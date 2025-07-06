@@ -2,7 +2,12 @@ package dev.hossain.keepalive.ui
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -17,6 +22,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -28,11 +36,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import dev.hossain.keepalive.OtherScreens
 import dev.hossain.keepalive.data.PermissionType
 import dev.hossain.keepalive.ui.screen.AppActivityLogScreen
 import dev.hossain.keepalive.ui.screen.AppConfigScreen
 import dev.hossain.keepalive.ui.screen.MainLandingScreen
 import dev.hossain.keepalive.ui.screen.SettingsScreen
+
+
 
 @Composable
 fun BottomNavigationWrapper(
@@ -92,6 +104,7 @@ fun BottomNavigationWrapper(
                     context,
                 )
             }
+            OtherScreens()
         }
     }
 }
