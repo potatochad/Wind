@@ -77,7 +77,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             KeepAliveTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
+                Surface(modifier = Modifier.fillMaxSize())
+                {
                     showPermissionRequestDialog = remember { mutableStateOf(false) }
                     nextPermissionType = remember { mutableStateOf(PERMISSION_POST_NOTIFICATIONS) }
                     val grantedPermissionCount by mainViewModel.totalApprovedPermissions.observeAsState(0)
@@ -101,6 +102,7 @@ class MainActivity : ComponentActivity() {
                         grantedCount = grantedPermissionCount,
                         configuredAppsCount = configuredAppsCount,
                     )
+
                 }
             }
         }
