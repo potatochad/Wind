@@ -41,6 +41,7 @@ import dev.hossain.keepalive.data.AppDataStore
 /**
  * Displays the app list settings screen, allowing users to configure which apps are managed.
  */
+//region BORING
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(navController: NavHostController) {
@@ -67,6 +68,7 @@ fun SettingsScreen(navController: NavHostController) {
         )
     }
 }
+//endregion
 
 /**
  * Shows a list of apps that are kept running and allows adding or removing apps from the list.
@@ -108,7 +110,7 @@ fun AppListScreen(
             ShowAppSelectionDialog(
                 installedApps = installedApps,
                 onAppSelected = {
-                    viewModel.addApp(it)
+                    viewModel.addApp(it)///////////////////////////////////////////REPLACE WITH MY THING
                     showDialog.value = false
                 },
                 onDismissRequest = { showDialog.value = false },
