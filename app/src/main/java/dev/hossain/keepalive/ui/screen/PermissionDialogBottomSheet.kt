@@ -76,18 +76,6 @@ fun BottomSheetDialog(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun MyBottomSheetDialogPreview() {
-    BottomSheetDialog(
-        showDialog = true,
-        title = "My Title",
-        description = "This is a description",
-        onAccept = { /*TODO*/ },
-        onCancel = { /*TODO*/ },
-    )
-}
-
 @Composable
 fun PermissionDialogs(
     context: Context,

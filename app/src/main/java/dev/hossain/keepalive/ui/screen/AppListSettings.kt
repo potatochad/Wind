@@ -78,46 +78,10 @@ fun AppListScreen(
     context: Context,
     modifier: Modifier = Modifier,
 ) {
-    val appList by viewModel.appList.observeAsState(emptyList())
-    val selectedApps by viewModel.selectedApps.observeAsState(emptySet())
     val installedApps = viewModel.getInstalledApps(context)
     val showDialog = remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
-        Text(
-            text = "Apps that are kept running:",
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(vertical = 8.dp),
-        )
-        Text(
-            text =
-                "These apps will be periodically checked if they were recently run, " +
-                    "if not, they will be restarted based on app configuration you choose.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.Gray,
-        )
-        LazyColumn {
-            if (appList.isEmpty()) {
-                item {
-                    Text(
-                        text = "No apps are added to the watch list.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(16.dp),
-                    )
-                }
-            } else {
-                items(appList, key = { it.packageName }) { app ->
-                    AppListItem(
-                        appInfo = app,
-                        isSelected = selectedApps.contains(app),
-                        onAppSelected = { viewModel.toggleAppSelection(it) },
-                        onDelete = { viewModel.removeApp(it) },
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = { showDialog.value = true },
@@ -128,7 +92,6 @@ fun AppListScreen(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("Add App")
-                Text("Add a new app to the watchlist.", style = MaterialTheme.typography.labelSmall)
             }
         }
 
@@ -138,7 +101,7 @@ fun AppListScreen(
             onClick = { navController.popBackStack() },
             modifier = Modifier.align(Alignment.CenterHorizontally),
         ) {
-            Text("Done")
+            Text("Leave")
         }
 
         if (showDialog.value) {

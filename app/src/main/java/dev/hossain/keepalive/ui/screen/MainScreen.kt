@@ -61,46 +61,16 @@ fun MainLandingScreen(
         modifier = modifier.fillMaxSize(),
     ) { innerPadding ->
         Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .wrapContentSize(Alignment.Center)
-                    .padding(innerPadding),
+            modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center).padding(innerPadding),
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.baseline_radar_24),
-                contentDescription = "App Icon",
-                modifier =
-                    Modifier
-                        .size(64.dp)
-                        .align(Alignment.CenterHorizontally)
-                        .padding(bottom = 16.dp),
-            )
-            AppHeading(
-                title = "Keep Alive",
-                modifier =
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(bottom = 8.dp),
-            )
-            Text(
-                text = "App that keeps other apps alive 💓",
-                style = MaterialTheme.typography.bodyLarge,
-                modifier =
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(bottom = 16.dp),
-            )
+            AppHeading(title = "Need some Permissions", modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp),)
+
+            Text(text = "Before working and having fun 💓", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp),)
+
             Spacer(modifier = Modifier.height(128.dp))
             Column {
-                Row(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+                Row(modifier = Modifier.fillMaxWidth().padding(24.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically,)
+                {
                     Text("ℹ️ Required permission status \nApproved Permissions: $grantedCount of $totalRequiredCount")
                     Spacer(modifier = Modifier.width(8.dp))
                     Icon(
@@ -110,53 +80,11 @@ fun MainLandingScreen(
                         contentDescription = "Icon",
                     )
                 }
-                AnimatedVisibility(
-                    visible = !allPermissionsGranted,
-                    enter = fadeIn(),
-                    exit = fadeOut(),
-                    modifier =
-                        Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(bottom = 32.dp),
-                ) {
-                    Button(
-                        onClick = { onRequestPermissions() },
-                    ) {
+                AnimatedVisibility(visible = !allPermissionsGranted, enter = fadeIn(), exit = fadeOut(), modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 32.dp),)
+                {
+                    Button(onClick = { onRequestPermissions() })
+                    {
                         Text("Grant Permission")
-                    }
-                }
-                AnimatedVisibility(
-                    visible = allPermissionsGranted,
-                    enter = fadeIn(),
-                    exit = fadeOut(),
-                    modifier =
-                        Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(bottom = 32.dp),
-                ) {
-                    Column(
-                        modifier = Modifier.wrapContentSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        // Display subtitle with appropriate text based on configured app count
-                        Text(
-                            text =
-                                if (configuredAppsCount == 0) {
-                                    "No app added to watch list - Configure apps to get started"
-                                } else {
-                                    "Currently watching $configuredAppsCount apps"
-                                },
-                            style = MaterialTheme.typography.bodySmall,
-                            color =
-                                if (configuredAppsCount == 0) {
-                                    MaterialTheme.colorScheme.error
-                                } else {
-                                    MaterialTheme.colorScheme.primary
-                                },
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(top = 2.dp),
-                        )
                     }
                 }
             }

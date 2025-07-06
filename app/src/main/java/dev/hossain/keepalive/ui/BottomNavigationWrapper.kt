@@ -60,10 +60,10 @@ fun BottomNavigationWrapper(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = "home",
             modifier = Modifier.padding(innerPadding),
         ) {
-            composable(Screen.Home.route) {
+            composable("home") {
                 MainLandingScreen(
                     navController = navController,
                     allPermissionsGranted = allPermissionsGranted,
@@ -77,16 +77,16 @@ fun BottomNavigationWrapper(
                     configuredAppsCount = configuredAppsCount,
                 )
             }
-            composable(Screen.WatchDogConfig.route) {
+            composable("app_configs") {
                 AppConfigScreen(
                     navController,
                     context,
                 )
             }
-            composable(Screen.AppWatchList.route) {
+            composable("app_watch_list") {
                 SettingsScreen(navController)
             }
-            composable(Screen.ActivityLogs.route) {
+            composable("activity_logs") {
                 AppActivityLogScreen(
                     navController,
                     context,
