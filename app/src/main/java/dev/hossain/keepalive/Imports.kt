@@ -104,127 +104,7 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.UUID
 
-//region NavController
 
-@SuppressLint("ComposableDestinationInComposeScope")
-@Composable
-fun NavGraphBuilder.OtherScreens(){
-    val navController = rememberNavController()
-    composable("TrueMain") {
-
-        TrueMain(navController)
-    }
-    composable("FunScreen") {
-        FunScreen(navController)
-    }
-
-}
-
-//endregion
-//region OnAppStart
-
-@RequiresApi(Build.VERSION_CODES.O)
-fun AppStart_beforeUI(context: Context) {
-    Global1.context = context
-}
-
-@Composable
-fun AppStart() {
-
-}
-
-//endregion
-
-//region BACKGROUND TASK
-
-class WatchdogService : Service() {
-    companion object { private const val NOTIFICATION_ID = 1 }
-    private val serviceJob = SupervisorJob()
-    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
-    private val notificationHelper = NotificationHelper(this)
-    private lateinit var activityLogger: AppActivityLogger
-    private var currentServiceInstanceId: Int = 0
-    override fun onBind(intent: Intent?): IBinder? {
-        Timber.d("onBind: $intent")
-        return null
-    }
-
-    //* FUNCTION RESPONSIBLE FOR WHAT HAPPENS WHEN BACKGROUND TASK RUNS
-    override fun onStartCommand(
-        intent: Intent?,
-        flags: Int,
-        startId: Int,
-    ): Int {
-        Timber.d("onStartCommand() called with: intent = $intent, flags = $flags, startId = $startId")
-        currentServiceInstanceId = startId
-        notificationHelper.createNotificationChannel()
-        activityLogger = AppActivityLogger(applicationContext)
-        startForeground(NOTIFICATION_ID, notificationHelper.buildNotification(),)
-
-
-        serviceScope.launch {
-
-
-        }
-        return START_STICKY
-    }
-
-    override fun onDestroy() { super.onDestroy(); serviceScope.cancel() }
-}
-
-
-//endregion
-
-
-/* TODO
-
-DO THE SETUP NOW
-TEST CONFIGURE
-AND GET TO POINT WHERE CAN SET YOUR FORGROUND SERVICE TODO ANYTHING YOU WANT, UPLOAD IT TO GITHUB
-TODO AS TEMPLATE FOR FUTURE THINGS
-
-ADDDDDDDDDDDDDDDDDDDD MY FUN MANAGER THING/ GREAT FOR EVERYTHING
- */
-
-
-
-//region MICALANIOUS UI
-@Composable
-fun MICALANIOUS_Ui() {
-    var OtherM = ItemManager("OtherSettings")
-    var OtherSettings = OtherM.createOrUpdate(defaults =
-        mapOf("showWorkAlert" to false)
-    )
-    GetToWorkAlert()
-
-}
-@Composable
-fun GetToWorkAlert(){
-    var OtherM = ItemManager("OtherSettings")
-    var OtherSettings = OtherM.createOrUpdate(defaults =
-        mapOf("showWorkAlert" to false)
-    )
-    if (OtherSettings.bool("showWorkAlert")) {
-        LaunchedEffect(Unit) {
-            delay(3000)
-            OtherM.update(OtherSettings.id, mapOf("showWorkAlert" to false))
-        }
-
-        Snackbar(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text("NO TIME! GET TO WORK.")
-        }
-    }
-}
-
-//endregion
-
-
-
-
-
-//!Must read
 //region USER MANUAL
 
 /** HOW USE REGION
@@ -317,7 +197,6 @@ just saves your thing online, like backup
 //endregion
 
 
-//? LIFE SAVERS
 //region MUST USE
 
 //region simple SYCHED
@@ -334,14 +213,6 @@ fun <T> Synched(valueProvider: () -> T): MutableState<T> {
 
 //endregion
 
-//region GLOBAL CONTEXT
-//* CONTEXT from anywhere!!!
-object Global1 {
-    lateinit var context: Context
-}
-
-
-//endregion
 //region log
 
 fun log(message: String, tag: String? = "AppLog") {
@@ -481,6 +352,14 @@ manager.createOrUpdate(
 //endregion
 
 //endregion
+
+
+
+
+
+
+
+
 
 
 

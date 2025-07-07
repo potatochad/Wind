@@ -34,27 +34,14 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun TrueMain(navController: NavController) {
-    var OtherM = ItemManager("OtherSettings")
-    var OtherSettings = OtherM.createOrUpdate(defaults =
-        mapOf("showWorkAlert" to false)
-    )
-    val S_manager = ItemManager("trueMain_settings")
-    var Settings = S_manager.createOrUpdate(defaults = mapOf(
-        "targetText" to "I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it, do the pomo. And spend half time improving, half time using the product. Done. I need to keep with it for 100 days for it to bear fruit. Right now it won't work/ the initial mvp is terrible. But that's ok. I will improve it slowly, one tiny feature at a time. All i must do is stick with the idea: type stuff and get time to have fun. Done. That is it!!!!. Goal is consistency, nothing else, nothing else!!",
-        "LetterToTime" to 5,
-        "DoneRetype_to_time" to 60,
-        "funTime" to 0,
-        "currentInput" to "",
-        "highestCorrect" to "",
-    ))
 
-    val targetText = Settings.string("targetText")
-    val DoneRetype_to_time = Settings.int("DoneRetype_to_time")
-    var funTime = Settings.int("DoneRetype_to_time")
-    var input = Settings.string("currentInput")
+    val targetText = S_Data.string("targetText")
+    val DoneRetype_to_time = S_Data.int("DoneRetype_to_time")
+    var funTime = S_Data.int("funTime")
+    var input = S_Data.string("currentInput")
 
     var correctInput by Synched { "" }
-    var highestCorrect = Settings.string("highestCorrect")
+    var highestCorrect = S_Data.int("highestCorrect")
 
 
 
@@ -90,8 +77,8 @@ fun TrueMain(navController: NavController) {
 
                 val newlyEarned = correctInput.length - highestCorrect
                 if (newlyEarned > 0) {
-                    funTime += newlyEarned * Settings.int("LetterToTime")
-                    highestCorrect = correctInput.length.toString()
+                    funTime += newlyEarned * S_Data.int("LetterToTime")
+                    highestCorrect = correctInput.length
                 }
 
                 if (correctInput == targetText) {
@@ -105,14 +92,14 @@ fun TrueMain(navController: NavController) {
         )
 
         Spacer(modifier = Modifier.height(24.dp))
-
+        MICALANIOUS_Ui()//*just ignore, please !NO delete
         Button(
             onClick = {
                 if (funTime > 0) {
                     navController.navigate("FunScreen")
                 }
                 else {
-
+                    S_manager.update("SettingsId", mapOf("showWorkAlert" to true))
                 }
             },
             modifier = Modifier.fillMaxWidth()
@@ -125,8 +112,9 @@ fun TrueMain(navController: NavController) {
 
 @Composable
 fun FunScreen(navController: NavHostController) {
-    var funTime by Synched { startTime }
+    var funTime = S_Data.int("funTime")
     var running by Synched { true }
+
 
     LaunchedEffect(Unit) {
         while (running && funTime > 0) {
@@ -135,7 +123,7 @@ fun FunScreen(navController: NavHostController) {
         }
         if (funTime <= 0) {
             running = false
-            onBack()
+            navController.navigate("TrueMain")
         }
     }
 
@@ -146,7 +134,7 @@ fun FunScreen(navController: NavHostController) {
         ) {
             Button(onClick = {
                 running = false
-                onBack()
+                navController.navigate("TrueMain")
             }) {
                 Text("🔙 Back to Winning")
             }
