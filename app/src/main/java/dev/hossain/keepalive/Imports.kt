@@ -1,57 +1,34 @@
 package dev.hossain.keepalive
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.AppOpsManager
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.graphics.Color
-import android.app.PendingIntent
 import android.app.Service
-import android.content.BroadcastReceiver
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.IBinder
-import android.os.Process
 import android.util.Log
-import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -59,49 +36,35 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Landscape
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.QueryStats
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.LockOpen
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Tune
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -109,7 +72,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
@@ -117,21 +79,12 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat.startActivity
-import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -139,46 +92,32 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import dev.hossain.keepalive.data.AppDataStore
-import dev.hossain.keepalive.data.SettingsRepository
 import dev.hossain.keepalive.data.logging.AppActivityLogger
-import dev.hossain.keepalive.data.model.AppActivityLog
-import dev.hossain.keepalive.ui.screen.AppInfo
-import dev.hossain.keepalive.util.AppConfig.DEFAULT_APP_CHECK_INTERVAL_MIN
-import dev.hossain.keepalive.util.AppConfig.DELAY_BETWEEN_MULTIPLE_APP_CHECKS_MS
-import dev.hossain.keepalive.util.AppLauncher
 import dev.hossain.keepalive.util.NotificationHelper
-import dev.hossain.keepalive.util.RecentAppChecker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import timber.log.Timber
-import java.io.File
-import java.text.SimpleDateFormat
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.TextStyle
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.TimeUnit
 
 //region NavController
 
+@SuppressLint("ComposableDestinationInComposeScope")
+@Composable
 fun NavGraphBuilder.OtherScreens(){
-    composable("TrueMain"){
-        TrueMain()
+    val navController = rememberNavController()
+    composable("TrueMain") {
+
+        TrueMain(navController)
     }
+    composable("FunScreen") {
+        FunScreen(navController)
+    }
+
 }
 
 //endregion
@@ -249,139 +188,37 @@ ADDDDDDDDDDDDDDDDDDDD MY FUN MANAGER THING/ GREAT FOR EVERYTHING
 
 
 
-//region TrueMain
-
+//region MICALANIOUS UI
 @Composable
-fun TrueMain() {
-    var funTime by Synched { 0 }
-    var input by Synched { "" }
-    var correctInput by Synched { "" }
-    var highestCorrect by Synched { 0 }
-    var showGame by Synched { false }
+fun MICALANIOUS_Ui() {
+    var OtherM = ItemManager("OtherSettings")
+    var OtherSettings = OtherM.createOrUpdate(defaults =
+        mapOf("showWorkAlert" to false)
+    )
+    GetToWorkAlert()
 
-    val targetText = "I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it, do the pomo. And spend half time improving, half time using the product. Done. I need to keep with it for 100 days for it to bear fruit. Right now it won't work/ the initial mvp is terrible. But that's ok. I will improve it slowly, one tiny feature at a time. All i must do is stick with the idea: type stuff and get time to have fun. Done. That is it!!!!. Goal is consistency, nothing else, nothing else!!"
-
-    if (showGame) {
-        FunScreen(funTime) {
-            showGame = false
+}
+@Composable
+fun GetToWorkAlert(){
+    var OtherM = ItemManager("OtherSettings")
+    var OtherSettings = OtherM.createOrUpdate(defaults =
+        mapOf("showWorkAlert" to false)
+    )
+    if (OtherSettings.bool("showWorkAlert")) {
+        LaunchedEffect(Unit) {
+            delay(3000)
+            OtherM.update(OtherSettings.id, mapOf("showWorkAlert" to false))
         }
-        return
-    }
 
-    val coloredTarget = buildAnnotatedString {
-        val correctChars = targetText.zip(input).takeWhile { it.first == it.second }.size
-        correctInput = input.take(correctChars)
-        for (i in targetText.indices) {
-            if (i < correctInput.length) {
-                withStyle(style = SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold)) {
-                    append(targetText[i])
-                }
-            } else {
-                append(targetText[i])
-            }
-        }
-    }
-
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Type to earn fun time!", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Text(text = "Fun time: ${funTime}s", fontSize = 18.sp)
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Text(text = coloredTarget)
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = input,
-            onValueChange = {
-                input = it
-
-                val newlyEarned = correctInput.length - highestCorrect
-                if (newlyEarned > 0) {
-                    funTime += newlyEarned * 3
-                    highestCorrect = correctInput.length
-                }
-
-                if (correctInput == targetText) {
-                    funTime += 60
-                    input = ""
-                    highestCorrect = 0
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Start typing...") }
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = {
-                if (funTime > 0) {
-                    showGame = true
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
+        Snackbar(
+            modifier = Modifier.padding(16.dp)
         ) {
-            Text("Chill Time 🌴")
+            Text("NO TIME! GET TO WORK.")
         }
     }
 }
-
-
-@Composable
-fun FunScreen(startTime: Int, onBack: () -> Unit) {
-    var funTime by Synched { startTime }
-    var running by Synched { true }
-
-    LaunchedEffect(Unit) {
-        while (running && funTime > 0) {
-            delay(1000)
-            funTime--
-        }
-        if (funTime <= 0) {
-            running = false
-            onBack()
-        }
-    }
-
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Button(onClick = {
-                running = false
-                onBack()
-            }) {
-                Text("🔙 Back to Winning")
-            }
-
-            Text("Fun time: ${funTime}s", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        AndroidView(
-            factory = { context ->
-                WebView(context).apply {
-                    settings.javaScriptEnabled = true
-                    loadUrl("https://play.famobi.com/wrapper/rise-up/A1000-10")
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp)
-        )
-    }
-}
-
 
 //endregion
-
-
-
-
 
 
 
@@ -416,64 +253,30 @@ fun FunScreen(startTime: Int, onBack: () -> Unit) {
 //! IMPORTANT
 /* *ULTIMATE DATA MANAGEMENT
 
-@Composable
-fun TaskScreen(manager: ItemManager) {
-    val scope = rememberCoroutineScope()
-    var text by remember { mutableStateOf("") }
-        Row{
-            Button(onClick = {
-                scope.launch {
-                    manager.add(
-                        Item.Defaults(mapOf("completed" to false))(mapOf("text" to text))
-                    )
-                    text = ""
-                }
-            }) {
-                Text("Add")
-            }
-        }
+val manager = ItemManager("my_items")  // name your save key
 
-        Spacer(modifier = Modifier.height(16.dp))
+manager.add(mapOf("text" to "Hello", "done" to false))
 
-        LazyColumn {
-            items(
-                items = manager.getAll(),
-                key = { it.id } // ✅ fix: add key parameter
-            ) { item ->
-                val id = item.id
-                val taskText = item.string("text")
-                val completed = item.bool("completed")
+val createItem = Item.Defaults(mapOf("done" to false))
+manager.add(createItem(mapOf("text" to "Buy milk")))
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp)
-                ) {
-                    Checkbox(
-                        checked = completed,
-                        onCheckedChange = {
-                            scope.launch {
-                                manager.update(id, mapOf("completed" to it))
-                            }
-                        }
-                    )
-                    Text(
-                        taskText,
-                        modifier = Modifier.weight(1f)
-                    )
-                    IconButton(onClick = {
-                        scope.launch {
-                            manager.remove(id)
-                        }
-                    }) {
-                        Icon(Icons.Default.Delete, contentDescription = "Delete")
-                    }
-                }
-            }
-        }
-    }
+val items = manager.getAll()
+for (item in items) {
+    println(item.string("text"))
+    println(item.bool("done"))
 }
+val id = items.first().id
+manager.update(id, mapOf("done" to true))
+
+manager.remove(id)
+
+manager.createOrUpdate(
+    id = null,
+    defaults = mapOf("done" to false),
+    fields = mapOf("text" to "Walk dog")
+)
+
+
 */
 
 
@@ -594,43 +397,39 @@ class ItemManager(
     private fun writeRaw(value: String) =
         prefs.edit().putString(key, value).commit()
 
-    private suspend fun save() = withContext(Dispatchers.IO) {
-        writeRaw(gson.toJson(_data.toList()))
-    }
-
     fun getAll(): List<ItemMap> = data
 
     fun getById(id: String): ItemMap? =
         _data.firstOrNull { it["id"] == id }?.let { ItemMap(it) }
 
-    suspend fun add(item: Map<String, Any>): ItemMap {
+    fun save() {
+        Thread {
+            writeRaw(gson.toJson(_data.toList()))
+        }.start()
+    }
+
+    fun add(item: Map<String, Any>): ItemMap {
         val withId = if (item.containsKey("id")) item else item + ("id" to UUID.randomUUID().toString())
-        withContext(Dispatchers.Main) {
-            _data.add(withId)
-        }
+        _data.add(withId)
         save()
         return ItemMap(withId)
     }
 
-    suspend fun remove(id: String) {
-        withContext(Dispatchers.Main) {
-            _data.removeAll { it["id"] == id }
-        }
+    fun remove(id: String) {
+        _data.removeAll { it["id"] == id }
         save()
     }
 
-    suspend fun update(id: String, fields: Map<String, Any>): ItemMap {
+    fun update(id: String, fields: Map<String, Any>): ItemMap {
         val idx = _data.indexOfFirst { it["id"] == id }
         require(idx >= 0) { "No item with id '$id'" }
         val updated = _data[idx] + fields
-        withContext(Dispatchers.Main) {
-            _data[idx] = updated
-        }
+        _data[idx] = updated
         save()
         return ItemMap(updated)
     }
 
-    suspend fun createOrUpdate(
+    fun createOrUpdate(
         id: String? = null,
         defaults: Map<String, Any> = emptyMap(),
         fields: Map<String, Any> = emptyMap()
@@ -648,6 +447,36 @@ class ItemManager(
         }
     }
 }
+
+/* *USAGE EXAMPLE
+1. Get value
+    val showAlert = settings.bool("showWorkAlert")
+
+val manager = ItemManager("my_items")  // name your save key
+
+manager.add(mapOf("text" to "Hello", "done" to false))
+
+val createItem = Item.Defaults(mapOf("done" to false))
+manager.add(createItem(mapOf("text" to "Buy milk")))
+
+val items = manager.getAll()
+for (item in items) {
+    println(item.string("text"))
+    println(item.bool("done"))
+}
+val id = items.first().id
+manager.update(id, mapOf("done" to true))
+
+manager.remove(id)
+
+manager.createOrUpdate(
+    id = null,
+    defaults = mapOf("done" to false),
+    fields = mapOf("text" to "Walk dog")
+)
+
+
+*/
 
 //endregion
 
