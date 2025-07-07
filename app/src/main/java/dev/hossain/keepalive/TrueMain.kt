@@ -17,6 +17,7 @@ import android.os.Build
 import android.os.IBinder
 import android.os.Process
 import android.util.Log
+import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
@@ -85,6 +86,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -116,13 +118,17 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -190,7 +196,6 @@ fun AppStart() {
 
 //endregion
 
-
 //region BACKGROUND TASK
 
 class WatchdogService : Service() {
@@ -218,86 +223,18 @@ class WatchdogService : Service() {
         startForeground(NOTIFICATION_ID, notificationHelper.buildNotification(),)
 
 
-        val dataStore = AppDataStore.store(context = applicationContext)
-        val appSettings = SettingsRepository(applicationContext)
-
-
         serviceScope.launch {
 
-            while (true) {
-                Timber.d("[Instance ID: $currentServiceInstanceId] Current time: ${System.currentTimeMillis()} @ ${Date()}")
-                val monitoredApps: List<AppInfo> = dataStore.data.first()
 
-                if (monitoredApps.isEmpty()) {
-                    Timber.w("No apps configured yet. Skipping the check.")
-                    continue
-                }
-
-                val recentlyUsedAppStats = RecentAppChecker.getRecentlyRunningAppStats(this@WatchdogService)
-                val shouldForceStart = appSettings.enableForceStartAppsFlow.first()
-
-                if (shouldForceStart) {
-                    Timber.d("Force start apps settings is enabled.")
-                } else {
-                    Timber.d("Force start apps settings is disabled.")
-                }
-
-                monitoredApps.forEach { appInfo ->
-                    val isAppRunningRecently = RecentAppChecker.isAppRunningRecently(recentlyUsedAppStats, appInfo.packageName)
-                    val needsToStart = !isAppRunningRecently || shouldForceStart
-
-                    val timestamp = System.currentTimeMillis()
-                    val message =
-                        if (needsToStart) {
-                            if (shouldForceStart) {
-                                "Force starting app regardless of running state"
-                            } else {
-                                "App was not running recently, attempting to start"
-                            }
-                        } else {
-                            "App is running normally, no action needed"
-                        }
-
-                    val activityLog =
-                        AppActivityLog(
-                            packageId = appInfo.packageName,
-                            appName = appInfo.appName,
-                            wasRunningRecently = isAppRunningRecently,
-                            wasAttemptedToStart = needsToStart,
-                            timestamp = timestamp,
-                            forceStartEnabled = shouldForceStart,
-                            message = message,
-                        )
-                    activityLogger.logAppActivity(activityLog)
-
-
-                    delay(DELAY_BETWEEN_MULTIPLE_APP_CHECKS_MS)
-                }
-            }
         }
         return START_STICKY
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.d("onDestroy: Service is being destroyed. Service ID: $currentServiceInstanceId ($this)")
-        serviceScope.cancel()
-    }
+    override fun onDestroy() { super.onDestroy(); serviceScope.cancel() }
 }
 
 
 //endregion
-
-//region TrueMain
-//NOT CONNECTED YET
-@Composable
-fun TrueMain(){
-
-}
-
-//endregion
-
-
 
 
 /* TODO
@@ -312,9 +249,303 @@ ADDDDDDDDDDDDDDDDDDDD MY FUN MANAGER THING/ GREAT FOR EVERYTHING
 
 
 
+//region TrueMain
+
+@Composable
+fun TrueMain() {
+    var funTime by Synched { 0 }
+    var input by Synched { "" }
+    var correctInput by Synched { "" }
+    var highestCorrect by Synched { 0 }
+    var showGame by Synched { false }
+
+    val targetText = "I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it, do the pomo. And spend half time improving, half time using the product. Done. I need to keep with it for 100 days for it to bear fruit. Right now it won't work/ the initial mvp is terrible. But that's ok. I will improve it slowly, one tiny feature at a time. All i must do is stick with the idea: type stuff and get time to have fun. Done. That is it!!!!. Goal is consistency, nothing else, nothing else!!"
+
+    if (showGame) {
+        FunScreen(funTime) {
+            showGame = false
+        }
+        return
+    }
+
+    val coloredTarget = buildAnnotatedString {
+        val correctChars = targetText.zip(input).takeWhile { it.first == it.second }.size
+        correctInput = input.take(correctChars)
+        for (i in targetText.indices) {
+            if (i < correctInput.length) {
+                withStyle(style = SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold)) {
+                    append(targetText[i])
+                }
+            } else {
+                append(targetText[i])
+            }
+        }
+    }
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        Text(text = "Type to earn fun time!", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(text = "Fun time: ${funTime}s", fontSize = 18.sp)
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(text = coloredTarget)
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = input,
+            onValueChange = {
+                input = it
+
+                val newlyEarned = correctInput.length - highestCorrect
+                if (newlyEarned > 0) {
+                    funTime += newlyEarned * 3
+                    highestCorrect = correctInput.length
+                }
+
+                if (correctInput == targetText) {
+                    funTime += 60
+                    input = ""
+                    highestCorrect = 0
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            placeholder = { Text("Start typing...") }
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = {
+                if (funTime > 0) {
+                    showGame = true
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Chill Time 🌴")
+        }
+    }
+}
+
+
+@Composable
+fun FunScreen(startTime: Int, onBack: () -> Unit) {
+    var funTime by Synched { startTime }
+    var running by Synched { true }
+
+    LaunchedEffect(Unit) {
+        while (running && funTime > 0) {
+            delay(1000)
+            funTime--
+        }
+        if (funTime <= 0) {
+            running = false
+            onBack()
+        }
+    }
+
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Button(onClick = {
+                running = false
+                onBack()
+            }) {
+                Text("🔙 Back to Winning")
+            }
+
+            Text("Fun time: ${funTime}s", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
+                    settings.javaScriptEnabled = true
+                    loadUrl("https://play.famobi.com/wrapper/rise-up/A1000-10")
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(500.dp)
+        )
+    }
+}
+
+
+//endregion
 
 
 
+
+
+
+
+
+
+//!Must read
+//region USER MANUAL
+
+/** HOW USE REGION
+
+    //region
+
+    requires a space of one between // and code to work well
+
+    //endregion
+
+*/
+
+/*HOW CODE
+    REWRITE NONE UNIVERSAL CODE-TALKING SMALL 100
+    all else rewriteee
+
+    use region, one file, and yea
+    plus, like to have functions, a section for universal functions
+
+*/
+
+
+//!IMPORTANT
+//region CHEET CODES
+
+//! IMPORTANT
+/* *ULTIMATE DATA MANAGEMENT
+
+@Composable
+fun TaskScreen(manager: ItemManager) {
+    val scope = rememberCoroutineScope()
+    var text by remember { mutableStateOf("") }
+        Row{
+            Button(onClick = {
+                scope.launch {
+                    manager.add(
+                        Item.Defaults(mapOf("completed" to false))(mapOf("text" to text))
+                    )
+                    text = ""
+                }
+            }) {
+                Text("Add")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyColumn {
+            items(
+                items = manager.getAll(),
+                key = { it.id } // ✅ fix: add key parameter
+            ) { item ->
+                val id = item.id
+                val taskText = item.string("text")
+                val completed = item.bool("completed")
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                ) {
+                    Checkbox(
+                        checked = completed,
+                        onCheckedChange = {
+                            scope.launch {
+                                manager.update(id, mapOf("completed" to it))
+                            }
+                        }
+                    )
+                    Text(
+                        taskText,
+                        modifier = Modifier.weight(1f)
+                    )
+                    IconButton(onClick = {
+                        scope.launch {
+                            manager.remove(id)
+                        }
+                    }) {
+                        Icon(Icons.Default.Delete, contentDescription = "Delete")
+                    }
+                }
+            }
+        }
+    }
+}
+*/
+
+
+/* Simple Synched:
+    var funTime by Synched { (0) }
+*/
+
+/*
+log:
+
+Example usage:
+log("Button clicked")
+log("Error happened", "ErrorTag")
+*/
+
+/* SMALL THINGS
+   val id: String = UUID.randomUUID().toString(),
+   *a thing that exists, unique completly
+
+ */
+
+//endregion
+
+//region How Commit/push
+/* Commits
+use them often:
+- on fail; (the last on fail, use that)
+    come back if mess, up
+- or just saving, which also do often
+
+*/
+/* Push
+push every day, before bed,
+just saves your thing online, like backup
+*/
+//endregion
+
+//endregion
+
+
+//? LIFE SAVERS
+//region MUST USE
+
+//region simple SYCHED
+
+@Composable
+fun <T> Synched(valueProvider: () -> T): MutableState<T> {
+    val state = remember { mutableStateOf(valueProvider()) }
+    LaunchedEffect(Unit) {
+        snapshotFlow { valueProvider() }
+            .collect { newValue -> state.value = newValue }
+    }
+    return state
+}
+
+//endregion
+
+//region GLOBAL CONTEXT
+//* CONTEXT from anywhere!!!
+object Global1 {
+    lateinit var context: Context
+}
+
+
+//endregion
+//region log
+
+fun log(message: String, tag: String? = "AppLog") {
+    Log.d(tag, message)
+}
+
+//endregion
 
 //region ALL MIGHTY DATA MANAGER
 
@@ -418,211 +649,9 @@ class ItemManager(
     }
 }
 
-/* USAGE EXAMPLE
-
-@Composable
-fun TaskScreen(manager: ItemManager) {
-    val scope = rememberCoroutineScope()
-    var text by remember { mutableStateOf("") }
-
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            TextField(
-                value = text,
-                onValueChange = { text = it },
-                modifier = Modifier.weight(1f),
-                placeholder = { Text("New Task") }
-            )
-            Spacer(Modifier.width(8.dp))
-            Button(onClick = {
-                scope.launch {
-                    manager.add(
-                        Item.Defaults(mapOf("completed" to false))(mapOf("text" to text))
-                    )
-                    text = ""
-                }
-            }) {
-                Text("Add")
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        LazyColumn {
-            items(
-                items = manager.getAll(),
-                key = { it.id } // ✅ fix: add key parameter
-            ) { item ->
-                val id = item.id
-                val taskText = item.string("text")
-                val completed = item.bool("completed")
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp)
-                ) {
-                    Checkbox(
-                        checked = completed,
-                        onCheckedChange = {
-                            scope.launch {
-                                manager.update(id, mapOf("completed" to it))
-                            }
-                        }
-                    )
-                    Text(
-                        taskText,
-                        modifier = Modifier.weight(1f)
-                    )
-                    IconButton(onClick = {
-                        scope.launch {
-                            manager.remove(id)
-                        }
-                    }) {
-                        Icon(Icons.Default.Delete, contentDescription = "Delete")
-                    }
-                }
-            }
-        }
-    }
-}
-
-*/
-
-//endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-//IMPORTED FROM TEST7 PROJECT
-
-
-
-//!Must read
-//region USER MANUAL
-
-/** HOW USE REGION
-
-    //region
-
-    requires a space of one between // and code to work well
-
-    //endregion
-
-*/
-
-/*HOW CODE
-    REWRITE NONE UNIVERSAL CODE-TALKING SMALL 100
-    all else rewriteee
-
-    use region, one file, and yea
-    plus, like to have functions, a section for universal functions
-
-*/
-
-
-//!IMPORTANT
-//region CHEET CODES
-
-//! IMPORTANT
-/* *ULTIMATE DATA MANAGEMENT
-
-
- */
-
-
-/* Simple Synched:
-MutableState updates automatically,
-doesn't cost cpu, not using loop
-
-
-Example usage:
-val syncedValue = Synched { someValue }
-
-syncedValue will update whenever someValue changes.
-updating composable
-*/
-
-/*
-log:
-
-Example usage:
-log("Button clicked")
-log("Error happened", "ErrorTag")
-*/
-
-/* SMALL THINGS
-   val id: String = UUID.randomUUID().toString(),
-   *a thing that exists, unique completly
-
- */
-
-//endregion
-
-//region How Commit/push
-/* Commits
-use them often:
-- on fail; (the last on fail, use that)
-    come back if mess, up
-- or just saving, which also do often
-
-*/
-/* Push
-push every day, before bed,
-just saves your thing online, like backup
-*/
 //endregion
 
 //endregion
-
-
-//? LIFE SAVERS
-//region MUST USE
-
-//region simple SYCHED
-
-@Composable
-fun <T> Synched(valueProvider: () -> T): MutableState<T> {
-    val state = remember { mutableStateOf(valueProvider()) }
-    LaunchedEffect(Unit) {
-        snapshotFlow { valueProvider() }
-            .collect { newValue -> state.value = newValue }
-    }
-    return state
-}
-
-//endregion
-
-//region GLOBAL CONTEXT
-//* CONTEXT from anywhere!!!
-object Global1 {
-    lateinit var context: Context
-}
-
-
-//endregion
-//region log
-
-fun log(message: String, tag: String? = "AppLog") {
-    Log.d(tag, message)
-}
-
-//endregion
-
-//endregion
-
-
-
 
 
 

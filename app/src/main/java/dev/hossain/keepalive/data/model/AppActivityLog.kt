@@ -1,18 +1,12 @@
 package dev.hossain.keepalive.data.model
 
 import androidx.annotation.Keep
-import dev.hossain.keepalive.service.WatchdogService
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-/**
- * Model class that represents a single log entry for app activity monitoring.
- *
- * This captures the state of an app when checked by the [WatchdogService].
- */
 @Keep
 @Serializable
 data class AppActivityLog(
@@ -52,13 +46,6 @@ data class AppActivityLog(
     @SerialName("message")
     val message: String = "",
 ) {
-    /**
-     * Converts the timestamp to a human-readable date string.
-     */
-    fun getFormattedTimestamp(): String {
-        val dateFormat = SimpleDateFormat("MMM d, yyyy h:mm a", Locale.getDefault())
-        return dateFormat.format(Date(timestamp))
-    }
 
     /**
      * Returns a simplified status message based on the log data.

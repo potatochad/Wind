@@ -3,7 +3,7 @@ package dev.hossain.keepalive.util
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import dev.hossain.keepalive.service.WatchdogService
+import dev.hossain.keepalive.WatchdogService
 import timber.log.Timber
 
 /**

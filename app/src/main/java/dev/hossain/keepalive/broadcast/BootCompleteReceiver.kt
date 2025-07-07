@@ -3,8 +3,8 @@ package dev.hossain.keepalive.broadcast
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import dev.hossain.keepalive.service.WatchdogService
 import timber.log.Timber
+import dev.hossain.keepalive.WatchdogService
 
 /**
  * Receiver to start the WatchdogService on boot complete.

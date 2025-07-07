@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -66,6 +67,10 @@ fun MainLandingScreen(
             AppHeading(title = "Permissions", modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp),)
 
             Text(text = "Enable so the app can work 💓", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp),)
+
+            //!SKIP ROW
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { Button(onClick = { navController.navigate("TrueMain") }) { Text("SKIPPP") } }
+
 
             Spacer(modifier = Modifier.height(128.dp))
             Column {
