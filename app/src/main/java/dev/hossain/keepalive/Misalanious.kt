@@ -96,6 +96,7 @@ fun MICALANIOUS_Ui() {
 }
 @Composable
 fun GetToWorkAlert(){
+
     if (S_Data.bool("showWorkAlert")) {
         LaunchedEffect(Unit) {
             delay(3000)

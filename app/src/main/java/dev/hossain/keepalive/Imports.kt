@@ -1,13 +1,10 @@
 package dev.hossain.keepalive
 
 import android.annotation.SuppressLint
-import androidx.compose.material3.TextField
-import androidx.compose.ui.graphics.Color
-import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
-import android.os.IBinder
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
@@ -52,11 +49,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -76,6 +73,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -86,24 +84,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import dev.hossain.keepalive.data.logging.AppActivityLogger
-import dev.hossain.keepalive.util.NotificationHelper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
+import kotlinx.coroutines.runBlocking
 import java.util.UUID
-
 
 //region USER MANUAL
 
@@ -243,25 +228,29 @@ class ItemMap(private val map: Map<String, Any>) {
     fun raw(): Map<String, Any> = map
 }
 
+
 class ItemManager(
     private val key: String
 ) {
-    private val prefs = Global1.context.getSharedPreferences(key, Context.MODE_PRIVATE)
+    private val prefs: SharedPreferences by lazy {
+        Global1.context.getSharedPreferences(key, Context.MODE_PRIVATE)
+    }
     private val gson = Gson()
 
     private val _data = mutableStateListOf<Map<String, Any>>()
     val data: List<ItemMap> get() = _data.map { ItemMap(it) }
 
     init {
-        CoroutineScope(Dispatchers.IO).launch {
+        // BLOCK until prefs are read and _data is populated
+        runBlocking {
             val raw = prefs.getString(key, null)
             val list: List<Map<String, Any>> = if (raw != null) {
                 gson.fromJson(raw, object : TypeToken<List<Map<String, Any>>>() {}.type)
-            } else emptyList()
-            withContext(Dispatchers.Main) {
-                _data.clear()
-                _data.addAll(list)
+            } else {
+                emptyList()
             }
+            _data.clear()
+            _data.addAll(list)
         }
     }
 
@@ -274,9 +263,7 @@ class ItemManager(
         _data.firstOrNull { it["id"] == id }?.let { ItemMap(it) }
 
     fun save() {
-        Thread {
-            writeRaw(gson.toJson(_data.toList()))
-        }.start()
+        Thread { writeRaw(gson.toJson(_data.toList())) }.start()
     }
 
     fun add(item: Map<String, Any>): ItemMap {
@@ -318,6 +305,7 @@ class ItemManager(
         }
     }
 }
+
 
 /* *USAGE EXAMPLE
 1. Get value
