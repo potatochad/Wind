@@ -119,7 +119,9 @@ dependencies {
 
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation ("com.google.code.gson:gson:2.10.1")
-    implementation ("androidx.compose.material:material:1.7.0")
+    implementation("androidx.compose.material3:material3:1.3.2")
+    implementation("androidx.compose.material3:material3-window-size-class:1.3.2")
+
 
 
     implementation(libs.androidx.activity.compose)

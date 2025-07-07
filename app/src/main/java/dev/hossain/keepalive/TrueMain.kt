@@ -3,13 +3,18 @@ package dev.hossain.keepalive
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.AppOpsManager
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.ui.graphics.Color
 import android.app.PendingIntent
+import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
+import android.os.IBinder
 import android.os.Process
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -42,6 +47,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -52,6 +58,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -71,6 +78,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -82,18 +90,16 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -106,7 +112,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -118,6 +123,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -127,10 +133,27 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dev.hossain.keepalive.data.AppDataStore
+import dev.hossain.keepalive.data.SettingsRepository
+import dev.hossain.keepalive.data.logging.AppActivityLogger
+import dev.hossain.keepalive.data.model.AppActivityLog
+import dev.hossain.keepalive.ui.screen.AppInfo
+import dev.hossain.keepalive.util.AppConfig.DEFAULT_APP_CHECK_INTERVAL_MIN
+import dev.hossain.keepalive.util.AppConfig.DELAY_BETWEEN_MULTIPLE_APP_CHECKS_MS
+import dev.hossain.keepalive.util.AppLauncher
+import dev.hossain.keepalive.util.NotificationHelper
+import dev.hossain.keepalive.util.RecentAppChecker
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -142,6 +165,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.TimeUnit
 
 //region NavController
 
@@ -155,17 +179,117 @@ fun NavGraphBuilder.OtherScreens(){
 //region OnAppStart
 
 @RequiresApi(Build.VERSION_CODES.O)
+fun AppStart_beforeUI(context: Context) {
+    Global1.context = context
+}
+
 @Composable
-fun OnAppStart() {
+fun AppStart() {
 
 }
 
 //endregion
 
 
+//region BACKGROUND TASK
+
+class WatchdogService : Service() {
+    companion object { private const val NOTIFICATION_ID = 1 }
+    private val serviceJob = SupervisorJob()
+    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
+    private val notificationHelper = NotificationHelper(this)
+    private lateinit var activityLogger: AppActivityLogger
+    private var currentServiceInstanceId: Int = 0
+    override fun onBind(intent: Intent?): IBinder? {
+        Timber.d("onBind: $intent")
+        return null
+    }
+
+    //* FUNCTION RESPONSIBLE FOR WHAT HAPPENS WHEN BACKGROUND TASK RUNS
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
+        Timber.d("onStartCommand() called with: intent = $intent, flags = $flags, startId = $startId")
+        currentServiceInstanceId = startId
+        notificationHelper.createNotificationChannel()
+        activityLogger = AppActivityLogger(applicationContext)
+        startForeground(NOTIFICATION_ID, notificationHelper.buildNotification(),)
+
+
+        val dataStore = AppDataStore.store(context = applicationContext)
+        val appSettings = SettingsRepository(applicationContext)
+
+
+        serviceScope.launch {
+
+            while (true) {
+                Timber.d("[Instance ID: $currentServiceInstanceId] Current time: ${System.currentTimeMillis()} @ ${Date()}")
+                val monitoredApps: List<AppInfo> = dataStore.data.first()
+
+                if (monitoredApps.isEmpty()) {
+                    Timber.w("No apps configured yet. Skipping the check.")
+                    continue
+                }
+
+                val recentlyUsedAppStats = RecentAppChecker.getRecentlyRunningAppStats(this@WatchdogService)
+                val shouldForceStart = appSettings.enableForceStartAppsFlow.first()
+
+                if (shouldForceStart) {
+                    Timber.d("Force start apps settings is enabled.")
+                } else {
+                    Timber.d("Force start apps settings is disabled.")
+                }
+
+                monitoredApps.forEach { appInfo ->
+                    val isAppRunningRecently = RecentAppChecker.isAppRunningRecently(recentlyUsedAppStats, appInfo.packageName)
+                    val needsToStart = !isAppRunningRecently || shouldForceStart
+
+                    val timestamp = System.currentTimeMillis()
+                    val message =
+                        if (needsToStart) {
+                            if (shouldForceStart) {
+                                "Force starting app regardless of running state"
+                            } else {
+                                "App was not running recently, attempting to start"
+                            }
+                        } else {
+                            "App is running normally, no action needed"
+                        }
+
+                    val activityLog =
+                        AppActivityLog(
+                            packageId = appInfo.packageName,
+                            appName = appInfo.appName,
+                            wasRunningRecently = isAppRunningRecently,
+                            wasAttemptedToStart = needsToStart,
+                            timestamp = timestamp,
+                            forceStartEnabled = shouldForceStart,
+                            message = message,
+                        )
+                    activityLogger.logAppActivity(activityLog)
+
+
+                    delay(DELAY_BETWEEN_MULTIPLE_APP_CHECKS_MS)
+                }
+            }
+        }
+        return START_STICKY
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.d("onDestroy: Service is being destroyed. Service ID: $currentServiceInstanceId ($this)")
+        serviceScope.cancel()
+    }
+}
+
+
+//endregion
 
 //region TrueMain
-
+//NOT CONNECTED YET
 @Composable
 fun TrueMain(){
 
@@ -192,13 +316,10 @@ ADDDDDDDDDDDDDDDDDDDD MY FUN MANAGER THING/ GREAT FOR EVERYTHING
 
 
 
-// DOING SOME LEARNING NOW
+//region ALL MIGHTY DATA MANAGER
 
-
-
-//region DATA ITEMS
-object ItemFactory {
-    fun createItemFactory(
+object Item {
+    fun Defaults(
         defaults: Map<String, Any> = emptyMap()
     ): (Map<String, Any>) -> Map<String, Any> {
         return { data ->
@@ -208,169 +329,168 @@ object ItemFactory {
     }
 }
 
-//endregion
+class ItemMap(private val map: Map<String, Any>) {
+    val id: String get() = map["id"] as? String ?: ""
+    fun string(key: String): String = map[key] as? String ?: ""
+    fun bool(key: String): Boolean = map[key] as? Boolean ?: false
+    fun int(key: String): Int = map[key] as? Int ?: 0
+    fun float(key: String): Float = map[key] as? Float ?: 0f
+    fun raw(): Map<String, Any> = map
+}
 
-
-class UniversalManager(
-    context: Context,
-    private val key: String,
-    private val lifecycleScope: LifecycleCoroutineScope
+class ItemManager(
+    private val key: String
 ) {
-    private val prefs: SharedPreferences = context.getSharedPreferences(key, Context.MODE_PRIVATE)
+    private val prefs = Global1.context.getSharedPreferences(key, Context.MODE_PRIVATE)
     private val gson = Gson()
-    private var data: MutableList<Map<String, Any>> = mutableListOf()
 
-    private fun readRaw(): String? =
-        prefs.getString(key, null)
+    private val _data = mutableStateListOf<Map<String, Any>>()
+    val data: List<ItemMap> get() = _data.map { ItemMap(it) }
+
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            val raw = prefs.getString(key, null)
+            val list: List<Map<String, Any>> = if (raw != null) {
+                gson.fromJson(raw, object : TypeToken<List<Map<String, Any>>>() {}.type)
+            } else emptyList()
+            withContext(Dispatchers.Main) {
+                _data.clear()
+                _data.addAll(list)
+            }
+        }
+    }
 
     private fun writeRaw(value: String) =
-        prefs.edit().putString(key, value).apply()
+        prefs.edit().putString(key, value).commit()
 
-    private suspend fun load() {
-        val raw = readRaw()
-        data = if (raw != null) {
-            gson.fromJson(
-                raw,
-                object : TypeToken<MutableList<Map<String, Any>>>() {}.type
-            )
-        } else {
-            mutableListOf()
+    private suspend fun save() = withContext(Dispatchers.IO) {
+        writeRaw(gson.toJson(_data.toList()))
+    }
+
+    fun getAll(): List<ItemMap> = data
+
+    fun getById(id: String): ItemMap? =
+        _data.firstOrNull { it["id"] == id }?.let { ItemMap(it) }
+
+    suspend fun add(item: Map<String, Any>): ItemMap {
+        val withId = if (item.containsKey("id")) item else item + ("id" to UUID.randomUUID().toString())
+        withContext(Dispatchers.Main) {
+            _data.add(withId)
         }
+        save()
+        return ItemMap(withId)
     }
 
-    private suspend fun save() {
-        writeRaw(gson.toJson(data))
-    }
-
-    fun getById(id: String, callback: (Map<String, Any>?) -> Unit) {
-        lifecycleScope.launch {
-            load()
-            callback(data.find { it["id"] == id })
+    suspend fun remove(id: String) {
+        withContext(Dispatchers.Main) {
+            _data.removeAll { it["id"] == id }
         }
+        save()
     }
 
-    fun add(item: MutableMap<String, Any>, callback: (MutableMap<String, Any>) -> Unit) {
-        lifecycleScope.launch {
-            load()
-            if (!item.containsKey("id")) {
-                item["id"] = UUID.randomUUID().toString()
-            }
-            data.add(item)
-            save()
-            callback(item)
+    suspend fun update(id: String, fields: Map<String, Any>): ItemMap {
+        val idx = _data.indexOfFirst { it["id"] == id }
+        require(idx >= 0) { "No item with id '$id'" }
+        val updated = _data[idx] + fields
+        withContext(Dispatchers.Main) {
+            _data[idx] = updated
         }
+        save()
+        return ItemMap(updated)
     }
 
-    fun remove(id: String, callback: () -> Unit = {}) {
-        lifecycleScope.launch {
-            load()
-            data = data.filter { it["id"] != id }.toMutableList()
-            save()
-            callback()
-        }
-    }
-
-    fun update(id: String, fields: Map<String, Any>, callback: (Map<String, Any>) -> Unit) {
-        lifecycleScope.launch {
-            load()
-            val idx = data.indexOfFirst { it["id"] == id }
-            if (idx == -1) throw IllegalArgumentException("No item with id '$id'")
-            val updated = data[idx] + fields
-            data[idx] = updated
-            save()
-            callback(updated)
-        }
-    }
-
-    fun createOrUpdate(
+    suspend fun createOrUpdate(
         id: String? = null,
         defaults: Map<String, Any> = emptyMap(),
-        fields: Map<String, Any> = emptyMap(),
-        callback: (Map<String, Any>) -> Unit
-    ) {
-        lifecycleScope.launch {
-            load()
-            val realId = id ?: UUID.randomUUID().toString()
-            val existing = data.find { it["id"] == realId }
-            if (existing != null) {
-                update(realId, fields, callback)
-            } else {
-                val item = mutableMapOf<String, Any>("id" to realId) + defaults + fields
-                add(item as MutableMap<String, Any>, callback)
+        fields: Map<String, Any> = emptyMap()
+    ): ItemMap {
+        val realId = id ?: UUID.randomUUID().toString()
+        val existing = getById(realId)
+        return if (existing != null) {
+            update(realId, fields)
+        } else {
+            val item = mutableMapOf<String, Any>("id" to realId).also {
+                it.putAll(defaults)
+                it.putAll(fields)
             }
-        }
-    }
-
-    fun getAll(callback: (List<Map<String, Any>>) -> Unit) {
-        lifecycleScope.launch {
-            load()
-            callback(data)
+            add(item)
         }
     }
 }
 
+/* USAGE EXAMPLE
 
+@Composable
+fun TaskScreen(manager: ItemManager) {
+    val scope = rememberCoroutineScope()
+    var text by remember { mutableStateOf("") }
 
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            TextField(
+                value = text,
+                onValueChange = { text = it },
+                modifier = Modifier.weight(1f),
+                placeholder = { Text("New Task") }
+            )
+            Spacer(Modifier.width(8.dp))
+            Button(onClick = {
+                scope.launch {
+                    manager.add(
+                        Item.Defaults(mapOf("completed" to false))(mapOf("text" to text))
+                    )
+                    text = ""
+                }
+            }) {
+                Text("Add")
+            }
+        }
 
+        Spacer(modifier = Modifier.height(16.dp))
 
+        LazyColumn {
+            items(
+                items = manager.getAll(),
+                key = { it.id } // ✅ fix: add key parameter
+            ) { item ->
+                val id = item.id
+                val taskText = item.string("text")
+                val completed = item.bool("completed")
 
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                ) {
+                    Checkbox(
+                        checked = completed,
+                        onCheckedChange = {
+                            scope.launch {
+                                manager.update(id, mapOf("completed" to it))
+                            }
+                        }
+                    )
+                    Text(
+                        taskText,
+                        modifier = Modifier.weight(1f)
+                    )
+                    IconButton(onClick = {
+                        scope.launch {
+                            manager.remove(id)
+                        }
+                    }) {
+                        Icon(Icons.Default.Delete, contentDescription = "Delete")
+                    }
+                }
+            }
+        }
+    }
+}
 
+*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//endregion
 
 
 
@@ -388,10 +508,10 @@ class UniversalManager(
 
 
 
-
+//!Must read
 //region USER MANUAL
 
-/* HOW USE REGION
+/** HOW USE REGION
 
     //region
 
@@ -402,22 +522,26 @@ class UniversalManager(
 */
 
 /*HOW CODE
+    REWRITE NONE UNIVERSAL CODE-TALKING SMALL 100
+    all else rewriteee
 
     use region, one file, and yea
     plus, like to have functions, a section for universal functions
 
 */
 
-/*HOW DATA manage
 
-    use, object, and the synch function always
-
-    viewmodel-only, only for rotating screens!
-*/
-
+//!IMPORTANT
 //region CHEET CODES
 
-/* Synched:
+//! IMPORTANT
+/* *ULTIMATE DATA MANAGEMENT
+
+
+ */
+
+
+/* Simple Synched:
 MutableState updates automatically,
 doesn't cost cpu, not using loop
 
@@ -437,149 +561,11 @@ log("Button clicked")
 log("Error happened", "ErrorTag")
 */
 
-/* Background alarms/reminders/onces
-Background alarms: Schedule alarms that trigger at specific times.
-
-1. Add <receiver android:name=".AlarmReceiver" /> in your AndroidManifest.xml.
-
-Example:
-AlarmScheduler.setAlarm(context, 15, 45) {
-   //                 (context, hour, minute)
-   // Code to run when alarm triggers
-}
-*/
-
 /* SMALL THINGS
    val id: String = UUID.randomUUID().toString(),
    *a thing that exists, unique completly
 
  */
-
-/* DATA MANAGEMENT LISTS
-@RequiresApi(Build.VERSION_CODES.O)
-object Reminder {
-    var where_Store_Data = "reminders.json"
-
-    //region BORING
-    private lateinit var settingsFile: File; var data by mutableStateOf(mutableListOf<RData>()); private set
-    fun init(context: Context) {
-        settingsFile = File(context.filesDir, where_Store_Data)
-        data = if (settingsFile.exists()) load() else mutableListOf<RData>().also { save(it) }
-    }
-    fun save(reminders: List<RData>) {
-        val json = Json.encodeToString(ListSerializer(RData.serializer()), reminders)
-        settingsFile.writeText(json)
-    }
-    fun load(): MutableList<RData> {
-        val json = settingsFile.readText()
-        return Json.decodeFromString(ListSerializer(RData.serializer()), json).toMutableList()
-    }
-    //endregion
-
-    fun update(id: String, fieldName: String, valueString: String) {
-        try {
-            val index = data.indexOfFirst { it.id == id }
-            if (index == -1) throw IllegalArgumentException("No reminder with id '$id' found")
-            val reminder = data[index]
-            val kClass = RData::class
-            val prop = kClass.memberProperties
-                .find { it.name == fieldName } as? KMutableProperty1<RData, Any?>
-                ?: throw IllegalArgumentException("No mutable property '$fieldName' found")
-
-            val typedValue: Any = when (prop.returnType.classifier) {
-                Boolean::class -> valueString.toBooleanStrictOrNull()
-                    ?: throw IllegalArgumentException("Can't convert '$valueString' to Boolean for '$fieldName'")
-                Long::class -> valueString.toLongOrNull()
-                    ?: throw IllegalArgumentException("Can't convert '$valueString' to Long for '$fieldName'")
-                Int::class -> valueString.toIntOrNull()
-                    ?: throw IllegalArgumentException("Can't convert '$valueString' to Int for '$fieldName'")
-                String::class -> valueString
-                else -> throw IllegalArgumentException("Unsupported type for '$fieldName'")
-            }
-
-            val newReminder = reminder.copy()
-            prop.setter.call(newReminder, typedValue)
-            val newData = data.toMutableList()
-            newData[index] = newReminder
-
-            save(newData)
-            data = newData
-
-        } catch (e: Exception) {
-            println("updateField CRASH: ${e.message}")
-            throw e
-        }
-    }
-    fun add(reminder: RData) {
-        val newData = data.toMutableList()
-        val nextOrder = newData.size + 1
-        val reminderWithOrder = reminder.copy(order = nextOrder)
-        newData.add(reminderWithOrder)
-
-        save(newData)
-        data = newData
-    }
-    fun remove(id: String) {
-        val newData = data.filter { it.id != id }.toMutableList()
-        save(newData)
-        data = newData
-    }
-}
-*/
-
-/* DATA MANAGEMENT ONCES
-object AppSettings {
-    var where_Store_Data = "settings.json"
-    var Data_Class = SData()
-
-    //region NEVER TO
-
-    private lateinit var settingsFile: File ; var data by mutableStateOf(Data_Class) ; private set
-    fun init(context: Context) {
-        settingsFile = File(context.filesDir, where_Store_Data)
-        data = if (settingsFile.exists()) load() else Data_Class.also { save(it) }
-    }
-    fun save(settings: SData) {
-        val json = Json.encodeToString(SData.serializer(), settings)
-        settingsFile.writeText(json)
-    }
-    fun load(): SData {
-        val json = settingsFile.readText()
-        return Json.decodeFromString(SData.serializer(), json)
-    }
-
-    //endregion
-
-    fun update(fieldName: String, valueString: String) {
-        try {
-            val kClass = SData::class
-            val prop = kClass.memberProperties
-                .find { it.name == fieldName } as? KMutableProperty1<SData, Any?>
-                ?: throw IllegalArgumentException("No mutable property '$fieldName' found")
-            val typedValue: Any = when (prop.returnType.classifier) {
-                Boolean::class -> valueString.toBooleanStrictOrNull()
-                    ?: throw IllegalArgumentException("Can't convert '$valueString' to Boolean for '$fieldName'")
-                Long::class -> valueString.toLongOrNull()
-                    ?: throw IllegalArgumentException("Can't convert '$valueString' to Long for '$fieldName'")
-                Int::class -> valueString.toIntOrNull()
-                    ?: throw IllegalArgumentException("Can't convert '$valueString' to Int for '$fieldName'")
-                String::class -> valueString
-                else -> throw IllegalArgumentException("Unsupported type for '$fieldName'")
-            }
-            val newData = data.copy()
-            prop.setter.call(newData, typedValue)
-            save(newData)
-
-            data = newData
-
-        } catch (e: Exception) {
-            println("updateField CRASH: ${e.message}")
-            throw e
-        }
-    }
-}
-
-*/
 
 //endregion
 
@@ -600,32 +586,31 @@ just saves your thing online, like backup
 //endregion
 
 
+//? LIFE SAVERS
+//region MUST USE
 
+//region simple SYCHED
 
-
-
-
-//region USEFULL for future
-
-//region GLOBAL OBJECTS, SYCHED
-
-//  on value change force updates, does not consume cpu (none aka)
-//      val x = SynchedState { false}
 @Composable
 fun <T> Synched(valueProvider: () -> T): MutableState<T> {
     val state = remember { mutableStateOf(valueProvider()) }
-
     LaunchedEffect(Unit) {
         snapshotFlow { valueProvider() }
             .collect { newValue -> state.value = newValue }
     }
-
     return state
+}
+
+//endregion
+
+//region GLOBAL CONTEXT
+//* CONTEXT from anywhere!!!
+object Global1 {
+    lateinit var context: Context
 }
 
 
 //endregion
-
 //region log
 
 fun log(message: String, tag: String? = "AppLog") {
@@ -634,89 +619,12 @@ fun log(message: String, tag: String? = "AppLog") {
 
 //endregion
 
-//region Background alarms/reminders/onces
-
-/*
-
-<receiver android:name=".AlarmReceiver" />
-
-AlarmScheduler.setAlarm(context, 15, 45) {
-    println("Alarm fired at 15:45 - get to work!")
-    // Put your code here to show screen over app, notification, whatever action
-}
-
-*/
-
-class AlarmReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        val action = intent.action ?: return
-
-        Log.d("AlarmReceiver", "Alarm received: $action")
-
-        val callback = AlarmScheduler.getCallback(action)
-        if (callback != null) {
-            callback.invoke()
-        } else {
-            Log.w("AlarmReceiver", "No callback found for action: $action")
-        }
-    }
-}
-
-object AlarmScheduler {
-    private val actionMap = ConcurrentHashMap<String, () -> Unit>()
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun setAlarm(
-        context: Context,
-        hour: Int,
-        minute: Int,
-        callback: () -> Unit
-    ) {
-        val actionName = "ALARM_ACTION_${System.currentTimeMillis()}"
-        val requestCode = actionName.hashCode()
-
-        actionMap[actionName] = callback
-
-        val calendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, hour)
-            set(Calendar.MINUTE, minute)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-            if (timeInMillis <= System.currentTimeMillis()) {
-                add(Calendar.DAY_OF_YEAR, 1)
-            }
-        }
-
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, AlarmReceiver::class.java).apply {
-            action = actionName
-        }
-
-        val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
-        } else {
-            PendingIntent.FLAG_UPDATE_CURRENT
-        }
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            context, requestCode, intent, flags
-        )
-
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            pendingIntent
-        )
-
-        Log.d("AlarmScheduler", "Alarm set for $hour:$minute with action $actionName")
-    }
-
-    fun getCallback(actionName: String): (() -> Unit)? = actionMap[actionName]
-}
-
 //endregion
 
-//endregion
+
+
+
+
 
 //region TEMPLATES
 
@@ -775,14 +683,6 @@ fun InputField(
         },
         placeholder = { Text(placeholderText, color = Color.LightGray) },
         singleLine = true,
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.Transparent,
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
-            cursorColor = Color(0xFFFFD700),
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
-        ),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text,
             imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default

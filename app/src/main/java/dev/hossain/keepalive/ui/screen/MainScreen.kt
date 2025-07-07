@@ -63,9 +63,9 @@ fun MainLandingScreen(
         Column(
             modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center).padding(innerPadding),
         ) {
-            AppHeading(title = "Need some Permissions", modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp),)
+            AppHeading(title = "Permissions", modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp),)
 
-            Text(text = "Before working and having fun 💓", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp),)
+            Text(text = "Enable so the app can work 💓", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp),)
 
             Spacer(modifier = Modifier.height(128.dp))
             Column {

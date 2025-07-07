@@ -75,11 +75,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        AppStart_beforeUI(applicationContext)
+
         setContent {
             KeepAliveTheme {
                 Surface(modifier = Modifier.fillMaxSize())
                 {
-                    OnAppStart()
+                    AppStart()
                     showPermissionRequestDialog = remember { mutableStateOf(false) }
                     nextPermissionType = remember { mutableStateOf(PERMISSION_POST_NOTIFICATIONS) }
                     val grantedPermissionCount by mainViewModel.totalApprovedPermissions.observeAsState(0)
