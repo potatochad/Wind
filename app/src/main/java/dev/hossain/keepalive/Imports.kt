@@ -55,6 +55,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
@@ -89,6 +90,65 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.runBlocking
 import java.util.UUID
+
+
+//THE AUTO SYNCHING WITH VALUEEE
+fun setS(what: String, input: Any) {
+    S_manager.update("SettingsId", mapOf(what to input))
+}
+
+@Composable
+fun <T : Any> setS_auto(valueProvider: () -> T, key: String): MutableState<T> {
+    val state = remember { mutableStateOf(valueProvider()) }
+
+    LaunchedEffect(state.value) {
+        // When the state changes, automatically update the S_manager with the new value
+        setS(key, state.value)
+    }
+
+    // Keep the state synced with valueProvider for the initial setup
+    // If valueProvider changes, it will trigger recomposition and auto-sync
+    DisposableEffect(key) {
+        state.value = valueProvider()  // Initialize value
+        onDispose { }
+    }
+
+    return state
+}
+
+object setSettings {
+    @Composable
+    inline fun <reified T : Any> general(key: String): MutableState<T> {
+        return when (T::class) {
+            String::class -> setS_auto({ S_Data.string(key) }, key) as MutableState<T>
+            Boolean::class -> setS_auto({ S_Data.bool(key) }, key) as MutableState<T>
+            Int::class -> setS_auto({ S_Data.int(key) }, key) as MutableState<T>
+            else -> throw IllegalArgumentException("Unsupported type")
+        }
+    }
+
+    @Composable
+    fun string(key: String): MutableState<String> {
+        return general(key)
+    }
+
+    @Composable
+    fun bool(key: String): MutableState<Boolean> {
+        return general(key)
+    }
+
+    @Composable
+    fun int(key: String): MutableState<Int> {
+        return general(key)
+    }
+}
+
+
+
+
+
+
+
 
 //region USER MANUAL
 
@@ -228,7 +288,6 @@ class ItemMap(private val map: Map<String, Any>) {
     fun raw(): Map<String, Any> = map
 }
 
-
 class ItemManager(
     private val key: String
 ) {
@@ -265,6 +324,14 @@ class ItemManager(
     fun save() {
         Thread { writeRaw(gson.toJson(_data.toList())) }.start()
     }
+    fun update(id: String, fields: Map<String, Any>): ItemMap {
+        val idx = _data.indexOfFirst { it["id"] == id }
+        require(idx >= 0) { "No item with id '$id'" }
+        val updated = _data[idx] + fields
+        _data[idx] = updated
+        save()
+        return ItemMap(updated)
+    }
 
     fun add(item: Map<String, Any>): ItemMap {
         val withId = if (item.containsKey("id")) item else item + ("id" to UUID.randomUUID().toString())
@@ -276,15 +343,6 @@ class ItemManager(
     fun remove(id: String) {
         _data.removeAll { it["id"] == id }
         save()
-    }
-
-    fun update(id: String, fields: Map<String, Any>): ItemMap {
-        val idx = _data.indexOfFirst { it["id"] == id }
-        require(idx >= 0) { "No item with id '$id'" }
-        val updated = _data[idx] + fields
-        _data[idx] = updated
-        save()
-        return ItemMap(updated)
     }
 
     fun createOrUpdate(

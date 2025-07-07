@@ -30,19 +30,22 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
+import android.widget.Toast
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 
 
+// Usage examples
 @Composable
 fun TrueMain(navController: NavController) {
-
-    val targetText = S_Data.string("targetText")
-    val DoneRetype_to_time = S_Data.int("DoneRetype_to_time")
-    var funTime = S_Data.int("funTime")
-    var input = S_Data.string("currentInput")
-
-    var correctInput by Synched { "" }
-    var highestCorrect = S_Data.int("highestCorrect")
-
+    val targetText by setSettings.string("targetText")
+    val DoneRetype_to_time by setSettings.int("DoneRetype_to_time")
+    var funTime by setSettings.int("funTime")
+    var input by setSettings.string("currentInput")
+    var correctInput by setSettings.string( "correctInput")
+    var highestCorrect by setSettings.int("highestCorrect")
 
 
 
@@ -67,14 +70,13 @@ fun TrueMain(navController: NavController) {
         Text(text = "Fun time: ${funTime}s", fontSize = 18.sp)
         Spacer(modifier = Modifier.height(12.dp))
 
-        Text(text = coloredTarget)
+        Text(text = coloredTarget, modifier= Modifier.height(200.dp).verticalScroll(rememberScrollState()))
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
             value = input,
             onValueChange = {
                 input = it
-
                 val newlyEarned = correctInput.length - highestCorrect
                 if (newlyEarned > 0) {
                     funTime += newlyEarned * S_Data.int("LetterToTime")
@@ -92,20 +94,7 @@ fun TrueMain(navController: NavController) {
         )
 
         Spacer(modifier = Modifier.height(24.dp))
-        MICALANIOUS_Ui()//*just ignore, please !NO delete
-        Button(
-            onClick = {
-                if (funTime > 0) {
-                    navController.navigate("FunScreen")
-                }
-                else {
-                    S_manager.update("SettingsId", mapOf("showWorkAlert" to true))
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Chill Time 🌴")
-        }
+        ChillTimeButton(navController)
     }
 }
 

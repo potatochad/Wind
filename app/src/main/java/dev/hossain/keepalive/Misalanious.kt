@@ -5,14 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -25,9 +29,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
-
-
-
 
 //region BACKGROUND TASK
 
@@ -68,8 +69,6 @@ class WatchdogService : Service() {
 
 
 //endregion
-
-
 //region NavController
 
 
@@ -87,27 +86,20 @@ fun NavGraphBuilder.OtherScreens(){
 
 //endregion
 
+
+
+
+
+
 //region MICALANIOUS UI
 @Composable
-fun MICALANIOUS_Ui() {
-
-    GetToWorkAlert()
-
-}
-@Composable
-fun GetToWorkAlert(){
-
-    if (S_Data.bool("showWorkAlert")) {
-        LaunchedEffect(Unit) {
-            delay(3000)
-            S_manager.update(S_Data.id, mapOf("showWorkAlert" to false))
-        }
-
-        Snackbar(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text("NO TIME! GET TO WORK.")
-        }
+fun ChillTimeButton(navController: NavController){
+    Button(
+        onClick = { if (S_Data.int("funTime") > 0) { navController.navigate("FunScreen") } else { Toast.makeText(Global1.context, "GET BACK TO WORK", Toast.LENGTH_SHORT).show() }
+        },
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text("Chill Time 🌴")
     }
 }
 
@@ -125,6 +117,6 @@ var S_Data = S_manager.createOrUpdate(id = "SettingsId", defaults = mapOf(
     "highestCorrect" to 0,
 
     /*? MISALANIOUS LOGIC MANAGEMENT */
-    "showWorkAlert" to false,
+
 ))
 
