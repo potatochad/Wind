@@ -221,6 +221,7 @@ object SettingsSaved {
                 val data = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
                 val edit = data.edit()
 
+                var CPU = 0
                 Settings::class.memberProperties.forEach { bar ->
                     bar.isAccessible = true
                     val value = bar.get(Bar)
@@ -232,6 +233,7 @@ object SettingsSaved {
                         is Float -> edit.putFloat(bar.name, value)
                         is Long -> edit.putLong(bar.name, value)
                     }
+                    CPU+=20; if (CPU>2000) {}//ADD SUPER UNIVERSAL STUFFF
                     delay(20L) // take it slow and steady (5ml-what takes)
                 }
                 edit.apply()
