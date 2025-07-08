@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI(context: Context) {
     Global1.context = context
+    SettingsSaved.init()
+    SettingsSaved.Bsave()
 }
 
 @Composable

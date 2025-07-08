@@ -116,7 +116,7 @@ ktlint {
 }
 
 dependencies {
-
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.2.0")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation("androidx.compose.material3:material3:1.3.2")
