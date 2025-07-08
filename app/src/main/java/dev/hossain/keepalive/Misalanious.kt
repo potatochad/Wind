@@ -110,7 +110,7 @@ fun ChillTimeButton(navController: NavController){
 val S_manager = ItemManager("Settings")
 var S_Data = S_manager.createOrUpdate(id = "SettingsId", defaults = mapOf(
     "targetText" to "I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it, do the pomo. And spend half time improving, half time using the product. Done. I need to keep with it for 100 days for it to bear fruit. Right now it won't work/ the initial mvp is terrible. But that's ok. I will improve it slowly, one tiny feature at a time. All i must do is stick with the idea: type stuff and get time to have fun. Done. That is it!!!!. Goal is consistency, nothing else, nothing else!!",
-    "LetterToTime" to 5,
+    "LetterToTime" to 10,
     "DoneRetype_to_time" to 60,
     "funTime" to 0,
     "currentInput" to "",
@@ -119,4 +119,3 @@ var S_Data = S_manager.createOrUpdate(id = "SettingsId", defaults = mapOf(
     /*? MISALANIOUS LOGIC MANAGEMENT */
 
 ))
-

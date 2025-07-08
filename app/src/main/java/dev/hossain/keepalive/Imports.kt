@@ -101,13 +101,12 @@ fun setS(what: String, input: Any) {
 fun <T : Any> setS_auto(valueProvider: () -> T, key: String): MutableState<T> {
     val state = remember { mutableStateOf(valueProvider()) }
 
+    // Automatically update the S_manager with the new value
     LaunchedEffect(state.value) {
-        // When the state changes, automatically update the S_manager with the new value
         setS(key, state.value)
     }
 
     // Keep the state synced with valueProvider for the initial setup
-    // If valueProvider changes, it will trigger recomposition and auto-sync
     DisposableEffect(key) {
         state.value = valueProvider()  // Initialize value
         onDispose { }
@@ -146,6 +145,166 @@ object setSettings {
 
 
 
+//ALL ONCES
+data class Settings(
+    var name: String,
+    var done: Boolean
+)
+
+//ALL CHANGING
+data class Task(
+    var name: String,
+    var done: Boolean
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//region ALL MIGHTY DATA MANAGER
+
+object Item {
+    fun Defaults(
+        defaults: Map<String, Any> = emptyMap()
+    ): (Map<String, Any>) -> Map<String, Any> {
+        return { data ->
+            val id = data["id"] as? String ?: UUID.randomUUID().toString()
+            defaults + data + mapOf("id" to id)
+        }
+    }
+}
+
+class ItemMap(private val map: Map<String, Any>) {
+    val id: String get() = map["id"] as? String ?: ""
+    fun string(key: String): String = map[key] as? String ?: ""
+    fun bool(key: String): Boolean = map[key] as? Boolean ?: false
+    fun int(key: String): Int = map[key] as? Int ?: 0
+    fun float(key: String): Float = map[key] as? Float ?: 0f
+    fun raw(): Map<String, Any> = map
+}
+
+class ItemManager(
+    private val key: String
+) {
+    private val prefs: SharedPreferences by lazy {
+        Global1.context.getSharedPreferences(key, Context.MODE_PRIVATE)
+    }
+    private val gson = Gson()
+
+    private val _data = mutableStateListOf<Map<String, Any>>()
+    val data: List<ItemMap> get() = _data.map { ItemMap(it) }
+
+    init {
+        // BLOCK until prefs are read and _data is populated
+        runBlocking {
+            val raw = prefs.getString(key, null)
+            val list: List<Map<String, Any>> = if (raw != null) {
+                gson.fromJson(raw, object : TypeToken<List<Map<String, Any>>>() {}.type)
+            } else {
+                emptyList()
+            }
+            _data.clear()
+            _data.addAll(list)
+        }
+    }
+
+    private fun writeRaw(value: String) =
+        prefs.edit().putString(key, value).commit()
+
+    fun getAll(): List<ItemMap> = data
+
+    fun getById(id: String): ItemMap? =
+        _data.firstOrNull { it["id"] == id }?.let { ItemMap(it) }
+
+    fun save() {
+        Thread { writeRaw(gson.toJson(_data.toList())) }.start()
+    }
+    fun update(id: String, fields: Map<String, Any>): ItemMap {
+        val idx = _data.indexOfFirst { it["id"] == id }
+        require(idx >= 0) { "No item with id '$id'" }
+        val updated = _data[idx] + fields
+        _data[idx] = updated
+        save()
+        return ItemMap(updated)
+    }
+
+    fun add(item: Map<String, Any>): ItemMap {
+        val withId = if (item.containsKey("id")) item else item + ("id" to UUID.randomUUID().toString())
+        _data.add(withId)
+        save()
+        return ItemMap(withId)
+    }
+
+    fun remove(id: String) {
+        _data.removeAll { it["id"] == id }
+        save()
+    }
+
+    fun createOrUpdate(
+        id: String? = null,
+        defaults: Map<String, Any> = emptyMap(),
+        fields: Map<String, Any> = emptyMap()
+    ): ItemMap {
+        val realId = id ?: UUID.randomUUID().toString()
+        val existing = getById(realId)
+        return if (existing != null) {
+            println("Updating existing item with ID: $realId")
+            update(realId, fields)
+        } else {
+            println("Creating new item with ID: $realId and defaults: $defaults")
+            val item = mutableMapOf<String, Any>("id" to realId).also {
+                it.putAll(defaults)
+                it.putAll(fields)
+            }
+            add(item)
+        }
+    }
+}
+
+
+
+/* *USAGE EXAMPLE
+1. Get value
+    val showAlert = settings.bool("showWorkAlert")
+
+val manager = ItemManager("my_items")  // name your save key
+
+manager.add(mapOf("text" to "Hello", "done" to false))
+
+val createItem = Item.Defaults(mapOf("done" to false))
+manager.add(createItem(mapOf("text" to "Buy milk")))
+
+val items = manager.getAll()
+for (item in items) {
+    println(item.string("text"))
+    println(item.bool("done"))
+}
+val id = items.first().id
+manager.update(id, mapOf("done" to true))
+
+manager.remove(id)
+
+manager.createOrUpdate(
+    id = null,
+    defaults = mapOf("done" to false),
+    fields = mapOf("text" to "Walk dog")
+)
+
+
+*/
+
+//endregion
 
 
 
@@ -261,139 +420,17 @@ fun <T> Synched(valueProvider: () -> T): MutableState<T> {
 //region log
 
 fun log(message: String, tag: String? = "AppLog") {
-    Log.d(tag, message)
+    var LogMessage = message
+    if ("bad".equals(tag, true)) {
+        val stackTrace = Thread.currentThread().stackTrace
+        val element = stackTrace[3]
+        val fileName = element.fileName
+        val lineNumber = element.lineNumber
+
+        LogMessage= "[$fileName:$lineNumber] $message"
+    }
+    Log.d(tag, LogMessage)
 }
-
-//endregion
-
-//region ALL MIGHTY DATA MANAGER
-
-object Item {
-    fun Defaults(
-        defaults: Map<String, Any> = emptyMap()
-    ): (Map<String, Any>) -> Map<String, Any> {
-        return { data ->
-            val id = data["id"] as? String ?: UUID.randomUUID().toString()
-            defaults + data + mapOf("id" to id)
-        }
-    }
-}
-
-class ItemMap(private val map: Map<String, Any>) {
-    val id: String get() = map["id"] as? String ?: ""
-    fun string(key: String): String = map[key] as? String ?: ""
-    fun bool(key: String): Boolean = map[key] as? Boolean ?: false
-    fun int(key: String): Int = map[key] as? Int ?: 0
-    fun float(key: String): Float = map[key] as? Float ?: 0f
-    fun raw(): Map<String, Any> = map
-}
-
-class ItemManager(
-    private val key: String
-) {
-    private val prefs: SharedPreferences by lazy {
-        Global1.context.getSharedPreferences(key, Context.MODE_PRIVATE)
-    }
-    private val gson = Gson()
-
-    private val _data = mutableStateListOf<Map<String, Any>>()
-    val data: List<ItemMap> get() = _data.map { ItemMap(it) }
-
-    init {
-        // BLOCK until prefs are read and _data is populated
-        runBlocking {
-            val raw = prefs.getString(key, null)
-            val list: List<Map<String, Any>> = if (raw != null) {
-                gson.fromJson(raw, object : TypeToken<List<Map<String, Any>>>() {}.type)
-            } else {
-                emptyList()
-            }
-            _data.clear()
-            _data.addAll(list)
-        }
-    }
-
-    private fun writeRaw(value: String) =
-        prefs.edit().putString(key, value).commit()
-
-    fun getAll(): List<ItemMap> = data
-
-    fun getById(id: String): ItemMap? =
-        _data.firstOrNull { it["id"] == id }?.let { ItemMap(it) }
-
-    fun save() {
-        Thread { writeRaw(gson.toJson(_data.toList())) }.start()
-    }
-    fun update(id: String, fields: Map<String, Any>): ItemMap {
-        val idx = _data.indexOfFirst { it["id"] == id }
-        require(idx >= 0) { "No item with id '$id'" }
-        val updated = _data[idx] + fields
-        _data[idx] = updated
-        save()
-        return ItemMap(updated)
-    }
-
-    fun add(item: Map<String, Any>): ItemMap {
-        val withId = if (item.containsKey("id")) item else item + ("id" to UUID.randomUUID().toString())
-        _data.add(withId)
-        save()
-        return ItemMap(withId)
-    }
-
-    fun remove(id: String) {
-        _data.removeAll { it["id"] == id }
-        save()
-    }
-
-    fun createOrUpdate(
-        id: String? = null,
-        defaults: Map<String, Any> = emptyMap(),
-        fields: Map<String, Any> = emptyMap()
-    ): ItemMap {
-        val realId = id ?: UUID.randomUUID().toString()
-        val existing = getById(realId)
-        return if (existing != null) {
-            update(realId, fields)
-        } else {
-            val item = mutableMapOf<String, Any>("id" to realId).also {
-                it.putAll(defaults)
-                it.putAll(fields)
-            }
-            add(item)
-        }
-    }
-}
-
-
-/* *USAGE EXAMPLE
-1. Get value
-    val showAlert = settings.bool("showWorkAlert")
-
-val manager = ItemManager("my_items")  // name your save key
-
-manager.add(mapOf("text" to "Hello", "done" to false))
-
-val createItem = Item.Defaults(mapOf("done" to false))
-manager.add(createItem(mapOf("text" to "Buy milk")))
-
-val items = manager.getAll()
-for (item in items) {
-    println(item.string("text"))
-    println(item.bool("done"))
-}
-val id = items.first().id
-manager.update(id, mapOf("done" to true))
-
-manager.remove(id)
-
-manager.createOrUpdate(
-    id = null,
-    defaults = mapOf("done" to false),
-    fields = mapOf("text" to "Walk dog")
-)
-
-
-*/
 
 //endregion
 
