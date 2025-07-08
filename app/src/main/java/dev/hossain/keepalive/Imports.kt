@@ -106,7 +106,10 @@ import kotlin.reflect.jvm.isAccessible
 
 
 
-
+class Settings {
+    var show by mutableStateOf(false)
+    var CurrentInput by mutableStateOf("")
+}
 
 
 
@@ -192,7 +195,10 @@ just saves your thing online, like backup
 
 
 //region MUST USE
+
 //region DATA MANAGER FOR ONCES
+
+//USES THE SETTINGS CLASS
 
 /*NEEDED SETUP
 * PUT IT HERE!!;
@@ -202,11 +208,14 @@ fun AppStart_beforeUI(context: Context) {
     SettingsSaved.init()
     SettingsSaved.Bsave()
 }
-*/
+*
+*
+*
 class Settings {
     var show by mutableStateOf(false)
     var CurrentInput by mutableStateOf("")
 }
+*/
 //best variable (best+var)
 val Bar = Settings()
 
@@ -223,6 +232,7 @@ object SettingsSaved {
 
                 var CPU = 0
                 Settings::class.memberProperties.forEach { bar ->
+                    /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
                     bar.isAccessible = true
                     val value = bar.get(Bar)
 
@@ -233,7 +243,6 @@ object SettingsSaved {
                         is Float -> edit.putFloat(bar.name, value)
                         is Long -> edit.putLong(bar.name, value)
                     }
-                    CPU+=20; if (CPU>2000) {}//ADD SUPER UNIVERSAL STUFFF
                     delay(20L) // take it slow and steady (5ml-what takes)
                 }
                 edit.apply()
@@ -266,6 +275,7 @@ object SettingsSaved {
         }
     }
 }
+
 //endregion
 
 //region simple SYCHED
