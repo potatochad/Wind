@@ -40,23 +40,19 @@ import androidx.compose.runtime.snapshotFlow
 // Usage examples
 @Composable
 fun TrueMain(navController: NavController) {
-    val targetText by setSettings.string("targetText")
-    val DoneRetype_to_time by setSettings.int("DoneRetype_to_time")
-    var funTime by setSettings.int("funTime")
-    var input by setSettings.string("currentInput")
-    var correctInput by setSettings.string("correctInput")
-    var highestCorrect by setSettings.int("highestCorrect")
+
+    log("targetText; ${Bar.targetText}, LetterToTime;${Bar.LetterToTime}, DoneRetype_to_time;${Bar.DoneRetype_to_time}, currentInput;${Bar.currentInput}, highestCorrect;${Bar.highestCorrect}")
 
     val coloredTarget = buildAnnotatedString {
-        val correctChars = targetText.zip(input).takeWhile { it.first == it.second }.size
-        correctInput = input.take(correctChars)
-        for (i in targetText.indices) {
+        val correctChars = Bar.targetText.zip(Bar.currentInput).takeWhile { it.first == it.second }.size
+        val correctInput = Bar.currentInput.take(correctChars)
+        for (i in Bar.targetText.indices) {
             if (i < correctInput.length) {
                 withStyle(style = SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold)) {
-                    append(targetText[i])
+                    append(Bar.targetText[i])
                 }
             } else {
-                append(targetText[i])
+                append(Bar.targetText[i])
             }
         }
     }
@@ -65,28 +61,35 @@ fun TrueMain(navController: NavController) {
         Text(text = "Header", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(12.dp))
 
-        Text(text = "Fun time: ${funTime}s", fontSize = 18.sp)
+        Text(text = "Fun time: ${Bar.funTime}s", fontSize = 18.sp)
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(text = coloredTarget, modifier = Modifier.height(200.dp).verticalScroll(rememberScrollState()))
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
-            value = input,
+            value = Bar.currentInput,
             onValueChange = {
-                input = it
+                Bar.currentInput = it
+                log("Bar.currentInput, on value change; ${Bar.currentInput}")
+                log("the itttttt; ${it}")
+                log("initOnce; ${initOnce}")
 
-                val newlyEarned = correctInput.length - highestCorrect
+                val correctChars = Bar.targetText.zip(Bar.currentInput).takeWhile { it.first == it.second }.size
+                val correctInput = Bar.currentInput.take(correctChars)
+
+
+                val newlyEarned = correctInput.length - Bar.highestCorrect
                 if (newlyEarned > 0) {
-                    var oldFunTime = funTime
-                    funTime += newlyEarned * S_Data.int("LetterToTime"); if (oldFunTime===funTime){ log("!funTime += newlyEarned * S_Data.int(LetterToTime)- VALUE DID NOT CHANGE, CLUES: ${oldFunTime}-OLDFUNTIME,,,${funTime}-funTime,,,${newlyEarned}-newlyEarned,,,${S_Data.int("LetterToTime")}-LetterToTime,,,", "BAD")}
-                    highestCorrect = correctInput.length
+                    var oldFunTime = Bar.funTime
+                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime===Bar.funTime){ log("!funTime += newlyEarned * S_Data.int(LetterToTime)- VALUE DID NOT CHANGE, CLUES: ${oldFunTime}-OLDFUNTIME,,,${Bar.funTime}-funTime,,,${newlyEarned}-newlyEarned,,,${Bar.LetterToTime}-LetterToTime,,,", "BAD")}
+                    Bar.highestCorrect = correctInput.length
                 }
 
-                if (correctInput == targetText) {
-                    funTime += DoneRetype_to_time
-                    input = ""  // Reset input when completed
-                    highestCorrect = 0
+                if (correctInput == Bar.targetText) {
+                    Bar.funTime += Bar.DoneRetype_to_time
+                    Bar.currentInput = ""  // Reset input when completed
+                    Bar.highestCorrect = 0
                 }
 
             },
@@ -102,16 +105,15 @@ fun TrueMain(navController: NavController) {
 
 @Composable
 fun FunScreen(navController: NavHostController) {
-    var funTime = S_Data.int("funTime")
     var running by Synched { true }
 
 
     LaunchedEffect(Unit) {
-        while (running && funTime > 0) {
+        while (running && Bar.funTime > 0) {
             delay(1000)
-            funTime--
+            Bar.funTime--
         }
-        if (funTime <= 0) {
+        if (Bar.funTime <= 0) {
             running = false
             navController.navigate("TrueMain")
         }
@@ -129,7 +131,7 @@ fun FunScreen(navController: NavHostController) {
                 Text("🔙 Back to Winning")
             }
 
-            Text("Fun time: ${funTime}s", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text("Fun time: ${Bar.funTime}s", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
 
         Spacer(modifier = Modifier.height(16.dp))

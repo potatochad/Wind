@@ -14,6 +14,9 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -95,7 +98,7 @@ fun NavGraphBuilder.OtherScreens(){
 @Composable
 fun ChillTimeButton(navController: NavController){
     Button(
-        onClick = { if (S_Data.int("funTime") > 0) { navController.navigate("FunScreen") } else { Toast.makeText(Global1.context, "GET BACK TO WORK", Toast.LENGTH_SHORT).show() }
+        onClick = { if (Bar.funTime > 0) { navController.navigate("FunScreen") } else { Toast.makeText(Global1.context, "GET BACK TO WORK", Toast.LENGTH_SHORT).show() }
         },
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -105,17 +108,3 @@ fun ChillTimeButton(navController: NavController){
 
 //endregion
 
-
-//* DATA
-val S_manager = ItemManager("Settings")
-var S_Data = S_manager.createOrUpdate(id = "SettingsId", defaults = mapOf(
-    "targetText" to "I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it, do the pomo. And spend half time improving, half time using the product. Done. I need to keep with it for 100 days for it to bear fruit. Right now it won't work/ the initial mvp is terrible. But that's ok. I will improve it slowly, one tiny feature at a time. All i must do is stick with the idea: type stuff and get time to have fun. Done. That is it!!!!. Goal is consistency, nothing else, nothing else!!",
-    "LetterToTime" to 10,
-    "DoneRetype_to_time" to 60,
-    "funTime" to 0,
-    "currentInput" to "",
-    "highestCorrect" to 0,
-
-    /*? MISALANIOUS LOGIC MANAGEMENT */
-
-))
