@@ -102,6 +102,126 @@ import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.jvm.isAccessible
 
 
+//region DATA MANAGER FOR ONCES
+
+/*NEEDED SETUP
+* PUT IT HERE!!;
+@RequiresApi(Build.VERSION_CODES.O)
+fun AppStart_beforeUI(context: Context) {
+    Global1.context = context
+    SettingsSaved.init()
+    SettingsSaved.Bsave()
+}
+*
+*
+*
+class Settings {
+    var show by mutableStateOf(false)
+    var CurrentInput by mutableStateOf("")
+}
+*/
+/*How Use
+* YOU CAN READ THE DATA, CHANGE IT, AUTO UPDATE, saves, etc..
+Bar.funTime += 1
+    Bar.currentInput = "Testing input"
+    Bar.highestCorrect = max(Bar.highestCorrect, 12)
+*/
+
+class Settings {
+    var funTime by mutableStateOf(0)
+
+    //? COPY PASTE THING
+    var targetText by mutableStateOf("I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it, do the pomo. And spend half time improving, half time using the product. Done. I need to keep with it for 100 days for it to bear fruit. Right now it won't work/ the initial mvp is terrible. But that's ok. I will improve it slowly, one tiny feature at a time. All i must do is stick with the idea: type stuff and get time to have fun. Done. That is it!!!!. Goal is consistency, nothing else, nothing else!!")
+    var LetterToTime by mutableStateOf(10)
+    var DoneRetype_to_time by mutableStateOf(60)
+    var currentInput by mutableStateOf("")
+    var highestCorrect by mutableStateOf(0)
+
+    /*? MISALANIOUS LOGIC MANAGEMENT */
+}
+
+val Bar = Settings(); //best variable
+
+var initOnce= false
+object SettingsSaved {
+    private var Dosave: Job? = null
+
+    fun Bsave() {
+        if (Dosave?.isActive == true) return
+        Dosave = GlobalScope.launch {
+            while (isActive) {
+                val data = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+                val edit = data.edit()
+
+                var CPU = 0
+                Settings::class.memberProperties.forEach { bar ->
+                    bar.isAccessible = true
+
+                    val value = bar.get(Bar)
+
+                    //region MAKING SURE THE DATA NOT LAG
+
+                    /*SKIP IF NOT CHANGED
+                    *REWRITES USUALLY COST 5ML
+                    * SKIPPING SAVES 4ML
+                    * 1ML TO READ
+                    */
+                    val oldValue: Any? = when (value) {
+                        is Boolean -> data.getBoolean(bar.name, !value) // use different default to force mismatch if missing
+                        is String -> data.getString(bar.name, null)
+                        is Int -> data.getInt(bar.name, Int.MIN_VALUE)
+                        is Float -> data.getFloat(bar.name, Float.MIN_VALUE)
+                        is Long -> data.getLong(bar.name, Long.MIN_VALUE)
+                        else -> null
+                    }; if (oldValue===value) { return@forEach }
+                    /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
+
+                    //endregion
+
+                    when (value) {
+                        is Boolean -> edit.putBoolean(bar.name, value)
+                        is String -> edit.putString(bar.name, value)
+                        is Int -> edit.putInt(bar.name, value)
+                        is Float -> edit.putFloat(bar.name, value)
+                        is Long -> edit.putLong(bar.name, value)
+                    }
+                    delay(5L) // take it slow and steady (5ml-what takes)
+                }
+                edit.apply()
+                delay(5_000L) // save every 5 seconds
+            }
+        }
+    }
+    fun init() {
+        val prefs = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        if (prefs.all.isEmpty() || initOnce) return
+        initOnce= true //MUST USE, ALL ARE ZERO OR NULL
+
+        Settings::class.memberProperties.forEach { barIDK ->
+            //best variable is variable//JUST MAKING SURE
+            if (barIDK is KMutableProperty1<Settings, *>) {
+                @Suppress("UNCHECKED_CAST")
+                val bar = barIDK as KMutableProperty1<Settings, Any?>
+                bar.isAccessible = true
+                val name = bar.name
+                val type = bar.returnType.classifier
+
+                val stateProp = bar.getDelegate(Bar)
+                when {
+                    stateProp is MutableState<*> && type == Boolean::class -> (stateProp as MutableState<Boolean>).value = prefs.getBoolean(name, false)
+                    stateProp is MutableState<*> && type == String::class -> (stateProp as MutableState<String>).value = prefs.getString(name, "") ?: ""
+                    stateProp is MutableState<*> && type == Int::class -> (stateProp as MutableState<Int>).value = prefs.getInt(name, 0)
+                    stateProp is MutableState<*> && type == Float::class -> (stateProp as MutableState<Float>).value = prefs.getFloat(name, 0f)
+                    stateProp is MutableState<*> && type == Long::class -> (stateProp as MutableState<Long>).value = prefs.getLong(name, 0L)
+                }
+            }
+            else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
+        }
+    }
+}
+
+//endregion
+
 
 //region USER MANUAL
 
@@ -174,114 +294,7 @@ just saves your thing online, like backup
 //endregion
 
 
-//region MUST USE
 
-//region DATA MANAGER FOR ONCES
-
-//USES THE SETTINGS CLASS
-
-/*NEEDED SETUP
-* PUT IT HERE!!;
-@RequiresApi(Build.VERSION_CODES.O)
-fun AppStart_beforeUI(context: Context) {
-    Global1.context = context
-    SettingsSaved.init()
-    SettingsSaved.Bsave()
-}
-*
-*
-*
-class Settings {
-    var show by mutableStateOf(false)
-    var CurrentInput by mutableStateOf("")
-}
-*/
-/*How Use
-* YOU CAN READ THE DATA, CHANGE IT, AUTO UPDATE, saves, etc..
-Bar.funTime += 1
-    Bar.currentInput = "Testing input"
-    Bar.highestCorrect = max(Bar.highestCorrect, 12)
-*/
-//best variable (best+var)
-
-
-
-class Settings {
-
-    var funTime by mutableStateOf(0)
-
-    //? COPY PASTE THING
-    var targetText by mutableStateOf("I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it, do the pomo. And spend half time improving, half time using the product. Done. I need to keep with it for 100 days for it to bear fruit. Right now it won't work/ the initial mvp is terrible. But that's ok. I will improve it slowly, one tiny feature at a time. All i must do is stick with the idea: type stuff and get time to have fun. Done. That is it!!!!. Goal is consistency, nothing else, nothing else!!")
-    var LetterToTime by mutableStateOf(10)
-    var DoneRetype_to_time by mutableStateOf(60)
-    var currentInput by mutableStateOf("")
-    var highestCorrect by mutableStateOf(0)
-
-    /*? MISALANIOUS LOGIC MANAGEMENT */
-}
-
-val Bar = Settings()
-
-var initOnce= false
-object SettingsSaved {
-    private var Dosave: Job? = null
-
-    fun Bsave() {
-        if (Dosave?.isActive == true) return
-        Dosave = GlobalScope.launch {
-            while (isActive) {
-                val data = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-                val edit = data.edit()
-
-                var CPU = 0
-                Settings::class.memberProperties.forEach { bar ->
-                    /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
-                    bar.isAccessible = true
-                    val value = bar.get(Bar)
-
-                    when (value) {
-                        is Boolean -> edit.putBoolean(bar.name, value)
-                        is String -> edit.putString(bar.name, value)
-                        is Int -> edit.putInt(bar.name, value)
-                        is Float -> edit.putFloat(bar.name, value)
-                        is Long -> edit.putLong(bar.name, value)
-                    }
-                    delay(20L) // take it slow and steady (5ml-what takes)
-                }
-                edit.apply()
-                delay(10_000L) // save every 10 seconds
-            }
-        }
-    }
-    fun init() {
-        val prefs = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        if (prefs.all.isEmpty() || initOnce) return
-        initOnce= true //MUST USE, ALL ARE ZERO OR NULL
-
-        Settings::class.memberProperties.forEach { barIDK ->
-            //best variable is variable//JUST MAKING SURE
-            if (barIDK is KMutableProperty1<Settings, *>) {
-                @Suppress("UNCHECKED_CAST")
-                val bar = barIDK as KMutableProperty1<Settings, Any?>
-                bar.isAccessible = true
-                val name = bar.name
-                val type = bar.returnType.classifier
-
-                val stateProp = bar.getDelegate(Bar)
-                when {
-                    stateProp is MutableState<*> && type == Boolean::class -> (stateProp as MutableState<Boolean>).value = prefs.getBoolean(name, false)
-                    stateProp is MutableState<*> && type == String::class -> (stateProp as MutableState<String>).value = prefs.getString(name, "") ?: ""
-                    stateProp is MutableState<*> && type == Int::class -> (stateProp as MutableState<Int>).value = prefs.getInt(name, 0)
-                    stateProp is MutableState<*> && type == Float::class -> (stateProp as MutableState<Float>).value = prefs.getFloat(name, 0f)
-                    stateProp is MutableState<*> && type == Long::class -> (stateProp as MutableState<Long>).value = prefs.getLong(name, 0L)
-                }
-            }
-            else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
-        }
-    }
-}
-
-//endregion
 
 //region simple SYCHED
 
