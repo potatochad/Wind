@@ -39,7 +39,7 @@ import androidx.compose.runtime.snapshotFlow
 
 // Usage examples
 @Composable
-fun TrueMain(navController: NavController) {
+fun Main(navController: NavController) {
 
     log("targetText; ${Bar.targetText}, LetterToTime;${Bar.LetterToTime}, DoneRetype_to_time;${Bar.DoneRetype_to_time}, currentInput;${Bar.currentInput}, highestCorrect;${Bar.highestCorrect}")
 

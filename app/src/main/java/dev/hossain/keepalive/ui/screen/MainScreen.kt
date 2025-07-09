@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,7 +46,7 @@ import dev.hossain.keepalive.ui.theme.KeepAliveTheme
  * Displays the app icon, heading, and manages permission and navigation logic.
  */
 @Composable
-fun MainLandingScreen(
+fun Permissions_Screen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     activityResultLauncher: ActivityResultLauncher<Intent>?,
@@ -64,13 +65,12 @@ fun MainLandingScreen(
         Column(
             modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center).padding(innerPadding),
         ) {
+
+            //region UI STUFF
+
             AppHeading(title = "Permissions", modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp),)
 
             Text(text = "Enable so the app can work 💓", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp),)
-
-            //!SKIP ROW
-            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { Button(onClick = { navController.navigate("TrueMain") }) { Text("SKIPPP") } }
-
 
             Spacer(modifier = Modifier.height(128.dp))
             Column {
@@ -93,6 +93,10 @@ fun MainLandingScreen(
                     }
                 }
             }
+
+            //endregion UI STUFFF
+
+            LaunchedEffect(allPermissionsGranted) { if (allPermissionsGranted) { navController.navigate("Main") } }
         }
     }
 

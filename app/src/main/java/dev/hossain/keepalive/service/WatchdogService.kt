@@ -10,8 +10,6 @@ import dev.hossain.keepalive.data.model.AppActivityLog
 import dev.hossain.keepalive.ui.screen.AppInfo
 import dev.hossain.keepalive.util.AppConfig.DEFAULT_APP_CHECK_INTERVAL_MIN
 import dev.hossain.keepalive.util.AppConfig.DELAY_BETWEEN_MULTIPLE_APP_CHECKS_MS
-import dev.hossain.keepalive.util.AppLauncher
-import dev.hossain.keepalive.util.HttpPingSender
 import dev.hossain.keepalive.util.NotificationHelper
 import dev.hossain.keepalive.util.RecentAppChecker
 import dev.hossain.keepalive.util.Validator.isValidUUID

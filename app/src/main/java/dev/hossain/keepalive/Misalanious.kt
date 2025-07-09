@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,7 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,9 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.hossain.keepalive.data.PermissionType
 import dev.hossain.keepalive.data.logging.AppActivityLogger
+import dev.hossain.keepalive.ui.screen.Permissions_Screen
 import dev.hossain.keepalive.util.NotificationHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -73,19 +78,35 @@ class WatchdogService : Service() {
 
 //endregion
 //region NavController
-
-
-fun NavGraphBuilder.OtherScreens(){
-    composable("TrueMain") {
-        val navController = rememberNavController()
-        TrueMain(navController)
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun SetupNavGraph(navController: NavHostController, startDestination: String, modifier: Modifier = Modifier, activityResultLauncher: ActivityResultLauncher<Intent>?, requestPermissionLauncher: ActivityResultLauncher<Array<String>>?, allPermissionsGranted: Boolean = false, permissionType: PermissionType, showPermissionRequestDialog: MutableState<Boolean>, onRequestPermissions: () -> Unit, totalRequiredCount: Int, grantedCount: Int) {
+    androidx.navigation.compose.NavHost(navController = navController, startDestination = startDestination) {
+        composable("PERMISSIONS"){
+            Permissions_Screen(
+                navController = navController,
+                allPermissionsGranted = allPermissionsGranted,
+                activityResultLauncher = activityResultLauncher,
+                requestPermissionLauncher = requestPermissionLauncher,
+                permissionType = permissionType,
+                showPermissionRequestDialog = showPermissionRequestDialog,
+                onRequestPermissions = onRequestPermissions,
+                totalRequiredCount = totalRequiredCount,
+                grantedCount = grantedCount,
+                configuredAppsCount = grantedCount,
+            )
+        }
+        composable("Main") {
+            val navController = rememberNavController()
+            Main(navController)
+        }
+        composable("FunScreen") {
+            val navController = rememberNavController()
+            FunScreen(navController)
+        }
     }
-    composable("FunScreen") {
-        val navController = rememberNavController()
-        FunScreen(navController)
-    }
-
 }
+
 
 //endregion
 

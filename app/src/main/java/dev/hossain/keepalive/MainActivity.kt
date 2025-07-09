@@ -8,6 +8,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import dev.hossain.keepalive.ui.screen.Permissions_Screen
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -27,7 +28,6 @@ import dev.hossain.keepalive.data.PermissionType.PERMISSION_IGNORE_BATTERY_OPTIM
 import dev.hossain.keepalive.data.PermissionType.PERMISSION_PACKAGE_USAGE_STATS
 import dev.hossain.keepalive.data.PermissionType.PERMISSION_POST_NOTIFICATIONS
 import dev.hossain.keepalive.data.PermissionType.PERMISSION_SYSTEM_APPLICATION_OVERLAY
-import dev.hossain.keepalive.ui.BottomNavigationWrapper
 import dev.hossain.keepalive.ui.screen.MainViewModel
 import dev.hossain.keepalive.ui.theme.KeepAliveTheme
 import dev.hossain.keepalive.util.ServiceManager
@@ -92,20 +92,19 @@ class MainActivity : ComponentActivity() {
                     val configuredAppsCount by AppDataStore.getConfiguredAppsCount(applicationContext)
                         .collectAsState(initial = 0)
 
-                    BottomNavigationWrapper(
+                    var StartDestination = "PERMISSIONS"; if (allPermissionsGranted) { StartDestination = "Main" }
+                    SetupNavGraph(
                         navController = navController,
-                        context = applicationContext,
                         allPermissionsGranted = allPermissionsGranted,
                         activityResultLauncher = activityResultLauncherForSystemSettings,
                         requestPermissionLauncher = permissionLauncher,
                         permissionType = nextPermissionType.value,
                         showPermissionRequestDialog = showPermissionRequestDialog,
                         onRequestPermissions = { requestNextRequiredPermission() },
-                        totalRequiredCount = mainViewModel.totalPermissionRequired,
-                        grantedCount = grantedPermissionCount,
-                        configuredAppsCount = configuredAppsCount,
+                        totalRequiredCount = grantedPermissionCount,
+                        grantedCount = configuredAppsCount,
+                        startDestination = StartDestination,
                     )
-
                 }
             }
         }
