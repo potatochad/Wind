@@ -8,7 +8,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import dev.hossain.keepalive.ui.screen.Permissions_Screen
+import dev.hossain.keepalive.MyNavGraph
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -92,9 +92,10 @@ class MainActivity : ComponentActivity() {
                     val configuredAppsCount by AppDataStore.getConfiguredAppsCount(applicationContext)
                         .collectAsState(initial = 0)
 
+                    Global1.navController = rememberNavController()
                     var StartDestination = "PERMISSIONS"; if (allPermissionsGranted) { StartDestination = "Main" }
-                    SetupNavGraph(
-                        navController = navController,
+                    MyNavGraph(
+                        navController = Global1.navController,
                         allPermissionsGranted = allPermissionsGranted,
                         activityResultLauncher = activityResultLauncherForSystemSettings,
                         requestPermissionLauncher = permissionLauncher,

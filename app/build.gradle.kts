@@ -116,6 +116,8 @@ ktlint {
 }
 
 dependencies {
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.10")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation ("com.google.code.gson:gson:2.10.1")

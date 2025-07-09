@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 
 
@@ -23,10 +24,11 @@ fun AppStart() {
 
 //endregion
 
-//region GLOBAL CONTEXT
+//region GLOBAL
 //* CONTEXT from anywhere!!!
 object Global1 {
     lateinit var context: Context
+    lateinit var navController: NavHostController
 }
 
 

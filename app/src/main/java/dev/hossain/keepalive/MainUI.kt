@@ -1,7 +1,22 @@
 package dev.hossain.keepalive
 
+import android.app.Activity
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.webkit.WebView
 import androidx.compose.foundation.layout.Arrangement
+import android.content.pm.PackageManager
+import androidx.compose.runtime.remember
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import coil.compose.rememberAsyncImagePainter
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,18 +46,30 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 
 
 // Usage examples
+
+
 @Composable
-fun Main(navController: NavController) {
-
-    log("targetText; ${Bar.targetText}, LetterToTime;${Bar.LetterToTime}, DoneRetype_to_time;${Bar.DoneRetype_to_time}, currentInput;${Bar.currentInput}, highestCorrect;${Bar.highestCorrect}")
-
+fun Main() {
     val coloredTarget = buildAnnotatedString {
         val correctChars = Bar.targetText.zip(Bar.currentInput).takeWhile { it.first == it.second }.size
         val correctInput = Bar.currentInput.take(correctChars)
@@ -57,96 +84,148 @@ fun Main(navController: NavController) {
         }
     }
 
+
+    /*
+    * THE FULL NORMALL UI
+    * TEXT INPUT THING
+    * */
     Column(modifier = Modifier.padding(16.dp).verticalScroll(rememberScrollState())) {
-        Text(text = "Header", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(12.dp))
 
-        Text(text = "Fun time: ${Bar.funTime}s", fontSize = 18.sp)
-        Spacer(modifier = Modifier.height(12.dp))
+            /*
+        Header
+        INFO WILL SLOWLY APPEAR HERE, AS YOU PROGRESS THOUGHT THE APP
+        * */
+            Row(modifier = Modifier.fillMaxWidth()) {
+                MainHeader()
+            }
+            Spacer(modifier = Modifier.height(12.dp))
 
-        Text(text = coloredTarget, modifier = Modifier.height(200.dp).verticalScroll(rememberScrollState()))
-        Spacer(modifier = Modifier.height(12.dp))
+            Text(text = "Fun time: ${Bar.funTime}s", fontSize = 18.sp)
+            Spacer(modifier = Modifier.height(12.dp))
 
-        OutlinedTextField(
-            value = Bar.currentInput,
-            onValueChange = {
-                Bar.currentInput = it
-                log("Bar.currentInput, on value change; ${Bar.currentInput}")
-                log("the itttttt; ${it}")
-                log("initOnce; ${initOnce}")
+            Text(
+                text = coloredTarget,
+                modifier = Modifier.height(200.dp).verticalScroll(rememberScrollState())
+            )
+            Spacer(modifier = Modifier.height(12.dp))
 
-                val correctChars = Bar.targetText.zip(Bar.currentInput).takeWhile { it.first == it.second }.size
-                val correctInput = Bar.currentInput.take(correctChars)
+            OutlinedTextField(
+                value = Bar.currentInput,
+                onValueChange = {
+                    Bar.currentInput = it
+                    log("Bar.currentInput, on value change; ${Bar.currentInput}")
+                    log("the itttttt; ${it}")
+                    log("initOnce; ${initOnce}")
+
+                    val correctChars = Bar.targetText.zip(Bar.currentInput)
+                        .takeWhile { it.first == it.second }.size
+                    val correctInput = Bar.currentInput.take(correctChars)
 
 
-                val newlyEarned = correctInput.length - Bar.highestCorrect
-                if (newlyEarned > 0) {
-                    var oldFunTime = Bar.funTime
-                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime===Bar.funTime){ log("!funTime += newlyEarned * S_Data.int(LetterToTime)- VALUE DID NOT CHANGE, CLUES: ${oldFunTime}-OLDFUNTIME,,,${Bar.funTime}-funTime,,,${newlyEarned}-newlyEarned,,,${Bar.LetterToTime}-LetterToTime,,,", "BAD")}
-                    Bar.highestCorrect = correctInput.length
-                }
+                    val newlyEarned = correctInput.length - Bar.highestCorrect
+                    if (newlyEarned > 0) {
+                        var oldFunTime = Bar.funTime
+                        Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
+                            log(
+                                "!funTime += newlyEarned * S_Data.int(LetterToTime)- VALUE DID NOT CHANGE, CLUES: ${oldFunTime}-OLDFUNTIME,,,${Bar.funTime}-funTime,,,${newlyEarned}-newlyEarned,,,${Bar.LetterToTime}-LetterToTime,,,",
+                                "BAD"
+                            )
+                        }
+                        Bar.highestCorrect = correctInput.length
+                    }
 
-                if (correctInput == Bar.targetText) {
-                    Bar.funTime += Bar.DoneRetype_to_time
-                    Bar.currentInput = ""  // Reset input when completed
-                    Bar.highestCorrect = 0
-                }
+                    if (correctInput == Bar.targetText) {
+                        Bar.funTime += Bar.DoneRetype_to_time
+                        Bar.currentInput = ""  // Reset input when completed
+                        Bar.highestCorrect = 0
+                    }
 
-            },
-            modifier = Modifier.fillMaxWidth().height(200.dp).verticalScroll(rememberScrollState()),
-            placeholder = { Text("Start typing...") }
-        )
+                },
+                modifier = Modifier.fillMaxWidth().height(200.dp)
+                    .verticalScroll(rememberScrollState()),
+                placeholder = { Text("Start typing...") }
+            )
 
-        Spacer(modifier = Modifier.height(24.dp))
-        ChillTimeButton(navController)
-    }
+            Spacer(modifier = Modifier.height(24.dp))
+            ChillTimeButton()
+        }
+
+    /*TOP BAR ITEMS
+    * IF CLICKED WHAT HAPPENS*/
+    Menu()
 }
+data class AppItem(val name: String, val icon: Drawable)
 
+fun Context.getInstalledApps(): List<AppItem> {
+    val pm = packageManager
+    return pm.getInstalledApplications(PackageManager.GET_META_DATA)
+        .map {
+            AppItem(
+                name = it.loadLabel(pm).toString(),
+                icon = it.loadIcon(pm)
+            )
+        }
+}
 
 @Composable
-fun FunScreen(navController: NavHostController) {
-    var running by Synched { true }
+fun ChillScreen()=NoLag  {
+    val context = LocalContext.current
+    val apps = remember { context.getInstalledApps() }
 
-
-    LaunchedEffect(Unit) {
-        while (running && Bar.funTime > 0) {
-            delay(1000)
-            Bar.funTime--
-        }
-        if (Bar.funTime <= 0) {
-            running = false
-            navController.navigate("TrueMain")
-        }
-    }
-
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Button(onClick = {
-                running = false
-                navController.navigate("TrueMain")
-            }) {
-                Text("🔙 Back to Winning")
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        items(apps) { app ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Image(
+                    painter = rememberAsyncImagePainter(app.icon),
+                    contentDescription = app.name,
+                    modifier = Modifier.size(40.dp)
+                )
+                Spacer(Modifier.width(12.dp))
+                Text(app.name)
             }
-
-            Text("Fun time: ${Bar.funTime}s", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        AndroidView(
-            factory = { context ->
-                WebView(context).apply {
-                    settings.javaScriptEnabled = true
-                    loadUrl("https://play.famobi.com/wrapper/rise-up/A1000-10")
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp)
-        )
     }
 }
 
+@Composable
+fun NoLag(content: @Composable () -> Unit) {
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(50) // space out work; LET UI LOAD
+            yield()
+        }
+    }
+    content()
+}
+
+
+
+class Settings {
+    var funTime by mutableStateOf(0)
+
+    //region COPY PASTE THING
+    var targetText by mutableStateOf("I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it, do the pomo. And spend half time improving, half time using the product. Done. I need to keep with it for 100 days for it to bear fruit. Right now it won't work/ the initial mvp is terrible. But that's ok. I will improve it slowly, one tiny feature at a time. All i must do is stick with the idea: type stuff and get time to have fun. Done. That is it!!!!. Goal is consistency, nothing else, nothing else!!")
+    var LetterToTime by mutableStateOf(10)
+    var DoneRetype_to_time by mutableStateOf(60)
+    var currentInput by mutableStateOf("")
+    var highestCorrect by mutableStateOf(0)
+    //endregion
+
+
+    //region MISALANIOUS
+
+    /* EXPLANATION
+    0-not pressed, first time, //1-UNCLOCKING CHILL BUTTON
+    *WE USE IT WHEN FIRST GUIDING THE PLAYER ON HOW TO USE THE APP
+    */
+    var FirstChillBtnPress by mutableStateOf(0)
+
+    var ShowMenu by mutableStateOf(false)
+
+    //endregion
+}
