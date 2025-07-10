@@ -45,6 +45,7 @@
         to improve the user experience and reduce unexpected interruptions.
     -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
 
     <application
         android:name=".KeepAliveApplication"

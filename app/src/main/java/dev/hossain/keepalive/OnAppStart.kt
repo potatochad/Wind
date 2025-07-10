@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 
@@ -19,8 +20,14 @@ fun AppStart_beforeUI(context: Context) {
 
 @Composable
 fun AppStart() {
-
+    LaunchedEffect(Unit) {
+        BadApps.init()
+        BadApps.DoSave()
+        Global1.context.getAllInstalledApps() // This is safe now
+    }
 }
+
+
 
 //endregion
 
@@ -33,3 +40,5 @@ object Global1 {
 
 
 //endregion
+
+

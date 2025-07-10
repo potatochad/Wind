@@ -1,5 +1,7 @@
 package dev.hossain.keepalive
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -47,23 +49,47 @@ import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.yield
+import java.util.UUID
 
+
+import kotlin.reflect.KClass
+import kotlin.reflect.KProperty1
+import kotlin.reflect.full.memberProperties
+import android.app.ActivityManager
+import androidx.annotation.RequiresPermission
+import androidx.compose.runtime.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 
 // Usage examples
 
@@ -89,7 +115,9 @@ fun Main() {
     * THE FULL NORMALL UI
     * TEXT INPUT THING
     * */
-    Column(modifier = Modifier.padding(16.dp).verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier
+        .padding(16.dp)
+        .verticalScroll(rememberScrollState())) {
 
             /*
         Header
@@ -105,7 +133,9 @@ fun Main() {
 
             Text(
                 text = coloredTarget,
-                modifier = Modifier.height(200.dp).verticalScroll(rememberScrollState())
+                modifier = Modifier
+                    .height(200.dp)
+                    .verticalScroll(rememberScrollState())
             )
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -141,7 +171,9 @@ fun Main() {
                     }
 
                 },
-                modifier = Modifier.fillMaxWidth().height(200.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
                     .verticalScroll(rememberScrollState()),
                 placeholder = { Text("Start typing...") }
             )
@@ -154,54 +186,149 @@ fun Main() {
     * IF CLICKED WHAT HAPPENS*/
     Menu()
 }
-data class AppItem(val name: String, val icon: Drawable)
 
-fun Context.getInstalledApps(): List<AppItem> {
-    val pm = packageManager
-    return pm.getInstalledApplications(PackageManager.GET_META_DATA)
-        .map {
-            AppItem(
-                name = it.loadLabel(pm).toString(),
-                icon = it.loadIcon(pm)
-            )
-        }
+
+
+
+
+
+val BadApps = DataClass_Manager<Apps>("BlockedApps", Apps::class).apply {
+    init()
+    DoSave()
 }
 
-@Composable
-fun ChillScreen()=NoLag  {
-    val context = LocalContext.current
-    val apps = remember { context.getInstalledApps() }
+data class Apps(
+    var id: String = UUID.randomUUID().toString(),
+    var name: String,
+    var icon: Drawable,
+    var packageName: String
+) {
+    var Block by mutableStateOf(false)
+    var Exists by mutableStateOf(true)
+    var TimeSpent by mutableStateOf(0f)
+}
 
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(apps) { app ->
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
+
+
+
+
+@SuppressLint("MissingPermission")
+@Composable
+fun ChillScreen() = NoLagCompose {
+    val Apps = remember { mutableStateListOf<Apps>() }
+
+
+    Box(Modifier.fillMaxSize()) {
+        Header("Pick Apps to block")
+
+
+        LazyColumn(Modifier.fillMaxSize()) { items(Apps, key = { it.id }) { app ->
+
+
+                val painter = rememberAsyncImagePainter(app.icon)
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(8.dp)) {
+
+
+
+                    Image(painter,app.name,Modifier.size(40.dp)); Spacer(Modifier.width(12.dp))
+                    Text(app.name); Spacer(Modifier.weight(1f))
+                }
+            }
+        }
+
+
+
+
+
+
+
+        //not loaded yet
+        if (Apps.isEmpty()) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .background(Color.Black),
+                contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = rememberAsyncImagePainter(app.icon),
-                    contentDescription = app.name,
-                    modifier = Modifier.size(40.dp)
-                )
-                Spacer(Modifier.width(12.dp))
-                Text(app.name)
+                CircularProgressIndicator()
             }
         }
     }
 }
 
-@Composable
-fun NoLag(content: @Composable () -> Unit) {
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(50) // space out work; LET UI LOAD
-            yield()
-        }
-    }
-    content()
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -218,14 +345,14 @@ class Settings {
 
 
     //region MISALANIOUS
-
-    /* EXPLANATION
-    0-not pressed, first time, //1-UNCLOCKING CHILL BUTTON
-    *WE USE IT WHEN FIRST GUIDING THE PLAYER ON HOW TO USE THE APP
-    */
-    var FirstChillBtnPress by mutableStateOf(0)
-
     var ShowMenu by mutableStateOf(false)
+    val AppList = mutableStateListOf<Apps>()
+
 
     //endregion
 }
+
+
+
+
+

@@ -91,17 +91,311 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.runBlocking
 import java.util.UUID
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
+import kotlin.reflect.KClass
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.KMutableProperty1
+import kotlin.reflect.KProperty
+import kotlin.reflect.KProperty1
 import kotlin.reflect.jvm.isAccessible
 
 
+
+
+//region USER MANUAL
+
+/** HOW USE REGION
+
+    //region
+
+    requires a space of one between // and code to work well
+
+    //endregion
+
+*/
+
+/*HOW CODE
+    REWRITE NONE UNIVERSAL CODE-TALKING SMALL 100
+    all else rewriteee
+
+    use region, one file, and yea
+    plus, like to have functions, a section for universal functions
+
+*/
+
+/*HOW MAKE DRAWERS, SLIDY THINGIES, ETC...
+    DO NOT USE THE ANDROID DEFAULTS FOR THAT
+    NO XML
+
+    *JUST MAKE POPUP, GOT IT, HANDLES LIKE 80% OF THE PAIN-
+    ?TO LAZY TO MAKE UNIVERSAL THINGY, WILL DO LATER, ONECE FINISH THIS
+    AND TRYING TO KEEP CUSTOMERSS
+*/
+
+
+//! IMPORTANT
+
+//region DATA MANAGEMENT
+
+/* *DATA MANAGEMENT
+
+2CLASS TYPES
+- ONE FOR SETTINGS, ONCES, ETC..
+FIND in data manager for onces
+        !-IT LITERRALLY IS EXAMPLE, SEE NOT REASON TO EVER CHANGE IT
+
+- THE OTHER FOR TASKS, ETC...,
+use this MULTIPLE MANAGER
+*/
+/* EXAMPLE FOR MANY
+data class Reminder(
+    val id: String = UUID.randomUUID().toString(),
+    val message: String,
+    val timeMs: Long
+)
+
+// instantiate **once**, e.g. in Application or top-level
+val AppMan: DataClass_Manager<Apps> by lazy {
+    DataClass_Manager(
+        context   = Global1.context,
+        prefsName = "BlockedApp_PREFS",
+        dataClass = Apps::class
+    )
+}
+• Add a new reminder
+reminderManager.add(Reminder(message = "Pay rent", timeMs = System.currentTimeMillis()))
+
+• Remove a reminder
+reminderManager.remove(reminder)
+
+• Update a reminder by ID
+reminderManager.updateById(reminder.id) { it.copy(timeMs = newTime) }
+
+• Get reminder by ID
+val reminder = reminderManager.getById("some-id")
+
+• Get ID from item
+val id = reminderManager.getId(reminder)
+
+• Get by var
+val shoppingApps = AppMan.getByVar("category", "shopping")
+ */
+
+//endregion
+
+/* Simple Synched:
+    var funTime by Synched { (0) }
+*/
+
+/*
+log:
+
+Example usage:
+log("Button clicked")
+log("Error happened", "ErrorTag")
+*/
+
+/* SMALL THINGS
+   val id: String = UUID.randomUUID().toString(),
+   *a thing that exists, unique completly
+
+ */
+
+/*NO LAG
+USE NO LAG COMPOSE
+NoLagCompose
+
+@Composable
+fun ChillScreen()=NoLagCompose {}
+* */
+
+//endregion
+
+
+
+
+//region simple SYCHED
+
+@Composable
+fun <T> Synched(valueProvider: () -> T): MutableState<T> {
+    val state = remember { mutableStateOf(valueProvider()) }
+    LaunchedEffect(Unit) {
+        snapshotFlow { valueProvider() }
+            .collect { newValue -> state.value = newValue }
+    }
+    return state
+}
+
+//endregion
+
+//region GOOD STUFFF
+
+//region log
+
+fun log(message: String, tag: String? = "AppLog") {
+    var LogMessage = message
+    if ("bad".equals(tag, true)) {
+        val stackTrace = Thread.currentThread().stackTrace
+        val element = stackTrace[3]
+        val fileName = element.fileName
+        val lineNumber = element.lineNumber
+
+        LogMessage= "[$fileName:$lineNumber] $message"
+        Log.w(tag, LogMessage)
+    }
+    else { Log.d(tag, LogMessage) }
+}
+
+//endregion
+
+//region NO LAG COMPOSE
+
+/*EXPLANATION
+*
+* CUT LAG BY 80%, IN LISTS, ETC..
+* BY MAKING SURE NOT EVERYTHING LOADS AT THE SAME TIME*/
+@Composable
+fun NoLagCompose(content: @Composable () -> Unit) {
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(50) // space out work; LET UI LOAD
+            yield()
+        }
+    }
+    content()
+}
+
+//endregion
+
+//region MULTIPLE MANAGER
+
+
+/*
+@Composable
+fun AppStart() {
+    val BadApps = DataClass_Manager<Apps>("BlockedApps", Apps::class)
+    BadApps.init()
+    BadApps.DoSave()
+}
+data class Reminder(
+    val id: String = UUID.randomUUID().toString(),
+    val message: String,
+    val timeMs: Long
+)
+
+// instantiate **once**, e.g. in Application or top-level
+val reminderManager = DataClass_Manager(
+    context   = Global1.context,
+    prefsName = "REMINDERS_PREFS",
+    dataClass = Reminder::class
+)
+• Add a new reminder
+reminderManager.add(Reminder(message = "Pay rent", timeMs = System.currentTimeMillis()))
+
+• Remove a reminder
+reminderManager.remove(reminder)
+
+• Update a reminder by ID
+reminderManager.updateById(reminder.id) { it.copy(timeMs = newTime) }
+
+• Get reminder by ID
+val reminder = reminderManager.getById("some-id")
+
+• Get ID from item
+val id = id.get(somePerson)
+
+• Filter Item
+note-class name
+val FOUNDITEM: Note? = notesManager.getByBar(key)
+ */
+
+/*
+*mustS
+* be field named id!!!!
+*
+* MUST BE SUCH DATA CLASS (MUTABLE IF WANT RECOMPOSE)
+*
+* data class Apps(var id: String = UUID.randomUUID().toString(), var name: String, var icon: Drawable,) {
+    ?MUTABLE, COMPOSE RECOMPOSES, EASY TO CHANGE
+    var Block by mutableStateOf(false)
+    var funTime by mutableStateOf(0)
+}
+
+ */
+
+var ItemsinitOnce= false
+class DataClass_Manager<T : Any>(
+    private val WhereStoreData: String,
+    dataClazz: KClass<T>,
+) {
+
+    private val gson = Gson()
+    private val dataClass = dataClazz
+    private val listType = TypeToken.getParameterized(List::class.java, dataClass.java).type
+    private val data = Global1.context.getSharedPreferences(WhereStoreData, Context.MODE_PRIVATE)
+    private val id: KProperty1<T, *> = dataClass.memberProperties.first { it.name == "id" }
+
+    val items: SnapshotStateList<T> = mutableStateListOf()
+
+    private var save: Job? = null
+
+    fun DoSave() {
+        if (save?.isActive == true) return
+        save = GlobalScope.launch {
+            while (isActive) {
+                /*EXPLANATION
+                * THIS IS SUPER SPEEED
+                ? DOES THE SAVE IN 10ml+20ml wait
+                ! If i am doing more than 1000 of items with 10 vars, then up delay to 20
+                * if more than 10k, or images, still good, make it less frequent DELAY TO 50
+                * */
+                val json = gson.toJson(items.toList(), listType)
+                delay(10L)
+                val tempKey = WhereStoreData + "Temporary"
+                val success = data.edit().putString(tempKey, json).commit()
+                delay(10L)
+                if (success) { data.edit().putString(WhereStoreData, json).apply() } else { log("Save failed, keeping previous data.", "bad") }
+                delay(1000L)
+            }
+        }
+    }
+    fun init() {
+        val savedJson = data.getString(WhereStoreData, null)
+        if (savedJson != null) {
+            try {
+                val list: List<T> = gson.fromJson(savedJson, listType)
+                items.clear()
+                items.addAll(list)
+            } catch (e: Exception) { log("Init failed to load saved data: ${e.message}", "bad") }
+        }
+
+        if (data.all.isEmpty() || ItemsinitOnce) return
+        ItemsinitOnce = true
+    }
+
+    fun add(item: T) { items.add(item) }
+
+    fun getById(idValue: Any): T? { return items.firstOrNull { id.get(it) == idValue } }
+    fun getId(item: T): Any? { return id.get(item) }
+
+    fun remove(idValue: Any) { val toRemove = getById(idValue); if (toRemove != null) items.remove(toRemove) else log("Remove failed: no item with id=$idValue", "bad") }
+
+    fun <V> filterBy(fieldName: String, value: V): List<T> {
+        val prop = dataClass.memberProperties.firstOrNull { it.name == fieldName }
+            ?: error("No property named '$fieldName'")
+        return items.filter { prop.get(it) == value }
+    }
+}
+
+
+//endregion
 //region DATA MANAGER FOR ONCES
 
 /*NEEDED SETUP
@@ -122,12 +416,12 @@ class Settings {
 */
 /*How Use
 * YOU CAN READ THE DATA, CHANGE IT, AUTO UPDATE, saves, etc..
+* WORKS FOR LISTS TOOOO
+? HANDLES ABOUT 600 ITEMS MAX-recommended is 300
 Bar.funTime += 1
     Bar.currentInput = "Testing input"
     Bar.highestCorrect = max(Bar.highestCorrect, 12)
 */
-
-
 
 val Bar = Settings(); //best variable
 
@@ -142,11 +436,20 @@ object SettingsSaved {
                 val data = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
                 val edit = data.edit()
 
+
+
                 var CPU = 0
                 Settings::class.memberProperties.forEach { bar ->
                     bar.isAccessible = true
 
                     val value = bar.get(Bar)
+
+                    if (value is SnapshotStateList<*>) {
+                        // Convert the Compose list to a plain List and to JSON
+                        val json = Gson().toJson(value.toList())
+                        edit.putString(bar.name, json)
+                        return@forEach  // skip the rest for this property
+                    }
 
                     //region MAKING SURE THE DATA NOT LAG
 
@@ -187,6 +490,7 @@ object SettingsSaved {
         initOnce= true //MUST USE, ALL ARE ZERO OR NULL
 
         Settings::class.memberProperties.forEach { barIDK ->
+
             //best variable is variable//JUST MAKING SURE
             if (barIDK is KMutableProperty1<Settings, *>) {
                 @Suppress("UNCHECKED_CAST")
@@ -196,6 +500,28 @@ object SettingsSaved {
                 val type = bar.returnType.classifier
 
                 val stateProp = bar.getDelegate(Bar)
+
+                if (stateProp is SnapshotStateList<*>) {
+                    prefs.getString(name, null)
+                        ?.takeIf { it.isNotEmpty() }
+                        ?.let { json ->
+                            // 1. Grab the KClass of the list’s element via reflection
+                            val elemKClass = (barIDK.returnType
+                                .arguments.first().type?.classifier as KClass<*>).java
+                            // 2. Build the correct List<Elem> type token
+                            val listType = TypeToken.getParameterized(List::class.java, elemKClass).type
+                            // 3. Deserialize into a List<Elem>
+                            @Suppress("UNCHECKED_CAST")
+                            val loadedList: List<Any> = Gson().fromJson(json, listType)
+                            // 4. Populate your SnapshotStateList
+                            (stateProp as SnapshotStateList<Any>).apply {
+                                clear()
+                                addAll(loadedList)
+                            }
+                        }
+                    return@forEach
+                }
+
                 when {
                     stateProp is MutableState<*> && type == Boolean::class -> (stateProp as MutableState<Boolean>).value = prefs.getBoolean(name, false)
                     stateProp is MutableState<*> && type == String::class -> (stateProp as MutableState<String>).value = prefs.getString(name, "") ?: ""
@@ -203,6 +529,7 @@ object SettingsSaved {
                     stateProp is MutableState<*> && type == Float::class -> (stateProp as MutableState<Float>).value = prefs.getFloat(name, 0f)
                     stateProp is MutableState<*> && type == Long::class -> (stateProp as MutableState<Long>).value = prefs.getLong(name, 0L)
                 }
+
             }
             else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
         }
@@ -211,114 +538,7 @@ object SettingsSaved {
 
 //endregion
 
-
-//region USER MANUAL
-
-/** HOW USE REGION
-
-    //region
-
-    requires a space of one between // and code to work well
-
-    //endregion
-
-*/
-
-/*HOW CODE
-    REWRITE NONE UNIVERSAL CODE-TALKING SMALL 100
-    all else rewriteee
-
-    use region, one file, and yea
-    plus, like to have functions, a section for universal functions
-
-*/
-
-
-//!IMPORTANT
-//region CHEET CODES
-
-//! IMPORTANT
-/* * DATA MANAGEMENT
-
-2CLASS TYPES
-- ONE FOR SETTINGS, ONCES, ETC..
-- THE OTHER FOR TASKS, ETC...,
-*/
-
-
-/* Simple Synched:
-    var funTime by Synched { (0) }
-*/
-
-/*
-log:
-
-Example usage:
-log("Button clicked")
-log("Error happened", "ErrorTag")
-*/
-
-/* SMALL THINGS
-   val id: String = UUID.randomUUID().toString(),
-   *a thing that exists, unique completly
-
- */
-
 //endregion
-
-//region How Commit/push
-/* Commits
-use them often:
-- on fail; (the last on fail, use that)
-    come back if mess, up
-- or just saving, which also do often
-
-*/
-/* Push
-push every day, before bed,
-just saves your thing online, like backup
-*/
-//endregion
-
-//endregion
-
-
-
-
-//region simple SYCHED
-
-@Composable
-fun <T> Synched(valueProvider: () -> T): MutableState<T> {
-    val state = remember { mutableStateOf(valueProvider()) }
-    LaunchedEffect(Unit) {
-        snapshotFlow { valueProvider() }
-            .collect { newValue -> state.value = newValue }
-    }
-    return state
-}
-
-//endregion
-
-//region log
-
-fun log(message: String, tag: String? = "AppLog") {
-    var LogMessage = message
-    if ("bad".equals(tag, true)) {
-        val stackTrace = Thread.currentThread().stackTrace
-        val element = stackTrace[3]
-        val fileName = element.fileName
-        val lineNumber = element.lineNumber
-
-        LogMessage= "[$fileName:$lineNumber] $message"
-        Log.w(tag, LogMessage)
-    }
-    else { Log.d(tag, LogMessage) }
-}
-
-//endregion
-
-
-
 
 //region TEMPLATES
 

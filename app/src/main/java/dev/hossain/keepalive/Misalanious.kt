@@ -1,9 +1,12 @@
 package dev.hossain.keepalive
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.IBinder
+import android.os.Message
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
@@ -59,6 +62,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 //region BACKGROUND TASK
@@ -342,7 +346,28 @@ fun InfoPopup(content: @Composable () -> Unit) {
 
 //endregion
 
-//region UI ONCES
+//region ONCES
+suspend fun Context.getAllInstalledApps(){
+    Bar.AppList.forEach { if (!it.Exists) { BadApps.remove(it.id) } }
+
+    Bar.AppList.forEach { it.Exists = false }
+
+    return withContext(Dispatchers.IO) {
+        packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+            .filter { packageManager.getLaunchIntentForPackage(it.packageName) != null }
+            .map { appInfo ->
+                val name = appInfo.loadLabel(packageManager).toString()
+                val icon = appInfo.loadIcon(packageManager)
+                val pkg = appInfo.packageName
+
+
+                val existing = Bar.AppList.find { it.packageName == pkg }
+
+                if (existing != null) { existing.Exists = true } else {Bar.AppList.add(Apps(name = name, icon = icon, packageName = pkg)); }
+            }
+    }
+}
+
 
 @Composable
 fun MenuIcon() {
@@ -366,7 +391,10 @@ fun ChillIcon() {
     }
 
 }
-
+@Composable
+fun Header(message: String) {
+    Text(text = message, fontSize = 28.sp)
+}
 
 //endregion
 

@@ -74,9 +74,7 @@ class MainActivity : ComponentActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         AppStart_beforeUI(applicationContext)
-
         setContent {
             KeepAliveTheme {
                 Surface(modifier = Modifier.fillMaxSize())
