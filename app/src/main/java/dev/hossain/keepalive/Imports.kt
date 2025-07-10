@@ -336,6 +336,13 @@ var initOnce= false
 object SettingsSaved {
     private var Dosave: Job? = null
 
+    fun SaveList(){
+
+    }
+    fun IntList(){
+
+    }
+
     fun Bsave() {
         if (Dosave?.isActive == true) return
         Dosave = GlobalScope.launch {
@@ -343,41 +350,12 @@ object SettingsSaved {
                 val data = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
                 val edit = data.edit()
 
-
-
                 var CPU = 0
                 Settings::class.memberProperties.forEach { bar ->
-                    bar.isAccessible = true
-
-                    val value = bar.get(Bar)
-
-                    if (value is SnapshotStateList<*>) {
-                        log("SAVING LIST ${value}", "BAD")
-                        val json = Gson().toJson(value.toList())
-
-                        log("JSON LIST ${json}-- tooo---${bar.name}", "BAD")
-                        edit.putString(bar.name, json)
-                        return@forEach  // skip the rest for this property
-                    }
-
-                    //region MAKING SURE THE DATA NOT LAG
-
-                    /*SKIP IF NOT CHANGED
-                    *REWRITES USUALLY COST 5ML
-                    * SKIPPING SAVES 4ML
-                    * 1ML TO READ
-                    */
-                    val oldValue: Any? = when (value) {
-                        is Boolean -> data.getBoolean(bar.name, !value) // use different default to force mismatch if missing
-                        is String -> data.getString(bar.name, null)
-                        is Int -> data.getInt(bar.name, Int.MIN_VALUE)
-                        is Float -> data.getFloat(bar.name, Float.MIN_VALUE)
-                        is Long -> data.getLong(bar.name, Long.MIN_VALUE)
-                        else -> null
-                    }; if (oldValue===value) { return@forEach }
                     /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
-
-                    //endregion
+                    bar.isAccessible = true
+                    val value = bar.get(Bar)
+                    if (value is SnapshotStateList<*>) return@forEach
 
                     when (value) {
                         is Boolean -> edit.putBoolean(bar.name, value)
@@ -386,10 +364,10 @@ object SettingsSaved {
                         is Float -> edit.putFloat(bar.name, value)
                         is Long -> edit.putLong(bar.name, value)
                     }
-                    delay(5L) // take it slow and steady (5ml-what takes)
+                    delay(20L) // take it slow and steady (5ml-what takes)
                 }
                 edit.apply()
-                delay(5_000L) // save every 5 seconds
+                delay(10_000L) // save every 10 seconds
             }
         }
     }
@@ -399,7 +377,6 @@ object SettingsSaved {
         initOnce= true //MUST USE, ALL ARE ZERO OR NULL
 
         Settings::class.memberProperties.forEach { barIDK ->
-
             //best variable is variable//JUST MAKING SURE
             if (barIDK is KMutableProperty1<Settings, *>) {
                 @Suppress("UNCHECKED_CAST")
@@ -409,32 +386,6 @@ object SettingsSaved {
                 val type = bar.returnType.classifier
 
                 val stateProp = bar.getDelegate(Bar)
-
-                if (stateProp is SnapshotStateList<*>) {
-
-                    log("INITIALIZING LIST: ${stateProp}", "BAD")
-                    prefs.getString(name, null)
-                        ?.takeIf { it.isNotEmpty() }
-                        ?.let { json ->
-                            // 1. Grab the KClass of the list’s element via reflection
-                            val elemKClass = (barIDK.returnType
-                                .arguments.first().type?.classifier as KClass<*>).java
-                            // 2. Build the correct List<Elem> type token
-                            val listType = TypeToken.getParameterized(List::class.java, elemKClass).type
-                            // 3. Deserialize into a List<Elem>
-                            @Suppress("UNCHECKED_CAST")
-                            val loadedList: List<Any> = Gson().fromJson(json, listType)
-                            // 4. Populate your SnapshotStateList
-                            (stateProp as SnapshotStateList<Any>).apply {
-                                clear()
-                                addAll(loadedList)
-                            }
-
-                            log("INITIALIZE LIST: ${stateProp}", "BAD")
-                        }
-                    return@forEach
-                }
-
                 when {
                     stateProp is MutableState<*> && type == Boolean::class -> (stateProp as MutableState<Boolean>).value = prefs.getBoolean(name, false)
                     stateProp is MutableState<*> && type == String::class -> (stateProp as MutableState<String>).value = prefs.getString(name, "") ?: ""
@@ -442,7 +393,6 @@ object SettingsSaved {
                     stateProp is MutableState<*> && type == Float::class -> (stateProp as MutableState<Float>).value = prefs.getFloat(name, 0f)
                     stateProp is MutableState<*> && type == Long::class -> (stateProp as MutableState<Long>).value = prefs.getLong(name, 0L)
                 }
-
             }
             else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
         }

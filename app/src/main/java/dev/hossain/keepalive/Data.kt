@@ -28,8 +28,9 @@ class Settings {
 
     //region MISALANIOUS
     var ShowMenu by mutableStateOf(false)
-    var AppList = mutableStateListOf<Apps>()
     var CheckInstalledApps by mutableStateOf(true)
+
+    var AppList = mutableStateListOf<Apps>()
 
     //endregion
 }
