@@ -74,8 +74,8 @@ fun AppStart_beforeUI(context: Context) {
     Global1.context = context
     SettingsSaved.init()
     SettingsSaved.Bsave()
-    SettingsSaved.initialize(Bar)
-    SettingsSaved.startAutoSave(Bar)
+    SettingsSaved.initialize(Global1.context, Bar)
+    SettingsSaved.startAutoSave(Global1.context, Bar)
 }
 
 @Composable

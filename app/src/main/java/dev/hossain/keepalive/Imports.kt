@@ -107,7 +107,8 @@ import kotlin.reflect.KProperty1
 import kotlin.reflect.jvm.isAccessible
 
 import kotlinx.coroutines.Dispatchers
-
+import kotlin.reflect.KParameter
+import kotlin.reflect.full.primaryConstructor
 
 
 //region USER MANUAL
@@ -262,16 +263,10 @@ fun <T> Synched(valueProvider: () -> T): MutableState<T> {
 //region log
 
 fun log(message: String, tag: String? = "AppLog") {
-    var LogMessage = message
-    if ("bad".equals(tag, true)) {
-        val stackTrace = Thread.currentThread().stackTrace
-        val element = stackTrace[3]
-        val fileName = element.fileName
-        val lineNumber = element.lineNumber
+    var LogMessage = message ; val stackTrace = Thread.currentThread().stackTrace ; val element = stackTrace[3] ; val fileName = element.fileName ; val lineNumber = element.lineNumber
+    LogMessage= "[$fileName:$lineNumber] $message"
+    if ("bad".equals(tag, true)) { Log.w(tag, LogMessage) }
 
-        LogMessage= "[$fileName:$lineNumber] $message"
-        Log.w(tag, LogMessage)
-    }
     else { Log.d(tag, LogMessage) }
 }
 
@@ -343,96 +338,107 @@ object SettingsSaved {
     private val lastJson = mutableMapOf<String, String>()
     private var autoSaveJob: Job? = null
 
-
-    fun initialize(holder: Any) {
-        val prefs = Global1.context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-        log("Initialization started", "bad")
-
-        holder::class.memberProperties.forEach { prop ->
-            if (!prop.returnType.toString().startsWith("SnapshotStateList<")) {
-                log("Skipping non-list property ${prop.name}", "bad")
-                return@forEach
-            }
-
+    private fun Any.toPlainMap(): Map<String, Any?> = this::class.memberProperties
+        .filter { it.name.contains('$').not() }     // drop Compose internals
+        .mapNotNull { prop ->
             prop.isAccessible = true
-            val stateList = prop.getter.call(holder) as? SnapshotStateList<Any>
-            if (stateList == null) {
-                log("Property ${prop.name} is null or not a SnapshotStateList", "bad")
-                return@forEach
-            }
+            val value = try { prop.getter.call(this) } catch (_: Exception) { return@mapNotNull null }
+            if (value is SnapshotStateList<*>) return@mapNotNull null  // skip lists
+            prop.name to value
+        }.toMap()
 
-            log("Loading list ${prop.name}", "bad")
-            // Determine element type
-            val arg = prop.returnType.arguments.first().type?.classifier
-            val elementClass = (arg as? KClass<*>)?.java
-            if (elementClass == null) {
-                log("Cannot determine element type for ${prop.name}", "bad")
-                return@forEach
+    /** Reconstruct any data-class T from a Map<String,Any?> via its primary constructor + var props */
+    private fun <T : Any> reconstruct(clazz: KClass<T>, data: Map<String, Any?>): T {
+        // 1) Build constructor args
+        val ctor = clazz.primaryConstructor
+            ?: error("Class ${clazz.simpleName} needs a primary constructor")
+        val args = mutableMapOf<KParameter, Any?>()
+        ctor.parameters.forEach { param ->
+            val name = param.name
+            if (name != null && data.containsKey(name)) {
+                args[param] = data[name]
             }
-            val type = TypeToken.getParameterized(List::class.java, elementClass).type
+        }
+        // 2) Instantiate
+        val instance = ctor.callBy(args)
+        // 3) Set any remaining mutable var properties
+        clazz.memberProperties.forEach { prop ->
+            val name = prop.name
+            if (data.containsKey(name) && prop is KMutableProperty1) {
+                prop.isAccessible = true
+                prop.setter.call(instance, data[name])
+            }
+        }
+        return instance
+    }
 
-            // Read JSON
+    /** —————————— 1) Initialize all lists from prefs —————————— */
+    fun initialize(context: Context, holder: Any) {
+        val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        holder::class.memberProperties.forEach { prop ->
+            prop.isAccessible = true
+            val raw = prop.getter.call(holder)
+            if (raw !is SnapshotStateList<*>) return@forEach
+
+            @Suppress("UNCHECKED_CAST")
+            val stateList = raw as SnapshotStateList<Any>
+            val elementK = prop.returnType
+                .arguments.firstOrNull()?.type?.classifier as? KClass<Any>
+                ?: run { /* cannot handle */ return@forEach }
+
+            // Read JSON of List<Map<String,Any?>>
             val json = prefs.getString(prop.name, "[]") ?: "[]"
-            log("Raw JSON for ${prop.name}: $json", "bad")
             lastJson[prop.name] = json
 
-            // Deserialize & populate
-            val items: List<Any> = Gson().fromJson(json, type)
+            val mapListType = object : TypeToken<List<Map<String, Any?>>>() {}.type
+            val listOfMaps: List<Map<String, Any?>> = Gson().fromJson(json, mapListType)
+
+            // Rebuild each element
             stateList.clear()
-            items.forEach { item ->
+            listOfMaps.forEach { dataMap ->
+                val item = reconstruct(elementK, dataMap)
                 stateList.add(item)
-                log("  → Added to ${prop.name}: $item", "bad")
             }
         }
-
-        log("Initialization complete", "bad")
     }
-    fun startAutoSave(holder: Any) {
-        if (autoSaveJob?.isActive == true) {
-            log("Auto-save already running", "bad")
-            return
-        }
 
+    /** ——————— 2) Start an auto-save loop for all lists ——————— */
+    fun startAutoSave(context: Context, holder: Any, intervalMs: Long = 1_000L) {
+        if (autoSaveJob?.isActive == true) return
         autoSaveJob = CoroutineScope(Dispatchers.IO).launch {
             val gson = Gson()
-            val prefs = Global1.context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
-            log("Auto-save loop started", "bad")
             while (isActive) {
                 val editor = prefs.edit()
                 var modified = false
 
                 holder::class.memberProperties.forEach { prop ->
-                    if (!prop.returnType.toString().startsWith("SnapshotStateList<")) {
-                        return@forEach
-                    }
-
                     prop.isAccessible = true
-                    val list = prop.getter.call(holder) as? SnapshotStateList<Any>
-                        ?: return@forEach
+                    val raw = prop.getter.call(holder) ?: return@forEach
+                    if (raw !is SnapshotStateList<*>) return@forEach
 
-                    val json = gson.toJson(list)
+                    @Suppress("UNCHECKED_CAST")
+                    val list = raw as SnapshotStateList<Any>
+
+                    // Snapshot + clean → List<Map<String,Any?>>
+                    val cleanList = list.toList().map { it.toPlainMap() }
+                    val json = gson.toJson(cleanList)
                     val key = prop.name
 
                     if (lastJson[key] != json) {
-                        log("Detected change in $key — saving ${list.size} items", "bad")
                         editor.putString(key, json)
                         lastJson[key] = json
                         modified = true
-                    } else {
-                        log("No change for $key", "bad")
                     }
                 }
 
-                if (modified) {
-                    editor.apply()
-                    log("Preferences applied", "bad")
-                }
-
-                delay(1_000L)
+                if (modified) editor.apply()
+                delay(intervalMs)
             }
         }
     }
+
 
 
     fun Bsave() {
