@@ -338,6 +338,7 @@ object SettingsSaved {
     private val lastJson = mutableMapOf<String, String>()
     private var autoSaveJob: Job? = null
 
+    /*
     private fun Any.toPlainMap(): Map<String, Any?> = this::class.memberProperties
         .filter { it.name.contains('$').not() }     // drop Compose internals
         .mapNotNull { prop ->
@@ -346,8 +347,6 @@ object SettingsSaved {
             if (value is SnapshotStateList<*>) return@mapNotNull null  // skip lists
             prop.name to value
         }.toMap()
-
-    /** Reconstruct any data-class T from a Map<String,Any?> via its primary constructor + var props */
     private fun <T : Any> reconstruct(clazz: KClass<T>, data: Map<String, Any?>): T {
         // 1) Build constructor args
         val ctor = clazz.primaryConstructor
@@ -371,8 +370,6 @@ object SettingsSaved {
         }
         return instance
     }
-
-    /** —————————— 1) Initialize all lists from prefs —————————— */
     fun initialize(context: Context, holder: Any) {
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         holder::class.memberProperties.forEach { prop ->
@@ -401,8 +398,6 @@ object SettingsSaved {
             }
         }
     }
-
-    /** ——————— 2) Start an auto-save loop for all lists ——————— */
     fun startAutoSave(context: Context, holder: Any, intervalMs: Long = 1_000L) {
         if (autoSaveJob?.isActive == true) return
         autoSaveJob = CoroutineScope(Dispatchers.IO).launch {
@@ -438,7 +433,7 @@ object SettingsSaved {
             }
         }
     }
-
+    */
 
 
     fun Bsave() {

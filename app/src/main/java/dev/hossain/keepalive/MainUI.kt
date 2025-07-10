@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.webkit.WebView
 import androidx.compose.foundation.layout.Arrangement
 import android.content.pm.PackageManager
 import androidx.compose.runtime.remember
@@ -33,13 +32,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -94,6 +89,19 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
+
+
+import android.view.ViewGroup
+import android.webkit.WebView
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.viewinterop.AndroidView
+import kotlinx.coroutines.delay
 
 // Usage examples
 
@@ -193,9 +201,62 @@ fun Main() {
 
 
 
+@Composable
+fun FunScreen() {
 
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(1000)
+            Bar.funTime -=1
+        }
+    }
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(0.dp) // remove padding
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = { Global1.navController.navigate("Main") }) {
+                Text("🔙 Winning")
+            }
+            Text(
+                text = "Fun time: ${Bar.funTime}s",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
 
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
+                    settings.javaScriptEnabled = true
+                    settings.domStorageEnabled = true
+                    settings.useWideViewPort = true
+                    settings.loadWithOverviewMode = true
+                    settings.builtInZoomControls = true
+                    settings.displayZoomControls = false
+
+                    layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
+
+                    loadUrl("https://play.famobi.com/wrapper/rise-up/A1000-10")
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f) // makes it take up remaining space
+        )
+    }
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class)

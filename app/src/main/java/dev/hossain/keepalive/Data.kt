@@ -18,8 +18,8 @@ class Settings {
     var funTime by mutableStateOf(0)
 
     //region COPY PASTE THING
-    var targetText by mutableStateOf("I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it, do the pomo. And spend half time improving, half time using the product. Done. I need to keep with it for 100 days for it to bear fruit. Right now it won't work/ the initial mvp is terrible. But that's ok. I will improve it slowly, one tiny feature at a time. All i must do is stick with the idea: type stuff and get time to have fun. Done. That is it!!!!. Goal is consistency, nothing else, nothing else!!")
-    var LetterToTime by mutableStateOf(10)
+    var targetText by mutableStateOf("I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it,and how I programm, all logic MUST BE WRITTEN BY ME, IT MUST BEEEE, otherwise will spend many hours and thus resulting a catastrophic outcome, of nothing achieved, like those 5 months!!! I need to keep with it, AND GET IT TO BEAR FRUIT AS FAST AS possible. Skip all the nonesense, of logicall app making, just get it done as dirty as possible, to the genshin part. And make it work, stack upon thing after thing. Can improve the thing later, get money to a person, etc... All i must do is stick with the idea: type stuff and get time to have fun. Done, I MUST FOCUS ON ONE IDEA, ONE ONLYYY. Goal is consistency, nothing else, nothing else!!")
+    var LetterToTime by mutableStateOf(3)
     var DoneRetype_to_time by mutableStateOf(60)
     var currentInput by mutableStateOf("")
     var highestCorrect by mutableStateOf(0)
@@ -31,7 +31,6 @@ class Settings {
     var CheckInstalledApps by mutableStateOf(true)
 
     var AppList = mutableStateListOf<Apps>()
-
     //endregion
 }
 
@@ -74,8 +73,8 @@ fun AppStart_beforeUI(context: Context) {
     Global1.context = context
     SettingsSaved.init()
     SettingsSaved.Bsave()
-    SettingsSaved.initialize(Global1.context, Bar)
-    SettingsSaved.startAutoSave(Global1.context, Bar)
+    //SettingsSaved.initialize(Global1.context, Bar)
+    //SettingsSaved.startAutoSave(Global1.context, Bar)
 }
 
 @Composable

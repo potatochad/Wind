@@ -134,6 +134,9 @@ fun MyNavGraph(navController: NavHostController, startDestination: String, modif
         composable("ChillScreen") {
             ChillScreen()
         }
+        composable("FunScreen") {
+            FunScreen()
+        }
     }
 }
 
@@ -149,7 +152,10 @@ fun MyNavGraph(navController: NavHostController, startDestination: String, modif
 
 @Composable
 fun ChillTimeButton(){
-    Button(onClick = { if (Bar.funTime <= 0) { Toast.makeText(Global1.context, "GET BACK TO WORK", Toast.LENGTH_SHORT).show() };
+    Button(onClick = { if (Bar.funTime <= 0) { Toast.makeText(Global1.context, "GET BACK TO WORK", Toast.LENGTH_SHORT).show() } else
+    {
+        Global1.navController.navigate("FunScreen")
+    }
 
     }, modifier = Modifier.fillMaxWidth()) { Text("Chill Time 🌴") }
 }
