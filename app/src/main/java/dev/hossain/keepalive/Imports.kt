@@ -143,52 +143,73 @@ import kotlin.reflect.jvm.isAccessible
 //! IMPORTANT
 
 //region DATA MANAGEMENT
-
-/* *DATA MANAGEMENT
-
-2CLASS TYPES
-- ONE FOR SETTINGS, ONCES, ETC..
-FIND in data manager for onces
-        !-IT LITERRALLY IS EXAMPLE, SEE NOT REASON TO EVER CHANGE IT
-
-- THE OTHER FOR TASKS, ETC...,
-use this MULTIPLE MANAGER
-*/
-/* EXAMPLE FOR MANY
-data class Reminder(
-    val id: String = UUID.randomUUID().toString(),
-    val message: String,
-    val timeMs: Long
-)
-
-// instantiate **once**, e.g. in Application or top-level
-val AppMan: DataClass_Manager<Apps> by lazy {
-    DataClass_Manager(
-        context   = Global1.context,
-        prefsName = "BlockedApp_PREFS",
-        dataClass = Apps::class
-    )
+// all you need
+//coudn't be simpler::
+/*NEEDED SETUP
+* PUT IT HERE!!;
+@RequiresApi(Build.VERSION_CODES.O)
+fun AppStart_beforeUI(context: Context) {
+    Global1.context = context
+    SettingsSaved.init()
+    SettingsSaved.Bsave()
 }
-• Add a new reminder
-reminderManager.add(Reminder(message = "Pay rent", timeMs = System.currentTimeMillis()))
+*
+*
+*
+class Settings {
+    var show by mutableStateOf(false)
+    var CurrentInput by mutableStateOf("")
+}
+*/
+/*How Use
+* YOU CAN READ THE DATA, CHANGE IT, AUTO UPDATE, saves, etc..
+* WORKS FOR LISTS TOOOO
+? HANDLES ABOUT 600 ITEMS MAX-recommended is 300
+Bar.funTime += 1
+    Bar.currentInput = "Testing input"
+    Bar.highestCorrect = max(Bar.highestCorrect, 12)
+    *
+    *
+   class Settings {
+    var ShowMenu by mutableStateOf(false)
+    val AppList = mutableStateListOf<Apps>()  // Apps- is a data class, enter in any you want
+*/
 
-• Remove a reminder
-reminderManager.remove(reminder)
 
-• Update a reminder by ID
-reminderManager.updateById(reminder.id) { it.copy(timeMs = newTime) }
+/*?HOW CHANGE LIST
+* ✅ Add
+AppList.add(app)
+AppList.addAll(listOfApps)
+AppList.add(index, app)
+*
+❌ Remove
+AppList.remove(app)
+AppList.removeAt(index)
+AppList.removeIf { it.Block }
+AppList.clear()
+*
+🔄 Update
+AppList[index] = app.copy(Block = true)
+AppList[index].Block = true  // if mutable inside
 
-• Get reminder by ID
-val reminder = reminderManager.getById("some-id")
+* val app = AppList[0]  // 0 = first app in the list
+val id = app.id       // this is the app's unique ID (UUID)
 
-• Get ID from item
-val id = reminderManager.getId(reminder)
-
-• Get by var
-val shoppingApps = AppMan.getByVar("category", "shopping")
- */
-
+*
+🔍 Find
+val found = AppList.find { it.name == "YouTube" }
+val exists = AppList.any { it.Block }
+val count = AppList.count { it.Exists }
+*
+🧠 Smart Filtering
+val onlyBlocked = AppList.filter { it.Block }
+val top3 = AppList.sortedByDescending { it.TimeSpent }.take(3)
+*
+🔁 Loop
+AppList.forEach { app -> println(app.name) }
+for (i in AppList.indices) { AppList[i].Exists = false }*/
 //endregion
+
 
 /* Simple Synched:
     var funTime by Synched { (0) }
@@ -274,129 +295,10 @@ fun NoLagCompose(content: @Composable () -> Unit) {
 
 //endregion
 
-//region MULTIPLE MANAGER
-
-
-/*
-@Composable
-fun AppStart() {
-    val BadApps = DataClass_Manager<Apps>("BlockedApps", Apps::class)
-    BadApps.init()
-    BadApps.DoSave()
-}
-data class Reminder(
-    val id: String = UUID.randomUUID().toString(),
-    val message: String,
-    val timeMs: Long
-)
-
-// instantiate **once**, e.g. in Application or top-level
-val reminderManager = DataClass_Manager(
-    context   = Global1.context,
-    prefsName = "REMINDERS_PREFS",
-    dataClass = Reminder::class
-)
-• Add a new reminder
-reminderManager.add(Reminder(message = "Pay rent", timeMs = System.currentTimeMillis()))
-
-• Remove a reminder
-reminderManager.remove(reminder)
-
-• Update a reminder by ID
-reminderManager.updateById(reminder.id) { it.copy(timeMs = newTime) }
-
-• Get reminder by ID
-val reminder = reminderManager.getById("some-id")
-
-• Get ID from item
-val id = id.get(somePerson)
-
-• Filter Item
-note-class name
-val FOUNDITEM: Note? = notesManager.getByBar(key)
- */
-
-/*
-*mustS
-* be field named id!!!!
-*
-* MUST BE SUCH DATA CLASS (MUTABLE IF WANT RECOMPOSE)
-*
-* data class Apps(var id: String = UUID.randomUUID().toString(), var name: String, var icon: Drawable,) {
-    ?MUTABLE, COMPOSE RECOMPOSES, EASY TO CHANGE
-    var Block by mutableStateOf(false)
-    var funTime by mutableStateOf(0)
-}
-
- */
-
-var ItemsinitOnce= false
-class DataClass_Manager<T : Any>(
-    private val WhereStoreData: String,
-    dataClazz: KClass<T>,
-) {
-
-    private val gson = Gson()
-    private val dataClass = dataClazz
-    private val listType = TypeToken.getParameterized(List::class.java, dataClass.java).type
-    private val data = Global1.context.getSharedPreferences(WhereStoreData, Context.MODE_PRIVATE)
-    private val id: KProperty1<T, *> = dataClass.memberProperties.first { it.name == "id" }
-
-    val items: SnapshotStateList<T> = mutableStateListOf()
-
-    private var save: Job? = null
-
-    fun DoSave() {
-        if (save?.isActive == true) return
-        save = GlobalScope.launch {
-            while (isActive) {
-                /*EXPLANATION
-                * THIS IS SUPER SPEEED
-                ? DOES THE SAVE IN 10ml+20ml wait
-                ! If i am doing more than 1000 of items with 10 vars, then up delay to 20
-                * if more than 10k, or images, still good, make it less frequent DELAY TO 50
-                * */
-                val json = gson.toJson(items.toList(), listType)
-                delay(10L)
-                val tempKey = WhereStoreData + "Temporary"
-                val success = data.edit().putString(tempKey, json).commit()
-                delay(10L)
-                if (success) { data.edit().putString(WhereStoreData, json).apply() } else { log("Save failed, keeping previous data.", "bad") }
-                delay(1000L)
-            }
-        }
-    }
-    fun init() {
-        val savedJson = data.getString(WhereStoreData, null)
-        if (savedJson != null) {
-            try {
-                val list: List<T> = gson.fromJson(savedJson, listType)
-                items.clear()
-                items.addAll(list)
-            } catch (e: Exception) { log("Init failed to load saved data: ${e.message}", "bad") }
-        }
-
-        if (data.all.isEmpty() || ItemsinitOnce) return
-        ItemsinitOnce = true
-    }
-
-    fun add(item: T) { items.add(item) }
-
-    fun getById(idValue: Any): T? { return items.firstOrNull { id.get(it) == idValue } }
-    fun getId(item: T): Any? { return id.get(item) }
-
-    fun remove(idValue: Any) { val toRemove = getById(idValue); if (toRemove != null) items.remove(toRemove) else log("Remove failed: no item with id=$idValue", "bad") }
-
-    fun <V> filterBy(fieldName: String, value: V): List<T> {
-        val prop = dataClass.memberProperties.firstOrNull { it.name == fieldName }
-            ?: error("No property named '$fieldName'")
-        return items.filter { prop.get(it) == value }
-    }
-}
 
 
 //endregion
-//region DATA MANAGER FOR ONCES
+//region DATA MANAGE
 
 /*NEEDED SETUP
 * PUT IT HERE!!;
@@ -421,6 +323,11 @@ class Settings {
 Bar.funTime += 1
     Bar.currentInput = "Testing input"
     Bar.highestCorrect = max(Bar.highestCorrect, 12)
+    *
+    *
+   class Settings {
+    var ShowMenu by mutableStateOf(false)
+    val AppList = mutableStateListOf<Apps>()  // Apps- is a data class, enter in any you want
 */
 
 val Bar = Settings(); //best variable
@@ -445,8 +352,10 @@ object SettingsSaved {
                     val value = bar.get(Bar)
 
                     if (value is SnapshotStateList<*>) {
-                        // Convert the Compose list to a plain List and to JSON
+                        log("SAVING LIST ${value}", "BAD")
                         val json = Gson().toJson(value.toList())
+
+                        log("JSON LIST ${json}-- tooo---${bar.name}", "BAD")
                         edit.putString(bar.name, json)
                         return@forEach  // skip the rest for this property
                     }
@@ -502,6 +411,8 @@ object SettingsSaved {
                 val stateProp = bar.getDelegate(Bar)
 
                 if (stateProp is SnapshotStateList<*>) {
+
+                    log("INITIALIZING LIST: ${stateProp}", "BAD")
                     prefs.getString(name, null)
                         ?.takeIf { it.isNotEmpty() }
                         ?.let { json ->
@@ -518,6 +429,8 @@ object SettingsSaved {
                                 clear()
                                 addAll(loadedList)
                             }
+
+                            log("INITIALIZE LIST: ${stateProp}", "BAD")
                         }
                     return@forEach
                 }

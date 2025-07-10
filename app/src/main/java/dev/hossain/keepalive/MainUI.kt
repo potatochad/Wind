@@ -90,6 +90,10 @@ import androidx.annotation.RequiresPermission
 import androidx.compose.runtime.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
 
 // Usage examples
 
@@ -192,165 +196,54 @@ fun Main() {
 
 
 
-val BadApps = DataClass_Manager<Apps>("BlockedApps", Apps::class).apply {
-    init()
-    DoSave()
-}
-
-data class Apps(
-    var id: String = UUID.randomUUID().toString(),
-    var name: String,
-    var icon: Drawable,
-    var packageName: String
-) {
-    var Block by mutableStateOf(false)
-    var Exists by mutableStateOf(true)
-    var TimeSpent by mutableStateOf(0f)
-}
 
 
-
-
-
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MissingPermission")
 @Composable
 fun ChillScreen() = NoLagCompose {
-    val Apps = remember { mutableStateListOf<Apps>() }
+    val context = LocalContext.current
 
-
-    Box(Modifier.fillMaxSize()) {
-        Header("Pick Apps to block")
-
-
-        LazyColumn(Modifier.fillMaxSize()) { items(Apps, key = { it.id }) { app ->
-
-
-                val painter = rememberAsyncImagePainter(app.icon)
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)) {
-
-
-
-                    Image(painter,app.name,Modifier.size(40.dp)); Spacer(Modifier.width(12.dp))
-                    Text(app.name); Spacer(Modifier.weight(1f))
-                }
-            }
+    LaunchedEffect(Unit) {
+        if (Bar.CheckInstalledApps) {
+            context.getAllInstalledApps()
+            Bar.CheckInstalledApps = false
+            Bar.AppList.sortWith(compareByDescending<Apps> { it.Block }.thenBy { it.name.lowercase() })
         }
+    }
 
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text("Pick Apps to Block") }, modifier = Modifier.fillMaxWidth())
+        }
+    ) { padding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+        ) {
+            items(Bar.AppList, key = { it.id }) { app ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
 
-
-
-
-
-
-        //not loaded yet
-        if (Apps.isEmpty()) {
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Black),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
+                    Checkbox(
+                        checked = app.Block,
+                        onCheckedChange = { app.Block = it }, modifier = Modifier.padding(start = 8.dp), enabled = true
+                    )
+                    Spacer(Modifier.width(12.dp))
+                    Text(app.name)
+                    Spacer(Modifier.weight(1f))
+                }
             }
         }
     }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Settings {
-    var funTime by mutableStateOf(0)
-
-    //region COPY PASTE THING
-    var targetText by mutableStateOf("I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it, do the pomo. And spend half time improving, half time using the product. Done. I need to keep with it for 100 days for it to bear fruit. Right now it won't work/ the initial mvp is terrible. But that's ok. I will improve it slowly, one tiny feature at a time. All i must do is stick with the idea: type stuff and get time to have fun. Done. That is it!!!!. Goal is consistency, nothing else, nothing else!!")
-    var LetterToTime by mutableStateOf(10)
-    var DoneRetype_to_time by mutableStateOf(60)
-    var currentInput by mutableStateOf("")
-    var highestCorrect by mutableStateOf(0)
-    //endregion
-
-
-    //region MISALANIOUS
-    var ShowMenu by mutableStateOf(false)
-    val AppList = mutableStateListOf<Apps>()
-
-
-    //endregion
-}
 
 
 
