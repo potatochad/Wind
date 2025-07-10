@@ -106,6 +106,7 @@ import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty1
 import kotlin.reflect.jvm.isAccessible
 
+import kotlinx.coroutines.Dispatchers
 
 
 
@@ -307,6 +308,8 @@ fun AppStart_beforeUI(context: Context) {
     Global1.context = context
     SettingsSaved.init()
     SettingsSaved.Bsave()
+    SettingsSaved.initialize(Bar)
+    SettingsSaved.startAutoSave(Bar)
 }
 *
 *
@@ -333,15 +336,104 @@ Bar.funTime += 1
 val Bar = Settings(); //best variable
 
 var initOnce= false
+
 object SettingsSaved {
     private var Dosave: Job? = null
+    private const val PREFS = "settingsLISTS"
+    private val lastJson = mutableMapOf<String, String>()
+    private var autoSaveJob: Job? = null
 
-    fun SaveList(){
 
+    fun initialize(holder: Any) {
+        val prefs = Global1.context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        log("Initialization started", "bad")
+
+        holder::class.memberProperties.forEach { prop ->
+            if (!prop.returnType.toString().startsWith("SnapshotStateList<")) {
+                log("Skipping non-list property ${prop.name}", "bad")
+                return@forEach
+            }
+
+            prop.isAccessible = true
+            val stateList = prop.getter.call(holder) as? SnapshotStateList<Any>
+            if (stateList == null) {
+                log("Property ${prop.name} is null or not a SnapshotStateList", "bad")
+                return@forEach
+            }
+
+            log("Loading list ${prop.name}", "bad")
+            // Determine element type
+            val arg = prop.returnType.arguments.first().type?.classifier
+            val elementClass = (arg as? KClass<*>)?.java
+            if (elementClass == null) {
+                log("Cannot determine element type for ${prop.name}", "bad")
+                return@forEach
+            }
+            val type = TypeToken.getParameterized(List::class.java, elementClass).type
+
+            // Read JSON
+            val json = prefs.getString(prop.name, "[]") ?: "[]"
+            log("Raw JSON for ${prop.name}: $json", "bad")
+            lastJson[prop.name] = json
+
+            // Deserialize & populate
+            val items: List<Any> = Gson().fromJson(json, type)
+            stateList.clear()
+            items.forEach { item ->
+                stateList.add(item)
+                log("  → Added to ${prop.name}: $item", "bad")
+            }
+        }
+
+        log("Initialization complete", "bad")
     }
-    fun IntList(){
+    fun startAutoSave(holder: Any) {
+        if (autoSaveJob?.isActive == true) {
+            log("Auto-save already running", "bad")
+            return
+        }
 
+        autoSaveJob = CoroutineScope(Dispatchers.IO).launch {
+            val gson = Gson()
+            val prefs = Global1.context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+
+            log("Auto-save loop started", "bad")
+            while (isActive) {
+                val editor = prefs.edit()
+                var modified = false
+
+                holder::class.memberProperties.forEach { prop ->
+                    if (!prop.returnType.toString().startsWith("SnapshotStateList<")) {
+                        return@forEach
+                    }
+
+                    prop.isAccessible = true
+                    val list = prop.getter.call(holder) as? SnapshotStateList<Any>
+                        ?: return@forEach
+
+                    val json = gson.toJson(list)
+                    val key = prop.name
+
+                    if (lastJson[key] != json) {
+                        log("Detected change in $key — saving ${list.size} items", "bad")
+                        editor.putString(key, json)
+                        lastJson[key] = json
+                        modified = true
+                    } else {
+                        log("No change for $key", "bad")
+                    }
+                }
+
+                if (modified) {
+                    editor.apply()
+                    log("Preferences applied", "bad")
+                }
+
+                delay(1_000L)
+            }
+        }
     }
+
 
     fun Bsave() {
         if (Dosave?.isActive == true) return
@@ -364,10 +456,9 @@ object SettingsSaved {
                         is Float -> edit.putFloat(bar.name, value)
                         is Long -> edit.putLong(bar.name, value)
                     }
-                    delay(20L) // take it slow and steady (5ml-what takes)
                 }
                 edit.apply()
-                delay(10_000L) // save every 10 seconds
+                delay(1_000L) // save every 5 seconds
             }
         }
     }
