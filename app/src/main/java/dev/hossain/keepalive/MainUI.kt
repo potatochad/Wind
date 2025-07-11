@@ -97,6 +97,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
@@ -113,17 +114,23 @@ fun Main() {
 
 
 
-    val coloredTarget = buildAnnotatedString {
-        val correctChars = Bar.targetText.zip(Bar.currentInput).takeWhile { it.first == it.second }.size
-        val correctInput = Bar.currentInput.take(correctChars)
-        for (i in Bar.targetText.indices) {
-            if (i < correctInput.length) {
-                withStyle(style = SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold)) {
-                    append(Bar.targetText[i])
-                }
+    fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
+        for (i in text.indices) {
+            if (i < correctUntil) {
+                pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
+                append(text[i])
+                pop()
             } else {
-                append(Bar.targetText[i])
+                append(text[i])
             }
+        }
+    }
+    val correctChars = Bar.targetText.zip(Bar.currentInput)
+        .takeWhile { it.first == it.second }.size
+
+    val coloredTarget = remember(Bar.targetText, Bar.currentInput) {
+        buildAnnotatedString {
+            appendAnnotated(Bar.targetText, correctChars)
         }
     }
 
@@ -161,34 +168,36 @@ fun Main() {
             OutlinedTextField(
                 value = Bar.currentInput,
                 onValueChange = {
-                    Bar.currentInput = it
-                    log("Bar.currentInput, on value change; ${Bar.currentInput}")
-                    log("the itttttt; ${it}")
-                    log("initOnce; ${initOnce}")
+                    if (it.length - Bar.currentInput.length <= 5) {
+                        Bar.TotalTypedLetters +=1
+                        Bar.currentInput = it
+                        log("Bar.currentInput, on value change; ${Bar.currentInput}")
+                        log("the itttttt; ${it}")
+                        log("initOnce; ${initOnce}")
 
-                    val correctChars = Bar.targetText.zip(Bar.currentInput)
-                        .takeWhile { it.first == it.second }.size
-                    val correctInput = Bar.currentInput.take(correctChars)
+                        val correctChars = Bar.targetText.zip(Bar.currentInput)
+                            .takeWhile { it.first == it.second }.size
+                        val correctInput = Bar.currentInput.take(correctChars)
 
 
-                    val newlyEarned = correctInput.length - Bar.highestCorrect
-                    if (newlyEarned > 0) {
-                        var oldFunTime = Bar.funTime
-                        Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
-                            log(
-                                "!funTime += newlyEarned * S_Data.int(LetterToTime)- VALUE DID NOT CHANGE, CLUES: ${oldFunTime}-OLDFUNTIME,,,${Bar.funTime}-funTime,,,${newlyEarned}-newlyEarned,,,${Bar.LetterToTime}-LetterToTime,,,",
-                                "BAD"
-                            )
+                        val newlyEarned = correctInput.length - Bar.highestCorrect
+                        if (newlyEarned > 0) {
+                            var oldFunTime = Bar.funTime
+                            Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
+                                log(
+                                    "!funTime += newlyEarned * S_Data.int(LetterToTime)- VALUE DID NOT CHANGE, CLUES: ${oldFunTime}-OLDFUNTIME,,,${Bar.funTime}-funTime,,,${newlyEarned}-newlyEarned,,,${Bar.LetterToTime}-LetterToTime,,,",
+                                    "BAD"
+                                )
+                            }
+                            Bar.highestCorrect = correctInput.length
                         }
-                        Bar.highestCorrect = correctInput.length
-                    }
 
-                    if (correctInput == Bar.targetText) {
-                        Bar.funTime += Bar.DoneRetype_to_time
-                        Bar.currentInput = ""  // Reset input when completed
-                        Bar.highestCorrect = 0
+                        if (correctInput == Bar.targetText) {
+                            Bar.funTime += Bar.DoneRetype_to_time
+                            Bar.currentInput = ""  // Reset input when completed
+                            Bar.highestCorrect = 0
+                        }
                     }
-
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -211,6 +220,8 @@ fun Main() {
 fun FunScreen() {
     Bar.GenshinApk = "com.miHoYo.GenshinImpact"
     LaunchedEffect(Unit) {
+        Bar.funTime = 600
+        Bar.LetterToTime =1
         while (true) {
             delay(1000)
             Bar.funTime -=1

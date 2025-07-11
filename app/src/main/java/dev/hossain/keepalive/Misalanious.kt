@@ -2,6 +2,9 @@ package dev.hossain.keepalive
 
 import android.app.AlertDialog
 import android.app.Service
+import android.app.admin.DeviceAdminReceiver
+import android.app.admin.DevicePolicyManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -73,7 +76,18 @@ import timber.log.Timber
 import android.provider.Settings
 import android.content.Intent
 import android.net.Uri
+import android.view.ViewGroup
+import android.webkit.WebView
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.viewinterop.AndroidView
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.isActive
+import java.time.LocalDate
 
 
 //region NavController
@@ -105,6 +119,16 @@ fun MyNavGraph(navController: NavHostController, startDestination: String, modif
         composable("FunScreen") {
             FunScreen()
         }
+        composable("RecommendedScreen") {
+            RecommendedScreen()
+        }
+        composable("EditScreen") {
+            EditScreen()
+        }
+        composable("Achievements") {
+            Achievements()
+        }
+
     }
 }
 
@@ -119,6 +143,59 @@ fun MyNavGraph(navController: NavHostController, startDestination: String, modif
 //region MICALANIOUS UI
 
 @Composable
+fun EditScreen() {
+    if (Bar.funTime < 1000) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "NOT ENOUGH POINTS",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        return
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Edit text",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = Bar.targetText,
+            onValueChange = { Bar.targetText = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 100.dp, max = 500.dp)
+                .verticalScroll(rememberScrollState())
+        )
+    }
+}
+
+@Composable
+fun Achievements(){
+    Column(modifier = Modifier
+        .padding(16.dp)
+        .verticalScroll(rememberScrollState())) {
+        Text(
+            text = "Total typed letters: ${Bar.TotalTypedLetters}",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
 fun ChillTimeButton(){
     Button(onClick = { if (Bar.funTime <= 0) { Toast.makeText(Global1.context, "GET BACK TO WORK", Toast.LENGTH_SHORT).show() } else
     {
@@ -128,12 +205,24 @@ fun ChillTimeButton(){
     }, modifier = Modifier.fillMaxWidth()) { Text("Chill Time 🌴") }
 }
 
-
+//TOP BAR
 @Composable
 fun MainHeader(){
-    MenuIcon()
-    ChillIcon()
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        MenuIcon()
+        ChillIcon()
+        EditIcon()
 
+
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(text = "Waterdo: ${Bar.WaterDOtime_spent}", fontSize = 15.sp, fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+fun RecommendedScreen() {
+    Button(onClick = {OpenDeviceAdminSettings()}) { Text("Make Uninstallable") }
 }
 
 //region MENU
@@ -174,6 +263,11 @@ fun Menu() {
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
+                MenuButton("Recommended", Icons.Filled.Info, Color(0xFFB5E8FF)) {
+                    Global1.navController.navigate("RecommendedScreen")
+                    Close()
+                }
                 MenuButton("Support", Icons.Filled.Email, Color(0xFFB5E8FF)) {
                     launchSupportEmail()
                     Close()
@@ -355,6 +449,32 @@ suspend fun Context.getAllInstalledApps(){
     }
 }
 
+//CHECKS IF NEW DAY/// WIRED UP TO SETTINGS VAR NEWDAY
+object DayChecker {
+    private var job: Job? = null
+    private var lastDate: String = LocalDate.now().toString()
+
+    fun start() {
+        if (job?.isActive == true) return  // Already running
+
+        job = CoroutineScope(Dispatchers.Default).launch {
+            while (coroutineContext.isActive) {
+                delay(60 * 1000L)
+                val today = LocalDate.now().toString()
+                if (today != lastDate) {
+                    lastDate = today
+                    onNewDay()
+                }
+            }
+        }
+    }
+
+    private fun onNewDay() {
+        Bar.NewDay = true
+        Bar.WaterDOtime_spent = 0
+    }
+}
+
 
 @Composable
 fun MenuIcon() {
@@ -373,6 +493,19 @@ fun ChillIcon() {
         Icon(
             imageVector = Icons.Default.Info,
             contentDescription = "Menu",
+            tint = Color(0xFFFFD700)
+        )
+    }
+
+}
+
+@Composable
+fun EditIcon() {
+
+    IconButton(onClick = {Global1.navController.navigate("EditScreen")}) {
+        Icon(
+            imageVector = Icons.Default.Edit,
+            contentDescription = "Edit",
             tint = Color(0xFFFFD700)
         )
     }
@@ -399,5 +532,22 @@ fun DrawOnTopPermission(){
         alert.create().show()
     }
 }
+
+fun OpenDeviceAdminSettings() {
+    val context = Global1.context
+    val intent = Intent(Settings.ACTION_SECURITY_SETTINGS)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    context.startActivity(intent)
+}
+//must have this thing
+class MyDeviceAdminReceiver : DeviceAdminReceiver()
+
+val gotAdmin = (Global1.context
+    .getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager)
+    .isAdminActive(ComponentName(Global1.context, MyDeviceAdminReceiver::class.java))
+
+
+
+
 //endregion
 

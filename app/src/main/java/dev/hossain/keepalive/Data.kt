@@ -45,7 +45,7 @@ class Settings {
 
     //region COPY PASTE THING
     var targetText by mutableStateOf("I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it,and how I programm, all logic MUST BE WRITTEN BY ME, IT MUST BEEEE, otherwise will spend many hours and thus resulting a catastrophic outcome, of nothing achieved, like those 5 months!!! I need to keep with it, AND GET IT TO BEAR FRUIT AS FAST AS possible. Skip all the nonesense, of logicall app making, just get it done as dirty as possible, to the genshin part. And make it work, stack upon thing after thing. Can improve the thing later, get money to a person, etc... All i must do is stick with the idea: type stuff and get time to have fun. Done, I MUST FOCUS ON ONE IDEA, ONE ONLYYY. Goal is consistency, nothing else, nothing else!!")
-    var LetterToTime by mutableStateOf(3)
+    var LetterToTime by mutableStateOf(1)
     var DoneRetype_to_time by mutableStateOf(60)
     var currentInput by mutableStateOf("")
     var highestCorrect by mutableStateOf(0)
@@ -57,10 +57,14 @@ class Settings {
     var ShowMenu by mutableStateOf(false)
     var CheckInstalledApps by mutableStateOf(true)
     var AppList = mutableStateListOf<Apps>()
+    var TotalTypedLetters by mutableStateOf(0)
 
 
     var COUNT by mutableStateOf(0)
-    var ServiceId by mutableStateOf("null")
+    var NewDay by mutableStateOf(true)
+
+    //refreshs to 0 daily// if more than 50 seconds, get 600 time
+    var WaterDOtime_spent by mutableStateOf(0)
     //endregion
 }
 
@@ -74,60 +78,6 @@ data class Apps(
     var Exists by mutableStateOf(true)
     var TimeSpent by mutableStateOf(0f)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -252,7 +202,9 @@ class WatchdogService : Service() {
                     val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
 
                     log("BACKGROUND---CURRENT APP:::${currentApp};", "bad")
-                    if (currentApp == Bar.GenshinApk || currentApp == "com.android.settings" || currentApp == "com.sec.android.app.clockpackage") {
+                    /* ...
+                    || currentApp == "com.sec.android.app.clockpackage"*/
+                    if (currentApp == Bar.GenshinApk ) {
                         if (Bar.funTime >100) {
                             Bar.funTime -=1
                             log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
@@ -260,6 +212,28 @@ class WatchdogService : Service() {
                         else {
                             BlockScreen()
                             log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+                        }
+                    }
+                    if (currentApp == "com.android.settings") {
+
+                        if (Bar.funTime >1_000) {
+                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
+                        }
+                        else {
+                            if (gotAdmin) {
+                                BlockScreen()
+                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+                            }
+                        }
+                    }
+                    if (currentApp == "com.seekrtech.waterapp") {
+                        if (Bar.NewDay) {
+                            if (Bar.WaterDOtime_spent > 50) {
+                                Bar.funTime += 600
+                                Bar.NewDay = false
+                            } else {
+                                Bar.WaterDOtime_spent += 1
+                            }
                         }
                     }
 
@@ -276,18 +250,6 @@ class WatchdogService : Service() {
 
 
 //endregion
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -318,6 +280,7 @@ fun AppStart_beforeUI(context: Context) {
 @Composable
 fun AppStart() {
     LaunchedEffect(Unit) {
+        DayChecker.start()
         Bar.CheckInstalledApps= true
     }
 }
