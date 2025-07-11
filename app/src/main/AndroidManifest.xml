@@ -79,7 +79,7 @@
             It indicates that the service performs a task that is critical to the app's functionality and should not be interrupted.
         -->
         <service
-            android:name=".service.WatchdogService"
+            android:name=".WatchdogService"
             android:foregroundServiceType="specialUse" />
 
         <receiver

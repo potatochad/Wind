@@ -68,45 +68,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-//region BACKGROUND TASK
 
-class WatchdogService : Service() {
-    companion object { private const val NOTIFICATION_ID = 1 }
-    private val serviceJob = SupervisorJob()
-    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
-    private val notificationHelper = NotificationHelper(this)
-    private lateinit var activityLogger: AppActivityLogger
-    private var currentServiceInstanceId: Int = 0
-    override fun onBind(intent: Intent?): IBinder? {
-        Timber.d("onBind: $intent")
-        return null
-    }
-
-    //* FUNCTION RESPONSIBLE FOR WHAT HAPPENS WHEN BACKGROUND TASK RUNS
-    override fun onStartCommand(
-        intent: Intent?,
-        flags: Int,
-        startId: Int,
-    ): Int {
-        Timber.d("onStartCommand() called with: intent = $intent, flags = $flags, startId = $startId")
-        currentServiceInstanceId = startId
-        notificationHelper.createNotificationChannel()
-        activityLogger = AppActivityLogger(applicationContext)
-        startForeground(NOTIFICATION_ID, notificationHelper.buildNotification(),)
-
-
-        serviceScope.launch {
-
-
-        }
-        return START_STICKY
-    }
-
-    override fun onDestroy() { super.onDestroy(); serviceScope.cancel() }
-}
-
-
-//endregion
 
 //region NavController
 //Global1.navController - to use anywhere, no input

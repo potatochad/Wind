@@ -103,8 +103,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.viewinterop.AndroidView
 import kotlinx.coroutines.delay
 
-// Usage examples
-
 
 @Composable
 fun Main() {
@@ -200,14 +198,14 @@ fun Main() {
 }
 
 
-
 @Composable
 fun FunScreen() {
-
+    Bar.GenshinApk = "com.miHoYo.GenshinImpact"
     LaunchedEffect(Unit) {
         while (true) {
             delay(1000)
             Bar.funTime -=1
+            if (Bar.funTime <=0) {Global1.navController.navigate("Main")}
         }
     }
 
