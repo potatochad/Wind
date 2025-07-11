@@ -3,7 +3,6 @@ package dev.hossain.keepalive
 import android.app.Service
 import android.app.usage.UsageStatsManager
 import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.IBinder
@@ -26,6 +25,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.UUID
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
+import androidx.compose.runtime.*
+import android.provider.Settings
+import android.view.LayoutInflater
+import android.view.WindowManager
+import android.os.Handler
+import android.os.Looper
+import android.content.Intent
+import android.view.View
+import android.graphics.PixelFormat
+import android.widget.Button
+import androidx.compose.material3.AlertDialog
 
 
 class Settings {
@@ -126,13 +138,86 @@ data class Apps(
 
 class WatchdogService : Service() {
     private val serviceJob = SupervisorJob()
-    private val serviceScope = CoroutineScope(Dispatchers.Default + serviceJob)
+    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
     private var OneJob: Job? = null
 
     override fun onBind(intent: Intent?): IBinder? {
         Timber.d("onBind: $intent")
         return null
     }
+
+    //region Boring
+    private var isOverlayShowing = false
+
+    fun BlockScreen() {
+        if (!Settings.canDrawOverlays(this)) { log("canDrawOverlays----PERMISSSION NOT GRANTED", "bad"); return}
+
+        val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+        val XmlBuilder = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val XmlView = XmlBuilder.inflate(R.layout.overlay_layout, null)
+
+        //region SCREEN PRAMS-BORING
+
+        val layoutParams = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            else
+                WindowManager.LayoutParams.TYPE_PHONE,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSLUCENT
+        )
+
+        //endregion
+
+        if (!isOverlayShowing) { log("Showing BlockScreen:::isOverlayShowing---${isOverlayShowing}", "bad"); windowManager.addView(XmlView, layoutParams); isOverlayShowing = true }
+        if (XmlView?.isAttachedToWindow == true) { } else { isOverlayShowing = false;log("NOW SHOWING BlockScreen:::isOverlayShowing-----${isOverlayShowing}", "bad") }
+
+
+        //region WAIT 10 SECONS TO LEAVE
+
+        var secondsLeft = 10
+        val leaveButton = XmlView.findViewById<Button>(R.id.leaveButton)
+        leaveButton.isEnabled = false
+        leaveButton.text = secondsLeft.toString()
+
+        val handler = Handler(Looper.getMainLooper())
+        val countdown = object : Runnable {
+            override fun run() {
+                log("BLOCK SCREEN: Counting down---secondsLeft---${secondsLeft}", "bad")
+                secondsLeft--
+
+                if (secondsLeft > 0) {
+                    leaveButton.text = secondsLeft.toString()
+                    handler.postDelayed(this, 1000) // wait 1 second, then run again
+                } else {
+                    leaveButton.text = "Leave"
+                    leaveButton.isEnabled = true // now they can click it
+                }
+            }
+        }
+        handler.postDelayed(countdown, 1000) // start after 1 second
+
+
+        //endregion
+
+        leaveButton.setOnClickListener {
+            log("BLOCK SCREEN: Clicked leave button", "bad")
+            val intent = Intent(Global1.context, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            Global1.context.startActivity(intent)
+
+            // Also remove the overlay from screen
+
+            log("Removing Overlay Screen+ isOverlayShowing = false", "bad")
+            isOverlayShowing = false
+            windowManager.removeView(XmlView)
+        }
+
+    }
+
+    //endregion
 
     override fun onStartCommand(
         intent: Intent?,
@@ -165,11 +250,18 @@ class WatchdogService : Service() {
                     !THIS REQUIRES NAVIGATING USER TO IT*/
                     val AppsUsed = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, NowTime - 20_000, NowTime)
                     val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
-                    log("BACKGROUND---CURRENT APP:::${currentApp}; ${Bar.COUNT}", "bad")
-                    if (currentApp == Bar.GenshinApk) {
-                        log("APP IS GENSHINNNNN:::${currentApp}", "bad")
-                    }
 
+                    log("BACKGROUND---CURRENT APP:::${currentApp};", "bad")
+                    if (currentApp == Bar.GenshinApk || currentApp == "com.android.settings" || currentApp == "com.sec.android.app.clockpackage") {
+                        if (Bar.funTime >100) {
+                            Bar.funTime -=1
+                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
+                        }
+                        else {
+                            BlockScreen()
+                            log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+                        }
+                    }
 
                     //endregion BLOCK APP
 

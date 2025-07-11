@@ -106,6 +106,13 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun Main() {
+
+
+    //FIX THIS LATERRRR
+    DrawOnTopPermission()
+
+
+
     val coloredTarget = buildAnnotatedString {
         val correctChars = Bar.targetText.zip(Bar.currentInput).takeWhile { it.first == it.second }.size
         val correctInput = Bar.currentInput.take(correctChars)
@@ -119,6 +126,8 @@ fun Main() {
             }
         }
     }
+
+
 
 
     /*

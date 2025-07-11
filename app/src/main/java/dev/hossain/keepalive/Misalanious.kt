@@ -1,8 +1,8 @@
 package dev.hossain.keepalive
 
+import android.app.AlertDialog
 import android.app.Service
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -37,6 +37,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +56,7 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import dev.hossain.keepalive.Global1.context
 import dev.hossain.keepalive.data.PermissionType
 import dev.hossain.keepalive.data.logging.AppActivityLogger
 import dev.hossain.keepalive.ui.screen.Permissions_Screen
@@ -68,6 +70,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
+import android.provider.Settings
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.material3.AlertDialog
 
 
 //region NavController
@@ -377,5 +383,21 @@ fun Header(message: String) {
     Text(text = message, fontSize = 28.sp)
 }
 
+fun DrawOnTopPermission(){
+    context = Global1.context
+    if (!Settings.canDrawOverlays(context)) {
+        val alert = AlertDialog.Builder(context)
+        alert.setTitle("Permission Needed")
+        alert.setMessage("Grant appear on top permission")
+
+        alert.setPositiveButton("ok") { _,_ ->
+            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${context.packageName}"))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+
+        }
+        alert.create().show()
+    }
+}
 //endregion
 
