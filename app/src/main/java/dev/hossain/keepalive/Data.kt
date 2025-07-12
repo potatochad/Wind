@@ -41,6 +41,7 @@ import androidx.compose.material3.AlertDialog
 import android.accessibilityservice.AccessibilityService
 import android.app.Activity
 import android.content.ContextWrapper
+import android.graphics.Rect
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
@@ -369,6 +370,7 @@ class WatchdogAccessibilityService  : AccessibilityService() {
     * */
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         CurrentApp(event)
+        GETEVERYTHING(event)
     }
     fun CurrentApp(event: AccessibilityEvent?) {
         if (event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
@@ -376,8 +378,6 @@ class WatchdogAccessibilityService  : AccessibilityService() {
             log("CURRENT APP: ${Bar.currentApp}", "bad")
         }
     }
-
-
     private fun exploreNodeTree(node: AccessibilityNodeInfo?, depth: Int) {
         if (node == null) return
 
@@ -387,21 +387,37 @@ class WatchdogAccessibilityService  : AccessibilityService() {
         val id = node.viewIdResourceName
         val desc = node.contentDescription
         val className = node.className
+        val clickable = node.isClickable
+        val enabled = node.isEnabled
+        val focused = node.isFocused
+        val focusable = node.isFocusable
+        val visible = node.isVisibleToUser
+        val bounds = Rect().apply { node.getBoundsInScreen(this) }
 
-        Log.d("UI-LOG", "$indent Node:")
-        if (!text.isNullOrEmpty()) Log.d("UI-LOG", "$indent   Text: $text")
-        if (!desc.isNullOrEmpty()) Log.d("UI-LOG", "$indent   Description: $desc")
-        if (!id.isNullOrEmpty()) Log.d("UI-LOG", "$indent   ID: $id")
-        Log.d("UI-LOG", "$indent   Class: $className")
+        // Header
+        log("$indent Node:", "bad")
 
+        // Properties
+        if (!text.isNullOrEmpty()) log("$indent   Text: $text", "bad")
+        if (!desc.isNullOrEmpty()) log("$indent   Description: $desc", "bad")
+        if (!id.isNullOrEmpty()) log("$indent   ID: $id", "bad")
+        log("$indent   Class: $className", "bad")
+        log("$indent   Clickable: $clickable", "bad")
+        log("$indent   Enabled: $enabled", "bad")
+        log("$indent   Focused: $focused", "bad")
+        log("$indent   Focusable: $focusable", "bad")
+        log("$indent   Visible: $visible", "bad")
+        log("$indent   Bounds: $bounds", "bad")
+
+        // Children
         for (i in 0 until node.childCount) {
             exploreNodeTree(node.getChild(i), depth + 1)
         }
     }
+
     fun GETEVERYTHING(event: AccessibilityEvent?) {
         val root = rootInActiveWindow
         if (root != null) {
-            Log.d("UI-LOG", "---- NEW SCREEN EVENT ----")
             exploreNodeTree(root, 0)
         }
     }
