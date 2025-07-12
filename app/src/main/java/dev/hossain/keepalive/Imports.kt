@@ -824,11 +824,10 @@ fun TopBar(navController: NavController, onClick: () -> Unit) {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Settings(navController: NavHostController) {
+fun Settings_Example() {
     var expanded by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     SettingsScreen(
-        navController = navController,
         title = "Settings",
         onSearchClick = { }
     ) {
@@ -837,7 +836,7 @@ fun Settings(navController: NavHostController) {
             icon = Icons.Outlined.Tune,
             title = "Defaults",
             subtitle = "Task, System",
-            onClick = { navController.navigate("S_DefaultsScreen")  }
+            onClick = { Global1.navController.navigate("S_DefaultsScreen")  }
         )
 
         SettingItem(
@@ -848,9 +847,8 @@ fun Settings(navController: NavHostController) {
 }
 
 @Composable
-fun S_DefaultsScreen(navController: NavHostController){
+fun S_DefaultsScreen(){
     SettingsScreen(
-        navController = navController,
         title = "Defaults",
         onSearchClick = { }
     ) {
@@ -972,7 +970,6 @@ fun settingsHeader(
 
 @Composable
 fun SettingsScreen(
-    navController: NavController,
     title: String,
     onSearchClick: () -> Unit = {},
     modifier: Modifier = Modifier,
@@ -997,7 +994,7 @@ fun SettingsScreen(
             settingsHeader(
                 title = title,
                 onSearchClick = onSearchClick,
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { Global1.navController.popBackStack() }
             )
         }
         item {

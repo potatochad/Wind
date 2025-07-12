@@ -38,18 +38,26 @@ import android.view.View
 import android.graphics.PixelFormat
 import android.widget.Button
 import androidx.compose.material3.AlertDialog
+import android.accessibilityservice.AccessibilityService
+import android.util.Log
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
 
 
 class Settings {
     var funTime by mutableStateOf(0)
 
+    var BlockYoutube by mutableStateOf(false)
+    var BlockSettings by mutableStateOf(false)
+    var currentApp by mutableStateOf("")
+
+
     //region COPY PASTE THING
-    var targetText by mutableStateOf("I am doing this project to regain freedom in my life. It is most important project ever, but that doesn't mean i need to take it soop seriously. I need to only focus on it,and how I programm, all logic MUST BE WRITTEN BY ME, IT MUST BEEEE, otherwise will spend many hours and thus resulting a catastrophic outcome, of nothing achieved, like those 5 months!!! I need to keep with it, AND GET IT TO BEAR FRUIT AS FAST AS possible. Skip all the nonesense, of logicall app making, just get it done as dirty as possible, to the genshin part. And make it work, stack upon thing after thing. Can improve the thing later, get money to a person, etc... All i must do is stick with the idea: type stuff and get time to have fun. Done, I MUST FOCUS ON ONE IDEA, ONE ONLYYY. Goal is consistency, nothing else, nothing else!!")
+    var targetText by mutableStateOf("I can do good things, I am amazing, I make mistakes, I try my best. I want to do x")
     var LetterToTime by mutableStateOf(1)
     var DoneRetype_to_time by mutableStateOf(60)
     var currentInput by mutableStateOf("")
     var highestCorrect by mutableStateOf(0)
-    var GenshinApk by mutableStateOf("com.miHoYo.GenshinImpact")
     //endregion
 
 
@@ -59,13 +67,19 @@ class Settings {
     var AppList = mutableStateListOf<Apps>()
     var TotalTypedLetters by mutableStateOf(0)
 
-
     var COUNT by mutableStateOf(0)
     var NewDay by mutableStateOf(true)
 
     //refreshs to 0 daily// if more than 50 seconds, get 600 time
     var WaterDOtime_spent by mutableStateOf(0)
     //endregion
+
+    //region PERMISSIONS
+
+    var AccesabilityPermission by mutableStateOf(false)
+
+
+    //endegion
 }
 
 
@@ -189,45 +203,40 @@ class WatchdogService : Service() {
 
                     //endregion
 
-                    //region BLOCK APP
+                    if (Bar.BlockYoutube) {
+                        if (Bar.currentApp == "com.google.android.youtube" ) {
+                            log("CURRENT APP,blocking: ${Bar.currentApp}", "bad")
 
-                    val usageStatsManager = Global1.context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-                    val NowTime = System.currentTimeMillis()
-
-                    /*
-                    * THIS IS NOT SUPER ACCURATE
-                    ? If you want better precision, you’ll need an Accessibility Service.
-                    !THIS REQUIRES NAVIGATING USER TO IT*/
-                    val AppsUsed = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, NowTime - 20_000, NowTime)
-                    val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
-
-                    log("BACKGROUND---CURRENT APP:::${currentApp};", "bad")
-                    /* ...
-                    || currentApp == "com.sec.android.app.clockpackage"*/
-                    if (currentApp == Bar.GenshinApk ) {
-                        if (Bar.funTime >100) {
-                            Bar.funTime -=1
-                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-                        }
-                        else {
-                            BlockScreen()
-                            log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
-                        }
-                    }
-                    if (currentApp == "com.android.settings") {
-
-                        if (Bar.funTime >1_000) {
-                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-                        }
-                        else {
-                            if (gotAdmin) {
+                            if (Bar.funTime >100) {
+                                Bar.funTime -=1
+                                log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
+                            }
+                            else {
                                 BlockScreen()
-                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+                                log("BACKGROUND---Blocking APP:::${Bar.currentApp}; ${Bar.COUNT}", "bad")
                             }
                         }
                     }
-                    if (currentApp == "com.seekrtech.waterapp") {
+                    if (Bar.BlockSettings) {
+                        if (Bar.currentApp == "com.android.settings") {
+                            log("CURRENT APP: ${Bar.currentApp}", "bad")
+                            if (Bar.funTime > 1_000) {
+                                log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
+                            } else {
+                                if (gotAdmin) {
+                                    BlockScreen()
+                                    log(
+                                        "BACKGROUND---Blocking APP:::${Bar.currentApp}; ${Bar.COUNT}",
+                                        "bad"
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    if (Bar.currentApp == "com.seekrtech.waterapp") {
+                        log("CURRENT APP: ${Bar.currentApp}", "bad")
                         if (Bar.NewDay) {
+                            log("NEW DAY ----${Bar.NewDay}", "bad")
                             if (Bar.WaterDOtime_spent > 50) {
                                 Bar.funTime += 600
                                 Bar.NewDay = false
@@ -237,7 +246,6 @@ class WatchdogService : Service() {
                         }
                     }
 
-                    //endregion BLOCK APP
 
                 }
             }
@@ -282,6 +290,7 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
         Bar.CheckInstalledApps= true
+        AccessibilityPermission()
     }
 }
 
@@ -300,3 +309,89 @@ object Global1 {
 //endregion
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* IT AUTO CALLS ITSELF
+YEA, WEIRD ONLY FEW FUNCTIONS IT CALLS
+? YOU MUST WORK WITH IT WANT AND SET UP
+! onAccessibilityEvent- IS A MUST AND ONLY ON CHANGE CALLED
+* */
+class WatchdogAccessibilityService  : AccessibilityService() {
+
+    /* ON CHANGE DO X
+    ! this is very important
+    ? must be names onAccessibilityEvent
+
+    * */
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        CurrentApp(event)
+    }
+    fun CurrentApp(event: AccessibilityEvent?) {
+        if (event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
+            Bar.currentApp = event.packageName.toString()
+            log("CURRENT APP: ${Bar.currentApp}", "bad")
+        }
+    }
+
+
+    private fun exploreNodeTree(node: AccessibilityNodeInfo?, depth: Int) {
+        if (node == null) return
+
+        val indent = "  ".repeat(depth)
+
+        val text = node.text
+        val id = node.viewIdResourceName
+        val desc = node.contentDescription
+        val className = node.className
+
+        Log.d("UI-LOG", "$indent Node:")
+        if (!text.isNullOrEmpty()) Log.d("UI-LOG", "$indent   Text: $text")
+        if (!desc.isNullOrEmpty()) Log.d("UI-LOG", "$indent   Description: $desc")
+        if (!id.isNullOrEmpty()) Log.d("UI-LOG", "$indent   ID: $id")
+        Log.d("UI-LOG", "$indent   Class: $className")
+
+        for (i in 0 until node.childCount) {
+            exploreNodeTree(node.getChild(i), depth + 1)
+        }
+    }
+    fun GETEVERYTHING(event: AccessibilityEvent?) {
+        val root = rootInActiveWindow
+        if (root != null) {
+            Log.d("UI-LOG", "---- NEW SCREEN EVENT ----")
+            exploreNodeTree(root, 0)
+        }
+    }
+    override fun onInterrupt() {
+        log("ACESABILITY Service interrupted.", "bad")
+    }
+}

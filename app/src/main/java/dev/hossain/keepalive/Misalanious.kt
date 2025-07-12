@@ -1,6 +1,7 @@
 package dev.hossain.keepalive
 
 import android.app.AlertDialog
+import android.app.AppOpsManager
 import android.app.Service
 import android.app.admin.DeviceAdminReceiver
 import android.app.admin.DevicePolicyManager
@@ -76,15 +77,32 @@ import timber.log.Timber
 import android.provider.Settings
 import android.content.Intent
 import android.net.Uri
+import android.os.Process
 import android.view.ViewGroup
 import android.webkit.WebView
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.AttachMoney
+import androidx.compose.material.icons.outlined.CalendarToday
+import androidx.compose.material.icons.outlined.LockOpen
+import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavController
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import java.time.LocalDate
@@ -128,6 +146,10 @@ fun MyNavGraph(navController: NavHostController, startDestination: String, modif
         composable("Achievements") {
             Achievements()
         }
+        composable("SettingsScreen") {
+            SettingsScreen()
+        }
+
 
     }
 }
@@ -194,6 +216,7 @@ fun Achievements(){
         )
     }
 }
+
 
 @Composable
 fun ChillTimeButton(){
@@ -277,7 +300,7 @@ fun Menu() {
                     Close()
                 }
                 MenuButton("Settings", Icons.Filled.Settings, Color(0xFFD8DEE9)) {
-                    navController.navigate("Settings")
+                    navController.navigate("SettingsScreen")
                     Close()
                 }
                 MenuButton("Premium", Icons.Filled.Landscape, Color(0xFFFFD700)) {
@@ -352,6 +375,30 @@ fun launchSupportEmail() {
 
 //endregion
 
+
+@Composable
+fun SettingsScreen() {
+
+    SettingsScreen(title = "Settings", onSearchClick = { }) {
+        SettingItem(
+            icon = Icons.Outlined.Tune,
+            title = "BlockYoutube",
+            subtitle = "SmartFilter-needs accessibility permission",
+            endContent = { OnOffSwitch(Bar.BlockYoutube) {
+                AccessibilityPermission()
+                if (Bar.AccesabilityPermission) {
+                    Bar.BlockYoutube = it
+                }
+            }; Spacer(modifier = Modifier.width(35.dp)) }
+        )
+        SettingItem(
+            icon = Icons.Outlined.Tune,
+            title = "BlockSettings",
+            subtitle = "Makes harder to uninstall",
+            endContent = { OnOffSwitch(Bar.BlockSettings) { Bar.BlockSettings = it }; Spacer(modifier = Modifier.width(35.dp)) }
+        )
+    }
+}
 
 
 
@@ -532,6 +579,38 @@ fun DrawOnTopPermission(){
         alert.create().show()
     }
 }
+fun AccessibilityPermission() {
+    val context = Global1.context
+    val serviceId = "${context.packageName}/your.package.name.YourAccessibilityService"
+
+    val enabledServices = Settings.Secure.getString(
+        context.contentResolver,
+        Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+    ) ?: ""
+
+    val isEnabled = enabledServices.contains(serviceId)
+
+    if (!isEnabled) {
+
+        Bar.AccesabilityPermission = false
+        val alert = AlertDialog.Builder(context)
+        alert.setTitle("Permission Needed")
+        alert.setMessage("Grant Accessibility permission for full control")
+
+        alert.setPositiveButton("OK") { _, _ ->
+            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        }
+
+        alert.create().show()
+    }
+    else {
+        Bar.AccesabilityPermission = true
+    }
+}
+
+
 
 fun OpenDeviceAdminSettings() {
     val context = Global1.context
