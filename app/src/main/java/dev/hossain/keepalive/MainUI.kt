@@ -108,9 +108,9 @@ import kotlinx.coroutines.delay
 @Composable
 fun Main() {
 
-
-    //FIX THIS LATERRRR
+    AccessibilityPermission()
     DrawOnTopPermission()
+
 
 
 
@@ -218,7 +218,7 @@ fun Main() {
 
 @Composable
 fun FunScreen() {
-    Bar.GenshinApk = "com.miHoYo.GenshinImpact"
+
     LaunchedEffect(Unit) {
         Bar.funTime = 600
         Bar.LetterToTime =1

@@ -385,10 +385,7 @@ fun SettingsScreen() {
             title = "BlockYoutube",
             subtitle = "SmartFilter-needs accessibility permission",
             endContent = { OnOffSwitch(Bar.BlockYoutube) {
-                AccessibilityPermission()
-                if (Bar.AccesabilityPermission) {
                     Bar.BlockYoutube = it
-                }
             }; Spacer(modifier = Modifier.width(35.dp)) }
         )
         SettingItem(
@@ -579,9 +576,11 @@ fun DrawOnTopPermission(){
         alert.create().show()
     }
 }
+
+@Composable
 fun AccessibilityPermission() {
-    val context = Global1.context
-    val serviceId = "${context.packageName}/your.package.name.YourAccessibilityService"
+    val context = LocalContext.current
+    val serviceId = "${context.packageName}/.WatchdogAccessibilityService"
 
     val enabledServices = Settings.Secure.getString(
         context.contentResolver,
@@ -591,21 +590,18 @@ fun AccessibilityPermission() {
     val isEnabled = enabledServices.contains(serviceId)
 
     if (!isEnabled) {
-
         Bar.AccesabilityPermission = false
-        val alert = AlertDialog.Builder(context)
-        alert.setTitle("Permission Needed")
-        alert.setMessage("Grant Accessibility permission for full control")
+        AlertDialog.Builder(context)
+            .setTitle("Permission Needed")
+            .setMessage("Please enable accessibility for full features.")
+            .setPositiveButton("ok") { _, _ ->
+                val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            }
+            .show()
 
-        alert.setPositiveButton("OK") { _, _ ->
-            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
-        }
-
-        alert.create().show()
-    }
-    else {
+    } else {
         Bar.AccesabilityPermission = true
     }
 }

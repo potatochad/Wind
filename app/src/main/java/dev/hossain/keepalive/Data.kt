@@ -39,6 +39,8 @@ import android.graphics.PixelFormat
 import android.widget.Button
 import androidx.compose.material3.AlertDialog
 import android.accessibilityservice.AccessibilityService
+import android.app.Activity
+import android.content.ContextWrapper
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
@@ -290,7 +292,6 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
         Bar.CheckInstalledApps= true
-        AccessibilityPermission()
     }
 }
 
@@ -301,9 +302,22 @@ fun AppStart() {
 //region GLOBAL
 //* CONTEXT from anywhere!!!
 object Global1 {
+    /* APP CONTEXT
+    Context is weirt:
+    there is application, ok for most things
+    ?and local
+    !which used for popup etc...
+    * */
     lateinit var context: Context
     lateinit var navController: NavHostController
+
+
+    /*POPUPS CRASHING??
+    * USE LOCAL CONTEXT
+    * ? YEA GOT NO BETTER SOLUTION SORRRY*/
+
 }
+
 
 
 //endregion
