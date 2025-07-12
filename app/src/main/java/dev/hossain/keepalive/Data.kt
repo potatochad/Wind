@@ -355,7 +355,8 @@ object Global1 {
 
 
 
-
+/*?WHEN TESTING IS PAINFUL
+* !AUTO DISABLED EACH TIME*/
 /* IT AUTO CALLS ITSELF
 YEA, WEIRD ONLY FEW FUNCTIONS IT CALLS
 ? YOU MUST WORK WITH IT WANT AND SET UP
@@ -370,7 +371,7 @@ class WatchdogAccessibilityService  : AccessibilityService() {
     * */
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         CurrentApp(event)
-        GETEVERYTHING(event)
+        //GETEVERYTHING(event)
     }
     fun CurrentApp(event: AccessibilityEvent?) {
         if (event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {

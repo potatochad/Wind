@@ -112,8 +112,6 @@ fun Main() {
     DrawOnTopPermission()
 
 
-
-
     fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
         for (i in text.indices) {
             if (i < correctUntil) {
