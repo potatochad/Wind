@@ -10,11 +10,12 @@ plugins {
 }
 
 android {
-    namespace = "dev.hossain.keepalive"
+    namespace = "com.productivity.wind"
+
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "dev.hossain.keepalive"
+        applicationId = "com.productivity.wind"
         minSdk = 28
         /*
          * DO NOT TARGET API 35 YET - IT WILL BREAK THE APP
@@ -126,7 +127,7 @@ dependencies {
     implementation("androidx.compose.material3:material3-window-size-class:1.3.2")
 
 
-    
+
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
 
 

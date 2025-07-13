@@ -21,5 +21,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Keep Alive"
+rootProject.name = "Wind"
 include(":app")

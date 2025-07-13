@@ -1,0 +1,124 @@
+package com.productivity.wind.ui.screen
+
+import android.content.Intent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.productivity.wind.data.PermissionType
+import com.productivity.wind.ui.theme.KeepAliveTheme
+
+/**
+ * Main landing screen composable for the Keep Alive app.
+ * Displays the app icon, heading, and manages permission and navigation logic.
+ */
+@Composable
+fun Permissions_Screen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    activityResultLauncher: ActivityResultLauncher<Intent>?,
+    requestPermissionLauncher: ActivityResultLauncher<Array<String>>?,
+    allPermissionsGranted: Boolean = false,
+    permissionType: PermissionType,
+    showPermissionRequestDialog: MutableState<Boolean>,
+    onRequestPermissions: () -> Unit,
+    totalRequiredCount: Int,
+    grantedCount: Int,
+    configuredAppsCount: Int,
+) {
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center).padding(innerPadding),
+        ) {
+
+            //region UI STUFF
+
+            AppHeading(title = "Permissions", modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp),)
+
+            Text(text = "Enable so the app can work 💓", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp),)
+
+            Spacer(modifier = Modifier.height(128.dp))
+            Column {
+                Row(modifier = Modifier.fillMaxWidth().padding(24.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically,)
+                {
+                    Text("ℹ️ Required permission status \nApproved Permissions: $grantedCount of $totalRequiredCount")
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        imageVector = if (allPermissionsGranted) Icons.Filled.Check else Icons.Filled.Clear,
+                        // Set color to red if permission is not granted
+                        tint = if (allPermissionsGranted) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.error,
+                        contentDescription = "Icon",
+                    )
+                }
+                AnimatedVisibility(visible = !allPermissionsGranted, enter = fadeIn(), exit = fadeOut(), modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 32.dp),)
+                {
+                    Button(onClick = { onRequestPermissions() })
+                    {
+                        Text("Grant Permission")
+                    }
+                }
+            }
+
+            //endregion UI STUFFF
+
+            LaunchedEffect(allPermissionsGranted) { if (allPermissionsGranted) { navController.navigate("Main") } }
+        }
+    }
+
+    PermissionDialogs(
+        context = LocalContext.current,
+        permissionType = permissionType,
+        showDialog = showPermissionRequestDialog,
+        activityResultLauncher = activityResultLauncher,
+        requestPermissionLauncher = requestPermissionLauncher,
+    )
+}
+
+@Composable
+fun AppHeading(
+    title: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = title,
+        modifier = modifier,
+        style = MaterialTheme.typography.headlineLarge,
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppHeadingPreview() {
+    KeepAliveTheme {
+        AppHeading("Hello Android App")
+    }
+}
