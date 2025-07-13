@@ -88,6 +88,8 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.AttachMoney
 import androidx.compose.material.icons.outlined.CalendarToday
+import androidx.compose.material.icons.outlined.Chat
+import androidx.compose.material.icons.outlined.Landscape
 import androidx.compose.material.icons.outlined.LockOpen
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Settings
@@ -106,6 +108,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import java.time.LocalDate
+import androidx.compose.material.icons.outlined.QueryStats
 
 
 //region NavController
@@ -235,103 +238,39 @@ fun RecommendedScreen() {
 //region MENU
 @Composable
 fun Menu() {
-    val navController = Global1.navController
-    fun Close() { Bar.ShowMenu = false }
+    Text("HEADER")
 
-    if (Bar.ShowMenu) {
-        // Full-screen overlay; clicking it closes the menu
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xCC000000)).clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) { Close() }
-
-        ) {
-            // Center card; consume clicks so they don't bubble out
-            Column(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(24.dp)
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(Color(0xFF2C2F48), Color(0xFF1C1C2E))
-                        ),
-                        shape = RoundedCornerShape(20.dp)
-                    )
-                    .border(
-                        width = 2.dp,
-                        color = Color(0xFF88C0D0),
-                        shape = RoundedCornerShape(20.dp)
-                    )
-                    .padding(24.dp)
-                    .clickable( // consume clicks inside
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null
-                    ) { /* no-op */ },
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                MenuButton("Recommended", Icons.Filled.Info, Color(0xFFB5E8FF)) {
-                    Global1.navController.navigate("RecommendedScreen")
-                    Close()
-                }
-                MenuButton("Support", Icons.Filled.Email, Color(0xFFB5E8FF)) {
-                    launchSupportEmail()
-                    Close()
-                }
-                MenuButton("Statistics", Icons.Filled.QueryStats, Color(0xFF88C0D0)) {
-                    navController.navigate("Achievements")
-                    Close()
-                }
-                MenuButton("Settings", Icons.Filled.Settings, Color(0xFFD8DEE9)) {
-                    navController.navigate("SettingsScreen")
-                    Close()
-                }
-                MenuButton("Premium", Icons.Filled.Landscape, Color(0xFFFFD700)) {
-                    navController.navigate("premium")
-                    Close()
-                }
-
-                Divider(color = Color.Gray.copy(alpha = 0.5f), thickness = 1.dp)
-
-                MenuButton("Leave", Icons.Filled.ExitToApp, Color(0xFFFF6F61)) {
-                    Close()
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun MenuButton(label: String, icon: ImageVector, tint: Color, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .background(Color(0xFF2E3440), shape = RoundedCornerShape(12.dp))
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = label,
-            tint = tint,
-            modifier = Modifier.size(24.dp)
+    SettingsScreen(titleContent  = {} , onSearchClick = { },showBack = false, showSearch= false,) {
+        SettingItem(
+            icon = Icons.Outlined.Chat,
+            title = "Contact Support",
+            onClick = { SupportEmail(); Bar.ShowMenu = false }
         )
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(
-            text = label,
-            color = Color.White,
-            fontSize = 18.sp
+        /*
+    SettingItem(
+        icon = Icons.Outlined.Landscape,
+        title = "Premium",
+        onClick = { Global1.navController.navigate("")  }
+    )
+    */
+        SettingItem(
+            icon = Icons.Outlined.Landscape,
+            title = "Settings",
+            onClick = { Global1.navController.navigate("SettingsScreen"); Bar.ShowMenu = false }
+        )
+        SettingItem(
+            icon = Icons.Outlined.QueryStats,
+            title = "Achievements",
+            onClick = { Global1.navController.navigate("Achievements"); Bar.ShowMenu = false }
         )
     }
 }
 
 
-fun launchSupportEmail() {
+fun SupportEmail() {
 
         //the inputs, work like you think
-        val subject = "bug: x"
+        val subject = ""
         val body = buildString {
             append("help, x is not working;\n\n")
             append("Phone Info:\n")

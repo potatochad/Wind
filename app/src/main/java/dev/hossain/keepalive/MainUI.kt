@@ -104,6 +104,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.viewinterop.AndroidView
 import kotlinx.coroutines.delay
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.ui.platform.LocalConfiguration
 
 
 @Composable
@@ -131,69 +134,115 @@ fun Main() {
             appendAnnotated(Bar.targetText, correctChars)
         }
     }
-
-    SettingsScreen(titleContent  = { MainHeader() }, showBack= false, showSearch= false) {
-
-        Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
-
-            /*
-    * THE FULL NORMALL UI
-    * TEXT INPUT THING
-    * */
-            Column(modifier = Modifier.padding(16.dp)) {
-
-                Text(
-                    text = coloredTarget,
-                    modifier = Modifier
-                        .height(200.dp)
-                        .verticalScroll(rememberScrollState())
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-
-                OutlinedTextField(
-                    value = Bar.currentInput,
-                    onValueChange = {
-                        if (it.length - Bar.currentInput.length <= 5) {
-                            Bar.TotalTypedLetters += 1
-                            Bar.currentInput = it
-
-                            val correctChars = Bar.targetText.zip(Bar.currentInput)
-                                .takeWhile { it.first == it.second }.size
-                            val correctInput = Bar.currentInput.take(correctChars)
+    val context = LocalContext.current
 
 
-                            val newlyEarned = correctInput.length - Bar.highestCorrect
-                            if (newlyEarned > 0) {
-                                var oldFunTime = Bar.funTime
-                                Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
 
-                                }
-                                Bar.highestCorrect = correctInput.length
-                            }
 
-                            if (correctInput == Bar.targetText) {
-                                Bar.funTime += Bar.DoneRetype_to_time
-                                Bar.currentInput = ""  // Reset input when completed
-                                Bar.highestCorrect = 0
-                            }
-                        }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .verticalScroll(rememberScrollState()),
-                    placeholder = { Text("Start typing...") }
-                )
 
-                Spacer(modifier = Modifier.height(24.dp))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //region MENU CONTROLLER
+    val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    LaunchedEffect(Bar.ShowMenu) {
+        if (Bar.ShowMenu) {
+            log("SHOWING MENUUUUU", "BAD")
+            scope.launch { drawerState.open() } }
+        else {
+
+            log("CLOSING MENUUUU", "BAD")
+            scope.launch { drawerState.close() } }
+    }
+    LaunchedEffect(drawerState) {
+        snapshotFlow { drawerState.isOpen }
+            .collect { isOpen ->
+                if (!isOpen && Bar.ShowMenu) {
+                    Bar.ShowMenu = false
+                }
             }
+    }
+    //endregion MENU CONTROLLER
 
-            /*TOP BAR ITEMS
-    * IF CLICKED WHAT HAPPENS*/
+    ModalNavigationDrawer(drawerState = drawerState, gesturesEnabled = true, drawerContent   = { ModalDrawerSheet(modifier = Modifier.width(halfWidth)) { Menu() } }) {
+        SettingsScreen(titleContent = { MainHeader() }, showBack = false, showSearch = false) {
+            Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
 
+
+                /*
+* THE FULL NORMALL UI
+* TEXT INPUT THING
+* */
+                Column(modifier = Modifier.padding(16.dp)) {
+
+                    Text(
+                        text = coloredTarget,
+                        modifier = Modifier
+                            .height(200.dp)
+                            .verticalScroll(rememberScrollState())
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    OutlinedTextField(
+                        value = Bar.currentInput,
+                        onValueChange = {
+                            if (it.length - Bar.currentInput.length <= 5) {
+                                Bar.TotalTypedLetters += 1
+                                Bar.currentInput = it
+
+                                val correctChars = Bar.targetText.zip(Bar.currentInput)
+                                    .takeWhile { it.first == it.second }.size
+                                val correctInput = Bar.currentInput.take(correctChars)
+
+
+                                val newlyEarned = correctInput.length - Bar.highestCorrect
+                                if (newlyEarned > 0) {
+                                    var oldFunTime = Bar.funTime
+                                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
+
+                                    }
+                                    Bar.highestCorrect = correctInput.length
+                                }
+
+                                if (correctInput == Bar.targetText) {
+                                    Bar.funTime += Bar.DoneRetype_to_time
+                                    Bar.currentInput = ""  // Reset input when completed
+                                    Bar.highestCorrect = 0
+                                }
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .verticalScroll(rememberScrollState()),
+                        placeholder = { Text("Start typing...") }
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+                }
+
+                /*TOP BAR ITEMS
+* IF CLICKED WHAT HAPPENS*/
+
+            }
         }
     }
-    Menu()
 }
 
 
