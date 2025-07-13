@@ -80,7 +80,7 @@ class NotificationHelper(private val context: Context) {
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentTitle(context.getString(R.string.notification_title_app_watchdog))
             .setContentText(context.getString(R.string.notification_content_monitoring_apps))
-            .setSmallIcon(R.drawable.baseline_radar_24kkk)
+            .setSmallIcon(R.drawable.baseline_radar_24)
             .setContentIntent(pendingIntent)
             // Low priority for ongoing background service notification
             .setPriority(NotificationCompat.PRIORITY_LOW)
