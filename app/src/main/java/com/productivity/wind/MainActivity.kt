@@ -34,13 +34,6 @@ import timber.log.Timber
 
 
 class MainActivity : ComponentActivity() {
-    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-    private lateinit var activityResultLauncherForSystemSettings: ActivityResultLauncher<Intent>
-    private val mainViewModel: MainViewModel by viewModels()
-    private lateinit var showPermissionRequestDialog: MutableState<Boolean>
-    private lateinit var nextPermissionType: MutableState<PermissionType>
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppStart_beforeUI(applicationContext)
@@ -49,135 +42,10 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     AppStart()
 
-                    showPermissionRequestDialog = remember { mutableStateOf(false) }
-                    nextPermissionType = remember { mutableStateOf(PERMISSION_POST_NOTIFICATIONS) }
-                    val grantedPermissionCount by mainViewModel.totalApprovedPermissions.observeAsState(0)
-                    val allPermissionsGranted by mainViewModel.allPermissionsGranted.observeAsState(false)
-                    val navController = rememberNavController()
-
-                    // Get the configured apps count from AppDataStore
-                    val configuredAppsCount by AppDataStore.getConfiguredAppsCount(applicationContext)
-                        .collectAsState(initial = 0)
-
                     Global1.navController = rememberNavController()
-                    var StartDestination = "PERMISSIONS"; if (allPermissionsGranted) { StartDestination = "Main" }
-                    MyNavGraph(
-                        navController = Global1.navController,
-                        allPermissionsGranted = allPermissionsGranted,
-                        activityResultLauncher = activityResultLauncherForSystemSettings,
-                        requestPermissionLauncher = permissionLauncher,
-                        permissionType = nextPermissionType.value,
-                        showPermissionRequestDialog = showPermissionRequestDialog,
-                        onRequestPermissions = { requestNextRequiredPermission() },
-                        totalRequiredCount = grantedPermissionCount,
-                        grantedCount = configuredAppsCount,
-                        startDestination = StartDestination,
-                    )
+                    MyNavGraph(navController = Global1.navController)
                 }
             }
         }
-
-        // Start the WatchdogService - this is required to monitor other apps and keep them alive.
-        ServiceManager.startWatchdogService(this)
-
-        permissionLauncher =
-            this.registerForActivityResult(
-                ActivityResultContracts.RequestMultiplePermissions(),
-            ) { permissions ->
-                if (permissions[POST_NOTIFICATIONS] == true) {
-                    // Permission granted, you can post notifications
-                    Timber.d("registerForActivityResult: POST_NOTIFICATIONS Permission granted")
-                } else {
-                    // Permission denied, handle accordingly
-                    Timber.d("registerForActivityResult: POST_NOTIFICATIONS Permission denied")
-                }
-
-                if (permissions[PACKAGE_USAGE_STATS] == true) {
-                    // Permission granted, you can get package usage stats
-                    Timber.d("registerForActivityResult: PACKAGE_USAGE_STATS Permission granted")
-                } else {
-                    // Permission denied, handle accordingly
-                    Timber.d("registerForActivityResult: PACKAGE_USAGE_STATS Permission denied")
-                }
-            }
-
-        // Initialize the ActivityResultLauncher
-        activityResultLauncherForSystemSettings =
-            registerForActivityResult(
-                ActivityResultContracts.StartActivityForResult(),
-            ) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    if (Settings.canDrawOverlays(this)) {
-                        // Permission granted, proceed with your action
-                        Timber.d("registerForActivityResult: Overlay permission granted")
-                    } else {
-                        // Permission not granted, show a message to the user
-                        Timber.d("registerForActivityResult: Overlay permission denied")
-                    }
-                }
-            }
-    }
-
-    /**
-     * Updates the status of all required permissions by checking them and updates the ViewModel.
-     *
-     * @return `true` if all required permissions are granted, `false` otherwise.
-     */
-    private fun updatePermissionGrantedStatus(): Boolean {
-        mainViewModel.checkAllPermissions(this)
-
-        return mainViewModel.requiredPermissionRemaining.isEmpty()
-    }
-
-    /**
-     * Requests the next required permission from the user.
-     *
-     * It first checks if all permissions are already granted. If not, it identifies the next
-     * pending permission and triggers a dialog to request it from the user.
-     */
-    private fun requestNextRequiredPermission() {
-        if (updatePermissionGrantedStatus()) {
-            Timber.d("requestNextRequiredPermission: All required permissions granted.")
-            Toast.makeText(this, "All required permissions granted.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        mainViewModel.requiredPermissionRemaining.first().let { permissionType: PermissionType ->
-            when (permissionType) {
-                PERMISSION_POST_NOTIFICATIONS -> {
-                    Timber.d("requestNextRequiredPermission: Requesting PERMISSION_POST_NOTIFICATIONS permission")
-                    nextPermissionType.value = PERMISSION_POST_NOTIFICATIONS
-                    showPermissionRequestDialog.value = true
-                }
-
-                PERMISSION_PACKAGE_USAGE_STATS -> {
-                    Timber.d("requestNextRequiredPermission: Requesting PERMISSION_PACKAGE_USAGE_STATS permission")
-                    nextPermissionType.value = PERMISSION_PACKAGE_USAGE_STATS
-                    showPermissionRequestDialog.value = true
-                }
-
-                PERMISSION_SYSTEM_APPLICATION_OVERLAY -> {
-                    Timber.d("requestNextRequiredPermission: Requesting PERMISSION_SYSTEM_APPLICATION_OVERLAY permission")
-                    nextPermissionType.value = PERMISSION_SYSTEM_APPLICATION_OVERLAY
-                    showPermissionRequestDialog.value = true
-                }
-
-                PERMISSION_IGNORE_BATTERY_OPTIMIZATIONS -> {
-                    Timber.d("requestNextRequiredPermission: Requesting PERMISSION_IGNORE_BATTERY_OPTIMIZATIONS permission")
-                    nextPermissionType.value = PERMISSION_IGNORE_BATTERY_OPTIMIZATIONS
-                    showPermissionRequestDialog.value = true
-                }
-            }
-        }
-    }
-
-    /**
-     * Called when the activity will start interacting with the user.
-     * At this point your activity is at the top of the activity stack, with user input going to it.
-     * It also updates the permission status.
-     */
-    override fun onResume() {
-        super.onResume()
-        updatePermissionGrantedStatus()
     }
 }

@@ -67,22 +67,8 @@ import androidx.compose.material.icons.outlined.QueryStats
 //Global1.navController - to use anywhere, no input
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MyNavGraph(navController: NavHostController, startDestination: String, modifier: Modifier = Modifier, activityResultLauncher: ActivityResultLauncher<Intent>?, requestPermissionLauncher: ActivityResultLauncher<Array<String>>?, allPermissionsGranted: Boolean = false, permissionType: PermissionType, showPermissionRequestDialog: MutableState<Boolean>, onRequestPermissions: () -> Unit, totalRequiredCount: Int, grantedCount: Int) {
-    androidx.navigation.compose.NavHost(navController = navController, startDestination = startDestination) {
-        composable("PERMISSIONS"){
-            Permissions_Screen(
-                navController = navController,
-                allPermissionsGranted = allPermissionsGranted,
-                activityResultLauncher = activityResultLauncher,
-                requestPermissionLauncher = requestPermissionLauncher,
-                permissionType = permissionType,
-                showPermissionRequestDialog = showPermissionRequestDialog,
-                onRequestPermissions = onRequestPermissions,
-                totalRequiredCount = totalRequiredCount,
-                grantedCount = grantedCount,
-                configuredAppsCount = grantedCount,
-            )
-        }
+fun MyNavGraph(navController: NavHostController) {
+    androidx.navigation.compose.NavHost(navController = navController, startDestination = "Main") {
         composable("Main") {
             Main()
         }
@@ -101,8 +87,6 @@ fun MyNavGraph(navController: NavHostController, startDestination: String, modif
         composable("SettingsScreen") {
             SettingsScreen()
         }
-
-
     }
 }
 
