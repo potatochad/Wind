@@ -78,16 +78,11 @@ class Settings {
     //region PERMISSIONS
     var App_Description by mutableStateOf("A simple gamified app, that encourages, actions you want to take: Just retype your goals, words you want to learn and earn points to Spend time on your favorite apps")
 
-    var NotificationPermission by mutableStateOf(false);
-    var NotificationP_Description by mutableStateOf("Necesary permission for background service to work, stay active: Without it, the app is unable to function properly")
-    var DrawOnTopPermission by mutableStateOf(false);
-    var DrawOnTopP_Description by mutableStateOf("This is used to block apps, that need points to use (each point = 1s, of usage)")
-    var OptimizationExclusionPermission by mutableStateOf(false);
-    var OptimizationExclusionP_Description by mutableStateOf("Necesary permission for background service to work.")
-    var UsageStatsPermission by mutableStateOf(false);
-    var UsageStatsP_Description by mutableStateOf("Necesary so the app can detect other apps, and the amount spent on them")
-    var DeviceAdminPermission by mutableStateOf(false);
-    var DeviceAdminP_Description by mutableStateOf("Optional: use when want a little disipline boost")
+    var NotificationPermission by mutableStateOf(false); var NotificationP_Description by mutableStateOf("Necesary permission for background service to work, stay active: Without it, the app is unable to function properly")
+    var DrawOnTopPermission by mutableStateOf(false); var DrawOnTopP_Description by mutableStateOf("This is used to block apps, that need points to use (each point = 1s, of usage)")
+    var OptimizationExclusionPermission by mutableStateOf(false); var OptimizationExclusionP_Description by mutableStateOf("Necesary permission for background service to work.")
+    var UsageStatsPermission by mutableStateOf(false); var UsageStatsP_Description by mutableStateOf("Necesary so the app can detect other apps, and the amount spent on them")
+    var DeviceAdminPermission by mutableStateOf(false); var DeviceAdminP_Description by mutableStateOf("Optional: use when want a little disipline boost")
 
     //endegion
 

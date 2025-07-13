@@ -11,12 +11,14 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -93,6 +95,7 @@ import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.jvm.isAccessible
 
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -845,6 +848,36 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
         )
     )
 }
+
+@Composable
+fun PermissionsButton(
+    isEnabled: Boolean,
+    onEnable: () -> Unit
+) {
+    val shape = RoundedCornerShape(20.dp)
+    val buttonColors = ButtonDefaults.buttonColors(
+        containerColor = if (isEnabled) Color.DarkGray else Color(0xFFFFD700),
+        contentColor = if (isEnabled) Color.LightGray else Color.Black,
+        disabledContainerColor = Color.DarkGray,
+        disabledContentColor = Color.Gray
+    )
+
+    Button(
+        onClick = onEnable,
+        enabled = !isEnabled,
+        shape = shape,
+        colors = buttonColors,
+        elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp),
+        border = BorderStroke(1.dp, if (isEnabled) Color.Gray else Color.Black),
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+        interactionSource = remember { MutableInteractionSource() },
+        modifier = Modifier
+            .height(40.dp)
+    ) {
+        Text(text = if (isEnabled) "✓" else "Enable", fontWeight = FontWeight.Bold)
+    }
+}
+
 
 @Composable
 fun SettingItem(

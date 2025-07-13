@@ -1,6 +1,8 @@
 package com.productivity.wind
 
+import android.R
 import android.app.AlertDialog
+import android.app.AppOpsManager
 import android.app.admin.DeviceAdminReceiver
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
@@ -48,13 +50,19 @@ import kotlinx.coroutines.withContext
 
 import android.provider.Settings
 import android.content.Intent
+import android.graphics.Canvas
 import android.net.Uri
+import android.os.PowerManager
+import android.os.Process
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.AdminPanelSettings
+import androidx.compose.material.icons.outlined.BarChart
+import androidx.compose.material.icons.outlined.BatterySaver
 import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.material.icons.outlined.Landscape
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.ui.text.font.FontWeight
@@ -62,13 +70,17 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import java.time.LocalDate
 import androidx.compose.material.icons.outlined.QueryStats
+import androidx.compose.material.icons.outlined.Security
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.compose.NavHost
 
 //region NavController
 //Global1.navController - to use anywhere, no input
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MyNavGraph(navController: NavHostController) {
-    androidx.navigation.compose.NavHost(navController = navController, startDestination = "Main") {
+    NavHost(navController = navController, startDestination = "Main") {
         composable("Main") {
             Main()
         }
@@ -86,6 +98,9 @@ fun MyNavGraph(navController: NavHostController) {
 
         composable("SettingsScreen") {
             SettingsScreen()
+        }
+        composable("SettingsP_Screen") {
+            SettingsP_Screen()
         }
 
         //endregion SETTINGS
@@ -168,10 +183,6 @@ fun MainHeader(){
     }
 }
 
-@Composable
-fun RecommendedScreen() {
-    Button(onClick = {OpenDeviceAdminSettings()}) { Text("Make Uninstallable") }
-}
 
 //region MENU
 @Composable
@@ -230,7 +241,7 @@ fun SupportEmail() {
         val Action = Intent.createChooser(intent, "Send Email").apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
-        Global1.context.startActivity(Action)
+        context.startActivity(Action)
         //endregion
     }
 
@@ -242,15 +253,211 @@ fun SupportEmail() {
 fun SettingsScreen() {
     SettingsScreen(titleContent  = {Text( "Settings")}, onSearchClick = { }) {
 
-        SettingItem(icon = Icons.Outlined.AdminPanelSettings, title = "Permissions", subtitle = "Necesary - for app to work", onClick = { Global1} )
+        SettingItem(icon = Icons.Outlined.AdminPanelSettings, title = "Permissions", subtitle = "Necesary - for app to work", onClick = { Global1.navController.navigate("SettingsP_Screen")} )
+
     }
 }
 
 //region PERMISSIONS
 
-@Composable
-fun SettingsP_Screen() {
+//region POPUP
 
+fun showPermissionDialog(
+    context: Context,
+    title: String,
+    message: String,
+    settingsAction: String,
+    dataUri: Uri? = null
+) {
+    AlertDialog.Builder(context)
+        .setTitle(title)
+        .setMessage(message)
+        .setIcon(R.drawable.ic_dialog_alert)
+        .setCancelable(false)
+        .setPositiveButton("Grant") { _, _ ->
+            Intent(settingsAction).apply {
+                dataUri?.let { data = it }
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }.also { context.startActivity(it) }
+        }
+        .setNegativeButton("Cancel", null)
+        .show()
+}
+
+fun DrawOnTopP_PopUp(context: Context) =
+    showPermissionDialog(
+        context,
+        "Grant Draw on top permission",
+        Bar.DrawOnTopP_Description,
+        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+        Uri.parse("package:${context.packageName}")
+    )
+
+fun NotificationP_PopUp(context: Context) =
+    showPermissionDialog(
+        context,
+        "Grant Notification access",
+        Bar.NotificationP_Description,
+        Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
+    )
+
+fun OptimizationExclusionP_PopUp(context: Context) =
+    showPermissionDialog(
+        context,
+        "Exclude from battery optimization",
+        Bar.OptimizationExclusionP_Description,
+        Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
+    )
+
+fun UsageStatsP_PopUp(context: Context) =
+    showPermissionDialog(
+        context,
+        "Grant Usage-Access permission",
+        Bar.UsageStatsP_Description,
+        Settings.ACTION_USAGE_ACCESS_SETTINGS
+    )
+
+fun DeviceAdminP_PopUp(ctx: Context) {
+    AlertDialog.Builder(ctx)
+        .setTitle("Activate Device-Admin")
+        .setMessage(Bar.DeviceAdminP_Description)
+        .setIcon(R.drawable.ic_dialog_alert)
+        .setCancelable(false)
+        .setPositiveButton("Grant") { _, _ ->
+            // Build the proper “add device admin” intent
+            val comp = ComponentName(ctx, MyDeviceAdminReceiver::class.java)
+            Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
+                putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, comp)
+                putExtra(
+                    DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                    Bar.DeviceAdminP_Description
+                )
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }.also { ctx.startActivity(it) }
+        }
+        .setNegativeButton("Cancel", null)
+        .show()
+}
+class MyDeviceAdminReceiver : DeviceAdminReceiver()
+
+//endregion POPUP
+
+
+//region ENABLED??
+
+fun isDrawOnTopEnabled(ctx: Context): Boolean =
+    Settings.canDrawOverlays(ctx)
+
+fun isNotificationEnabled(ctx: Context): Boolean =
+    NotificationManagerCompat
+        .getEnabledListenerPackages(ctx)
+        .contains(ctx.packageName)
+
+fun isBatteryOptimizationDisabled(ctx: Context): Boolean {
+    val pm = ctx.getSystemService(PowerManager::class.java)
+    return pm.isIgnoringBatteryOptimizations(ctx.packageName)
+}
+
+fun isUsageStatsP_Enabled(ctx: Context): Boolean {
+    val appOps = ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+    return appOps.checkOpNoThrow(
+        AppOpsManager.OPSTR_GET_USAGE_STATS,
+        Process.myUid(),
+        ctx.packageName
+    ) == AppOpsManager.MODE_ALLOWED
+}
+
+fun isDeviceAdminEnabled(ctx: Context): Boolean =
+    (ctx.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager)
+        .isAdminActive(ComponentName(ctx, MyDeviceAdminReceiver::class.java))
+
+
+//endregion ENABLED??
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!AFRAID THAT MIGH BE LAGY
+@Composable
+fun SettingsP_Screen()= NoLagCompose {
+    val ctx = LocalContext.current
+    LaunchedEffect(Unit) {
+        while(true) {
+            Bar.NotificationPermission = isNotificationEnabled(ctx)
+            Bar.DrawOnTopPermission = isDrawOnTopEnabled(ctx)
+            Bar.OptimizationExclusionPermission = isBatteryOptimizationDisabled(ctx)
+            Bar.UsageStatsPermission = isUsageStatsP_Enabled(ctx)
+            Bar.DeviceAdminPermission = isDeviceAdminEnabled(ctx)
+
+            log("""
+            🔐 Permissions Status:
+            - Notification: ${Bar.NotificationPermission}
+            - Draw On Top: ${Bar.DrawOnTopPermission}
+            - Battery Opt Excluded: ${Bar.OptimizationExclusionPermission}
+            - Usage Stats: ${Bar.UsageStatsPermission}
+            - Device Admin: ${Bar.DeviceAdminPermission}
+            """.trimIndent(), "bad")
+
+            delay(200L)
+        }
+    }
+
+    SettingsScreen(titleContent = { Text("Permissions") }) {
+
+        SettingItem(
+            icon = Icons.Outlined.Notifications,
+            title = "Notification",
+            subtitle = "Necesary",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.NotificationPermission,
+                    onEnable = {NotificationP_PopUp(ctx)}
+                )
+            }
+        )
+        SettingItem(
+            icon = Icons.Outlined.Visibility,
+            title = "Draw On Top",
+            subtitle = "Necesary",
+            endContent = {
+                PermissionsButton(
+                isEnabled = Bar.DrawOnTopPermission,
+                onEnable = {DrawOnTopP_PopUp(ctx)}
+                )
+            }
+        )
+        SettingItem(
+            icon = Icons.Outlined.BatterySaver,
+            title = "Optimization Exclusion",
+            subtitle = "Necesary",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.OptimizationExclusionPermission,
+                    onEnable = { OptimizationExclusionP_PopUp(ctx) }
+                )
+            }
+        )
+        SettingItem(
+            icon = Icons.Outlined.BarChart,
+            title = "Usage Stats",
+            subtitle = "Necesary",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.UsageStatsPermission,
+                    onEnable = { UsageStatsP_PopUp(ctx) }
+                )
+            }
+        )
+        SettingItem(
+            icon = Icons.Outlined.Security,
+            title = "Device Admin",
+            subtitle = "Optiona-for disipline",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.DeviceAdminPermission,
+                    onEnable = { DeviceAdminP_PopUp(ctx) }
+                )
+            }
+        )
+
+    }
 }
 
 //endregion PERMISSIONS
@@ -261,61 +468,6 @@ fun SettingsP_Screen() {
 
 //region UI BUILDERS
 
-@Composable
-fun InfoPopup(content: @Composable () -> Unit) {
-    var show by remember { mutableStateOf(true) }
-
-    if (show) {
-        Popup(onDismissRequest = { show = false }) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0x80000000)) // semi-transparent black
-                    .clickable { show = false }, // tap outside to close
-                contentAlignment = Alignment.Center
-            ) {
-                // Animated popup box
-                var visible by remember { mutableStateOf(false) }
-
-                LaunchedEffect(Unit) {
-                    visible = true
-                }
-
-                val scale by animateFloatAsState(
-                    targetValue = if (visible) 1f else 0.8f,
-                    animationSpec = tween(durationMillis = 300)
-                )
-
-                Box(
-                    modifier = Modifier
-                        .graphicsLayer { scaleX = scale; scaleY = scale }
-                        .background(
-                            brush = Brush.verticalGradient(
-                                listOf(Color(0xFF2C2F48), Color(0xFF1C1C2E))
-                            ),
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                        .border(
-                            width = 2.dp,
-                            color = Color(0xFF88C0D0),
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                        .padding(24.dp)
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.Info,
-                            contentDescription = "Info",
-                            tint = Color(0xFFB5E8FF),
-                            modifier = Modifier.size(28.dp).padding(end = 12.dp)
-                        )
-                        content()
-                    }
-                }
-            }
-        }
-    }
-}
 
 //endregion
 
@@ -326,7 +478,7 @@ suspend fun Context.getAllInstalledApps(){
 
     log("LIST ON PAGE CREATION: ${Bar.AppList}", "bad")
 
-    val myPackage = Global1.context.packageName
+    val myPackage = context.packageName
     return withContext(Dispatchers.IO) {
         packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
             .filter { it.packageName != myPackage }
@@ -336,7 +488,7 @@ suspend fun Context.getAllInstalledApps(){
 
                 /*BETTER ICON
                 * IT IS 15ML FASTER TO LOAD AND 14KB LESS STORAGE*/
-                val original = appInfo.loadIcon(packageManager) ; val bitmap = Bitmap.createBitmap(32, 32, Bitmap.Config.RGB_565) ; val canvas = android.graphics.Canvas(bitmap);original.setBounds(0, 0, 32, 32);original.draw(canvas)
+                val original = appInfo.loadIcon(packageManager) ; val bitmap = Bitmap.createBitmap(32, 32, Bitmap.Config.RGB_565) ; val canvas = Canvas(bitmap);original.setBounds(0, 0, 32, 32);original.draw(canvas)
                 val icon = BitmapDrawable(resources, bitmap)
                 val pkg = appInfo.packageName
 
@@ -418,23 +570,6 @@ fun Header(message: String) {
     Text(text = message, fontSize = 28.sp)
 }
 
-fun DrawOnTopPermission(){
-    context = Global1.context
-    if (!Settings.canDrawOverlays(context)) {
-        val alert = AlertDialog.Builder(context)
-        alert.setTitle("Permission Needed")
-        alert.setMessage("Grant appear on top permission")
-
-        alert.setPositiveButton("ok") { _,_ ->
-            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${context.packageName}"))
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
-
-        }
-        alert.create().show()
-    }
-}
-
 //!DISABLED
 @Composable
 fun AccessibilityPermission() {
@@ -465,22 +600,6 @@ fun AccessibilityPermission() {
         //!Bar.AccesabilityPermission = true
     }
 }
-
-
-
-fun OpenDeviceAdminSettings() {
-    val context = Global1.context
-    val intent = Intent(Settings.ACTION_SECURITY_SETTINGS)
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    context.startActivity(intent)
-}
-//must have this thing
-class MyDeviceAdminReceiver : DeviceAdminReceiver()
-
-val gotAdmin = (Global1.context
-    .getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager)
-    .isAdminActive(ComponentName(Global1.context, MyDeviceAdminReceiver::class.java))
-
 
 
 
