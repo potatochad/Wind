@@ -17,27 +17,8 @@ import com.productivity.wind.data.PermissionType.PERMISSION_POST_NOTIFICATIONS
 import com.productivity.wind.data.PermissionType.PERMISSION_SYSTEM_APPLICATION_OVERLAY
 import timber.log.Timber
 
-/**
- * Utility object for handling requests for various Android permissions required by the application.
- *
- * This object centralizes the logic for requesting permissions such as:
- * - Battery optimization exclusion
- * - Overlay permission (draw over other apps)
- * - Usage stats access
- * - Notification listener access (though this seems unused currently based on `requestPermission` logic)
- * - Post notifications (for Android Tiramisu and above)
- *
- * It provides a generic [requestPermission] method that delegates to specific handlers based on [PermissionType].
- */
 object AppPermissions {
-    /**
-     * Requests the user to exclude the application from battery optimizations.
-     *
-     * This navigates the user to the system settings screen where they can disable battery optimization
-     * for this app. A [Toast] message is shown to guide the user.
-     *
-     * @param context The [Context] used to show the Toast and start the settings activity.
-     */
+
     @SuppressLint("BatteryLife")
     fun requestBatteryOptimizationExclusion(context: Context) {
         Toast.makeText(
@@ -52,23 +33,6 @@ object AppPermissions {
         context.startActivity(intent)
     }
 
-    /**
-     * Requests the overlay permission (to draw over other apps).
-     *
-     * This navigates the user to the system settings screen where they can grant the
-     * "Display over other apps" permission. This is necessary for features that require
-     * showing UI elements while the app is not in the foreground (though the app's current
-     * usage might be for starting activities from background service).
-     *
-     * Background Activity Launch Restrictions (Android 10+):
-     * Starting from Android 10 (API level 29), apps have restrictions on launching activities
-     * from the background to improve user experience. Overlay permission can sometimes be
-     * a prerequisite or related to scenarios where apps might attempt such launches.
-     *
-     * @param context The [Context] (though unused directly, kept for consistency or future use).
-     * @param activityResultLauncher The [ActivityResultLauncher] used to launch the system settings intent
-     *                               and handle the result.
-     */
     fun requestOverlayPermission(
         context: Context,
         activityResultLauncher: ActivityResultLauncher<Intent>,
@@ -96,22 +60,7 @@ object AppPermissions {
         context.startActivity(intent)
     }
 
-    /**
-     * Requests the "Notification Listener" permission.
-     *
-     * This navigates the user to the system settings screen where they can grant permission
-     * for the app to read notifications.
-     *
-     * Note: This method is currently defined but not actively called by the main [requestPermission]
-     * switch statement for any [PermissionType]. It might be legacy or for future use.
-     *
-     * @param context The [Context] used to start the settings activity.
-     */
-    fun requestNotificationAccess(context: Context) {
-        Timber.d("requestNotificationAccess: Requesting notification access permission")
-        val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
-        context.startActivity(intent)
-    }
+
 
     /**
      * Requests the [POST_NOTIFICATIONS] permission using an [ActivityResultLauncher].
@@ -172,10 +121,6 @@ object AppPermissions {
             PERMISSION_IGNORE_BATTERY_OPTIMIZATIONS -> {
                 // Request for battery optimization exclusion
                 AppPermissions.requestBatteryOptimizationExclusion(context)
-            }
-
-            else -> {
-                // Do nothing
             }
         }
     }

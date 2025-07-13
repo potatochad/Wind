@@ -32,53 +32,23 @@ import com.productivity.wind.ui.theme.KeepAliveTheme
 import com.productivity.wind.util.ServiceManager
 import timber.log.Timber
 
-/**
- * Main activity for the KeepAlive application.
- *
- * This activity is responsible for:
- * - Setting up the user interface.
- * - Managing and requesting necessary runtime permissions.
- * - Initializing and starting the [WatchdogService] to monitor applications.
- * - Handling results from permission requests and system settings changes.
- */
+
 class MainActivity : ComponentActivity() {
-    /**
-     * ActivityResultLauncher for requesting multiple permissions.
-     * This is used to request standard Android runtime permissions like [android.Manifest.permission.POST_NOTIFICATIONS]
-     * and [android.Manifest.permission.PACKAGE_USAGE_STATS].
-     */
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-
-    /**
-     * ActivityResultLauncher for starting an activity for a result.
-     * This is primarily used for permissions that require navigating to system settings,
-     * such as the overlay permission ([android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION])
-     * or battery optimization exclusion.
-     */
     private lateinit var activityResultLauncherForSystemSettings: ActivityResultLauncher<Intent>
-
     private val mainViewModel: MainViewModel by viewModels()
-
-    /** State variable to control the visibility of the permission request dialog. */
     private lateinit var showPermissionRequestDialog: MutableState<Boolean>
-
-    /** State variable to store the next permission type to be requested. */
     private lateinit var nextPermissionType: MutableState<PermissionType>
 
-    /**
-     * Called when the activity is first created.
-     *
-     * This function sets up the UI, initializes permission launchers, and starts the WatchdogService.
-     * It also observes LiveData for permission status and configured app count.
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppStart_beforeUI(applicationContext)
         setContent {
             KeepAliveTheme {
-                Surface(modifier = Modifier.fillMaxSize())
-                {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     AppStart()
+
                     showPermissionRequestDialog = remember { mutableStateOf(false) }
                     nextPermissionType = remember { mutableStateOf(PERMISSION_POST_NOTIFICATIONS) }
                     val grantedPermissionCount by mainViewModel.totalApprovedPermissions.observeAsState(0)

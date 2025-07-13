@@ -250,29 +250,32 @@ fun SupportEmail() {
 
 //endregion
 
+//region Settings
 
 @Composable
 fun SettingsScreen() {
-
     SettingsScreen(titleContent  = {Text( "Settings")}, onSearchClick = { }) {
+
         SettingItem(
             icon = Icons.Outlined.Tune,
-            title = "BlockYoutube",
-            subtitle = "SmartFilter-needs accessibility permission",
-            endContent = { OnOffSwitch(Bar.BlockYoutube) {
-                    Bar.BlockYoutube = it
-            }; Spacer(modifier = Modifier.width(35.dp)) }
-        )
-        SettingItem(
-            icon = Icons.Outlined.Tune,
-            title = "BlockSettings",
-            subtitle = "Makes harder to uninstall",
+            title = "Permissions",
+            subtitle = "Necesary - for app to work",
             endContent = { OnOffSwitch(Bar.BlockSettings) { Bar.BlockSettings = it }; Spacer(modifier = Modifier.width(35.dp)) }
         )
     }
 }
 
+//region PERMISSIONS
 
+@Composable
+fun SettingsP_Screen() {
+
+}
+
+//endregion PERMISSIONS
+
+
+//endregion Settings
 
 
 //region UI BUILDERS
@@ -451,6 +454,7 @@ fun DrawOnTopPermission(){
     }
 }
 
+//!DISABLED
 @Composable
 fun AccessibilityPermission() {
     val context = LocalContext.current
@@ -466,7 +470,7 @@ fun AccessibilityPermission() {
     log("Service id AccessibilityPermission${serviceId} ", "bad")
     log("isEnabled? AccessibilityPermission${isEnabled} ", "bad")
     if (!isEnabled) {
-            Bar.AccesabilityPermission = false
+            //!Bar.AccesabilityPermission = false
             AlertDialog.Builder(context)
                 .setTitle("Permission Needed")
                 .setMessage("Please enable accessibility for full features.")
@@ -477,7 +481,7 @@ fun AccessibilityPermission() {
                 }
                 .show()
     } else {
-        Bar.AccesabilityPermission = true
+        //!Bar.AccesabilityPermission = true
     }
 }
 
