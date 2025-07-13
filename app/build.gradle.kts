@@ -126,6 +126,10 @@ dependencies {
     implementation("androidx.compose.material3:material3-window-size-class:1.3.2")
 
 
+    
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
+
+
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.runtime.livedata)

@@ -14,6 +14,9 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
+
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.isAccessible
 import dev.hossain.keepalive.data.logging.AppActivityLogger
 import dev.hossain.keepalive.util.NotificationHelper
 import kotlinx.coroutines.CoroutineScope
@@ -42,10 +45,22 @@ import android.accessibilityservice.AccessibilityService
 import android.app.Activity
 import android.content.ContextWrapper
 import android.graphics.Rect
+import android.provider.Settings.Global
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.google.gson.Gson
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.isActive
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlin.reflect.KMutableProperty1
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.isAccessible
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.isAccessible
+import androidx.compose.runtime.MutableState
 
 class Settings {
     var funTime by mutableStateOf(0)
@@ -95,6 +110,176 @@ data class Apps(
     var Exists by mutableStateOf(true)
     var TimeSpent by mutableStateOf(0f)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+data class FancyItem(
+    var name: MutableState<String> = mutableStateOf(""),
+    var done: MutableState<Boolean> = mutableStateOf(false)
+)
+class Lists {
+    val SimpleList = mutableStateListOf<FancyItem>()
+    val SimpleList1 = mutableStateListOf<FancyItem>()
+}
+val Blis = Lists();
+inline fun <reified T : Any> MutableList_ToSimple(list: List<T>): List<Map<String, Any?>> {
+    return list.map { item ->
+        val map = mutableMapOf<String, Any?>()
+
+        T::class.memberProperties.forEach { blar ->
+            blar.isAccessible = true
+            val value = blar.get(item)
+
+            // If it's a MutableState, get its .value
+            if (value is MutableState<*>) {
+                map[blar.name] = value.value
+            } else {
+                map[blar.name] = value
+            }
+        }
+
+        map
+    }
+}
+
+
+fun ListsSaveding() {
+    val gson = Gson()
+
+    //region SETUP
+
+    val context = Global1.context
+    var WhereSave = "MyPrefs"
+    val data = context.getSharedPreferences(WhereSave, Context.MODE_PRIVATE)
+    val editor = data.edit()
+
+    //endregion SETUP
+
+
+    fun saveAllLists(context: Context) {
+        val gson = Gson()
+        val sharedPref = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+
+        // Loop through all properties inside Blis (like SimpleList, SimpleList1, etc.)
+        Lists::class.memberProperties.forEach { prop ->
+            prop.isAccessible = true
+            val list = prop.get(Blis)
+
+            if (list is List<*>) {
+                // Make sure the list holds FancyItem objects
+                val fancyList = list.filterIsInstance<FancyItem>()
+                val simpleList = MutableList_ToSimple(fancyList)
+                val jsonString = gson.toJson(simpleList)
+
+                // Save using the property name as the key
+                editor.putString(prop.name, jsonString)
+            }
+        }
+
+        editor.apply()
+    }
+
+
+
+    editor.putString("name", "John")
+    editor.apply()
+
+    val name = data.getString("name", "default")
+
+
+}
+
+object ListsSaved {
+    private var Dosave: Job? = null
+    fun Bsave() {
+        if (Dosave?.isActive == true) return
+        Dosave = GlobalScope.launch {
+            while (isActive) {
+                val data = Global1.context.getSharedPreferences("lists", Context.MODE_PRIVATE)
+                val edit = data.edit()
+
+                var CPU = 0
+                dev.hossain.keepalive.Settings::class.memberProperties.forEach { bar ->
+                    /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
+                    bar.isAccessible = true
+                    val value = bar.get(Bar)
+                    if (value is SnapshotStateList<*>) return@forEach
+
+                    when (value) {
+                        is Boolean -> edit.putBoolean(bar.name, value)
+                        is String -> edit.putString(bar.name, value)
+                        is Int -> edit.putInt(bar.name, value)
+                        is Float -> edit.putFloat(bar.name, value)
+                        is Long -> edit.putLong(bar.name, value)
+                    }
+                }
+                edit.apply()
+                delay(1_000L) // save every 5 seconds
+            }
+        }
+    }
+    fun init() {
+        val prefs = Global1.context.getSharedPreferences("lists", Context.MODE_PRIVATE)
+        if (prefs.all.isEmpty() || initOnce) return
+        initOnce= true //MUST USE, ALL ARE ZERO OR NULL
+
+        dev.hossain.keepalive.Settings::class.memberProperties.forEach { barIDK ->
+            //best variable is variable//JUST MAKING SURE
+            if (barIDK is KMutableProperty1<dev.hossain.keepalive.Settings, *>) {
+                @Suppress("UNCHECKED_CAST")
+                val bar = barIDK as KMutableProperty1<dev.hossain.keepalive.Settings, Any?>
+                bar.isAccessible = true
+                val name = bar.name
+                val type = bar.returnType.classifier
+
+                val stateProp = bar.getDelegate(Bar)
+                when {
+                    stateProp is MutableState<*> && type == Boolean::class -> (stateProp as MutableState<Boolean>).value = prefs.getBoolean(name, false)
+                    stateProp is MutableState<*> && type == String::class -> (stateProp as MutableState<String>).value = prefs.getString(name, "") ?: ""
+                    stateProp is MutableState<*> && type == Int::class -> (stateProp as MutableState<Int>).value = prefs.getInt(name, 0)
+                    stateProp is MutableState<*> && type == Float::class -> (stateProp as MutableState<Float>).value = prefs.getFloat(name, 0f)
+                    stateProp is MutableState<*> && type == Long::class -> (stateProp as MutableState<Long>).value = prefs.getLong(name, 0L)
+                }
+            }
+            else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -191,10 +376,9 @@ class WatchdogService : Service() {
         flags: Int,
         startId: Int,
     ): Int {
-
         NotificationHelper(this).createNotificationChannel()
         startForeground(1, NotificationHelper(this).buildNotification(),)
-
+        Global1.context = this
         if (OneJob == null || OneJob?.isActive == false) {
             OneJob = serviceScope.launch {
                 while (true) {
@@ -206,40 +390,46 @@ class WatchdogService : Service() {
 
                     //endregion
 
-                    if (Bar.BlockYoutube) {
-                        if (Bar.currentApp == "com.google.android.youtube" ) {
-                            log("CURRENT APP,blocking: ${Bar.currentApp}", "bad")
 
-                            if (Bar.funTime >100) {
-                                Bar.funTime -=1
-                                log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-                            }
-                            else {
+                    //region BLOCK APP
+
+                    val usageStatsManager = Global1.context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+                    val NowTime = System.currentTimeMillis()
+
+                    /*
+                    * THIS IS NOT SUPER ACCURATE
+                    ? If you want better precision, you’ll need an Accessibility Service.
+                    !THIS REQUIRES NAVIGATING USER TO IT*/
+                    val AppsUsed = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, NowTime - 20_000, NowTime)
+                    val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
+
+                    log("BACKGROUND---CURRENT APP:::${currentApp};", "bad")
+                    if (currentApp == "net.pluckeye.tober" ) {
+                        if (Bar.funTime >0) {
+                            Bar.funTime -=1
+                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
+                        }
+                        else {
+                            BlockScreen()
+                            log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+                        }
+                    }
+                    if (currentApp == "com.android.settings") {
+
+                        if (Bar.funTime >1_000) {
+                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
+                        }
+                        else {
+                            if (gotAdmin) {
                                 BlockScreen()
-                                log("BACKGROUND---Blocking APP:::${Bar.currentApp}; ${Bar.COUNT}", "bad")
+                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
                             }
                         }
                     }
-                    if (Bar.BlockSettings) {
-                        if (Bar.currentApp == "com.android.settings") {
-                            log("CURRENT APP: ${Bar.currentApp}", "bad")
-                            if (Bar.funTime > 1_000) {
-                                log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-                            } else {
-                                if (gotAdmin) {
-                                    BlockScreen()
-                                    log(
-                                        "BACKGROUND---Blocking APP:::${Bar.currentApp}; ${Bar.COUNT}",
-                                        "bad"
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    if (Bar.currentApp == "com.seekrtech.waterapp") {
-                        log("CURRENT APP: ${Bar.currentApp}", "bad")
+                    if (currentApp == "com.seekrtech.waterapp") {
+                        log("NEW DAY??; ${Bar.NewDay}", "bad")
+                        log("waterdo time; ${Bar.WaterDOtime_spent}", "bad")
                         if (Bar.NewDay) {
-                            log("NEW DAY ----${Bar.NewDay}", "bad")
                             if (Bar.WaterDOtime_spent > 50) {
                                 Bar.funTime += 600
                                 Bar.NewDay = false
@@ -248,6 +438,8 @@ class WatchdogService : Service() {
                             }
                         }
                     }
+
+                    //endregion BLOCK APP
 
 
                 }

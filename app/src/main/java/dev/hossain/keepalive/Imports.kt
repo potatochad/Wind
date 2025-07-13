@@ -16,6 +16,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -109,6 +110,9 @@ import kotlin.reflect.jvm.isAccessible
 import kotlinx.coroutines.Dispatchers
 import kotlin.reflect.KParameter
 import kotlin.reflect.full.primaryConstructor
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.Divider
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 //region USER MANUAL
@@ -828,7 +832,7 @@ fun Settings_Example() {
     var expanded by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     SettingsScreen(
-        title = "Settings",
+        titleContent  = {Text("HEADER")} ,
         onSearchClick = { }
     ) {
 
@@ -842,33 +846,6 @@ fun Settings_Example() {
         SettingItem(
             icon = Icons.Outlined.LockOpen,
             title = "Usage permissions",
-        )
-    }
-}
-
-@Composable
-fun S_DefaultsScreen(){
-    SettingsScreen(
-        title = "Defaults",
-        onSearchClick = { }
-    ) {
-        SettingItem(
-            icon = Icons.Outlined.Schedule,
-            title = "Default duration",
-            endContent = {
-                /*
-                TaskInputField(
-                    value = AppSettings.data.DefaultDuration.toString(),
-                    onValueChange = { newValue ->
-                        AppSettings.update("DefaultDuration", newValue)
-                    },
-                    placeholderText = "Duration",
-                    isNumber = true,
-                    modifier = Modifier.widthIn(max = 65.dp)
-                )
-                */
-
-            }
         )
     }
 }
@@ -924,12 +901,24 @@ fun SettingItem(
 
 @Composable
 fun settingsHeader(
-    title: String,
+    titleContent: @Composable () -> Unit,
     onSearchClick: () -> Unit,
     onBackClick: () -> Unit = {},
+    showBack: Boolean = true,
+    showSearch: Boolean = true,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = Modifier.padding(top = 20.dp)) {
+    val ui = rememberSystemUiController()
+    LaunchedEffect(Unit) {
+        ui.setStatusBarColor(Color.Black, darkIcons = false)
+    }
+    Column {
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .background(Color.Black)
+        )
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -938,40 +927,49 @@ fun settingsHeader(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(onClick = onBackClick) {   // Back button on the left
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color(0xFFFFD700) // gold
-                )
+            // Back button on the left
+            if (showBack) {
+                IconButton(onClick = onBackClick) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color(0xFFFFD700)
+                    )
+                }
             }
 
-            Text(
-                text = title,
-                color = Color.White, // gold vibe kept
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 23.sp,
-                modifier = Modifier.weight(1f),   // Take available space between buttons
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+            // Title slot
+            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
+                titleContent()
+            }
 
-            IconButton(onClick = onSearchClick) {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search",
-                    tint = Color(0xFFFFD700) // gold
-                )
+            // Search icon on the right
+            if (showSearch) {
+                IconButton(onClick = onSearchClick) {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search",
+                        tint = Color(0xFFFFD700)
+                    )
+                }
             }
         }
+        // Divider under header
+        Divider(
+            color = Color.Gray,
+            thickness = 1.dp,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
-
 @Composable
 fun SettingsScreen(
-    title: String,
+    titleContent: @Composable () -> Unit,
     onSearchClick: () -> Unit = {},
+    onBackClick: () -> Unit = {},
+    showBack: Boolean = true,
+    showSearch: Boolean = true,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
@@ -992,9 +990,11 @@ fun SettingsScreen(
     ) {
         item {
             settingsHeader(
-                title = title,
+                titleContent = titleContent,
                 onSearchClick = onSearchClick,
-                onBackClick = { Global1.navController.popBackStack() }
+                onBackClick = onBackClick,
+                showBack = showBack,
+                showSearch = showSearch
             )
         }
         item {
@@ -1002,6 +1002,8 @@ fun SettingsScreen(
         }
     }
 }
+
+
 
 //endregion
 

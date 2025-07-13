@@ -134,9 +134,6 @@ fun MyNavGraph(navController: NavHostController, startDestination: String, modif
         composable("ChillScreen") {
             ChillScreen()
         }
-        composable("FunScreen") {
-            FunScreen()
-        }
         composable("RecommendedScreen") {
             RecommendedScreen()
         }
@@ -217,29 +214,16 @@ fun Achievements(){
     }
 }
 
-
-@Composable
-fun ChillTimeButton(){
-    Button(onClick = { if (Bar.funTime <= 0) { Toast.makeText(Global1.context, "GET BACK TO WORK", Toast.LENGTH_SHORT).show() } else
-    {
-        Global1.navController.navigate("FunScreen")
-    }
-
-    }, modifier = Modifier.fillMaxWidth()) { Text("Chill Time 🌴") }
-}
-
 //TOP BAR
 @Composable
 fun MainHeader(){
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         MenuIcon()
-        ChillIcon()
         EditIcon()
 
 
         Spacer(modifier = Modifier.width(12.dp))
-        Text(text = "Waterdo: ${Bar.WaterDOtime_spent}", fontSize = 15.sp, fontWeight = FontWeight.Bold
-        )
+        Text(text = "Points: ${Bar.funTime}", fontSize = 18.sp)
     }
 }
 
@@ -379,7 +363,7 @@ fun launchSupportEmail() {
 @Composable
 fun SettingsScreen() {
 
-    SettingsScreen(title = "Settings", onSearchClick = { }) {
+    SettingsScreen(titleContent  = {Text( "Settings")}, onSearchClick = { }) {
         SettingItem(
             icon = Icons.Outlined.Tune,
             title = "BlockYoutube",
@@ -457,7 +441,6 @@ fun InfoPopup(content: @Composable () -> Unit) {
         }
     }
 }
-
 
 //endregion
 

@@ -94,6 +94,7 @@ import androidx.compose.material3.TopAppBar
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -108,9 +109,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun Main() {
 
-    AccessibilityPermission()
-    DrawOnTopPermission()
-
+    //AccessibilityPermission()
+    //DrawOnTopPermission()
 
     fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
         for (i in text.indices) {
@@ -132,147 +132,70 @@ fun Main() {
         }
     }
 
+    SettingsScreen(titleContent  = { MainHeader() }, showBack= false, showSearch= false) {
 
+        Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
 
-
-    /*
+            /*
     * THE FULL NORMALL UI
     * TEXT INPUT THING
     * */
-    Column(modifier = Modifier
-        .padding(16.dp)
-        .verticalScroll(rememberScrollState())) {
+            Column(modifier = Modifier.padding(16.dp)) {
 
-            /*
-        Header
-        INFO WILL SLOWLY APPEAR HERE, AS YOU PROGRESS THOUGHT THE APP
-        * */
-            Row(modifier = Modifier.fillMaxWidth()) {
-                MainHeader()
-            }
-            Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = coloredTarget,
+                    modifier = Modifier
+                        .height(200.dp)
+                        .verticalScroll(rememberScrollState())
+                )
+                Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Fun time: ${Bar.funTime}s", fontSize = 18.sp)
-            Spacer(modifier = Modifier.height(12.dp))
+                OutlinedTextField(
+                    value = Bar.currentInput,
+                    onValueChange = {
+                        if (it.length - Bar.currentInput.length <= 5) {
+                            Bar.TotalTypedLetters += 1
+                            Bar.currentInput = it
 
-            Text(
-                text = coloredTarget,
-                modifier = Modifier
-                    .height(200.dp)
-                    .verticalScroll(rememberScrollState())
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-
-            OutlinedTextField(
-                value = Bar.currentInput,
-                onValueChange = {
-                    if (it.length - Bar.currentInput.length <= 5) {
-                        Bar.TotalTypedLetters +=1
-                        Bar.currentInput = it
-                        log("Bar.currentInput, on value change; ${Bar.currentInput}")
-                        log("the itttttt; ${it}")
-                        log("initOnce; ${initOnce}")
-
-                        val correctChars = Bar.targetText.zip(Bar.currentInput)
-                            .takeWhile { it.first == it.second }.size
-                        val correctInput = Bar.currentInput.take(correctChars)
+                            val correctChars = Bar.targetText.zip(Bar.currentInput)
+                                .takeWhile { it.first == it.second }.size
+                            val correctInput = Bar.currentInput.take(correctChars)
 
 
-                        val newlyEarned = correctInput.length - Bar.highestCorrect
-                        if (newlyEarned > 0) {
-                            var oldFunTime = Bar.funTime
-                            Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
-                                log(
-                                    "!funTime += newlyEarned * S_Data.int(LetterToTime)- VALUE DID NOT CHANGE, CLUES: ${oldFunTime}-OLDFUNTIME,,,${Bar.funTime}-funTime,,,${newlyEarned}-newlyEarned,,,${Bar.LetterToTime}-LetterToTime,,,",
-                                    "BAD"
-                                )
+                            val newlyEarned = correctInput.length - Bar.highestCorrect
+                            if (newlyEarned > 0) {
+                                var oldFunTime = Bar.funTime
+                                Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
+
+                                }
+                                Bar.highestCorrect = correctInput.length
                             }
-                            Bar.highestCorrect = correctInput.length
+
+                            if (correctInput == Bar.targetText) {
+                                Bar.funTime += Bar.DoneRetype_to_time
+                                Bar.currentInput = ""  // Reset input when completed
+                                Bar.highestCorrect = 0
+                            }
                         }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .verticalScroll(rememberScrollState()),
+                    placeholder = { Text("Start typing...") }
+                )
 
-                        if (correctInput == Bar.targetText) {
-                            Bar.funTime += Bar.DoneRetype_to_time
-                            Bar.currentInput = ""  // Reset input when completed
-                            Bar.highestCorrect = 0
-                        }
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .verticalScroll(rememberScrollState()),
-                placeholder = { Text("Start typing...") }
-            )
+                Spacer(modifier = Modifier.height(24.dp))
+            }
 
-            Spacer(modifier = Modifier.height(24.dp))
-            ChillTimeButton()
-        }
-
-    /*TOP BAR ITEMS
+            /*TOP BAR ITEMS
     * IF CLICKED WHAT HAPPENS*/
+
+        }
+    }
     Menu()
 }
 
-
-@Composable
-fun FunScreen() {
-
-    LaunchedEffect(Unit) {
-        Bar.funTime = 600
-        Bar.LetterToTime =1
-        while (true) {
-            delay(1000)
-            Bar.funTime -=1
-            if (Bar.funTime <=0) {Global1.navController.navigate("Main")}
-        }
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(0.dp) // remove padding
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Button(onClick = { Global1.navController.navigate("Main") }) {
-                Text("🔙 Winning")
-            }
-            Text(
-                text = "Fun time: ${Bar.funTime}s",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        AndroidView(
-            factory = { context ->
-                WebView(context).apply {
-                    settings.javaScriptEnabled = true
-                    settings.domStorageEnabled = true
-                    settings.useWideViewPort = true
-                    settings.loadWithOverviewMode = true
-                    settings.builtInZoomControls = true
-                    settings.displayZoomControls = false
-
-                    layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                    )
-
-                    loadUrl("https://play.famobi.com/wrapper/rise-up/A1000-10")
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f) // makes it take up remaining space
-        )
-    }
-}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
