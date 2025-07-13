@@ -52,6 +52,7 @@ import android.net.Uri
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.outlined.AdminPanelSettings
 import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.material.icons.outlined.Landscape
 import androidx.compose.material.icons.outlined.Tune
@@ -61,7 +62,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import java.time.LocalDate
 import androidx.compose.material.icons.outlined.QueryStats
-
 
 //region NavController
 //Global1.navController - to use anywhere, no input
@@ -75,18 +75,20 @@ fun MyNavGraph(navController: NavHostController) {
         composable("ChillScreen") {
             ChillScreen()
         }
-        composable("RecommendedScreen") {
-            RecommendedScreen()
-        }
         composable("EditScreen") {
             EditScreen()
         }
         composable("Achievements") {
             Achievements()
         }
+
+        //region SETTINGS
+
         composable("SettingsScreen") {
             SettingsScreen()
         }
+
+        //endregion SETTINGS
     }
 }
 
@@ -240,12 +242,7 @@ fun SupportEmail() {
 fun SettingsScreen() {
     SettingsScreen(titleContent  = {Text( "Settings")}, onSearchClick = { }) {
 
-        SettingItem(
-            icon = Icons.Outlined.Tune,
-            title = "Permissions",
-            subtitle = "Necesary - for app to work",
-            endContent = { OnOffSwitch(Bar.BlockSettings) { Bar.BlockSettings = it }; Spacer(modifier = Modifier.width(35.dp)) }
-        )
+        SettingItem(icon = Icons.Outlined.AdminPanelSettings, title = "Permissions", subtitle = "Necesary - for app to work", onClick = { Global1} )
     }
 }
 
