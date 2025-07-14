@@ -79,6 +79,7 @@ fun Main() {
 
     //region MENU CONTROLLER
     val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp
+    Bar.halfWidth = halfWidth
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     LaunchedEffect(Bar.ShowMenu) {

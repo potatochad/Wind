@@ -70,6 +70,7 @@ import androidx.compose.material.icons.outlined.QueryStats
 import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.max
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.compose.NavHost
 
@@ -132,7 +133,19 @@ fun MainHeader(){
 
 @Composable
 fun Menu() {
-    Column(modifier = Modifier.padding(start = Bar.halfWidth/2-35.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+
+    //region SAFE PADDING
+
+    var ready by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Bar.halfWidth) {if (Bar.halfWidth > 0.dp) { ready = true } }
+    if (!ready) return // Wait until ready
+    log("Bar.halfWidth hasn't loaded yet, has been assighned a valueee----${ready}", "bad")
+    val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - 35.dp)
+
+    //endregion SAFE PADDING
+
+    Column(modifier = Modifier.padding(start = safeStartPadding), horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.height(8.dp))
             Icon(
                 painter = painterResource(id = R.drawable.baseline_radar_24),
@@ -147,8 +160,6 @@ fun Menu() {
             )
             Spacer(modifier = Modifier.height(20.dp))
         }
-
-
 
     SettingsScreen(titleContent  = {} , onSearchClick = { },showBack = false, showSearch= false, showDivider = false) {
         SettingItem(
@@ -236,16 +247,94 @@ fun EditScreen() {
     }
 }
 
+
 @Composable
-fun Achievements(){
-    Column(modifier = Modifier
-        .padding(16.dp)
-        .verticalScroll(rememberScrollState())) {
-        Text(
-            text = "Total typed letters: ${Bar.TotalTypedLetters}",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
+fun Achievements()= NoLagCompose {
+    val ctx = LocalContext.current
+    LaunchedEffect(Unit) {
+        while(true) {
+            Bar.NotificationPermission = isNotificationEnabled(ctx)
+            Bar.DrawOnTopPermission = isDrawOnTopEnabled(ctx)
+            Bar.OptimizationExclusionPermission = isBatteryOptimizationDisabled(ctx)
+            Bar.UsageStatsPermission = isUsageStatsP_Enabled(ctx)
+            Bar.DeviceAdminPermission = isDeviceAdminEnabled(ctx)
+            delay(200L)
+        }
+    }
+    var showNotificationPopup = remember { mutableStateOf(false) }
+    var showDrawOnTopPopup = remember { mutableStateOf(false) }
+    var showOptimizationPopup = remember { mutableStateOf(false) }
+    var showUsagePopup = remember { mutableStateOf(false) }
+    var showDeviceAdminPopup = remember { mutableStateOf(false) }
+
+
+    NotificationP_PopUp(ctx, showNotificationPopup)
+    DrawOnTopP_PopUp(ctx, showDrawOnTopPopup)
+    OptimizationExclusionP_PopUp(ctx, showOptimizationPopup)
+    UsageStatsP_PopUp(ctx, showUsagePopup)
+    DeviceAdminP_PopUp(ctx, showDeviceAdminPopup)
+
+
+    SettingsScreen(titleContent = { Text("Permissions") }, showSearch = false) {
+
+        SettingItem(
+            icon = Icons.Outlined.Notifications,
+            title = "Notification",
+            subtitle = "Necessary",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.NotificationPermission,
+                    onEnable = {
+                        showNotificationPopup.value= true
+                    }
+                )
+            }
         )
+        SettingItem(
+            icon = Icons.Outlined.Visibility,
+            title = "Draw On Top",
+            subtitle = "Necessary",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.DrawOnTopPermission,
+                    onEnable = {showDrawOnTopPopup.value = true}
+                )
+            }
+        )
+        SettingItem(
+            icon = Icons.Outlined.BatterySaver,
+            title = "Optimization Exclusion",
+            subtitle = "Necessary",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.OptimizationExclusionPermission,
+                    onEnable = { showOptimizationPopup.value = true }
+                )
+            }
+        )
+        SettingItem(
+            icon = Icons.Outlined.BarChart,
+            title = "Usage Stats",
+            subtitle = "Necessary",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.UsageStatsPermission,
+                    onEnable = { showUsagePopup.value = true }
+                )
+            }
+        )
+        SettingItem(
+            icon = Icons.Outlined.Security,
+            title = "Device Admin",
+            subtitle = "Optional-for discipline",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.DeviceAdminPermission,
+                    onEnable = { showDeviceAdminPopup.value = true }
+                )
+            }
+        )
+
     }
 }
 
@@ -330,26 +419,25 @@ fun UsageStatsP_PopUp(context: Context, show: MutableState<Boolean>) =
         Settings.ACTION_USAGE_ACCESS_SETTINGS
     )
 
-fun DeviceAdminP_PopUp(ctx: Context) {
-    AlertDialog.Builder(ctx)
-        .setTitle("Activate Device-Admin")
-        .setMessage(Bar.DeviceAdminP_Description)
-        .setCancelable(false)
-        .setPositiveButton("Grant") { _, _ ->
-            // Build the proper “add device admin” intent
+@Composable
+fun DeviceAdminP_PopUp(ctx: Context, show: MutableState<Boolean>) {
+    LazyPopup(
+        show = show,
+        onDismiss = { show.value = false },
+        onConfirm = {
+            show.value = false
             val comp = ComponentName(ctx, MyDeviceAdminReceiver::class.java)
             Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
                 putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, comp)
-                putExtra(
-                    DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                    Bar.DeviceAdminP_Description
-                )
+                putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, Bar.DeviceAdminP_Description)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }.also { ctx.startActivity(it) }
-        }
-        .setNegativeButton("Cancel", null)
-        .show()
+        },
+        title = "Activate Device-Admin",
+        message = Bar.DeviceAdminP_Description
+    )
 }
+
 class MyDeviceAdminReceiver : DeviceAdminReceiver()
 
 //endregion POPUP
@@ -409,7 +497,7 @@ fun SettingsP_Screen()= NoLagCompose {
     DrawOnTopP_PopUp(ctx, showDrawOnTopPopup)
     OptimizationExclusionP_PopUp(ctx, showOptimizationPopup)
     UsageStatsP_PopUp(ctx, showUsagePopup)
-
+    DeviceAdminP_PopUp(ctx, showDeviceAdminPopup)
 
 
     SettingsScreen(titleContent = { Text("Permissions") }, showSearch = false) {
@@ -417,7 +505,7 @@ fun SettingsP_Screen()= NoLagCompose {
         SettingItem(
             icon = Icons.Outlined.Notifications,
             title = "Notification",
-            subtitle = "Necesary",
+            subtitle = "Necessary",
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.NotificationPermission,
@@ -430,7 +518,7 @@ fun SettingsP_Screen()= NoLagCompose {
         SettingItem(
             icon = Icons.Outlined.Visibility,
             title = "Draw On Top",
-            subtitle = "Necesary",
+            subtitle = "Necessary",
             endContent = {
                 PermissionsButton(
                 isEnabled = Bar.DrawOnTopPermission,
@@ -441,7 +529,7 @@ fun SettingsP_Screen()= NoLagCompose {
         SettingItem(
             icon = Icons.Outlined.BatterySaver,
             title = "Optimization Exclusion",
-            subtitle = "Necesary",
+            subtitle = "Necessary",
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.OptimizationExclusionPermission,
@@ -452,7 +540,7 @@ fun SettingsP_Screen()= NoLagCompose {
         SettingItem(
             icon = Icons.Outlined.BarChart,
             title = "Usage Stats",
-            subtitle = "Necesary",
+            subtitle = "Necessary",
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.UsageStatsPermission,
@@ -463,11 +551,11 @@ fun SettingsP_Screen()= NoLagCompose {
         SettingItem(
             icon = Icons.Outlined.Security,
             title = "Device Admin",
-            subtitle = "Optiona-for disipline",
+            subtitle = "Optional-for discipline",
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.DeviceAdminPermission,
-                    onEnable = { DeviceAdminP_PopUp(ctx) }
+                    onEnable = { showDeviceAdminPopup.value = true }
                 )
             }
         )

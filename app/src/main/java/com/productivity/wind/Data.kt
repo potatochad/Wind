@@ -52,6 +52,7 @@ class Settings {
     var currentApp by mutableStateOf("")
 
     //region COPY PASTE THING
+
     var TotalRemovedLetters by mutableStateOf(0)
     var InputedLetter by mutableStateOf("")
     var targetText by mutableStateOf("I can do good things, I have a lot of work to do today, I can do hard work, I need start working now. I have many important things to do, I need focus only one the most important thing at hand. Afterwards I can enjoy some youtube videos- if configured (TopBar right side ICON)")
@@ -60,6 +61,7 @@ class Settings {
     var currentInput by mutableStateOf("")
     var highestCorrect by mutableStateOf(0)
     var highestColord by mutableStateOf(0)
+
     //endregion
 
     //region MISALANIOUS
@@ -82,14 +84,28 @@ class Settings {
 
     var App_Description by mutableStateOf("A simple gamified app, that encourages, actions you want to take: Just retype your goals, words you want to learn and earn points to Spend time on your favorite apps")
 
-    var NotificationPermission by mutableStateOf(false); var NotificationP_Description by mutableStateOf("Necesary permission for background service to work, stay active: Without it, the app is unable to function properly")
-    var DrawOnTopPermission by mutableStateOf(false); var DrawOnTopP_Description by mutableStateOf("This is used to block apps, that need points to use (each point = 1s, of usage)")
-    var OptimizationExclusionPermission by mutableStateOf(false); var OptimizationExclusionP_Description by mutableStateOf("Necesary permission for background service to work.")
-    var UsageStatsPermission by mutableStateOf(false); var UsageStatsP_Description by mutableStateOf("Necesary so the app can detect other apps, and the amount spent on them")
-    var DeviceAdminPermission by mutableStateOf(false); var DeviceAdminP_Description by mutableStateOf("Optional: use when want a little disipline boost")
+    var NotificationPermission by mutableStateOf(false); var NotificationP_Description by mutableStateOf("Makes sure that background service stays alive and doesn't get stopped")
+    var DrawOnTopPermission by mutableStateOf(false); var DrawOnTopP_Description by mutableStateOf("This is used to block apps (draw an overlay), that [you selected] need points to use (each point = 1s, of usage)")
+    var OptimizationExclusionPermission by mutableStateOf(false); var OptimizationExclusionP_Description by mutableStateOf("Helps, the background service to not get stopped, when batery saver turned on")
+    var UsageStatsPermission by mutableStateOf(false); var UsageStatsP_Description by mutableStateOf("Without it the background service is unable to detect apps [that you want blocked]")
+    var DeviceAdminPermission by mutableStateOf(false); var DeviceAdminP_Description by mutableStateOf("Optional: use when want a little discipline boost")
 
     //endregion
 
+    //region ACHIEVEMENTS
+
+    /*SELF SYCNHS LAZY POPUP
+    *
+    !TO SELF SYNCH NEED EACH THING START WITH Achievement  (the var, okkk)
+     ? MAKE SURE nothing else starts out like that
+    * */
+    var NotificationPermission by mutableStateOf(false); var NotificationP_Description by mutableStateOf("Makes sure that background service stays alive and doesn't get stopped")
+    var DrawOnTopPermission by mutableStateOf(false); var DrawOnTopP_Description by mutableStateOf("This is used to block apps (draw an overlay), that [you selected] need points to use (each point = 1s, of usage)")
+    var OptimizationExclusionPermission by mutableStateOf(false); var OptimizationExclusionP_Description by mutableStateOf("Helps, the background service to not get stopped, when batery saver turned on")
+    var UsageStatsPermission by mutableStateOf(false); var UsageStatsP_Description by mutableStateOf("Without it the background service is unable to detect apps [that you want blocked]")
+    var DeviceAdminPermission by mutableStateOf(false); var DeviceAdminP_Description by mutableStateOf("Optional: use when want a little discipline boost")
+
+    //endregion
 
 }
 
