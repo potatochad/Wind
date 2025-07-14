@@ -114,62 +114,38 @@ fun Main() {
 
                     OutlinedTextField(
                         value = Bar.currentInput,
-                        onValueChange = {
-                            if (it.length - Bar.currentInput.length <= 1) {
+                        onValueChange = { input ->
+                            // Only single‐char changes
+                            if (input.length - Bar.currentInput.length <= 1) {
+                                // 1) Track typing
+                                Bar.TotalTypedLetters++
+                                Bar.currentInput = input
 
+                                // 2) Compute how many chars are correct
+                                correctChars = Bar.targetText
+                                    .zip(input)
+                                    .takeWhile { it.first == it.second }
+                                    .size
 
-                                Bar.TotalTypedLetters += 1
-                                Bar.currentInput = it
-
-                                val correctChars = Bar.targetText.zip(Bar.currentInput)
-                                    .takeWhile { it.first == it.second }.size
-                                val correctInput = Bar.currentInput.take(correctChars)
-
-
-                                val newlyEarned = correctInput.length - Bar.highestCorrect
+                                // 3) Earn funTime for newly correct letters
+                                val newlyEarned = correctChars - Bar.highestCorrect
                                 if (newlyEarned > 0) {
-                                    var oldFunTime = Bar.funTime
-                                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
-
-                                    }
-                                    Bar.highestCorrect = correctInput.length
+                                    Bar.funTime += newlyEarned * Bar.LetterToTime
+                                    Bar.highestCorrect = correctChars
                                 }
 
-                                if (correctInput == Bar.targetText) {
+                                // 4) Completed full text?
+                                if (correctChars == Bar.targetText.length) {
                                     Bar.funTime += Bar.DoneRetype_to_time
-                                    Bar.currentInput = ""  // Reset input when completed
+                                    Bar.currentInput = ""
                                     Bar.highestCorrect = 0
+                                    correctChars = 0
                                 }
 
-
-
-
-
-
-
-
-
-
-                                Bar.funTime +=1
-                                val newLength = it.length
-                                val oldLength = Bar.currentInput.length
-                                Bar.TotalTypedLetters += 1
-                                Bar.currentInput = it
-
-                                if ((newLength > oldLength) && newLength <= Bar.targetText.length) {
-                                    // Typing forward
-                                    if (Bar.targetText.startsWith(it)) {
-                                        correctChars = newLength
-                                    } else {
-                                        correctChars = Bar.targetText.zip(it).takeWhile { it.first == it.second }.size
-                                    }
-                                } else {
-                                    // Deleting or modifying
-                                    correctChars = Bar.targetText.zip(it).takeWhile { it.first == it.second }.size
-                                }
+                                // 5) Tiny bonus per keystroke
+                                Bar.funTime++
                             }
                         },
-
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp)
