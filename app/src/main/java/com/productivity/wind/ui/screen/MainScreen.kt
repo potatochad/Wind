@@ -35,73 +35,7 @@ import androidx.navigation.NavHostController
 import com.productivity.wind.data.PermissionType
 import com.productivity.wind.ui.theme.KeepAliveTheme
 
-/**
- * Main landing screen composable for the Keep Alive app.
- * Displays the app icon, heading, and manages permission and navigation logic.
- */
-@Composable
-fun Permissions_Screen(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    activityResultLauncher: ActivityResultLauncher<Intent>?,
-    requestPermissionLauncher: ActivityResultLauncher<Array<String>>?,
-    allPermissionsGranted: Boolean = false,
-    permissionType: PermissionType,
-    showPermissionRequestDialog: MutableState<Boolean>,
-    onRequestPermissions: () -> Unit,
-    totalRequiredCount: Int,
-    grantedCount: Int,
-    configuredAppsCount: Int,
-) {
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center).padding(innerPadding),
-        ) {
 
-            //region UI STUFF
-
-            AppHeading(title = "Permissions", modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp),)
-
-            Text(text = "Enable so the app can work 💓", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp),)
-
-            Spacer(modifier = Modifier.height(128.dp))
-            Column {
-                Row(modifier = Modifier.fillMaxWidth().padding(24.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically,)
-                {
-                    Text("ℹ️ Required permission status \nApproved Permissions: $grantedCount of $totalRequiredCount")
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(
-                        imageVector = if (allPermissionsGranted) Icons.Filled.Check else Icons.Filled.Clear,
-                        // Set color to red if permission is not granted
-                        tint = if (allPermissionsGranted) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.error,
-                        contentDescription = "Icon",
-                    )
-                }
-                AnimatedVisibility(visible = !allPermissionsGranted, enter = fadeIn(), exit = fadeOut(), modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 32.dp),)
-                {
-                    Button(onClick = { onRequestPermissions() })
-                    {
-                        Text("Grant Permission")
-                    }
-                }
-            }
-
-            //endregion UI STUFFF
-
-            LaunchedEffect(allPermissionsGranted) { if (allPermissionsGranted) { navController.navigate("Main") } }
-        }
-    }
-
-    PermissionDialogs(
-        context = LocalContext.current,
-        permissionType = permissionType,
-        showDialog = showPermissionRequestDialog,
-        activityResultLauncher = activityResultLauncher,
-        requestPermissionLauncher = requestPermissionLauncher,
-    )
-}
 
 @Composable
 fun AppHeading(

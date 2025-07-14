@@ -397,12 +397,13 @@ class WatchdogService : Service() {
                         if (Bar.funTime >1_000) {
                             log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
                         }
-                        else {
-                            if (gotAdmin) {
-                                BlockScreen()
-                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
-                            }
-                        }
+                        //!!!!!!!!!!!!!!!!!!!!NEED FIX HERE WITH PERMISSIONS
+//                        else {
+//                            if (gotAdmin) {
+//                                BlockScreen()
+//                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+//                            }
+//                        }
                     }
                     if (currentApp == "com.seekrtech.waterapp") {
                         log("NEW DAY??; ${Bar.NewDay}", "bad")

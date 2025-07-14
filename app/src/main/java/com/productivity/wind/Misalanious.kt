@@ -40,8 +40,6 @@ import androidx.compose.ui.window.Popup
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.productivity.wind.Global1.context
-import com.productivity.wind.data.PermissionType
-import com.productivity.wind.ui.screen.Permissions_Screen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

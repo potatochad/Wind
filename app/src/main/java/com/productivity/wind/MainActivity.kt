@@ -27,9 +27,7 @@ import com.productivity.wind.data.PermissionType.PERMISSION_IGNORE_BATTERY_OPTIM
 import com.productivity.wind.data.PermissionType.PERMISSION_PACKAGE_USAGE_STATS
 import com.productivity.wind.data.PermissionType.PERMISSION_POST_NOTIFICATIONS
 import com.productivity.wind.data.PermissionType.PERMISSION_SYSTEM_APPLICATION_OVERLAY
-import com.productivity.wind.ui.screen.MainViewModel
 import com.productivity.wind.ui.theme.KeepAliveTheme
-import com.productivity.wind.util.ServiceManager
 import timber.log.Timber
 
 
