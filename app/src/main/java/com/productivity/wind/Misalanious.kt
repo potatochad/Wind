@@ -119,10 +119,11 @@ fun MainHeader(){
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         MenuIcon()
         EditIcon()
-
-
         Spacer(modifier = Modifier.width(12.dp))
         Text(text = "Points: ${Bar.funTime}", fontSize = 18.sp)
+
+        Spacer(modifier = Modifier.width(40.dp))
+        ConfigureIcon()
     }
 }
 
@@ -238,7 +239,7 @@ fun EditPopUp(show: MutableState<Boolean>) {
             )
         },
         showCancel = true,
-        onConfirm = { Bar.targetText = TemporaryTargetText },
+        onConfirm = { Bar.targetText = TemporaryTargetText; Bar.FirstEditText = false },
         onCancel = { TemporaryTargetText = Bar.targetText }
     )
 }
@@ -642,31 +643,35 @@ fun MenuIcon() {
         )
     }
 }
-
 @Composable
 fun EditIcon() {
+
+    //region THE SAFETY
+
+    val showBeginnerAlert = remember { mutableStateOf(false) }
+    val showVeteranAlert = remember { mutableStateOf(false) }
+
+    var BeginnerA_Title by remember { mutableStateOf("Get 100 points") }
+    var BeginnerA_Message by remember { mutableStateOf("Before being allowed to change the text, need a minimum of 100 points. [After changing the text once it increases permanantly to 1k]. This is to help you stay disiplined afterwards") }
+
+    var VeteranA_Title by remember { mutableStateOf("Get 1k points") }
+    var VeteranA_Message by remember { mutableStateOf("Need 1k points before changing the text: this is to help you stay disiplined") }
+
+
+    LazyPopup(show = showBeginnerAlert, title = BeginnerA_Title, message = BeginnerA_Message)
+    LazyPopup(show = showVeteranAlert, title = VeteranA_Title, message = VeteranA_Message)
+
+    //endregion THE SAFETY
+
     val show = remember { mutableStateOf(false) }
-
     EditPopUp(show = show)
+
+
     IconButton(onClick = {
-//        if (Bar.funTime < 1000) {
-//            Box(
-//                modifier = Modifier.fillMaxSize(),
-//                contentAlignment = Alignment.Center
-//            ) {
-//                Text(
-//                    text = "NOT ENOUGH POINTS",
-//                    fontSize = 20.sp,
-//                    fontWeight = FontWeight.Bold
-//                )
-//            }
-//            return
-//        }
-
-        log("ON EDIT ICON CLICK, BEFORE SETTING-----${show.value}", "BAD")
-        show.value=true
-
-        log("ON EDIT ICON CLICK, after SETTING-----${show.value}", "BAD")
+        if (Bar.FirstEditText && Bar.funTime > 99) show.value=true
+        else if (!Bar.FirstEditText && Bar.funTime > 999) show.value=true
+        else if (Bar.FirstEditText) showBeginnerAlert.value = true
+        else if (!Bar.FirstEditText) showVeteranAlert.value = true
     }
 
 
@@ -682,9 +687,26 @@ fun EditIcon() {
 
 }
 @Composable
-fun Header(message: String) {
-    Text(text = message, fontSize = 28.sp)
+fun ConfigureIcon() {
+
+    IconButton(onClick = {
+    }
+
+
+
+
+    ) {
+        Icon(
+            imageVector = Icons.Default.Edit,
+            contentDescription = "Edit",
+            tint = Color(0xFFFFD700)
+        )
+    }
+
 }
+
+
+
 
 //!DISABLED
 @Composable

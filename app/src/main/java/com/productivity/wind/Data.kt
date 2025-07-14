@@ -53,8 +53,9 @@ class Settings {
     var currentApp by mutableStateOf("")
 
     //region COPY PASTE THING
+
     var TotalRemovedLetters by mutableStateOf(0)
-    var InputedLetter by mutableStateOf("")
+    var FirstEditText by mutableStateOf(true)
     var targetText by mutableStateOf("I can do good things. I have a lot of work to do today. I am focused and ready to start. " + "I can handle difficult tasks and stay on track. Every minute I work brings me closer to my goals. " + "I choose to ignore distractions and focus on one thing at a time. " + "Once I finish my most important task, I will take a short break and relax. " + "If I have enabled rewards, I can enjoy a video as a treat. (Top bar right side icon)")
     var LetterToTime by mutableStateOf(1)
     var DoneRetype_to_time by mutableStateOf(60)
@@ -62,7 +63,7 @@ class Settings {
     var highestCorrect by mutableStateOf(0)
     var highestColord by mutableStateOf(0)
 
-    //endregion
+    //endregion COPY PASTE THING
 
     //region MISALANIOUS
 
