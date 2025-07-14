@@ -43,38 +43,43 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 @Composable
 fun Main() {
+    //Bar.targetText = "I am doing this project to regain freedom in my life. It is most important project ever, I NEED TO TAKE THIS WEEK UNTIL FRIDAY SUPER SERIOUSLY, NOT GETTING THE APP TO THE PLAY STORE UNTIL THEN means a 100x difference: NO PROGRAMMING, PROGRESS FOR A MONTH, MULTIPLE DISTRACTIONS, NO ME WITH SELF CONTROL, ETC.... I need to only focus on it,and how I programm, all logic MUST BE WRITTEN BY ME, IT MUST BEEEE, otherwise will spend many hours and thus resulting a catastrophic outcome, of nothing achieved, like those 5 months!!! I need to keep with it, AND GET IT TO BEAR FRUIT AS FAST AS possible, but making sure logic IS REUSABLE AND UNIVERSAL. All i must do is stick with the idea: type stuff and get time to have fun. Done, I MUST FOCUS ON ONE IDEA, ONE ONLYYY. Goal is consistency, nothing else, nothing else!!"
 
     fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
         for (i in text.indices) {
             if (i < correctUntil) {
                 pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
-                append(text[i])
-                pop()
+                append(text[i]); pop()
             } else {
                 append(text[i])
             }
         }
     }
-    val correctChars = Bar.targetText.zip(Bar.currentInput)
-        .takeWhile { it.first == it.second }.size
 
-    val coloredTarget = remember(Bar.targetText, Bar.currentInput) {
-        buildAnnotatedString {
-            appendAnnotated(Bar.targetText, correctChars)
+    // Offload heavy build to background
+    val coloredTarget by produceState(initialValue = AnnotatedString(""), Bar.targetText, Bar.currentInput) {
+        withContext(Dispatchers.Default) {
+            val correctChars = Bar.targetText.zip(Bar.currentInput)
+                .takeWhile { it.first == it.second }
+                .size
+            value = buildAnnotatedString {
+                appendAnnotated(Bar.targetText, correctChars)
+            }
         }
     }
-    val context = LocalContext.current
-
 
 
     //region MENU CONTROLLER

@@ -44,6 +44,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.isActive
 import kotlin.reflect.KMutableProperty1
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 
 class Settings {
@@ -52,10 +53,9 @@ class Settings {
     var currentApp by mutableStateOf("")
 
     //region COPY PASTE THING
-
     var TotalRemovedLetters by mutableStateOf(0)
     var InputedLetter by mutableStateOf("")
-    var targetText by mutableStateOf("I can do good things, I have a lot of work to do today, I can do hard work, I need start working now. I have many important things to do, I need focus only one the most important thing at hand. Afterwards I can enjoy some youtube videos- if configured (TopBar right side ICON)")
+    var targetText by mutableStateOf("I can do good things. I have a lot of work to do today. I am focused and ready to start. " + "I can handle difficult tasks and stay on track. Every minute I work brings me closer to my goals. " + "I choose to ignore distractions and focus on one thing at a time. " + "Once I finish my most important task, I will take a short break and relax. " + "If I have enabled rewards, I can enjoy a video as a treat. (Top bar right side icon)")
     var LetterToTime by mutableStateOf(1)
     var DoneRetype_to_time by mutableStateOf(60)
     var currentInput by mutableStateOf("")
@@ -99,11 +99,6 @@ class Settings {
     !TO SELF SYNCH NEED EACH THING START WITH Achievement  (the var, okkk)
      ? MAKE SURE nothing else starts out like that
     * */
-    var NotificationPermission by mutableStateOf(false); var NotificationP_Description by mutableStateOf("Makes sure that background service stays alive and doesn't get stopped")
-    var DrawOnTopPermission by mutableStateOf(false); var DrawOnTopP_Description by mutableStateOf("This is used to block apps (draw an overlay), that [you selected] need points to use (each point = 1s, of usage)")
-    var OptimizationExclusionPermission by mutableStateOf(false); var OptimizationExclusionP_Description by mutableStateOf("Helps, the background service to not get stopped, when batery saver turned on")
-    var UsageStatsPermission by mutableStateOf(false); var UsageStatsP_Description by mutableStateOf("Without it the background service is unable to detect apps [that you want blocked]")
-    var DeviceAdminPermission by mutableStateOf(false); var DeviceAdminP_Description by mutableStateOf("Optional: use when want a little discipline boost")
 
     //endregion
 

@@ -86,9 +86,6 @@ fun MyNavGraph(navController: NavHostController) {
         composable("ChillScreen") {
             ChillScreen()
         }
-        composable("EditScreen") {
-            EditScreen()
-        }
         composable("Achievements") {
             Achievements()
         }
@@ -179,11 +176,11 @@ fun Menu() {
             title = "Settings",
             onClick = { Global1.navController.navigate("SettingsScreen"); Bar.ShowMenu = false }
         )
-        SettingItem(
-            icon = Icons.Outlined.QueryStats,
-            title = "Achievements",
-            onClick = { Global1.navController.navigate("Achievements"); Bar.ShowMenu = false }
-        )
+//        SettingItem(
+//            icon = Icons.Outlined.QueryStats,
+//            title = "Achievements",
+//            onClick = { Global1.navController.navigate("Achievements"); Bar.ShowMenu = false }
+//        )
     }
 }
 
@@ -222,29 +219,28 @@ fun SupportEmail() {
 //endregion MENU
 
 @Composable
-fun EditScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "Edit text",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = Bar.targetText,
-            onValueChange = { Bar.targetText = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 100.dp, max = 500.dp)
-                .verticalScroll(rememberScrollState())
-        )
-    }
+fun EditPopUp(show: MutableState<Boolean>) {
+    var TemporaryTargetText by remember { mutableStateOf("") }
+    TemporaryTargetText = Bar.targetText
+    LazyPopup(
+        show = show,
+        onDismiss = { TemporaryTargetText = Bar.targetText },
+        title = "Edit Text",
+        message = "",
+        content = {
+            OutlinedTextField(
+                value = TemporaryTargetText,
+                onValueChange = { TemporaryTargetText = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 100.dp, max = 200.dp)
+                    .verticalScroll(rememberScrollState())
+            )
+        },
+        showCancel = true,
+        onConfirm = { Bar.targetText = TemporaryTargetText },
+        onCancel = { TemporaryTargetText = Bar.targetText }
+    )
 }
 
 
@@ -649,7 +645,9 @@ fun MenuIcon() {
 
 @Composable
 fun EditIcon() {
+    val show = remember { mutableStateOf(false) }
 
+    EditPopUp(show = show)
     IconButton(onClick = {
 //        if (Bar.funTime < 1000) {
 //            Box(
@@ -665,9 +663,11 @@ fun EditIcon() {
 //            return
 //        }
 
+        log("ON EDIT ICON CLICK, BEFORE SETTING-----${show.value}", "BAD")
+        show.value=true
 
-
-        Global1.navController.navigate("EditScreen")}
+        log("ON EDIT ICON CLICK, after SETTING-----${show.value}", "BAD")
+    }
 
 
 

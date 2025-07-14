@@ -1107,23 +1107,24 @@ fun LazyPopup(
     onDismiss: () -> Unit,
     title: String = "Info",
     message: String,
+    content: (@Composable () -> Unit)? = null,
     showCancel: Boolean = true,
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null
 ) {
 
-    log("show-- ${show}", "bad")
-    log("Clcikedddd--show1 ${Bar.showLazyPopUp}", "bad")
-
     if (!show.value) return
-    log("SHOWING POPUP", "bad")
         AlertDialog(
             onDismissRequest = {
                 show.value = false
-                log("DISMISSING POPUP", "bad")
             },
             title = { Text(title) },
-            text = { Text(message) },
+            text = { if (content == null) {Text(message) }
+                else {
+                    content()
+                }
+
+                   },
             confirmButton = {
                 TextButton(onClick = {
                     onConfirm?.invoke()
@@ -1137,7 +1138,6 @@ fun LazyPopup(
                     TextButton(onClick = {
                         onCancel?.invoke()
                         show.value = false
-                        log("DISMISSING POPUP", "bad")
                     }) {
                         Text("Cancel")
                     }
