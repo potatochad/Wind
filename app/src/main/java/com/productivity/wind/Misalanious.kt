@@ -51,9 +51,12 @@ import android.graphics.Canvas
 import android.net.Uri
 import android.os.PowerManager
 import android.os.Process
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.AdminPanelSettings
 import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.BatterySaver
@@ -69,6 +72,9 @@ import java.time.LocalDate
 import androidx.compose.material.icons.outlined.QueryStats
 import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.max
 import androidx.core.app.NotificationManagerCompat
@@ -88,6 +94,9 @@ fun MyNavGraph(navController: NavHostController) {
         }
         composable("Achievements") {
             Achievements()
+        }
+        composable("ConfigureScreen") {
+            ConfigureScreen()
         }
 
         //region SETTINGS
@@ -116,15 +125,22 @@ fun MyNavGraph(navController: NavHostController) {
 //TOP BAR
 @Composable
 fun MainHeader(){
-    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         MenuIcon()
         EditIcon()
         Spacer(modifier = Modifier.width(12.dp))
         Text(text = "Points: ${Bar.funTime}", fontSize = 18.sp)
 
-        Spacer(modifier = Modifier.width(40.dp))
+
+        Spacer(modifier = Modifier.weight(1f))
+
         ConfigureIcon()
     }
+
 }
 
 //region MENU
@@ -243,6 +259,116 @@ fun EditPopUp(show: MutableState<Boolean>) {
         onCancel = { TemporaryTargetText = Bar.targetText }
     )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 1️⃣ ICON CACHE
+object Vapp {
+    val IconMap = mutableStateMapOf<String, ImageBitmap?>()
+}
+
+// 2️⃣ LOAD INSTALLED APPS (fixed)
+suspend fun Context.getAllInstalledApps() = withContext(Dispatchers.IO) {
+    // mark all as missing, then remove them safely
+    Bar.AppList.forEach { it.Exists = false }
+    Bar.AppList.removeAll { !it.Exists }
+
+    val myPkg = packageName
+    packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+        .asSequence()
+        .filter { it.packageName != myPkg }
+        .filter { packageManager.getLaunchIntentForPackage(it.packageName) != null }
+        .forEach { appInfo ->
+            val name = appInfo.loadLabel(packageManager).toString()
+            val pkg = appInfo.packageName
+            val exists = Bar.AppList.find { it.packageName == pkg }
+            if (exists != null) {
+                exists.Exists = true
+            } else {
+                Bar.AppList.add(Apps(name = name, packageName = pkg))
+                log("ADDED NEW APP: $pkg", "bad")
+            }
+        }
+}
+
+// 3️⃣ BACKGROUND ICON LOADER
+suspend fun Context.loadIconsInBackground() = withContext(Dispatchers.IO) {
+    Bar.AppList.forEach { app ->
+        if (!Vapp.IconMap.containsKey(app.packageName)) {
+            Vapp.IconMap[app.packageName] = try {
+                val icon = packageManager.getApplicationIcon(app.packageName)
+                Bitmap.createBitmap(64, 64, Bitmap.Config.ARGB_8888).also { bmp ->
+                    Canvas(bmp).apply {
+                        icon.setBounds(0, 0, 64, 64)
+                        icon.draw(this)
+                    }
+                }.asImageBitmap()
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+}
+
+// 4️⃣ COMPOSABLE WITH BOTH STEPS
+@Composable
+fun ConfigureScreen() = NoLagCompose {
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        context.getAllInstalledApps()
+        context.loadIconsInBackground()
+    }
+//
+//    LazyColumn(modifier = Modifier.fillMaxSize()) {
+//        items(
+//            items = Bar.AppList,
+//            key = { it.packageName }
+//        ) { app ->
+//            val icon = Vapp.IconMap[app.packageName]
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(8.dp)
+//            ) {
+//                if (icon != null) {
+//                    Image(icon, contentDescription = null, modifier = Modifier.size(40.dp))
+//                } else {
+//                    CircularProgressIndicator(strokeWidth = 2.dp, modifier = Modifier.size(24.dp))
+//                }
+//                Spacer(modifier = Modifier.width(8.dp))
+//                Text(app.name, fontWeight = FontWeight.Bold)
+//            }
+//        }
+//    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @Composable
@@ -575,36 +701,6 @@ fun SettingsP_Screen()= NoLagCompose {
 //endregion
 
 //region ONCES
-suspend fun Context.getAllInstalledApps(){
-    Bar.AppList.forEach { if (!it.Exists) { Bar.AppList.remove(it) } }
-    Bar.AppList.forEach { it.Exists = false }
-
-    log("LIST ON PAGE CREATION: ${Bar.AppList}", "bad")
-
-    val myPackage = context.packageName
-    return withContext(Dispatchers.IO) {
-        packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-            .filter { it.packageName != myPackage }
-            .filter { packageManager.getLaunchIntentForPackage(it.packageName) != null }
-            .map { appInfo ->
-                val name = appInfo.loadLabel(packageManager).toString()
-
-                /*BETTER ICON
-                * IT IS 15ML FASTER TO LOAD AND 14KB LESS STORAGE*/
-                val original = appInfo.loadIcon(packageManager) ; val bitmap = Bitmap.createBitmap(32, 32, Bitmap.Config.RGB_565) ; val canvas = Canvas(bitmap);original.setBounds(0, 0, 32, 32);original.draw(canvas)
-                val icon = BitmapDrawable(resources, bitmap)
-                val pkg = appInfo.packageName
-
-                val existing = Bar.AppList.find { it.packageName == pkg }
-                if (existing != null) { existing.Exists = true } else {Bar.AppList.add(Apps(name = name, packageName = pkg));
-
-                    log("ADDDING A NEW APP", "bad")
-                }
-
-            }
-
-    }
-}
 
 //CHECKS IF NEW DAY/// WIRED UP TO SETTINGS VAR NEWDAY
 object DayChecker {
@@ -673,10 +769,6 @@ fun EditIcon() {
         else if (Bar.FirstEditText) showBeginnerAlert.value = true
         else if (!Bar.FirstEditText) showVeteranAlert.value = true
     }
-
-
-
-
     ) {
         Icon(
             imageVector = Icons.Default.Edit,
@@ -690,6 +782,7 @@ fun EditIcon() {
 fun ConfigureIcon() {
 
     IconButton(onClick = {
+        Global1.navController.navigate("ConfigureScreen")
     }
 
 
@@ -697,8 +790,8 @@ fun ConfigureIcon() {
 
     ) {
         Icon(
-            imageVector = Icons.Default.Edit,
-            contentDescription = "Edit",
+            imageVector = Icons.Default.Settings,
+            contentDescription = "configure",
             tint = Color(0xFFFFD700)
         )
     }

@@ -1114,6 +1114,7 @@ fun LazyPopup(
 ) {
 
     if (!show.value) return
+
         AlertDialog(
             onDismissRequest = {
                 onDismiss?.invoke()
