@@ -54,8 +54,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun Main() {
 
-    //AccessibilityPermission()
-    //DrawOnTopPermission()
+    var correctChars by remember { mutableStateOf(0) }
 
     fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
         for (i in text.indices) {
@@ -68,39 +67,16 @@ fun Main() {
             }
         }
     }
-    val correctChars = Bar.targetText.zip(Bar.currentInput)
-        .takeWhile { it.first == it.second }.size
-
     val coloredTarget = remember(Bar.targetText, Bar.currentInput) {
         buildAnnotatedString {
             appendAnnotated(Bar.targetText, correctChars)
         }
     }
-    val context = LocalContext.current
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     //region MENU CONTROLLER
-    val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp
+
+    Bar.halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     LaunchedEffect(Bar.ShowMenu) {
@@ -120,9 +96,10 @@ fun Main() {
                 }
             }
     }
+
     //endregion MENU CONTROLLER
 
-    ModalNavigationDrawer(drawerState = drawerState, gesturesEnabled = true, drawerContent   = { ModalDrawerSheet(modifier = Modifier.width(halfWidth)) { Menu() } }) {
+    ModalNavigationDrawer(drawerState = drawerState, gesturesEnabled = true, drawerContent   = { ModalDrawerSheet(modifier = Modifier.width(Bar.halfWidth)) { Menu() } }) {
         SettingsScreen(titleContent = { MainHeader() }, showBack = false, showSearch = false) {
             Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
 
@@ -144,28 +121,23 @@ fun Main() {
                     OutlinedTextField(
                         value = Bar.currentInput,
                         onValueChange = {
-                            if (it.length - Bar.currentInput.length <= 5) {
+                            if (it.length - Bar.currentInput.length <= 1) {
+                                Bar.funTime +=1
+                                val newLength = it.length
+                                val oldLength = Bar.currentInput.length
                                 Bar.TotalTypedLetters += 1
                                 Bar.currentInput = it
 
-                                val correctChars = Bar.targetText.zip(Bar.currentInput)
-                                    .takeWhile { it.first == it.second }.size
-                                val correctInput = Bar.currentInput.take(correctChars)
-
-
-                                val newlyEarned = correctInput.length - Bar.highestCorrect
-                                if (newlyEarned > 0) {
-                                    var oldFunTime = Bar.funTime
-                                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
-
+                                if ((newLength > oldLength) && newLength <= Bar.targetText.length) {
+                                    // Typing forward
+                                    if (Bar.targetText.startsWith(it)) {
+                                        correctChars = newLength
+                                    } else {
+                                        correctChars = Bar.targetText.zip(it).takeWhile { it.first == it.second }.size
                                     }
-                                    Bar.highestCorrect = correctInput.length
-                                }
-
-                                if (correctInput == Bar.targetText) {
-                                    Bar.funTime += Bar.DoneRetype_to_time
-                                    Bar.currentInput = ""  // Reset input when completed
-                                    Bar.highestCorrect = 0
+                                } else {
+                                    // Deleting or modifying
+                                    correctChars = Bar.targetText.zip(it).takeWhile { it.first == it.second }.size
                                 }
                             }
                         },
@@ -186,7 +158,6 @@ fun Main() {
         }
     }
 }
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)

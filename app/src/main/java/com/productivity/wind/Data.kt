@@ -44,6 +44,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.isActive
 import kotlin.reflect.KMutableProperty1
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.unit.dp
 
 class Settings {
     var funTime by mutableStateOf(0)
@@ -52,15 +53,18 @@ class Settings {
 
 
     //region COPY PASTE THING
-    var targetText by mutableStateOf("I can do good things, I am amazing, I make mistakes, I try my best. I want to do x")
+
+    var InputedLetter by mutableStateOf("")
+    var targetText by mutableStateOf("I can do good things, I have a lot of work to do today, I can do hard work, I need start working now. I have many important things to do, I need focus only one the most important thing at hand. Afterwards I can enjoy some youtube videos- if configured (TopBar right side ICON)")
     var LetterToTime by mutableStateOf(1)
     var DoneRetype_to_time by mutableStateOf(60)
     var currentInput by mutableStateOf("")
     var highestCorrect by mutableStateOf(0)
     //endregion
 
-
     //region MISALANIOUS
+
+    var halfWidth by mutableStateOf(0.dp)
     var ShowMenu by mutableStateOf(false)
     var CheckInstalledApps by mutableStateOf(true)
     var AppList = mutableStateListOf<Apps>()
@@ -71,9 +75,11 @@ class Settings {
 
     //refreshs to 0 daily// if more than 50 seconds, get 600 time
     var WaterDOtime_spent by mutableStateOf(0)
-    //endregion
+
+    //endregion MISALANIOUS
 
     //region PERMISSIONS
+
     var App_Description by mutableStateOf("A simple gamified app, that encourages, actions you want to take: Just retype your goals, words you want to learn and earn points to Spend time on your favorite apps")
 
     var NotificationPermission by mutableStateOf(false); var NotificationP_Description by mutableStateOf("Necesary permission for background service to work, stay active: Without it, the app is unable to function properly")
@@ -82,7 +88,7 @@ class Settings {
     var UsageStatsPermission by mutableStateOf(false); var UsageStatsP_Description by mutableStateOf("Necesary so the app can detect other apps, and the amount spent on them")
     var DeviceAdminPermission by mutableStateOf(false); var DeviceAdminP_Description by mutableStateOf("Optional: use when want a little disipline boost")
 
-    //endegion
+    //endregion
 
 
 }

@@ -937,19 +937,21 @@ fun settingsHeader(
     onBackClick: () -> Unit = {},
     showBack: Boolean = true,
     showSearch: Boolean = true,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showDivider: Boolean = true
 ) {
     val ui = rememberSystemUiController()
     LaunchedEffect(Unit) {
         ui.setStatusBarColor(Color.Black, darkIcons = false)
     }
+
     Column {
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
                 .statusBarsPadding()
-                .background(Color.Black)
         )
+
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -958,9 +960,11 @@ fun settingsHeader(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Back button on the left
             if (showBack) {
-                IconButton(onClick = onBackClick) {
+                IconButton(onClick = {
+                    onBackClick()
+                    Global1.navController.popBackStack()
+                }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Back",
@@ -969,12 +973,17 @@ fun settingsHeader(
                 }
             }
 
-            // Title slot
-            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
+            // Title content
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = if (showBack) 8.dp else 0.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
                 titleContent()
             }
 
-            // Search icon on the right
+            // Search icon
             if (showSearch) {
                 IconButton(onClick = onSearchClick) {
                     Icon(
@@ -985,14 +994,18 @@ fun settingsHeader(
                 }
             }
         }
-        // Divider under header
-        Divider(
-            color = Color.Gray,
-            thickness = 1.dp,
-            modifier = Modifier.fillMaxWidth()
-        )
+
+        if (showDivider) {
+            Divider(
+                color = Color.Gray,
+                thickness = 1.dp,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
     }
 }
+
 
 @Composable
 fun SettingsScreen(
@@ -1002,6 +1015,7 @@ fun SettingsScreen(
     showBack: Boolean = true,
     showSearch: Boolean = true,
     modifier: Modifier = Modifier,
+    showDivider: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val focusManager = LocalFocusManager.current
@@ -1025,7 +1039,8 @@ fun SettingsScreen(
                 onSearchClick = onSearchClick,
                 onBackClick = onBackClick,
                 showBack = showBack,
-                showSearch = showSearch
+                showSearch = showSearch,
+                showDivider = showDivider
             )
         }
         item {
@@ -1088,7 +1103,7 @@ LazyPopup(
 */
 @Composable
 fun LazyPopup(
-    show: Boolean,
+    show: MutableState<Boolean>,
     onDismiss: () -> Unit,
     title: String = "Info",
     message: String,
@@ -1096,19 +1111,15 @@ fun LazyPopup(
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null
 ) {
-    LaunchEffect(Unit) {
-        Bar.showLazyPopUp = true
-    }
 
     log("show-- ${show}", "bad")
-
-
     log("Clcikedddd--show1 ${Bar.showLazyPopUp}", "bad")
-    if (!Bar.showLazyPopUp) return
+
+    if (!show.value) return
     log("SHOWING POPUP", "bad")
         AlertDialog(
             onDismissRequest = {
-                Bar.showLazyPopUp = false
+                show.value = false
                 log("DISMISSING POPUP", "bad")
             },
             title = { Text(title) },
@@ -1116,7 +1127,7 @@ fun LazyPopup(
             confirmButton = {
                 TextButton(onClick = {
                     onConfirm?.invoke()
-                    Bar.showLazyPopUp = false
+                    show.value = false
                 }) {
                     Text("OK")
                 }
@@ -1125,7 +1136,7 @@ fun LazyPopup(
                 {
                     TextButton(onClick = {
                         onCancel?.invoke()
-                        Bar.showLazyPopUp = false
+                        show.value = false
                         log("DISMISSING POPUP", "bad")
                     }) {
                         Text("Cancel")

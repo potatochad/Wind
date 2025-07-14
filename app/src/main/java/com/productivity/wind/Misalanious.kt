@@ -1,6 +1,6 @@
 package com.productivity.wind
 
-import android.R
+import com.productivity.wind.R
 import android.app.AlertDialog
 import android.app.AppOpsManager
 import android.app.admin.DeviceAdminReceiver
@@ -69,6 +69,7 @@ import java.time.LocalDate
 import androidx.compose.material.icons.outlined.QueryStats
 import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.ui.res.painterResource
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.compose.NavHost
 
@@ -114,6 +115,101 @@ fun MyNavGraph(navController: NavHostController) {
 
 //region MICALANIOUS UI
 
+//TOP BAR
+@Composable
+fun MainHeader(){
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        MenuIcon()
+        EditIcon()
+
+
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(text = "Points: ${Bar.funTime}", fontSize = 18.sp)
+    }
+}
+
+//region MENU
+
+@Composable
+fun Menu() {
+    Column(modifier = Modifier.padding(start = Bar.halfWidth/2-35.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_radar_24),
+                contentDescription = "Radar Icon",
+                tint = Color(0xFFFFD700),
+                modifier = Modifier.size(60.dp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Wind",
+                fontSize = 28.sp // 👈 make it bigger here
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+        }
+
+
+
+    SettingsScreen(titleContent  = {} , onSearchClick = { },showBack = false, showSearch= false, showDivider = false) {
+        SettingItem(
+            icon = Icons.Outlined.Chat,
+            title = "Contact Support",
+            onClick = { SupportEmail(); Bar.ShowMenu = false }
+        )
+        /*
+    SettingItem(
+        icon = Icons.Outlined.Landscape,
+        title = "Premium",
+        onClick = { Global1.navController.navigate("")  }
+    )
+    */
+        SettingItem(
+            icon = Icons.Outlined.Landscape,
+            title = "Settings",
+            onClick = { Global1.navController.navigate("SettingsScreen"); Bar.ShowMenu = false }
+        )
+        SettingItem(
+            icon = Icons.Outlined.QueryStats,
+            title = "Achievements",
+            onClick = { Global1.navController.navigate("Achievements"); Bar.ShowMenu = false }
+        )
+    }
+}
+
+
+fun SupportEmail() {
+    val subject = "Support Request – App Issue"
+
+    val body = buildString {
+        appendLine()
+        appendLine("Phone Info:")
+        appendLine("• Manufacturer: ${Build.MANUFACTURER}")
+        appendLine("• Model: ${Build.MODEL}")
+        appendLine("• Android Version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})")
+        appendLine()
+        appendLine("I'm experiencing the following issue with the app:")
+        appendLine()
+
+    }
+
+    val email = arrayOf("productivity.shield@gmail.com")
+
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "message/rfc822"
+        putExtra(Intent.EXTRA_EMAIL, email)
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, body)
+    }
+
+    val chooser = Intent.createChooser(intent, "Send Email").apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+
+    context.startActivity(chooser)
+}
+
+//endregion MENU
+
 @Composable
 fun EditScreen() {
     Column(
@@ -153,88 +249,12 @@ fun Achievements(){
     }
 }
 
-//TOP BAR
-@Composable
-fun MainHeader(){
-    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        MenuIcon()
-        EditIcon()
-
-
-        Spacer(modifier = Modifier.width(12.dp))
-        Text(text = "Points: ${Bar.funTime}", fontSize = 18.sp)
-    }
-}
-
-
-//region MENU
-@Composable
-fun Menu() {
-    Text("HEADER")
-
-    SettingsScreen(titleContent  = {} , onSearchClick = { },showBack = false, showSearch= false,) {
-        SettingItem(
-            icon = Icons.Outlined.Chat,
-            title = "Contact Support",
-            onClick = { SupportEmail(); Bar.ShowMenu = false }
-        )
-        /*
-    SettingItem(
-        icon = Icons.Outlined.Landscape,
-        title = "Premium",
-        onClick = { Global1.navController.navigate("")  }
-    )
-    */
-        SettingItem(
-            icon = Icons.Outlined.Landscape,
-            title = "Settings",
-            onClick = { Global1.navController.navigate("SettingsScreen"); Bar.ShowMenu = false }
-        )
-        SettingItem(
-            icon = Icons.Outlined.QueryStats,
-            title = "Achievements",
-            onClick = { Global1.navController.navigate("Achievements"); Bar.ShowMenu = false }
-        )
-    }
-}
-
-
-fun SupportEmail() {
-
-        //the inputs, work like you think
-        val subject = ""
-        val body = buildString {
-            append("help, x is not working;\n\n")
-            append("Phone Info:\n")
-            append("Manufacturer: ${Build.MANUFACTURER}\n")
-            append("Model: ${Build.MODEL}\n")
-            append("SDK: ${Build.VERSION.SDK_INT}\n")
-            append("Version: ${Build.VERSION.RELEASE}\n")
-        }
-        val email = arrayOf("productivity.shield@gmail.com")
-
-
-        //region SENDS THE EMAIL
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "message/rfc822"
-            putExtra(Intent.EXTRA_EMAIL, email)
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-            putExtra(Intent.EXTRA_TEXT, body)
-        }
-        val Action = Intent.createChooser(intent, "Send Email").apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
-        context.startActivity(Action)
-        //endregion
-    }
-
-//endregion
 
 //region Settings
 
 @Composable
 fun SettingsScreen() {
-    SettingsScreen(titleContent  = {Text( "Settings")}, onSearchClick = { }) {
+    SettingsScreen(titleContent  = {Text( "Settings")}, showSearch = false) {
 
         SettingItem(icon = Icons.Outlined.AdminPanelSettings, title = "Permissions", subtitle = "Necesary - for app to work", onClick = { Global1.navController.navigate("SettingsP_Screen")} )
 
@@ -247,7 +267,7 @@ fun SettingsScreen() {
 
 @Composable
 fun showPermissionDialog(
-    show: Boolean,
+    show: MutableState<Boolean>,
     context: Context,
     title: String,
     message: String,
@@ -270,7 +290,7 @@ fun showPermissionDialog(
 
 
 @Composable
-fun DrawOnTopP_PopUp(context: Context, show: Boolean) =
+fun DrawOnTopP_PopUp(context: Context, show: MutableState<Boolean>) =
     showPermissionDialog(
         show,
         context,
@@ -281,7 +301,7 @@ fun DrawOnTopP_PopUp(context: Context, show: Boolean) =
     )
 
 @Composable
-fun NotificationP_PopUp(context: Context, show: Boolean) =
+fun NotificationP_PopUp(context: Context, show: MutableState<Boolean>) =
     showPermissionDialog(
         show,
         context,
@@ -291,7 +311,7 @@ fun NotificationP_PopUp(context: Context, show: Boolean) =
     )
 
 @Composable
-fun OptimizationExclusionP_PopUp(context: Context, show: Boolean) =
+fun OptimizationExclusionP_PopUp(context: Context, show: MutableState<Boolean>) =
     showPermissionDialog(
         show,
         context,
@@ -301,7 +321,7 @@ fun OptimizationExclusionP_PopUp(context: Context, show: Boolean) =
     )
 
 @Composable
-fun UsageStatsP_PopUp(context: Context, show: Boolean) =
+fun UsageStatsP_PopUp(context: Context, show: MutableState<Boolean>) =
     showPermissionDialog(
         show,
         context,
@@ -334,7 +354,6 @@ class MyDeviceAdminReceiver : DeviceAdminReceiver()
 
 //endregion POPUP
 
-
 //region ENABLED??
 
 fun isDrawOnTopEnabled(ctx: Context): Boolean =
@@ -366,7 +385,6 @@ fun isDeviceAdminEnabled(ctx: Context): Boolean =
 
 //endregion ENABLED??
 
-
 @Composable
 fun SettingsP_Screen()= NoLagCompose {
     val ctx = LocalContext.current
@@ -380,11 +398,11 @@ fun SettingsP_Screen()= NoLagCompose {
             delay(200L)
         }
     }
-    var showNotificationPopup by remember { mutableStateOf(false) }
-    var showDrawOnTopPopup by remember { mutableStateOf(false) }
-    var showOptimizationPopup by remember { mutableStateOf(false) }
-    var showUsagePopup by remember { mutableStateOf(false) }
-    var showDeviceAdminPopup by remember { mutableStateOf(false) }
+    var showNotificationPopup = remember { mutableStateOf(false) }
+    var showDrawOnTopPopup = remember { mutableStateOf(false) }
+    var showOptimizationPopup = remember { mutableStateOf(false) }
+    var showUsagePopup = remember { mutableStateOf(false) }
+    var showDeviceAdminPopup = remember { mutableStateOf(false) }
 
 
     NotificationP_PopUp(ctx, showNotificationPopup)
@@ -394,7 +412,7 @@ fun SettingsP_Screen()= NoLagCompose {
 
 
 
-    SettingsScreen(titleContent = { Text("Permissions") }) {
+    SettingsScreen(titleContent = { Text("Permissions") }, showSearch = false) {
 
         SettingItem(
             icon = Icons.Outlined.Notifications,
@@ -404,7 +422,7 @@ fun SettingsP_Screen()= NoLagCompose {
                 PermissionsButton(
                     isEnabled = Bar.NotificationPermission,
                     onEnable = {
-                        showNotificationPopup= true
+                        showNotificationPopup.value= true
                     }
                 )
             }
@@ -416,7 +434,7 @@ fun SettingsP_Screen()= NoLagCompose {
             endContent = {
                 PermissionsButton(
                 isEnabled = Bar.DrawOnTopPermission,
-                onEnable = {showDrawOnTopPopup = true}
+                onEnable = {showDrawOnTopPopup.value = true}
                 )
             }
         )
@@ -427,7 +445,7 @@ fun SettingsP_Screen()= NoLagCompose {
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.OptimizationExclusionPermission,
-                    onEnable = { showOptimizationPopup = true }
+                    onEnable = { showOptimizationPopup.value = true }
                 )
             }
         )
@@ -438,7 +456,7 @@ fun SettingsP_Screen()= NoLagCompose {
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.UsageStatsPermission,
-                    onEnable = { showUsagePopup = true }
+                    onEnable = { showUsagePopup.value = true }
                 )
             }
         )
@@ -461,6 +479,9 @@ fun SettingsP_Screen()= NoLagCompose {
 
 
 //endregion Settings
+
+//endregion
+
 
 
 //region UI BUILDERS
