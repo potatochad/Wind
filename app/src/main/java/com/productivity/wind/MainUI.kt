@@ -74,6 +74,7 @@ fun Main() {
     }
 
 
+
     //region MENU CONTROLLER
 
     Bar.halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp
@@ -102,14 +103,7 @@ fun Main() {
     ModalNavigationDrawer(drawerState = drawerState, gesturesEnabled = true, drawerContent   = { ModalDrawerSheet(modifier = Modifier.width(Bar.halfWidth)) { Menu() } }) {
         SettingsScreen(titleContent = { MainHeader() }, showBack = false, showSearch = false) {
             Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
-
-
-                /*
-* THE FULL NORMALL UI
-* TEXT INPUT THING
-* */
                 Column(modifier = Modifier.padding(16.dp)) {
-
                     Text(
                         text = coloredTarget,
                         modifier = Modifier
@@ -122,6 +116,40 @@ fun Main() {
                         value = Bar.currentInput,
                         onValueChange = {
                             if (it.length - Bar.currentInput.length <= 1) {
+
+
+                                Bar.TotalTypedLetters += 1
+                                Bar.currentInput = it
+
+                                val correctChars = Bar.targetText.zip(Bar.currentInput)
+                                    .takeWhile { it.first == it.second }.size
+                                val correctInput = Bar.currentInput.take(correctChars)
+
+
+                                val newlyEarned = correctInput.length - Bar.highestCorrect
+                                if (newlyEarned > 0) {
+                                    var oldFunTime = Bar.funTime
+                                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
+
+                                    }
+                                    Bar.highestCorrect = correctInput.length
+                                }
+
+                                if (correctInput == Bar.targetText) {
+                                    Bar.funTime += Bar.DoneRetype_to_time
+                                    Bar.currentInput = ""  // Reset input when completed
+                                    Bar.highestCorrect = 0
+                                }
+
+
+
+
+
+
+
+
+
+
                                 Bar.funTime +=1
                                 val newLength = it.length
                                 val oldLength = Bar.currentInput.length
@@ -141,6 +169,7 @@ fun Main() {
                                 }
                             }
                         },
+
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp)
@@ -150,10 +179,6 @@ fun Main() {
 
                     Spacer(modifier = Modifier.height(24.dp))
                 }
-
-                /*TOP BAR ITEMS
-* IF CLICKED WHAT HAPPENS*/
-
             }
         }
     }
