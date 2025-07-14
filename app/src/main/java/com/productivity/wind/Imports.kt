@@ -95,12 +95,16 @@ import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.jvm.isAccessible
 
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.TextButton
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 //region USER MANUAL
+
+//region Usefull
 
 /** HOW USE REGION
 
@@ -228,24 +232,36 @@ NoLagCompose
 fun ChillScreen()=NoLagCompose {}
 * */
 
+//endregion Usefull
+
+
+//region ONCEs
+
+/* ACCESABILITY PERMISSION
+*
+<service
+            android:name=".WatchdogAccessibilityService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+*/
+
+
+//endregion
+
 //endregion
 
 
 
 
-//region simple SYCHED
-
-@Composable
-fun <T> Synched(valueProvider: () -> T): MutableState<T> {
-    val state = remember { mutableStateOf(valueProvider()) }
-    LaunchedEffect(Unit) {
-        snapshotFlow { valueProvider() }
-            .collect { newValue -> state.value = newValue }
-    }
-    return state
-}
-
-//endregion
 
 //region GOOD STUFFF
 
@@ -863,7 +879,7 @@ fun PermissionsButton(
     )
 
     Button(
-        onClick = onEnable,
+        onClick = { onEnable() },
         enabled = !isEnabled,
         shape = shape,
         colors = buttonColors,
@@ -1062,13 +1078,65 @@ var Content = null
 //endregion
 
 //region POP UPS
-/* POP UPS
-
-var showPopup by remember { mutableStateOf(false) }
-Text("Daily", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp, modifier = Modifier.weight(1f).clickable { showPopup = true })
-if (showPopup) { AlertDialog(onDismissRequest = { showPopup = false }, confirmButton = { TextButton(onClick = { showPopup = false }) { Text("OK") }}, title = { Text("Look...") }, text = { Text("Me, one lazy dude, ok, i know productivity app, but do no judge, we all make mistakes from time to time, mine being that i am lazy, and this app, is to help me solve that, so if you really care about this feature i will implement it in the future, give me a dm, and paypal me 100 bucks, i will get it done that week, otherwise, lazyyyyyyyy, wait a year or something") }) }
-
+/* Example
+LazyPopup(
+    onDismiss = { },
+    onConfirm = { },
+    title = "Look...",
+    message = "Me, one lazy dude... etc..."
+)
 */
+@Composable
+fun LazyPopup(
+    show: Boolean,
+    onDismiss: () -> Unit,
+    title: String = "Info",
+    message: String,
+    showCancel: Boolean = true,
+    onConfirm: (() -> Unit)? = null,
+    onCancel: (() -> Unit)? = null
+) {
+    LaunchEffect(Unit) {
+        Bar.showLazyPopUp = true
+    }
+
+    log("show-- ${show}", "bad")
+
+
+    log("Clcikedddd--show1 ${Bar.showLazyPopUp}", "bad")
+    if (!Bar.showLazyPopUp) return
+    log("SHOWING POPUP", "bad")
+        AlertDialog(
+            onDismissRequest = {
+                Bar.showLazyPopUp = false
+                log("DISMISSING POPUP", "bad")
+            },
+            title = { Text(title) },
+            text = { Text(message) },
+            confirmButton = {
+                TextButton(onClick = {
+                    onConfirm?.invoke()
+                    Bar.showLazyPopUp = false
+                }) {
+                    Text("OK")
+                }
+            },
+            dismissButton = if (showCancel) {
+                {
+                    TextButton(onClick = {
+                        onCancel?.invoke()
+                        Bar.showLazyPopUp = false
+                        log("DISMISSING POPUP", "bad")
+                    }) {
+                        Text("Cancel")
+                    }
+                }
+            } else null
+        )
+
+}
+
+
 //endregion
 
 //endregion

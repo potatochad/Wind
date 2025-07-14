@@ -47,9 +47,7 @@ import androidx.compose.runtime.MutableState
 
 class Settings {
     var funTime by mutableStateOf(0)
-
-    var BlockYoutube by mutableStateOf(false)
-    var BlockSettings by mutableStateOf(false)
+    var showLazyPopUp by mutableStateOf(false)
     var currentApp by mutableStateOf("")
 
 

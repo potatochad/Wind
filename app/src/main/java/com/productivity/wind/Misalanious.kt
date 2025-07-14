@@ -45,7 +45,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
 import android.provider.Settings
 import android.content.Intent
 import android.graphics.Canvas
@@ -117,20 +116,6 @@ fun MyNavGraph(navController: NavHostController) {
 
 @Composable
 fun EditScreen() {
-    if (Bar.funTime < 1000) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "NOT ENOUGH POINTS",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-        return
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -260,30 +245,34 @@ fun SettingsScreen() {
 
 //region POPUP
 
+@Composable
 fun showPermissionDialog(
+    show: Boolean,
     context: Context,
     title: String,
     message: String,
     settingsAction: String,
     dataUri: Uri? = null
 ) {
-    AlertDialog.Builder(context)
-        .setTitle(title)
-        .setMessage(message)
-        .setIcon(R.drawable.ic_dialog_alert)
-        .setCancelable(false)
-        .setPositiveButton("Grant") { _, _ ->
+    LazyPopup(
+        show = show,
+        onDismiss = { },
+        onConfirm = {
             Intent(settingsAction).apply {
                 dataUri?.let { data = it }
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }.also { context.startActivity(it) }
-        }
-        .setNegativeButton("Cancel", null)
-        .show()
+        },
+        title = title,
+        message = message,
+    )
 }
 
-fun DrawOnTopP_PopUp(context: Context) =
+
+@Composable
+fun DrawOnTopP_PopUp(context: Context, show: Boolean) =
     showPermissionDialog(
+        show,
         context,
         "Grant Draw on top permission",
         Bar.DrawOnTopP_Description,
@@ -291,24 +280,30 @@ fun DrawOnTopP_PopUp(context: Context) =
         Uri.parse("package:${context.packageName}")
     )
 
-fun NotificationP_PopUp(context: Context) =
+@Composable
+fun NotificationP_PopUp(context: Context, show: Boolean) =
     showPermissionDialog(
+        show,
         context,
         "Grant Notification access",
         Bar.NotificationP_Description,
         Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
     )
 
-fun OptimizationExclusionP_PopUp(context: Context) =
+@Composable
+fun OptimizationExclusionP_PopUp(context: Context, show: Boolean) =
     showPermissionDialog(
+        show,
         context,
         "Exclude from battery optimization",
         Bar.OptimizationExclusionP_Description,
         Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
     )
 
-fun UsageStatsP_PopUp(context: Context) =
+@Composable
+fun UsageStatsP_PopUp(context: Context, show: Boolean) =
     showPermissionDialog(
+        show,
         context,
         "Grant Usage-Access permission",
         Bar.UsageStatsP_Description,
@@ -319,7 +314,6 @@ fun DeviceAdminP_PopUp(ctx: Context) {
     AlertDialog.Builder(ctx)
         .setTitle("Activate Device-Admin")
         .setMessage(Bar.DeviceAdminP_Description)
-        .setIcon(R.drawable.ic_dialog_alert)
         .setCancelable(false)
         .setPositiveButton("Grant") { _, _ ->
             // Build the proper “add device admin” intent
@@ -372,7 +366,7 @@ fun isDeviceAdminEnabled(ctx: Context): Boolean =
 
 //endregion ENABLED??
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!AFRAID THAT MIGH BE LAGY
+
 @Composable
 fun SettingsP_Screen()= NoLagCompose {
     val ctx = LocalContext.current
@@ -383,19 +377,22 @@ fun SettingsP_Screen()= NoLagCompose {
             Bar.OptimizationExclusionPermission = isBatteryOptimizationDisabled(ctx)
             Bar.UsageStatsPermission = isUsageStatsP_Enabled(ctx)
             Bar.DeviceAdminPermission = isDeviceAdminEnabled(ctx)
-
-            log("""
-            🔐 Permissions Status:
-            - Notification: ${Bar.NotificationPermission}
-            - Draw On Top: ${Bar.DrawOnTopPermission}
-            - Battery Opt Excluded: ${Bar.OptimizationExclusionPermission}
-            - Usage Stats: ${Bar.UsageStatsPermission}
-            - Device Admin: ${Bar.DeviceAdminPermission}
-            """.trimIndent(), "bad")
-
             delay(200L)
         }
     }
+    var showNotificationPopup by remember { mutableStateOf(false) }
+    var showDrawOnTopPopup by remember { mutableStateOf(false) }
+    var showOptimizationPopup by remember { mutableStateOf(false) }
+    var showUsagePopup by remember { mutableStateOf(false) }
+    var showDeviceAdminPopup by remember { mutableStateOf(false) }
+
+
+    NotificationP_PopUp(ctx, showNotificationPopup)
+    DrawOnTopP_PopUp(ctx, showDrawOnTopPopup)
+    OptimizationExclusionP_PopUp(ctx, showOptimizationPopup)
+    UsageStatsP_PopUp(ctx, showUsagePopup)
+
+
 
     SettingsScreen(titleContent = { Text("Permissions") }) {
 
@@ -406,7 +403,9 @@ fun SettingsP_Screen()= NoLagCompose {
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.NotificationPermission,
-                    onEnable = {NotificationP_PopUp(ctx)}
+                    onEnable = {
+                        showNotificationPopup= true
+                    }
                 )
             }
         )
@@ -417,7 +416,7 @@ fun SettingsP_Screen()= NoLagCompose {
             endContent = {
                 PermissionsButton(
                 isEnabled = Bar.DrawOnTopPermission,
-                onEnable = {DrawOnTopP_PopUp(ctx)}
+                onEnable = {showDrawOnTopPopup = true}
                 )
             }
         )
@@ -428,7 +427,7 @@ fun SettingsP_Screen()= NoLagCompose {
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.OptimizationExclusionPermission,
-                    onEnable = { OptimizationExclusionP_PopUp(ctx) }
+                    onEnable = { showOptimizationPopup = true }
                 )
             }
         )
@@ -439,7 +438,7 @@ fun SettingsP_Screen()= NoLagCompose {
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.UsageStatsPermission,
-                    onEnable = { UsageStatsP_PopUp(ctx) }
+                    onEnable = { showUsagePopup = true }
                 )
             }
         )
@@ -538,23 +537,33 @@ fun MenuIcon() {
         )
     }
 }
-@Composable
-fun ChillIcon() {
-
-    IconButton(onClick = {Global1.navController.navigate("ChillScreen")}) {
-        Icon(
-            imageVector = Icons.Default.Info,
-            contentDescription = "Menu",
-            tint = Color(0xFFFFD700)
-        )
-    }
-
-}
 
 @Composable
 fun EditIcon() {
 
-    IconButton(onClick = {Global1.navController.navigate("EditScreen")}) {
+    IconButton(onClick = {
+//        if (Bar.funTime < 1000) {
+//            Box(
+//                modifier = Modifier.fillMaxSize(),
+//                contentAlignment = Alignment.Center
+//            ) {
+//                Text(
+//                    text = "NOT ENOUGH POINTS",
+//                    fontSize = 20.sp,
+//                    fontWeight = FontWeight.Bold
+//                )
+//            }
+//            return
+//        }
+
+
+
+        Global1.navController.navigate("EditScreen")}
+
+
+
+
+    ) {
         Icon(
             imageVector = Icons.Default.Edit,
             contentDescription = "Edit",
