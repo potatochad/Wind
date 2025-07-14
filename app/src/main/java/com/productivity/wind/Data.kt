@@ -51,15 +51,15 @@ class Settings {
     var showLazyPopUp by mutableStateOf(false)
     var currentApp by mutableStateOf("")
 
-
     //region COPY PASTE THING
-
+    var TotalRemovedLetters by mutableStateOf(0)
     var InputedLetter by mutableStateOf("")
     var targetText by mutableStateOf("I can do good things, I have a lot of work to do today, I can do hard work, I need start working now. I have many important things to do, I need focus only one the most important thing at hand. Afterwards I can enjoy some youtube videos- if configured (TopBar right side ICON)")
     var LetterToTime by mutableStateOf(1)
     var DoneRetype_to_time by mutableStateOf(60)
     var currentInput by mutableStateOf("")
     var highestCorrect by mutableStateOf(0)
+    var highestColord by mutableStateOf(0)
     //endregion
 
     //region MISALANIOUS

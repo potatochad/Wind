@@ -51,10 +51,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.sp
 
 
+
 @Composable
 fun Main() {
-
-    var correctChars by remember { mutableStateOf(0) }
 
     fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
         for (i in text.indices) {
@@ -114,38 +113,34 @@ fun Main() {
 
                     OutlinedTextField(
                         value = Bar.currentInput,
-                        onValueChange = { input ->
-                            // Only single‐char changes
-                            if (input.length - Bar.currentInput.length <= 1) {
-                                // 1) Track typing
-                                Bar.TotalTypedLetters++
-                                Bar.currentInput = input
+                        onValueChange = {
+                            val oldIndex = Bar.currentInput.length
 
-                                // 2) Compute how many chars are correct
-                                correctChars = Bar.targetText
-                                    .zip(input)
-                                    .takeWhile { it.first == it.second }
-                                    .size
+                            if ((it.length - Bar.currentInput.length) === 1) {
+                                Bar.TotalTypedLetters += 1; Bar.currentInput = it
+                                Bar.InputedLetter = Bar.currentInput[oldIndex+1].toString()
 
-                                // 3) Earn funTime for newly correct letters
-                                val newlyEarned = correctChars - Bar.highestCorrect
-                                if (newlyEarned > 0) {
-                                    Bar.funTime += newlyEarned * Bar.LetterToTime
-                                    Bar.highestCorrect = correctChars
+                                if (Bar.targetText[oldIndex+1].toString() === Bar.InputedLetter) {
+                                    if (Bar.highestCorrect < (oldIndex+1)) {
+                                        Bar.funTime +=1
+                                        Bar.highestCorrect +=1
+                                        Bar.highestColord +=1
+                                    }
                                 }
 
-                                // 4) Completed full text?
-                                if (correctChars == Bar.targetText.length) {
+                                if (Bar.targetText === Bar.currentInput) {
                                     Bar.funTime += Bar.DoneRetype_to_time
                                     Bar.currentInput = ""
                                     Bar.highestCorrect = 0
-                                    correctChars = 0
                                 }
 
-                                // 5) Tiny bonus per keystroke
-                                Bar.funTime++
+                            }
+                            if ((it.length - Bar.currentInput.length) === -1) {
+                                Bar.TotalRemovedLetters -= 1
+                                Bar.currentInput = it
                             }
                         },
+
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp)
