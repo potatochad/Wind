@@ -51,7 +51,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.sp
 
 
-
 @Composable
 fun Main() {
 
@@ -66,17 +65,20 @@ fun Main() {
             }
         }
     }
+    val correctChars = Bar.targetText.zip(Bar.currentInput)
+        .takeWhile { it.first == it.second }.size
+
     val coloredTarget = remember(Bar.targetText, Bar.currentInput) {
         buildAnnotatedString {
             appendAnnotated(Bar.targetText, correctChars)
         }
     }
+    val context = LocalContext.current
 
 
 
     //region MENU CONTROLLER
-
-    Bar.halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp
+    val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     LaunchedEffect(Bar.ShowMenu) {
@@ -96,13 +98,19 @@ fun Main() {
                 }
             }
     }
-
     //endregion MENU CONTROLLER
 
-    ModalNavigationDrawer(drawerState = drawerState, gesturesEnabled = true, drawerContent   = { ModalDrawerSheet(modifier = Modifier.width(Bar.halfWidth)) { Menu() } }) {
+    ModalNavigationDrawer(drawerState = drawerState, gesturesEnabled = true, drawerContent   = { ModalDrawerSheet(modifier = Modifier.width(halfWidth)) { Menu() } }) {
         SettingsScreen(titleContent = { MainHeader() }, showBack = false, showSearch = false) {
             Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
+
+
+                /*
+* THE FULL NORMALL UI
+* TEXT INPUT THING
+* */
                 Column(modifier = Modifier.padding(16.dp)) {
+
                     Text(
                         text = coloredTarget,
                         modifier = Modifier
@@ -114,33 +122,31 @@ fun Main() {
                     OutlinedTextField(
                         value = Bar.currentInput,
                         onValueChange = {
-                            val oldIndex = Bar.currentInput.length
+                            if (it.length - Bar.currentInput.length <= 5) {
+                                Bar.TotalTypedLetters += 1
+                                Bar.currentInput = it
 
-                            if ((it.length - Bar.currentInput.length) === 1) {
-                                Bar.TotalTypedLetters += 1; Bar.currentInput = it
-                                Bar.InputedLetter = Bar.currentInput[oldIndex+1].toString()
+                                val correctChars = Bar.targetText.zip(Bar.currentInput)
+                                    .takeWhile { it.first == it.second }.size
+                                val correctInput = Bar.currentInput.take(correctChars)
 
-                                if (Bar.targetText[oldIndex+1].toString() === Bar.InputedLetter) {
-                                    if (Bar.highestCorrect < (oldIndex+1)) {
-                                        Bar.funTime +=1
-                                        Bar.highestCorrect +=1
-                                        Bar.highestColord +=1
+
+                                val newlyEarned = correctInput.length - Bar.highestCorrect
+                                if (newlyEarned > 0) {
+                                    var oldFunTime = Bar.funTime
+                                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
+
                                     }
+                                    Bar.highestCorrect = correctInput.length
                                 }
 
-                                if (Bar.targetText === Bar.currentInput) {
+                                if (correctInput == Bar.targetText) {
                                     Bar.funTime += Bar.DoneRetype_to_time
-                                    Bar.currentInput = ""
+                                    Bar.currentInput = ""  // Reset input when completed
                                     Bar.highestCorrect = 0
                                 }
-
-                            }
-                            if ((it.length - Bar.currentInput.length) === -1) {
-                                Bar.TotalRemovedLetters -= 1
-                                Bar.currentInput = it
                             }
                         },
-
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(200.dp)
@@ -150,6 +156,10 @@ fun Main() {
 
                     Spacer(modifier = Modifier.height(24.dp))
                 }
+
+                /*TOP BAR ITEMS
+* IF CLICKED WHAT HAPPENS*/
+
             }
         }
     }
