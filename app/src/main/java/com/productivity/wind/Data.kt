@@ -145,11 +145,39 @@ data class Item1(
     var done: MutableState<Boolean> = mutableStateOf(false)
 )
 class Lists {
-    val SimpleList = mutableStateListOf<Item1>()
-    //val SimpleListCool = mutableStateListOf<Item2coll>()
-    //.....a hundrer more of such lists
+    val TestList = mutableStateListOf<Item1>()
 }
 val Blis = Lists();
+
+/* *HOW USE
+
+? Add an item
+val newItem = Item1(name = mutableStateOf("Buy groceries"), done = mutableStateOf(false))
+Blis.SimpleList.add(newItem)
+
+? Update an item
+if (Blis.SimpleList.isNotEmpty()) {
+    Blis.SimpleList[0].done.value = true
+}
+
+? Find an item
+val found = Blis.SimpleList.find { it.name.value == "Buy groceries" }
+if (found != null) {
+    println("Found item: ${found.name.value}")
+}
+
+? Remove an item
+if (Blis.SimpleList.isNotEmpty()) {
+    Blis.SimpleList.removeAt(0)
+}
+
+? LOOP THOUGH ALL
+Blis.SimpleList.forEach { item ->
+    println("Task: ${item.name.value}, Done: ${item.done.value}")
+}
+
+
+*/
 
 //endregion USER LIST ACTION
 
@@ -157,7 +185,7 @@ val Blis = Lists();
 
 
 
-fun ListsSaveding() {
+object Blists {
 
     //region SETUP
 
@@ -169,23 +197,35 @@ fun ListsSaveding() {
 
     //endregion SETUP
 
+    private var Dosave: Job? = null
+
     fun saveAllLists() {
-        // 1. Iterate every property in Lists
-        Lists::class.memberProperties.forEach { prop ->
-            prop.isAccessible = true
-            val Blist = prop.get(Blis)
+        if (Dosave?.isActive == true) return
 
-            // 2. Only process StateLists
-            if (Blist is SnapshotStateList<*>) {
-                val simple = MutableList_ToSimple(Blist as List<Any>)
-                val json = gson.toJson(simple)
-                editor.putString(prop.name, json)
+        Dosave = GlobalScope.launch {
+            while (isActive) {
+                // 1. Iterate every property in Lists
+                Lists::class.memberProperties.forEach { prop ->
+                    prop.isAccessible = true
+                    val Blist = prop.get(Blis)
+
+                    // 2. Only process StateLists
+                    if (Blist is SnapshotStateList<*>) {
+                        val simple = MutableList_ToSimple(Blist as List<Any>)
+                        val json = gson.toJson(simple)
+                        editor.putString(prop.name, json)
+                    } else {
+                        log("LIST IS NOT SNAPSHOTSTATELIST", "bad")
+                    }
+                }
+
+                editor.apply()
+
+                delay(1000) // <--- This makes it wait 1 second before doing it again
             }
-            else {log("LIST IS NOT SNACHOTSTATELIST", "bad")}
         }
-
-        editor.apply()
     }
+
 
 
 
@@ -266,64 +306,6 @@ fun <T : Any> simpleListToMutable(simpleList: List<Map<String, Any?>>, elemClass
             }
         }
         instance
-    }
-}
-
-//Example on how to do the save and INT
-object ListsSaved {
-    private var Dosave: Job? = null
-    fun Bsave() {
-        if (Dosave?.isActive == true) return
-        Dosave = GlobalScope.launch {
-            while (isActive) {
-                val data = Global1.context.getSharedPreferences("lists", Context.MODE_PRIVATE)
-                val edit = data.edit()
-
-                var CPU = 0
-                com.productivity.wind.Settings::class.memberProperties.forEach { bar ->
-                    /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
-                    bar.isAccessible = true
-                    val value = bar.get(Bar)
-                    if (value is SnapshotStateList<*>) return@forEach
-
-                    when (value) {
-                        is Boolean -> edit.putBoolean(bar.name, value)
-                        is String -> edit.putString(bar.name, value)
-                        is Int -> edit.putInt(bar.name, value)
-                        is Float -> edit.putFloat(bar.name, value)
-                        is Long -> edit.putLong(bar.name, value)
-                    }
-                }
-                edit.apply()
-                delay(1_000L) // save every 5 seconds
-            }
-        }
-    }
-    fun init() {
-        val prefs = Global1.context.getSharedPreferences("lists", Context.MODE_PRIVATE)
-        if (prefs.all.isEmpty() || initOnce) return
-        initOnce= true //MUST USE, ALL ARE ZERO OR NULL
-
-        com.productivity.wind.Settings::class.memberProperties.forEach { barIDK ->
-            //best variable is variable//JUST MAKING SURE
-            if (barIDK is KMutableProperty1<com.productivity.wind.Settings, *>) {
-                @Suppress("UNCHECKED_CAST")
-                val bar = barIDK as KMutableProperty1<com.productivity.wind.Settings, Any?>
-                bar.isAccessible = true
-                val name = bar.name
-                val type = bar.returnType.classifier
-
-                val stateProp = bar.getDelegate(Bar)
-                when {
-                    stateProp is MutableState<*> && type == Boolean::class -> (stateProp as MutableState<Boolean>).value = prefs.getBoolean(name, false)
-                    stateProp is MutableState<*> && type == String::class -> (stateProp as MutableState<String>).value = prefs.getString(name, "") ?: ""
-                    stateProp is MutableState<*> && type == Int::class -> (stateProp as MutableState<Int>).value = prefs.getInt(name, 0)
-                    stateProp is MutableState<*> && type == Float::class -> (stateProp as MutableState<Float>).value = prefs.getFloat(name, 0f)
-                    stateProp is MutableState<*> && type == Long::class -> (stateProp as MutableState<Long>).value = prefs.getLong(name, 0L)
-                }
-            }
-            else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
-        }
     }
 }
 
@@ -541,12 +523,11 @@ fun AppStart_beforeUI(context: Context) {
     Global1.context = context
     SettingsSaved.init()
     SettingsSaved.Bsave()
-    //SettingsSaved.initialize(Global1.context, Bar)
-    //SettingsSaved.startAutoSave(Global1.context, Bar)
 
+    Blists.saveAllLists()
+    Blists.initializeAllLists()
 
     //Background thing
-
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }
 }
 
