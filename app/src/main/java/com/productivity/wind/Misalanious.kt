@@ -51,15 +51,22 @@ import android.graphics.Canvas
 import android.net.Uri
 import android.os.PowerManager
 import android.os.Process
+import android.service.notification.NotificationListenerService
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.AdminPanelSettings
+import androidx.compose.material.icons.outlined.AppBlocking
 import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.BatterySaver
 import androidx.compose.material.icons.outlined.Chat
@@ -76,11 +83,14 @@ import java.time.LocalDate
 import androidx.compose.material.icons.outlined.QueryStats
 import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
@@ -89,8 +99,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.max
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
+import okhttp3.internal.wait
 import java.time.Instant.now
 
 
@@ -271,13 +284,129 @@ fun EditPopUp(show: MutableState<Boolean>) {
 
 @Composable
 fun ConfigureScreen() = NoLagCompose {
-    SettingsScreen(titleContent = { Text("Configure apps") }, showSearch = false) {
-        Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
+    val iconMap = remember { mutableStateMapOf<String, ImageBitmap>() }
+    var show = remember { mutableStateOf(false) }
+    var showPick = remember { mutableStateOf(false) }
+
+    // Load apps gradually in background
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            val pm = context.packageManager
+            val intent = Intent(Intent.ACTION_MAIN, null).apply {
+                addCategory(Intent.CATEGORY_LAUNCHER)
+            }
+
+            val resolveInfos = pm.queryIntentActivities(intent, 0)
+            for (info in resolveInfos) {
+                val label = info.loadLabel(pm)?.toString() ?: continue
+                val packageName = info.activityInfo.packageName ?: continue
+                val iconDrawable = info.activityInfo.loadIcon(pm)
+
+                val app = apps(
+                    name = mutableStateOf(label),
+                    packageName = mutableStateOf(packageName)
+                )
+
+                withContext(Dispatchers.Main) {
+                    Blist.apps.add(app)
+                }
+
+                val iconBitmap = iconDrawable.toBitmap().asImageBitmap()
+                withContext(Dispatchers.Main) {
+                    iconMap[packageName] = iconBitmap
+                }
+
+                delay(20) // Small delay to smoothen UI loading
+            }
         }
+    }
+    val BlockedApps = Blist.apps.filter { it.Block.value }
 
+    SettingsScreen(titleContent = { Text("Configure apps") }, showSearch = false) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
+            if (!areAllPermissionsEnabled(context)) { show.value = true; LazyPopup(show = show, onDismiss = {Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = {Global1.navController.navigate("SettingsP_Screen")}, onCancel = {Global1.navController.navigate("Main")}) } else {
+                SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
+                        Button(
+                            onClick = { showPick.value = true },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)), // gold
+                            shape = RoundedCornerShape(8.dp),
+                            contentPadding = PaddingValues(6.dp),
+                            modifier = Modifier
+                                .size(40.dp)
+                        ) {
+                            Text("+", fontSize = 24.sp, color = Color.White)
+                        }
 
+                    })
+                LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
+                        LazyColumn(modifier = Modifier.height(300.dp)) {
+                            items(Blist.apps, key = { it.id }) { app ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Checkbox(
+                                        checked = app.Block.value,
+                                        onCheckedChange = { app.Block.value = it},
+                                    )
+                                    val icon = iconMap[app.packageName.value]
+                                    if (icon != null) {
+                                        Image(
+                                            bitmap = icon,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(35.dp)
+                                        )
+                                    }
+
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(app.name.value)
+                                }
+                            }
+                        }
+                    }, onConfirm = {},)
+                if (BlockedApps.isEmpty()) {
+                    Box(modifier = Modifier.fillMaxSize().height(Bar.halfHeight*2-200.dp),) { Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+                            Spacer(modifier = Modifier.height( Bar.halfHeight-190.dp))
+                            Icon(
+                                imageVector = Icons.Default.Block,
+                                contentDescription = "Blocked Icon",
+                                tint = Color.Gray,
+                                modifier = Modifier.size(64.dp)
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text("No Blocks", fontSize = 18.sp, color = Color.Gray)
+                        }
+                    }
+
+                }
+                else {
+
+                    LazyColumn(modifier = Modifier.fillMaxSize().height(500.dp)) {
+                        items(BlockedApps, key = { it.id }) { app ->
+                            Row(modifier = Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+
+                                val icon = iconMap[app.packageName.value]
+                                if (icon != null) {
+                                    Image(
+                                        bitmap = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(35.dp)
+                                    )
+                                } else { }
+
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(app.name.value)
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
     }
 }
+
 
 
 
@@ -410,6 +539,25 @@ fun showPermissionDialog(
         message = message,
     )
 }
+@Composable
+fun showPermissionDialog2(
+    show: MutableState<Boolean>,
+    context: Context,
+    title: String,
+    message: String,
+    onConfirm: () -> Unit,
+) {
+    LazyPopup(
+        show = show,
+        onDismiss = { },
+        onConfirm = {
+            onConfirm()
+        },
+        title = title,
+        message = message,
+    )
+}
+
 
 
 @Composable
@@ -435,13 +583,20 @@ fun NotificationP_PopUp(context: Context, show: MutableState<Boolean>) =
 
 @Composable
 fun OptimizationExclusionP_PopUp(context: Context, show: MutableState<Boolean>) =
-    showPermissionDialog(
+    showPermissionDialog2(
         show,
         context,
         "Exclude from battery optimization",
         Bar.OptimizationExclusionP_Description,
-        Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
+        onConfirm = {
+            val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                data = Uri.parse("package:${context.packageName}")
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
     )
+
 
 @Composable
 fun UsageStatsP_PopUp(context: Context, show: MutableState<Boolean>) =
@@ -452,27 +607,76 @@ fun UsageStatsP_PopUp(context: Context, show: MutableState<Boolean>) =
         Bar.UsageStatsP_Description,
         Settings.ACTION_USAGE_ACCESS_SETTINGS
     )
-
 @Composable
 fun DeviceAdminP_PopUp(ctx: Context, show: MutableState<Boolean>) {
-    LazyPopup(
-        show = show,
-        onDismiss = { show.value = false },
-        onConfirm = {
-            show.value = false
-            val comp = ComponentName(ctx, MyDeviceAdminReceiver::class.java)
-            Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
-                putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, comp)
-                putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, Bar.DeviceAdminP_Description)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }.also { ctx.startActivity(it) }
-        },
-        title = "Activate Device-Admin",
-        message = Bar.DeviceAdminP_Description
-    )
+    if (!show.value) return
+
+    Popup(
+        alignment = Alignment.Center,
+        onDismissRequest = { show.value = false }
+    ) {
+        Card(
+            modifier = Modifier
+                .padding(24.dp)
+                .width(300.dp),
+            elevation = CardDefaults.cardElevation(10.dp),
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text("Admin Permission", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Spacer(Modifier.height(12.dp))
+                Text("We need device admin access to block apps properly.")
+                Spacer(Modifier.height(24.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = { show.value = false }) {
+                        Text("Cancel")
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    Button(onClick = {
+                        show.value = false
+                        try {
+                            val comp = ComponentName(ctx, MyDeviceAdminReceiver::class.java)
+                            val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
+                                putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, comp)
+                                putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Used to block apps.")
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            ctx.startActivity(intent)
+                        } catch (e: Exception) {
+                            Toast.makeText(ctx, "Failed to open admin screen.", Toast.LENGTH_LONG).show()
+                            val fallback = Intent(Settings.ACTION_SETTINGS).apply {
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            ctx.startActivity(fallback)
+                        }
+                    }) {
+                        Text("Allow")
+                    }
+                }
+            }
+        }
+    }
 }
 
-class MyDeviceAdminReceiver : DeviceAdminReceiver()
+class MyDeviceAdminReceiver : DeviceAdminReceiver() {
+    override fun onEnabled(context: Context, intent: Intent) {
+        super.onEnabled(context, intent)
+        Log.w("DeviceAdmin", "✅ Admin activated!")
+        Toast.makeText(context, "Admin access granted!", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDisabled(context: Context, intent: Intent) {
+        super.onDisabled(context, intent)
+        Log.w("DeviceAdmin", "❌ Admin removed!")
+        Toast.makeText(context, "Admin access removed!", Toast.LENGTH_SHORT).show()
+    }
+}
 
 //endregion POPUP
 
@@ -504,6 +708,13 @@ fun isDeviceAdminEnabled(ctx: Context): Boolean =
     (ctx.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager)
         .isAdminActive(ComponentName(ctx, MyDeviceAdminReceiver::class.java))
 
+fun areAllPermissionsEnabled(ctx: Context): Boolean {
+    return isDrawOnTopEnabled(ctx)
+            && isNotificationEnabled(ctx)
+            && isBatteryOptimizationDisabled(ctx)
+            && isUsageStatsP_Enabled(ctx)
+}
+
 
 //endregion ENABLED??
 
@@ -511,6 +722,7 @@ fun isDeviceAdminEnabled(ctx: Context): Boolean =
 fun SettingsP_Screen()= NoLagCompose {
     val ctx = LocalContext.current
     LaunchedEffect(Unit) {
+
         while(true) {
             Bar.NotificationPermission = isNotificationEnabled(ctx)
             Bar.DrawOnTopPermission = isDrawOnTopEnabled(ctx)
@@ -612,6 +824,7 @@ fun SettingsP_Screen()= NoLagCompose {
 //endregion
 
 //region ONCES
+class MyNotificationListener : NotificationListenerService()
 
 //CHECKS IF NEW DAY/// WIRED UP TO SETTINGS VAR NEWDAY
 object DayChecker {

@@ -855,7 +855,7 @@ object UniversalListManager {
                 val rawList = prop.getter.call(registry)
                 if (rawList is SnapshotStateList<*>) {
                     @Suppress("UNCHECKED_CAST")
-                    val stateList = rawList as SnapshotStateList<Any?>
+                    val stateList = (rawList as SnapshotStateList<Any?>).toList()
                     val simpleList = stateList.map { item ->
                         val map = mutableMapOf<String, Any?>()
                         item!!::class.memberProperties
@@ -1512,6 +1512,7 @@ fun LazyPopup(
     message: String,
     content: (@Composable () -> Unit)? = null,
     showCancel: Boolean = true,
+    showConfirm: Boolean = true,
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null
 ) {
@@ -1532,12 +1533,15 @@ fun LazyPopup(
 
                },
         confirmButton = {
-            TextButton(onClick = {
-                onConfirm?.invoke()
-                show.value = false
-            }) {
-                Text("OK")
+            if (showConfirm) {
+                TextButton(onClick = {
+                    onConfirm?.invoke()
+                    show.value = false
+                }) {
+                    Text("OK")
+                }
             }
+
         },
         dismissButton = if (showCancel) {
             {

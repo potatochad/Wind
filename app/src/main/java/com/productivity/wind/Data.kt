@@ -1,6 +1,12 @@
 package com.productivity.wind
 
 
+import android.graphics.drawable.Drawable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.graphics.drawable.toBitmap
+
 import android.content.SharedPreferences
 import com.google.gson.reflect.TypeToken
 
@@ -58,7 +64,6 @@ import kotlin.reflect.full.primaryConstructor
 class Settings {
     var funTime by mutableStateOf(0)
     var currentApp by mutableStateOf("")
-
     //region COPY PASTE THING
 
     var TotalRemovedLetters by mutableStateOf(0)
@@ -72,18 +77,21 @@ class Settings {
 
     //endregion COPY PASTE THING
 
-    //region MISALANIOUS
-
-    var halfWidth by mutableStateOf(0.dp)
-    var ShowMenu by mutableStateOf(false)
-    var CheckInstalledApps by mutableStateOf(true)
-    var TotalTypedLetters by mutableStateOf(0)
+    //region BLOCKING
 
     var COUNT by mutableStateOf(0)
     var NewDay by mutableStateOf(true)
-
     //refreshs to 0 daily// if more than 50 seconds, get 600 time
     var WaterDOtime_spent by mutableStateOf(0)
+    var secondsLeft by mutableStateOf(10)
+    //endregion BLOCKING
+
+    //region MISALANIOUS
+
+    var halfHeight by mutableStateOf(0.dp)
+    var halfWidth by mutableStateOf(0.dp)
+    var ShowMenu by mutableStateOf(false)
+
 
     //endregion MISALANIOUS
 
@@ -101,11 +109,7 @@ class Settings {
 
     //region ACHIEVEMENTS
 
-    /*SELF SYCNHS LAZY POPUP
-    *
-    !TO SELF SYNCH NEED EACH THING START WITH Achievement  (the var, okkk)
-     ? MAKE SURE nothing else starts out like that
-    * */
+    var TotalTypedLetters by mutableStateOf(0)
 
     //endregion
 
@@ -116,20 +120,19 @@ class Settings {
 
 
 
+// Main function to get installed apps and their icons
+
 data class apps(
     var id: String = UUID.randomUUID().toString(),
     var name: MutableState<String> = mutableStateOf(""),
     var done: MutableState<Boolean> = mutableStateOf(false),
-
-
     var packageName: MutableState<String> = mutableStateOf(""),
-    var Block : MutableState<String> = mutableStateOf(""),
-var Exists by mutableStateOf(true)
-var TimeSpent by mutableStateOf(0f)
+    var Block : MutableState<Boolean> = mutableStateOf(false),
+    var TimeSpent : MutableState<Int> = mutableStateOf(0),
 )
 
 object Blist {
-    val apps = mutableStateListOf<apps>()
+    var apps = mutableStateListOf<apps>()
 }
 
 
@@ -185,20 +188,18 @@ class WatchdogService : Service() {
 
 
         //region WAIT 10 SECONS TO LEAVE
-
-        var secondsLeft = 10
         val leaveButton = XmlView.findViewById<Button>(R.id.leaveButton)
         leaveButton.isEnabled = false
-        leaveButton.text = secondsLeft.toString()
+        leaveButton.text = Bar.secondsLeft.toString()
 
         val handler = Handler(Looper.getMainLooper())
         val countdown = object : Runnable {
             override fun run() {
-                log("BLOCK SCREEN: Counting down---secondsLeft---${secondsLeft}", "bad")
-                secondsLeft--
+                log("BLOCK SCREEN: Counting down---secondsLeft---${Bar.secondsLeft}", "bad")
+                Bar.secondsLeft--
 
-                if (secondsLeft > 0) {
-                    leaveButton.text = secondsLeft.toString()
+                if (Bar.secondsLeft > 0) {
+                    leaveButton.text = Bar.secondsLeft.toString()
                     handler.postDelayed(this, 1000) // wait 1 second, then run again
                 } else {
                     leaveButton.text = "Leave"
@@ -212,6 +213,7 @@ class WatchdogService : Service() {
         //endregion
 
         leaveButton.setOnClickListener {
+            Bar.secondsLeft = 10
             log("BLOCK SCREEN: Clicked leave button", "bad")
             val intent = Intent(Global1.context, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -265,41 +267,46 @@ class WatchdogService : Service() {
 
                     //endregion CURRENT APP
 
-                    if (currentApp == "net.pluckeye.tober" ) {
-                        if (Bar.funTime >0) {
-                            Bar.funTime -=1
+                    val blocked = Blist.apps.any { it.packageName.value == currentApp && it.Block.value }
+
+                    if (blocked) {
+                        if (Bar.funTime > 0) {
+                            Bar.funTime -= 1
                             log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-                        }
-                        else {
+                        } else {
                             BlockScreen()
                             log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
                         }
                     }
-                    if (currentApp == "com.android.settings") {
 
-                        if (Bar.funTime >1_000) {
-                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-                        }
-                        //!!!!!!!!!!!!!!!!!!!!NEED FIX HERE WITH PERMISSIONS
-//                        else {
-//                            if (gotAdmin) {
-//                                BlockScreen()
-//                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+
+//
+//                    if (currentApp == "com.android.settings") {
+//
+//                        if (Bar.funTime >1_000) {
+//                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
+//                        }
+//                        //!!!!!!!!!!!!!!!!!!!!NEED FIX HERE WITH PERMISSIONS
+////                        else {
+////                            if (gotAdmin) {
+////                                BlockScreen()
+////                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+////                            }
+////                        }
+//                    }
+//
+//                    if (currentApp == "com.seekrtech.waterapp") {
+//                        log("NEW DAY??; ${Bar.NewDay}", "bad")
+//                        log("waterdo time; ${Bar.WaterDOtime_spent}", "bad")
+//                        if (Bar.NewDay) {
+//                            if (Bar.WaterDOtime_spent > 50) {
+//                                Bar.funTime += 600
+//                                Bar.NewDay = false
+//                            } else {
+//                                Bar.WaterDOtime_spent += 1
 //                            }
 //                        }
-                    }
-                    if (currentApp == "com.seekrtech.waterapp") {
-                        log("NEW DAY??; ${Bar.NewDay}", "bad")
-                        log("waterdo time; ${Bar.WaterDOtime_spent}", "bad")
-                        if (Bar.NewDay) {
-                            if (Bar.WaterDOtime_spent > 50) {
-                                Bar.funTime += 600
-                                Bar.NewDay = false
-                            } else {
-                                Bar.WaterDOtime_spent += 1
-                            }
-                        }
-                    }
+//                    }
 
 
 
@@ -344,7 +351,6 @@ fun AppStart_beforeUI(context: Context) {
 fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
-        Bar.CheckInstalledApps= true
     }
 }
 
