@@ -50,6 +50,7 @@ import kotlin.reflect.KMutableProperty1
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
+import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
 
@@ -188,13 +189,45 @@ fun ListsSaveding() {
 
 
 
+    fun initializeAllLists() {
+        Lists::class.memberProperties.forEach { prop ->
+            prop.isAccessible = true
+            val rawList = prop.get(Blis)
+            if (rawList is SnapshotStateList<*>) {
+                // 1. load JSON
+                val json = data.getString(prop.name, "[]")
+                val mapType = object : TypeToken<List<Map<String, Any?>>>() {}.type
+                val simpleList: List<Map<String, Any?>> = gson.fromJson(json, mapType)
 
-    editor.putString("name", "John")
-    editor.apply()
+                // 2. clear old entries
+                @Suppress("UNCHECKED_CAST")
+                val stateList = rawList as SnapshotStateList<Any?>
+                stateList.clear()
 
-    val name = data.getString("name", "default")
+                // 3. infer element class
+                val elemClass = prop.returnType
+                    .arguments
+                    .first()
+                    .type
+                    ?.classifier as? KClass<Any>
+                    ?: return@forEach
 
-
+                // 4. rebuild each item and add
+                simpleList.forEach { map ->
+                    val instance = elemClass.createInstance()
+                    elemClass.memberProperties.forEach { field ->
+                        field.isAccessible = true
+                        val fieldVal = field.get(instance)
+                        if (fieldVal is MutableState<*>) {
+                            @Suppress("UNCHECKED_CAST")
+                            (fieldVal as MutableState<Any?>).value = map[field.name]
+                        }
+                    }
+                    stateList.add(instance)
+                }
+            }
+        }
+    }
 }
 
 //region HELPERS
@@ -219,21 +252,19 @@ inline fun <reified T : Any> MutableList_ToSimple(list: List<T>): List<Map<Strin
         map
     }
 }
-inline fun <reified T : Any> SimpleList_ToMutable(simpleList: List<Map<String, Any?>>): List<T> {
+fun <T : Any> simpleListToMutable(simpleList: List<Map<String, Any?>>, elemClass: KClass<T>): List<T> {
     return simpleList.map { map ->
-        val instance = T::class.createInstance()
-
-        T::class.memberProperties.forEach { prop ->
+        // 1. Make a blank instance
+        val instance = elemClass.createInstance()
+        // 2. Fill in each MutableState property
+        elemClass.memberProperties.forEach { prop ->
             prop.isAccessible = true
             val propValue = prop.get(instance)
-
             if (propValue is MutableState<*>) {
-                val newValue = map[prop.name]
                 @Suppress("UNCHECKED_CAST")
-                (propValue as MutableState<Any?>).value = newValue
+                (propValue as MutableState<Any?>).value = map[prop.name]
             }
         }
-
         instance
     }
 }
