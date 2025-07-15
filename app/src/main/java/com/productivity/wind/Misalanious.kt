@@ -54,7 +54,9 @@ import android.os.Process
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.AdminPanelSettings
@@ -76,12 +78,14 @@ import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.max
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavController
@@ -265,9 +269,81 @@ fun EditPopUp(show: MutableState<Boolean>) {
 
 @Composable
 fun ConfigureScreen() = NoLagCompose {
+    val coroutineScope = rememberCoroutineScope()
+    var newItemName by remember { mutableStateOf("") }
+    var findQuery by remember { mutableStateOf("") }
+    var findResult by remember { mutableStateOf<Item1?>(null) }
+
     SettingsScreen(titleContent = { Text("Configure apps") }, showSearch = false) {
         Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
         }
+
+                OutlinedTextField(
+                    value = newItemName,
+                    onValueChange = { newItemName = it },
+                    label = { Text("New item name") },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Button(onClick = {
+                    if (newItemName.isNotBlank()) {
+                        val newItem = Item1(name = mutableStateOf(newItemName), done = mutableStateOf(false))
+                        Blis.TestList.add(newItem)
+                        newItemName = ""
+                    }
+                }) {
+                    Text("Add Item")
+                }
+
+                // Find item
+                OutlinedTextField(
+                    value = findQuery,
+                    onValueChange = { findQuery = it },
+                    label = { Text("Find by name") },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Button(onClick = {
+                    findResult = Blis.TestList.find { it.name.value == findQuery }
+                }) {
+                    Text("Find Item")
+                }
+                findResult?.let {
+                    Text("Found: ${it.name.value}, Done: ${it.done.value}")
+                }
+
+                // List display with update and delete
+                if (Blis.TestList.isNotEmpty()) {
+                    Text("Items:")
+                    Blis.TestList.forEachIndexed { index, item ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Checkbox(
+                                checked = item.done.value,
+                                onCheckedChange = { checked -> item.done.value = checked }
+                            )
+                            Text(item.name.value, modifier = Modifier.weight(1f))
+                            IconButton(onClick = { Blis.TestList.removeAt(index) }) {
+                                Icon(Icons.Default.Delete, contentDescription = "Delete")
+                            }
+                        }
+                    }
+                }
+
+                // Loop (log) all items
+                Button(onClick = {
+                    coroutineScope.launch {
+                        Blis.TestList.forEach { itItem ->
+                            println("Task: ${'$'}{itItem.name.value}, Done: ${'$'}{itItem.done.value}")
+                        }
+                    }
+                }) {
+                    Text("Log All to Console")
+                }
     }
 }
 
