@@ -132,6 +132,7 @@ data class Apps(
 
 
 data class Item(
+    var id: String = UUID.randomUUID().toString(),
     var name: MutableState<String> = mutableStateOf(""),
     var done: MutableState<Boolean> = mutableStateOf(false)
 )
@@ -141,8 +142,6 @@ object Blist {
     val shopping = mutableStateListOf<Item>()
     val tasks  = mutableStateListOf<Item>()
 }
-
-
 
 
 

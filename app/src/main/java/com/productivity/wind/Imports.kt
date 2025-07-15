@@ -118,6 +118,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.primaryConstructor
 
 
 //region USER MANUAL
@@ -517,6 +518,247 @@ object SettingsSaved {
 //endregion
 
 //region DATA MANAGE LISTS
+
+//! HOW USE BETTER LIST
+/* *update("shopping, id = ${id}, name = Chicken")
+! The spaces and ,  are for me-do nothing (make sure not supper close together)
+? works with index to, instead of id doo
+* index = ${index}
+*/
+
+/* *remove("shopping, id = ${id}")
+! The spaces and ,  are for me-do nothing (make sure not supper close together)
+? works with index to, instead of id doo
+* index = ${index}
+*/
+
+/* *add("shopping, name = ckicken")
+! The spaces and ,  are for me-do nothing (make sure not supper close together)
+? ID, pregenerated, other things are also prefilled out (can though add field if want overwrite default)
+! But some might not be, Check logs if that the case --"bad",
+*/
+fun add(input: String) {
+    try {
+        log("Raw input: '$input'")
+
+        // 1) Match: listName and everything after (the rawFields)
+        val pattern = Regex(
+            """^\s*([A-Za-z]\w*)\s*,?\s*(.*)$""",
+            RegexOption.IGNORE_CASE
+        )
+        val match = pattern.matchEntire(input)
+        if (match == null) {
+            log("❌ Input didn't match expected pattern")
+            return
+        }
+
+        val (rawList, rawFields) = match.destructured
+        val listName = rawList.lowercase()
+        log("✓ target list = '$listName'")
+
+        // 2) Grab the SnapshotStateList from Blist
+        val listProp = Blist::class.members
+            .firstOrNull { it.name.equals(listName, ignoreCase = true) }
+            ?: run { log("❌ No list named '$listName'"); return }
+        val list = listProp.call(Blist) as? SnapshotStateList<Any>
+            ?: run { log("❌ Property '$listName' is not a SnapshotStateList"); return }
+
+        // 3) Figure out the element class from the list's generic
+        val elementKClass = (listProp.returnType.arguments
+            .firstOrNull()?.type?.classifier as? KClass<*>)
+            ?: run { log("❌ Couldn't determine element type for '$listName'"); return }
+
+        // 4) Instantiate with defaults via primary constructor
+        val ctor = elementKClass.primaryConstructor
+            ?: run { log("❌ No primary constructor on ${elementKClass.simpleName}"); return }
+        ctor.isAccessible = true
+        // call with no args → all parameters must have defaults
+        val newItem = ctor.callBy(emptyMap())
+        log("✓ Created new ${elementKClass.simpleName} with defaults: $newItem")
+
+        // 5) Apply overrides from rawFields (e.g. "name = Chicken, done = true")
+        if (rawFields.isNotBlank()) {
+            val kvRegex = Regex("""(\w+)\s*=\s*([^\s,]+)""")
+            kvRegex.findAll(rawFields).forEach { m ->
+                val field = m.groupValues[1]
+                val value = m.groupValues[2]
+                log("→ override '$field' = '$value'")
+
+                // find the MutableState<Property> on newItem
+                val prop = elementKClass.memberProperties
+                    .firstOrNull { it.name.equals(field, ignoreCase = true) }
+                    ?: run { log("   • no property '$field' on ${elementKClass.simpleName}"); return@forEach }
+
+                // we expect backing state: e.g. val name = mutableStateOf(default)
+                val state = prop.getter.call(newItem)
+                if (state is MutableState<*>) {
+                    val parsed: Any? = when (state.value) {
+                        is Boolean -> value.equals("true", ignoreCase = true)
+                        is Int     -> value.toIntOrNull()
+                        is Float   -> value.toFloatOrNull()
+                        is Double  -> value.toDoubleOrNull()
+                        else       -> value
+                    }
+                    if (parsed == null) {
+                        log("   • failed to parse '$value' for field '${prop.name}'")
+                    } else {
+                        @Suppress("UNCHECKED_CAST")
+                        (state as MutableState<Any>).value = parsed
+                        log("   • set '${prop.name}' = $parsed")
+                    }
+                } else {
+                    log("   • property '${prop.name}' is not a MutableState")
+                }
+            }
+        } else {
+            log("✓ no overrides provided")
+        }
+
+        // 6) Finally, add to the list
+        list.add(newItem)
+        log("✓ Added new item to '$listName': $newItem")
+
+    } catch (e: Exception) {
+        log("Add failed: ${e.message}")
+    }
+}
+fun remove(input: String) {
+    try {
+        log("Raw input: '$input'")
+
+        // 1) Match: listName, (id or index)
+        val pattern = Regex(
+            """^\s*([A-Za-z]\w*)\s*,?\s*(?:id\s*=\s*([^\s,]+)|index\s*=\s*(\d+))\s*$""",
+            RegexOption.IGNORE_CASE
+        )
+        val match = pattern.matchEntire(input)
+        if (match == null) {
+            log("❌ Input didn't match expected pattern")
+            return
+        }
+
+        val (rawList, rawId, rawIndex) = match.destructured
+        val listName = rawList.lowercase()
+        log("✓ target list = '$listName'")
+
+        val isByIndex = rawIndex.isNotBlank()
+        val selector = if (isByIndex) rawIndex else rawId
+        log("✓ selecting by ${if (isByIndex) "index" else "id"} = '$selector'")
+
+        // 2) Get the SnapshotStateList from Blist
+        val listProp = Blist::class.members
+            .firstOrNull { it.name.equals(listName, ignoreCase = true) }
+            ?: run { log("❌ No list named '$listName'"); return }
+        val list = listProp.call(Blist) as? SnapshotStateList<Any>
+            ?: run { log("❌ Property '$listName' is not a SnapshotStateList"); return }
+
+        // 3) Remove the item
+        if (isByIndex) {
+            val idx = selector.toIntOrNull()
+                ?: run { log("❌ Invalid index '$selector'"); return }
+            if (idx in 0 until list.size) {
+                list.removeAt(idx)
+                log("✓ Removed item at index $idx from '$listName'")
+            } else {
+                log("❌ Index $idx out of bounds (size=${list.size})")
+            }
+        } else {
+            val toRemove = list.find { elem ->
+                val idProp = elem::class.members.firstOrNull { it.name == "id" } ?: return@find false
+                idProp.call(elem) == selector
+            }
+            if (toRemove != null) {
+                list.remove(toRemove)
+                log("✓ Removed item with id='$selector' from '$listName'")
+            } else {
+                log("❌ No item with id='$selector' found in '$listName'")
+            }
+        }
+    } catch (e: Exception) {
+        log("Remove failed: ${e.message}")
+    }
+}
+fun update(input: String) {
+    try {
+        log("Raw input: '$input'")
+        // 1) Match: listName, (id or index), restOfFields
+        val pattern = Regex(
+            """^\s*([A-Za-z]\w*)\s*,?\s*(?:id\s*=\s*([^\s,]+)|index\s*=\s*(\d+))\s*(?:,\s*(.*))?$""",
+            RegexOption.IGNORE_CASE
+        )
+        val match = pattern.matchEntire(input)
+        if (match == null) {
+            log("❌ Input didn't match expected pattern")
+            return
+        }
+
+        val (rawList, rawId, rawIndex, rawFields) = match.destructured
+        val listName = rawList.lowercase()
+        log("✓ target list = '$listName'")
+        val isByIndex = rawIndex.isNotBlank()
+        val selector = if (isByIndex) rawIndex else rawId
+        log("✓ selecting by ${if (isByIndex) "index" else "id"} = '$selector'")
+
+        // 2) Get the SnapshotStateList from Blist
+        val listProp = Blist::class.members
+            .firstOrNull { it.name.equals(listName, ignoreCase = true) }
+            ?: run { log("❌ No list named '$listName'"); return }
+        val list = listProp.call(Blist) as? SnapshotStateList<Any>
+            ?: run { log("❌ Property '$listName' is not a SnapshotStateList"); return }
+
+        // 3) Locate the item
+        val item = if (isByIndex) {
+            val idx = selector.toIntOrNull()
+                ?: run { log("❌ Invalid index '$selector'"); return }
+            list.getOrNull(idx)
+        } else {
+            list.find { elem ->
+                val idProp = elem::class.members.firstOrNull { it.name == "id" } ?: return@find false
+                idProp.call(elem) == selector
+            }
+        } ?: run { log("❌ No item found for '$selector'"); return }
+
+        log("✓ Found item: $item")
+
+        // 4) Parse and apply each field=value from rawFields
+        if (!rawFields.isNullOrBlank()) {
+            val kvRegex = Regex("""(\w+)\s*=\s*([^\s,]+)""")
+            kvRegex.findAll(rawFields).forEach { m ->
+                val field = m.groupValues[1].lowercase()
+                val value = m.groupValues[2]
+                log("→ updating field '$field' to '$value'")
+
+                val member = item::class.members.firstOrNull { it.name.equals(field, true) }
+                    ?: run { println("   • no member '$field' on item"); return@forEach }
+                val state = member.call(item)
+                if (state is MutableState<*>) {
+                    val parsed: Any? = when (state.value) {
+                        is Boolean -> value.equals("true", true)
+                        is Int     -> value.toIntOrNull()
+                        is Float   -> value.toFloatOrNull()
+                        is Double  -> value.toDoubleOrNull()
+                        else       -> value
+                    }
+                    if (parsed == null) {
+                        log("   • failed to parse '$value' for ${state.value}")
+                    } else {
+                        @Suppress("UNCHECKED_CAST")
+                        (state as MutableState<Any>).value = parsed
+                        log("   • set '${field}' = $parsed")
+                    }
+                } else {
+                    log("   • member '$field' is not a MutableState")
+                }
+            }
+        } else {
+            log("✓ no additional fields to update")
+        }
+    } catch (e: Exception) {
+        log("Update failed: ${e.message}")
+    }
+}
+
+
 
 /*
 ? Call on app start once             where all lists sit [object]

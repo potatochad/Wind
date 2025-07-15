@@ -91,6 +91,7 @@ import androidx.compose.ui.unit.max
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
+import java.time.Instant.now
 
 
 //region NavController
@@ -274,27 +275,7 @@ fun ConfigureScreen() = NoLagCompose {
         Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
         }
 
-        Blist.shopping.forEachIndexed { index, item ->
-            Row {
-                TextField(
-                    value = item.name.value,
-                    onValueChange = { Blist.shopping[index].name.value = it }
-                )
-                Checkbox(
-                    checked = item.done.value,
-                    onCheckedChange = { Blist.shopping[index].done.value = it }
-                )
-                Button(onClick = { Blist.shopping.removeAt(index) }) {
-                    Text("-")
-                }
-            }
-        }
 
-        Button(onClick = {
-            Blist.shopping.add(Item(mutableStateOf("New Item"), mutableStateOf(false)))
-        }) {
-            Text("Add to Shopping")
-        }
     }
 }
 
