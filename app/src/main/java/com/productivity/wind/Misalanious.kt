@@ -270,60 +270,30 @@ fun EditPopUp(show: MutableState<Boolean>) {
 
 @Composable
 fun ConfigureScreen() = NoLagCompose {
-    val coroutineScope = rememberCoroutineScope()
-    var newItemName by remember { mutableStateOf("") }
-    var findQuery by remember { mutableStateOf("") }
-    var findResult by remember { mutableStateOf<Item1?>(null) }
-
     SettingsScreen(titleContent = { Text("Configure apps") }, showSearch = false) {
         Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
         }
 
-        ListsRegistry.shoppingList.forEachIndexed { index, item ->
+        Blist.shopping.forEachIndexed { index, item ->
             Row {
                 TextField(
                     value = item.name.value,
-                    onValueChange = { ListsRegistry.shoppingList[index].name.value = it }
+                    onValueChange = { Blist.shopping[index].name.value = it }
                 )
                 Checkbox(
                     checked = item.done.value,
-                    onCheckedChange = { ListsRegistry.shoppingList[index].done.value = it }
+                    onCheckedChange = { Blist.shopping[index].done.value = it }
                 )
-                Button(onClick = { ListsRegistry.shoppingList.removeAt(index) }) {
-                    Text("Remove")
+                Button(onClick = { Blist.shopping.removeAt(index) }) {
+                    Text("-")
                 }
             }
         }
 
         Button(onClick = {
-            ListsRegistry.shoppingList.add(Item(mutableStateOf("New Item"), mutableStateOf(false)))
+            Blist.shopping.add(Item(mutableStateOf("New Item"), mutableStateOf(false)))
         }) {
             Text("Add to Shopping")
-        }
-
-        Spacer(Modifier.height(24.dp))
-
-        Text("Tasks List")
-        ListsRegistry.tasksList.forEachIndexed { index, item ->
-            Row {
-                TextField(
-                    value = item.name.value,
-                    onValueChange = { ListsRegistry.tasksList[index].name.value = it }
-                )
-                Checkbox(
-                    checked = item.done.value,
-                    onCheckedChange = { ListsRegistry.tasksList[index].done.value = it }
-                )
-                Button(onClick = { ListsRegistry.tasksList.removeAt(index) }) {
-                    Text("x")
-                }
-            }
-        }
-
-        Button(onClick = {
-            ListsRegistry.tasksList.add(Item(mutableStateOf("New Task"), mutableStateOf(false)))
-        }) {
-            Text("Add to Tasks")
         }
     }
 }

@@ -138,8 +138,8 @@ data class Item(
 
 // 2) Create a registry object holding all your lists:
 object Blist {
-    val shoppingList = mutableStateListOf<Item>()
-    val tasksList    = mutableStateListOf<Item>()
+    val shopping = mutableStateListOf<Item>()
+    val tasks  = mutableStateListOf<Item>()
 }
 
 

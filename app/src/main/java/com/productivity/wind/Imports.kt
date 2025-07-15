@@ -518,6 +518,25 @@ object SettingsSaved {
 
 //region DATA MANAGE LISTS
 
+/*
+? Call on app start once             where all lists sit [object]
+    UniversalListManager.initialize(context, Blist)
+
+? FOR IT TO BE GLOBAL MUST DO THIS
+    data class Item(
+    var name: MutableState<String> = mutableStateOf(""),
+    var done: MutableState<Boolean> = mutableStateOf(false)
+)
+
+2) Create a registry object holding all your lists:
+object Blist {
+    val shoppingList = mutableStateListOf<Item>()
+    val tasksList    = mutableStateListOf<Item>()
+}
+
+! INITIALIZING AND SAVING TAKEN CARE OF
+
+* */
 object UniversalListManager {
     private lateinit var prefs: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
