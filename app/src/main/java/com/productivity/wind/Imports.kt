@@ -7,10 +7,15 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,6 +29,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -99,6 +105,9 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.TextButton
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.window.Popup
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -941,6 +950,7 @@ fun settingsHeader(
     showDivider: Boolean = true
 ) {
     val ui = rememberSystemUiController()
+    var DisableTB_Button by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         ui.setStatusBarColor(Color.Black, darkIcons = false)
     }
@@ -960,10 +970,26 @@ fun settingsHeader(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            if (showBack) {
-                IconButton(onClick = {
-                    onBackClick()
-                    Global1.navController.popBackStack()
+            /* 🔒 Btn Cooldown
+             *
+             * ⚠️ Problem:
+             * Rapid back clicks (especially after popupBackStack or screen transitions)
+             * sometimes cause a full black screen in Compose — likely due to
+             * navigation state confusion or overlapping recompositions.
+             *
+             * ✅ Fix:
+             * We temporarily disable this button after it's clicked once,
+             * using the `DisableTB_Button` flag, to prevent double-taps.
+             *
+             * This protects Compose from crashing or losing its state tree.
+             */
+            if (showBack ) {
+                IconButton(onClick = { if (DisableTB_Button) { }; if (!DisableTB_Button) { DisableTB_Button = true
+
+                        onBackClick()
+                        Global1.navController.popBackStack()
+                    }
+
                 }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
@@ -972,6 +998,7 @@ fun settingsHeader(
                     )
                 }
             }
+
 
             // Title content
             Box(
@@ -1029,6 +1056,8 @@ fun SettingsScreen(
         ) {
             focusManager.clearFocus()
         }
+
+
 
     LazyColumn(
         modifier = baseModifier.then(modifier)
@@ -1093,6 +1122,7 @@ var Content = null
 //endregion
 
 //region POP UPS
+
 /* Example
 LazyPopup(
     onDismiss = { },
@@ -1113,42 +1143,112 @@ fun LazyPopup(
     onCancel: (() -> Unit)? = null
 ) {
 
-    if (!show.value) return
+    if (!show.value) {return}
 
-        AlertDialog(
-            onDismissRequest = {
-                onDismiss?.invoke()
+    AlertDialog(
+        onDismissRequest = {
+            onDismiss?.invoke()
 
+            show.value = false
+        },
+        title = { Text(title) },
+        text = { if (content == null) {Text(message) }
+            else {
+                content()
+            }
+
+               },
+        confirmButton = {
+            TextButton(onClick = {
+                onConfirm?.invoke()
                 show.value = false
-            },
-            title = { Text(title) },
-            text = { if (content == null) {Text(message) }
-                else {
-                    content()
-                }
-
-                   },
-            confirmButton = {
+            }) {
+                Text("OK")
+            }
+        },
+        dismissButton = if (showCancel) {
+            {
                 TextButton(onClick = {
-                    onConfirm?.invoke()
+                    onCancel?.invoke()
                     show.value = false
                 }) {
-                    Text("OK")
+                    Text("Cancel")
                 }
-            },
-            dismissButton = if (showCancel) {
-                {
-                    TextButton(onClick = {
-                        onCancel?.invoke()
-                        show.value = false
-                    }) {
-                        Text("Cancel")
-                    }
-                }
-            } else null
-        )
+            }
+        } else null
+    )
 
 }
+
+@Composable
+fun LazyMenu(
+    onDismiss: (() -> Unit)? = null,
+    content: @Composable () -> Unit,
+) {
+    val visible = remember { mutableStateOf(false) }
+    val internalVisible = remember { mutableStateOf(false) }
+
+    // Trigger showing/hiding Popup
+    LaunchedEffect(Bar.ShowMenu) {
+        if (Bar.ShowMenu) {
+            visible.value = true
+            delay(16)
+            internalVisible.value = true
+        } else {
+            internalVisible.value = false
+            delay(200) // Wait for animation out
+            visible.value = false
+        }
+    }
+
+    if (!visible.value) return
+
+    // Slide offset
+    val offsetX by animateDpAsState(
+        targetValue = if (internalVisible.value) 0.dp else -Bar.halfWidth,
+        animationSpec = tween(durationMillis = 200),
+        label = "MenuSlide"
+    )
+
+    // Background fade
+    val backgroundAlpha by animateFloatAsState(
+        targetValue = if (internalVisible.value) 0.4f else 0f,
+        animationSpec = tween(durationMillis = 200),
+        label = "Fade"
+    )
+
+    Popup(
+        alignment = Alignment.TopStart,
+        onDismissRequest = {
+            onDismiss?.invoke()
+            Bar.ShowMenu = false
+        }
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = backgroundAlpha))
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) {
+                onDismiss?.invoke()
+                    Bar.ShowMenu = false
+                }
+        )
+
+        Box(
+            modifier = Modifier
+                .offset { IntOffset(offsetX.roundToPx(), 0) }
+                .width(Bar.halfWidth)
+                .height(LocalConfiguration.current.screenHeightDp.dp)
+                .background(Color.DarkGray)
+        ) {
+            content()
+        }
+    }
+}
+
 
 
 //endregion

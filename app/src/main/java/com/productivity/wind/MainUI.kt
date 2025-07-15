@@ -51,6 +51,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 
@@ -68,8 +69,6 @@ fun Main() {
             }
         }
     }
-
-    // Offload heavy build to background
     val coloredTarget by produceState(initialValue = AnnotatedString(""), Bar.targetText, Bar.currentInput) {
         withContext(Dispatchers.Default) {
             val correctChars = Bar.targetText.zip(Bar.currentInput)
@@ -83,91 +82,75 @@ fun Main() {
 
 
     //region MENU CONTROLLER
-    val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp
-    Bar.halfWidth = halfWidth
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    LaunchedEffect(Bar.ShowMenu) {
-        if (Bar.ShowMenu) {
-            log("SHOWING MENUUUUU", "BAD")
-            scope.launch { drawerState.open() } }
-        else {
 
-            log("CLOSING MENUUUU", "BAD")
-            scope.launch { drawerState.close() } }
+    LaunchedEffect(Unit) {
+        Bar.JustNavigatedToMain = true
+        log("JustNavigatedToMain---${Bar.JustNavigatedToMain}", "bad")
+        delay(2000L)
+        Bar.JustNavigatedToMain = false
     }
-    LaunchedEffect(drawerState) {
-        snapshotFlow { drawerState.isOpen }
-            .collect { isOpen ->
-                if (!isOpen && Bar.ShowMenu) {
-                    Bar.ShowMenu = false
-                }
-            }
-    }
+
+    val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
+
     //endregion MENU CONTROLLER
 
-    ModalNavigationDrawer(drawerState = drawerState, gesturesEnabled = true, drawerContent   = { ModalDrawerSheet(modifier = Modifier.width(halfWidth)) { Menu() } }) {
-        SettingsScreen(titleContent = { MainHeader() }, showBack = false, showSearch = false) {
-            Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
+    LazyMenu { Menu()  }
+
+    SettingsScreen(titleContent = { MainHeader() }, showBack = false, showSearch = false) {
+        Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
+            Column(modifier = Modifier.padding(16.dp)) {
+
+                Text(
+                    text = coloredTarget,
+                    modifier = Modifier
+                        .height(200.dp)
+                        .verticalScroll(rememberScrollState())
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+
+                OutlinedTextField(
+                    value = Bar.currentInput,
+                    onValueChange = {
+                        if (it.length - Bar.currentInput.length <= 5) {
+                            Bar.TotalTypedLetters += 1
+                            Bar.currentInput = it
+
+                            val correctChars = Bar.targetText.zip(Bar.currentInput)
+                                .takeWhile { it.first == it.second }.size
+                            val correctInput = Bar.currentInput.take(correctChars)
 
 
-                /*
-* THE FULL NORMALL UI
-* TEXT INPUT THING
-* */
-                Column(modifier = Modifier.padding(16.dp)) {
+                            val newlyEarned = correctInput.length - Bar.highestCorrect
+                            if (newlyEarned > 0) {
+                                var oldFunTime = Bar.funTime
+                                Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
 
-                    Text(
-                        text = coloredTarget,
-                        modifier = Modifier
-                            .height(200.dp)
-                            .verticalScroll(rememberScrollState())
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    OutlinedTextField(
-                        value = Bar.currentInput,
-                        onValueChange = {
-                            if (it.length - Bar.currentInput.length <= 5) {
-                                Bar.TotalTypedLetters += 1
-                                Bar.currentInput = it
-
-                                val correctChars = Bar.targetText.zip(Bar.currentInput)
-                                    .takeWhile { it.first == it.second }.size
-                                val correctInput = Bar.currentInput.take(correctChars)
-
-
-                                val newlyEarned = correctInput.length - Bar.highestCorrect
-                                if (newlyEarned > 0) {
-                                    var oldFunTime = Bar.funTime
-                                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
-
-                                    }
-                                    Bar.highestCorrect = correctInput.length
                                 }
-
-                                if (correctInput == Bar.targetText) {
-                                    Bar.funTime += Bar.DoneRetype_to_time
-                                    Bar.currentInput = ""  // Reset input when completed
-                                    Bar.highestCorrect = 0
-                                }
+                                Bar.highestCorrect = correctInput.length
                             }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                            .verticalScroll(rememberScrollState()),
-                        placeholder = { Text("Start typing...") }
-                    )
 
-                    Spacer(modifier = Modifier.height(24.dp))
-                }
+                            if (correctInput == Bar.targetText) {
+                                Bar.funTime += Bar.DoneRetype_to_time
+                                Bar.currentInput = ""  // Reset input when completed
+                                Bar.highestCorrect = 0
+                            }
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .verticalScroll(rememberScrollState()),
+                    placeholder = { Text("Start typing...") }
+                )
 
-                /*TOP BAR ITEMS
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+
+            /*TOP BAR ITEMS
 * IF CLICKED WHAT HAPPENS*/
 
-            }
         }
+
     }
 }
 

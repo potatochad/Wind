@@ -61,6 +61,8 @@ import androidx.compose.material.icons.outlined.AdminPanelSettings
 import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.BatterySaver
 import androidx.compose.material.icons.outlined.Chat
+import androidx.compose.material.icons.outlined.Copyright
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Landscape
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Tune
@@ -77,40 +79,44 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.max
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
+
 
 //region NavController
 //Global1.navController - to use anywhere, no input
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MyNavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "Main") {
-        composable("Main") {
-            Main()
-        }
-        composable("Achievements") {
-            Achievements()
-        }
-        composable("ConfigureScreen") {
-            ConfigureScreen()
-        }
+        NavHost(navController = navController, startDestination = "Main") {
+            composable("Main") {
+                Main()
+            }
+            composable("Achievements") {
+                Achievements()
+            }
+            composable("ConfigureScreen") {
+                ConfigureScreen()
+            }
 
-        //region SETTINGS
+            //region SETTINGS
 
-        composable("SettingsScreen") {
-            SettingsScreen()
-        }
-        composable("SettingsP_Screen") {
-            SettingsP_Screen()
-        }
+            composable("SettingsScreen") {
+                SettingsScreen()
+            }
+            composable("SettingsP_Screen") {
+                SettingsP_Screen()
+            }
 
-        //endregion SETTINGS
-    }
+            //endregion SETTINGS
+        }
 }
+
 
 
 //endregion
@@ -144,36 +150,30 @@ fun MainHeader(){
 }
 
 //region MENU
+@Composable
+fun MenuHeader(){
+    val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - 50.dp)
+    Column(modifier = Modifier.padding(start = safeStartPadding), horizontalAlignment = Alignment.CenterHorizontally) {
+        Spacer(modifier = Modifier.height(8.dp))
+        Icon(
+            painter = painterResource(id = R.drawable.baseline_radar_24),
+            contentDescription = "Radar Icon",
+            tint = Color(0xFFFFD700),
+            modifier = Modifier.size(60.dp)
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = "Wind",
+            fontSize = 28.sp // 👈 make it bigger here
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+    }
 
+}
 @Composable
 fun Menu() {
 
-    //region SAFE PADDING
-
-    var ready by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Bar.halfWidth) {if (Bar.halfWidth > 0.dp) { ready = true } }
-    if (!ready) log("Bar.halfWidth ready?----${ready}", "bad"); return
-    val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - 35.dp)
-    //endregion SAFE PADDING
-
-    Column(modifier = Modifier.padding(start = safeStartPadding), horizontalAlignment = Alignment.CenterHorizontally) {
-            Spacer(modifier = Modifier.height(8.dp))
-            Icon(
-                painter = painterResource(id = R.drawable.baseline_radar_24),
-                contentDescription = "Radar Icon",
-                tint = Color(0xFFFFD700),
-                modifier = Modifier.size(60.dp)
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Wind",
-                fontSize = 28.sp // 👈 make it bigger here
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-        }
-
-    SettingsScreen(titleContent  = {} , onSearchClick = { },showBack = false, showSearch= false, showDivider = false) {
+    SettingsScreen(titleContent  = {MenuHeader()} , onSearchClick = { },showBack = false, showSearch= false, showDivider = false) {
         SettingItem(
             icon = Icons.Outlined.Chat,
             title = "Contact Support",
@@ -263,37 +263,13 @@ fun EditPopUp(show: MutableState<Boolean>) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 @Composable
 fun ConfigureScreen() = NoLagCompose {
     SettingsScreen(titleContent = { Text("Configure apps") }, showSearch = false) {
         Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
-
-
-
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -658,7 +634,12 @@ object DayChecker {
 
 @Composable
 fun MenuIcon() {
-    IconButton(onClick = {Bar.ShowMenu = true}) {
+    IconButton(onClick = { if (Bar.JustNavigatedToMain) {}
+
+        log("BUTTON CLICKED---${Bar.JustNavigatedToMain}", "bad")
+        if (!Bar.JustNavigatedToMain) {Bar.ShowMenu = true}
+
+        }) {
         Icon(
             imageVector = Icons.Default.Menu,
             contentDescription = "Menu",

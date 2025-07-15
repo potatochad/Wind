@@ -71,6 +71,18 @@ class Settings {
 
     //region MISALANIOUS
 
+    //region MENU
+
+    /*Helps compose
+    !Animation needs time, meaning need wait a bit before making button active
+     *
+     */
+    var JustNavigatedToMain by mutableStateOf(true)
+
+
+
+    //endregion MENU
+
     var halfWidth by mutableStateOf(0.dp)
     var ShowMenu by mutableStateOf(false)
     var CheckInstalledApps by mutableStateOf(true)
@@ -111,8 +123,173 @@ class Settings {
 
 
 
+data class Apps(
+    var id: String = UUID.randomUUID().toString(),
+    var name: String,
+    var packageName: String
+) {
+    var Block by mutableStateOf(false)
+    var Exists by mutableStateOf(true)
+    var TimeSpent by mutableStateOf(0f)
+}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//region USER LIST ACTION
+
+data class Item1(
+    var name: MutableState<String> = mutableStateOf(""),
+    var done: MutableState<Boolean> = mutableStateOf(false)
+)
+class Lists {
+    val SimpleList = mutableStateListOf<Item1>()
+    //val SimpleList1 = mutableStateListOf<Item2>()
+}
+val Blis = Lists();
+
+//endregion USER LIST ACTION
+
+
+
+
+
+fun ListsSaveding() {
+
+    //region SETUP
+
+    val gson = Gson()
+    val context = Global1.context
+    var WhereSave = "MyPrefs"
+    val data = context.getSharedPreferences(WhereSave, Context.MODE_PRIVATE)
+    val editor = data.edit()
+
+    //endregion SETUP
+
+
+    fun saveAllLists(context: Context) {
+        Lists::class.memberProperties.forEach { prop ->
+            prop.isAccessible = true
+            val list = prop.get(Blis)
+
+            if (list is List<*>) {
+                //val fancyList = list.filterIsInstance<Item>()
+                //val simpleList = MutableList_ToSimple(fancyList)
+                //val jsonString = gson.toJson(simpleList)
+
+                // Save using the property name as the key
+                //editor.putString(prop.name, jsonString)
+            }
+        }
+
+        editor.apply()
+    }
+
+
+
+    editor.putString("name", "John")
+    editor.apply()
+
+    val name = data.getString("name", "default")
+
+
+}
+
+//region HELPERS
+
+//FOR USING in the saving
+inline fun <reified T : Any> MutableList_ToSimple(list: List<T>): List<Map<String, Any?>> {
+    return list.map { item ->
+        val map = mutableMapOf<String, Any?>()
+
+        T::class.memberProperties.forEach { blar ->
+            blar.isAccessible = true
+            val value = blar.get(item)
+
+            // If it's a MutableState, get its .value
+            if (value is MutableState<*>) {
+                map[blar.name] = value.value
+            } else {
+                map[blar.name] = value
+            }
+        }
+
+        map
+    }
+}
+
+//Example on how to do the save and INT
+object ListsSaved {
+    private var Dosave: Job? = null
+    fun Bsave() {
+        if (Dosave?.isActive == true) return
+        Dosave = GlobalScope.launch {
+            while (isActive) {
+                val data = Global1.context.getSharedPreferences("lists", Context.MODE_PRIVATE)
+                val edit = data.edit()
+
+                var CPU = 0
+                com.productivity.wind.Settings::class.memberProperties.forEach { bar ->
+                    /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
+                    bar.isAccessible = true
+                    val value = bar.get(Bar)
+                    if (value is SnapshotStateList<*>) return@forEach
+
+                    when (value) {
+                        is Boolean -> edit.putBoolean(bar.name, value)
+                        is String -> edit.putString(bar.name, value)
+                        is Int -> edit.putInt(bar.name, value)
+                        is Float -> edit.putFloat(bar.name, value)
+                        is Long -> edit.putLong(bar.name, value)
+                    }
+                }
+                edit.apply()
+                delay(1_000L) // save every 5 seconds
+            }
+        }
+    }
+    fun init() {
+        val prefs = Global1.context.getSharedPreferences("lists", Context.MODE_PRIVATE)
+        if (prefs.all.isEmpty() || initOnce) return
+        initOnce= true //MUST USE, ALL ARE ZERO OR NULL
+
+        com.productivity.wind.Settings::class.memberProperties.forEach { barIDK ->
+            //best variable is variable//JUST MAKING SURE
+            if (barIDK is KMutableProperty1<com.productivity.wind.Settings, *>) {
+                @Suppress("UNCHECKED_CAST")
+                val bar = barIDK as KMutableProperty1<com.productivity.wind.Settings, Any?>
+                bar.isAccessible = true
+                val name = bar.name
+                val type = bar.returnType.classifier
+
+                val stateProp = bar.getDelegate(Bar)
+                when {
+                    stateProp is MutableState<*> && type == Boolean::class -> (stateProp as MutableState<Boolean>).value = prefs.getBoolean(name, false)
+                    stateProp is MutableState<*> && type == String::class -> (stateProp as MutableState<String>).value = prefs.getString(name, "") ?: ""
+                    stateProp is MutableState<*> && type == Int::class -> (stateProp as MutableState<Int>).value = prefs.getInt(name, 0)
+                    stateProp is MutableState<*> && type == Float::class -> (stateProp as MutableState<Float>).value = prefs.getFloat(name, 0f)
+                    stateProp is MutableState<*> && type == Long::class -> (stateProp as MutableState<Long>).value = prefs.getLong(name, 0L)
+                }
+            }
+            else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
+        }
+    }
+}
+
+
+//endregion HELPERS
 
 
 
@@ -242,7 +419,7 @@ class WatchdogService : Service() {
                     //endregion
 
 
-                    //region BLOCK APP
+                    //region CURRENT APP
 
                     val usageStatsManager = Global1.context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
                     val NowTime = System.currentTimeMillis()
@@ -254,7 +431,11 @@ class WatchdogService : Service() {
                     val AppsUsed = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, NowTime - 20_000, NowTime)
                     val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
 
-                    log("BACKGROUND---CURRENT APP:::${currentApp};", "bad")
+                    //LOG WHEN WANT TOOO
+                    if (currentApp == Global1.context.packageName || currentApp == null) { } else { log("BACKGROUND — CURRENT APP: $currentApp", "bad") }
+
+                    //endregion CURRENT APP
+
                     if (currentApp == "net.pluckeye.tober" ) {
                         if (Bar.funTime >0) {
                             Bar.funTime -=1
@@ -291,7 +472,6 @@ class WatchdogService : Service() {
                         }
                     }
 
-                    //endregion BLOCK APP
 
 
                 }
