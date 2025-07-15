@@ -199,49 +199,78 @@ object Blists {
 
     private var Dosave: Job? = null
 
+
     fun saveAllLists() {
         if (Dosave?.isActive == true) return
 
         Dosave = GlobalScope.launch {
             while (isActive) {
-                // 1. Iterate every property in Lists
                 Lists::class.memberProperties.forEach { prop ->
                     prop.isAccessible = true
-                    val Blist = prop.get(Blis)
+                    val raw = prop.get(Blis)
 
-                    // 2. Only process StateLists
-                    if (Blist is SnapshotStateList<*>) {
-                        val simple = MutableList_ToSimple(Blist as List<Any>)
-                        val json = gson.toJson(simple)
+                    if (raw is SnapshotStateList<*>) {
+                        // 1. Read the existing stored string
+                        val existingJson = data.getString(prop.name, null)
+                        if (existingJson != null) {
+                            // 2. Parse it to check for corruption
+                            val mapType = object : TypeToken<List<Map<String, Any?>>>() {}.type
+                            val existingList: List<Map<String, Any?>> =
+                                try {
+                                    gson.fromJson(existingJson, mapType)
+                                } catch (e: Exception) {
+                                    emptyList() // parse error → treat as corrupted
+                                }
+
+                            // 3. If it's all empty maps or all-null values, clear it now
+                            val isCorrupted = existingList.isNotEmpty()
+                                    && existingList.all { entry ->
+                                entry.isEmpty() || entry.values.all { it == null }
+                            }
+
+                            if (isCorrupted) {
+                                log("CORRUPTED stored data for '${prop.name}', clearing now", "bad")
+                                editor.remove(prop.name)
+                                // note: do NOT editor.apply() here; we batch apply later
+                            }
+                        }
+
+                        // 4. Build fresh JSON from the current in-memory list
+                        val simple = MutableList_ToSimple(raw as List<Any>)
+                        val json   = gson.toJson(simple)
+                        log("Saving '${prop.name}' with ${simple.size} items → $json", "bad")
                         editor.putString(prop.name, json)
+
                     } else {
-                        log("LIST IS NOT SNAPSHOTSTATELIST", "bad")
+                        log("SKIP '${prop.name}' (not a SnapshotStateList)", "bad")
                     }
                 }
 
+                // 5. Apply all removals and writes together
                 editor.apply()
-
-                delay(1000) // <--- This makes it wait 1 second before doing it again
+                delay(1000)
             }
         }
     }
 
 
-
-
     fun initializeAllLists() {
         Lists::class.memberProperties.forEach { prop ->
             prop.isAccessible = true
-            val rawList = prop.get(Blis)
-            if (rawList is SnapshotStateList<*>) {
+            val raw = prop.get(Blis)
+
+            if (raw is SnapshotStateList<*>) {
                 // 1. load JSON
                 val json = data.getString(prop.name, "[]")
+                log("Loading '${prop.name}' → $json", "bad")
+
                 val mapType = object : TypeToken<List<Map<String, Any?>>>() {}.type
                 val simpleList: List<Map<String, Any?>> = gson.fromJson(json, mapType)
 
                 // 2. clear old entries
                 @Suppress("UNCHECKED_CAST")
-                val stateList = rawList as SnapshotStateList<Any?>
+                val stateList = raw as SnapshotStateList<Any?>
+                log("Clearing '${prop.name}', had ${stateList.size} items", "bad")
                 stateList.clear()
 
                 // 3. infer element class
@@ -253,18 +282,23 @@ object Blists {
                     ?: return@forEach
 
                 // 4. rebuild each item and add
-                simpleList.forEach { map ->
+                simpleList.forEachIndexed { idx, map ->
                     val instance = elemClass.createInstance()
                     elemClass.memberProperties.forEach { field ->
                         field.isAccessible = true
-                        val fieldVal = field.get(instance)
-                        if (fieldVal is MutableState<*>) {
+                        val fv = field.get(instance)
+                        if (fv is MutableState<*>) {
                             @Suppress("UNCHECKED_CAST")
-                            (fieldVal as MutableState<Any?>).value = map[field.name]
+                            (fv as MutableState<Any?>).value = map[field.name]
                         }
                     }
                     stateList.add(instance)
+                    log("  → Added item #$idx to '${prop.name}': $map", "bad")
                 }
+
+                log("Finished initializing '${prop.name}', total ${stateList.size} items", "bad")
+            } else {
+                log("SKIP '${prop.name}' (not a SnapshotStateList)", "bad")
             }
         }
     }
@@ -274,24 +308,28 @@ object Blists {
 
 //FOR USING in the saving
 inline fun <reified T : Any> MutableList_ToSimple(list: List<T>): List<Map<String, Any?>> {
-    return list.map { item ->
+    return list.mapIndexed { index, item ->
         val map = mutableMapOf<String, Any?>()
+        log("Processing item #$index of type ${T::class.simpleName}", "bad")
 
         T::class.memberProperties.forEach { blar ->
             blar.isAccessible = true
             val value = blar.get(item)
 
-            // If it's a MutableState, get its .value
             if (value is MutableState<*>) {
                 map[blar.name] = value.value
+                log("  → ${blar.name} is MutableState: ${value.value}", "bad")
             } else {
                 map[blar.name] = value
+                log("  → ${blar.name} is raw: $value", "bad")
             }
         }
 
+        log("Finished item #$index → $map", "bad")
         map
     }
 }
+
 fun <T : Any> simpleListToMutable(simpleList: List<Map<String, Any?>>, elemClass: KClass<T>): List<T> {
     return simpleList.map { map ->
         // 1. Make a blank instance
