@@ -172,51 +172,6 @@ fun Main() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("MissingPermission")
-@Composable
-fun ChillScreen() = NoLagCompose {
-    val context = LocalContext.current
-
-    LaunchedEffect(Unit) {
-        if (Bar.CheckInstalledApps) {
-            context.getAllInstalledApps()
-            Bar.CheckInstalledApps = false
-            Bar.AppList.sortWith(compareByDescending<Apps> { it.Block }.thenBy { it.name.lowercase() })
-        }
-    }
-
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("Pick Apps to Block") }, modifier = Modifier.fillMaxWidth())
-        }
-    ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            items(Bar.AppList, key = { it.id }) { app ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                ) {
-
-                    Checkbox(
-                        checked = app.Block,
-                        onCheckedChange = { app.Block = it }, modifier = Modifier.padding(start = 8.dp), enabled = true
-                    )
-                    Spacer(Modifier.width(12.dp))
-                    Text(app.name)
-                    Spacer(Modifier.weight(1f))
-                }
-            }
-        }
-    }
-}
-
 
 
 

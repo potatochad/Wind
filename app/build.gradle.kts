@@ -117,17 +117,17 @@ ktlint {
     ignoreFailures.set(false)
 }
 
-dependencies {
-    implementation("io.coil-kt:coil-compose:2.5.0")
 
+
+dependencies {
+
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
+    implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.10")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
-    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.compose.material3:material3:1.3.2")
     implementation("androidx.compose.material3:material3-window-size-class:1.3.2")
-
-
-
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
 
 

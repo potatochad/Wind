@@ -72,9 +72,12 @@ import java.time.LocalDate
 import androidx.compose.material.icons.outlined.QueryStats
 import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.max
 import androidx.core.app.NotificationManagerCompat
@@ -88,9 +91,6 @@ fun MyNavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "Main") {
         composable("Main") {
             Main()
-        }
-        composable("ChillScreen") {
-            ChillScreen()
         }
         composable("Achievements") {
             Achievements()
@@ -153,10 +153,8 @@ fun Menu() {
     var ready by remember { mutableStateOf(false) }
 
     LaunchedEffect(Bar.halfWidth) {if (Bar.halfWidth > 0.dp) { ready = true } }
-    if (!ready) return // Wait until ready
-    log("Bar.halfWidth hasn't loaded yet, has been assighned a valueee----${ready}", "bad")
+    if (!ready) log("Bar.halfWidth ready?----${ready}", "bad"); return
     val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - 35.dp)
-
     //endregion SAFE PADDING
 
     Column(modifier = Modifier.padding(start = safeStartPadding), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -275,88 +273,17 @@ fun EditPopUp(show: MutableState<Boolean>) {
 
 
 
-// 1️⃣ ICON CACHE
-object Vapp {
-    val IconMap = mutableStateMapOf<String, ImageBitmap?>()
-}
 
-// 2️⃣ LOAD INSTALLED APPS (fixed)
-suspend fun Context.getAllInstalledApps() = withContext(Dispatchers.IO) {
-    // mark all as missing, then remove them safely
-    Bar.AppList.forEach { it.Exists = false }
-    Bar.AppList.removeAll { !it.Exists }
-
-    val myPkg = packageName
-    packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-        .asSequence()
-        .filter { it.packageName != myPkg }
-        .filter { packageManager.getLaunchIntentForPackage(it.packageName) != null }
-        .forEach { appInfo ->
-            val name = appInfo.loadLabel(packageManager).toString()
-            val pkg = appInfo.packageName
-            val exists = Bar.AppList.find { it.packageName == pkg }
-            if (exists != null) {
-                exists.Exists = true
-            } else {
-                Bar.AppList.add(Apps(name = name, packageName = pkg))
-                log("ADDED NEW APP: $pkg", "bad")
-            }
-        }
-}
-
-// 3️⃣ BACKGROUND ICON LOADER
-suspend fun Context.loadIconsInBackground() = withContext(Dispatchers.IO) {
-    Bar.AppList.forEach { app ->
-        if (!Vapp.IconMap.containsKey(app.packageName)) {
-            Vapp.IconMap[app.packageName] = try {
-                val icon = packageManager.getApplicationIcon(app.packageName)
-                Bitmap.createBitmap(64, 64, Bitmap.Config.ARGB_8888).also { bmp ->
-                    Canvas(bmp).apply {
-                        icon.setBounds(0, 0, 64, 64)
-                        icon.draw(this)
-                    }
-                }.asImageBitmap()
-            } catch (e: Exception) {
-                null
-            }
-        }
-    }
-}
-
-// 4️⃣ COMPOSABLE WITH BOTH STEPS
 @Composable
 fun ConfigureScreen() = NoLagCompose {
-    val context = LocalContext.current
+    SettingsScreen(titleContent = { Text("Configure apps") }, showSearch = false) {
+        Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
 
-    LaunchedEffect(Unit) {
-        context.getAllInstalledApps()
-        context.loadIconsInBackground()
+
+
+        }
     }
-//
-//    LazyColumn(modifier = Modifier.fillMaxSize()) {
-//        items(
-//            items = Bar.AppList,
-//            key = { it.packageName }
-//        ) { app ->
-//            val icon = Vapp.IconMap[app.packageName]
-//            Row(
-//                verticalAlignment = Alignment.CenterVertically,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(8.dp)
-//            ) {
-//                if (icon != null) {
-//                    Image(icon, contentDescription = null, modifier = Modifier.size(40.dp))
-//                } else {
-//                    CircularProgressIndicator(strokeWidth = 2.dp, modifier = Modifier.size(24.dp))
-//                }
-//                Spacer(modifier = Modifier.width(8.dp))
-//                Text(app.name, fontWeight = FontWeight.Bold)
-//            }
-//        }
-//    }
 }
-
 
 
 
