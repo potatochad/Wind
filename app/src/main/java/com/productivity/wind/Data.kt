@@ -114,36 +114,23 @@ class Settings {
 
 
 
-data class Apps(
-    var id: String = UUID.randomUUID().toString(),
-    var name: String,
-    var packageName: String
-) {
-    var Block by mutableStateOf(false)
-    var Exists by mutableStateOf(true)
-    var TimeSpent by mutableStateOf(0f)
-}
 
 
-
-
-
-
-
-
-data class Item(
+data class apps(
     var id: String = UUID.randomUUID().toString(),
     var name: MutableState<String> = mutableStateOf(""),
-    var done: MutableState<Boolean> = mutableStateOf(false)
+    var done: MutableState<Boolean> = mutableStateOf(false),
+
+
+    var packageName: MutableState<String> = mutableStateOf(""),
+    var Block : MutableState<String> = mutableStateOf(""),
+var Exists by mutableStateOf(true)
+var TimeSpent by mutableStateOf(0f)
 )
 
-// 2) Create a registry object holding all your lists:
 object Blist {
-    val shopping = mutableStateListOf<Item>()
-    val tasks  = mutableStateListOf<Item>()
+    val apps = mutableStateListOf<apps>()
 }
-
-
 
 
 
