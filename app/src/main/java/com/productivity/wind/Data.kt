@@ -50,10 +50,11 @@ import kotlin.reflect.KMutableProperty1
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
+import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.primaryConstructor
 
 class Settings {
     var funTime by mutableStateOf(0)
-    var showLazyPopUp by mutableStateOf(false)
     var currentApp by mutableStateOf("")
 
     //region COPY PASTE THING
@@ -70,18 +71,6 @@ class Settings {
     //endregion COPY PASTE THING
 
     //region MISALANIOUS
-
-    //region MENU
-
-    /*Helps compose
-    !Animation needs time, meaning need wait a bit before making button active
-     *
-     */
-    var JustNavigatedToMain by mutableStateOf(true)
-
-
-
-    //endregion MENU
 
     var halfWidth by mutableStateOf(0.dp)
     var ShowMenu by mutableStateOf(false)
@@ -156,7 +145,8 @@ data class Item1(
 )
 class Lists {
     val SimpleList = mutableStateListOf<Item1>()
-    //val SimpleList1 = mutableStateListOf<Item2>()
+    //val SimpleListCool = mutableStateListOf<Item2coll>()
+    //.....a hundrer more of such lists
 }
 val Blis = Lists();
 
@@ -178,24 +168,24 @@ fun ListsSaveding() {
 
     //endregion SETUP
 
-
-    fun saveAllLists(context: Context) {
+    fun saveAllLists() {
+        // 1. Iterate every property in Lists
         Lists::class.memberProperties.forEach { prop ->
             prop.isAccessible = true
-            val list = prop.get(Blis)
+            val Blist = prop.get(Blis)
 
-            if (list is List<*>) {
-                //val fancyList = list.filterIsInstance<Item>()
-                //val simpleList = MutableList_ToSimple(fancyList)
-                //val jsonString = gson.toJson(simpleList)
-
-                // Save using the property name as the key
-                //editor.putString(prop.name, jsonString)
+            // 2. Only process StateLists
+            if (Blist is SnapshotStateList<*>) {
+                val simple = MutableList_ToSimple(Blist as List<Any>)
+                val json = gson.toJson(simple)
+                editor.putString(prop.name, json)
             }
+            else {log("LIST IS NOT SNACHOTSTATELIST", "bad")}
         }
 
         editor.apply()
     }
+
 
 
 
@@ -227,6 +217,24 @@ inline fun <reified T : Any> MutableList_ToSimple(list: List<T>): List<Map<Strin
         }
 
         map
+    }
+}
+inline fun <reified T : Any> SimpleList_ToMutable(simpleList: List<Map<String, Any?>>): List<T> {
+    return simpleList.map { map ->
+        val instance = T::class.createInstance()
+
+        T::class.memberProperties.forEach { prop ->
+            prop.isAccessible = true
+            val propValue = prop.get(instance)
+
+            if (propValue is MutableState<*>) {
+                val newValue = map[prop.name]
+                @Suppress("UNCHECKED_CAST")
+                (propValue as MutableState<Any?>).value = newValue
+            }
+        }
+
+        instance
     }
 }
 

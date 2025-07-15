@@ -634,12 +634,7 @@ object DayChecker {
 
 @Composable
 fun MenuIcon() {
-    IconButton(onClick = { if (Bar.JustNavigatedToMain) {}
-
-        log("BUTTON CLICKED---${Bar.JustNavigatedToMain}", "bad")
-        if (!Bar.JustNavigatedToMain) {Bar.ShowMenu = true}
-
-        }) {
+    IconButton(onClick = { Bar.ShowMenu = true }) {
         Icon(
             imageVector = Icons.Default.Menu,
             contentDescription = "Menu",

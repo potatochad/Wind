@@ -79,20 +79,7 @@ fun Main() {
             }
         }
     }
-
-
-    //region MENU CONTROLLER
-
-    LaunchedEffect(Unit) {
-        Bar.JustNavigatedToMain = true
-        log("JustNavigatedToMain---${Bar.JustNavigatedToMain}", "bad")
-        delay(2000L)
-        Bar.JustNavigatedToMain = false
-    }
-
     val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
-
-    //endregion MENU CONTROLLER
 
     LazyMenu { Menu()  }
 
