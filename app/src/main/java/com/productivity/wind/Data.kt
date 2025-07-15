@@ -51,6 +51,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import kotlin.reflect.KClass
+import kotlin.reflect.KProperty1
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
 
@@ -130,233 +131,16 @@ data class Apps(
 
 
 
-
-
-
-
-
-
-
-
-//region USER LIST ACTION
-
-data class Item1(
+data class Item(
     var name: MutableState<String> = mutableStateOf(""),
     var done: MutableState<Boolean> = mutableStateOf(false)
 )
-class Lists {
-    val TestList = mutableStateListOf<Item1>()
+
+// 2) Create a registry object holding all your lists:
+object Blist {
+    val shoppingList = mutableStateListOf<Item>()
+    val tasksList    = mutableStateListOf<Item>()
 }
-val Blis = Lists();
-
-/* *HOW USE
-
-? Add an item
-val newItem = Item1(name = mutableStateOf("Buy groceries"), done = mutableStateOf(false))
-Blis.SimpleList.add(newItem)
-
-? Update an item
-if (Blis.SimpleList.isNotEmpty()) {
-    Blis.SimpleList[0].done.value = true
-}
-
-? Find an item
-val found = Blis.SimpleList.find { it.name.value == "Buy groceries" }
-if (found != null) {
-    println("Found item: ${found.name.value}")
-}
-
-? Remove an item
-if (Blis.SimpleList.isNotEmpty()) {
-    Blis.SimpleList.removeAt(0)
-}
-
-? LOOP THOUGH ALL
-Blis.SimpleList.forEach { item ->
-    println("Task: ${item.name.value}, Done: ${item.done.value}")
-}
-
-
-*/
-
-//endregion USER LIST ACTION
-
-
-
-
-
-object Blists {
-
-    //region SETUP
-
-    val gson = Gson()
-    val context = Global1.context
-    var WhereSave = "MyPrefs"
-    val data = context.getSharedPreferences(WhereSave, Context.MODE_PRIVATE)
-    val editor = data.edit()
-
-    //endregion SETUP
-
-    private var Dosave: Job? = null
-
-
-    fun saveAllLists() {
-        if (Dosave?.isActive == true) return
-
-        Dosave = GlobalScope.launch {
-            while (isActive) {
-                Lists::class.memberProperties.forEach { prop ->
-                    prop.isAccessible = true
-                    val raw = prop.get(Blis)
-
-                    if (raw is SnapshotStateList<*>) {
-                        // 1. Read the existing stored string
-                        val existingJson = data.getString(prop.name, null)
-                        if (existingJson != null) {
-                            // 2. Parse it to check for corruption
-                            val mapType = object : TypeToken<List<Map<String, Any?>>>() {}.type
-                            val existingList: List<Map<String, Any?>> =
-                                try {
-                                    gson.fromJson(existingJson, mapType)
-                                } catch (e: Exception) {
-                                    emptyList() // parse error → treat as corrupted
-                                }
-
-                            // 3. If it's all empty maps or all-null values, clear it now
-                            val isCorrupted = existingList.isNotEmpty()
-                                    && existingList.all { entry ->
-                                entry.isEmpty() || entry.values.all { it == null }
-                            }
-
-                            if (isCorrupted) {
-                                log("CORRUPTED stored data for '${prop.name}', clearing now", "bad")
-                                editor.remove(prop.name)
-                                // note: do NOT editor.apply() here; we batch apply later
-                            }
-                        }
-
-                        // 4. Build fresh JSON from the current in-memory list
-                        val simple = MutableList_ToSimple(raw as List<Any>)
-                        val json   = gson.toJson(simple)
-                        log("Saving '${prop.name}' with ${simple.size} items → $json", "bad")
-                        editor.putString(prop.name, json)
-
-                    } else {
-                        log("SKIP '${prop.name}' (not a SnapshotStateList)", "bad")
-                    }
-                }
-
-                // 5. Apply all removals and writes together
-                editor.apply()
-                delay(1000)
-            }
-        }
-    }
-
-
-    fun initializeAllLists() {
-        Lists::class.memberProperties.forEach { prop ->
-            prop.isAccessible = true
-            val raw = prop.get(Blis)
-
-            if (raw is SnapshotStateList<*>) {
-                // 1. load JSON
-                val json = data.getString(prop.name, "[]")
-                log("Loading '${prop.name}' → $json", "bad")
-
-                val mapType = object : TypeToken<List<Map<String, Any?>>>() {}.type
-                val simpleList: List<Map<String, Any?>> = gson.fromJson(json, mapType)
-
-                // 2. clear old entries
-                @Suppress("UNCHECKED_CAST")
-                val stateList = raw as SnapshotStateList<Any?>
-                log("Clearing '${prop.name}', had ${stateList.size} items", "bad")
-                stateList.clear()
-
-                // 3. infer element class
-                val elemClass = prop.returnType
-                    .arguments
-                    .first()
-                    .type
-                    ?.classifier as? KClass<Any>
-                    ?: return@forEach
-
-                // 4. rebuild each item and add
-                simpleList.forEachIndexed { idx, map ->
-                    val instance = elemClass.createInstance()
-                    elemClass.memberProperties.forEach { field ->
-                        field.isAccessible = true
-                        val fv = field.get(instance)
-                        if (fv is MutableState<*>) {
-                            @Suppress("UNCHECKED_CAST")
-                            (fv as MutableState<Any?>).value = map[field.name]
-                        }
-                    }
-                    stateList.add(instance)
-                    log("  → Added item #$idx to '${prop.name}': $map", "bad")
-                }
-
-                log("Finished initializing '${prop.name}', total ${stateList.size} items", "bad")
-            } else {
-                log("SKIP '${prop.name}' (not a SnapshotStateList)", "bad")
-            }
-        }
-    }
-}
-
-//region HELPERS
-
-//FOR USING in the saving
-inline fun <reified T : Any> MutableList_ToSimple(list: List<T>): List<Map<String, Any?>> {
-    return list.mapIndexed { index, item ->
-        val map = mutableMapOf<String, Any?>()
-        log("Processing item #$index of type ${T::class.simpleName}", "bad")
-
-        T::class.memberProperties.forEach { blar ->
-            blar.isAccessible = true
-            val value = blar.get(item)
-
-            if (value is MutableState<*>) {
-                map[blar.name] = value.value
-                log("  → ${blar.name} is MutableState: ${value.value}", "bad")
-            } else {
-                map[blar.name] = value
-                log("  → ${blar.name} is raw: $value", "bad")
-            }
-        }
-
-        log("Finished item #$index → $map", "bad")
-        map
-    }
-}
-
-fun <T : Any> simpleListToMutable(simpleList: List<Map<String, Any?>>, elemClass: KClass<T>): List<T> {
-    return simpleList.map { map ->
-        // 1. Make a blank instance
-        val instance = elemClass.createInstance()
-        // 2. Fill in each MutableState property
-        elemClass.memberProperties.forEach { prop ->
-            prop.isAccessible = true
-            val propValue = prop.get(instance)
-            if (propValue is MutableState<*>) {
-                @Suppress("UNCHECKED_CAST")
-                (propValue as MutableState<Any?>).value = map[prop.name]
-            }
-        }
-        instance
-    }
-}
-
-
-//endregion HELPERS
-
-
-
-
-
-
-
-
 
 
 
@@ -562,8 +346,8 @@ fun AppStart_beforeUI(context: Context) {
     SettingsSaved.init()
     SettingsSaved.Bsave()
 
-    Blists.saveAllLists()
-    Blists.initializeAllLists()
+    UniversalListManager.initialize(context, Blist)
+
 
     //Background thing
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }

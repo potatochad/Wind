@@ -3,6 +3,7 @@ package com.productivity.wind
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -109,6 +110,14 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.window.Popup
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlin.reflect.KClass
+import kotlin.reflect.KProperty1
+import kotlin.reflect.full.createInstance
 
 
 //region USER MANUAL
@@ -308,7 +317,7 @@ fun NoLagCompose(content: @Composable () -> Unit) {
 
 
 //endregion
-//region DATA MANAGE
+//region DATA MANAGE ONCES
 
 /*NEEDED SETUP
 * PUT IT HERE!!;
@@ -504,6 +513,109 @@ object SettingsSaved {
         }
     }
 }
+
+//endregion
+
+//region DATA MANAGE LISTS
+
+object UniversalListManager {
+    private lateinit var prefs: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+    private val gson = Gson()
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private var saveJob: Job? = null
+
+    fun initialize(
+        context: Context,
+        registry: Any,
+        prefsName: String = "MyPrefs",
+        intervalMs: Long = 1000L
+    ) {
+        prefs = context.applicationContext.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
+        editor = prefs.edit()
+        loadAll(registry)
+        startAutosave(registry, intervalMs)
+    }
+
+    // Load each SnapshotStateList from JSON
+    private fun loadAll(registry: Any) {
+        registry::class.memberProperties
+            .filterIsInstance<KProperty1<Any, Any?>>()
+            .forEach { prop ->
+                prop.isAccessible = true
+                val rawList = prop.getter.call(registry)
+                if (rawList is SnapshotStateList<*>) {
+                    @Suppress("UNCHECKED_CAST")
+                    val stateList = rawList as SnapshotStateList<Any?>
+                    val json = prefs.getString(prop.name, null) ?: "[]"
+                    val type = object : TypeToken<List<Map<String, Any?>>>() {}.type
+                    val simpleList: List<Map<String, Any?>> = gson.fromJson(json, type)
+
+                    stateList.clear()
+
+                    val elemKClass = prop.returnType.arguments
+                        .first().type?.classifier as? KClass<Any> ?: return@forEach
+
+                    simpleList.forEach { map ->
+                        val instance = elemKClass.createInstance()
+                        elemKClass.memberProperties
+                            .filterIsInstance<KProperty1<Any, Any?>>()
+                            .forEach { field ->
+                                field.isAccessible = true
+                                val fieldVal = field.getter.call(instance)
+                                if (fieldVal is MutableState<*>) {
+                                    @Suppress("UNCHECKED_CAST")
+                                    (fieldVal as MutableState<Any?>).value = map[field.name]
+                                }
+                            }
+                        stateList.add(instance)
+                    }
+                }
+            }
+    }
+
+    // Start a background job to save periodically
+    private fun startAutosave(registry: Any, intervalMs: Long) {
+        if (saveJob?.isActive == true) return
+        saveJob = scope.launch {
+            while (isActive) {
+                saveOnce(registry)
+                delay(intervalMs)
+            }
+        }
+    }
+
+    // Save all SnapshotStateList properties once
+    private fun saveOnce(registry: Any) {
+        registry::class.memberProperties
+            .filterIsInstance<KProperty1<Any, Any?>>()
+            .forEach { prop ->
+                prop.isAccessible = true
+                val rawList = prop.getter.call(registry)
+                if (rawList is SnapshotStateList<*>) {
+                    @Suppress("UNCHECKED_CAST")
+                    val stateList = rawList as SnapshotStateList<Any?>
+                    val simpleList = stateList.map { item ->
+                        val map = mutableMapOf<String, Any?>()
+                        item!!::class.memberProperties
+                            .filterIsInstance<KProperty1<Any, Any?>>()
+                            .forEach { field ->
+                                field.isAccessible = true
+                                val fieldVal = field.getter.call(item)
+                                if (fieldVal is MutableState<*>) {
+                                    map[field.name] = fieldVal.value
+                                }
+                            }
+                        map
+                    }
+                    val json = gson.toJson(simpleList)
+                    editor.putString(prop.name, json)
+                }
+            }
+        editor.apply()
+    }
+}
+
 
 //endregion
 

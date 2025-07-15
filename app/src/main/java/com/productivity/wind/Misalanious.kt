@@ -80,6 +80,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.TextField
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
@@ -278,72 +279,52 @@ fun ConfigureScreen() = NoLagCompose {
         Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
         }
 
-                OutlinedTextField(
-                    value = newItemName,
-                    onValueChange = { newItemName = it },
-                    label = { Text("New item name") },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                    modifier = Modifier.fillMaxWidth()
+        ListsRegistry.shoppingList.forEachIndexed { index, item ->
+            Row {
+                TextField(
+                    value = item.name.value,
+                    onValueChange = { ListsRegistry.shoppingList[index].name.value = it }
                 )
-                Button(onClick = {
-                    if (newItemName.isNotBlank()) {
-                        val newItem = Item1(name = mutableStateOf(newItemName), done = mutableStateOf(false))
-                        Blis.TestList.add(newItem)
-                        newItemName = ""
-                    }
-                }) {
-                    Text("Add Item")
-                }
-
-                // Find item
-                OutlinedTextField(
-                    value = findQuery,
-                    onValueChange = { findQuery = it },
-                    label = { Text("Find by name") },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    modifier = Modifier.fillMaxWidth()
+                Checkbox(
+                    checked = item.done.value,
+                    onCheckedChange = { ListsRegistry.shoppingList[index].done.value = it }
                 )
-                Button(onClick = {
-                    findResult = Blis.TestList.find { it.name.value == findQuery }
-                }) {
-                    Text("Find Item")
+                Button(onClick = { ListsRegistry.shoppingList.removeAt(index) }) {
+                    Text("Remove")
                 }
-                findResult?.let {
-                    Text("Found: ${it.name.value}, Done: ${it.done.value}")
-                }
+            }
+        }
 
-                // List display with update and delete
-                if (Blis.TestList.isNotEmpty()) {
-                    Text("Items:")
-                    Blis.TestList.forEachIndexed { index, item ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Checkbox(
-                                checked = item.done.value,
-                                onCheckedChange = { checked -> item.done.value = checked }
-                            )
-                            Text(item.name.value, modifier = Modifier.weight(1f))
-                            IconButton(onClick = { Blis.TestList.removeAt(index) }) {
-                                Icon(Icons.Default.Delete, contentDescription = "Delete")
-                            }
-                        }
-                    }
-                }
+        Button(onClick = {
+            ListsRegistry.shoppingList.add(Item(mutableStateOf("New Item"), mutableStateOf(false)))
+        }) {
+            Text("Add to Shopping")
+        }
 
-                // Loop (log) all items
-                Button(onClick = {
-                    coroutineScope.launch {
-                        Blis.TestList.forEach { itItem ->
-                            println("Task: ${'$'}{itItem.name.value}, Done: ${'$'}{itItem.done.value}")
-                        }
-                    }
-                }) {
-                    Text("Log All to Console")
+        Spacer(Modifier.height(24.dp))
+
+        Text("Tasks List")
+        ListsRegistry.tasksList.forEachIndexed { index, item ->
+            Row {
+                TextField(
+                    value = item.name.value,
+                    onValueChange = { ListsRegistry.tasksList[index].name.value = it }
+                )
+                Checkbox(
+                    checked = item.done.value,
+                    onCheckedChange = { ListsRegistry.tasksList[index].done.value = it }
+                )
+                Button(onClick = { ListsRegistry.tasksList.removeAt(index) }) {
+                    Text("x")
                 }
+            }
+        }
+
+        Button(onClick = {
+            ListsRegistry.tasksList.add(Item(mutableStateOf("New Task"), mutableStateOf(false)))
+        }) {
+            Text("Add to Tasks")
+        }
     }
 }
 
