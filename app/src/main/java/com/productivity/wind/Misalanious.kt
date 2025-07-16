@@ -542,7 +542,7 @@ fun Achievements()= NoLagCompose {
 fun SettingsScreen() {
     SettingsScreen(titleContent  = {Text( "Settings")}, showSearch = false) {
 
-        SettingItem(icon = Icons.Outlined.AdminPanelSettings, title = "Permissions", subtitle = "Necesary - for app to work", onClick = { Global1.navController.navigate("SettingsP_Screen")} )
+        SettingItem(icon = Icons.Outlined.AdminPanelSettings, title = "Permissions", onClick = { Global1.navController.navigate("SettingsP_Screen")} )
 
     }
 }
@@ -785,7 +785,6 @@ fun SettingsP_Screen()= NoLagCompose {
         SettingItem(
             icon = Icons.Outlined.Notifications,
             title = "Notification",
-            subtitle = "Necessary",
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.NotificationPermission,
@@ -798,7 +797,6 @@ fun SettingsP_Screen()= NoLagCompose {
         SettingItem(
             icon = Icons.Outlined.Visibility,
             title = "Draw On Top",
-            subtitle = "Necessary",
             endContent = {
                 PermissionsButton(
                 isEnabled = Bar.DrawOnTopPermission,
@@ -809,7 +807,6 @@ fun SettingsP_Screen()= NoLagCompose {
         SettingItem(
             icon = Icons.Outlined.BatterySaver,
             title = "Optimization Exclusion",
-            subtitle = "Necessary",
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.OptimizationExclusionPermission,
@@ -820,7 +817,6 @@ fun SettingsP_Screen()= NoLagCompose {
         SettingItem(
             icon = Icons.Outlined.BarChart,
             title = "Usage Stats",
-            subtitle = "Necessary",
             endContent = {
                 PermissionsButton(
                     isEnabled = Bar.UsageStatsPermission,
