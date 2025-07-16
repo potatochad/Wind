@@ -267,46 +267,47 @@ class WatchdogService : Service() {
         NotificationHelper(this).createNotificationChannel()
         startForeground(1, NotificationHelper(this).buildNotification(),)
         Global1.context = this
-        if (OneJob == null || OneJob?.isActive == false) {
-            OneJob = serviceScope.launch {
-                while (true) {
+        if (Bar.BlockingEnabled) {
+            if (OneJob == null || OneJob?.isActive == false) {
+                OneJob = serviceScope.launch {
+                    while (true) {
 
-                    //region SAFETY PURPOSES
+                        //region SAFETY PURPOSES
 
-                    delay(1000L)
-                    Bar.COUNT +=1
+                        delay(1000L)
+                        Bar.COUNT +=1
 
-                    //endregion
+                        //endregion
 
 
-                    //region CURRENT APP
+                        //region CURRENT APP
 
-                    val usageStatsManager = Global1.context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-                    val NowTime = System.currentTimeMillis()
+                        val usageStatsManager = Global1.context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+                        val NowTime = System.currentTimeMillis()
 
-                    /*
-                    * THIS IS NOT SUPER ACCURATE
-                    ? If you want better precision, you’ll need an Accessibility Service.
-                    !THIS REQUIRES NAVIGATING USER TO IT*/
-                    val AppsUsed = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, NowTime - 20_000, NowTime)
-                    val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
+                        /*
+                        * THIS IS NOT SUPER ACCURATE
+                        ? If you want better precision, you’ll need an Accessibility Service.
+                        !THIS REQUIRES NAVIGATING USER TO IT*/
+                        val AppsUsed = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, NowTime - 20_000, NowTime)
+                        val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
 
-                    //LOG WHEN WANT TOOO
-                    if (currentApp == Global1.context.packageName || currentApp == null) { } else { log("BACKGROUND — CURRENT APP: $currentApp", "bad") }
+                        //LOG WHEN WANT TOOO
+                        if (currentApp == Global1.context.packageName || currentApp == null) { } else { log("BACKGROUND — CURRENT APP: $currentApp", "bad") }
 
-                    //endregion CURRENT APP
+                        //endregion CURRENT APP
 
-                    val blocked = Blist.apps.any { it.packageName.value == currentApp && it.Block.value }
+                        val blocked = Blist.apps.any { it.packageName.value == currentApp && it.Block.value }
 
-                    if (blocked) {
-                        if (Bar.funTime > 0) {
-                            Bar.funTime -= 1
-                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-                        } else {
-                            BlockScreen()
-                            log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+                        if (blocked) {
+                            if (Bar.funTime > 0) {
+                                Bar.funTime -= 1
+                                log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
+                            } else {
+                                BlockScreen()
+                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+                            }
                         }
-                    }
 
 
 //
@@ -339,9 +340,11 @@ class WatchdogService : Service() {
 
 
 
+                    }
                 }
             }
         }
+
         return START_STICKY
     }
 
