@@ -199,7 +199,7 @@ fun German() {
                 val newlyEarned = correctInput.length - Bar.G_highestCorrect
                 if (newlyEarned > 0) {
                     var oldFunTime = Bar.funTime
-                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) { log("TIME HAS NOT INCREASE", "BAD") }
+                    Bar.funTime += newlyEarned * Bar.G_LetterToTime; if (oldFunTime === Bar.funTime) { log("TIME HAS NOT INCREASE", "BAD") }
                     Bar.G_highestCorrect = correctInput.length
                 }
 

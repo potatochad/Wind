@@ -85,7 +85,7 @@ class Settings {
 
     var G_FirstEditText by mutableStateOf(true)
     var G_targetText by mutableStateOf("Let's get ready to work. Start by choosing one task that is the most important. Try to focus on that task only.  When the task is finished, you can take a short break to rest. If you finish more tasks after that, great job — keep going one step at a time. If permissions turned on (menu->settings) you can configure apps (Top bar, right side icon) to be blocked if do not have enough points (1 point = 1 second).")
-    var G_LetterToTime by mutableStateOf(1)
+    var G_LetterToTime by mutableStateOf(2)
     var G_DoneRetype_to_time by mutableStateOf(60)
     var G_currentInput by mutableStateOf("")
     var G_highestCorrect by mutableStateOf(0)
