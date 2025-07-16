@@ -284,9 +284,14 @@ fun EditPopUp(show: MutableState<Boolean>) {
 
 @Composable
 fun ConfigureS_Header() = NoLagCompose {
-    Text("Configure apps")
-    Spacer(modifier = Modifier.fillMaxWidth())
-    StopBlockingButton()
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text("Configure apps")
+        Spacer(modifier = Modifier.weight(1f))
+        StopBlockingButton()
+    }
 }
 
 @Composable
@@ -295,19 +300,36 @@ fun ConfigureScreen() = NoLagCompose {
     var show = remember { mutableStateOf(false) }
     var showPick = remember { mutableStateOf(false) }
 
+
     // Load apps gradually in background
     LaunchedEffect(Unit) {
+
         withContext(Dispatchers.IO) {
+            log("Blist.apps---${Blist.apps}", "bad")
+
             val pm = context.packageManager
-            val intent = Intent(Intent.ACTION_MAIN, null).apply {
-                addCategory(Intent.CATEGORY_LAUNCHER)
+            val intent = Intent(Intent.ACTION_MAIN, null).apply { addCategory(Intent.CATEGORY_LAUNCHER) }
+
+            val InstalledApps = pm.queryIntentActivities(intent, 0)
+
+            //region REMOVE UNINSTALLED APPS
+
+            val installedPackageNames = InstalledApps.map { it.activityInfo.packageName }.toSet()
+            withContext(Dispatchers.Main) {
+                Blist.apps.removeAll { it.packageName.value !in installedPackageNames }
             }
 
-            val resolveInfos = pm.queryIntentActivities(intent, 0)
-            for (info in resolveInfos) {
+            //endregion REMOVE UNINSTALLED APPS
+
+            for (info in InstalledApps) {
                 val label = info.loadLabel(pm)?.toString() ?: continue
                 val packageName = info.activityInfo.packageName ?: continue
                 val iconDrawable = info.activityInfo.loadIcon(pm)
+
+                if (packageName == "com.productivity.wind") {continue}
+                if (Blist.apps.any { it.packageName.value == packageName }) continue
+
+
 
                 val app = apps(
                     name = mutableStateOf(label),
@@ -327,6 +349,7 @@ fun ConfigureScreen() = NoLagCompose {
             }
         }
     }
+
     val BlockedApps = Blist.apps.filter { it.Block.value }
 
     SettingsScreen(titleContent = { ConfigureS_Header() }, showSearch = false) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {

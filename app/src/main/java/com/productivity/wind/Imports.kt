@@ -1241,13 +1241,14 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
         checked = isOn,
         onCheckedChange = onToggle,
         colors = SwitchDefaults.colors(
-            checkedThumbColor = Color(0xFFFFD700), // Gold
-            uncheckedThumbColor = Color.Gray,
-            checkedTrackColor = Color(0xFFFFE066),  // Light gold track
-            uncheckedTrackColor = Color.LightGray
+            checkedThumbColor = Color(0xFFFFD700),         // Gold thumb
+            uncheckedThumbColor = Color.LightGray,         // Soft gray when off
+            checkedTrackColor = Color(0xFFFFF8DC),         // Light creamy gold track
+            uncheckedTrackColor = Color(0xFFE0E0E0)        // Muted gray track
         )
     )
 }
+
 
 
 @Composable

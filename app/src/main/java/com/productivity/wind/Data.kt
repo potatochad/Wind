@@ -69,7 +69,7 @@ class Settings {
 
     var TotalRemovedLetters by mutableStateOf(0)
     var FirstEditText by mutableStateOf(true)
-    var targetText by mutableStateOf("Let's get ready to work. Start by choosing one task that is the most important. " + "Try to focus on that task only. If something distracts you, gently bring your focus back. " + "Take your time and do your best. When the task is finished, you can take a short break to rest. " + "If you finish more tasks after that, great job — keep going one step at a time. " + "If permissions turned on (menu->settings) you can configure apps to be blocked if do not have enough points. (Top bar, right side icon)")
+    var targetText by mutableStateOf("Let's get ready to work. Start by choosing one task that is the most important. Try to focus on that task only.  When the task is finished, you can take a short break to rest. If you finish more tasks after that, great job — keep going one step at a time. If permissions turned on (menu->settings) you can configure apps (Top bar, right side icon) to be blocked if do not have enough points (1 point = 1 second).")
     var LetterToTime by mutableStateOf(1)
     var DoneRetype_to_time by mutableStateOf(60)
     var currentInput by mutableStateOf("")
