@@ -99,13 +99,38 @@ class Settings {
 
     //region PERMISSIONS
 
-    var App_Description by mutableStateOf("A simple gamified app, that encourages, actions you want to take: Just retype your goals, words you want to learn and earn points to Spend time on your favorite apps")
+    //region PERMISSIONS
 
-    var NotificationPermission by mutableStateOf(false); var NotificationP_Description by mutableStateOf("Makes sure that background service stays alive and doesn't get stopped")
-    var DrawOnTopPermission by mutableStateOf(false); var DrawOnTopP_Description by mutableStateOf("This is used to block apps (draw an overlay), that [you selected] need points to use (each point = 1s, of usage)")
-    var OptimizationExclusionPermission by mutableStateOf(false); var OptimizationExclusionP_Description by mutableStateOf("Helps, the background service to not get stopped, when batery saver turned on")
-    var UsageStatsPermission by mutableStateOf(false); var UsageStatsP_Description by mutableStateOf("Without it the background service is unable to detect apps [that you want blocked]")
-    var DeviceAdminPermission by mutableStateOf(false); var DeviceAdminP_Description by mutableStateOf("Optional: use when want a little discipline boost")
+    var App_Description by mutableStateOf(
+        "A simple, gamified app that helps you build focus and habits. Just retype your goals, affirmations, or learning material. Earn points. Use points to unlock time on the apps you choose."
+    )
+
+    var NotificationPermission by mutableStateOf(false)
+    var NotificationP_Description by mutableStateOf(
+        "Keeps the app running in the background so you don’t miss any tracking or point updates."
+    )
+
+    var DrawOnTopPermission by mutableStateOf(false)
+    var DrawOnTopP_Description by mutableStateOf(
+        "Allows the app to show a screen over other apps. This is used to gently pause access to apps you’ve selected, if you have spent all earned points."
+    )
+
+    var OptimizationExclusionPermission by mutableStateOf(false)
+    var OptimizationExclusionP_Description by mutableStateOf(
+        "Stops your phone’s battery saver from shutting down the background service. This ensures the app runs smoothly."
+    )
+
+    var UsageStatsPermission by mutableStateOf(false)
+    var UsageStatsP_Description by mutableStateOf(
+        "Lets the app see which apps you open. Used only to track apps you selected, to help manage your focus."
+    )
+
+    var DeviceAdminPermission by mutableStateOf(false)
+    var DeviceAdminP_Description by mutableStateOf(
+        "Optional: Gives a stronger layer of control if you want extra discipline. Can be turned off anytime in settings."
+    )
+
+//endregion
 
     //endregion
 
