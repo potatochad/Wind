@@ -280,7 +280,7 @@ fun EditPopUp(show: MutableState<Boolean>) {
 
 
 
-
+//region CONFIGURE SCREEN
 
 @Composable
 fun ConfigureScreen() = NoLagCompose {
@@ -393,7 +393,12 @@ fun ConfigureScreen() = NoLagCompose {
                                         contentDescription = null,
                                         modifier = Modifier.size(35.dp)
                                     )
-                                } else { }
+                                } else {
+                                    CircularProgressIndicator(
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+
 
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(app.name.value)
@@ -407,8 +412,7 @@ fun ConfigureScreen() = NoLagCompose {
     }
 }
 
-
-
+//endregion CONFIGURE SCREEN
 
 
 @Composable
@@ -607,6 +611,8 @@ fun UsageStatsP_PopUp(context: Context, show: MutableState<Boolean>) =
         Bar.UsageStatsP_Description,
         Settings.ACTION_USAGE_ACCESS_SETTINGS
     )
+
+//!Doesn't work
 @Composable
 fun DeviceAdminP_PopUp(ctx: Context, show: MutableState<Boolean>) {
     if (!show.value) return
@@ -663,7 +669,6 @@ fun DeviceAdminP_PopUp(ctx: Context, show: MutableState<Boolean>) {
         }
     }
 }
-
 class MyDeviceAdminReceiver : DeviceAdminReceiver() {
     override fun onEnabled(context: Context, intent: Intent) {
         super.onEnabled(context, intent)
@@ -743,7 +748,6 @@ fun SettingsP_Screen()= NoLagCompose {
     DrawOnTopP_PopUp(ctx, showDrawOnTopPopup)
     OptimizationExclusionP_PopUp(ctx, showOptimizationPopup)
     UsageStatsP_PopUp(ctx, showUsagePopup)
-    DeviceAdminP_PopUp(ctx, showDeviceAdminPopup)
 
 
     SettingsScreen(titleContent = { Text("Permissions") }, showSearch = false) {
@@ -794,18 +798,6 @@ fun SettingsP_Screen()= NoLagCompose {
                 )
             }
         )
-        SettingItem(
-            icon = Icons.Outlined.Security,
-            title = "Device Admin",
-            subtitle = "Optional-for discipline",
-            endContent = {
-                PermissionsButton(
-                    isEnabled = Bar.DeviceAdminPermission,
-                    onEnable = { showDeviceAdminPopup.value = true }
-                )
-            }
-        )
-
     }
 }
 

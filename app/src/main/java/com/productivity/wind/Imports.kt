@@ -1259,21 +1259,27 @@ fun PermissionsButton(
         disabledContainerColor = Color.DarkGray,
         disabledContentColor = Color.Gray
     )
+    if (isEnabled)
+    {Text(text = "✓", fontWeight = FontWeight.Bold, color = Color.Green) }
 
-    Button(
-        onClick = { onEnable() },
-        enabled = !isEnabled,
-        shape = shape,
-        colors = buttonColors,
-        elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp),
-        border = BorderStroke(1.dp, if (isEnabled) Color.Gray else Color.Black),
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
-        interactionSource = remember { MutableInteractionSource() },
-        modifier = Modifier
-            .height(40.dp)
-    ) {
-        Text(text = if (isEnabled) "✓" else "Enable", fontWeight = FontWeight.Bold)
+    if (!isEnabled) {
+        Button(
+            onClick = { onEnable() },
+            enabled = !isEnabled,
+            shape = shape,
+            colors = buttonColors,
+            elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp),
+            border = BorderStroke(1.dp, if (isEnabled) Color.Gray else Color.Black),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+            interactionSource = remember { MutableInteractionSource() },
+            modifier = Modifier
+                .height(40.dp)
+        ) {
+            Text(text = if (isEnabled) "✓" else "Enable", fontWeight = FontWeight.Bold)
+        }
     }
+
+
 }
 
 

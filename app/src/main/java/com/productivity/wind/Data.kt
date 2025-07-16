@@ -64,11 +64,12 @@ import kotlin.reflect.full.primaryConstructor
 class Settings {
     var funTime by mutableStateOf(0)
     var currentApp by mutableStateOf("")
+
     //region COPY PASTE THING
 
     var TotalRemovedLetters by mutableStateOf(0)
     var FirstEditText by mutableStateOf(true)
-    var targetText by mutableStateOf("I can do good things. I have a lot of work to do today. I am focused and ready to start. " + "I can handle difficult tasks and stay on track. Every minute I work brings me closer to my goals. " + "I choose to ignore distractions and focus on one thing at a time. " + "Once I finish my most important task, I will take a short break and relax. " + "If I have enabled rewards, I can enjoy a video as a treat. (Top bar right side icon)")
+    var targetText by mutableStateOf("Let's get ready to work. Start by choosing one task that is the most important. " + "Try to focus on that task only. If something distracts you, gently bring your focus back. " + "Take your time and do your best. When the task is finished, you can take a short break to rest. " + "If you finish more tasks after that, great job — keep going one step at a time. " + "If permissions turned on (menu->settings) you can configure apps to be blocked if do not have enough points. (Top bar, right side icon)")
     var LetterToTime by mutableStateOf(1)
     var DoneRetype_to_time by mutableStateOf(60)
     var currentInput by mutableStateOf("")
@@ -81,6 +82,7 @@ class Settings {
 
     var COUNT by mutableStateOf(0)
     var NewDay by mutableStateOf(true)
+
     //refreshs to 0 daily// if more than 50 seconds, get 600 time
     var WaterDOtime_spent by mutableStateOf(0)
     var secondsLeft by mutableStateOf(10)
@@ -188,32 +190,32 @@ class WatchdogService : Service() {
 
 
         //region WAIT 10 SECONS TO LEAVE
-        val leaveButton = XmlView.findViewById<Button>(R.id.leaveButton)
-        leaveButton.isEnabled = false
-        leaveButton.text = Bar.secondsLeft.toString()
-
-        val handler = Handler(Looper.getMainLooper())
-        val countdown = object : Runnable {
-            override fun run() {
-                log("BLOCK SCREEN: Counting down---secondsLeft---${Bar.secondsLeft}", "bad")
-                Bar.secondsLeft--
-
-                if (Bar.secondsLeft > 0) {
-                    leaveButton.text = Bar.secondsLeft.toString()
-                    handler.postDelayed(this, 1000) // wait 1 second, then run again
-                } else {
-                    leaveButton.text = "Leave"
-                    leaveButton.isEnabled = true // now they can click it
-                }
-            }
-        }
-        handler.postDelayed(countdown, 1000) // start after 1 second
+          val leaveButton = XmlView.findViewById<Button>(R.id.leaveButton)
+//        leaveButton.isEnabled = false
+//        leaveButton.text = Bar.secondsLeft.toString()
+//
+//        val handler = Handler(Looper.getMainLooper())
+//        val countdown = object : Runnable {
+//            override fun run() {
+//                log("BLOCK SCREEN: Counting down---secondsLeft---${Bar.secondsLeft}", "bad")
+//                Bar.secondsLeft--
+//
+//                if (Bar.secondsLeft > 0) {
+//                    leaveButton.text = Bar.secondsLeft.toString()
+//                    handler.postDelayed(this, 1000) // wait 1 second, then run again
+//                } else {
+//                    leaveButton.text = "Leave"
+//                    leaveButton.isEnabled = true // now they can click it
+//                }
+//            }
+//        }
+//        handler.postDelayed(countdown, 1000) // start after 1 second
 
 
         //endregion
 
         leaveButton.setOnClickListener {
-            Bar.secondsLeft = 10
+            //Bar.secondsLeft = 10
             log("BLOCK SCREEN: Clicked leave button", "bad")
             val intent = Intent(Global1.context, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
