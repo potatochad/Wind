@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="242dp"
         android:layout_gravity="center"
         android:background="@android:color/white"
         android:orientation="vertical"
@@ -17,8 +17,8 @@
             android:id="@+id/overlayTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Access Blocked"
-            android:textColor="@android:color/holo_red_dark"
+            android:text="Not enough points"
+            android:textColor="#A69052"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="This app is blocked. Please leave immediately."
+            android:text="You've chosen to block this app.  Please return to Wind"
             android:textSize="18sp" />
 
         <Button
@@ -35,7 +35,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Leave" />
+            android:text="Leave"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFD700" />
+
     </LinearLayout>
 
 </FrameLayout>
