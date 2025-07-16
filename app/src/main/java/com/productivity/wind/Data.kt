@@ -45,7 +45,9 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.widget.Button
 import android.accessibilityservice.AccessibilityService
+import android.content.pm.ActivityInfo
 import android.graphics.Rect
+import android.view.Surface
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -66,18 +68,31 @@ class Settings {
     var showBlockScreen by mutableStateOf(true)
     var currentApp by mutableStateOf("")
 
-    //region COPY PASTE THING
+    //region COPY PASTE THING Disipline
 
-    var TotalRemovedLetters by mutableStateOf(0)
     var FirstEditText by mutableStateOf(true)
     var targetText by mutableStateOf("Let's get ready to work. Start by choosing one task that is the most important. Try to focus on that task only.  When the task is finished, you can take a short break to rest. If you finish more tasks after that, great job — keep going one step at a time. If permissions turned on (menu->settings) you can configure apps (Top bar, right side icon) to be blocked if do not have enough points (1 point = 1 second).")
     var LetterToTime by mutableStateOf(1)
     var DoneRetype_to_time by mutableStateOf(60)
+    var HowManyDoneRetypes_InDay by mutableStateOf(0)
     var currentInput by mutableStateOf("")
     var highestCorrect by mutableStateOf(0)
-    var highestColord by mutableStateOf(0)
 
-    //endregion COPY PASTE THING
+    //endregion COPY PASTE Disipline
+
+
+    //region COPY PASTE THING GERMAN
+
+    var G_FirstEditText by mutableStateOf(true)
+    var G_targetText by mutableStateOf("Let's get ready to work. Start by choosing one task that is the most important. Try to focus on that task only.  When the task is finished, you can take a short break to rest. If you finish more tasks after that, great job — keep going one step at a time. If permissions turned on (menu->settings) you can configure apps (Top bar, right side icon) to be blocked if do not have enough points (1 point = 1 second).")
+    var G_LetterToTime by mutableStateOf(1)
+    var G_DoneRetype_to_time by mutableStateOf(60)
+    var G_currentInput by mutableStateOf("")
+    var G_highestCorrect by mutableStateOf(0)
+
+    //endregion COPY PASTE GERMAN
+
+
 
     //region BLOCKING
 
@@ -160,9 +175,16 @@ data class apps(
     var Block : MutableState<Boolean> = mutableStateOf(false),
     var TimeSpent : MutableState<Int> = mutableStateOf(0),
 )
+data class CopyPastes(
+    var id: String = UUID.randomUUID().toString(),
+    var text: MutableState<String> = mutableStateOf("Copy paste text"),
+    var done: MutableState<Boolean> = mutableStateOf(false),
+    var HowManyDones : MutableState<Int> = mutableStateOf(0),
+)
 
 object Blist {
     var apps = mutableStateListOf<apps>()
+    var CopyPastes = mutableStateListOf<CopyPastes>()
 }
 
 
@@ -194,11 +216,21 @@ class WatchdogService : Service() {
     fun BlockScreen() {
         if (!Settings.canDrawOverlays(this)) { log("canDrawOverlays----PERMISSSION NOT GRANTED", "bad"); return}
 
+        Bar.secondsLeft = 10 // ✅ always reset when showing the overlay
         val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         val XmlBuilder = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val XmlView = XmlBuilder.inflate(R.layout.overlay_layout, null)
 
         //region SCREEN PRAMS-BORING
+
+        if (XmlView.parent != null) {
+            windowManager.removeView(XmlView) // ✅ ensures no duplicate view error
+        }
+        val rotation = windowManager.defaultDisplay.rotation
+        if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
+            XmlView.rotation = -90f // ✅ visually lock to upright
+        }
+
 
         val layoutParams = WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
@@ -207,7 +239,10 @@ class WatchdogService : Service() {
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
             else
                 WindowManager.LayoutParams.TYPE_PHONE,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or // ✅ changed
+                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,      // ✅ changed
             PixelFormat.TRANSLUCENT
         )
 
@@ -218,41 +253,41 @@ class WatchdogService : Service() {
 
 
         //region WAIT 10 SECONS TO LEAVE
-          val leaveButton = XmlView.findViewById<Button>(R.id.leaveButton)
-//        leaveButton.isEnabled = false
-//        leaveButton.text = Bar.secondsLeft.toString()
-//
-//        val handler = Handler(Looper.getMainLooper())
-//        val countdown = object : Runnable {
-//            override fun run() {
-//                log("BLOCK SCREEN: Counting down---secondsLeft---${Bar.secondsLeft}", "bad")
-//                Bar.secondsLeft--
-//
-//                if (Bar.secondsLeft > 0) {
-//                    leaveButton.text = Bar.secondsLeft.toString()
-//                    handler.postDelayed(this, 1000) // wait 1 second, then run again
-//                } else {
-//                    leaveButton.text = "Leave"
-//                    leaveButton.isEnabled = true // now they can click it
-//                }
-//            }
-//        }
-//        handler.postDelayed(countdown, 1000) // start after 1 second
+
+        val leaveButton = XmlView.findViewById<Button>(R.id.leaveButton)
+        leaveButton.isEnabled = false
+        leaveButton.text = Bar.secondsLeft.toString()
+
+        val handler = Handler(Looper.getMainLooper())
+        handler.removeCallbacksAndMessages(null) // ✅ clear any previous countdowns
+
+        val countdown = object : Runnable {
+            override fun run() {
+                log("BLOCK SCREEN: Counting down---secondsLeft---${Bar.secondsLeft}", "bad")
+                Bar.secondsLeft--
+
+                if (Bar.secondsLeft > 0) {
+                    leaveButton.text = Bar.secondsLeft.toString()
+                    handler.postDelayed(this, 1000) // wait 1 second, then run again
+                } else {
+                    leaveButton.text = "Leave"
+                    leaveButton.isEnabled = true // now they can click it
+                }
+            }
+        }
+        handler.postDelayed(countdown, 1000) // start after 1 second
 
 
         //endregion
 
         leaveButton.setOnClickListener {
-            //Bar.secondsLeft = 10
+            Bar.secondsLeft = 10
             log("BLOCK SCREEN: Clicked leave button", "bad")
             val intent = Intent(Global1.context, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             Global1.context.startActivity(intent)
 
-            // Also remove the overlay from screen
-
             log("Removing Overlay Screen+ isOverlayShowing = false", "bad")
-            Bar.showBlockScreen = false
             isOverlayShowing = false
             windowManager.removeView(XmlView)
         }
@@ -310,36 +345,57 @@ class WatchdogService : Service() {
                                 log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
                             }
                         }
-
-                        if (Bar.showBlockScreen) {BlockScreen()}
-
-//
-//                    if (currentApp == "com.android.settings") {
-//
-//                        if (Bar.funTime >1_000) {
-//                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-//                        }
-//                        //!!!!!!!!!!!!!!!!!!!!NEED FIX HERE WITH PERMISSIONS
-////                        else {
-////                            if (gotAdmin) {
-////                                BlockScreen()
-////                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
-////                            }
-////                        }
-//                    }
-//
-//                    if (currentApp == "com.seekrtech.waterapp") {
-//                        log("NEW DAY??; ${Bar.NewDay}", "bad")
-//                        log("waterdo time; ${Bar.WaterDOtime_spent}", "bad")
-//                        if (Bar.NewDay) {
-//                            if (Bar.WaterDOtime_spent > 50) {
-//                                Bar.funTime += 600
-//                                Bar.NewDay = false
+//                        if (currentApp == ) {
+//                            if (Bar.funTime > 0) {
+//                                Bar.funTime -= 1
+//                                log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
 //                            } else {
-//                                Bar.WaterDOtime_spent += 1
+//                                BlockScreen()
+//                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
 //                            }
 //                        }
-//                    }
+
+
+
+                    if (currentApp == "com.android.settings") {
+
+                        if (Bar.funTime >1_000) {
+                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
+                        }
+                        else {
+                            if (isDeviceAdminEnabled(Global1.context)) {
+                                BlockScreen()
+                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+                            }
+                        }
+                    }
+
+
+
+                    if (currentApp == "com.seekrtech.waterapp") {
+                        log("NEW DAY??; ${Bar.NewDay}", "bad")
+                        log("waterdo time; ${Bar.WaterDOtime_spent}", "bad")
+                        if (Bar.NewDay) {
+                            if (Bar.WaterDOtime_spent > 50) {
+                                Bar.funTime += 900
+                                Bar.NewDay = false
+                            } else {
+                                Bar.WaterDOtime_spent += 1
+                            }
+                        }
+                    }
+                        if (currentApp == "com.seekrtech.waterapp") {
+                            log("NEW DAY??; ${Bar.NewDay}", "bad")
+                            log("waterdo time; ${Bar.WaterDOtime_spent}", "bad")
+                            if (Bar.NewDay) {
+                                if (Bar.WaterDOtime_spent > 50) {
+                                    Bar.funTime += 900
+                                    Bar.NewDay = false
+                                } else {
+                                    Bar.WaterDOtime_spent += 1
+                                }
+                            }
+                        }
 
 
 

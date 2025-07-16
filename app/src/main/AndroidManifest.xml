@@ -13,13 +13,6 @@
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
-    <receiver android:name=".InstallReceiver"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.PACKAGE_ADDED"/>
-            <data android:scheme="package"/>
-        </intent-filter>
-    </receiver>
 
 
     <application

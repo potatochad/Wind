@@ -58,6 +58,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -89,6 +90,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.ui.draw.shadow
@@ -123,7 +125,9 @@ fun MyNavGraph(navController: NavHostController) {
             composable("ConfigureScreen") {
                 ConfigureScreen()
             }
-
+            composable("SettingsLogs_Screen") {
+                SettingsLogs_Screen()
+            }
             //region SETTINGS
 
             composable("SettingsScreen") {
@@ -544,9 +548,19 @@ fun SettingsScreen() {
     SettingsScreen(titleContent  = {Text( "Settings")}, showSearch = false) {
 
         SettingItem(icon = Icons.Outlined.AdminPanelSettings, title = "Permissions", onClick = { Global1.navController.navigate("SettingsP_Screen")} )
+        SettingItem(icon = Icons.Outlined.AdminPanelSettings, title = "Logs", onClick = { Global1.navController.navigate("SettingsLogs_Screen")} )
 
     }
 }
+
+
+@Composable
+fun SettingsLogs_Screen() {
+
+    SettingsScreen(titleContent = { Text("Logs") }, showSearch = false) {}
+
+}
+
 
 //region PERMISSIONS
 
@@ -835,27 +849,6 @@ fun SettingsP_Screen()= NoLagCompose {
 
 //endregion
 
-//region APK BLOCK
-
-class InstallReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        val action = intent.action
-        val packageName = intent.data?.encodedSchemeSpecificPart
-
-        if (action == Intent.ACTION_PACKAGE_ADDED && packageName != null) {
-            log("App installed: $packageName", "bad")
-
-            if (packageName == "com.productivity.wind") {
-                log("MY APPS APK DETECTed not letting overwrite", "bad")
-                Bar.showBlockScreen = true
-            }
-        }
-    }
-}
-
-
-//endregion APK block
-
 
 //region UI BUILDERS
 
@@ -892,6 +885,26 @@ object DayChecker {
 }
 
 
+@Composable
+fun NewDayWaterDo() {
+    val context = LocalContext.current
+    var show = remember { mutableStateOf(Bar.NewDay) }
+    LazyPopup(
+        show = show,
+        title = "FREE 15M. DO WATERDO",
+        message = "Spend only 50s on waterdo app and get 900 POINTS!!!",
+        showCancel = false,
+        onConfirm = {
+            val intent = context.packageManager.getLaunchIntentForPackage("com.seekrtech.waterapp")
+            if (intent != null) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            } else {
+                log("WaterApp not installed", "bad")
+            }
+        },
+    )
+}
 @Composable
 fun MenuIcon() {
     IconButton(onClick = { Bar.ShowMenu = true }) {
@@ -941,6 +954,70 @@ fun EditIcon() {
     }
 
 }
+@Composable
+fun G_EditIcon() {
+
+    //region THE SAFETY
+
+    val showBeginnerAlert = remember { mutableStateOf(false) }
+    val showVeteranAlert = remember { mutableStateOf(false) }
+
+    var BeginnerA_Title by remember { mutableStateOf("Get 100 points") }
+    var BeginnerA_Message by remember { mutableStateOf("Before being allowed to change the text, need a minimum of 100 points. [After changing the text once it increases permanantly to 1k]. This is to help you stay disiplined afterwards") }
+
+    var VeteranA_Title by remember { mutableStateOf("Get 1k points") }
+    var VeteranA_Message by remember { mutableStateOf("Need 1k points before changing the text: this is to help you stay disiplined") }
+
+
+    LazyPopup(show = showBeginnerAlert, title = BeginnerA_Title, message = BeginnerA_Message)
+    LazyPopup(show = showVeteranAlert, title = VeteranA_Title, message = VeteranA_Message)
+
+    //endregion THE SAFETY
+
+    val show = remember { mutableStateOf(false) }
+    G_EditPopUp(show = show)
+
+
+    IconButton(onClick = {
+        if (Bar.G_FirstEditText && Bar.funTime > 99) show.value=true
+        else if (!Bar.G_FirstEditText && Bar.funTime > 999) show.value=true
+        else if (Bar.G_FirstEditText) showBeginnerAlert.value = true
+        else if (!Bar.G_FirstEditText) showVeteranAlert.value = true
+    }
+    ) {
+        Icon(
+            imageVector = Icons.Default.Edit,
+            contentDescription = "Edit",
+            tint = Color(0xFFFFD700)
+        )
+    }
+
+}
+@Composable
+fun G_EditPopUp(show: MutableState<Boolean>) {
+    var TemporaryTargetText by remember { mutableStateOf("") }
+    TemporaryTargetText = Bar.G_targetText
+    LazyPopup(
+        show = show,
+        onDismiss = { TemporaryTargetText = Bar.G_targetText },
+        title = "Edit Text",
+        message = "",
+        content = {
+            OutlinedTextField(
+                value = TemporaryTargetText,
+                onValueChange = { TemporaryTargetText = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 100.dp, max = 200.dp)
+                    .verticalScroll(rememberScrollState())
+            )
+        },
+        showCancel = true,
+        onConfirm = { Bar.G_targetText = TemporaryTargetText; Bar.G_FirstEditText = false },
+        onCancel = { TemporaryTargetText = Bar.G_targetText }
+    )
+}
+
 @Composable
 fun ConfigureIcon() {
 
