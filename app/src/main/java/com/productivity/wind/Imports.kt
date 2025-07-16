@@ -121,168 +121,6 @@ import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
 
 
-//region USER MANUAL
-
-//region Usefull
-
-/** HOW USE REGION
-
-    //region
-
-    requires a space of one between // and code to work well
-
-    //endregion
-
-*/
-
-/*HOW CODE
-    REWRITE NONE UNIVERSAL CODE-TALKING SMALL 100
-    all else rewriteee
-
-    use region, one file, and yea
-    plus, like to have functions, a section for universal functions
-
-*/
-
-/*HOW MAKE DRAWERS, SLIDY THINGIES, ETC...
-    DO NOT USE THE ANDROID DEFAULTS FOR THAT
-    NO XML
-
-    *JUST MAKE POPUP, GOT IT, HANDLES LIKE 80% OF THE PAIN-
-    ?TO LAZY TO MAKE UNIVERSAL THINGY, WILL DO LATER, ONECE FINISH THIS
-    AND TRYING TO KEEP CUSTOMERSS
-*/
-
-
-//! IMPORTANT
-
-//region DATA MANAGEMENT
-// all you need
-//coudn't be simpler::
-/*NEEDED SETUP
-* PUT IT HERE!!;
-@RequiresApi(Build.VERSION_CODES.O)
-fun AppStart_beforeUI(context: Context) {
-    Global1.context = context
-    SettingsSaved.init()
-    SettingsSaved.Bsave()
-}
-*
-*
-*
-class Settings {
-    var show by mutableStateOf(false)
-    var CurrentInput by mutableStateOf("")
-}
-*/
-/*How Use
-* YOU CAN READ THE DATA, CHANGE IT, AUTO UPDATE, saves, etc..
-* WORKS FOR LISTS TOOOO
-? HANDLES ABOUT 600 ITEMS MAX-recommended is 300
-Bar.funTime += 1
-    Bar.currentInput = "Testing input"
-    Bar.highestCorrect = max(Bar.highestCorrect, 12)
-    *
-    *
-   class Settings {
-    var ShowMenu by mutableStateOf(false)
-    val AppList = mutableStateListOf<Apps>()  // Apps- is a data class, enter in any you want
-*/
-
-
-/*?HOW CHANGE LIST
-* ✅ Add
-AppList.add(app)
-AppList.addAll(listOfApps)
-AppList.add(index, app)
-*
-❌ Remove
-AppList.remove(app)
-AppList.removeAt(index)
-AppList.removeIf { it.Block }
-AppList.clear()
-*
-🔄 Update
-AppList[index] = app.copy(Block = true)
-AppList[index].Block = true  // if mutable inside
-
-* val app = AppList[0]  // 0 = first app in the list
-val id = app.id       // this is the app's unique ID (UUID)
-
-*
-🔍 Find
-val found = AppList.find { it.name == "YouTube" }
-val exists = AppList.any { it.Block }
-val count = AppList.count { it.Exists }
-*
-🧠 Smart Filtering
-val onlyBlocked = AppList.filter { it.Block }
-val top3 = AppList.sortedByDescending { it.TimeSpent }.take(3)
-*
-🔁 Loop
-AppList.forEach { app -> println(app.name) }
-for (i in AppList.indices) { AppList[i].Exists = false }*/
-//endregion
-
-
-/* Simple Synched:
-    var funTime by Synched { (0) }
-*/
-
-/*
-log:
-
-Example usage:
-log("Button clicked")
-log("Error happened", "ErrorTag")
-*/
-
-/* SMALL THINGS
-   val id: String = UUID.randomUUID().toString(),
-   *a thing that exists, unique completly
-
- */
-
-/*NO LAG
-USE NO LAG COMPOSE
-NoLagCompose
-
-@Composable
-fun ChillScreen()=NoLagCompose {}
-* */
-
-//endregion Usefull
-
-
-//region ONCEs
-
-/* ACCESABILITY PERMISSION
-*
-<service
-            android:name=".WatchdogAccessibilityService"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-
-            </intent-filter>
-
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
-        </service>
-*/
-
-
-//endregion
-
-//endregion
-
-
-
-
-
-//region GOOD STUFFF
 
 //region log
 
@@ -315,9 +153,6 @@ fun NoLagCompose(content: @Composable () -> Unit) {
 
 //endregion
 
-
-
-//endregion
 //region DATA MANAGE ONCES
 
 /*NEEDED SETUP
@@ -880,11 +715,8 @@ object UniversalListManager {
 
 //endregion
 
-//endregion
 
 //region TEMPLATES
-
-//region UI elements
 
 //region ReloadButton
 
@@ -955,135 +787,6 @@ fun InputField(
 }
 
 
-
-//endregion
-
-//region MENU
-
-@SuppressLint("RememberReturnType")
-@Composable
-fun MenuPopup(navController: NavController, onDismiss: () -> Unit, menuItems: List<MenuItem>) {
-    Surface(
-        color = Color(0xFF000000),
-        modifier = Modifier
-            .width(200.dp)
-            .padding(end = 1.dp)
-            .drawWithContent {
-                drawContent()
-                drawRect(
-                    color = Color(0xFFFFD700),
-                    topLeft = Offset(size.width - 1.dp.toPx(), 0f),
-                    size = Size(1.dp.toPx(), size.height)
-                )
-            }
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 20.dp, vertical = 40.dp)
-                .clickable(
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
-                ) { },
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
-        ) {
-            menuItems.forEach { item ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 10.dp)
-                        .clickable {
-                            item.onClick()
-                        },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = null,
-                        tint = if (item.label == "Premium") Color(0xFFFFD700) else Color.White,
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Text(
-                        text = item.label,
-                        fontSize = 17.sp,
-                        color = Color.White
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Row(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(bottom = 24.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.size(16.dp)
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = "Productivity Shield",
-                    fontSize = 13.sp,
-                    color = Color.White
-                )
-            }
-        }
-    }
-}
-data class MenuItem(
-    val label: String,
-    val icon: ImageVector,
-    val onClick: () -> Unit
-)
-
-fun launchSupportEmail(context: Context) {
-
-    //the inputs, work like you think
-    val subject = "bug: x"
-    val body = buildString {
-        append("help, x is not working;\n\n")
-        append("Phone Info:\n")
-        append("Manufacturer: ${Build.MANUFACTURER}\n")
-        append("Model: ${Build.MODEL}\n")
-        append("SDK: ${Build.VERSION.SDK_INT}\n")
-        append("Version: ${Build.VERSION.RELEASE}\n")
-    }
-    val email = arrayOf("productivity.shield@gmail.com")
-
-
-    //region SENDS THE EMAIL
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "message/rfc822"
-        putExtra(Intent.EXTRA_EMAIL, email)
-        putExtra(Intent.EXTRA_SUBJECT, subject)
-        putExtra(Intent.EXTRA_TEXT, body)
-    }
-    val Action = Intent.createChooser(intent, "Send Email").apply {
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    }
-    context.startActivity(Action)
-    //endregion
-}
-
-@Composable
-fun getMenuItems(navController: NavController): List<MenuItem> {
-    val context = LocalContext.current
-
-    return listOf(
-        MenuItem("Support", Icons.Filled.Email) {
-            launchSupportEmail(context)
-        },
-        MenuItem("Statistics", Icons.Filled.QueryStats) { navController.navigate("Statistics") },
-        MenuItem("Settings", Icons.Filled.Settings) { navController.navigate("Settings") },
-        MenuItem("Premium", Icons.Filled.Landscape) { navController.navigate("Premium") }
-    )
-}
 
 //endregion
 
@@ -1160,80 +863,8 @@ fun ShowMore(
 
 //endregion
 
-//region TOPBAR
-
-@Composable
-fun TopBar(navController: NavController, onClick: () -> Unit) {
-    Column {
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.Black)
-                .padding(horizontal = 8.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            // Left: Menu button
-            IconButton(onClick = onClick) {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = "Menu",
-                    tint = Color(0xFFFFD700)
-                )
-            }
-
-
-            // Right: Nav buttons
-            Row(
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = { navController.navigate("lock") }) {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "Lock",
-                        tint = Color(0xFFFFD700)
-                    )
-                }
-            }
-        }
-    }
-}
-//endregion
-
-//endregion
 
 //region SCREENS
-
-//region SETTINGS SCREEN
-//region SETTINGS UI
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun Settings_Example() {
-    var expanded by remember { mutableStateOf(false) }
-    val focusManager = LocalFocusManager.current
-    SettingsScreen(
-        titleContent  = {Text("HEADER")} ,
-        onSearchClick = { }
-    ) {
-
-        SettingItem(
-            icon = Icons.Outlined.Tune,
-            title = "Defaults",
-            subtitle = "Task, System",
-            onClick = { Global1.navController.navigate("S_DefaultsScreen")  }
-        )
-
-        SettingItem(
-            icon = Icons.Outlined.LockOpen,
-            title = "Usage permissions",
-        )
-    }
-}
-
-//region UI TOOLKIT
 
 @Composable
 fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
@@ -1466,45 +1097,7 @@ fun SettingsScreen(
 //endregion
 
 
-//endregion
-
-//endregion
-
-
-/* DEFAULT
-
-@Composable
-fun Screen(navController: NavHostController){
-var Content = null
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-            .padding(12.dp)
-            .clipToBounds()
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) { IconButton(onClick = { navController.popBackStack() }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.White
-                )
-            }
-
-
-            Content
-
-        }
-    }
-}
-
-*/
-//endregion
-
-//region POP UPS
+//region LAZY POPUP
 
 /* Example
 LazyPopup(

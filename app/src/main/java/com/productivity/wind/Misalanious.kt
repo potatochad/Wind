@@ -164,6 +164,7 @@ fun MainHeader(){
         EditIcon()
         Spacer(modifier = Modifier.width(12.dp))
         Text(text = "Points: ${Bar.funTime}", fontSize = 18.sp)
+        Text(text = "WaterDo: ${Bar.WaterDOtime_spent}", fontSize = 18.sp)
 
 
         Spacer(modifier = Modifier.weight(1f))

@@ -22,11 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.productivity.wind.data.AppDataStore
-import com.productivity.wind.data.PermissionType
-import com.productivity.wind.data.PermissionType.PERMISSION_IGNORE_BATTERY_OPTIMIZATIONS
-import com.productivity.wind.data.PermissionType.PERMISSION_PACKAGE_USAGE_STATS
-import com.productivity.wind.data.PermissionType.PERMISSION_POST_NOTIFICATIONS
-import com.productivity.wind.data.PermissionType.PERMISSION_SYSTEM_APPLICATION_OVERLAY
 import com.productivity.wind.ui.theme.KeepAliveTheme
 import timber.log.Timber
 
