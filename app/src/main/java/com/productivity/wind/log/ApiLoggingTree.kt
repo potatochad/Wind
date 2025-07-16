@@ -16,25 +16,7 @@ import timber.log.Timber
 import java.io.IOException
 import java.util.concurrent.ConcurrentLinkedQueue
 
-/**
- * Custom Timber tree that sends log to an API endpoint.
- * Allows the log to be monitored remotely to analyze the app behavior.
- *
- * Create account in Airtable and create a base.
- * - https://airtable.com/signup
- *
- * Create your own auth token.
- * - https://airtable.com/create/tokens
- *
- * Get the API endpoint URL by selecting workspace from this page
- * - https://airtable.com/developers/web/api/introduction
- *
- * Create a table in Airtable with following fields:
- * - Device (Single line text)
- * - Log (Long text)
- *
- * See additional guide on the [GitHub repository](https://github.com/hossain-khan/android-keep-alive/blob/main/REMOTE-MONITORING.md).
- */
+
 class ApiLoggingTree(
     private val isEnabled: Boolean,
     private val authToken: String,
@@ -55,23 +37,11 @@ class ApiLoggingTree(
     private var apiFailureCount = 0
 
     companion object {
-        /**
-         * The API is limited to 5 requests per second per base.
-         * If you exceed these rates, you will receive a 429 status code and will need to
-         * wait 30 seconds before subsequent requests will succeed.
-         */
+
         private const val MAX_LOG_COUNT_PER_SECOND = 5
 
-        /**
-         * The API is limited to 10 records per request.
-         * - https://airtable.com/developers/web/api/create-records
-         */
         private const val MAX_RECORDS_PER_REQUEST = 10
 
-        /**
-         * Maximum subsequent API failure count before stopping the flush job.
-         * This is safeguard to prevent the job turning into a DDoS attack.
-         */
         private const val MAX_SUBSEQUENT_API_FAILURE_COUNT = 10
     }
 
@@ -115,13 +85,6 @@ class ApiLoggingTree(
             }
     }
 
-    /**
-     * Creates log message in JSON format based on following specification:
-     * - https://airtable.com/developers/web/api/create-records
-     *
-     * Your request body should include an array of up to 10 record objects.
-     * - https://airtable.com/developers/web/api/create-records
-     */
     private fun createLogMessage(logs: List<LogMessage>): String? {
         if (logs.isEmpty()) {
             return null
@@ -153,8 +116,6 @@ class ApiLoggingTree(
                 sendLogToApi(jsonPayload)
                 sentLogCount++
 
-                // This delay is added to ensure the order of log is maintained.
-                // However, there is no guarantee that the log will be sent in order.
                 delay(100L)
             }
         }

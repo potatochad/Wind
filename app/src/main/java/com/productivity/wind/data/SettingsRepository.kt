@@ -14,22 +14,7 @@ import kotlinx.coroutines.flow.map
 /** Extension property to provide a [DataStore] instance for application settings, named "app_settings". */
 private val Context.dataStore by preferencesDataStore(name = "app_settings")
 
-/**
- * Repository for managing application settings using Jetpack DataStore.
- *
- * This class provides methods to save and retrieve various application settings such as:
- * - App check interval ([appCheckIntervalFlow], [saveAppCheckInterval])
- * - Force start apps toggle ([enableForceStartAppsFlow], [saveEnableForceStartApps])
- * - Health check toggle and UUID ([enableHealthCheckFlow], [healthCheckUUIDFlow], [saveEnableHealthCheck], [saveHealthCheckUUID])
- * - Remote logging toggle and Airtable configuration ([enableRemoteLoggingFlow], [airtableTokenFlow], [airtableDataUrlFlow],
- *   [saveEnableRemoteLogging], [saveAirtableToken], [saveAirtableDataUrl])
- * - Combined Airtable configuration object ([airtableConfig])
- *
- * All settings are exposed as [Flow]s to allow for reactive updates.
- * Default values are provided for settings if they haven't been set yet.
- *
- * @param context The application context, used to access the DataStore.
- */
+
 class SettingsRepository(private val context: Context) {
     companion object {
         /** [Preferences.Key] for storing the app check interval in minutes. */
@@ -54,11 +39,6 @@ class SettingsRepository(private val context: Context) {
         val AIRTABLE_DATA_URL = stringPreferencesKey("airtable_data_url")
     }
 
-    /**
-     * A [Flow] that emits the configured app check interval in minutes.
-     * Defaults to [DEFAULT_APP_CHECK_INTERVAL_MIN] if not set.
-     * Ensures the interval is not less than [MINIMUM_APP_CHECK_INTERVAL_MIN].
-     */
     val appCheckIntervalFlow: Flow<Int> =
         context.dataStore.data
             .map { preferences ->
@@ -66,60 +46,38 @@ class SettingsRepository(private val context: Context) {
                 if (interval < MINIMUM_APP_CHECK_INTERVAL_MIN) MINIMUM_APP_CHECK_INTERVAL_MIN else interval
             }
 
-    /**
-     * A [Flow] that emits `true` if force starting apps is enabled, `false` otherwise.
-     * Defaults to `false` (disabled) if not set.
-     */
+
     val enableForceStartAppsFlow: Flow<Boolean> =
         context.dataStore.data
             .map { preferences ->
                 preferences[ENABLE_FORCE_START_APPS] ?: false // Default to disabled
             }
 
-    /**
-     * A [Flow] that emits `true` if health checks are enabled, `false` otherwise.
-     * Defaults to `false` (disabled) if not set.
-     */
     val enableHealthCheckFlow: Flow<Boolean> =
         context.dataStore.data
             .map { preferences ->
                 preferences[ENABLE_HEALTH_CHECK] ?: false // Default to disabled
             }
 
-    /**
-     * A [Flow] that emits the configured health check UUID string.
-     * Defaults to an empty string if not set.
-     */
     val healthCheckUUIDFlow: Flow<String> =
         context.dataStore.data
             .map { preferences ->
                 preferences[HEALTH_CHECK_UUID] ?: "" // Default to empty string
             }
 
-    /**
-     * A [Flow] that emits `true` if remote logging (e.g., to Airtable) is enabled, `false` otherwise.
-     * Defaults to `false` (disabled) if not set.
-     */
     val enableRemoteLoggingFlow: Flow<Boolean> =
         context.dataStore.data
             .map { preferences ->
                 preferences[ENABLE_REMOTE_LOGGING] ?: false // Default to disabled
             }
 
-    /**
-     * A [Flow] that emits the configured Airtable authentication token.
-     * Defaults to an empty string if not set.
-     */
+
     val airtableTokenFlow: Flow<String> =
         context.dataStore.data
             .map { preferences ->
                 preferences[AIRTABLE_TOKEN] ?: "" // Default to empty string
             }
 
-    /**
-     * A [Flow] that emits the configured Airtable data URL.
-     * Defaults to an empty string if not set.
-     */
     val airtableDataUrlFlow: Flow<String> =
         context.dataStore.data
             .map { preferences ->

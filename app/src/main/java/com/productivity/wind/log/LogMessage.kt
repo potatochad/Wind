@@ -6,14 +6,9 @@ import com.productivity.wind.BuildConfig
 import org.json.JSONObject
 import java.time.Instant
 
-/**
- * Cell name for saving device information. Cell type: single line text
- */
 private const val COLUMN_NAME_DEVICE = "Device"
 
-/**
- * Cell name for saving log message. Cell type: long text
- */
+
 private const val COLUMN_NAME_LOG = "Log"
 
 data class LogMessage(

@@ -11,41 +11,13 @@ import com.productivity.wind.MainActivity
 import com.productivity.wind.R
 import timber.log.Timber
 
-/**
- * Helper class for creating and managing notifications related to the foreground service.
- *
- * This class is responsible for:
- * - Creating the notification channel required for displaying notifications on Android Oreo (API 26) and above.
- * - Building the persistent notification that is displayed when the [WatchdogService] is running in the foreground.
- *
- * The foreground service notification is essential to ensure the [WatchdogService] remains active
- * and is not prematurely killed by the Android system.
- *
- * @param context The application [Context], used to access system services like [NotificationManager]
- *                and to create [Intent]s for notification actions.
- */
 class NotificationHelper(private val context: Context) {
     companion object {
-        /**
-         * Unique ID for the notification channel used by the WatchdogService.
-         * This ID is used when creating the channel and when building notifications to associate them with this channel.
-         */
         private const val CHANNEL_ID = "WatchdogServiceChannel"
     }
-
-    /**
-     * Creates the notification channel for the WatchdogService.
-     *
-     * This method should be called before trying to display any notifications on Android Oreo (API 26) or higher.
-     * It creates a [NotificationChannel] with a default importance and registers it with the [NotificationManager].
-     * If the channel already exists, this operation has no effect.
-     */
     fun createNotificationChannel() {
         Timber.d("createNotificationChannel() called")
-
-        // NotificationChannel is only available on API 26+
-        // No need for an explicit Build.VERSION.SDK_INT check here, as NotificationChannel constructor handles it.
-        val channel =
+val channel =
             NotificationChannel(
                 CHANNEL_ID,
                 context.getString(R.string.notification_channel_name_watchdog_service),
@@ -56,18 +28,6 @@ class NotificationHelper(private val context: Context) {
         manager.createNotificationChannel(channel)
     }
 
-    /**
-     * Builds the persistent [Notification] for the foreground [WatchdogService].
-     *
-     * The notification informs the user that the app watchdog is active.
-     * It includes:
-     * - A title and content text.
-     * - A small icon.
-     * - A [PendingIntent] that opens [MainActivity] when the notification is tapped.
-     * - Low priority and is set to ongoing to make it persistent.
-     *
-     * @return The configured [Notification] object.
-     */
     fun buildNotification(): Notification {
         Timber.d("buildNotification() called")
 
