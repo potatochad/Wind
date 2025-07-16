@@ -283,6 +283,13 @@ fun EditPopUp(show: MutableState<Boolean>) {
 //region CONFIGURE SCREEN
 
 @Composable
+fun ConfigureS_Header() = NoLagCompose {
+    Text("Configure apps")
+    Spacer(modifier = Modifier.fillMaxWidth())
+    StopBlockingButton()
+}
+
+@Composable
 fun ConfigureScreen() = NoLagCompose {
     val iconMap = remember { mutableStateMapOf<String, ImageBitmap>() }
     var show = remember { mutableStateOf(false) }
@@ -322,7 +329,7 @@ fun ConfigureScreen() = NoLagCompose {
     }
     val BlockedApps = Blist.apps.filter { it.Block.value }
 
-    SettingsScreen(titleContent = { Text("Configure apps") }, showSearch = false) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
+    SettingsScreen(titleContent = { ConfigureS_Header() }, showSearch = false) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
             if (!areAllPermissionsEnabled(context)) { show.value = true; LazyPopup(show = show, onDismiss = {Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = {Global1.navController.navigate("SettingsP_Screen")}, onCancel = {Global1.navController.navigate("Main")}) } else {
                 SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
                         Button(
@@ -912,6 +919,63 @@ fun ConfigureIcon() {
         )
     }
 
+}
+@Composable
+fun StopBlockingButton() {
+    var showEnablePopup = remember { mutableStateOf(false) }
+    var showUnsuccessfulD_Popup = remember { mutableStateOf(false) }
+
+    // Show BEFORE enabling blocking
+    if (showEnablePopup.value) {
+        LazyPopup(
+            show = showEnablePopup,
+            onDismiss = { showEnablePopup.value = false },
+            title = "Enable?",
+            message = "If you enable blocking, an overlay screen will appear over the selected apps when you run out of points. (1 point = 1 second)\n\nTo disable blocking, you’ll need at least 1 point.",
+            showCancel = true,
+            showConfirm = true,
+            onConfirm = {
+                Bar.BlockingEnabled = true
+                showEnablePopup.value = false
+            },
+            onCancel = {
+                showEnablePopup.value = false
+            }
+        )
+    }
+
+    // Show if disabling fails
+    if (showUnsuccessfulD_Popup.value) {
+        LazyPopup(
+            show = showUnsuccessfulD_Popup,
+            onDismiss = { showUnsuccessfulD_Popup.value = false },
+            title = "Not enough points",
+            message = "You need at least 1 point to disable blocking. Just type a letter to earn one.",
+            showCancel = true,
+            showConfirm = false,
+            onConfirm = {},
+            onCancel = {
+                showUnsuccessfulD_Popup.value = false
+            }
+        )
+    }
+
+    // Main switch
+    OnOffSwitch(
+        isOn = Bar.BlockingEnabled,
+        onToggle = { isNowOn ->
+            if (isNowOn) {
+                showEnablePopup.value = true
+            } else {
+                val hasPoints = Bar.funTime > 0
+                if (hasPoints) {
+                    Bar.BlockingEnabled = false
+                } else {
+                    showUnsuccessfulD_Popup.value = true
+                }
+            }
+        }
+    )
 }
 
 

@@ -80,6 +80,8 @@ class Settings {
 
     //region BLOCKING
 
+    var BlockingEnabled by mutableStateOf(false)
+
     var COUNT by mutableStateOf(0)
     var NewDay by mutableStateOf(true)
 

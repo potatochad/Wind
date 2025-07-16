@@ -1241,11 +1241,14 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
         checked = isOn,
         onCheckedChange = onToggle,
         colors = SwitchDefaults.colors(
-            checkedThumbColor = Color.Blue,
-            uncheckedThumbColor = Color.Gray
+            checkedThumbColor = Color(0xFFFFD700), // Gold
+            uncheckedThumbColor = Color.Gray,
+            checkedTrackColor = Color(0xFFFFE066),  // Light gold track
+            uncheckedTrackColor = Color.LightGray
         )
     )
 }
+
 
 @Composable
 fun PermissionsButton(
