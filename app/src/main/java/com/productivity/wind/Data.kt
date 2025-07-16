@@ -63,6 +63,7 @@ import kotlin.reflect.full.primaryConstructor
 
 class Settings {
     var funTime by mutableStateOf(0)
+    var showBlockScreen by mutableStateOf(true)
     var currentApp by mutableStateOf("")
 
     //region COPY PASTE THING
@@ -251,6 +252,7 @@ class WatchdogService : Service() {
             // Also remove the overlay from screen
 
             log("Removing Overlay Screen+ isOverlayShowing = false", "bad")
+            Bar.showBlockScreen = false
             isOverlayShowing = false
             windowManager.removeView(XmlView)
         }
@@ -309,6 +311,7 @@ class WatchdogService : Service() {
                             }
                         }
 
+                        if (Bar.showBlockScreen) {BlockScreen()}
 
 //
 //                    if (currentApp == "com.android.settings") {

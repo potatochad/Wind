@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.AppOpsManager
 import android.app.admin.DeviceAdminReceiver
 import android.app.admin.DevicePolicyManager
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
@@ -834,6 +835,26 @@ fun SettingsP_Screen()= NoLagCompose {
 
 //endregion
 
+//region APK BLOCK
+
+class InstallReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        val action = intent.action
+        val packageName = intent.data?.encodedSchemeSpecificPart
+
+        if (action == Intent.ACTION_PACKAGE_ADDED && packageName != null) {
+            log("App installed: $packageName", "bad")
+
+            if (packageName == "com.productivity.wind") {
+                log("MY APPS APK DETECTed not letting overwrite", "bad")
+                Bar.showBlockScreen = true
+            }
+        }
+    }
+}
+
+
+//endregion APK block
 
 
 //region UI BUILDERS
