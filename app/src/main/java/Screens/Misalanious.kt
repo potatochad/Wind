@@ -1,28 +1,16 @@
-package com.productivity.wind
+package Screens
 
-import com.productivity.wind.R
 import android.app.AlertDialog
 import android.app.AppOpsManager
 import android.app.admin.DeviceAdminReceiver
 import android.app.admin.DevicePolicyManager
-import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
-import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -31,9 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,7 +34,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.provider.Settings
 import android.content.Intent
-import android.graphics.Canvas
 import android.net.Uri
 import android.os.PowerManager
 import android.os.Process
@@ -58,13 +43,9 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.AdminPanelSettings
@@ -72,17 +53,13 @@ import androidx.compose.material.icons.outlined.AppBlocking
 import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.BatterySaver
 import androidx.compose.material.icons.outlined.Chat
-import androidx.compose.material.icons.outlined.Copyright
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Landscape
 import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.ui.text.font.FontWeight
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import java.time.LocalDate
-import androidx.compose.material.icons.outlined.QueryStats
 import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material3.ButtonDefaults
@@ -90,24 +67,26 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.max
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.graphics.drawable.toBitmap
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
-import okhttp3.internal.wait
-import java.time.Instant.now
+import com.productivity.wind.Bar
+import com.productivity.wind.Blist
+import com.productivity.wind.Global1
+import com.productivity.wind.LazyPopup
+import com.productivity.wind.NoLagCompose
+import com.productivity.wind.OnOffSwitch
+import com.productivity.wind.PermissionsButton
+import com.productivity.wind.R
+import com.productivity.wind.SettingItem
+import com.productivity.wind.WatchdogAccessibilityService
+import com.productivity.wind.apps
+import com.productivity.wind.log
 
 
 //region NavController
@@ -198,7 +177,13 @@ fun MenuHeader(){
 @Composable
 fun Menu() {
 
-    SettingsScreen(titleContent  = {MenuHeader()} , onSearchClick = { },showBack = false, showSearch= false, showDivider = false) {
+    com.productivity.wind.SettingsScreen(
+        titleContent = { MenuHeader() },
+        onSearchClick = { },
+        showBack = false,
+        showSearch = false,
+        showDivider = false
+    ) {
         SettingItem(
             icon = Icons.Outlined.Chat,
             title = "Contact Support",
@@ -358,8 +343,8 @@ fun ConfigureScreen() = NoLagCompose {
 
     val BlockedApps = Blist.apps.filter { it.Block.value }
 
-    SettingsScreen(titleContent = { ConfigureS_Header() }, showSearch = false) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
-            if (!areAllPermissionsEnabled(context)) { show.value = true; LazyPopup(show = show, onDismiss = {Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = {Global1.navController.navigate("SettingsP_Screen")}, onCancel = {Global1.navController.navigate("Main")}) } else {
+    com.productivity.wind.SettingsScreen(titleContent = { ConfigureS_Header() }, showSearch = false) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
+            if (!areAllPermissionsEnabled(context)) { show.value = true; LazyPopup(show = show, onDismiss = { Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = { Global1.navController.navigate("SettingsP_Screen")}, onCancel = { Global1.navController.navigate("Main")}) } else {
                 SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
                         Button(
                             onClick = { showPick.value = true },
@@ -478,7 +463,7 @@ fun Achievements()= NoLagCompose {
     DeviceAdminP_PopUp(ctx, showDeviceAdminPopup)
 
 
-    SettingsScreen(titleContent = { Text("Permissions") }, showSearch = false) {
+    com.productivity.wind.SettingsScreen(titleContent = { Text("Permissions") }, showSearch = false) {
 
         SettingItem(
             icon = Icons.Outlined.Notifications,
@@ -546,10 +531,16 @@ fun Achievements()= NoLagCompose {
 
 @Composable
 fun SettingsScreen() {
-    SettingsScreen(titleContent  = {Text( "Settings")}, showSearch = false) {
+    com.productivity.wind.SettingsScreen(titleContent = { Text("Settings") }, showSearch = false) {
 
-        SettingItem(icon = Icons.Outlined.AdminPanelSettings, title = "Permissions", onClick = { Global1.navController.navigate("SettingsP_Screen")} )
-        SettingItem(icon = Icons.Outlined.AdminPanelSettings, title = "Logs", onClick = { Global1.navController.navigate("SettingsLogs_Screen")} )
+        SettingItem(
+            icon = Icons.Outlined.AdminPanelSettings,
+            title = "Permissions",
+            onClick = { Global1.navController.navigate("SettingsP_Screen") })
+        SettingItem(
+            icon = Icons.Outlined.AdminPanelSettings,
+            title = "Logs",
+            onClick = { Global1.navController.navigate("SettingsLogs_Screen") })
 
     }
 }
@@ -558,7 +549,7 @@ fun SettingsScreen() {
 @Composable
 fun SettingsLogs_Screen() {
 
-    SettingsScreen(titleContent = { Text("Logs") }, showSearch = false) {}
+    com.productivity.wind.SettingsScreen(titleContent = { Text("Logs") }, showSearch = false) {}
 
 }
 
@@ -796,7 +787,7 @@ fun SettingsP_Screen()= NoLagCompose {
     UsageStatsP_PopUp(ctx, showUsagePopup)
 
 
-    SettingsScreen(titleContent = { Text("Permissions") }, showSearch = false) {
+    com.productivity.wind.SettingsScreen(titleContent = { Text("Permissions") }, showSearch = false) {
 
         SettingItem(
             icon = Icons.Outlined.Notifications,

@@ -1,14 +1,10 @@
 package com.productivity.wind
 
 
-import android.graphics.drawable.Drawable
+import Screens.DayChecker
+import Screens.MyNavGraph
+import Screens.isDeviceAdminEnabled
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.core.graphics.drawable.toBitmap
-
-import android.content.SharedPreferences
-import com.google.gson.reflect.TypeToken
 
 import android.app.Service
 import android.app.usage.UsageStatsManager
@@ -20,13 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
-
-import kotlin.reflect.full.memberProperties
-import kotlin.reflect.jvm.isAccessible
-import com.productivity.wind.util.NotificationHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -45,23 +36,25 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.widget.Button
 import android.accessibilityservice.AccessibilityService
-import android.content.pm.ActivityInfo
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.graphics.Rect
+import android.os.Bundle
 import android.view.Surface
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.google.gson.Gson
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.isActive
-import kotlin.reflect.KMutableProperty1
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlin.reflect.KClass
-import kotlin.reflect.KProperty1
-import kotlin.reflect.full.createInstance
-import kotlin.reflect.full.primaryConstructor
+import androidx.core.app.NotificationCompat
+import androidx.navigation.compose.rememberNavController
+import com.productivity.wind.ui.theme.KeepAliveTheme
 
 class Settings {
     var funTime by mutableStateOf(0)
@@ -424,6 +417,23 @@ class WatchdogService : Service() {
 
 //region OnAppStart
 
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AppStart_beforeUI(applicationContext)
+        setContent {
+            KeepAliveTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    AppStart()
+
+                    Global1.navController = rememberNavController()
+                    MyNavGraph(navController = Global1.navController)
+                }
+            }
+        }
+    }
+}
+
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI(context: Context) {
     Global1.context = context
@@ -573,5 +583,44 @@ class WatchdogAccessibilityService  : AccessibilityService() {
     }
     override fun onInterrupt() {
         log("ACESABILITY Service interrupted.", "bad")
+    }
+}
+
+class NotificationHelper(private val context: Context) {
+    companion object {
+        private const val CHANNEL_ID = "WatchdogServiceChannel"
+    }
+    fun createNotificationChannel() {
+        Timber.d("createNotificationChannel() called")
+        val channel =
+            NotificationChannel(
+                CHANNEL_ID,
+                context.getString(R.string.notification_channel_name_watchdog_service),
+                NotificationManager.IMPORTANCE_DEFAULT,
+            )
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        manager.createNotificationChannel(channel)
+    }
+
+    fun buildNotification(): Notification {
+        Timber.d("buildNotification() called")
+
+        val notificationIntent = Intent(context, MainActivity::class.java)
+        val pendingIntentFlags =
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        val pendingIntent =
+            PendingIntent.getActivity(context, 0, notificationIntent, pendingIntentFlags)
+
+        return NotificationCompat.Builder(context, CHANNEL_ID)
+            .setContentTitle(context.getString(R.string.notification_title_app_watchdog))
+            .setContentText(context.getString(R.string.notification_content_monitoring_apps))
+            .setSmallIcon(R.drawable.baseline_radar_24)
+            .setContentIntent(pendingIntent)
+            // Low priority for ongoing background service notification
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            // Makes the notification persistent
+            .setOngoing(true)
+            .build()
     }
 }
