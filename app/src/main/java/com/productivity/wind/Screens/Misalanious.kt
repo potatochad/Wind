@@ -87,7 +87,7 @@ import com.productivity.wind.SettingItem
 import com.productivity.wind.WatchdogAccessibilityService
 import com.productivity.wind.apps
 import com.productivity.wind.log
-
+import com.productivity.wind.SettingsScreen
 
 //region NavController
 //Global1.navController - to use anywhere, no input
@@ -103,9 +103,6 @@ fun MyNavGraph(navController: NavHostController) {
             }
             composable("ConfigureScreen") {
                 ConfigureScreen()
-            }
-            composable("SettingsLogs_Screen") {
-                SettingsLogs_Screen()
             }
             //region SETTINGS
 
@@ -290,6 +287,7 @@ fun ConfigureScreen() = NoLagCompose {
     val iconMap = remember { mutableStateMapOf<String, ImageBitmap>() }
     var show = remember { mutableStateOf(false) }
     var showPick = remember { mutableStateOf(false) }
+    var showNeedMorePoints = remember { mutableStateOf(false) }
 
 
     // Load apps gradually in background
@@ -342,12 +340,42 @@ fun ConfigureScreen() = NoLagCompose {
     }
 
     val BlockedApps = Blist.apps.filter { it.Block.value }
+    LazyPopup(show = showNeedMorePoints, title = "Not EnoughPoints", message = "Need 1k points to edit blocks", onConfirm = {},)
 
-    com.productivity.wind.SettingsScreen(titleContent = { ConfigureS_Header() }, showSearch = false) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
+    LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
+        LazyColumn(modifier = Modifier.height(300.dp)) {
+            items(Blist.apps, key = { it.id }) { app ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        checked = app.Block.value,
+                        onCheckedChange = { app.Block.value = it},
+                    )
+                    val icon = iconMap[app.packageName.value]
+                    if (icon != null) {
+                        Image(
+                            bitmap = icon,
+                            contentDescription = null,
+                            modifier = Modifier.size(35.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(app.name.value)
+                }
+            }
+        }
+    }, onConfirm = {},)
+
+    SettingsScreen(titleContent = { ConfigureS_Header() }, showSearch = false) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
             if (!areAllPermissionsEnabled(context)) { show.value = true; LazyPopup(show = show, onDismiss = { Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = { Global1.navController.navigate("SettingsP_Screen")}, onCancel = { Global1.navController.navigate("Main")}) } else {
                 SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
                         Button(
-                            onClick = { showPick.value = true },
+                            onClick = { if(Bar.funTime < 1000 && !BlockedApps.isEmpty()) {showNeedMorePoints.value = true} else { showPick.value = true } },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)), // gold
                             shape = RoundedCornerShape(8.dp),
                             contentPadding = PaddingValues(6.dp),
@@ -358,34 +386,6 @@ fun ConfigureScreen() = NoLagCompose {
                         }
 
                     })
-                LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
-                        LazyColumn(modifier = Modifier.height(300.dp)) {
-                            items(Blist.apps, key = { it.id }) { app ->
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Checkbox(
-                                        checked = app.Block.value,
-                                        onCheckedChange = { app.Block.value = it},
-                                    )
-                                    val icon = iconMap[app.packageName.value]
-                                    if (icon != null) {
-                                        Image(
-                                            bitmap = icon,
-                                            contentDescription = null,
-                                            modifier = Modifier.size(35.dp)
-                                        )
-                                    }
-
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(app.name.value)
-                                }
-                            }
-                        }
-                    }, onConfirm = {},)
                 if (BlockedApps.isEmpty()) {
                     Box(modifier = Modifier.fillMaxSize().height(Bar.halfHeight*2-200.dp),) { Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
                             Spacer(modifier = Modifier.height( Bar.halfHeight-190.dp))
@@ -427,7 +427,6 @@ fun ConfigureScreen() = NoLagCompose {
                         }
                     }
                 }
-
             }
         }
     }
@@ -537,20 +536,7 @@ fun SettingsScreen() {
             icon = Icons.Outlined.AdminPanelSettings,
             title = "Permissions",
             onClick = { Global1.navController.navigate("SettingsP_Screen") })
-        SettingItem(
-            icon = Icons.Outlined.AdminPanelSettings,
-            title = "Logs",
-            onClick = { Global1.navController.navigate("SettingsLogs_Screen") })
-
     }
-}
-
-
-@Composable
-fun SettingsLogs_Screen() {
-
-    com.productivity.wind.SettingsScreen(titleContent = { Text("Logs") }, showSearch = false) {}
-
 }
 
 
@@ -775,14 +761,12 @@ fun SettingsP_Screen()= NoLagCompose {
         }
     }
     var showNotificationPopup = remember { mutableStateOf(false) }
-    var showDrawOnTopPopup = remember { mutableStateOf(false) }
     var showOptimizationPopup = remember { mutableStateOf(false) }
     var showUsagePopup = remember { mutableStateOf(false) }
     var showDeviceAdminPopup = remember { mutableStateOf(false) }
 
 
     NotificationP_PopUp(ctx, showNotificationPopup)
-    DrawOnTopP_PopUp(ctx, showDrawOnTopPopup)
     OptimizationExclusionP_PopUp(ctx, showOptimizationPopup)
     UsageStatsP_PopUp(ctx, showUsagePopup)
 
@@ -798,16 +782,6 @@ fun SettingsP_Screen()= NoLagCompose {
                     onEnable = {
                         showNotificationPopup.value= true
                     }
-                )
-            }
-        )
-        SettingItem(
-            icon = Icons.Outlined.Visibility,
-            title = "Draw On Top",
-            endContent = {
-                PermissionsButton(
-                isEnabled = Bar.DrawOnTopPermission,
-                onEnable = {showDrawOnTopPopup.value = true}
                 )
             }
         )
@@ -1040,7 +1014,7 @@ fun StopBlockingButton() {
             show = showEnablePopup,
             onDismiss = { showEnablePopup.value = false },
             title = "Enable?",
-            message = "If you enable blocking, an overlay screen will appear over the selected apps when you run out of points. (1 point = 1 second)\n\nTo disable blocking, you’ll need at least 1 point.",
+            message = "If you enable blocking, an overlay screen will appear over the selected apps when you run out of points. (1 point = 1 second)\n\nTo disable blocking, you’ll need at least 1_000 points.",
             showCancel = true,
             showConfirm = true,
             onConfirm = {
@@ -1059,7 +1033,7 @@ fun StopBlockingButton() {
             show = showUnsuccessfulD_Popup,
             onDismiss = { showUnsuccessfulD_Popup.value = false },
             title = "Not enough points",
-            message = "You need at least 1 point to disable blocking. Just type a letter to earn one.",
+            message = "You need at least 1000 points to disable blocking",
             showCancel = true,
             showConfirm = false,
             onConfirm = {},
@@ -1076,7 +1050,7 @@ fun StopBlockingButton() {
             if (isNowOn) {
                 showEnablePopup.value = true
             } else {
-                val hasPoints = Bar.funTime > 0
+                val hasPoints = Bar.funTime > 1000
                 if (hasPoints) {
                     Bar.BlockingEnabled = false
                 } else {
