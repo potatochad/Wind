@@ -42,7 +42,7 @@
             android:name=".WatchdogService"
             android:foregroundServiceType="specialUse" />
         <service
-            android:name="Screens.MyNotificationListener"
+            android:name="com.productivity.wind.Screens.MyNotificationListener"
             android:exported="true"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
@@ -50,7 +50,7 @@
             </intent-filter>
         </service>
         <receiver
-            android:name="Screens.MyDeviceAdminReceiver"
+            android:name="com.productivity.wind.Screens.MyDeviceAdminReceiver"
             android:exported="true"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data

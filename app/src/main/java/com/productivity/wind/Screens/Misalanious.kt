@@ -1,4 +1,4 @@
-package Screens
+package com.productivity.wind.Screens
 
 import android.app.AlertDialog
 import android.app.AppOpsManager

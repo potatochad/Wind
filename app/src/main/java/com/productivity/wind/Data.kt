@@ -1,9 +1,9 @@
 package com.productivity.wind
 
 
-import Screens.DayChecker
-import Screens.MyNavGraph
-import Screens.isDeviceAdminEnabled
+import com.productivity.wind.Screens.DayChecker
+import com.productivity.wind.Screens.MyNavGraph
+import com.productivity.wind.Screens.isDeviceAdminEnabled
 import androidx.compose.runtime.mutableStateOf
 
 import android.app.Service
@@ -27,14 +27,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.UUID
-import android.provider.Settings
-import android.view.LayoutInflater
-import android.view.WindowManager
-import android.os.Handler
-import android.os.Looper
 import android.content.Intent
-import android.graphics.PixelFormat
-import android.widget.Button
 import android.accessibilityservice.AccessibilityService
 import android.app.Notification
 import android.app.NotificationChannel
@@ -42,7 +35,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.Surface
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import androidx.activity.ComponentActivity
