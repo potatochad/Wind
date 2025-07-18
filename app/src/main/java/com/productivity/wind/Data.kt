@@ -203,91 +203,11 @@ class WatchdogService : Service() {
         return null
     }
 
-    //region Boring
-    private var isOverlayShowing = false
-
-    fun BlockScreen() {
-        if (!Settings.canDrawOverlays(this)) { log("canDrawOverlays----PERMISSSION NOT GRANTED", "bad"); return}
-
-        Bar.secondsLeft = 10 // ✅ always reset when showing the overlay
-        val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
-        val XmlBuilder = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val XmlView = XmlBuilder.inflate(R.layout.overlay_layout, null)
-
-        //region SCREEN PRAMS-BORING
-
-        if (XmlView.parent != null) {
-            windowManager.removeView(XmlView) // ✅ ensures no duplicate view error
-        }
-        val rotation = windowManager.defaultDisplay.rotation
-        if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
-            XmlView.rotation = -90f // ✅ visually lock to upright
-        }
-
-
-        val layoutParams = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT,
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-            else
-                WindowManager.LayoutParams.TYPE_PHONE,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or // ✅ changed
-                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,      // ✅ changed
-            PixelFormat.TRANSLUCENT
-        )
-
-        //endregion
-
-        if (!isOverlayShowing) { log("Showing BlockScreen:::isOverlayShowing---${isOverlayShowing}", "bad"); windowManager.addView(XmlView, layoutParams); isOverlayShowing = true }
-        if (XmlView?.isAttachedToWindow == true) { } else { isOverlayShowing = false;log("NOW SHOWING BlockScreen:::isOverlayShowing-----${isOverlayShowing}", "bad") }
-
-
-        //region WAIT 10 SECONS TO LEAVE
-
-        val leaveButton = XmlView.findViewById<Button>(R.id.leaveButton)
-        leaveButton.isEnabled = false
-        leaveButton.text = Bar.secondsLeft.toString()
-
-        val handler = Handler(Looper.getMainLooper())
-        handler.removeCallbacksAndMessages(null) // ✅ clear any previous countdowns
-
-        val countdown = object : Runnable {
-            override fun run() {
-                log("BLOCK SCREEN: Counting down---secondsLeft---${Bar.secondsLeft}", "bad")
-                Bar.secondsLeft--
-
-                if (Bar.secondsLeft > 0) {
-                    leaveButton.text = Bar.secondsLeft.toString()
-                    handler.postDelayed(this, 1000) // wait 1 second, then run again
-                } else {
-                    leaveButton.text = "Leave"
-                    leaveButton.isEnabled = true // now they can click it
-                }
-            }
-        }
-        handler.postDelayed(countdown, 1000) // start after 1 second
-
-
-        //endregion
-
-        leaveButton.setOnClickListener {
-            Bar.secondsLeft = 10
-            log("BLOCK SCREEN: Clicked leave button", "bad")
-            val intent = Intent(Global1.context, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            Global1.context.startActivity(intent)
-
-            log("Removing Overlay Screen+ isOverlayShowing = false", "bad")
-            isOverlayShowing = false
-            windowManager.removeView(XmlView)
-        }
-
+    fun GOtowindAPP(){
+        val intent = Intent(Global1.context, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        Global1.context.startActivity(intent)
     }
-
-    //endregion
 
     override fun onStartCommand(
         intent: Intent?,
@@ -334,7 +254,7 @@ class WatchdogService : Service() {
                                 Bar.funTime -= 1
                                 log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
                             } else {
-                                BlockScreen()
+                                GOtowindAPP()
                                 log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
                             }
                         }
@@ -357,7 +277,7 @@ class WatchdogService : Service() {
                         }
                         else {
                             if (isDeviceAdminEnabled(Global1.context)) {
-                                BlockScreen()
+                                GOtowindAPP()
                                 log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
                             }
                         }
