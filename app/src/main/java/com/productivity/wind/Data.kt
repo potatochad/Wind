@@ -51,7 +51,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
 import androidx.navigation.compose.rememberNavController
@@ -451,8 +450,6 @@ fun AppStart_beforeUI(context: Context) {
 
 @Composable
 fun AppStart() {
-    val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
-    val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
