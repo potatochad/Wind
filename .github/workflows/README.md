@@ -1,6 +1,6 @@
 # Android Release Workflow
 
-This workflow automates the process of building and distributing signed release APKs when a GitHub release is published.
+This workflow automates the process of building and distributing signed release APKs when a GitHub release is published. Sehr scaryyy
 
 ## How it works
 
