@@ -1,4 +1,4 @@
-# Android Release Workflow
+# Android Release Workflow [LOL]
 
 This workflow automates the process of building and distributing signed release APKs when a GitHub release is published. Sehr scaryyy
 
