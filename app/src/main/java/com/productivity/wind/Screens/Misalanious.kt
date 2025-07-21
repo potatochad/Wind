@@ -586,18 +586,6 @@ fun showPermissionDialog2(
 }
 
 
-
-@Composable
-fun DrawOnTopP_PopUp(context: Context, show: MutableState<Boolean>) =
-    showPermissionDialog(
-        show,
-        context,
-        "Grant Draw on top permission",
-        Bar.DrawOnTopP_Description,
-        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-        Uri.parse("package:${context.packageName}")
-    )
-
 @Composable
 fun NotificationP_PopUp(context: Context, show: MutableState<Boolean>) =
     showPermissionDialog(
@@ -635,63 +623,6 @@ fun UsageStatsP_PopUp(context: Context, show: MutableState<Boolean>) =
         Settings.ACTION_USAGE_ACCESS_SETTINGS
     )
 
-//!Doesn't work
-@Composable
-fun DeviceAdminP_PopUp(ctx: Context, show: MutableState<Boolean>) {
-    if (!show.value) return
-
-    Popup(
-        alignment = Alignment.Center,
-        onDismissRequest = { show.value = false }
-    ) {
-        Card(
-            modifier = Modifier
-                .padding(24.dp)
-                .width(300.dp),
-            elevation = CardDefaults.cardElevation(10.dp),
-            shape = RoundedCornerShape(20.dp)
-        ) {
-            Column(
-                modifier = Modifier.padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("Admin Permission", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                Spacer(Modifier.height(12.dp))
-                Text("We need device admin access to block apps properly.")
-                Spacer(Modifier.height(24.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    TextButton(onClick = { show.value = false }) {
-                        Text("Cancel")
-                    }
-                    Spacer(Modifier.width(8.dp))
-                    Button(onClick = {
-                        show.value = false
-                        try {
-                            val comp = ComponentName(ctx, MyDeviceAdminReceiver::class.java)
-                            val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
-                                putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, comp)
-                                putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Used to block apps.")
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            }
-                            ctx.startActivity(intent)
-                        } catch (e: Exception) {
-                            Toast.makeText(ctx, "Failed to open admin screen.", Toast.LENGTH_LONG).show()
-                            val fallback = Intent(Settings.ACTION_SETTINGS).apply {
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            }
-                            ctx.startActivity(fallback)
-                        }
-                    }) {
-                        Text("Allow")
-                    }
-                }
-            }
-        }
-    }
-}
 class MyDeviceAdminReceiver : DeviceAdminReceiver() {
     override fun onEnabled(context: Context, intent: Intent) {
         super.onEnabled(context, intent)
@@ -753,17 +684,14 @@ fun SettingsP_Screen()= NoLagCompose {
 
         while(true) {
             Bar.NotificationPermission = isNotificationEnabled(ctx)
-            Bar.DrawOnTopPermission = isDrawOnTopEnabled(ctx)
             Bar.OptimizationExclusionPermission = isBatteryOptimizationDisabled(ctx)
             Bar.UsageStatsPermission = isUsageStatsP_Enabled(ctx)
-            Bar.DeviceAdminPermission = isDeviceAdminEnabled(ctx)
             delay(200L)
         }
     }
     var showNotificationPopup = remember { mutableStateOf(false) }
     var showOptimizationPopup = remember { mutableStateOf(false) }
     var showUsagePopup = remember { mutableStateOf(false) }
-    var showDeviceAdminPopup = remember { mutableStateOf(false) }
 
 
     NotificationP_PopUp(ctx, showNotificationPopup)
