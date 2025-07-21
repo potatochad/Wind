@@ -75,7 +75,7 @@ class Settings {
     var G_LetterToTime by m(2)
     var G_DoneRetype_to_time by m(60)
     var G_currentInput by m("")
-    var G_highestCorrect by mutableStateOf(0)
+    var G_highestCorrect by m(0)
 
     //endregion COPY PASTE GERMAN
 
@@ -83,21 +83,21 @@ class Settings {
 
     //region BLOCKING
 
-    var BlockingEnabled by mutableStateOf(false)
+    var BlockingEnabled by m(false)
 
-    var COUNT by mutableStateOf(0)
-    var NewDay by mutableStateOf(true)
+    var COUNT by m(0)
+    var NewDay by m(true)
 
     //refreshs to 0 daily// if more than 50 seconds, get 600 time
-    var WaterDOtime_spent by mutableStateOf(0)
-    var secondsLeft by mutableStateOf(10)
+    var WaterDOtime_spent by m(0)
+    var secondsLeft by m(10)
     //endregion BLOCKING
 
     //region MISALANIOUS
 
-    var halfHeight by mutableStateOf(0.dp)
-    var halfWidth by mutableStateOf(0.dp)
-    var ShowMenu by mutableStateOf(false)
+    var halfHeight by m(0.dp)
+    var halfWidth by m(0.dp)
+    var ShowMenu by m(false)
 
 
     //endregion MISALANIOUS
@@ -106,34 +106,34 @@ class Settings {
 
     //region PERMISSIONS
 
-    var App_Description by mutableStateOf(
+    var App_Description by m(
         "A simple, gamified app that helps you build focus and habits. Just retype your goals, affirmations, or learning material. Earn points. Use points to unlock time on the apps you choose."
     )
 
-    var NotificationPermission by mutableStateOf(false)
-    var NotificationP_Description by mutableStateOf(
+    var NotificationPermission by m(false)
+    var NotificationP_Description by m(
         "Keeps the app running in the background so you don’t miss any tracking or point updates."
     )
 
-    var DrawOnTopPermission by mutableStateOf(false)
-    var DrawOnTopP_Description by mutableStateOf(
+    var DrawOnTopPermission by m(false)
+    var DrawOnTopP_Description by m(
         "Allows the app to show a screen over other apps. This is used to gently pause access to apps you’ve selected, if you have spent all earned points."
     )
 
-    var OptimizationExclusionPermission by mutableStateOf(false)
-    var OptimizationExclusionP_Description by mutableStateOf(
+    var OptimizationExclusionPermission by m(false)
+    var OptimizationExclusionP_Description by m(
         "Stops your phone’s battery saver from shutting down the background service. This ensures the app runs smoothly."
     )
 
-    var UsageStatsPermission by mutableStateOf(false)
-    var UsageStatsP_Description by mutableStateOf(
+    var UsageStatsPermission by m(false)
+    var UsageStatsP_Description by m(
         "Lets the app see which apps you open. Used only to track apps you selected, to help manage your focus."
     )
 
-    var DeviceAdminPermission by mutableStateOf(false)
-    var DeviceAdminP_Description by mutableStateOf(
-        "Optional: Gives a stronger layer of control if you want extra discipline. Can be turned off anytime in settings."
-    )
+    var DeviceAdminPermission by m(false)
+    // var DeviceAdminP_Description by m(
+    //    "Optional: Gives a stronger layer of control if you want extra discipline. Can be turned off anytime in settings."
+    //)
 
 //endregion
 
@@ -141,7 +141,7 @@ class Settings {
 
     //region ACHIEVEMENTS
 
-    var TotalTypedLetters by mutableStateOf(0)
+    var TotalTypedLetters by m(0)
 
     //endregion
 
