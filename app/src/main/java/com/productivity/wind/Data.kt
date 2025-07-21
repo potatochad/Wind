@@ -106,10 +106,6 @@ class Settings {
 
     //region PERMISSIONS
 
-    var App_Description by m(
-        "A simple, gamified app that helps you build focus and habits. Just retype your goals, affirmations, or learning material. Earn points. Use points to unlock time on the apps you choose."
-    )
-
     var NotificationPermission by m(false)
     var NotificationP_Description by m(
         "Keeps the app running in the background so you don’t miss any tracking or point updates."
