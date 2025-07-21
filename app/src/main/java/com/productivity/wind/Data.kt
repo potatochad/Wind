@@ -48,31 +48,33 @@ import androidx.core.app.NotificationCompat
 import androidx.navigation.compose.rememberNavController
 import com.productivity.wind.ui.theme.KeepAliveTheme
 
+fun <T> m(value: T) = mutableStateOf(value)
+
 class Settings {
-    var funTime by mutableStateOf(0)
-    var showBlockScreen by mutableStateOf(true)
-    var currentApp by mutableStateOf("")
+    var funTime by m(0)
+    var showBlockScreen by m(true)
+    var currentApp by m("")
 
     //region COPY PASTE THING Disipline
 
-    var FirstEditText by mutableStateOf(true)
-    var targetText by mutableStateOf("Let's get ready to work. Start by choosing one task that is the most important. Try to focus on that task only.  When the task is finished, you can take a short break to rest. If you finish more tasks after that, great job — keep going one step at a time. If permissions turned on (menu->settings) you can configure apps (Top bar, right side icon) to be blocked if do not have enough points (1 point = 1 second).")
-    var LetterToTime by mutableStateOf(1)
-    var DoneRetype_to_time by mutableStateOf(60)
-    var HowManyDoneRetypes_InDay by mutableStateOf(0)
-    var currentInput by mutableStateOf("")
-    var highestCorrect by mutableStateOf(0)
+    var FirstEditText by m(true)
+    var targetText by m("Let's get ready to work. Start by choosing one task that is the most important. Try to focus on that task only.  When the task is finished, you can take a short break to rest. If you finish more tasks after that, great job — keep going one step at a time. If permissions turned on (menu->settings) you can configure apps (Top bar, right side icon) to be blocked if do not have enough points (1 point = 1 second).")
+    var LetterToTime by m(1)
+    var DoneRetype_to_time by m(60)
+    var HowManyDoneRetypes_InDay by m(0)
+    var currentInput by m("")
+    var highestCorrect by m(0)
 
     //endregion COPY PASTE Disipline
 
 
     //region COPY PASTE THING GERMAN
 
-    var G_FirstEditText by mutableStateOf(true)
-    var G_targetText by mutableStateOf("Let's get ready to work. Start by choosing one task that is the most important. Try to focus on that task only.  When the task is finished, you can take a short break to rest. If you finish more tasks after that, great job — keep going one step at a time. If permissions turned on (menu->settings) you can configure apps (Top bar, right side icon) to be blocked if do not have enough points (1 point = 1 second).")
-    var G_LetterToTime by mutableStateOf(2)
-    var G_DoneRetype_to_time by mutableStateOf(60)
-    var G_currentInput by mutableStateOf("")
+    var G_FirstEditText by m(true)
+    var G_targetText by m("Let's get ready to work. Start by choosing one task that is the most important. Try to focus on that task only.  When the task is finished, you can take a short break to rest. If you finish more tasks after that, great job — keep going one step at a time. If permissions turned on (menu->settings) you can configure apps (Top bar, right side icon) to be blocked if do not have enough points (1 point = 1 second).")
+    var G_LetterToTime by m(2)
+    var G_DoneRetype_to_time by m(60)
+    var G_currentInput by m("")
     var G_highestCorrect by mutableStateOf(0)
 
     //endregion COPY PASTE GERMAN
