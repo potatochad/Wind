@@ -131,9 +131,9 @@ class Settings {
     )
 
     var DeviceAdminPermission by m(false)
-    // var DeviceAdminP_Description by m(
-    //    "Optional: Gives a stronger layer of control if you want extra discipline. Can be turned off anytime in settings."
-    //)
+    var DeviceAdminP_Description by m(
+        "Optional: Gives a stronger layer of control if you want extra discipline. Can be turned off anytime in settings."
+    )
 
 //endregion
 
