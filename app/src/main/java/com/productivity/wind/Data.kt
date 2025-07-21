@@ -5,7 +5,6 @@ import com.productivity.wind.Screens.DayChecker
 import com.productivity.wind.Screens.MyNavGraph
 import com.productivity.wind.Screens.isDeviceAdminEnabled
 import androidx.compose.runtime.mutableStateOf
-
 import android.app.Service
 import android.app.usage.UsageStatsManager
 import android.content.Context
@@ -111,11 +110,6 @@ class Settings {
         "Keeps the app running in the background so you don’t miss any tracking or point updates."
     )
 
-    var DrawOnTopPermission by m(false)
-    var DrawOnTopP_Description by m(
-        "Allows the app to show a screen over other apps. This is used to gently pause access to apps you’ve selected, if you have spent all earned points."
-    )
-
     var OptimizationExclusionPermission by m(false)
     var OptimizationExclusionP_Description by m(
         "Stops your phone’s battery saver from shutting down the background service. This ensures the app runs smoothly."
@@ -124,11 +118,6 @@ class Settings {
     var UsageStatsPermission by m(false)
     var UsageStatsP_Description by m(
         "Lets the app see which apps you open. Used only to track apps you selected, to help manage your focus."
-    )
-
-    var DeviceAdminPermission by m(false)
-    var DeviceAdminP_Description by m(
-        "Optional: Gives a stronger layer of control if you want extra discipline. Can be turned off anytime in settings."
     )
 
 //endregion
