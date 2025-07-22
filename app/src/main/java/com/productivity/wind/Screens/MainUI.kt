@@ -87,6 +87,7 @@ fun Disipline() {
     if (Bar.HowManyDoneRetypes_InDay == 5) { }
     else {
         Text("Done: ${Bar.HowManyDoneRetypes_InDay}/5")
+        EditIcon()
         Text(
             text = coloredTarget,
             modifier = Modifier
