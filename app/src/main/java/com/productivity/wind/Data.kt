@@ -3,7 +3,6 @@ package com.productivity.wind
 
 import com.productivity.wind.Screens.DayChecker
 import com.productivity.wind.Screens.MyNavGraph
-import com.productivity.wind.Screens.isDeviceAdminEnabled
 import androidx.compose.runtime.mutableStateOf
 import android.app.Service
 import android.app.usage.UsageStatsManager
@@ -237,31 +236,6 @@ class WatchdogService : Service() {
                                 log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
                             }
                         }
-//                        if (currentApp == ) {
-//                            if (Bar.funTime > 0) {
-//                                Bar.funTime -= 1
-//                                log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-//                            } else {
-//                                BlockScreen()
-//                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
-//                            }
-//                        }
-
-
-
-                    if (currentApp == "com.android.settings") {
-
-                        if (Bar.funTime >1_000) {
-                            log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-                        }
-                        else {
-                            if (isDeviceAdminEnabled(Global1.context)) {
-                                GOtowindAPP()
-                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
-                            }
-                        }
-                    }
-
 
 
                     if (currentApp == "com.seekrtech.waterapp") {
@@ -276,21 +250,6 @@ class WatchdogService : Service() {
                             }
                         }
                     }
-                        if (currentApp == "com.seekrtech.waterapp") {
-                            log("NEW DAY??; ${Bar.NewDay}", "bad")
-                            log("waterdo time; ${Bar.WaterDOtime_spent}", "bad")
-                            if (Bar.NewDay) {
-                                if (Bar.WaterDOtime_spent > 50) {
-                                    Bar.funTime += 900
-                                    Bar.NewDay = false
-                                } else {
-                                    Bar.WaterDOtime_spent += 1
-                                }
-                            }
-                        }
-
-
-
                     }
                 }
             }
