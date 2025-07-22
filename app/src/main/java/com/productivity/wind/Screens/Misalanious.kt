@@ -664,11 +664,12 @@ class MyNotificationListener : NotificationListenerService()
 //CHECKS IF NEW DAY/// WIRED UP TO SETTINGS VAR NEWDAY
 object DayChecker {
     private var job: Job? = null
-    private var lastDate: String = LocalDate.now().toString()
 
+        
     fun start() {
         if (job?.isActive == true) return  // Already running
-
+        if (Bar.lastDate == "") { Bar.lastDate = LocalDate.now().toString() }
+            
         job = CoroutineScope(Dispatchers.Default).launch {
             while (coroutineContext.isActive) {
                 delay(60 * 1000L)
