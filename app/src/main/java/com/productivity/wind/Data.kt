@@ -308,6 +308,8 @@ fun AppStart_beforeUI(context: Context) {
 
 @Composable
 fun AppStart() {
+    val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
+    val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
