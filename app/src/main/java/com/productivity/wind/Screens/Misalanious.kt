@@ -137,7 +137,6 @@ fun MainHeader(){
         verticalAlignment = Alignment.CenterVertically
     ) {
         MenuIcon()
-        EditIcon()
         Spacer(modifier = Modifier.width(12.dp))
         Text(text = "Points: ${Bar.funTime}", fontSize = 18.sp)
         Text(text = "WaterDo: ${Bar.WaterDOtime_spent}", fontSize = 18.sp)
@@ -727,11 +726,11 @@ fun EditIcon() {
     val showBeginnerAlert = remember { mutableStateOf(false) }
     val showVeteranAlert = remember { mutableStateOf(false) }
 
-    var BeginnerA_Title by remember { mutableStateOf("Get 100 points") }
-    var BeginnerA_Message by remember { mutableStateOf("Before being allowed to change the text, need a minimum of 100 points. [After changing the text once it increases permanantly to 1k]. This is to help you stay disiplined afterwards") }
+    var BeginnerA_Title by remember { mutableStateOf("Get 10 points") }
+    var BeginnerA_Message by remember { mutableStateOf("Before being allowed to change the text, need a minimum of 10 points. [After changing the text once it increases permanantly to 100]. This is to help you stay disiplined afterwards") }
 
-    var VeteranA_Title by remember { mutableStateOf("Get 1k points") }
-    var VeteranA_Message by remember { mutableStateOf("Need 1k points before changing the text: this is to help you stay disiplined") }
+    var VeteranA_Title by remember { mutableStateOf("Get 100 points") }
+    var VeteranA_Message by remember { mutableStateOf("Need 100 points before changing the text: this is to help you stay disiplined") }
 
 
     LazyPopup(show = showBeginnerAlert, title = BeginnerA_Title, message = BeginnerA_Message)
@@ -744,8 +743,8 @@ fun EditIcon() {
 
 
     IconButton(onClick = {
-        if (Bar.FirstEditText && Bar.funTime > 99) show.value=true
-        else if (!Bar.FirstEditText && Bar.funTime > 999) show.value=true
+        if (Bar.FirstEditText && Bar.funTime > 9) show.value=true
+        else if (!Bar.FirstEditText && Bar.funTime > 99) show.value=true
         else if (Bar.FirstEditText) showBeginnerAlert.value = true
         else if (!Bar.FirstEditText) showVeteranAlert.value = true
     }
@@ -766,11 +765,11 @@ fun G_EditIcon() {
     val showBeginnerAlert = remember { mutableStateOf(false) }
     val showVeteranAlert = remember { mutableStateOf(false) }
 
-    var BeginnerA_Title by remember { mutableStateOf("Get 100 points") }
-    var BeginnerA_Message by remember { mutableStateOf("Before being allowed to change the text, need a minimum of 100 points. [After changing the text once it increases permanantly to 1k]. This is to help you stay disiplined afterwards") }
+    var BeginnerA_Title by remember { mutableStateOf("Get 10 points") }
+    var BeginnerA_Message by remember { mutableStateOf("Before being allowed to change the text, need a minimum of 10 points. [After changing the text once it increases permanantly to 100]. This is to help you stay disiplined afterwards") }
 
-    var VeteranA_Title by remember { mutableStateOf("Get 1k points") }
-    var VeteranA_Message by remember { mutableStateOf("Need 1k points before changing the text: this is to help you stay disiplined") }
+    var VeteranA_Title by remember { mutableStateOf("Get 100 points") }
+    var VeteranA_Message by remember { mutableStateOf("Need 100 points before changing the text: this is to help you stay disiplined") }
 
 
     LazyPopup(show = showBeginnerAlert, title = BeginnerA_Title, message = BeginnerA_Message)
