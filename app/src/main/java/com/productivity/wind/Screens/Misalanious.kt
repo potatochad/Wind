@@ -674,8 +674,8 @@ object DayChecker {
             while (coroutineContext.isActive) {
                 delay(60 * 1000L)
                 val today = LocalDate.now().toString()
-                if (today != lastDate) {
-                    lastDate = today
+                if (today != Bar.lastDate) {
+                    Bar.lastDate = today
                     onNewDay()
                 }
             }
