@@ -49,6 +49,12 @@ fun Main() {
 
 @Composable
 fun Disipline() {
+    val ScrollText = rememberScrollState()
+
+    LaunchedEffect(Bar.highestCorrect) {
+    ScrollText.animateScrollBy(1)
+    }
+
     fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
         for (i in text.indices) {
             if (i < correctUntil) {
@@ -77,7 +83,7 @@ fun Disipline() {
             text = coloredTarget,
             modifier = Modifier
                 .height(200.dp)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(ScrollText)
         )
         Spacer(modifier = Modifier.height(20.dp))
 
