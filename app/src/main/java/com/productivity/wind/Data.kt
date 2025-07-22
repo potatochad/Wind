@@ -45,6 +45,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
 import androidx.navigation.compose.rememberNavController
 import com.productivity.wind.ui.theme.KeepAliveTheme
+import androidx.compose.ui.platform.LocalConfiguration
+
 
 fun <T> m(value: T) = mutableStateOf(value)
 
