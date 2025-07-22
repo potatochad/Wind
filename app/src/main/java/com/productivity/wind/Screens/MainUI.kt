@@ -58,7 +58,7 @@ fun Disipline() {
     val ScrollText = rememberScrollState()
 
     LaunchedEffect(Bar.highestCorrect) {
-    ScrollText.animateScrollBy(1)
+    ScrollText.animateScrollBy(1f)
     }
 
     fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
