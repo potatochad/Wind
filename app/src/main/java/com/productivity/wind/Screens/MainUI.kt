@@ -58,7 +58,9 @@ fun Disipline() {
     val ScrollText = rememberScrollState()
 
     LaunchedEffect(Bar.highestCorrect) {
-    ScrollText.animateScrollBy(1f)
+        if (Bar.highestCorrect > 20) {
+            ScrollText.animateScrollBy(2f)
+        }
     }
 
     fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
@@ -133,6 +135,14 @@ fun Disipline() {
 
 @Composable
 fun German() {
+    val ScrollText = rememberScrollState()
+
+    LaunchedEffect(Bar.G_highestCorrect) {
+        if (Bar.G_highestCorrect > 20) {
+            ScrollText.animateScrollBy(2f)
+        }
+    }
+    
     fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
         for (i in text.indices) {
             if (i < correctUntil) {
@@ -159,7 +169,7 @@ fun German() {
         text = coloredTarget,
         modifier = Modifier
             .height(200.dp)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(ScrollText)
     )
     Spacer(modifier = Modifier.height(20.dp))
 
