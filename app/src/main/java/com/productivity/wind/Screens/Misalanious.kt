@@ -668,8 +668,7 @@ fun isDeviceAdminEnabled(ctx: Context): Boolean =
         .isAdminActive(ComponentName(ctx, MyDeviceAdminReceiver::class.java))
 
 fun areAllPermissionsEnabled(ctx: Context): Boolean {
-    return isDrawOnTopEnabled(ctx)
-            && isNotificationEnabled(ctx)
+    return isNotificationEnabled(ctx)
             && isBatteryOptimizationDisabled(ctx)
             && isUsageStatsP_Enabled(ctx)
 }
