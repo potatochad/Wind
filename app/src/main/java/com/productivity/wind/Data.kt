@@ -54,6 +54,7 @@ class Settings {
     var funTime by m(0)
     var showBlockScreen by m(true)
     var currentApp by m("")
+    var lastDate by m("")
 
     //region COPY PASTE THING Disipline
 
