@@ -36,12 +36,12 @@ import androidx.compose.foundation.gestures.animateScrollBy
 
 
 
-//
 @Composable
 fun Main() {
-    LazyMenu { Menu();  }
+    LazyMenu { Menu() }
     if (Bar.NewDay == true) { Bar.HowManyDoneRetypes_InDay = 0}
-
+    Bar.NewDay = false
+    
     NewDayWaterDo()
     SettingsScreen(titleContent = { MainHeader() }, showBack = false, showSearch = false) {
         Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
@@ -91,7 +91,7 @@ fun Disipline() {
         Text(
             text = coloredTarget,
             modifier = Modifier
-                .height(200.dp)
+                .heightIn(max = 200.dp)
                 .verticalScroll(ScrollText)
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -169,7 +169,7 @@ fun German() {
     Text(
         text = coloredTarget,
         modifier = Modifier
-            .height(200.dp)
+            .heightIn(max = 200.dp)
             .verticalScroll(ScrollText)
     )
     Spacer(modifier = Modifier.height(20.dp))
