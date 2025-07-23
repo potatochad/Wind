@@ -47,7 +47,7 @@ import androidx.navigation.compose.rememberNavController
 import com.productivity.wind.ui.theme.KeepAliveTheme
 import androidx.compose.ui.platform.LocalConfiguration
 
-
+//
 fun <T> m(value: T) = mutableStateOf(value)
 
 class Settings {
