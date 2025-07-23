@@ -253,40 +253,66 @@ object SettingsSaved {
             else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
         }
     }
-    fun backupToFile() {
-        val prefs = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "wind_settings_backup.txt")
-        file.printWriter().use { out ->
-        prefs.all.forEach { (key, value) ->
-            out.println("$key=$value")
-        }
-        }
-    }
-    fun restoreFromFile() {
-      val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "wind_settings_backup.txt")
-      if (!file.exists()) {
-          log("No backup found!", "bad")
-          return
-      }
+}
 
-    val prefs = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-    val editor = prefs.edit()
-    file.forEachLine { line ->
-        val (key, value) = line.split("=", limit = 2)
-        when {
-            value.equals("true", true) || value.equals("false", true) -> editor.putBoolean(key, value.toBoolean())
-            value.toIntOrNull() != null -> editor.putInt(key, value.toInt())
-            value.toFloatOrNull() != null -> editor.putFloat(key, value.toFloat())
-            value.toLongOrNull() != null -> editor.putLong(key, value.toLong())
-            else -> editor.putString(key, value)
+@Composable
+fun BsaveToFile() {
+    val context = LocalContext.current
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument("text/plain")
+    ) { uri ->
+        if (uri != null) {
+            val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+            context.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
+                prefs.all.forEach { (key, value) -> out.write("$key=$value\n") }
+            }
         }
     }
-    editor.apply()
+
+    LaunchedEffect(trigger) { launcher.launch("WindBackUp.txt")
+    }
+}
+@Composable
+fun BrestoreFromFile(trigger: Boolean) {
+    val context = LocalContext.current
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri != null) {
+            val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+            val editor = prefs.edit()
+
+            try {
+                context.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
+                    lines.forEach { line ->
+                        if (!line.contains("=")) return@forEach // Skip bad line
+
+                        val (key, value) = line.split("=", limit = 2)
+                        when {
+                            value.equals("true", true) || value.equals("false", true) -> editor.putBoolean(key, value.toBoolean())
+                            value.toIntOrNull() != null -> editor.putInt(key, value.toInt())
+                            value.toFloatOrNull() != null -> editor.putFloat(key, value.toFloat())
+                            value.toLongOrNull() != null -> editor.putLong(key, value.toLong())
+                            else -> editor.putString(key, value)
+                        }
+                    }
+                }
+                editor.apply()
+                log("Restore successful", "good")
+            } catch (e: Exception) {
+                log("Restore failed: ${e.message}", "bad")
+            }
+        }
+    }
+
+    LaunchedEffect(trigger) {
+        if (trigger) launcher.launch(arrayOf("text/plain"))
+    }
 }
 
 
-    
-}
 
 //endregion
 
