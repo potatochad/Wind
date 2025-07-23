@@ -462,17 +462,13 @@ fun SettingsScreen() {
         SettingItem(
            icon = Icons.Outlined.Restore,
            title = "Restore",
-           onClick = { 
-               
-           }
+           onClick = { restoreFromFile() }
         )
 
         SettingItem(
           icon = Icons.Outlined.Backup,
           title = "BackUp",
-          onClick = { 
-          
-          }
+          onClick = { backupToFile() }
         )
 
     }
