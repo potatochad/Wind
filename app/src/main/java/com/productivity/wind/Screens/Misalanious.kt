@@ -88,6 +88,8 @@ import com.productivity.wind.WatchdogAccessibilityService
 import com.productivity.wind.apps
 import com.productivity.wind.log
 import com.productivity.wind.SettingsScreen
+import androidx.compose.material.icons.filled.Face
+
 
 //region NavController
 //Global1.navController - to use anywhere, no input
@@ -137,9 +139,10 @@ fun MainHeader(){
         verticalAlignment = Alignment.CenterVertically
     ) {
         MenuIcon()
+        ChillIcon()
         Spacer(modifier = Modifier.width(12.dp))
-        Text(text = "Points: ${Bar.funTime}", fontSize = 18.sp)
-        Text(text = "WaterDo: ${Bar.WaterDOtime_spent}", fontSize = 18.sp)
+        Text(text = "Points ${Bar.funTime}", fontSize = 18.sp)
+        Text(text = "Water ${Bar.WaterDOtime_spent}", fontSize = 18.sp)
 
 
         Spacer(modifier = Modifier.weight(1f))
@@ -718,6 +721,16 @@ fun MenuIcon() {
             tint = Color(0xFFFFD700)
         )
     }
+}
+@Composable
+fun ChillIcon() {
+  IconButton(onClick = {  }) {
+        Icon(
+            imageVector = Icons.Default.Face,
+            contentDescription = "Chill",
+            tint = Color(0xFFFFD700)
+        )
+  }       
 }
 @Composable
 fun EditIcon() {
