@@ -60,7 +60,15 @@ fun Disipline() {
 
     LaunchedEffect(Bar.highestCorrect) {
         if (Bar.highestCorrect > 20) {
-            ScrollText.animateScrollBy(2f)
+            ScrollText.animateScrollBy(1f)
+        }
+    }
+
+    val ScrollINPUTText = rememberScrollState()
+
+    LaunchedEffect(Bar.highestCorrect) {
+        if (Bar.highestCorrect > 20) {
+            ScrollINPUTText.animateScrollBy(15f)
         }
     }
 
@@ -129,7 +137,7 @@ fun Disipline() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(ScrollINPUTText),
             placeholder = { Text("Start typing...") }
         )
     }
@@ -141,7 +149,7 @@ fun German() {
 
     LaunchedEffect(Bar.G_highestCorrect) {
         if (Bar.G_highestCorrect > 20) {
-            ScrollText.animateScrollBy(2f)
+            ScrollText.animateScrollBy(1f)
         }
     }
     
