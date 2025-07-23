@@ -89,8 +89,8 @@ import com.productivity.wind.apps
 import com.productivity.wind.log
 import com.productivity.wind.SettingsScreen
 import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Restore
-import androidx.compose.material.icons.filled.Backup
+import androidx.compose.material.icons.outlined.Restore
+import androidx.compose.material.icons.outlined.Backup
 
 
 
