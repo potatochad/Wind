@@ -251,6 +251,17 @@ object SettingsSaved {
             else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
         }
     }
+    fun backupToFile() {
+        val prefs = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "wind_settings_backup.txt")
+        file.printWriter().use { out ->
+        prefs.all.forEach { (key, value) ->
+            out.println("$key=$value")
+        }
+        }
+    }
+
+    
 }
 
 //endregion
