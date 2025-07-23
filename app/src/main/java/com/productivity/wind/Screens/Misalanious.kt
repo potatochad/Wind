@@ -88,10 +88,10 @@ import com.productivity.wind.WatchdogAccessibilityService
 import com.productivity.wind.apps
 import com.productivity.wind.log
 import com.productivity.wind.SettingsScreen
-import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.outlined.Restore
 import androidx.compose.material.icons.outlined.Backup
-
+import com.productivity.wind.SettingsSaved
 
 
 //region NavController
@@ -743,7 +743,7 @@ fun MenuIcon() {
 fun ChillIcon() {
   IconButton(onClick = {  }) {
         Icon(
-            imageVector = Icons.Default.Face,
+            imageVector = Icons.Default.SportsEsports,
             contentDescription = "Chill",
             tint = Color(0xFFFFD700)
         )
