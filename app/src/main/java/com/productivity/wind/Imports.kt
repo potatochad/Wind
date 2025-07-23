@@ -260,6 +260,28 @@ object SettingsSaved {
         }
         }
     }
+    fun restoreFromFile() {
+      val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "wind_settings_backup.txt")
+      if (!file.exists()) {
+          log("No backup found!", "bad")
+          return
+      }
+
+    val prefs = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    val editor = prefs.edit()
+    file.forEachLine { line ->
+        val (key, value) = line.split("=", limit = 2)
+        when {
+            value.equals("true", true) || value.equals("false", true) -> editor.putBoolean(key, value.toBoolean())
+            value.toIntOrNull() != null -> editor.putInt(key, value.toInt())
+            value.toFloatOrNull() != null -> editor.putFloat(key, value.toFloat())
+            value.toLongOrNull() != null -> editor.putLong(key, value.toLong())
+            else -> editor.putString(key, value)
+        }
+    }
+    editor.apply()
+}
+
 
     
 }
