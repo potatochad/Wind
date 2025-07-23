@@ -89,6 +89,9 @@ import com.productivity.wind.apps
 import com.productivity.wind.log
 import com.productivity.wind.SettingsScreen
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Restore
+import androidx.compose.material.icons.filled.Backup
+
 
 
 //region NavController
@@ -453,7 +456,21 @@ fun SettingsScreen() {
         SettingItem(
             icon = Icons.Outlined.AdminPanelSettings,
             title = "Permissions",
-            onClick = { Global1.navController.navigate("SettingsP_Screen") })
+            onClick = { Global1.navController.navigate("SettingsP_Screen") }
+        )
+        
+        SettingItem(
+           icon = Icons.Outlined.Restore,
+           title = "Restore",
+           onClick = { }
+        )
+
+        SettingItem(
+          icon = Icons.Outlined.Backup,
+          title = "BackUp",
+          onClick = { }
+        )
+
     }
 }
 
