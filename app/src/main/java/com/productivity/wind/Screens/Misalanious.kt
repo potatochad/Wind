@@ -446,9 +446,9 @@ fun Achievements()= NoLagCompose {
 
             SettingItem(
             icon = Icons.Outlined.AdminPanelSettings,
-            title = "How many typed letters",
+            title = "Typed letters",
             endContent = {
-                    Text("${Bar.funTime}")
+                    Text("${Bar.TotalTypedLetters}")
             }
         )
             
