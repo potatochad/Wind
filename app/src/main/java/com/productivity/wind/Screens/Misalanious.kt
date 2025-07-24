@@ -168,7 +168,7 @@ fun UsageIcon() {
         if (Bar.showUsageIcon) {
                 SimpleIconButton(
                         onClick = {Global1.navcontroller.navigate(""),
-                        icon = Menu
+                        icon = Icons.Outlined.Chat
                 }
         }
 }
