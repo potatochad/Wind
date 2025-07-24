@@ -256,6 +256,34 @@ object SettingsSaved {
             else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
         }
     }
+    fun initFromFile(map: Map<String, String>) {
+    if (initOnce) return
+    initOnce = true
+
+    Settings::class.memberProperties.forEach { barIDK ->
+        if (barIDK is KMutableProperty1<Settings, *>) {
+            @Suppress("UNCHECKED_CAST")
+            val bar = barIDK as KMutableProperty1<Settings, Any?>
+            bar.isAccessible = true
+            val name = bar.name
+            val type = bar.returnType.classifier
+
+            val stateProp = bar.getDelegate(Bar)
+            val raw = map[name]
+
+            when {
+                stateProp is MutableState<*> && type == Boolean::class -> (stateProp as MutableState<Boolean>).value = raw?.toBoolean() ?: false
+                stateProp is MutableState<*> && type == String::class -> (stateProp as MutableState<String>).value = raw ?: ""
+                stateProp is MutableState<*> && type == Int::class -> (stateProp as MutableState<Int>).value = raw?.toIntOrNull() ?: 0
+                stateProp is MutableState<*> && type == Float::class -> (stateProp as MutableState<Float>).value = raw?.toFloatOrNull() ?: 0f
+                stateProp is MutableState<*> && type == Long::class -> (stateProp as MutableState<Long>).value = raw?.toLongOrNull() ?: 0L
+            }
+        } else {
+            log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad")
+        }
+    }
+}
+
 }
 
 object UI {
@@ -286,38 +314,30 @@ fun BrestoreFromFile(trigger: Boolean) {
         contract = ActivityResultContracts.OpenDocument()
     ) { uri ->
         if (uri != null) {
-            val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-            val editor = prefs.edit()
-
             try {
+                val fileMap = mutableMapOf<String, String>()
+
                 context.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
                     lines.forEach { line ->
-                        if (!line.contains("=")) return@forEach // Skip bad line
-
+                        if (!line.contains("=")) return@forEach
                         val (key, value) = line.split("=", limit = 2)
-                        when {
-                            value.equals("true", true) || value.equals("false", true) -> editor.putBoolean(key, value.toBoolean())
-                            value.toIntOrNull() != null -> editor.putInt(key, value.toInt())
-                            value.toFloatOrNull() != null -> editor.putFloat(key, value.toFloat())
-                            value.toLongOrNull() != null -> editor.putLong(key, value.toLong())
-                            else -> editor.putString(key, value)
-                        }
+                        fileMap[key] = value
                     }
                 }
-                editor.apply()
+
+                SettingsSaved.initFromFile(fileMap)
             } catch (e: Exception) {
                 log("Restore failed: ${e.message}", "bad")
             }
         }
     }
 
-    LaunchedEffect(trigger) { 
+    LaunchedEffect(trigger) {
         if (trigger) {
-        launcher.launch(arrayOf("text/plain"))
-        Bar.restoringFromFile = true
-        SettingsSaved.init()
-        delay(1000L)
-        Bar.restoringFromFile = false
+            launcher.launch(arrayOf("text/plain"))
+            Bar.restoringFromFile = true
+            delay(1000L)
+            Bar.restoringFromFile = false
         }
     }
 }
