@@ -55,6 +55,7 @@ class Settings {
     var showBlockScreen by m(true)
     var currentApp by m("")
     var lastDate by m("")
+    var restoringFromFile by m(false)
 
     //region COPY PASTE THING Disipline
 
