@@ -313,6 +313,7 @@ fun AppStart_beforeUI(context: Context) {
 @Composable
 fun MAINStart() {
     LaunchedEffect(Unit) {
+        delay(1_000L)
         Bar.restoringFromFile = false
     }
 }
