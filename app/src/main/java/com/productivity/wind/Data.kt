@@ -130,6 +130,7 @@ class Settings {
     //region ACHIEVEMENTS
 
     var TotalTypedLetters by m(0)
+    var showUsageIcon by m(true)
 
     //endregion
 
