@@ -363,13 +363,6 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
 
 
 
-
-
-
-
-}
-
-
 //endregion
 
 //region DATA MANAGE LISTS
