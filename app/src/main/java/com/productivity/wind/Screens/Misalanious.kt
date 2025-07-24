@@ -459,17 +459,22 @@ fun SettingsScreen() {
             onClick = { Global1.navController.navigate("SettingsP_Screen") }
         )
         
-        SettingItem(
-           icon = Icons.Outlined.Restore,
-           title = "Restore",
-           onClick = { UI.BrestoreFromFile() }
-        )
+        var restoreTrigger by remember { mutableStateOf(false) }
+        var backupTrigger by remember { mutableStateOf(false) }
 
-        SettingItem(
-          icon = Icons.Outlined.Backup,
-          title = "BackUp",
-          onClick = { UI.BsaveToFile() }
-        )
+SettingItem(
+    icon = Icons.Outlined.Restore,
+    title = "Restore",
+    onClick = { restoreTrigger = true }
+)
+
+SettingItem(
+    icon = Icons.Outlined.Backup,
+    title = "BackUp",
+    onClick = { backupTrigger = true }
+)
+UI.BrestoreFromFile(restoreTrigger)
+UI.BsaveToFile(backupTrigger)
 
     }
 }
