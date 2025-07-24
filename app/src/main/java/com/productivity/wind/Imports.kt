@@ -204,6 +204,7 @@ object SettingsSaved {
     
     fun Bsave() {
         if (Dosave?.isActive == true) return
+        if (Bar.restoringFromFile) return
         Dosave = GlobalScope.launch {
             while (isActive) {
                 val data = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
@@ -310,7 +311,14 @@ fun BrestoreFromFile(trigger: Boolean) {
         }
     }
 
-    LaunchedEffect(trigger) { if (trigger) launcher.launch(arrayOf("text/plain"))
+    LaunchedEffect(trigger) { 
+        if (trigger) {
+        launcher.launch(arrayOf("text/plain"))
+        Bar.restoringFromFile = true
+        SettingsSaved.init()
+        delay(1000L)
+        Bar.restoringFromFile = false
+        }
     }
 }
 }
