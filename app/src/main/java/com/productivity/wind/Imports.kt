@@ -341,6 +341,32 @@ fun BrestoreFromFile(trigger: Boolean) {
         }
     }
 }
+
+@Composable
+fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
+    Switch(
+        checked = isOn,
+        onCheckedChange = onToggle,
+        colors = SwitchDefaults.colors(
+            checkedThumbColor = Color(0xFFFFD700),         // Gold thumb
+            uncheckedThumbColor = Color.LightGray,         // Soft gray when off
+            checkedTrackColor = Color(0xFFFFF8DC),         // Light creamy gold track
+            uncheckedTrackColor = Color(0xFFE0E0E0)        // Muted gray track
+        )
+    )
+}
+
+
+    
+}
+
+
+
+
+
+
+
+
 }
 
 
@@ -859,22 +885,6 @@ fun ShowMore(
 
 
 //region SCREENS
-
-@Composable
-fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
-    Switch(
-        checked = isOn,
-        onCheckedChange = onToggle,
-        colors = SwitchDefaults.colors(
-            checkedThumbColor = Color(0xFFFFD700),         // Gold thumb
-            uncheckedThumbColor = Color.LightGray,         // Soft gray when off
-            checkedTrackColor = Color(0xFFFFF8DC),         // Light creamy gold track
-            uncheckedTrackColor = Color(0xFFE0E0E0)        // Muted gray track
-        )
-    )
-}
-
-
 
 @Composable
 fun PermissionsButton(
