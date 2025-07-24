@@ -442,8 +442,17 @@ fun ConfigureScreen() = NoLagCompose {
 
 @Composable
 fun Achievements()= NoLagCompose {
-    
+    SettingsScreen(titleContent = { Text("Achievements") }, showSearch = false) {
 
+            SettingItem(
+            icon = Icons.Outlined.AdminPanelSettings,
+            title = "How many typed letters",
+            endContent = {
+                    Text("${Bar.funTime}")
+            }
+        )
+            
+    }
 }
 
 
@@ -754,6 +763,7 @@ fun ChillIcon() {
         )
   }       
 }
+
 @Composable
 fun EditIcon() {
 
