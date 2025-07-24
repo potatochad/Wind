@@ -257,6 +257,8 @@ object SettingsSaved {
     }
 }
 
+object UI {
+    
 @Composable
 fun BsaveToFile() {
     val context = LocalContext.current
@@ -311,7 +313,7 @@ fun BrestoreFromFile() {
     LaunchedEffect(Unit) { launcher.launch(arrayOf("text/plain"))
     }
 }
-
+}
 
 
 //endregion
