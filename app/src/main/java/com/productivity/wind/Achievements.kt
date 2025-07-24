@@ -105,7 +105,7 @@ fun Achievements()= NoLagCompose {
             icon = Icons.Outlined.AdminPanelSettings,
             title = "${toggleText(Bar.showUsageIcon)} usage icon",
             endContent = {
-                    OnOffSwitch(isOn = Bar.showUsageIcon, onToggle = { Bar.showUsageIcon = it }) 
+                    UI.OnOffSwitch(isOn = Bar.showUsageIcon, onToggle = { Bar.showUsageIcon = it }) 
                }
             )
             
