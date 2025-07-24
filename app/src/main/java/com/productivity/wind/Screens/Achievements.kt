@@ -80,7 +80,6 @@ import com.productivity.wind.Blist
 import com.productivity.wind.Global1
 import com.productivity.wind.LazyPopup
 import com.productivity.wind.NoLagCompose
-import com.productivity.wind.OnOffSwitch
 import com.productivity.wind.PermissionsButton
 import com.productivity.wind.R
 import com.productivity.wind.SettingItem
