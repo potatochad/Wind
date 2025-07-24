@@ -102,7 +102,6 @@ import kotlinx.coroutines.yield
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.jvm.isAccessible
-
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
@@ -121,6 +120,9 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import android.net.Uri
 
 
 
@@ -270,11 +272,11 @@ fun BsaveToFile() {
         }
     }
 
-    LaunchedEffect(trigger) { launcher.launch("WindBackUp.txt")
+    LaunchedEffect(Unit) { launcher.launch("WindBackUp.txt")
     }
 }
 @Composable
-fun BrestoreFromFile(trigger: Boolean) {
+fun BrestoreFromFile() {
     val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
@@ -300,15 +302,13 @@ fun BrestoreFromFile(trigger: Boolean) {
                     }
                 }
                 editor.apply()
-                log("Restore successful", "good")
             } catch (e: Exception) {
                 log("Restore failed: ${e.message}", "bad")
             }
         }
     }
 
-    LaunchedEffect(trigger) {
-        if (trigger) launcher.launch(arrayOf("text/plain"))
+    LaunchedEffect(Unit) { launcher.launch(arrayOf("text/plain"))
     }
 }
 
