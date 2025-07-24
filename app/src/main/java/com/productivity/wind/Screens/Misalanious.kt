@@ -93,6 +93,7 @@ import androidx.compose.material.icons.outlined.Restore
 import androidx.compose.material.icons.outlined.Backup
 import com.productivity.wind.SettingsSaved
 import com.productivity.wind.UI
+import com.productivity.wind.Achievements
 
 //region NavController
 //Global1.navController - to use anywhere, no input
@@ -446,28 +447,6 @@ fun ConfigureScreen() = NoLagCompose {
 }
 
 //endregion CONFIGURE SCREEN
-
-
-@Composable
-fun Achievements()= NoLagCompose {
-    SettingsScreen(titleContent = { Text("Achievements") }, showSearch = false) {
-
-            SettingItem(
-            icon = Icons.Outlined.AdminPanelSettings,
-            title = "${Bar.TotalTypedLetters} usage icon",
-            endContent = {
-                    Text("ON OFF SWITCH")
-            }
-            SettingItem(
-            icon = Icons.Outlined.AdminPanelSettings,
-            title = "Typed letters",
-            endContent = {
-                    Text("${Bar.TotalTypedLetters}")
-            }
-        )
-            
-    }
-}
 
 
 //region Settings
