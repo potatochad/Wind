@@ -92,7 +92,7 @@ import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.outlined.Restore
 import androidx.compose.material.icons.outlined.Backup
 import com.productivity.wind.SettingsSaved
-
+import com.productivity.wind.UI
 
 //region NavController
 //Global1.navController - to use anywhere, no input
@@ -462,13 +462,13 @@ fun SettingsScreen() {
         SettingItem(
            icon = Icons.Outlined.Restore,
            title = "Restore",
-           onClick = { SettingsSaved.BrestoreFromFile() }
+           onClick = { UI.BrestoreFromFile() }
         )
 
         SettingItem(
           icon = Icons.Outlined.Backup,
           title = "BackUp",
-          onClick = { SettingsSaved.BsaveToFile() }
+          onClick = { UI.BsaveToFile() }
         )
 
     }
