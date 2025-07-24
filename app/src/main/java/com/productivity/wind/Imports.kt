@@ -259,8 +259,8 @@ object SettingsSaved {
 
 object UI {
     
-@Composable
-fun BsaveToFile() {
+@Composable 
+fun BsaveToFile(trigger: Boolean) {
     val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
@@ -274,11 +274,11 @@ fun BsaveToFile() {
         }
     }
 
-    LaunchedEffect(Unit) { launcher.launch("WindBackUp.txt")
+    LaunchedEffect(trigger) { if (trigger) launcher.launch("WindBackUp.txt")
     }
 }
 @Composable
-fun BrestoreFromFile() {
+fun BrestoreFromFile(trigger: Boolean) {
     val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
@@ -310,7 +310,7 @@ fun BrestoreFromFile() {
         }
     }
 
-    LaunchedEffect(Unit) { launcher.launch(arrayOf("text/plain"))
+    LaunchedEffect(trigger) { if (trigger) launcher.launch(arrayOf("text/plain"))
     }
 }
 }
