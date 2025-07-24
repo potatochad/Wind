@@ -119,6 +119,14 @@ fun MyNavGraph(navController: NavHostController) {
             }
 
             //endregion SETTINGS
+
+            
+            //region ACHIEVEMENTS
+
+
+            
+            //endregion ACHIEVEMENTS
+
         }
 }
 
@@ -444,6 +452,12 @@ fun ConfigureScreen() = NoLagCompose {
 fun Achievements()= NoLagCompose {
     SettingsScreen(titleContent = { Text("Achievements") }, showSearch = false) {
 
+            SettingItem(
+            icon = Icons.Outlined.AdminPanelSettings,
+            title = "${Bar.TotalTypedLetters} usage icon",
+            endContent = {
+                    Text("ON OFF SWITCH")
+            }
             SettingItem(
             icon = Icons.Outlined.AdminPanelSettings,
             title = "Typed letters",
