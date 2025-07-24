@@ -152,17 +152,39 @@ fun MainHeader(){
     ) {
         MenuIcon()
         ChillIcon()
+        UsageIcon()
+        
         Spacer(modifier = Modifier.width(12.dp))
         Text(text = "Points ${Bar.funTime}", fontSize = 18.sp)
-        Text(text = "Water ${Bar.WaterDOtime_spent}", fontSize = 18.sp)
-
-
+        
         Spacer(modifier = Modifier.weight(1f))
 
         ConfigureIcon()
     }
 
 }
+
+@Composable
+fun UsageIcon() {
+        if (Bar.showUsageIcon) {
+                SimpleIconButton(
+                        onClick = {Global1.navcontroller.navigate(""),
+                        icon = Menu
+                }
+        }
+}
+
+@Composable
+fun SimpleIconButton(onClick: () -> Unit, icon: ImageVector) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = Color(0xFFFFD700)
+        )
+    }
+}
+
 
 //region MENU
 @Composable
@@ -746,6 +768,7 @@ fun MenuIcon() {
         )
     }
 }
+
 @Composable
 fun ChillIcon() {
   IconButton(onClick = {  }) {
