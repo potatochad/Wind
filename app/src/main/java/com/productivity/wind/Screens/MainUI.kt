@@ -35,14 +35,14 @@ import kotlinx.coroutines.launch
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.heightIn
 import com.productivity.wind.MAINStart
-
+import com.productivity.wind.LogDialogHost
 
 @Composable
 fun Main() {
     LazyMenu { Menu() }
     if (Bar.NewDay == true) { Bar.HowManyDoneRetypes_InDay = 0}
     Bar.NewDay = false
-    
+    LogDialogHost() 
     NewDayWaterDo()
     MAINStart()
     
