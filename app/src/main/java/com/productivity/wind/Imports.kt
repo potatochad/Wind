@@ -369,7 +369,7 @@ fun BsaveToFile(trigger: Boolean) {
     }
 }
 @Composable
-fun BrestoreFromFile(trigger: Boolean) {
+fun BrestoreFromFile(trigger: MutableState<Boolean>) {
     val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
@@ -401,8 +401,9 @@ fun BrestoreFromFile(trigger: Boolean) {
             logs.Visual("${}—Trigger")
             launcher.launch(arrayOf("text/plain"))
             Bar.restoringFromFile = true
-            delay(1000L)
+            delay(2000L)
             Bar.restoringFromFile = false
+            trigger.value = false
         }
     }
 }
