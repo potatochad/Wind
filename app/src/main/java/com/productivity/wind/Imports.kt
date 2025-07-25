@@ -147,7 +147,7 @@ fun log(message: String, tag: String? = "AppLog") {
     else { Log.d(tag, LogMessage) }
 }
 
-object logV {
+object logs {
     private val _messages = mutableStateListOf<String>()
     val currentMessage: String? get() = _messages.firstOrNull()
 
@@ -164,7 +164,7 @@ object logV {
 /*! call THIS IN YOUR COMPOSABLE (MAIN ONE)*/
 @Composable
 fun LogDialogHost() {
-    logV.currentMessage?.let { msg ->
+    logs.currentMessage?.let { msg ->
         VisibleLog(message = msg) 
     }
 }
@@ -188,7 +188,7 @@ fun VisibleLog(message: String) {
             }
         },
         confirmButton = {
-            TextButton(onClick = { logV.clear() } ) {
+            TextButton(onClick = { logs.clear() } ) {
                 Text("✕")
             }
         },
@@ -389,7 +389,7 @@ fun BrestoreFromFile(trigger: Boolean) {
 
                 SettingsSaved.initFromFile(fileMap)
             } catch (e: Exception) {
-                //VisibleLog("Restore failed: ${e.message}")
+                logs.Visual("Restore failed: ${e.message}")
             }
         }
     }
