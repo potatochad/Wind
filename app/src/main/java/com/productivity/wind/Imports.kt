@@ -394,9 +394,9 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
         }
     }
     logs.Visual("FUNCTION RUNNING")
-    LaunchedEffect(trigger) {
+    LaunchedEffect(trigger.value) {
         logs.Visual("${}—Trigger")
-        if (trigger) {
+        if (trigger.value) {
             
             logs.Visual("${}—Trigger")
             launcher.launch(arrayOf("text/plain"))
