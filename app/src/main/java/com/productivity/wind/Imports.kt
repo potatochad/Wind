@@ -159,22 +159,6 @@ object logV {
 
 
 /*! call THIS IN YOUR COMPOSABLE (MAIN ONE)*/
-
-object logV {
-    private val _messages = mutableStateListOf<String>()
-    val currentMessage: String? get() = _messages.firstOrNull()
-
-    fun Visual(msg: String) {
-        _messages.add(msg)
-    }
-
-    fun clear() {
-        if (_messages.isNotEmpty()) _messages.removeAt(0)
-    }
-}
-
-
-/*! call THIS IN YOUR COMPOSABLE (MAIN ONE)*/
 @Composable
 fun LogDialogHost() {
     logV.currentMessage?.let { msg ->
