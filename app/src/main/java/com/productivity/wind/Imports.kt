@@ -403,7 +403,7 @@ fun BrestoreFromFile(trigger: Boolean) {
 
                 SettingsSaved.initFromFile(fileMap)
             } catch (e: Exception) {
-                VisibleLog("Restore failed: ${e.message}")
+                //VisibleLog("Restore failed: ${e.message}")
             }
         }
     }
