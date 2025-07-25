@@ -500,7 +500,7 @@ SettingItem(
     title = "BackUp",
     onClick = { backupTrigger = true }
 )
-UI.BrestoreFromFile(restoreTrigger.value)
+UI.BrestoreFromFile(restoreTrigger)
 UI.BsaveToFile(backupTrigger)
 
     }
