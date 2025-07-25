@@ -364,7 +364,7 @@ object SettingsSaved {
 
 object UI {
     
-@Composable 
+@Composable
 fun BsaveToFile(trigger: Boolean) {
     val context = LocalContext.current
 
@@ -417,7 +417,7 @@ fun BrestoreFromFile(trigger: Boolean) {
         }
     }
 }
-}
+
 
 @Composable
 fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
