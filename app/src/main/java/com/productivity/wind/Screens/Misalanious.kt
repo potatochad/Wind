@@ -93,6 +93,8 @@ import androidx.compose.material.icons.outlined.Backup
 import com.productivity.wind.SettingsSaved
 import com.productivity.wind.UI
 import com.productivity.wind.Achievements
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Chat
 
 //region NavController
 //Global1.navController - to use anywhere, no input
@@ -168,7 +170,7 @@ fun MainHeader(){
 fun UsageIcon() {
     if (Bar.showUsageIcon) {
         SimpleIconButton(
-            onClick = { Global1.navcontroller.navigate("") },
+            onClick = { Global1.navController.navigate("") },
             icon = Icons.Outlined.Chat
         )
     }
