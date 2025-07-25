@@ -236,11 +236,11 @@ fun Menu() {
             title = "Settings",
             onClick = { Global1.navController.navigate("SettingsScreen"); Bar.ShowMenu = false }
         )
-//        SettingItem(
-//            icon = Icons.Outlined.QueryStats,
-//            title = "Achievements",
-//            onClick = { Global1.navController.navigate("Achievements"); Bar.ShowMenu = false }
-//        )
+        SettingItem(
+            icon = Icons.Outlined.QueryStats,
+            title = "Achievements",
+            onClick = { Global1.navController.navigate("Achievements"); Bar.ShowMenu = false }
+        )
     }
 }
 
