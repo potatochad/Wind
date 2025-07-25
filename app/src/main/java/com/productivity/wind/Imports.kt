@@ -131,6 +131,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
+import android.widget.ScrollView
 
 
 
@@ -189,7 +190,6 @@ fun VisibleLog(message: String) {
                 Text("✕")
             }
         },
-        buttons = {}
     )
 }
 
