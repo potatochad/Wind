@@ -286,6 +286,9 @@ object SettingsSaved {
 
 }
 
+fun VisibleLog(message: String) {
+    Toast.makeText(Global1.context, message, Toast.LENGTH_LONG).show()
+}
 object UI {
     
 @Composable 
@@ -327,7 +330,7 @@ fun BrestoreFromFile(trigger: Boolean) {
 
                 SettingsSaved.initFromFile(fileMap)
             } catch (e: Exception) {
-                log("Restore failed: ${e.message}", "bad")
+                VisibleLog("Restore failed: ${e.message}")
             }
         }
     }
