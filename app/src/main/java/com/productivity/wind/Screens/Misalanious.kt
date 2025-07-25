@@ -163,14 +163,15 @@ fun MainHeader(){
 
 }
 
+
 @Composable
 fun UsageIcon() {
-        if (Bar.showUsageIcon) {
-                SimpleIconButton(
-                        onClick = {Global1.navcontroller.navigate(""),
-                        icon = Icons.Outlined.Chat
-                }
-        }
+    if (Bar.showUsageIcon) {
+        SimpleIconButton(
+            onClick = { Global1.navcontroller.navigate("") },
+            icon = Icons.Outlined.Chat
+        )
+    }
 }
 
 @Composable
@@ -942,7 +943,7 @@ fun StopBlockingButton() {
     }
 
     // Main switch
-    OnOffSwitch(
+    UI.OnOffSwitch(
         isOn = Bar.BlockingEnabled,
         onToggle = { isNowOn ->
             if (isNowOn) {
