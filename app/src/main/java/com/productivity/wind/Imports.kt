@@ -395,10 +395,7 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
     }
     logs.Visual("FUNCTION RUNNING")
     LaunchedEffect(trigger.value) {
-        logs.Visual("${}—Trigger")
         if (trigger.value) {
-            
-            logs.Visual("${}—Trigger")
             launcher.launch(arrayOf("text/plain"))
             Bar.restoringFromFile = true
             delay(2000L)
