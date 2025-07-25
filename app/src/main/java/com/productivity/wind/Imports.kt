@@ -124,6 +124,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import android.net.Uri
 import android.widget.Toast
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 
 
@@ -136,6 +139,72 @@ fun log(message: String, tag: String? = "AppLog") {
 
     else { Log.d(tag, LogMessage) }
 }
+
+object logV {
+    private val _messages = mutableStateListOf<String>()
+    val currentMessage: String? get() = _messages.firstOrNull()
+
+    fun Visual(msg: String) {
+        _messages.add(msg)
+    }
+
+    fun clear() {
+        if (_messages.isNotEmpty()) _messages.removeAt(0)
+    }
+}
+
+
+/*! call THIS IN YOUR COMPOSABLE (MAIN ONE)*/
+
+object logV {
+    private val _messages = mutableStateListOf<String>()
+    val currentMessage: String? get() = _messages.firstOrNull()
+
+    fun Visual(msg: String) {
+        _messages.add(msg)
+    }
+
+    fun clear() {
+        if (_messages.isNotEmpty()) _messages.removeAt(0)
+    }
+}
+
+
+/*! call THIS IN YOUR COMPOSABLE (MAIN ONE)*/
+@Composable
+fun LogDialogHost() {
+    logV.currentMessage?.let { msg ->
+        VisibleLog(message = msg) 
+    }
+}
+
+
+@Composable
+fun VisibleLog(message: String) {
+    AlertDialog(
+        onDismissRequest = {},
+        title = { Text("Log Message") },
+        text = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 300.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                SelectionContainer {
+                    Text(message)
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { logV.clear() } ) {
+                Text("✕")
+            }
+        },
+        buttons = {}
+    )
+}
+
 
 //endregion
 
@@ -287,9 +356,8 @@ object SettingsSaved {
 
 }
 
-fun VisibleLog(message: String) {
-    Toast.makeText(Global1.context, message, Toast.LENGTH_LONG).show()
-}
+
+
 object UI {
     
 @Composable 
@@ -344,6 +412,7 @@ fun BrestoreFromFile(trigger: Boolean) {
             Bar.restoringFromFile = false
         }
     }
+}
 }
 
 @Composable
