@@ -170,7 +170,7 @@ fun MainHeader(){
 fun UsageIcon() {
     if (Bar.showUsageIcon) {
         SimpleIconButton(
-            onClick = { Global1.navController.navigate("") },
+            onClick = { Global1.navController.navigate("Achievements") },
             icon = Icons.Outlined.Chat
         )
     }
