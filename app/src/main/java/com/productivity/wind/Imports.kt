@@ -395,37 +395,27 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
     onDone = { println("Done pressed") }
 )
 */
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun InputField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholderText: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
+        .background(Color.Black), // Default background
     isNumber: Boolean = false,
-    maxLength: Int = Int.MAX_VALUE,
-    width: Dp = Dp.Unspecified,
-    height: Dp = Dp.Unspecified,
-    backgroundColor: Color = Color.Black,
     focusRequester: FocusRequester? = null,
     onDone: (() -> Unit)? = null
 ) {
-    val shape = RoundedCornerShape(6.dp)
+    Spacer(modifier = Modifier.width(8.dp))
 
     TextField(
         value = value,
         onValueChange = {
-            val trimmed = it.take(maxLength)
-            val parsed = if (isNumber) trimmed.toIntOrNull()?.toString() ?: "" else trimmed
+            val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
             onValueChange(parsed)
         },
-        placeholder = {
-            Text(
-                text = placeholderText,
-                color = Color.LightGray,
-                fontSize = 14.sp
-            )
-        },
+        placeholder = { Text(placeholderText, color = Color.LightGray) },
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text,
@@ -434,17 +424,12 @@ fun InputField(
         keyboardActions = KeyboardActions(
             onDone = { onDone?.invoke() }
         ),
-        modifier = modifier
-            .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier)
-            .width(if (width != Dp.Unspecified) width else Dp.Unspecified)
-            .height(if (height != Dp.Unspecified) height else Dp.Unspecified)
-            .background(backgroundColor, shape),
-        shape = shape,
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.Transparent,
-            textColor = Color.White
+        modifier = modifier.then(
+            focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier
         )
     )
+
+    Spacer(modifier = Modifier.width(8.dp))
 }
 
 
