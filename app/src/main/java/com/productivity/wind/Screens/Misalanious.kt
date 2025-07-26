@@ -1,7 +1,5 @@
 package com.productivity.wind.Screens
 
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.drawLine
 import androidx.compose.foundation.border
 import android.app.AlertDialog
 import android.app.AppOpsManager
@@ -518,24 +516,29 @@ SettingItem(
 
                     var text by remember { mutableStateOf("") }
 
-UI.InputField(
-    value = text.take(10), 
-    onValueChange = { text = it.take(10) },
-    placeholderText = "Enter name",
+Box(
     modifier = Modifier
-    .width(100.dp)
-    .height(30.dp)
-    .drawBehind {
-        val strokeWidth = 1.dp.toPx()
-        drawLine(
-            color = Color(0xFFFFD700),
-            start = Offset(0f, size.height),
-            end = Offset(size.width, size.height),
-            strokeWidth = strokeWidth
-        )
-    }
-    .padding(horizontal = 8.dp)
-)
+        .width(100.dp)
+        .height(32.dp) // little taller to fit line
+) {
+    UI.InputField(
+        value = text.take(10),
+        onValueChange = { text = it.take(10) },
+        placeholderText = "Enter name",
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.TopStart)
+            .padding(horizontal = 8.dp)
+    )
+    Divider(
+        color = Color(0xFFFFD700),
+        thickness = 1.dp,
+        modifier = Modifier
+            .align(Alignment.BottomStart)
+            .fillMaxWidth()
+    )
+}
+
 
             }
         )
