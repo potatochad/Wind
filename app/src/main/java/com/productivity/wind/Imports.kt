@@ -146,53 +146,8 @@ fun log(message: String, tag: String? = "AppLog") {
 
     else { Log.d(tag, LogMessage) }
 }
-
-object logs {
-    private val _messages = mutableStateListOf<String>()
-    val currentMessage: String? get() = _messages.firstOrNull()
-
-    fun Visual(msg: String) {
-        _messages.add(msg)
-    }
-
-    fun clear() {
-        if (_messages.isNotEmpty()) _messages.removeAt(0)
-    }
-}
-
-
-/*! call THIS IN YOUR COMPOSABLE (MAIN ONE)*/
-@Composable
-fun LogDialogHost() {
-    logs.currentMessage?.let { msg ->
-        VisibleLog(message = msg) 
-    }
-}
-
-
-@Composable
-fun VisibleLog(message: String) {
-    AlertDialog(
-        onDismissRequest = {},
-        title = { Text("Log Message") },
-        text = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = 300.dp)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                SelectionContainer {
-                    Text(message)
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = { logs.clear() } ) {
-                Text("✕")
-            }
-        },
-    )
+fun Vlog(msg: String) {
+    Toast.makeText(Global1.context, msg, Toast.LENGTH_SHORT).show()
 }
 
 
@@ -389,11 +344,10 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
 
                 SettingsSaved.initFromFile(fileMap)
             } catch (e: Exception) {
-                logs.Visual("Restore failed: ${e.message}")
+                log("Restore failed: ${e.message}", "bad")
             }
         }
     }
-    logs.Visual("FUNCTION RUNNING")
     LaunchedEffect(trigger.value) {
         if (trigger.value) {
             launcher.launch(arrayOf("text/plain"))
@@ -401,6 +355,7 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
             delay(2000L)
             Bar.restoringFromFile = false
             trigger.value = false
+            Vlog("Succesfully restored")
         }
     }
 }
