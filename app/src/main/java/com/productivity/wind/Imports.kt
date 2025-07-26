@@ -140,13 +140,14 @@ import androidx.compose.foundation.rememberScrollState
 
 //region log
 
-fun log(message: String, tag: String? = "AppLog") {
+fun log(message: String, tag: String? = "Bad") {
     var LogMessage = message ; val stackTrace = Thread.currentThread().stackTrace ; val element = stackTrace[3] ; val fileName = element.fileName ; val lineNumber = element.lineNumber
     LogMessage= "[$fileName:$lineNumber] $message"
     if ("bad".equals(tag, true)) { Log.w(tag, LogMessage) }
 
     else { Log.d(tag, LogMessage) }
 }
+
 fun Vlog(msg: String) {
     Toast.makeText(Global1.context, msg, Toast.LENGTH_SHORT).show()
 }
@@ -273,7 +274,6 @@ object SettingsSaved {
         }
     }
     fun initFromFile(map: Map<String, String>) {
-
     Settings::class.memberProperties.forEach { barIDK ->
         if (barIDK is KMutableProperty1<Settings, *>) {
             @Suppress("UNCHECKED_CAST")
@@ -380,7 +380,46 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
 }
 
 
-    
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun InputField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    placeholderText: String,
+    modifier: Modifier = Modifier
+        .background(Color.Black), // Default background
+    isNumber: Boolean = false,
+    focusRequester: FocusRequester? = null,
+    onDone: (() -> Unit)? = null
+) {
+    Spacer(modifier = Modifier.width(8.dp))
+
+    TextField(
+        value = value,
+        onValueChange = {
+            val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
+            onValueChange(parsed)
+        },
+        placeholder = { Text(placeholderText, color = Color.LightGray) },
+        singleLine = true,
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text,
+            imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { onDone?.invoke() }
+        ),
+        modifier = modifier.then(
+            focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier
+        )
+    )
+
+    Spacer(modifier = Modifier.width(8.dp))
+}
+
+
+
+    //INSIDE UI OBJECTTTTTT
 }
 
 
@@ -752,79 +791,6 @@ object UniversalListManager {
 //endregion
 
 
-//region TEMPLATES
-
-//region ReloadButton
-
-@Composable
-fun ReloadButton(navController: NavController) {
-    var hasReloaded by remember { mutableStateOf(false) }
-
-    Button(
-        onClick = {
-            if (!hasReloaded) {
-                // Pop current and navigate back to the same route
-                navController.currentBackStackEntry
-                    ?.destination
-                    ?.route
-                    ?.let { route ->
-                        navController.popBackStack()
-                        navController.navigate(route)
-                    }
-                hasReloaded = true
-            }
-        },
-        enabled = !hasReloaded,
-        modifier = Modifier.padding(16.dp)
-    ) {
-        Text(if (hasReloaded) "Reloaded" else "Reload")
-    }
-}
-
-//endregion
-
-//region Task..._inputs
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun InputField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    placeholderText: String,
-    modifier: Modifier = Modifier
-        .background(Color.Black), // Default background
-    isNumber: Boolean = false,
-    focusRequester: FocusRequester? = null,
-    onDone: (() -> Unit)? = null
-) {
-    Spacer(modifier = Modifier.width(8.dp))
-
-    TextField(
-        value = value,
-        onValueChange = {
-            val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
-            onValueChange(parsed)
-        },
-        placeholder = { Text(placeholderText, color = Color.LightGray) },
-        singleLine = true,
-        keyboardOptions = KeyboardOptions.Default.copy(
-            keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text,
-            imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
-        ),
-        keyboardActions = KeyboardActions(
-            onDone = { onDone?.invoke() }
-        ),
-        modifier = modifier.then(
-            focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier
-        )
-    )
-
-    Spacer(modifier = Modifier.width(8.dp))
-}
-
-
-
-//endregion
 
 //region Submit_Icon
 
