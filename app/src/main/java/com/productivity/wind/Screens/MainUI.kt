@@ -35,7 +35,6 @@ import kotlinx.coroutines.launch
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.heightIn
 import com.productivity.wind.MAINStart
-import com.productivity.wind.LogDialogHost
 
 @Composable
 fun Main() {
