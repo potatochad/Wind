@@ -97,7 +97,6 @@ import com.productivity.wind.UI
 import com.productivity.wind.Achievements
 import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.drawscope.drawLine
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
