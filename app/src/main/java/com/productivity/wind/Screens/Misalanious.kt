@@ -97,6 +97,11 @@ import com.productivity.wind.UI
 import com.productivity.wind.Achievements
 import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.drawscope.drawLine
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 
 //region NavController
 //Global1.navController - to use anywhere, no input
@@ -512,14 +517,22 @@ SettingItem(
                     var text by remember { mutableStateOf("") }
 
 UI.InputField(
-    value = text.take(20), // Max 20 chars
-    onValueChange = { text = it.take(20) },
+    value = text.take(10), 
+    onValueChange = { text = it.take(10) },
     placeholderText = "Enter name",
     modifier = Modifier
-        .width(200.dp)
-        .height(56.dp)
-        .border(1.dp, Color(0xFFFFD700)) // gold
-        .padding(horizontal = 8.dp),
+    .width(100.dp)
+    .height(30.dp)
+    .drawBehind {
+        val strokeWidth = 1.dp.toPx()
+        drawLine(
+            color = Color(0xFFFFD700),
+            start = Offset(0f, size.height),
+            end = Offset(size.width, size.height),
+            strokeWidth = strokeWidth
+        )
+    }
+    .padding(horizontal = 8.dp)
 )
 
             }
