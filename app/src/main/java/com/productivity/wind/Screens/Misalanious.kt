@@ -503,6 +503,26 @@ SettingItem(
 UI.BrestoreFromFile(restoreTrigger)
 UI.BsaveToFile(backupTrigger)
 
+SettingItem(
+            icon = Icons.Outlined.AdminPanelSettings,
+            title = "Permissions",
+            endContent = {
+
+                    var text by remember { mutableStateOf("") }
+
+UI.InputField(
+    value = text.take(20), // Max 20 chars
+    onValueChange = { text = it.take(20) },
+    placeholderText = "Enter name",
+    modifier = Modifier
+        .width(200.dp)
+        .height(56.dp)
+        .border(1.dp, Color(0xFFFFD700)) // gold
+        .padding(horizontal = 8.dp),
+)
+
+            }
+        )
     }
 }
 
