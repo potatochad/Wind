@@ -355,7 +355,7 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
             delay(2000L)
             Bar.restoringFromFile = false
             trigger.value = false
-            Vlog("Succesfully restored")
+            Vlog("Succesfully restored: trigger is false ${trigger.value} ")
         }
     }
 }
