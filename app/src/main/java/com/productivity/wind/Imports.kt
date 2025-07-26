@@ -327,38 +327,43 @@ fun BsaveToFile(trigger: Boolean) {
 fun BrestoreFromFile(trigger: MutableState<Boolean>) {
     val context = LocalContext.current
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocument()
-    ) { uri ->
-        if (uri != null) {
-            try {
-                val fileMap = mutableMapOf<String, String>()
+    val launcher = rememberUpdatedState(
+        newValue = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.OpenDocument()
+        ) { uri ->
+            if (uri != null) {
+                try {
+                    val fileMap = mutableMapOf<String, String>()
 
-                context.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
-                    lines.forEach { line ->
-                        if (!line.contains("=")) return@forEach
-                        val (key, value) = line.split("=", limit = 2)
-                        fileMap[key] = value
+                    context.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
+                        lines.forEach { line ->
+                            if (!line.contains("=")) return@forEach
+                            val (key, value) = line.split("=", limit = 2)
+                            fileMap[key] = value
+                        }
                     }
-                }
 
-                SettingsSaved.initFromFile(fileMap)
-            } catch (e: Exception) {
-                log("Restore failed: ${e.message}", "bad")
+                    SettingsSaved.initFromFile(fileMap)
+                    Vlog("Restore completed successfully")
+                } catch (e: Exception) {
+                    log("Restore failed: ${e.message}", "bad")
+                }
             }
         }
-    }
+    )
+
     LaunchedEffect(trigger.value) {
         if (trigger.value) {
-            launcher.launch(arrayOf("text/plain"))
+            launcher.value.launch(arrayOf("text/plain"))
             Bar.restoringFromFile = true
             delay(2000L)
             Bar.restoringFromFile = false
             trigger.value = false
-            Vlog("Succesfully restored: trigger is false ${trigger.value} ")
+            Vlog("Successfully restored: trigger is now false.")
         }
     }
 }
+
 
 
 @Composable
