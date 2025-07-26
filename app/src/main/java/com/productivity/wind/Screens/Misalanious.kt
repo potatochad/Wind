@@ -1,5 +1,7 @@
 package com.productivity.wind.Screens
 
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.drawLine
 import androidx.compose.foundation.border
 import android.app.AlertDialog
 import android.app.AppOpsManager
