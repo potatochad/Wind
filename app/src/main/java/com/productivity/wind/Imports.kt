@@ -338,7 +338,7 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
 
                     context.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
                         lines.forEach { line ->
-                            if (!line.contains("=")) { Vlog("Error...corrupted data"); return@forEach}
+                            if (!line.contains("=")) { Vlog("Error...corrupted data"); return@forEach }
                             val (key, value) = line.split("=", limit = 2)
                             fileMap[key] = value
                         }
