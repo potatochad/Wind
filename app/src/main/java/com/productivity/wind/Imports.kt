@@ -341,12 +341,11 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
                             fileMap[key] = value
                         }
                     }
-                    Vlog(" $fileMap —file map ")
 
                     SettingsSaved.initFromFile(fileMap)
-                    //Vlog("Restore completed successfully")
                 } catch (e: Exception) {
                     log("Restore failed: ${e.message}", "bad")
+                    Vlog("Restore failed: ${e.message}")
                 }
             }
         }
@@ -355,13 +354,11 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
     LaunchedEffect(trigger.value) {
         if (trigger.value) {
             Bar.restoringFromFile = true
-            //This triggers...but I havent selected any document or something...the function trigger triggers on click...
-            Vlog("${trigger.value}—doing restoring")
             launcher.value.launch(arrayOf("text/plain"))
             delay(1000L)
             Bar.restoringFromFile = false
             trigger.value = false
-            //Vlog("Successfully restored: trigger is now false.")
+            Vlog("Successfully restored")
         }
     }
 }
