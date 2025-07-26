@@ -345,7 +345,7 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
                     }
 
                     SettingsSaved.initFromFile(fileMap)
-                    Vlog("Restore completed successfully")
+                    //Vlog("Restore completed successfully")
                 } catch (e: Exception) {
                     log("Restore failed: ${e.message}", "bad")
                 }
@@ -355,12 +355,13 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
 
     LaunchedEffect(trigger.value) {
         if (trigger.value) {
+            Vlog("${trigger.value}—doing restoring")
             launcher.value.launch(arrayOf("text/plain"))
             Bar.restoringFromFile = true
             delay(2000L)
             Bar.restoringFromFile = false
             trigger.value = false
-            Vlog("Successfully restored: trigger is now false.")
+            //Vlog("Successfully restored: trigger is now false.")
         }
     }
 }
