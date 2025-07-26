@@ -273,8 +273,6 @@ object SettingsSaved {
         }
     }
     fun initFromFile(map: Map<String, String>) {
-    if (initOnce) return
-    initOnce = true
 
     Settings::class.memberProperties.forEach { barIDK ->
         if (barIDK is KMutableProperty1<Settings, *>) {
