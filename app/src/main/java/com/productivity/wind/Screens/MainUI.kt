@@ -42,7 +42,6 @@ fun Main() {
     LazyMenu { Menu() }
     if (Bar.NewDay == true) { Bar.HowManyDoneRetypes_InDay = 0}
     Bar.NewDay = false
-    LogDialogHost() 
     NewDayWaterDo()
     MAINStart()
     
