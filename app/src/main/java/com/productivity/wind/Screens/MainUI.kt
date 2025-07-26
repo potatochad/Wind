@@ -49,7 +49,8 @@ fun Main() {
             Column(modifier = Modifier.padding(16.dp)) {
                 Disipline()
                 German()
-                Text("WaterDo: ${ Bar.WaterDOtime_spent ‎} ")
+                Text( text = "WaterDo: ${Bar.WaterDOtime_spent}")
+                
             }
         }
     }
