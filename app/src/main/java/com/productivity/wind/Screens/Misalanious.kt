@@ -8,7 +8,7 @@ import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
 import android.os.Build
-import androidx.compose.ui.graphics.drawscope.drawLine
+import androidx.compose.material3.Divider
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
