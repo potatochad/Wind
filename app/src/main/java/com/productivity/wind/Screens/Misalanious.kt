@@ -101,8 +101,6 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.Modifier.wrapContentHeight
-
 
 //region NavController
 //Global1.navController - to use anywhere, no input
