@@ -518,16 +518,16 @@ SettingItem(
 Box(
     modifier = Modifier
         .width(100.dp)
-        .height(49.dp) // little taller to fit line
+        .height(IntrinsicSize.Min)
 ) {
     UI.InputField(
         value = text.take(5),
         onValueChange = { text = it.take(5) },
         placeholderText = "text",
         modifier = Modifier
-                    .width(100.dp)
-                    .height(50.dp)
+            .fillMaxSize() // Let TextField fill exact size
     )
+
     Divider(
         color = Color(0xFFFFD700),
         thickness = 1.dp,
