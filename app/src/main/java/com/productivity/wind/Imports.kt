@@ -137,6 +137,8 @@ import android.widget.ScrollView
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.unit.dp
+import androidx.compose.material.TextFieldDefaults
+
 
 
 
@@ -405,7 +407,8 @@ fun InputField(
         .background(Color.Black), // Default background
     isNumber: Boolean = false,
     focusRequester: FocusRequester? = null,
-    onDone: (() -> Unit)? = null
+    onDone: (() -> Unit)? = null,
+    showIndicator: Boolean = true
 ) {
     TextField(
         value = value,
@@ -413,6 +416,23 @@ fun InputField(
             val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
             onValueChange(parsed)
         },
+
+
+
+
+        colors = TextFieldDefaults.textFieldColors(
+    unfocusedIndicatorColor = if (showIndicator) Color.Gray else Color.Transparent,
+    focusedIndicatorColor = if (showIndicator) Color.Gray else Color.Transparent,
+    disabledIndicatorColor = Color.Transparent,
+    containerColor = Color.Transparent
+),
+
+
+
+
+
+
+        
         placeholder = { Text(placeholderText, color = Color.LightGray) },
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
