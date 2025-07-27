@@ -1,8 +1,5 @@
 package com.productivity.wind.Screens
 
-
-import androidx.compose.ui.Modifier.align
-
 import androidx.compose.foundation.border
 import android.app.AlertDialog
 import android.app.AppOpsManager
@@ -511,26 +508,22 @@ SettingItem(
 UI.BrestoreFromFile(restoreTrigger)
 UI.BsaveToFile(backupTrigger)
 
+
+var text by remember { mutableStateOf("") }
 SettingItem(
             icon = Icons.Outlined.AdminPanelSettings,
             title = "Permissions",
             endContent = {
 
-                    var text by remember { mutableStateOf("") }
-
-
-
+                    
     UI.InputField(
         value = text.take(5),
         onValueChange = { text = it.take(5) },
         placeholderText = "text",
         modifier = Modifier
-            .width(100.dp)
+            .width(60.dp)
             .height(70.dp)
-            .align(Alignment.CenterVertically)
     )
-
-
 
 
 
