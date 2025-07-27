@@ -521,13 +521,12 @@ Box(
         .wrapContentHeight() // little taller to fit line
 ) {
     UI.InputField(
-        value = text.take(10),
-        onValueChange = { text = it.take(10) },
-        placeholderText = "Enter name",
+        value = text.take(5),
+        onValueChange = { text = it.take(5) },
+        placeholderText = "text",
         modifier = Modifier
-            .fillMaxWidth()
-            .align(Alignment.TopStart)
-            .padding(horizontal = 8.dp)
+                    .width(100.dp)
+                    .height(50.dp)
     )
     Divider(
         color = Color(0xFFFFD700),
