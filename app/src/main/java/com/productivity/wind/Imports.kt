@@ -460,14 +460,14 @@ fun InputField(
                     modifier = Modifier
                         .padding(horizontal = innerPadding)
                         .width(InputWidth)
-                        //.background(Color.Gray, shape = RoundedCornerShape(6.dp))
+                        .background(Color.Transparent)
                         .height(boxHeight - 8.dp), // adjust to keep indicator visible
                     contentAlignment = Alignment.CenterStart
                 ) {
                     if (value.isEmpty()) {
                         Text(
                             placeholderText,
-                            color = Color.LightGray,
+                            color = Color.White,
                             fontSize = textSize
                         )
                     }
