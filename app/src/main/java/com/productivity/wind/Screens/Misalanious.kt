@@ -524,6 +524,7 @@ SettingItem(
         modifier = Modifier
             .width(100.dp)
             .height(70.dp)
+            .align(Alignment.CenterVertically)
     )
 
 
