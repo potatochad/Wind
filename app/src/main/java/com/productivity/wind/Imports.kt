@@ -961,12 +961,19 @@ fun SettingItem(
     icon: ImageVector = Icons.Outlined.Settings,
     onClick: (() -> Unit)? = null
 ) {
+    Card(
+    modifier = modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp, vertical = 12.dp)
+        .clickable(enabled = onClick != null) { onClick?.invoke() },
+    shape = RoundedCornerShape(12.dp),
+    colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
+    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+) {
     Row(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp)
-            .background(Color(0xFF121212), shape = RoundedCornerShape(12.dp))
-            .clickable(enabled = onClick != null) { onClick?.invoke() },
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -974,7 +981,7 @@ fun SettingItem(
             contentDescription = null,
             tint = Color(0xFFFFD700),
             modifier = Modifier
-                .padding(end = 16.dp)
+                .padding(end = 10.dp)
                 .size(24.dp)
         )
         Column(modifier = Modifier.weight(1f)) {
@@ -985,6 +992,8 @@ fun SettingItem(
         }
         endContent?.invoke()
     }
+}
+
 }
 
 @Composable
