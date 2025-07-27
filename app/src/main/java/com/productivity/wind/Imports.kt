@@ -1,5 +1,10 @@
 package com.productivity.wind
 
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.material3.Text
+
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.rememberUpdatedState
 import android.os.Environment
@@ -403,53 +408,59 @@ fun InputField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholderText: String,
-    modifier: Modifier = Modifier
-        .background(Color.Black), // Default background
+    modifier: Modifier = Modifier.background(Color.Black),
     isNumber: Boolean = false,
     focusRequester: FocusRequester? = null,
     onDone: (() -> Unit)? = null,
     showIndicator: Boolean = true
 ) {
-    TextField(
+    val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
+    val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
+    val interactionSource = remember { MutableInteractionSource() }
+
+    BasicTextField(
         value = value,
         onValueChange = {
             val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
             onValueChange(parsed)
         },
-
-
-
-
-        colors = TextFieldDefaults.colors(
-    unfocusedIndicatorColor = if (showIndicator) Color(0xFFFFD700) else Color.Transparent,
-    focusedIndicatorColor = if (showIndicator) Color(0xFFFFD700) else Color.Transparent,
-    disabledIndicatorColor = Color.Transparent,
-    focusedContainerColor = Color.Transparent,
-    unfocusedContainerColor = Color.Transparent,
-    disabledContainerColor = Color.Transparent,
-    cursorColor = Color.White // or whatever you want
-),
-
-
-
-
-
-
-        
-        placeholder = { Text(placeholderText, color = Color.LightGray) },
+        modifier = modifier
+            .height(36.dp) // 🔥 Control height here
+            .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
+        textStyle = LocalTextStyle.current.copy(color = Color.White),
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
-            keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text,
-            imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
+            keyboardType = keyboardType,
+            imeAction = imeAction
         ),
-        keyboardActions = KeyboardActions(
-            onDone = { onDone?.invoke() }
-        ),
-        modifier = modifier.then(
-            focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier
-        )
+        keyboardActions = KeyboardActions(onDone = { onDone?.invoke() }),
+        cursorBrush = SolidColor(Color.Gray),
+        interactionSource = interactionSource,
+        decorationBox = { innerTextField ->
+            Column {
+                Box(
+                    modifier = Modifier
+                        .padding(horizontal = 4.dp) // 🔥 Control horizontal padding
+                        .fillMaxWidth()
+                        .height(28.dp), // 🔥 Text area height
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    if (value.isEmpty()) {
+                        Text(placeholderText, color = Color.LightGray)
+                    }
+                    innerTextField()
+                }
+                if (showIndicator) {
+                    Divider(
+                        color = Color(0xFFFFD700),
+                        thickness = 1.dp
+                    )
+                }
+            }
+        }
     )
 }
+
 
 
 
