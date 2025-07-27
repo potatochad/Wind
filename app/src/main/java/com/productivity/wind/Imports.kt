@@ -988,6 +988,12 @@ fun SettingItem(
     colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 ) {
+            Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(3.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
@@ -1003,7 +1009,7 @@ fun SettingItem(
             }
         }
         endContent?.invoke()
-    }
+    }}
 }
 
 }
