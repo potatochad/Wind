@@ -966,7 +966,7 @@ fun SettingItem(
     Card(
     modifier = modifier
         .fillMaxWidth()
-        .padding(horizontal = 4.dp, vertical = 3.dp)
+        .padding(horizontal = 2.dp, vertical = 2.dp)
         .clickable(enabled = onClick != null) { onClick?.invoke() },
     shape = RoundedCornerShape(12.dp),
     colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
@@ -975,7 +975,7 @@ fun SettingItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(3.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
