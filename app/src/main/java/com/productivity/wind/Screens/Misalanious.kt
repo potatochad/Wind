@@ -531,45 +531,7 @@ SettingItem(
 
 
             }
-        )
-
-
-
-SettingItem(
-            icon = Icons.Outlined.AdminPanelSettings,
-            title = "Permissions",
-            endContent = {
-
-                    var text by remember { mutableStateOf("") }
-
-Box(
-    modifier = Modifier
-        .width(100.dp)
-        .wrapContentHeight() // little taller to fit line
-) {
-    UI.InputField(
-        value = text.take(5),
-        onValueChange = { text = it.take(5) },
-        placeholderText = "text",
-        modifier = Modifier
-                    .width(100.dp)
-                    .height(50.dp)
-    )
-    Divider(
-        color = Color(0xFFFFD700),
-        thickness = 1.dp,
-        modifier = Modifier
-            .align(Alignment.BottomStart)
-            .width(100.dp)
-    )
-}
-
-
-
-
-
-            }
-          )
+         )
     }
 }
 
