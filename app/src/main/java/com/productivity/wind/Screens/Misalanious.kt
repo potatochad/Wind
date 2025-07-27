@@ -101,6 +101,8 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.Modifier.wrapContentHeight
+
 
 //region NavController
 //Global1.navController - to use anywhere, no input
@@ -518,7 +520,7 @@ SettingItem(
 Box(
     modifier = Modifier
         .width(100.dp)
-        .height(32.dp) // little taller to fit line
+        .wrapContentHeight() // little taller to fit line
 ) {
     UI.InputField(
         value = text.take(10),
@@ -534,7 +536,7 @@ Box(
         thickness = 1.dp,
         modifier = Modifier
             .align(Alignment.BottomStart)
-            .fillMaxWidth()
+            .width(100.dp)
     )
 }
 
