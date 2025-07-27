@@ -515,17 +515,18 @@ SettingItem(
 
                     var text by remember { mutableStateOf("") }
 
+
 Box(
     modifier = Modifier
         .width(100.dp)
-        .height(IntrinsicSize.Min)
+        .wrapContentHeight()
 ) {
     UI.InputField(
         value = text.take(5),
         onValueChange = { text = it.take(5) },
         placeholderText = "text",
         modifier = Modifier
-            .fillMaxSize() // Let TextField fill exact size
+            .fillMaxWidth()
     )
 
     Divider(
@@ -534,9 +535,9 @@ Box(
         modifier = Modifier
             .align(Alignment.BottomStart)
             .width(100.dp)
+            .offset(y = (-4).dp) // 🛠️ pull it up slightly
     )
 }
-
 
 
 
