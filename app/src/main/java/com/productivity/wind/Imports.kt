@@ -407,8 +407,6 @@ fun InputField(
     focusRequester: FocusRequester? = null,
     onDone: (() -> Unit)? = null
 ) {
-    Spacer(modifier = Modifier.width(8.dp))
-
     TextField(
         value = value,
         onValueChange = {
@@ -428,8 +426,6 @@ fun InputField(
             focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier
         )
     )
-
-    Spacer(modifier = Modifier.width(8.dp))
 }
 
 
