@@ -973,7 +973,13 @@ fun SettingItem(
     icon: ImageVector = Icons.Outlined.Settings,
     onClick: (() -> Unit)? = null
 ) {
-    Card(
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Card(
     modifier = modifier
         .fillMaxWidth()
         .padding(horizontal = 2.dp, vertical = 2.dp)
@@ -982,12 +988,6 @@ fun SettingItem(
     colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(6.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
