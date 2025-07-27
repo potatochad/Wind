@@ -416,7 +416,10 @@ fun InputField(
     isNumber: Boolean = false,
     focusRequester: FocusRequester? = null,
     onDone: (() -> Unit)? = null,
-    showIndicator: Boolean = true
+    showIndicator: Boolean = true,
+    textSize: TextUnit = 14.sp,           // 👈 new
+    boxHeight: Dp = 36.dp,                // 👈 new
+    innerPadding: Dp = 4.dp               // 👈 new
 ) {
     val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
     val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
@@ -429,9 +432,9 @@ fun InputField(
             onValueChange(parsed)
         },
         modifier = modifier
-            .height(36.dp) // 🔥 Control height here
+            .height(boxHeight)
             .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
-        textStyle = LocalTextStyle.current.copy(color = Color.White),
+        textStyle = LocalTextStyle.current.copy(color = Color.White, fontSize = textSize),
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType,
@@ -444,13 +447,17 @@ fun InputField(
             Column {
                 Box(
                     modifier = Modifier
-                        .padding(horizontal = 4.dp) // 🔥 Control horizontal padding
+                        .padding(horizontal = innerPadding)
                         .fillMaxWidth()
-                        .height(28.dp), // 🔥 Text area height
+                        .height(boxHeight - 8.dp), // adjust to keep indicator visible
                     contentAlignment = Alignment.CenterStart
                 ) {
                     if (value.isEmpty()) {
-                        Text(placeholderText, color = Color.LightGray)
+                        Text(
+                            placeholderText,
+                            color = Color.LightGray,
+                            fontSize = textSize
+                        )
                     }
                     innerTextField()
                 }
