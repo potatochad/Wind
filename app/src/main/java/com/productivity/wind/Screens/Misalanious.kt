@@ -94,6 +94,7 @@ import androidx.compose.material.icons.outlined.Restore
 import androidx.compose.material.icons.outlined.Backup
 import com.productivity.wind.SettingsSaved
 import com.productivity.wind.UI
+import com.productivity.wind.Vlog
 import com.productivity.wind.Achievements
 import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.ui.graphics.vector.ImageVector
