@@ -422,7 +422,8 @@ fun InputField(
     showIndicator: Boolean = true,
     textSize: TextUnit = 14.sp,           // 👈 new
     boxHeight: Dp = 36.dp,                // 👈 new
-    innerPadding: Dp = 4.dp               // 👈 new
+    innerPadding: Dp = 4.dp,
+    InputWidth: Dp = 80.dp
 ) {
     val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
     val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
@@ -451,7 +452,7 @@ fun InputField(
                 Box(
                     modifier = Modifier
                         .padding(horizontal = innerPadding)
-                        .fillMaxWidth()
+                        .width(InputWidth)
                         .height(boxHeight - 8.dp), // adjust to keep indicator visible
                     contentAlignment = Alignment.CenterStart
                 ) {
@@ -467,7 +468,8 @@ fun InputField(
                 if (showIndicator) {
                     Divider(
                         color = Color(0xFFFFD700),
-                        thickness = 1.dp
+                        thickness = 1.dp,
+                        modifier = Modifier.width(InputWidth)
                     )
                 }
             }
