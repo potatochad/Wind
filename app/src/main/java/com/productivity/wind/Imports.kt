@@ -460,7 +460,7 @@ fun InputField(
                     modifier = Modifier
                         .padding(horizontal = innerPadding)
                         .width(InputWidth)
-                        .background(Color.Gray, shape = RoundedCornerShape(6.dp))
+                        //.background(Color.Gray, shape = RoundedCornerShape(6.dp))
                         .height(boxHeight - 8.dp), // adjust to keep indicator visible
                     contentAlignment = Alignment.CenterStart
                 ) {
