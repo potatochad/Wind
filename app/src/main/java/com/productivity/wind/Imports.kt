@@ -421,13 +421,13 @@ fun InputField(
 
 
         colors = TextFieldDefaults.colors(
-    unfocusedIndicatorColor = if (showIndicator) Color.Gray else Color.Transparent,
-    focusedIndicatorColor = if (showIndicator) Color.Gray else Color.Transparent,
+    unfocusedIndicatorColor = if (showIndicator) Color(0xFFFFD700) else Color.Transparent,
+    focusedIndicatorColor = if (showIndicator) Color(0xFFFFD700) else Color.Transparent,
     disabledIndicatorColor = Color.Transparent,
     focusedContainerColor = Color.Transparent,
     unfocusedContainerColor = Color.Transparent,
     disabledContainerColor = Color.Transparent,
-    cursorColor = Color.White // Optional: customize cursor
+    cursorColor = Color.White // or whatever you want
 ),
 
 
