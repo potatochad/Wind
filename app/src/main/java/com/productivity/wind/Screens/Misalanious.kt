@@ -515,11 +515,11 @@ SettingItem(
             title = "Permissions",
             endContent = {
 
-                    Text("Sooo")
     UI.InputField(
         value = text.take(5),
         onValueChange = { text = it.take(5) },
         placeholderText = "text",
+            modifier = Modifier.width(50.dp)
     )
 
 
