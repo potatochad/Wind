@@ -490,41 +490,43 @@ fun SettingsScreen() {
             title = "Permissions",
             onClick = { Global1.navController.navigate("SettingsP_Screen") }
         )
+
+
+        //region RESTORE/BACKUP
         
         var restoreTrigger = remember { mutableStateOf(false) }
         var backupTrigger by remember { mutableStateOf(false) }
+        SettingItem(
+                icon = Icons.Outlined.Restore,
+                title = "Restore",
+                onClick = { restoreTrigger.value = true }
+        )
+        SettingItem(
+                icon = Icons.Outlined.Backup,
+                title = "BackUp",
+                onClick = { backupTrigger = true }
+        )
+        UI.BrestoreFromFile(restoreTrigger)
+        UI.BsaveToFile(backupTrigger)
 
-SettingItem(
-    icon = Icons.Outlined.Restore,
-    title = "Restore",
-    onClick = { restoreTrigger.value = true }
-)
+        //endregion RESTORE/BACKUP
 
-SettingItem(
-    icon = Icons.Outlined.Backup,
-    title = "BackUp",
-    onClick = { backupTrigger = true }
-)
-UI.BrestoreFromFile(restoreTrigger)
-UI.BsaveToFile(backupTrigger)
-
-
-var text by remember { mutableStateOf("") }
-SettingItem(
-            icon = Icons.Outlined.AdminPanelSettings,
-            title = "Permissions",
-            endContent = {
-
-    UI.InputField(
-        value = text.take(5),
-        onValueChange = { text = it.take(5) },
-        placeholderText = "text",
-            modifier = Modifier.width(50.dp)
-    )
-
-
-            }
-         )
+            
+        var text by remember { mutableStateOf("") }
+        SettingItem(
+                icon = Icons.Outlined.AdminPanelSettings,
+                title = "Permissions",
+                endContent = {
+                        UI.InputField(
+                                value = text,
+                                onValueChange = { text = it },
+                                placeholderText = "text",
+                                InputWidth = 50.dp,
+                                MaxLetters = 5,
+                                OnMaxLetters =  { Vlog("Maximum of 5 letters") },
+                        )
+                }
+        )
     }
 }
 
