@@ -976,7 +976,7 @@ fun SettingItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
@@ -991,7 +991,7 @@ fun SettingItem(
             Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(6.dp),
+            .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
