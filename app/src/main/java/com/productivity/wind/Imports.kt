@@ -418,12 +418,14 @@ fun InputField(
     modifier: Modifier = Modifier.background(Color.Black),
     isNumber: Boolean = false,
     focusRequester: FocusRequester? = null,
-    onDone: (() -> Unit)? = null,
+    onDone: (() -> Unit)? = null,  //When press done button
     showIndicator: Boolean = true,
-    textSize: TextUnit = 14.sp,           // 👈 new
-    boxHeight: Dp = 36.dp,                // 👈 new
+    textSize: TextUnit = 14.sp,           
+    boxHeight: Dp = 36.dp,                
     innerPadding: Dp = 4.dp,
-    InputWidth: Dp = 80.dp
+    InputWidth: Dp = 80.dp,
+    MaxLetters: Int? = 20_000,
+    OnMaxLetters: (() -> Unit)? = null, //each letter type doo
 ) {
     val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
     val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
@@ -432,9 +434,14 @@ fun InputField(
     BasicTextField(
         value = value,
         onValueChange = {
-            val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
-            onValueChange(parsed)
+          val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
+          if (parsed.length <= (MaxLetters ?: Int.MAX_VALUE)) {
+            onValueChange(parsed) }  
+          else {
+            OnMaxLetters?.invoke()
+          }
         },
+
         modifier = modifier
             .height(boxHeight)
             .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
