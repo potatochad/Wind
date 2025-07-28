@@ -46,12 +46,10 @@ fun Main() {
     
     SettingsScreen(titleContent = { MainHeader() }, showBack = false) {
         
-            Column(modifier = Modifier.padding(16.dp)) {
                 LazyCard{Disipline()} 
                 LazyCard{German()} 
                 LazyCard{Text( text = "WaterDo: ${Bar.WaterDOtime_spent}")} 
                 
-            }
         }
     }
 }
