@@ -1,7 +1,7 @@
 package com.productivity.wind
 
 import androidx.compose.ui.draw.clip
-
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.Dp
@@ -1070,7 +1070,7 @@ fun SettingItem(
             }
         }
         endContent?.invoke()
-    }}
+    }
 }
 
 }
