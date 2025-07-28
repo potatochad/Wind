@@ -409,7 +409,6 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
     onDone = { println("Done pressed") }
 )
 */
-
 @Composable
 fun InputField(
     value: String,
@@ -1037,7 +1036,7 @@ fun settingsHeader(
     onSearchClick: () -> Unit,
     onBackClick: () -> Unit = {},
     showBack: Boolean = true,
-    showSearch: Boolean = true,
+    showSearch: Boolean = false,
     modifier: Modifier = Modifier,
     showDivider: Boolean = true
 ) {
