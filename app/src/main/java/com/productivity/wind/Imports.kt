@@ -510,12 +510,22 @@ fun LazyCard(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun SettingsCombind(items: List<@Composable () -> Unit>) {
+fun SettingsCombind(
+    items: List<@Composable () -> Unit>,
+    DividerStartPadding: Int = 10,
+    DividerEndPadding: Int = 10
+) {
     LazyCard {
         Column {
             items.forEachIndexed { i, item ->
                 item()
-                if (i < items.lastIndex) Divider(thickness = 1.dp)
+                if (i < items.lastIndex) {
+                    Divider(
+                        thickness = 1.dp,
+                        modifier = Modifier
+                            .padding(start = DividerStartPadding.dp, end = DividerEndPadding.dp)
+                    )
+                }
             }
         }
     }
