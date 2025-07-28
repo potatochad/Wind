@@ -1009,15 +1009,13 @@ fun SettingItem(
     subtitle: String? = null,
     endContent: @Composable (() -> Unit)? = null,
     modifier: Modifier = Modifier,
-    icon: ImageVector = Icons.Outlined.Settings,
+	
+    icon: ImageVector? = null,
+    BigIcon: ImageVector? = null,
+    BigIconColor: Color? = null,
+	
     onClick: (() -> Unit)? = null
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
         Card(
     modifier = modifier
         .fillMaxWidth()
@@ -1033,7 +1031,8 @@ fun SettingItem(
             .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
+	if (icon != null) {
+		Icon(
             imageVector = icon,
             contentDescription = null,
             tint = Color(0xFFFFD700),
@@ -1041,6 +1040,29 @@ fun SettingItem(
                 .padding(end = 10.dp)
                 .size(24.dp)
         )
+	}	    
+
+	if (BigIcon != null && BigIconColor != null) {
+                    Box(
+                        modifier = Modifier
+                            .padding(end = 10.dp)
+                            .size(36.dp)
+                            .clip(CircleShape)
+                            .background(BigIconColor),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = BigIcon,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+	}
+
+
+
+	
         Column(modifier = Modifier.weight(1f)) {
             Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
             subtitle?.let {
