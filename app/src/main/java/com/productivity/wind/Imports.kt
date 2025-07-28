@@ -456,16 +456,18 @@ fun InputField(
         keyboardActions = KeyboardActions(onDone = { onDone?.invoke() }),
         cursorBrush = SolidColor(Color.Gray),
         interactionSource = interactionSource,
+        
         decorationBox = { innerTextField ->
             Column {
                 Box(
                     modifier = Modifier
                         .padding(horizontal = innerPadding)
                         .width(InputWidth)
-                        .background(InputBackgroundColor, RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
-                        .height(boxHeight - 8.dp), // adjust to keep indicator visible
-                    contentAlignment = Alignment.CenterStart
-                ) {
+						.height(boxHeight - 8.dp)
+						.clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)) // 👈 clips background to round shape
+						.background(InputBackgroundColor), // 👈 this sets the color
+					contentAlignment = Alignment.CenterStart
+				) {
                     if (value.isEmpty()) {
                         Text(
                             placeholderText,
