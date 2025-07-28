@@ -524,20 +524,21 @@ fun SettingsCombind(
 ) {
     LazyCard(
 	    InputColor = SettingsItemCardColor,
-	    InnerPadding = 1
-    content = {
-            items.forEachIndexed { i, item ->
-                item()
-                if (i < items.lastIndex) {
-                    Divider(
-                        thickness = 1.dp,
-			    modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = DividerFromStart.dp, end = DividerFromEnd.dp)
-                    )
-                }
-        }
-    })
+	    InnerPadding = 1,
+	    content = {
+		    items.forEachIndexed { i, item ->
+			    item()
+			    if (i < items.lastIndex) {
+				    Divider(
+					    thickness = 1.dp,
+					    modifier = Modifier
+						    .fillMaxWidth()
+						    .padding(start = DividerFromStart.dp, end = DividerFromEnd.dp)
+				    )
+			    }
+		    }
+	    }
+    )
 }
 
 
