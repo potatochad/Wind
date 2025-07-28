@@ -523,7 +523,7 @@ fun SettingsCombind(
     DividerFromEnd: Int = 15
 ) {
     LazyCard(
-	    InputColor = SettingsItemCardColor
+	    InputColor = SettingsItemCardColor,
 	    InnerPadding = 1
     ) {
             items.forEachIndexed { i, item ->
