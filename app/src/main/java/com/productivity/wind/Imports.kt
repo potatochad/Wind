@@ -508,7 +508,20 @@ fun LazyCard(content: @Composable () -> Unit) {
 		}
 	     }
 }
-	
+
+@Composable
+fun SettingsCombind(items: List<@Composable () -> Unit>) {
+    LazyCard {
+        Column {
+            items.forEachIndexed { i, item ->
+                item()
+                if (i < items.lastIndex) Divider(thickness = 1.dp)
+            }
+        }
+    }
+}
+
+
 
 
 
