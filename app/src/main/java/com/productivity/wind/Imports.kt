@@ -319,6 +319,8 @@ object SettingsSaved {
 
 
 object UI {
+	//No synched with actual settingsItem function YET
+	var SettingsItemCardColor = Color(0xFF121212)
     
 @Composable
 fun BsaveToFile(trigger: Boolean) {
@@ -414,7 +416,7 @@ fun InputField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholderText: String,
-    modifier: Modifier = Modifier.background(Color.Black),
+    modifier: Modifier = Modifier,
     isNumber: Boolean = false,
     focusRequester: FocusRequester? = null,
     onDone: (() -> Unit)? = null,  //When press done button
@@ -426,7 +428,7 @@ fun InputField(
     MaxLetters: Int? = 20_000,
     OnMaxLetters: (() -> Unit)? = null, //each letter type doo
     InputTextColor: Color = Color.White,
-    InputBackgroundColor: Color = Color.DarkGray,
+    InputBackgroundColor: Color = SettingsItemCardColor,
 ) {
     val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
     val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
@@ -491,6 +493,7 @@ fun InputField(
     )
 }
 
+	
 @Composable
 fun LazyCard(
 	content: @Composable () -> Unit,
@@ -520,7 +523,7 @@ fun SettingsCombind(
     DividerFromEnd: Int = 15
 ) {
     LazyCard(
-	    InputColor = Color.DarkGray,  
+	    InputColor = SettingsItemCardColor
 	    InnerPadding = 1
     ) {
             items.forEachIndexed { i, item ->
