@@ -1,10 +1,10 @@
 package com.productivity.wind
 
+import androidx.compose.ui.draw.clip
+
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.Dp
-
-
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
