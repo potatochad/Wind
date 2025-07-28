@@ -419,13 +419,15 @@ fun InputField(
     isNumber: Boolean = false,
     focusRequester: FocusRequester? = null,
     onDone: (() -> Unit)? = null,  //When press done button
-    showIndicator: Boolean = true,
+    showDivider: Boolean = true,
     textSize: TextUnit = 14.sp,           
     boxHeight: Dp = 36.dp,                
     innerPadding: Dp = 4.dp,
     InputWidth: Dp = 80.dp,
     MaxLetters: Int? = 20_000,
     OnMaxLetters: (() -> Unit)? = null, //each letter type doo
+    InputTextColor: Color = Color.White,
+    InputBackgroundColor: Color = Color.DarkGray,
 ) {
     val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
     val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
@@ -445,7 +447,7 @@ fun InputField(
         modifier = modifier
             .height(boxHeight)
             .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
-        textStyle = LocalTextStyle.current.copy(color = Color.White, fontSize = textSize),
+        textStyle = LocalTextStyle.current.copy(color = InputTextColor, fontSize = textSize),
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType,
@@ -460,20 +462,20 @@ fun InputField(
                     modifier = Modifier
                         .padding(horizontal = innerPadding)
                         .width(InputWidth)
-                        .background(Color.Transparent)
+                        .background(InputBackgroundColor, RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
                         .height(boxHeight - 8.dp), // adjust to keep indicator visible
                     contentAlignment = Alignment.CenterStart
                 ) {
                     if (value.isEmpty()) {
                         Text(
                             placeholderText,
-                            color = Color.White,
+                            color = InputTextColor,
                             fontSize = textSize
                         )
                     }
                     innerTextField()
                 }
-                if (showIndicator) {
+                if (showDivider) {
                     Divider(
                         color = Color(0xFFFFD700),
                         thickness = 1.dp,
