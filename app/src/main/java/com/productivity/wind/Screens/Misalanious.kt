@@ -497,21 +497,16 @@ fun SettingsScreen() {
         var restoreTrigger = remember { mutableStateOf(false) }
         var backupTrigger by remember { mutableStateOf(false) }
 
-            UI.SettingsCombind(
-                    listOf(
-                            { SettingItem(
-                                    icon = Icons.Outlined.Restore,
-                                    title = "Restore",
-                                    onClick = { restoreTrigger.value = true }
-                            ) },
-                            { SettingItem(
-                                    icon = Icons.Outlined.Backup,
-                                    title = "BackUp",
-                                    onClick = { backupTrigger = true }
-                            ) }
-                        )
-            )
-        
+        SettingItem(
+                icon = Icons.Outlined.Restore,
+                title = "Restore",
+                onClick = { restoreTrigger.value = true }
+        )
+        SettingItem(
+                icon = Icons.Outlined.Backup,
+                title = "BackUp",
+                onClick = { backupTrigger = true }
+        ) 
         
         UI.BrestoreFromFile(restoreTrigger)
         UI.BsaveToFile(backupTrigger)
