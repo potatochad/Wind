@@ -44,7 +44,7 @@ fun Main() {
     NewDayWaterDo()
     MAINStart()
     
-    SettingsScreen(titleContent = { MainHeader() }, showBack = false, showSearch = false) {
+    SettingsScreen(titleContent = { MainHeader() }, showBack = false) {
         Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Disipline()
