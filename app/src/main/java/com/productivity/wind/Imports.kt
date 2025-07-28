@@ -1182,7 +1182,10 @@ fun SettingsScreen(
             )
         }
         item {
-            content()
+		Column {
+			content()
+		}
+            
         }
     }
 }
