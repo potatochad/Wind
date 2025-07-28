@@ -223,7 +223,6 @@ fun Menu() {
         titleContent = { MenuHeader() },
         onSearchClick = { },
         showBack = false,
-        showSearch = false,
         showDivider = false
     ) {
         SettingItem(
@@ -416,7 +415,7 @@ fun ConfigureScreen() = NoLagCompose {
         }
     }, onConfirm = {},)
 
-    SettingsScreen(titleContent = { ConfigureS_Header() }, showSearch = false) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
+    SettingsScreen(titleContent = { ConfigureS_Header() }) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
             if (!areAllPermissionsEnabled(context)) { show.value = true; LazyPopup(show = show, onDismiss = { Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = { Global1.navController.navigate("SettingsP_Screen")}, onCancel = { Global1.navController.navigate("Main")}) } else {
                 SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
                         Button(
@@ -484,7 +483,7 @@ fun ConfigureScreen() = NoLagCompose {
 
 @Composable
 fun SettingsScreen() {
-    SettingsScreen(titleContent = { Text("Settings") }, showSearch = false) {
+    SettingsScreen(titleContent = { Text("Settings") }) {
 
         SettingItem(
             icon = Icons.Outlined.AdminPanelSettings,
@@ -685,7 +684,7 @@ fun SettingsP_Screen()= NoLagCompose {
     UsageStatsP_PopUp(ctx, showUsagePopup)
 
 
-    SettingsScreen(titleContent = { Text("Permissions") }, showSearch = false) {
+    SettingsScreen(titleContent = { Text("Permissions") }) {
 
         SettingItem(
             icon = Icons.Outlined.Notifications,
