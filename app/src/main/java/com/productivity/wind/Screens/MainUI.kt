@@ -51,7 +51,6 @@ fun Main() {
                 UI.LazyCard{ German() } 
                 UI.LazyCard{ Text( text = "WaterDo: ${Bar.WaterDOtime_spent}") } 
                 
-        }
     }
 }
 
