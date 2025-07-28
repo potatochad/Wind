@@ -495,7 +495,7 @@ fun InputField(
 fun LazyCard(content: @Composable () -> Unit) {
 	Card(
 		modifier = Modifier
-			.padding(16.dp)
+			.padding(8.dp)
 			.fillMaxWidth(), 
 		shape = RoundedCornerShape(16.dp), 
 		elevation = CardDefaults
@@ -503,7 +503,7 @@ fun LazyCard(content: @Composable () -> Unit) {
 		colors = CardDefaults
 			.cardColors(containerColor = Color(0xFF1A1A1A))
 	     ){
-		Box(modifier = Modifier.padding(16.dp)) {
+		Box(modifier = Modifier.padding(8.dp)) {
                      content()
 		}
 	     }
