@@ -492,7 +492,11 @@ fun InputField(
 }
 
 @Composable
-fun LazyCard(content: @Composable () -> Unit) {
+fun LazyCard(
+	content: @Composable () -> Unit,
+	InputColor: Color = Color(0xFF1A1A1A),
+	InnerPadding: Int = 16
+) {
 	Card(
 		modifier = Modifier
 			.padding(8.dp)
@@ -501,9 +505,9 @@ fun LazyCard(content: @Composable () -> Unit) {
 		elevation = CardDefaults
 			.cardElevation(defaultElevation = 8.dp), 
 		colors = CardDefaults
-			.cardColors(containerColor = Color(0xFF1A1A1A))
+			.cardColors(containerColor = InputColor)
 	     ){
-		Column(modifier = Modifier.padding(16.dp)) {
+		Column(modifier = Modifier.padding(InnerPadding.dp)) {
                      content()
 		}
 	     }
@@ -512,21 +516,23 @@ fun LazyCard(content: @Composable () -> Unit) {
 @Composable
 fun SettingsCombind(
     items: List<@Composable () -> Unit>,
-    DividerStartPadding: Int = 10,
-    DividerEndPadding: Int = 10
+    DividerFromStart: Int = 40,
+    DividerFromEnd: Int = 15
 ) {
-    LazyCard {
-        Column {
+    LazyCard(
+	    InputColor = Color.DarkGray,  
+	    InnerPadding = 1
+    ) {
             items.forEachIndexed { i, item ->
                 item()
                 if (i < items.lastIndex) {
                     Divider(
                         thickness = 1.dp,
-                        modifier = Modifier
-                            .padding(start = DividerStartPadding.dp, end = DividerEndPadding.dp)
+			    modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = DividerFromStart.dp, end = DividerFromEnd.dp)
                     )
                 }
-            }
         }
     }
 }
