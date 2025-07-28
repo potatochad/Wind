@@ -1131,7 +1131,7 @@ fun SettingsScreen(
     onSearchClick: () -> Unit = {},
     onBackClick: () -> Unit = {},
     showBack: Boolean = true,
-    showSearch: Boolean = true,
+    showSearch: Boolean = false,
     modifier: Modifier = Modifier,
     showDivider: Boolean = true,
     content: @Composable () -> Unit
