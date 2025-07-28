@@ -503,7 +503,9 @@ fun LazyCard(content: @Composable () -> Unit) {
 		colors = CardDefaults
 			.cardColors(containerColor = Color(0xFF1A1A1A))
 	     ){
-				content()
+		Box(modifier = Modifier.padding(16.dp)) {
+                     content()
+		}
 	     }
 }
 	
