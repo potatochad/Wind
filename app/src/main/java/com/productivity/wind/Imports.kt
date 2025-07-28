@@ -525,7 +525,7 @@ fun SettingsCombind(
     LazyCard(
 	    InputColor = SettingsItemCardColor,
 	    InnerPadding = 1
-    ) {
+    content = {
             items.forEachIndexed { i, item ->
                 item()
                 if (i < items.lastIndex) {
@@ -537,7 +537,7 @@ fun SettingsCombind(
                     )
                 }
         }
-    }
+    })
 }
 
 
