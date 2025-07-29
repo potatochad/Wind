@@ -482,6 +482,7 @@ fun ConfigureScreen() = NoLagCompose {
 
 //region Settings
 val DarkBlue = Color(0xFF00008B) 
+val Gold = Color(0xFFFFD700)
 
 @Composable
 fun SettingsScreen() {
@@ -498,9 +499,10 @@ fun SettingsScreen() {
 
         var text by remember { mutableStateOf("") }
         SettingItem(
-                icon = Icons.Outlined.AdminPanelSettings,
-                title = "Difficulty",
-                subTitle = "How many points to be allowed anything"
+                BigIcon = Icons.Filled.AdminPanelSettings,
+                BigIconColor = Color(0xFFFFD700),
+                
+                title = "Unlock Threshold",
                 endContent = {
                         UI.InputField(
                                 value = text,
@@ -519,6 +521,7 @@ fun SettingsScreen() {
         var restoreTrigger = remember { mutableStateOf(false) }
         var backupTrigger by remember { mutableStateOf(false) }
 
+        backupTrigger = false
         //! NOT ENCRIPTED WITH PREMIUM MIGHT BE A PROBLEM
         SettingItem(
                 BigIcon = Icons.Filled.Restore,
