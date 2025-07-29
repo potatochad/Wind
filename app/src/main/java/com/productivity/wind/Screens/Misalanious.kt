@@ -498,6 +498,7 @@ fun SettingsScreen() {
                 )    
         }
 
+        // NOT SYNCHED UP WITH APP YET
         var text by remember { mutableStateOf("") }
         SettingItem(
                 BigIcon = Icons.Filled.LockOpen,
@@ -507,8 +508,8 @@ fun SettingsScreen() {
                         UI.InputField(
                                 value = text,
                                 onValueChange = { text = it },
-                                //placeholderText = "text",
                                 InputWidth = 60.dp,
+                                //numbers only
                                 MaxLetters = 5,
                                 OnMaxLetters =  { Vlog("MAX: 99999 points") },
                         )
