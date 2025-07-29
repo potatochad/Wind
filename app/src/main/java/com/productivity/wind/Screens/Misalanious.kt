@@ -508,22 +508,26 @@ fun SettingsScreen() {
                 title = "Unlock Threshold",
                 endContent = {
                         UI.InputField(
-                                value = Bar.Dpoints,
-                                onValueChange = { 
-                                        if (it > Bar.Dpoints) { 
-                                                Vlog("$it > $Dpoints =Get more points") 
+                                value = Bar.Dpoints.toString(),
+                                onValueChange = {
+                                        val input = it.toIntOrNull() ?: 0  // convert input to number safely
+                                        val current = Bar.Dpoints
+                                        if (input > current) {
+                                                Vlog("$input > $current = Get more points")
                                         } else {
-                                                if (it > 0) { Bar.Dpoints = 0 }
-                                                else { Bar.Dpoints = it }
-                                        } 
+                                                Bar.Dpoints = if (input > 0) 0 else input
+                                        }
                                 },
                                 InputWidth = 60.dp,
                                 isNumber = true,
                                 MaxLetters = 5,
-                                OnMaxLetters =  { Vlog("MAX: 99999 points") },
-                        )
+                                OnMaxLetters = {
+                                        Vlog("MAX: 99999 points")
+                                }
+                        ) 
                 }
         )
+
 
 
         //region RESTORE/BACKUP
