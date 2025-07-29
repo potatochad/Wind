@@ -503,6 +503,7 @@ fun SettingsScreen() {
         var restoreTrigger = remember { mutableStateOf(false) }
         var backupTrigger by remember { mutableStateOf(false) }
 
+        //! NOT ENCRIPTED WITH PREMIUM MIGHT BE A PROBLEM
         SettingItem(
                 BigIcon = Icons.Filled.Restore,
                 BigIconColor = DarkBlue,
