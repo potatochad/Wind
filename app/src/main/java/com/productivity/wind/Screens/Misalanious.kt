@@ -1,5 +1,6 @@
 package com.productivity.wind.Screens
 
+import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.foundation.border
 import android.app.AlertDialog
 import android.app.AppOpsManager
@@ -499,18 +500,17 @@ fun SettingsScreen() {
 
         var text by remember { mutableStateOf("") }
         SettingItem(
-                BigIcon = Icons.Filled.AdminPanelSettings,
-                BigIconColor = Color(0xFFFFD700),
-                
+                BigIcon = Icons.Filled.LockOpen,
+                BigIconColor = Gold,
                 title = "Unlock Threshold",
                 endContent = {
                         UI.InputField(
                                 value = text,
                                 onValueChange = { text = it },
-                                placeholderText = "text",
-                                InputWidth = 50.dp,
+                                //placeholderText = "text",
+                                InputWidth = 60.dp,
                                 MaxLetters = 5,
-                                OnMaxLetters =  { Vlog("Maximum of 5 letters") },
+                                OnMaxLetters =  { Vlog("MAX: 99999 points") },
                         )
                 }
         )
