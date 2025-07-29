@@ -1016,6 +1016,12 @@ fun SettingItem(
 	
     onClick: (() -> Unit)? = null
 ) {
+	Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Card(
     modifier = modifier
         .fillMaxWidth()
@@ -1071,7 +1077,7 @@ fun SettingItem(
         }
         endContent?.invoke()
     }
-}
+}}
 
 }
 
