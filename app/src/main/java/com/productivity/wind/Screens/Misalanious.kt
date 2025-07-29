@@ -131,16 +131,8 @@ fun MyNavGraph(navController: NavHostController) {
 
             //endregion SETTINGS
 
-            
-            //region ACHIEVEMENTS
-
-
-            
-            //endregion ACHIEVEMENTS
-
         }
 }
-
 
 
 //endregion
@@ -184,18 +176,6 @@ fun UsageIcon() {
         )
     }
 }
-
-@Composable
-fun SimpleIconButton(onClick: () -> Unit, icon: ImageVector) {
-    IconButton(onClick = onClick) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = Color(0xFFFFD700)
-        )
-    }
-}
-
 
 //region MENU
 @Composable
