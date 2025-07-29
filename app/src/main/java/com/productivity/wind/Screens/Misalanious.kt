@@ -90,8 +90,8 @@ import com.productivity.wind.apps
 import com.productivity.wind.log
 import com.productivity.wind.SettingsScreen
 import androidx.compose.material.icons.filled.SportsEsports
-import androidx.compose.material.icons.outlined.Restore
-import androidx.compose.material.icons.outlined.Backup
+import androidx.compose.material.icons.filled.Restore
+import androidx.compose.material.icons.filled.Backup
 import com.productivity.wind.SettingsSaved
 import com.productivity.wind.UI
 import com.productivity.wind.Vlog
@@ -481,17 +481,21 @@ fun ConfigureScreen() = NoLagCompose {
 
 
 //region Settings
+val DarkBlue = Color(0xFF00008B) 
 
 @Composable
 fun SettingsScreen() {
     SettingsScreen(titleContent = { Text("Settings") }) {
 
-        SettingItem(
-            BigIcon = Icons.Filled.AdminPanelSettings,
-            BigIconColor = Color(0xFFFFD700),
-            title = "Permissions",
-            onClick = { Global1.navController.navigate("SettingsP_Screen") }
-        )
+        if (areAllPermissionsEnabled()) {
+                SettingItem(
+                        BigIcon = Icons.Filled.AdminPanelSettings,
+                        BigIconColor = Color(0xFFFFD700),
+                        title = "Permissions",
+                        onClick = { Global1.navController.navigate("SettingsP_Screen") }
+                )    
+        }
+        
 
 
         //region RESTORE/BACKUP
@@ -500,12 +504,14 @@ fun SettingsScreen() {
         var backupTrigger by remember { mutableStateOf(false) }
 
         SettingItem(
-                icon = Icons.Outlined.Restore,
+                BigIcon = Icons.Filled.Restore,
+                BigIconColor = DarkBlue,
                 title = "Restore",
                 onClick = { restoreTrigger.value = true }
         )
         SettingItem(
-                icon = Icons.Outlined.Backup,
+                BigIcon = Icons.Filled.Backup,
+                BigIconColor = DarkBlue,
                 title = "BackUp",
                 onClick = { backupTrigger = true }
         ) 
@@ -657,7 +663,7 @@ fun isUsageStatsP_Enabled(ctx: Context): Boolean {
     ) == AppOpsManager.MODE_ALLOWED
 }
 
-fun areAllPermissionsEnabled(ctx: Context): Boolean {
+fun areAllPermissionsEnabled(ctx: Context = Global1.context): Boolean {
     return isNotificationEnabled(ctx)
             && isBatteryOptimizationDisabled(ctx)
             && isUsageStatsP_Enabled(ctx)
