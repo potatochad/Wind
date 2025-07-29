@@ -102,6 +102,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.material.icons.filled.AdminPanelSettings
 
 //region NavController
 //Global1.navController - to use anywhere, no input
@@ -486,7 +487,8 @@ fun SettingsScreen() {
     SettingsScreen(titleContent = { Text("Settings") }) {
 
         SettingItem(
-            icon = Icons.Outlined.AdminPanelSettings,
+            BigIcon = Icons.Filled.AdminPanelSettings
+            BigIconColor = Color(0xFFFFD700) 
             title = "Permissions",
             onClick = { Global1.navController.navigate("SettingsP_Screen") }
         )
