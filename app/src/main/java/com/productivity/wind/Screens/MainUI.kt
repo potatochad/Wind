@@ -36,7 +36,6 @@ import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.heightIn
 import com.productivity.wind.MAINStart
 import com.productivity.wind.UI
-import com.productivity.wind.Icon
 
 @Composable
 fun Main() {
