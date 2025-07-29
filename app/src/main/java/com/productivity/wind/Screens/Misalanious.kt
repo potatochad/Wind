@@ -499,7 +499,7 @@ fun SettingsScreen() {
         }
 
         // NOT SYNCHED UP WITH APP YET
-        var Dpoints by remember { mutableStateOf("") }
+        var Dpoints by remember { mutableStateOf("1") }
         SettingItem(
                 BigIcon = Icons.Filled.LockOpen,
                 BigIconColor = Gold,
@@ -508,8 +508,11 @@ fun SettingsScreen() {
                         UI.InputField(
                                 value = Dpoints,
                                 onValueChange = { 
-                                        if (it > Dpoints) { Vlog("$it > $Dpoints =Get more points") }
-                                        Dpoints = it 
+                                        if (it > Dpoints) { 
+                                                Vlog("$it > $Dpoints =Get more points") 
+                                        } else {
+                                                Dpoints = it 
+                                        } 
                                 },
                                 InputWidth = 60.dp,
                                 isNumber = true,
