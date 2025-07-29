@@ -1034,7 +1034,7 @@ fun SettingItem(
             Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp),
+            .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 	if (icon != null) {
@@ -1052,7 +1052,7 @@ fun SettingItem(
                     Box(
                         modifier = Modifier
                             .padding(end = 10.dp)
-                            .size(32.dp)
+                            .size(30.dp)
                             .clip(CircleShape)
                             .background(BigIconColor),
                         contentAlignment = Alignment.Center
@@ -1170,8 +1170,9 @@ fun settingsHeader(
                 thickness = 1.dp,
                 modifier = Modifier.fillMaxWidth()
             )
+	    Spacer(modifier = Modifier.padding(bottom = 10.dp))
         }
-
+	
     }
 }
 
