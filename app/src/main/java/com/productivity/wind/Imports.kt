@@ -1,25 +1,5 @@
 package com.productivity.wind
 
-import android.content.Context
-import android.os.PowerManager
-import android.provider.Settings
-import android.app.NotificationManager
-import android.app.AppOpsManager
-import android.os.Build
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
-import android.app.AppOpsManager.OPSTR_POST_NOTIFICATION
-import android.os.Process
-import android.app.usage.UsageStatsManager
-import android.app.usage.UsageStats
-import android.app.usage.UsageEvents
-import android.content.Intent
-import android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
-import android.Manifest
-import androidx.core.app.ActivityCompat
 
 
 import androidx.compose.ui.draw.clip
