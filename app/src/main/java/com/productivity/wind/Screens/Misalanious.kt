@@ -489,7 +489,7 @@ val Gold = Color(0xFFFFD700)
 fun SettingsScreen() {
     SettingsScreen(titleContent = { Text("Settings") }) {
 
-        if (areAllPermissionsEnabled()) {
+        if (!areAllPermissionsEnabled()) {
                 SettingItem(
                         BigIcon = Icons.Filled.AdminPanelSettings,
                         BigIconColor = Color(0xFFFFD700),
@@ -499,6 +499,7 @@ fun SettingsScreen() {
         }
 
         // NOT SYNCHED UP WITH APP YET
+        //NEED EXPLANATION TOO
         var Dpoints by remember { mutableStateOf("1") }
         SettingItem(
                 BigIcon = Icons.Filled.LockOpen,
