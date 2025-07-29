@@ -52,11 +52,13 @@ fun <T> m(value: T) = mutableStateOf(value)
 
 class Settings {
     var funTime by m(0)
-    var showBlockScreen by m(true)
-    var currentApp by m("")
+    //Disipline points
+    var Dpoints by m(0)
     var lastDate by m("")
     var restoringFromFile by m(false)
 
+
+    
     //region COPY PASTE THING Disipline
 
     var FirstEditText by m(true)
@@ -70,6 +72,7 @@ class Settings {
     //endregion COPY PASTE Disipline
 
 
+    
     //region COPY PASTE THING GERMAN
 
     var G_FirstEditText by m(true)
@@ -86,7 +89,7 @@ class Settings {
     //region BLOCKING
 
     var BlockingEnabled by m(false)
-
+    var currentApp by m("")
     var COUNT by m(0)
     var NewDay by m(true)
 
@@ -95,6 +98,8 @@ class Settings {
     var secondsLeft by m(10)
     //endregion BLOCKING
 
+
+    
     //region MISALANIOUS
 
     var halfHeight by m(0.dp)
@@ -104,8 +109,8 @@ class Settings {
 
     //endregion MISALANIOUS
 
-    //region PERMISSIONS
 
+    
     //region PERMISSIONS
 
     var NotificationPermission by m(false)
@@ -122,10 +127,11 @@ class Settings {
     var UsageStatsP_Description by m(
         "Lets the app see which apps you open. Used only to track apps you selected, to help manage your focus."
     )
-
-//endregion
-
+    
     //endregion
+
+
+    
 
     //region ACHIEVEMENTS
 
