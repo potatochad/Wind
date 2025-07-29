@@ -1052,7 +1052,7 @@ fun SettingItem(
                     Box(
                         modifier = Modifier
                             .padding(end = 10.dp)
-                            .size(36.dp)
+                            .size(32.dp)
                             .clip(CircleShape)
                             .background(BigIconColor),
                         contentAlignment = Alignment.Center
