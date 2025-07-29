@@ -167,16 +167,6 @@ fun MainHeader(){
 }
 
 
-@Composable
-fun UsageIcon() {
-    if (Bar.showUsageIcon) {
-        UI.SimpleIconButton(
-            onClick = { Global1.navController.navigate("Achievements") },
-            icon = Icons.Outlined.Chat
-        )
-    }
-}
-
 //region MENU
 @Composable
 fun MenuHeader(){
@@ -792,8 +782,12 @@ fun NewDayWaterDo() {
         },
     )
 }
+
+
+object Icon {
+        
 @Composable
-fun MenuIcon() {
+fun Menu() {
     IconButton(onClick = { Bar.ShowMenu = true }) {
         Icon(
             imageVector = Icons.Default.Menu,
@@ -804,7 +798,7 @@ fun MenuIcon() {
 }
 
 @Composable
-fun ChillIcon() {
+fun Chill() {
   IconButton(onClick = {  }) {
         Icon(
             imageVector = Icons.Default.SportsEsports,
@@ -815,7 +809,7 @@ fun ChillIcon() {
 }
 
 @Composable
-fun EditIcon() {
+fun Edit() {
 
     //region THE SAFETY
 
@@ -854,44 +848,54 @@ fun EditIcon() {
 
 }
 @Composable
-fun G_EditIcon() {
+fun G_Edit() {
 
+        
     //region THE SAFETY
 
-    val showBeginnerAlert = remember { mutableStateOf(false) }
-    val showVeteranAlert = remember { mutableStateOf(false) }
+    val show = remember { mutableStateOf(false) }
+    val showBad = remember { mutableStateOf(false) }
 
-    var BeginnerA_Title by remember { mutableStateOf("Get 10 points") }
-    var BeginnerA_Message by remember { mutableStateOf("Before being allowed to change the text, need a minimum of 10 points. [After changing the text once it increases permanantly to 100]. This is to help you stay disiplined afterwards") }
+    var VeteranA_Title by remember { mutableStateOf("Get ${Bar.Dpoints} points") }
+    var VeteranA_Message by remember { mutableStateOf("Need ${Bar.Dpoints} points before changing the text: this is to help you stay disiplined") }
 
-    var VeteranA_Title by remember { mutableStateOf("Get 100 points") }
-    var VeteranA_Message by remember { mutableStateOf("Need 100 points before changing the text: this is to help you stay disiplined") }
-
-
-    LazyPopup(show = showBeginnerAlert, title = BeginnerA_Title, message = BeginnerA_Message)
-    LazyPopup(show = showVeteranAlert, title = VeteranA_Title, message = VeteranA_Message)
+    LazyPopup(show = showBad, title = VeteranA_Title, message = VeteranA_Message)
 
     //endregion THE SAFETY
 
-    val show = remember { mutableStateOf(false) }
     G_EditPopUp(show = show)
 
 
-    IconButton(onClick = {
-        if (Bar.G_FirstEditText && Bar.funTime > 99) show.value=true
-        else if (!Bar.G_FirstEditText && Bar.funTime > 999) show.value=true
-        else if (Bar.G_FirstEditText) showBeginnerAlert.value = true
-        else if (!Bar.G_FirstEditText) showVeteranAlert.value = true
-    }
-    ) {
-        Icon(
-            imageVector = Icons.Default.Edit,
-            contentDescription = "Edit",
-            tint = Color(0xFFFFD700)
+    UI.SimpleIconButton(
+            onClick = { 
+                    if (Bar.funTime > Bar.Dpoints) show.value=true
+                    else showBad.value = true 
+            },
+            icon = Icons.Default.Edit
+        )
+}
+
+@Composable
+fun Configure() {
+    UI.SimpleIconButton(
+            onClick = { Global1.navController.navigate("ConfigureScreen") },
+            icon = Icons.Default.Settings
+        )
+}
+
+@Composable
+fun UsageIcon() {
+    if (Bar.showUsageIcon) {
+        UI.SimpleIconButton(
+            onClick = { Global1.navController.navigate("Achievements") },
+            icon = Icons.Outlined.Chat
         )
     }
-
 }
+
+ //ICONS!!!!!!-------------------------///
+}
+
 @Composable
 fun G_EditPopUp(show: MutableState<Boolean>) {
     var TemporaryTargetText by remember { mutableStateOf("") }
@@ -917,25 +921,11 @@ fun G_EditPopUp(show: MutableState<Boolean>) {
     )
 }
 
-@Composable
-fun ConfigureIcon() {
-
-    IconButton(onClick = {
-        Global1.navController.navigate("ConfigureScreen")
-    }
 
 
 
 
-    ) {
-        Icon(
-            imageVector = Icons.Default.Settings,
-            contentDescription = "configure",
-            tint = Color(0xFFFFD700)
-        )
-    }
 
-}
 @Composable
 fun StopBlockingButton() {
     var showEnablePopup = remember { mutableStateOf(false) }
