@@ -386,7 +386,7 @@ fun ConfigureScreen() = NoLagCompose {
     }
 
     val BlockedApps = Blist.apps.filter { it.Block.value }
-    LazyPopup(show = showNeedMorePoints, title = "Not EnoughPoints", message = "Need 1k points to edit blocks", onConfirm = {},)
+    LazyPopup(show = showNeedMorePoints, title = "Not EnoughPoints", message = "Need ${Bar.Dpoints} points to edit blocks", onConfirm = {},)
 
     LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
         LazyColumn(modifier = Modifier.height(300.dp)) {
@@ -421,7 +421,7 @@ fun ConfigureScreen() = NoLagCompose {
             if (!areAllPermissionsEnabled(context)) { show.value = true; LazyPopup(show = show, onDismiss = { Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = { Global1.navController.navigate("SettingsP_Screen")}, onCancel = { Global1.navController.navigate("Main")}) } else {
                 SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
                         Button(
-                            onClick = { if(Bar.funTime < 1000 && !BlockedApps.isEmpty()) {showNeedMorePoints.value = true} else { showPick.value = true } },
+                            onClick = { if(Bar.funTime < Bar.Dpoints && !BlockedApps.isEmpty()) {showNeedMorePoints.value = true} else { showPick.value = true } },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)), // gold
                             shape = RoundedCornerShape(8.dp),
                             contentPadding = PaddingValues(6.dp),
@@ -481,7 +481,9 @@ fun ConfigureScreen() = NoLagCompose {
 //endregion CONFIGURE SCREEN
 
 
+
 //region Settings
+
 val DarkBlue = Color(0xFF00008B) 
 val Gold = Color(0xFFFFD700)
 
@@ -500,19 +502,19 @@ fun SettingsScreen() {
 
         // NOT SYNCHED UP WITH APP YET
         //NEED EXPLANATION TOO
-        var Dpoints by remember { mutableStateOf("1") }
         SettingItem(
                 BigIcon = Icons.Filled.LockOpen,
                 BigIconColor = Gold,
                 title = "Unlock Threshold",
                 endContent = {
                         UI.InputField(
-                                value = Dpoints,
+                                value = Bar.Dpoints,
                                 onValueChange = { 
-                                        if (it > Dpoints) { 
+                                        if (it > Bar.Dpoints) { 
                                                 Vlog("$it > $Dpoints =Get more points") 
                                         } else {
-                                                Dpoints = it 
+                                                if (it > 0) { Bar.Dpoints = 0 }
+                                                else { Bar.Dpoints = it }
                                         } 
                                 },
                                 InputWidth = 60.dp,
