@@ -36,6 +36,7 @@ import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.heightIn
 import com.productivity.wind.MAINStart
 import com.productivity.wind.UI
+import com.productivity.wind.Icon
 
 @Composable
 fun Main() {
@@ -96,7 +97,7 @@ fun Disipline() {
     if (Bar.HowManyDoneRetypes_InDay == 5) { }
     else {
         Text("Done: ${Bar.HowManyDoneRetypes_InDay}/5")
-        EditIcon()
+        Icon.Edit()
         Text(
             text = coloredTarget,
             modifier = Modifier
@@ -174,7 +175,7 @@ fun German() {
         }
     }
 
-    G_EditIcon()
+    Icon.G_Edit()
     Text(
         text = coloredTarget,
         modifier = Modifier
