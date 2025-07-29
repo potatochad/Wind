@@ -1019,13 +1019,13 @@ fun SettingItem(
 	Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(7.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
     modifier = modifier
         .fillMaxWidth()
-        .padding(5.dp)
+        .padding(4.dp)
         .clickable(enabled = onClick != null) { onClick?.invoke() },
     shape = RoundedCornerShape(12.dp),
     colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
@@ -1034,7 +1034,7 @@ fun SettingItem(
             Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(5.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 	if (icon != null) {
@@ -1219,7 +1219,6 @@ fun SettingsScreen(
 		Column {
 			content()
 		}
-            
         }
     }
 }
