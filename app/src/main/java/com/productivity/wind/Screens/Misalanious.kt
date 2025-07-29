@@ -170,7 +170,7 @@ fun MainHeader(){
 @Composable
 fun UsageIcon() {
     if (Bar.showUsageIcon) {
-        SimpleIconButton(
+        UI.SimpleIconButton(
             onClick = { Global1.navController.navigate("Achievements") },
             icon = Icons.Outlined.Chat
         )
