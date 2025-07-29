@@ -495,7 +495,23 @@ fun SettingsScreen() {
                         onClick = { Global1.navController.navigate("SettingsP_Screen") }
                 )    
         }
-        
+
+        var text by remember { mutableStateOf("") }
+        SettingItem(
+                icon = Icons.Outlined.AdminPanelSettings,
+                title = "Difficulty",
+                subTitle = "How many points to be allowed anything"
+                endContent = {
+                        UI.InputField(
+                                value = text,
+                                onValueChange = { text = it },
+                                placeholderText = "text",
+                                InputWidth = 50.dp,
+                                MaxLetters = 5,
+                                OnMaxLetters =  { Vlog("Maximum of 5 letters") },
+                        )
+                }
+        )
 
 
         //region RESTORE/BACKUP
@@ -521,23 +537,6 @@ fun SettingsScreen() {
         UI.BsaveToFile(backupTrigger)
 
         //endregion RESTORE/BACKUP
-
-            
-        var text by remember { mutableStateOf("") }
-        SettingItem(
-                icon = Icons.Outlined.AdminPanelSettings,
-                title = "Permissions",
-                endContent = {
-                        UI.InputField(
-                                value = text,
-                                onValueChange = { text = it },
-                                placeholderText = "text",
-                                InputWidth = 50.dp,
-                                MaxLetters = 5,
-                                OnMaxLetters =  { Vlog("Maximum of 5 letters") },
-                        )
-                }
-        )
     }
 }
 
