@@ -530,13 +530,12 @@ fun SettingsScreen() {
 
 //region PERMISSIONS
 
+
+
 //region POPUP
 
-
-
-
 @Composable
-fun NotificationP_PopUp(context: Context, show: MutableState<Boolean>) =
+fun NotificationP_PopUp(show: MutableState<Boolean>) =
         LazyPopup(
         show = show,
         onConfirm = {
@@ -546,9 +545,8 @@ fun NotificationP_PopUp(context: Context, show: MutableState<Boolean>) =
         message = Bar.NotificationP_Description,
     )
     
-
 @Composable
-fun OptimizationExclusionP_PopUp(context: Context, show: MutableState<Boolean>) =
+fun OptimizationExclusionP_PopUp(show: MutableState<Boolean>) =
         LazyPopup(
                 show = show,
                 onConfirm = {
@@ -561,11 +559,9 @@ fun OptimizationExclusionP_PopUp(context: Context, show: MutableState<Boolean>) 
                 title = "Exclude from battery optimization",
                 message = Bar.OptimizationExclusionP_Description,
         )
-        
-
 
 @Composable
-fun UsageStatsP_PopUp(context: Context, show: MutableState<Boolean>) =
+fun UsageStatsP_PopUp(show: MutableState<Boolean>) =
         LazyPopup(
         show = show,
         onConfirm = {
@@ -575,31 +571,31 @@ fun UsageStatsP_PopUp(context: Context, show: MutableState<Boolean>) =
         message = Bar.UsageStatsP_Description,
     )
 
-
+//To lazy to delete this and manifest
 class MyDeviceAdminReceiver : DeviceAdminReceiver() {}
 
 //endregion POPUP
 
+
+
 //region ENABLED??
 
-fun areAllPermissionsEnabled(ctx: Context = Global1.context): Boolean {
-    return UI.isNotificationEnabled(ctx)
-            && UI.isBatteryOptimizationDisabled(ctx)
-            && UI.isUsageStatsP_Enabled(ctx)
+fun areAllPermissionsEnabled(): Boolean {
+    return UI.isNotificationEnabled()
+            && UI.isBatteryOptimizationDisabled()
+            && UI.isUsageStatsP_Enabled()
 }
-
 
 //endregion ENABLED??
 
+
 @Composable
 fun SettingsP_Screen()= NoLagCompose {
-    val ctx = LocalContext.current
     LaunchedEffect(Unit) {
-
         while(true) {
-            Bar.NotificationPermission = isNotificationEnabled(ctx)
-            Bar.OptimizationExclusionPermission = isBatteryOptimizationDisabled(ctx)
-            Bar.UsageStatsPermission = isUsageStatsP_Enabled(ctx)
+            Bar.NotificationPermission = isNotificationEnabled()
+            Bar.OptimizationExclusionPermission = isBatteryOptimizationDisabled()
+            Bar.UsageStatsPermission = isUsageStatsP_Enabled()
             delay(200L)
         }
     }
@@ -608,9 +604,9 @@ fun SettingsP_Screen()= NoLagCompose {
     var showUsagePopup = remember { mutableStateOf(false) }
 
 
-    NotificationP_PopUp(ctx, showNotificationPopup)
-    OptimizationExclusionP_PopUp(ctx, showOptimizationPopup)
-    UsageStatsP_PopUp(ctx, showUsagePopup)
+    NotificationP_PopUp(showNotificationPopup)
+    OptimizationExclusionP_PopUp(showOptimizationPopup)
+    UsageStatsP_PopUp(showUsagePopup)
 
 
     SettingsScreen(titleContent = { Text("Permissions") }) {
