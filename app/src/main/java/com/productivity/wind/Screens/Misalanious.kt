@@ -532,13 +532,6 @@ fun SettingsScreen() {
 
 //region POPUP
 
-fun openPermissionSettings(action: String, uri: Uri? = null) {
-    val intent = Intent(action).apply {
-        uri?.let { data = it }
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
-    Global1.context.startActivity(intent)
-}
 
 
 
