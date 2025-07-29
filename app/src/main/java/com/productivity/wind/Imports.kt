@@ -552,6 +552,8 @@ fun SimpleIconButton(
 	    }
     }	
 }
+
+//Region SETTING STUFF
 	fun openPermissionSettings(action: String, uri: Uri? = null) {
 		val intent = Intent(action).apply {
 			uri?.let { data = it }
@@ -560,7 +562,28 @@ fun SimpleIconButton(
 		Global1.context.startActivity(intent)
 	}
 
+	
+	fun isNotificationEnabled(): Boolean =
+	        val ctx = Global1.context
+	        NotificationManagerCompat
+		        .getEnabledListenerPackages(ctx)
+		        .contains(ctx.packageName)
+	fun isBatteryOptimizationDisabled(): Boolean {
+		val ctx = Global1.context
+		val pm = ctx.getSystemService(PowerManager::class.java)
+		return pm.isIgnoringBatteryOptimizations(ctx.packageName)
+	}
+	fun isUsageStatsP_Enabled(): Boolean {
+		val ctx = Global1.context
+		val appOps = ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+		return appOps.checkOpNoThrow(
+			AppOpsManager.OPSTR_GET_USAGE_STATS,
+			Process.myUid(),
+			ctx.packageName
+		) == AppOpsManager.MODE_ALLOWED
+	}
 
+//endregion SETTING STUFF
 
 
 
