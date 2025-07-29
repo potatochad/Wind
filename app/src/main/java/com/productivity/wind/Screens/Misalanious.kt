@@ -152,16 +152,16 @@ fun MainHeader(){
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        MenuIcon()
-        ChillIcon()
-        UsageIcon()
+        Icon.Menu()
+        Icon.Chill()
+        Icon.Usage()
         
         Spacer(modifier = Modifier.width(12.dp))
         Text(text = "Points ${Bar.funTime}", fontSize = 18.sp)
         
         Spacer(modifier = Modifier.weight(1f))
 
-        ConfigureIcon()
+        Icon.Configure()
     }
 
 }
@@ -532,37 +532,19 @@ fun SettingsScreen() {
 
 //region POPUP
 
-@Composable
-fun showPermissionDialog(
-    show: MutableState<Boolean>,
-    context: Context,
-    title: String,
-    message: String,
-    settingsAction: String,
-    dataUri: Uri? = null
-) {
-    LazyPopup(
-        show = show,
-        onDismiss = { },
-        onConfirm = {
-            Intent(settingsAction).apply {
-                dataUri?.let { data = it }
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }.also { context.startActivity(it) }
-        },
-        title = title,
-        message = message,
-    )
+fun openPermissionSettings(action: String, uri: Uri? = null) {
+    val intent = Intent(action).apply {
+        uri?.let { data = it }
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    Global1.context.startActivity(intent)
 }
+
+
+
 @Composable
-fun showPermissionDialog2(
-    show: MutableState<Boolean>,
-    context: Context,
-    title: String,
-    message: String,
-    onConfirm: () -> Unit,
-) {
-    LazyPopup(
+fun NotificationP_PopUp(context: Context, show: MutableState<Boolean>) =
+        LazyPopup(
         show = show,
         onDismiss = { },
         onConfirm = {
@@ -571,12 +553,6 @@ fun showPermissionDialog2(
         title = title,
         message = message,
     )
-}
-
-
-
-@Composable
-fun NotificationP_PopUp(context: Context, show: MutableState<Boolean>) =
     showPermissionDialog(
         show,
         context,
@@ -613,19 +589,7 @@ fun UsageStatsP_PopUp(context: Context, show: MutableState<Boolean>) =
     )
 
 
-class MyDeviceAdminReceiver : DeviceAdminReceiver() {
-    override fun onEnabled(context: Context, intent: Intent) {
-        super.onEnabled(context, intent)
-        Log.w("DeviceAdmin", "✅ Admin activated!")
-        Toast.makeText(context, "Admin access granted!", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onDisabled(context: Context, intent: Intent) {
-        super.onDisabled(context, intent)
-        Log.w("DeviceAdmin", "❌ Admin removed!")
-        Toast.makeText(context, "Admin access removed!", Toast.LENGTH_SHORT).show()
-    }
-}
+class MyDeviceAdminReceiver : DeviceAdminReceiver() {}
 
 //endregion POPUP
 
@@ -726,12 +690,9 @@ fun SettingsP_Screen()= NoLagCompose {
 //endregion
 
 
-//region UI BUILDERS
-
-
-//endregion
 
 //region ONCES
+
 class MyNotificationListener : NotificationListenerService()
 
 //CHECKS IF NEW DAY/// WIRED UP TO SETTINGS VAR NEWDAY
@@ -788,63 +749,48 @@ object Icon {
         
 @Composable
 fun Menu() {
-    IconButton(onClick = { Bar.ShowMenu = true }) {
-        Icon(
-            imageVector = Icons.Default.Menu,
-            contentDescription = "Menu",
-            tint = Color(0xFFFFD700)
+    UI.SimpleIconButton(
+            onClick = { Bar.ShowMenu = true },
+            icon = Icons.Default.Menu
         )
-    }
 }
 
 @Composable
 fun Chill() {
-  IconButton(onClick = {  }) {
-        Icon(
-            imageVector = Icons.Default.SportsEsports,
-            contentDescription = "Chill",
-            tint = Color(0xFFFFD700)
+  UI.SimpleIconButton(
+            onClick = { Vlog("COMING OUT SOON") },
+            icon = Icons.Default.SportsEsports
         )
-  }       
 }
 
 @Composable
 fun Edit() {
 
+        
     //region THE SAFETY
 
-    val showBeginnerAlert = remember { mutableStateOf(false) }
-    val showVeteranAlert = remember { mutableStateOf(false) }
+    val show = remember { mutableStateOf(false) }
+    val showBad = remember { mutableStateOf(false) }
 
-    var BeginnerA_Title by remember { mutableStateOf("Get 10 points") }
-    var BeginnerA_Message by remember { mutableStateOf("Before being allowed to change the text, need a minimum of 10 points. [After changing the text once it increases permanantly to 100]. This is to help you stay disiplined afterwards") }
+    var VeteranA_Title by remember { mutableStateOf("Get ${Bar.Dpoints} points") }
+    var VeteranA_Message by remember { mutableStateOf("Need ${Bar.Dpoints} points before changing the text: this is to help you stay disiplined") }
 
-    var VeteranA_Title by remember { mutableStateOf("Get 100 points") }
-    var VeteranA_Message by remember { mutableStateOf("Need 100 points before changing the text: this is to help you stay disiplined") }
-
-
-    LazyPopup(show = showBeginnerAlert, title = BeginnerA_Title, message = BeginnerA_Message)
-    LazyPopup(show = showVeteranAlert, title = VeteranA_Title, message = VeteranA_Message)
+    LazyPopup(show = showBad, title = VeteranA_Title, message = VeteranA_Message)
 
     //endregion THE SAFETY
+    
+    
 
-    val show = remember { mutableStateOf(false) }
     EditPopUp(show = show)
 
 
-    IconButton(onClick = {
-        if (Bar.FirstEditText && Bar.funTime > 9) show.value=true
-        else if (!Bar.FirstEditText && Bar.funTime > 99) show.value=true
-        else if (Bar.FirstEditText) showBeginnerAlert.value = true
-        else if (!Bar.FirstEditText) showVeteranAlert.value = true
-    }
-    ) {
-        Icon(
-            imageVector = Icons.Default.Edit,
-            contentDescription = "Edit",
-            tint = Color(0xFFFFD700)
+    UI.SimpleIconButton(
+            onClick = { 
+                    if (Bar.funTime > Bar.Dpoints) show.value=true
+                    else showBad.value = true 
+            },
+            icon = Icons.Default.Edit
         )
-    }
 
 }
 @Composable
@@ -896,6 +842,10 @@ fun UsageIcon() {
  //ICONS!!!!!!-------------------------///
 }
 
+
+
+
+
 @Composable
 fun G_EditPopUp(show: MutableState<Boolean>) {
     var TemporaryTargetText by remember { mutableStateOf("") }
@@ -920,8 +870,6 @@ fun G_EditPopUp(show: MutableState<Boolean>) {
         onCancel = { TemporaryTargetText = Bar.G_targetText }
     )
 }
-
-
 
 
 
