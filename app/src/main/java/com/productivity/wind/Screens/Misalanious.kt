@@ -499,7 +499,7 @@ fun SettingsScreen() {
         }
 
         // NOT SYNCHED UP WITH APP YET
-        var text by remember { mutableStateOf("") }
+        var Dpoints by remember { mutableStateOf("") }
         SettingItem(
                 BigIcon = Icons.Filled.LockOpen,
                 BigIconColor = Gold,
@@ -507,9 +507,12 @@ fun SettingsScreen() {
                 endContent = {
                         UI.InputField(
                                 value = text,
-                                onValueChange = { text = it },
+                                onValueChange = { 
+                                        if (it > Dpoints) { Vlog("$it > $Dpoints =Get more points") }
+                                        text = it 
+                                },
                                 InputWidth = 60.dp,
-                                //numbers only
+                                isNumber = true,
                                 MaxLetters = 5,
                                 OnMaxLetters =  { Vlog("MAX: 99999 points") },
                         )
