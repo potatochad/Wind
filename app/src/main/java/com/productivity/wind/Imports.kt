@@ -1019,13 +1019,13 @@ fun SettingItem(
 	Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp),
+            .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
     modifier = modifier
         .fillMaxWidth()
-        .padding(horizontal = 2.dp, vertical = 2.dp)
+        .padding(5.dp)
         .clickable(enabled = onClick != null) { onClick?.invoke() },
     shape = RoundedCornerShape(12.dp),
     colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
