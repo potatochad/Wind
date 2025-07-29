@@ -516,9 +516,49 @@ fun LazyCard(
 	     }
 }
 
+@Composable
+fun SimpleIconButton(
+	onClick: () -> Unit, 
+	icon: ImageVector? = null,
+	BigIcon: ImageVector? = null,
+	BigIconColor: Color? = null,
+) {
+    IconButton(onClick = onClick) {
+	    if (icon != null) {
+		    Icon(
+			    imageVector = icon,
+			    contentDescription = null,
+			    tint = Color(0xFFFFD700),
+			    modifier = Modifier
+				    .size(24.dp)
+		    )
+	    }	    
+	    
+	    if (BigIcon != null && BigIconColor != null) {
+                    Box(
+                        modifier = Modifier
+                            .size(30.dp)
+                            .clip(CircleShape)
+                            .background(BigIconColor),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = BigIcon,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(20.dp)
+                        )
+		    }
+	    }
+    }
 
 
-    //INSIDE UI OBJECTTTTTT
+	
+}
+
+
+
+    //INSIDE UI OBJECTTTTTT----------------------------------------//
 }
 
 
