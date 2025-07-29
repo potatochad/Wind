@@ -487,8 +487,8 @@ fun SettingsScreen() {
     SettingsScreen(titleContent = { Text("Settings") }) {
 
         SettingItem(
-            BigIcon = Icons.Filled.AdminPanelSettings
-            BigIconColor = Color(0xFFFFD700) 
+            BigIcon = Icons.Filled.AdminPanelSettings,
+            BigIconColor = Color(0xFFFFD700),
             title = "Permissions",
             onClick = { Global1.navController.navigate("SettingsP_Screen") }
         )
