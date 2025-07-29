@@ -415,7 +415,7 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
 fun InputField(
     value: String,
     onValueChange: (String) -> Unit,
-    placeholderText: String,
+    placeholderText: String = "Input Text",
     modifier: Modifier = Modifier,
     isNumber: Boolean = false,
     focusRequester: FocusRequester? = null,
