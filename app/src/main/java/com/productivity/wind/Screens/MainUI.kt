@@ -47,9 +47,9 @@ fun Main() {
     
     SettingsScreen(titleContent = { MainHeader() }, showBack = false) {
         
-                UI.LazyCard{ Disipline() } 
-                UI.LazyCard{ German() } 
-                UI.LazyCard{ Text( text = "WaterDo: ${Bar.WaterDOtime_spent}") } 
+                UI.LazyCard( content = { Disipline() } )
+                UI.LazyCard( content = { German() } )
+                UI.LazyCard( content = { Text( text = "WaterDo: ${Bar.WaterDOtime_spent}") } )
                 
     }
 }
