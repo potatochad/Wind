@@ -539,46 +539,40 @@ fun SettingsScreen() {
 fun NotificationP_PopUp(context: Context, show: MutableState<Boolean>) =
         LazyPopup(
         show = show,
-        onDismiss = { },
         onConfirm = {
-            onConfirm()
+            openPermissionSettings(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
         },
-        title = title,
-        message = message,
+        title = "Grant Notification access",
+        message = Bar.NotificationP_Description,
     )
-    showPermissionDialog(
-        show,
-        context,
-        "Grant Notification access",
-        Bar.NotificationP_Description,
-        Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
-    )
+    
 
 @Composable
 fun OptimizationExclusionP_PopUp(context: Context, show: MutableState<Boolean>) =
-    showPermissionDialog2(
-        show,
-        context,
-        "Exclude from battery optimization",
-        Bar.OptimizationExclusionP_Description,
-        onConfirm = {
-            val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
-                data = Uri.parse("package:${context.packageName}")
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-            context.startActivity(intent)
-        }
-    )
+        LazyPopup(
+                show = show,
+                onConfirm = {
+                        val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                                data = Uri.parse("package:${context.packageName}")
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                        context.startActivity(intent)
+                },
+                title = "Exclude from battery optimization",
+                message = Bar.OptimizationExclusionP_Description,
+        )
+        
 
 
 @Composable
 fun UsageStatsP_PopUp(context: Context, show: MutableState<Boolean>) =
-    showPermissionDialog(
-        show,
-        context,
-        "Grant Usage-Access permission",
-        Bar.UsageStatsP_Description,
-        Settings.ACTION_USAGE_ACCESS_SETTINGS
+        LazyPopup(
+        show = show,
+        onConfirm = {
+            openPermissionSettings(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+        },
+        title = "Grant Usage-Access permission",
+        message = Bar.UsageStatsP_Description,
     )
 
 
@@ -588,29 +582,10 @@ class MyDeviceAdminReceiver : DeviceAdminReceiver() {}
 
 //region ENABLED??
 
-fun isNotificationEnabled(ctx: Context): Boolean =
-    NotificationManagerCompat
-        .getEnabledListenerPackages(ctx)
-        .contains(ctx.packageName)
-
-fun isBatteryOptimizationDisabled(ctx: Context): Boolean {
-    val pm = ctx.getSystemService(PowerManager::class.java)
-    return pm.isIgnoringBatteryOptimizations(ctx.packageName)
-}
-
-fun isUsageStatsP_Enabled(ctx: Context): Boolean {
-    val appOps = ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-    return appOps.checkOpNoThrow(
-        AppOpsManager.OPSTR_GET_USAGE_STATS,
-        Process.myUid(),
-        ctx.packageName
-    ) == AppOpsManager.MODE_ALLOWED
-}
-
 fun areAllPermissionsEnabled(ctx: Context = Global1.context): Boolean {
-    return isNotificationEnabled(ctx)
-            && isBatteryOptimizationDisabled(ctx)
-            && isUsageStatsP_Enabled(ctx)
+    return UI.isNotificationEnabled(ctx)
+            && UI.isBatteryOptimizationDisabled(ctx)
+            && UI.isUsageStatsP_Enabled(ctx)
 }
 
 
