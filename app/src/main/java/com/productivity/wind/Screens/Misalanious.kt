@@ -506,10 +506,10 @@ fun SettingsScreen() {
                 title = "Unlock Threshold",
                 endContent = {
                         UI.InputField(
-                                value = text,
+                                value = Dpoints,
                                 onValueChange = { 
                                         if (it > Dpoints) { Vlog("$it > $Dpoints =Get more points") }
-                                        text = it 
+                                        Dpoints = it 
                                 },
                                 InputWidth = 60.dp,
                                 isNumber = true,
