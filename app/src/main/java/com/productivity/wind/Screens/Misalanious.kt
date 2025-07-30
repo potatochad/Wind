@@ -793,7 +793,7 @@ fun Configure() {
 }
 
 @Composable
-fun UsageIcon() {
+fun Usage() {
     if (Bar.showUsageIcon) {
         UI.SimpleIconButton(
             onClick = { Global1.navController.navigate("Achievements") },
