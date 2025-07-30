@@ -1,7 +1,7 @@
 package com.productivity.wind
 
 import android.os.Process
-
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import android.app.AppOpsManager
 import android.os.PowerManager
 import androidx.core.app.NotificationManagerCompat
