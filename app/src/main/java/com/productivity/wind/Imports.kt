@@ -1100,12 +1100,15 @@ fun SettingItem(
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
 	
-    onClick: (() -> Unit)? = null
+    onClick: (() -> Unit)? = null,
+
+    topPadding: Int = 7,
+    bottomPadding: Int = 7,
 ) {
 	Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(7.dp),
+            .padding(top = topPadding.dp, bottom = bottomPadding.dp, horizontal = 7.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
