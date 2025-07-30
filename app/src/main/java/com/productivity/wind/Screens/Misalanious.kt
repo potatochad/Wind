@@ -465,13 +465,15 @@ fun SettingsScreen() {
                         BigIcon = Icons.Filled.AdminPanelSettings,
                         BigIconColor = Color(0xFFFFD700),
                         title = "Permissions",
-                        onClick = { Global1.navController.navigate("SettingsP_Screen") }
+                        onClick = { Global1.navController.navigate("SettingsP_Screen") },
+                        bottomPadding = 2,
                 )    
         }
 
         // NOT SYNCHED UP WITH APP YET
         //NEED EXPLANATION TOO
         SettingItem(
+                topPadding = 2,
                 BigIcon = Icons.Filled.LockOpen,
                 BigIconColor = Gold,
                 title = "Unlock Threshold",
