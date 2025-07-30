@@ -483,7 +483,7 @@ fun SettingsScreen() {
                                 onValueChange = {
                                         val input = it.toIntOrNull() ?: 0  // convert input to number safely
                                         if (input > Bar.funTime) {
-                                                Vlog("$input input > ${current}p= get more points", "one")
+                                                Vlog("$input input > ${Bar.funTime}p= get more points", "one")
                                         } else {
                                                 Bar.Dpoints = if (input > 0) 0 else input
                                         }
