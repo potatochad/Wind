@@ -515,7 +515,7 @@ fun SettingsScreen() {
                 bottomPadding = 0.dp
         )
         SettingItem(
-                topPadding = 0.dp
+                topPadding = 0.dp,
                 BigIcon = Icons.Filled.Backup,
                 BigIconColor = DarkBlue,
                 title = "BackUp",
