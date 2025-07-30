@@ -1102,14 +1102,19 @@ fun SettingItem(
 	
     onClick: (() -> Unit)? = null,
 
-    topPadding: Int = 7,
-    bottomPadding: Int = 7,
+    topPadding: Dp= 7.dp,
+    bottomPadding: Dp = 7.dp,
 ) {
 	Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = topPadding.dp, bottom = bottomPadding.dp, horizontal = 7.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(
+		    top = topPadding,
+		    bottom = bottomPadding,
+		    start = 7.dp,
+		    end = 7.dp
+	    ),
+ verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
     modifier = modifier
