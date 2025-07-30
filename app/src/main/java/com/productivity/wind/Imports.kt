@@ -169,8 +169,20 @@ fun log(message: String, tag: String? = "Bad") {
     else { Log.d(tag, LogMessage) }
 }
 
-fun Vlog(msg: String) {
+fun Vlog1(msg: String) {
     Toast.makeText(Global1.context, msg, Toast.LENGTH_SHORT).show()
+}
+
+private var lastToast: Toast? = null
+
+fun Vlog(msg: String, special: String = "none") {
+    if (special.equals("one", true)) {
+        lastToast?.cancel()
+    }
+
+    val toast = Toast.makeText(Global1.context, msg, Toast.LENGTH_SHORT)
+    lastToast = toast
+    toast.show()
 }
 
 
