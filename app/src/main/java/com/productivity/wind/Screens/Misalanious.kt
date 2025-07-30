@@ -538,7 +538,7 @@ fun NotificationP_PopUp(show: MutableState<Boolean>) =
         LazyPopup(
         show = show,
         onConfirm = {
-            openPermissionSettings(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+            UI.openPermissionSettings(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
         },
         title = "Grant Notification access",
         message = Bar.NotificationP_Description,
@@ -564,7 +564,7 @@ fun UsageStatsP_PopUp(show: MutableState<Boolean>) =
         LazyPopup(
         show = show,
         onConfirm = {
-            openPermissionSettings(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+            UI.openPermissionSettings(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         },
         title = "Grant Usage-Access permission",
         message = Bar.UsageStatsP_Description,
@@ -592,9 +592,9 @@ fun areAllPermissionsEnabled(): Boolean {
 fun SettingsP_Screen()= NoLagCompose {
     LaunchedEffect(Unit) {
         while(true) {
-            Bar.NotificationPermission = isNotificationEnabled()
-            Bar.OptimizationExclusionPermission = isBatteryOptimizationDisabled()
-            Bar.UsageStatsPermission = isUsageStatsP_Enabled()
+            Bar.NotificationPermission = UI.isNotificationEnabled()
+            Bar.OptimizationExclusionPermission = UI.isBatteryOptimizationDisabled()
+            Bar.UsageStatsPermission = UI.isUsageStatsP_Enabled()
             delay(200L)
         }
     }
