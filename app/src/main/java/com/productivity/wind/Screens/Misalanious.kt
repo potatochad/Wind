@@ -104,7 +104,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.material.icons.filled.AdminPanelSettings
-import com.productivity.wind.Icon
 //region NavController
 //Global1.navController - to use anywhere, no input
 @RequiresApi(Build.VERSION_CODES.O)
@@ -388,7 +387,7 @@ fun ConfigureScreen() = NoLagCompose {
     }, onConfirm = {},)
 
     SettingsScreen(titleContent = { ConfigureS_Header() }) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
-            if (!areAllPermissionsEnabled(context)) { show.value = true; LazyPopup(show = show, onDismiss = { Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = { Global1.navController.navigate("SettingsP_Screen")}, onCancel = { Global1.navController.navigate("Main")}) } else {
+            if (!areAllPermissionsEnabled()) { show.value = true; LazyPopup(show = show, onDismiss = { Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = { Global1.navController.navigate("SettingsP_Screen")}, onCancel = { Global1.navController.navigate("Main")}) } else {
                 SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
                         Button(
                             onClick = { if(Bar.funTime < Bar.Dpoints && !BlockedApps.isEmpty()) {showNeedMorePoints.value = true} else { showPick.value = true } },
