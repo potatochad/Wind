@@ -1119,7 +1119,6 @@ fun SettingItem(
         Card(
     modifier = modifier
         .fillMaxWidth()
-        .padding(4.dp)
         .clickable(enabled = onClick != null) { onClick?.invoke() },
     shape = RoundedCornerShape(12.dp),
     colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
