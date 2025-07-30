@@ -485,7 +485,7 @@ fun SettingsScreen() {
                                         if (input > Bar.funTime) {
                                                 Vlog("$input input > ${Bar.funTime}p= get more points", "one")
                                         } else {
-                                                Bar.Dpoints = if (input > 0) 0 else input
+                                                Bar.Dpoints = input
                                         }
                                 },
                                 InputWidth = 60.dp,
