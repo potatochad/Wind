@@ -563,13 +563,13 @@ fun SimpleIconButton(
 		}
 		Global1.context.startActivity(intent)
 	}
+	fun isNotificationEnabled(): Boolean {
+		val ctx = Global1.context
+		return NotificationManagerCompat
+			.getEnabledListenerPackages(ctx)
+			.contains(ctx.packageName)
+	}
 
-	
-	fun isNotificationEnabled(): Boolean =
-	        val ctx = Global1.context
-	        NotificationManagerCompat
-		        .getEnabledListenerPackages(ctx)
-		        .contains(ctx.packageName)
 	fun isBatteryOptimizationDisabled(): Boolean {
 		val ctx = Global1.context
 		val pm = ctx.getSystemService(PowerManager::class.java)
