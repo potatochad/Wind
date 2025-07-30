@@ -446,10 +446,20 @@ fun InputField(
     OnMaxLetters: (() -> Unit)? = null, //each letter type doo
     InputTextColor: Color = Color.White,
     InputBackgroundColor: Color = SettingsItemCardColor,
+
+    OnFocusLose: (() -> Unit)? = null,
 ) {
     val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
     val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
     val interactionSource = remember { MutableInteractionSource() }
+
+    val isFocused by interactionSource.collectIsFocusedAsState()
+
+    LaunchedEffect(isFocused) {
+	    if (!isFocused) {
+		    OnFocusLose?.invoke()
+	    }
+    }
 
     BasicTextField(
         value = value,
