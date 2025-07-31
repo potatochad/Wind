@@ -81,7 +81,7 @@ import com.productivity.wind.SettingsScreen
 import com.productivity.wind.SettingsSaved
 import com.productivity.wind.UI
 import com.productivity.wind.Vlog
-import com.productivity.wind.Challenge
+import com.productivity.wind.Screens.Challenge
 import com.productivity.wind.Achievements
 import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.ui.graphics.vector.ImageVector
