@@ -173,7 +173,7 @@ object Blist {
 
 //region POPUP CONTROLLER
 
-object Pop {
+object Popup {
     var show1 = m(false)
     var show2 = m(false)
     var show3 = m(false)
@@ -183,6 +183,7 @@ object Pop {
 //!Just call this on app start
 @Composable
 fun PopUps(){
+    /*
     LazyPopup(
       show: = ,
     onDismiss: (() -> Unit)? = null,
@@ -194,6 +195,9 @@ fun PopUps(){
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null
 ) {
+*/
+
+    
 }
 
 //endregion POPUP CONTROLLER
