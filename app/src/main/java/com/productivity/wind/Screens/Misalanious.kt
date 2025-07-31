@@ -267,7 +267,6 @@ fun ConfigureS_Header() = NoLagCompose {
 @Composable
 fun ConfigureScreen() = NoLagCompose {
     val iconMap = remember { mutableStateMapOf<String, ImageBitmap>() }
-    var show = remember { mutableStateOf(false) }
     var showPick = remember { mutableStateOf(false) }
 
 
@@ -549,7 +548,10 @@ fun G_Edit() {
 @Composable
 fun Configure() {
     UI.SimpleIconButton(
-            onClick = { Global1.navController.navigate("ConfigureScreen") },
+            onClick = { 
+                    if (!areAllPermissionsEnabled()) { Popup.NeedMorePoints.value = true }
+                    else { Global1.navController.navigate("ConfigureScreen") }
+            },
             icon = Icons.Default.Settings
         )
 }
