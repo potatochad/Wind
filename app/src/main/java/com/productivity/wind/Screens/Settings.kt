@@ -106,3 +106,225 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.material.icons.filled.AdminPanelSettings
+
+
+//region Settings
+
+val DarkBlue = Color(0xFF00008B) 
+val Gold = Color(0xFFFFD700)
+
+@Composable
+fun SettingsScreen() {
+    SettingsScreen(titleContent = { Text("Settings") }) {
+
+        if (!areAllPermissionsEnabled()) {
+                SettingItem(
+                        BigIcon = Icons.Filled.AdminPanelSettings,
+                        BigIconColor = Color(0xFFFFD700),
+                        title = "Permissions",
+                        onClick = { Global1.navController.navigate("SettingsP_Screen") },
+                        bottomPadding = 2.dp,
+                )    
+        }
+
+        // NOT SYNCHED UP WITH APP YET
+        //NEED EXPLANATION TOO
+        SettingItem(
+                topPadding = 1.dp,
+                BigIcon = Icons.Filled.LockOpen,
+                BigIconColor = Gold,
+                title = "Unlock Threshold",
+                endContent = {
+                        UI.InputField(
+                                value = Bar.Dpoints.toString(),
+                                onValueChange = {
+                                        val input = it.toIntOrNull() ?: 0  // convert input to number safely
+                                        if (input > Bar.funTime) {
+                                                Vlog("$input input > ${Bar.funTime}p= get more points", "one")
+                                        } else {
+                                                Bar.Dpoints = input
+                                        }
+                                },
+                                InputWidth = 60.dp,
+                                isNumber = true,
+                                MaxLetters = 5,
+                                OnMaxLetters = {
+                                        Vlog("MAX: 99999 points")
+                                },
+                                //OnFocusLose = { if (Bar.Dpoints<1) Bar.Dpoints =0 }
+                        ) 
+                }
+        )
+
+
+
+        //region RESTORE/BACKUP
+        
+        var restoreTrigger = remember { mutableStateOf(false) }
+        var backupTrigger by remember { mutableStateOf(false) }
+
+
+        LaunchedEffect(backupTrigger) {
+                if (backupTrigger) {
+                        delay(3000L)
+                        backupTrigger = false
+                }
+        }
+
+        
+        //! NOT ENCRIPTED WITH PREMIUM MIGHT BE A PROBLEM
+        SettingItem(
+                BigIcon = Icons.Filled.Restore,
+                BigIconColor = DarkBlue,
+                title = "Restore",
+                onClick = { restoreTrigger.value = true },
+                bottomPadding = 2.dp
+        )
+        SettingItem(
+                topPadding = 1.dp,
+                BigIcon = Icons.Filled.Backup,
+                BigIconColor = DarkBlue,
+                title = "BackUp",
+                onClick = { backupTrigger = true }
+        ) 
+        
+        UI.BrestoreFromFile(restoreTrigger)
+        UI.BsaveToFile(backupTrigger)
+
+        //endregion RESTORE/BACKUP
+
+        
+        SettingItem(
+                BigIcon = Icons.Filled.Extension,
+                BigIconColor = Color(0xFF9C27B0),
+                title = "Other",
+                onClick = { }
+        ) 
+    }
+}
+
+
+//region PERMISSIONS
+
+
+
+//region POPUP
+
+@Composable
+fun NotificationP_PopUp(show: MutableState<Boolean>) =
+        LazyPopup(
+        show = show,
+        onConfirm = {
+            UI.openPermissionSettings(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+        },
+        title = "Grant Notification access",
+        message = Bar.NotificationP_Description,
+    )
+    
+@Composable
+fun OptimizationExclusionP_PopUp(show: MutableState<Boolean>) =
+        LazyPopup(
+                show = show,
+                onConfirm = {
+                        val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                                data = Uri.parse("package:${context.packageName}")
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                        context.startActivity(intent)
+                },
+                title = "Exclude from battery optimization",
+                message = Bar.OptimizationExclusionP_Description,
+        )
+
+@Composable
+fun UsageStatsP_PopUp(show: MutableState<Boolean>) =
+        LazyPopup(
+        show = show,
+        onConfirm = {
+            UI.openPermissionSettings(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+        },
+        title = "Grant Usage-Access permission",
+        message = Bar.UsageStatsP_Description,
+    )
+
+//To lazy to delete this and manifest
+class MyDeviceAdminReceiver : DeviceAdminReceiver() {}
+
+//endregion POPUP
+
+
+
+//region ENABLED??
+
+fun areAllPermissionsEnabled(): Boolean {
+    return UI.isNotificationEnabled()
+            && UI.isBatteryOptimizationDisabled()
+            && UI.isUsageStatsP_Enabled()
+}
+
+//endregion ENABLED??
+
+
+@Composable
+fun SettingsP_Screen()= NoLagCompose {
+    LaunchedEffect(Unit) {
+        while(true) {
+            Bar.NotificationPermission = UI.isNotificationEnabled()
+            Bar.OptimizationExclusionPermission = UI.isBatteryOptimizationDisabled()
+            Bar.UsageStatsPermission = UI.isUsageStatsP_Enabled()
+            delay(200L)
+        }
+    }
+    var showNotificationPopup = remember { mutableStateOf(false) }
+    var showOptimizationPopup = remember { mutableStateOf(false) }
+    var showUsagePopup = remember { mutableStateOf(false) }
+
+
+    NotificationP_PopUp(showNotificationPopup)
+    OptimizationExclusionP_PopUp(showOptimizationPopup)
+    UsageStatsP_PopUp(showUsagePopup)
+
+
+    SettingsScreen(titleContent = { Text("Permissions") }) {
+
+        SettingItem(
+            icon = Icons.Outlined.Notifications,
+            title = "Notification",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.NotificationPermission,
+                    onEnable = {
+                        showNotificationPopup.value= true
+                    }
+                )
+            }
+        )
+        SettingItem(
+            icon = Icons.Outlined.BatterySaver,
+            title = "Optimization Exclusion",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.OptimizationExclusionPermission,
+                    onEnable = { showOptimizationPopup.value = true }
+                )
+            }
+        )
+        SettingItem(
+            icon = Icons.Outlined.BarChart,
+            title = "Usage Stats",
+            endContent = {
+                PermissionsButton(
+                    isEnabled = Bar.UsageStatsPermission,
+                    onEnable = { showUsagePopup.value = true }
+                )
+            }
+        )
+    }
+}
+
+//endregion PERMISSIONS
+
+//! ADD NOTIFICATION LISTENER HERE!!!!!
+
+
+//endregion
