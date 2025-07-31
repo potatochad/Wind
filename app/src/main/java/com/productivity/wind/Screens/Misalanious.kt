@@ -80,6 +80,7 @@ import com.productivity.wind.log
 import com.productivity.wind.SettingsScreen
 import com.productivity.wind.SettingsSaved
 import com.productivity.wind.UI
+import com.productivity.wind.Popup
 import com.productivity.wind.Vlog
 import com.productivity.wind.Screens.Challenge
 import com.productivity.wind.Achievements
@@ -508,7 +509,7 @@ fun Edit() {
     
     
 
-    EditPopUp(show = show)
+    Popup.Edit.value = show
 
 
     UI.SimpleIconButton(
