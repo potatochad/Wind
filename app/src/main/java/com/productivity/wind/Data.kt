@@ -180,7 +180,7 @@ object Blist {
 
 object Popup {
     var Edit = m(false)
-    var show2 = m(false)
+    var G_Edit = m(false)
     var show3 = m(false)
     var show4 = m(false)
     var show5 = m(false)
@@ -188,6 +188,7 @@ object Popup {
 //!Just call this on app start
 @Composable
 fun PopUps(){
+    G_EditPopUp(Popup.G_Edit)
     /*
     LazyPopup(
       show: = ,
@@ -227,6 +228,29 @@ fun EditPopUp(show: MutableState<Boolean>) {
         showCancel = true,
         onConfirm = { Bar.targetText = TemporaryTargetText; Bar.FirstEditText = false },
         onCancel = { TemporaryTargetText = Bar.targetText }
+    )
+@Composable
+fun G_EditPopUp(show: MutableState<Boolean>) {
+    var TemporaryTargetText by remember { mutableStateOf("") }
+    TemporaryTargetText = Bar.G_targetText
+    LazyPopup(
+        show = show,
+        onDismiss = { TemporaryTargetText = Bar.G_targetText },
+        title = "Edit Text",
+        message = "",
+        content = {
+            OutlinedTextField(
+                value = TemporaryTargetText,
+                onValueChange = { TemporaryTargetText = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 100.dp, max = 200.dp)
+                    .verticalScroll(rememberScrollState())
+            )
+        },
+        showCancel = true,
+        onConfirm = { Bar.G_targetText = TemporaryTargetText; Bar.G_FirstEditText = false },
+        onCancel = { TemporaryTargetText = Bar.G_targetText }
     )
 }
 //endregion POPUP CONTROLLER
