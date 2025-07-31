@@ -324,7 +324,7 @@ fun SettingsP_Screen()= NoLagCompose {
 
 //endregion PERMISSIONS
 
-//! ADD NOTIFICATION LISTENER HERE!!!!!
+class MyNotificationListener : NotificationListenerService()
 
 
 //endregion
