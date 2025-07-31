@@ -180,13 +180,20 @@ object Pop {
     var show4 = m(false)
     var show5 = m(false)
 }
-
+//!Just call this on app start
 @Composable
 fun PopUps(){
     LazyPopup(
-      show = Pop.show1,
-      message = "Message is a test"
-    ) 
+      show: = ,
+    onDismiss: (() -> Unit)? = null,
+    title: String = "Info",
+    message: String,
+    content: (@Composable () -> Unit)? = null,
+    showCancel: Boolean = true,
+    showConfirm: Boolean = true,
+    onConfirm: (() -> Unit)? = null,
+    onCancel: (() -> Unit)? = null
+) {
 }
 
 //endregion POPUP CONTROLLER
