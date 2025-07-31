@@ -220,7 +220,13 @@ fun SettingsScreen() {
 fun SettingsOtherScreen() {
     SettingsScreen(titleContent = { Text("Settings") }) {
 
-        
+        SettingItem(
+            icon = Icons.Outlined.AdminPanelSettings,
+            title = "Show Achievement icon shortcut",
+            endContent = {
+                    UI.OnOffSwitch(isOn = Bar.showUsageIcon, onToggle = { Bar.showUsageIcon = it }) 
+               }
+            )
     }
 }
 
