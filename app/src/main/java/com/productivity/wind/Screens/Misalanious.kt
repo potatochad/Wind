@@ -129,6 +129,9 @@ fun MyNavGraph(navController: NavHostController) {
             composable("SettingsP_Screen") {
                 SettingsP_Screen()
             }
+            composable("SettingsOtherScreen") {
+                    SettingsOtherScreen()
+            }
 
             //endregion SETTINGS
 
