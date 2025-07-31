@@ -440,28 +440,6 @@ object DayChecker {
 }
 
 
-@Composable
-fun NewDayWaterDo() {
-    val context = LocalContext.current
-    var show = remember { mutableStateOf(Bar.NewDay) }
-    LazyPopup(
-        show = show,
-        title = "FREE 15M. DO WATERDO",
-        message = "Spend only 50s on waterdo app and get 900 POINTS!!!",
-        showCancel = false,
-        onConfirm = {
-            val intent = context.packageManager.getLaunchIntentForPackage("com.seekrtech.waterapp")
-            if (intent != null) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context.startActivity(intent)
-            } else {
-                log("WaterApp not installed", "bad")
-            }
-        },
-    )
-}
-
-
 object Icon {
         
 @Composable
