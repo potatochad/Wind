@@ -193,7 +193,8 @@ fun SettingsScreen() {
 
         //endregion RESTORE/BACKUP
 
-        
+        Spacer(modifier = Modifier.fillMaxHeight())
+
         SettingItem(
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
@@ -204,7 +205,7 @@ fun SettingsScreen() {
                 BigIcon = Icons.Filled.Tune,
                 BigIconColor = Color(0xFFB0BEC5),
                 title = "Other",
-                onClick = { }
+                onClick = { Global1.navController.navigate("SettingsOtherScreen") }
         ) 
     }
 }
@@ -213,6 +214,14 @@ fun SettingsScreen() {
 //region PERMISSIONS
 
 
+//region OTHER SCREEN
+
+@Composable
+fun SettingsOtherScreen() {
+    
+}
+
+//endregion OTHER SCREEN
 
 //region POPUP
 
