@@ -81,6 +81,7 @@ import com.productivity.wind.SettingsScreen
 import com.productivity.wind.SettingsSaved
 import com.productivity.wind.UI
 import com.productivity.wind.Vlog
+import com.productivity.wind.Challenge
 import com.productivity.wind.Achievements
 import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -101,6 +102,9 @@ fun MyNavGraph(navController: NavHostController) {
             }
             composable("ConfigureScreen") {
                 ConfigureScreen()
+            }
+            composable("Challenge") {
+                    Challenge()
             }
             //region SETTINGS
 
@@ -506,7 +510,7 @@ fun Chill() {
 @Composable
 fun Add() {
   UI.SimpleIconButton(
-            onClick = { Vlog("COMING OUT SOON") },
+            onClick = { Global1.navController.navigate("Challenge" },
             icon = Icons.Default.Add
         )
 }
