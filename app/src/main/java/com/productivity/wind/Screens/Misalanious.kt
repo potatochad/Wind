@@ -494,7 +494,7 @@ fun SettingsScreen() {
                                 OnMaxLetters = {
                                         Vlog("MAX: 99999 points")
                                 },
-                                OnFocusLose = { if(it.toIntOrNull()<1) Bar.Dpoints =0 }
+                                //OnFocusLose = { if (Bar.Dpoints<1) Bar.Dpoints =0 }
                         ) 
                 }
         )
