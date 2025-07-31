@@ -97,18 +97,8 @@ import com.productivity.wind.UI
 @Composable
 fun Achievements()= NoLagCompose {
     SettingsScreen(titleContent = { Text("Achievements") }, showSearch = false) {
-
             
-            
-            SettingItem(
-            icon = Icons.Outlined.AdminPanelSettings,
-            title = "${toggleText(Bar.showUsageIcon)} usage icon",
-            endContent = {
-                    //UI.OnOffSwitch(isOn = Bar.showUsageIcon, onToggle = { Bar.showUsageIcon = it }) 
-               }
-            )
-            
-            SettingItem(
+        SettingItem(
             icon = Icons.Outlined.AdminPanelSettings,
             title = "Typed letters",
             endContent = {
