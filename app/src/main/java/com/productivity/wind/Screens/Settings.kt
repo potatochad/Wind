@@ -218,7 +218,10 @@ fun SettingsScreen() {
 
 @Composable
 fun SettingsOtherScreen() {
-    
+    SettingsScreen(titleContent = { Text("Settings") }) {
+
+        
+    }
 }
 
 //endregion OTHER SCREEN
