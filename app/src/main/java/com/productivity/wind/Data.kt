@@ -48,7 +48,6 @@ import androidx.navigation.compose.rememberNavController
 import com.productivity.wind.ui.theme.KeepAliveTheme
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.runtime.remember
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 
