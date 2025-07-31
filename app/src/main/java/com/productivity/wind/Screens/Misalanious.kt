@@ -549,7 +549,7 @@ fun G_Edit() {
 fun Configure() {
     UI.SimpleIconButton(
             onClick = { 
-                    if (!areAllPermissionsEnabled()) { Popup.NeedMorePoints.value = true }
+                    if (!areAllPermissionsEnabled()) { Popup.EnablePermissions.value = true }
                     else { Global1.navController.navigate("ConfigureScreen") }
             },
             icon = Icons.Default.Settings
