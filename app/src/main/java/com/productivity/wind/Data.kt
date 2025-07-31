@@ -196,10 +196,34 @@ fun PopUps(){
     onCancel: (() -> Unit)? = null
 ) {
 */
-
+EditPopUp()
     
 }
 
+@Composable
+fun EditPopUp(show: MutableState<Boolean>) {
+    var TemporaryTargetText by remember { mutableStateOf("") }
+    TemporaryTargetText = Bar.targetText
+    LazyPopup(
+        show = show,
+        onDismiss = { TemporaryTargetText = Bar.targetText },
+        title = "Edit Text",
+        message = "",
+        content = {
+            OutlinedTextField(
+                value = TemporaryTargetText,
+                onValueChange = { TemporaryTargetText = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 100.dp, max = 200.dp)
+                    .verticalScroll(rememberScrollState())
+            )
+        },
+        showCancel = true,
+        onConfirm = { Bar.targetText = TemporaryTargetText; Bar.FirstEditText = false },
+        onCancel = { TemporaryTargetText = Bar.targetText }
+    )
+}
 //endregion POPUP CONTROLLER
 
 
