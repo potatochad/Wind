@@ -174,7 +174,7 @@ object Blist {
 //region POPUP CONTROLLER
 
 object Popup {
-    var show1 = m(false)
+    var Edit = m(false)
     var show2 = m(false)
     var show3 = m(false)
     var show4 = m(false)
@@ -196,7 +196,7 @@ fun PopUps(){
     onCancel: (() -> Unit)? = null
 ) {
 */
-EditPopUp()
+   EditPopUp(Popup.Edit)
     
 }
 
