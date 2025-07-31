@@ -182,26 +182,14 @@ object Popup {
     var Edit = m(false)
     var G_Edit = m(false)
     var NeedMorePoints = m(false)
-    var show4 = m(false)
+    var EnablePermissions = m(false)
     var show5 = m(false)
 }
 //!Just call this on app start
 @Composable
 fun PopUps(){
-    G_EditPopUp(Popup.G_Edit)
-    /*
-    LazyPopup(
-      show: = ,
-    onDismiss: (() -> Unit)? = null,
-    title: String = "Info",
-    message: String,
-    content: (@Composable () -> Unit)? = null,
-    showCancel: Boolean = true,
-    showConfirm: Boolean = true,
-    onConfirm: (() -> Unit)? = null,
-    onCancel: (() -> Unit)? = null
-) {
-*/
+   G_EditPopUp(Popup.G_Edit)
+   EnablePermissionsPopup(Popup.EnablePermissions)
    EditPopUp(Popup.Edit)
    LazyPopup(show = Popup.NeedMorePoints, title = "Not EnoughPoints", message = "Need ${Bar.Dpoints} points to do this")
 
@@ -255,7 +243,16 @@ fun G_EditPopUp(show: MutableState<Boolean>) {
         onCancel = { TemporaryTargetText = Bar.G_targetText }
     )
 }
+@Composable
+fun EnablePermissionsPopup(show: MutableState<Boolean>) {
+    LazyPopup(show = show,
+              title = "Need Permissions", 
+              message = "Please enable all permissions first.", 
+              onConfirm = { Global1.navController.navigate("SettingsP_Screen")}
+              )
+}
 
+                
 //endregion POPUP CONTROLLER
 
 
