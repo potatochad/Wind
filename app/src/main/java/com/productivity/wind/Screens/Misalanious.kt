@@ -1,5 +1,7 @@
 package com.productivity.wind.Screens
 
+import androidx.compose.material.icons.filled.Extension
+
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.foundation.border
 import android.app.AlertDialog
@@ -506,7 +508,15 @@ fun SettingsScreen() {
         var restoreTrigger = remember { mutableStateOf(false) }
         var backupTrigger by remember { mutableStateOf(false) }
 
-        backupTrigger = false
+
+        LaunchedEffect(backupTrigger) {
+                if (backupTrigger) {
+                        delay(3000L)
+                        backupTrigger = false
+                }
+        }
+
+        
         //! NOT ENCRIPTED WITH PREMIUM MIGHT BE A PROBLEM
         SettingItem(
                 BigIcon = Icons.Filled.Restore,
@@ -527,6 +537,14 @@ fun SettingsScreen() {
         UI.BsaveToFile(backupTrigger)
 
         //endregion RESTORE/BACKUP
+
+        
+        SettingItem(
+                BigIcon = Icons.Filled.Extension,
+                BigIconColor = Color(0xFF9C27B0),
+                title = "Other",
+                onClick = { }
+        ) 
     }
 }
 
