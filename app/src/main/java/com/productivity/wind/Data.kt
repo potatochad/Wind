@@ -174,11 +174,11 @@ object Blist {
 //region POPUP CONTROLLER
 
 object Pop {
-    var show1 by m(false)
-    var show2 by m(false)
-    var show3 by m(false)
-    var show4 by m(false)
-    var show5 by m(false)
+    var show1 = m(false)
+    var show2 = m(false)
+    var show3 = m(false)
+    var show4 = m(false)
+    var show5 = m(false)
 }
 
 @Composable
