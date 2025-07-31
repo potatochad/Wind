@@ -350,18 +350,12 @@ fun ConfigureScreen() = NoLagCompose {
             }
         }
     }, onConfirm = {},)
-
-
-
-
-Popup.NeedMorePoints.value//LEFT TO ADD THIS
-
     
     SettingsScreen(titleContent = { ConfigureS_Header() }) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
             if (!areAllPermissionsEnabled()) { show.value = true; LazyPopup(show = show, onDismiss = { Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = { Global1.navController.navigate("SettingsP_Screen")}, onCancel = { Global1.navController.navigate("Main")}) } else {
                 SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
                         Button(
-                            onClick = { if(Bar.funTime < Bar.Dpoints && !BlockedApps.isEmpty()) {showNeedMorePoints.value = true} else { showPick.value = true } },
+                            onClick = { if(Bar.funTime < Bar.Dpoints && !BlockedApps.isEmpty()) {Popup.NeedMorePoints.value = true} else { showPick.value = true } },
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)), // gold
                             shape = RoundedCornerShape(8.dp),
                             contentPadding = PaddingValues(6.dp),
