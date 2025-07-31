@@ -264,7 +264,7 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 fun AddReminder(show: MutableState<Boolean>) {
     LazyPopup(show = show,
               title = "Need Permissions", 
-              content = Text("Please enable all permissions first."), 
+              content = { Text("Please enable all permissions first.") }, 
               onConfirm = { }
               )
 }
