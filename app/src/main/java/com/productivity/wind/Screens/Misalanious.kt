@@ -510,7 +510,7 @@ fun Chill() {
 @Composable
 fun Add() {
   UI.SimpleIconButton(
-            onClick = { Global1.navController.navigate("Challenge" },
+            onClick = { Global1.navController.navigate("Challenge") },
             icon = Icons.Default.Add
         )
 }
