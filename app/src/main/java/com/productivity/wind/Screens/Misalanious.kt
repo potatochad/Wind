@@ -509,7 +509,7 @@ fun Edit() {
     
     
 
-    Popup.Edit.value = show
+    Popup.Edit.value = show.value
 
 
     UI.SimpleIconButton(
