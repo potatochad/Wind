@@ -537,7 +537,7 @@ fun G_Edit() {
 
     //endregion THE SAFETY
 
-    G_EditPopUp(show = show)
+    Popup.G_Edit.value = show.value
 
 
     UI.SimpleIconButton(
