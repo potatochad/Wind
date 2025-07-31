@@ -455,49 +455,6 @@ fun ConfigureScreen() = NoLagCompose {
 
 //region Settings
 
-val DarkBlue = Color(0xFF00008B) 
-val Gold = Color(0xFFFFD700)
-
-@Composable
-fun SettingsScreen() {
-    SettingsScreen(titleContent = { Text("Settings") }) {
-
-        if (!areAllPermissionsEnabled()) {
-                SettingItem(
-                        BigIcon = Icons.Filled.AdminPanelSettings,
-                        BigIconColor = Color(0xFFFFD700),
-                        title = "Permissions",
-                        onClick = { Global1.navController.navigate("SettingsP_Screen") },
-                        bottomPadding = 2.dp,
-                )    
-        }
-
-        // NOT SYNCHED UP WITH APP YET
-        //NEED EXPLANATION TOO
-        SettingItem(
-                topPadding = 1.dp,
-                BigIcon = Icons.Filled.LockOpen,
-                BigIconColor = Gold,
-                title = "Unlock Threshold",
-                endContent = {
-                        UI.InputField(
-                                value = Bar.Dpoints.toString(),
-                                onValueChange = {
-                                        val input = it.toIntOrNull() ?: 0  // convert input to number safely
-                                        if (input > Bar.funTime) {
-                                                Vlog("$input input > ${Bar.funTime}p= get more points", "one")
-                                        } else {
-                                                Bar.Dpoints = input
-                                        }
-                                },
-                                InputWidth = 60.dp,
-                                isNumber = true,
-                                MaxLetters = 5,
-                                OnMaxLetters = {
-                                        Vlog("MAX: 99999 points")
-                                },
-                                //OnFocusLose = { if 
-
 
 //region POPUP
 
