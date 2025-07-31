@@ -99,11 +99,17 @@ fun Challenge() {
               LazyPopup()
             }
         )
-    @Composable
-fun LazyPopup(
-    show: MutableState<Boolean>,
-    onDismiss: (() -> Unit)? = null,
-    title: String = "Info",
+    
+    
+
+
+
+
+
+
+    LazyPopup(
+      show = ReminderPopup,
+    title = "Add",
     message: String,
     content: (@Composable () -> Unit)? = null,
     showCancel: Boolean = true,
@@ -111,12 +117,6 @@ fun LazyPopup(
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null
 ) {
-
-
-
-
-
-
 
     
   }
