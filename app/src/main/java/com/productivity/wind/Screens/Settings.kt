@@ -179,7 +179,7 @@ fun SettingsScreen() {
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
                 title = "Extension",
-                onClick = { }
+                onClick = { Pop.show1.value = true}
         ) 
         SettingItem(
                 BigIcon = Icons.Filled.Tune,
