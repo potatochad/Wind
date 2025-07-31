@@ -230,6 +230,7 @@ fun EditPopUp(show: MutableState<Boolean>) {
         onConfirm = { Bar.targetText = TemporaryTargetText; Bar.FirstEditText = false },
         onCancel = { TemporaryTargetText = Bar.targetText }
     )
+}
 @Composable
 fun G_EditPopUp(show: MutableState<Boolean>) {
     var TemporaryTargetText by remember { mutableStateOf("") }
