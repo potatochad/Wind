@@ -92,7 +92,13 @@ import androidx.compose.ui.draw.drawBehind
 @Composable
 fun Challenge() {
   SettingsScreen(titleContent = { Text("Challenge") }) {
-
+    SettingItem(
+            icon = Icons.Outlined.,
+            title = "Reminder",
+            endContent = {
+              LazyPopup()
+            }
+        )
 
 
 
