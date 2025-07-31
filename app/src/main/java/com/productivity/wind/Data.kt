@@ -171,8 +171,25 @@ object Blist {
 
 
 
+//region POPUP CONTROLLER
 
+object Pop {
+    var show1 by m(false)
+    var show2 by m(false)
+    var show3 by m(false)
+    var show4 by m(false)
+    var show5 by m(false)
+}
 
+@Composable
+fun PopUps(){
+    LazyPopup(
+      show = Pop.show1,
+      message = "Message is a test"
+    ) 
+}
+
+//endregion POPUP CONTROLLER
 
 
 
@@ -326,6 +343,7 @@ fun MAINStart() {
 }
 @Composable
 fun AppStart() {
+    PopUps()
     val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
     val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
     LaunchedEffect(Unit) {
