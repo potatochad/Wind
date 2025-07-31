@@ -1,6 +1,6 @@
 package com.productivity.wind
 
-import androidx.compose.material.OutlinedTextField
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.foundation.layout.heightIn
 import com.productivity.wind.Screens.DayChecker
 import com.productivity.wind.Screens.MyNavGraph
