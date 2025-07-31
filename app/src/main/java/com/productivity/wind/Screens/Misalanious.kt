@@ -593,7 +593,7 @@ fun Usage() {
     if (Bar.showUsageIcon) {
         UI.SimpleIconButton(
             onClick = { Global1.navController.navigate("Achievements") },
-            icon = Icons.Outlined.Chat
+            icon = Icons.Outlined.QueryStats
         )
     }
 }
