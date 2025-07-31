@@ -195,6 +195,10 @@ fun PopUps(){
 
 }
 
+
+
+
+// All other things
 @Composable
 fun EditPopUp(show: MutableState<Boolean>) {
     var TemporaryTargetText by remember { mutableStateOf("") }
@@ -251,6 +255,22 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
               onConfirm = { Global1.navController.navigate("SettingsP_Screen")}
               )
 }
+
+
+
+//region ADD CHALLANGE POPUPS
+
+@Composable
+fun AddReminder(show: MutableState<Boolean>) {
+    LazyPopup(show = show,
+              title = "Need Permissions", 
+              content = Text("Please enable all permissions first."), 
+              onConfirm = { }
+              )
+}
+
+//region ADD CHALLANGE POPUPS
+
 
                 
 //endregion POPUP CONTROLLER
