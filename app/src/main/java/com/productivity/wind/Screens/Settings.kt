@@ -1,7 +1,7 @@
 package com.productivity.wind.Screens
 
 import androidx.compose.material.icons.filled.Extension
-
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.foundation.border
 import android.app.AlertDialog
@@ -201,7 +201,7 @@ fun SettingsScreen() {
                 onClick = { }
         ) 
         SettingItem(
-                BigIcon = Icons.Filled.Extension, // Tune
+                BigIcon = Icons.Filled.Tune,
                 BigIconColor = Color(0xFFB0BEC5),
                 title = "Other",
                 onClick = { }
