@@ -1,8 +1,5 @@
 package com.productivity.wind.Screens
 
-import androidx.compose.material.icons.filled.Extension
-
-import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.foundation.border
 import android.app.AlertDialog
 import android.app.AppOpsManager
@@ -49,24 +46,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.AdminPanelSettings
-import androidx.compose.material.icons.outlined.AppBlocking
-import androidx.compose.material.icons.outlined.QueryStats
-import androidx.compose.material.icons.outlined.BarChart
-import androidx.compose.material.icons.outlined.BatterySaver
-import androidx.compose.material.icons.outlined.Chat
-import androidx.compose.material.icons.outlined.Landscape
-import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.ui.text.font.FontWeight
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import java.time.LocalDate
-import androidx.compose.material.icons.outlined.Security
-import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -92,9 +78,6 @@ import com.productivity.wind.WatchdogAccessibilityService
 import com.productivity.wind.apps
 import com.productivity.wind.log
 import com.productivity.wind.SettingsScreen
-import androidx.compose.material.icons.filled.SportsEsports
-import androidx.compose.material.icons.filled.Restore
-import androidx.compose.material.icons.filled.Backup
 import com.productivity.wind.SettingsSaved
 import com.productivity.wind.UI
 import com.productivity.wind.Vlog
@@ -104,8 +87,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.material.icons.filled.AdminPanelSettings
 //region NavController
 //Global1.navController - to use anywhere, no input
 @RequiresApi(Build.VERSION_CODES.O)
@@ -165,6 +146,7 @@ fun MainHeader(){
         
         Spacer(modifier = Modifier.weight(1f))
 
+        Icon.Add()
         Icon.Configure()
     }
 
@@ -519,6 +501,13 @@ fun Chill() {
   UI.SimpleIconButton(
             onClick = { Vlog("COMING OUT SOON") },
             icon = Icons.Default.SportsEsports
+        )
+}
+@Composable
+fun Add() {
+  UI.SimpleIconButton(
+            onClick = { Vlog("COMING OUT SOON") },
+            icon = Icons.Default.Add
         )
 }
 
