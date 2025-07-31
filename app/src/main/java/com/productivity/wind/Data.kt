@@ -181,7 +181,7 @@ object Blist {
 object Popup {
     var Edit = m(false)
     var G_Edit = m(false)
-    var show3 = m(false)
+    var NeedMorePoints = m(false)
     var show4 = m(false)
     var show5 = m(false)
 }
@@ -203,7 +203,8 @@ fun PopUps(){
 ) {
 */
    EditPopUp(Popup.Edit)
-    
+   LazyPopup(show = Popup.NeedMorePoints, title = "Not EnoughPoints", message = "Need ${Bar.Dpoints} points to do this")
+
 }
 
 @Composable
@@ -253,6 +254,7 @@ fun G_EditPopUp(show: MutableState<Boolean>) {
         onCancel = { TemporaryTargetText = Bar.G_targetText }
     )
 }
+
 //endregion POPUP CONTROLLER
 
 
