@@ -350,7 +350,8 @@ fun ConfigureScreen() = NoLagCompose {
         }
     }, onConfirm = {},)
     
-    SettingsScreen(titleContent = { ConfigureS_Header() }) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
+    SettingsScreen(titleContent = { ConfigureS_Header() }) { 
+            UI.LazyCard (content = {
             SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
                         Button(
                             onClick = { if(Bar.funTime < Bar.Dpoints && !BlockedApps.isEmpty()) {Popup.NeedMorePoints.value = true} else { showPick.value = true } },
@@ -406,7 +407,7 @@ fun ConfigureScreen() = NoLagCompose {
                     }
                 
             }
-        }
+        })
     }
 }
 
