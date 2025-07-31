@@ -269,7 +269,6 @@ fun ConfigureScreen() = NoLagCompose {
     val iconMap = remember { mutableStateMapOf<String, ImageBitmap>() }
     var show = remember { mutableStateOf(false) }
     var showPick = remember { mutableStateOf(false) }
-    var showNeedMorePoints = remember { mutableStateOf(false) }
 
 
     // Load apps gradually in background
@@ -323,13 +322,6 @@ fun ConfigureScreen() = NoLagCompose {
 
     val BlockedApps = Blist.apps.filter { it.Block.value }
 
-
-
-    ///////////!---REMOVED POPUP HERE
-
-
-
-    
     LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
         LazyColumn(modifier = Modifier.height(300.dp)) {
             items(Blist.apps, key = { it.id }) { app ->
@@ -359,6 +351,12 @@ fun ConfigureScreen() = NoLagCompose {
         }
     }, onConfirm = {},)
 
+
+
+
+Popup.NeedMorePoints.value//LEFT TO ADD THIS
+
+    
     SettingsScreen(titleContent = { ConfigureS_Header() }) { Card(modifier = Modifier.padding(16.dp).fillMaxWidth(), shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))) {
             if (!areAllPermissionsEnabled()) { show.value = true; LazyPopup(show = show, onDismiss = { Global1.navController.navigate("Main")}, title = "Need Permissions", message = "Please enable all permissions first. They are necessary for the app to work ", showCancel = true, onConfirm = { Global1.navController.navigate("SettingsP_Screen")}, onCancel = { Global1.navController.navigate("Main")}) } else {
                 SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
