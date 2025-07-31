@@ -322,8 +322,14 @@ fun ConfigureScreen() = NoLagCompose {
     }
 
     val BlockedApps = Blist.apps.filter { it.Block.value }
-    LazyPopup(show = showNeedMorePoints, title = "Not EnoughPoints", message = "Need ${Bar.Dpoints} points to edit blocks", onConfirm = {},)
 
+
+
+    ///////////!---REMOVED POPUP HERE
+
+
+
+    
     LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
         LazyColumn(modifier = Modifier.height(300.dp)) {
             items(Blist.apps, key = { it.id }) { app ->
