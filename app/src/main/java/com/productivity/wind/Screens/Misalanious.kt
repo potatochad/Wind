@@ -496,61 +496,7 @@ fun SettingsScreen() {
                                 OnMaxLetters = {
                                         Vlog("MAX: 99999 points")
                                 },
-                                //OnFocusLose = { if (Bar.Dpoints<1) Bar.Dpoints =0 }
-                        ) 
-                }
-        )
-
-
-
-        //region RESTORE/BACKUP
-        
-        var restoreTrigger = remember { mutableStateOf(false) }
-        var backupTrigger by remember { mutableStateOf(false) }
-
-
-        LaunchedEffect(backupTrigger) {
-                if (backupTrigger) {
-                        delay(3000L)
-                        backupTrigger = false
-                }
-        }
-
-        
-        //! NOT ENCRIPTED WITH PREMIUM MIGHT BE A PROBLEM
-        SettingItem(
-                BigIcon = Icons.Filled.Restore,
-                BigIconColor = DarkBlue,
-                title = "Restore",
-                onClick = { restoreTrigger.value = true },
-                bottomPadding = 2.dp
-        )
-        SettingItem(
-                topPadding = 1.dp,
-                BigIcon = Icons.Filled.Backup,
-                BigIconColor = DarkBlue,
-                title = "BackUp",
-                onClick = { backupTrigger = true }
-        ) 
-        
-        UI.BrestoreFromFile(restoreTrigger)
-        UI.BsaveToFile(backupTrigger)
-
-        //endregion RESTORE/BACKUP
-
-        
-        SettingItem(
-                BigIcon = Icons.Filled.Extension,
-                BigIconColor = Color(0xFF9C27B0),
-                title = "Other",
-                onClick = { }
-        ) 
-    }
-}
-
-
-//region PERMISSIONS
-
+                                //OnFocusLose = { if 
 
 
 //region POPUP
