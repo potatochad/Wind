@@ -82,7 +82,7 @@ import com.productivity.wind.SettingsSaved
 import com.productivity.wind.UI
 import com.productivity.wind.Vlog
 import com.productivity.wind.Achievements
-import com.productivity.wind.Pop
+import com.productivity.wind.Popup
 import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.drawscope.DrawScope
