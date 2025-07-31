@@ -166,7 +166,7 @@ fun SettingsScreen() {
 
         LaunchedEffect(backupTrigger) {
                 if (backupTrigger) {
-                        delay(3000L)
+                        delay(1000L)
                         backupTrigger = false
                 }
         }
