@@ -197,6 +197,12 @@ fun SettingsScreen() {
         SettingItem(
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
+                title = "Extension",
+                onClick = { }
+        ) 
+        SettingItem(
+                BigIcon = Icons.Filled.Extension, // Tune
+                BigIconColor = Color(0xFFB0BEC5),
                 title = "Other",
                 onClick = { }
         ) 
