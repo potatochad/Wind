@@ -415,7 +415,7 @@ class WatchdogService : Service() {
 
                         //endregion CURRENT APP
 
-                        val blocked = Blist.apps.any { it.packageName.value == currentApp && it.Block.value }
+                        val blocked = Blist.apps.any { it.packageName == currentApp && it.Block }
 
                         if (blocked) {
                             if (Bar.funTime > 0) {
