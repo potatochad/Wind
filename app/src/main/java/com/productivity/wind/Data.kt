@@ -247,7 +247,7 @@ object Popup {
     var G_Edit = m(false)
     var NeedMorePoints = m(false)
     var EnablePermissions = m(false)
-    var show5 = m(false)
+    var EnableBlocking = m(false)
 }
 //!Just call this on app start
 @Composable
@@ -256,13 +256,32 @@ fun PopUps(){
    EnablePermissionsPopup(Popup.EnablePermissions)
    EditPopUp(Popup.Edit)
    LazyPopup(show = Popup.NeedMorePoints, title = "Not EnoughPoints", message = "Need ${Bar.Dpoints} points to do this")
-
+   EnableBlockingPopup(Popup.EnableBlocking)
 }
 
 
 
 
 // All other things
+@Composable
+fun EnableBlockingPopup(show: MutableState<Boolean>){
+    LazyPopup(
+            show = show,
+            onDismiss = { showEnablePopup.value = false },
+            title = "Enable?",
+            message = "If you enable blocking, an overlay screen will appear over the selected apps when you run out of points. (1 point = 1 second)\n\nTo disable blocking, you’ll need more than the selected points in the unlock Threashold",
+            showCancel = true,
+            showConfirm = true,
+            onConfirm = {
+                Bar.BlockingEnabled = true
+                showEnablePopup.value = false
+            },
+            onCancel = {
+                showEnablePopup.value = false
+            }
+        )
+}
+
 @Composable
 fun EditPopUp(show: MutableState<Boolean>) {
     var TemporaryTargetText by remember { mutableStateOf("") }
