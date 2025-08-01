@@ -108,7 +108,10 @@ fun Disipline() {
             value = Bar.currentInput,
             onValueChange = {
                 if (it.length - Bar.currentInput.length <= 5) {
-                    Bar.TotalTypedLetters += 1
+                    if (it.length > Bar.currentInput.length){
+                        Bar.TotalTypedLetters += 1
+                    }
+                    
                     Bar.currentInput = it
 
                     val correctChars = Bar.targetText.zip(Bar.currentInput)
