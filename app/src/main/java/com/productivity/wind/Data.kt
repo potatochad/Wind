@@ -151,13 +151,16 @@ class Settings {
 
 
 
+class M<T>(val state: MutableState<T>)
+
+fun <T> md(value: T) = M(mutableStateOf(value))
 
 
 // Main function to get installed apps and their icons
 
 data class apps(
     var id: String = UUID.randomUUID().toString(),
-    var name: MutableState<String> = mutableStateOf(""),
+    var name = md(""),
     var done: MutableState<Boolean> = mutableStateOf(false),
     var packageName: MutableState<String> = mutableStateOf(""),
     var Block : MutableState<Boolean> = mutableStateOf(false),
