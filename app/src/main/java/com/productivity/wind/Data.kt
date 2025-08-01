@@ -169,9 +169,20 @@ data class CopyPastes(
     var HowManyDones : MutableState<Int> = mutableStateOf(0),
 )
 
+data class Challenges(
+    var id: String = UUID.randomUUID().toString(),
+    var text: MutableState<String> = mutableStateOf("Copy paste text"),
+    var done: MutableState<Boolean> = mutableStateOf(false),
+    var HowManyDones : MutableState<Int> = mutableStateOf(0),
+)
+
+
 object Blist {
     var apps = mutableStateListOf<apps>()
     var CopyPastes = mutableStateListOf<CopyPastes>()
+    
+    var Challenges = mutableStateListOf<Challenges>()
+  
 }
 
 
