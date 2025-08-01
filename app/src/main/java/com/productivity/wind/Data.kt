@@ -267,7 +267,7 @@ fun AddReminder(show: MutableState<Boolean>) {
     LazyPopup(show = show,
               title = "Add Challenge", 
               content = { 
-                  InputField(
+                  UI.InputField(
                       value = InputText,
                       onValueChange = { InputText = it },
                       onDone = { DONE() } ,
