@@ -160,7 +160,7 @@ fun <T> md(value: T) = M(mutableStateOf(value))
 
 data class apps(
     var id: String = UUID.randomUUID().toString(),
-    var name = md(""),
+    var name = MutableState<Boolean> = m(""),
     var done: MutableState<Boolean> = mutableStateOf(false),
     var packageName: MutableState<String> = mutableStateOf(""),
     var Block : MutableState<Boolean> = mutableStateOf(false),
@@ -179,6 +179,40 @@ data class Challenges(
     var done: MutableState<Boolean> = mutableStateOf(false),
     var HowManyDones : MutableState<Int> = mutableStateOf(0),
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 object Blist {
