@@ -161,17 +161,17 @@ fun <T> md(value: T) = M(mutableStateOf(value))
 
 data class apps(
     var id: String = UUID.randomUUID().toString(),
-    var name = MutableState<Boolean> = m(""),
-    var done: MutableState<Boolean> = mutableStateOf(false),
-    var packageName: MutableState<String> = mutableStateOf(""),
-    var Block : MutableState<Boolean> = mutableStateOf(false),
-    var TimeSpent : MutableState<Int> = mutableStateOf(0),
+    var name: String = "",
+    var done: Boolean = false,
+    var packageName: String = "",
+    var Block : Boolean = false,
+    var TimeSpent : Int = 0,
 )
 data class CopyPastes(
     var id: String = UUID.randomUUID().toString(),
-    var text: MutableState<String> = mutableStateOf("Copy paste text"),
-    var done: MutableState<Boolean> = mutableStateOf(false),
-    var HowManyDones : MutableState<Int> = mutableStateOf(0),
+    var text: String = "Copy paste text",
+    var done: Boolean = false,
+    var HowManyDones : Int = 0,
 )
 
 data class Challenges(
