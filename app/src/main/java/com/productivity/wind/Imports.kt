@@ -441,7 +441,7 @@ fun InputField(
     innerPadding: Dp = 4.dp,
     InputWidth: Dp = 80.dp,
     MaxLetters: Int? = 20_000,
-    OnMaxLetters: (() -> Unit)? = null, //each letter type doo
+    OnMaxLetters: (() -> Unit) = { Vlog("MAX LETTERS") }, //each letter type doo
     InputTextColor: Color = Color.White,
     InputBackgroundColor: Color = SettingsItemCardColor,
 
@@ -466,7 +466,7 @@ fun InputField(
           if (parsed.length <= (MaxLetters ?: Int.MAX_VALUE)) {
             onValueChange(parsed) }  
           else {
-            OnMaxLetters?.invoke()
+            OnMaxLetters
           }
         },
 
