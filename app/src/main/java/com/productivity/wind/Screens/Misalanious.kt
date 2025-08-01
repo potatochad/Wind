@@ -301,8 +301,8 @@ fun ConfigureScreen() = NoLagCompose {
 
 
                 val app = apps(
-                    name = mutableStateOf(label),
-                    packageName = mutableStateOf(packageName)
+                    name = label,
+                    packageName = packageName
                 )
 
                 withContext(Dispatchers.Main) {
@@ -386,7 +386,7 @@ fun ConfigureScreen() = NoLagCompose {
                         items(BlockedApps, key = { it.id }) { app ->
                             Row(modifier = Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
 
-                                val icon = iconMap[app.packageName.value]
+                                val icon = iconMap[app.packageName]
                                 if (icon != null) {
                                     Image(
                                         bitmap = icon,
@@ -401,7 +401,7 @@ fun ConfigureScreen() = NoLagCompose {
 
 
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text(app.name.value)
+                                Text(app.name)
                             }
                         }
                     }
