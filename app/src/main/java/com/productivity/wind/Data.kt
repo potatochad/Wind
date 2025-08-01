@@ -153,12 +153,8 @@ class Settings {
 
 
 
-class M<T>(val state: MutableState<T>)
-
-fun <T> md(value: T) = M(mutableStateOf(value))
 
 
-// Main function to get installed apps and their icons
 
 data class apps(
     var id: String = UUID.randomUUID().toString(),
@@ -176,11 +172,16 @@ data class CopyPastes(
 )
 
 
+
 object Blist {
     var apps = mutableStateListOf<apps>()
     var CopyPastes = mutableStateListOf<CopyPastes>()
-    //....
 }
+
+
+
+
+
 
 
 object BlistStorage {
@@ -531,7 +532,14 @@ fun AppStart() {
     val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
     LaunchedEffect(Unit) {
         DayChecker.start()
+
+        while (true) {
+          BlistStorage.saveAll()
+        delay(1_000L) 
+        }
+        BlistStorage.loadAll()
     }
+    
 }
 
 
