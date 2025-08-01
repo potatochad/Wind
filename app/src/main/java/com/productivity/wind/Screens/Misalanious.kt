@@ -381,7 +381,6 @@ fun ConfigureScreen() = NoLagCompose {
 
                 }
                 else {
-
                     LazyColumn(modifier = Modifier.fillMaxSize().height(500.dp)) {
                         items(BlockedApps, key = { it.id }) { app ->
                             Row(modifier = Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -524,7 +523,7 @@ fun StopBlockingButton() {
             if (isNowOn) {
                 Popup.EnableBlocking.value = true
             } else {
-                val hasPoints = Bar.funTime > 1000
+                val hasPoints = Bar.funTime > Bar.Dpoints
                 if (hasPoints) {
                     Bar.BlockingEnabled = false
                 } else {
