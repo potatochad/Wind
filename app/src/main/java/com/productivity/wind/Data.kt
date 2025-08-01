@@ -274,7 +274,8 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 
 @Composable
 fun AddReminder(show: MutableState<Boolean>) {
-    var InputText by m("")
+    var InputText by remember { m("") }
+
     fun DONE() { show.value = false }
     LazyPopup(show = show,
               title = "Add Challenge", 
