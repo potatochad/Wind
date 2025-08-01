@@ -263,8 +263,7 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 @Composable
 fun AddReminder(show: MutableState<Boolean>) {
     var InputText by m("")
-    val
-    private fun DONE() {}
+    fun DONE() { show.value = false }
     LazyPopup(show = show,
               title = "Add Challenge", 
               content = { 
@@ -274,16 +273,17 @@ fun AddReminder(show: MutableState<Boolean>) {
                       onDone = { DONE() } ,
                       textSize = 16.sp,           
                       boxHeight = 40.dp,                
-                      InputWidth: Dp = 200.dp,
+                      InputWidth = 200.dp,
                       MaxLetters = 100,
-    OnMaxLetters: (() -> Unit)? = null, 
-                  )// fix this to be in auto vlog max letters
+                  )
               }, 
-              onConfirm = { }
+              onConfirm = { DONE() }
               )
 }
 
 //region ADD CHALLANGE POPUPS
+
+
                 
 //endregion POPUP CONTROLLER
 
