@@ -251,18 +251,6 @@ fun SupportEmail() {
 //region CONFIGURE SCREEN
 
 @Composable
-fun ConfigureS_Header() = NoLagCompose {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text("Configure apps")
-        Spacer(modifier = Modifier.weight(1f))
-        StopBlockingButton()
-    }
-}
-
-@Composable
 fun ConfigureScreen() = NoLagCompose {
     val iconMap = remember { mutableStateMapOf<String, ImageBitmap>() }
     var showPick = remember { mutableStateOf(false) }
@@ -348,19 +336,20 @@ fun ConfigureScreen() = NoLagCompose {
         }
     }, onConfirm = {},)
     
-    SettingsScreen(titleContent = { ConfigureS_Header() }) { 
-            UI.LazyCard (content = {
-            SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
-                        Button(
-                            onClick = { if(Bar.funTime < Bar.Dpoints && !BlockedApps.isEmpty()) {Popup.NeedMorePoints.value = true} else { showPick.value = true } },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD700)), // gold
-                            shape = RoundedCornerShape(8.dp),
-                            contentPadding = PaddingValues(6.dp),
-                            modifier = Modifier
-                                .size(40.dp)
+    SettingsScreen(titleContent = {
+    
+        SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
+                        
+                    
+                        Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("+", fontSize = 24.sp, color = Color.White)
-                        }
+                                Text("Configure apps")
+                                Spacer(modifier = Modifier.weight(1f))
+                                StopBlockingButton()
+                        
+                    
                         UI.SimpleIconButton(
                                 onClick = {
                                         if (Bar.funTime < Bar.Dpoints && BlockedApps.isNotEmpty()) {
@@ -370,11 +359,18 @@ fun ConfigureScreen() = NoLagCompose {
                                         }
                                 },
                                 BigIcon = Icons.Default.Add,
-                                BigIconColor = Color(0xFFFFD700)
+                                BigIconColor = Color(0xFFFFD700),
+                                SquareIcon = true
                         )
+                        }
 
 
                     })
+    
+    
+    
+    }) { 
+            UI.LazyCard (content = {
                 if (BlockedApps.isEmpty()) {
                     UI.EmptyBox(text = "No Blocks")
                 }
