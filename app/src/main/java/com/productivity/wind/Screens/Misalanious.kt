@@ -364,19 +364,7 @@ fun ConfigureScreen() = NoLagCompose {
 
                     })
                 if (BlockedApps.isEmpty()) {
-                    Box(modifier = Modifier.fillMaxSize().height(Bar.halfHeight*2-200.dp),) { Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-                            Spacer(modifier = Modifier.height( Bar.halfHeight-190.dp))
-                            Icon(
-                                imageVector = Icons.Default.Block,
-                                contentDescription = "Blocked Icon",
-                                tint = Color.Gray,
-                                modifier = Modifier.size(64.dp)
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text("No Blocks", fontSize = 18.sp, color = Color.Gray)
-                        }
-                    }
-
+                    UI.EmptyBox(text = "No Blocks")
                 }
                 else {
                     LazyColumn(modifier = Modifier.fillMaxSize().height(500.dp)) {
