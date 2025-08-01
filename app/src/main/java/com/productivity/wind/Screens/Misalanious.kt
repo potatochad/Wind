@@ -468,29 +468,10 @@ fun Add() {
 
 @Composable
 fun Edit() {
-
-        
-    //region THE SAFETY
-
-    val show = remember { mutableStateOf(false) }
-    val showBad = remember { mutableStateOf(false) }
-
-    var VeteranA_Title by remember { mutableStateOf("Get ${Bar.Dpoints} points") }
-    var VeteranA_Message by remember { mutableStateOf("Need ${Bar.Dpoints} points before changing the text: this is to help you stay disiplined") }
-
-    LazyPopup(show = showBad, title = VeteranA_Title, message = VeteranA_Message)
-
-    //endregion THE SAFETY
-    
-    
-
-    Popup.Edit.value = show.value
-
-
     UI.SimpleIconButton(
             onClick = { 
-                    if (Bar.funTime > Bar.Dpoints) show.value=true
-                    else showBad.value = true 
+                    if (Bar.funTime > Bar.Dpoints) Popup.Edit.value =true
+                    else Popup.NeedMorePoints.value = true
             },
             icon = Icons.Default.Edit
         )
@@ -498,27 +479,10 @@ fun Edit() {
 }
 @Composable
 fun G_Edit() {
-
-        
-    //region THE SAFETY
-
-    val show = remember { mutableStateOf(false) }
-    val showBad = remember { mutableStateOf(false) }
-
-    var VeteranA_Title by remember { mutableStateOf("Get ${Bar.Dpoints} points") }
-    var VeteranA_Message by remember { mutableStateOf("Need ${Bar.Dpoints} points before changing the text: this is to help you stay disiplined") }
-
-    LazyPopup(show = showBad, title = VeteranA_Title, message = VeteranA_Message)
-
-    //endregion THE SAFETY
-
-    Popup.G_Edit.value = show.value
-
-
     UI.SimpleIconButton(
             onClick = { 
-                    if (Bar.funTime > Bar.Dpoints) show.value=true
-                    else showBad.value = true 
+                    if (Bar.funTime > Bar.Dpoints) Popup.G_Edit.value =true
+                    else Popup.NeedMorePoints.value = true
             },
             icon = Icons.Default.Edit
         )
@@ -554,20 +518,11 @@ fun Usage() {
 
 @Composable
 fun StopBlockingButton() {
-    var showEnablePopup = remember { mutableStateOf(false) }
-    var showUnsuccessfulD_Popup = remember { mutableStateOf(false) }
-
-    // Show BEFORE enabling blocking
-    if (showEnablePopup.value) {
-        
-    }
-
-    // Main switch
     UI.OnOffSwitch(
         isOn = Bar.BlockingEnabled,
         onToggle = { isNowOn ->
             if (isNowOn) {
-                showEnablePopup.value = true
+                Popup.EnableBlocking.value = true
             } else {
                 val hasPoints = Bar.funTime > 1000
                 if (hasPoints) {
