@@ -193,13 +193,11 @@ fun Menu() {
             title = "Contact Support",
             onClick = { SupportEmail(); Bar.ShowMenu = false }
         )
-        /*
-    SettingItem(
-        icon = Icons.Outlined.Landscape,
-        title = "Premium",
-        onClick = { Global1.navController.navigate("")  }
-    )
-    */
+        SettingItem(
+                icon = Icons.Outlined.Landscape,
+                title = "Premium",
+                onClick = { Vlog("Coming Soon") }
+        )
         SettingItem(
             icon = Icons.Outlined.Landscape,
             title = "Settings",
