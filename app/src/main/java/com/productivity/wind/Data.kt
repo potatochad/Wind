@@ -177,10 +177,68 @@ data class CopyPastes(
 object Blist {
     var apps = mutableStateListOf<apps>()
     var CopyPastes = mutableStateListOf<CopyPastes>()
-    
-    //var Challenges = mutableStateListOf<Challenges>()
-  
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+object BlistStorage {
+    inline fun <reified T> saveList(key: String, list: List<T>, prefs: SharedPreferences) {
+        val json = Gson().toJson(list)
+        prefs.edit().putString(key, json).apply()
+    }
+
+    inline fun <reified T> loadList(key: String, prefs: SharedPreferences): MutableList<T> {
+        val json = prefs.getString(key, null) ?: return mutableListOf()
+        val type = object : TypeToken<List<T>>() {}.type
+        return Gson().fromJson<List<T>>(json, type).toMutableList()
+    }
+
+    fun saveAll(prefs: SharedPreferences) {
+        saveList("apps", Blist.apps, prefs)
+        saveList("copypastes", Blist.CopyPastes, prefs)
+    }
+
+    fun loadAll(prefs: SharedPreferences) {
+        Blist.apps.clear()
+        Blist.apps.addAll(loadList("apps", prefs))
+
+        Blist.CopyPastes.clear()
+        Blist.CopyPastes.addAll(loadList("copypastes", prefs))
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
