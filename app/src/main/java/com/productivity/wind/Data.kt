@@ -275,18 +275,13 @@ fun NeedMorePointsPopuo(show: MutableState<Boolean>){
 fun EnableBlockingPopup(show: MutableState<Boolean>){
     LazyPopup(
             show = show,
-            onDismiss = { Popup.showEnablePopup.value = false },
             title = "Enable?",
             message = "If you enable blocking, an overlay screen will appear over the selected apps when you run out of points. (1 point = 1 second)\n\nTo disable blocking, you’ll need more than the selected points in the unlock Threashold",
             showCancel = true,
             showConfirm = true,
             onConfirm = {
                 Bar.BlockingEnabled = true
-                Popup.showEnablePopup.value = false
             },
-            onCancel = {
-                Popup.showEnablePopup.value = false
-            }
         )
 }
 
