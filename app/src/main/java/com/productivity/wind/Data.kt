@@ -51,6 +51,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.runtime.remember
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.ui.unit.sp
 
 
 fun <T> m(value: T) = mutableStateOf(value)
@@ -288,7 +289,8 @@ fun AddReminder(show: MutableState<Boolean>) {
                       MaxLetters = 100,
                   )
               }, 
-              onConfirm = { DONE() }
+              onConfirm = { DONE() },
+              message="",
               )
 }
 
