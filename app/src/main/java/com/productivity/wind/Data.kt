@@ -255,7 +255,7 @@ fun PopUps(){
    G_EditPopUp(Popup.G_Edit)
    EnablePermissionsPopup(Popup.EnablePermissions)
    EditPopUp(Popup.Edit)
-   LazyPopup(show = Popup.NeedMorePoints, title = "Not EnoughPoints", message = "Need ${Bar.Dpoints} points to do this")
+   NeedMorePointsPopuo(Popup.NeedMorePoints)
    EnableBlockingPopup(Popup.EnableBlocking)
 }
 
@@ -263,6 +263,14 @@ fun PopUps(){
 
 
 // All other things
+@Composable
+fun NeedMorePointsPopuo(show: MutableState<Boolean>){
+    LazyPopup(
+        show = Popup.NeedMorePoints, 
+        title = "Not EnoughPoints", 
+        message = "Need have ${Bar.Dpoints} points to do this. Only have ${Bar.funTime}"
+    )
+}
 @Composable
 fun EnableBlockingPopup(show: MutableState<Boolean>){
     LazyPopup(
