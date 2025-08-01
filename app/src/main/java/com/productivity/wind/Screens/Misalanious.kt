@@ -559,21 +559,7 @@ fun StopBlockingButton() {
 
     // Show BEFORE enabling blocking
     if (showEnablePopup.value) {
-        LazyPopup(
-            show = showEnablePopup,
-            onDismiss = { showEnablePopup.value = false },
-            title = "Enable?",
-            message = "If you enable blocking, an overlay screen will appear over the selected apps when you run out of points. (1 point = 1 second)\n\nTo disable blocking, you’ll need at least 1_000 points.",
-            showCancel = true,
-            showConfirm = true,
-            onConfirm = {
-                Bar.BlockingEnabled = true
-                showEnablePopup.value = false
-            },
-            onCancel = {
-                showEnablePopup.value = false
-            }
-        )
+        
     }
 
     // Main switch
@@ -587,7 +573,7 @@ fun StopBlockingButton() {
                 if (hasPoints) {
                     Bar.BlockingEnabled = false
                 } else {
-                    showUnsuccessfulD_Popup.value = true
+                    Popup.NeedMorePoints.value = true
                 }
             }
         }
