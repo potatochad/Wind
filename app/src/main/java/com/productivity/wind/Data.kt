@@ -177,44 +177,40 @@ data class CopyPastes(
 object Blist {
     var apps = mutableStateListOf<apps>()
     var CopyPastes = mutableStateListOf<CopyPastes>()
-
+    //....
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 object BlistStorage {
-    inline fun <reified T> saveList(key: String, list: List<T>, prefs: SharedPreferences) {
-        val json = Gson().toJson(list)
-        prefs.edit().putString(key, json).apply()
+    private val prefs by lazy {
+        Global1.context.getSharedPreferences("ListStorage", Context.MODE_PRIVATE)
     }
 
-    inline fun <reified T> loadList(key: String, prefs: SharedPreferences): MutableList<T> {
-        val json = prefs.getString(key, null) ?: return mutableListOf()
-        val type = object : TypeToken<List<T>>() {}.type
-        return Gson().fromJson<List<T>>(json, type).toMutableList()
+    fun saveAll() {
+        Blist::class.members
+            .filter { it.returnType.toString().startsWith("kotlin.collections.MutableList") }
+            .forEach { member ->
+                val name = member.name
+                val list = member.call(Blist) as? List<*> ?: return@forEach
+                prefs.edit().putString(name, Gson().toJson(list)).apply()
+            }
     }
 
-    fun saveAll(prefs: SharedPreferences) {
-        saveList("apps", Blist.apps, prefs)
-        saveList("copypastes", Blist.CopyPastes, prefs)
-    }
+    fun loadAll() {
+        Blist::class.members
+            .filter { it.returnType.toString().startsWith("kotlin.collections.MutableList") }
+            .forEach { member ->
+                val name = member.name
+                val property = member as? kotlin.reflect.KMutableProperty1<Any, Any?> ?: return@forEach
+                val currentList = property.get(Blist) as? MutableList<Any> ?: return@forEach
 
-    fun loadAll(prefs: SharedPreferences) {
-        Blist.apps.clear()
-        Blist.apps.addAll(loadList("apps", prefs))
+                val json = prefs.getString(name, null) ?: return@forEach
+                val type = object : TypeToken<List<Any>>() {}.type
+                val loaded = Gson().fromJson<List<Any>>(json, type)
 
-        Blist.CopyPastes.clear()
-        Blist.CopyPastes.addAll(loadList("copypastes", prefs))
+                currentList.clear()
+                currentList.addAll(loaded)
+            }
     }
 }
 
