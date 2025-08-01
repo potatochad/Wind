@@ -534,6 +534,7 @@ fun SimpleIconButton(
 	icon: ImageVector? = null,
 	BigIcon: ImageVector? = null,
 	BigIconColor: Color? = null,
+	SquareIcon: Boolean = false
 ) {
     IconButton(onClick = onClick) {
 	    if (icon != null) {
@@ -547,21 +548,49 @@ fun SimpleIconButton(
 	    }	    
 	    
 	    if (BigIcon != null && BigIconColor != null) {
-                    Box(
-                        modifier = Modifier
-                            .size(30.dp)
-                            .clip(CircleShape)
-                            .background(BigIconColor),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = BigIcon,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.size(20.dp)
-                        )
+		    if (!SquareIcon) {
+			    Box(
+				    modifier = Modifier
+					    .size(30.dp)
+					    .clip(CircleShape)
+					    .background(BigIconColor),
+				    contentAlignment = Alignment.Center
+			    ) {
+				    Icon(
+					    imageVector = BigIcon,
+					    contentDescription = null,
+					    tint = Color.White,
+					    modifier = Modifier.size(20.dp)
+				    )
+			    }
+		    }
+		    else {
+			    Box(
+				    modifier = Modifier
+					    .size(40.dp)
+					    .clip(RoundedCornerShape(6.dp))
+					    .background(BigIconColor),
+				    contentAlignment = Alignment.Center
+			    ) {
+				    Icon(
+					    imageVector = BigIcon, bold
+					    contentDescription = null,
+					    tint = Color.White,
+					    modifier = Modifier.size(24.dp)
+				    )
+			    }
+
+			    
 		    }
 	    }
+
+
+
+
+
+
+
+
     }	
 }
 
