@@ -361,6 +361,18 @@ fun ConfigureScreen() = NoLagCompose {
                         ) {
                             Text("+", fontSize = 24.sp, color = Color.White)
                         }
+                        UI.SimpleIconButton(
+                                onClick = {
+                                        if (Bar.funTime < Bar.Dpoints && BlockedApps.isNotEmpty()) {
+                                                Popup.NeedMorePoints.value = true
+                                        } else {
+                                                showPick.value = true
+                                        }
+                                },
+                                BigIcon = Icons.Default.Add,
+                                BigIconColor = Color(0xFFFFD700)
+                        )
+
 
                     })
                 if (BlockedApps.isEmpty()) {
