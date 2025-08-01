@@ -285,7 +285,7 @@ fun ConfigureScreen() = NoLagCompose {
 
             val installedPackageNames = InstalledApps.map { it.activityInfo.packageName }.toSet()
             withContext(Dispatchers.Main) {
-                Blist.apps.removeAll { it.packageName.value !in installedPackageNames }
+                Blist.apps.removeAll { it.packageName !in installedPackageNames }
             }
 
             //endregion REMOVE UNINSTALLED APPS
@@ -296,7 +296,7 @@ fun ConfigureScreen() = NoLagCompose {
                 val iconDrawable = info.activityInfo.loadIcon(pm)
 
                 if (packageName == "com.productivity.wind") {continue}
-                if (Blist.apps.any { it.packageName.value == packageName }) continue
+                if (Blist.apps.any { it.packageName == packageName }) continue
 
 
 
@@ -319,7 +319,7 @@ fun ConfigureScreen() = NoLagCompose {
         }
     }
 
-    val BlockedApps = Blist.apps.filter { it.Block.value }
+    val BlockedApps = Blist.apps.filter { it.Block }
 
     LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
         LazyColumn(modifier = Modifier.height(300.dp)) {
@@ -331,10 +331,10 @@ fun ConfigureScreen() = NoLagCompose {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Checkbox(
-                        checked = app.Block.value,
-                        onCheckedChange = { app.Block.value = it},
+                        checked = app.Block,
+                        onCheckedChange = { app.Block = it},
                     )
-                    val icon = iconMap[app.packageName.value]
+                    val icon = iconMap[app.packageName]
                     if (icon != null) {
                         Image(
                             bitmap = icon,
@@ -344,7 +344,7 @@ fun ConfigureScreen() = NoLagCompose {
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(app.name.value)
+                    Text(app.name)
                 }
             }
         }
