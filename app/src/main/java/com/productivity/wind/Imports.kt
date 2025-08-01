@@ -169,9 +169,7 @@ fun log(message: String, tag: String? = "Bad") {
     else { Log.d(tag, LogMessage) }
 }
 
-fun Vlog1(msg: String) {
-    Toast.makeText(Global1.context, msg, Toast.LENGTH_SHORT).show()
-}
+
 
 private var lastToast: Toast? = null
 
@@ -390,7 +388,7 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
         if (trigger.value) {
             Bar.restoringFromFile = true
             launcher.value.launch(arrayOf("text/plain"))
-            delay(1000L)
+            delay(2000L)
             Bar.restoringFromFile = false
             trigger.value = false
             Vlog("Successfully restored")
