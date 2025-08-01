@@ -432,8 +432,7 @@ fun AppStart_beforeUI(context: Context) {
     SettingsSaved.init()
     SettingsSaved.Bsave()
 
-    UniversalListManager.initialize(context, Blist)
-
+    
 
     //Background thing
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }
