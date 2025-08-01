@@ -576,22 +576,6 @@ fun StopBlockingButton() {
         )
     }
 
-    // Show if disabling fails
-    if (showUnsuccessfulD_Popup.value) {
-        LazyPopup(
-            show = showUnsuccessfulD_Popup,
-            onDismiss = { showUnsuccessfulD_Popup.value = false },
-            title = "Not enough points",
-            message = "You need at least 1000 points to disable blocking",
-            showCancel = true,
-            showConfirm = false,
-            onConfirm = {},
-            onCancel = {
-                showUnsuccessfulD_Popup.value = false
-            }
-        )
-    }
-
     // Main switch
     UI.OnOffSwitch(
         isOn = Bar.BlockingEnabled,
