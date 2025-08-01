@@ -262,9 +262,13 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 
 @Composable
 fun AddReminder(show: MutableState<Boolean>) {
+    var 
+    val
     LazyPopup(show = show,
-              title = "Need Permissions", 
-              content = { Text("Please enable all permissions first.") }, 
+              title = "Add Challenge", 
+              content = { 
+                  InputText()
+              }, 
               onConfirm = { }
               )
 }
