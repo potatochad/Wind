@@ -480,6 +480,9 @@ fun AppStart() {
         DayChecker.start()
     }
     LaunchedEffect(Unit) {
+        if (Tests.isEmpty()){
+            Tests.add(TestData(name = "Test"))
+        }
     val gson = Gson()
     val type = object : TypeToken<MutableList<TestData>>() {}.type
 
