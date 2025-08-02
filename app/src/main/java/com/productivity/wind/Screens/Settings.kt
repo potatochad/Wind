@@ -180,7 +180,7 @@ fun SettingsScreen() {
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
                 title = "Extension",
-                onClick = { Vlog("${Bar.myList}") }
+                onClick = { Vlog("${Bar.myList}—A b c") }
         ) 
         SettingItem(
                 BigIcon = Icons.Filled.Tune,
