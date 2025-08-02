@@ -158,7 +158,7 @@ class Settings {
 
 
 
-data class apps(
+data class DataApps(
     var id: String = UUID.randomUUID().toString(),
     var name: String = "",
     var done: Boolean = false,
@@ -166,14 +166,14 @@ data class apps(
     var Block : Boolean = false,
     var TimeSpent : Int = 0,
 )
-data class CopyPastes(
+data class DataCopyPastes(
     var id: String = UUID.randomUUID().toString(),
     var text: String = "Copy paste text",
     var done: Boolean = false,
     var HowManyDones : Int = 0,
 )
-var apps = mutableStateListOf<apps>()
-var CopyPastes = mutableStateListOf<CopyPastes>()
+var apps = mutableStateListOf<DataApps>()
+var CopyPastes = mutableStateListOf<DataCopyPastes>()
 
 
 
