@@ -573,7 +573,7 @@ fun SimpleIconButton(
 				    contentAlignment = Alignment.Center
 			    ) {
 				    Icon(
-					    imageVector = BigIcon, bold
+					    imageVector = BigIcon,
 					    contentDescription = null,
 					    tint = Color.White,
 					    modifier = Modifier.size(24.dp)
