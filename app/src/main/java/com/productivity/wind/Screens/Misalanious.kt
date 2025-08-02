@@ -310,7 +310,7 @@ fun ConfigureScreen() = NoLagCompose {
     LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
         LazyColumn(modifier = Modifier.height(300.dp)) {
             items(Blist.apps, key = { it.id }) { app ->
-                UI.SimpleRow(){
+                UI.SimpleRow(content = {
                     Checkbox(
                         checked = app.Block,
                         onCheckedChange = { app.Block = it},
@@ -326,7 +326,7 @@ fun ConfigureScreen() = NoLagCompose {
 
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(app.name)
-                }
+                })
             }
         }
     }, onConfirm = {},)
@@ -356,8 +356,7 @@ fun ConfigureScreen() = NoLagCompose {
                 else {
                     LazyColumn(modifier = Modifier.fillMaxSize().height(500.dp)) {
                         items(BlockedApps, key = { it.id }) { app ->
-                            Row(modifier = Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-
+                            UI.SimpleRow(content ={
                                 val icon = iconMap[app.packageName]
                                 if (icon != null) {
                                     Image(
@@ -374,7 +373,7 @@ fun ConfigureScreen() = NoLagCompose {
 
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(app.name)
-                            }
+                            })
                         }
                     }
                 
