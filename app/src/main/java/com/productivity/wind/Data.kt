@@ -65,7 +65,7 @@ class Settings {
     var lastDate by m("")
     var restoringFromFile by m(false)
 
-    var myList by m(listOf("A", "B", "C"))
+    var myList by m("")
 
 
     
@@ -172,13 +172,9 @@ data class CopyPastes(
     var done: Boolean = false,
     var HowManyDones : Int = 0,
 )
+var apps = mutableStateListOf<apps>()
+var CopyPastes = mutableStateListOf<CopyPastes>()
 
-
-
-object Blist {
-    var apps = mutableStateListOf<apps>()
-    var CopyPastes = mutableStateListOf<CopyPastes>()
-}
 
 
 
