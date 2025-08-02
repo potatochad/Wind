@@ -181,7 +181,7 @@ fun SettingsScreen() {
                 BigIconColor = Color(0xFF9C27B0),
                 title = "Extension ${Bar.myList}",
                 onClick = { 
-                    myList = myList + "D"
+                    Bar.myList = Bar.myList + "D"
                     Vlog("${Bar.myList}") 
                 }
         ) 
