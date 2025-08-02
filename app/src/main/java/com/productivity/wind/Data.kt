@@ -176,6 +176,16 @@ var apps = mutableStateListOf<DataApps>()
 var CopyPastes = mutableStateListOf<DataCopyPastes>()
 
 
+data class TestData(
+    var id: String = UUID.randomUUID().toString(),
+    var name: String = "",
+    var done: Boolean = false,
+    var packageName: String = "",
+    var Block : Boolean = false,
+    var TimeSpent : Int = 0,
+)
+var Tests= mutableStateListOf<TestData>()
+
 
 
 
@@ -451,18 +461,18 @@ fun AppStart_beforeUI(context: Context) {
 
     LaunchEffect(Unit) {
     val gson = Gson()
-    val type = object : TypeToken<MutableList<DataApps>>() {}.type
+    val type = object : TypeToken<MutableList<TestData>>() {}.type
 
     // Load from Bar.myList if not empty
     if (Bar.myList.isNotBlank()) {
-        val loaded = gson.fromJson<MutableList<DataApps>>(Bar.myList, type)
-        apps.clear()
-        apps.addAll(loaded)
+        val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
+        Tests.clear()
+        Tests.addAll(loaded)
     }
 
     // Sync every second
     while (true) {
-        Bar.myList = gson.toJson(apps)
+        Bar.myList = gson.toJson(Tests)
         delay(1_000L)
     }
 }
