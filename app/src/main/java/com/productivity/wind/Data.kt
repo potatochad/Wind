@@ -188,7 +188,8 @@ var Tests= mutableStateListOf<TestData>()
 
 
 object ListStorage {
-    
+
+    @Composable
     fun OnAppStart(){
         LaunchedEffect(Unit) {
             if (Tests.isEmpty()){
