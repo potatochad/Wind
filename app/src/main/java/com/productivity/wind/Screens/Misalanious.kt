@@ -67,7 +67,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.compose.NavHost
 import com.productivity.wind.Bar
-import com.productivity.wind.Blist
 import com.productivity.wind.Global1
 import com.productivity.wind.LazyPopup
 import com.productivity.wind.NoLagCompose
@@ -260,7 +259,7 @@ fun ConfigureScreen() = NoLagCompose {
     LaunchedEffect(Unit) {
 
         withContext(Dispatchers.IO) {
-            log("Blist.apps---${Blist.apps}", "bad")
+            log("apps---${apps}", "bad")
 
             val pm = context.packageManager
             val intent = Intent(Intent.ACTION_MAIN, null).apply { addCategory(Intent.CATEGORY_LAUNCHER) }
@@ -271,7 +270,7 @@ fun ConfigureScreen() = NoLagCompose {
 
             val installedPackageNames = InstalledApps.map { it.activityInfo.packageName }.toSet()
             withContext(Dispatchers.Main) {
-                Blist.apps.removeAll { it.packageName !in installedPackageNames }
+                apps.removeAll { it.packageName !in installedPackageNames }
             }
 
             //endregion REMOVE UNINSTALLED APPS
@@ -305,7 +304,7 @@ fun ConfigureScreen() = NoLagCompose {
         }
     }
 
-    val BlockedApps = Blist.apps.filter { it.Block }
+    val BlockedApps = apps.filter { it.Block }
 
     LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
         LazyColumn(modifier = Modifier.height(300.dp)) {
