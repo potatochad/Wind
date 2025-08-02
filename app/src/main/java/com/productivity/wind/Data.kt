@@ -187,6 +187,36 @@ data class TestData(
 var Tests= mutableStateListOf<TestData>()
 
 
+object ListStorage {
+    
+    fun OnAppStart(){
+        LaunchedEffect(Unit) {
+            if (Tests.isEmpty()){
+                Tests.add(TestData(name = "Test"))
+        }
+        val gson = Gson()
+        val type = object : TypeToken<MutableList<TestData>>() {}.type
+
+            // Load from Bar.myList if not empty
+            if (Bar.myList.isNotBlank()) {
+                val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
+                Tests.clear()
+                Tests.addAll(loaded)
+            }
+
+            // Sync every second
+            while (true) {
+                Bar.myList = gson.toJson(Tests)
+                delay(1_000L)
+            }
+        }
+    }
+
+    fun OnRestart(){
+        
+    }
+}
+
 
 
 //region POPUP CONTROLLER
@@ -479,27 +509,7 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
-    LaunchedEffect(Unit) {
-        if (Tests.isEmpty()){
-            Tests.add(TestData(name = "Test"))
-        }
-    val gson = Gson()
-    val type = object : TypeToken<MutableList<TestData>>() {}.type
-
-    // Load from Bar.myList if not empty
-    if (Bar.myList.isNotBlank()) {
-        val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
-        Tests.clear()
-        Tests.addAll(loaded)
-    }
-
-    // Sync every second
-    while (true) {
-        Bar.myList = gson.toJson(Tests)
-        delay(1_000L)
-    }
-    }
-    
+    ListStorage.OnAppStart()
 }
 
 
