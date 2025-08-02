@@ -376,7 +376,7 @@ class WatchdogService : Service() {
 
                         //endregion CURRENT APP
 
-                        val blocked = Blist.apps.any { it.packageName == currentApp && it.Block }
+                        val blocked = apps.any { it.packageName == currentApp && it.Block }
 
                         if (blocked) {
                             if (Bar.funTime > 0) {
@@ -470,12 +470,6 @@ fun AppStart() {
     val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
     LaunchedEffect(Unit) {
         DayChecker.start()
-
-        while (true) {
-          BlistStorage.saveAll()
-        delay(1_000L) 
-        }
-        BlistStorage.loadAll()
     }
     
 }
