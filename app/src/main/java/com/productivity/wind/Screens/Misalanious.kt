@@ -249,6 +249,7 @@ fun SupportEmail() {
 
 //region CONFIGURE SCREEN
 
+//! PARTIALLY DISABLED
 @Composable
 fun ConfigureScreen() = NoLagCompose {
     val iconMap = remember { mutableStateMapOf<String, ImageBitmap>() }
@@ -293,7 +294,7 @@ fun ConfigureScreen() = NoLagCompose {
                 */ //!FIX LATER
 
                 withContext(Dispatchers.Main) {
-                    apps.add(app)
+                    //! ADD LATER apps.add(app)
                 }
 
                 val iconBitmap = iconDrawable.toBitmap().asImageBitmap()
