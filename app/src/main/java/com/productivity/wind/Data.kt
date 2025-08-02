@@ -449,6 +449,24 @@ fun AppStart_beforeUI(context: Context) {
     SettingsSaved.init()
     SettingsSaved.Bsave()
 
+    LaunchEffect(Unit) {
+    val gson = Gson()
+    val type = object : TypeToken<MutableList<DataApps>>() {}.type
+
+    // Load from Bar.myList if not empty
+    if (Bar.myList.isNotBlank()) {
+        val loaded = gson.fromJson<MutableList<DataApps>>(Bar.myList, type)
+        apps.clear()
+        apps.addAll(loaded)
+    }
+
+    // Sync every second
+    while (true) {
+        Bar.myList = gson.toJson(apps)
+        delay(1_000L)
+    }
+}
+
     
 
     //Background thing
