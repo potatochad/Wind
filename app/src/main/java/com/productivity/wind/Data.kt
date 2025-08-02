@@ -459,7 +459,7 @@ fun AppStart_beforeUI(context: Context) {
     SettingsSaved.init()
     SettingsSaved.Bsave()
 
-    LaunchEffect(Unit) {
+    LaunchedEffect(Unit) {
     val gson = Gson()
     val type = object : TypeToken<MutableList<TestData>>() {}.type
 
