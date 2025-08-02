@@ -76,7 +76,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.compose.NavHost
 import com.productivity.wind.Bar
-import com.productivity.wind.Blist
 import com.productivity.wind.Global1
 import com.productivity.wind.LazyPopup
 import com.productivity.wind.NoLagCompose
