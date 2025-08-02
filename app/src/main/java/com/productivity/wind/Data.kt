@@ -65,7 +65,7 @@ class Settings {
     var lastDate by m("")
     var restoringFromFile by m(false)
 
-    var myList by m(mutableListOf("A", "B", "C"))
+    var myList by m(listOf("A", "B", "C"))
 
 
     
