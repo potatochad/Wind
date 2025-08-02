@@ -65,6 +65,8 @@ class Settings {
     var lastDate by m("")
     var restoringFromFile by m(false)
 
+    var myList by m(mutableListOf("A", "B", "C"))
+
 
     
     //region COPY PASTE THING Disipline
