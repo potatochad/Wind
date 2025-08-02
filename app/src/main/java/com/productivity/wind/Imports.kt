@@ -142,8 +142,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.TextFieldDefaults
-
-
+import com.productivity.wind.ListStorage
 
 
 //region log
@@ -313,6 +312,7 @@ object SettingsSaved {
         } else {
             log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad")
         }
+	ListStorage.OnRestart()
     }
 }
 
