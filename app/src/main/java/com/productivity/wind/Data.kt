@@ -212,8 +212,12 @@ object ListStorage {
         }
     }
 
-    fun OnRestart(){
-        
+    fun OnRestore(){
+        if (Bar.myList.isNotBlank()) {
+                val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
+                Tests.clear()
+                Tests.addAll(loaded)
+        }
     }
 }
 
