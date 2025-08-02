@@ -80,6 +80,7 @@ import com.productivity.wind.SettingsScreen
 import com.productivity.wind.SettingsSaved
 import com.productivity.wind.UI
 import com.productivity.wind.Vlog
+import com.productivity.wind.TestData
 import com.productivity.wind.Achievements
 import com.productivity.wind.Popup
 import androidx.compose.material.icons.outlined.Chat
@@ -178,10 +179,10 @@ fun SettingsScreen() {
         SettingItem(
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
-                title = "Extension ${Bar.myList}",
+                title = "Extension ${TestData}",
                 onClick = { 
-                    Bar.myList = Bar.myList + "D"
-                    Vlog("${Bar.myList}") 
+                    TestData = TestData+ "D"
+                    Vlog("${TestData}") 
                 }
         ) 
         SettingItem(
