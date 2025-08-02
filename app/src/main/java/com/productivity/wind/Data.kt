@@ -189,13 +189,14 @@ var Tests= mutableStateListOf<TestData>()
 
 object ListStorage {
 
+    
+    val gson = Gson()
     @Composable
     fun OnAppStart(){
         LaunchedEffect(Unit) {
             if (Tests.isEmpty()){
                 Tests.add(TestData(name = "Test"))
         }
-        val gson = Gson()
         val type = object : TypeToken<MutableList<TestData>>() {}.type
 
             // Load from Bar.myList if not empty
