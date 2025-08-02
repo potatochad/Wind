@@ -505,6 +505,13 @@ fun InputField(
     )
 }
 
+@Composable
+fun LazyRow(
+	content: @Composable () -> Unit,
+	padding: Int = 8
+){
+	
+}
 	
 @Composable
 fun LazyCard(
