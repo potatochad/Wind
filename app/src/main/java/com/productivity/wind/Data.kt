@@ -191,14 +191,14 @@ object ListStorage {
 
     
     val gson = Gson()
+    val type = object : TypeToken<MutableList<TestData>>() {}.type
+
     @Composable
     fun OnAppStart(){
         LaunchedEffect(Unit) {
             if (Tests.isEmpty()){
                 Tests.add(TestData(name = "Test"))
         }
-        val type = object : TypeToken<MutableList<TestData>>() {}.type
-
             // Load from Bar.myList if not empty
             if (Bar.myList.isNotBlank()) {
                 val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
