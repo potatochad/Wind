@@ -506,11 +506,18 @@ fun InputField(
 }
 
 @Composable
-fun LazyRow(
+fun SimpleRow(
 	content: @Composable () -> Unit,
 	padding: Int = 8
 ){
-	
+	Row(
+		modifier = Modifier
+			.fillMaxWidth()
+                        .padding(padding.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+		content()
+		}
 }
 	
 @Composable
