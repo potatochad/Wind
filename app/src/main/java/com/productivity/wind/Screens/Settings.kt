@@ -179,8 +179,11 @@ fun SettingsScreen() {
         SettingItem(
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
-                title = "Extension",
-                onClick = { Vlog("${Bar.myList}—A b c") }
+                title = "Extension ${Bar.myList}",
+                onClick = { 
+                    myList = myList + "D"
+                    Vlog("${Bar.myList}") 
+                }
         ) 
         SettingItem(
                 BigIcon = Icons.Filled.Tune,
