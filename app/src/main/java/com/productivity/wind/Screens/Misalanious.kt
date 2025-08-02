@@ -310,12 +310,7 @@ fun ConfigureScreen() = NoLagCompose {
     LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
         LazyColumn(modifier = Modifier.height(300.dp)) {
             items(Blist.apps, key = { it.id }) { app ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                UI.SimpleRow(){
                     Checkbox(
                         checked = app.Block,
                         onCheckedChange = { app.Block = it},
