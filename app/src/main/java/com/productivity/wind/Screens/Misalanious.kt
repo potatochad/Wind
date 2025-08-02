@@ -282,7 +282,7 @@ fun ConfigureScreen() = NoLagCompose {
                 val iconDrawable = info.activityInfo.loadIcon(pm)
 
                 if (packageName == "com.productivity.wind") {continue}
-                if (Blist.apps.any { it.packageName == packageName }) continue
+                if (apps.any { it.packageName == packageName }) continue
 
 
 
@@ -292,7 +292,7 @@ fun ConfigureScreen() = NoLagCompose {
                 )
 
                 withContext(Dispatchers.Main) {
-                    Blist.apps.add(app)
+                    apps.add(app)
                 }
 
                 val iconBitmap = iconDrawable.toBitmap().asImageBitmap()
@@ -309,7 +309,7 @@ fun ConfigureScreen() = NoLagCompose {
 
     LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
         LazyColumn(modifier = Modifier.height(300.dp)) {
-            items(Blist.apps, key = { it.id }) { app ->
+            items(apps, key = { it.id }) { app ->
                 UI.SimpleRow(content = {
                     Checkbox(
                         checked = app.Block,
