@@ -337,38 +337,22 @@ fun ConfigureScreen() = NoLagCompose {
     }, onConfirm = {},)
     
     SettingsScreen(titleContent = {
-    
         SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
-                        
-                    
-                        Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.fillMaxWidth()
-                        ) {
-                                Text("Configure apps")
-                                Spacer(modifier = Modifier.weight(1f))
-                                StopBlockingButton()
-                        
-                    
-                        UI.SimpleIconButton(
-                                onClick = {
-                                        if (Bar.funTime < Bar.Dpoints && BlockedApps.isNotEmpty()) {
-                                                Popup.NeedMorePoints.value = true
-                                        } else {
-                                                showPick.value = true
-                                        }
-                                },
-                                BigIcon = Icons.Default.Add,
-                                BigIconColor = Color(0xFFFFD700),
-                                SquareIcon = true
-                        )
-                        }
-
-
-                    })
-    
-    
-    
+          StopBlockingButton()
+          UI.SimpleIconButton(
+            onClick = {
+              if (Bar.funTime < Bar.Dpoints && BlockedApps.isNotEmpty()) {
+                Popup.NeedMorePoints.value = true
+              } else {
+                showPick.value = true
+              }
+            },
+            BigIcon = Icons.Default.Add,
+            BigIconColor = Color(0xFFFFD700),
+            SquareIcon = true
+            )
+          }
+        )
     }) { 
             UI.LazyCard (content = {
                 if (BlockedApps.isEmpty()) {
