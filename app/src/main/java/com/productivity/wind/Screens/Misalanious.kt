@@ -285,10 +285,12 @@ fun ConfigureScreen() = NoLagCompose {
 
 
 
+                /*! FIX IT LATER
                 val app = apps(
                     name = label,
                     packageName = packageName
                 )
+                */ //!FIX LATER
 
                 withContext(Dispatchers.Main) {
                     apps.add(app)
