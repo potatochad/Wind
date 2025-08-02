@@ -179,66 +179,6 @@ var CopyPastes = mutableStateListOf<CopyPastes>()
 
 
 
-
-
-
-object BlistStorage {
-    private val prefs by lazy {
-        Global1.context.getSharedPreferences("ListStorage", Context.MODE_PRIVATE)
-    }
-
-    fun saveAll() {
-        Blist::class.members
-            .filter { it.returnType.toString().startsWith("kotlin.collections.MutableList") }
-            .forEach { member ->
-                val name = member.name
-                val list = member.call(Blist) as? List<*> ?: return@forEach
-                prefs.edit().putString(name, Gson().toJson(list)).apply()
-            }
-    }
-
-    fun loadAll() {
-        Blist::class.members
-            .filter { it.returnType.toString().startsWith("kotlin.collections.MutableList") }
-            .forEach { member ->
-                val name = member.name
-                val property = member as? kotlin.reflect.KMutableProperty1<Any, Any?> ?: return@forEach
-                val currentList = property.get(Blist) as? MutableList<Any> ?: return@forEach
-
-                val json = prefs.getString(name, null) ?: return@forEach
-                val type = object : TypeToken<List<Any>>() {}.type
-                val loaded = Gson().fromJson<List<Any>>(json, type)
-
-                currentList.clear()
-                currentList.addAll(loaded)
-            }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //region POPUP CONTROLLER
 
 object Popup {
