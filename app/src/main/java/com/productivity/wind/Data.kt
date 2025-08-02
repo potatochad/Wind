@@ -459,26 +459,6 @@ fun AppStart_beforeUI(context: Context) {
     SettingsSaved.init()
     SettingsSaved.Bsave()
 
-    LaunchedEffect(Unit) {
-    val gson = Gson()
-    val type = object : TypeToken<MutableList<TestData>>() {}.type
-
-    // Load from Bar.myList if not empty
-    if (Bar.myList.isNotBlank()) {
-        val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
-        Tests.clear()
-        Tests.addAll(loaded)
-    }
-
-    // Sync every second
-    while (true) {
-        Bar.myList = gson.toJson(Tests)
-        delay(1_000L)
-    }
-}
-
-    
-
     //Background thing
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }
 }
@@ -498,6 +478,23 @@ fun AppStart() {
     val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
     LaunchedEffect(Unit) {
         DayChecker.start()
+    }
+    LaunchedEffect(Unit) {
+    val gson = Gson()
+    val type = object : TypeToken<MutableList<TestData>>() {}.type
+
+    // Load from Bar.myList if not empty
+    if (Bar.myList.isNotBlank()) {
+        val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
+        Tests.clear()
+        Tests.addAll(loaded)
+    }
+
+    // Sync every second
+    while (true) {
+        Bar.myList = gson.toJson(Tests)
+        delay(1_000L)
+    }
     }
     
 }
