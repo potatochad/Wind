@@ -76,6 +76,10 @@ fun Id(): String {
 }
 fun <T> m(value: T) = mutableStateOf(value)
 
+inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> {
+    return mutableStateListOf()
+}
+
 //endregion Vals/ Vars FOR DATA
 
 
