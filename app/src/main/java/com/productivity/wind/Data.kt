@@ -205,7 +205,7 @@ object ListStorage {
         all.forEach { item ->
             @Suppress("UNCHECKED_CAST")
             initONCE(
-                item.jsonRef(),
+                item.json(),
                 item.list as SnapshotStateList<Any>
             )
         }
