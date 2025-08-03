@@ -155,8 +155,13 @@ class Settings {
     //endregion
 
 
+    //region LISTS
+    
     var myList by m("")
     var myList2 by m("")
+
+    //endregion LISTS
+    
 }
 //m-mutable state, ml- mutablelistof
 
@@ -176,7 +181,7 @@ object ListStorage {
         List(Bar::myList2, Tests),
     )
     //RUNS ON start and restore
-    inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
+    inline fun <reified T> initONCE(json: String, list: SnapshotStateList<T>) {
         if (json.isNotBlank()) {
             val type = getListType(list)
             val loaded = gson.fromJson<MutableList<T>>(json, type)
@@ -186,12 +191,33 @@ object ListStorage {
     }
 
     @Composable
-    fun <T> OnAppStart(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
+    fun <T> OnAppStartONCE(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
         LaunchedEffect(Unit) {
             while (true) {
                 jsonRef.set(gson.toJson(list))
                 delay(1_000L)
             }
+        }
+    }
+
+    //runs on restore and init
+    fun initAll() {
+        all.forEach { item ->
+            @Suppress("UNCHECKED_CAST")
+            initONCE(
+                item.jsonRef as KMutableProperty0<String>,
+                item.list as SnapshotStateList<Any>
+            )
+        }
+    }
+
+    fun OnAppsStartAll(){
+        all.forEach { item ->
+            @Suppress("UNCHECKED_CAST")
+            OnAppStartONCE(
+                item.jsonRef as KMutableProperty0<String>,
+                item.list as SnapshotStateList<Any>
+            )
         }
     }
 
@@ -534,7 +560,7 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
-    ListStorage.OnAppStart(Bar::myList, Tests)
+    ListStorage.OnAppsStartAll()
 }
 
 
