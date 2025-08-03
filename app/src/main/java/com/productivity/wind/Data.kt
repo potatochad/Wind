@@ -172,23 +172,26 @@ data class TestData(
 )
 var Tests = ml(TestData())
 
-inline fun <reified T> getListType(list: SnapshotStateList<T>) =
-    object : TypeToken<MutableList<T>>() {}.type
+inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
+    return object : TypeToken<MutableList<T>>() {}.type
+}
 
 object ListStorage {
 
     var List = Tests
     
 
+    /*
     fun SetUpList(newList: SnapshotStateList<TestData>) {
         List = newList
     }
+    */
 
     
     //RUNS ON start and restore
     inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
         if (json.isNotBlank()) {
-            val type = object : TypeToken<MutableList<T>>() {}.type
+            val type = getListType(list)
             val loaded = gson.fromJson<MutableList<T>>(json, type)
             list.clear()
             list.addAll(loaded)
