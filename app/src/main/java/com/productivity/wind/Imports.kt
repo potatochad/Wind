@@ -84,7 +84,7 @@ inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
 }
 
 data class List<T>(
- val jsonRef: KMutableProperty0<String>,
+ val json: KMutableProperty0<String>,
  val list: SnapshotStateList<T>
 )
 
