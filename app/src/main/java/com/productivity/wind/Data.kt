@@ -60,7 +60,6 @@ import com.productivity.wind.Bool
 import com.productivity.wind.Id
 
 
-fun <T> m(value: T) = mutableStateOf(value)
 
 class Settings {
     var funTime by m(0)
@@ -158,9 +157,6 @@ class Settings {
     var myList by m("")
 }
 
-// Str
-// Bool
-// Id
 data class TestData(
     var id: Str = Id(),
     var name: Str = "",
@@ -207,17 +203,17 @@ object ListStorage {
 
 
 data class DataApps(
-    var id: String = UUID.randomUUID().toString(),
-    var name: String = "",
-    var done: Boolean = false,
-    var packageName: String = "",
-    var Block : Boolean = false,
+    var id: Str = Id(),
+    var name: Str = "",
+    var done: Bool = false,
+    var packageName: Str = "",
+    var Block : Bool = false,
     var TimeSpent : Int = 0,
 )
 data class DataCopyPastes(
-    var id: String = UUID.randomUUID().toString(),
-    var text: String = "Copy paste text",
-    var done: Boolean = false,
+    var id: Str = Id(),
+    var text: Str = "Copy paste text",
+    var done: Bool = false,
     var HowManyDones : Int = 0,
 )
 var apps = mutableStateListOf<DataApps>()
