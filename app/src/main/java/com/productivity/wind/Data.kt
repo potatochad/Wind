@@ -156,18 +156,16 @@ class Settings {
 
 
     var myList by m("")
+    var myList2 by m("")
 }
 //m-mutable state, ml- mutablelistof
 
 data class TestData(
     var id: Str = Id(),
     var name: Str = "",
-    var done: Bool = false,
-    var packageName: Str = "",
-    var Block : Bool = false,
-    var TimeSpent : Int = 0,
 )
 var Tests = ml(TestData())
+var Tests2 = ml(TestData())
 
 
 
@@ -180,8 +178,7 @@ object ListStorage {
 
     val all = listOf(
         List(Bar::myList, Tests),
-        List(Bar::blocked, BlockedApps),
-        List(Bar::history, History)
+        List(Bar::myList2, Tests),
         // Add more here
     )
     //RUNS ON start and restore
