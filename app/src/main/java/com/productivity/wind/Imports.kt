@@ -66,7 +66,7 @@ import java.util.UUID
 
 
 
-//region Vals/ Vars FOR LISTS
+//region Vals/ Vars FOR DATA
 
 val gson = Gson()
 typealias Str = String
@@ -74,8 +74,9 @@ typealias Bool = Boolean
 fun Id(): String {
     return UUID.randomUUID().toString()
 }
+fun <T> m(value: T) = mutableStateOf(value)
 
-//endregion Vals/ Vars FOR LISTS
+//endregion Vals/ Vars FOR DATA
 
 
 
