@@ -175,8 +175,8 @@ var Tests = ml(TestData())
 object ListStorage {
 
     var List = Tests
-    var SaveTo = Bar.myList
-    var DataClass = TestData
+    //Save, restore, load where
+    var SRList = Bar.myList
     
 
     //LISTS DATA
@@ -184,8 +184,8 @@ object ListStorage {
 
     //RUNS ON start and restore
     fun init() {
-        if (Bar.myList.isNotBlank()) {
-                val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
+        if (SRList.isNotBlank()) {
+                val loaded = gson.fromJson<MutableList<TestData>>(SRList, type)
                 Tests.clear()
                 Tests.addAll(loaded)
         }
