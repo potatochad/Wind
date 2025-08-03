@@ -195,14 +195,17 @@ object ListStorage {
     }
 
     @Composable
-    fun OnAppStart(){
+    fun <T> OnAppStart(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
         LaunchedEffect(Unit) {
             while (true) {
-                Bar.myList = gson.toJson(Tests)
+                jsonRef.set(gson.toJson(list))
                 delay(1_000L)
             }
         }
     }
+
+
+    
 }
 
 
@@ -540,7 +543,7 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
-    ListStorage.OnAppStart()
+    ListStorage.OnAppStart(Bar::myList, Tests)
 }
 
 
