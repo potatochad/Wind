@@ -158,13 +158,15 @@ class Settings {
     var myList by m("")
 }
 
-
+// Str
+// Bool
+// Id
 data class TestData(
-    var id: String = UUID.randomUUID().toString(),
-    var name: String = "",
-    var done: Boolean = false,
-    var packageName: String = "",
-    var Block : Boolean = false,
+    var id: Str = Id(),
+    var name: Str = "",
+    var done: Bool = false,
+    var packageName: Str = "",
+    var Block : Bool = false,
     var TimeSpent : Int = 0,
 )
 var Tests= mutableStateListOf<TestData>()
