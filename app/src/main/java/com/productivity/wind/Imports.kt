@@ -145,6 +145,17 @@ import androidx.compose.material3.TextFieldDefaults
 import com.productivity.wind.ListStorage
 
 
+
+//region Vals/ Vars
+
+val gson = Gson()
+
+
+//endregion Vals/ Vars
+
+
+
+
 //region log
 
 fun log(message: String, tag: String? = "Bad") {
