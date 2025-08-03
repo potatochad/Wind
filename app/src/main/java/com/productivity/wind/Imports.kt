@@ -146,12 +146,16 @@ import com.productivity.wind.ListStorage
 
 
 
-//region Vals/ Vars
+//region Vals/ Vars FOR LISTS
 
 val gson = Gson()
+typealias Str = String
+typealias Bool = Boolean
+fun Id(): String {
+    return UUID.randomUUID().toString()
+}
 
-
-//endregion Vals/ Vars
+//endregion Vals/ Vars FOR LISTS
 
 
 
