@@ -169,9 +169,7 @@ data class TestData(
 )
 var Tests = ml(TestData())
 
-inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
-    return object : TypeToken<MutableList<T>>() {}.type
-}
+
 
 object ListStorage {
 
