@@ -177,8 +177,8 @@ var Tests2 = ml(TestData())
 object ListStorage {
     
     val all = listOf(
-        List(Bar::myList, Tests),
-        List(Bar::myList2, Tests),
+        StoreList(Bar::myList, Tests),
+        StoreList(Bar::myList2, Tests),
     )
     //RUNS ON start and restore
     inline fun <reified T> initONCE(json: String, list: SnapshotStateList<T>) {
@@ -205,7 +205,7 @@ object ListStorage {
         all.forEach { item ->
             @Suppress("UNCHECKED_CAST")
             initONCE(
-                item.jsonRef as KMutableProperty0<String>,
+                item.json as KMutableProperty0<String>,
                 item.list as SnapshotStateList<Any>
             )
         }
@@ -216,7 +216,7 @@ object ListStorage {
         all.forEach { item ->
             @Suppress("UNCHECKED_CAST")
             OnAppStartONCE(
-                item.jsonRef as KMutableProperty0<String>,
+                item.json as KMutableProperty0<String>,
                 item.list as SnapshotStateList<Any>
             )
         }
