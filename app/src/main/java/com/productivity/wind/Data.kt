@@ -176,20 +176,23 @@ object ListStorage {
     
     val type = object : TypeToken<MutableList<TestData>>() {}.type
 
+    fun init() {
+        if (Bar.myList.isNotBlank()) {
+                val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
+                Tests.clear()
+                Tests.addAll(loaded)
+        }
+    }
     @Composable
     fun OnAppStart(){
         LaunchedEffect(Unit) {
             if (Tests.isEmpty()){
                 Tests.add(TestData(name = "Test"))
-        }
-            // Load from Bar.myList if not empty
-            if (Bar.myList.isNotBlank()) {
-                val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
-                Tests.clear()
-                Tests.addAll(loaded)
             }
+            
+            init()
 
-            // Sync every second
+            
             while (true) {
                 Bar.myList = gson.toJson(Tests)
                 delay(1_000L)
@@ -197,13 +200,8 @@ object ListStorage {
         }
     }
 
-    fun OnRestore(){
-        if (Bar.myList.isNotBlank()) {
-                val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
-                Tests.clear()
-                Tests.addAll(loaded)
-        }
-    }
+
+    
 }
 
 
