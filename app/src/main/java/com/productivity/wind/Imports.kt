@@ -88,6 +88,16 @@ data class StoreList<T>(
  val list: SnapshotStateList<T>
 )
 
+fun InputedSameListVLOG() {
+    val seen = mutableSetOf<SnapshotStateList<*>>()
+    all.forEach {
+        if (!seen.add(it.list)) {
+            Vlog(" Duplicate list used — LISTSTORAGE")
+        }
+    }
+}
+
+
 //endregion Vals/ Vars FOR DATA
 
 
