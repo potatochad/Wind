@@ -169,7 +169,7 @@ data class TestData(
     var Block : Bool = false,
     var TimeSpent : Int = 0,
 )
-var Tests= mutableStateListOf<TestData>()
+var Tests = ml(TestData())
 
 
 object ListStorage {
