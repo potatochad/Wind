@@ -170,16 +170,10 @@ var Tests2 = ml(TestData())
 
 
 object ListStorage {
-
-    data class List<T>(
-        val jsonRef: KMutableProperty0<String>,
-        val list: SnapshotStateList<T>
-    )
-
+    
     val all = listOf(
         List(Bar::myList, Tests),
         List(Bar::myList2, Tests),
-        // Add more here
     )
     //RUNS ON start and restore
     inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
