@@ -178,7 +178,7 @@ object ListStorage {
     
     val all = listOf(
         StoreList(Bar::myList, Tests),
-        StoreList(Bar::myList2, Tests),
+        StoreList(Bar::myList2, Tests2),
     )
     //RUNS ON start and restore
     inline fun <reified T> initONCE(json: String, list: SnapshotStateList<T>) {
@@ -202,6 +202,7 @@ object ListStorage {
 
     //runs on restore and init
     fun initAll() {
+        InputedSameListVLOG()
         all.forEach { item ->
             @Suppress("UNCHECKED_CAST")
             initONCE(
