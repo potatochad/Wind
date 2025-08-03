@@ -182,7 +182,7 @@ object ListStorage {
     )
     //RUNS ON start and restore
     inline fun <reified T> initONCE(json: String, list: SnapshotStateList<T>) {
-        if (json.isNotBlank()) {
+        if (json.isNotBlank() && list.isEmpty()) {
             val type = getListType(list)
             val loaded = gson.fromJson<MutableList<T>>(json, type)
             list.clear()
