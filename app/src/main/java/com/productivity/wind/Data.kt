@@ -155,10 +155,6 @@ class Settings {
 }
 
 
-
-
-
-
 data class TestData(
     var id: String = UUID.randomUUID().toString(),
     var name: String = "",
@@ -172,8 +168,7 @@ var Tests= mutableStateListOf<TestData>()
 
 object ListStorage {
 
-    
-    
+    //LISTS DATA
     val type = object : TypeToken<MutableList<TestData>>() {}.type
 
     //RUNS ON start and restore
