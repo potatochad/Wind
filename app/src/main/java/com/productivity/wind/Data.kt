@@ -211,6 +211,7 @@ object ListStorage {
         }
     }
 
+    @Composable
     fun OnAppsStartAll(){
         all.forEach { item ->
             @Suppress("UNCHECKED_CAST")
