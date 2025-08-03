@@ -173,7 +173,7 @@ var Tests= mutableStateListOf<TestData>()
 object ListStorage {
 
     
-    val gson = Gson()
+    
     val type = object : TypeToken<MutableList<TestData>>() {}.type
 
     @Composable
