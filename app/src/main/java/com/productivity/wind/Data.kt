@@ -159,7 +159,7 @@ class Settings {
 
     var myList by m("")
 }
-
+//m-mutable state, ml- mutablelistof
 
 data class TestData(
     var id: Str = Id(),
