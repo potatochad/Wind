@@ -177,9 +177,8 @@ object ListStorage {
     var List = Tests
     var SaveTo = Bar.myList
     var DataClass = TestData
-
-
     
+
     //LISTS DATA
     val type = object : TypeToken<MutableList<TestData>>() {}.type
 
@@ -194,11 +193,6 @@ object ListStorage {
     @Composable
     fun OnAppStart(){
         LaunchedEffect(Unit) {
-            if (Tests.isEmpty()){
-                Tests.add(TestData(name = "Test"))
-            }
-
-            
             while (true) {
                 Bar.myList = gson.toJson(Tests)
                 delay(1_000L)
@@ -526,6 +520,16 @@ fun MAINStart() {
 }
 @Composable
 fun AppStart() {
+
+
+    //DELETE!!!!!!LATER
+    if (Tests.isEmpty()){
+                Tests.add(TestData(name = "Test"))
+    }
+
+
+
+    
     PopUps()
     val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
     val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
