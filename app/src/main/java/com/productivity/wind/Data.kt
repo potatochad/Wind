@@ -205,7 +205,7 @@ object ListStorage {
         all.forEach { item ->
             @Suppress("UNCHECKED_CAST")
             initONCE(
-                item.json as KMutableProperty0<String>,
+                item.jsonRef(),
                 item.list as SnapshotStateList<Any>
             )
         }
