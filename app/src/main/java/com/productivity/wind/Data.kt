@@ -65,7 +65,7 @@ class Settings {
     var lastDate by m("")
     var restoringFromFile by m(false)
 
-    var myList by m("")
+    
 
 
     
@@ -150,30 +150,13 @@ class Settings {
 
     //endregion
 
+
+    var myList by m("")
 }
 
 
 
 
-
-
-
-data class DataApps(
-    var id: String = UUID.randomUUID().toString(),
-    var name: String = "",
-    var done: Boolean = false,
-    var packageName: String = "",
-    var Block : Boolean = false,
-    var TimeSpent : Int = 0,
-)
-data class DataCopyPastes(
-    var id: String = UUID.randomUUID().toString(),
-    var text: String = "Copy paste text",
-    var done: Boolean = false,
-    var HowManyDones : Int = 0,
-)
-var apps = mutableStateListOf<DataApps>()
-var CopyPastes = mutableStateListOf<DataCopyPastes>()
 
 
 data class TestData(
@@ -222,6 +205,39 @@ object ListStorage {
         }
     }
 }
+
+
+
+
+
+
+data class DataApps(
+    var id: String = UUID.randomUUID().toString(),
+    var name: String = "",
+    var done: Boolean = false,
+    var packageName: String = "",
+    var Block : Boolean = false,
+    var TimeSpent : Int = 0,
+)
+data class DataCopyPastes(
+    var id: String = UUID.randomUUID().toString(),
+    var text: String = "Copy paste text",
+    var done: Boolean = false,
+    var HowManyDones : Int = 0,
+)
+var apps = mutableStateListOf<DataApps>()
+var CopyPastes = mutableStateListOf<DataCopyPastes>()
+
+
+
+
+
+
+
+
+
+
+
 
 
 
