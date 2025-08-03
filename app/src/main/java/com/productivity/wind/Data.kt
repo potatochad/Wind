@@ -58,6 +58,9 @@ import com.productivity.wind.gson
 import com.productivity.wind.Str
 import com.productivity.wind.Bool
 import com.productivity.wind.Id
+import com.productivity.wind.m
+import com.productivity.wind.ml
+
 
 
 
@@ -156,6 +159,7 @@ class Settings {
 
     var myList by m("")
 }
+
 
 data class TestData(
     var id: Str = Id(),
