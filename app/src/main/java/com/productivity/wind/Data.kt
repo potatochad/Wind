@@ -176,6 +176,7 @@ object ListStorage {
     
     val type = object : TypeToken<MutableList<TestData>>() {}.type
 
+    //RUNS ON start and restore
     fun init() {
         if (Bar.myList.isNotBlank()) {
                 val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
@@ -189,8 +190,6 @@ object ListStorage {
             if (Tests.isEmpty()){
                 Tests.add(TestData(name = "Test"))
             }
-            
-            init()
 
             
             while (true) {
@@ -199,9 +198,6 @@ object ListStorage {
             }
         }
     }
-
-
-    
 }
 
 
