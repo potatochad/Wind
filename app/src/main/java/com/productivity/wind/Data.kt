@@ -180,17 +180,21 @@ object ListStorage {
     var List = Tests
     
 
-    //LISTS DATA
-    val type = getListType(List)
+    fun SetUpList(newList: SnapshotStateList<TestData>) {
+        List = newList
+    }
 
+    
     //RUNS ON start and restore
-    fun init() {
-        if (Bar.myList.isNotBlank()) {
-                val loaded = gson.fromJson<MutableList<TestData>>(Bar.myList, type)
-                Tests.clear()
-                Tests.addAll(loaded)
+    inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
+        if (json.isNotBlank()) {
+            val type = object : TypeToken<MutableList<T>>() {}.type
+            val loaded = gson.fromJson<MutableList<T>>(json, type)
+            list.clear()
+            list.addAll(loaded)
         }
     }
+
     @Composable
     fun OnAppStart(){
         LaunchedEffect(Unit) {
