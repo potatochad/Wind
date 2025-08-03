@@ -55,12 +55,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.unit.sp
-import com.productivity.wind.gson
-import com.productivity.wind.Str
-import com.productivity.wind.Bool
-import com.productivity.wind.Id
-import com.productivity.wind.m
-import com.productivity.wind.ml
+import com.productivity.wind.*
+import java.lang.reflect.*
 
 
 
