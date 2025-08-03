@@ -83,6 +83,12 @@ inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotState
 inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
     return object : TypeToken<MutableList<T>>() {}.type
 }
+
+data class List<T>(
+ val jsonRef: KMutableProperty0<String>,
+ val list: SnapshotStateList<T>
+)
+
 //endregion Vals/ Vars FOR DATA
 
 
