@@ -55,6 +55,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.unit.sp
 import com.productivity.wind.gson
+import com.productivity.wind.Str
+import com.productivity.wind.Bool
+import com.productivity.wind.Id
+
 
 fun <T> m(value: T) = mutableStateOf(value)
 
