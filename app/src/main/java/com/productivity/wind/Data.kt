@@ -174,6 +174,12 @@ var Tests = ml(TestData())
 
 object ListStorage {
 
+    var List = Tests
+    var SaveTo = Bar.myList
+    var DataClass = TestData
+
+
+    
     //LISTS DATA
     val type = object : TypeToken<MutableList<TestData>>() {}.type
 
