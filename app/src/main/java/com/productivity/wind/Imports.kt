@@ -238,7 +238,7 @@ object SettingsSaved {
             }
             else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
         }
-	ListStorage.init(Bar.myList, Tests)
+	ListStorage.initAll()
     }
     fun initFromFile(map: Map<String, String>) {
     Settings::class.memberProperties.forEach { barIDK ->
@@ -262,7 +262,7 @@ object SettingsSaved {
         } else {
             log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad")
         }
-	ListStorage.init(Bar.myList, Tests)
+	ListStorage.initAll()
     }
 }
 
