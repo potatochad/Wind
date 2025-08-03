@@ -202,7 +202,6 @@ object ListStorage {
 
     //runs on restore and init
     fun initAll() {
-        InputedSameListVLOG()
         all.forEach { item ->
             @Suppress("UNCHECKED_CAST")
             initONCE(
