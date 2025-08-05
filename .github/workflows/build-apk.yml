@@ -2,7 +2,7 @@ name: Build APK
 # testing
 on:
   push:
-    branches: [CopyPaste1]
+    branches: [main]
 
 jobs:
   build:
