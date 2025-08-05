@@ -83,10 +83,26 @@ inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
     return object : TypeToken<MutableList<T>>() {}.type
 }
 
-data class StoreList<T>(
+data class StoreList1<T>(
  val json: KMutableProperty0<String>,
  val list: SnapshotStateList<T>
 )
+data class StoreList<T>(
+    val json: () -> String,
+    val list: SnapshotStateList<T>,
+    val type: Type
+) {
+    companion object {
+        inline operator fun <reified T> invoke(
+            json: () -> String,
+            list: SnapshotStateList<T>
+        ): StoreList<T> {
+            val type = object : TypeToken<MutableList<T>>() {}.type
+            return StoreList(json, list, type)
+        }
+    }
+}
+
 
 
 
