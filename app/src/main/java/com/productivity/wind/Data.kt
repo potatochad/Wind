@@ -210,15 +210,29 @@ object ListStorage {
             )
         }
     }
-    fun initAll() {
-    all.forEach { item ->
-        if (item.json().isNotBlank() && item.list.isEmpty()) {
-            val loaded = gson.fromJson<MutableList<*>>(item.json(), item.type)
-            @Suppress("UNCHECKED_CAST")
-            (item.list as MutableList<Any>).addAll(loaded as Collection<Any>)
+    @Suppress("UNCHECKED_CAST")
+fun initAll() {
+    all.forEachIndexed { index, item ->
+        val json = item.json()
+        if (json.isNotBlank() && item.list.isEmpty()) {
+            Vlog("▶️ [INIT] Restoring list #$index with JSON: $json")
+
+            try {
+                val loaded = gson.fromJson<List<*>>(json, item.type)
+                val typed = loaded as List<Any>
+                (item.list as MutableList<Any>).addAll(typed)
+
+                Vlog("✅ [INIT] Loaded ${typed.size} items into list #$index")
+                Vlog("🔍 First item: ${typed.firstOrNull()}")
+            } catch (e: Exception) {
+                Vlog("❌ [INIT] Failed to load list #$index: ${e.message}")
+            }
+        } else {
+            Vlog("⚠️ [SKIP] List #$index skipped (blank or not empty)")
         }
     }
 }
+
 
 
 
