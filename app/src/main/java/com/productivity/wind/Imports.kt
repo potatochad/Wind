@@ -94,7 +94,7 @@ data class StoreList<T>(
 ) {
     companion object {
         inline operator fun <reified T> invoke(
-            json: () -> String,
+            noinline json: () -> String,
             list: SnapshotStateList<T>
         ): StoreList<T> {
             val type = object : TypeToken<MutableList<T>>() {}.type
