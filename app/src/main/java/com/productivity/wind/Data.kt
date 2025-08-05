@@ -577,6 +577,9 @@ fun AppStart() {
     if (Tests.isEmpty()){
                 Tests.add(TestData(name = "Test"))
     }
+        if (Tests2.isEmpty()){
+                Tests2.add(TestData(name = "Test"))
+        }
 
 
 
