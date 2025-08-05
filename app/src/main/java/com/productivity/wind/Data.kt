@@ -195,7 +195,7 @@ object ListStorage {
 
 
     @Composable
-    fun <T> On(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
+    fun <T> Synch(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
         LaunchedEffect(Unit) {
             while (true) {
                 jsonRef.set(gson.toJson(list))
