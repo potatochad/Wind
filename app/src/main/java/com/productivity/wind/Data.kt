@@ -1,5 +1,5 @@
 package com.productivity.wind
-//Test 2
+
 import kotlin.reflect.*
 import androidx.compose.runtime.snapshots.*
 import com.google.gson.Gson
@@ -201,7 +201,7 @@ object ListStorage {
     }
 
     //runs on restore and init
-    fun initAll() {
+    fun initAll2() {
         all.forEach { item ->
             @Suppress("UNCHECKED_CAST")
             initONCE(
@@ -210,6 +210,20 @@ object ListStorage {
             )
         }
     }
+    fun initAll() {
+    all.forEach { item ->
+        val json = item.json()
+        val list = item.list
+
+        if (json.isNotBlank() && list.isEmpty()) {
+            val type = TypeToken.getParameterized(MutableList::class.java, list.firstOrNull()?.javaClass ?: return@forEach).type
+            val loaded = gson.fromJson<MutableList<Any>>(json, type)
+            @Suppress("UNCHECKED_CAST")
+            (list as MutableList<Any>).addAll(loaded)
+        }
+    }
+}
+
 
     @Composable
     fun OnAppsStartAll(){
