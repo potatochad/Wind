@@ -179,6 +179,7 @@ object ListStorage {
     //RUNS ON start and restore
     fun initAll() {
         Vlog(msg= "lol", delayLevel = 1)
+        
         init(Bar.myList, Tests)
         init(Bar.myList2, Tests2)
 
