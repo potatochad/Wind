@@ -195,7 +195,7 @@ object ListStorage {
 
 
     @Composable
-    fun <T> OnAppStartONCE(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
+    fun <T> On(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
         LaunchedEffect(Unit) {
             while (true) {
                 jsonRef.set(gson.toJson(list))
@@ -206,13 +206,6 @@ object ListStorage {
 
     @Composable
     fun OnAppsStartAll(){
-        all.forEach { item ->
-            @Suppress("UNCHECKED_CAST")
-            OnAppStartONCE(
-                item.json as KMutableProperty0<String>,
-                item.list as SnapshotStateList<Any>
-            )
-        }
     }
 
 
