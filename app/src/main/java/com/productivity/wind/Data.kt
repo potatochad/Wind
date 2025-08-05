@@ -281,8 +281,6 @@ fun PopUps(){
 }
 
 
-
-
 // All other things
 @Composable
 fun NeedMorePointsPopuo(show: MutableState<Boolean>){
@@ -362,6 +360,8 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
               onConfirm = { Global1.navController.navigate("SettingsP_Screen")}
               )
 }
+
+//endregion POPUP CONTROLLER
 
 
 

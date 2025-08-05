@@ -88,6 +88,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+
 //region NavController
 //Global1.navController - to use anywhere, no input
 @RequiresApi(Build.VERSION_CODES.O)
@@ -106,6 +107,23 @@ fun MyNavGraph(navController: NavHostController) {
             composable("Challenge") {
                     Challenge()
             }
+
+            //region WEB
+
+            composable("Web") {
+                Web()
+            }
+            composable("FunWeb") {
+                FunWeb()
+            }
+            composable("WorkWeb") {
+                WorkWeb()
+            }
+
+
+            //endregion WEB
+
+
             //region SETTINGS
 
             composable("SettingsScreen") {
@@ -427,7 +445,7 @@ fun Menu() {
 @Composable
 fun Chill() {
   UI.SimpleIconButton(
-            onClick = { Vlog("COMING OUT SOON") },
+            onClick = { Global1.navController.navigate("Web") },
             icon = Icons.Default.SportsEsports
         )
 }
