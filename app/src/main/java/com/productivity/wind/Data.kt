@@ -185,8 +185,8 @@ object ListStorage {
 
     @Composable
     fun OnAppsStartAll(){
-        init(Bar::myList, Tests)
-        init(Bar::myList2, Tests2)
+        set(Bar::myList, Tests)
+        set(Bar::myList2, Tests2)
     }
 
 
