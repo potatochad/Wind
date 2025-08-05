@@ -175,13 +175,14 @@ var Tests2 = ml(TestData())
 
 
 object ListStorage {
-    
-    val all = listOf(
-        StoreList(Bar::myList, Tests),
-        StoreList(Bar::myList2, Tests2),
-    )
+
     //RUNS ON start and restore
-    inline fun <reified T> initONCE(json: String, list: SnapshotStateList<T>) {
+    fun initAll() {
+        init(Bar::myList, Tests)
+        init(Bar::myList2, Tests2)
+    }
+
+    inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
         if (json.isNotBlank() && list.isEmpty()) {
             val type = getListType(list)
             val loaded = gson.fromJson<MutableList<T>>(json, type)
@@ -189,6 +190,9 @@ object ListStorage {
             list.addAll(loaded)
         }
     }
+
+
+
 
     @Composable
     fun <T> OnAppStartONCE(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
@@ -199,43 +203,6 @@ object ListStorage {
             }
         }
     }
-
-    //runs on restore and init
-    fun initAll2() {
-        all.forEach { item ->
-            @Suppress("UNCHECKED_CAST")
-            initONCE(
-                item.json(),
-                item.list as SnapshotStateList<Any>
-            )
-        }
-    }
-    @Suppress("UNCHECKED_CAST")
-fun initAll() {
-    all.forEachIndexed { index, item ->
-        val json = item.json()
-        if (json.isNotBlank() && item.list.isEmpty()) {
-            Vlog("▶️ [INIT] Restoring list #$index with JSON: $json")
-
-            try {
-                val loaded = gson.fromJson<List<*>>(json, item.type)
-                val typed = loaded as List<Any>
-                (item.list as MutableList<Any>).addAll(typed)
-
-                Vlog("✅ [INIT] Loaded ${typed.size} items into list #$index")
-                Vlog("🔍 First item: ${typed.firstOrNull()}")
-            } catch (e: Exception) {
-                Vlog("❌ [INIT] Failed to load list #$index: ${e.message}")
-            }
-        } else {
-            Vlog("⚠️ [SKIP] List #$index skipped (blank or not empty)")
-        }
-    }
-}
-
-
-
-
 
     @Composable
     fun OnAppsStartAll(){
