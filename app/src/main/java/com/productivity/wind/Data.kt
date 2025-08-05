@@ -182,6 +182,17 @@ object ListStorage {
         init(Bar.myList2, Tests2)
     }
 
+
+    @Composable
+    fun OnAppsStartAll(){
+        init(Bar::myList, Tests)
+        init(Bar::myList2, Tests2)
+    }
+
+
+
+
+    
     inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
         if (json.isNotBlank() && list.isEmpty()) {
             val type = getListType(list)
@@ -192,10 +203,8 @@ object ListStorage {
     }
 
 
-
-
     @Composable
-    fun <T> Synch(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
+    fun <T> set(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
         LaunchedEffect(Unit) {
             while (true) {
                 jsonRef.set(gson.toJson(list))
@@ -204,12 +213,7 @@ object ListStorage {
         }
     }
 
-    @Composable
-    fun OnAppsStartAll(){
-    }
 
-
-    
 }
 
 
