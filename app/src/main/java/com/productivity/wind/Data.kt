@@ -210,19 +210,21 @@ object ListStorage {
             )
         }
     }
-    fun initAll() {
-    all.forEach { item ->
-        val json = item.json()
-        val list = item.list
-
-        if (json.isNotBlank() && list.isEmpty()) {
-            val type = TypeToken.getParameterized(MutableList::class.java, list.firstOrNull()?.javaClass ?: return@forEach).type
-            val loaded = gson.fromJson<MutableList<Any>>(json, type)
-            @Suppress("UNCHECKED_CAST")
-            (list as MutableList<Any>).addAll(loaded)
-        }
+    fun <T> initONCE1(json: String, list: SnapshotStateList<T>, type: Type) {
+    if (json.isNotBlank() && list.isEmpty()) {
+        val loaded = gson.fromJson<MutableList<T>>(json, type)
+        list.clear()
+        list.addAll(loaded)
     }
 }
+
+    fun initAll() {
+    all.forEach { item ->
+        val type = getListType(item.list)
+        initONCE1(item.json(), item.list, type)
+    }
+}
+
 
 
     @Composable
