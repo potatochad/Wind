@@ -126,15 +126,20 @@ fun log(message: String, tag: String? = "Bad") {
 
 private var lastToast: Toast? = null
 
-fun Vlog(msg: String, special: String = "none") {
+fun Vlog(msg: String, special: String = "none", delayLevel: Int = 0) {
+    val delayMs = (delayLevel.coerceIn(0, 100)) * 30L // Example: Level 2 = 60ms
+
     if (special.equals("one", true)) {
         lastToast?.cancel()
     }
 
-    val toast = Toast.makeText(Global1.context, msg, Toast.LENGTH_SHORT)
-    lastToast = toast
-    toast.show()
+    Handler(Looper.getMainLooper()).postDelayed({
+        val toast = Toast.makeText(Global1.context, msg, Toast.LENGTH_SHORT)
+        lastToast = toast
+        toast.show()
+    }, delayMs)
 }
+
 
 
 //endregion
