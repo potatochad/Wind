@@ -213,12 +213,13 @@ object ListStorage {
     fun initAll() {
     all.forEach { item ->
         if (item.json().isNotBlank() && item.list.isEmpty()) {
-            val loaded = gson.fromJson<MutableList<Any>>(item.json(), item.type)
+            val loaded = gson.fromJson(item.json(), item.type)
             @Suppress("UNCHECKED_CAST")
-            (item.list as MutableList<Any>).addAll(loaded)
+            (item.list as MutableList<Any>).addAll(loaded as Collection<Any>)
         }
     }
 }
+
 
 
     @Composable
