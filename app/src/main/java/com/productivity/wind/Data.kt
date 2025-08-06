@@ -157,7 +157,7 @@ class Settings {
 
     //region LISTS
     
-    var myList = m("")
+    var myList by m("")
     
 }
 //m-mutable state, ml- mutablelistof
@@ -179,19 +179,19 @@ object ListStorage {
     //RUNS ON start and restore
     fun initAll(){
         
-        init(Bar.myList.value, Tests)
+        init(Bar.myList, Tests)
     
     }
     @Composable
     fun SynchAll(){
         
-        SSet(Bar.myList, Tests)
+        SSet(Bar::myList, Tests)
 
         if (Tests.isEmpty()) Tests.add(TestData())
 
     }
     @Composable
-fun <T> SSet(jsonState: MutableState<String>, list: SnapshotStateList<T>) {
+fun <T> SSet2(jsonState: MutableState<String>, list: SnapshotStateList<T>) {
     LaunchedEffect(Unit) {
         while (true) {
             jsonState.value = gson.toJson(list)
@@ -221,7 +221,7 @@ fun <T> SSet(jsonState: MutableState<String>, list: SnapshotStateList<T>) {
     }
 
     @Composable
-    fun <T> SSet2(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
+    fun <T> SSet(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
         LaunchedEffect(Unit) {
             while (true) {
                 jsonRef.set(gson.toJson(list))
