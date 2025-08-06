@@ -181,7 +181,7 @@ object ListStorage {
         Vlog(msg= "lol", delayLevel = 1)
         
         init(Bar.myList, Tests)
-        init(Bar.myList2, Tests2)
+        // init(Bar.myList2, Tests2)
 
         Vlog(msg= "lol22222", delayLevel = 2)
       
@@ -191,7 +191,7 @@ object ListStorage {
     @Composable
     fun OnAppsStartAll(){
         set(Bar::myList, Tests)
-        set(Bar::myList2, Tests2)
+        // set(Bar::myList2, Tests2)
     }
 
 
