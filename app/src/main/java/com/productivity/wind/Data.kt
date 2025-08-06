@@ -621,77 +621,7 @@ object Global1 {
 
 
 
-/*?WHEN TESTING IS PAINFUL
-* !AUTO DISABLED EACH TIME*/
-/* IT AUTO CALLS ITSELF
-YEA, WEIRD ONLY FEW FUNCTIONS IT CALLS
-? YOU MUST WORK WITH IT WANT AND SET UP
-! onAccessibilityEvent- IS A MUST AND ONLY ON CHANGE CALLED
-* */
-class WatchdogAccessibilityService  : AccessibilityService() {
-
-    /* ON CHANGE DO X
-    ! this is very important
-    ? must be names onAccessibilityEvent
-
-    * */
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        CurrentApp(event)
-        //GETEVERYTHING(event)
-    }
-    fun CurrentApp(event: AccessibilityEvent?) {
-        if (event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            Bar.currentApp = event.packageName.toString()
-            log("CURRENT APP: ${Bar.currentApp}", "bad")
-        }
-    }
-    private fun exploreNodeTree(node: AccessibilityNodeInfo?, depth: Int) {
-        if (node == null) return
-
-        val indent = "  ".repeat(depth)
-
-        val text = node.text
-        val id = node.viewIdResourceName
-        val desc = node.contentDescription
-        val className = node.className
-        val clickable = node.isClickable
-        val enabled = node.isEnabled
-        val focused = node.isFocused
-        val focusable = node.isFocusable
-        val visible = node.isVisibleToUser
-        val bounds = Rect().apply { node.getBoundsInScreen(this) }
-
-        // Header
-        log("$indent Node:", "bad")
-
-        // Properties
-        if (!text.isNullOrEmpty()) log("$indent   Text: $text", "bad")
-        if (!desc.isNullOrEmpty()) log("$indent   Description: $desc", "bad")
-        if (!id.isNullOrEmpty()) log("$indent   ID: $id", "bad")
-        log("$indent   Class: $className", "bad")
-        log("$indent   Clickable: $clickable", "bad")
-        log("$indent   Enabled: $enabled", "bad")
-        log("$indent   Focused: $focused", "bad")
-        log("$indent   Focusable: $focusable", "bad")
-        log("$indent   Visible: $visible", "bad")
-        log("$indent   Bounds: $bounds", "bad")
-
-        // Children
-        for (i in 0 until node.childCount) {
-            exploreNodeTree(node.getChild(i), depth + 1)
-        }
-    }
-
-    fun GETEVERYTHING(event: AccessibilityEvent?) {
-        val root = rootInActiveWindow
-        if (root != null) {
-            exploreNodeTree(root, 0)
-        }
-    }
-    override fun onInterrupt() {
-        log("ACESABILITY Service interrupted.", "bad")
-    }
-}
+class WatchdogAccessibilityService  : AccessibilityService() {}
 
 class NotificationHelper(private val context: Context) {
     companion object {
