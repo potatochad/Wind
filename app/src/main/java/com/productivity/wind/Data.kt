@@ -618,11 +618,6 @@ object Global1 {
 
 
 
-
-
-
-class WatchdogAccessibilityService  : AccessibilityService() {}
-
 class NotificationHelper(private val context: Context) {
     companion object {
         private const val CHANNEL_ID = "WatchdogServiceChannel"
