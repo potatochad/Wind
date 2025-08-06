@@ -171,6 +171,9 @@ data class TestData(
 )
 var Tests = ml(TestData())
 
+
+
+
 object ListStorage {
 
     //RUNS ON start and restore
@@ -181,6 +184,9 @@ object ListStorage {
     }
     @Composable
     fun SynchAll(){
+
+        if (Tests.isEmpty()) Tests.add(TestData())
+
         
         SSet(Bar::myList, Tests)
 
@@ -537,8 +543,7 @@ fun AppStart() {
         DayChecker.start()
     }
     
-    if (Tests.isEmpty()) Tests.add(TestData())
-
+    
     ListStorage.SynchAll()
     
     
