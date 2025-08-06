@@ -181,10 +181,13 @@ object ListStorage {
     fun initAll(){
         if (Tests.isEmpty()) Tests.add(TestData())
 
+        ListStorage.init(Bar.myList, Tests)
         
     }
+    @Composable
     fun SynchAll(){
-        
+        ListStorage.SSet(Bar::myList, Tests)
+
     }
     //RUNS ON start and restore
     inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
@@ -536,9 +539,9 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
+    ListStorage.SynchAll()
     
-    ListStorage.SSet(Bar::myList, Tests)
-
+    
 }
 
 
