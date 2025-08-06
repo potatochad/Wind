@@ -175,8 +175,7 @@ object ListStorage {
 
     //RUNS ON start and restore
     fun initAll(){
-        if (Tests.isEmpty()) Tests.add(TestData())
-
+        
         init(Bar.myList, Tests)
         
     }
@@ -537,6 +536,9 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
+    
+    if (Tests.isEmpty()) Tests.add(TestData())
+
     ListStorage.SynchAll()
     
     
