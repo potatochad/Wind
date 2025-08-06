@@ -179,6 +179,8 @@ object ListStorage {
 
 
     fun initAll(){
+        if (Tests.isEmpty()) Tests.add(TestData())
+
         
     }
     fun SynchAll(){
@@ -527,13 +529,6 @@ fun MAINStart() {
 }
 @Composable
 fun AppStart() {
-
-
-    //DELETE!!!!!
-    if (Tests.isEmpty()) Tests.add(TestData())
-
-
-
     
     PopUps()
     val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
