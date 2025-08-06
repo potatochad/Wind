@@ -178,6 +178,7 @@ inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
 object ListStorage {
 
 
+    //RUNS ON start and restore
     fun initAll(){
         if (Tests.isEmpty()) Tests.add(TestData())
 
@@ -186,10 +187,12 @@ object ListStorage {
     }
     @Composable
     fun SynchAll(){
+        
         SSet(Bar::myList, Tests)
 
     }
-    //RUNS ON start and restore
+    
+    
     inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
         if (json.isNotBlank()) {
             val type = getListType(list)
