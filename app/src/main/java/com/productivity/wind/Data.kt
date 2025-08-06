@@ -541,7 +541,7 @@ fun AppStart() {
         DayChecker.start()
     }
     
-    ListStorage.OnAppStart(Bar::myList, Tests)
+    ListStorage.SSet(Bar::myList, Tests)
 
 }
 
