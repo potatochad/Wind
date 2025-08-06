@@ -187,8 +187,8 @@ object ListStorage {
     @Composable
     fun SynchAll(){
         
-        SSet(Bar::myList, Tests)
-        SSet(Bar::myList2, Tests2)
+        SSet(Bar.myList, Tests)
+        SSet(Bar.myList2, Tests2)
 
         if (Tests.isEmpty()) Tests.add(TestData())
         if (Tests2.isEmpty()) Tests2.add(TestData())
