@@ -181,12 +181,12 @@ object ListStorage {
     fun initAll(){
         if (Tests.isEmpty()) Tests.add(TestData())
 
-        ListStorage.init(Bar.myList, Tests)
+        init(Bar.myList, Tests)
         
     }
     @Composable
     fun SynchAll(){
-        ListStorage.SSet(Bar::myList, Tests)
+        SSet(Bar::myList, Tests)
 
     }
     //RUNS ON start and restore
