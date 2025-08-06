@@ -176,7 +176,14 @@ inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
 }
 
 object ListStorage {
- 
+
+
+    fun initAll(){
+        
+    }
+    fun SynchAll(){
+        
+    }
     //RUNS ON start and restore
     inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
         if (json.isNotBlank()) {
@@ -188,7 +195,7 @@ object ListStorage {
     }
 
     @Composable
-    fun <T> OnAppStart(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
+    fun <T> SSet(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
         LaunchedEffect(Unit) {
             while (true) {
                 jsonRef.set(gson.toJson(list))
@@ -522,10 +529,7 @@ fun MAINStart() {
 fun AppStart() {
 
 
-    //DELETE!!!!!!LATER
-    if (Tests.isEmpty()){
-                Tests.add(TestData(name = "Test"))
-    }
+    //DELETE!!!!!
 
 
 
