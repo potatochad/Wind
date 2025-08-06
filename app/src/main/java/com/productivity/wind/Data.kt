@@ -158,48 +158,28 @@ class Settings {
     //region LISTS
     
     var myList by m("")
-    var myList2 by m("")
-
-    //endregion LISTS
-    
 }
 //m-mutable state, ml- mutablelistof
 
 data class TestData(
     var id: Str = Id(),
     var name: Str = "",
+    var done: Bool = false,
+    var packageName: Str = "",
+    var Block : Bool = false,
+    var TimeSpent : Int = 0,
 )
 var Tests = ml(TestData())
-var Tests2 = ml(TestData())
 
+inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
+    return object : TypeToken<MutableList<T>>() {}.type
+}
 
-
-object ListStorage_OLD {
-
+object ListStorage {
+ 
     //RUNS ON start and restore
-    fun initAll() {
-        Vlog(msg= "lol", delayLevel = 1)
-        
-        init(Bar.myList, Tests)
-        // init(Bar.myList2, Tests2)
-
-        Vlog(msg= "lol22222", delayLevel = 2)
-      
-    }
-
-
-    @Composable
-    fun OnAppsStartAll(){
-        set(Bar::myList, Tests)
-        // set(Bar::myList2, Tests2)
-    }
-
-
-
-
-    
     inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
-        if (json.isNotBlank() && list.isEmpty()) {
+        if (json.isNotBlank()) {
             val type = getListType(list)
             val loaded = gson.fromJson<MutableList<T>>(json, type)
             list.clear()
@@ -207,9 +187,8 @@ object ListStorage_OLD {
         }
     }
 
-
     @Composable
-    fun <T> set(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
+    fun <T> OnAppStart(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
         LaunchedEffect(Unit) {
             while (true) {
                 jsonRef.set(gson.toJson(list))
@@ -218,62 +197,10 @@ object ListStorage_OLD {
         }
     }
 
-
+    
 }
 
 
-object ListStorage {
-
-    // RUNS ON START AND RESTORE
-    fun initAll() {
-        Vlog("🚀 INIT ALL START", delayLevel = 1)
-
-        Vlog("📦 JSON myList: ${Bar.myList}", delayLevel = 2)
-        Vlog("📋 List size before restore: ${Tests.size}", delayLevel = 3)
-
-        init(Bar.myList, Tests, "Tests", 4)
-
-        // Vlog("📦 JSON myList2: ${Bar.myList2}", delayLevel = 10)
-        // init(Bar.myList2, Tests2, "Tests2", 11)
-
-        Vlog("✅ INIT ALL DONE", delayLevel = 20)
-    }
-
-    inline fun <reified T> init(json: String, list: SnapshotStateList<T>, name: String = "List", delayLevel: Int) {
-        if (json.isNotBlank() && list.isEmpty()) {
-            val type = getListType(list)
-            try {
-                val loaded = gson.fromJson<MutableList<T>>(json, type)
-                Vlog("🧹 [$name] Clearing list. Before: ${list.size}", delayLevel = delayLevel)
-                list.clear()
-                list.addAll(loaded)
-                Vlog("✅ [$name] Restored ${loaded.size} items. First: ${loaded.firstOrNull()}", delayLevel = delayLevel + 1)
-            } catch (e: Exception) {
-                Vlog("❌ [$name] Failed to restore: ${e.message}", delayLevel = delayLevel + 2)
-            }
-        } else {
-            Vlog("⚠️ [$name] Skipped (Empty JSON or List already filled)", delayLevel = delayLevel + 3)
-        }
-    }
-
-    @Composable
-    fun OnAppsStartAll() {
-        set(Bar::myList, Tests, "Tests", 30)
-        // set(Bar::myList2, Tests2, "Tests2", 40)
-    }
-
-    @Composable
-    fun <T> set(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>, name: String = "List", delayLevel: Int) {
-        LaunchedEffect(Unit) {
-            while (true) {
-                val json = gson.toJson(list)
-                jsonRef.set(json)
-                Vlog("💾 [$name] Saved: ${list.size} items", delayLevel = delayLevel)
-                delay(1_000L)
-            }
-        }
-    }
-}
 
 
 
@@ -599,9 +526,6 @@ fun AppStart() {
     if (Tests.isEmpty()){
                 Tests.add(TestData(name = "Test"))
     }
-        if (Tests2.isEmpty()){
-                Tests2.add(TestData(name = "Test"))
-        }
 
 
 
@@ -612,7 +536,7 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
-    ListStorage.OnAppsStartAll()
+    ListStorage.OnAppsStart()
 }
 
 
