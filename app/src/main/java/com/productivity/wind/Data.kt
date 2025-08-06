@@ -530,6 +530,7 @@ fun AppStart() {
 
 
     //DELETE!!!!!
+    if (Tests.isEmpty()) Tests.add(TestData())
 
 
 
