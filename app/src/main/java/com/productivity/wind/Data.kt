@@ -174,7 +174,7 @@ var Tests2 = ml(TestData())
 
 
 
-object ListStorage {
+object ListStorage_OLD {
 
     //RUNS ON start and restore
     fun initAll() {
@@ -221,6 +221,59 @@ object ListStorage {
 
 }
 
+
+object ListStorage {
+
+    // RUNS ON START AND RESTORE
+    fun initAll() {
+        Vlog("🚀 INIT ALL START", delayLevel = 1)
+
+        Vlog("📦 JSON myList: ${Bar.myList}", delayLevel = 2)
+        Vlog("📋 List size before restore: ${Tests.size}", delayLevel = 3)
+
+        init(Bar.myList, Tests, "Tests", 4)
+
+        // Vlog("📦 JSON myList2: ${Bar.myList2}", delayLevel = 10)
+        // init(Bar.myList2, Tests2, "Tests2", 11)
+
+        Vlog("✅ INIT ALL DONE", delayLevel = 20)
+    }
+
+    inline fun <reified T> init(json: String, list: SnapshotStateList<T>, name: String = "List", delayLevel: Int) {
+        if (json.isNotBlank() && list.isEmpty()) {
+            val type = getListType(list)
+            try {
+                val loaded = gson.fromJson<MutableList<T>>(json, type)
+                Vlog("🧹 [$name] Clearing list. Before: ${list.size}", delayLevel = delayLevel)
+                list.clear()
+                list.addAll(loaded)
+                Vlog("✅ [$name] Restored ${loaded.size} items. First: ${loaded.firstOrNull()}", delayLevel = delayLevel + 1)
+            } catch (e: Exception) {
+                Vlog("❌ [$name] Failed to restore: ${e.message}", delayLevel = delayLevel + 2)
+            }
+        } else {
+            Vlog("⚠️ [$name] Skipped (Empty JSON or List already filled)", delayLevel = delayLevel + 3)
+        }
+    }
+
+    @Composable
+    fun OnAppsStartAll() {
+        set(Bar::myList, Tests, "Tests", 30)
+        // set(Bar::myList2, Tests2, "Tests2", 40)
+    }
+
+    @Composable
+    fun <T> set(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>, name: String = "List", delayLevel: Int) {
+        LaunchedEffect(Unit) {
+            while (true) {
+                val json = gson.toJson(list)
+                jsonRef.set(json)
+                Vlog("💾 [$name] Saved: ${list.size} items", delayLevel = delayLevel)
+                delay(1_000L)
+            }
+        }
+    }
+}
 
 
 
