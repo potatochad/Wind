@@ -80,6 +80,9 @@ fun <T> m(value: T) = mutableStateOf(value)
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> {
     return mutableStateListOf()
 }
+inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
+    return object : TypeToken<MutableList<T>>() {}.type
+}
 
 
 //endregion Vals/ Vars FOR DATA
