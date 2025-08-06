@@ -195,6 +195,16 @@ object ListStorage {
 
 
     }
+    @Composable
+fun <T> SSet(jsonState: MutableState<String>, list: SnapshotStateList<T>) {
+    LaunchedEffect(Unit) {
+        while (true) {
+            jsonState.value = gson.toJson(list)
+            delay(1_000L)
+        }
+    }
+}
+
 
 
 
@@ -216,7 +226,7 @@ object ListStorage {
     }
 
     @Composable
-    fun <T> SSet(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
+    fun <T> SSet2(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
         LaunchedEffect(Unit) {
             while (true) {
                 jsonRef.set(gson.toJson(list))
