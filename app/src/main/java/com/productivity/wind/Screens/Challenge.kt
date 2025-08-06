@@ -73,7 +73,7 @@ import com.productivity.wind.NoLagCompose
 import com.productivity.wind.PermissionsButton
 import com.productivity.wind.R
 import com.productivity.wind.SettingItem
-import com.productivity.wind.WatchdogAccessibilityService
+//import com.productivity.wind.WatchdogAccessibilityService
 import com.productivity.wind.apps
 import com.productivity.wind.log
 import com.productivity.wind.SettingsScreen
