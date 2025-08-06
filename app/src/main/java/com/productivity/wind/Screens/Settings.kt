@@ -163,14 +163,10 @@ fun SettingsScreen() {
         SettingItem(
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
-                title = "Extension ${Tests[0].name} ${Tests2[0].name}",
+                title = "Extension ${Tests[0].name}",
             onClick = {
                 val newName = Tests[0].name + "D"
                 Tests[0] = Tests[0].copy(name = newName)
-
-
-                val newName2 = Tests2[0].name + "2"
-                Tests2[0] = Tests2[0].copy(name = newName2)
 
             }
 
