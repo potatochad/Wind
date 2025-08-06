@@ -158,7 +158,7 @@ class Settings {
     //region LISTS
     
     var myList by m("")
-    var myList2 by m("")
+    
 }
 //m-mutable state, ml- mutablelistof
 
@@ -171,7 +171,6 @@ data class TestData(
     var TimeSpent : Int = 0,
 )
 var Tests = ml(TestData())
-var Tests2 = ml(TestData())
 
 
 
@@ -181,18 +180,14 @@ object ListStorage {
     fun initAll(){
         
         init(Bar.myList, Tests)
-        init(Bar.myList2, Tests2)
     
     }
     @Composable
     fun SynchAll(){
         
         SSet(Bar.myList, Tests)
-        SSet(Bar.myList2, Tests2)
 
         if (Tests.isEmpty()) Tests.add(TestData())
-        if (Tests2.isEmpty()) Tests2.add(TestData())
-
 
     }
     @Composable
