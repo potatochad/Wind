@@ -536,7 +536,9 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
-    ListStorage.OnAppsStart()
+    
+    ListStorage.OnAppStart(Bar::myList, Tests)
+
 }
 
 
