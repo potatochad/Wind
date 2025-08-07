@@ -195,44 +195,58 @@ object ListStorage {
 fun SSet2(stateCommand: String) {
     LaunchedEffect(Unit) {
         val parts = stateCommand.split(",").map { it.trim() }
-        if (parts.size != 2) return@LaunchedEffect
+        if (parts.size != 2) {
+            Vlog("❌ Format error: expected 'Object.property, ListName'")
+            return@LaunchedEffect
+        }
 
-        val statePath = parts[0]  // e.g., Bar.myList
-        val listName = parts[1]   // e.g., Tests
+        val statePath = parts[0]       // e.g., "Bar.myList"
+        val listName = parts[1]        // e.g., "Tests"
 
         val stateParts = statePath.split(".")
-        if (stateParts.size != 2) return@LaunchedEffect
+        if (stateParts.size != 2) {
+            Vlog("❌ Invalid state path: '$statePath'")
+            return@LaunchedEffect
+        }
 
         val objectName = stateParts[0]
         val propertyName = stateParts[1]
 
-        // Use existing Bar instance (DO NOT reinitialize!)
+        // Resolve instance
         val instance: Any = when (objectName) {
             "Bar" -> Bar
-            else -> return@LaunchedEffect
+            else -> {
+                Vlog("❌ Unknown object: '$objectName'")
+                return@LaunchedEffect
+            }
         }
 
-        // Find mutable String property on Bar
+        // Find the state property
         val stateProp = instance::class.memberProperties
             .filterIsInstance<KMutableProperty1<Any, *>>()
             .firstOrNull { it.name == propertyName } as? KMutableProperty1<Any, String>
-            ?: return@LaunchedEffect
+            ?: run {
+                Vlog("❌ Property '$propertyName' not found in object '$objectName'")
+                return@LaunchedEffect
+            }
 
-        // Find global list
+        // Find the list
         val listProp = ListStorage::class.memberProperties
             .filterIsInstance<KProperty1<ListStorage, *>>()
             .firstOrNull { it.name == listName }
             ?.get(ListStorage) as? SnapshotStateList<Any>
-            ?: return@LaunchedEffect
+            ?: run {
+                Vlog("❌ List '$listName' not found in ListStorage")
+                return@LaunchedEffect
+            }
 
-        // Update every second
         while (true) {
-            val json = gson.toJson(listProp)
-            stateProp.set(instance, json)
+            stateProp.set(instance, gson.toJson(listProp))
             delay(1_000L)
         }
     }
 }
+
 
 
 
