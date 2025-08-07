@@ -194,28 +194,32 @@ object ListStorage {
 
 
     fun init2(stateCommand: String) {
-    val parts = stateCommand.split(",").map { it.trim() }
-    if (parts.size != 2) {
-        Vlog("❌ Format error: expected 'Object.property, ListName'")
-        return
-    }
-
-    val statePath = parts[0]
-    val listName = parts[1]
-
     try {
+        val parts = stateCommand.split(",").map { it.trim() }
+        if (parts.size != 2) {
+            Vlog("❌ Format error: expected 'Object.property, ListName'")
+            return
+        }
+
+        val statePath = parts[0]
+        val listName = parts[1]
+
         val clazz = Class.forName("com.productivity.wind.DataKt")
         val field = clazz.declaredFields.firstOrNull { it.name == listName }
-
         if (field == null) {
-            Vlog("❌ Field '$listName' not found in DataKt")
+            Vlog("❌ Field '$listName' not found")
             return
         }
 
         field.isAccessible = true
         val listAny = field.get(null)
+        if (listAny == null) {
+            Vlog("❌ Field '$listName' is null")
+            return
+        }
+
         if (listAny !is SnapshotStateList<*>) {
-            Vlog("❌ Field '$listName' is not a SnapshotStateList")
+            Vlog("❌ Field '$listName' is not a SnapshotStateList. It is: ${listAny::class.simpleName}")
             return
         }
 
@@ -223,25 +227,41 @@ object ListStorage {
         val list = listAny as SnapshotStateList<Any>
 
         val json = statePath.split(".").let { (obj, prop) ->
-            when (obj) {
-                "Bar" -> Bar::class.memberProperties
-                    .firstOrNull { it.name == prop }
-                    ?.getter?.call(Bar) as? String ?: ""
-                else -> ""
+            try {
+                when (obj) {
+                    "Bar" -> Bar::class.memberProperties
+                        .firstOrNull { it.name == prop }
+                        ?.getter?.call(Bar) as? String ?: ""
+                    else -> {
+                        Vlog("❌ Unknown object: '$obj'")
+                        ""
+                    }
+                }
+            } catch (e: Exception) {
+                Vlog("❌ Failed to read property '$statePath': ${e.message}")
+                ""
             }
         }
 
         if (json.isNotBlank()) {
-            val type = object : TypeToken<MutableList<Any>>() {}.type
-            val loaded = gson.fromJson<MutableList<Any>>(json, type)
-            list.clear()
-            list.addAll(loaded)
+            try {
+                val type = object : TypeToken<MutableList<Any>>() {}.type
+                val loaded = gson.fromJson<MutableList<Any>>(json, type)
+                list.clear()
+                list.addAll(loaded)
+                Vlog("✅ List '$listName' loaded with ${loaded.size} items")
+            } catch (e: Exception) {
+                Vlog("❌ Failed to parse JSON: ${e.message}")
+            }
+        } else {
+            Vlog("⚠️ JSON for '$statePath' is blank")
         }
 
     } catch (e: Exception) {
-        Vlog("❌ init2 error: ${e.message}")
+        Vlog("💥 Unhandled crash in init2: ${e.message}")
     }
 }
+
 
 
     @Composable
