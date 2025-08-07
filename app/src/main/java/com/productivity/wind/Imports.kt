@@ -68,7 +68,8 @@ import java.io.File
 import kotlin.math.min
 
 
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
 
 //region Vals/ Vars FOR DATA
 
@@ -517,15 +518,18 @@ fun LazyCard(
 //
 @Composable
 fun CopyIcon(text: String) {
+    val context = LocalContext.current
+
     SimpleIconButton(
         icon = Icons.Default.ContentCopy,
         onClick = {
-            val clipboard = LocalContext.current.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("label", text)
             clipboard.setPrimaryClip(clip)
         }
     )
 }
+
 
 @Composable
 fun SimpleIconButton(
