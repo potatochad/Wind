@@ -200,35 +200,34 @@ fun SSet2(stateCommand: String) {
         val statePath = parts[0]  // e.g., Bar.myList
         val listName = parts[1]   // e.g., Tests
 
-        // Resolve object and property (e.g., Bar + myList)
         val stateParts = statePath.split(".")
         if (stateParts.size != 2) return@LaunchedEffect
 
         val objectName = stateParts[0]
         val propertyName = stateParts[1]
 
-        // Get object instance
+        // Use existing Bar instance (DO NOT reinitialize!)
         val instance: Any = when (objectName) {
             "Bar" -> Bar
             else -> return@LaunchedEffect
         }
 
-        // Get state property
+        // Find mutable String property on Bar
         val stateProp = instance::class.memberProperties
             .filterIsInstance<KMutableProperty1<Any, *>>()
-            .find { it.name == propertyName } as? KMutableProperty1<Any, String>
+            .firstOrNull { it.name == propertyName } as? KMutableProperty1<Any, String>
             ?: return@LaunchedEffect
 
-        // Get list reference
-        val listField = ListStorage::class.members
+        // Find global list
+        val listProp = ListStorage::class.memberProperties
             .filterIsInstance<KProperty1<ListStorage, *>>()
-            .find { it.name == listName }
+            .firstOrNull { it.name == listName }
             ?.get(ListStorage) as? SnapshotStateList<Any>
             ?: return@LaunchedEffect
 
-        // Start syncing
+        // Update every second
         while (true) {
-            val json = gson.toJson(listField)
+            val json = gson.toJson(listProp)
             stateProp.set(instance, json)
             delay(1_000L)
         }
