@@ -231,14 +231,14 @@ fun SSet2(stateCommand: String) {
             }
 
         // Find the list
-        val listProp = ListStorage::class.memberProperties
-            .filterIsInstance<KProperty1<ListStorage, *>>()
-            .firstOrNull { it.name == listName }
-            ?.get(ListStorage) as? SnapshotStateList<Any>
-            ?: run {
-                Vlog("❌ List '$listName' not found in ListStorage")
-                return@LaunchedEffect
-            }
+        val clazz = Class.forName("com.productivity.wind.DataKt")
+        val field = clazz.declaredFields.firstOrNull { it.name == listName }
+        val listProp = field?.get(null) as? SnapshotStateList<Any>
+        ?: run {
+        Vlog("❌ List '$listName' not found in top-level vars")
+        return@LaunchedEffect
+    }
+
 
         while (true) {
             stateProp.set(instance, gson.toJson(listProp))
