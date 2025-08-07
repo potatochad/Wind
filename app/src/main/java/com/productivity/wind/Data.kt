@@ -185,34 +185,21 @@ object ListStorage {
     @Composable
     fun SynchAll(){
         
-        SSet(wrap(Bar.myList), Tests)
+        SSet2(Bar.myList, Tests)
 
         if (Tests.isEmpty()) Tests.add(TestData())
 
     }
     @Composable
-fun <T> SSet2(jsonState: MutableState<String>, list: SnapshotStateList<T>) {
+fun <T> SSet2(jsonRef: MutableState<String>, list: SnapshotStateList<T>) {
     LaunchedEffect(Unit) {
         while (true) {
-            jsonState.value = gson.toJson(list)
+            jsonRef.value = gson.toJson(list)
             delay(1_000L)
         }
     }
 }
-fun wrap(ref: MutableState<String>): KMutableProperty0<String> {
-    return object : KMutableProperty0<String> {
-        override val name = "wrapped"
-        override fun get(): String = ref.value
-        override fun set(value: String) { ref.value = value }
-        override val getter: KProperty0.Getter<String> get() = TODO()
-        override val delegate: Any? get() = null
-        override fun getDelegate(): Any? = null
-        override fun isConst(): Boolean = false
-        override fun isLateinit(): Boolean = false
-        override fun call(): String = get()
-        override fun call(vararg args: Any?): String = get()
-    }
-}
+
 
 
 
