@@ -176,6 +176,12 @@ fun SettingsScreen() {
         SettingItem(
                 BigIcon = Icons.Filled.Tune,
                 BigIconColor = Color(0xFFB0BEC5),
+                title = "Logs",
+                onClick = { Global1.navController.navigate("LogsScreen") }
+        ) 
+        SettingItem(
+                BigIcon = Icons.Filled.Tune,
+                BigIconColor = Color(0xFFB0BEC5),
                 title = "Other",
                 onClick = { Global1.navController.navigate("SettingsOtherScreen") }
         ) 
@@ -333,19 +339,19 @@ fun SettingsP_Screen()= NoLagCompose {
 
 @Composable
 fun LogsScreen() {
-    val context = LocalContext.current
-    var logText by remember { mutableStateOf("Loading...") }
-
-    LaunchedEffect(Unit) {
-        val file = File(context.filesDir, "vlog.txt")
-        logText = try {
+    SettingsScreen(titleContent = { Text("Logs") }) {
+        val context = LocalContext.current
+        var logText by remember { mutableStateOf("Loading...") }
+        
+        LaunchedEffect(Unit) {
+            val file = File(context.filesDir, "vlog.txt")
+            logText = try {
             file.readText()
-        } catch (e: Exception) {
-            "❌ Error reading logs: ${e.message}"
-        }
-    }
+            } catch (e: Exception) {
+                "❌ Error reading logs: ${e.message}"
+            }
 
-    Box(modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState())) {
+        }
         Text(text = logText)
     }
 }
