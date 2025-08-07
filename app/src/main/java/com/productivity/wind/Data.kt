@@ -185,20 +185,55 @@ object ListStorage {
     @Composable
     fun SynchAll(){
         
-        SSet2(Bar.myList, Tests)
+        SSet2("Bar.myList, Tests")
 
         if (Tests.isEmpty()) Tests.add(TestData())
 
     }
     @Composable
-fun <T> SSet2(jsonRef: MutableState<String>, list: SnapshotStateList<T>) {
+fun SSet2(stateCommand: String) {
     LaunchedEffect(Unit) {
+        val parts = stateCommand.split(",").map { it.trim() }
+        if (parts.size != 2) return@LaunchedEffect
+
+        val statePath = parts[0]  // e.g., Bar.myList
+        val listName = parts[1]   // e.g., Tests
+
+        // Resolve object and property (e.g., Bar + myList)
+        val stateParts = statePath.split(".")
+        if (stateParts.size != 2) return@LaunchedEffect
+
+        val objectName = stateParts[0]
+        val propertyName = stateParts[1]
+
+        // Get object instance
+        val instance: Any = when (objectName) {
+            "Bar" -> Bar
+            else -> return@LaunchedEffect
+        }
+
+        // Get state property
+        val stateProp = instance::class.memberProperties
+            .filterIsInstance<KMutableProperty1<Any, *>>()
+            .find { it.name == propertyName } as? KMutableProperty1<Any, String>
+            ?: return@LaunchedEffect
+
+        // Get list reference
+        val listField = ListStorage::class.members
+            .filterIsInstance<KProperty1<ListStorage, *>>()
+            .find { it.name == listName }
+            ?.get(ListStorage) as? SnapshotStateList<Any>
+            ?: return@LaunchedEffect
+
+        // Start syncing
         while (true) {
-            jsonRef.value = gson.toJson(list)
+            val json = gson.toJson(listField)
+            stateProp.set(instance, json)
             delay(1_000L)
         }
     }
 }
+
 
 
 
