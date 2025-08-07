@@ -200,18 +200,27 @@ object ListStorage {
         return
     }
 
-    val statePath = parts[0]      // Bar.myList (ignored here)
-    val listName = parts[1]       // Tests
+    val statePath = parts[0]
+    val listName = parts[1]
 
     try {
         val clazz = Class.forName("com.productivity.wind.DataKt")
         val field = clazz.declaredFields.firstOrNull { it.name == listName }
-        field?.isAccessible = true
-        val list = field?.get(null) as? SnapshotStateList<Any>
-            ?: run {
-                Vlog("❌ List '$listName' not found")
-                return
-            }
+
+        if (field == null) {
+            Vlog("❌ Field '$listName' not found in DataKt")
+            return
+        }
+
+        field.isAccessible = true
+        val listAny = field.get(null)
+        if (listAny !is SnapshotStateList<*>) {
+            Vlog("❌ Field '$listName' is not a SnapshotStateList")
+            return
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        val list = listAny as SnapshotStateList<Any>
 
         val json = statePath.split(".").let { (obj, prop) ->
             when (obj) {
@@ -233,6 +242,7 @@ object ListStorage {
         Vlog("❌ init2 error: ${e.message}")
     }
 }
+
 
     @Composable
     fun SSet2(stateCommand: String) {
