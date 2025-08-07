@@ -63,14 +63,12 @@ import android.widget.ScrollView
 import com.productivity.wind.*
 import java.util.UUID
 import java.lang.reflect.Type
-
 import kotlin.collections.*
 import java.io.File
 import kotlin.math.min
 
 
-
-
+import android.content.*
 
 //region Vals/ Vars FOR DATA
 
