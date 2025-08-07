@@ -180,7 +180,7 @@ object ListStorage {
     //RUNS ON start and restore
     fun initAll(){
         
-        init(Bar.myList, Tests)
+        init2("Bar.myList, Tests")
     
     }
     @Composable
@@ -191,9 +191,52 @@ object ListStorage {
         if (Tests.isEmpty()) Tests.add(TestData())
 
     }
+
+
+    fun init2(stateCommand: String) {
+    val parts = stateCommand.split(",").map { it.trim() }
+    if (parts.size != 2) {
+        Vlog("❌ Format error: expected 'Object.property, ListName'")
+        return
+    }
+
+    val statePath = parts[0]      // Bar.myList (ignored here)
+    val listName = parts[1]       // Tests
+
+    try {
+        val clazz = Class.forName("com.productivity.wind.DataKt")
+        val field = clazz.declaredFields.firstOrNull { it.name == listName }
+        field?.isAccessible = true
+        val list = field?.get(null) as? SnapshotStateList<Any>
+            ?: run {
+                Vlog("❌ List '$listName' not found")
+                return
+            }
+
+        val json = statePath.split(".").let { (obj, prop) ->
+            when (obj) {
+                "Bar" -> Bar::class.memberProperties
+                    .firstOrNull { it.name == prop }
+                    ?.getter?.call(Bar) as? String ?: ""
+                else -> ""
+            }
+        }
+
+        if (json.isNotBlank()) {
+            val type = object : TypeToken<MutableList<Any>>() {}.type
+            val loaded = gson.fromJson<MutableList<Any>>(json, type)
+            list.clear()
+            list.addAll(loaded)
+        }
+
+    } catch (e: Exception) {
+        Vlog("❌ init2 error: ${e.message}")
+    }
+}
+
     @Composable
-fun SSet2(stateCommand: String) {
-    LaunchedEffect(Unit) {
+    fun SSet2(stateCommand: String) {
+        LaunchedEffect(Unit) {
         val parts = stateCommand.split(",").map { it.trim() }
         if (parts.size != 2) {
             Vlog("❌ Format error: expected 'Object.property, ListName'")
