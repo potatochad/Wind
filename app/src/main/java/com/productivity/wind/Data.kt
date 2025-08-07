@@ -237,60 +237,51 @@ object ListStorage {
     @Composable
     fun SSet2(stateCommand: String) {
         LaunchedEffect(Unit) {
-        val parts = stateCommand.split(",").map { it.trim() }
-        if (parts.size != 2) {
-            Vlog("❌ Format error: expected 'Object.property, ListName'")
-            return@LaunchedEffect
-        }
-
-        val statePath = parts[0]       // e.g., "Bar.myList"
-        val listName = parts[1]        // e.g., "Tests"
-
-        val stateParts = statePath.split(".")
-        if (stateParts.size != 2) {
-            Vlog("❌ Invalid state path: '$statePath'")
-            return@LaunchedEffect
-        }
-
-        val objectName = stateParts[0]
-        val propertyName = stateParts[1]
-
-        // Resolve instance
-        val instance: Any = when (objectName) {
-            "Bar" -> Bar
-            else -> {
-                Vlog("❌ Unknown object: '$objectName'")
+            val parts = stateCommand.split(",").map { it.trim() }
+            if (parts.size != 2) {
+                Vlog("❌ Format error: expected 'Object.property, ListName'")
                 return@LaunchedEffect
             }
-        }
-
-        // Find the state property
-        val stateProp = instance::class.memberProperties
-            .filterIsInstance<KMutableProperty1<Any, *>>()
-            .firstOrNull { it.name == propertyName } as? KMutableProperty1<Any, String>
+            val statePath = parts[0]       // e.g., "Bar.myList"
+            val listName = parts[1]        // e.g., "Tests"
+            val stateParts = statePath.split(".")
+            if (stateParts.size != 2) {
+                Vlog("❌ Invalid state path: '$statePath'")
+                return@LaunchedEffect
+            }
+            val objectName = stateParts[0]
+            val propertyName = stateParts[1]
+            val instance: Any = when (objectName) {
+                "Bar" -> Bar
+                else -> {
+                    Vlog("❌ Unknown object: '$objectName'")
+                    return@LaunchedEffect
+                }
+            }
+            // Find the state property
+            val stateProp = instance::class.memberProperties
+                .filterIsInstance<KMutableProperty1<Any, *>>()
+                .firstOrNull { it.name == propertyName } as? KMutableProperty1<Any, String>
             ?: run {
                 Vlog("❌ Property '$propertyName' not found in object '$objectName'")
                 return@LaunchedEffect
             }
-
-        // Find the list
-        val clazz = Class.forName("com.productivity.wind.DataKt")
-val field = clazz.declaredFields.firstOrNull { it.name == listName }
-field?.isAccessible = true
-val listProp = field?.get(null) as? SnapshotStateList<Any>
-    ?: run {
-        Vlog("❌ List '$listName' not found in top-level vars")
-        return@LaunchedEffect
-    }
-
-
-
-        while (true) {
-            stateProp.set(instance, gson.toJson(listProp))
-            delay(1_000L)
+            // Find the list
+            val clazz = Class.forName("com.productivity.wind.DataKt")
+            val field = clazz.declaredFields.firstOrNull { it.name == listName }
+            field?.isAccessible = true
+            val listProp = field?.get(null) as? SnapshotStateList<Any>
+            ?: run {
+                Vlog("❌ List '$listName' not found in top-level vars")
+                return@LaunchedEffect
+            }
+            
+            while (true) {
+                stateProp.set(instance, gson.toJson(listProp))
+                delay(1_000L)
+            }
         }
     }
-}
 
 
 
