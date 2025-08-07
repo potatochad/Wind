@@ -518,6 +518,18 @@ fun LazyCard(
 }
 //
 @Composable
+fun CopyIcon(text: String) {
+    SimpleIconButton(
+        icon = Icons.Default.ContentCopy,
+        onClick = {
+            val clipboard = LocalContext.current.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("label", text)
+            clipboard.setPrimaryClip(clip)
+        }
+    )
+}
+
+@Composable
 fun SimpleIconButton(
 	onClick: () -> Unit, 
 	icon: ImageVector? = null,
