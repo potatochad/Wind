@@ -117,6 +117,17 @@ fun Vlog(msg: String, special: String = "none", delayLevel: Int = 0) {
         toast.show()
     }, delayMs)
 }
+fun Tlog(msg: String) {
+    val fullMsg = "[${System.currentTimeMillis()}] $msg\n"
+    try {
+        val file = File(context.filesDir, "vlog.txt")
+        file.appendText(fullMsg)
+    } catch (e: Exception) {
+        // Silent fail
+    }
+}
+
+
 
 
 
