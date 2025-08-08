@@ -358,8 +358,8 @@ fun LogsScreen() {
             
             Text("Logs") 
 
-            Spacer(modifier = Modifier.fillMaxWidth())
-
+            Spacer(modifier = Modifier.weight(1f))
+            
             UI.CopyIcon(logText)
         }) {
         
