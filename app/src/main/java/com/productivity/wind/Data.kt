@@ -220,7 +220,9 @@ object ListStorage {
 
             val listField = dataClass.getDeclaredField(listFieldName)
             listField.isAccessible = true
-            val list = listField.get(null) as? MutableList<Any> ?: continue
+            
+            @Suppress("UNCHECKED_CAST")
+            val list = listField.get(null) as? SnapshotStateList<Any> ?: continue
 
             if (jsonValue.isNotBlank() && list.isEmpty()) {
                 val type = getListType(list)
