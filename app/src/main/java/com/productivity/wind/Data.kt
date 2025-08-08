@@ -234,7 +234,7 @@ object ListStorage {
                         .firstOrNull { it.name == prop }
                         ?.getter?.call(Bar) as? String ?: ""
                     else -> {
-                        Tlog("❌ Unknown object: '$obj'")
+                        log("❌ Unknown object: '$obj'")
                         ""
                     }
                 }
@@ -683,7 +683,6 @@ fun AppStart() {
     
     
     ListStorage.SynchAll()
-    Tlog("Initializing data")
     
     
 }
