@@ -126,7 +126,9 @@ fun Tlog(msg: String) {
     val dir = context?.filesDir ?: return  
 
     val file = File(dir, "vlog.txt")
-    val fullMsg = "[${System.currentTimeMillis()}] $msg\n"
+    val now = System.currentTimeMillis()
+	val time = SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault()).format(Date(now))
+	val fullMsg = "[$time] $msg\n"
 
     try {
         if (!file.exists()) file.createNewFile()
