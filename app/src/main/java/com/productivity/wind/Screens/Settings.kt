@@ -166,13 +166,8 @@ fun SettingsScreen() {
         SettingItem(
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
-                title = "Extension ${Tests[0].name}",
-            onClick = {
-                val newName = Tests[0].name + "D"
-                Tests[0] = Tests[0].copy(name = newName)
-
-            }
-
+                title = "Extension",
+            onClick = {}
         ) 
         SettingItem(
                 BigIcon = Icons.Filled.Tune,
@@ -259,9 +254,6 @@ fun UsageStatsP_PopUp(show: MutableState<Boolean>) =
         title = "Grant Usage-Access permission",
         message = "Lets the app see which apps you open. Used only to track apps you selected, to help manage your focus."
     )
-
-//To lazy to delete this and manifest
-class MyDeviceAdminReceiver : DeviceAdminReceiver() {}
 
 //endregion POPUP
 
