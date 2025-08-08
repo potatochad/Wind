@@ -165,6 +165,7 @@ fun MainHeader(){
         Icon.Menu()
         Icon.Chill()
         Icon.Usage()
+        Icon.Logs()
         
         Spacer(modifier = Modifier.width(12.dp))
         Text(text = "Points ${Bar.funTime}", fontSize = 18.sp)
@@ -447,10 +448,13 @@ fun Menu() {
 
 @Composable
 fun Chill() {
-  UI.SimpleIconButton(
-            onClick = { Global1.navController.navigate("Web") },
-            icon = Icons.Default.SportsEsports
-        )
+
+  if (Bar.showLogsIcon = true) {
+          UI.SimpleIconButton(
+                  onClick = { Global1.navController.navigate("Web") },
+                  icon = Icons.Default.SportsEsports
+          )
+  }
 }
 @Composable
 fun Add() {
@@ -459,6 +463,15 @@ fun Add() {
             icon = Icons.Default.Add
         )
 }
+
+@Composable
+fun Logs() {
+  UI.SimpleIconButton(
+            onClick = { Global1.navController.navigate("LogsScreen") },
+            icon = Icons.Default.History
+        )
+}
+
 
 @Composable
 fun Edit() {
