@@ -231,7 +231,7 @@ fun NotificationP_PopUp(show: MutableState<Boolean>) =
             UI.openPermissionSettings(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
         },
         title = "Grant Notification access",
-        message = Bar.NotificationP_Description,
+        message = "Keeps the app running in the background so you don’t miss any tracking or point updates.",
     )
     
 @Composable
@@ -246,8 +246,8 @@ fun OptimizationExclusionP_PopUp(show: MutableState<Boolean>) =
                         context.startActivity(intent)
                 },
                 title = "Exclude from battery optimization",
-                message = Bar.OptimizationExclusionP_Description,
-        )
+                message = "Stops your phone’s battery saver from shutting down the background service. This ensures the app runs smoothly."
+  )
 
 @Composable
 fun UsageStatsP_PopUp(show: MutableState<Boolean>) =
@@ -257,7 +257,7 @@ fun UsageStatsP_PopUp(show: MutableState<Boolean>) =
             UI.openPermissionSettings(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         },
         title = "Grant Usage-Access permission",
-        message = Bar.UsageStatsP_Description,
+        message = "Lets the app see which apps you open. Used only to track apps you selected, to help manage your focus."
     )
 
 //To lazy to delete this and manifest
