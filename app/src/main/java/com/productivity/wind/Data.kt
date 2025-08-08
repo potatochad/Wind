@@ -177,7 +177,10 @@ var Tests = ml(TestData())
 
 
 
-
+val trackedLists = listOf(
+        Dset("Bar.myList", "Tests"),
+        
+    )
 
 
 data class Dset(
@@ -188,74 +191,50 @@ data class Dset(
 object ListStorage {
 
     //RUNS ON start and restore
-    val trackedLists = listOf(
-        Dset("Bar.myList", "Tests"),
-        
-    )
-
-    fun initAll2(){
-        
-        init(Bar.myList, Tests)
-        /*
-        init(Bar.mylistttt, Teststrg)
-        init(Bar.myListok, Testsok)
-        // 100 more
-        */
-    
-    }
-
-
-
-
     fun initAll() {
-    val dataClass = Class.forName("com.productivity.wind.DataKt")
+        val dataClass = Class.forName("com.productivity.wind.DataKt")
+        for (x in trackedLists) {
+            try {
+                val jsonFieldName = x.toFrom.split(".").last()
+                val listFieldName = x.what
+                //log("🔍 Restoring $listFieldName from $jsonFieldName")
 
-    for (x in trackedLists) {
-        try {
-            val jsonFieldName = x.toFrom.split(".").last()
-            val listFieldName = x.what
+                val jsonProp = Settings::class.memberProperties
+                    .firstOrNull { it.name == jsonFieldName } as? KProperty1<Settings, *>
+                val json = jsonProp?.get(Bar) as? String
+                if (json.isNullOrBlank()) {
+                    log("⚠️ Skipping $listFieldName: JSON is blank")
+                    continue
+                }
+                val listField = dataClass.getDeclaredField(listFieldName)
+                listField.isAccessible = true
 
-            Vlog("🔍 Restoring $listFieldName from $jsonFieldName")
+                @Suppress("UNCHECKED_CAST")
+                val list = listField.get(null) as? SnapshotStateList<Any> ?: continue
+           
+                val genericType = listField.genericType
+                val listParamType = (genericType as? ParameterizedType)
+                    ?.actualTypeArguments
+                    ?.firstOrNull()
 
-            val jsonProp = Settings::class.memberProperties
-                .firstOrNull { it.name == jsonFieldName } as? KProperty1<Settings, *>
-            val json = jsonProp?.get(Bar) as? String
-            if (json.isNullOrBlank()) {
-                Vlog("⚠️ Skipping $listFieldName: JSON is blank")
-                continue
+                if (listParamType == null) {
+                    log("❌ Could not detect type for $listFieldName")
+                    continue
+                }
+
+                val type = TypeToken.getParameterized(List::class.java, listParamType).type
+                val loaded = gson.fromJson<List<*>>(json, type)
+                val typed = loaded as List<Any>
+
+                list.clear()
+                list.addAll(typed)
+                log("✅ Restored $listFieldName: ${typed.size} items")
+
+            } catch (e: Exception) {
+                log("❌ Exception for '${x.what}': ${e.message}")
             }
-
-            val listField = dataClass.getDeclaredField(listFieldName)
-            listField.isAccessible = true
-
-            @Suppress("UNCHECKED_CAST")
-            val list = listField.get(null) as? SnapshotStateList<Any> ?: continue
-
-            // 🔥 Get real type argument from field generic info
-            val genericType = listField.genericType
-            val listParamType = (genericType as? ParameterizedType)
-                ?.actualTypeArguments
-                ?.firstOrNull()
-
-            if (listParamType == null) {
-                Vlog("❌ Could not detect type for $listFieldName")
-                continue
-            }
-
-            val type = TypeToken.getParameterized(List::class.java, listParamType).type
-            val loaded = gson.fromJson<List<*>>(json, type)
-            val typed = loaded as List<Any>
-
-            list.clear()
-            list.addAll(typed)
-
-            Vlog("✅ Restored $listFieldName: ${typed.size} items")
-
-        } catch (e: Exception) {
-            Vlog("❌ Exception for '${x.what}': ${e.message}")
         }
     }
-}
 
 
 
@@ -308,37 +287,7 @@ object ListStorage {
         }
     }
 
-
-
-
-
     
-    @Suppress("UNCHECKED_CAST")
-fun initUntyped(json: String, list: SnapshotStateList<*>, type: Type) {
-    try {
-        if (json.isNotBlank()) {
-            val loaded = gson.fromJson<List<*>>(json, type)
-            val typed = loaded as List<Any>
-            (list as MutableList<Any>).clear()
-            list.addAll(typed)
-        }
-    } catch (e: Exception) {
-        Vlog("❌ Failed to parse JSON: ${e.message}")
-    }
-}
-
-
-    
-    inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
-        if (json.isNotBlank()) {
-            val type = getListType(list)
-            val loaded = gson.fromJson<MutableList<T>>(json, type)
-            list.clear()
-            list.addAll(loaded)
-        }
-    }
-
-
     
 }
 
