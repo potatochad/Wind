@@ -449,7 +449,7 @@ fun Menu() {
 @Composable
 fun Chill() {
 
-  if (Bar.showLogsIcon = true) {
+  if (Bar.showLogsIcon == true) {
           UI.SimpleIconButton(
                   onClick = { Global1.navController.navigate("Web") },
                   icon = Icons.Default.SportsEsports
