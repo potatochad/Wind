@@ -208,8 +208,6 @@ object ListStorage {
 
 
     fun initAll() {
-    Vlog("🚀 ListStorage.initAll() CALLED")
-
     val dataClass = Class.forName("com.productivity.wind.DataKt") // ✅ this must be exact file where `Tests` is declared
 
     for (x in trackedLists) {
@@ -245,10 +243,6 @@ object ListStorage {
                 continue
             }
 
-            if (list.isNotEmpty()) {
-                Vlog("⚠️ Skipping $listFieldName: Already has items")
-                continue
-            }
 
             val type = object : TypeToken<List<Any>>() {}.type
             val loaded = gson.fromJson<List<Any>>(json, type)
