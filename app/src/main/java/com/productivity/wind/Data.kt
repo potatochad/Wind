@@ -194,168 +194,79 @@ object ListStorage {
     }
 
 
-    fun init2(stateCommand: String) {
-    try {
-        val parts = stateCommand.split(",").map { it.trim() }
+    fun init2(InputString: String) {
+        val parts = InputString.split(",").map { it.trim() }
         if (parts.size != 2) {
-            log("❌ Format error: expected 'Object.property, ListName'")
-            return
-        }
-
-        val statePath = parts[0]
-        val listName = parts[1]
-
-        val clazz = Class.forName("com.productivity.wind.DataKt")
-        val field = clazz.declaredFields.firstOrNull { it.name == listName }
-        if (field == null) {
-            log("❌ Field '$listName' not found")
-            return
-        }
-
-        field.isAccessible = true
-        val listAny = field.get(null)
-        if (listAny == null) {
-            log("❌ Field '$listName' is null")
-            return
-        }
-
-        if (listAny !is SnapshotStateList<*>) {
-            log("❌ Field '$listName' is not a SnapshotStateList. It is: ${listAny::class.simpleName}")
-            return
-        }
-
-        @Suppress("UNCHECKED_CAST")
-        val list = listAny as SnapshotStateList<Any>
-
-        val json = statePath.split(".").let { (obj, prop) ->
-            try {
-                when (obj) {
-                    "Bar" -> Bar::class.memberProperties
-                        .firstOrNull { it.name == prop }
-                        ?.getter?.call(Bar) as? String ?: ""
-                    else -> {
-                        log("❌ Unknown object: '$obj'")
-                        ""
-                    }
-                }
-            } catch (e: Exception) {
-                log("❌ Failed to read property '$statePath': ${e.message}")
-                ""
+                Vlog("❌ Format error: expected 'Object.property, ListName'")
+                return
             }
-        }
 
+            val statePath = parts[0]   // e.g., Bar.myList
+            val listName = parts[1]    // e.g., Tests
+
+            //? 2.
+            val barResult = FindBar(statePath)
+            if (barResult == null) {
+                Vlog("❌ Failed to resolve state path: $statePath")
+                return
+            }
+
+            //? 1.
+            val list = FindVar(listName)
+            if (list == null) {
+                Vlog("❌ Failed to resolve list: $listName")
+                return
+            }
+
+            val instance = barResult.first
+            val stateProp = barResult.second
+
+
+            //? 3.
+        val json = stateProp.get(instance)
         if (json.isNotBlank()) {
-            try {
-                val type = object : TypeToken<MutableList<Any>>() {}.type
-                val loaded = gson.fromJson<MutableList<Any>>(json, type)
-                list.clear()
-                list.addAll(loaded)
-                //Tlog("✅ List '$listName' loaded with ${loaded.size} items")
-            } catch (e: Exception) {
-                log("❌ Failed to parse JSON: ${e.message}")
-            }
-        } else {
-            log("⚠️ JSON for '$statePath' is blank")
-        }
-
-    } catch (e: Exception) {
-        log("💥 Unhandled crash in init2: ${e.message}")
-    }
-}
-
-@Composable
-fun SSet2(stateCommand: String) {
-    LaunchedEffect(Unit) {
-        val parts = stateCommand.split(",").map { it.trim() }
-        if (parts.size != 2) {
-            Vlog("❌ Format error: expected 'Object.property, ListName'")
-            return@LaunchedEffect
-        }
-
-        val statePath = parts[0]   // e.g., Bar.myList
-        val listName = parts[1]    // e.g., Tests
-
-        val barResult = FindBar(statePath)
-        if (barResult == null) {
-            Vlog("❌ Failed to resolve state path: $statePath")
-            return@LaunchedEffect
-        }
-
-        val listResult = FindVar(listName)
-        if (listResult == null) {
-            Vlog("❌ Failed to resolve list: $listName")
-            return@LaunchedEffect
-        }
-
-        val instance = barResult.first
-        val stateProp = barResult.second
-
-        while (true) {
-            stateProp.set(instance, gson.toJson(listResult))
-            delay(1_000L)
+            val type = getListType(list)
+            val loaded = gson.fromJson<List<*>>(json, type)
+            val typed = loaded as? List<Any> ?: return
+            list.clear()
+            list.addAll(typed)
         }
     }
-}
-
 
     @Composable
-    fun SSet3(stateCommand: String) {
+    fun SSet2(stateCommand: String) {
+
         LaunchedEffect(Unit) {
             val parts = stateCommand.split(",").map { it.trim() }
             if (parts.size != 2) {
                 Vlog("❌ Format error: expected 'Object.property, ListName'")
                 return@LaunchedEffect
             }
-            val statePath = parts[0]       // e.g., "Bar.myList"
-            val listName = parts[1]        // e.g., "Tests"
-            val stateParts = statePath.split(".")
-            if (stateParts.size != 2) {
-                Vlog("❌ Invalid state path: '$statePath'")
+
+            val statePath = parts[0]   // e.g., Bar.myList
+            val listName = parts[1]    // e.g., Tests
+
+            val barResult = FindBar(statePath)
+            if (barResult == null) {
+                Vlog("❌ Failed to resolve state path: $statePath")
                 return@LaunchedEffect
             }
-            val objectName = stateParts[0]
-            val propertyName = stateParts[1]
-            val instance: Any = when (objectName) {
-                "Bar" -> Bar
-                else -> {
-                    Vlog("❌ Unknown object: '$objectName'")
-                    return@LaunchedEffect
-                }
-            }
-            // Find the state property
-            val stateProp = instance::class.memberProperties
-                .filterIsInstance<KMutableProperty1<Any, *>>()
-                .firstOrNull { it.name == propertyName } as? KMutableProperty1<Any, String>
-            ?: run {
-                Vlog("❌ Property '$propertyName' not found in object '$objectName'")
+
+            val listResult = FindVar(listName)
+            if (listResult == null) {
+                Vlog("❌ Failed to resolve list: $listName")
                 return@LaunchedEffect
             }
-            // Find the list
-            val clazz = Class.forName("com.productivity.wind.DataKt")
-            
-            val field = clazz.declaredFields.firstOrNull { it.name == listName }
-            field?.isAccessible = true
-            
-            val listProp = field?.get(null) as? SnapshotStateList<Any>
-            ?: run {
-                Vlog("❌ List '$listName' not found in top-level vars")
-                return@LaunchedEffect
-            }
-            
+
+            val instance = barResult.first
+            val stateProp = barResult.second
+
             while (true) {
-                stateProp.set(instance, gson.toJson(listProp))
+                stateProp.set(instance, gson.toJson(listResult))
                 delay(1_000L)
             }
         }
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -373,17 +284,6 @@ fun SSet2(stateCommand: String) {
         }
     }
 
-    @Composable
-    fun <T> SSet(jsonRef: KMutableProperty0<String>, list: SnapshotStateList<T>) {
-        LaunchedEffect(Unit) {
-            while (true) {
-                jsonRef.set(gson.toJson(list))
-                delay(1_000L)
-            }
-        }
-    }
-
-    
 
     
 }
