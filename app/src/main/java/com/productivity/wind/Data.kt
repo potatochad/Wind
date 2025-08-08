@@ -150,26 +150,15 @@ class Settings {
 
     //region LISTS
     
-    var myList by m("")
+    var ListApps by m("")
     
 }
 //m-mutable state, ml- mutablelistof
 
-data class TestData(
-    var id: Str = Id(),
-    var name: Str = "",
-    var done: Bool = false,
-    var packageName: Str = "",
-    var Block : Bool = false,
-    var TimeSpent : Int = 0,
-)
-var Tests = ml(TestData())
-
-
-
+var apps = ml(DataApps())
 
 val trackedLists = listOf(
-        Dset("Bar.myList", "Tests"),
+        Dset("Bar.ListApps", "apps"),
         
     )
 
@@ -185,15 +174,6 @@ data class DataApps(
     var Block : Bool = false,
     var TimeSpent : Int = 0,
 )
-data class DataCopyPastes(
-    var id: Str = Id(),
-    var text: Str = "Copy paste text",
-    var done: Bool = false,
-    var HowManyDones : Int = 0,
-)
-var apps = mutableStateListOf<DataApps>()
-var CopyPastes = mutableStateListOf<DataCopyPastes>()
-
 
 
 
