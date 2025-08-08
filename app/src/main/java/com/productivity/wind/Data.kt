@@ -385,6 +385,7 @@ fun EditPopUp(show: MutableState<Boolean>) {
         onCancel = { TemporaryTargetText = Bar.targetText }
     )
 }
+
 @Composable
 fun G_EditPopUp(show: MutableState<Boolean>) {
     var TemporaryTargetText by remember { mutableStateOf("") }
@@ -409,6 +410,7 @@ fun G_EditPopUp(show: MutableState<Boolean>) {
         onCancel = { TemporaryTargetText = Bar.G_targetText }
     )
 }
+
 @Composable
 fun EnablePermissionsPopup(show: MutableState<Boolean>) {
     LazyPopup(show = show,
