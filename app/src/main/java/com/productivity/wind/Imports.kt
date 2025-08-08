@@ -102,31 +102,33 @@ fun FindVar(listName: String, where: String = "com.productivity.wind.DataKt"): S
         null
     }
 }
+
 fun FindBar(statePath: String): Pair<Any, KMutableProperty1<Any, String>>? {
-    val parts = statePath.split(".")
-    if (parts.size != 2) {
-        Vlog("❌ Invalid state path: '$statePath'")
-        return null
-    }
-    val (objectName, propertyName) = parts
-    val instance: Any = when (objectName) {
-        "Bar" -> Bar
-        else -> {
-            Vlog("❌ Unknown object: '$objectName'")
-            return null
-        }
-    }
+    val parts = statePath.split(".")
+    if (parts.size != 2) {
+        Vlog("❌ Invalid state path: '$statePath'")
+        return null
+    }
+    val (objectName, propertyName) = parts
+    val instance: Any = when (objectName) {
+        "Bar" -> Bar
+        else -> {
+            Vlog("❌ Unknown object: '$objectName'")
+            return null
+        }
+    }
 
-    val stateProp = instance::class.memberProperties
-        .filterIsInstance<KMutableProperty1<Any, *>>()
-        .firstOrNull { it.name == propertyName } as? KMutableProperty1<Any, String>
-        ?: run {
-            Vlog("❌ Property '$propertyName' not found in object '$objectName'")
-            return null
-        }
+    val stateProp = instance::class.memberProperties
+        .filterIsInstance<KMutableProperty1<Any, *>>()
+        .firstOrNull { it.name == propertyName } as? KMutableProperty1<Any, String>
+        ?: run {
+            Vlog("❌ Property '$propertyName' not found in object '$objectName'")
+            return null
+        }
 
-    return instance to stateProp
+    return instance to stateProp
 }
+
 
 
 
