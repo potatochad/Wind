@@ -181,7 +181,7 @@ object ListStorage {
     //RUNS ON start and restore
     fun initAll(){
         
-        init(Bar.myList, Tests)
+        init2("Bar.myList, Tests")
     
     }
     @Composable
