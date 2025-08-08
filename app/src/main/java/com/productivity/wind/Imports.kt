@@ -123,7 +123,9 @@ fun Vlog(msg: String, special: String = "none", delayLevel: Int = 0) {
 }
 fun Tlog(msg: String) {
     val context = Global1.context
-    val file = File(context.filesDir, "vlog.txt")
+    val dir = context?.filesDir ?: return  
+
+    val file = File(dir, "vlog.txt")
     val fullMsg = "[${System.currentTimeMillis()}] $msg\n"
 
     try {
@@ -134,9 +136,8 @@ fun Tlog(msg: String) {
         }
         lines.add(fullMsg.trim())
         file.writeText(lines.joinToString("\n"))
-    } catch (_: Exception) {
-        // Optional: print to logcat for debugging
-        // Log.e("❌ Error writing to vlog.txt", e)
+    } catch (e: Exception) {
+        Log.e("Tlog", "❌ Error writing to vlog.txt", e)
     }
 }
 
