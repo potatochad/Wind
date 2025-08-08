@@ -130,7 +130,6 @@ fun getLogs(): String {
 
         // Optional: filter only your app logs
         logs.lines()
-            .filter { it.contains("com.productivity.wind") }
             .joinToString("\n")
     } catch (e: Exception) {
         "❌ Failed to read logs: ${e.message}"
