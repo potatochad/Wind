@@ -73,6 +73,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import java.io.*
+import androidx.compose.foundation.*
 
 
 //region Settings
