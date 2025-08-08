@@ -121,6 +121,7 @@ class Settings {
     var halfWidth by m(0.dp)
     var ShowMenu by m(false)
 
+    var showLogsIcon by m(false)
 
     //endregion MISALANIOUS
 
