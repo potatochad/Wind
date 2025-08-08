@@ -121,25 +121,19 @@ fun Vlog(msg: String, special: String = "none", delayLevel: Int = 0) {
         toast.show()
     }, delayMs)
 }
-fun Tlog(msg: String) {
-    val context = Global1.context
-    val dir = context?.filesDir ?: return  
 
-    val file = File(dir, "vlog.txt")
-    val now = System.currentTimeMillis()
-	val time = SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault()).format(Date(now))
-	val fullMsg = "[$time] $msg\n"
+fun getLogs(): String {
+    return try {
+        val process = Runtime.getRuntime().exec("logcat -d")
+        val reader = process.inputStream.bufferedReader()
+        val logs = reader.readText()
 
-    try {
-        if (!file.exists()) file.createNewFile()
-        val lines = file.readLines().toMutableList()
-        if (lines.size >= 200) {
-            lines.subList(0, lines.size - 199).clear()
-        }
-        lines.add(fullMsg.trim())
-        file.writeText(lines.joinToString("\n"))
+        // Optional: filter only your app logs
+        logs.lines()
+            .filter { it.contains("com.productivity.wind") }
+            .joinToString("\n")
     } catch (e: Exception) {
-        Log.e("Tlog", "❌ Error writing to vlog.txt", e)
+        "❌ Failed to read logs: ${e.message}"
     }
 }
 
