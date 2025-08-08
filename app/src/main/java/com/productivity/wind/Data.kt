@@ -208,7 +208,7 @@ object ListStorage {
 
 
     fun initAll() {
-    val dataClass = Class.forName("com.productivity.wind.DataKt") // ✅ this must be exact file where `Tests` is declared
+    val dataClass = Class.forName("com.productivity.wind.DataKt")
 
     for (x in trackedLists) {
         try {
@@ -217,46 +217,46 @@ object ListStorage {
 
             Vlog("🔍 Restoring $listFieldName from $jsonFieldName")
 
-            // Get JSON from Bar
             val jsonProp = Settings::class.memberProperties
                 .firstOrNull { it.name == jsonFieldName } as? KProperty1<Settings, *>
-
-            if (jsonProp == null) {
-                Vlog("❌ No JSON field found: $jsonFieldName")
-                continue
-            }
-
-            val json = jsonProp.get(Bar) as? String
+            val json = jsonProp?.get(Bar) as? String
             if (json.isNullOrBlank()) {
                 Vlog("⚠️ Skipping $listFieldName: JSON is blank")
                 continue
             }
 
-            // Get actual list (e.g. Tests)
             val listField = dataClass.getDeclaredField(listFieldName)
             listField.isAccessible = true
 
             @Suppress("UNCHECKED_CAST")
-            val list = listField.get(null) as? SnapshotStateList<Any>
-            if (list == null) {
-                Vlog("❌ List '$listFieldName' is null or wrong type")
+            val list = listField.get(null) as? SnapshotStateList<Any> ?: continue
+
+            // 🔥 Get real type argument from field generic info
+            val genericType = listField.genericType
+            val listParamType = (genericType as? ParameterizedType)
+                ?.actualTypeArguments
+                ?.firstOrNull()
+
+            if (listParamType == null) {
+                Vlog("❌ Could not detect type for $listFieldName")
                 continue
             }
 
-
-            val type = object : TypeToken<List<Any>>() {}.type
-            val loaded = gson.fromJson<List<Any>>(json, type)
+            val type = TypeToken.getParameterized(List::class.java, listParamType).type
+            val loaded = gson.fromJson<List<*>>(json, type)
+            val typed = loaded as List<Any>
 
             list.clear()
-            list.addAll(loaded)
+            list.addAll(typed)
 
-            Vlog("✅ Restored $listFieldName: ${loaded.size} items")
+            Vlog("✅ Restored $listFieldName: ${typed.size} items")
 
         } catch (e: Exception) {
             Vlog("❌ Exception for '${x.what}': ${e.message}")
         }
     }
 }
+
 
 
 
