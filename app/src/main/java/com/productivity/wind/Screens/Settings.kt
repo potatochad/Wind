@@ -176,12 +176,6 @@ fun SettingsScreen() {
         SettingItem(
                 BigIcon = Icons.Filled.Tune,
                 BigIconColor = Color(0xFFB0BEC5),
-                title = "Logs",
-                onClick = { Global1.navController.navigate("LogsScreen") }
-        ) 
-        SettingItem(
-                BigIcon = Icons.Filled.Tune,
-                BigIconColor = Color(0xFFB0BEC5),
                 title = "Other",
                 onClick = { Global1.navController.navigate("SettingsOtherScreen") }
         ) 
@@ -205,6 +199,12 @@ fun SettingsOtherScreen() {
                     UI.OnOffSwitch(isOn = Bar.showUsageIcon, onToggle = { Bar.showUsageIcon = it }) 
                }
             )
+        SettingItem(
+                BigIcon = Icons.Filled.ListAlt,
+                BigIconColor = Color(0xFF90A4AE),
+                title = "Logs",
+                onClick = { Global1.navController.navigate("LogsScreen") }
+        ) 
 
 
         
@@ -339,7 +339,15 @@ fun SettingsP_Screen()= NoLagCompose {
 
 @Composable
 fun LogsScreen() {
-    SettingsScreen(titleContent = { Text("Logs") }) {
+    SettingsScreen(
+        titleContent = { 
+            
+            Text("Logs") 
+
+            Spacer(modifier = Modifier.fillMaxWidth())
+
+            UI.CopyIcon(logText)
+        }) {
         val context = LocalContext.current
         var logText by remember { mutableStateOf("Loading...") }
         
