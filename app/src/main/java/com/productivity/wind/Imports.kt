@@ -69,6 +69,9 @@ import kotlin.math.min
 import android.content.ClipData
 import android.content.ClipboardManager
 
+
+
+
 //region Vals/ Vars FOR DATA
 
 val gson = Gson()
@@ -127,10 +130,6 @@ fun FindBar(statePath: String): android.util.Pair<Any, KMutableProperty1<Any, St
 
     return android.util.Pair(instance, stateProp) // 👈 THIS FIXES IT
 }
-
-
-
-
 
 //endregion Vals/ Vars FOR DATA
 
