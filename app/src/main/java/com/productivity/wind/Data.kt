@@ -176,63 +176,47 @@ var Tests = ml(TestData())
 
 
 
+
+
+
+
+data class Dset(
+    val toFrom: String,
+    val what: String
+)
+
 object ListStorage {
 
     //RUNS ON start and restore
+    val trackedLists = listOf(
+        DSet("Bar.myList", "Tests"),
+        
+    )
+
     fun initAll(){
         
-        init2("Bar.myList, Tests")
+        init(Bar.myList, Tests)
+        /*
+        init(Bar.mylistttt, Teststrg)
+        init(Bar.myListok, Testsok)
+        // 100 more
+        */
     
     }
     @Composable
     fun SynchAll(){
-        
-        SSet2("Bar.myList, Tests")
+        for (x in trackedLists) {
+            SSet2(x.toFrom + ", " + x.what)
+        }
+        //SSet2("Bar.myList, Tests")
 
         if (Tests.isEmpty()) Tests.add(TestData())
 
     }
 
 
-    fun init2(InputString: String) {
-        val parts = InputString.split(",").map { it.trim() }
-        if (parts.size != 2) {
-                Vlog("❌ Format error: expected 'Object.property, ListName'")
-                return
-            }
 
-            val statePath = parts[0]   // e.g., Bar.myList
-            val listName = parts[1]    // e.g., Tests
-
-            //? 2.
-            val barResult = FindBar(statePath)
-            if (barResult == null) {
-                Vlog("❌ Failed to resolve state path: $statePath")
-                return
-            }
-
-            //? 1.
-            val list = FindVar(listName)
-            if (list == null) {
-                Vlog("❌ Failed to resolve list: $listName")
-                return
-            }
-
-            val instance = barResult.first
-            val stateProp = barResult.second
-
-
-            //? 3.
-        val json = stateProp.get(instance)
-        if (json.isNotBlank()) {
-            val type = getListType(list)
-            val loaded = gson.fromJson<List<*>>(json, type)
-            val typed = loaded as? List<Any> ?: return
-            list.clear()
-            list.addAll(typed)
-        }
-    }
-
+    
     @Composable
     fun SSet2(stateCommand: String) {
 
