@@ -130,19 +130,10 @@ class Settings {
     //region PERMISSIONS
 
     var NotificationPermission by m(false)
-    var NotificationP_Description by m(
-        "Keeps the app running in the background so you don’t miss any tracking or point updates."
-    )
 
     var OptimizationExclusionPermission by m(false)
-    var OptimizationExclusionP_Description by m(
-        "Stops your phone’s battery saver from shutting down the background service. This ensures the app runs smoothly."
-    )
 
     var UsageStatsPermission by m(false)
-    var UsageStatsP_Description by m(
-        "Lets the app see which apps you open. Used only to track apps you selected, to help manage your focus."
-    )
     
     //endregion
 
