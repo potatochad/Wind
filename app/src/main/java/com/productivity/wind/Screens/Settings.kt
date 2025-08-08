@@ -339,6 +339,20 @@ fun SettingsP_Screen()= NoLagCompose {
 
 @Composable
 fun LogsScreen() {
+    
+    val context = LocalContext.current
+    var logText by remember { mutableStateOf("Loading...") }
+        
+    LaunchedEffect(Unit) {
+        val file = File(context.filesDir, "vlog.txt")
+        logText = try {
+        file.readText()
+        } catch (e: Exception) {
+            "❌ Error reading logs: ${e.message}"
+        }
+
+    }
+        
     SettingsScreen(
         titleContent = { 
             
@@ -348,18 +362,7 @@ fun LogsScreen() {
 
             UI.CopyIcon(logText)
         }) {
-        val context = LocalContext.current
-        var logText by remember { mutableStateOf("Loading...") }
         
-        LaunchedEffect(Unit) {
-            val file = File(context.filesDir, "vlog.txt")
-            logText = try {
-            file.readText()
-            } catch (e: Exception) {
-                "❌ Error reading logs: ${e.message}"
-            }
-
-        }
         Text(text = logText)
     }
 }
