@@ -354,13 +354,15 @@ fun LogsScreen() {
     }
         
     SettingsScreen(
-        titleContent = { 
-            
-            Text("Logs") 
-
-            Spacer(modifier = Modifier.weight(1f))
-            
-            UI.CopyIcon(logText)
+        titleContent = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Logs")
+                Spacer(modifier = Modifier.weight(1f))
+                UI.CopyIcon(logText)
+            }
         }) {
         
         Text(text = logText)
