@@ -347,17 +347,13 @@ fun SettingsP_Screen()= NoLagCompose {
 @Composable
 fun LogsScreen() {
     
-    val context = LocalContext.current
-    var logText by remember { mutableStateOf("Loading...") }
-        
-    LaunchedEffect(Unit) {
-        val file = File(context.filesDir, "vlog.txt")
-        logText = try {
-        file.readText()
-        } catch (e: Exception) {
-            "❌ Error reading logs: ${e.message}"
-        }
+    var logText by remember { m("") }
 
+    LaunchedEffect(Unit) {
+        while (true) {
+            logText = getLogs()
+            delay(1_000)
+        }
     }
         
     SettingsScreen(
