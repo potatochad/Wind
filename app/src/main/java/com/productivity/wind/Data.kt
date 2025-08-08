@@ -198,7 +198,7 @@ object ListStorage {
     try {
         val parts = stateCommand.split(",").map { it.trim() }
         if (parts.size != 2) {
-            Tlog("❌ Format error: expected 'Object.property, ListName'")
+            log("❌ Format error: expected 'Object.property, ListName'")
             return
         }
 
@@ -208,19 +208,19 @@ object ListStorage {
         val clazz = Class.forName("com.productivity.wind.DataKt")
         val field = clazz.declaredFields.firstOrNull { it.name == listName }
         if (field == null) {
-            Tlog("❌ Field '$listName' not found")
+            log("❌ Field '$listName' not found")
             return
         }
 
         field.isAccessible = true
         val listAny = field.get(null)
         if (listAny == null) {
-            Tlog("❌ Field '$listName' is null")
+            log("❌ Field '$listName' is null")
             return
         }
 
         if (listAny !is SnapshotStateList<*>) {
-            Tlog("❌ Field '$listName' is not a SnapshotStateList. It is: ${listAny::class.simpleName}")
+            log("❌ Field '$listName' is not a SnapshotStateList. It is: ${listAny::class.simpleName}")
             return
         }
 
@@ -239,7 +239,7 @@ object ListStorage {
                     }
                 }
             } catch (e: Exception) {
-                Tlog("❌ Failed to read property '$statePath': ${e.message}")
+                log("❌ Failed to read property '$statePath': ${e.message}")
                 ""
             }
         }
@@ -250,16 +250,16 @@ object ListStorage {
                 val loaded = gson.fromJson<MutableList<Any>>(json, type)
                 list.clear()
                 list.addAll(loaded)
-                Tlog("✅ List '$listName' loaded with ${loaded.size} items")
+                //Tlog("✅ List '$listName' loaded with ${loaded.size} items")
             } catch (e: Exception) {
-                Tlog("❌ Failed to parse JSON: ${e.message}")
+                log("❌ Failed to parse JSON: ${e.message}")
             }
         } else {
-            Tlog("⚠️ JSON for '$statePath' is blank")
+            log("⚠️ JSON for '$statePath' is blank")
         }
 
     } catch (e: Exception) {
-        Tlog("💥 Unhandled crash in init2: ${e.message}")
+        log("💥 Unhandled crash in init2: ${e.message}")
     }
 }
 
