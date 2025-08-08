@@ -287,7 +287,8 @@ fun SSet2(stateCommand: String) {
             return@LaunchedEffect
         }
 
-        val (instance, stateProp) = barResult
+        val instance = barResult.first
+        val stateProp = barResult.second
 
         while (true) {
             stateProp.set(instance, gson.toJson(listResult))
