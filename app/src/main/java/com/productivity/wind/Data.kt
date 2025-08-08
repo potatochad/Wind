@@ -292,17 +292,20 @@ object ListStorage {
 
 
     
-    fun <T> initUntyped(json: String, list: SnapshotStateList<T>, type: Type) {
+    @Suppress("UNCHECKED_CAST")
+fun initUntyped(json: String, list: SnapshotStateList<*>, type: Type) {
     try {
         if (json.isNotBlank()) {
-            val loaded = gson.fromJson<List<T>>(json, type)
-            list.clear()
-            list.addAll(loaded)
+            val loaded = gson.fromJson<List<*>>(json, type)
+            val typed = loaded as List<Any>
+            (list as MutableList<Any>).clear()
+            list.addAll(typed)
         }
     } catch (e: Exception) {
         Vlog("❌ Failed to parse JSON: ${e.message}")
     }
 }
+
 
     
     inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
