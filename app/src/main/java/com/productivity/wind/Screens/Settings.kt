@@ -368,7 +368,17 @@ fun LogsScreen() {
             }
         }) {
         
-        Text(text = logText)
+        
+        Text(
+            text = logText,
+            modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+                .fillMaxWidth(),
+            softWrap = false,
+            maxLines = Int.MAX_VALUE
+        )
+
+        
     }
 }
 
