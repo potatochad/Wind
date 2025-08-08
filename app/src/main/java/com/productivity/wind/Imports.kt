@@ -103,7 +103,7 @@ fun FindVar(listName: String, where: String = "com.productivity.wind.DataKt"): S
     }
 }
 
-fun FindBar(statePath: String): Pair<Any, KMutableProperty1<Any, String>>? {
+fun FindBar(statePath: String): android.util.Pair<Any, KMutableProperty1<Any, String>>? {
     val parts = statePath.split(".")
     if (parts.size != 2) {
         Vlog("❌ Invalid state path: '$statePath'")
