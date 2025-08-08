@@ -109,6 +109,7 @@ fun FindBar(statePath: String): android.util.Pair<Any, KMutableProperty1<Any, St
         Vlog("❌ Invalid state path: '$statePath'")
         return null
     }
+
     val (objectName, propertyName) = parts
     val instance: Any = when (objectName) {
         "Bar" -> Bar
@@ -126,8 +127,9 @@ fun FindBar(statePath: String): android.util.Pair<Any, KMutableProperty1<Any, St
             return null
         }
 
-    return instance to stateProp
+    return android.util.Pair(instance, stateProp) // 👈 THIS FIXES IT
 }
+
 
 
 
