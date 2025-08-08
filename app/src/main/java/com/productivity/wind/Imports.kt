@@ -122,20 +122,24 @@ fun Vlog(msg: String, special: String = "none", delayLevel: Int = 0) {
     }, delayMs)
 }
 fun Tlog(msg: String) {
-
     val context = Global1.context
     val file = File(context.filesDir, "vlog.txt")
     val fullMsg = "[${System.currentTimeMillis()}] $msg\n"
 
     try {
-        val lines = if (file.exists()) file.readLines().toMutableList() else mutableListOf()
+        if (!file.exists()) file.createNewFile()
+        val lines = file.readLines().toMutableList()
         if (lines.size >= 200) {
             lines.subList(0, lines.size - 199).clear()
         }
         lines.add(fullMsg.trim())
         file.writeText(lines.joinToString("\n"))
-    } catch (_: Exception) {}
+    } catch (_: Exception) {
+        // Optional: print to logcat for debugging
+        // Log.e("❌ Error writing to vlog.txt", e)
+    }
 }
+
 
 
 
