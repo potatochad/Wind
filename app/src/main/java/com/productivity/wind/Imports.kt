@@ -88,6 +88,47 @@ inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
     return object : TypeToken<MutableList<T>>() {}.type
 }
 
+fun FindVar(listName: String, where: String = "com.productivity.wind.DataKt"): SnapshotStateList<Any>? {
+    return try {
+        val clazz = Class.forName(where)
+        val field = clazz.declaredFields.firstOrNull { it.name == listName }
+        field?.isAccessible = true
+        field?.get(null) as? SnapshotStateList<Any> ?: run {
+            Vlog("❌ List '$listName' not found")
+            null
+        }
+    } catch (e: Exception) {
+        Vlog("❌ Error resolving list '$listName': ${e.message}")
+        null
+    }
+}
+fun FindBar(statePath: String): Pair<Any, KMutableProperty1<Any, String>>? {
+    val parts = statePath.split(".")
+    if (parts.size != 2) {
+        Vlog("❌ Invalid state path: '$statePath'")
+        return null
+    }
+    val (objectName, propertyName) = parts
+    val instance: Any = when (objectName) {
+        "Bar" -> Bar
+        else -> {
+            Vlog("❌ Unknown object: '$objectName'")
+            return null
+        }
+    }
+
+    val stateProp = instance::class.memberProperties
+        .filterIsInstance<KMutableProperty1<Any, *>>()
+        .firstOrNull { it.name == propertyName } as? KMutableProperty1<Any, String>
+        ?: run {
+            Vlog("❌ Property '$propertyName' not found in object '$objectName'")
+            return null
+        }
+
+    return instance to stateProp
+}
+
+
 
 //endregion Vals/ Vars FOR DATA
 
