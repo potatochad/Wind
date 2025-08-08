@@ -181,7 +181,7 @@ object ListStorage {
     //RUNS ON start and restore
     fun initAll(){
         
-        init2("Bar.myList, Tests")
+        init("Bar.myList, Tests")
     
     }
     @Composable
@@ -263,10 +263,42 @@ object ListStorage {
     }
 }
 
+@Composable
+fun SSet2(stateCommand: String) {
+    LaunchedEffect(Unit) {
+        val parts = stateCommand.split(",").map { it.trim() }
+        if (parts.size != 2) {
+            Vlog("❌ Format error: expected 'Object.property, ListName'")
+            return@LaunchedEffect
+        }
+
+        val statePath = parts[0]   // e.g., Bar.myList
+        val listName = parts[1]    // e.g., Tests
+
+        val barResult = FindBar(statePath)
+        if (barResult == null) {
+            Vlog("❌ Failed to resolve state path: $statePath")
+            return@LaunchedEffect
+        }
+
+        val listResult = FindVar(listName)
+        if (listResult == null) {
+            Vlog("❌ Failed to resolve list: $listName")
+            return@LaunchedEffect
+        }
+
+        val (instance, stateProp) = barResult
+
+        while (true) {
+            stateProp.set(instance, gson.toJson(listResult))
+            delay(1_000L)
+        }
+    }
+}
 
 
     @Composable
-    fun SSet2(stateCommand: String) {
+    fun SSet3(stateCommand: String) {
         LaunchedEffect(Unit) {
             val parts = stateCommand.split(",").map { it.trim() }
             if (parts.size != 2) {
