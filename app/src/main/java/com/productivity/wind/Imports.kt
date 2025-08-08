@@ -68,6 +68,7 @@ import java.io.File
 import kotlin.math.min
 import android.content.ClipData
 import android.content.ClipboardManager
+import java.lang.reflect.ParameterizedType
 
 
 
