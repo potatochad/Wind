@@ -346,7 +346,7 @@ fun SettingsP_Screen()= NoLagCompose {
 
 
 @Composable
-fun LogsScreen() {
+fun LogsScreen()= NoLagCompose {
     
     var logText by remember { m("") }
 
