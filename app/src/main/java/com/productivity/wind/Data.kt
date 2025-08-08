@@ -193,7 +193,7 @@ object ListStorage {
         
     )
 
-    fun initAll(){
+    fun initAll2(){
         
         init(Bar.myList, Tests)
         /*
@@ -203,12 +203,42 @@ object ListStorage {
         */
     
     }
+
+
+
+
+    fun initAll() {
+    val dataClass = Class.forName("com.productivity.wind.DataKt") // <- 🔁 change this to your actual file with `Tests`
+
+    for (x in trackedLists) {
+        try {
+            val barFieldName = x.toFrom.split(".").last() // "myList"
+            val listFieldName = x.what // "Tests"
+
+            val jsonProp = Settings::class.memberProperties.firstOrNull { it.name == barFieldName } as? KProperty1<Settings, *>
+            val jsonValue = jsonProp?.get(Bar) as? String ?: continue
+
+            val listField = dataClass.getDeclaredField(listFieldName)
+            listField.isAccessible = true
+            val list = listField.get(null) as? MutableList<Any> ?: continue
+
+            if (jsonValue.isNotBlank() && list.isEmpty()) {
+                val type = getListType(list)
+                val loaded = gson.fromJson<List<Any>>(jsonValue, type)
+                list.addAll(loaded)
+            }
+
+        } catch (e: Exception) {
+            Vlog("❌ Failed to init list '${x.what}': ${e.message}")
+        }
+    }
+}
+
     @Composable
     fun SynchAll(){
         for (x in trackedLists) {
             SSet2(x.toFrom + ", " + x.what)
         }
-        //SSet2("Bar.myList, Tests")
 
         if (Tests.isEmpty()) Tests.add(TestData())
 
