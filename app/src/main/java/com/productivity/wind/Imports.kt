@@ -399,8 +399,6 @@ object ListStorage {
             SSet2(x.toFrom + ", " + x.what)
         }
 
-        if (Tests.isEmpty()) Tests.add(TestData())
-
     }
 
 
