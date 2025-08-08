@@ -299,8 +299,10 @@ object ListStorage {
             }
             // Find the list
             val clazz = Class.forName("com.productivity.wind.DataKt")
+            
             val field = clazz.declaredFields.firstOrNull { it.name == listName }
             field?.isAccessible = true
+            
             val listProp = field?.get(null) as? SnapshotStateList<Any>
             ?: run {
                 Vlog("❌ List '$listName' not found in top-level vars")
