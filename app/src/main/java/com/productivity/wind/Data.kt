@@ -64,6 +64,24 @@ import java.lang.reflect.*
 
 
 class Settings {
+
+
+    private val data = mutableMapOf<String, MutableState<Any>>()
+
+    fun <T : Any> add(key: String, value: T) {
+        data[key] = mutableStateOf(value)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> get(key: String): MutableState<T>? {
+        return data[key] as? MutableState<T>
+    }
+
+
+
+
+
+    
     var funTime by m(0)
     //Disipline points
     var Dpoints by m(0)
