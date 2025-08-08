@@ -682,6 +682,7 @@ fun AppStart() {
     
     
     ListStorage.SynchAll()
+    Tlog("Initializing data")
     
     
 }
