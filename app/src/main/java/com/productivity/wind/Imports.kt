@@ -66,8 +66,6 @@ import java.lang.reflect.Type
 import kotlin.collections.*
 import java.io.File
 import kotlin.math.min
-
-
 import android.content.ClipData
 import android.content.ClipboardManager
 
@@ -307,7 +305,7 @@ object SettingsSaved {
             }
             else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
         }
-	ListStorage.initAll()
+	    ListStorage.initAll()
     }
     fun initFromFile(map: Map<String, String>) {
     Settings::class.memberProperties.forEach { barIDK ->
@@ -384,7 +382,7 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
                     SettingsSaved.initFromFile(fileMap)
                 } catch (e: Exception) {
                     log("Restore failed: ${e.message}", "bad")
-                    Vlog("Restore failed: ${e.message}")
+                    //Vlog("Restore failed: ${e.message}")
                 }
             }
         }
