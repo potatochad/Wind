@@ -208,26 +208,28 @@ object ListStorage {
 
 
     fun initAll() {
-    val dataClass = Class.forName("com.productivity.wind.DataKt") // <- 🔁 change this to your actual file with `Tests`
+    val dataClass = Class.forName("com.productivity.wind.DataKt") // <- Replace with actual file name if needed
 
     for (x in trackedLists) {
         try {
-            val barFieldName = x.toFrom.split(".").last() // "myList"
-            val listFieldName = x.what // "Tests"
+            val barFieldName = x.toFrom.split(".").last() // e.g. "myList"
+            val listFieldName = x.what // e.g. "Tests"
 
-            val jsonProp = Settings::class.memberProperties.firstOrNull { it.name == barFieldName } as? KProperty1<Settings, *>
+            // Get JSON string from Bar.myList
+            val jsonProp = Settings::class.memberProperties
+                .firstOrNull { it.name == barFieldName } as? KProperty1<Settings, *>
             val jsonValue = jsonProp?.get(Bar) as? String ?: continue
 
+            // Get actual list variable (e.g. Tests)
             val listField = dataClass.getDeclaredField(listFieldName)
             listField.isAccessible = true
-            
+
             @Suppress("UNCHECKED_CAST")
             val list = listField.get(null) as? SnapshotStateList<Any> ?: continue
 
             if (jsonValue.isNotBlank() && list.isEmpty()) {
                 val type = getListType(list)
-                val loaded = gson.fromJson<List<Any>>(jsonValue, type)
-                list.addAll(loaded)
+                initUntyped(jsonValue, list, type)
             }
 
         } catch (e: Exception) {
@@ -235,6 +237,7 @@ object ListStorage {
         }
     }
 }
+
 
     @Composable
     fun SynchAll(){
@@ -289,7 +292,8 @@ object ListStorage {
 
 
     
-    
+    fun <T> initUntyped(json: String, list: SnapshotStateList<T>, type: Type)
+
     
     inline fun <reified T> init(json: String, list: SnapshotStateList<T>) {
         if (json.isNotBlank()) {
