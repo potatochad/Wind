@@ -208,35 +208,62 @@ object ListStorage {
 
 
     fun initAll() {
-    val dataClass = Class.forName("com.productivity.wind.DataKt") // <- Replace with actual file name if needed
+    Vlog("🚀 ListStorage.initAll() CALLED")
+
+    val dataClass = Class.forName("com.productivity.wind.DataKt") // ✅ this must be exact file where `Tests` is declared
 
     for (x in trackedLists) {
         try {
-            val barFieldName = x.toFrom.split(".").last() // e.g. "myList"
-            val listFieldName = x.what // e.g. "Tests"
+            val jsonFieldName = x.toFrom.split(".").last()
+            val listFieldName = x.what
 
-            // Get JSON string from Bar.myList
+            Vlog("🔍 Restoring $listFieldName from $jsonFieldName")
+
+            // Get JSON from Bar
             val jsonProp = Settings::class.memberProperties
-                .firstOrNull { it.name == barFieldName } as? KProperty1<Settings, *>
-            val jsonValue = jsonProp?.get(Bar) as? String ?: continue
+                .firstOrNull { it.name == jsonFieldName } as? KProperty1<Settings, *>
 
-            // Get actual list variable (e.g. Tests)
+            if (jsonProp == null) {
+                Vlog("❌ No JSON field found: $jsonFieldName")
+                continue
+            }
+
+            val json = jsonProp.get(Bar) as? String
+            if (json.isNullOrBlank()) {
+                Vlog("⚠️ Skipping $listFieldName: JSON is blank")
+                continue
+            }
+
+            // Get actual list (e.g. Tests)
             val listField = dataClass.getDeclaredField(listFieldName)
             listField.isAccessible = true
 
             @Suppress("UNCHECKED_CAST")
-            val list = listField.get(null) as? SnapshotStateList<Any> ?: continue
-
-            if (jsonValue.isNotBlank() && list.isEmpty()) {
-                val type = getListType(list)
-                initUntyped(jsonValue, list, type)
+            val list = listField.get(null) as? SnapshotStateList<Any>
+            if (list == null) {
+                Vlog("❌ List '$listFieldName' is null or wrong type")
+                continue
             }
 
+            if (list.isNotEmpty()) {
+                Vlog("⚠️ Skipping $listFieldName: Already has items")
+                continue
+            }
+
+            val type = object : TypeToken<List<Any>>() {}.type
+            val loaded = gson.fromJson<List<Any>>(json, type)
+
+            list.clear()
+            list.addAll(loaded)
+
+            Vlog("✅ Restored $listFieldName: ${loaded.size} items")
+
         } catch (e: Exception) {
-            Vlog("❌ Failed to init list '${x.what}': ${e.message}")
+            Vlog("❌ Exception for '${x.what}': ${e.message}")
         }
     }
 }
+
 
 
     @Composable
