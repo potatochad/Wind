@@ -366,8 +366,8 @@ fun AppStart_beforeUI(context: Context) {
     SettingsSaved.init()
     SettingsSaved.Bsave()
 
-    //Background thing
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }
+    //Background thing! Disabled
+    //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }
 }
 
 
