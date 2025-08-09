@@ -376,11 +376,12 @@ fun AppChallange(show: MutableState<Boolean>) {
 
     
 
-    LaunchEffect(show) {
+    LaunchedEffect(show.value) {
         if (!show.value) {
             InputText = "50"
         }
     }
+
 
     @Composable
     fun PopupContent() {
