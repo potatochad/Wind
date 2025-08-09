@@ -174,9 +174,6 @@ data class DataApps(
     var Block : Bool = false,
     var TimeSpent : Int = 0,
 )
-
-// ---- ONE FUNCTION TO DO IT ALL ----
-object AppScanner {
     fun refreshApps(context: Context, target: MutableList<DataApps> = apps) {
         val pm = context.packageManager
 
@@ -234,7 +231,7 @@ object AppScanner {
         target.clear()
         target.addAll(fresh)
     }
-}
+
 
 
 
