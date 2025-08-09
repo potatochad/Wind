@@ -267,140 +267,8 @@ fun SupportEmail() {
 
 //region CONFIGURE SCREEN
 
-//! PARTIALLY DISABLED
-@Composable
-fun ConfigureScreen() = NoLagCompose {
-    val iconMap = remember { mutableStateMapOf<String, ImageBitmap>() }
-    var showPick = remember { mutableStateOf(false) }
 
 
-    // Load apps gradually in background
-    LaunchedEffect(Unit) {
-
-        withContext(Dispatchers.IO) {
-            log("apps---${apps}", "bad")
-
-            val pm = context.packageManager
-            val intent = Intent(Intent.ACTION_MAIN, null).apply { addCategory(Intent.CATEGORY_LAUNCHER) }
-
-            val InstalledApps = pm.queryIntentActivities(intent, 0)
-
-            //region REMOVE UNINSTALLED APPS
-
-            val installedPackageNames = InstalledApps.map { it.activityInfo.packageName }.toSet()
-            withContext(Dispatchers.Main) {
-                apps.removeAll { it.packageName !in installedPackageNames }
-            }
-
-            //endregion REMOVE UNINSTALLED APPS
-
-            for (info in InstalledApps) {
-                val label = info.loadLabel(pm)?.toString() ?: continue
-                val packageName = info.activityInfo.packageName ?: continue
-                val iconDrawable = info.activityInfo.loadIcon(pm)
-
-                if (packageName == "com.productivity.wind") {continue}
-                if (apps.any { it.packageName == packageName }) continue
-
-
-
-                /*! FIX IT LATER
-                val app = apps(
-                    name = label,
-                    packageName = packageName
-                )
-                */ //!FIX LATER
-
-                withContext(Dispatchers.Main) {
-                    //! ADD LATER apps.add(app)
-                }
-
-                val iconBitmap = iconDrawable.toBitmap().asImageBitmap()
-                withContext(Dispatchers.Main) {
-                    iconMap[packageName] = iconBitmap
-                }
-
-                delay(20)
-            }
-        }
-    }
-
-    val BlockedApps = apps.filter { it.Block }
-
-    LazyPopup(show = showPick, title = "Add Blocks", message = "", showCancel = false, showConfirm = false, content = {
-        LazyColumn(modifier = Modifier.height(300.dp)) {
-            items(apps, key = { it.id }) { app ->
-                UI.SimpleRow(content = {
-                    Checkbox(
-                        checked = app.Block,
-                        onCheckedChange = { app.Block = it},
-                    )
-                    val icon = iconMap[app.packageName]
-                    if (icon != null) {
-                        Image(
-                            bitmap = icon,
-                            contentDescription = null,
-                            modifier = Modifier.size(35.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(app.name)
-                })
-            }
-        }
-    }, onConfirm = {},)
-    
-    SettingsScreen(titleContent = {
-        SettingItem(icon = Icons.Outlined.AppBlocking, title = "Blocked Apps", endContent = {
-          StopBlockingButton()
-          UI.SimpleIconButton(
-            onClick = {
-              if (Bar.funTime < Bar.Dpoints && BlockedApps.isNotEmpty()) {
-                Popup.NeedMorePoints.value = true
-              } else {
-                showPick.value = true
-              }
-            },
-            BigIcon = Icons.Default.Add,
-            BigIconColor = Color(0xFFFFD700),
-            SquareIcon = true
-            )
-          }
-        )
-    }) { 
-            UI.LazyCard (content = {
-                if (BlockedApps.isEmpty()) {
-                    UI.EmptyBox(text = "No Blocks")
-                }
-                else {
-                    LazyColumn(modifier = Modifier.fillMaxSize().height(500.dp)) {
-                        items(BlockedApps, key = { it.id }) { app ->
-                            UI.SimpleRow(content ={
-                                val icon = iconMap[app.packageName]
-                                if (icon != null) {
-                                    Image(
-                                        bitmap = icon,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(35.dp)
-                                    )
-                                } else {
-                                    CircularProgressIndicator(
-                                        modifier = Modifier.size(24.dp)
-                                    )
-                                }
-
-
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text(app.name)
-                            })
-                        }
-                    }
-                
-            }
-        })
-    }
-}
 
 //endregion CONFIGURE SCREEN
 
@@ -434,13 +302,14 @@ object DayChecker {
 
 object Icon {
         
-@Composable
-fun Menu() {
-    UI.SimpleIconButton(
-            onClick = { Bar.ShowMenu = true },
-            icon = Icons.Default.Menu
-        )
-}
+
+        @Composable
+        fun Menu() {
+                UI.SimpleIconButton(
+                        onClick = { Bar.ShowMenu = true },
+                        icon = Icons.Default.Menu
+                )
+        }
 
 @Composable
 fun Chill() {
