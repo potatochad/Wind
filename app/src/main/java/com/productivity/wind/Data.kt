@@ -62,6 +62,9 @@ import java.lang.reflect.*
 import androidx.compose.material3.Text
 import androidx.compose.ui.text.style.*
 
+import com.productivity.wind.t
+import com.productivity.wind.c
+
 
 class Settings {
     var funTime by m(0)
