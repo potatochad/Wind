@@ -398,10 +398,11 @@ fun AppChallange(show: MutableState<Boolean>) {
                     value = InputText,
                     onValueChange = { InputText = it },
                     onDone = { DONE() },
-                    textSize = 16.sp,
+                    textSize = 12.sp,
                     boxHeight = 40.dp,
                     InputWidth = 100.dp,
-                    MaxLetters = 100
+                    MaxLetters = 100,
+                    InputBackgroundColor = Color.Transparent,
                 )
                 UI.CText(
                     UI.t(" on "),
