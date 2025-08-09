@@ -78,7 +78,7 @@ import com.productivity.wind.apps
 import com.productivity.wind.log
 import com.productivity.wind.SettingsScreen
 import com.productivity.wind.SettingsSaved
-import com.productivity.wind.UI
+import com.productivity.wind.*
 import com.productivity.wind.Vlog
 import com.productivity.wind.Achievements
 import androidx.compose.material.icons.outlined.Chat
@@ -93,7 +93,8 @@ import androidx.compose.ui.draw.drawBehind
 fun Challenge() {
   SettingsScreen(titleContent = { Text("Challenge") }) {
     SettingItem(
-            icon = Icons.Outlined.Info,
+            BigIcon = Icons.Filled.Backup,
+            BigIconColor = DarkBlue,
             title = "App Usage",
             onClick = { Popup,AppChallange.value = true },
         )
