@@ -59,9 +59,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.unit.sp
 import com.productivity.wind.*
 import java.lang.reflect.*
-
-
 import androidx.compose.material3.Text
+import androidx.compose.ui.text.style.*
 
 
 class Settings {
