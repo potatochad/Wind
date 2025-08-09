@@ -723,9 +723,16 @@ fun CText(
         parts.forEach { p ->
             when (p) {
                 is T -> {
-                    if (p.style != null) withStyle(p.style) { append(p.text) }
-                    else append(p.text)
-                }
+					val baseStyle = p.style ?: SpanStyle(
+						color = style.color,
+						fontSize = style.fontSize,
+						fontWeight = style.fontWeight,
+						fontStyle = style.fontStyle,
+						textDecoration = style.textDecoration
+					)
+					withStyle(baseStyle) { append(p.text) }
+				}
+
                 is C -> {
 					val id = "c$idx"; idx++
 					actions[id] = p.onClick
