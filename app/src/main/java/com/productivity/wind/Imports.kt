@@ -735,14 +735,18 @@ fun CText(
 
 
                 is C -> {
-					val id = "c$idx"; idx++
-					actions[id] = p.onClick
-					pushStringAnnotation(tag = "click", annotation = id)
-					withStyle((p.style ?: defaultClickStyle).copy(color = Color(0xFFFFD700))) {
-						append(p.text)
-					}
-					pop()
-				}
+    val id = "c$idx"; idx++
+    actions[id] = p.onClick
+    pushStringAnnotation(tag = "click", annotation = id)
+    withStyle((p.style ?: defaultClickStyle).copy(
+        color = Color(0xFFFFD700),
+        textDecoration = TextDecoration.None
+    )) {
+        append(p.text)
+    }
+    pop()
+}
+
 
             }
         }
