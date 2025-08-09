@@ -174,7 +174,8 @@ data class DataApps(
     var Block : Bool = false,
     var TimeSpent : Int = 0,
 )
-    fun refreshApps(context: Context, target: MutableList<DataApps> = apps) {
+    fun refreshApps(target: MutableList<DataApps> = apps) {
+        val context = Global1.context
         val pm = context.packageManager
 
         // 1) Get all launchable apps
@@ -371,21 +372,26 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 
 @Composable
 fun AppChallange(show: MutableState<Boolean>) {
-    var InputText by remember { m("") }
+    var InputText by remember { m("50") }
 
     
 
     LaunchEffect(show) {
         if (!show.value) {
-            InputText = ""
+            InputText = "50"
         }
     }
 
     @Composable
     fun PopupContent() {
 
+        SettingsScreen(){
         
-        UI.InputField(
+            refreshApps()
+
+            Text("If spend")
+        
+            UI.InputField(
                       value = InputText,
                       onValueChange = { InputText = it },
                       onDone = { show.value = false } ,
@@ -394,6 +400,9 @@ fun AppChallange(show: MutableState<Boolean>) {
                       InputWidth = 200.dp,
                       MaxLetters = 100,
                   )
+            Text("on app") //app is blue on click launches another popup
+            
+        }
         
     }
 
