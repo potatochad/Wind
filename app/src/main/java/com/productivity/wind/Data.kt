@@ -170,6 +170,7 @@ data class DataApps(
     var done: Bool = false,
 )
 
+/*
 fun refreshApps(context: Context, target: MutableList<DataApps> = apps) {
     val pm = context.packageManager
 
@@ -228,7 +229,7 @@ fun refreshApps(context: Context, target: MutableList<DataApps> = apps) {
     target.addAll(fresh)
     
 }
-
+*/
 
 
 
