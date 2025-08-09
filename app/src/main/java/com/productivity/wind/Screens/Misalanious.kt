@@ -170,7 +170,6 @@ fun MainHeader(){
         Spacer(modifier = Modifier.weight(1f))
 
         Icon.Add()
-        Icon.Configure()
     }
 
 }
