@@ -697,7 +697,63 @@ fun CopyIcon(text: String) {
     )
 }
 
+// -------- Core ----------
 
+
+//region CLICKALE TEXTTTTT■■■■■■■■■■■
+
+sealed interface P
+data class T(val text: String, val style: SpanStyle? = null) : P
+data class C(val text: String, val onClick: () -> Unit, val style: SpanStyle? = null) : P
+
+@Composable
+fun CText(
+    vararg parts: P,
+    modifier: Modifier = Modifier,
+    style: TextStyle = TextStyle.Default,
+    defaultClickStyle: SpanStyle = SpanStyle(
+        color = MaterialTheme.colorScheme.primary,
+        textDecoration = TextDecoration.Underline
+    ),
+) {
+    var idx = 0
+    val actions = mutableMapOf<String, () -> Unit>()
+
+    val annotated = buildAnnotatedString {
+        parts.forEach { p ->
+            when (p) {
+                is T -> {
+                    if (p.style != null) withStyle(p.style) { append(p.text) }
+                    else append(p.text)
+                }
+                is C -> {
+                    val id = "c$idx"; idx++
+                    actions[id] = p.onClick
+                    pushStringAnnotation(tag = "click", annotation = id)
+                    withStyle(p.style ?: defaultClickStyle) { append(p.text) }
+                    pop()
+                }
+            }
+        }
+    }
+
+    ClickableText(
+        text = annotated,
+        modifier = modifier,
+        style = style,
+    ) { offset ->
+        annotated.getStringAnnotations("click", offset, offset)
+            .firstOrNull()
+            ?.let { actions[it.item]?.invoke() }
+    }
+}
+
+// -------- Shorthand makers ----------
+fun t(text: String, style: SpanStyle? = null) = T(text, style)
+fun c(text: String, style: SpanStyle? = null, onClick: () -> Unit) = C(text, onClick, style)
+
+
+//endregion CLICABLE TEXT ■■■■■■■■■
 
 @Composable
 fun SimpleIconButton(
