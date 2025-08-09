@@ -96,7 +96,7 @@ fun Challenge() {
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "App Usage",
-            onClick = { Popup,AppChallange.value = true },
+            onClick = { Popup.AppChallange.value = true },
         )
     
    }
