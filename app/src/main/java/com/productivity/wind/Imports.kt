@@ -627,6 +627,7 @@ fun InputField(
                         color = Color(0xFFFFD700),
                         thickness = 1.dp,
                         modifier = Modifier
+							.offset(y = (-1).dp)
                             .padding(horizontal = innerPadding)
                             .width(InputWidth)
                     )
