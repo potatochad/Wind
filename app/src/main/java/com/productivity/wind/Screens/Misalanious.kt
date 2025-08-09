@@ -129,9 +129,6 @@ fun MyNavGraph(navController: NavHostController) {
             composable("SettingsScreen") {
                 SettingsScreen()
             }
-            composable("SettingsP_Screen") {
-                SettingsP_Screen()
-            }
             composable("SettingsOtherScreen") {
                     SettingsOtherScreen()
             }
@@ -492,17 +489,6 @@ fun G_Edit() {
                     else Popup.NeedMorePoints.value = true
             },
             icon = Icons.Default.Edit
-        )
-}
-
-@Composable
-fun Configure() {
-    UI.SimpleIconButton(
-            onClick = { 
-                    if (!areAllPermissionsEnabled()) { Popup.EnablePermissions.value = true }
-                    else { Global1.navController.navigate("ConfigureScreen") }
-            },
-            icon = Icons.Default.Settings
         )
 }
 
