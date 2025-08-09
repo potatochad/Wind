@@ -399,7 +399,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                     value = InputText,
                     onValueChange = { InputText = it },
                     onDone = { DONE() },
-                    textSize = 12.sp,
+                    textSize = 14.sp,
                     boxHeight = 40.dp,
                     InputWidth = 100.dp,
                     MaxLetters = 50,
