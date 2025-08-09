@@ -383,30 +383,31 @@ fun AppChallange(show: MutableState<Boolean>) {
     }
 
 
+    fun DONE(){
+
+        show.value = false
+    }
     @Composable
     fun PopupContent() {
         
             refreshApps()
 
             UI.SimpleRow( content ={
-    Text("If spend ")
-    
-    UI.InputField(
-        value = InputText,
-        onValueChange = { InputText = it },
-        onDone = { /* do something */ },
-        textSize = 16.sp,
-        boxHeight = 40.dp,
-        InputWidth = 100.dp,
-        MaxLetters = 100
-    )
-
-    Text(" on ")
-    
-    CText(
-        c("app", onClick = { show.value = true })
-    )
-})
+                Text("If spend ")
+                UI.InputField(
+                    value = InputText,
+                    onValueChange = { InputText = it },
+                    onDone = { DONE() },
+                    textSize = 16.sp,
+                    boxHeight = 40.dp,
+                    InputWidth = 100.dp,
+                    MaxLetters = 100
+                )
+                CText(
+                    T(" on ")
+                    c("app", onClick = {  })
+                )
+            })
 
         
     }
