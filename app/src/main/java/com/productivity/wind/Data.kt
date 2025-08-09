@@ -404,7 +404,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                     MaxLetters = 100
                 )
                 UI.CText(
-                    T(" on ")
+                    t(" on "),
                     c("app", onClick = {  })
                 )
             })
