@@ -403,6 +403,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                     boxHeight = 40.dp,
                     InputWidth = 100.dp,
                     MaxLetters = 50,
+                    showDivider = false,
                     innerPadding = 0.dp,
                     InputBackgroundColor = Color.Transparent,
                 )
