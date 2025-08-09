@@ -286,6 +286,7 @@ fun NeedMorePointsPopuo(show: MutableState<Boolean>){
         message = "Need have ${Bar.Dpoints} points to do this. Only have ${Bar.funTime}"
     )
 }
+
 @Composable
 fun EnableBlockingPopup(show: MutableState<Boolean>){
     LazyPopup(
@@ -369,11 +370,17 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 fun AddReminder(show: MutableState<Boolean>) {
     var InputText by remember { m("") }
 
-    fun DONE() { show.value = false }
     LazyPopup(show = show,
               title = "Add Challenge", 
-              content = { 
-                  UI.InputField(
+              content = { PopupContent() }, 
+              onConfirm = {  },
+              message="",
+              )
+
+
+    fun PopupContent() {
+
+        UI.InputField(
                       value = InputText,
                       onValueChange = { InputText = it },
                       onDone = { DONE() } ,
@@ -382,10 +389,10 @@ fun AddReminder(show: MutableState<Boolean>) {
                       InputWidth = 200.dp,
                       MaxLetters = 100,
                   )
-              }, 
-              onConfirm = { DONE() },
-              message="",
-              )
+        
+    }
+
+    
 }
 
 //region ADD CHALLANGE POPUPS
