@@ -265,6 +265,8 @@ object Popup {
     var NeedMorePoints = m(false)
     var EnablePermissions = m(false)
     var EnableBlocking = m(false)
+
+    var AppChallange = m(false)
 }
 //!Just call this on app start
 @Composable
@@ -274,6 +276,7 @@ fun PopUps(){
    EditPopUp(Popup.Edit)
    NeedMorePointsPopuo(Popup.NeedMorePoints)
    EnableBlockingPopup(Popup.EnableBlocking)
+   AppChallange(Popup.AppChallange)
 }
 
 
@@ -367,7 +370,7 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 //region ADD CHALLANGE POPUPS
 
 @Composable
-fun AddReminder(show: MutableState<Boolean>) {
+fun AppChallange(show: MutableState<Boolean>) {
     var InputText by remember { m("") }
 
     
