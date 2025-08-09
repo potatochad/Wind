@@ -101,9 +101,6 @@ fun MyNavGraph(navController: NavHostController) {
             composable("Achievements") {
                 Achievements()
             }
-            composable("ConfigureScreen") {
-                ConfigureScreen()
-            }
             composable("Challenge") {
                     Challenge()
             }
