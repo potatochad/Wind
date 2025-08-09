@@ -378,6 +378,7 @@ fun AddReminder(show: MutableState<Boolean>) {
               )
 
 
+    @Composable
     fun PopupContent() {
 
         UI.InputField(
