@@ -61,6 +61,7 @@ import com.productivity.wind.*
 import java.lang.reflect.*
 
 
+import androidx.compose.material3.Text
 
 
 class Settings {
