@@ -330,99 +330,6 @@ fun AddReminder(show: MutableState<Boolean>) {
 
 
 
-//region BACKGROUND TASK
-
-class WatchdogService : Service() {
-    private val serviceJob = SupervisorJob()
-    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
-    private var OneJob: Job? = null
-
-    override fun onBind(intent: Intent?): IBinder? {
-        Timber.d("onBind: $intent")
-        return null
-    }
-
-    fun GOtowindAPP(){
-        val intent = Intent(Global1.context, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        Global1.context.startActivity(intent)
-    }
-
-    override fun onStartCommand(
-        intent: Intent?,
-        flags: Int,
-        startId: Int,
-    ): Int {
-        NotificationHelper(this).createNotificationChannel()
-        startForeground(1, NotificationHelper(this).buildNotification(),)
-        Global1.context = this
-        if (Bar.BlockingEnabled) {
-            if (OneJob == null || OneJob?.isActive == false) {
-                OneJob = serviceScope.launch {
-                    while (true) {
-
-                        //region SAFETY PURPOSES
-
-                        delay(1000L)
-                        Bar.COUNT +=1
-
-                        //endregion
-
-
-                        //region CURRENT APP
-
-                        val usageStatsManager = Global1.context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-                        val NowTime = System.currentTimeMillis()
-
-                        /*
-                        * THIS IS NOT SUPER ACCURATE
-                        ? If you want better precision, you’ll need an Accessibility Service.
-                        !THIS REQUIRES NAVIGATING USER TO IT*/
-                        val AppsUsed = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, NowTime - 20_000, NowTime)
-                        val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
-
-                        //LOG WHEN WANT TOOO
-                        if (currentApp == Global1.context.packageName || currentApp == null) { } else { log("BACKGROUND — CURRENT APP: $currentApp", "bad") }
-
-                        //endregion CURRENT APP
-
-                        val blocked = apps.any { it.packageName == currentApp && it.Block }
-
-                        if (blocked) {
-                            if (Bar.funTime > 0) {
-                                Bar.funTime -= 1
-                                log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
-                            } else {
-                                GOtowindAPP()
-                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
-                            }
-                        }
-
-
-                    if (currentApp == "com.seekrtech.waterapp") {
-                        log("NEW DAY??; ${Bar.NewDay}", "bad")
-                        log("waterdo time; ${Bar.WaterDOtime_spent}", "bad")
-                        if (Bar.NewDay) {
-                            if (Bar.WaterDOtime_spent > 50) {
-                                Bar.funTime += 900
-                                Bar.NewDay = false
-                            } else {
-                                Bar.WaterDOtime_spent += 1
-                            }
-                        }
-                    }
-                    }
-                }
-            }
-        }
-
-        return START_STICKY
-    }
-
-    override fun onDestroy() { super.onDestroy(); serviceScope.cancel() }
-}
-
-
 //endregion
 
 
@@ -509,10 +416,6 @@ object Global1 {
     * ? YEA GOT NO BETTER SOLUTION SORRRY*/
 
 }
-
-
-
-//endregion
 
 
 
