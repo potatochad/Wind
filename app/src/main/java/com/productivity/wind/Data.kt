@@ -402,7 +402,8 @@ fun AppChallange(show: MutableState<Boolean>) {
                     textSize = 12.sp,
                     boxHeight = 40.dp,
                     InputWidth = 100.dp,
-                    MaxLetters = 100,
+                    MaxLetters = 50,
+                    innerPadding = 0.dp,
                     InputBackgroundColor = Color.Transparent,
                 )
                 UI.CText(
