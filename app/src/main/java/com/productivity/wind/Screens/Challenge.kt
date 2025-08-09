@@ -95,9 +95,7 @@ fun Challenge() {
     SettingItem(
             icon = Icons.Outlined.Info,
             title = "App Usage",
-            onClick = {
-              
-            },
+            onClick = { Popup,AppChallange.value = true },
         )
     
    }
