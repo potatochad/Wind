@@ -403,7 +403,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                     InputWidth = 100.dp,
                     MaxLetters = 100
                 )
-                CText(
+                UI.CText(
                     T(" on ")
                     c("app", onClick = {  })
                 )
