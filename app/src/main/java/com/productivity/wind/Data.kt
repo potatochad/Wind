@@ -384,8 +384,6 @@ fun AppChallange(show: MutableState<Boolean>) {
 
     @Composable
     fun PopupContent() {
-
-        SettingsScreen(){
         
             refreshApps()
 
@@ -402,7 +400,6 @@ fun AppChallange(show: MutableState<Boolean>) {
                   )
             Text("on app") //app is blue on click launches another popup
             
-        }
         
     }
 
