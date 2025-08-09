@@ -558,6 +558,7 @@ fun InputField(
     textSize: TextUnit = 14.sp,           
     boxHeight: Dp = 36.dp,                
     innerPadding: Dp = 4.dp,
+	dividerYBack: Int = 0,
     InputWidth: Dp = 80.dp,
     MaxLetters: Int? = 20_000,
     OnMaxLetters: (() -> Unit) = { Vlog("MAX LETTERS") }, //each letter type doo
@@ -627,7 +628,7 @@ fun InputField(
                         color = Color(0xFFFFD700),
                         thickness = 1.dp,
                         modifier = Modifier
-							.offset(y = (-1).dp)
+							.offset(y = (-dividerYBack).dp)
                             .padding(horizontal = innerPadding)
                             .width(InputWidth)
                     )
