@@ -724,14 +724,11 @@ fun CText(
             when (p) {
                 is T -> {
 					val baseStyle = p.style ?: SpanStyle(
-						color = style.color,
-						fontSize = style.fontSize,
-						fontWeight = style.fontWeight,
-						fontStyle = style.fontStyle,
-						textDecoration = style.textDecoration
+						color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
 					)
 					withStyle(baseStyle) { append(p.text) }
 				}
+
 
                 is C -> {
 					val id = "c$idx"; idx++
