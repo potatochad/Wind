@@ -723,12 +723,14 @@ fun CText(
     val annotated = buildAnnotatedString {
         parts.forEach { p ->
             when (p) {
-                is T -> {
+                // replace your block with this
+				is T -> {
 					val baseStyle = p.style ?: SpanStyle(
-						color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+						color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.60f) // medium emphasis
 					)
 					withStyle(baseStyle) { append(p.text) }
 				}
+
 
 
                 is C -> {
