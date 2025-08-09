@@ -162,19 +162,72 @@ val trackedLists = listOf(
         
     )
 
-
-
-
-
 data class DataApps(
     var id: Str = Id(),
     var name: Str = "",
-    var done: Bool = false,
     var packageName: Str = "",
-    var Block : Bool = false,
     var TimeSpent : Int = 0,
+    var done: Bool = false,
 )
 
+fun refreshApps(context: Context, target: MutableList<DataApps> = apps) {
+    val pm = context.packageManager
+
+    // 1) Get all launchable apps
+    val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+    val launchables = pm.queryIntentActivities(launchIntent, 0)
+
+    // 2) Usage access check
+    val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as android.app.AppOpsManager
+    val mode = appOps.unsafeCheckOpNoThrow(
+        android.app.AppOpsManager.OPSTR_GET_USAGE_STATS,
+        android.os.Process.myUid(),
+        context.packageName
+    )
+    val hasUsage = mode == android.app.AppOpsManager.MODE_ALLOWED
+
+    // 3) Build "today" window
+    val end = System.currentTimeMillis()
+    val cal = java.util.Calendar.getInstance().apply {
+        set(java.util.Calendar.HOUR_OF_DAY, 0)
+        set(java.util.Calendar.MINUTE, 0)
+        set(java.util.Calendar.SECOND, 0)
+        set(java.util.Calendar.MILLISECOND, 0)
+    }
+    val start = cal.timeInMillis
+
+    // 4) Read usage (if allowed)
+    val timeByPkg = if (hasUsage) {
+        val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as android.app.usage.UsageStatsManager
+        val stats = usm.queryUsageStats(android.app.usage.UsageStatsManager.INTERVAL_DAILY, start, end)
+        stats.associate { it.packageName to ((it.totalTimeInForeground / 1000L).toInt().coerceAtLeast(0)) }
+    } else {
+        emptyMap()
+    }
+
+    // 5) Preserve existing id/done by package
+    val oldByPkg = target.associateBy { it.packageName }
+
+    // 6) Build fresh list
+    val fresh = launchables.map { ri ->
+        val pkg = ri.activityInfo.packageName
+        val label = ri.loadLabel(pm)?.toString() ?: pkg
+        val old = oldByPkg[pkg]
+
+        DataApps(
+            id = old?.id ?: Id(),
+            name = label,
+            packageName = pkg,
+            TimeSpent = timeByPkg[pkg] ?: (old?.TimeSpent ?: 0),
+            done = old?.done ?: false
+        )
+    }.sortedByDescending { it.TimeSpent }
+
+    // 7) Replace content in-place
+    target.clear()
+    target.addAll(fresh)
+    
+}
 
 
 
