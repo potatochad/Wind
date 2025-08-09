@@ -370,12 +370,7 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 fun AddReminder(show: MutableState<Boolean>) {
     var InputText by remember { m("") }
 
-    LazyPopup(show = show,
-              title = "Add Challenge", 
-              content = { PopupContent() }, 
-              onConfirm = {  },
-              message="",
-              )
+    
 
 
     @Composable
@@ -384,7 +379,7 @@ fun AddReminder(show: MutableState<Boolean>) {
         UI.InputField(
                       value = InputText,
                       onValueChange = { InputText = it },
-                      onDone = { DONE() } ,
+                      onDone = { show.value = false } ,
                       textSize = 16.sp,           
                       boxHeight = 40.dp,                
                       InputWidth = 200.dp,
@@ -392,6 +387,13 @@ fun AddReminder(show: MutableState<Boolean>) {
                   )
         
     }
+
+    LazyPopup(show = show,
+              title = "Add Challenge", 
+              content = { PopupContent() }, 
+              onConfirm = {  },
+              message="",
+              )
 
     
 }
