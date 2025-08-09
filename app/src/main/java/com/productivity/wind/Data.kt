@@ -375,10 +375,16 @@ fun AppChallange(show: MutableState<Boolean>) {
 
     
 
+    LaunchEffect(show) {
+        if (!show.value) {
+            InputText = ""
+        }
+    }
 
     @Composable
     fun PopupContent() {
 
+        
         UI.InputField(
                       value = InputText,
                       onValueChange = { InputText = it },
