@@ -84,17 +84,7 @@ val Gold = Color(0xFFFFD700)
 @Composable
 fun SettingsScreen() {
     SettingsScreen(titleContent = { Text("Settings") }) {
-
-        if (!areAllPermissionsEnabled()) {
-                SettingItem(
-                        BigIcon = Icons.Filled.AdminPanelSettings,
-                        BigIconColor = Color(0xFFFFD700),
-                        title = "Permissions",
-                        onClick = { Global1.navController.navigate("SettingsP_Screen") },
-                        bottomPadding = 2.dp,
-                )    
-        }
-
+        
         // NOT SYNCHED UP WITH APP YET
         //NEED EXPLANATION TOO
         SettingItem(
@@ -215,47 +205,6 @@ fun SettingsOtherScreen() {
 }
 
 //endregion OTHER SCREEN
-
-//region POPUP
-
-@Composable
-fun NotificationP_PopUp(show: MutableState<Boolean>) =
-        LazyPopup(
-        show = show,
-        onConfirm = {
-            UI.openPermissionSettings(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
-        },
-        title = "Grant Notification access",
-        message = "Keeps the app running in the background so you don’t miss any tracking or point updates.",
-    )
-    
-@Composable
-fun OptimizationExclusionP_PopUp(show: MutableState<Boolean>) =
-        LazyPopup(
-                show = show,
-                onConfirm = {
-                        val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
-                                data = Uri.parse("package:${context.packageName}")
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        }
-                        context.startActivity(intent)
-                },
-                title = "Exclude from battery optimization",
-                message = "Stops your phone’s battery saver from shutting down the background service. This ensures the app runs smoothly."
-  )
-
-@Composable
-fun UsageStatsP_PopUp(show: MutableState<Boolean>) =
-        LazyPopup(
-        show = show,
-        onConfirm = {
-            UI.openPermissionSettings(Settings.ACTION_USAGE_ACCESS_SETTINGS)
-        },
-        title = "Grant Usage-Access permission",
-        message = "Lets the app see which apps you open. Used only to track apps you selected, to help manage your focus."
-    )
-
-//endregion POPUP
 
 
 
