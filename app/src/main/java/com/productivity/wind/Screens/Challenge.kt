@@ -94,8 +94,9 @@ fun Challenge() {
   SettingsScreen(titleContent = { Text("Challenge") }) {
     SettingItem(
             icon = Icons.Outlined.Info,
-            title = "Reminder",
+            title = "App Usage",
             endContent = {
+              
             }
         )
     
