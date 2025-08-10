@@ -720,34 +720,41 @@ fun CText(
 ) {
     var idx = 0
     val actions = mutableMapOf<String, () -> Unit>()
+    val scope = rememberCoroutineScope()
+    var pressedId by remember { mutableStateOf<String?>(null) }
+    val pulse by animateFloatAsState(
+        targetValue = if (pressedId != null) 0.35f else 0f,
+        animationSpec = tween(120),
+        label = "clickPulse"
+    )
 
     val annotated = buildAnnotatedString {
         parts.forEach { p ->
             when (p) {
-                // replace your block with this
-				is T -> {
-					val baseStyle = p.style ?: SpanStyle(
-						color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.60f) // medium emphasis
-					)
-					withStyle(baseStyle) { append(p.text) }
-				}
-
-
+                is T -> {
+                    val baseStyle = p.style ?: SpanStyle(
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.60f)
+                    )
+                    withStyle(baseStyle) { append(p.text) }
+                }
 
                 is C -> {
-    val id = "c$idx"; idx++
-    actions[id] = p.onClick
-    pushStringAnnotation(tag = "click", annotation = id)
-    withStyle((p.style ?: defaultClickStyle).copy(
-        color = Color(0xFFFFD700),
-        textDecoration = TextDecoration.None
-    )) {
-        append(p.text)
-    }
-    pop()
-}
+                    val id = "c$idx"; idx++
+                    actions[id] = p.onClick
+                    pushStringAnnotation(tag = "click", annotation = id)
 
+                    val gold = Color(0xFFFFD700)
+                    val colorNow = if (pressedId == id) gold.copy(alpha = 1f - pulse) else gold
 
+                    withStyle((p.style ?: defaultClickStyle).copy(
+                        color = colorNow,
+                        textDecoration = TextDecoration.None,
+                        fontWeight = FontWeight.Bold
+                    )) {
+                        append(p.text)
+                    }
+                    pop()
+                }
             }
         }
     }
@@ -759,7 +766,14 @@ fun CText(
     ) { offset ->
         annotated.getStringAnnotations("click", offset, offset)
             .firstOrNull()
-            ?.let { actions[it.item]?.invoke() }
+            ?.let {
+                pressedId = it.item
+                scope.launch {
+                    actions[it.item]?.invoke()
+                    delay(140)
+                    pressedId = null
+                }
+            }
     }
 }
 
