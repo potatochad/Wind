@@ -792,6 +792,7 @@ fun Ctext(
 
 //endregion CLICABLE TEXT ■■■■■■■■■
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SimpleIconButton(
     onClick: () -> Unit,
