@@ -552,6 +552,7 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
     onDone = { println("Done pressed") }
 )
 */
+
 @Composable
 fun InputField(
     value: String,
@@ -560,91 +561,90 @@ fun InputField(
     modifier: Modifier = Modifier,
     isNumber: Boolean = false,
     focusRequester: FocusRequester? = null,
-    onDone: (() -> Unit)? = null,  //When press done button
-    showDivider: Boolean = true,
-    textSize: TextUnit = 14.sp,           
-    boxHeight: Dp = 36.dp,                
-    innerPadding: Dp = 4.dp,
-	dividerYBack: Int = 0,
+    onDone: (() -> Unit)? = null,
+    showDivider: Boolean = true, // acts as "show underline"
+    textSize: TextUnit = 14.sp,
+    boxHeight: Dp = 36.dp,
+    innerPadding: Dp = 0.dp,         // set 0 to kill side gaps
     InputWidth: Dp = 80.dp,
     MaxLetters: Int? = 20_000,
-    OnMaxLetters: (() -> Unit) = { Vlog("MAX LETTERS") }, //each letter type doo
+    OnMaxLetters: (() -> Unit) = {},
     InputTextColor: Color = Color.White,
-    InputBackgroundColor: Color = SettingsItemCardColor,
+    InputBackgroundColor: Color = Color(0xFF1B1B1B),
+
+    // underline controls (your “divider distance” etc.)
+    underlineGap: Dp = 2.dp,         // distance between text box content and the line
+    underlineInset: Dp = 0.dp,       // left/right inset of the line
+    underlineThickness: Dp = 1.dp,   // line thickness
+    underlineColor: Color = Color(0xFFFFD700),
 
     OnFocusLose: (() -> Unit)? = null,
 ) {
     val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
     val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
     val interactionSource = remember { MutableInteractionSource() }
-
     val isFocused by interactionSource.collectIsFocusedAsState()
 
     LaunchedEffect(isFocused) {
-	    if (!isFocused) {
-		    OnFocusLose?.invoke()
-	    }
+        if (!isFocused) OnFocusLose?.invoke()
     }
 
     BasicTextField(
         value = value,
         onValueChange = {
-          val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
-          if (parsed.length <= (MaxLetters ?: Int.MAX_VALUE)) {
-            onValueChange(parsed) }  
-          else {
-            OnMaxLetters
-          }
+            val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
+            if (parsed.length <= (MaxLetters ?: Int.MAX_VALUE)) onValueChange(parsed)
+            else OnMaxLetters()
         },
-
         modifier = modifier
             .height(boxHeight)
             .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
         textStyle = LocalTextStyle.current.copy(color = InputTextColor, fontSize = textSize),
         singleLine = true,
-        keyboardOptions = KeyboardOptions.Default.copy(
+        keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(
             keyboardType = keyboardType,
             imeAction = imeAction
         ),
-        keyboardActions = KeyboardActions(onDone = { onDone?.invoke() }),
+        keyboardActions = androidx.compose.ui.text.input.KeyboardActions(onDone = { onDone?.invoke() }),
         cursorBrush = SolidColor(Color.Gray),
         interactionSource = interactionSource,
-        
         decorationBox = { innerTextField ->
-            Column {
-                Box(
-                    modifier = Modifier
-                        .padding(horizontal = innerPadding)
-                        .width(InputWidth)
-						.height(boxHeight - 8.dp)
-						.clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)) // 👈 clips background to round shape
-						.background(InputBackgroundColor), // 👈 this sets the color
-					contentAlignment = Alignment.CenterStart
-				) {
-                    if (value.isEmpty()) {
-                        Text(
-                            placeholderText,
-                            color = InputTextColor,
-                            fontSize = textSize
-                        )
-                    }
-                    innerTextField()
-                }
-                if (showDivider) {
-                    Divider(
-                        color = Color(0xFFFFD700),
-                        thickness = 1.dp,
-                        modifier = Modifier
-							.offset(y = (-dividerYBack).dp)
-                            .padding(horizontal = innerPadding)
-                            .width(InputWidth)
+            Box(
+                modifier = Modifier
+                    .width(InputWidth)
+                    .height(boxHeight)
+                    .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                    .background(InputBackgroundColor)
+                    .padding(start = innerPadding, end = innerPadding, bottom = underlineGap) // control distance to line
+                    .drawBehind {
+                        if (showDivider) {
+                            val stroke = underlineThickness.toPx()
+                            val y = size.height - stroke / 2
+                            val inset = underlineInset.toPx()
+                            drawLine(
+                                color = underlineColor,
+                                start = Offset(inset, y),
+                                end = Offset(size.width - inset, y),
+                                strokeWidth = stroke
+                            )
+                        }
+                    },
+                contentAlignment = Alignment.CenterStart
+            ) {
+                if (value.isEmpty()) {
+                    androidx.compose.material3.Text(
+                        placeholderText,
+                        color = InputTextColor.copy(alpha = 0.6f),
+                        fontSize = textSize,
+                        textAlign = TextAlign.Start
                     )
-
                 }
+                innerTextField()
             }
         }
     )
 }
+
 
 @Composable
 fun SimpleRow(
