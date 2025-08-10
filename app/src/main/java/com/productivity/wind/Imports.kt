@@ -1146,7 +1146,8 @@ fun settingsHeader(
             modifier = modifier
                 .fillMaxWidth()
                 .background(Color.Black)
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = 16.dp, vertical = 12.dp)
+			.heightIn(max = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
