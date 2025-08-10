@@ -744,7 +744,7 @@ fun SimpleIconButton(
 ) {
     IconButton(
 		onClick = onClick,
-		modifier = modifier.padding(outerPadding),
+		modifier = modifier.padding(OuterPadding.dp),
 	) {
 	    if (icon != null) {
 		    Icon(
