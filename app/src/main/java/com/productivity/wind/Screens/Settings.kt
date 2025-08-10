@@ -219,7 +219,7 @@ fun LogsScreen()= NoLagCompose {
         titleContent = {
                 Text("Logs")
                 
-                UI.Bspacer(mw = 1f)
+                UI.space(Mwidth=true)
                 
                 UI.CopyIcon(logText)
         }) {
