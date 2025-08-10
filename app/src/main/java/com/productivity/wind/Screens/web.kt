@@ -76,13 +76,15 @@ fun Web() {
                     UI.SimpleIconButton(
                         onClick = { Global1.navController.navigate("WorkWeb") },
                         BigIcon = Icons.Default.Work,
-                        BigIconColor = Color(0xFF4CAF50) // Green
+                        BigIconColor = Color(0xFF4CAF50), // Green
+                        OuterPadding = 0,
                     )
 
                     UI.SimpleIconButton(
                         onClick = { Global1.navController.navigate("FunWeb") },
                         BigIcon = Icons.Default.SentimentVerySatisfied,
-                        BigIconColor = Color(0xFFFFC107) // Amber
+                        BigIconColor = Color(0xFFFFC107), // Amber
+                        OuterPadding = 0,
                     )
 
 
