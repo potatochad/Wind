@@ -523,6 +523,34 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
 }
 
 
+@Composable
+fun Bspacer(
+    w: Dp? = null,        // width
+    h: Dp? = null,        // height
+    mw: Float? = null,    // fillMaxWidth(fraction)
+    mh: Float? = null,    // fillMaxHeight(fraction)
+    ms: Float? = null,    // fillMaxSize(fraction)
+    wt: Float? = null     // weight (Row/Column)
+) {
+    var m = Modifier
+
+    // fixed size first
+    if (w != null && h != null) m = m.size(w, h)
+    else {
+        if (w != null) m = m.width(w)
+        if (h != null) m = m.height(h)
+    }
+
+    // fills override size if set
+    if (ms != null) m = m.fillMaxSize(ms)
+    if (mw != null) m = m.fillMaxWidth(mw)
+    if (mh != null) m = m.fillMaxHeight(mh)
+
+    if (wt != null) m = m.weight(wt, fill = true)
+
+    Spacer(m)
+}
+
 
 @Composable
 fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
