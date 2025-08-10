@@ -525,68 +525,30 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
 
 //region SPACER
 
-/*
-	CALL AS USUALL
-
- Row { Text("A"); Bspacer(wt = 1f); Text("B") }
-Column { Bspacer(h = 8.dp) }
-
- 
-
- THE ROWSCOPE 
- THE COLUMB SCOPE IGNOREEEE
- */
-
 @Composable
-fun RowScope.Bspacer(
+fun Bspacer(
     w: Dp? = null,
     h: Dp? = null,
-    mw: Float? = null,
-    mh: Float? = null,
-    ms: Float? = null,
-    wt: Float? = null
+    Mwidth: Boolean = false,
+    Mheight: Boolean = false,
+    Msize: Boolean = false
 ) {
-    var m = Modifier
-    if (w != null && h != null) m = m.size(w, h)
-    else {
-        if (w != null) m = m.width(w)
-        if (h != null) m = m.height(h)
+    when {
+        Msize -> Spacer(Modifier.fillMaxSize())
+        Mwidth && Mheight -> Spacer(Modifier.fillMaxSize())
+        Mwidth && h != null -> Spacer(Modifier.fillMaxWidth().height(h))
+        Mwidth -> Spacer(Modifier.fillMaxWidth())
+        Mheight && w != null -> Spacer(Modifier.fillMaxHeight().width(w))
+        Mheight -> Spacer(Modifier.fillMaxHeight())
+        w != null && h != null -> Spacer(Modifier.size(w, h))
+        w != null -> Spacer(Modifier.width(w))
+        h != null -> Spacer(Modifier.height(h))
+        else -> Spacer(Modifier.size(0.dp))
     }
-    if (ms != null) m = m.fillMaxSize(ms)
-    if (mw != null) m = m.fillMaxWidth(mw)
-    if (mh != null) m = m.fillMaxHeight(mh)
-    if (wt != null) m = m.weight(wt, fill = true)
-    Spacer(modifier = m)
-}
-
-// Column version (same API)
-@Composable
-fun ColumnScope.Bspacer(
-    w: Dp? = null,
-    h: Dp? = null,
-    mw: Float? = null,
-    mh: Float? = null,
-    ms: Float? = null,
-    wt: Float? = null
-) {
-    var m = Modifier
-    if (w != null && h != null) m = m.size(w, h)
-    else {
-        if (w != null) m = m.width(w)
-        if (h != null) m = m.height(h)
-    }
-    if (ms != null) m = m.fillMaxSize(ms)
-    if (mw != null) m = m.fillMaxWidth(mw)
-    if (mh != null) m = m.fillMaxHeight(mh)
-    if (wt != null) m = m.weight(wt, fill = true)
-    Spacer(modifier = m)
 }
 
 
-
-//endregion  SPACER
-
-
+//endregion SPACER
 
 
 @Composable
