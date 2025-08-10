@@ -394,7 +394,7 @@ fun AppChallange(show: MutableState<Boolean>) {
             UI.SimpleRow( content ={
                 
                 Text("If")
-                Ctext(text = "spend", onClick = {})
+                UI.Ctext(text = "spend", onClick = {})
                 UI.InputField(
                     value = InputText,
                     onValueChange = { InputText = it },
@@ -408,7 +408,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                     InputBackgroundColor = Color.Transparent,
                 )
                 Text(" on ")
-                Ctext(text = "0 apps", onClick = {})
+                UI.Ctext(text = "0 apps", onClick = {})
 
                 
             })
