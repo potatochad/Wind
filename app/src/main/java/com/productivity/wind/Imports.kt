@@ -792,49 +792,76 @@ fun Ctext(
 
 //endregion CLICABLE TEXT ■■■■■■■■■
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SimpleIconButton(
-    onClick: () -> Unit,
-    icon: ImageVector? = null,
-    BigIcon: ImageVector? = null,
-    BigIconColor: Color? = null,
-    SquareIcon: Boolean = false,
-    BigIconSize: Int = 30,
-){
-        IconButton(
-            onClick = onClick,
-        ) {
-            if (icon != null) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = Color(0xFFFFD700),
-                    modifier = Modifier.size(24.dp)
-                )
-            }
+	onClick: () -> Unit, 
+	icon: ImageVector? = null,
+	BigIcon: ImageVector? = null,
+	BigIconColor: Color? = null,
+	SquareIcon: Boolean = false,
+	BigIconSize: Int = 30,
+) {
+    IconButton(
+		onClick = onClick,
+		// modifier = modifier.padding(OuterPadding.dp),
+	) {
+	    if (icon != null) {
+		    Icon(
+			    imageVector = icon,
+			    contentDescription = null,
+			    tint = Color(0xFFFFD700),
+			    modifier = Modifier
+				    .size(24.dp)
+		    )
+	    }	    
+	    
+	    if (BigIcon != null && BigIconColor != null) {
+		    if (!SquareIcon) {
+			    Box(
+				    modifier = Modifier
+					    .size(BigIconSize.dp)
+					    .clip(CircleShape)
+					    .background(BigIconColor),
+				    contentAlignment = Alignment.Center
+			    ) {
+				    Icon(
+					    imageVector = BigIcon,
+					    contentDescription = null,
+					    tint = Color.White,
+					    modifier = Modifier.size(20.dp)
+				    )
+			    }
+		    }
+		    else {
+			    Box(
+				    modifier = Modifier
+					    .size(BigIconSize.dp)
+					    .clip(RoundedCornerShape(6.dp))
+					    .background(BigIconColor),
+				    contentAlignment = Alignment.Center
+			    ) {
+				    Icon(
+					    imageVector = BigIcon,
+					    contentDescription = null,
+					    tint = Color.White,
+					    modifier = Modifier.size(24.dp)
+				    )
+			    }
 
-            if (BigIcon != null && BigIconColor != null) {
-                val shape = if (SquareIcon) RoundedCornerShape(6.dp) else CircleShape
-                val innerSize = if (SquareIcon) 24.dp else 20.dp
-                Box(
-                    modifier = Modifier
-                        .size(BigIconSize.dp)
-                        .clip(shape)
-                        .background(BigIconColor),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = BigIcon,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(innerSize)
-                    )
-                }
-            }
-        }
-    }
+			    
+		    }
+	    }
+
+
+
+
+
+
+
+
+    }	
 }
+
 
 
 //Region SETTING STUFF
