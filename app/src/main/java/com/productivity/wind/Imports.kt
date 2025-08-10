@@ -526,7 +526,7 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
 //region SPACER
 
 @Composable
-fun Bspacer(
+fun space(
     w: Dp? = null,
     h: Dp? = null,
     Mwidth: Boolean = false,
