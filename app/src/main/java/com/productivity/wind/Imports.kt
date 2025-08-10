@@ -74,18 +74,13 @@ import android.content.ClipboardManager
 import java.lang.reflect.ParameterizedType
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
-
-
-
-
-
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.ripple
 
 
 //region Vals/ Vars FOR DATA
@@ -772,7 +767,7 @@ fun CText(
 
     Box(
     modifier = modifier
-        .indication(interaction, rememberRipple(bounded = true))
+        .indication(interaction, ripple(bounded = true))
         .pointerInput(annotated, layout) {
             detectTapGestures(
                 onPress = { pos: Offset ->
