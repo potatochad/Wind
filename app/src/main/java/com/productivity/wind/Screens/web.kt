@@ -68,8 +68,6 @@ import java.lang.reflect.Type
 fun Web() {
     SettingsScreen(
         titleContent = {
-            UI.SimpleRow(
-                content = {
                     Text("Web")
 
                     // WORK WEB
@@ -86,10 +84,6 @@ fun Web() {
                         BigIconColor = Color(0xFFFFC107), // Amber
                         OuterPadding = 0,
                     )
-
-
-                },
-            )
 
 
         },
