@@ -584,6 +584,7 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
 )
 */
 
+ 
 @Composable
 fun InputField(
     value: String,
@@ -593,26 +594,24 @@ fun InputField(
     isNumber: Boolean = false,
     focusRequester: FocusRequester? = null,
     onDone: (() -> Unit)? = null,
-    showDivider: Boolean = true, // acts as "show underline"
+    showDivider: Boolean = true, // underline
     textSize: TextUnit = 14.sp,
     boxHeight: Dp = 36.dp,
-    innerPadding: Dp = 0.dp,         // set 0 to kill side gaps
+    innerPadding: Dp = 0.dp,
     InputWidth: Dp = 80.dp,
     MaxLetters: Int? = 20_000,
     OnMaxLetters: (() -> Unit) = {},
     InputTextColor: Color = Color.White,
     InputBackgroundColor: Color = Color(0xFF1B1B1B),
 
-    // underline controls (your “divider distance” etc.)
-    underlineGap: Dp = 2.dp,         // distance between text box content and the line
-    underlineInset: Dp = 0.dp,       // left/right inset of the line
-    underlineThickness: Dp = 1.dp,   // line thickness
+    // underline controls
+    underlineGap: Dp = 2.dp,
+    underlineInset: Dp = 0.dp,
+    underlineThickness: Dp = 1.dp,
     underlineColor: Color = Color(0xFFFFD700),
 
     OnFocusLose: (() -> Unit)? = null,
 ) {
-    val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
-    val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
 
@@ -622,21 +621,22 @@ fun InputField(
 
     BasicTextField(
         value = value,
-        onValueChange = {
-            val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
-            if (parsed.length <= (MaxLetters ?: Int.MAX_VALUE)) onValueChange(parsed)
-            else OnMaxLetters()
+        onValueChange = { raw ->
+            val filtered = if (isNumber) raw.filter { it.isDigit() } else raw
+            if (filtered.length <= (MaxLetters ?: Int.MAX_VALUE)) onValueChange(filtered) else OnMaxLetters()
         },
         modifier = modifier
             .height(boxHeight)
+            // handle Enter without KeyboardOptions/Actions
+            .onKeyEvent { e ->
+                if (e.key == Key.Enter && e.type == KeyEventType.KeyUp) {
+                    onDone?.invoke()
+                    true
+                } else false
+            }
             .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
-        textStyle = LocalTextStyle.current.copy(color = InputTextColor, fontSize = textSize),
+        textStyle = TextStyle(color = InputTextColor, fontSize = textSize, textAlign = TextAlign.Start),
         singleLine = true,
-        keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(
-            keyboardType = keyboardType,
-            imeAction = imeAction
-        ),
-        keyboardActions = androidx.compose.ui.text.input.KeyboardActions(onDone = { onDone?.invoke() }),
         cursorBrush = SolidColor(Color.Gray),
         interactionSource = interactionSource,
         decorationBox = { innerTextField ->
@@ -646,11 +646,10 @@ fun InputField(
                     .height(boxHeight)
                     .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
                     .background(InputBackgroundColor)
-                    .padding(start = innerPadding, end = innerPadding, bottom = underlineGap) // control distance to line
                     .drawBehind {
                         if (showDivider) {
                             val stroke = underlineThickness.toPx()
-                            val y = size.height - stroke / 2
+                            val y = size.height - underlineGap.toPx() - stroke / 2
                             val inset = underlineInset.toPx()
                             drawLine(
                                 color = underlineColor,
@@ -663,18 +662,25 @@ fun InputField(
                 contentAlignment = Alignment.CenterStart
             ) {
                 if (value.isEmpty()) {
-                    androidx.compose.material3.Text(
+                    Text(
                         placeholderText,
                         color = InputTextColor.copy(alpha = 0.6f),
                         fontSize = textSize,
                         textAlign = TextAlign.Start
                     )
                 }
-                innerTextField()
+                Box(Modifier
+                    .height(boxHeight)
+                    .width(InputWidth)
+                    .padding(start = innerPadding, end = innerPadding)
+                ) {
+                    innerTextField()
+                }
             }
         }
     )
 }
+
 
 
 @Composable
