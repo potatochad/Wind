@@ -558,24 +558,17 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
 
 @Composable
 fun space(
-    w: Dp? = null,
-    h: Dp? = null,
     Mwidth: Boolean = false,
     Mheight: Boolean = false,
-    Msize: Boolean = false
 ) {
-    when {
-        Msize -> Spacer(Modifier.fillMaxSize())
-        Mwidth && Mheight -> Spacer(Modifier.fillMaxSize())
-        Mwidth && h != null -> Spacer(Modifier.fillMaxWidth().height(h))
-        Mwidth -> Spacer(Modifier.fillMaxWidth())
-        Mheight && w != null -> Spacer(Modifier.fillMaxHeight().width(w))
-        Mheight -> Spacer(Modifier.fillMaxHeight())
-        w != null && h != null -> Spacer(Modifier.size(w, h))
-        w != null -> Spacer(Modifier.width(w))
-        h != null -> Spacer(Modifier.height(h))
-        else -> Spacer(Modifier.size(0.dp))
+    if (Mwidth) {
+        Spacer(modifier = Modifier.fillMaxWidth())
     }
+    if (Mheight) {
+        Spacer(modifier = Modifier.fillMaxHeight())
+    }
+
+	
 }
 
 
