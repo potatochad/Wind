@@ -198,7 +198,8 @@ fun Menu() {
         titleContent = { MenuHeader() },
         onSearchClick = { },
         showBack = false,
-        showDivider = false
+        showDivider = false,
+        MheaderHeight = 500,
     ) {
         SettingItem(
             icon = Icons.Outlined.Chat,
