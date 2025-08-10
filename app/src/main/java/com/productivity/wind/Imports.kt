@@ -1229,7 +1229,7 @@ fun SettingsScreen(
     showSearch: Boolean = false,
     modifier: Modifier = Modifier,
     showDivider: Boolean = true,
-	MheaderHeight: Int = 44,
+	MheaderHeight: Int = 100,
     content: @Composable () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
