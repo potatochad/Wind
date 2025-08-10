@@ -274,7 +274,7 @@ fun PopUps(){
    G_EditPopUp(Popup.G_Edit)
    EnablePermissionsPopup(Popup.EnablePermissions)
    EditPopUp(Popup.Edit)
-   NeedMorePointsPopuo(Popup.NeedMorePoints)
+   NeedMorePointsPopup(Popup.NeedMorePoints)
    EnableBlockingPopup(Popup.EnableBlocking)
    AppChallange(Popup.AppChallange)
 }
