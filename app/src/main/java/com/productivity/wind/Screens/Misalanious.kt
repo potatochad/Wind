@@ -159,7 +159,6 @@ fun MainHeader(){
         Icon.Menu()
         Icon.Chill()
         Icon.Usage()
-        Icon.Logs()
         
         Spacer(modifier = Modifier.width(12.dp))
         Text(text = "Points ${Bar.funTime}", fontSize = 18.sp)
@@ -206,11 +205,6 @@ fun Menu() {
             icon = Icons.Outlined.Chat,
             title = "Contact Support",
             onClick = { SupportEmail(); Bar.ShowMenu = false }
-        )
-        SettingItem(
-                icon = Icons.Outlined.Landscape,
-                title = "Premium",
-                onClick = { Vlog("Coming Soon") }
         )
         SettingItem(
             icon = Icons.Outlined.Landscape,
