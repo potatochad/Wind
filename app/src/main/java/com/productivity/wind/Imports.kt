@@ -1190,6 +1190,7 @@ fun settingsHeader(
                 contentAlignment = Alignment.CenterStart
             ) {
 				UI.SimpleRow( 
+					padding = 0,
 					content = {
 						titleContent()
 				})
