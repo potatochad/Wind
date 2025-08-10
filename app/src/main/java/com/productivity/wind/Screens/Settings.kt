@@ -215,14 +215,9 @@ fun LogsScreen()= NoLagCompose {
         
     SettingsScreen(
         titleContent = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
                 Text("Logs")
                 Spacer(modifier = Modifier.weight(1f))
                 UI.CopyIcon(logText)
-            }
         }) {
         
         
