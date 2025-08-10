@@ -792,76 +792,56 @@ fun Ctext(
 
 //endregion CLICABLE TEXT ■■■■■■■■■
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SimpleIconButton(
-	onClick: () -> Unit, 
-	icon: ImageVector? = null,
-	BigIcon: ImageVector? = null,
-	BigIconColor: Color? = null,
-	SquareIcon: Boolean = false,
-	BigIconSize: Int = 30,
+    onClick: () -> Unit,
+    icon: ImageVector? = null,
+    BigIcon: ImageVector? = null,
+    BigIconColor: Color? = null,
+    SquareIcon: Boolean = false,
+    BigIconSize: Int = 30,
+    OuterPadding: Int = 5,          // outside space
+    ButtonSize: Int = 40,           // actual button box (default M3 ~48)
+    modifier: Modifier = Modifier,
 ) {
-    IconButton(
-		onClick = onClick,
-		// modifier = modifier.padding(OuterPadding.dp),
-	) {
-	    if (icon != null) {
-		    Icon(
-			    imageVector = icon,
-			    contentDescription = null,
-			    tint = Color(0xFFFFD700),
-			    modifier = Modifier
-				    .size(24.dp)
-		    )
-	    }	    
-	    
-	    if (BigIcon != null && BigIconColor != null) {
-		    if (!SquareIcon) {
-			    Box(
-				    modifier = Modifier
-					    .size(BigIconSize.dp)
-					    .clip(CircleShape)
-					    .background(BigIconColor),
-				    contentAlignment = Alignment.Center
-			    ) {
-				    Icon(
-					    imageVector = BigIcon,
-					    contentDescription = null,
-					    tint = Color.White,
-					    modifier = Modifier.size(20.dp)
-				    )
-			    }
-		    }
-		    else {
-			    Box(
-				    modifier = Modifier
-					    .size(BigIconSize.dp)
-					    .clip(RoundedCornerShape(6.dp))
-					    .background(BigIconColor),
-				    contentAlignment = Alignment.Center
-			    ) {
-				    Icon(
-					    imageVector = BigIcon,
-					    contentDescription = null,
-					    tint = Color.White,
-					    modifier = Modifier.size(24.dp)
-				    )
-			    }
+    CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+        IconButton(
+            onClick = onClick,
+            modifier = modifier
+                .padding(OuterPadding.dp) // OUTER padding
+                .size(ButtonSize.dp)      // controls inner room around icon
+        ) {
+            if (icon != null) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = Color(0xFFFFD700),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
 
-			    
-		    }
-	    }
-
-
-
-
-
-
-
-
-    }	
+            if (BigIcon != null && BigIconColor != null) {
+                val shape = if (SquareIcon) RoundedCornerShape(6.dp) else CircleShape
+                val innerSize = if (SquareIcon) 24.dp else 20.dp
+                Box(
+                    modifier = Modifier
+                        .size(BigIconSize.dp)
+                        .clip(shape)
+                        .background(BigIconColor),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = BigIcon,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(innerSize)
+                    )
+                }
+            }
+        }
+    }
 }
-
 
 
 //Region SETTING STUFF
@@ -1147,8 +1127,7 @@ fun settingsHeader(
     showBack: Boolean = true,
     showSearch: Boolean = false,
     modifier: Modifier = Modifier,
-    showDivider: Boolean = true,
-	//Mheight: Int = 40,
+    showDivider: Boolean = true
 ) {
     val ui = rememberSystemUiController()
     var DisableTB_Button by remember { mutableStateOf(false) }
@@ -1156,9 +1135,8 @@ fun settingsHeader(
         ui.setStatusBarColor(Color.Black, darkIcons = false)
     }
 
-    Column(//modifier = Modifier.heightIn(max = Mheight.dp
-		) {
-         Spacer(
+    Column {
+        Spacer(
             modifier = Modifier
                 .fillMaxWidth()
                 .statusBarsPadding()
