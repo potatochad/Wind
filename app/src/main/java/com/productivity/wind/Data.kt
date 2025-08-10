@@ -392,7 +392,9 @@ fun AppChallange(show: MutableState<Boolean>) {
             refreshApps()
 
             UI.SimpleRow( content ={
-                Text("If spend ")
+                
+                Text("If")
+                Ctext(text = "spend", onClick = {})
                 UI.InputField(
                     value = InputText,
                     onValueChange = { InputText = it },
@@ -405,10 +407,10 @@ fun AppChallange(show: MutableState<Boolean>) {
                     innerPadding = 0.dp,
                     InputBackgroundColor = Color.Transparent,
                 )
-                UI.CText(
-                    UI.t(" on "),
-                    UI.c("app", onClick = {  })
-                )
+                Text(" on ")
+                Ctext(text = "0 apps", onClick = {})
+
+                
             })
 
         
