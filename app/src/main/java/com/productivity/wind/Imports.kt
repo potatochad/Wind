@@ -771,45 +771,44 @@ fun CText(
     }
 
     Box(
-        modifier = modifier
-            .indication(interaction, rememberRipple(bounded = true))
-            .pointerInput(annotated, layout) {
-                detectTapGestures(
-                    onPress = { pos ->
-                        // start ripple + pressed style (like Button)
-                        val press = PressInteraction.Press(pos)
-                        interaction.emit(press)
+    modifier = modifier
+        .indication(interaction, rememberRipple(bounded = true))
+        .pointerInput(annotated, layout) {
+            detectTapGestures(
+                onPress = { pos: Offset ->
+                    // this = PressGestureScope
+                    val press = PressInteraction.Press(pos)
+                    this@pointerInput // no-op, just to show scope
 
-                        val l = layout
-                        val offset = l?.getOffsetForPosition(pos)
-                        val ann = offset?.let {
-                            annotated.getStringAnnotations("click", it, it).firstOrNull()
-                        }
-                        if (ann != null) pressedId = ann.item
+                    // start ripple
+                    interaction.emit(press)
 
-                        val released = tryAwaitRelease()
-                        interaction.emit(
-                            if (released) PressInteraction.Release(press)
-                            else PressInteraction.Cancel(press)
-                        )
-                        pressedId = null
-                    },
-                    onTap = { pos ->
-                        val l = layout ?: return@detectTapGestures
-                        val offset = l.getOffsetForPosition(pos)
-                        annotated.getStringAnnotations("click", offset, offset)
-                            .firstOrNull()
-                            ?.let { actions[it.item]?.invoke() }
-                    }
-                )
-            }
-    ) {
-        Text(
-            text = annotated,
-            style = style,
-            onTextLayout = { layout = it }
-        )
-    }
+                    // mark pressed span (if any)
+                    val off = layout?.getOffsetForPosition(pos)
+                    val ann = off?.let { annotated.getStringAnnotations("click", it, it).firstOrNull() }
+                    if (ann != null) pressedId = ann.item
+
+                    // wait for release/cancel
+                    val released = this.tryAwaitRelease()
+                    interaction.emit(
+                        if (released) PressInteraction.Release(press)
+                        else PressInteraction.Cancel(press)
+                    )
+                    pressedId = null
+                },
+                onTap = { pos: Offset ->
+                    val l = layout ?: return@detectTapGestures
+                    val off = l.getOffsetForPosition(pos)
+                    annotated.getStringAnnotations("click", off, off)
+                        .firstOrNull()
+                        ?.let { actions[it.item]?.invoke() }
+                }
+            )
+        }
+) {
+    Text(text = annotated, style = style, onTextLayout = { layout = it })
+}
+
 }
 
 // Shorthand
