@@ -119,7 +119,6 @@ class Settings {
     var halfWidth by m(0.dp)
     var ShowMenu by m(false)
 
-    var showLogsIcon by m(false)
 
     var lastDate by m("")
     var restoringFromFile by m(false)
@@ -144,7 +143,6 @@ class Settings {
     //region ACHIEVEMENTS
 
     var TotalTypedLetters by m(0)
-    var showUsageIcon by m(false)
 
     //endregion
 
@@ -284,7 +282,7 @@ fun PopUps(){
 
 // All other things
 @Composable
-fun NeedMorePointsPopuo(show: MutableState<Boolean>){
+fun NeedMorePointsPopup(show: MutableState<Boolean>){
     LazyPopup(
         show = Popup.NeedMorePoints, 
         title = "Not EnoughPoints", 
