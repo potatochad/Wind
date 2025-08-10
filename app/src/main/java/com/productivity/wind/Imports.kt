@@ -1156,7 +1156,8 @@ fun settingsHeader(
         ui.setStatusBarColor(Color.Black, darkIcons = false)
     }
 
-    Column(modifier = Modifier.heightIn(max = Mheight.dp)) {
+    Column(//modifier = Modifier.heightIn(max = Mheight.dp
+									   )) {
          Spacer(
             modifier = Modifier
                 .fillMaxWidth()
