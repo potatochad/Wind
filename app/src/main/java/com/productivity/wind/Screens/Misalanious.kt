@@ -158,7 +158,6 @@ fun MainHeader(){
     ) {
         Icon.Menu()
         Icon.Chill()
-        Icon.Usage()
         
         Spacer(modifier = Modifier.width(12.dp))
         Text(text = "Points ${Bar.funTime}", fontSize = 18.sp)
@@ -320,14 +319,6 @@ fun Add() {
         )
 }
 
-@Composable
-fun Logs() {
-  UI.SimpleIconButton(
-            onClick = { Global1.navController.navigate("LogsScreen") },
-            icon = Icons.Default.History
-        )
-}
-
 
 @Composable
 fun Edit() {
@@ -349,16 +340,6 @@ fun G_Edit() {
             },
             icon = Icons.Default.Edit
         )
-}
-
-@Composable
-fun Usage() {
-    if (Bar.showUsageIcon) {
-        UI.SimpleIconButton(
-            onClick = { Global1.navController.navigate("Achievements") },
-            icon = Icons.Outlined.QueryStats
-        )
-    }
 }
 
  //ICONS!!!!!!-------------------------///
