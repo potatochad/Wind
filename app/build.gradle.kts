@@ -120,9 +120,19 @@ ktlint {
 
 
 dependencies {
+
+implementation(platform(libs.androidx.compose.bom))
+
+// Needed for KeyboardOptions / KeyboardActions
+implementation("androidx.compose.foundation:foundation")
+
+// Needed for TextAlign, ImeAction, KeyboardType
+implementation("androidx.compose.ui:ui-text")
+
+
+
+
     implementation("com.google.accompanist:accompanist-navigation-animation:0.34.0")
-
-
     implementation("androidx.datastore:datastore-preferences:1.1.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.10")
