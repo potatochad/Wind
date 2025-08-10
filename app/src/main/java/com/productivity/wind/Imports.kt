@@ -83,12 +83,9 @@ import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.material3.ripple
 
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.ui.text.input.KeyboardOptions
-import androidx.compose.ui.text.style.TextAlign
 
 // --- imports you need ---
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -105,8 +102,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
@@ -658,15 +653,16 @@ fun InputField(
             if (filtered.length <= (MaxLetters ?: Int.MAX_VALUE)) onValueChange(filtered) else OnMaxLetters()
         },
         modifier = modifier
-            .height(boxHeight)
-            // handle Enter without KeyboardOptions/Actions
-            .onKeyEvent { e ->
-                if (e.key == Key.Enter && e.type == KeyEventType.KeyUp) {
-                    onDone?.invoke()
-                    true
-                } else false
-            }
-            .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
+			.height(boxHeight)
+			.onKeyEvent { event ->
+				if (event.key == Key.Enter && event.type == KeyEventType.KeyUp) {
+					onDone?.invoke()
+					true
+				} else false
+			}
+			.then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier)
+
+
         textStyle = TextStyle(color = InputTextColor, fontSize = textSize, textAlign = TextAlign.Start),
         singleLine = true,
         cursorBrush = SolidColor(Color.Gray),
