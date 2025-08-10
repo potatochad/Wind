@@ -1229,7 +1229,8 @@ fun SettingsScreen(
     showSearch: Boolean = false,
     modifier: Modifier = Modifier,
     showDivider: Boolean = true,
-    content: @Composable () -> Unit
+	MheaderHeight: Int = 44,
+    content: @Composable () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val baseModifier = Modifier
@@ -1255,7 +1256,8 @@ fun SettingsScreen(
                 onBackClick = onBackClick,
                 showBack = showBack,
                 showSearch = showSearch,
-                showDivider = showDivider
+                showDivider = showDivider,
+				Mheight = MheaderHeight,
             )
         }
         item {
