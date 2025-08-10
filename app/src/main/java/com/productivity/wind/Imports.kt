@@ -1147,7 +1147,8 @@ fun settingsHeader(
     showBack: Boolean = true,
     showSearch: Boolean = false,
     modifier: Modifier = Modifier,
-    showDivider: Boolean = true
+    showDivider: Boolean = true,
+	Mheight: Int = 40,
 ) {
     val ui = rememberSystemUiController()
     var DisableTB_Button by remember { mutableStateOf(false) }
@@ -1155,8 +1156,8 @@ fun settingsHeader(
         ui.setStatusBarColor(Color.Black, darkIcons = false)
     }
 
-    Column {
-        Spacer(
+    Column(modifier = Modifier.heightIn(max = Mheight.dp)) {
+         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
                 .statusBarsPadding()
