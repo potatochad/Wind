@@ -711,105 +711,22 @@ fun CopyIcon(text: String) {
 
 //region CLICKALE TEXTTTTT■■■■■■■■■■■
 
-
-sealed interface P
-data class T(val text: String, val style: SpanStyle? = null) : P
-data class C(val text: String, val onClick: () -> Unit, val style: SpanStyle? = null) : P
-
 @Composable
-fun CText(
-    vararg parts: P,
-    modifier: Modifier = Modifier,
-    style: TextStyle = TextStyle.Default,
-    defaultClickStyle: SpanStyle = SpanStyle(
-        color = MaterialTheme.colorScheme.primary,
-        textDecoration = TextDecoration.Underline
-    ),
+fun Ctext(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    var idx = 0
-    val actions = remember { mutableMapOf<String, () -> Unit>() }
-    var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
-
-    // Ripple like a Button
-    val interaction = remember { MutableInteractionSource() }
-    var pressedId by remember { mutableStateOf<String?>(null) }
-    val Gold = Color(0xFFFFD700)
-
-    val annotated = buildAnnotatedString {
-        parts.forEach { p ->
-            when (p) {
-                is T -> {
-                    val base = p.style ?: SpanStyle(
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.60f)
-                    )
-                    withStyle(base) { append(p.text) }
-                }
-
-                is C -> {
-                    val id = "c$idx"; idx++
-                    actions[id] = p.onClick
-                    pushStringAnnotation(tag = "click", annotation = id)
-
-                    val isPressed = pressedId == id
-                    val colorNow = if (isPressed) Gold.copy(alpha = 0.8f) else Gold
-
-                    withStyle((p.style ?: defaultClickStyle).copy(
-                        color = colorNow,
-                        textDecoration = TextDecoration.None,
-                        fontWeight = FontWeight.Bold
-                    )) { append(p.text) }
-
-                    pop()
-                }
-            }
-        }
-    }
-
-    Box(
-    modifier = modifier
-        .indication(interaction, ripple(bounded = true))
-        .pointerInput(annotated, layout) {
-            detectTapGestures(
-                onPress = { pos: Offset ->
-                    // this = PressGestureScope
-                    val press = PressInteraction.Press(pos)
-                    this@pointerInput // no-op, just to show scope
-
-                    // start ripple
-                    interaction.emit(press)
-
-                    // mark pressed span (if any)
-                    val off = layout?.getOffsetForPosition(pos)
-                    val ann = off?.let { annotated.getStringAnnotations("click", it, it).firstOrNull() }
-                    if (ann != null) pressedId = ann.item
-
-                    // wait for release/cancel
-                    val released = this.tryAwaitRelease()
-                    interaction.emit(
-                        if (released) PressInteraction.Release(press)
-                        else PressInteraction.Cancel(press)
-                    )
-                    pressedId = null
-                },
-                onTap = { pos: Offset ->
-                    val l = layout ?: return@detectTapGestures
-                    val off = l.getOffsetForPosition(pos)
-                    annotated.getStringAnnotations("click", off, off)
-                        .firstOrNull()
-                        ?.let { actions[it.item]?.invoke() }
-                }
-            )
-        }
-) {
-    Text(text = annotated, style = style, onTextLayout = { layout = it })
+    Text(
+        text = text,
+        modifier = modifier.clickable(onClick = onClick),
+        style = TextStyle(
+            color = Color(0xFFFFD700),           // gold
+            fontWeight = FontWeight.Bold,        // bold
+            textDecoration = TextDecoration.None // no underline
+        )
+    )
 }
-
-}
-
-// Shorthand
-fun t(text: String, style: SpanStyle? = null) = T(text, style)
-fun c(text: String, style: SpanStyle? = null, onClick: () -> Unit) = C(text, onClick, style)
-
 
 
 //endregion CLICABLE TEXT ■■■■■■■■■
