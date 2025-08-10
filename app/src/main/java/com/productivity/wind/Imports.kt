@@ -821,7 +821,7 @@ fun SimpleIconButton(
 	BigIcon: ImageVector? = null,
 	BigIconColor: Color? = null,
 	SquareIcon: Boolean = false,
-	BigIconSize: Int = 30,
+	BigIconSize: Int = 24,
 ) {
     IconButton(onClick = onClick) {
 	    if (icon != null) {
