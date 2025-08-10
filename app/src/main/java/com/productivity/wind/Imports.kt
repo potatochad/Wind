@@ -1128,7 +1128,7 @@ fun settingsHeader(
     showSearch: Boolean = false,
     modifier: Modifier = Modifier,
     showDivider: Boolean = true,
-	Mheight: Int = 44,
+	Mheight: Int = 200,
 ) {
     val ui = rememberSystemUiController()
     var DisableTB_Button by remember { mutableStateOf(false) }
@@ -1229,7 +1229,7 @@ fun SettingsScreen(
     showSearch: Boolean = false,
     modifier: Modifier = Modifier,
     showDivider: Boolean = true,
-	MheaderHeight: Int = 100,
+	MheaderHeight: Int = 200,
     content: @Composable () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
