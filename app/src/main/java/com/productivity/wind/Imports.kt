@@ -76,6 +76,18 @@ import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
 
 
+
+
+
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.material.ripple.rememberRipple
+
+
 //region Vals/ Vars FOR DATA
 
 val gson = Gson()
