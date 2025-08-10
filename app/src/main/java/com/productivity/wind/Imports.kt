@@ -801,16 +801,9 @@ fun SimpleIconButton(
     BigIconColor: Color? = null,
     SquareIcon: Boolean = false,
     BigIconSize: Int = 30,
-    OuterPadding: Int = 5,          // outside space
-    ButtonSize: Int = 40,           // actual button box (default M3 ~48)
-    modifier: Modifier = Modifier,
-) {
-    CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+){
         IconButton(
             onClick = onClick,
-            modifier = modifier
-                .padding(OuterPadding.dp) // OUTER padding
-                .size(ButtonSize.dp)      // controls inner room around icon
         ) {
             if (icon != null) {
                 Icon(
