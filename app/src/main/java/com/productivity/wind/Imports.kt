@@ -704,6 +704,7 @@ fun CopyIcon(text: String) {
 
 //region CLICKALE TEXTTTTT■■■■■■■■■■■
 
+
 sealed interface P
 data class T(val text: String, val style: SpanStyle? = null) : P
 data class C(val text: String, val onClick: () -> Unit, val style: SpanStyle? = null) : P
@@ -719,23 +720,22 @@ fun CText(
     ),
 ) {
     var idx = 0
-    val actions = mutableMapOf<String, () -> Unit>()
-    val scope = rememberCoroutineScope()
+    val actions = remember { mutableMapOf<String, () -> Unit>() }
+    var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
+
+    // Ripple like a Button
+    val interaction = remember { MutableInteractionSource() }
     var pressedId by remember { mutableStateOf<String?>(null) }
-    val pulse by animateFloatAsState(
-        targetValue = if (pressedId != null) 0.35f else 0f,
-        animationSpec = tween(120),
-        label = "clickPulse"
-    )
+    val Gold = Color(0xFFFFD700)
 
     val annotated = buildAnnotatedString {
         parts.forEach { p ->
             when (p) {
                 is T -> {
-                    val baseStyle = p.style ?: SpanStyle(
+                    val base = p.style ?: SpanStyle(
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.60f)
                     )
-                    withStyle(baseStyle) { append(p.text) }
+                    withStyle(base) { append(p.text) }
                 }
 
                 is C -> {
@@ -743,43 +743,67 @@ fun CText(
                     actions[id] = p.onClick
                     pushStringAnnotation(tag = "click", annotation = id)
 
-                    val gold = Color(0xFFFFD700)
-                    val colorNow = if (pressedId == id) gold.copy(alpha = 1f - pulse) else gold
+                    val isPressed = pressedId == id
+                    val colorNow = if (isPressed) Gold.copy(alpha = 0.8f) else Gold
 
                     withStyle((p.style ?: defaultClickStyle).copy(
                         color = colorNow,
                         textDecoration = TextDecoration.None,
                         fontWeight = FontWeight.Bold
-                    )) {
-                        append(p.text)
-                    }
+                    )) { append(p.text) }
+
                     pop()
                 }
             }
         }
     }
 
-    ClickableText(
-        text = annotated,
-        modifier = modifier,
-        style = style,
-    ) { offset ->
-        annotated.getStringAnnotations("click", offset, offset)
-            .firstOrNull()
-            ?.let {
-                pressedId = it.item
-                scope.launch {
-                    actions[it.item]?.invoke()
-                    delay(140)
-                    pressedId = null
-                }
+    Box(
+        modifier = modifier
+            .indication(interaction, rememberRipple(bounded = true))
+            .pointerInput(annotated, layout) {
+                detectTapGestures(
+                    onPress = { pos ->
+                        // start ripple + pressed style (like Button)
+                        val press = PressInteraction.Press(pos)
+                        interaction.emit(press)
+
+                        val l = layout
+                        val offset = l?.getOffsetForPosition(pos)
+                        val ann = offset?.let {
+                            annotated.getStringAnnotations("click", it, it).firstOrNull()
+                        }
+                        if (ann != null) pressedId = ann.item
+
+                        val released = tryAwaitRelease()
+                        interaction.emit(
+                            if (released) PressInteraction.Release(press)
+                            else PressInteraction.Cancel(press)
+                        )
+                        pressedId = null
+                    },
+                    onTap = { pos ->
+                        val l = layout ?: return@detectTapGestures
+                        val offset = l.getOffsetForPosition(pos)
+                        annotated.getStringAnnotations("click", offset, offset)
+                            .firstOrNull()
+                            ?.let { actions[it.item]?.invoke() }
+                    }
+                )
             }
+    ) {
+        Text(
+            text = annotated,
+            style = style,
+            onTextLayout = { layout = it }
+        )
     }
 }
 
-// -------- Shorthand makers ----------
+// Shorthand
 fun t(text: String, style: SpanStyle? = null) = T(text, style)
 fun c(text: String, style: SpanStyle? = null, onClick: () -> Unit) = C(text, onClick, style)
+
 
 
 //endregion CLICABLE TEXT ■■■■■■■■■
