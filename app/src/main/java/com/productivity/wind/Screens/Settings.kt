@@ -216,7 +216,7 @@ fun LogsScreen()= NoLagCompose {
     SettingsScreen(
         titleContent = {
                 Text("Logs")
-                Spacer(modifier = Modifier.weight(1f))
+                Bspacer(mw = true)
                 UI.CopyIcon(logText)
         }) {
         
