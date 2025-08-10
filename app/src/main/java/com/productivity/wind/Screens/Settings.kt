@@ -179,20 +179,6 @@ fun SettingsOtherScreen() {
     SettingsScreen(titleContent = { Text("Settings") }) {
 
         SettingItem(
-            icon = Icons.Outlined.AdminPanelSettings,
-            title = "Show Achievement icon shortcut",
-            endContent = {
-                    UI.OnOffSwitch(isOn = Bar.showUsageIcon, onToggle = { Bar.showUsageIcon = it }) 
-               }
-            )
-        SettingItem(
-            icon = Icons.Outlined.AdminPanelSettings,
-            title = "Show Logs shortcut",
-            endContent = {
-                    UI.OnOffSwitch(isOn = Bar.showLogsIcon, onToggle = { Bar.showLogsIcon= it }) 
-               }
-            )
-        SettingItem(
                 BigIcon = Icons.Filled.ListAlt,
                 BigIconColor = Color(0xFF90A4AE),
                 title = "Logs",
