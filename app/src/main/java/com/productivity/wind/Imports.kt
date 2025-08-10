@@ -1157,7 +1157,7 @@ fun settingsHeader(
     }
 
     Column(//modifier = Modifier.heightIn(max = Mheight.dp
-									   )) {
+		) {
          Spacer(
             modifier = Modifier
                 .fillMaxWidth()
