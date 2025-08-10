@@ -800,13 +800,15 @@ fun SimpleIconButton(
 	BigIconColor: Color? = null,
 	SquareIcon: Boolean = false,
 	BigIconSize: Int = 30,
-	OuterPadding: Int = 10,
+	OuterPadding: Int = 5,
 	modifier: Modifier = Modifier,
 ) {
     IconButton(
-		onClick = onClick,
-		modifier = modifier.padding(OuterPadding.dp),
-	) {
+    onClick = onClick,
+    modifier = modifier,
+    colors = IconButtonDefaults.iconButtonColors(),
+    contentPadding = PaddingValues(OuterPadding.dp) 
+) {
 	    if (icon != null) {
 		    Icon(
 			    imageVector = icon,
