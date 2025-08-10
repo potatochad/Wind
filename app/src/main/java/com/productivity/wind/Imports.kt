@@ -820,7 +820,8 @@ fun SimpleIconButton(
 	icon: ImageVector? = null,
 	BigIcon: ImageVector? = null,
 	BigIconColor: Color? = null,
-	SquareIcon: Boolean = false
+	SquareIcon: Boolean = false,
+	BigIconSize: Int = 30,
 ) {
     IconButton(onClick = onClick) {
 	    if (icon != null) {
@@ -837,7 +838,7 @@ fun SimpleIconButton(
 		    if (!SquareIcon) {
 			    Box(
 				    modifier = Modifier
-					    .size(30.dp)
+					    .size(BigIconSize.dp)
 					    .clip(CircleShape)
 					    .background(BigIconColor),
 				    contentAlignment = Alignment.Center
@@ -853,7 +854,7 @@ fun SimpleIconButton(
 		    else {
 			    Box(
 				    modifier = Modifier
-					    .size(40.dp)
+					    .size(BigIconSize.dp)
 					    .clip(RoundedCornerShape(6.dp))
 					    .background(BigIconColor),
 				    contentAlignment = Alignment.Center
