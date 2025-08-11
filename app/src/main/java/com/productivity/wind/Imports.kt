@@ -701,7 +701,11 @@ fun InputField(
     InputBackgroundColor: Color = SettingsItemCardColor,
 
     OnFocusLose: (() -> Unit)? = null,
-	AutoWidth: Boolean = false
+	AutoWidth: Boolean = false,
+	AutoWidthMin: Int = 60,
+	AutoWidthMax: Int = 200,
+	
+	NoBottomPadding: Boolean = false,
 ) {
     val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
     val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
@@ -709,6 +713,12 @@ fun InputField(
 
     val isFocused by interactionSource.collectIsFocusedAsState()
 
+	val outerMod = if (AutoWidth) {
+		modifier.widthIn(min = AutoWidthMin.dp, max = AutoWidthMax.dp)
+	} else {
+		modifier.width(InputWidth) // keep your fixed width when AutoWidth = false
+	}
+	
     LaunchedEffect(isFocused) {
 	    if (!isFocused) {
 		    OnFocusLose?.invoke()
@@ -726,7 +736,7 @@ fun InputField(
           }
         },
 
-        modifier = modifier
+        modifier = outerMod
             .height(boxHeight)
             .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
         textStyle = LocalTextStyle.current.copy(color = InputTextColor, fontSize = textSize),
@@ -744,7 +754,7 @@ fun InputField(
                 Box(
                     modifier = Modifier
                         .padding(horizontal = innerPadding)
-                        .width(InputWidth)
+                        .wrapContentWidth()
 						.height(boxHeight - 8.dp)
 						.clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)) // 👈 clips background to round shape
 						.background(InputBackgroundColor), // 👈 this sets the color
@@ -757,9 +767,14 @@ fun InputField(
                             fontSize = textSize
                         )
                     }
-
 					
-					Box(Modifier.padding(top = 20.dp)) { // moves typed text down
+
+					if (NoBottomPadding) {
+						Box(Modifier.padding(top = 8.dp)) { // moves typed text down
+							innerTextField()
+						}
+					}
+					if (!NoBottomPadding) {
 						innerTextField()
 					}
 
