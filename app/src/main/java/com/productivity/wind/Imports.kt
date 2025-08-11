@@ -1591,9 +1591,8 @@ class WatchdogService : Service() {
 
 
                     if (currentApp == "com.seekrtech.waterapp") {
-                        }}}
-                    }
-                }
+						
+					}
             }
         }
 
