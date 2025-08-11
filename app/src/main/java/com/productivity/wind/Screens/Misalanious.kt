@@ -183,13 +183,11 @@ fun MainHeader(){
 
 @Composable
 fun Menu() {
-
     SettingsScreen(
-        titleContent = { MenuHeader() },
-        onSearchClick = { },
+        titleContent = { UI.MenuHeader() },
         showBack = false,
         showDivider = false,
-        MheaderHeight = 500,
+        MheaderHeight = 700,
     ) {
         SettingItem(
             icon = Icons.Outlined.Chat,
@@ -206,7 +204,12 @@ fun Menu() {
             title = "Achievements",
             onClick = { Global1.navController.navigate("Achievements"); Bar.ShowMenu = false }
         )
+
+
+        
     }
+
+    
 }
 
 
