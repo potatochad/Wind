@@ -201,9 +201,8 @@ fun SettingsOtherScreen() {
 
 
 @Composable
-fun Mwidth(weight: Float = 1f) {
-    Spacer(modifier = Modifier.weight(weight))
-}
+fun FullWidthSpacer() = Spacer(Modifier.fillMaxWidth())
+
 
 
 
@@ -223,7 +222,7 @@ fun LogsScreen()= NoLagCompose {
         titleContent = {
                 Text("Logs")
                 
-                Mwidth()
+                FullWidthSpacer()
                 
                 UI.CopyIcon(logText)
         }) {
