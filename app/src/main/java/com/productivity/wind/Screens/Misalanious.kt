@@ -102,22 +102,22 @@ fun MyNavGraph(navController: NavHostController) {
             screen("Main") {
                 Main()
             }
-            composable("Achievements") {
+            screen("Achievements") {
                 Achievements()
             }
-            composable("Challenge") {
+            screen("Challenge") {
                     Challenge()
             }
 
             //region WEB
 
-            composable("Web") {
+            screen("Web") {
                 Web()
             }
-            composable("FunWeb") {
+            screen("FunWeb") {
                 FunWeb()
             }
-            composable("WorkWeb") {
+            screen("WorkWeb") {
                 WorkWeb()
             }
 
@@ -127,13 +127,13 @@ fun MyNavGraph(navController: NavHostController) {
 
             //region SETTINGS
 
-            composable("SettingsScreen") {
+            screen("SettingsScreen") {
                 SettingsScreen()
             }
-            composable("SettingsOtherScreen") {
+            screen("SettingsOtherScreen") {
                     SettingsOtherScreen()
             }
-            composable("LogsScreen") {
+            screen("LogsScreen") {
                     LogsScreen()
             }
 
