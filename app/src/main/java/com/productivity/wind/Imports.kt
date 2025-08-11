@@ -114,7 +114,7 @@ import androidx.compose.ui.res.painterResource
 import android.content.Intent
 import java.time.LocalDate
 
-import com.productivity.wind.Screens.Misalanious.*
+import com.productivity.wind.Screens.Misalanious.onNewDay
 //import android.provider.Settings
 
 
