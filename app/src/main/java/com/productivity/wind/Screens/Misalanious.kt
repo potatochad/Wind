@@ -144,6 +144,11 @@ fun MyNavGraph(navController: NavHostController) {
         }
 }
 
+@Composable
+fun ScreenNav(){
+        
+}
+
 
 //endregion
 
@@ -152,7 +157,7 @@ fun MyNavGraph(navController: NavHostController) {
 
 
 
-//region MICALANIOUS UI
+
 
 //TOP BAR
 @Composable
@@ -204,17 +209,8 @@ fun Menu() {
     
 }
 
-//endregion MENU
 
 
-
-
-//region CONFIGURE SCREEN
-
-
-
-
-//endregion CONFIGURE SCREEN
 
 //Gets called on a new day
 fun onNewDay() {  
@@ -223,8 +219,6 @@ fun onNewDay() {
 
 
 object Icon {
-        
-
         @Composable
         fun Menu() {
                 UI.SimpleIconButton(
@@ -232,71 +226,46 @@ object Icon {
                         icon = Icons.Default.Menu
                 )
         }
-
-@Composable
-fun Chill() {
-          UI.SimpleIconButton(
-                  onClick = { Global1.navController.navigate("Web") },
-                  icon = Icons.Default.SportsEsports
-          )
-}
-@Composable
-fun Add() {
-  UI.SimpleIconButton(
-            onClick = { Global1.navController.navigate("Challenge") },
-            icon = Icons.Default.Add
-        )
-}
-
-
-@Composable
-fun Edit() {
-    UI.SimpleIconButton(
-            onClick = { 
-                    if (Bar.funTime > Bar.Dpoints) Popup.Edit.value =true
-                    else Popup.NeedMorePoints.value = true
-            },
-            icon = Icons.Default.Edit
-        )
-
-}
-@Composable
-fun G_Edit() {
-    UI.SimpleIconButton(
-            onClick = { 
-                    if (Bar.funTime > Bar.Dpoints) Popup.G_Edit.value =true
-                    else Popup.NeedMorePoints.value = true
-            },
-            icon = Icons.Default.Edit
-        )
-}
+        
+        @Composable
+        fun Chill() {
+                UI.SimpleIconButton(
+                        onClick = { Global1.navController.navigate("Web") },
+                        icon = Icons.Default.SportsEsports
+                )
+        }
+        
+        @Composable
+        fun Add() {
+                UI.SimpleIconButton(
+                        onClick = { Global1.navController.navigate("Challenge") },
+                        icon = Icons.Default.Add
+                )
+        }
+        
+        @Composable
+        fun Edit() {
+                UI.SimpleIconButton(
+                        onClick = { 
+                                if (Bar.funTime > Bar.Dpoints) Popup.Edit.value =true
+                                else Popup.NeedMorePoints.value = true
+                        },
+                        icon = Icons.Default.Edit
+                )
+        }
+        
+        @Composable
+        fun G_Edit() {
+                UI.SimpleIconButton(
+                        onClick = { 
+                                if (Bar.funTime > Bar.Dpoints) Popup.G_Edit.value =true
+                                else Popup.NeedMorePoints.value = true
+                        },
+                        icon = Icons.Default.Edit
+                )
+        }
 
  //ICONS!!!!!!-------------------------///
 }
 
-
-
-
-
-@Composable
-fun StopBlockingButton() {
-    UI.OnOffSwitch(
-        isOn = Bar.BlockingEnabled,
-        onToggle = { isNowOn ->
-            if (isNowOn) {
-                Popup.EnableBlocking.value = true
-            } else {
-                val hasPoints = Bar.funTime > Bar.Dpoints
-                if (hasPoints) {
-                    Bar.BlockingEnabled = false
-                } else {
-                    Popup.NeedMorePoints.value = true
-                }
-            }
-        }
-    )
-}
-
-
-//endregion
 
