@@ -930,6 +930,22 @@ fun SimpleIconButton(
 			ctx.packageName
 		) == AppOpsManager.MODE_ALLOWED
 	}
+	fun requestUsageStatsPermission() {
+		val context = Global1.context
+		AlertDialog.Builder(context)
+			.setTitle("Permission Needed")
+			.setMessage("We need usage access to track your app usage and help you stay productive. This will open your phone’s settings — please enable access for this app.")
+			.setPositiveButton("OK") { _, _ ->
+				context.startActivity(
+					Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).apply {
+						flags = Intent.FLAG_ACTIVITY_NEW_TASK
+					}
+				)
+			}
+			.setNegativeButton("Cancel", null)
+			.show()
+	}
+
 
 //endregion SETTING STUFF
 
