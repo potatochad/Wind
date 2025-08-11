@@ -557,24 +557,11 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
 //region SPACER
 
 @Composable
-fun space(
-    Mwidth: Boolean = false,
-    Mheight: Boolean = false,
-) {
-	if (Mwidth) {
-		Row(modifier = Modifier.fillMaxWidth()) {
-			Spacer(modifier = Modifier.weight(1f))
-		}
-	}
+fun RowScope.Mwidth(weight: Float = 1f) { Spacer(Modifier.weight(weight)) }
 
-	if (Mheight) {
-		Column(modifier = Modifier.fillMaxHeight()) {
-			Spacer(modifier = Modifier.weight(1f))
-		}
-	}
-	
-	
-}
+@Composable
+fun ColumnScope.Mheight(weight: Float = 1f) { Spacer(Modifier.weight(weight)) }
+
 
 
 //endregion SPACER
