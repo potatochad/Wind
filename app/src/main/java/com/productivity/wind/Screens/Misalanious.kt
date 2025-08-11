@@ -159,13 +159,15 @@ fun MainHeader(){
         Icon.Menu()
         Icon.Chill()
         
-        Spacer(modifier = Modifier.width(12.dp))
+        UI.move(w = 12)
+        
         Text(text = "Points ${Bar.funTime}", fontSize = 18.sp)
         
         
         UI.End { 
                 Icon.Add()
         }
+        
         
     }
 
