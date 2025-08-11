@@ -196,19 +196,6 @@ fun SettingsOtherScreen() {
 
 
 
-
-
-
-
-@Composable
-fun End(content: @Composable () -> Unit) {
-    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-        content()
-    }
-}
-
-
-
 @Composable
 fun LogsScreen()= NoLagCompose {
     
@@ -225,7 +212,7 @@ fun LogsScreen()= NoLagCompose {
         titleContent = {
                 Text("Logs")
                 
-                End { UI.CopyIcon(logText) }
+                UI.End { UI.CopyIcon(logText) }
         }) {
         
         
