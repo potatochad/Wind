@@ -74,7 +74,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import java.io.*
 import androidx.compose.foundation.*
-
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.style.TextAlign
 
@@ -159,7 +158,7 @@ fun SettingsScreen() {
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
                 title = "Extension",
-            onClick = {}
+                onClick = {}
         ) 
         SettingItem(
                 BigIcon = Icons.Filled.Tune,
