@@ -157,11 +157,6 @@ fun MyNavGraph(navController: NavHostController) {
 //TOP BAR
 @Composable
 fun MainHeader(){
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
         Icon.Menu()
         Icon.Chill()
         
@@ -173,9 +168,6 @@ fun MainHeader(){
         UI.End { 
                 Icon.Add()
         }
-        
-        
-    }
 
 }
 
