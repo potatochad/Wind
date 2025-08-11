@@ -936,12 +936,13 @@ fun SimpleIconButton(
 		) == AppOpsManager.MODE_ALLOWED
 	}
 	fun requestUsageStatsPermission(activity: Activity) {
+		
 		AlertDialog.Builder(activity)
 			.setTitle("Permission Needed")
 			.setMessage("We need Usage Access to track app usage and help you stay productive. This will open Settings — please enable access for this app.")
 			.setPositiveButton("OK") { _, _ ->
-				val intent = Intent(action = Settings.ACTION_USAGE_ACCESS_SETTINGS).apply {
-					addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+				val intent = android.content.Intent(android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS).apply {
+					addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
 				}
 				try {
 					activity.startActivity(intent)
