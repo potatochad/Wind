@@ -113,14 +113,15 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 import android.content.Intent
 import java.time.LocalDate
-import com.productivity.wind.Screens.onNewDay
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+
 import com.productivity.wind.*
+import com.productivity.wind.Screens.*
+
 
 //import android.provider.Settings
 
