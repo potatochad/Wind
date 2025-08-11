@@ -101,7 +101,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun MyNavGraph(navController: NavHostController) {
         NavHost(navController = navController, startDestination = "Main") {
-            composable("Main") {
+            screen("Main") {
                 Main()
             }
             composable("Achievements") {
@@ -147,6 +147,9 @@ fun MyNavGraph(navController: NavHostController) {
 @Composable
 fun ScreenNav(){
         
+}
+fun NavGraphBuilder.screen(route: String, content: @Composable () -> Unit) {
+    composable(route) { content() }
 }
 
 
