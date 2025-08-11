@@ -576,9 +576,10 @@ fun MenuHeader(
     iconTint: Color = Color(0xFFFFD700),
     titleSize: TextUnit = 28.sp,
     topPadding: Dp = 8.dp,
-    bottomPadding: Dp = 20.dp
+    bottomPadding: Dp = 20.dp,
+	StartPaddingRemove: Int = 40,
 ) {
-    val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - 40.dp)
+    val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - StartPaddingRemove.dp)
 
     Column(
         modifier = Modifier.padding(start = safeStartPadding),
