@@ -112,6 +112,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 
+import androidx.appcompat.app.AlertDialog
+import android.app.AppOpsManager
+import android.content.Context
+import android.content.Intent
+import android.provider.Settings
+import java.time.LocalDate
+import kotlinx.coroutines.*
+import com.productivity.wind.Screens.onNewDay
 
 
 
