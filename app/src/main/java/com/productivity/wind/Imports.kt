@@ -1465,6 +1465,32 @@ fun LazyMenu(
 
 
 
+
+object DayChecker {
+    private var job: Job? = null
+
+        
+    fun start() {
+        if (job?.isActive == true) return  // Already running
+        if (Bar.lastDate == "") { Bar.lastDate = LocalDate.now().toString() }
+            
+        job = CoroutineScope(Dispatchers.Default).launch {
+            while (coroutineContext.isActive) {
+                delay(60 * 1000L)
+                val today = LocalDate.now().toString()
+                if (today != Bar.lastDate) {
+                    Bar.lastDate = today
+                    onNewDay()
+                }
+            }
+        }
+    }
+
+    
+    
+}
+
+
 //endregion
 
 //endregion
