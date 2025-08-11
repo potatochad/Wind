@@ -562,13 +562,13 @@ fun space(
     Mheight: Boolean = false,
 ) {
 	if (Mwidth) {
-		Row(modifier = Modifier.fillMaxWidth) {
+		Row(modifier = Modifier.fillMaxWidth()) {
 			Spacer(modifier = Modifier.weight(1f))
 		}
 	}
 
 	if (Mheight) {
-		Column(modifier = Modifier.fillMaxHeight) {
+		Column(modifier = Modifier.fillMaxHeight()) {
 			Spacer(modifier = Modifier.weight(1f))
 		}
 	}
