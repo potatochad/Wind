@@ -1519,6 +1519,13 @@ object DayChecker {
 fun NavGraphBuilder.url(route: String, content: @Composable () -> Unit) {
     composable(route) { content() }
 }
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun MyNavGraph(navController: NavHostController) {
+        NavHost(navController = navController, startDestination = "Main") {
+            ScreenNav()
+        }
+}
 
 
 //endregion
