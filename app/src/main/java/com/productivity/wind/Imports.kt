@@ -561,7 +561,14 @@ fun space(
     Mwidth: Boolean = false,
     Mheight: Boolean = false,
 ) {
+	Row {
         Spacer(modifier = Modifier.weight(1f))
+	}
+
+	Column {
+		Spacer(modifier = Modifier.weight(1f))
+	}
+	
 }
 
 
