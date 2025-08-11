@@ -114,7 +114,7 @@ import androidx.compose.ui.res.painterResource
 
 import android.content.Intent
 import java.time.LocalDate
-import android.provider.Settings
+//import android.provider.Settings
 
 
 
@@ -1595,7 +1595,7 @@ class WatchdogService : Service() {
 
                     if (currentApp == "com.seekrtech.waterapp") {
 						
-					}
+					}   }}
             }
         }
 
