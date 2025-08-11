@@ -197,7 +197,7 @@ fun Menu() {
         SettingItem(
             icon = Icons.Outlined.Landscape,
             title = "Settings",
-            onClick = { Global1.navController.navigate("SettingsScreen"); Bar.ShowMenu = false }
+            onClick = { Global1.navController.navigate("SettingsScreen"); Bar.ShowMenu = false  }
         )
         SettingItem(
             icon = Icons.Outlined.QueryStats,
