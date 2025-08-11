@@ -91,7 +91,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-
 import androidx.navigation.NavGraphBuilder
 
 //region NavController
@@ -147,9 +146,7 @@ fun MyNavGraph(navController: NavHostController) {
 fun ScreenNav(){
         
 }
-fun NavGraphBuilder.screen(route: String, content: @Composable () -> Unit) {
-    composable(route) { content() }
-}
+
 
 
 //endregion
