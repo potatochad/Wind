@@ -701,6 +701,7 @@ fun InputField(
     InputBackgroundColor: Color = SettingsItemCardColor,
 
     OnFocusLose: (() -> Unit)? = null,
+	AutoWidth: Boolean = false
 ) {
     val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
     val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
@@ -756,7 +757,14 @@ fun InputField(
                             fontSize = textSize
                         )
                     }
-                    innerTextField()
+
+					
+					Box(Modifier.padding(top = 20.dp)) { // moves typed text down
+						innerTextField()
+					}
+
+
+					
                 }
                 if (showDivider) {
                     Divider(
