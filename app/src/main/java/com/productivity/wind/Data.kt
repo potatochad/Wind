@@ -399,10 +399,14 @@ fun AppChallange(show: MutableState<Boolean>) {
                     onDone = { DONE() },
                     textSize = 14.sp,
                     boxHeight = 40.dp,
-                    InputWidth = 100.dp,
                     MaxLetters = 50,
                     showDivider = false,
                     innerPadding = 0.dp,
+
+                    AutoWidth = true,
+                    AutoWidthMin = 20,
+                    AutoWidthMax = 50,
+                    NoBottomPadding = true,
                     InputBackgroundColor = Color.Transparent,
                 )
                 Text(" on ")
