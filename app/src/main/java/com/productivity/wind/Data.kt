@@ -104,7 +104,6 @@ class Settings {
     var BlockingEnabled by m(false)
     var currentApp by m("")
     var COUNT by m(0)
-    var NewDay by m(true)
 
     //refreshs to 0 daily// if more than 50 seconds, get 600 time
     var WaterDOtime_spent by m(0)
