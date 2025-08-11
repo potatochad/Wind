@@ -8,8 +8,7 @@ import com.google.gson.reflect.TypeToken
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.foundation.layout.heightIn
-import com.productivity.wind.Screens.DayChecker
-import com.productivity.wind.Screens.MyNavGraph
+import com.productivity.wind.Screens.*
 import androidx.compose.runtime.mutableStateOf
 import android.app.Service
 import android.app.usage.UsageStatsManager
