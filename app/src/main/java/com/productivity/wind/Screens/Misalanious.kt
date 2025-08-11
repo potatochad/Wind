@@ -224,31 +224,9 @@ fun Menu() {
 
 //endregion CONFIGURE SCREEN
 
-//CHECKS IF NEW DAY/// WIRED UP TO SETTINGS VAR NEWDAY
-object DayChecker {
-    private var job: Job? = null
-
-        
-    fun start() {
-        if (job?.isActive == true) return  // Already running
-        if (Bar.lastDate == "") { Bar.lastDate = LocalDate.now().toString() }
-            
-        job = CoroutineScope(Dispatchers.Default).launch {
-            while (coroutineContext.isActive) {
-                delay(60 * 1000L)
-                val today = LocalDate.now().toString()
-                if (today != Bar.lastDate) {
-                    Bar.lastDate = today
-                    onNewDay()
-                }
-            }
-        }
-    }
-
-    private fun onNewDay() {
-        Bar.NewDay = true
+//Gets called on a new day
+fun onNewDay() {  
         Bar.WaterDOtime_spent = 0
-    }
 }
 
 
