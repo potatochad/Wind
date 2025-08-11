@@ -177,15 +177,6 @@ fun FindBar(statePath: String): android.util.Pair<Any, KMutableProperty1<Any, St
 
 
 
-//region renames UI
-
-val Mwidth = Modifier.weight(1f)
-
-
-//endregion renames UI
-
-
-
 //region log
 
 fun log(message: String, tag: String? = "Bad") {
