@@ -40,8 +40,6 @@ import com.productivity.wind.UI
 @Composable
 fun Main() {
     LazyMenu { Menu() }
-    if (Bar.NewDay == true) { Bar.HowManyDoneRetypes_InDay = 0}
-    Bar.NewDay = false
     MAINStart()
     
     SettingsScreen(titleContent = { MainHeader() }, showBack = false) {
