@@ -199,7 +199,7 @@ fun MenuHeader(
     topPadding: Dp = 8.dp,
     bottomPadding: Dp = 20.dp
 ) {
-    val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - 50.dp)
+    val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - 40.dp)
 
     Column(
         modifier = Modifier.padding(start = safeStartPadding),
@@ -221,28 +221,6 @@ fun MenuHeader(
     }
 }
 
-
-//region MENU
-@Composable
-fun MenuHeader7(){
-    val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - 50.dp)
-    Column(modifier = Modifier.padding(start = safeStartPadding), horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.height(8.dp))
-        Icon(
-            painter = painterResource(id = R.drawable.baseline_radar_24),
-            contentDescription = "Radar Icon",
-            tint = Color(0xFFFFD700),
-            modifier = Modifier.size(60.dp)
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = "Wind",
-            fontSize = 28.sp // 👈 make it bigger here
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-    }
-
-}
 @Composable
 fun Menu() {
 
