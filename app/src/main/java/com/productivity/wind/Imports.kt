@@ -1515,6 +1515,10 @@ object DayChecker {
     
 }
 
+fun NavGraphBuilder.screen(route: String, content: @Composable () -> Unit) {
+    composable(route) { content() }
+}
+
 
 //endregion
 
