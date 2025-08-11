@@ -552,6 +552,13 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
     }
 }
 
+@Composable
+fun End(content: @Composable () -> Unit) {
+    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
+        content()
+    }
+}
+
 
 @Composable
 fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
