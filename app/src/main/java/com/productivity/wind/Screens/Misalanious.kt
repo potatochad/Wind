@@ -192,7 +192,7 @@ fun Menu() {
         SettingItem(
             icon = Icons.Outlined.Chat,
             title = "Contact Support",
-            onClick = { SupportEmail(); Bar.ShowMenu = false }
+            onClick = { UI.SendEmail(); Bar.ShowMenu = false }
         )
         SettingItem(
             icon = Icons.Outlined.Landscape,
@@ -210,71 +210,6 @@ fun Menu() {
     }
 
     
-}
-
-fun SendEmail(
-    recipient: String = "productivity.shield@gmail.com",
-    subject: String = "Support Request – App Issue",
-    includePhoneInfo: Boolean = true,
-    prefillMessage: String = "I'm experiencing the following issue with the app:\n\n"
-) {
-    val context = Global1.context
-        
-    val body = buildString {
-        appendLine()
-        if (includePhoneInfo) {
-            appendLine("Phone Info:")
-            appendLine("• Manufacturer: ${Build.MANUFACTURER}")
-            appendLine("• Model: ${Build.MODEL}")
-            appendLine("• Android Version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})")
-            appendLine()
-        }
-        append(prefillMessage)
-    }
-
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "message/rfc822"
-        putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
-        putExtra(Intent.EXTRA_SUBJECT, subject)
-        putExtra(Intent.EXTRA_TEXT, body)
-    }
-
-    val chooser = Intent.createChooser(intent, "Send Email").apply {
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    }
-
-    context.startActivity(chooser)
-}
-
-fun SupportEmail() {
-    val subject = "Support Request – App Issue"
-
-    val body = buildString {
-        appendLine()
-        appendLine("Phone Info:")
-        appendLine("• Manufacturer: ${Build.MANUFACTURER}")
-        appendLine("• Model: ${Build.MODEL}")
-        appendLine("• Android Version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})")
-        appendLine()
-        appendLine("I'm experiencing the following issue with the app:")
-        appendLine()
-
-    }
-
-    val email = arrayOf("productivity.shield@gmail.com")
-
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "message/rfc822"
-        putExtra(Intent.EXTRA_EMAIL, email)
-        putExtra(Intent.EXTRA_SUBJECT, subject)
-        putExtra(Intent.EXTRA_TEXT, body)
-    }
-
-    val chooser = Intent.createChooser(intent, "Send Email").apply {
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    }
-
-    context.startActivity(chooser)
 }
 
 //endregion MENU
