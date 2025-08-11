@@ -561,14 +561,7 @@ fun space(
     Mwidth: Boolean = false,
     Mheight: Boolean = false,
 ) {
-    if (Mwidth) {
-        Spacer(modifier = Modifier.fillMaxWidth())
-    }
-    if (Mheight) {
-        Spacer(modifier = Modifier.fillMaxHeight())
-    }
-
-	
+        Spacer(Modifier.weight(1f))    
 }
 
 
