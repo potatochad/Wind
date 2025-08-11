@@ -568,6 +568,39 @@ fun move(w: Int = 0, h: Int = 0) {
 }
 
 
+@Composable
+fun MenuHeader(
+    title: String = "Wind",
+    iconRes: Int = R.drawable.baseline_radar_24,
+    iconSize: Dp = 60.dp,
+    iconTint: Color = Color(0xFFFFD700),
+    titleSize: TextUnit = 28.sp,
+    topPadding: Dp = 8.dp,
+    bottomPadding: Dp = 20.dp
+) {
+    val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - 40.dp)
+
+    Column(
+        modifier = Modifier.padding(start = safeStartPadding),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(Modifier.height(topPadding))
+        Icon(
+            painter = painterResource(id = iconRes),
+            contentDescription = "$title Icon",
+            tint = iconTint,
+            modifier = Modifier.size(iconSize)
+        )
+        Spacer(Modifier.height(4.dp))
+        Text(
+            text = title,
+            fontSize = titleSize
+        )
+        Spacer(Modifier.height(bottomPadding))
+    }
+}
+
+
 
 
 @Composable
