@@ -190,7 +190,7 @@ fun MainHeader(){
 
 
 @Composable
-fun MenuHeader6(
+fun MenuHeader(
     title: String = "Wind",
     iconRes: Int = R.drawable.baseline_radar_24,
     iconSize: Dp = 60.dp,
@@ -224,7 +224,7 @@ fun MenuHeader6(
 
 //region MENU
 @Composable
-fun MenuHeader(){
+fun MenuHeader7(){
     val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - 50.dp)
     Column(modifier = Modifier.padding(start = safeStartPadding), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.height(8.dp))
