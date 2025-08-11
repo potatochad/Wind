@@ -602,6 +602,40 @@ fun MenuHeader(
     }
 }
 
+fun SendEmail(
+    recipient: String = "productivity.shield@gmail.com",
+    subject: String = "Support Request – App Issue",
+    includePhoneInfo: Boolean = true,
+    prefillMessage: String = "I'm experiencing the following issue with the app:\n\n"
+) {
+    val context = Global1.context
+        
+    val body = buildString {
+        appendLine()
+        if (includePhoneInfo) {
+            appendLine("Phone Info:")
+            appendLine("• Manufacturer: ${Build.MANUFACTURER}")
+            appendLine("• Model: ${Build.MODEL}")
+            appendLine("• Android Version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})")
+            appendLine()
+        }
+        append(prefillMessage)
+    }
+
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "message/rfc822"
+        putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, body)
+    }
+
+    val chooser = Intent.createChooser(intent, "Send Email").apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+
+    context.startActivity(chooser)
+}
+
 
 
 
