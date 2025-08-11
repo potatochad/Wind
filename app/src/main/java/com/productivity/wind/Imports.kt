@@ -1516,7 +1516,7 @@ object DayChecker {
     
 }
 
-fun NavGraphBuilder.screen(route: String, content: @Composable () -> Unit) {
+fun NavGraphBuilder.url(route: String, content: @Composable () -> Unit) {
     composable(route) { content() }
 }
 
