@@ -112,7 +112,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 
-
+import android.content.Intent
+import java.time.LocalDate
 
 
 //region Vals/ Vars FOR DATA
@@ -1590,17 +1591,7 @@ class WatchdogService : Service() {
 
 
                     if (currentApp == "com.seekrtech.waterapp") {
-                        log("NEW DAY??; ${Bar.NewDay}", "bad")
-                        log("waterdo time; ${Bar.WaterDOtime_spent}", "bad")
-                        if (Bar.NewDay) {
-                            if (Bar.WaterDOtime_spent > 50) {
-                                Bar.funTime += 900
-                                Bar.NewDay = false
-                            } else {
-                                Bar.WaterDOtime_spent += 1
-                            }
-                        }
-                    }
+                        }}}
                     }
                 }
             }
