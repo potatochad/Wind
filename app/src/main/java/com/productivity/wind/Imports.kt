@@ -177,6 +177,14 @@ fun FindBar(statePath: String): android.util.Pair<Any, KMutableProperty1<Any, St
 
 
 
+//region renames UI
+
+val Mwidth = Modifier.weight(1f)
+
+
+//endregion renames UI
+
+
 
 //region log
 
@@ -552,19 +560,6 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
         }
     }
 }
-
-
-//region SPACER
-
-@Composable
-fun RowScope.Mwidth(weight: Float = 1f) { Spacer(Modifier.weight(weight)) }
-
-@Composable
-fun ColumnScope.Mheight(weight: Float = 1f) { Spacer(Modifier.weight(weight)) }
-
-
-
-//endregion SPACER
 
 
 @Composable
