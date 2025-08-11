@@ -93,63 +93,26 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphBuilder
 
-//region NavController
-//Global1.navController - to use anywhere, no input
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun MyNavGraph(navController: NavHostController) {
-        NavHost(navController = navController, startDestination = "Main") {
-            screen("Main") {
-                Main()
-            }
-            screen("Achievements") {
-                Achievements()
-            }
-            screen("Challenge") {
-                    Challenge()
-            }
 
-            //region WEB
+fun NavGraphBuilder.ScreenNav() {
+    //Main—StartDestination    
+    url("Main") { Main() }
 
-            screen("Web") {
-                Web()
-            }
-            screen("FunWeb") {
-                FunWeb()
-            }
-            screen("WorkWeb") {
-                WorkWeb()
-            }
+    
+    url("Achievements") { Achievements() }
+    url("Challenge") { Challenge() }
 
+    
+    url("Web") { Web() }
+    url("FunWeb") { FunWeb() }
+    url("WorkWeb") { WorkWeb() }
 
-            //endregion WEB
-
-
-            //region SETTINGS
-
-            screen("SettingsScreen") {
-                SettingsScreen()
-            }
-            screen("SettingsOtherScreen") {
-                    SettingsOtherScreen()
-            }
-            screen("LogsScreen") {
-                    LogsScreen()
-            }
-
-            //endregion SETTINGS
-
-        }
+    
+    url("SettingsScreen") { SettingsScreen() }
+    url("SettingsOtherScreen") { SettingsOtherScreen() }
+    url("LogsScreen") { LogsScreen() }
 }
 
-@Composable
-fun ScreenNav(){
-        
-}
-
-
-
-//endregion
 
 
 
