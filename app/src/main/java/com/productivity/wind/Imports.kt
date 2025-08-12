@@ -860,7 +860,7 @@ fun InputField(
 
 
 @Composable
-fun SimpleTextInputField(
+fun InputField2(
     value: String,
     onChange: (String) -> Unit,
     isNumber: Boolean = false,
@@ -872,25 +872,31 @@ fun SimpleTextInputField(
     AutoWidthMax: Int = 200,
 ) {
     val FocusChange = TextMemory()
-    val imeAction = ImeAction(null) // no onDone param now
     val isFocused by IsFocused(FocusChange)
+    OnLoseFocus(isFocused, null)
 
-    val outerMod = Modifier.widthIn(min = AutoWidthMin.dp, max = AutoWidthMax.dp)
+    val style = TextStyle(TextColor, textSize)
 
-    OnLoseFocus(isFocused, null) // no OnFocusLose param now
+    val measurer = rememberTextMeasurer()
+    val density = LocalDensity.current
+    val textForMeasure = if (value.isEmpty()) " " else value
+    val measuredPx = measurer.measure(textForMeasure, style = style).size.width
+    val widthDp = (with(density) { measuredPx.toDp() } + 8.dp) // + padding
+        .coerceIn(AutoWidthMin.dp, AutoWidthMax.dp)
 
     BasicTextField(
         value = value,
         onValueChange = {
             val input = FilterInput(isNumber, it)
-            if (input.length <= max(MaxLetters)) {
-                onChange(input)
-            }
+            if (input.length <= max(MaxLetters)) onChange(input)
         },
-        modifier = outerMod.height(height),
-        textStyle = TextStyle(TextColor, textSize),
+        modifier = Modifier.width(widthDp).height(height),
+        textStyle = style,
         singleLine = true,
-		keyboardOptions = KeyboardOptions(type(isNumber), imeAction),
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = KeyboardType(isNumber),
+            imeAction = ImeAction.Default
+        ),
         keyboardActions = doneAction(null),
         cursorBrush = grayCursor(),
         interactionSource = FocusChange,
