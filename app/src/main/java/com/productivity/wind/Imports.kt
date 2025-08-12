@@ -890,10 +890,7 @@ fun SimpleTextInputField(
         modifier = outerMod.height(height),
         textStyle = TextStyle(TextColor, textSize),
         singleLine = true,
-        keyboardOptions = buildKeyboardOptions(
-            keyboardType = KeyboardType(isNumber),
-            imeAction = imeAction
-        ),
+		keyboardOptions = KeyboardOptions(type(isNumber), imeAction),
         keyboardActions = doneAction(null),
         cursorBrush = grayCursor(),
         interactionSource = FocusChange,
