@@ -1417,46 +1417,45 @@ fun LazyPopup(
                 .alpha(0f)
                 .clearAndSetSemantics { }
         ) { if (content == null) Text(message) else content() }
-        
 	}
 
-    if (!show.value) {return}
+    if (show.value) { 
+		AlertDialog(
+			onDismissRequest = {
+				onDismiss?.invoke()
 
-    AlertDialog(
-        onDismissRequest = {
-            onDismiss?.invoke()
+				show.value = false
+			},
+			title = { Text(title) },
+			text = { if (content == null) {Text(message) }
+				else {
+					content()
+				}
+			},
+			confirmButton = {
+				if (showConfirm) {
+					TextButton(onClick = {
+						onConfirm?.invoke()
+						show.value = false
+					}) {
+						Text("OK")
+					}
+				}
+			},
+			dismissButton = if (showCancel) {
+				{
+					TextButton(onClick = {
+						onCancel?.invoke()
+						show.value = false
+					}) {
+						Text("Cancel")
+					}
+				}
+			} else null
+		)
+	}
 
-            show.value = false
-        },
-        title = { Text(title) },
-        text = { if (content == null) {Text(message) }
-            else {
-                content()
-            }
-
-               },
-        confirmButton = {
-            if (showConfirm) {
-                TextButton(onClick = {
-                    onConfirm?.invoke()
-                    show.value = false
-                }) {
-                    Text("OK")
-                }
-            }
-
-        },
-        dismissButton = if (showCancel) {
-            {
-                TextButton(onClick = {
-                    onCancel?.invoke()
-                    show.value = false
-                }) {
-                    Text("Cancel")
-                }
-            }
-        } else null
-    )
+	
 
 }
 
