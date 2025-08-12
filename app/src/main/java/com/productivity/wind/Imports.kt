@@ -745,7 +745,7 @@ fun InputField(
         onValueChange = {
           val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
           if (parsed.length <= (MaxLetters ?: Int.MAX_VALUE)) {
-            onValueChange(parsed) 
+            onChange(parsed) 
 		  
 		  }  
           else {
