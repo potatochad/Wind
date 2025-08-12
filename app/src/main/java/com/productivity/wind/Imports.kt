@@ -726,6 +726,13 @@ fun KeyboardOptions(
 )
 fun grayCursor() = SolidColor(Color.Gray)
 
+fun OptionsInput(
+    onDone: (() -> Unit)?
+) = KeyboardOptions.Default.copy(
+	var isNumber = true
+    keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text,
+    imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
+)
 
 
 
@@ -863,6 +870,7 @@ fun InputField(
 fun InputField2(
     value: String,
     onChange: (String) -> Unit,
+    onDone: (() -> Unit)? = null,          // ← added
     textSize: TextUnit = 14.sp,
     height: Dp = 36.dp,
     MaxLetters: Int? = 3,
@@ -880,21 +888,22 @@ fun InputField2(
     val density = LocalDensity.current
     val textForMeasure = if (value.isEmpty()) " " else value
     val measuredPx = measurer.measure(textForMeasure, style = style).size.width
-    val widthDp = (with(density) { measuredPx.toDp() } + 8.dp) // + padding
+    val widthDp = (with(density) { measuredPx.toDp() } + 8.dp)
         .coerceIn(AutoWidthMin.dp, AutoWidthMax.dp)
 
     BasicTextField(
         value = value,
         onValueChange = {
-            val input = FilterInput(isNumber, it)
+            val input = FilterInput(true, it)
             if (input.length <= max(MaxLetters)) onChange(input)
         },
         modifier = Modifier.width(widthDp).height(height),
         textStyle = style,
         singleLine = true,
-		keyboardOptions = KeyboardOptions(type(true), imeAction),
- 
-        keyboardActions = doneAction(null),
+        keyboardOptions = OptionsInput(onDone),
+        keyboardActions = KeyboardActions(
+            onDone = { onDone?.invoke() }
+        ),
         cursorBrush = grayCursor(),
         interactionSource = FocusChange,
         decorationBox = { innerTextField ->
