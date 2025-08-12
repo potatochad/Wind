@@ -725,6 +725,20 @@ fun KeyboardOptions(
     imeAction = imeAction
 )
 fun grayCursor() = SolidColor(Color.Gray)
+@Composable
+fun AutoWidthMod(
+    text: String,
+    style: TextStyle,
+    min: Dp,
+    max: Dp,
+    paddingH: Dp = 0.dp
+): Modifier {
+    val measurer = rememberTextMeasurer()
+    val density = LocalDensity.current
+    val wPx = measurer.measure(text, style = style).size.width
+    val wDp = with(density) { wPx.toDp() } + paddingH * 2
+    return Modifier.width(wDp.coerceIn(min, max))
+}
 
 
 
@@ -764,11 +778,13 @@ fun InputField(
 	
 	//val AutoWidthMaxVAL = AutoWidthMin + (charCount * charWidthDp) + (paddingHorizontalDp * 2)
 
-	val outerMod = if (AutoWidth) {
-		Modifier.widthIn(min = AutoWidthMin.dp, max = AutoWidthMax.dp)
-	} else {
-		Modifier.width(InputWidth)
-	}
+	val widthMod = if (AutoWidth) AutoWidthMod(
+        text = if (value.isEmpty()) placeholderText else value,
+        style = style,
+        min = AutoWidthMin.dp,
+        max = AutoWidthMax.dp,
+        paddingH = 8.dp
+    ) else Modifier.width(InputWidth)
 	
 	OnLoseFocus(isFocused, OnFocusLose)
 
@@ -786,7 +802,7 @@ fun InputField(
 		  
         },
 
-        modifier = outerMod
+        modifier = widthMod
             .height(height),
         textStyle = TextStyle(TextColor, textSize),
         singleLine = true,
