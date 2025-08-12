@@ -705,13 +705,13 @@ fun InputField(
     showDivider: Boolean = true,
     textSize: TextUnit = 14.sp,           
     boxHeight: Dp = 36.dp,                
-    innerPadding: Dp = 4.dp,
+    PadingHorizontal: Dp = 4.dp,
 	dividerYBack: Int = 0,
     InputWidth: Dp = 80.dp,
     MaxLetters: Int? = 20_000,
     OnMaxLetters: (() -> Unit) = { Vlog("MAX LETTERS") }, //each letter type doo
     InputTextColor: Color = Color.White,
-    InputBackgroundColor: Color = SettingsItemCardColor,
+    BackgroundColor: Color = SettingsItemCardColor,
 
     OnFocusLose: (() -> Unit)? = null,
 	AutoWidth: Boolean = false,
@@ -750,7 +750,7 @@ fun InputField(
 		  
 		  }  
           else {
-            OnMaxLetters
+            OnMaxLetters()
           }
         },
 
@@ -768,16 +768,11 @@ fun InputField(
         interactionSource = interactionSource,
         
         decorationBox = { innerTextField ->
-            Column {
-                Box(
-                    modifier = Modifier
-                        .padding(horizontal = innerPadding)
-                        .wrapContentWidth()
-						.height(boxHeight - 8.dp)
-						.clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)) // 👈 clips background to round shape
-						.background(InputBackgroundColor), // 👈 this sets the color
-					contentAlignment = Alignment.CenterStart
-				) {
+			FieldBox(
+				horizontal = PadingHorizontal,
+				boxHeight = boxHeight,
+				BackgroundColor = BackgroundColor,
+			) {
                     if (value.isEmpty()) {
                         Text(
                             placeholderText,
@@ -787,35 +782,72 @@ fun InputField(
                     }
 					
 
-					if (NoBottomPadding) {
-						Box(Modifier.padding(top = 8.dp)) { // moves typed text down
-							innerTextField()
-						}
-					}
-					if (!NoBottomPadding) {
 						innerTextField()
-					}
+					
 
 
 					
                 }
-                if (showDivider) {
-                    Divider(
-                        color = Color(0xFFFFD700),
-                        thickness = 1.dp,
-                        modifier = Modifier
-							.offset(y = (-dividerYBack).dp)
-                            .padding(horizontal = innerPadding)
-                            .width(InputWidth)
-                    )
+				
+				SimpleDivider(
+					show = showDivider,
+					MoveY = -dividerYBack,
+					paddingHorizontal = PadingHorizontal,
+					width = InputWidth,
+				)
 
-                }
-            }
+
+
+				
         }
     )
 }
 
+@Composable
+fun FieldBox(
+    modifier: Modifier = Modifier,
+    horizontal: Dp = 0.dp,
+    boxHeight: Dp = 40.dp,
+    BackgroundColor: Color = Color.Gray,
+	where: Alignment = Alignment.CenterStart,
+	content: @Composable () -> Unit,
+) {
+    Column {
+        Box(
+            modifier = modifier
+                .padding(horizontal = horizontal)
+                .height(boxHeight)
+				.wrapContentWidth()
+                .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                .background(BackgroundColor),
+            contentAlignment = where,
+        ) {
+            content()
+        }
+    }
+}
 
+
+@Composable
+fun SimpleDivider(
+    show: Boolean,
+    color: Color = Color(0xFFFFD700),
+    thickness: Dp = 1.dp,
+    MoveY: Int = 0,
+    paddingHorizontal: Dp = 0.dp,
+    width: Dp = Dp.Unspecified,
+) {
+    if (show) {
+        Divider(
+            color = color,
+            thickness = thickness,
+            modifier = Modifier
+                .offset(y = MoveY.dp)
+                .padding(horizontal = paddingHorizontal)
+                .width(width)
+        )
+    }
+}
 
 
 @Composable
