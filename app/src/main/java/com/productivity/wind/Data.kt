@@ -401,7 +401,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                     textSize = 14.sp,
                     height = 40.dp,
                     MaxLetters = 50,
-                    showDivider = false,
+                    Divider = false,
 
                     AutoWidth = true,
                     AutoWidthMin = 20,
