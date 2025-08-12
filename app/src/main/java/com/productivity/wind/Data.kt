@@ -393,6 +393,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                 
                 Text("If")
                 UI.Ctext(text = "spend", onClick = {})
+                UI.move(w=5)
                 UI.InputField(
                     value = InputText,
                     onValueChange = { InputText = it },
@@ -405,7 +406,7 @@ fun AppChallange(show: MutableState<Boolean>) {
 
                     AutoWidth = true,
                     AutoWidthMin = 20,
-                    AutoWidthMax = 50,
+                    AutoWidthMax = 100,
                     NoBottomPadding = true,
                     InputBackgroundColor = Color.Transparent,
                 )
