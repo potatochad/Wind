@@ -680,7 +680,7 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
 }
 
 
-//region TEXT VALS
+//region TEXT VALS ■■■■■■■■■■■■■
 
 @Composable
 fun TextStyle(
@@ -708,10 +708,15 @@ fun OnLoseFocus(isFocused: Boolean, onFocusLose: (() -> Unit)?) {
         }
     }
 }
+fun FilterInput(isNumber: Boolean, input: String): String {
+    return if (isNumber) input.toIntOrNull()?.toString() ?: "0" else input
+}
 
 
 
-//endregion Text VALS
+//endregion Text VALS■■■■■■■■■■■
+
+
 @Composable
 fun InputField(
     value: String,
@@ -758,9 +763,9 @@ fun InputField(
     BasicTextField(
         value = value,
         onValueChange = {
-          val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
-          if (parsed.length <= (MaxLetters ?: Int.MAX_VALUE)) {
-            onChange(parsed) 
+          val input = FilterInput(isNumber, it)   
+		  if (input.length <= (MaxLetters ?: Int.MAX_VALUE)) {
+            onChange(input) 
 		  
 		  }  
           else {
