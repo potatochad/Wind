@@ -893,10 +893,8 @@ fun InputField2(
         modifier = Modifier.width(widthDp).height(height),
         textStyle = style,
         singleLine = true,
-        keyboardOptions = KeyboardOptions.Default.copy(
-            keyboardType = KeyboardType(isNumber),
-            imeAction = ImeAction.Default
-        ),
+		keyboardOptions = KeyboardOptions(type(isNumber), imeAction),
+ 
         keyboardActions = doneAction(null),
         cursorBrush = grayCursor(),
         interactionSource = FocusChange,
