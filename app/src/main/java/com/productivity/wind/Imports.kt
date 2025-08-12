@@ -705,7 +705,6 @@ fun InputField(
     showDivider: Boolean = true,
     textSize: TextUnit = 14.sp,           
     boxHeight: Dp = 36.dp,                
-    PadingHorizontal: Dp = 4.dp,
 	dividerYBack: Int = 0,
     InputWidth: Dp = 80.dp,
     MaxLetters: Int? = 20_000,
@@ -769,7 +768,6 @@ fun InputField(
         
         decorationBox = { innerTextField ->
 			FieldBox(
-				horizontal = PadingHorizontal,
 				boxHeight = boxHeight,
 				BackgroundColor = BackgroundColor,
 			) {
@@ -792,7 +790,6 @@ fun InputField(
 				SimpleDivider(
 					show = showDivider,
 					MoveY = -dividerYBack,
-					paddingHorizontal = PadingHorizontal,
 					width = InputWidth,
 				)
 
