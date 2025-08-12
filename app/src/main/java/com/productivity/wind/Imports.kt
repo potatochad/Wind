@@ -742,7 +742,7 @@ fun InputField(
     onDone: (() -> Unit)? = null,  //When press done button
     showDivider: Boolean = true,
     textSize: TextUnit = 14.sp,           
-    boxHeight: Dp = 36.dp,                
+    height: Dp = 36.dp,                
 	dividerYBack: Int = 0,
     InputWidth: Dp = 80.dp,
     MaxLetters: Int? = 20_000,
@@ -788,7 +788,7 @@ fun InputField(
         },
 
         modifier = outerMod
-            .height(boxHeight)
+            .height(height)
             .then(FocusAsk(focusRequester)),
         textStyle = TextStyle(InputTextColor, textSize),
         singleLine = true,
@@ -799,7 +799,7 @@ fun InputField(
         
         decorationBox = { innerTextField ->
 			FieldBox(
-				boxHeight = boxHeight,
+				height = height,
 				BackgroundColor = BackgroundColor,
 			) {
                     if (value.isEmpty()) {
@@ -835,7 +835,7 @@ fun InputField(
 fun FieldBox(
     modifier: Modifier = Modifier,
     horizontal: Dp = 0.dp,
-    boxHeight: Dp = 40.dp,
+    height: Dp = 40.dp,
     BackgroundColor: Color = Color.Gray,
 	where: Alignment = Alignment.CenterStart,
 	content: @Composable () -> Unit,
@@ -844,7 +844,7 @@ fun FieldBox(
         Box(
             modifier = modifier
                 .padding(horizontal = horizontal)
-                .height(boxHeight)
+                .height(height)
 				.wrapContentWidth()
                 .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
                 .background(BackgroundColor),
