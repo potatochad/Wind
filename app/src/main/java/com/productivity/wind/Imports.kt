@@ -691,6 +691,25 @@ fun TextStyle(
     fontSize = fontSize
 )
 
+@Composable
+fun TextMemory() = remember { MutableInteractionSource() }
+fun KeyboardType(isNumber: Boolean) =
+    if (isNumber) KeyboardType.Number else KeyboardType.Text
+fun ImeAction(onDone: (() -> Unit)?) =
+    if (onDone != null) ImeAction.Done else ImeAction.Default
+@Composable
+fun IsFocused(source: InteractionSource) =
+    source.collectIsFocusedAsState()
+@Composable
+fun OnLoseFocus(isFocused: Boolean, onFocusLose: (() -> Unit)?) {
+    LaunchedEffect(isFocused) {
+        if (!isFocused) {
+            onFocusLose?.invoke()
+        }
+    }
+}
+
+
 
 //endregion Text VALS
 @Composable
@@ -719,11 +738,10 @@ fun InputField(
 	
 	NoBottomPadding: Boolean = false,
 ) {
-    val keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
-    val imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val isFocused by interactionSource.collectIsFocusedAsState()
+	val FocusChange = TextMemory()
+    val keyboardType = KeyboardType(isNumber)
+    val imeAction = ImeAction(onDone)
+    val isFocused by IsFocused(FocusChange)
 
 	
 	//val AutoWidthMaxVAL = AutoWidthMin + (charCount * charWidthDp) + (paddingHorizontalDp * 2)
@@ -731,14 +749,11 @@ fun InputField(
 	val outerMod = if (AutoWidth) {
 		modifier.widthIn(min = AutoWidthMin.dp, max = AutoWidthMax.dp)
 	} else {
-		modifier.width(InputWidth) // keep your fixed width when AutoWidth = false
+		modifier.width(InputWidth)
 	}
 	
-    LaunchedEffect(isFocused) {
-	    if (!isFocused) {
-		    OnFocusLose?.invoke()
-	    }
-    }
+	OnLoseFocus(isFocused, OnFocusLose)
+
 
     BasicTextField(
         value = value,
@@ -764,7 +779,7 @@ fun InputField(
         ),
         keyboardActions = KeyboardActions(onDone = { onDone?.invoke() }),
         cursorBrush = SolidColor(Color.Gray),
-        interactionSource = interactionSource,
+        interactionSource = FocusChange,
         
         decorationBox = { innerTextField ->
 			FieldBox(
