@@ -1405,8 +1405,19 @@ fun LazyPopup(
     showCancel: Boolean = true,
     showConfirm: Boolean = true,
     onConfirm: (() -> Unit)? = null,
-    onCancel: (() -> Unit)? = null
+    onCancel: (() -> Unit)? = null,
+
+	Preload: Boolean = true,
 ) {
+	if (!show.value && Preload) {
+		Box(
+            Modifier
+                .size(1.dp)
+                .alpha(0f)
+                .clearAndSetSemantics { }
+        ) { if (content == null) Text(message) else content() }
+        return
+	}
 
     if (!show.value) {return}
 
