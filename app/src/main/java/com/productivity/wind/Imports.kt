@@ -782,7 +782,7 @@ fun InputField(
 
         modifier = outerMod
             .height(boxHeight)
-            .then(FocusAsk(focusRequester),
+            .then(FocusAsk(focusRequester)),
         textStyle = TextStyle(InputTextColor, textSize),
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
