@@ -903,7 +903,7 @@ fun InputField2(
         decorationBox = { innerTextField ->
             FieldBox(
                 height = height,
-                BackgroundColor = SettingsItemCardColor
+                BackgroundColor = Color.Transparent
             ) {
                 innerTextField()
             }
