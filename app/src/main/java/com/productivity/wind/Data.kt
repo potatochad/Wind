@@ -396,13 +396,12 @@ fun AppChallange(show: MutableState<Boolean>) {
                 UI.move(w=5)
                 UI.InputField(
                     value = InputText,
-                    onValueChange = { InputText = it },
+                    onChange = { InputText = it },
                     onDone = { DONE() },
                     textSize = 14.sp,
                     boxHeight = 40.dp,
                     MaxLetters = 50,
                     showDivider = false,
-                    innerPadding = 0.dp,
 
                     AutoWidth = true,
                     AutoWidthMin = 20,
