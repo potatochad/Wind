@@ -726,6 +726,9 @@ fun InputField(
 
     val isFocused by interactionSource.collectIsFocusedAsState()
 
+	
+	//val AutoWidthMaxVAL = AutoWidthMin + (charCount * charWidthDp) + (paddingHorizontalDp * 2)
+
 	val outerMod = if (AutoWidth) {
 		modifier.widthIn(min = AutoWidthMin.dp, max = AutoWidthMax.dp)
 	} else {
@@ -743,7 +746,9 @@ fun InputField(
         onValueChange = {
           val parsed = if (isNumber) it.toIntOrNull()?.toString() ?: "0" else it
           if (parsed.length <= (MaxLetters ?: Int.MAX_VALUE)) {
-            onValueChange(parsed) }  
+            onValueChange(parsed) 
+		  
+		  }  
           else {
             OnMaxLetters
           }
