@@ -693,7 +693,7 @@ fun TextStyle(
 
 @Composable
 fun TextMemory() = remember { MutableInteractionSource() }
-fun KeyboardType(isNumber: Boolean) =
+fun type(isNumber: Boolean) =
     if (isNumber) KeyboardType.Number else KeyboardType.Text
 fun ImeAction(onDone: (() -> Unit)?) =
     if (onDone != null) ImeAction.Done else ImeAction.Default
@@ -724,6 +724,8 @@ fun KeyboardOptions(
     keyboardType = keyboardType,
     imeAction = imeAction
 )
+fun grayCursor() = SolidColor(Color.Gray)
+
 
 
 
@@ -738,14 +740,14 @@ fun InputField(
     placeholderText: String = "Input Text",
     isNumber: Boolean = false,
     onDone: (() -> Unit)? = null,  //When press done button
-    showDivider: Boolean = true,
+    Divider: Boolean = true,
     textSize: TextUnit = 14.sp,           
     height: Dp = 36.dp,                
-	dividerYBack: Int = 0,
+	dividerY: Int = 0,
     InputWidth: Dp = 80.dp,
     MaxLetters: Int? = 20_000,
     OnMaxLetters: (() -> Unit) = { Vlog("MAX LETTERS") }, //each letter type doo
-    InputTextColor: Color = Color.White,
+    TextColor: Color = Color.White,
     BackgroundColor: Color = SettingsItemCardColor,
 
     OnFocusLose: (() -> Unit)? = null,
@@ -756,7 +758,6 @@ fun InputField(
 	NoBottomPadding: Boolean = false,
 ) {
 	val FocusChange = TextMemory()
-    val keyboardType = KeyboardType(isNumber)
     val imeAction = ImeAction(onDone)
     val isFocused by IsFocused(FocusChange)
 
@@ -787,11 +788,11 @@ fun InputField(
 
         modifier = outerMod
             .height(height),
-        textStyle = TextStyle(InputTextColor, textSize),
+        textStyle = TextStyle(TextColor, textSize),
         singleLine = true,
-		keyboardOptions = KeyboardOptions(keyboardType, imeAction),
+		keyboardOptions = KeyboardOptions(type(isNumber), imeAction),
         keyboardActions = doneAction(onDone),
-        cursorBrush = SolidColor(Color.Gray),
+        cursorBrush = grayCursor(),
         interactionSource = FocusChange,
         
         decorationBox = { innerTextField ->
@@ -816,8 +817,8 @@ fun InputField(
                 }
 				
 				SimpleDivider(
-					show = showDivider,
-					MoveY = -dividerYBack,
+					show = Divider,
+					MoveY = dividerY,
 					width = InputWidth,
 				)
 
