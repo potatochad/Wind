@@ -736,9 +736,7 @@ fun InputField(
     value: String,
     onChange: (String) -> Unit,
     placeholderText: String = "Input Text",
-    modifier: Modifier = Modifier,
     isNumber: Boolean = false,
-    focusRequester: FocusRequester? = null,
     onDone: (() -> Unit)? = null,  //When press done button
     showDivider: Boolean = true,
     textSize: TextUnit = 14.sp,           
@@ -766,9 +764,9 @@ fun InputField(
 	//val AutoWidthMaxVAL = AutoWidthMin + (charCount * charWidthDp) + (paddingHorizontalDp * 2)
 
 	val outerMod = if (AutoWidth) {
-		modifier.widthIn(min = AutoWidthMin.dp, max = AutoWidthMax.dp)
+		Modifier.widthIn(min = AutoWidthMin.dp, max = AutoWidthMax.dp)
 	} else {
-		modifier.width(InputWidth)
+		Modifier.width(InputWidth)
 	}
 	
 	OnLoseFocus(isFocused, OnFocusLose)
@@ -788,8 +786,7 @@ fun InputField(
         },
 
         modifier = outerMod
-            .height(height)
-            .then(FocusAsk(focusRequester)),
+            .height(height),
         textStyle = TextStyle(InputTextColor, textSize),
         singleLine = true,
 		keyboardOptions = KeyboardOptions(keyboardType, imeAction),
