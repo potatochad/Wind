@@ -400,7 +400,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                     height = 40.dp,
                     MaxLetters = 50,
                     AutoWidthMin = 20,
-                    AutoWidthMax = 40
+                    AutoWidthMax = 40,
                 )
 
                 Text(" on ")
