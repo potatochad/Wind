@@ -407,7 +407,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                     AutoWidthMin = 20,
                     AutoWidthMax = 40,
                     NoBottomPadding = true,
-                    InputBackgroundColor = Color.Transparent,
+                    BackgroundColor = Color.Transparent,
                 )
                 Text(" on ")
                 UI.Ctext(text = "0 apps", onClick = {})
