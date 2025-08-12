@@ -258,7 +258,20 @@ fun NoLagCompose(content: @Composable () -> Unit) {
     }
     content()
 }
-
+@Composable
+fun PreloadBox(
+    whenDo: Boolean,
+    what: @Composable () -> Unit
+) {
+    if (whenDo) {
+        Box(
+            Modifier
+                .size(1.dp)
+                .alpha(0f)
+                .clearAndSetSemantics { }
+        ) { what() }
+    }
+}
 //endregion
 
 //region DATA MANAGE ONCES
@@ -1410,15 +1423,13 @@ fun LazyPopup(
 	Preload: Boolean = true,
 ) = NoLagCompose {
 	
-	if (!show.value && Preload) {
-		Box(
-            Modifier
-                .size(1.dp)
-                .alpha(0f)
-                .clearAndSetSemantics { }
-        ) { if (content == null) Text(message) else content() }
-	}
-
+	val preloading = !show.value && Preload
+	
+	PreloadBox(
+        whenDo = preloading,
+        what = { content?.invoke() ?: Text(message) }
+    )
+	
     if (show.value) { 
 		AlertDialog(
 			onDismissRequest = {
