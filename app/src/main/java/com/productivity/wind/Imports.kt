@@ -1408,7 +1408,7 @@ fun LazyPopup(
     onCancel: (() -> Unit)? = null,
 
 	Preload: Boolean = true,
-) {
+) = NoLagCompose {
 	if (!show.value && Preload) {
 		Box(
             Modifier
