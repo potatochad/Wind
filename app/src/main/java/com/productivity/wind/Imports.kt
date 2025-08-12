@@ -717,6 +717,13 @@ fun doneAction(onDone: (() -> Unit)?) =
     KeyboardActions(onDone = { onDone?.invoke() })
 fun FocusAsk(focusRequester: FocusRequester?) =
     focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier
+fun KeyboardOptions(
+    keyboardType: KeyboardType,
+    imeAction: ImeAction
+) = KeyboardOptions.Default.copy(
+    keyboardType = keyboardType,
+    imeAction = imeAction
+)
 
 
 
@@ -785,10 +792,7 @@ fun InputField(
             .then(FocusAsk(focusRequester)),
         textStyle = TextStyle(InputTextColor, textSize),
         singleLine = true,
-        keyboardOptions = KeyboardOptions.Default.copy(
-            keyboardType = keyboardType,
-            imeAction = imeAction
-        ),
+		keyboardOptions = KeyboardOptions(keyboardType, imeAction),
         keyboardActions = doneAction(onDone),
         cursorBrush = SolidColor(Color.Gray),
         interactionSource = FocusChange,
