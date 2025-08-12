@@ -863,7 +863,6 @@ fun InputField(
 fun InputField2(
     value: String,
     onChange: (String) -> Unit,
-    isNumber: Boolean = false,
     textSize: TextUnit = 14.sp,
     height: Dp = 36.dp,
     MaxLetters: Int? = 3,
@@ -893,7 +892,7 @@ fun InputField2(
         modifier = Modifier.width(widthDp).height(height),
         textStyle = style,
         singleLine = true,
-		keyboardOptions = KeyboardOptions(type(isNumber), imeAction),
+		keyboardOptions = KeyboardOptions(type(true), imeAction),
  
         keyboardActions = doneAction(null),
         cursorBrush = grayCursor(),
