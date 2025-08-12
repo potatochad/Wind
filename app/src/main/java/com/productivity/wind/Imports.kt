@@ -837,16 +837,16 @@ fun SimpleDivider(
     paddingHorizontal: Dp = 0.dp,
     width: Dp = Dp.Unspecified,
 ) {
-    if (show) {
-        Divider(
-            color = color,
-            thickness = thickness,
-            modifier = Modifier
-                .offset(y = MoveY.dp)
-                .padding(horizontal = paddingHorizontal)
-                .width(width)
-        )
-    }
+    if (!show) return
+
+    Divider(
+        color = color,
+        thickness = thickness,
+        modifier = Modifier
+            .offset(y = MoveY.dp)
+            .padding(horizontal = paddingHorizontal)
+            .then(if (width != Dp.Unspecified) Modifier.width(width) else Modifier)
+    )
 }
 
 
