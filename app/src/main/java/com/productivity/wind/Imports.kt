@@ -696,7 +696,7 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
 @Composable
 fun InputField(
     value: String,
-    onValueChange: (String) -> Unit,
+    onChange: (String) -> Unit,
     placeholderText: String = "Input Text",
     modifier: Modifier = Modifier,
     isNumber: Boolean = false,
