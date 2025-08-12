@@ -118,10 +118,10 @@ import androidx.navigation.compose.composable
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-
 import com.productivity.wind.*
 import com.productivity.wind.Screens.*
 
+import androidx.compose.ui.semantics.clearAndSetSemantics
 
 //import android.provider.Settings
 
