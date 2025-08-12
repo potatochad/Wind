@@ -680,19 +680,19 @@ fun OnOffSwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
 }
 
 
-/* USAGE
-    InputField(
-    value = myText,
-    onValueChange = { myText = it },
-    placeholderText = "Enter name",
-    maxLength = 20,
-    width = 200.dp,
-    height = 40.dp,
-    backgroundColor = Color.DarkGray,
-    isNumber = false,
-    onDone = { println("Done pressed") }
+//region TEXT VALS
+
+@Composable
+fun TextStyle(
+    color: Color,
+    fontSize: TextUnit
+) = LocalTextStyle.current.copy(
+    color = color,
+    fontSize = fontSize
 )
-*/
+
+
+//endregion Text VALS
 @Composable
 fun InputField(
     value: String,
@@ -756,7 +756,7 @@ fun InputField(
         modifier = outerMod
             .height(boxHeight)
             .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
-        textStyle = LocalTextStyle.current.copy(color = InputTextColor, fontSize = textSize),
+        textStyle = TextStyle(color = InputTextColor, fontSize = textSize),
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType,
