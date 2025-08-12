@@ -728,11 +728,11 @@ fun grayCursor() = SolidColor(Color.Gray)
 
 fun OptionsInput(
     onDone: (() -> Unit)?
-) = KeyboardOptions.Default.copy(
-	var isNumber = true
+) {var isNumber = true
+	KeyboardOptions.Default.copy(
     keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text,
     imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
-)
+)}
 
 
 
