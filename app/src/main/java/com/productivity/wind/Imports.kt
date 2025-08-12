@@ -1409,6 +1409,7 @@ fun LazyPopup(
 
 	Preload: Boolean = true,
 ) = NoLagCompose {
+	
 	if (!show.value && Preload) {
 		Box(
             Modifier
@@ -1416,7 +1417,7 @@ fun LazyPopup(
                 .alpha(0f)
                 .clearAndSetSemantics { }
         ) { if (content == null) Text(message) else content() }
-        return
+        
 	}
 
     if (!show.value) {return}
