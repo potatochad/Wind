@@ -711,6 +711,13 @@ fun OnLoseFocus(isFocused: Boolean, onFocusLose: (() -> Unit)?) {
 fun FilterInput(isNumber: Boolean, input: String): String {
     return if (isNumber) input.toIntOrNull()?.toString() ?: "0" else input
 }
+fun max(maxLetters: Int?) =
+    maxLetters ?: Int.MAX_VALUE
+fun doneAction(onDone: (() -> Unit)?) =
+    KeyboardActions(onDone = { onDone?.invoke() })
+fun FocusAsk(focusRequester: FocusRequester?) =
+    focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier
+
 
 
 
@@ -764,25 +771,25 @@ fun InputField(
         value = value,
         onValueChange = {
           val input = FilterInput(isNumber, it)   
-		  if (input.length <= (MaxLetters ?: Int.MAX_VALUE)) {
+		  if (input.length <= max(MaxLetters) ) {
             onChange(input) 
 		  
-		  }  
-          else {
+		  } else {
             OnMaxLetters()
           }
+		  
         },
 
         modifier = outerMod
             .height(boxHeight)
-            .then(focusRequester?.let { Modifier.focusRequester(it) } ?: Modifier),
-        textStyle = TextStyle(color = InputTextColor, fontSize = textSize),
+            .then(FocusAsk(focusRequester),
+        textStyle = TextStyle(InputTextColor, textSize),
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType,
             imeAction = imeAction
         ),
-        keyboardActions = KeyboardActions(onDone = { onDone?.invoke() }),
+        keyboardActions = doneAction(onDone),
         cursorBrush = SolidColor(Color.Gray),
         interactionSource = FocusChange,
         
