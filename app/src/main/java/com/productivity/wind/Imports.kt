@@ -803,7 +803,7 @@ fun InputField(
                     if (value.isEmpty()) {
                         Text(
                             placeholderText,
-                            color = InputTextColor,
+                            color = TextColor,
                             fontSize = textSize
                         )
                     }
