@@ -406,7 +406,7 @@ fun AppChallange(show: MutableState<Boolean>) {
 
                     AutoWidth = true,
                     AutoWidthMin = 20,
-                    AutoWidthMax = 100,
+                    AutoWidthMax = 40,
                     NoBottomPadding = true,
                     InputBackgroundColor = Color.Transparent,
                 )
