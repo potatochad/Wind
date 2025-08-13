@@ -378,9 +378,13 @@ fun AppChallange(show: MutableState<Boolean>) {
                 )
 
                 Text("on ")
-                UI.Ctext(text = "0 apps", onClick = {})
+                UI.Ctext("0 apps"){
+                    
+                }
                 Text(" add ")
-                UI.Ctext(text = "0 points", onClick = {})
+                UI.Ctext("0 points"){
+                    
+                }
                 
                 
 
