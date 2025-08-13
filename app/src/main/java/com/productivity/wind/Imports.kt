@@ -122,6 +122,8 @@ import com.productivity.wind.*
 import com.productivity.wind.Screens.*
 
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.rememberTextMeasurer
 
 //import android.provider.Settings
 
@@ -858,25 +860,37 @@ fun InputField(
 
 
 
-
+@OptIn(ExperimentalTextApi::class)
 @Composable
 fun InputField222(
     value: String,
     onChange: (String) -> Unit,
     textSize: TextUnit = 14.sp,
     height: Dp = 36.dp,
-    MaxLetters: Int? = 3,
+    MaxLetters: Int? = 5,
     TextColor: Color = Color.White,
-    WidthMin: Int = 60,
-    WidthMax: Int = 200,
+    WidthMin: Int = 20,
+    WidthMax: Int = 80,
 ) {
     val FocusChange = TextMemory()
-    val imeAction = ImeAction(null) // no onDone param now
+    val imeAction = ImeAction(ImeAction.Default)
     val isFocused by IsFocused(FocusChange)
 
-    val outerMod = Modifier.widthIn(min = WidthMin.dp, max = WidthMax.dp)
 
-    OnLoseFocus(isFocused, null) // no OnFocusLose param now
+	
+    val measurer = rememberTextMeasurer()
+	val density = LocalDensity.current
+	val measuredWidth = measurer.measure(
+		if (value.isEmpty()) " " 
+		else value, style = TextStyle(TextColor, textSize)).size.width
+	val outerMod = Modifier.width(
+		(with(density) { measuredWidth.toDp() } + 8.dp)
+			.coerceIn(WidthMin.dp, WidthMax.dp)
+	)
+
+
+
+    OnLoseFocus(isFocused, null)
 
     BasicTextField(
         value = value,
@@ -885,6 +899,7 @@ fun InputField222(
             if (input.length <= max(MaxLetters)) {
                 onChange(input)
             }
+			else { Vlog("max ${MaxLetters} letters") }
         },
         modifier = outerMod.height(height),
         textStyle = TextStyle(TextColor, textSize),
