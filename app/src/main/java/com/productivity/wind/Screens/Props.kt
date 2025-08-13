@@ -372,7 +372,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                 
                 Text("If")
                 Text(" spend ")
-                UI.InputField222(
+                UI.Cinput(
                     value = InputText,
                     onChange = { InputText = it },
                 )
