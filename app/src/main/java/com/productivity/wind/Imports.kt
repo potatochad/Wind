@@ -1069,7 +1069,7 @@ fun Ctext(
 ) {
     Text(
         text = text,
-        modifier = modifier.clickable(onClick = onClick),
+        modifier = Modifier.clickable(onClick = onClick),
         style = TextStyle(
             color = Color(0xFFFFD700),           // gold
             fontWeight = FontWeight.Bold,        // bold
