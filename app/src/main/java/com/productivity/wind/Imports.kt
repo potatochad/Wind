@@ -1066,7 +1066,6 @@ fun CopyIcon(text: String) {
 fun Ctext(
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
