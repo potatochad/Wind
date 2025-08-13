@@ -394,13 +394,9 @@ fun AppChallange(show: MutableState<Boolean>) {
                 Text("If")
                 UI.Ctext(text = "spend", onClick = {})
                 UI.move(w=5)
-                UI.InputField2(
+                UI.InputField222(
                     value = InputText,
                     onChange = { InputText = it },
-                    height = 40.dp,
-                    MaxLetters = 50,
-                    AutoWidthMin = 20,
-                    AutoWidthMax = 40,
                 )
 
                 Text(" on ")
