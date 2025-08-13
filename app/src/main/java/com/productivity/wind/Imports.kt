@@ -726,13 +726,6 @@ fun KeyboardOptions(
 )
 fun grayCursor() = SolidColor(Color.Gray)
 
-fun OptionsInput(
-    onDone: (() -> Unit)?
-) {var isNumber = true
-	KeyboardOptions.Default.copy(
-    keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text,
-    imeAction = if (onDone != null) ImeAction.Done else ImeAction.Default
-)}
 
 
 
@@ -865,12 +858,12 @@ fun InputField(
 
 
 
-//
+
 @Composable
-fun InputField2(
+fun SimpleTextInputField(
     value: String,
     onChange: (String) -> Unit,
-    onDone: (() -> Unit)? = null,          // ← added
+    isNumber: Boolean = false,
     textSize: TextUnit = 14.sp,
     height: Dp = 36.dp,
     MaxLetters: Int? = 3,
@@ -879,37 +872,32 @@ fun InputField2(
     AutoWidthMax: Int = 200,
 ) {
     val FocusChange = TextMemory()
+    val imeAction = ImeAction(null) // no onDone param now
     val isFocused by IsFocused(FocusChange)
-    OnLoseFocus(isFocused, null)
 
-    val style = TextStyle(TextColor, textSize)
+    val outerMod = Modifier.widthIn(min = AutoWidthMin.dp, max = AutoWidthMax.dp)
 
-    val measurer = rememberTextMeasurer()
-    val density = LocalDensity.current
-    val textForMeasure = if (value.isEmpty()) " " else value
-    val measuredPx = measurer.measure(textForMeasure, style = style).size.width
-    val widthDp = (with(density) { measuredPx.toDp() } + 8.dp)
-        .coerceIn(AutoWidthMin.dp, AutoWidthMax.dp)
+    OnLoseFocus(isFocused, null) // no OnFocusLose param now
 
     BasicTextField(
         value = value,
         onValueChange = {
-            val input = FilterInput(true, it)
-            if (input.length <= max(MaxLetters)) onChange(input)
+            val input = FilterInput(isNumber, it)
+            if (input.length <= max(MaxLetters)) {
+                onChange(input)
+            }
         },
-        modifier = Modifier.width(widthDp).height(height),
-        textStyle = style,
+        modifier = outerMod.height(height),
+        textStyle = TextStyle(TextColor, textSize),
         singleLine = true,
-        keyboardOptions = OptionsInput(onDone),
-        keyboardActions = KeyboardActions(
-            onDone = { onDone?.invoke() }
-        ),
+		keyboardOptions = KeyboardOptions(type(isNumber), imeAction),
+        keyboardActions = doneAction(null),
         cursorBrush = grayCursor(),
         interactionSource = FocusChange,
         decorationBox = { innerTextField ->
             FieldBox(
                 height = height,
-                BackgroundColor = Color.Transparent
+                BackgroundColor = SettingsItemCardColor
             ) {
                 innerTextField()
             }
