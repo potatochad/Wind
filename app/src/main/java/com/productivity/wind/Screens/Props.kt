@@ -176,9 +176,6 @@ fun Menu() {
 
 
 //Gets called on a new day
-fun onNewDay() {  
-        Bar.WaterDOtime_spent = 0
-}
 
 
 object Icon {
