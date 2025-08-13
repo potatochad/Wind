@@ -860,29 +860,28 @@ fun InputField(
 
 
 @Composable
-fun SimpleTextInputField(
+fun InputField222(
     value: String,
     onChange: (String) -> Unit,
-    isNumber: Boolean = false,
     textSize: TextUnit = 14.sp,
     height: Dp = 36.dp,
     MaxLetters: Int? = 3,
     TextColor: Color = Color.White,
-    AutoWidthMin: Int = 60,
-    AutoWidthMax: Int = 200,
+    WidthMin: Int = 60,
+    WidthMax: Int = 200,
 ) {
     val FocusChange = TextMemory()
     val imeAction = ImeAction(null) // no onDone param now
     val isFocused by IsFocused(FocusChange)
 
-    val outerMod = Modifier.widthIn(min = AutoWidthMin.dp, max = AutoWidthMax.dp)
+    val outerMod = Modifier.widthIn(min = WidthMin.dp, max = WidthMax.dp)
 
     OnLoseFocus(isFocused, null) // no OnFocusLose param now
 
     BasicTextField(
         value = value,
         onValueChange = {
-            val input = FilterInput(isNumber, it)
+            val input = FilterInput(true, it)
             if (input.length <= max(MaxLetters)) {
                 onChange(input)
             }
@@ -890,14 +889,14 @@ fun SimpleTextInputField(
         modifier = outerMod.height(height),
         textStyle = TextStyle(TextColor, textSize),
         singleLine = true,
-		keyboardOptions = KeyboardOptions(type(isNumber), imeAction),
+		keyboardOptions = KeyboardOptions(type(true), imeAction),
         keyboardActions = doneAction(null),
         cursorBrush = grayCursor(),
         interactionSource = FocusChange,
         decorationBox = { innerTextField ->
             FieldBox(
                 height = height,
-                BackgroundColor = SettingsItemCardColor
+                BackgroundColor = Color.Transparent
             ) {
                 innerTextField()
             }
