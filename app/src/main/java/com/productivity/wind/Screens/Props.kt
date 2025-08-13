@@ -234,24 +234,6 @@ object Icon {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //region POPUP CONTROLLER
 
 object Popup {
@@ -389,18 +371,17 @@ fun AppChallange(show: MutableState<Boolean>) {
             UI.SimpleRow( content ={
                 
                 Text("If")
-                UI.Ctext(text = "do", onClick = {})
-                UI.Ctext(text = "spend ", onClick = {})
+                Text(" spend ")
                 UI.InputField222(
                     value = InputText,
                     onChange = { InputText = it },
                 )
 
-                Text(" on ")
+                Text("on ")
                 UI.Ctext(text = "0 apps", onClick = {})
-                Text(" until ")
-                UI.Ctext(text = "10am", onClick = {})
-            
+                Text(" add ")
+                UI.Ctext(text = "0 points", onClick = {})
+                
                 
 
 
