@@ -873,7 +873,7 @@ fun InputField222(
     WidthMax: Int = 80,
 ) {
     val FocusChange = TextMemory()
-    val imeAction = ImeAction(ImeAction.Default)
+    val imeAction = ImeAction(null)
     val isFocused by IsFocused(FocusChange)
 
 
