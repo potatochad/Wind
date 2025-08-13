@@ -120,10 +120,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.productivity.wind.*
 import com.productivity.wind.Screens.*
-
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.rememberTextMeasurer
+
+import androidx.compose.foundation.layout.FlowRow
 
 //import android.provider.Settings
 
@@ -999,7 +1000,7 @@ fun SimpleDivider(
 
 
 @Composable
-fun SimpleRow(
+fun SimpleRow2(
 	content: @Composable () -> Unit,
 	padding: Int = 8
 ){
@@ -1011,6 +1012,20 @@ fun SimpleRow(
                 ) {
 		content()
 		}
+}
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun SimpleRow(
+    padding: Int = 8,
+    hGap: Dp = 8.dp,
+    vGap: Dp = 8.dp,
+    content: @Composable () -> Unit,
+) {
+    FlowRow(
+        modifier = Modifier.fillMaxWidth().padding(padding.dp),
+        horizontalArrangement = Arrangement.spacedBy(hGap),
+        verticalArrangement = Arrangement.spacedBy(vGap),
+    ) { content() }
 }
 	
 @Composable
