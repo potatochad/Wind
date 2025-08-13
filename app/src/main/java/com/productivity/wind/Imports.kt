@@ -864,12 +864,13 @@ fun InputField(
 @Composable
 fun Cinput(
     value: String,
-    onChange: (String) -> Unit,
     textSize: TextUnit = 14.sp,
     height: Dp = 36.dp,
     MaxLetters: Int? = 5,
     WidthMin: Int = 10,
     WidthMax: Int = 800,
+
+	onChange: (String) -> Unit,
 ) {
 	val TextColor = Color(0xFFFFD700)
     val FocusChange = TextMemory()
