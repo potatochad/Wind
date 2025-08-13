@@ -862,7 +862,7 @@ fun InputField(
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
-fun InputField222(
+fun Ctext(
     value: String,
     onChange: (String) -> Unit,
     textSize: TextUnit = 14.sp,
