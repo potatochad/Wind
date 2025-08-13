@@ -392,8 +392,8 @@ fun AppChallange(show: MutableState<Boolean>) {
             UI.SimpleRow( content ={
                 
                 Text("If")
-                UI.Ctext(text = "spend", onClick = {})
-                UI.move(w=5)
+                UI.Ctext(text = "do", onClick = {})
+                UI.Ctext(text = "spend ", onClick = {})
                 UI.InputField222(
                     value = InputText,
                     onChange = { InputText = it },
@@ -401,6 +401,11 @@ fun AppChallange(show: MutableState<Boolean>) {
 
                 Text(" on ")
                 UI.Ctext(text = "0 apps", onClick = {})
+                Text(" until ")
+                UI.Ctext(text = "10am", onClick = {})
+            
+                
+
 
                 
             })
