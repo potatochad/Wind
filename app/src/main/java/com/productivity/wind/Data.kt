@@ -62,6 +62,10 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.graphics.Color
 
+fun onNewDay() {  
+        Bar.WaterDOtime_spent = 0
+}
+
 
 class Settings {
     var funTime by m(0)
