@@ -1013,20 +1013,66 @@ fun SimpleRow2(
 		content()
 		}
 }
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SimpleRow(
-    padding: Int = 8,
+    modifier: Modifier = Modifier,
     hGap: Dp = 8.dp,
     vGap: Dp = 8.dp,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
-    FlowRow(
-        modifier = Modifier.fillMaxWidth().padding(padding.dp),
-        horizontalArrangement = Arrangement.spacedBy(hGap),
-        verticalArrangement = Arrangement.spacedBy(vGap),
-    ) { content() }
+    Layout(content = content, modifier = modifier) { measurables, constraints ->
+        val h = hGap.roundToPx()
+        val v = vGap.roundToPx()
+        val maxW = constraints.maxWidth
+
+        val placeables = measurables.map { it.measure(constraints.copy(minWidth = 0)) }
+
+        val rows = mutableListOf<MutableList<Placeable>>()
+        val rowWidths = mutableListOf<Int>()
+        val rowHeights = mutableListOf<Int>()
+
+        var curRow = mutableListOf<Placeable>()
+        var curW = 0
+        var curH = 0
+
+        fun pushRow() {
+            if (curRow.isNotEmpty()) {
+                rows += curRow
+                rowWidths += curW - h.coerceAtLeast(0)
+                rowHeights += curH
+            }
+            curRow = mutableListOf()
+            curW = 0
+            curH = 0
+        }
+
+        for (p in placeables) {
+            val nextW = if (curRow.isEmpty()) p.width else curW + h + p.width
+            if (nextW > maxW) pushRow()
+            if (curRow.isNotEmpty()) curW += h
+            curRow += p
+            curW += p.width
+            curH = maxOf(curH, p.height)
+        }
+        pushRow()
+
+        val width = rowWidths.maxOrNull()?.coerceIn(constraints.minWidth, constraints.maxWidth) ?: constraints.minWidth
+        val height = rowHeights.sum() + v * (rowHeights.size - 1).coerceAtLeast(0)
+
+        layout(width, height) {
+            var y = 0
+            rows.forEachIndexed { i, row ->
+                var x = 0
+                row.forEach { p ->
+                    p.placeRelative(x, y)
+                    x += p.width + h
+                }
+                y += rowHeights[i] + v
+            }
+        }
+    }
 }
+
 	
 @Composable
 fun LazyCard(
