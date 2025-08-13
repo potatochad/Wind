@@ -862,16 +862,16 @@ fun InputField(
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
-fun Ctext(
+fun Cinput(
     value: String,
     onChange: (String) -> Unit,
     textSize: TextUnit = 14.sp,
     height: Dp = 36.dp,
     MaxLetters: Int? = 5,
-    TextColor: Color = Color.White,
-    WidthMin: Int = 20,
-    WidthMax: Int = 80,
+    WidthMin: Int = 10,
+    WidthMax: Int = 800,
 ) {
+	val TextColor = Color(0xFFFFD700)
     val FocusChange = TextMemory()
     val imeAction = ImeAction(null)
     val isFocused by IsFocused(FocusChange)
@@ -884,7 +884,7 @@ fun Ctext(
 		if (value.isEmpty()) " " 
 		else value, style = TextStyle(TextColor, textSize)).size.width
 	val outerMod = Modifier.width(
-		(with(density) { measuredWidth.toDp() } + 8.dp)
+		(with(density) { measuredWidth.toDp() } + 0.dp)
 			.coerceIn(WidthMin.dp, WidthMax.dp)
 	)
 
