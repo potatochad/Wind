@@ -1004,8 +1004,8 @@ fun SimpleDivider(
 
 
 @Composable
-fun TextRow(
-    padding: Int = 5,
+fun TextRow2(
+    padding: Int = 0,
     hGap: Dp = 5.dp,
     content: @Composable () -> Unit
 ) {
@@ -1056,6 +1056,65 @@ fun TextRow(
                     x += p.width + gap
                 }
                 y += rowH + gap
+            }
+        }
+    }
+}
+@Composable
+fun TextRow(
+    padding: Int = 0,
+    hGap: Dp = 5.dp,          // space between items in a row
+    vGap: Dp = 6.dp,          // space between rows
+    content: @Composable () -> Unit
+) {
+    Layout(
+        content = content,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(padding.dp)
+    ) { measurables, constraints ->
+        val h = hGap.roundToPx()
+        val v = vGap.roundToPx()
+        val maxW = constraints.maxWidth
+        val placeables = measurables.map { it.measure(constraints.copy(minWidth = 0)) }
+
+        val rows = mutableListOf<MutableList<Placeable>>()
+        val rowHeights = mutableListOf<Int>()
+        var cur = mutableListOf<Placeable>()
+        var curW = 0
+        var curH = 0
+
+        fun pushRow() {
+            if (cur.isNotEmpty()) {
+                rows += cur
+                rowHeights += curH
+                cur = mutableListOf(); curW = 0; curH = 0
+            }
+        }
+
+        for (p in placeables) {
+            val nextW = if (cur.isEmpty()) p.width else curW + h + p.width
+            if (nextW > maxW) pushRow()
+            if (cur.isNotEmpty()) curW += h
+            cur += p
+            curW += p.width
+            curH = maxOf(curH, p.height)
+        }
+        pushRow()
+
+        val height = rowHeights.sum() + v * (rowHeights.size - 1).coerceAtLeast(0)
+
+        layout(maxW, height) {
+            var y = 0
+            rows.forEachIndexed { i, row ->
+                var x = 0
+                val rowH = rowHeights[i]
+                row.forEach { p ->
+                    val yCenter = y + (rowH - p.height) / 2
+                    p.placeRelative(x, yCenter)
+                    x += p.width + h
+                }
+                y += rowH + v
             }
         }
     }
