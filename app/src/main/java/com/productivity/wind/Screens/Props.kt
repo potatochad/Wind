@@ -349,6 +349,7 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 @Composable
 fun AppChallange(show: MutableState<Boolean>) {
     var InputText by remember { m("50") }
+    var InputText by remember { m("50") }
 
     
 
@@ -375,13 +376,17 @@ fun AppChallange(show: MutableState<Boolean>) {
                 UI.Cinput(InputText){ 
                     InputText = it 
                 }
+                Text("seconds")
 
                 Text("on")
                 UI.Ctext("0 apps"){
                     
                 }
                 Text("add")
-                UI.Ctext("0 points"){
+                UI.Cinput(InputText){ 
+                    InputText = it 
+                }
+                UI.Ctext("points"){
                     
                 }
                 
@@ -395,10 +400,11 @@ fun AppChallange(show: MutableState<Boolean>) {
     }
 
     LazyPopup(show = show,
-              title = "Add Challenge", 
+              title = "App usage", 
               content = { PopupContent() }, 
               onConfirm = {  },
               message="",
+              onDismiss={},
               )
 
     
