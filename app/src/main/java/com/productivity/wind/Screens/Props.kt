@@ -348,8 +348,8 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 
 @Composable
 fun AppChallange(show: MutableState<Boolean>) {
-    var Time by remember { m("50") }
-    var Points by remember { m("0") }
+    var Time = remember { m("50") }
+    var Points = remember { m("0") }
 
     
 
@@ -374,7 +374,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                 Text("If")
                 Text("spend")
                 UI.Cinput(Time){ 
-                    Time = it 
+                    Time.value = it 
                 }
                 Text("seconds")
 
@@ -383,9 +383,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                     
                 }
                 Text("add")
-                UI.Cinput(Points){ 
-                    Points = it 
-                }
+                UI.Cinput(Points)
                 UI.Ctext("points"){
                     
                 }
