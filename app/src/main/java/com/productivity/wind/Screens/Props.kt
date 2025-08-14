@@ -371,16 +371,16 @@ fun AppChallange(show: MutableState<Boolean>) {
             UI.TextRow(){
                 
                 Text("If")
-                Text(" spend ")
+                Text("spend")
                 UI.Cinput(InputText){ 
                     InputText = it 
                 }
 
-                Text("on ")
+                Text("on")
                 UI.Ctext("0 apps"){
                     
                 }
-                Text(" add ")
+                Text("add")
                 UI.Ctext("0 points"){
                     
                 }
