@@ -1006,7 +1006,7 @@ fun SimpleDivider(
 @Composable
 fun TextRow(
     padding: Int = 5,
-    hGap: Dp = 0.dp,
+    hGap: Dp = 5.dp,
     content: @Composable () -> Unit
 ) {
     Layout(
@@ -1068,7 +1068,7 @@ fun TextRow(
 
 @Composable
 fun SimpleRow(
-	padding: Int = 5,
+	padding: Int = 0,
 	content: @Composable () -> Unit,
 ){
 	Row(
