@@ -881,6 +881,13 @@ fun InputField(
 
 
 
+fun ResetText(show: MutableState<Boolean>, onReset: () -> Unit) {
+    LaunchedEffect(show.value) {
+        if (!show.value) {
+            onReset()
+        }
+    }
+}
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
