@@ -1704,9 +1704,16 @@ fun LazyPopup(
 				show.value = false
 			},
 			title = { Text(title) },
-			text = { if (content == null) {Text(message) }
-				else {
-					content()
+			text = {
+				Box(
+					Modifier.animateContentSize(
+						animationSpec = tween(durationMillis = 350, easing = LinearOutSlowInEasing)
+					)
+				) {
+					if (content == null) {Text(message) }
+					else {
+						content()
+					}
 				}
 			},
 			confirmButton = {
