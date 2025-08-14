@@ -355,7 +355,8 @@ fun AppChallange(show: MutableState<Boolean>) {
 
     LaunchedEffect(show.value) {
         if (!show.value) {
-            InputText = "50"
+            Time.value = "50"
+            points.value = "0"
         }
     }
 
