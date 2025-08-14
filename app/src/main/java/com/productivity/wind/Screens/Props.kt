@@ -368,7 +368,7 @@ fun AppChallange(show: MutableState<Boolean>) {
         
             refreshApps()
 
-            UI.SimpleRow( content ={
+            UI.TextRow(){
                 
                 Text("If")
                 Text(" spend ")
@@ -389,7 +389,7 @@ fun AppChallange(show: MutableState<Boolean>) {
 
 
                 
-            })
+            }
 
         
     }
