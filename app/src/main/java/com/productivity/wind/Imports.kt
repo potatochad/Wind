@@ -1666,14 +1666,21 @@ fun SettingsScreen(
 
 //region LAZY POPUP
 
-/* Example
-LazyPopup(
-    onDismiss = { },
-    onConfirm = { },
-    title = "Look...",
-    message = "Me, one lazy dude... etc..."
-)
-*/
+@Composable
+fun AnimateDown(
+    modifier: Modifier = Modifier,
+    duration: Int = 100,
+    easing: Easing = LinearOutSlowInEasing,
+    content: @Composable BoxScope.() -> Unit
+) {
+    Box(
+        modifier.animateContentSize(
+            animationSpec = tween(durationMillis = duration, easing = easing)
+        ),
+        content = content
+    )
+}
+
 @Composable
 fun LazyPopup(
     show: MutableState<Boolean>,
@@ -1703,11 +1710,7 @@ fun LazyPopup(
 			},
 			title = { Text(title) },
 			text = {
-				Box(
-					Modifier.animateContentSize(
-						animationSpec = tween(durationMillis = 350, easing = LinearOutSlowInEasing)
-					)
-				) {
+				AnimateDown() {
 					if (content == null) {Text(message) }
 					else {
 						content()
