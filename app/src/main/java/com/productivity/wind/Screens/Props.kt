@@ -355,7 +355,7 @@ fun AppChallange(show: MutableState<Boolean>) {
 
     UI.ResetText(show){
         Time.value = "50"
-        points.value = "0"
+        Points.value = "0"
     }
 
 
