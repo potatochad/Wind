@@ -381,7 +381,7 @@ fun AppChallange(show: MutableState<Boolean>) {
                 UI.Ctext("0 apps"){
                     
                 }
-                Text("add")
+                Text(", add")
                 UI.Cinput(Points)
                 UI.Ctext("points"){
                     
