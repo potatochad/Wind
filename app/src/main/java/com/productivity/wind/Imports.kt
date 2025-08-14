@@ -879,11 +879,7 @@ fun Cinput(
     val FocusChange = TextMemory()
     val imeAction = ImeAction(null)
     val isFocused by IsFocused(FocusChange)
-	val TextStyling = LocalTextStyle.current.copy(
-		color = TextColor,
-		fontSize = textSize,
-		// fontWeight = FontWeight.Bold
-	)
+	val TextStyling = TextStyle(TextColor, textSize)
 
 
 	
