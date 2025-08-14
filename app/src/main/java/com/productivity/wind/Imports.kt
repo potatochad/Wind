@@ -695,6 +695,25 @@ fun TextStyle(
     color = color,
     fontSize = fontSize
 )
+@Composable
+fun CTextStyle2(
+    color: Color,
+    fontSize: TextUnit
+) = LocalTextStyle.current.copy(
+    color = color,
+    fontSize = fontSize
+)
+@Composable
+fun CTextStyle(
+    color: Color,
+    fontSize: TextUnit
+) = LocalTextStyle.current.copy(
+    color = color,
+    fontSize = fontSize,
+    fontWeight = FontWeight.Bold
+)
+
+
 
 @Composable
 fun TextMemory() = remember { MutableInteractionSource() }
@@ -880,7 +899,7 @@ fun Cinput(
     val imeAction = ImeAction(null)
     val isFocused by IsFocused(FocusChange)
 
-	val TextStyling = TextStyle(TextColor, textSize)
+	val TextStyling = CTextStyle(TextColor, textSize)
 
 	
     val measurer = rememberTextMeasurer()
@@ -1007,7 +1026,7 @@ fun SimpleDivider(
 fun TextRow(
     padding: Int = 0,
     hGap: Dp = 5.dp,          // space between items in a row
-    vGap: Dp = 1.dp,          // space between rows
+    vGap: Dp = 0.dp,          // space between rows
     content: @Composable () -> Unit
 ) {
     Layout(
