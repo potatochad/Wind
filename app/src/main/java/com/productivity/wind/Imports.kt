@@ -879,8 +879,8 @@ fun Cinput(
     val FocusChange = TextMemory()
     val imeAction = ImeAction(null)
     val isFocused by IsFocused(FocusChange)
-	val TextStyling = TextStyle(TextColor, textSize)
 
+	val TextStyling = TextStyle(TextColor, textSize)
 
 	
     val measurer = rememberTextMeasurer()
@@ -907,7 +907,7 @@ fun Cinput(
 			else { Vlog("max ${MaxLetters} letters") }
         },
         modifier = outerMod.height(height),
-        textStyle = TextStyling
+        textStyle = TextStyle(TextColor, textSize),
         singleLine = true,
 		keyboardOptions = KeyboardOptions(type(true), imeAction),
         keyboardActions = doneAction(null),
@@ -1003,69 +1003,11 @@ fun SimpleDivider(
 
 
 
-
-@Composable
-fun TextRow2(
-    padding: Int = 0,
-    hGap: Dp = 5.dp,
-    content: @Composable () -> Unit
-) {
-    Layout(
-        content = content,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(padding.dp)
-    ) { measurables, constraints ->
-        val gap = hGap.roundToPx()
-        val maxW = constraints.maxWidth
-        val placeables = measurables.map { it.measure(constraints.copy(minWidth = 0)) }
-
-        val rows = mutableListOf<MutableList<Placeable>>()
-        val rowHeights = mutableListOf<Int>()
-        var cur = mutableListOf<Placeable>()
-        var curW = 0
-        var curH = 0
-
-        fun pushRow() {
-            if (cur.isNotEmpty()) {
-                rows += cur
-                rowHeights += curH
-                cur = mutableListOf(); curW = 0; curH = 0
-            }
-        }
-
-        for (p in placeables) {
-            val nextW = if (cur.isEmpty()) p.width else curW + gap + p.width
-            if (nextW > maxW) pushRow()
-            if (cur.isNotEmpty()) curW += gap
-            cur += p
-            curW += p.width
-            curH = maxOf(curH, p.height)
-        }
-        pushRow()
-
-        val height = rowHeights.sum() + gap * (rowHeights.size - 1).coerceAtLeast(0)
-
-        layout(maxW, height) {
-            var y = 0
-            rows.forEachIndexed { i, row ->
-                var x = 0
-                val rowH = rowHeights[i]
-                row.forEach { p ->
-                    val yCenter = y + (rowH - p.height) / 2
-                    p.placeRelative(x, yCenter)
-                    x += p.width + gap
-                }
-                y += rowH + gap
-            }
-        }
-    }
-}
 @Composable
 fun TextRow(
     padding: Int = 0,
     hGap: Dp = 5.dp,          // space between items in a row
-    vGap: Dp = 6.dp,          // space between rows
+    vGap: Dp = 1.dp,          // space between rows
     content: @Composable () -> Unit
 ) {
     Layout(
@@ -1716,7 +1658,7 @@ fun SettingsScreen(
 @Composable
 fun AnimateDown(
     modifier: Modifier = Modifier,
-    duration: Int = 40,
+    duration: Int = 30,
     easing: Easing = LinearOutSlowInEasing,
     content: @Composable BoxScope.() -> Unit
 ) {
@@ -2036,6 +1978,5 @@ class NotificationHelper(private val context: Context) {
 }
 
 //endregion LATER USE
-
 
 
