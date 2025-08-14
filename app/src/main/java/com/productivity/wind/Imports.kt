@@ -1004,7 +1004,6 @@ fun SimpleDivider(
 
 
 @OptIn(ExperimentalLayoutApi::class)
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TextRow(
     content: @Composable () -> Unit,
