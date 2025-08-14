@@ -1005,7 +1005,7 @@ fun SimpleDivider(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun TextRow(
+fun TextRow2(
     padding: Int = 8,
 	content: @Composable () -> Unit,
 ) {
@@ -1019,6 +1019,62 @@ fun TextRow(
         content()
     }
 }
+// imports you need:
+// import androidx.compose.ui.layout.Layout
+// import androidx.compose.ui.layout.Placeable
+
+@Composable
+fun TextRow(
+    padding: Int = 8,
+    hGap: Dp = 6.dp,
+    content: @Composable () -> Unit
+) {
+    Layout(
+        content = content,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(padding.dp)
+    ) { measurables, constraints ->
+        val gap = hGap.roundToPx()
+        val maxW = constraints.maxWidth
+        val placeables = measurables.map { it.measure(constraints.copy(minWidth = 0)) }
+
+        val rows = mutableListOf<MutableList<Placeable>>()
+        val rowHeights = mutableListOf<Int>()
+        var cur = mutableListOf<Placeable>()
+        var curW = 0
+        var curH = 0
+
+        fun pushRow() {
+            if (cur.isNotEmpty()) {
+                rows += cur
+                rowHeights += curH
+                cur = mutableListOf(); curW = 0; curH = 0
+            }
+        }
+
+        for (p in placeables) {
+            val nextW = if (cur.isEmpty()) p.width else curW + gap + p.width
+            if (nextW > maxW) pushRow()
+            if (cur.isNotEmpty()) curW += gap
+            cur += p
+            curW += p.width
+            curH = maxOf(curH, p.height)
+        }
+        pushRow()
+
+        val height = rowHeights.sum() + gap * (rowHeights.size - 1).coerceAtLeast(0)
+        layout(maxW, height) {
+            var y = 0
+            rows.forEachIndexed { i, row ->
+                var x = 0
+                row.forEach { it.placeRelative(x, y); x += it.width + gap }
+                y += rowHeights[i] + gap
+            }
+        }
+    }
+}
+
 
 
 
