@@ -879,8 +879,15 @@ fun InputField(
 
 
 
+class Alias<T>(private val state: MutableState<T>) {
+    var it: T
+        get() = state.value
+        set(value) { state.value = value }
+}
 
+fun <T> it(initial: T) = Alias(m(initial))
 
+@Composable
 fun ResetText(show: MutableState<Boolean>, onReset: () -> Unit) {
     LaunchedEffect(show.value) {
         if (!show.value) {
