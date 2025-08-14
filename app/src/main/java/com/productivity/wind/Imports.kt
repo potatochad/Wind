@@ -926,7 +926,7 @@ fun Cinput(
 			else { Vlog("max ${MaxLetters} letters") }
         },
         modifier = outerMod.height(height),
-        textStyle = TextStyle(TextColor, textSize),
+        textStyle = TextStyling,
         singleLine = true,
 		keyboardOptions = KeyboardOptions(type(true), imeAction),
         keyboardActions = doneAction(null),
