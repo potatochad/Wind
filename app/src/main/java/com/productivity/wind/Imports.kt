@@ -1728,18 +1728,18 @@ fun LazyPopup(
     )
 	
     if (show.value) { 
+		AnimateDown() {
 		AlertDialog(
 			onDismissRequest = {
 				onDismiss?.invoke()
 			},
 			title = { Text(title) },
 			text = {
-				AnimateDown() {
 					if (content == null) {Text(message) }
 					else {
 						content()
 					}
-				}
+		
 			},
 			confirmButton = {
 				if (showConfirm) {
@@ -1762,6 +1762,8 @@ fun LazyPopup(
 				}
 			} else null
 		)
+	}
+		
 	}
 
 	
