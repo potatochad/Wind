@@ -1006,8 +1006,8 @@ fun SimpleDivider(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TextRow(
-    content: @Composable () -> Unit,
-    padding: Int = 8
+    padding: Int = 8,
+	content: @Composable () -> Unit,
 ) {
     FlowRow(
         modifier = Modifier
@@ -1025,8 +1025,8 @@ fun TextRow(
 
 @Composable
 fun SimpleRow(
+	padding: Int = 0,
 	content: @Composable () -> Unit,
-	padding: Int = 0
 ){
 	Row(
 		modifier = Modifier
