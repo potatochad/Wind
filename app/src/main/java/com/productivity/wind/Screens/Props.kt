@@ -353,7 +353,7 @@ fun AppChallange(show: MutableState<Boolean>) {
 
     
 
-    UI.ResetText(){
+    UI.ResetText(show){
         Time.value = "50"
         points.value = "0"
     }
