@@ -1042,7 +1042,7 @@ fun SimpleDivider(
 fun TextRow(
     padding: Int = 0,
     hGap: Dp = 5.dp,          // space between items in a row
-    vGap: Dp = 0.dp,          // space between rows
+    vGap: Dp = -5.dp,          // space between rows
     content: @Composable () -> Unit
 ) {
     Layout(
@@ -1691,21 +1691,6 @@ fun SettingsScreen(
 //region LAZY POPUP
 
 @Composable
-fun AnimateDown(
-    modifier: Modifier = Modifier,
-    duration: Int = 200,
-    easing: Easing = LinearOutSlowInEasing,
-    content: @Composable BoxScope.() -> Unit
-) {
-    Box(
-        modifier.animateContentSize(
-            animationSpec = tween(durationMillis = duration, easing = easing)
-        ),
-        content = content
-    )
-}
-
-@Composable
 fun LazyPopup(
     show: MutableState<Boolean>,
     onDismiss: (() -> Unit)? = { show.value = false },
@@ -1728,7 +1713,6 @@ fun LazyPopup(
     )
 	
     if (show.value) { 
-		AnimateDown() {
 		AlertDialog(
 			onDismissRequest = {
 				onDismiss?.invoke()
@@ -1762,7 +1746,6 @@ fun LazyPopup(
 				}
 			} else null
 		)
-	}
 		
 	}
 
