@@ -1068,7 +1068,7 @@ fun TextRow(
 
 @Composable
 fun SimpleRow(
-	padding: Int = 0,
+	padding: Int = 5,
 	content: @Composable () -> Unit,
 ){
 	Row(
