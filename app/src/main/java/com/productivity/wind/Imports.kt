@@ -882,7 +882,7 @@ fun Cinput(
 	val TextStyling = LocalTextStyle.current.copy(
 		color = TextColor,
 		fontSize = textSize,
-		fontWeight = FontWeight.Bold
+		// fontWeight = FontWeight.Bold
 	)
 
 
