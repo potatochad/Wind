@@ -904,7 +904,7 @@ fun Cinput(
     height: Dp = 36.dp,
     MaxLetters: Int? = 5,
     WidthMin: Int = 10,
-    WidthMax: Int = 800,
+    WidthMax: Int = 100,
 
 	onChange: (String) -> Unit = {},
 ) {
@@ -1042,7 +1042,7 @@ fun SimpleDivider(
 fun TextRow(
     padding: Int = 0,
     hGap: Dp = 5.dp,          // space between items in a row
-    vGap: Dp = -5.dp,          // space between rows
+    vGap: Dp = 0.dp,          // space between rows
     content: @Composable () -> Unit
 ) {
     Layout(
