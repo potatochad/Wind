@@ -1656,7 +1656,7 @@ fun SettingsScreen(
 @Composable
 fun AnimateDown(
     modifier: Modifier = Modifier,
-    duration: Int = 100,
+    duration: Int = 50,
     easing: Easing = LinearOutSlowInEasing,
     content: @Composable BoxScope.() -> Unit
 ) {
