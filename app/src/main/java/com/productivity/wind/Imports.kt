@@ -885,15 +885,16 @@ fun InputField(
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun Cinput(
-    value: String,
+    what: MutableState<String>,
     textSize: TextUnit = 14.sp,
     height: Dp = 36.dp,
     MaxLetters: Int? = 5,
     WidthMin: Int = 10,
     WidthMax: Int = 800,
 
-	onChange: (String) -> Unit,
+	onChange: (String) -> Unit = {},
 ) {
+	val value = what.value
 	val TextColor = Color(0xFFFFD700)
     val FocusChange = TextMemory()
     val imeAction = ImeAction(null)
@@ -921,6 +922,7 @@ fun Cinput(
         onValueChange = {
             val input = FilterInput(true, it)
             if (input.length <= max(MaxLetters)) {
+				what.value = input
                 onChange(input)
             }
 			else { Vlog("max ${MaxLetters} letters") }
