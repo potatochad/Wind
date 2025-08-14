@@ -1003,30 +1003,10 @@ fun SimpleDivider(
 
 
 
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun TextRow2(
-    padding: Int = 8,
-	content: @Composable () -> Unit,
-) {
-    FlowRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(padding.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        content()
-    }
-}
-// imports you need:
-// import androidx.compose.ui.layout.Layout
-// import androidx.compose.ui.layout.Placeable
-
 @Composable
 fun TextRow(
-    padding: Int = 8,
-    hGap: Dp = 6.dp,
+    padding: Int = 5,
+    hGap: Dp = 0.dp,
     content: @Composable () -> Unit
 ) {
     Layout(
@@ -1064,16 +1044,23 @@ fun TextRow(
         pushRow()
 
         val height = rowHeights.sum() + gap * (rowHeights.size - 1).coerceAtLeast(0)
+
         layout(maxW, height) {
             var y = 0
             rows.forEachIndexed { i, row ->
                 var x = 0
-                row.forEach { it.placeRelative(x, y); x += it.width + gap }
-                y += rowHeights[i] + gap
+                val rowH = rowHeights[i]
+                row.forEach { p ->
+                    val yCenter = y + (rowH - p.height) / 2
+                    p.placeRelative(x, yCenter)
+                    x += p.width + gap
+                }
+                y += rowH + gap
             }
         }
     }
 }
+
 
 
 
