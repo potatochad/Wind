@@ -1560,11 +1560,10 @@ fun settingsHeader(
                     .padding(start = if (showBack) 8.dp else 0.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
-				UI.SimpleRow( 
-					padding = 0,
-					content = {
+				UI.SimpleRow(){
 						titleContent()
-				})
+				}
+				
             }
 
             // Search icon
