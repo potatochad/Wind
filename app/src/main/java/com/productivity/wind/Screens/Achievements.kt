@@ -61,7 +61,7 @@ import android.net.Uri
 import android.widget.Toast
 import android.widget.ScrollView
 import com.productivity.wind.*
-import com.productivity.wind.Import.*
+import com.productivity.wind.Imports.*
 import java.util.UUID
 import java.lang.reflect.Type
 import androidx.compose.material.icons.filled.*
