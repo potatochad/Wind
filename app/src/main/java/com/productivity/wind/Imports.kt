@@ -1004,16 +1004,18 @@ fun SimpleDivider(
 
 
 @OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TextRow(
-    padding: Int = 0,
-	content: @Composable () -> Unit,
+    content: @Composable () -> Unit,
+    padding: Int = 8
 ) {
     FlowRow(
         modifier = Modifier
             .fillMaxWidth()
             .padding(padding.dp),
-        verticalAlignment = Alignment.CenterVertically
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         content()
     }
