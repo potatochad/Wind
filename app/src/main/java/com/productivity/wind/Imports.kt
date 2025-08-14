@@ -1677,7 +1677,7 @@ LazyPopup(
 @Composable
 fun LazyPopup(
     show: MutableState<Boolean>,
-    onDismiss: (() -> Unit)? = null,
+    onDismiss: (() -> Unit)? = { show.value = false },
     title: String = "Info",
     message: String,
     content: (@Composable () -> Unit)? = null,
@@ -1700,8 +1700,6 @@ fun LazyPopup(
 		AlertDialog(
 			onDismissRequest = {
 				onDismiss?.invoke()
-
-				show.value = false
 			},
 			title = { Text(title) },
 			text = {
