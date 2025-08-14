@@ -879,6 +879,11 @@ fun Cinput(
     val FocusChange = TextMemory()
     val imeAction = ImeAction(null)
     val isFocused by IsFocused(FocusChange)
+	val TextStyling = TextStyle(
+		color = TextColor,
+		fontSize = textSize,
+		fontWeight = FontWeight.Bold
+	)
 
 
 	
@@ -886,7 +891,7 @@ fun Cinput(
 	val density = LocalDensity.current
 	val measuredWidth = measurer.measure(
 		if (value.isEmpty()) " " 
-		else value, style = TextStyle(TextColor, textSize)).size.width
+		else value, style = TextStyling).size.width
 	val outerMod = Modifier.width(
 		(with(density) { measuredWidth.toDp() } + 0.dp)
 			.coerceIn(WidthMin.dp, WidthMax.dp)
@@ -906,7 +911,7 @@ fun Cinput(
 			else { Vlog("max ${MaxLetters} letters") }
         },
         modifier = outerMod.height(height),
-        textStyle = TextStyle(TextColor, textSize),
+        textStyle = TextStyling
         singleLine = true,
 		keyboardOptions = KeyboardOptions(type(true), imeAction),
         keyboardActions = doneAction(null),
@@ -1715,7 +1720,7 @@ fun SettingsScreen(
 @Composable
 fun AnimateDown(
     modifier: Modifier = Modifier,
-    duration: Int = 50,
+    duration: Int = 40,
     easing: Easing = LinearOutSlowInEasing,
     content: @Composable BoxScope.() -> Unit
 ) {
