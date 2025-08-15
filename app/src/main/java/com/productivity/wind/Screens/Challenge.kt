@@ -130,6 +130,7 @@ fun AppUsage() {
                 UI.Ctext("points"){
                     
                 }
+            }
                 
                 
     
