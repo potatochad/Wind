@@ -93,7 +93,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphBuilder
 import androidx.compose.ui.window.Popup
-
 import com.productivity.wind.Imports.*
 
 fun NavGraphBuilder.ScreenNav() {
@@ -147,23 +146,23 @@ fun MainHeader(){
 
 @Composable
 fun Menu() {
-    SettingsScreen(
+    LazyScreen(
         titleContent = { UI.MenuHeader() },
         showBack = false,
         showDivider = false,
         MheaderHeight = 700,
     ) {
-        SettingItem(
+        LazyItem(
             icon = Icons.Outlined.Chat,
             title = "Contact Support",
             onClick = { UI.SendEmail(); Bar.ShowMenu = false }
         )
-        SettingItem(
+        LazyItem(
             icon = Icons.Outlined.Landscape,
             title = "Settings",
             onClick = { Global1.navController.navigate("SettingsScreen"); Bar.ShowMenu = false  }
         )
-        SettingItem(
+        LazyItem(
             icon = Icons.Outlined.QueryStats,
             title = "Achievements",
             onClick = { Global1.navController.navigate("Achievements"); Bar.ShowMenu = false }
@@ -185,7 +184,7 @@ fun Menu() {
 object Icon {
         @Composable
         fun Menu() {
-                UI.SimpleIconButton(
+                LazyIconButton(
                         onClick = { Bar.ShowMenu = true },
                         icon = Icons.Default.Menu
                 )
@@ -193,7 +192,7 @@ object Icon {
         
         @Composable
         fun Chill() {
-                UI.SimpleIconButton(
+                LazyIconButton(
                         onClick = { Global1.navController.navigate("Web") },
                         icon = Icons.Default.SportsEsports
                 )
@@ -201,7 +200,7 @@ object Icon {
         
         @Composable
         fun Add() {
-                UI.SimpleIconButton(
+                LazyIconButton(
                         onClick = { Global1.navController.navigate("Challenge") },
                         icon = Icons.Default.Add
                 )
@@ -209,7 +208,7 @@ object Icon {
         
         @Composable
         fun Edit() {
-                UI.SimpleIconButton(
+                LazyIconButton(
                         onClick = { 
                                 if (Bar.funTime > Bar.Dpoints) Popup.Edit.value =true
                                 else Popup.NeedMorePoints.value = true
@@ -220,7 +219,7 @@ object Icon {
         
         @Composable
         fun G_Edit() {
-                UI.SimpleIconButton(
+                LazyIconButton(
                         onClick = { 
                                 if (Bar.funTime > Bar.Dpoints) Popup.G_Edit.value =true
                                 else Popup.NeedMorePoints.value = true
