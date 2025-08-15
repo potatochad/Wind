@@ -101,7 +101,10 @@ fun NavGraphBuilder.ScreenNav() {
 
     
     url("Achievements") { Achievements() }
+    
     url("Challenge") { Challenge() }
+    url("AppUsage") { AppUsage() }
+    
 
     
     url("Web") { Web() }
