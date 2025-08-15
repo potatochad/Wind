@@ -1,1 +1,738 @@
+package com.productivity.wind
 
+import timber.log.Timber
+import android.app.usage.UsageStatsManager
+import android.app.usage.UsageStats
+import androidx.compose.foundation.interaction.*
+import android.app.*
+import androidx.core.app.*
+import androidx.compose.ui.draw.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.ui.unit.*
+import androidx.compose.material3.*
+import androidx.compose.foundation.text.*
+import androidx.compose.ui.text.input.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.runtime.*
+import android.os.*
+import java.io.*
+import android.annotation.*
+import android.content.*
+import android.util.*
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.focus.*
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.text.font.*
+import androidx.navigation.NavController
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import kotlinx.coroutines.*
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.KMutableProperty1
+import kotlin.reflect.jvm.isAccessible
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.window.Popup
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlin.reflect.*
+import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.primaryConstructor
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import android.net.Uri
+import android.widget.Toast
+import android.widget.ScrollView
+import com.productivity.wind.*
+import java.util.UUID
+import java.lang.reflect.Type
+import kotlin.collections.*
+import java.io.File
+import kotlin.math.min
+import android.content.ClipData
+import android.content.ClipboardManager
+import java.lang.reflect.ParameterizedType
+import androidx.compose.ui.text.*
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.material3.ripple
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.res.painterResource
+import android.content.Intent
+import java.time.LocalDate
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+import androidx.annotation.RequiresApi
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import com.productivity.wind.*
+import com.productivity.wind.Screens.*
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.rememberTextMeasurer
+
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.Placeable
+
+
+
+@Composable
+fun LazySwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
+    Switch(
+      checked = isOn,
+      onCheckedChange = onToggle,
+      modifier = Modifier.size(34.dp), // default ~39dp → minus 5dp
+      colors = SwitchDefaults.colors(
+          checkedThumbColor = Color(0xFFFFD700),
+          uncheckedThumbColor = Color.LightGray,
+          checkedTrackColor = Color(0xFFFFF8DC),
+          uncheckedTrackColor = Color(0xFFE0E0E0)
+      )
+    )
+}
+  
+  
+@Composable
+fun LazyLine(
+    show: Boolean,
+    color: Color = Color(0xFFFFD700),
+    thickness: Dp = 1.dp,
+    MoveY: Int = 0,
+    paddingHorizontal: Dp = 0.dp,
+    width: Dp = Dp.Unspecified,
+  ) {
+    if (!show) return
+
+    Divider(
+        color = color,
+        thickness = thickness,
+        modifier = Modifier
+            .offset(y = MoveY.dp)
+            .padding(horizontal = paddingHorizontal)
+            .then(if (width != Dp.Unspecified) Modifier.width(width) else Modifier)
+    )
+}
+  
+@Composable
+fun LazzyRow(
+    padding: Int = 0,
+    content: @Composable () -> Unit,
+  ){
+    Row(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(padding.dp),
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      content()
+	  	}
+}
+      
+
+	
+@Composable
+fun LazyCard(
+	content: @Composable () -> Unit,
+	InputColor: Color = Color(0xFF1A1A1A),
+	InnerPadding: Int = 16
+) {
+  Card(
+      modifier = Modifier
+        .padding(8.dp)
+        .fillMaxWidth(), 
+      shape = RoundedCornerShape(16.dp), 
+      elevation = CardDefaults
+        .cardElevation(defaultElevation = 8.dp), 
+      colors = CardDefaults
+        .cardColors(containerColor = InputColor)
+    ){
+      Column(modifier = Modifier.padding(InnerPadding.dp)) {
+        content()
+      }
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LazyIconButton(
+    onClick: () -> Unit,
+    icon: ImageVector? = null,
+    BigIcon: ImageVector? = null,
+    BigIconColor: Color? = null,
+    SquareIcon: Boolean = false,
+    BigIconSize: Int = 30,
+    OuterPadding: Int = 5,          // outside space
+    ButtonSize: Int = 40,           // actual button box (default M3 ~48)
+    modifier: Modifier = Modifier,
+) {
+    CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+        IconButton(
+            onClick = onClick,
+            modifier = modifier
+                .padding(OuterPadding.dp) // OUTER padding
+                .size(ButtonSize.dp)      // controls inner room around icon
+        ) {
+            if (icon != null) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = Color(0xFFFFD700),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+
+            if (BigIcon != null && BigIconColor != null) {
+                val shape = if (SquareIcon) RoundedCornerShape(6.dp) else CircleShape
+                val innerSize = if (SquareIcon) 24.dp else 20.dp
+                Box(
+                    modifier = Modifier
+                        .size(BigIconSize.dp)
+                        .clip(shape)
+                        .background(BigIconColor),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = BigIcon,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(innerSize)
+                    )
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun LazyEmpty(
+    text: String = "No Items",
+    icon: ImageVector = Icons.Default.Block,
+    height: Dp = Bar.halfHeight * 2 - 200.dp,
+    iconSize: Dp = 64.dp,
+    topSpacing: Dp = Bar.halfHeight - 190.dp,
+    textSize: TextUnit = 18.sp,
+    color: Color = Color.Gray
+) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .height(height)) {
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(topSpacing))
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = color,
+                modifier = Modifier.size(iconSize)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text, fontSize = textSize, color = color)
+        }
+    }
+}
+
+
+@Stable
+@Composable
+fun LazyMore(
+    modifier: Modifier = Modifier,
+    title: String = "Show more",
+    initiallyExpanded: Boolean = false,
+    content: @Composable () -> Unit
+) {
+    var expanded by remember { mutableStateOf(initiallyExpanded) }
+    val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
+
+    Column(modifier = modifier) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { expanded = !expanded }
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = if (expanded) "Show less" else "Show more",
+                modifier = Modifier.rotate(rotation),
+                tint = Color(0xFFFFD700) // GOLD icon
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = title,
+                modifier = Modifier.weight(1f),
+                color = Color(0xFFFFD700) // GOLD text
+            )
+        }
+
+        AnimatedVisibility(
+            visible = expanded,
+            enter = expandVertically(
+                animationSpec = tween(durationMillis = 400),
+                expandFrom = Alignment.Top
+            ),
+            exit = shrinkVertically(
+                animationSpec = tween(durationMillis = 300),
+                shrinkTowards = Alignment.Top
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 32.dp, top = 4.dp) // indent content nicely
+            ) {
+                content()
+            }
+        }
+    }
+}
+
+//endregion
+
+
+//region SCREENS
+
+
+@Composable
+fun LazyItem(
+    title: String,
+    subtitle: String? = null,
+    endContent: @Composable (() -> Unit)? = null,
+    modifier: Modifier = Modifier,
+	
+    icon: ImageVector? = null,
+    BigIcon: ImageVector? = null,
+    BigIconColor: Color? = null,
+	
+    onClick: (() -> Unit)? = null,
+
+    topPadding: Dp= 7.dp,
+    bottomPadding: Dp = 7.dp,
+) {
+	Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+		    top = topPadding,
+		    bottom = bottomPadding,
+		    start = 7.dp,
+		    end = 7.dp
+	    ),
+ verticalAlignment = Alignment.CenterVertically
+    ) {
+        Card(
+    modifier = modifier
+        .fillMaxWidth()
+        .clickable(enabled = onClick != null) { onClick?.invoke() },
+    shape = RoundedCornerShape(12.dp),
+    colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
+    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+) {
+            Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+	if (icon != null) {
+		Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = Color(0xFFFFD700),
+            modifier = Modifier
+                .padding(end = 10.dp)
+                .size(24.dp)
+        )
+	}	    
+
+	if (BigIcon != null && BigIconColor != null) {
+                    Box(
+                        modifier = Modifier
+                            .padding(end = 10.dp)
+                            .size(30.dp)
+                            .clip(CircleShape)
+                            .background(BigIconColor),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = BigIcon,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+	}
+
+
+
+	
+        Column(modifier = Modifier.weight(1f)) {
+            Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
+            subtitle?.let {
+                Text(text = it, color = Color.Gray, fontSize = 12.sp)
+            }
+        }
+        endContent?.invoke()
+    }
+}}
+
+}
+
+@Composable
+fun LazyHeader(
+    titleContent: @Composable () -> Unit,
+    onSearchClick: () -> Unit,
+    onBackClick: () -> Unit = {},
+    showBack: Boolean = true,
+    showSearch: Boolean = false,
+    modifier: Modifier = Modifier,
+    showDivider: Boolean = true,
+	Mheight: Int = 100,
+) {
+    val ui = rememberSystemUiController()
+    var DisableTB_Button by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        ui.setStatusBarColor(Color.Black, darkIcons = false)
+    }
+
+    Column {
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+        )
+
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(Color.Black)
+				.padding(vertical = 12.dp)
+			.heightIn(max = Mheight.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            /* 🔒 Btn Cooldown
+             *
+             * ⚠️ Problem:
+             * Rapid back clicks (especially after popupBackStack or screen transitions)
+             * sometimes cause a full black screen in Compose — likely due to
+             * navigation state confusion or overlapping recompositions.
+             *
+             * ✅ Fix:
+             * We temporarily disable this button after it's clicked once,
+             * using the `DisableTB_Button` flag, to prevent double-taps.
+             *
+             * This protects Compose from crashing or losing its state tree.
+             */
+            if (showBack ) {
+                IconButton(onClick = { if (DisableTB_Button) { }; if (!DisableTB_Button) { DisableTB_Button = true
+
+                        onBackClick()
+                        Global1.navController.popBackStack()
+                    }
+
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color(0xFFFFD700)
+                    )
+                }
+            }
+
+
+            // Title content
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = if (showBack) 8.dp else 0.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+				UI.SimpleRow(){
+						titleContent()
+				}
+				
+            }
+
+            // Search icon
+            if (showSearch) {
+                IconButton(onClick = onSearchClick) {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search",
+                        tint = Color(0xFFFFD700)
+                    )
+                }
+            }
+        }
+
+        if (showDivider) {
+            Divider(
+                color = Color.Gray,
+                thickness = 1.dp,
+                modifier = Modifier.fillMaxWidth()
+            )
+	    Spacer(modifier = Modifier.padding(bottom = 10.dp))
+        }
+	
+    }
+}
+
+
+@Composable
+fun LazyScreen(
+    titleContent: @Composable () -> Unit,
+    onSearchClick: () -> Unit = {},
+    onBackClick: () -> Unit = {},
+    showBack: Boolean = true,
+    showSearch: Boolean = false,
+    modifier: Modifier = Modifier,
+    showDivider: Boolean = true,
+	MheaderHeight: Int = 44,
+    content: @Composable () -> Unit,
+) {
+    val focusManager = LocalFocusManager.current
+    val baseModifier = Modifier
+        .fillMaxSize()
+        .background(Color.Black)
+        .clipToBounds()
+        .clickable(
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }
+        ) {
+            focusManager.clearFocus()
+        }
+
+
+
+    LazyColumn(
+        modifier = baseModifier.then(modifier)
+    ) {
+        item {
+            LazyHeader(
+                titleContent = titleContent,
+                onSearchClick = onSearchClick,
+                onBackClick = onBackClick,
+                showBack = showBack,
+                showSearch = showSearch,
+                showDivider = showDivider,
+				Mheight = MheaderHeight,
+            )
+        }
+        item {
+		Column {
+			content()
+		}
+        }
+    }
+}
+
+
+
+//endregion
+
+
+//region LAZY POPUP
+
+@Composable
+fun LazyPopup(
+    show: MutableState<Boolean>,
+    onDismiss: (() -> Unit)? = { show.value = false },
+    title: String = "Info",
+    message: String,
+    content: (@Composable () -> Unit)? = null,
+    showCancel: Boolean = true,
+    showConfirm: Boolean = true,
+    onConfirm: (() -> Unit)? = null,
+    onCancel: (() -> Unit)? = null,
+
+	Preload: Boolean = true,
+) = NoLagCompose {
+	
+	val preloading = !show.value && Preload
+	
+	PreloadBox(
+        whenDo = preloading,
+        what = { content?.invoke() ?: Text(message) }
+    )
+	
+    if (show.value) { 
+		AlertDialog(
+			onDismissRequest = {
+				onDismiss?.invoke()
+			},
+			title = { Text(title) },
+			text = {
+					if (content == null) {Text(message) }
+					else {
+						content()
+					}
+		
+			},
+			confirmButton = {
+				if (showConfirm) {
+					TextButton(onClick = {
+						onConfirm?.invoke()
+						show.value = false
+					}) {
+						Text("OK")
+					}
+				}
+			},
+			dismissButton = if (showCancel) {
+				{
+					TextButton(onClick = {
+						onCancel?.invoke()
+						show.value = false
+					}) {
+						Text("Cancel")
+					}
+				}
+			} else null
+		)
+		
+	}
+
+	
+
+}
+
+@Composable
+fun LazyMenu(
+    onDismiss: (() -> Unit)? = null,
+    content: @Composable () -> Unit,
+) {
+    val visible = remember { mutableStateOf(false) }
+    val internalVisible = remember { mutableStateOf(false) }
+
+    // Trigger showing/hiding Popup
+    LaunchedEffect(Bar.ShowMenu) {
+        if (Bar.ShowMenu) {
+            visible.value = true
+            delay(16)
+            internalVisible.value = true
+        } else {
+            internalVisible.value = false
+            delay(200) // Wait for animation out
+            visible.value = false
+        }
+    }
+
+    if (!visible.value) return
+
+    // Slide offset
+    val offsetX by animateDpAsState(
+        targetValue = if (internalVisible.value) 0.dp else -Bar.halfWidth,
+        animationSpec = tween(durationMillis = 200),
+        label = "MenuSlide"
+    )
+
+    // Background fade
+    val backgroundAlpha by animateFloatAsState(
+        targetValue = if (internalVisible.value) 0.4f else 0f,
+        animationSpec = tween(durationMillis = 200),
+        label = "Fade"
+    )
+
+    Popup(
+        alignment = Alignment.TopStart,
+        onDismissRequest = {
+            onDismiss?.invoke()
+            Bar.ShowMenu = false
+        }
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = backgroundAlpha))
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) {
+                onDismiss?.invoke()
+                    Bar.ShowMenu = false
+                }
+        )
+
+        Box(
+            modifier = Modifier
+                .offset { IntOffset(offsetX.roundToPx(), 0) }
+                .width(Bar.halfWidth)
+                .height(LocalConfiguration.current.screenHeightDp.dp)
+                .background(Color.DarkGray)
+        ) {
+            content()
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+          
