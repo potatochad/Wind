@@ -259,37 +259,6 @@ fun LazyIconButton(
 }
 
 
-@Composable
-fun LazyEmpty(
-    text: String = "No Items",
-    icon: ImageVector = Icons.Default.Block,
-    height: Dp = Bar.halfHeight * 2 - 200.dp,
-    iconSize: Dp = 64.dp,
-    topSpacing: Dp = Bar.halfHeight - 190.dp,
-    textSize: TextUnit = 18.sp,
-    color: Color = Color.Gray
-) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .height(height)) {
-
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(topSpacing))
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = color,
-                modifier = Modifier.size(iconSize)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text, fontSize = textSize, color = color)
-        }
-    }
-}
-
 
 @Stable
 @Composable
