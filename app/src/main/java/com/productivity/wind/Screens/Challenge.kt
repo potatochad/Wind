@@ -98,17 +98,15 @@ fun AppUsage() {
 
         
             refreshApps()
-
-            UI.TextRow(){
                 
                 Text("If")
-                Text("spend")
+                Text(" spend ")
                 UI.Cinput(Time){ 
                     Time.value = it 
                 }
-                Text("seconds")
+                Text(" seconds ")
 
-                Text("on")
+                Text("on ")
                 UI.Ctext("0 apps"){
                     
                 }
@@ -117,7 +115,6 @@ fun AppUsage() {
                 UI.Ctext("points"){
                     
                 }
-            }
                 
                 
     
