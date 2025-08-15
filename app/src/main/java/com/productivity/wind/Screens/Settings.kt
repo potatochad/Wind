@@ -77,6 +77,8 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.style.TextAlign
 
+import com.productivity.wind.Imports.*
+
 //region Settings
 
 val DarkBlue = Color(0xFF00008B) 
