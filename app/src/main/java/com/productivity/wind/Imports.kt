@@ -1250,7 +1250,7 @@ fun MyNavGraph2(navController: NavHostController) {
 }
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MyNavGraph(navController: NavHostController) {
+fun MyNavGraph(navController: NavHostController) NoLagCompose = {
     // Real UI
     Box {
         NavHost(navController = navController, startDestination = "Main") {
