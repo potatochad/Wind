@@ -83,24 +83,20 @@ import com.productivity.wind.Imports.*
 
 fun NavGraphBuilder.ScreenNav() {
     //Main—StartDestination    
-    page(::Main)
+    url("Main") { Main() }
 
-    
-    page(::Achievements)
-    
-    page { Challenge() }
-    page { AppUsage() }
-    
+    url("Achievements") { Achievements() }
+    url("Challenge") { Challenge() }
+    url("AppUsage") { AppUsage() }
 
-    
-    page { Web() }
-    page { FunWeb() }
-    page { WorkWeb() }
+    url("Web") { Web() }
+    url("FunWeb") { FunWeb() }
+    url("WorkWeb") { WorkWeb() }
 
-    
-    page { SettingsScreen() }
-    page { SettingsOtherScreen() }
-    page { LogsScreen() }
+    url("Settings") { SettingsScreen() }
+    url("SettingsOther") { SettingsOtherScreen() }
+    url("Logs") { LogsScreen() }
+
 }
 
 
