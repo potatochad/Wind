@@ -90,7 +90,7 @@ fun Challenge() {
 }
 
 @Composable
-fun AppUsage() {
+fun AppUsage2() {
   var Time = remember { m("50") }
   var Points = remember { m("0") }
 
@@ -111,10 +111,10 @@ fun AppUsage() {
                     
                 }
                 Text(", add")
-                UI.Cinput(Points)
-                UI.Ctext("points"){
-                    
+                UI.Cinput(Points) {
+                  Points.value = it
                 }
+                Text(" points")
                 
                 
     
@@ -123,6 +123,52 @@ fun AppUsage() {
 
 
 
+@Composable
+fun AppUsage() {
+    var Time = remember { m("50") }
+    var Points = remember { m("0") }
+    var selectedApp = remember { m("") }
+    var showAppList = remember { m(false) }
+
+    LazyScreen(titleContent = { Text("App Usage") }) {
+        refreshApps()
+
+        Text("If")
+        Text(" spend ")
+        UI.Cinput(Time.value) { Time.value = it }
+        Text(" seconds ")
+
+        Text("on ")
+        UI.Ctext(
+            if (selectedApp.value.isEmpty()) "app" else selectedApp.value
+        ) {
+            showAppList.value = true
+        }
+
+        Text(", add ")
+        UI.Cinput(Points.value) { Points.value = it }
+        Text(" points")
+    }
+
+    // Popup list for selecting app
+    if (showAppList.value) {
+        LazyPopup(
+            show = showAppList,
+            title = "Select App",
+            message = "",
+            content = {
+                LazyColumn {
+                    items(apps) { app ->
+                        UI.Ctext(app.name) {
+                            selectedApp.value = app.name
+                            showAppList.value = false
+                        }
+                    }
+                }
+            }
+        )
+    }
+}
 
 
 
