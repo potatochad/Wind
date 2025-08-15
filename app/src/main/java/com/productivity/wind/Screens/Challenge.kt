@@ -107,7 +107,7 @@ fun AppUsage() {
                 Text(" seconds ")
 
                 Text("on ")
-                UI.Ctext("0 apps"){
+                UI.Ctext("app"){
                     
                 }
                 Text(", add")
