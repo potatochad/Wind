@@ -37,6 +37,8 @@ import androidx.compose.foundation.layout.heightIn
 import com.productivity.wind.MAINStart
 import com.productivity.wind.UI
 
+import com.productivity.wind.Imports.*
+
 @Composable
 fun Main() {
     LazyMenu { Menu() }
