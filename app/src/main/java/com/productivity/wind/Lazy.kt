@@ -476,7 +476,7 @@ fun LazyHeader(
                     .padding(start = if (showBack) 8.dp else 0.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
-				UI.SimpleRow(){
+				LazzyRow(){
 						titleContent()
 				}
 				
