@@ -44,11 +44,11 @@ fun Main() {
     LazyMenu { Menu() }
     MAINStart()
     
-    SettingsScreen(titleContent = { MainHeader() }, showBack = false) {
+    LazyScreen(titleContent = { MainHeader() }, showBack = false) {
         
-                UI.LazyCard( content = { Disipline() } )
-                UI.LazyCard( content = { German() } )
-                UI.LazyCard( content = { Text( text = "WaterDo: ${Bar.WaterDOtime_spent}") } )
+                LazyCard( content = { Disipline() } )
+                LazyCard( content = { German() } )
+                LazyCard( content = { Text( text = "WaterDo: ${Bar.WaterDOtime_spent}") } )
                 
     }
 }
