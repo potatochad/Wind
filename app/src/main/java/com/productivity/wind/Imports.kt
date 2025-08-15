@@ -1226,6 +1226,13 @@ object DayChecker {
     
 }
 
+inline fun NavGraphBuilder.page(
+    noinline content: @Composable () -> Unit
+) {
+    val route = content.javaClass.name.substringAfterLast('$')
+    url(route) { content() }
+}
+
 fun NavGraphBuilder.url(route: String, content: @Composable () -> Unit) {
     composable(route) { content() }
 }
