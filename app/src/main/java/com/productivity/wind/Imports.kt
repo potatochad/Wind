@@ -1243,62 +1243,13 @@ fun NavGraphBuilder.url(route: String, content: @Composable () -> Unit) {
 }
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MyNavGraph2(navController: NavHostController) {
+fun MyNavGraph2(navController: NavHostController) =NoLagCompose{
         NavHost(navController = navController, startDestination = "Main") {
             ScreenNav()
         }
+		PreloadBox(whenDo = true) { SettingsScreen() }
 }
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun MyNavGraph(navController: NavHostController) = NoLagCompose {
-    // Real UI
-    Box {
-        NavHost(navController = navController, startDestination = "Main") {
-            ScreenNav()
-        }
 
-        // Offscreen preloader that discovers routes from the NavGraph and renders them once
-        val preloadNav = rememberNavController()
-        var ran by remember { mutableStateOf(false) }
-
-        PreloadBox(whenDo = true) {
-            // Hidden NavHost with the SAME graph
-            NavHost(navController = preloadNav, startDestination = "Main") {
-                ScreenNav()
-            }
-        }
-
-        LaunchedEffect(preloadNav) {
-            if (ran) return@LaunchedEffect
-            ran = true
-
-            // Ensure the graph is ready this frame
-            withFrameNanos { /* wait one frame so NavHost builds */ }
-
-            // Collect all route strings (incl. nested graphs)
-            fun collectRoutes(graph: NavGraph, out: MutableList<String>) {
-                graph.forEach { node ->
-                    when (node) {
-                        is NavGraph -> collectRoutes(node, out)
-                        else -> node.route?.let(out::add)
-                    }
-                }
-            }
-            val routes = mutableListOf<String>()
-            collectRoutes(preloadNav.graph, routes)
-
-            // Navigate through each route once to pre-compose/warm caches
-            routes.distinct().forEach { route ->
-                if (route != "Main") {
-                    runCatching { preloadNav.navigate(route) }
-                }
-            }
-
-            // Optional: return to start to keep things tidy
-            runCatching { preloadNav.popBackStack("Main", inclusive = false) }
-        }
-    }
-}
 
 
 
