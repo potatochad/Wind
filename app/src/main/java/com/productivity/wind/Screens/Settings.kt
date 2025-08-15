@@ -86,11 +86,9 @@ val Gold = Color(0xFFFFD700)
 
 @Composable
 fun SettingsScreen() {
-    SettingsScreen(titleContent = { Text("Settings") }) {
+    LazyScreen(titleContent = { Text("Settings") }) {
         
-        // NOT SYNCHED UP WITH APP YET
-        //NEED EXPLANATION TOO
-        SettingItem(
+        LazyItem(
                 topPadding = 1.dp,
                 BigIcon = Icons.Filled.LockOpen,
                 BigIconColor = Gold,
@@ -134,14 +132,14 @@ fun SettingsScreen() {
 
         
         //! NOT ENCRIPTED WITH PREMIUM MIGHT BE A PROBLEM
-        SettingItem(
+        LazyItem(
                 BigIcon = Icons.Filled.Restore,
                 BigIconColor = DarkBlue,
                 title = "Restore",
                 onClick = { restoreTrigger.value = true },
                 bottomPadding = 2.dp
         )
-        SettingItem(
+        LazyItem(
                 topPadding = 1.dp,
                 BigIcon = Icons.Filled.Backup,
                 BigIconColor = DarkBlue,
@@ -154,15 +152,14 @@ fun SettingsScreen() {
 
         //endregion RESTORE/BACKUP
 
-        Spacer(modifier = Modifier.fillMaxHeight())
-
-        SettingItem(
+        
+        LazyItem(
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
                 title = "Extension",
                 onClick = {}
         ) 
-        SettingItem(
+        LazyItem(
                 BigIcon = Icons.Filled.Tune,
                 BigIconColor = Color(0xFFB0BEC5),
                 title = "Other",
@@ -179,9 +176,9 @@ fun SettingsScreen() {
 
 @Composable
 fun SettingsOtherScreen() {
-    SettingsScreen(titleContent = { Text("Settings") }) {
+    LazyScreen(titleContent = { Text("Settings") }) {
 
-        SettingItem(
+        LazyItem(
                 BigIcon = Icons.Filled.ListAlt,
                 BigIconColor = Color(0xFF90A4AE),
                 title = "Logs",
@@ -209,7 +206,7 @@ fun LogsScreen()= NoLagCompose {
         }
     }
         
-    SettingsScreen(
+    LazyScreen(
         titleContent = {
                 Text("Logs")
                 
