@@ -1049,7 +1049,7 @@ fun CopyIcon(text: String) {
         }
     }
 
-    LazyIconButton(
+    LazyIcon(
         icon = if (copied) Icons.Default.Check else Icons.Default.ContentCopy,
         onClick = {
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
