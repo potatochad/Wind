@@ -73,7 +73,6 @@ import com.productivity.wind.NoLagCompose
 import com.productivity.wind.PermissionsButton
 import com.productivity.wind.R
 import com.productivity.wind.SettingItem
-//import com.productivity.wind.WatchdogAccessibilityService
 import com.productivity.wind.apps
 import com.productivity.wind.log
 import com.productivity.wind.SettingsScreen
@@ -86,13 +85,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-
 import com.productivity.wind.Imports.*
 
 @Composable
 fun Challenge() {
-  SettingsScreen(titleContent = { Text("Challenge") }) {
-    SettingItem(
+  LazyScreen(titleContent = { Text("Challenge") }) {
+    LazyItem(
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "App Usage",
@@ -107,7 +105,7 @@ fun AppUsage() {
   var Time = remember { m("50") }
   var Points = remember { m("0") }
 
-  SettingsScreen(titleContent = { Text("App Usage") }) {
+  LazyScreen(titleContent = { Text("App Usage") }) {
 
         
             refreshApps()
