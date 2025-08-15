@@ -158,7 +158,7 @@ class Settings {
 }
 //m-mutable state, ml- mutablelistof
 
-var apps = ml(DataApps())
+
 
 val trackedLists = listOf(
         Dset("Bar.ListApps", "apps"),
@@ -167,7 +167,7 @@ val trackedLists = listOf(
 
 
 
-
+var apps = ml(DataApps())
 
 data class DataApps(
     var id: Str = Id(),
