@@ -277,41 +277,7 @@ fun PreloadBox(
         ) { what() }
     }
 }
-//endregion
 
-//region DATA MANAGE ONCES
-
-/*NEEDED SETUP
-* PUT IT HERE!!;
-@RequiresApi(Build.VERSION_CODES.O)
-fun AppStart_beforeUI(context: Context) {
-    Global1.context = context
-    SettingsSaved.init()
-    SettingsSaved.Bsave()
-    SettingsSaved.initialize(Bar)
-    SettingsSaved.startAutoSave(Bar)
-}
-*
-*
-*
-class Settings {
-    var show by mutableStateOf(false)
-    var CurrentInput by mutableStateOf("")
-}
-*/
-/*How Use
-* YOU CAN READ THE DATA, CHANGE IT, AUTO UPDATE, saves, etc..
-* WORKS FOR LISTS TOOOO
-? HANDLES ABOUT 600 ITEMS MAX-recommended is 300
-Bar.funTime += 1
-    Bar.currentInput = "Testing input"
-    Bar.highestCorrect = max(Bar.highestCorrect, 12)
-    *
-    *
-   class Settings {
-    var ShowMenu by mutableStateOf(false)
-    val AppList = mutableStateListOf<Apps>()  // Apps- is a data class, enter in any you want
-*/
 
 val Bar = Settings(); //best variable
 
@@ -823,7 +789,7 @@ fun InputField(
 					
                 }
 				
-				SimpleDivider(
+				LazyLine(
 					show = Divider,
 					MoveY = dividerY,
 					width = InputWidth,
@@ -1083,7 +1049,7 @@ fun CopyIcon(text: String) {
         }
     }
 
-    SimpleIconButton(
+    LazyIconButton(
         icon = if (copied) Icons.Default.Check else Icons.Default.ContentCopy,
         onClick = {
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
