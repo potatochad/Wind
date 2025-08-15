@@ -1243,7 +1243,7 @@ fun NavGraphBuilder.url(route: String, content: @Composable () -> Unit) {
 }
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MyNavGraph2(navController: NavHostController) =NoLagCompose{
+fun MyNavGraph(navController: NavHostController) =NoLagCompose{
         NavHost(navController = navController, startDestination = "Main") {
             ScreenNav()
         }
