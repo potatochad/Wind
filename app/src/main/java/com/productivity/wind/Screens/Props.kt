@@ -243,7 +243,6 @@ object Popup {
     var EnablePermissions = m(false)
     var EnableBlocking = m(false)
 
-    var AppChallange = m(false)
 }
 //!Just call this on app start
 @Composable
@@ -253,7 +252,6 @@ fun PopUps(){
    EditPopUp(Popup.Edit)
    NeedMorePointsPopup(Popup.NeedMorePoints)
    EnableBlockingPopup(Popup.EnableBlocking)
-   AppChallange(Popup.AppChallange)
 }
 
 
@@ -343,67 +341,4 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 //endregion POPUP CONTROLLER
 
 
-
-//region ADD CHALLANGE POPUPS
-
-@Composable
-fun AppChallange(show: MutableState<Boolean>) {
-    var Time = remember { m("50") }
-    var Points = remember { m("0") }
-
-    
-
-    UI.ResetText(show){
-        Time.value = "50"
-        Points.value = "0"
-    }
-
-
-    fun DONE(){
-
-        show.value = false
-    }
-    @Composable
-    fun PopupContent() {
-        
-            refreshApps()
-
-            UI.TextRow(){
-                
-                Text("If")
-                Text("spend")
-                UI.Cinput(Time){ 
-                    Time.value = it 
-                }
-                Text("seconds")
-
-                Text("on")
-                UI.Ctext("0 apps"){
-                    
-                }
-                Text(", add")
-                UI.Cinput(Points)
-                UI.Ctext("points"){
-                    
-                }
-                
-                
-
-
-                
-            }
-
-        
-    }
-
-    LazyPopup(show = show,
-              title = "App usage", 
-              content = { PopupContent() }, 
-              onConfirm = {  },
-              message="",
-              onDismiss={},
-              )
-
-    
-}
 
