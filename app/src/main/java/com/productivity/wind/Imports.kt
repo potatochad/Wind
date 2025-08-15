@@ -1233,6 +1233,7 @@ object DayChecker {
 
 
 
+fun goTo(route: String) = Global1.navController.navigate(route)
 
 
 fun NavGraphBuilder.url(route: String, content: @Composable () -> Unit) {
