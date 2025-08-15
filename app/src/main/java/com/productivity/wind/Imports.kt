@@ -1237,18 +1237,35 @@ object DayChecker {
 
 fun goTo(route: String) = Global1.navController.navigate(route)
 
-
-fun NavGraphBuilder.url(route: String, content: @Composable () -> Unit) {
-    composable(route) { content() }
-}
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MyNavGraph(navController: NavHostController) =NoLagCompose{
         NavHost(navController = navController, startDestination = "Main") {
             ScreenNav()
         }
-		PreloadBox(whenDo = true) { SettingsScreen() }
+
+		PreloadAll()
 }
+
+
+// Holds all routes + composables for later
+val preloadScreens = mutableListOf<Pair<String, @Composable () -> Unit>>()
+
+fun NavGraphBuilder.url(
+    route: String,
+    content: @Composable () -> Unit
+) {
+    composable(route) { content() }
+    preloadScreens.add(route to content)
+}
+
+@Composable
+fun PreloadAll() {
+    preloadScreens.forEach { (_, screen) ->
+        PreloadBox(true) { screen() }
+    }
+}
+
 
 
 
