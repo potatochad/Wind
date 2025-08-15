@@ -96,7 +96,7 @@ fun Challenge() {
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "App Usage",
-            onClick = { Global1.navigate("") },
+            onClick = { Global1.navController.navigate("AppUsage")},
         )
     
    }
