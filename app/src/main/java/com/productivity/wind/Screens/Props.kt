@@ -83,7 +83,7 @@ import com.productivity.wind.Imports.*
 
 fun NavGraphBuilder.ScreenNav() {
     //Main—StartDestination    
-    page { Main() }
+    url("Main") { Main() }
 
     
     page { Achievements() }
