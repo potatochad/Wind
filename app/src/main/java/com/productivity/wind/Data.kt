@@ -174,8 +174,8 @@ data class DataApps(
     var name: Str = "",
     var done: Bool = false,
     var packageName: Str = "",
-    var Block : Bool = false,
-    var TimeSpent : Int = 0,
+    var TimeSpent: Int = 0,
+    var Worth: Int = 0,
 )
     fun refreshApps(target: MutableList<DataApps> = apps) {
         val context = Global1.context
