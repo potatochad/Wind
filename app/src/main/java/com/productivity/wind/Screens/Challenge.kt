@@ -66,17 +66,6 @@ import androidx.compose.ui.unit.max
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.compose.NavHost
-import com.productivity.wind.Bar
-import com.productivity.wind.Global1
-import com.productivity.wind.LazyPopup
-import com.productivity.wind.NoLagCompose
-import com.productivity.wind.PermissionsButton
-import com.productivity.wind.R
-import com.productivity.wind.SettingItem
-import com.productivity.wind.apps
-import com.productivity.wind.log
-import com.productivity.wind.SettingsScreen
-import com.productivity.wind.SettingsSaved
 import com.productivity.wind.*
 import com.productivity.wind.Vlog
 import com.productivity.wind.Achievements
