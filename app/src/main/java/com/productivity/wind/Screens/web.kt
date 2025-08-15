@@ -68,7 +68,7 @@ import com.productivity.wind.Imports.*
 
 @Composable
 fun Web() {
-    SettingsScreen(
+    LazyScreen(
         titleContent = {
                     Text("Web")
 
@@ -101,7 +101,7 @@ fun Web() {
 
 @Composable
 fun FunWeb() {
-    SettingsScreen(titleContent = { Text("Fun Web") }) {
+    LazyScreen(titleContent = { Text("Fun Web") }) {
         UI.EmptyBox(text = "TO DO")
 
     }
@@ -114,7 +114,7 @@ fun FunWeb() {
 
 @Composable
 fun WorkWeb() {
-    SettingsScreen(titleContent = {Text("Work Web")}) {
+    LazyScreen(titleContent = {Text("Work Web")}) {
         UI.EmptyBox(text = "TO DO")
     }
 
