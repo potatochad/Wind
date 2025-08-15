@@ -1232,22 +1232,6 @@ object DayChecker {
 
 
 
-// Zero-arg screens: keeps your url() helper
-fun NavGraphBuilder.page(fn: KFunction0<Unit>, variant: String? = null) =
-    url(buildString {
-        append(fn.name)
-        if (!variant.isNullOrBlank()) append('/').append(variant)
-    }) { fn() }
-
-// Arg screens: call composable() directly (since url() only accepts () -> Unit)
-fun NavGraphBuilder.page(
-    routeBase: String,          // e.g., "User/edit"
-    argName: String,            // e.g., "id"
-    content: @Composable (String) -> Unit
-) = composable("$routeBase/{$argName}") { entry: NavBackStackEntry ->
-    val arg = entry.arguments?.getString(argName) ?: return@composable
-    content(arg)
-}
 
 
 
