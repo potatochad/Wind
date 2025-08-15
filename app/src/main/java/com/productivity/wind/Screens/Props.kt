@@ -184,7 +184,7 @@ fun Menu() {
 object Icon {
         @Composable
         fun Menu() {
-                LazyIconButton(
+                LazyIcon(
                         onClick = { Bar.ShowMenu = true },
                         icon = Icons.Default.Menu
                 )
@@ -192,7 +192,7 @@ object Icon {
         
         @Composable
         fun Chill() {
-                LazyIconButton(
+                LazyIcon(
                         onClick = { Global1.navController.navigate("Web") },
                         icon = Icons.Default.SportsEsports
                 )
@@ -200,7 +200,7 @@ object Icon {
         
         @Composable
         fun Add() {
-                LazyIconButton(
+                LazyIcon(
                         onClick = { Global1.navController.navigate("Challenge") },
                         icon = Icons.Default.Add
                 )
@@ -208,7 +208,7 @@ object Icon {
         
         @Composable
         fun Edit() {
-                LazyIconButton(
+                LazyIcon(
                         onClick = { 
                                 if (Bar.funTime > Bar.Dpoints) Popup.Edit.value =true
                                 else Popup.NeedMorePoints.value = true
@@ -219,7 +219,7 @@ object Icon {
         
         @Composable
         fun G_Edit() {
-                LazyIconButton(
+                LazyIcon(
                         onClick = { 
                                 if (Bar.funTime > Bar.Dpoints) Popup.G_Edit.value =true
                                 else Popup.NeedMorePoints.value = true
