@@ -102,6 +102,41 @@ fun Challenge() {
    }
 }
 
+@Composable
+fun AppUsage() {
+  var Time = remember { m("50") }
+  var Points = remember { m("0") }
+
+  SettingsScreen(titleContent = { Text("App Usage") }) {
+
+        
+            refreshApps()
+
+            UI.TextRow(){
+                
+                Text("If")
+                Text("spend")
+                UI.Cinput(Time){ 
+                    Time.value = it 
+                }
+                Text("seconds")
+
+                Text("on")
+                UI.Ctext("0 apps"){
+                    
+                }
+                Text(", add")
+                UI.Cinput(Points)
+                UI.Ctext("points"){
+                    
+                }
+                
+                
+    
+   }
+}
+
+
 
 
 
