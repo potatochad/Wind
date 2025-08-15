@@ -1249,20 +1249,30 @@ fun MyNavGraph(navController: NavHostController) =NoLagCompose{
 
 
 // Holds all routes + composables for later
-val preloadScreens = mutableListOf<Pair<String, @Composable () -> Unit>>()
+// 1) Define a clean holder (no Pair at all)
+data class RouteEntry(
+    val route: String,
+    val screen: @Composable () -> Unit
+)
 
+// 2) Keep a single registry (order-preserving, no duplicates)
+private val preloadRegistry = LinkedHashMap<String, RouteEntry>()
+
+// 3) Your DSL
 fun NavGraphBuilder.url(
     route: String,
     content: @Composable () -> Unit
 ) {
     composable(route) { content() }
-    preloadScreens.add(route to content)
+    preloadRegistry.putIfAbsent(route, RouteEntry(route, content))
 }
 
+// 4) Preload runner
 @Composable
-fun PreloadAll() {
-    preloadScreens.forEach { (_, screen) ->
-        PreloadBox(true) { screen() }
+fun PreloadAll(enabled: Boolean = true) {
+    if (!enabled) return
+    preloadRegistry.values.forEach { entry ->
+        PreloadBox(true) { entry.screen() }
     }
 }
 
