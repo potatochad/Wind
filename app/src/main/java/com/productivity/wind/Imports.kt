@@ -1229,23 +1229,25 @@ object DayChecker {
 
 
 
-// 1) Zero-arg composables, optional variant like "create"/"edit"
+
+
+// Zero-arg screens: keeps your url() helper
 fun NavGraphBuilder.page(fn: KFunction0<Unit>, variant: String? = null) =
     url(buildString {
-        append(fn.name)            // e.g., "User"
-        if (!variant.isNullOrBlank()) append("/").append(variant) // "User/create"
+        append(fn.name)
+        if (!variant.isNullOrBlank()) append('/').append(variant)
     }) { fn() }
 
-// 2) With a required path param (e.g., id)
-fun <T> NavGraphBuilder.page(
-    routeBase: String,              // e.g., "User/edit"
-    argName: String,                // e.g., "id"
-    parse: (String) -> T,           // how to parse
-    content: @Composable (T) -> Unit
-) = url("$routeBase/{$argName}") { backStack ->
-    val raw = backStack.arguments?.getString(argName) ?: error("$argName missing")
-    content(parse(raw))
+// Arg screens: call composable() directly (since url() only accepts () -> Unit)
+fun NavGraphBuilder.page(
+    routeBase: String,          // e.g., "User/edit"
+    argName: String,            // e.g., "id"
+    content: @Composable (String) -> Unit
+) = composable("$routeBase/{$argName}") { entry: NavBackStackEntry ->
+    val arg = entry.arguments?.getString(argName) ?: return@composable
+    content(arg)
 }
+
 
 
 fun NavGraphBuilder.url(route: String, content: @Composable () -> Unit) {
