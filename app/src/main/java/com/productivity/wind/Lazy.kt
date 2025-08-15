@@ -209,8 +209,8 @@ fun LazyCard(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LazyIconButton(
-    onClick: () -> Unit,
+fun LazyIcon(
+    onClick: () -> Unit = {},
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
