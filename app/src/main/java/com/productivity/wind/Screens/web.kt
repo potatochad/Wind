@@ -73,14 +73,14 @@ fun Web() {
                     Text("Web")
 
                     // WORK WEB
-                    UI.SimpleIconButton(
+                    LazyIconButton(
                         onClick = { Global1.navController.navigate("WorkWeb") },
                         BigIcon = Icons.Default.Work,
                         BigIconColor = Color(0xFF4CAF50), // Green
                         OuterPadding = 0,
                     )
 
-                    UI.SimpleIconButton(
+                    LazyIconButton(
                         onClick = { Global1.navController.navigate("FunWeb") },
                         BigIcon = Icons.Default.SentimentVerySatisfied,
                         BigIconColor = Color(0xFFFFC107), // Amber
