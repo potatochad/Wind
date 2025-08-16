@@ -163,7 +163,7 @@ fun SettingsScreen() {
                 BigIcon = Icons.Filled.Tune,
                 BigIconColor = Color(0xFFB0BEC5),
                 title = "Other",
-                onClick = { Global1.navController.navigate("SettingsOtherScreen") }
+                onClick = { goTo("SettingsOtherScreen") }
         ) 
     }
 }
@@ -182,7 +182,7 @@ fun SettingsOtherScreen() {
                 BigIcon = Icons.Filled.ListAlt,
                 BigIconColor = Color(0xFF90A4AE),
                 title = "Logs",
-                onClick = { Global1.navController.navigate("LogsScreen") }
+                onClick = { goTo("LogsScreen") }
         ) 
 
 
