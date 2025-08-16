@@ -93,7 +93,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("FunWeb") { FunWeb() }
     url("WorkWeb") { WorkWeb() }
 
-    url("Settings") { SettingsScreen() }
+    url("SettingsScreen") { SettingsScreen() }
     url("SettingsOther") { SettingsOtherScreen() }
     url("Logs") { LogsScreen() }
 
