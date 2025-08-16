@@ -77,6 +77,7 @@ import androidx.compose.ui.draw.drawBehind
 import com.productivity.wind.Imports.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.draw.alpha
 
 
 @Composable
