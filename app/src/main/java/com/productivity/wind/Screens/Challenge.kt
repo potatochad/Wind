@@ -138,8 +138,7 @@ fun AppUsage() {
                     showAppList.value = false
                   }
                 }
-
-  
+            }
         )
     }
 }
