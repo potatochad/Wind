@@ -128,14 +128,18 @@ fun AppUsage() {
             title = "Select App",
             message = "",
             content = {
-                LazyColumn {
-                    items(apps) { app ->
-                        UI.Ctext(app.name) {
-                            selectedApp.value = app.name
-                            showAppList.value = false
-                        }
-                    }
+                LazzyColumn( 
+                  data = apps,
+                  modifier = Modifier.heightIn(max = 200.dp),
+                  key = { it.id }   // optional, but smoother if you have stable ids
+                ) { app ->
+                  UI.Ctext(app.name) {
+                    selectedApp.value = app.name
+                    showAppList.value = false
+                  }
                 }
+
+  
         )
     }
 }
