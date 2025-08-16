@@ -1236,28 +1236,51 @@ object DayChecker {
 
 
 
-fun goTo2(route: String) {
+fun goTo(route: String, thresholdMs: Long = 150) {
     val nav = Global1.navController
-    nav.navigate("Loading") { launchSingleTop = true }
 
-    nav.navigate(route) {
-        launchSingleTop = true
-        popUpTo("Loading") { inclusive = true }
-    }
-}
-fun goTo(route: String) {
-    val nav = Global1.navController
-    nav.navigate("Loading") { launchSingleTop = true }
+    // Already there? bail.
+    if (nav.currentDestination?.route == route) return
 
-    // Wait a bit before going to the real screen
     GlobalScope.launch(Dispatchers.Main) {
-        delay(500) // half a second so Loading appears
-        nav.navigate(route) {
-            launchSingleTop = true
-            popUpTo("Loading") { inclusive = true }
+        var showedLoading = false
+
+        // Start nav immediately
+        val startedAt = SystemClock.uptimeMillis()
+        nav.navigate(route) { launchSingleTop = true }
+
+        // If it’s not finished quickly, show Loading
+        val timer = launch {
+            delay(thresholdMs)
+            if (nav.currentDestination?.route != route) {
+                showedLoading = true
+                nav.navigate("Loading") { launchSingleTop = true }
+            }
+        }
+
+        // Wait until we actually land on the route
+        suspendCancellableCoroutine<Unit> { cont ->
+            val listener = NavController.OnDestinationChangedListener { _, dest, _ ->
+                if (dest.route == route) {
+                    cont.resume(Unit) {}
+                }
+            }
+            nav.addOnDestinationChangedListener(listener)
+            cont.invokeOnCancellation { nav.removeOnDestinationChangedListener(listener) }
+        }.also {
+            timer.cancel()
+        }
+
+        // If we showed Loading, replace it with the real screen
+        if (showedLoading) {
+            nav.navigate(route) {
+                launchSingleTop = true
+                popUpTo("Loading") { inclusive = true }
+            }
         }
     }
 }
+
 
 
 
