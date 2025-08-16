@@ -120,8 +120,8 @@ fun AppUsage() {
     }
 
     // Refresh apps only when popup shows
-    LaunchedEffect(showAppList.value) {
-        if (showAppList.value) refreshApps()
+    LaunchedEffect(Unit) {
+        refreshApps()
     }
 
     // --- Popup: fast, stable, click to select + close ---
@@ -136,6 +136,15 @@ fun AppUsage() {
                 selectedApp.value = name
                 showAppList.value = false
             }
+
+            Box(Modifier.size(1.dp).alpha(0f)) {
+              LazyColumn {
+                items(stableApps.take(10), key = { it.id }) { app ->
+                  Text(app.name) // cheap render just to “warm” layout cache
+                }
+              }
+            }
+
 
             LazyColumn(
                 state = listState,
