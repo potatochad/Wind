@@ -96,9 +96,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("SettingsScreen") { SettingsScreen() }
     url("SettingsOther") { SettingsOtherScreen() }
     url("LogsScreen") { LogsScreen() }
-
-    url("Loading") { Loading() }
-
+    
 }
 
 
