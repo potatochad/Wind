@@ -1265,7 +1265,15 @@ fun NavGraphBuilder.url(
     composable(route) { content() }
 }
 
-
+@Composable
+fun Loading() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
+    }
+}
 
 
 
