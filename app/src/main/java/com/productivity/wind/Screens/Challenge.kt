@@ -75,10 +75,6 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import com.productivity.wind.Imports.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.draw.alpha
-
 
 @Composable
 fun Challenge() {
@@ -87,105 +83,92 @@ fun Challenge() {
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "App Usage",
-            onClick = { goTo("AppUsage")},
+            onClick = { Global1.navController.navigate("AppUsage")},
         )
     
    }
 }
 
+@Composable
+fun AppUsage2() {
+  var Time = remember { m("50") }
+  var Points = remember { m("0") }
+
+  LazyScreen(titleContent = { Text("App Usage") }) {
 
         
-      
+            refreshApps()
+                
+                Text("If")
+                Text(" spend ")
+                UI.Cinput(Time){ 
+                    Time.value = it 
+                }
+                Text(" seconds ")
 
+                Text("on ")
+                UI.Ctext("app"){
+                    
+                }
+                Text(", add")
+                UI.Cinput(Points) {
+                  Points.value = it
+                }
+                Text(" points")
+                
+                
     
+   }
+}
+
+
 
 @Composable
 fun AppUsage() {
-    val Time = remember { m("50") }
-    val Points = remember { m("0") }
-    val selectedApp = remember { m("") }
-    val showAppList = remember { m(false) }
-    val stableApps = remember(apps) { apps.toList() }
+    var Time = remember { m("50") }
+    var Points = remember { m("0") }
+    var selectedApp = remember { m("") }
+    var showAppList = remember { m(false) }
 
     LazyScreen(titleContent = { Text("App Usage") }) {
+        refreshApps()
+
         LazzyRow {
-            Text("If")
-            Text(" spend ")
-            UI.Cinput(Time)
-            Text(" seconds ")
+          
+        Text("If")
+        Text(" spend ")
+        UI.Cinput(Time)
+        Text(" seconds ")
 
-            Text("on ")
-            UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
-                showAppList.value = true
-            }
+        Text("on ")
+        UI.Ctext(
+            if (selectedApp.value.isEmpty()) "app" else selectedApp.value
+        ) {
+            showAppList.value = true
+        }
 
-            Text(", add ")
-            UI.Cinput(Points)
-            Text(" points")
+        Text(", add ")
+        UI.Cinput(Points)
+        Text(" points")
         }
     }
 
-    // run off main so taps never freeze
-    LaunchedEffect(Unit) { withContext(Dispatchers.Default) { refreshApps() } }
-
-    LazyPopup(
-        show = showAppList,
-        title = "Select App",
-        message = "",
-        content = {
-            NoLagLazyColumn(
-                items = stableApps,
-                itemKey = { it.id },
-            ) { app ->
-                UI.Ctext(app.name) {
-                    selectedApp.value = app.name
-                    showAppList.value = false   // <-- close popup so it stops eating clicks
+    // Popup list for selecting app
+    if (showAppList.value) {
+        LazyPopup(
+            show = showAppList,
+            title = "Select App",
+            message = "",
+            content = {
+                LazyColumn {
+                    items(apps) { app ->
+                        UI.Ctext(app.name) {
+                            selectedApp.value = app.name
+                            showAppList.value = false
+                        }
+                    }
                 }
             }
-        }
-    )
-}
-
-@Composable
-fun <T> NoLagLazyColumn(
-    items: List<T>,
-    modifier: Modifier = Modifier.heightIn(max = 200.dp),
-    state: LazyListState = rememberLazyListState(),
-    chunk: Int = 40,                 // how many to reveal per tick
-    stepMs: Long = 8,                // tiny yield
-    itemKey: ((T) -> Any)? = null,
-    contentType: (T) -> Any? = { "app" },
-    itemContent: @Composable (T) -> Unit
-) {
-    // tiny pre-measure so first show is instant
-    Box(Modifier.size(1.dp).alpha(0f)) { Text("") }
-
-    val shown = remember { mutableStateListOf<T>() }
-    LaunchedEffect(items) {
-        shown.clear()
-        for (i in items.indices step chunk) {
-            val end = minOf(i + chunk, items.size)
-            shown.addAll(items.subList(i, end))
-            kotlinx.coroutines.delay(stepMs)
-        }
-    }
-
-    LazyColumn(
-        modifier = modifier,
-        state = state,
-        userScrollEnabled = true
-    ) {
-        if (itemKey != null) {
-            items(
-                items = shown,
-                key = { itemKey(it) },
-                contentType = { contentType(it) }
-            ) { it -> itemContent(it) }
-        } else {
-            items(
-                items = shown,
-                contentType = { contentType(it) }
-            ) { it -> itemContent(it) }
-        }
+        )
     }
 }
