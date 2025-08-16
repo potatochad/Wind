@@ -133,6 +133,8 @@ fun AppUsage() {
     LazyScreen(titleContent = { Text("App Usage") }) {
         refreshApps()
 
+        LazzyRow {
+          
         Text("If")
         Text(" spend ")
         UI.Cinput(Time)
@@ -148,6 +150,7 @@ fun AppUsage() {
         Text(", add ")
         UI.Cinput(Points)
         Text(" points")
+        }
     }
 
     // Popup list for selecting app
