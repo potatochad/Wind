@@ -102,6 +102,8 @@ fun AppUsage() {
     val Points = remember { m("0") }
     val selectedApp = remember { m("") }
     val showAppList = remember { m(false) }
+    val stableApps = remember(apps) { apps.toList() }
+
 
     LazyScreen(titleContent = { Text("App Usage") }) {
         LazzyRow {
@@ -128,48 +130,61 @@ fun AppUsage() {
         title = "Select App",
         message = "",
         content = {
-            val stableApps = remember(apps) { apps.toList() }
-            AllAtOnceList(
-                apps = stableApps,
-                selectedApp = selectedApp,
-                showAppList = showAppList,
-                chunk = 50,
-                stepMs = 5
-            )
+          
+NoLagLazyColumn(
+  items = stableApps,
+  itemKey = { it.id },
+) { app ->
+    UI.Ctext(app.name) {
+        selectedApp.value = app.name
+    }
+}
+
         }
     )
 }
 
 @Composable
-private fun AllAtOnceList(
-    apps: List<DataApps>,
-    selectedApp: MutableState<String>,
-    showAppList: MutableState<Boolean>,
-    chunk: Int = 40,
-    stepMs: Long = 8
+fun <T> NoLagLazyColumn(
+    items: List<T>,
+    modifier: Modifier = Modifier.heightIn(max = 200.dp),
+    state: LazyListState = rememberLazyListState(),
+    chunk: Int = 40,                 // how many to reveal per tick
+    stepMs: Long = 8,                // tiny yield
+    itemKey: ((T) -> Any)? = null,
+    contentType: (T) -> Any? = { "app" },
+    itemContent: @Composable (T) -> Unit
 ) {
-    val shown = remember { mutableStateListOf<DataApps>() }
+    // tiny pre-measure so first show is instant
+    Box(Modifier.size(1.dp).alpha(0f)) { Text("") }
 
-    LaunchedEffect(apps) {
+    val shown = remember { mutableStateListOf<T>() }
+    LaunchedEffect(items) {
         shown.clear()
-        for (i in apps.indices step chunk) {
-            val end = minOf(i + chunk, apps.size)
-            shown.addAll(apps.subList(i, end))
+        for (i in items.indices step chunk) {
+            val end = minOf(i + chunk, items.size)
+            shown.addAll(items.subList(i, end))
             kotlinx.coroutines.delay(stepMs)
         }
     }
 
-    Column(
-        modifier = Modifier
-            .heightIn(max = 200.dp)
-            .verticalScroll(rememberScrollState())
+    LazyColumn(
+        modifier = modifier,
+        state = state,
+        // helps reuse
+        userScrollEnabled = true
     ) {
-        shown.forEach { app ->
-            UI.Ctext(app.name) {
-                selectedApp.value = app.name
-                showAppList.value = false
-            }
+        if (itemKey != null) {
+            items(
+                items = shown,
+                key = { itemKey(it) },
+                contentType = { contentType(it) }
+            ) { it -> itemContent(it) }
+        } else {
+            items(
+                items = shown,
+                contentType = { contentType(it) }
+            ) { it -> itemContent(it) }
         }
     }
 }
-
