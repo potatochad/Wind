@@ -1347,7 +1347,7 @@ class WatchdogService : Service() {
                         //LOG WHEN WANT TOOO
                         if (currentApp == Global1.context.packageName || currentApp == null) { } else { log("BACKGROUND — CURRENT APP: $currentApp", "bad") }
 
-                        //endregion CURRENT APP
+                        /*
 
                         val blocked = apps.any { it.packageName == currentApp && it.Block }
 
@@ -1364,7 +1364,7 @@ class WatchdogService : Service() {
 
                     if (currentApp == "com.seekrtech.waterapp") {
 						
-					}   }}
+					}*/   }}
             }
         }
 
