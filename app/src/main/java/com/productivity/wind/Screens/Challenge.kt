@@ -75,6 +75,8 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import com.productivity.wind.Imports.*
+import androidx.compose.foundation.lazy.*
+
 
 @Composable
 fun Challenge() {
