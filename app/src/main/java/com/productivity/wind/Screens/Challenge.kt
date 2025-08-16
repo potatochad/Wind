@@ -137,7 +137,7 @@ fun AppUsage() {
                 showAppList.value = false
             }
 
-            Box(Modifier.size(1.dp).alpha(0f)) {
+            Box(Modifier.size(1.dp).graphicsLayer(alpha = 0f)) {
               LazyColumn {
                 items(stableApps.take(10), key = { it.id }) { app ->
                   Text(app.name) // cheap render just to “warm” layout cache
