@@ -1235,27 +1235,27 @@ object DayChecker {
 
 
 
-fun goTo(route: String) = Global1.navController.navigate(route)
+var isLoading = mutableStateOf(false)
+
+fun goTo(route: String) {
+    isLoading.value = true
+    Global1.navController.navigate(route) {
+        launchSingleTop = true
+    }
+    // auto hide after nav finishes building next frame
+    Handler(Looper.getMainLooper()).post {
+        isLoading.value = false
+    }
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MyNavGraph(navController: NavHostController) =NoLagCompose{
-	    PreloadAll()
         NavHost(navController = navController, startDestination = "Main") {
             ScreenNav()
         }
 }
 
-
-// Holds all routes + composables for later
-// 1) Define a clean holder (no Pair at all)
-data class RouteEntry(
-    val route: String,
-    val screen: @Composable () -> Unit
-)
-
-// 2) Keep a single registry (order-preserving, no duplicates)
-private val preloadRegistry = LinkedHashMap<String, RouteEntry>()
 
 // 3) Your DSL
 fun NavGraphBuilder.url(
@@ -1263,16 +1263,6 @@ fun NavGraphBuilder.url(
     content: @Composable () -> Unit
 ) {
     composable(route) { content() }
-    preloadRegistry.putIfAbsent(route, RouteEntry(route, content))
-}
-
-// 4) Preload runner
-@Composable
-fun PreloadAll(enabled: Boolean = true) {
-    if (!enabled) return
-    preloadRegistry.values.forEach { entry ->
-        PreloadBox(true) { entry.screen() }
-    }
 }
 
 
