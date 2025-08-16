@@ -126,10 +126,11 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
-
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavGraph
+import android.view.Choreographer
+import androidx.navigation.NavOptionsBuilder
 
 //import android.provider.Settings
 
@@ -1238,15 +1239,24 @@ object DayChecker {
 var isLoading = mutableStateOf(false)
 
 fun goTo(route: String) {
-    isLoading.value = true
-    Global1.navController.navigate(route) {
+    Global1.isLoading.value = true
+
+    val nav = Global1.navController
+    var listener: NavController.OnDestinationChangedListener? = null
+    listener = NavController.OnDestinationChangedListener { controller, _, _ ->
+        // Wait one frame so the new screen paints, then hide loader
+        Choreographer.getInstance().postFrameCallback {
+            Global1.isLoading.value = false
+        }
+        listener?.let { controller.removeOnDestinationChangedListener(it) }
+    }
+
+    nav.addOnDestinationChangedListener(listener!!)
+    nav.navigate(route) {
         launchSingleTop = true
     }
-    // auto hide after nav finishes building next frame
-    Handler(Looper.getMainLooper()).post {
-        isLoading.value = false
-    }
 }
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
