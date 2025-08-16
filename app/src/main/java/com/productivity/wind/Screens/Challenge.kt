@@ -135,7 +135,7 @@ fun AppUsage() {
 
         Text("If")
         Text(" spend ")
-        UI.Cinput(Time.value)
+        UI.Cinput(Time)
         Text(" seconds ")
 
         Text("on ")
@@ -146,7 +146,7 @@ fun AppUsage() {
         }
 
         Text(", add ")
-        UI.Cinput(Points.value)
+        UI.Cinput(Points)
         Text(" points")
     }
 
