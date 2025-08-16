@@ -89,40 +89,9 @@ fun Challenge() {
    }
 }
 
-@Composable
-fun AppUsage2() {
-  var Time = remember { m("50") }
-  var Points = remember { m("0") }
-
-  LazyScreen(titleContent = { Text("App Usage") }) {
 
         
-            refreshApps()
-                
-                Text("If")
-                Text(" spend ")
-                UI.Cinput(Time){ 
-                    Time.value = it 
-                }
-                Text(" seconds ")
-
-                Text("on ")
-                UI.Ctext("app"){
-                    
-                }
-                Text(", add")
-                UI.Cinput(Points) {
-                  Points.value = it
-                }
-                Text(" points")
-                
-                
-    
-   }
-}
-
-
-
+      
 @Composable
 fun AppUsage() {
     var Time = remember { m("50") }
