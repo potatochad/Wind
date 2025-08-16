@@ -123,7 +123,6 @@ fun AppUsage() {
     }
 
     // Popup list for selecting app
-    if (showAppList.value) {
         LazyPopup(
             show = showAppList,
             title = "Select App",
@@ -137,7 +136,6 @@ fun AppUsage() {
                         }
                     }
                 }
-            }
         )
     }
 }
