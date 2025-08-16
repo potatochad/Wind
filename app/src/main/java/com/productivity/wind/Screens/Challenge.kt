@@ -135,32 +135,35 @@ fun AppUsage() {
 
               
               
-              val listState = rememberLazyListState()
-              var preload by remember { mutableIntStateOf(2) } // how many extra rows to prep
-
-              LaunchedEffect(listState) {
-                while (true) {
-                  if (listState.isScrollInProgress) {
-                    preload = 2                // keep light while moving
-                  } else {
-                    preload = (preload + 2).coerceAtMost(30) // warm up each second
-                  }
-                  delay(1000)
-                }
-              }
               
-              LazyColumn(
-                modifier = Modifier.heightIn(max = 200.dp),
-                state = listState,
-                beyondBoundsItemCount = preload
-              ) {
-                items(apps, key = { it.id }, contentType = { "app" }) { app ->
-                  UI.Ctext(app.name) {
-                    selectedApp.value = app.name
-                    showAppList.value = false
-                  }
-                }
-              }
+    val listState = rememberLazyListState()
+    var preload by remember { mutableIntStateOf(2) }
+
+    LaunchedEffect(listState) {
+        while (true) {
+            if (listState.isScrollInProgress) {
+                preload = 2
+            } else {
+                preload = (preload + 2).coerceAtMost(30)
+            }
+            delay(1000)
+        }
+    }
+
+    LazyColumn(
+        modifier = Modifier.heightIn(max = 200.dp),
+        state = listState
+    ) {
+        // just slice extra items into the list to fake "preloading"
+        val expanded = apps.take(preload.coerceAtMost(apps.size))
+        items(expanded, key = { it.id }) { app ->
+            UI.Ctext(app.name) {
+                selectedApp.value = app.name
+                showAppList.value = false
+            }
+        }
+    }
+}
 
 
 
