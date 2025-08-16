@@ -127,31 +127,29 @@ fun AppUsage() {
         title = "Select App",
         message = "",
         content = {
-            // freeze current apps for smooth recycling
-            val stableApps = remember(apps) { apps.toList() }
-            val listState = rememberLazyListState()
-            val onPick by rememberUpdatedState<(String) -> Unit> { name ->
-                selectedApp.value = name
-                showAppList.value = false
-            }
+            // --- Popup content (no overscroll/local providers, no beyondBounds) ---
+val stableApps = remember(apps) { apps.toList() }
+val listState = rememberLazyListState()
+val onPick by rememberUpdatedState<(String) -> Unit> { name ->
+    selectedApp.value = name
+    showAppList.value = false
+}
 
-            CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
-                LazyColumn(
-                    state = listState,
-                    modifier = Modifier
-                        .heightIn(max = 200.dp)
-                        .clipToBounds(),
-                    beyondBoundsItemCount = 4
-                ) {
-                    items(
-                        items = stableApps,
-                        key = { it.id },
-                        contentType = { 0 } // single type => better reuse
-                    ) { app ->
-                        UI.Ctext(app.name) { onPick(app.name) }
-                    }
-                }
-            }
+LazyColumn(
+    state = listState,
+    modifier = Modifier.heightIn(max = 200.dp)
+) {
+    items(
+        items = stableApps,
+        key = { it.id },
+        contentType = { 0 }
+    ) { app ->
+        UI.Ctext(app.name) { onPick(app.name) }
+    }
+}
+
+
+            
         }
     )
 }
