@@ -96,6 +96,9 @@ fun Challenge() {
 
         
       
+
+    
+
 @Composable
 fun AppUsage() {
     val Time = remember { m("50") }
@@ -103,7 +106,6 @@ fun AppUsage() {
     val selectedApp = remember { m("") }
     val showAppList = remember { m(false) }
     val stableApps = remember(apps) { apps.toList() }
-
 
     LazyScreen(titleContent = { Text("App Usage") }) {
         LazzyRow {
@@ -123,23 +125,23 @@ fun AppUsage() {
         }
     }
 
-    LaunchedEffect(Unit) { refreshApps() }
+    // run off main so taps never freeze
+    LaunchedEffect(Unit) { withContext(Dispatchers.Default) { refreshApps() } }
 
     LazyPopup(
         show = showAppList,
         title = "Select App",
         message = "",
         content = {
-          
-NoLagLazyColumn(
-  items = stableApps,
-  itemKey = { it.id },
-) { app ->
-    UI.Ctext(app.name) {
-        selectedApp.value = app.name
-    }
-}
-
+            NoLagLazyColumn(
+                items = stableApps,
+                itemKey = { it.id },
+            ) { app ->
+                UI.Ctext(app.name) {
+                    selectedApp.value = app.name
+                    showAppList.value = false   // <-- close popup so it stops eating clicks
+                }
+            }
         }
     )
 }
@@ -171,7 +173,6 @@ fun <T> NoLagLazyColumn(
     LazyColumn(
         modifier = modifier,
         state = state,
-        // helps reuse
         userScrollEnabled = true
     ) {
         if (itemKey != null) {
