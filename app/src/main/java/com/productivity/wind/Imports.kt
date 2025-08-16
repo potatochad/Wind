@@ -1253,6 +1253,7 @@ fun goTo(route: String) {
 fun MyNavGraph(navController: NavHostController) =NoLagCompose{
         NavHost(navController = navController, startDestination = "Main") {
             ScreenNav()
+			url("Loading") { Loading() }
         }
 }
 
