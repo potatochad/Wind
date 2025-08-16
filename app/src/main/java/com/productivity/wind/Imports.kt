@@ -1228,11 +1228,15 @@ object DayChecker {
 }
 
     
-    
+
+
+
+
+
+
+
+	
 fun goTo(route: String) = Global1.navController.navigate(route)
-
-
-
 
 
 
@@ -1241,7 +1245,6 @@ fun goTo(route: String) = Global1.navController.navigate(route)
 fun MyNavGraph(navController: NavHostController) =NoLagCompose{
         NavHost(navController = navController, startDestination = "Main") {
             ScreenNav()
-			url("Loading") { Loading() }
         }
 }
 
@@ -1252,16 +1255,6 @@ fun NavGraphBuilder.url(
     content: @Composable () -> Unit
 ) {
     composable(route) { content() }
-}
-
-@Composable
-fun Loading() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
 }
 
 
