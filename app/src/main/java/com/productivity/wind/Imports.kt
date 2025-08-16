@@ -1236,7 +1236,7 @@ object DayChecker {
 
 
 
-fun goTo(route: String) {
+fun goTo2(route: String) {
     val nav = Global1.navController
     nav.navigate("Loading") { launchSingleTop = true }
 
@@ -1245,6 +1245,20 @@ fun goTo(route: String) {
         popUpTo("Loading") { inclusive = true }
     }
 }
+fun goTo(route: String) {
+    val nav = Global1.navController
+    nav.navigate("Loading") { launchSingleTop = true }
+
+    // Wait a bit before going to the real screen
+    GlobalScope.launch(Dispatchers.Main) {
+        delay(500) // half a second so Loading appears
+        nav.navigate(route) {
+            launchSingleTop = true
+            popUpTo("Loading") { inclusive = true }
+        }
+    }
+}
+
 
 
 
