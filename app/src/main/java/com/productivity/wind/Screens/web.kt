@@ -74,14 +74,14 @@ fun Web() {
 
                     // WORK WEB
                     LazyIcon(
-                        onClick = { Global1.navController.navigate("WorkWeb") },
+                        onClick = { goTo("WorkWeb") },
                         BigIcon = Icons.Default.Work,
                         BigIconColor = Color(0xFF4CAF50), // Green
                         OuterPadding = 0,
                     )
 
                     LazyIcon(
-                        onClick = { Global1.navController.navigate("FunWeb") },
+                        onClick = { goTo("FunWeb") },
                         BigIcon = Icons.Default.SentimentVerySatisfied,
                         BigIconColor = Color(0xFFFFC107), // Amber
                         OuterPadding = 0,
