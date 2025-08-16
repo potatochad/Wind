@@ -102,8 +102,6 @@ fun AppUsage() {
     val showAppList = remember { m(false) }
 
     LazyScreen(titleContent = { Text("App Usage") }) {
-        refreshApps()
-
         LazzyRow {
             Text("If")
             Text(" spend ")
@@ -121,47 +119,36 @@ fun AppUsage() {
         }
     }
 
+    // Refresh apps only when popup shows
+    LaunchedEffect(showAppList.value) {
+        if (showAppList.value) refreshApps()
+    }
+
     // --- Popup: fast, stable, click to select + close ---
     LazyPopup(
         show = showAppList,
         title = "Select App",
         message = "",
         content = {
-            // --- Popup content (no overscroll/local providers, no beyondBounds) ---
-val stableApps = remember(apps) { apps.toList() }
-val listState = rememberLazyListState()
-val onPick by rememberUpdatedState<(String) -> Unit> { name ->
-    selectedApp.value = name
-    showAppList.value = false
-}
+            val stableApps = remember(apps) { apps.toList() }
+            val listState = rememberLazyListState()
+            val onPick by rememberUpdatedState<(String) -> Unit> { name ->
+                selectedApp.value = name
+                showAppList.value = false
+            }
 
-LazyColumn(
-    state = listState,
-    modifier = Modifier.heightIn(max = 200.dp)
-) {
-    items(
-        items = stableApps,
-        key = { it.id },
-        contentType = { 0 }
-    ) { app ->
-        UI.Ctext(app.name) { onPick(app.name) }
-    }
-}
-
-
-            
+            LazyColumn(
+                state = listState,
+                modifier = Modifier.heightIn(max = 200.dp)
+            ) {
+                items(
+                    items = stableApps,
+                    key = { it.id },
+                    contentType = { 0 }
+                ) { app ->
+                    UI.Ctext(app.name) { onPick(app.name) }
+                }
+            }
         }
     )
 }
-
-
-
-
-
-
-
-
-
-
-
-
