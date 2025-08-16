@@ -147,87 +147,35 @@ fun LazySwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
 
 
 
+
+
 @Composable
-fun NoLagLazyColumn(
-    modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState(),
-    content: LazyListScope.() -> Unit
-) {
-    LazyColumn(
-        modifier = modifier,
-        state = state
-    ) {
-        content()
-    }
-}
-
-/* ---------- Helpers for stable, reusable rows ---------- */
-
-fun <T> LazyListScope.itemsStable(
-    items: List<T>,
-    key: (T) -> Any,
-    contentType: (T) -> Any? = { null },
+fun <T> PreloadItems(
+    data: List<T>,
     itemContent: @Composable (T) -> Unit
 ) {
-    // guard against ref-flips triggering churn
-    val snap = items
-    if (contentType === ({ _: T -> null })) {
-        items(
-            items = snap,
-            key = key
-        ) { item -> itemContent(item) }
-    } else {
-        items(
-            items = snap,
-            key = key,
-            contentType = contentType
-        ) { item -> itemContent(item) }
+    Box(Modifier.size(1.dp).alpha(0f)) {
+        Column {
+            data.forEach { element ->
+                key(element.hashCode()) {
+                    itemContent(element) // prebuild it invisibly
+                }
+            }
+        }
     }
 }
-
-fun <T> LazyListScope.itemsIndexedStable(
-    items: List<T>,
-    key: (index: Int, item: T) -> Any,
-    contentType: (index: Int, item: T) -> Any? = { _, _ -> null },
-    itemContent: @Composable (index: Int, item: T) -> Unit
-) {
-    val snap = items
-    if (contentType === ({ _: Int, _: T -> null })) {
-        itemsIndexed(
-            items = snap,
-            key = key
-        ) { i, it -> itemContent(i, it) }
-    } else {
-        itemsIndexed(
-            items = snap,
-            key = key,
-            contentType = contentType
-        ) { i, it -> itemContent(i, it) }
-    }
-}
-
-/* ---------- Simple overload for the classic list ---------- */
-
-@Composable
-fun <T> NoLagLazyColumn(
+fun <T> LazyListScope.noLag(
     data: List<T>,
-    modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState(),
-    key: ((T) -> Any)? = null,
-    contentType: ((T) -> Any?)? = null,
-    item: @Composable (T) -> Unit
-) = NoLagLazyColumn(modifier, state) {
-    when {
-        key != null && contentType != null ->
-            itemsStable(data, key = key, contentType = contentType, itemContent = item)
-        key != null ->
-            itemsStable(data, key = key, itemContent = item)
-        contentType != null ->
-            items(data, contentType = contentType) { item(it) }
-        else ->
-            items(data) { item(it) }
+    preload: Boolean = true,
+    itemContent: @Composable (T) -> Unit
+) {
+    if (preload) {
+        item {
+            PreloadItems(data, itemContent)
+        }
     }
 }
+
 
 
 
