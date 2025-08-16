@@ -127,38 +127,61 @@ fun AppUsage() {
 
     // --- Popup: fast, stable, click to select + close ---
     LazyPopup(
-        show = showAppList,
-        title = "Select App",
-        message = "",
-        content = {
-            val stableApps = remember(apps) { apps.toList() }
-            val listState = rememberLazyListState()
-            val onPick by rememberUpdatedState<(String) -> Unit> { name ->
-                selectedApp.value = name
-                showAppList.value = false
-            }
-
-            Box(Modifier.size(1.dp).graphicsLayer(alpha = 0f)) {
-              LazyColumn {
-                items(stableApps.take(10), key = { it.id }) { app ->
-                  Text(app.name) // cheap render just to “warm” layout cache
-                }
-              }
-            }
-
-
-            LazyColumn(
-                state = listState,
-                modifier = Modifier.heightIn(max = 200.dp)
-            ) {
-                items(
-                    items = stableApps,
-                    key = { it.id },
-                    contentType = { 0 }
-                ) { app ->
-                    UI.Ctext(app.name) { onPick(app.name) }
-                }
-            }
+    show = showAppList,
+    title = "Select App",
+    message = "",
+    content = {
+        val stableApps = remember(apps) { apps.toList() }
+        val onPick by rememberUpdatedState<(String) -> Unit> { name ->
+            selectedApp.value = name
+            showAppList.value = false
         }
-    )
+
+        // optional micro warm-up (safe & simple)
+        Box(Modifier.size(1.dp).alpha(0f)) {
+            Text("warm") // forces tiny first measure; harmless
+        }
+
+        AllAtOnceList(
+            apps = stableApps,
+            onPick = onPick,
+            chunk = 50,     // tune
+            stepMs = 5      // tune
+        )
+    }
+)
+
 }
+
+
+@Composable
+private fun AllAtOnceList(
+    apps: List<DataApps>,
+    onPick: (String) -> Unit,
+    chunk: Int = 40,              // how many to add per step
+    stepMs: Long = 8              // tiny yield between chunks
+) {
+    val shown = remember { mutableStateListOf<DataApps>() }
+
+    // Warm up gradually so UI never freezes
+    LaunchedEffect(apps) {
+        shown.clear()
+        for (i in apps.indices step chunk) {
+            val end = minOf(i + chunk, apps.size)
+            shown.addAll(apps.subList(i, end))
+            kotlinx.coroutines.delay(stepMs)   // "yield"
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .heightIn(max = 200.dp)                // your popup height
+            .verticalScroll(rememberScrollState())
+    ) {
+        // All rows are composed and stay in memory
+        shown.forEach { app ->
+            UI.Ctext(app.name) { onPick(app.name) }
+        }
+    }
+}
+
