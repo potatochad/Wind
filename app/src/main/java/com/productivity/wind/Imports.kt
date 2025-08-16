@@ -1236,26 +1236,16 @@ object DayChecker {
 
 
 
-var isLoading = mutableStateOf(false)
-
 fun goTo(route: String) {
-    Global1.isLoading.value = true
-
     val nav = Global1.navController
-    var listener: NavController.OnDestinationChangedListener? = null
-    listener = NavController.OnDestinationChangedListener { controller, _, _ ->
-        // Wait one frame so the new screen paints, then hide loader
-        Choreographer.getInstance().postFrameCallback {
-            Global1.isLoading.value = false
-        }
-        listener?.let { controller.removeOnDestinationChangedListener(it) }
-    }
+    nav.navigate("Loading") { launchSingleTop = true }
 
-    nav.addOnDestinationChangedListener(listener!!)
     nav.navigate(route) {
         launchSingleTop = true
+        popUpTo("Loading") { inclusive = true }
     }
 }
+
 
 
 @RequiresApi(Build.VERSION_CODES.O)
