@@ -1240,11 +1240,10 @@ fun goTo(route: String) = Global1.navController.navigate(route)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MyNavGraph(navController: NavHostController) =NoLagCompose{
+	    PreloadAll()
         NavHost(navController = navController, startDestination = "Main") {
             ScreenNav()
         }
-
-		PreloadAll()
 }
 
 
