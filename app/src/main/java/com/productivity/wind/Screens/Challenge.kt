@@ -156,12 +156,12 @@ fun AppUsage() {
 
 
 @Composable
-private fun AllAtOnceList(
+fun AllAtOnceList(
     apps: List<DataApps>,
     onPick: (String) -> Unit,
     chunk: Int = 40,              // how many to add per step
     stepMs: Long = 8              // tiny yield between chunks
-) {
+) = NoLagCompose{
     val shown = remember { mutableStateListOf<DataApps>() }
 
     // Warm up gradually so UI never freezes
