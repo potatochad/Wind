@@ -142,12 +142,12 @@ fun Menu() {
         LazyItem(
             icon = Icons.Outlined.Landscape,
             title = "Settings",
-            onClick = { Global1.navController.navigate("SettingsScreen"); Bar.ShowMenu = false  }
+            onClick = { goTo("SettingsScreen"); Bar.ShowMenu = false  }
         )
         LazyItem(
             icon = Icons.Outlined.QueryStats,
             title = "Achievements",
-            onClick = { Global1.navController.navigate("Achievements"); Bar.ShowMenu = false }
+            onClick = { goTo("Achievements"); Bar.ShowMenu = false }
         )
 
 
@@ -175,7 +175,7 @@ object Icon {
         @Composable
         fun Chill() {
                 LazyIcon(
-                        onClick = { Global1.navController.navigate("Web") },
+                        onClick = { goTo("Web") },
                         icon = Icons.Default.SportsEsports
                 )
         }
@@ -183,7 +183,7 @@ object Icon {
         @Composable
         fun Add() {
                 LazyIcon(
-                        onClick = { Global1.navController.navigate("Challenge") },
+                        onClick = { goTo("Challenge") },
                         icon = Icons.Default.Add
                 )
         }
