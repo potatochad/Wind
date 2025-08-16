@@ -96,98 +96,65 @@ fun Challenge() {
       
 @Composable
 fun AppUsage() {
-    var Time = remember { m("50") }
-    var Points = remember { m("0") }
-    var selectedApp = remember { m("") }
-    var showAppList = remember { m(false) }
+    val Time = remember { m("50") }
+    val Points = remember { m("0") }
+    val selectedApp = remember { m("") }
+    val showAppList = remember { m(false) }
 
     LazyScreen(titleContent = { Text("App Usage") }) {
         refreshApps()
 
         LazzyRow {
-          
-        Text("If")
-        Text(" spend ")
-        UI.Cinput(Time)
-        Text(" seconds ")
+            Text("If")
+            Text(" spend ")
+            UI.Cinput(Time)
+            Text(" seconds ")
 
-        Text("on ")
-        UI.Ctext(
-            if (selectedApp.value.isEmpty()) "app" else selectedApp.value
-        ) {
-            showAppList.value = true
-        }
-
-        Text(", add ")
-        UI.Cinput(Points)
-        Text(" points")
-        }
-    }
-
-    // Popup list for selecting app
-        LazyPopup(
-            show = showAppList,
-            title = "Select App",
-            message = "",
-            content = {
-
-
-
-              
-              
-              
-    val listState = rememberLazyListState()
-    var preload by remember { mutableIntStateOf(2) }
-
-    LaunchedEffect(listState) {
-        while (true) {
-            if (listState.isScrollInProgress) {
-                preload = 2
-            } else {
-                preload = (preload + 2).coerceAtMost(30)
+            Text("on ")
+            UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
+                showAppList.value = true
             }
-            delay(1000)
+
+            Text(", add ")
+            UI.Cinput(Points)
+            Text(" points")
         }
     }
 
-    LazyColumn(
-        modifier = Modifier.heightIn(max = 200.dp),
-        state = listState
-    ) {
-        // just slice extra items into the list to fake "preloading"
-        val expanded = apps.take(preload.coerceAtMost(apps.size))
-        items(expanded, key = { it.id }) { app ->
-            UI.Ctext(app.name) {
-                selectedApp.value = app.name
+    // --- Popup: fast, stable, click to select + close ---
+    LazyPopup(
+        show = showAppList,
+        title = "Select App",
+        message = "",
+        content = {
+            // freeze current apps for smooth recycling
+            val stableApps = remember(apps) { apps.toList() }
+            val listState = rememberLazyListState()
+            val onPick by rememberUpdatedState<(String) -> Unit> { name ->
+                selectedApp.value = name
                 showAppList.value = false
             }
-        }
-    }
 
-
-
-
-
-
-
-                
+            CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier
+                        .heightIn(max = 200.dp)
+                        .clipToBounds(),
+                    beyondBoundsItemCount = 4
+                ) {
+                    items(
+                        items = stableApps,
+                        key = { it.id },
+                        contentType = { 0 } // single type => better reuse
+                    ) { app ->
+                        UI.Ctext(app.name) { onPick(app.name) }
+                    }
+                }
             }
-
-        )
-    
+        }
+    )
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
