@@ -144,6 +144,33 @@ fun LazySwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
       )
     )
 }
+@Composable
+fun <T> LazzyColumn(
+    data: List<T>,                // build offscreen first
+    modifier: Modifier = Modifier,
+    state: LazyListState = rememberLazyListState(),
+    key: ((T) -> Any)? = null,                // pass stable id if you have it
+    item: @Composable (T) -> Unit
+) = NoLagCompose {
+    val snapshot by remember(data) { derivedStateOf { data } }
+
+    // Prebuild offscreen (tiny, invisible) so showing is instant
+    PreloadBox(whenDo = true) {
+        LazyColumn(
+            modifier = Modifier.size(1.dp).alpha(0f).clearAndSetSemantics { }
+        ) {
+            if (key != null) items(snapshot, key = key) { item(it) }
+            else items(snapshot) { item(it) }
+        }
+    }
+
+    // Real, visible list
+    LazyColumn(modifier = modifier, state = state) {
+        if (key != null) items(snapshot, key = key) { item(it) }
+        else items(snapshot) { item(it) }
+    }
+}
+
   
   
 @Composable
