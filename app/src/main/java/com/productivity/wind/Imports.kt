@@ -1225,61 +1225,12 @@ object DayChecker {
             }
         }
     }
+}
 
     
     
-}
+fun goTo(route: String) = Global1.navController.navigate(route)
 
-
-
-
-
-
-
-fun goTo(route: String, thresholdMs: Long = 150) {
-    val nav = Global1.navController
-
-    // Already there? bail.
-    if (nav.currentDestination?.route == route) return
-
-    GlobalScope.launch(Dispatchers.Main) {
-        var showedLoading = false
-
-        // Start nav immediately
-        val startedAt = SystemClock.uptimeMillis()
-        nav.navigate(route) { launchSingleTop = true }
-
-        // If it’s not finished quickly, show Loading
-        val timer = launch {
-            delay(thresholdMs)
-            if (nav.currentDestination?.route != route) {
-                showedLoading = true
-                nav.navigate("Loading") { launchSingleTop = true }
-            }
-        }
-
-        // Wait until we actually land on the route
-        suspendCancellableCoroutine<Unit> { cont ->
-            val listener = NavController.OnDestinationChangedListener { _, dest, _ ->
-                if (dest.route == route) {
-                    cont.resume(Unit) {}
-                }
-            }
-            nav.addOnDestinationChangedListener(listener)
-            cont.invokeOnCancellation { nav.removeOnDestinationChangedListener(listener) }
-        }.also {
-            timer.cancel()
-        }
-
-        // If we showed Loading, replace it with the real screen
-        if (showedLoading) {
-            nav.navigate(route) {
-                launchSingleTop = true
-                popUpTo("Loading") { inclusive = true }
-            }
-        }
-    }
-}
 
 
 
