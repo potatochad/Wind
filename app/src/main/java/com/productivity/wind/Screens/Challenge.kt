@@ -161,7 +161,10 @@ fun AppUsage() {
             title = "Select App",
             message = "",
             content = {
-                IdList( apps.toList() ) { app ->
+                IdList(
+                  apps.toList(),
+                  key = {it.id},
+                ) { app ->
                   UI.Ctext(app.name) {
                     selectedApp.value = app.name
                   }
@@ -179,17 +182,20 @@ fun AppUsage() {
 @Composable
 fun <T> IdList(
     list: List<T>,
+    key: (T) -> Any,   // caller provides stable key
     modifier: Modifier = Modifier.heightIn(max = 400.dp),
     state: LazyListState = rememberLazyListState(),
     itemContent: @Composable (T) -> Unit
 ) {
+    val snapshot = remember(list) { list.toList() }
+
     LazyColumn(
         modifier = modifier,
         state = state
     ) {
         items(
-            items = list,
-            key = { it.hashCode() },   // fallback stable key
+            items = snapshot,
+            key = key,               // stable key from caller
             contentType = { "item" }
         ) { item ->
             itemContent(item)
