@@ -142,8 +142,7 @@ import com.google.accompanist.drawablepainter.rememberDrawablePainter
 fun LazyImage(
     source: Any?,
     modifier: Modifier = Modifier
-        .size(50.dp)
-        .padding(5.dp)
+        .size(40.dp)
 ) {
     val contentDescription = "boring"
     when (source) {
