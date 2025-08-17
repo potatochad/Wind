@@ -164,9 +164,22 @@ fun AppUsage() {
                 LazzyList(
                   apps.toList(),
                 ) { app ->
+                  LazzyRow{
+                    val icon = getAppIcon(app.packageName)
+
+                    icon?.let {
+                      Image(
+                        painter = rememberDrawablePainter(it),
+                        contentDescription = app.name,
+                        modifier = Modifier.size(20.dp).padding(end = 6.dp)
+                      )
+                    }
+
+                    
                   UI.Ctext(app.name) {
                     selectedApp.value = app.name
                   }
+                }
                 }
                 
             }
@@ -188,6 +201,18 @@ fun <T> LazzyList(
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         list.forEach { item ->
             itemContent(item)
+        }
+    }
+}
+@Composable
+fun getAppIcon(packageName: String): Drawable? {
+    val context = Global1.context
+    val pm = context.packageManager
+    return remember(packageName) {
+        try {
+            pm.getApplicationIcon(packageName)
+        } catch (_: Exception) {
+            null
         }
     }
 }
