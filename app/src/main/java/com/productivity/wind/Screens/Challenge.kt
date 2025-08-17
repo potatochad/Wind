@@ -90,11 +90,11 @@ import androidx.core.graphics.drawable.toBitmap
 @Composable
 fun LazyImage(
     source: Any?,
-    contentDescription: String,
     modifier: Modifier = Modifier
-        .size(24.dp)
-        .padding(end = 10.dp)
+        .size(50.dp)
+        .padding(5.dp)
 ) {
+    val contentDescription = "boring"
     when (source) {
         is Painter -> Image(painter = source, contentDescription = contentDescription, modifier = modifier)
         is Drawable -> Image(painter = rememberDrawablePainter(source), contentDescription = contentDescription, modifier = modifier)
@@ -169,13 +169,9 @@ fun AppUsage() {
                   LazzyRow{
                     val icon = getAppIcon(app.packageName)
 
-                    icon?.let {
-                      Image(
-                        painter = rememberDrawablePainter(it),
-                        contentDescription = app.name,
-                        modifier = Modifier.size(50.dp).padding(end = 10.dp, start = 10.dp)
-                      )
-                    }
+                    UI.move(10)
+                    LazyImage(icon)
+                    UI.move(10)
 
                     
                   UI.Ctext(app.name) {
