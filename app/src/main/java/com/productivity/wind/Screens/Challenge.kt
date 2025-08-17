@@ -141,29 +141,13 @@ fun AppUsage() {
     }
 
     // Popup list for selecting app
-        LazyPopup(
-            show = showAppList,
-            title = "Select App",
-            message = "",
-            content = {
-                LazzyList(
-                  apps.toList(),
-                ) { app ->
-                  LazzyRow{
-                    val icon = getAppIcon(app.packageName)
+        AppSelectPopup(
+          show = showAppList,
+        ) { app ->
+          selectedApp.value = app.name
+        }
+        
 
-                    UI.move(10)
-                    LazyImage(icon)
-                    UI.move(10)
 
-                    
-                  UI.Ctext(app.name) {
-                    selectedApp.value = app.name
-                  }
-                }
-                }
-                
-            }
-        )
 }
 
