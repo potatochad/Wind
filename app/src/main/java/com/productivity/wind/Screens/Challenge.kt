@@ -187,14 +187,12 @@ fun <T> IdList(
     state: LazyListState = rememberLazyListState(),
     itemContent: @Composable (T) -> Unit
 ) {
-    val snapshot = remember(list) { list.toList() }
-
     LazyColumn(
         modifier = modifier,
         state = state
     ) {
         items(
-            items = snapshot,
+            items = list,
             key = key,               // stable key from caller
             contentType = { "item" }
         ) { item ->
