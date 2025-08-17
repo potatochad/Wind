@@ -325,8 +325,7 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
 @Composable
 fun AppSelectPopup(
     show: MutableState<Boolean>,
-    apps: List<DataApps>,
-    onSelect: (DataApps) -> Unit
+    onSelect: (DataApps) -> Unit = {},
 ) {
     LazyPopup(
         show = show,
