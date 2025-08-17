@@ -102,7 +102,7 @@ fun Challenge() {
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "App Usage",
-            onClick = { Global1.navController.navigate("AppUsage")},
+            onClick = { goTo("AppUsage")},
         )
     
    }
@@ -141,7 +141,6 @@ fun AppUsage() {
     }
 
     // Popup list for selecting app
-    if (showAppList.value) {
         LazyPopup(
             show = showAppList,
             title = "Select App",
@@ -166,19 +165,5 @@ fun AppUsage() {
                 
             }
         )
-    }
-}
-
-@Composable
-fun getAppIcon(packageName: String): Drawable? {
-    val context = Global1.context
-    val pm = context.packageManager
-    return remember(packageName) {
-        try {
-            pm.getApplicationIcon(packageName)
-        } catch (_: Exception) {
-            null
-        }
-    }
 }
 
