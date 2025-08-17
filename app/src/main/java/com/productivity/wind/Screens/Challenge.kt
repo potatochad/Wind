@@ -78,9 +78,6 @@ import com.productivity.wind.Imports.*
 import androidx.compose.foundation.lazy.*
 import android.graphics.drawable.*
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-
-
-
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image
@@ -91,7 +88,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.drawable.toBitmap
 
 @Composable
-fun UniversalImage(
+fun LazyImage(
     source: Any?,
     contentDescription: String,
     modifier: Modifier = Modifier
@@ -123,38 +120,6 @@ fun Challenge() {
             title = "App Usage",
             onClick = { Global1.navController.navigate("AppUsage")},
         )
-    
-   }
-}
-
-@Composable
-fun AppUsage2() {
-  var Time = remember { m("50") }
-  var Points = remember { m("0") }
-
-  LazyScreen(titleContent = { Text("App Usage") }) {
-
-        
-            refreshApps()
-                
-                Text("If")
-                Text(" spend ")
-                UI.Cinput(Time){ 
-                    Time.value = it 
-                }
-                Text(" seconds ")
-
-                Text("on ")
-                UI.Ctext("app"){
-                    
-                }
-                Text(", add")
-                UI.Cinput(Points) {
-                  Points.value = it
-                }
-                Text(" points")
-                
-                
     
    }
 }
@@ -241,6 +206,7 @@ fun <T> LazzyList(
         }
     }
 }
+
 @Composable
 fun getAppIcon(packageName: String): Drawable? {
     val context = Global1.context
