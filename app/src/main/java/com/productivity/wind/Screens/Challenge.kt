@@ -117,8 +117,11 @@ fun AppUsage() {
     var selectedApp = remember { m("") }
     var showAppList = remember { m(false) }
 
-    LazyScreen(titleContent = { Text("App Usage") }) {
+    LaunchedEffect(Unit) {
         refreshApps()
+    }
+
+    LazyScreen(titleContent = { Text("App Usage") }) {
 
         LazzyRow {
           
