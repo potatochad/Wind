@@ -160,7 +160,7 @@ fun AppUsage() {
             title = "Select App",
             message = "",
             content = {
-                IdList( data = apps.toList() ) { app ->
+                IdList( apps.toList() ) { app ->
                   UI.Ctext(app.name) {
                     selectedApp.value = app.name
                   }
@@ -174,25 +174,23 @@ fun AppUsage() {
 
 
 
-interface HasId { val id: Any }
 
 @Composable
-fun <T : HasId> IdList(
-    data: List<T>,   // expects a List
+fun <T> IdList(
+    list: List<T>,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
     itemContent: @Composable (T) -> Unit
 ) {
-    // Take a snapshot copy (Compose friendly)
-    val snapshot = remember(data) { derivedStateOf { data.toList() } }
+    // snapshot for stability
+    val snapshot by remember(list) { mutableStateOf(list.toList()) }
 
     LazyColumn(
         modifier = modifier,
         state = state
     ) {
         items(
-            items = snapshot.value,
-            key = { it.id },
+            items = snapshot,
             contentType = { "item" }
         ) { item ->
             itemContent(item)
