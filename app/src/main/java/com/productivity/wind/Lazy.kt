@@ -155,7 +155,18 @@ fun LazyImage(
 }
 
 
-
+@Composable
+fun <T> LazzyList(
+    list: List<T>,
+    modifier: Modifier = Modifier.heightIn(max = 200.dp),
+    itemContent: @Composable (T) -> Unit
+) =NoLagCompose {
+    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+        list.forEach { item ->
+            itemContent(item)
+        }
+    }
+}
 
 
 @Composable
