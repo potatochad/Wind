@@ -87,22 +87,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.drawable.toBitmap
 
-@Composable
-fun LazyImage(
-    source: Any?,
-    modifier: Modifier = Modifier
-        .size(50.dp)
-        .padding(5.dp)
-) {
-    val contentDescription = "boring"
-    when (source) {
-        is Painter -> Image(painter = source, contentDescription = contentDescription, modifier = modifier)
-        is Drawable -> Image(painter = rememberDrawablePainter(source), contentDescription = contentDescription, modifier = modifier)
-        is Bitmap -> Image(painter = BitmapPainter(source.asImageBitmap()), contentDescription = contentDescription, modifier = modifier)
-        is ImageBitmap -> Image(painter = BitmapPainter(source), contentDescription = contentDescription, modifier = modifier)
-        else -> { /* do nothing if null/unsupported */ }
-    }
-}
 
 
 
