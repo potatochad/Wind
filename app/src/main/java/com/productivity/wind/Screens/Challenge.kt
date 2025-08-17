@@ -81,6 +81,40 @@ import com.google.accompanist.drawablepainter.rememberDrawablePainter
 
 
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import androidx.compose.foundation.Image
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.graphics.drawable.toBitmap
+
+@Composable
+fun UniversalImage(
+    source: Any?,
+    contentDescription: String,
+    modifier: Modifier = Modifier
+        .size(24.dp)
+        .padding(end = 10.dp)
+) {
+    when (source) {
+        is Painter -> Image(painter = source, contentDescription = contentDescription, modifier = modifier)
+        is Drawable -> Image(painter = rememberDrawablePainter(source), contentDescription = contentDescription, modifier = modifier)
+        is Bitmap -> Image(painter = BitmapPainter(source.asImageBitmap()), contentDescription = contentDescription, modifier = modifier)
+        is ImageBitmap -> Image(painter = BitmapPainter(source), contentDescription = contentDescription, modifier = modifier)
+        else -> { /* do nothing if null/unsupported */ }
+    }
+}
+
+
+
+
+
+
+
+
 @Composable
 fun Challenge() {
   LazyScreen(titleContent = { Text("Challenge") }) {
@@ -175,7 +209,7 @@ fun AppUsage() {
                       Image(
                         painter = rememberDrawablePainter(it),
                         contentDescription = app.name,
-                        modifier = Modifier.size(20.dp).padding(end = 6.dp)
+                        modifier = Modifier.size(24.dp).padding(end = 10.dp)
                       )
                     }
 
