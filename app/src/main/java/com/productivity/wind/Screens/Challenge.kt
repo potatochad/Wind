@@ -161,9 +161,8 @@ fun AppUsage() {
             title = "Select App",
             message = "",
             content = {
-                IdList(
+                TestList(
                   apps.toList(),
-                  key = {it.id},
                 ) { app ->
                   UI.Ctext(app.name) {
                     selectedApp.value = app.name
@@ -200,3 +199,17 @@ fun <T> IdList(
         }
     }
 }
+
+@Composable
+fun <T> TestList(
+    list: List<T>,
+    modifier: Modifier = Modifier.heightIn(max = 400.dp),
+    itemContent: @Composable (T) -> Unit
+) =NoLagCompose {
+    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+        list.forEach { item ->
+            itemContent(item)
+        }
+    }
+}
+
