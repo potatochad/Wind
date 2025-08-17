@@ -208,7 +208,7 @@ fun AppUsage() {
                       Image(
                         painter = rememberDrawablePainter(it),
                         contentDescription = app.name,
-                        modifier = Modifier.size(28.dp).padding(end = 10.dp, start = 6.dp)
+                        modifier = Modifier.size(50.dp).padding(end = 10.dp, start = 10.dp)
                       )
                     }
 
