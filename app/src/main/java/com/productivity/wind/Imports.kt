@@ -561,13 +561,15 @@ fun End(content: @Composable () -> Unit) {
     }
 }
 @Composable
-fun move(w: Int = 0, h: Int = 0) {
+fun move(s: Int = 0, w: Int = 0, h: Int = 0) {
     Spacer(
-        Modifier
-            .width(w.dp)
-            .height(h.dp)
+        modifier = when {
+            s > 0 -> Modifier.size(s.dp)
+            else -> Modifier.width(w.dp).height(h.dp)
+        }
     )
 }
+
 
 
 @Composable
