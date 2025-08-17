@@ -327,12 +327,14 @@ fun AppSelectPopup(
     show: MutableState<Boolean>,
     onSelect: (DataApps) -> Unit = {},
 ) {
+    val stableApps = remember(apps) { apps.toList() }   // freeze snapshot
+
     LazyPopup(
         show = show,
         title = "Select App",
         message = "",
         content = {
-            LazzyList(apps.toList()) { app ->
+            LazzyList(stableApps) { app ->
                 LazzyRow {
                     val icon = getAppIcon(app.packageName)
 
@@ -342,12 +344,14 @@ fun AppSelectPopup(
 
                     UI.Ctext(app.name) {
                         onSelect(app)
+                        show.value = false
                     }
                 }
             }
         }
     )
 }
+
 
 
 //endregion POPUP CONTROLLER
