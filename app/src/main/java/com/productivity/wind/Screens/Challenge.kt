@@ -179,7 +179,7 @@ interface HasId { val id: Any }
 @Composable
 fun <T : HasId> IdList(
     data: List<T>,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.heightIn(max = 400.dp),
     state: LazyListState = rememberLazyListState(),
     itemContent: @Composable (T) -> Unit
 ) {
