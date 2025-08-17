@@ -179,12 +179,12 @@ fun AppUsage() {
 @Composable
 fun <T> IdList(
     list: List<T>,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.heightIn(max = 400.dp),
     state: LazyListState = rememberLazyListState(),
     itemContent: @Composable (T) -> Unit
 ) {
     // snapshot for stability
-    val snapshot by remember(list) { mutableStateOf(list.toList()) }
+    val snapshot = remember(list) { list }
 
     LazyColumn(
         modifier = modifier,
@@ -198,3 +198,6 @@ fun <T> IdList(
         }
     }
 }
+
+
+
