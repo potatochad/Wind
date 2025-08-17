@@ -189,7 +189,7 @@ fun <T> IdList(
     ) {
         items(
             items = list,
-            key = { (it as dynamic).id }, // assume all have id
+            key = { it.hashCode() },   // fallback stable key
             contentType = { "item" }
         ) { item ->
             itemContent(item)
