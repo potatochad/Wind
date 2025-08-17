@@ -161,7 +161,7 @@ fun AppUsage() {
             title = "Select App",
             message = "",
             content = {
-                TestList(
+                LazzyList(
                   apps.toList(),
                 ) { app ->
                   UI.Ctext(app.name) {
@@ -178,32 +178,11 @@ fun AppUsage() {
 
 
 
-@Composable
-fun <T> IdList(
-    list: List<T>,
-    key: (T) -> Any,   // caller provides stable key
-    modifier: Modifier = Modifier.heightIn(max = 400.dp),
-    state: LazyListState = rememberLazyListState(),
-    itemContent: @Composable (T) -> Unit
-) {
-    LazyColumn(
-        modifier = modifier,
-        state = state
-    ) {
-        items(
-            items = list,
-            key = key,               // stable key from caller
-            contentType = { "item" }
-        ) { item ->
-            itemContent(item)
-        }
-    }
-}
 
 @Composable
-fun <T> TestList(
+fun <T> LazzyList(
     list: List<T>,
-    modifier: Modifier = Modifier.heightIn(max = 400.dp),
+    modifier: Modifier = Modifier.heightIn(max = 200.dp),
     itemContent: @Composable (T) -> Unit
 ) =NoLagCompose {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
