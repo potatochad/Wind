@@ -322,6 +322,35 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
               onConfirm = { Global1.navController.navigate("SettingsP_Screen")}
               )
 }
+@Composable
+fun AppSelectPopup(
+    show: MutableState<Boolean>,
+    apps: List<DataApps>,
+    onSelect: (DataApps) -> Unit
+) {
+    LazyPopup(
+        show = show,
+        title = "Select App",
+        message = "",
+        content = {
+            LazzyList(apps.toList()) { app ->
+                LazzyRow {
+                    val icon = getAppIcon(app.packageName)
+
+                    UI.move(10)
+                    LazyImage(icon)
+                    UI.move(10)
+
+                    UI.Ctext(app.name) {
+                        onSelect(app)
+                        show.value = false
+                    }
+                }
+            }
+        }
+    )
+}
+
 
 //endregion POPUP CONTROLLER
 
