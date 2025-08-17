@@ -121,6 +121,9 @@ ktlint {
 
 dependencies {
 
+implementation("com.google.accompanist:accompanist-drawablepainter:0.37.3")
+
+
 implementation(platform(libs.androidx.compose.bom))
 
 // Needed for KeyboardOptions / KeyboardActions
