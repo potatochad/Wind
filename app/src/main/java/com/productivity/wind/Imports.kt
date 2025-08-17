@@ -487,6 +487,19 @@ object ListStorage {
 
 
 
+@Composable
+fun getAppIcon(packageName: String): Drawable? {
+    val context = Global1.context
+    val pm = context.packageManager
+    return remember(packageName) {
+        try {
+            pm.getApplicationIcon(packageName)
+        } catch (_: Exception) {
+            null
+        }
+    }
+}
+
 
 
 
