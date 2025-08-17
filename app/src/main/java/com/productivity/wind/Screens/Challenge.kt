@@ -183,21 +183,16 @@ fun <T> IdList(
     state: LazyListState = rememberLazyListState(),
     itemContent: @Composable (T) -> Unit
 ) {
-    // snapshot for stability
-    val snapshot = remember(list) { list }
-
     LazyColumn(
         modifier = modifier,
         state = state
     ) {
         items(
-            items = snapshot,
+            items = list,
+            key = { (it as dynamic).id }, // assume all have id
             contentType = { "item" }
         ) { item ->
             itemContent(item)
         }
     }
 }
-
-
-
