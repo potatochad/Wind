@@ -342,7 +342,6 @@ fun AppSelectPopup(
 
                     UI.Ctext(app.name) {
                         onSelect(app)
-                        show.value = false
                     }
                 }
             }
