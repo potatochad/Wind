@@ -134,7 +134,7 @@ fun AppUsage() {
         UI.Ctext(
             if (selectedApp.value.isEmpty()) "app" else selectedApp.value
         ) {
-            showAppList.value = true
+            show.value = true
         }
 
         Text(", add ")
