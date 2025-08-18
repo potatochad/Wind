@@ -140,6 +140,7 @@ fun AppUsage() {
         UI.Cinput(Points)
         Text(" points")
         }
+        Text("Loading ${Loading}")
     }
 
     LaunchedEffect(showAppList.value){
