@@ -165,7 +165,12 @@ fun AppUsage() {
             title = "Select App",
             message = "",
             content = {
-                  LaunchedEffect(Unit) { Loading = false }
+                  DisposableEffect(Unit) {
+                    Vlog("Showing popup")
+                    Loading = false
+                    onDispose { }
+                  }
+
   
                 LazzyList(
                   apps.toList(),
