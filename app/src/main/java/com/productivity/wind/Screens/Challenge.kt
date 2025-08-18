@@ -174,7 +174,6 @@ fun AppUsage() {
 
                     UI.move(10)
                     LazyImage(icon)
-                    UI.move(10)
 
                     
                   UI.Ctext(app.name) {
