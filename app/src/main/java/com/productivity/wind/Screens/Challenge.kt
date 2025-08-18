@@ -116,6 +116,8 @@ fun AppUsage() {
     var Points = remember { m("0") }
     var selectedApp = remember { m("") }
     var showAppList = remember { m(false) }
+    
+    var Loading by remember { m(false) }
 
     LazyScreen(titleContent = { Text("App Usage") }) {
         refreshApps()
@@ -140,6 +142,21 @@ fun AppUsage() {
         }
     }
 
+    LauchEffect(showAppList.value){
+        if (showAppList.value == true) {
+          Loading = true
+        }
+    }
+    if (Loading) {
+      Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopCenter
+      ) {
+        CircularProgressIndicator()
+    }
+}
+
+
     // Popup list for selecting app
     if (showAppList.value) {
         LazyPopup(
@@ -147,6 +164,8 @@ fun AppUsage() {
             title = "Select App",
             message = "",
             content = {
+                  Loading = false
+  
                 LazzyList(
                   apps.toList(),
                 ) { app ->
