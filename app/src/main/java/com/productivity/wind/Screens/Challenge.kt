@@ -153,8 +153,8 @@ fun AppUsage() {
         contentAlignment = Alignment.TopCenter
       ) {
         CircularProgressIndicator()
+      }
     }
-}
 
 
     // Popup list for selecting app
@@ -164,7 +164,7 @@ fun AppUsage() {
             title = "Select App",
             message = "",
             content = {
-                  Loading = false
+                  LaunchedEffect(Unit) { Loading = false }
   
                 LazzyList(
                   apps.toList(),
