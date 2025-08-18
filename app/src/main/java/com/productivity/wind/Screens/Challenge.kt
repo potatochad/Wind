@@ -142,7 +142,7 @@ fun AppUsage() {
         }
     }
 
-    LauchedEffect(showAppList.value){
+    LaunchedEffect(showAppList.value){
         if (showAppList.value == true) {
           Loading = true
         }
