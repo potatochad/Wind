@@ -142,7 +142,7 @@ fun AppUsage() {
         }
     }
 
-    LauchEffect(showAppList.value){
+    LauchedEffect(showAppList.value){
         if (showAppList.value == true) {
           Loading = true
         }
