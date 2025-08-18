@@ -115,13 +115,10 @@ fun AppUsage() {
     var Time = remember { m("50") }
     var Points = remember { m("0") }
     var selectedApp = remember { m("") }
-    var show = remember { m(false) }
-
-    LaunchedEffect(Unit) {
-        refreshApps()
-    }
+    var showAppList = remember { m(false) }
 
     LazyScreen(titleContent = { Text("App Usage") }) {
+        refreshApps()
 
         LazzyRow {
           
@@ -134,7 +131,7 @@ fun AppUsage() {
         UI.Ctext(
             if (selectedApp.value.isEmpty()) "app" else selectedApp.value
         ) {
-            show.value = true
+            showAppList.value = true
         }
 
         Text(", add ")
@@ -144,34 +141,30 @@ fun AppUsage() {
     }
 
     // Popup list for selecting app
-
-
-
-        val stableApps = remember(apps) { apps.toList() }   // freeze snapshot
-
-    LazyPopup(
-        show = show,
-        title = "Select App",
-        message = "",
-        content = {
-            LazzyList(stableApps) { app ->
-                LazzyRow {
+    if (showAppList.value) {
+        LazyPopup(
+            show = showAppList,
+            title = "Select App",
+            message = "",
+            content = {
+                LazzyList(
+                  apps.toList(),
+                ) { app ->
+                  LazzyRow{
                     val icon = getAppIcon(app.packageName)
 
                     UI.move(10)
                     LazyImage(icon)
                     UI.move(10)
 
-                    UI.Ctext(app.name) {
-                        selectedApp.value = app.name
-                        show.value = false
-                    }
+                    
+                  UI.Ctext(app.name) {
+                    selectedApp.value = app.name
+                  }
                 }
+                }
+                
             }
-        }
-    )
-        
-
-
+        )
+    }
 }
-
