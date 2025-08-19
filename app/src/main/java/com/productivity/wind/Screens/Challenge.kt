@@ -138,7 +138,6 @@ fun AppUsage() {
         UI.Cinput(Points)
         Text(" points")
         }
-        Text("Loading ${Loading}")
     }
 
     // Popup list for selecting app
@@ -167,8 +166,8 @@ fun AppSelectPopup(
         content = {
             LazzyList(apps) { app ->
                 LazzyRow {
-                    val icon = remember(app.packageName) { getAppIcon(app.packageName) }
-
+                    val icon = getAppIcon(app.packageName)
+                    
                     UI.move(10)
                     LazyImage(icon)
                     UI.move(10)
