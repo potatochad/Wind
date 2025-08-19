@@ -117,16 +117,6 @@ fun AppUsage() {
     var selectedApp = remember { m("") }
     var showAppList = remember { m(false) }
     
-    var Loading by remember { m(false) }
-    if (Loading) {
-      Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
-      ) {
-        CircularProgressIndicator()
-      }
-    }
-
     LazyScreen(titleContent = { Text("App Usage") }) {
         refreshApps()
 
@@ -151,44 +141,45 @@ fun AppUsage() {
         Text("Loading ${Loading}")
     }
 
-    LaunchedEffect(showAppList.value){
-        if (showAppList.value == true) {
-          Loading = true
-        }
-    }
-
-
     // Popup list for selecting app
     if (showAppList.value) {
-        LazyPopup(
-            show = showAppList,
-            title = "Select App",
-            message = "",
-            content = {
-                  DisposableEffect(Unit) {
-                    Vlog("Showing popup")
-                    Loading = false
-                    onDispose { }
-                  }
+      AppSelectPopup(
+        showPopup = showAppList,
+        apps = apps.toList()
+      ) { app ->
+        selectedApp.value = app.name
+      }
+    }
+}
 
-  
-                LazzyList(
-                  apps.toList(),
-                ) { app ->
-                  LazzyRow{
-                    val icon = getAppIcon(app.packageName)
+
+
+@Composable
+fun AppSelectPopup(
+    showPopup: MutableState<Boolean>,
+    apps: List<DataApps>,
+    onSelect: (DataApps) -> Unit = {}
+) {
+    LazyPopup(
+        show = showPopup,
+        title = "Select App",
+        message = "",
+        content = {
+            LazzyList(apps) { app ->
+                LazzyRow {
+                    val icon = remember(app.packageName) { getAppIcon(app.packageName) }
 
                     UI.move(10)
                     LazyImage(icon)
+                    UI.move(10)
 
-                    
-                  UI.Ctext(app.name) {
-                    selectedApp.value = app.name
-                  }
+                    UI.Ctext(app.name) {
+                        onSelect(app)
+                        showPopup.value = false
+                    }
                 }
-                }
-                
             }
-        )
-    }
+        }
+    )
 }
+
