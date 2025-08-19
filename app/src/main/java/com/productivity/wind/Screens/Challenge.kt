@@ -118,6 +118,14 @@ fun AppUsage() {
     var showAppList = remember { m(false) }
     
     var Loading by remember { m(false) }
+    if (Loading) {
+      Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopCenter
+      ) {
+        CircularProgressIndicator()
+      }
+    }
 
     LazyScreen(titleContent = { Text("App Usage") }) {
         refreshApps()
@@ -147,14 +155,6 @@ fun AppUsage() {
         if (showAppList.value == true) {
           Loading = true
         }
-    }
-    if (Loading) {
-      Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
-      ) {
-        CircularProgressIndicator()
-      }
     }
 
 
