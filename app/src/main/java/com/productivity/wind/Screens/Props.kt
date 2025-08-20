@@ -374,13 +374,13 @@ LazzyList(apps) { app ->
                         .clip(RoundedCornerShape(12.dp))
                         .background(Color.Black.copy(alpha = 0.1f)) // 10% black
                         .padding(12.dp)
-                )
+                ){}
                 Row(
                     Modifier
                         .clip(RoundedCornerShape(12.dp))
                         .background(Color.Black.copy(alpha = 0.1f)) // 10% black
                         .padding(12.dp)
-                )
+                ){}
                 
             }
 
