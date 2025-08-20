@@ -370,7 +370,7 @@ LazzyList(apps) { app ->
                 Box(
                     Modifier
                         .padding(10.dp)
-                        .size(34.dp)
+                        .size(32.dp)
                         .clip(RoundedCornerShape(12.dp))
                         .background(Color.Black.copy(alpha = 0.1f)) // 10% black
                         .padding(12.dp)
@@ -379,7 +379,8 @@ LazzyList(apps) { app ->
                     Modifier
                         .clip(RoundedCornerShape(12.dp))
                         .background(Color.Black.copy(alpha = 0.1f)) // 10% black
-                        .padding(end = 100.dp)
+                        .width(200.dp)
+                        .height(32.dp)
                 ){}
                 
             }
