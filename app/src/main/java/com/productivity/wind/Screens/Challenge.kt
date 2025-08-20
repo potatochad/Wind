@@ -114,9 +114,7 @@ fun Challenge() {
 fun AppUsage() {
     var Time = remember { m("50") }
     var Points = remember { m("0") }
-    var selectedApp = remember { m("") }
-    var showAppList = remember { m(false) }
-    
+
     LazyScreen(titleContent = { Text("App Usage") }) {
         refreshApps()
 
@@ -131,7 +129,7 @@ fun AppUsage() {
         UI.Ctext(
             if (selectedApp.value.isEmpty()) "app" else selectedApp.value
         ) {
-            showAppList.value = true
+            Popup.AppSelect.value = true
         }
 
         Text(", add ")
