@@ -244,11 +244,12 @@ fun LazyLine(
   
 @Composable
 fun LazzyRow(
+	modifier: Modifier = Modifier,
     padding: Int = 0,
     content: @Composable () -> Unit,
   ){
     Row(
-      modifier = Modifier
+      modifier = modifier
         .fillMaxWidth()
         .padding(padding.dp),
       verticalAlignment = Alignment.CenterVertically
