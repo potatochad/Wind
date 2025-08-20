@@ -345,7 +345,7 @@ fun AppSelectPopup(
                 LaunchedEffect(Unit) {
                     var x = 6
                     while(x < apps.size) {
-                        wait(200)
+                        wait(20)
                         x++
                         appsList = apps.take(x)
                     }
