@@ -239,12 +239,7 @@ fun PopUps(){
    EditPopUp(Popup.Edit)
    NeedMorePointsPopup(Popup.NeedMorePoints)
    EnableBlockingPopup(Popup.EnableBlocking)
-   AppSelectPopup(
-        showPopup = Popup.AppSelect,
-        apps = apps.toList()
-      ) { app ->
-        selectedApp.value = app.name
-   }
+   AppSelectPopup(Popup.AppSelect)
 }
 
 
