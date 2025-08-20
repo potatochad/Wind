@@ -341,7 +341,7 @@ fun AppSelectPopup(
             title = "Select App",
             message = "",
             content = {
-                var appsList = apps.take(10)
+                var appsList by remember { m(apps.take(6)) }
                 LaunchedEffect(Unit) {
                     wait(1000)
                     appsList = apps.toList()
