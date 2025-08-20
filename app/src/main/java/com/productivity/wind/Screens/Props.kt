@@ -353,7 +353,7 @@ LaunchedEffect(Unit) {
 }
 
 LazzyList(apps) { app ->
-    LazzyRow {
+    LazzyRow() {
         val index = apps.indexOf(app)
         if (index < loadedCount) {
             val icon = getAppIcon(app.packageName)
