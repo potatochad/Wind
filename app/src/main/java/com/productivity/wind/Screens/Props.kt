@@ -81,6 +81,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.compose.ui.window.Popup
 import com.productivity.wind.Imports.*
 import androidx.compose.foundation.background
+import androidx.compose.ui.draw.clip
 
 
 fun NavGraphBuilder.ScreenNav() {
@@ -371,7 +372,7 @@ LazzyList(apps) { app ->
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color.Black.copy(alpha = 0.2f)) // 10% black
                     .padding(12.dp)
-            )
+            ){}
 
 
         }
