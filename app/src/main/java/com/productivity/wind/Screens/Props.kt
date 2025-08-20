@@ -227,6 +227,7 @@ object Popup {
     var NeedMorePoints = m(false)
     var EnablePermissions = m(false)
     var EnableBlocking = m(false)
+    var AppSelect = m(false)
 
 }
 //!Just call this on app start
@@ -237,6 +238,12 @@ fun PopUps(){
    EditPopUp(Popup.Edit)
    NeedMorePointsPopup(Popup.NeedMorePoints)
    EnableBlockingPopup(Popup.EnableBlocking)
+   AppSelectPopup(
+        showPopup = Popup.AppSelect,
+        apps = apps.toList()
+      ) { app ->
+        selectedApp.value = app.name
+   }
 }
 
 
@@ -322,6 +329,7 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
               onConfirm = { Global1.navController.navigate("SettingsP_Screen")}
               )
 }
+
 @Composable
 fun AppSelectPopup(
     show: MutableState<Boolean>,
