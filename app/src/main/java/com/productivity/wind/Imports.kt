@@ -618,9 +618,6 @@ fun MenuHeader(
         Spacer(Modifier.height(bottomPadding))
     }
 }
-suspend fun wait(ms: Long) {
-    kotlinx.coroutines.delay(ms)
-}
 
 fun SendEmail(
     recipient: String = "productivity.shield@gmail.com",
