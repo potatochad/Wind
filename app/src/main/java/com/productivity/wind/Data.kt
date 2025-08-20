@@ -80,7 +80,7 @@ class Settings {
     //region COPY PASTE THING Disipline
 
     var FirstEditText by m(true)
-    var targetText by m("Let's get ready to work. Start by choosing one task that is the most important. Try to focus on that task only.  When the task is finished, you can take a short break to rest. If you finish more tasks after that, great job — keep going one step at a time. If permissions turned on (menu->settings) you can configure apps (Top bar, right side icon) to be blocked if do not have enough points (1 point = 1 second).")
+    var targetText by m("ALWAYS BE KIND")
     var LetterToTime by m(1)
     var DoneRetype_to_time by m(60)
     var HowManyDoneRetypes_InDay by m(0)
