@@ -141,26 +141,19 @@ fun AppUsage() {
     }
 
     // Popup list for selecting app
-    if (showAppList.value) {
-      AppSelectPopup(
-        showPopup = showAppList,
-        apps = apps.toList()
-      ) { app ->
-        selectedApp.value = app.name
-      }
-    }
 }
 
 
 
 @Composable
 fun AppSelectPopup(
-    showPopup: MutableState<Boolean>,
+    show: MutableState<Boolean>,
     apps: List<DataApps>,
     onSelect: (DataApps) -> Unit = {}
 ) {
+  if (show) {
     LazyPopup(
-        show = showPopup,
+        show = show,
         title = "Select App",
         message = "",
         content = {
@@ -180,5 +173,6 @@ fun AppSelectPopup(
             }
         }
     )
+  }
 }
 
