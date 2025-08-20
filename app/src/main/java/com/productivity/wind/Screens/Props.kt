@@ -344,11 +344,11 @@ fun AppSelectPopup(
             title = "Select App",
             message = "",
             content = {
-                var loadedCount by remember { m(0) }
+                var loadedCount by remember { m(6) }
 
 LaunchedEffect(Unit) {
     for (i in 1..apps.size) {
-        wait(10)
+        wait(20)
         loadedCount = i
     }
 }
