@@ -366,13 +366,23 @@ LazzyList(apps) { app ->
                 show.value = false
             }
         } else {
-            LazzyRow(
-                Modifier
-                    .padding(10.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color.Black.copy(alpha = 0.2f)) // 10% black
-                    .padding(12.dp)
-            ){}
+            LazzyRow(){
+                Box(
+                    Modifier
+                        .padding(10.dp)
+                        .size(34.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.Black.copy(alpha = 0.1f)) // 10% black
+                        .padding(12.dp)
+                )
+                Row(
+                    Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.Black.copy(alpha = 0.1f)) // 10% black
+                        .padding(12.dp)
+                )
+                
+            }
 
 
         }
