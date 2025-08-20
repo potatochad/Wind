@@ -365,13 +365,14 @@ LazzyList(apps) { app ->
                 show.value = false
             }
         } else {
-            // Placeholder box
-            Box(
-    Modifier
-        .size(40.dp)
-        .padding(10.dp)
-        .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
-)
+            LazzyRow(
+                Modifier
+                    .padding(10.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.Black.copy(alpha = 0.2f)) // 10% black
+                    .padding(12.dp)
+            )
+
 
         }
     }
