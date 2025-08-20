@@ -341,29 +341,38 @@ fun AppSelectPopup(
             title = "Select App",
             message = "",
             content = {
-                var appsList by remember { m(apps.take(6)) }
-                LaunchedEffect(Unit) {
-                    var x = 6
-                    while(x < apps.size) {
-                        wait(20)
-                        x++
-                        appsList = apps.take(x)
-                    }
-                }
-                LazzyList(appsList) { app ->
-                    LazzyRow {
-                        val icon = getAppIcon(app.packageName)
+                var loadedCount by remember { m(0) }
 
-                        UI.move(10)
-                        LazyImage(icon)
-                        UI.move(10)
+LaunchedEffect(Unit) {
+    for (i in 1..apps.size) {
+        wait(20)
+        loadedCount = i
+    }
+}
 
-                        UI.Ctext(app.name) {
-                            selectedApp.value = app.name
-                            show.value = false
-                        }
-                    }
-                }
+LazzyList(apps) { app ->
+    LazzyRow {
+        val index = apps.indexOf(app)
+        if (index < loadedCount) {
+            val icon = getAppIcon(app.packageName)
+            UI.move(10)
+            LazyImage(icon)
+            UI.move(10)
+            UI.Ctext(app.name) {
+                selectedApp.value = app.name
+                show.value = false
+            }
+        } else {
+            // Placeholder box
+            Box(
+                Modifier
+                    .size(40.dp)
+                    .padding(10.dp)
+            )
+        }
+    }
+}
+
             }
         )
     }
