@@ -227,6 +227,7 @@ object Popup {
     var NeedMorePoints = m(false)
     var EnablePermissions = m(false)
     var EnableBlocking = m(false)
+    
     var AppSelect = m(false)
 
 }
@@ -330,35 +331,39 @@ fun EnablePermissionsPopup(show: MutableState<Boolean>) {
               )
 }
 
+var selectedApp = m("")
+
 @Composable
 fun AppSelectPopup(
     show: MutableState<Boolean>,
-    onSelect: (DataApps) -> Unit = {},
 ) {
-    val stableApps = remember(apps) { apps.toList() }   // freeze snapshot
+    if (show.value) {
+        LazyPopup(
+            show = show,
+            title = "Select App",
+            message = "",
+            content = {
+                LazzyList(apps.toList()) { app ->
+                    LazzyRow {
+                        val icon = getAppIcon(app.packageName)
 
-    LazyPopup(
-        show = show,
-        title = "Select App",
-        message = "",
-        content = {
-            LazzyList(stableApps) { app ->
-                LazzyRow {
-                    val icon = getAppIcon(app.packageName)
+                        UI.move(10)
+                        LazyImage(icon)
+                        UI.move(10)
 
-                    UI.move(10)
-                    LazyImage(icon)
-                    UI.move(10)
-
-                    UI.Ctext(app.name) {
-                        onSelect(app)
-                        show.value = false
+                        UI.Ctext(app.name) {
+                            selectedApp.value = app.name
+                            show.value = false
+                        }
                     }
                 }
             }
-        }
-    )
+        )
+    }
 }
+
+
+
 
 
 
