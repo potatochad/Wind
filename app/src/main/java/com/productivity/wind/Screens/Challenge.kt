@@ -145,34 +145,3 @@ fun AppUsage() {
 
 
 
-@Composable
-fun AppSelectPopup(
-    show: MutableState<Boolean>,
-    apps: List<DataApps>,
-    onSelect: (DataApps) -> Unit = {}
-) {
-  if (show) {
-    LazyPopup(
-        show = show,
-        title = "Select App",
-        message = "",
-        content = {
-            LazzyList(apps) { app ->
-                LazzyRow {
-                    val icon = getAppIcon(app.packageName)
-                    
-                    UI.move(10)
-                    LazyImage(icon)
-                    UI.move(10)
-
-                    UI.Ctext(app.name) {
-                        onSelect(app)
-                        showPopup.value = false
-                    }
-                }
-            }
-        }
-    )
-  }
-}
-
