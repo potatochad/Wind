@@ -338,7 +338,12 @@ fun AppSelectPopup(
             title = "Select App",
             message = "",
             content = {
-                LazzyList(apps.toList()) { app ->
+                var appsList = apps.take(10)
+                LaunchedEffect(Unit) {
+                    kotlinx.coroutines.delay(1000) // 1 secon
+                    appsList = apps.toList()
+                }
+                LazzyList(appsList) { app ->
                     LazzyRow {
                         val icon = getAppIcon(app.packageName)
 
