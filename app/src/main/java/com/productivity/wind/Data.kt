@@ -282,6 +282,7 @@ fun MAINStart() {
 }
 @Composable
 fun AppStart() {
+    refreshApps()
     
     PopUps()
     val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
