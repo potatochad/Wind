@@ -343,7 +343,7 @@ fun AppSelectPopup(
             content = {
                 var appsList by remember { m(apps.take(6)) }
                 LaunchedEffect(Unit) {
-                    wait(1000)
+                    wait(200)
                     appsList = apps.toList()
                 }
                 LazzyList(appsList) { app ->
