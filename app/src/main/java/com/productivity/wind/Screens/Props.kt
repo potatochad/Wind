@@ -348,7 +348,7 @@ fun AppSelectPopup(
 
 LaunchedEffect(Unit) {
     for (i in 1..apps.size) {
-        wait(20)
+        wait(10)
         loadedCount = i
     }
 }
@@ -379,8 +379,8 @@ LazzyList(apps) { app ->
                     Modifier
                         .clip(RoundedCornerShape(12.dp))
                         .background(Color.Black.copy(alpha = 0.1f)) // 10% black
-                        .width(200.dp)
-                        .height(32.dp)
+                        .width(160.dp)
+                        .height(30.dp)
                 ){}
                 
             }
