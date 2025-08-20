@@ -340,7 +340,7 @@ fun AppSelectPopup(
             content = {
                 var appsList = apps.take(10)
                 LaunchedEffect(Unit) {
-                    kotlinx.coroutines.delay(1000) // 1 secon
+                    wait(1000)
                     appsList = apps.toList()
                 }
                 LazzyList(appsList) { app ->
