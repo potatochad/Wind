@@ -119,7 +119,7 @@ fun AppUsage() {
         Text("AppUsage")
         Icon.Add(onClick={
           apps.edit(
-            Worth
+            ForRewardTimeSpent
           )
         })
       } 
