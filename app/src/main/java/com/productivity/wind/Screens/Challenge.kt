@@ -120,14 +120,14 @@ fun AppUsage() {
         Text("AppUsage")
         Icon.Add(onClick={
           when {
-            Time.toInt() < 1 -> Vlog("add time")
-            Points.toInt() < 1 -> Vlog("add points")
+            Time.value.toInt() < 1 -> Vlog("add time")
+            Points.value.toInt() < 1 -> Vlog("add points")
             selectedApp.value.isEmpty() -> Vlog("select app")
             
             else -> if (appId != null) {
               apps.edit(appId) {
-                DoneTime = Time.toInt()
-                Worth = Points.toInt()
+                DoneTime = Time.value.toInt()
+                Worth = Points.value.toInt()
               }
             }
 
