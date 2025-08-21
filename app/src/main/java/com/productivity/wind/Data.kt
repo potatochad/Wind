@@ -233,10 +233,10 @@ fun MutableList<DataApps>.edit(id: Str, block: DataApps.() -> Unit) {
                 id = old?.id ?: Id(),
                 name = label,
                 packageName = pkg,
-                TimeSpent = timeByPkg[pkg] ?: (old?.TimeSpent ?: 0),
+                NowTime = timeByPkg[pkg] ?: (old?.NowTime ?: 0),
                 done = old?.done ?: false
             )
-        }.sortedByDescending { it.TimeSpent }
+        }.sortedByDescending { it.NowTime }
 
         // 7) Replace content in-place
         target.clear()
