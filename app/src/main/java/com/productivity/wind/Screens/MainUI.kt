@@ -47,7 +47,7 @@ fun Main() {
         
                 LazyCard( content = { Disipline() } )
                 LazyCard( content = { German() } )
-                LazyCard( content = { Text( text = "WaterDo: ${Bar.WaterDOtime_spent}") } )
+                LazyCard( content = { Text( text = "${app.name}: ${app.worth}") } )
                 
     }
 }
