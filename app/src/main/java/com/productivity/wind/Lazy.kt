@@ -262,9 +262,9 @@ fun LazzyRow(
 	
 @Composable
 fun LazyCard(
-	content: @Composable () -> Unit,
 	InputColor: Color = Color(0xFF1A1A1A),
 	InnerPadding: Int = 16
+	content: @Composable () -> Unit,
 ) {
   Card(
       modifier = Modifier
