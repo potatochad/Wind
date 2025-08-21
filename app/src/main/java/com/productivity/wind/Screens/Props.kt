@@ -347,7 +347,7 @@ fun AppSelectPopup(
                 var loadedCount by remember { m(6) }
 
 LaunchedEffect(Unit) {
-    for (i in 1..apps.size) {
+    for (i in 6..apps.size) {
         wait(20)
         loadedCount = i
     }
