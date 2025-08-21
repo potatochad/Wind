@@ -118,8 +118,8 @@ fun AppUsage() {
     LazyScreen(titleContent = {
         Text("AppUsage")
         Icon.Add(onClick={
-          apps.add(
-            
+          apps.edit(
+            Worth
           )
         })
       } 
