@@ -164,7 +164,11 @@ fun Menu() {
 
 
 object Header {
-    
+    @Composable
+    fun AppUsage(){
+        Text("AppUsage")
+        
+    }
     
 }
 
@@ -186,9 +190,9 @@ object Icon {
         }
         
         @Composable
-        fun Add() {
+        fun Add(onClick: () -> Unit = { goTo("Challenge") }) {
                 LazyIcon(
-                        onClick = { goTo("Challenge") },
+                        onClick = onClick,
                         icon = Icons.Default.Add
                 )
         }
