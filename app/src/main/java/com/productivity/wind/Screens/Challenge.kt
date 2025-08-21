@@ -116,19 +116,16 @@ fun AppUsage() {
     var Points = remember { m("0") }
 
     LazyScreen(titleContent = { Text("App Usage") }) {
-        refreshApps()
-
-        LazzyRow {
-          
+      refreshApps()
+      
+      LazzyRow {
         Text("If")
         Text(" spend ")
         UI.Cinput(Time)
         Text(" seconds ")
 
         Text("on ")
-        UI.Ctext(
-            if (selectedApp.value.isEmpty()) "app" else selectedApp.value
-        ) {
+        UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
             Popup.AppSelect.value = true
         }
 
@@ -138,7 +135,6 @@ fun AppUsage() {
         }
     }
 
-    // Popup list for selecting app
 }
 
 
