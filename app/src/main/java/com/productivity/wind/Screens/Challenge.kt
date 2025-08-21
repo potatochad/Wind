@@ -114,23 +114,25 @@ fun Challenge() {
 fun AppUsage() {
     var Time = remember { m("50") }
     var Points = remember { m("0") }
+    val appId = apps.find { it.name == selectedApp.value }?.id
 
     LazyScreen(titleContent = {
         Text("AppUsage")
         Icon.Add(onClick={
-          if (Time<1) {
-            Vlog("add time")
+          when {
+            Time.toInt() < 1 -> Vlog("add time")
+            Points.toInt() < 1 -> Vlog("add points")
+            selectedApp.value.isEmpty() -> Vlog("select app")
+            
+            else -> if (appId != null) {
+              apps.edit(appId) {
+                DoneTime = Time.toInt()
+                Worth = Points.toInt()
+              }
+            }
+
           }
-          if (Points<1) {
-            Vlog("add points")
-          }
-          if (selectedApp.value.isEmpty()){
-            Vlog("select app")
-          }
-          apps.edit(
-            DoneTime = Time,
-            Worth = Points,
-          )
+          
         })
       } 
     ) {
