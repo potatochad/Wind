@@ -163,8 +163,8 @@ fun Menu() {
 
 
 
-//Gets called on a new day
-object Weird {
+object Header {
+    
     
 }
 
