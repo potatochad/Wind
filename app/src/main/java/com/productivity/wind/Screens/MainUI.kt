@@ -48,8 +48,32 @@ fun Main() {
                 LazyCard( content = { Disipline() } )
                 LazyCard( content = { German() } )
 
+
+
+
+
+
+
+                                
+            
+        
                 //filter for apps...with apps.worth >0
-                LazyCard( content = { Text( text = "${apps.name}: ${apps.NowTime}") } )
+                apps.filter { it.Worth > 0 }.forEach { app ->
+                    LazyCard {
+                        Text("${app.name}: ${app.NowTime}")
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+                
                 
     }
 }
