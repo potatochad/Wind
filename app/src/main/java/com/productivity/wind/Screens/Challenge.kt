@@ -115,7 +115,15 @@ fun AppUsage() {
     var Time = remember { m("50") }
     var Points = remember { m("0") }
 
-    LazyScreen(titleContent = { Text("App Usage") }) {
+    LazyScreen(titleContent = {
+        Text("AppUsage")
+        Icon.Add(onClick={
+          apps.add(
+            
+          )
+        })
+      } 
+    ) {
       refreshApps()
       
       LazzyRow {
