@@ -174,8 +174,8 @@ data class DataApps(
     var name: Str = "",
     var done: Bool = false,
     var packageName: Str = "",
-    var CurrentTimeSpent: Int = 0,
-    var ForRewardTimeSpent: Int = 0,
+    var NowTime: Int = 0,
+    var DoneTime: Int = 0,
     var Worth: Int = 0,
 )
     fun refreshApps(target: MutableList<DataApps> = apps) {
