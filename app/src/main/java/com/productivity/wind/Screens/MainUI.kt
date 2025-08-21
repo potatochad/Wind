@@ -45,8 +45,8 @@ fun Main() {
     
     LazyScreen(titleContent = { MainHeader() }, showBack = false) {
         
-                LazyCard( content = { Disipline() } )
-                LazyCard( content = { German() } )
+                LazyCard{ Disipline() } 
+                LazyCard{ German() }
 
 
 
