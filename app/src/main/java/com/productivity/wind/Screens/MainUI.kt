@@ -47,7 +47,9 @@ fun Main() {
         
                 LazyCard( content = { Disipline() } )
                 LazyCard( content = { German() } )
-                LazyCard( content = { Text( text = "${app.name}: ${app.worth}") } )
+
+                //filter for apps...with apps.worth >0
+                LazyCard( content = { Text( text = "${apps.name}: ${apps.NowTime}") } )
                 
     }
 }
