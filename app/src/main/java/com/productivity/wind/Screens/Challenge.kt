@@ -115,6 +115,7 @@ fun AppUsage() {
     var Time = remember { m("50") }
     var Points = remember { m("0") }
     val appId = apps.find { it.name == selectedApp.value }?.id
+    selectedApp.value = ""
 
     LazyScreen(titleContent = {
         Text("AppUsage")
