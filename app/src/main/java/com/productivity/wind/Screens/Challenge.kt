@@ -118,8 +118,18 @@ fun AppUsage() {
     LazyScreen(titleContent = {
         Text("AppUsage")
         Icon.Add(onClick={
+          if (Time<1) {
+            Vlog("add time")
+          }
+          if (Points<1) {
+            Vlog("add points")
+          }
+          if (selectedApp.value.isEmpty()){
+            Vlog("select app")
+          }
           apps.edit(
-            ForRewardTimeSpent
+            DoneTime = Time,
+            Worth = Points,
           )
         })
       } 
