@@ -183,11 +183,12 @@ fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedA
                     Worth = Points.value.toInt()
                 }
                 if (apps.any { it.Worth > 0 && it.id == appId }) {
-                    Vlog("Succesfully added")
+                    Vlog("${apps.Worth} ${app.name} ADDED")
                 } else {
                     Vlog("FAILED to add")
                 }
                 selectedApp.value = ""
+                Points.value = "0"
             }
         }
     })
