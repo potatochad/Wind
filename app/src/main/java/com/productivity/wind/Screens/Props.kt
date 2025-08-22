@@ -252,7 +252,7 @@ object Popup {
     var Edit = m(false)
     var G_Edit = m(false)
     var NeedMorePoints = m(false)
-    var EnablePermissions = m(false)
+    var AskUsagePermission = m(false)
     var EnableBlocking = m(false)
     
     var AppSelect = m(false)
@@ -262,7 +262,7 @@ object Popup {
 @Composable
 fun PopUps(){
    G_EditPopUp(Popup.G_Edit)
-   EnablePermissionsPopup(Popup.EnablePermissions)
+   AskUsagePermission(Popup.AskUsagePermission)
    EditPopUp(Popup.Edit)
    NeedMorePointsPopup(Popup.NeedMorePoints)
    EnableBlockingPopup(Popup.EnableBlocking)
@@ -345,13 +345,27 @@ fun G_EditPopUp(show: MutableState<Boolean>) {
 }
 
 @Composable
-fun EnablePermissionsPopup(show: MutableState<Boolean>) {
-    LazyPopup(show = show,
-              title = "Need Permissions", 
-              message = "Please enable all permissions first.", 
-              onConfirm = { Global1.navController.navigate("SettingsP_Screen")}
-              )
+fun AskUsagePermission(show: MutableState<Boolean>) {
+    if (show.value) {
+        LazyPopup(
+            show = show,
+            title = "Need Usage Permission",
+            message = "Please enable permission",
+            onConfirm = {
+                // Open Usage Access Settings
+                val context = LocalContext.current
+                val intent = android.content.Intent(android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS)
+                    .apply { addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK) }
+                context.startActivity(intent)
+
+                // Optionally hide popup
+                show.value = false
+            },
+            onDismiss = { show.value = false }
+        )
+    }
 }
+
 
 var selectedApp = m("")
 suspend fun wait(ms: Long) {
