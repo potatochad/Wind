@@ -188,15 +188,21 @@ fun MutableList<DataApps>.edit(id: Str, block: DataApps.() -> Unit) {
 }
 
 
+fun getApps(): List<ResolveInfo> {
+    val context = Global1.context
+    val pm = context.packageManager
+    val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+    val launchables = pm.queryIntentActivities(launchIntent, 0)
+    val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+    return pm.queryIntentActivities(launchIntent, 0)
+}
 
 
     fun refreshApps(target: MutableList<DataApps> = apps) {
         val context = Global1.context
         val pm = context.packageManager
 
-        // 1) Get all launchable apps
-        val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
-        val launchables = pm.queryIntentActivities(launchIntent, 0)
+        val launchables = getApps()
 
         // 2) Usage access check
         val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as android.app.AppOpsManager
