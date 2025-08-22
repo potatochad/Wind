@@ -63,6 +63,7 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.ui.graphics.Color
 import android.content.pm.*
 import com.productivity.wind.Imports.*
+import android.app.*
 
 fun onNewDay() {  
         Bar.WaterDOtime_spent = 0
