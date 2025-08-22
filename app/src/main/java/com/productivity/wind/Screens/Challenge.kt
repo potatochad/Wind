@@ -97,7 +97,7 @@ import androidx.core.graphics.drawable.toBitmap
 
 @Composable
 fun Challenge() {
-  LazyScreen(titleContent = { Text("Challenge") }) {
+  LazyScreen(title = { Text("Challenge") }) {
     LazyItem(
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
