@@ -178,20 +178,6 @@ fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedA
             selectedApp.value.isEmpty() -> Vlog("select app")
 
             else -> if (appId != null) {
-                val index = apps.indexOfFirst { it.id == appId }
-                if (index != -1) {
-                    apps[index].DoneTime = Time.value.toInt()
-                    apps[index].Worth = Points.value.toInt()
-                    Vlog("${apps[index].name} ${apps[index].Worth}-worth ${apps[index].DoneTime}-donetime")
-                }
-            
-
-                val addedApp = apps.find { it.id == appId && it.Worth > 0 }
-                if (addedApp != null) {
-                    Vlog("${addedApp.Worth} ${addedApp.name} ADDED")
-                } else {
-                    Vlog("FAILED to add")
-                }
                 selectedApp.value = ""
                 Points.value = "0"
                 Time.value = "0"
