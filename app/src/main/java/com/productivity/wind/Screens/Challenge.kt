@@ -119,7 +119,7 @@ fun AppUsage() {
     var Points = remember { m("0") }
     selectedApp.value = ""
     LaunchedEffect(Unit) {
-        refreshApps(this)
+        refreshApps()
     }
 
     LazyScreen(title = {
