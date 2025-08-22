@@ -102,7 +102,9 @@ fun Challenge() {
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "App Usage",
-            onClick = { goTo("AppUsage")},
+            onClick = { 
+              If (AskUsagePermission){goTo("AppUsage")}
+            },
         )
     
    }
