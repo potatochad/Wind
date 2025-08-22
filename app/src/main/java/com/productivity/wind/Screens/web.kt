@@ -73,7 +73,7 @@ fun Web() {
                     Text("Web")
 
                     // WORK WEB
-                    end {
+                    UI.End {
                     LazyIcon(
                         onClick = { goTo("WorkWeb") },
                         BigIcon = Icons.Default.Work,
