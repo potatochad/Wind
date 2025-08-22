@@ -179,7 +179,7 @@ fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedA
 
             else -> if (appId != null) {
                 apps.edit(appId) {
-                        DoneTime = Time.value.toInt(),
+                        DoneTime = Time.value.toInt()
                         Worth = Points.value.toInt()
                 }
             
