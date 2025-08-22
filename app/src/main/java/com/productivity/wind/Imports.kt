@@ -1126,7 +1126,7 @@ fun Ctext(
 		val pm = ctx.getSystemService(PowerManager::class.java)
 		return pm.isIgnoringBatteryOptimizations(ctx.packageName)
 	}
-	fun isUsageStatsP_Enabled(): Boolean {
+	fun isUsageP_Enabled(): Boolean {
 		val ctx = Global1.context
 		val appOps = ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
 		return appOps.checkOpNoThrow(
@@ -1134,22 +1134,6 @@ fun Ctext(
 			Process.myUid(),
 			ctx.packageName
 		) == AppOpsManager.MODE_ALLOWED
-	}
-	fun requestUsageStatsPermission(activity: Activity) {
-		
-		AlertDialog.Builder(activity)
-			.setTitle("Permission Needed")
-			.setMessage("We need Usage Access to track app usage and help you stay productive. This will open Settings — please enable access for this app.")
-			.setPositiveButton("OK") { _, _ ->
-				val intent = android.content.Intent(android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS).apply {
-					addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
-				}
-				try {
-					activity.startActivity(intent)
-				} catch (_: ActivityNotFoundException) { /* no-op */ }
-			}
-			.setNegativeButton("Cancel", null)
-			.show()
 	}
 
 
