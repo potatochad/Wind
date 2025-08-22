@@ -170,7 +170,7 @@ fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedA
     val appId = apps.find { it.name == selectedApp.value }?.id
 
     Text("AppUsage")
-    end {
+    UI.End {
     Icon.Add(onClick = {
         when {
             Time.value.toInt() < 1 -> Vlog("add time")
