@@ -69,10 +69,11 @@ import com.productivity.wind.Imports.*
 @Composable
 fun Web() {
     LazyScreen(
-        titleContent = {
+        title = {
                     Text("Web")
 
                     // WORK WEB
+                    end {
                     LazyIcon(
                         onClick = { goTo("WorkWeb") },
                         BigIcon = Icons.Default.Work,
@@ -86,6 +87,7 @@ fun Web() {
                         BigIconColor = Color(0xFFFFC107), // Amber
                         OuterPadding = 0,
                     )
+                    }
 
 
         },
@@ -101,7 +103,7 @@ fun Web() {
 
 @Composable
 fun FunWeb() {
-    LazyScreen(titleContent = { Text("Fun Web") }) {
+    LazyScreen(title = { Text("Fun Web") }) {
         UI.EmptyBox(text = "TO DO")
 
     }
@@ -114,7 +116,7 @@ fun FunWeb() {
 
 @Composable
 fun WorkWeb() {
-    LazyScreen(titleContent = {Text("Work Web")}) {
+    LazyScreen(title = {Text("Work Web")}) {
         UI.EmptyBox(text = "TO DO")
     }
 
