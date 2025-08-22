@@ -130,19 +130,6 @@ class Settings {
 
     //endregion MISALANIOUS
 
-
-    
-    //region PERMISSIONS
-
-    var NotificationPermission by m(false)
-
-    var OptimizationExclusionPermission by m(false)
-
-    var UsageStatsPermission by m(false)
-    
-    //endregion
-
-
     
 
     //region ACHIEVEMENTS
@@ -183,8 +170,8 @@ fun MutableList<DataApps>.edit(id: Str, block: DataApps.() -> Unit) {
     val index = indexOfFirst { it.id == id }
     if (index != -1) {
         val old = this[index]
-        old.block()              // mutate fields
-        this[index] = old.copy() // replace object to trigger Compose recomposition
+        old.block()              
+        this[index] = old.copy() 
     }
 }
 
