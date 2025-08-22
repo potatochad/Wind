@@ -353,7 +353,7 @@ fun AskUsagePermission(show: MutableState<Boolean>) {
             message = "Please enable permission",
             onConfirm = {
                 // Open Usage Access Settings
-                val context = LocalContext.current
+                val context = Global1.context
                 val intent = android.content.Intent(android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     .apply { addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK) }
                 context.startActivity(intent)
