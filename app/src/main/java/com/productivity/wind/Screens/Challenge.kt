@@ -117,7 +117,7 @@ fun AppUsage() {
     selectedApp.value = ""
 
     LazyScreen(title = {
-        header.appUsage(Time, Points, selectedApp)
+        Header.AppUsage(Time, Points, selectedApp)
        }
     ) {
       refreshApps()
