@@ -139,6 +139,11 @@ fun AppUsage() {
         }
 
 
+      
+
+         Icon.Add(onClick = {
+           apps[1] = apps[1].copy(Worth = 10)  // ✅ triggers recomposition
+         })
 
 
 
@@ -147,7 +152,7 @@ fun AppUsage() {
       LazzyList(apps) { app ->
         LazyCard {
           LazzyRow {
-            Text("${app.name}: ${app.NowTime}")
+            Text("${app.name}: ${app.Worth}")
           }
         }
       }
