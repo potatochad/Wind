@@ -192,84 +192,68 @@ fun getApps(): List<ResolveInfo> {
     val context = Global1.context
     val pm = context.packageManager
     val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
-    val launchables = pm.queryIntentActivities(launchIntent, 0)
-    val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
     return pm.queryIntentActivities(launchIntent, 0)
 }
-fun getAppUsage(start: Long, end: Long): Map<String, Int> {
-    val hasUsage = isUsageStatsP_Enabled()
+
+fun getTodayAppUsage(packageName: String): Int {
     val context = Global1.context
-    if (!hasUsage) return emptyMap()
+
+    if (!isUsageStatsP_Enabled()) return 0 // no permission, return 0
+
+    // Today window
+    val end = System.currentTimeMillis()
+    val cal = java.util.Calendar.getInstance().apply {
+        set(java.util.Calendar.HOUR_OF_DAY, 0)
+        set(java.util.Calendar.MINUTE, 0)
+        set(java.util.Calendar.SECOND, 0)
+        set(java.util.Calendar.MILLISECOND, 0)
+    }
+    val start = cal.timeInMillis
 
     val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as android.app.usage.UsageStatsManager
-    val stats = usm.queryUsageStats(
-        android.app.usage.UsageStatsManager.INTERVAL_DAILY,
-        start,
-        end
-    )
+    val stats = usm.queryUsageStats(android.app.usage.UsageStatsManager.INTERVAL_DAILY, start, end)
 
-    return stats.associate { 
-        it.packageName to ((it.totalTimeInForeground / 1000L).toInt().coerceAtLeast(0)) 
-    }
+    // Find the usage for the specific package
+    val appStats = stats.find { it.packageName == packageName }
+    return ((appStats?.totalTimeInForeground ?: 0) / 1000L).toInt().coerceAtLeast(0)
 }
 
 
 
-    fun refreshApps(target: MutableList<DataApps> = apps, activity: Activity) {
-        val context = Global1.context
-        val pm = context.packageManager
 
-        val launchables = getApps()
+fun refreshApps(target: MutableList<DataApps> = apps, activity: Activity) {
+    val context = Global1.context
 
-        if (!isUsageStatsP_Enabled()) {
-                requestUsageStatsPermission(activity)
-        }
+    // 1) Get all launchable apps
+    val launchables = getApps()
 
-
-        // 3) Build "today" window
-        val end = System.currentTimeMillis()
-        val cal = java.util.Calendar.getInstance().apply {
-            set(java.util.Calendar.HOUR_OF_DAY, 0)
-            set(java.util.Calendar.MINUTE, 0)
-            set(java.util.Calendar.SECOND, 0)
-            set(java.util.Calendar.MILLISECOND, 0)
-        }
-        val start = cal.timeInMillis
-
-        // 4) Read usage (if allowed)
-        val timeByPkg = if (hasUsage) {
-            val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as android.app.usage.UsageStatsManager
-            val stats = usm.queryUsageStats(android.app.usage.UsageStatsManager.INTERVAL_DAILY, start, end)
-            stats.associate { it.packageName to ((it.totalTimeInForeground / 1000L).toInt().coerceAtLeast(0)) }
-        } else {
-            emptyMap()
-        }
-
-        // 5) Preserve existing id/done by package
-        val oldByPkg = target.associateBy { it.packageName }
-
-        // 6) Build fresh list
-        val fresh = launchables.map { ri ->
-            val pkg = ri.activityInfo.packageName
-            val label = ri.loadLabel(pm)?.toString() ?: pkg
-            val old = oldByPkg[pkg]
-
-            DataApps(
-                id = old?.id ?: Id(),
-                name = label,
-                packageName = pkg,
-                NowTime = timeByPkg[pkg] ?: (old?.NowTime ?: 0),
-                done = old?.done ?: false
-            )
-        }.sortedByDescending { it.NowTime }
-
-        // 7) Replace content in-place
-        target.clear()
-        target.addAll(fresh)
+    // 2) Check usage permission
+    if (!isUsageStatsP_Enabled()) {
+        requestUsageStatsPermission(activity)
     }
-   
 
+    // 3) Preserve old IDs and done flags
+    val oldByPkg = target.associateBy { it.packageName }
 
+    // 4) Build fresh list using our helper function for each package
+    val fresh = launchables.map { ri ->
+        val pkg = ri.activityInfo.packageName
+        val label = ri.loadLabel(context.packageManager)?.toString() ?: pkg
+        val old = oldByPkg[pkg]
+
+        DataApps(
+            id = old?.id ?: Id(),
+            name = label,
+            packageName = pkg,
+            NowTime = getTodayAppUsageForPackage(pkg), // ✅ our function
+            done = old?.done ?: false
+        )
+    }.sortedByDescending { it.NowTime }
+
+    // 5) Replace content in-place
+    target.clear()
+    target.addAll(fresh)
+}
 
 
 
