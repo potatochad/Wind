@@ -198,7 +198,7 @@ fun getApps(): List<ResolveInfo> {
 fun getTodayAppUsage(packageName: String): Int {
     val context = Global1.context
 
-    if (!isUsageStatsP_Enabled()) return 0 // no permission, return 0
+    if (!UI.isUsageStatsP_Enabled()) return 0 // no permission, return 0
 
     // Today window
     val end = System.currentTimeMillis()
@@ -228,8 +228,9 @@ fun refreshApps(target: MutableList<DataApps> = apps, activity: Activity) {
     val launchables = getApps()
 
     // 2) Check usage permission
-    if (!isUsageStatsP_Enabled()) {
-        requestUsageStatsPermission(activity)
+    if (!UI.isUsageStatsP_Enabled()) {
+        UI.requestUsageStatsPermission(activity)
+        return
     }
 
     // 3) Preserve old IDs and done flags
