@@ -130,7 +130,15 @@ fun AppUsage() {
                 DoneTime = Time.value.toInt()
                 Worth = Points.value.toInt()
               }
-              
+              if (apps.any { it.Worth > 0 && it.id == appId }) {
+                Vlog("Succesfully added")
+              } else {
+                Vlog("FAILED to add")
+              }
+              selectedApp.value = ""
+
+                    
+              }
             }
 
           }
