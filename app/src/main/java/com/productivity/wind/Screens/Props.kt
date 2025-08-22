@@ -350,18 +350,14 @@ fun AskUsagePermission(show: MutableState<Boolean>) {
         LazyPopup(
             show = show,
             title = "Need Usage Permission",
-            message = "Please enable permission",
+            message = "To make continue further we need this permision for the app. Allowing us to acces your screen time of indvidual apps",
             onConfirm = {
                 // Open Usage Access Settings
                 val context = Global1.context
                 val intent = android.content.Intent(android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     .apply { addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK) }
                 context.startActivity(intent)
-
-                // Optionally hide popup
-                show.value = false
-            },
-            onDismiss = { show.value = false }
+            }
         )
     }
 }
