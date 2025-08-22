@@ -196,22 +196,35 @@ fun getApps(): List<ResolveInfo> {
     val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
     return pm.queryIntentActivities(launchIntent, 0)
 }
+fun getAppUsage(start: Long, end: Long): Map<String, Int> {
+    val hasUsage = isUsageStatsP_Enabled()
+    val context = Global1.context
+    if (!hasUsage) return emptyMap()
+
+    val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as android.app.usage.UsageStatsManager
+    val stats = usm.queryUsageStats(
+        android.app.usage.UsageStatsManager.INTERVAL_DAILY,
+        start,
+        end
+    )
+
+    return stats.associate { 
+        it.packageName to ((it.totalTimeInForeground / 1000L).toInt().coerceAtLeast(0)) 
+    }
+}
 
 
-    fun refreshApps(target: MutableList<DataApps> = apps) {
+
+    fun refreshApps(target: MutableList<DataApps> = apps, activity: Activity) {
         val context = Global1.context
         val pm = context.packageManager
 
         val launchables = getApps()
 
-        // 2) Usage access check
-        val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as android.app.AppOpsManager
-        val mode = appOps.unsafeCheckOpNoThrow(
-            android.app.AppOpsManager.OPSTR_GET_USAGE_STATS,
-            android.os.Process.myUid(),
-            context.packageName
-        )
-        val hasUsage = mode == android.app.AppOpsManager.MODE_ALLOWED
+        if (!isUsageStatsP_Enabled()) {
+                requestUsageStatsPermission(activity)
+        }
+
 
         // 3) Build "today" window
         val end = System.currentTimeMillis()
