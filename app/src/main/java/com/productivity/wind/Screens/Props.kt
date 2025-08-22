@@ -182,7 +182,7 @@ fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedA
                 if (index != -1) {
                     apps[index].DoneTime = Time.value.toInt()
                     apps[index].Worth = Points.value.toInt()
-                    Vlog("${apps[index].name} updated!")
+                    Vlog("${apps[index].name} ${apps[index].Worth}-worth ${apps[index].DoneTime}-donetime")
                 }
             
 
@@ -194,6 +194,7 @@ fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedA
                 }
                 selectedApp.value = ""
                 Points.value = "0"
+                Time.value = "0"
             }
         }
     })
