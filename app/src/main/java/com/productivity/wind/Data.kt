@@ -178,13 +178,15 @@ data class DataApps(
     var DoneTime: Int = 0,
     var Worth: Int = 0,
 )
-fun MutableList<DataApps>.edit(id: Str, block: DataApps.() -> DataApps) {
+fun MutableList<DataApps>.edit(id: Str, block: DataApps.() -> Unit) {
     val index = indexOfFirst { it.id == id }
     if (index != -1) {
-        val updated = block(this[index])
-        this[index] = updated // ✅ replace with new instance
+        val old = this[index]
+        old.block()              // mutate fields
+        this[index] = old.copy() // replace object to trigger Compose recomposition
     }
 }
+
 
 
 
