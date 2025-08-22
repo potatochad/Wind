@@ -59,8 +59,19 @@ fun Main() {
         
                 LazzyList(apps.filter { it.Worth > 0 }) { app ->
                     LazyCard {
-                        Text("${app.name}: ${app.NowTime}")
-                    }
+                        LazzyRow {
+                            Text("${app.name}: ${app.NowTime}")
+                        }
+                     }
+                }
+                UI.move(h = 20)
+                Text("all apps")
+                LazzyList(apps) { app ->
+                    LazyCard {
+                        LazzyRow {
+                            Text("${app.name}: ${app.NowTime}")
+                        }
+                     }
                 }
 
 
