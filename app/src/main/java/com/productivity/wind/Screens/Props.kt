@@ -164,11 +164,36 @@ fun Menu() {
 
 
 object Header {
-    @Composable
-    fun AppUsage(){
-        Text("AppUsage")
-        
+    
+@Composable
+fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedApp: MutableState<String>) {
+    val appId = apps.find { it.name == selectedApp.value }?.id
+
+    Text("AppUsage")
+    end {
+    Icon.Add(onClick = {
+        when {
+            Time.value.toInt() < 1 -> Vlog("add time")
+            Points.value.toInt() < 1 -> Vlog("add points")
+            selectedApp.value.isEmpty() -> Vlog("select app")
+
+            else -> if (appId != null) {
+                apps.edit(appId) {
+                    DoneTime = Time.value.toInt()
+                    Worth = Points.value.toInt()
+                }
+                if (apps.any { it.Worth > 0 && it.id == appId }) {
+                    Vlog("Succesfully added")
+                } else {
+                    Vlog("FAILED to add")
+                }
+                selectedApp.value = ""
+            }
+        }
+    })
     }
+}
+
     
 }
 
