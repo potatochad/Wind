@@ -182,8 +182,9 @@ fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedA
                     DoneTime = Time.value.toInt()
                     Worth = Points.value.toInt()
                 }
-                if (apps.any { it.Worth > 0 && it.id == appId }) {
-                    Vlog("${apps.Worth} ${app.name} ADDED")
+                val addedApp = apps.find { it.id == appId && it.Worth > 0 }
+                if (addedApp != null) {
+                    Vlog("${addedApp.Worth} ${addedApp.name} ADDED")
                 } else {
                     Vlog("FAILED to add")
                 }
