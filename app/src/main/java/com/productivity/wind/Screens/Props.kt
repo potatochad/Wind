@@ -178,10 +178,13 @@ fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedA
             selectedApp.value.isEmpty() -> Vlog("select app")
 
             else -> if (appId != null) {
-                apps.edit(appId) {
-                    DoneTime = Time.value.toInt()
-                    Worth = Points.value.toInt()
+                apps.edit(appId) { old ->
+                    old.copy(
+                        DoneTime = Time.value.toInt(),
+                        Worth = Points.value.toInt()
+                    )
                 }
+
                 val addedApp = apps.find { it.id == appId && it.Worth > 0 }
                 if (addedApp != null) {
                     Vlog("${addedApp.Worth} ${addedApp.name} ADDED")
