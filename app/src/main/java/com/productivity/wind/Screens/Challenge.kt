@@ -115,16 +115,14 @@ fun AppUsage() {
     var Time = remember { m("50") }
     var Points = remember { m("0") }
     selectedApp.value = ""
+    LaunchedEffect(Unit) {
+        refreshApps(this)
+    }
 
     LazyScreen(title = {
         Header.AppUsage(Time, Points, selectedApp)
        }
     ) {
-      LaunchedEffect(Unit) {
-        refreshApps()
-      }
-      
-      
       LazzyRow {
         Text("If")
         Text(" spend ")
@@ -143,10 +141,12 @@ fun AppUsage() {
 
 
       
-
+         
          Icon.Add(onClick = {
-           apps[1] = apps[1].copy(Worth = 10)  // ✅ triggers recomposition
+           val oldApp = apps[0]
+           apps[0] = oldApp.copy(Worth = oldApp.Worth + 1) // ✅ triggers recomposition
          })
+
 
 
 
