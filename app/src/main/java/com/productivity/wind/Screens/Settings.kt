@@ -86,7 +86,7 @@ val Gold = Color(0xFFFFD700)
 
 @Composable
 fun SettingsScreen() {
-    LazyScreen(titleContent = { Text("Settings") }) {
+    LazyScreen(title = { Text("Settings") }) {
         
         LazyItem(
                 topPadding = 1.dp,
@@ -176,7 +176,7 @@ fun SettingsScreen() {
 
 @Composable
 fun SettingsOtherScreen() {
-    LazyScreen(titleContent = { Text("Settings") }) {
+    LazyScreen(title = { Text("Settings") }) {
 
         LazyItem(
                 BigIcon = Icons.Filled.ListAlt,
