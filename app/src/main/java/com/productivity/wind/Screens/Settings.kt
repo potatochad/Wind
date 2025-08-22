@@ -207,7 +207,7 @@ fun LogsScreen()= NoLagCompose {
     }
         
     LazyScreen(
-        titleContent = {
+        title= {
                 Text("Logs")
                 
                 UI.End { UI.CopyIcon(logText) }
