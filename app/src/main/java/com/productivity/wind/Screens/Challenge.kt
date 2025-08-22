@@ -137,6 +137,23 @@ fun AppUsage() {
         UI.Cinput(Points)
         Text(" points")
         }
+
+
+
+
+
+         UI.move(h = 20)
+         Text("all apps")
+      LazzyList(apps) { app ->
+        LazyCard {
+          LazzyRow {
+            Text("${app.name}: ${app.NowTime}")
+          }
+        }
+      }
+
+
+      
     }
 
 }
