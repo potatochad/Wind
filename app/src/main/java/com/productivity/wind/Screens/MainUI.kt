@@ -43,7 +43,7 @@ fun Main() {
     LazyMenu { Menu() }
     MAINStart()
     
-    LazyScreen(titleContent = { MainHeader() }, showBack = false) {
+    LazyScreen( title ={ MainHeader() }, showBack = false) {
         
                 LazyCard{ Disipline() } 
                 LazyCard{ German() }
