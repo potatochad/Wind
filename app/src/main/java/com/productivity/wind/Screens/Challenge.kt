@@ -103,7 +103,8 @@ fun Challenge() {
             BigIconColor = DarkBlue,
             title = "App Usage",
             onClick = { 
-              If (AskUsagePermission){goTo("AppUsage")}
+              If (UI.isUsageP_Enabled) {Popup.AskUsagePermission.value = true)}
+              else { goTo("AppUsage") }
             },
         )
     
