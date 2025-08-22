@@ -132,7 +132,7 @@ fun MainHeader(){
 @Composable
 fun Menu() {
     LazyScreen(
-        titleContent = { UI.MenuHeader() },
+        UI.MenuHeader(),
         showBack = false,
         showDivider = false,
         MheaderHeight = 700,
