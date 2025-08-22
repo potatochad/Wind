@@ -225,8 +225,7 @@ fun refreshApps(target: MutableList<DataApps> = apps) {
 
     // 2) Check usage permission
     if (!UI.isUsageP_Enabled()) {
-        UI.askUsagePermission()
-        return // stop here until permission is granted
+        return
     }
 
     // 3) Preserve old IDs and done flags
