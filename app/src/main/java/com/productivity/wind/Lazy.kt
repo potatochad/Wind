@@ -585,7 +585,7 @@ fun LazyHeader(
 
 @Composable
 fun LazyScreen(
-    titleContent: @Composable () -> Unit,
+    title: @Composable () -> Unit,
     onSearchClick: () -> Unit = {},
     onBackClick: () -> Unit = {},
     showBack: Boolean = true,
@@ -614,7 +614,7 @@ fun LazyScreen(
     ) {
         item {
             LazyHeader(
-                titleContent = titleContent,
+                titleContent = title,
                 onSearchClick = onSearchClick,
                 onBackClick = onBackClick,
                 showBack = showBack,
