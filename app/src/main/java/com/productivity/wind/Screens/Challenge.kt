@@ -120,7 +120,10 @@ fun AppUsage() {
         Header.AppUsage(Time, Points, selectedApp)
        }
     ) {
-      refreshApps()
+      LaunchedEffect(Unit) {
+        refreshApps()
+      }
+      
       
       LazzyRow {
         Text("If")
