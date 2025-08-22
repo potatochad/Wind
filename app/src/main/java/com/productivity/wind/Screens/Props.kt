@@ -184,6 +184,7 @@ fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedA
                         Worth = Points.value.toInt()
                     )
                 }
+            }
 
                 val addedApp = apps.find { it.id == appId && it.Worth > 0 }
                 if (addedApp != null) {
