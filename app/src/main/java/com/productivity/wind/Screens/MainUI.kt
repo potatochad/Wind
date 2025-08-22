@@ -57,14 +57,12 @@ fun Main() {
                                 
             
         
-                //filter for apps...with apps.worth >0
-                LazyColumn {
-                    items(apps.filter { it.Worth > 0 }) { app ->
-                        LazyCard {
-                            Text("${app.name}: ${app.NowTime}")
-                        }
+                LazzyList(apps.filter { it.Worth > 0 }) { app ->
+                    LazyCard {
+                        Text("${app.name}: ${app.NowTime}")
                     }
                 }
+
 
 
 
