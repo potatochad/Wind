@@ -198,9 +198,6 @@ fun getApps(): List<ResolveInfo> {
 
 fun getTodayAppUsage(packageName: String): Int {
     val context = Global1.context
-
-    if (!UI.isUsageStatsP_Enabled()) return 0 // no permission, return 0
-
     // Today window
     val end = System.currentTimeMillis()
     val cal = java.util.Calendar.getInstance().apply {
@@ -220,24 +217,22 @@ fun getTodayAppUsage(packageName: String): Int {
 }
 
 
-
-
-fun refreshApps(target: MutableList<DataApps> = apps, activity: Activity) {
+fun refreshApps(target: MutableList<DataApps> = apps) {
     val context = Global1.context
 
     // 1) Get all launchable apps
-    val launchables = getApps()
+    val launchables: List<ResolveInfo> = getApps()
 
     // 2) Check usage permission
-    if (!UI.isUsageStatsP_Enabled()) {
-        UI.requestUsageStatsPermission(activity)
-        return
+    if (!UI.isUsageP_Enabled()) {
+        UI.askUsagePermission()
+        return // stop here until permission is granted
     }
 
     // 3) Preserve old IDs and done flags
     val oldByPkg = target.associateBy { it.packageName }
 
-    // 4) Build fresh list using our helper function for each package
+    // 4) Build fresh list using helper function for today's usage
     val fresh = launchables.map { ri ->
         val pkg = ri.activityInfo.packageName
         val label = ri.loadLabel(context.packageManager)?.toString() ?: pkg
@@ -247,8 +242,10 @@ fun refreshApps(target: MutableList<DataApps> = apps, activity: Activity) {
             id = old?.id ?: Id(),
             name = label,
             packageName = pkg,
-            NowTime = getTodayAppUsageForPackage(pkg), // ✅ our function
-            done = old?.done ?: false
+            NowTime = getTodayAppUsage(pkg), // ✅ calls your helper
+            done = old?.done ?: false,
+            DoneTime = old?.DoneTime ?: 0,
+            Worth = old?.Worth ?: 0
         )
     }.sortedByDescending { it.NowTime }
 
@@ -301,7 +298,7 @@ fun MAINStart() {
 @Composable
 fun AppStart() {
     LaunchedEffect(Unit) {
-        refreshApps(this)
+        refreshApps()
     }
     
     PopUps()
