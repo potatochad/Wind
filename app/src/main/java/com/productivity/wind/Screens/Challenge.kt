@@ -1,5 +1,5 @@
 package com.productivity.wind.Screens
-//
+
 import androidx.compose.foundation.border
 import android.app.AlertDialog
 import android.app.AppOpsManager
@@ -130,6 +130,7 @@ fun AppUsage() {
                 DoneTime = Time.value.toInt()
                 Worth = Points.value.toInt()
               }
+              
             }
 
           }
