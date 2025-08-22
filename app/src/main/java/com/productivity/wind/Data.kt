@@ -178,10 +178,14 @@ data class DataApps(
     var DoneTime: Int = 0,
     var Worth: Int = 0,
 )
-fun MutableList<DataApps>.edit(id: Str, block: DataApps.() -> Unit) {
+fun MutableList<DataApps>.edit(id: Str, block: DataApps.() -> DataApps) {
     val index = indexOfFirst { it.id == id }
-    if (index != -1) this[index].block()
+    if (index != -1) {
+        val updated = block(this[index])
+        this[index] = updated // ✅ replace with new instance
+    }
 }
+
 
 
     fun refreshApps(target: MutableList<DataApps> = apps) {
