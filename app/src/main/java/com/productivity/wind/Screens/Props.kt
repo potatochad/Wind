@@ -178,9 +178,11 @@ fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedA
             selectedApp.value.isEmpty() -> Vlog("select app")
 
             else -> if (appId != null) {
-                apps.edit(appId) {
-                        DoneTime = Time.value.toInt()
-                        Worth = Points.value.toInt()
+                val index = apps.indexOfFirst { it.id == appId }
+                if (index != -1) {
+                    apps[index].DoneTime = Time.value.toInt()
+                    apps[index].Worth = Points.value.toInt()
+                    Vlog("${apps[index].name} updated!")
                 }
             
 
