@@ -315,7 +315,7 @@ fun MAINStart() {
 @Composable
 fun AppStart() {
     LaunchedEffect(Unit) {
-        refreshApps()
+        refreshApps(this)
     }
     
     PopUps()
