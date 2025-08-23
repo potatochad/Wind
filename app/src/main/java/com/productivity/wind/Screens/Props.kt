@@ -250,20 +250,6 @@ fun NeedMorePointsPopup(show: MutableState<Boolean>){
 }
 
 @Composable
-fun EnableBlockingPopup(show: MutableState<Boolean>){
-    LazyPopup(
-            show = show,
-            title = "Enable?",
-            message = "If you enable blocking, an overlay screen will appear over the selected apps when you run out of points. (1 point = 1 second)\n\nTo disable blocking, you’ll need more than the selected points in the unlock Threashold",
-            showCancel = true,
-            showConfirm = true,
-            onConfirm = {
-                Bar.BlockingEnabled = true
-            },
-        )
-}
-
-@Composable
 fun EditPopUp(show: MutableState<Boolean>) {
     var TemporaryTargetText by remember { mutableStateOf("") }
     TemporaryTargetText = Bar.targetText
