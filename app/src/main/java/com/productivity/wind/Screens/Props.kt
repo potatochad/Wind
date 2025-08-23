@@ -242,7 +242,6 @@ object Icon {
 //!Just call this on app start
 @Composable
 fun PopUps(){
-   G_EditPopUp(Popup.G_Edit)
    AskUsagePermission(Popup.AskUsagePermission)
    EditPopUp(Popup.Edit)
    NeedMorePointsPopup(Popup.NeedMorePoints)
@@ -300,30 +299,6 @@ fun EditPopUp(show: MutableState<Boolean>) {
     )
 }
 
-@Composable
-fun G_EditPopUp(show: MutableState<Boolean>) {
-    var TemporaryTargetText by remember { mutableStateOf("") }
-    TemporaryTargetText = Bar.G_targetText
-    LazyPopup(
-        show = show,
-        onDismiss = { TemporaryTargetText = Bar.G_targetText },
-        title = "Edit Text",
-        message = "",
-        content = {
-            OutlinedTextField(
-                value = TemporaryTargetText,
-                onValueChange = { TemporaryTargetText = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 100.dp, max = 200.dp)
-                    .verticalScroll(rememberScrollState())
-            )
-        },
-        showCancel = true,
-        onConfirm = { Bar.G_targetText = TemporaryTargetText; Bar.G_FirstEditText = false },
-        onCancel = { TemporaryTargetText = Bar.G_targetText }
-    )
-}
 
 @Composable
 fun AskUsagePermission(show: MutableState<Boolean>) {
