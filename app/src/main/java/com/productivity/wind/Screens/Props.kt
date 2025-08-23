@@ -105,30 +105,6 @@ fun NavGraphBuilder.ScreenNav() {
 
 
 
-
-
-
-
-
-//TOP BAR
-@Composable
-fun MainHeader(){
-        Icon.Menu()
-        Icon.Chill()
-        
-        UI.move(w = 12)
-        
-        Text(text = "Points ${Bar.funTime}", fontSize = 18.sp)
-        
-        
-        UI.End { 
-                Icon.Add()
-        }
-
-}
-
-
-
 @Composable
 fun Menu() {
     LazyScreen(
@@ -165,27 +141,42 @@ fun Menu() {
 
 object Header {
     
-@Composable
-fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedApp: MutableState<String>) {
-    val appId = apps.find { it.name == selectedApp.value }?.id
+    @Composable
+    fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedApp: MutableState<String>) {
+        val appId = apps.find { it.name == selectedApp.value }?.id
 
-    Text("AppUsage")
-    UI.End {
-    Icon.Add(onClick = {
-        when {
-            Time.value.toInt() < 1 -> Vlog("add time")
-            Points.value.toInt() < 1 -> Vlog("add points")
-            selectedApp.value.isEmpty() -> Vlog("select app")
+        Text("AppUsage")
+        UI.End {
+            Icon.Add(onClick = {
+                when {
+                    Time.value.toInt() < 1 -> Vlog("add time")
+                    Points.value.toInt() < 1 -> Vlog("add points")
+                    selectedApp.value.isEmpty() -> Vlog("select app")
 
-            else -> if (appId != null) {
-                selectedApp.value = ""
-                Points.value = "0"
-                Time.value = "0"
-            }
+                    else -> if (appId != null) {
+                        selectedApp.value = ""
+                        Points.value = "0"
+                        Time.value = "0"
+                    }
+                }
+            })
         }
-    })
     }
-}
+
+    @Composable
+    fun Main(){
+        Icon.Menu()
+        Icon.Chill()
+        
+        UI.move(w = 12)
+        
+        Text(text = "Points ${Bar.funTime}", fontSize = 18.sp)
+        
+        
+        UI.End { 
+                Icon.Add()
+        }
+    }
 
     
 }
