@@ -286,6 +286,34 @@ fun PreloadBox(
 
 
 
+fun refreshApps() {
+    val context = Global1.context
+    val realApps: List<ResolveInfo> = getApps()
+
+    if (!UI.isUsageP_Enabled()) {
+        return
+    }
+    realApps.forEach { info ->
+            val pkg = getAppPackage(info)
+            val label = getAppName(info)
+            val ListsApp= getListsApp(pkg)
+            val AppUsage = getTodayAppUsage(pkg)
+            
+            if (ListsApp != null) {
+                    ListsApp.NowTime = AppUsage
+                    ListsApp.name = label
+            } else {
+                    apps.add(
+                            DataApps(
+                                    id = Id(),
+                                    name = label,
+                                    packageName = pkg,
+                                    NowTime = AppUsage,
+                            )
+                    )
+            }
+    }  
+}
 
 fun getApps(): List<ResolveInfo> {
     val context = Global1.context
