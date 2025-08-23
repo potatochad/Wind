@@ -220,7 +220,7 @@ fun refreshApps(target: MutableList<DataApps> = apps) {
 
 
 
-fun show(state: MutableState<Boolean>) = state.value = true
+fun show(state: MutableState<Boolean>){ state.value = true }
 
 object Popup {
     var Edit = m(false)
