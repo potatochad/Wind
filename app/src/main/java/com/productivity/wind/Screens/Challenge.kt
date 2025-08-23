@@ -104,7 +104,7 @@ fun Challenge() {
             title = "App Usage",
             onClick = { 
               if (!UI.isUsageP_Enabled()) {
-                Popup.AskUsagePermission.value = true
+                show(Popup.AskUsagePermission)
               } else { goTo("AppUsage") }
             },
         )
@@ -135,7 +135,7 @@ fun AppUsage() {
 
         Text("on ")
         UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
-            Popup.AppSelect.value = true
+            show(Popup.AppSelect)
         }
 
         Text(", add ")
