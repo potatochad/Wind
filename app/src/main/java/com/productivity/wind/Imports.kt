@@ -284,6 +284,55 @@ fun PreloadBox(
 }
 
 
+
+
+
+fun getApps(): List<ResolveInfo> {
+    val context = Global1.context
+    val pm = context.packageManager
+    val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+    return pm.queryIntentActivities(launchIntent, 0)
+}
+fun getListsApp(packageName: String): DataApps? {
+    val map = apps.associateBy { it.packageName }
+    return map[packageName]
+}
+
+fun getTodayAppUsage(packageName: String): Int {
+    val context = Global1.context
+    val end = System.currentTimeMillis()
+    val cal = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+    val start = cal.timeInMillis
+
+    val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+
+    // Use INTERVAL_BEST and filter manually
+    val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, start, end)
+    val todayUsage = stats
+        .filter { it.packageName == packageName && it.lastTimeUsed >= start }
+        .sumOf { it.totalTimeInForeground }
+
+    return (todayUsage / 1000L).toInt().coerceAtLeast(0)
+}
+fun getAppPackage(ri: ResolveInfo): String {
+    return ri.activityInfo.packageName
+}
+fun getAppName(info: ResolveInfo): String {
+    val context = Global1.context
+    val pkg = info.activityInfo.packageName
+    return info.loadLabel(context.packageManager)?.toString() ?: pkg
+}
+
+
+
+
+
+
 val Bar = Settings(); //best variable
 
 var initOnce= false
