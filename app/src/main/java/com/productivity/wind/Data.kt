@@ -156,62 +156,71 @@ fun getApps(): List<ResolveInfo> {
     val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
     return pm.queryIntentActivities(launchIntent, 0)
 }
-
-fun getTodayAppUsage(packageName: String): Int {
-    val context = Global1.context
-    // Today window
-    val end = System.currentTimeMillis()
-    val cal = java.util.Calendar.getInstance().apply {
-        set(java.util.Calendar.HOUR_OF_DAY, 0)
-        set(java.util.Calendar.MINUTE, 0)
-        set(java.util.Calendar.SECOND, 0)
-        set(java.util.Calendar.MILLISECOND, 0)
-    }
-    val start = cal.timeInMillis
-
-    val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as android.app.usage.UsageStatsManager
-    val stats = usm.queryUsageStats(android.app.usage.UsageStatsManager.INTERVAL_DAILY, start, end)
-
-    // Find the usage for the specific package
-    val appStats = stats.find { it.packageName == packageName }
-    return ((appStats?.totalTimeInForeground ?: 0) / 1000L).toInt().coerceAtLeast(0)
+fun getListsApp(packageName: String): DataApps? {
+    val map = apps.associateBy { it.packageName }
+    return map[packageName]
 }
 
 
-fun refreshApps(target: MutableList<DataApps> = apps) {
+fun getTodayAppUsage(packageName: String): Int {
     val context = Global1.context
+    val end = System.currentTimeMillis()
+    val cal = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+    val start = cal.timeInMillis
 
-    // 1) Get all launchable apps
-    val launchables: List<ResolveInfo> = getApps()
+    val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
 
-    // 2) Check usage permission
+    // Use INTERVAL_BEST and filter manually
+    val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, start, end)
+    val todayUsage = stats
+        .filter { it.packageName == packageName && it.lastTimeUsed >= start }
+        .sumOf { it.totalTimeInForeground }
+
+    return (todayUsage / 1000L).toInt().coerceAtLeast(0)
+}
+fun getAppPackage(ri: ResolveInfo): String {
+    return ri.activityInfo.packageName
+}
+fun getAppName(info: ResolveInfo): String {
+    val context = Global1.context
+    val pkg = info.activityInfo.packageName
+    return info.loadLabel(context.packageManager)?.toString() ?: pkg
+}
+
+
+
+fun refreshApps() {
+    val context = Global1.context
+    val realApps: List<ResolveInfo> = getApps()
+
     if (!UI.isUsageP_Enabled()) {
         return
     }
-
-    // 3) Preserve old IDs and done flags
-    val oldByPkg = target.associateBy { it.packageName }
-
-    // 4) Build fresh list using helper function for today's usage
-    val fresh = launchables.map { ri ->
-        val pkg = ri.activityInfo.packageName
-        val label = ri.loadLabel(context.packageManager)?.toString() ?: pkg
-        val old = oldByPkg[pkg]
-
-        DataApps(
-            id = old?.id ?: Id(),
-            name = label,
-            packageName = pkg,
-            NowTime = getTodayAppUsage(pkg), // ✅ calls your helper
-            done = old?.done ?: false,
-            DoneTime = old?.DoneTime ?: 0,
-            Worth = old?.Worth ?: 0
-        )
-    }.sortedByDescending { it.NowTime }
-
-    // 5) Replace content in-place
-    target.clear()
-    target.addAll(fresh)
+    realApps.forEach { info ->
+            val pkg = getAppPackage(info)
+            val label = getAppName(info)
+            val ListsApp= getListsApp(pkg)
+            val AppUsage = getTodayAppUsage(pkg)
+            
+            if (ListsApp != null) {
+                    ListsApp.NowTime = AppUsage
+                    ListsApp.name = label
+            } else {
+                    apps.add(
+                            DataApps(
+                                    id = Id(),
+                                    name = label,
+                                    packageName = pkg,
+                                    NowTime = AppUsage,
+                            )
+                    )
+            }
+    }  
 }
 
 
