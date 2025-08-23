@@ -66,7 +66,7 @@ import com.productivity.wind.Imports.*
 import android.app.*
 
 fun onNewDay() {  
-        Bar.WaterDOtime_spent = 0
+        
 }
 
 
@@ -89,32 +89,6 @@ class Settings {
     var highestCorrect by m(0)
 
     //endregion COPY PASTE Disipline
-
-
-    
-    //region COPY PASTE THING GERMAN
-
-    var G_FirstEditText by m(true)
-    var G_targetText by m("Let's get ready to work. Start by choosing one task that is the most important. Try to focus on that task only.  When the task is finished, you can take a short break to rest. If you finish more tasks after that, great job — keep going one step at a time. If permissions turned on (menu->settigs) you can configure apps (Top bar, right side icon) to be blocked if do not have enough points (1 point = 1 second).")
-    var G_LetterToTime by m(2)
-    var G_DoneRetype_to_time by m(60)
-    var G_currentInput by m("")
-    var G_highestCorrect by m(0)
-
-    //endregion COPY PASTE GERMAN
-
-
-
-    //region BLOCKING
-
-    var BlockingEnabled by m(false)
-    var currentApp by m("")
-    var COUNT by m(0)
-
-    //refreshs to 0 daily// if more than 50 seconds, get 600 time
-    var WaterDOtime_spent by m(0)
-    var secondsLeft by m(10)
-    //endregion BLOCKING
 
 
     
