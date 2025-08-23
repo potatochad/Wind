@@ -40,13 +40,12 @@ import com.productivity.wind.Imports.*
 
 @Composable
 fun Main() {
-    LazyMenu { Menu() }
+    
     MAINStart()
     
     LazyScreen( title ={ Header.Main() }, showBack = false) {
         
                 LazyCard{ Disipline() } 
-                LazyCard{ German() }
 
 
 
@@ -181,84 +180,6 @@ fun Disipline() {
         )
     }
 }
-
-@Composable
-fun German() {
-    val ScrollText = rememberScrollState()
-
-    LaunchedEffect(Bar.G_highestCorrect) {
-        if (Bar.G_highestCorrect > 20) {
-            ScrollText.animateScrollBy(1f)
-        }
-    }
-    
-    fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
-        for (i in text.indices) {
-            if (i < correctUntil) {
-                pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
-                append(text[i]); pop()
-            } else {
-                append(text[i])
-            }
-        }
-    }
-    val coloredTarget by produceState(initialValue = AnnotatedString(""), Bar.G_targetText, Bar.G_currentInput) {
-        withContext(Dispatchers.Default) {
-            val correctChars = Bar.G_targetText.zip(Bar.G_currentInput)
-                .takeWhile { it.first == it.second }
-                .size
-            value = buildAnnotatedString {
-                appendAnnotated(Bar.G_targetText, correctChars)
-            }
-        }
-    }
-
-    Icon.G_Edit()
-    Text(
-        text = coloredTarget,
-        modifier = Modifier
-            .heightIn(max = 200.dp)
-            .verticalScroll(ScrollText)
-    )
-    Spacer(modifier = Modifier.height(20.dp))
-
-    OutlinedTextField(
-        value = Bar.G_currentInput,
-        onValueChange = {
-            if (it.length - Bar.G_currentInput.length <= 5) {
-                Bar.TotalTypedLetters += 1
-                Bar.G_currentInput = it
-
-                val correctChars = Bar.G_targetText.zip(Bar.G_currentInput)
-                    .takeWhile { it.first == it.second }.size
-                val correctInput = Bar.G_currentInput.take(correctChars)
-
-
-                val newlyEarned = correctInput.length - Bar.G_highestCorrect
-                if (newlyEarned > 0) {
-                    var oldFunTime = Bar.funTime
-                    Bar.funTime += newlyEarned * Bar.G_LetterToTime; if (oldFunTime === Bar.funTime) { log("TIME HAS NOT INCREASE", "BAD") }
-                    Bar.G_highestCorrect = correctInput.length
-                }
-
-                if (correctInput == Bar.G_targetText) {
-                    Bar.funTime += Bar.DoneRetype_to_time
-                    Bar.G_currentInput = ""
-                    Bar.G_highestCorrect = 0
-                }
-            }
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .verticalScroll(rememberScrollState()),
-        placeholder = { Text("Start typing...") }
-    )
-
-}
-
-
-
 
 
 
