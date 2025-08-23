@@ -1273,7 +1273,7 @@ fun NavGraphBuilder.url(
 //region LATER USE
 
 
-
+/*
 class WatchdogService : Service() {
     private val serviceJob = SupervisorJob()
     private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
@@ -1353,7 +1353,7 @@ class WatchdogService : Service() {
     override fun onDestroy() { super.onDestroy(); serviceScope.cancel() }
 }
 
-
+*/
 
 
 class NotificationHelper(private val context: Context) {
