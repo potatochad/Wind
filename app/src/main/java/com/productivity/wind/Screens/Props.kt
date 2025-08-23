@@ -234,7 +234,6 @@ fun PopUps(){
    AskUsagePermission(Popup.AskUsagePermission)
    EditPopUp(Popup.Edit)
    NeedMorePointsPopup(Popup.NeedMorePoints)
-   EnableBlockingPopup(Popup.EnableBlocking)
    AppSelectPopup(Popup.AppSelect)
 }
 
