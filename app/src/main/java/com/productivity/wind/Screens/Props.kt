@@ -216,17 +216,6 @@ object Icon {
                         icon = Icons.Default.Edit
                 )
         }
-        
-        @Composable
-        fun G_Edit() {
-                LazyIcon(
-                        onClick = { 
-                                if (Bar.funTime > Bar.Dpoints) show(Popup.G_Edit)
-                                else show(Popup.NeedMorePoints)
-                        },
-                        icon = Icons.Default.Edit
-                )
-        }
 
  //ICONS!!!!!!-------------------------///
 }
