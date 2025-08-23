@@ -210,8 +210,8 @@ object Icon {
         fun Edit() {
                 LazyIcon(
                         onClick = { 
-                                if (Bar.funTime > Bar.Dpoints) Popup.Edit.value =true
-                                else Popup.NeedMorePoints.value = true
+                                if (Bar.funTime > Bar.Dpoints) show(Popup.Edit)
+                                else show(Popup.NeedMorePoints)
                         },
                         icon = Icons.Default.Edit
                 )
@@ -221,8 +221,8 @@ object Icon {
         fun G_Edit() {
                 LazyIcon(
                         onClick = { 
-                                if (Bar.funTime > Bar.Dpoints) Popup.G_Edit.value =true
-                                else Popup.NeedMorePoints.value = true
+                                if (Bar.funTime > Bar.Dpoints) show(Popup.G_Edit)
+                                else show(Popup.NeedMorePoints)
                         },
                         icon = Icons.Default.Edit
                 )
@@ -255,7 +255,7 @@ fun PopUps(){
 @Composable
 fun NeedMorePointsPopup(show: MutableState<Boolean>){
     LazyPopup(
-        show = Popup.NeedMorePoints, 
+        show = show, 
         title = "Not EnoughPoints", 
         message = "Need have ${Bar.Dpoints} points to do this. Only have ${Bar.funTime}"
     )
