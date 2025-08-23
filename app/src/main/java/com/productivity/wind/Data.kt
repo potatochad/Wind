@@ -279,6 +279,7 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         refreshApps()
     }
+    LazyMenu { Menu() }
     
     PopUps()
     val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
