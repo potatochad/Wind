@@ -239,16 +239,6 @@ object Icon {
 
 //region POPUP CONTROLLER
 
-object Popup {
-    var Edit = m(false)
-    var G_Edit = m(false)
-    var NeedMorePoints = m(false)
-    var AskUsagePermission = m(false)
-    var EnableBlocking = m(false)
-    
-    var AppSelect = m(false)
-
-}
 //!Just call this on app start
 @Composable
 fun PopUps(){
