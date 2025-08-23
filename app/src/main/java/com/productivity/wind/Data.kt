@@ -224,7 +224,6 @@ fun show(state: MutableState<Boolean>){ state.value = true }
 
 object Popup {
     var Edit = m(false)
-    var G_Edit = m(false)
     var NeedMorePoints = m(false)
     var AskUsagePermission = m(false)
     var EnableBlocking = m(false)
