@@ -43,7 +43,7 @@ fun Main() {
     LazyMenu { Menu() }
     MAINStart()
     
-    LazyScreen( title ={ MainHeader() }, showBack = false) {
+    LazyScreen( title ={ Header.Main() }, showBack = false) {
         
                 LazyCard{ Disipline() } 
                 LazyCard{ German() }
