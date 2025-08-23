@@ -84,10 +84,6 @@ fun Achievements()= NoLagCompose {
     }
 }
 
-fun toggleText(state: Boolean): String {
-    val action = if (state) "disable" else "enable"
-    return action
-}
 
 
 
