@@ -243,16 +243,14 @@ suspend fun wait(ms: Long) {
 @Composable
 fun AppSelectPopup(
     show: MutableState<Boolean>,
-    selectedApp: MutableState<String>
 ) {
     if (show.value) {
-        // Load apps once using remember
         val appList by remember { mutableStateOf(getApps()) }
         var loadedCount by remember { mutableStateOf(6) }
 
         LaunchedEffect(Unit) {
             for (i in 6..appList.size) {
-                wait(20) // your delay function
+                wait(20)
                 loadedCount = i
             }
         }
@@ -265,13 +263,13 @@ fun AppSelectPopup(
                 LazzyList(appList) { appInfo ->
                     val index = appList.indexOf(appInfo)
                     if (index < loadedCount) {
-                        val icon = getAppIcon(appInfo.activityInfo.packageName)
+                        val icon = getAppIcon(getAppPackage(appInfo))
                         LazzyRow {
                             UI.move(10)
                             LazyImage(icon)
                             UI.move(10)
-                            UI.Ctext(appInfo.loadLabel(Global1.context.packageManager).toString()) {
-                                selectedApp.value = appInfo.activityInfo.packageName
+                            UI.Ctext(getAppName(appInfo)) {
+                                selectedApp.value = getAppPackage(appInfo)
                                 show.value = false
                             }
                         }
