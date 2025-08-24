@@ -146,7 +146,7 @@ fun <T : Any> MutableList<T>.edit(
             }
         }
     } catch (e: Exception) {
-        Vlog("edit bad: ${e.message}")
+        Vlog("edit, e: ${e.message}")
     }
 }
 
