@@ -103,62 +103,23 @@ data class DataApps(
     var DoneTime: Int = 0,
     var Worth: Int = 0,
 )
+
+fun getType(value: Any): String {
+    return when (value) {
+        is Int -> "Int"
+        is String -> "String"
+        is Boolean -> "Boolean"
+        else -> "Unknown"
+    }
+}
+
 fun <T : Any> MutableList<T>.edit(
-    id: String = "none",
-    index: Int = -1,
+    which: Any,
     block: T.() -> Unit
 ) {
-    try {
-        // Local function: safely get the 'id' property
-        fun getId(item: Any?): String? {
-            return try {
-                item?.let { it::class.members.find { m -> m.name == "id" }?.call(it) as? String }
-            } catch (e: Exception) {
-                null
-            }
-        }
-
-        // Local function: resolve the target ID
-        fun resolveId(): String? {
-            if (id != "none") return id
-            if (index == -1) {
-                Vlog("No index or id provided")
-                return null
-            }
-            val item = getOrNull(index)
-            return getId(item) ?: run {
-                Vlog("missing id in $item")
-                null
-            }
-        }
-
-        // Local function: apply block and handle data class copy
-        fun applyBlock(index: Int, item: T) {
-            item.block()
-            if (item::class.isData) {
-                val copyMethod = item::class.members.find { it.name == "copy" }
-                if (copyMethod != null) {
-                    this[index] = item // For data class, normally you'd do item.copy()
-                }
-            }
-        }
-
-        // Main logic
-        val targetId = resolveId() ?: return
-
-        forEachIndexed { i, item ->
-            val itemId = getId(item) ?: run {
-                Vlog("missing id in $item")
-                return@forEachIndexed
-            }
-            if (itemId == targetId) {
-                applyBlock(i, item)
-            }
-        }
-
-    } catch (e: Exception) {
-        Vlog("edit, e: ${e.message}")
-    }
+        
+    
+        
 }
 
 
