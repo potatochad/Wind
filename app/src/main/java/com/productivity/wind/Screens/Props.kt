@@ -243,70 +243,60 @@ suspend fun wait(ms: Long) {
 @Composable
 fun AppSelectPopup(
     show: MutableState<Boolean>,
+    selectedApp: MutableState<String>
 ) {
     if (show.value) {
+        // Load apps once using remember
+        val appList by remember { mutableStateOf(getApps()) }
+        var loadedCount by remember { mutableStateOf(6) }
+
+        LaunchedEffect(Unit) {
+            for (i in 6..appList.size) {
+                wait(20) // your delay function
+                loadedCount = i
+            }
+        }
+
         LazyPopup(
             show = show,
             title = "Select App",
             message = "",
             content = {
-                var loadedCount by remember { m(6) }
-
-LaunchedEffect(Unit) {
-    for (i in 6..apps.size) {
-        wait(20)
-        loadedCount = i
-    }
-}
-
-LazzyList(apps) { app ->
-    LazzyRow() {
-        val index = apps.indexOf(app)
-        if (index < loadedCount) {
-            val icon = getAppIcon(app.packageName)
-            UI.move(10)
-            LazyImage(icon)
-            UI.move(10)
-            UI.Ctext(app.name) {
-                selectedApp.value = app.name
-                show.value = false
-            }
-        } else {
-            LazzyRow(){
-                Box(
-                    Modifier
-                        .padding(10.dp)
-                        .size(32.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(Color.Black.copy(alpha = 0.1f)) // 10% black
-                        .padding(12.dp)
-                ){}
-                Row(
-                    Modifier
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(Color.Black.copy(alpha = 0.1f)) // 10% black
-                        .width(160.dp)
-                        .height(30.dp)
-                ){}
-                
-            }
-
-
-        }
-    }
-}
-
+                LazzyList(appList) { appInfo ->
+                    val index = appList.indexOf(appInfo)
+                    if (index < loadedCount) {
+                        val icon = getAppIcon(appInfo.activityInfo.packageName)
+                        LazzyRow {
+                            UI.move(10)
+                            LazyImage(icon)
+                            UI.move(10)
+                            UI.Ctext(appInfo.loadLabel(Global1.context.packageManager).toString()) {
+                                selectedApp.value = appInfo.activityInfo.packageName
+                                show.value = false
+                            }
+                        }
+                    } else {
+                        // Placeholder while loading
+                        LazzyRow {
+                            Box(
+                                Modifier
+                                    .padding(10.dp)
+                                    .size(32.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .background(Color.Black.copy(alpha = 0.1f))
+                                    .padding(12.dp)
+                            ) {}
+                            Row(
+                                Modifier
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .background(Color.Black.copy(alpha = 0.1f))
+                                    .width(160.dp)
+                                    .height(30.dp)
+                            ) {}
+                        }
+                    }
+                }
             }
         )
     }
 }
-
-
-
-
-
-
-//endregion POPUP CONTROLLER
-
-
-
