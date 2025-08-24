@@ -60,7 +60,7 @@ fun AppUsage() {
       
          
          Icon.Add(onClick = {
-           apps.edit(apps[0].id) {
+           edit(apps, 0) {
              Worth += 1
            }
          })
