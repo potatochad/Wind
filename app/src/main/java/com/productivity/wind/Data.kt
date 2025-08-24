@@ -120,17 +120,20 @@ fun <R> if_Type(
 }
 
 fun <T> edit(
-    list: MutableList<T>, 
+    list: SnapshotStateList<T>,  
     which: Any,
     edit: T.() -> Unit
 ) {
     var item: T? = null
+    var index: Int? = null
     if_Type(which,
         if_String = {
             item = list.find { it.id == which }
+            index = list.indexOf(item)
         },
         if_Int = {
             item = list[which]
+            index = which
         }
     )
 
@@ -138,7 +141,7 @@ fun <T> edit(
 
     val oldItem = item
     oldItem.edit()
-    item = oldItem
+    list[index] = oldItem   
     
 }
 
