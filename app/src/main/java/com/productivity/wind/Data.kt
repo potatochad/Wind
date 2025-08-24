@@ -103,22 +103,43 @@ data class DataApps(
     var DoneTime: Int = 0,
     var Worth: Int = 0,
 )
-fun <T> MutableList<T>.edit(id: String, block: T.() -> Unit) where T : Any {
+fun <T : Any> MutableList<T>.edit(
+    id: String = "none",
+    index: Int = -1,
+    block: T.() -> Unit
+) {
+    var targetId = id
+
+    if (targetId == "none") {
+        if (index == -1) {
+            Vlog("No index or id provided")
+            return
+        } else {
+            val item = this.getOrNull(index)
+            val idProp = item?.let { 
+                it::class.members.find { m -> m.name == "id" }?.call(it) as? String
+            }
+            if (idProp == null) {
+                Vlog("missing id in $item")
+                return
+            }
+            targetId = idProp
+        }
+    }
+
     for (i in indices) {
         val item = this[i]
-        // Try to get the 'id' property
         val idProp = item::class.members.find { it.name == "id" }?.call(item) as? String
         if (idProp == null) {
             Vlog("missing id in $item")
             continue
         }
-        if (idProp == id) {
-            item.block() // apply your changes
-            // Replace whole item if it's a data class to trigger recomposition
+        if (idProp == targetId) {
+            item.block() // apply changes
             if (item::class.isData) {
                 val copyMethod = item::class.members.find { it.name == "copy" }
                 if (copyMethod != null) {
-                    this[i] = copyMethod.call(item) as T
+                    this[i] = copyMethod.call(item) as T // replace to trigger recomposition
                 }
             }
         }
