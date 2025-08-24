@@ -1,4 +1,4 @@
-package com.productivity.wind
+package com.productivity.wind.Imports
 
 import androidx.compose.ui.draw.*
 import androidx.compose.foundation.shape.*
@@ -50,9 +50,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import com.productivity.wind.Imports.Bar
-import com.productivity.wind.Imports.NoLagCompose
-import com.productivity.wind.Imports.PreloadBox
+import com.productivity.wind.Global1
 
 
 @Composable

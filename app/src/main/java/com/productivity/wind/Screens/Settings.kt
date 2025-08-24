@@ -10,7 +10,6 @@ import kotlinx.coroutines.delay
 import android.service.notification.NotificationListenerService
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.filled.*
-import com.productivity.wind.*
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.*
 
@@ -31,7 +30,7 @@ fun SettingsScreen() {
                 BigIconColor = Gold,
                 title = "Unlock Threshold",
                 endContent = {
-                        UI.InputField(
+                        InputField(
                                 value = Bar.Dpoints.toString(),
                                 onChange = {
                                         val input = it.toIntOrNull() ?: 0  // convert input to number safely
@@ -84,8 +83,8 @@ fun SettingsScreen() {
                 onClick = { backupTrigger = true }
         ) 
         
-        UI.BrestoreFromFile(restoreTrigger)
-        UI.BsaveToFile(backupTrigger)
+        BrestoreFromFile(restoreTrigger)
+        BsaveToFile(backupTrigger)
 
         //endregion RESTORE/BACKUP
 

@@ -1,5 +1,7 @@
 package com.productivity.wind.Screens
 
+import android.content.Intent
+import android.provider.Settings
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -224,8 +226,8 @@ fun AskUsagePermission(show: MutableState<Boolean>) {
             onConfirm = {
                 // Open Usage Access Settings
                 val context = Global1.context
-                val intent = android.content.Intent(android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS)
-                    .apply { addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK) }
+                val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+                    .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
                 context.startActivity(intent)
             }
         )
