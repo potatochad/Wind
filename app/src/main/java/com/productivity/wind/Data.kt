@@ -140,7 +140,10 @@ fun <T : Any> MutableList<T>.edit(
                 if (item::class.isData) {
                     val copyMethod = item::class.members.find { it.name == "copy" }
                     if (copyMethod != null) {
-                        this[i] = copyMethod.call(item) as T // replace to trigger recomposition
+                        if (item::class.isData) {
+                                this[i] = item
+                        }
+
                     }
                 }
             }
