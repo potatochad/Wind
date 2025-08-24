@@ -129,7 +129,7 @@ fun <T> edit(
     var index: Int? = null
     if_Type(which,
         if_String = {
-            item = list.find { it.id == which }
+            item = list.find { (it as dynamic).id == which }
             index = list.indexOf(item)
         },
         if_Int = {
