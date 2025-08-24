@@ -104,23 +104,44 @@ data class DataApps(
     var Worth: Int = 0,
 )
 
-fun getType(value: Any): String {
+fun <R> if_Type(
+    value: Any,
+    if_Int: ((Int) -> R)? = null,
+    if_String: ((String) -> R)? = null,
+    if_Boolean: ((Boolean) -> R)? = null,
+    if_Other: ((Any) -> R)? = null
+): R? {
     return when (value) {
-        is Int -> "Int"
-        is String -> "String"
-        is Boolean -> "Boolean"
-        else -> "Unknown"
+        is Int -> onInt?.invoke(value)
+        is String -> onString?.invoke(value)
+        is Boolean -> onBoolean?.invoke(value)
+        else -> onOther?.invoke(value)
     }
 }
 
-fun <T : Any> MutableList<T>.edit(
+fun <T> edit(
+    list: MutableList<T>, 
     which: Any,
-    block: T.() -> Unit
+    edit: T.() -> Unit
 ) {
-        
+    var item: T? = null
+    if_Type(which,
+        if_String = {
+            item = list.find { it.id == which }
+        },
+        if_Int = {
+            item = list[which]
+        }
+    )
+
+    if (item == null) {Vlog("Item null: data, fun edit"); return}
+
+    val oldItem = item
+    oldItem.edit()
+    item = oldItem
     
-        
 }
+
 
 
 
