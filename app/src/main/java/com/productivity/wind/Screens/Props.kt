@@ -269,7 +269,7 @@ fun AppSelectPopup(
                             LazyImage(icon)
                             UI.move(10)
                             UI.Ctext(getAppName(appInfo)) {
-                                selectedApp.value = getAppPackage(appInfo)
+                                selectedApp.value = getAppName(appInfo)
                                 show.value = false
                             }
                         }
