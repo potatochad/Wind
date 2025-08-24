@@ -84,9 +84,9 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import android.graphics.drawable.Drawable
-
 import android.content.pm.*
 import java.util.*
+import com.productivity.wind.R
 //import android.provider.Settings
 
 
