@@ -109,49 +109,58 @@ fun <T : Any> MutableList<T>.edit(
     block: T.() -> Unit
 ) {
     try {
-        var targetId = id
+        // Local function: safely get the 'id' property
+        fun getId(item: Any?): String? {
+            return try {
+                item?.let { it::class.members.find { m -> m.name == "id" }?.call(it) as? String }
+            } catch (e: Exception) {
+                null
+            }
+        }
 
-        if (targetId == "none") {
+        // Local function: resolve the target ID
+        fun resolveId(): String? {
+            if (id != "none") return id
             if (index == -1) {
                 Vlog("No index or id provided")
-                return
-            } else {
-                val item = this.getOrNull(index)
-                val idProp = item?.let { 
-                    it::class.members.find { m -> m.name == "id" }?.call(it) as? String
-                }
-                if (idProp == null) {
-                    Vlog("missing id in $item")
-                    return
-                }
-                targetId = idProp
+                return null
             }
-        }
-
-        for (i in indices) {
-            val item = this[i]
-            val idProp = item::class.members.find { it.name == "id" }?.call(item) as? String
-            if (idProp == null) {
+            val item = getOrNull(index)
+            return getId(item) ?: run {
                 Vlog("missing id in $item")
-                continue
+                null
             }
-            if (idProp == targetId) {
-                item.block() // apply changes
-                if (item::class.isData) {
-                    val copyMethod = item::class.members.find { it.name == "copy" }
-                    if (copyMethod != null) {
-                        if (item::class.isData) {
-                                this[i] = item
-                        }
+        }
 
-                    }
+        // Local function: apply block and handle data class copy
+        fun applyBlock(index: Int, item: T) {
+            item.block()
+            if (item::class.isData) {
+                val copyMethod = item::class.members.find { it.name == "copy" }
+                if (copyMethod != null) {
+                    this[index] = item // For data class, normally you'd do item.copy()
                 }
             }
         }
+
+        // Main logic
+        val targetId = resolveId() ?: return
+
+        forEachIndexed { i, item ->
+            val itemId = getId(item) ?: run {
+                Vlog("missing id in $item")
+                return@forEachIndexed
+            }
+            if (itemId == targetId) {
+                applyBlock(i, item)
+            }
+        }
+
     } catch (e: Exception) {
         Vlog("edit, e: ${e.message}")
     }
 }
+
 
 
 
