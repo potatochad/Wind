@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.productivity.wind.ui.theme.KeepAliveTheme
 import androidx.compose.ui.platform.LocalConfiguration
 import com.productivity.wind.Imports.*
+import androidx.compose.runtime.snapshots.*
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
@@ -112,10 +113,10 @@ fun <R> if_Type(
     if_Other: ((Any) -> R)? = null
 ): R? {
     return when (value) {
-        is Int -> onInt?.invoke(value)
-        is String -> onString?.invoke(value)
-        is Boolean -> onBoolean?.invoke(value)
-        else -> onOther?.invoke(value)
+        is Int -> if_Int?.invoke(value)
+        is String -> if_String?.invoke(value)
+        is Boolean -> if_Boolean?.invoke(value)
+        else -> if_Other?.invoke(value)
     }
 }
 
