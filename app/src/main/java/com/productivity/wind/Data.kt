@@ -176,7 +176,10 @@ fun MAINStart() {
 @Composable
 fun AppStart() {
     LaunchedEffect(Unit) {
-        refreshApps()
+        while(true){
+           wait(1000L)
+           refreshApps()
+        }
     }
     LazyMenu { Menu() }
     
