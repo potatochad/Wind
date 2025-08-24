@@ -60,9 +60,11 @@ fun AppUsage() {
       
          
          Icon.Add(onClick = {
-           val oldApp = apps[0]
-           apps[0] = oldApp.copy(Worth = oldApp.Worth + 1) // ✅ triggers recomposition
+           apps.edit(apps[0].id) {
+             Worth += 1
+           }
          })
+
 
 
 
