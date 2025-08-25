@@ -133,7 +133,7 @@ fun <T> edit(
     var index: Int? = null
     if_Type(which,
         if_String = {
-            item = list.find { reflection(it, "id") == which }
+            item = list.find { reflection(it as Any, "id") == which }
             index = list.indexOf(item)
         },
         if_Int = {
