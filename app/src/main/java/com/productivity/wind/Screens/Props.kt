@@ -249,7 +249,7 @@ fun AskUsagePermission(show: MutableState<Boolean>) {
         LazyPopup(
             show = show,
             title = "Need Usage Permission",
-            message = "Ahhh, mon cher, zis is ze moment, oui oui! We must, we must have ze permission, ha ha! Let us peeky-peek at ze screen time of your apps, magnifique—oh la la, ze app goes zoom-zoom perfectly, trés bien, oui oui!"
+            message = "Ahhh, mon cher, zis is ze moment, oui oui! We must, we must have ze permission, ha ha! Let us peeky-peek at ze screen time of your apps, magnifique—oh la la, ze app goes zoom-zoom perfectly, trés bien, oui oui!",
             onConfirm = {
                 // Open Usage Access Settings
                 val context = Global1.context
