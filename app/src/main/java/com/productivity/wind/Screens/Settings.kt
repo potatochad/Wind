@@ -30,7 +30,7 @@ fun SettingsScreen() {
                 BigIconColor = Gold,
                 title = "Unlock Threshold",
                 endContent = {
-                        Cinput(
+                        UI.Cinput(
                             what = Bar.Dpoints.toString(),
                             InputWidth = 60.dp,
                             MaxLetters = 5,
