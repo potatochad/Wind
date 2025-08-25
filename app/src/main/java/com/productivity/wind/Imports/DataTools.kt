@@ -468,4 +468,27 @@ fun <T> edit(
 }
 
 
+fun <T : Any> getListType(list: List<T>): KClass<out T> {
+    return list.firstOrNull()?.javaClass?.kotlin
+        ?: throw IllegalArgumentException("Cannot infer type T from empty list")
+}
+fun <T : Any> createEmptyItem(list: List<T>): T {
+    val itemType: KClass<out T> = list.firstOrNull()?.javaClass?.kotlin
+        ?: throw IllegalArgumentException("Cannot infer type T from empty list")
+    
+    return itemType.createInstance() as T
+}
+fun <T : Any> add(
+    list: SnapshotStateList<T>,
+    Add: T.() -> Unit
+) {
+    var item: T = createEmptyItem(list)
+    item.Add()
+    list.add(item)
+}
+
+
+
+
+
 
