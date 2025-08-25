@@ -41,6 +41,7 @@ fun AppUsage() {
        }
     ) {
       LazzyRow {
+        UI.move(w = 10.dp)
         Text("If")
         Text(" spend ")
         UI.Cinput(Time)
@@ -50,37 +51,15 @@ fun AppUsage() {
         UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
             show(Popup.AppSelect)
         }
-
-        Text(", add ")
-        UI.Cinput(Points)
-        Text(" points")
-        }
-
-
-      
-         
-         Icon.Add(onClick = {
-           edit(apps, 0) {
-             Worth += 1
-           }
-         })
-
-
-
-
-
-         UI.move(h = 20)
-         Text("all apps")
-      LazzyList(apps) { app ->
-        LazyCard {
-          LazzyRow {
-            Text("${app.name}: ${app.Worth}")
-          }
-        }
       }
 
+        LazzyRow{
+          Text(", add ")
+          UI.Cinput(Points)
+          Text(" points")
+        }
 
-      
+
     }
 
 }
