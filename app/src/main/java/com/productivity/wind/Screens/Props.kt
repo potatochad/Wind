@@ -96,10 +96,11 @@ object Header {
                     selectedApp.value.isEmpty() -> Vlog("select app")
 
                     else -> if (appId != null) {
-                        edit(apps, appId) {
+                        add(apps) {
                             DoneTime = Time.value
                             Worth = Points.value
                         }
+
                         
                     
                         selectedApp.value = ""
