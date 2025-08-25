@@ -555,11 +555,6 @@ data class PopupStyle(
     val containerColor: Color = Color(0xFF2B2B2B),
     val tonalElevation: Dp = 10.dp
 )
-fun AlertDialogScope.styleFunction(style: PopupStyle) {
-    this@styleFunction.shape = style.shape
-    this@styleFunction.containerColor = style.containerColor
-    this@styleFunction.tonalElevation = style.tonalElevation
-}
 
 @Composable
 fun LazyPopup(
@@ -573,13 +568,11 @@ fun LazyPopup(
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
 
-	Preload: Boolean = true,
+	style: PopupStyle = null,
 ) = NoLagCompose {
 	
-	val preloading = !show.value && Preload
-	
 	PreloadBox(
-        whenDo = preloading,
+        whenDo = !show.value,
         what = { content?.invoke() ?: Text(message) }
     )
 	
@@ -616,11 +609,12 @@ fun LazyPopup(
 					}
 				}
 			} else null
-		){
+
 			
-		}
-		
-		
+		    shape = style.shape,
+            containerColor = style.containerColor,
+            tonalElevation = style.tonalElevation,
+		)
 	}
 }
 
