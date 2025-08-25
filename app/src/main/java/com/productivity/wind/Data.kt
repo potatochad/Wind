@@ -106,39 +106,6 @@ data class DataApps(
 )
 
 
-fun <T> edit(
-    list: SnapshotStateList<T>,  
-    which: Any,
-    edit: T.() -> Unit
-) {
-    var item: T? = null
-    var index: Int? = null
-    if_Type(which,
-        if_String = {
-            item = list.find { reflection(it as Any, "id") == which }
-            index = list.indexOf(item)
-        },
-        if_Int = {
-            item = list[which as Int]
-            index = which
-        }
-    )
-
-    if (item == null) {Vlog("Item null: data, fun edit"); return}
-
-    val oldItem = item
-    oldItem?.edit()
-    list.removeAt(index!!)
-    list.add(index!!, oldItem!!)
-
-
-    
-}
-
-
-
-
-
 
 
 
