@@ -146,7 +146,7 @@ fun <T> edit(
 
     val oldItem = item
     oldItem?.edit()
-    list[index!!] = oldItem   
+    list[index!!] = oldItem!!
     
 }
 
