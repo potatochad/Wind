@@ -119,6 +119,10 @@ fun <R> if_Type(
         else -> if_Other?.invoke(value)
     }
 }
+fun reflection(obj: Any, propertyName: String): Any? {
+    val prop = obj::class.members.find { it.name == propertyName }
+    return prop?.call(obj)
+}
 
 fun <T> edit(
     list: SnapshotStateList<T>,  
@@ -129,7 +133,7 @@ fun <T> edit(
     var index: Int? = null
     if_Type(which,
         if_String = {
-            item = list.find { (it as dynamic).id == which }
+            item = list.find { reflection(it, "id") == which }
             index = list.indexOf(item)
         },
         if_Int = {
