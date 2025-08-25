@@ -42,7 +42,7 @@ fun AppUsage() {
        }
     ) {
       LazzyRow {
-        UI.move(w = 10.dp)
+        UI.move(w = 20)
         Text("If")
         Text(" spend ")
         UI.Cinput(Time)
