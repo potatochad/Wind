@@ -146,7 +146,10 @@ fun <T> edit(
 
     val oldItem = item
     oldItem?.edit()
-    list[index!!] = oldItem!!
+    list.removeAt(index!!)
+    list.add(index!!, oldItem!!)
+
+
     
 }
 
