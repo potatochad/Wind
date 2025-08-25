@@ -271,6 +271,7 @@ object UI {
     fun End(content: @Composable () -> Unit) {
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
             content()
+			move(w = 10)
         }
     }
 
