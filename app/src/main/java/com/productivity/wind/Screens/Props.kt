@@ -121,7 +121,6 @@ object Header {
                     }
                 }
             })
-        }
     }
 
     @Composable
