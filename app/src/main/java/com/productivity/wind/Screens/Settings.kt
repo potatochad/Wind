@@ -23,7 +23,7 @@ val Gold = Color(0xFFFFD700)
 @Composable
 fun SettingsScreen() {
     LazyScreen(title = { Text("Settings") }) {
-        
+    
         LazyItem(
                 topPadding = 1.dp,
                 BigIcon = Icons.Filled.LockOpen,
@@ -31,7 +31,7 @@ fun SettingsScreen() {
                 title = "Unlock Threshold",
                 endContent = {
                         UI.Cinput(   
-                            what = Bar.Dpoints.value.toString(),
+                            what = remember { m(Bar.points) },
                             MaxLetters = 5,
                         ) {
                             val input = it.toIntOrNull() ?: 0
