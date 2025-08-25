@@ -139,8 +139,8 @@ object Header {
         
         UI.move(w = 12)
         
-        Text(text = "Points ${Bar.funTime}", fontSize = 18.sp)
-        
+        PointsCounter(points = Bar.funTime)
+
         
         UI.End {
                 Icon.Add()
@@ -149,6 +149,33 @@ object Header {
 
     
 }
+
+
+@Composable
+fun PointsCounter(points: Int) {
+    // Smooth number animation
+    val animatedPoints by animateIntAsState(
+        targetValue = points,
+        animationSpec = spring(dampingRatio = 0.3f, stiffness = 200f) // bouncy
+    )
+
+    // Pop effect on each update
+    var scale by remember { mutableStateOf(1f) }
+    LaunchedEffect(points) {
+        scale = 1.3f
+        kotlinx.coroutines.delay(150)
+        scale = 1f
+    }
+
+    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+        Text(
+            text = "Points $animatedPoints",
+            fontSize = 18.sp,
+            modifier = Modifier.scale(scale)
+        )
+    }
+}
+
 
 object Icon {
         @Composable
