@@ -30,9 +30,8 @@ fun SettingsScreen() {
                 BigIconColor = Gold,
                 title = "Unlock Threshold",
                 endContent = {
-                        UI.Cinput(
-                            what = Bar.Dpoints.toString(),
-                            InputWidth = 60.dp,
+                        UI.Cinput(   
+                            what = Bar.Dpoints.value.toString(),
                             MaxLetters = 5,
                         ) {
                             val input = it.toIntOrNull() ?: 0
