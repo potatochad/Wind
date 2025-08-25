@@ -550,11 +550,6 @@ fun LazyScreen(
 
 
 //region LAZY POPUP
-data class PopupStyle(
-    val shape: Shape = RoundedCornerShape(16.dp),
-    val containerColor: Color = Color(0xFF2B2B2B),
-    val tonalElevation: Dp = 0.dp
-)
 
 @Composable
 fun LazyPopup(
@@ -568,7 +563,6 @@ fun LazyPopup(
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
 
-	style: PopupStyle? = PopupStyle(),
 ) = NoLagCompose {
 	
 	PreloadBox(
@@ -609,12 +603,7 @@ fun LazyPopup(
 					}
 				}
 			} else null
-
-			
-		    shape = style.shape,
-            containerColor = style.containerColor,
-            tonalElevation = style.tonalElevation,
-		)
+     	)
 	}
 }
 
