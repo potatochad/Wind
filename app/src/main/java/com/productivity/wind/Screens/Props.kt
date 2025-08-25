@@ -85,44 +85,52 @@ object Header {
     
     @Composable
     fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedApp: MutableState<String>) {
-        
         Text("AppUsage")
         UI.End {
             Icon.Add(onClick = {
                 when {
-                    Time.value.toInt() < 1 -> Vlog("add time")
-                    Points.value.toInt() < 1 -> Vlog("add points")
-                    selectedApp.value.isEmpty() -> Vlog("select app")
-
-                    val app = apps.find { it.name == selectedApp.value }
-                    if (app == null) {Vlog("NO such app found"); return}
-                    if (app.Worth == 0) {
-                        edit(apps, app.id) {
-                            DoneTime = Time.value
-                            Worth = Points.value
-                        }
-                    } else {
-                        add(apps) {
-                            name = selectedApp.value
-                            DoneTime = Time.value
-                            Worth = Points.value
-                        }
+                    Time.value.toInt() < 1 -> {
+                        Vlog("add time")
+                        return@Add
                     }
-
-                        
-
-                        
-                    
-                    selectedApp.value = ""
-                    Points.value = "0"
-                    Time.value = "0"
-
-                    goTo("Main")
+                    Points.value.toInt() < 1 -> {
+                        Vlog("add points")
+                        return@Add
+                    }
+                    selectedApp.value.isEmpty() -> {
+                        Vlog("select app")
+                        return@Add
                     }
                 }
-            )
+
+                val app = apps.find { it.name == selectedApp.value }
+                if (app == null) {
+                    Vlog("NO such app found")
+                    return@Add
+                }
+
+                if (app.Worth == 0) {
+                    edit(apps, app.id) {
+                        DoneTime = Time.value
+                        Worth = Points.value
+                    }
+                } else {
+                    add(apps) {
+                        name = selectedApp.value
+                        DoneTime = Time.value
+                        Worth = Points.value
+                    }
+                }
+
+                selectedApp.value = ""
+                Points.value = "0"
+                Time.value = "0"
+
+                goTo("Main")
+            })
         }
     }
+
 
     @Composable
     fun Main(){
