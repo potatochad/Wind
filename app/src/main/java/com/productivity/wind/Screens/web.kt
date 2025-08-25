@@ -16,19 +16,19 @@ fun Web() {
 
                     // WORK WEB
                     UI.End {
-                    LazyIcon(
-                        onClick = { goTo("WorkWeb") },
-                        BigIcon = Icons.Default.Work,
-                        BigIconColor = Color(0xFF4CAF50), // Green
-                        OuterPadding = 0,
-                    )
-
-                    LazyIcon(
-                        onClick = { goTo("FunWeb") },
-                        BigIcon = Icons.Default.SentimentVerySatisfied,
-                        BigIconColor = Color(0xFFFFC107), // Amber
-                        OuterPadding = 0,
-                    )
+                        LazyIcon(
+                            onClick = { goTo("WorkWeb") },
+                            BigIcon = Icons.Default.Work,
+                            BigIconColor = Color(0xFF4CAF50), // Green
+                            OuterPadding = 0,
+                        )
+                        
+                        LazyIcon(
+                            onClick = { goTo("FunWeb") },
+                            BigIcon = Icons.Default.SentimentVerySatisfied,
+                            BigIconColor = Color(0xFFFFC107), // Amber
+                            OuterPadding = 0,
+                        )
                     }
 
 
