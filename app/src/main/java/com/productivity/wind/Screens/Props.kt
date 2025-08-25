@@ -105,6 +105,8 @@ object Header {
                         selectedApp.value = ""
                         Points.value = "0"
                         Time.value = "0"
+
+                        goTo("main")
                     }
                 }
             })
