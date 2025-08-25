@@ -106,7 +106,7 @@ object Header {
                         Points.value = "0"
                         Time.value = "0"
 
-                        goTo("main")
+                        goTo("Main")
                     }
                 }
             })
