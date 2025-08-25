@@ -117,8 +117,8 @@ object Header {
                 } else {
                     add(apps) {
                         name = selectedApp.value
-                        DoneTime = Time.value
-                        Worth = Points.value
+                        DoneTime = Time.value.toIntOrNull() ?: 0
+                        Worth = Points.value.toIntOrNull() ?: 0
                     }
                 }
 
