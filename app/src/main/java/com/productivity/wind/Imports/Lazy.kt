@@ -568,7 +568,7 @@ fun LazyPopup(
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
 
-	style: PopupStyle = null,
+	style: PopupStyle? = null,
 ) = NoLagCompose {
 	
 	PreloadBox(
