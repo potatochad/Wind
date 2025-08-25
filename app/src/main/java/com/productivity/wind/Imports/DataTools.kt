@@ -413,3 +413,28 @@ object ListStorage {
 
 
 }
+
+
+
+
+
+
+fun <R> if_Type(
+    value: Any,
+    if_Int: ((Int) -> R)? = null,
+    if_String: ((String) -> R)? = null,
+    if_Boolean: ((Boolean) -> R)? = null,
+    if_Other: ((Any) -> R)? = null
+): R? {
+    return when (value) {
+        is Int -> if_Int?.invoke(value)
+        is String -> if_String?.invoke(value)
+        is Boolean -> if_Boolean?.invoke(value)
+        else -> if_Other?.invoke(value)
+    }
+}
+fun reflection(obj: Any, propertyName: String): Any? {
+    val prop = obj::class.members.find { it.name == propertyName }
+    return prop?.call(obj)
+}
+
