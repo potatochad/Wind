@@ -137,7 +137,7 @@ fun <T> edit(
             index = list.indexOf(item)
         },
         if_Int = {
-            item = list[which]
+            item = list[which as Int]
             index = which
         }
     )
