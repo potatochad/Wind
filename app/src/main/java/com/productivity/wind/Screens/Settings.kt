@@ -31,23 +31,17 @@ fun SettingsScreen() {
                 title = "Unlock Threshold",
                 endContent = {
                         Cinput(
-                                value = Bar.Dpoints.toString(),
-                                onChange = {
-                                        val input = it.toIntOrNull() ?: 0  // convert input to number safely
-                                        if (input > Bar.funTime) {
-                                                Vlog("$input input > ${Bar.funTime}p= get more points", "one")
-                                        } else {
-                                                Bar.Dpoints = input
-                                        }
-                                },
-                                InputWidth = 60.dp,
-                                isNumber = true,
-                                MaxLetters = 5,
-                                OnMaxLetters = {
-                                        Vlog("MAX: 99999 points")
-                                },
-                                //OnFocusLose = { if (Bar.Dpoints<1) Bar.Dpoints =0 }
-                        ) 
+                            what = Bar.Dpoints.toString(),
+                            InputWidth = 60.dp,
+                            MaxLetters = 5,
+                        ) {
+                            val input = it.toIntOrNull() ?: 0
+                            if (input > Bar.funTime) {
+                                Vlog("$input input > ${Bar.funTime}p= get more points", "one")
+                            } else {
+                                Bar.Dpoints = input
+                            }
+                        }
                 }
         )
 
