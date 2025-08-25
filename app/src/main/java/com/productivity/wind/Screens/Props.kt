@@ -111,8 +111,8 @@ object Header {
 
                 if (app.Worth == 0) {
                     edit(apps, app.id) {
-                        DoneTime = Time.value
-                        Worth = Points.value
+                        DoneTime = Time.value.toIntOrNull() ?: 0
+                        Worth = Points.value.toIntOrNull() ?: 0
                     }
                 } else {
                     add(apps) {
