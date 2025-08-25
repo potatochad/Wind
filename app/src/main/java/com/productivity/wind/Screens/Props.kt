@@ -120,7 +120,8 @@ object Header {
                     goTo("Main")
                     }
                 }
-            })
+            )
+        }
     }
 
     @Composable
