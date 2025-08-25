@@ -85,8 +85,7 @@ object Header {
     
     @Composable
     fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedApp: MutableState<String>) {
-        val appId = apps.find { it.name == selectedApp.value }?.id
-
+        
         Text("AppUsage")
         UI.End {
             Icon.Add(onClick = {
@@ -95,19 +94,30 @@ object Header {
                     Points.value.toInt() < 1 -> Vlog("add points")
                     selectedApp.value.isEmpty() -> Vlog("select app")
 
-                    else -> if (appId != null) {
-                        add(apps) {
+                    val app = apps.find { it.name == selectedApp.value }
+                    if (app == null) {Vlog("NO such app found"); return}
+                    if (app.Worth == 0) {
+                        edit(apps, app.id) {
                             DoneTime = Time.value
                             Worth = Points.value
                         }
+                    } else {
+                        add(apps) {
+                            name = selectedApp.value
+                            DoneTime = Time.value
+                            Worth = Points.value
+                        }
+                    }
+
+                        
 
                         
                     
-                        selectedApp.value = ""
-                        Points.value = "0"
-                        Time.value = "0"
+                    selectedApp.value = ""
+                    Points.value = "0"
+                    Time.value = "0"
 
-                        goTo("Main")
+                    goTo("Main")
                     }
                 }
             })
