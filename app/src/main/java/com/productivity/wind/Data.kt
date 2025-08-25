@@ -145,7 +145,7 @@ fun <T> edit(
     if (item == null) {Vlog("Item null: data, fun edit"); return}
 
     val oldItem = item
-    oldItem.edit()
+    oldItem?.edit()
     list[index] = oldItem   
     
 }
