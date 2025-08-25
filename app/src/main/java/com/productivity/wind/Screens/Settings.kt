@@ -30,7 +30,7 @@ fun SettingsScreen() {
                 BigIconColor = Gold,
                 title = "Unlock Threshold",
                 endContent = {
-                        InputField(
+                        Cinput(
                                 value = Bar.Dpoints.toString(),
                                 onChange = {
                                         val input = it.toIntOrNull() ?: 0  // convert input to number safely
