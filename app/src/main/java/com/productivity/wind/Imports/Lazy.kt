@@ -337,35 +337,35 @@ fun LazyItem(
 		    start = 7.dp,
 		    end = 7.dp
 	    ),
- verticalAlignment = Alignment.CenterVertically
+		verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
-    modifier = modifier
-        .fillMaxWidth()
-        .clickable(enabled = onClick != null) { onClick?.invoke() },
-    shape = RoundedCornerShape(12.dp),
-    colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
-    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-) {
+			modifier = modifier
+				.fillMaxWidth()
+				.clickable(enabled = onClick != null) { onClick?.invoke() },
+			shape = RoundedCornerShape(12.dp),
+			colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
+			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+		) {
             Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(5.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-	if (icon != null) {
-		Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = Color(0xFFFFD700),
-            modifier = Modifier
-                .padding(end = 10.dp)
-                .size(24.dp)
-        )
-	}	    
+				modifier = Modifier
+					.fillMaxWidth()
+					.padding(5.dp),
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				if (icon != null) {
+					Icon(
+						imageVector = icon,
+						contentDescription = null,
+						tint = Color(0xFFFFD700),
+						modifier = Modifier
+							.padding(end = 10.dp)
+							.size(24.dp)
+					)
+				}	    
 
-	if (BigIcon != null && BigIconColor != null) {
-                    Box(
+				if (BigIcon != null && BigIconColor != null) {
+					Box(
                         modifier = Modifier
                             .padding(end = 10.dp)
                             .size(30.dp)
@@ -380,21 +380,19 @@ fun LazyItem(
                             modifier = Modifier.size(20.dp)
                         )
                     }
+				}
+
+
+				Column(modifier = Modifier.weight(1f)) {
+					Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
+					subtitle?.let {
+						Text(text = it, color = Color.Gray, fontSize = 12.sp)
+					}
+				}
+				endContent?.invoke()
+			}
+		}
 	}
-
-
-
-	
-        Column(modifier = Modifier.weight(1f)) {
-            Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
-            subtitle?.let {
-                Text(text = it, color = Color.Gray, fontSize = 12.sp)
-            }
-        }
-        endContent?.invoke()
-    }
-}}
-
 }
 
 @Composable
@@ -552,6 +550,16 @@ fun LazyScreen(
 
 
 //region LAZY POPUP
+data class PopupStyle(
+    val shape: Shape = RoundedCornerShape(16.dp),
+    val containerColor: Color = Color(0xFF2B2B2B),
+    val tonalElevation: Dp = 10.dp
+)
+fun AlertDialogScope.styleFunction(style: PopupStyle) {
+    this@styleFunction.shape = style.shape
+    this@styleFunction.containerColor = style.containerColor
+    this@styleFunction.tonalElevation = style.tonalElevation
+}
 
 @Composable
 fun LazyPopup(
@@ -608,7 +616,10 @@ fun LazyPopup(
 					}
 				}
 			} else null
-		)
+		){
+			
+		}
+		
 		
 	}
 }
