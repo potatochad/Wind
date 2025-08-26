@@ -268,12 +268,17 @@ object UI {
 
 
     @Composable
-    fun End(content: @Composable () -> Unit) {
-        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-            content()
+	fun End(content: @Composable () -> Unit) {
+		Row(
+			Modifier.fillMaxWidth(),
+			horizontalArrangement = Arrangement.End,
+			verticalAlignment = Alignment.CenterVertically
+		) {
+			content()
 			move(w = 10)
-        }
-    }
+		}
+	}
+
 
     @Composable
     fun move(s: Int = 0, w: Int = 0, h: Int = 0) {
