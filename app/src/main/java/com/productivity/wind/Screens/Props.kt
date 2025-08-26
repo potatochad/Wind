@@ -276,6 +276,7 @@ fun AppSelectPopup(
         val appList by remember { mutableStateOf(getApps()) }
         var loadedCount by remember { mutableStateOf(6) }
 
+        // gradually increase loaded count
         LaunchedEffect(Unit) {
             for (i in 6..appList.size) {
                 wait(20)
@@ -288,37 +289,16 @@ fun AppSelectPopup(
             title = "Select App",
             message = "",
             content = {
-                LazzyList(appList) { appInfo ->
-                    val index = appList.indexOf(appInfo)
-                    if (index < loadedCount) {
-                        val icon = getAppIcon(getAppPackage(appInfo))
-                        LazzyRow {
-                            UI.move(10)
-                            LazyImage(icon)
-                            UI.move(10)
-                            UI.Ctext(getAppName(appInfo)) {
-                                selectedApp.value = getAppName(appInfo)
-                                show.value = false
-                            }
-                        }
-                    } else {
-                        // Placeholder while loading
-                        LazzyRow {
-                            Box(
-                                Modifier
-                                    .padding(10.dp)
-                                    .size(32.dp)
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .background(Color.Black.copy(alpha = 0.1f))
-                                    .padding(12.dp)
-                            ) {}
-                            Row(
-                                Modifier
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .background(Color.Black.copy(alpha = 0.1f))
-                                    .width(160.dp)
-                                    .height(30.dp)
-                            ) {}
+                // Only pass the loaded items to the LazyList
+                LazzyList(appList.take(loadedCount)) { appInfo ->
+                    val icon = getAppIcon(getAppPackage(appInfo))
+                    LazzyRow {
+                        UI.move(10)
+                        LazyImage(icon)
+                        UI.move(10)
+                        UI.Ctext(getAppName(appInfo)) {
+                            selectedApp.value = getAppName(appInfo)
+                            show.value = false
                         }
                     }
                 }
