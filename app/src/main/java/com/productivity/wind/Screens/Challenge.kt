@@ -44,7 +44,7 @@ fun AppUsage() {
         Header.AppUsage(Time, Points, selectedApp)
        }
     ) {
-      TextRow {
+      UI.TextRow {
         UI.move(w = 20)
         Text("If")
         Text(" spend ")
