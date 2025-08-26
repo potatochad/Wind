@@ -167,7 +167,7 @@ fun PointsCounter(points: Int) {
         scale = 1f
     }
 
-    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+    LazzyRow {
         Text(
             text = "Points $animatedPoints",
             fontSize = 18.sp,
