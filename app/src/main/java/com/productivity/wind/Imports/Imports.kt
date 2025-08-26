@@ -400,8 +400,7 @@ object UI {
         val isFocused by IsFocused(FocusChange)
 
         val TextStyling = CTextStyle(TextColor, textSize)
-
-
+		val isNumber = style.isNumber
         val measurer = rememberTextMeasurer()
         val density = LocalDensity.current
         val measuredWidth = measurer.measure(
@@ -413,23 +412,14 @@ object UI {
             (with(density) { measuredWidth.toDp() } + 2.dp)
                 .coerceIn(WidthMin.dp, WidthMax.dp),
         )
-
-
-
         OnLoseFocus(isFocused, null)
 
+
+
+
+		
         BasicTextField(
-            value = value,
-            onValueChange = {
-                val input = FilterInput(style.isNumber, it)
-                if (MaxLetters == null || input.length <= MaxLetters) {
-					what.value = input
-                    onChange(input)
-                } else {
-                    Vlog("max ${MaxLetters} letters")
-                }
-            },
-            decorationBox = { innerTextField ->
+			decorationBox = { innerTextField ->
                 FieldBox(
                     height = height,
                     BackgroundColor = Color.Transparent,
@@ -437,9 +427,6 @@ object UI {
                     innerTextField()
                 }
             },
-
-
-			// style
 			modifier = outerMod.height(height),
             textStyle = TextStyling,
             singleLine = true,
@@ -447,6 +434,24 @@ object UI {
             keyboardActions = doneAction(null),
             cursorBrush = grayCursor(),
             interactionSource = FocusChange,
+
+
+
+
+
+
+
+			
+            value = value,
+            onValueChange = {
+                val input = FilterInput(isNumber, it)
+                if (MaxLetters == null || input.length <= MaxLetters) {
+					what.value = input
+                    onChange(input)
+                } else {
+                    Vlog("max ${MaxLetters} letters")
+                }
+            },
         )
     }
 
