@@ -375,7 +375,8 @@ object UI {
 		val singleLine: Boolean = true,
 		val keyboardType: KeyboardType = KeyboardType.Text,
 		val imeAction: ImeAction = ImeAction.Default,
-		val cursorColor: Color = Color.Gray
+		val cursorColor: Color = Color.Gray,
+		val isNumber: Bool = true,
 	)
 
     @Composable
@@ -388,7 +389,9 @@ object UI {
         WidthMax: Int = 100,
 		style: InputStyle = InputStyle()
 
-        onChange: (String) -> Unit = {},
+        onChange: (String) -> Unit = {
+			
+		},
     ) {
         val value = what.value
         val TextColor = Color(0xFFFFD700)
@@ -407,7 +410,7 @@ object UI {
             style = TextStyling,
         ).size.width
         val outerMod = Modifier.width(
-            (with(density) { measuredWidth.toDp() } + 0.dp)
+            (with(density) { measuredWidth.toDp() } + 2.dp)
                 .coerceIn(WidthMin.dp, WidthMax.dp),
         )
 
@@ -418,9 +421,9 @@ object UI {
         BasicTextField(
             value = value,
             onValueChange = {
-                val input = FilterInput(true, it)
+                val input = FilterInput(style.isNumber, it)
                 if (MaxLetters == null || input.length <= MaxLetters) {
-                    what.value = input
+					what.value = input
                     onChange(input)
                 } else {
                     Vlog("max ${MaxLetters} letters")
