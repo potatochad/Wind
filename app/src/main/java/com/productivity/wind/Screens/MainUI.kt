@@ -52,8 +52,7 @@ fun Main() {
                 LazzyList(apps.filter { it.Worth > 0 }) { app ->
                     LazyCard {
                         LazzyRow {
-                            Column(modifier = Modifier.weight(1f) // main text takes most space
-                                  ) {
+                            Column() {
                                 Text("${app.name}: spent time ${app.NowTime}/${app.DoneTime}", fontSize = 14.sp)
                                 // Tiny progress bar for value
                                 Box(
@@ -75,7 +74,7 @@ fun Main() {
                             Text(
                                 "★",
                                 fontSize = 12.sp,
-                                color = if (app.value > 0) Color.Yellow else Color.Gray,
+                                color = if (app.Worth > 10) Color.Yellow else Color.Gray,
                                 modifier = Modifier.padding(start = 8.dp, top = 4.dp)
                             )
                         }
