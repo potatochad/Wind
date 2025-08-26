@@ -176,26 +176,35 @@ fun LazzyRow(
 
 	
 @Composable
+@Composable
 fun LazyCard(
-	InputColor: Color = Color(0xFF1A1A1A),
-	InnerPadding: Int = 16,
-	content: @Composable () -> Unit,
+    InputColor: Color = Color(0xFF1A1A1A),
+    InnerPadding: Int = 16,
+    content: @Composable () -> Unit,
 ) {
-  Card(
-      modifier = Modifier
-        .padding(8.dp)
-        .fillMaxWidth(), 
-      shape = RoundedCornerShape(16.dp), 
-      elevation = CardDefaults
-        .cardElevation(defaultElevation = 8.dp), 
-      colors = CardDefaults
-        .cardColors(containerColor = InputColor)
-    ){
-      Column(modifier = Modifier.padding(InnerPadding.dp)) {
-        content()
-      }
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = InputColor)
+    ) {
+        Column(
+            modifier = Modifier.padding(
+                PaddingValues(
+                    start = InnerPadding.dp,
+                    end = InnerPadding.dp,
+                    bottom = InnerPadding.dp,
+                    top = (InnerPadding - 2).dp  // decrease top padding by 2.dp
+                )
+            )
+        ) {
+            content()
+        }
     }
 }
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
