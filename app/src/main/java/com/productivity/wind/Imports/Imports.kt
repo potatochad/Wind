@@ -365,6 +365,7 @@ object UI {
 
 	// IMPLEMENT LATEr...not synched with cinput
     data class InputStyle(
+		/*
 		val textColor: Color = Color(0xFFFFD700),
 		val textSize: TextUnit = 14.sp,
 		val height: Dp = 36.dp,
@@ -376,6 +377,7 @@ object UI {
 		val keyboardType: KeyboardType = KeyboardType.Text,
 		val imeAction: ImeAction = ImeAction.Default,
 		val cursorColor: Color = Color.Gray,
+		*/
 		val isNumber: Bool = true,
 	)
 
@@ -387,11 +389,9 @@ object UI {
         MaxLetters: Int? = 5,
         WidthMin: Int = 10,
         WidthMax: Int = 100,
-		style: InputStyle = InputStyle()
+		style: InputStyle = InputStyle(),
 
-        onChange: (String) -> Unit = {
-			
-		},
+        onChange: (String) -> Unit = {},
     ) {
         val value = what.value
         val TextColor = Color(0xFFFFD700)
