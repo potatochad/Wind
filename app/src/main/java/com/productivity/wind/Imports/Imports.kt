@@ -484,8 +484,8 @@ object UI {
     @Composable
     fun TextRow(
         padding: Int = 0,
-        hGap: Dp = 5.dp,          // space between items in a row
-        vGap: Dp = 0.dp,          // space between rows
+        hGap: Dp = 0.dp,          // space between items in a row
+        vGap: Dp = 20.dp,          // space between rows
         content: @Composable () -> Unit,
     ) {
         Layout(
