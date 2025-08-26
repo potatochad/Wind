@@ -24,8 +24,9 @@ import androidx.navigation.NavGraphBuilder
 import com.productivity.wind.Imports.*
 import androidx.compose.foundation.background
 import androidx.compose.ui.draw.clip
-
+import androidx.compose.ui.draw.*
 import androidx.compose.animation.core.*
+
 fun NavGraphBuilder.ScreenNav() {
     //Main—StartDestination    
     url("Main") { Main() }
