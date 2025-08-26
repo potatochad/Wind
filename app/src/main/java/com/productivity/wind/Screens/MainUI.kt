@@ -24,9 +24,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.heightIn
 import com.productivity.wind.MAINStart
-
 import com.productivity.wind.*
 import com.productivity.wind.Imports.*
+
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.unit.*
 
 @Composable
 fun Main() {
@@ -49,8 +52,34 @@ fun Main() {
                 LazzyList(apps.filter { it.Worth > 0 }) { app ->
                     LazyCard {
                         LazzyRow {
-                            Text("${app.name}: spent time ${app.NowTime}/${app.}")
+                            Column(modifier = Modifier.weight(1f) // main text takes most space
+                                  ) {
+                                Text("${app.name}: spent time ${app.NowTime}/${app.DoneTime}", fontSize = 14.sp)
+                                // Tiny progress bar for value
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.5f) // half-width
+                                        .height(4.dp)
+                                        .background(Color.Gray.copy(alpha = 0.3f))
+                                ) {
+                                    val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth(progress)
+                                            .height(4.dp)
+                                            .background(Color.Green)
+                                    )
+                                }
+                            }
+                            // Tiny symbol representing value or priority
+                            Text(
+                                "★",
+                                fontSize = 12.sp,
+                                color = if (app.value > 0) Color.Yellow else Color.Gray,
+                                modifier = Modifier.padding(start = 8.dp, top = 4.dp)
+                            )
                         }
+
                      }
                 }
                             
