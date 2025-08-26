@@ -31,7 +31,7 @@ fun SettingsScreen() {
                 title = "Unlock Threshold",
                 endContent = {
                         UI.Cinput(   
-                            what = remember { m(Bar.Dpoints.value.toString()) },
+                            what = remember { m(Bar.Dpoints.toString()) },
                             MaxLetters = 5,
                         ) {
                             val input = it.toIntOrNull() ?: 0
