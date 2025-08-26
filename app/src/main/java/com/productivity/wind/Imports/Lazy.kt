@@ -100,6 +100,25 @@ fun LazySwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
     )
 }
 
+@Composable 
+fun LazyRuleCard(
+	Header: Str,
+	content: @Composable () -> Unit,
+){
+	LazzyRow {
+		Text(
+			text = "$Header",
+			fontSize = 17.sp,        
+			color = Color.White,        
+			fontWeight = FontWeight.Bold,
+		)
+	}
+
+	LazyCard{
+		content()
+	}
+
+}
 
 
 
