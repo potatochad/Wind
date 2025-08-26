@@ -19,7 +19,10 @@ fun Challenge() {
             onClick = { 
               if (!UI.isUsageP_Enabled()) {
                 show(Popup.AskUsagePermission)
-              } else { goTo("AppUsage") }
+              } else { 
+                goTo("AppUsage")
+                refreshApps()  
+              }
             },
         )
     
@@ -34,14 +37,14 @@ fun AppUsage() {
     var Points = remember { m("0") }
     selectedApp.value = ""
     LaunchedEffect(Unit) {
-        refreshApps()
+        refreshApps()  
     }
 
     LazyScreen(title = {
         Header.AppUsage(Time, Points, selectedApp)
        }
     ) {
-      LazzyRow {
+      TextRow {
         UI.move(w = 20)
         Text("If")
         Text(" spend ")
@@ -52,13 +55,10 @@ fun AppUsage() {
         UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
             show(Popup.AppSelect)
         }
+        Text(", add ")
+        UI.Cinput(Points)
+        Text(" points")
       }
-
-        LazzyRow{
-          Text(", add ")
-          UI.Cinput(Points)
-          Text(" points")
-        }
 
 
     }
