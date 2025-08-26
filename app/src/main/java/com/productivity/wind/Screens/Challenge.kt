@@ -44,20 +44,25 @@ fun AppUsage() {
         Header.AppUsage(Time, Points, selectedApp)
        }
     ) {
-      UI.TextRow {
-        UI.move(w = 20)
-        Text("If")
-        Text(" spend ")
-        UI.Cinput(Time)
-        Text(" seconds ")
-
-        Text("on ")
-        UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
-            show(Popup.AppSelect)
+      LazyRuleCard("If"){
+        LazzyRow{
+          Text("● spend ")
+          UI.Cinput(Time)
+          Text(" seconds")
         }
-        Text(", add ")
-        UI.Cinput(Points)
-        Text(" points")
+        LazzyRow{
+          Text("on ")
+          UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
+            show(Popup.AppSelect)
+          }
+        }
+      }
+      LazyRuleCard("Do"){
+        LazzyRow{
+          Text(", add ")
+          UI.Cinput(Points)
+          Text(" points")
+        }
       }
 
 
