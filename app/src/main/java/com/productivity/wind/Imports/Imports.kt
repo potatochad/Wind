@@ -358,6 +358,21 @@ object UI {
 
 
 
+	// IMPLEMENT LATEr...not synched with cinput
+    data class InputStyle(
+		val textColor: Color = Color(0xFFFFD700),
+		val textSize: TextUnit = 14.sp,
+		val height: Dp = 36.dp,
+		val maxLetters: Int? = 5,
+		val widthMin: Dp = 10.dp,
+		val widthMax: Dp = 100.dp,
+		val backgroundColor: Color = Color.Transparent,
+		val singleLine: Boolean = true,
+		val keyboardType: KeyboardType = KeyboardType.Text,
+		val imeAction: ImeAction = ImeAction.Default,
+		val cursorColor: Color = Color.Gray
+	)
+
     @Composable
     fun Cinput(
         what: MutableState<String>,
@@ -366,6 +381,7 @@ object UI {
         MaxLetters: Int? = 5,
         WidthMin: Int = 10,
         WidthMax: Int = 100,
+		style: InputStyle = InputStyle()
 
         onChange: (String) -> Unit = {},
     ) {
@@ -398,20 +414,13 @@ object UI {
             value = value,
             onValueChange = {
                 val input = FilterInput(true, it)
-                if (input.length <= max(MaxLetters)) {
+                if (MaxLetters == null || input.length <= MaxLetters) {
                     what.value = input
                     onChange(input)
                 } else {
                     Vlog("max ${MaxLetters} letters")
                 }
             },
-            modifier = outerMod.height(height),
-            textStyle = TextStyling,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(type(true), imeAction),
-            keyboardActions = doneAction(null),
-            cursorBrush = grayCursor(),
-            interactionSource = FocusChange,
             decorationBox = { innerTextField ->
                 FieldBox(
                     height = height,
@@ -420,6 +429,16 @@ object UI {
                     innerTextField()
                 }
             },
+
+
+			// style
+			modifier = outerMod.height(height),
+            textStyle = TextStyling,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(type(true), imeAction),
+            keyboardActions = doneAction(null),
+            cursorBrush = grayCursor(),
+            interactionSource = FocusChange,
         )
     }
 
