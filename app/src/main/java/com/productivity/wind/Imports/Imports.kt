@@ -211,8 +211,13 @@ fun getApps(): List<ResolveInfo> {
     val context = Global1.context
     val pm = context.packageManager
     val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
-    return pm.queryIntentActivities(launchIntent, 0)
+    return pm.queryIntentActivities(launchIntent, 0).abcOrder()
 }
+fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
+    val pm = Global1.context.packageManager
+    return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
+}
+
 fun getListsApp(packageName: String): DataApps? {
     val map = apps.associateBy { it.packageName }
     return map[packageName]
