@@ -198,9 +198,9 @@ fun refreshApps() {
 				}
             } else {
                     add(apps){
-                        name = label,
-                        packageName = pkg,
-                        NowTime = AppUsage,
+                        name = label
+                        packageName = pkg
+                        NowTime = AppUsage
 					}
             }
     }  
