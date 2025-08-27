@@ -369,9 +369,9 @@ object UI {
 			colors = RadioButtonDefaults.colors(
 				selectedColor = Color(0xFFFFD700),
 				unselectedColor = Color.Gray
-        ),
-        modifier = Modifier
-			    .size(10.dp)
+			),
+			modifier = Modifier
+				.scale(0.3f)
 				.padding(start = 0.dp, end = 8.dp, top = 3.dp, bottom = 3.dp)
 		)
 	}
