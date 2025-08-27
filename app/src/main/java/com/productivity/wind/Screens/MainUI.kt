@@ -152,7 +152,7 @@ fun Disipline() {
                 .heightIn(max = 200.dp)
                 .verticalScroll(ScrollText)
         )
-        UI.move(h = 20.dp)
+        UI.move(h = 20)
 
         OutlinedTextField(
             value = Bar.currentInput,
