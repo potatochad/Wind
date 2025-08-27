@@ -90,47 +90,31 @@ fun <T> LazzyList(
     var currentChunkSize by remember { mutableStateOf(chunkSize) }
     var doubledOnce by remember { mutableStateOf(false) }
 
-    /** Initialize the list with the first batch */
-    suspend fun initialize() {
+    // Gradual loading effect
+    LaunchedEffect(items) {
         loadedItems.clear()
-        addBatch(0, initialCount)
-    }
+        // Add initial batch
+        val initialEnd = initialCount.coerceAtMost(items.size)
+        loadedItems.addAll(items.subList(0, initialEnd))
 
-    /** Add a batch of items safely */
-    suspend fun addBatch(startIndex: Int, batchSize: Int) {
-        val endIndex = (startIndex + batchSize).coerceAtMost(items.size)
-        loadedItems.addAll(items.subList(startIndex, endIndex))
-    }
-
-    /** Gradually load the remaining items in batches */
-    suspend fun gradualLoad() {
-        var currentIndex = initialCount
+        // Load remaining items in chunks
+        var currentIndex = initialEnd
         while (currentIndex < items.size) {
-            addBatch(currentIndex, currentChunkSize)
-            currentIndex += currentChunkSize
+            val nextIndex = (currentIndex + currentChunkSize).coerceAtMost(items.size)
+            loadedItems.addAll(items.subList(currentIndex, nextIndex))
+            currentIndex = nextIndex
             if (currentIndex >= items.size) break
             kotlinx.coroutines.delay(delayMs)
         }
     }
 
-    /** Monitor scroll: if reached end, temporarily double chunk size */
-    fun handleScroll() {
+    // Scroll monitoring effect
+    LaunchedEffect(listState.firstVisibleItemIndex, listState.layoutInfo) {
         val lastVisible = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
         if (!doubledOnce && lastVisible >= loadedItems.size - 1 && loadedItems.size < items.size) {
             currentChunkSize *= 2
             doubledOnce = true
         }
-    }
-
-    // Launch initialization and gradual load
-    LaunchedEffect(items) {
-        initialize()
-        gradualLoad()
-    }
-
-    // Monitor scroll changes
-    LaunchedEffect(listState.firstVisibleItemIndex, listState.layoutInfo) {
-        handleScroll()
     }
 
     // Display loaded items
@@ -140,6 +124,7 @@ fun <T> LazzyList(
         }
     }
 }
+
 
 
 
