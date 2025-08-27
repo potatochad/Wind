@@ -165,7 +165,9 @@ fun LazyRuleCard(
 	Header: Str,
 	content: @Composable () -> Unit,
 ){
-	LazyCard{
+	LazyCard(
+		style = LazyCardStyle(roundCorners = 8)
+	){
 		LazzyRow {
 			Text(
 				text = "$Header",
@@ -254,18 +256,21 @@ fun LazzyRow(
 }
       
 
-	
+data class LazyCardStyle(
+	roundCorners: Int = 16,
+)
 @Composable
 fun LazyCard(
     InputColor: Color = Color(0xFF1A1A1A),
     InnerPadding: Int = 16,
     content: @Composable () -> Unit,
+	style: LazyCardStyle = LazyCardStyle(),
 ) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(style.roundCorners.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(containerColor = InputColor)
     ) {
