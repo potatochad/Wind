@@ -79,7 +79,7 @@ fun <T> LazzyList(
     chunkSize: Int = 10,
     modifier: Modifier = Modifier.heightIn(max = 200.dp),
     itemContent: @Composable (T) -> Unit
-) = NoLagCompose {
+) {
     // State for items currently loaded
     val loadedItems = remember { mutableStateListOf<T>() }
 
