@@ -441,7 +441,7 @@ fun <T : Any> SnapshotStateList<T>.register(item: T) {
 }
 
 // Extension to add and register automatically
-fun <T : Any> SnapshotStateList<T>.addAndRegister(item: T) {
+fun <T : Any> SnapshotStateList<T>.new(item: T) {
     this.add(item)
     this.register(item)
 }
@@ -463,4 +463,15 @@ fun <T : Any> T.edit(block: T.() -> Unit) {
     copy.block()
     val index = list.indexOf(this)
     if (index != -1) list[index] = copy
+}
+fun <T : Any> SnapshotStateList<T>.idEdit(id: String, block: T.() -> Unit) {
+    val index = this.indexOfFirst {
+        val prop = it::class.memberProperties.find { p -> p.name == "id" } ?: return
+        prop.get(it) == id
+    }
+    if (index != -1) {
+        val copy = this[index].copyDataClass()
+        copy.block()
+        this[index] = copy
+    }
 }
