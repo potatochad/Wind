@@ -204,8 +204,12 @@ fun refreshApps() {
 			}
 		}
     } catch (e: Exception) {
-        Vlog("refreshApps: ${e.message ?: "unknown error"}")
-    }
+		e.message?.let { msg ->
+			if (msg != "unknown error") {
+				Vlog("refreshApps: $msg")
+			}
+		}
+	}
 }
 
 
