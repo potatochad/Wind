@@ -199,10 +199,11 @@ fun refreshApps() {
         }
 
 		apps.forEach { app ->
-            edit(apps, app.id) {
+			edit(apps, app.id) {
 				NowTime = getTodayAppUsage(app.pkg)
 			}
 		}
+
     } catch (e: Exception) {
 		Vlog("refreshApps: ${e.message?: "unknown error"}")
 	}
