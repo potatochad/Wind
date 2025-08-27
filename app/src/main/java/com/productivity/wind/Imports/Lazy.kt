@@ -73,16 +73,34 @@ fun LazyImage(
 
 @Composable
 fun <T> LazzyList(
-    list: List<T>,
+    items: List<T>,
+    initialCount: Int = 6,
+    delayMs: Long = 20,
     modifier: Modifier = Modifier.heightIn(max = 200.dp),
     itemContent: @Composable (T) -> Unit
-) = NoLagCompose {
-    Column(modifier = modifier.verticalScroll(rememberScrollState())) {
-        list.forEach { item ->
+)= NoLagCompose{
+    val loadedItems = remember { mutableStateListOf<T>() }
+
+    // gradually add items to the lazy list
+    LaunchedEffect(items) {
+        loadedItems.clear()
+        items.forEachIndexed { index, item ->
+            if (index >= initialCount) {
+                kotlinx.coroutines.delay(delayMs)
+            }
+            loadedItems.add(item)
+        }
+    }
+
+    LazyColumn(modifier = modifier) {
+        items(loadedItems) { item ->
             itemContent(item)
         }
     }
 }
+
+
+
 
 
 @Composable
