@@ -46,11 +46,10 @@ fun AppUsage() {
     ) {
       LazyRuleCard("If"){
         LazzyRow{
-          Text("● spend ")
+          Text("Spend ")
           UI.Cinput(Time)
           Text(" seconds")
-        }
-        LazzyRow{
+          
           Text("on ")
           UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
             show(Popup.AppSelect)
@@ -59,7 +58,7 @@ fun AppUsage() {
       }
       LazyRuleCard("Do"){
         LazzyRow{
-          Text(", add ")
+          Text("Add ")
           UI.Cinput(Points)
           Text(" points")
         }
