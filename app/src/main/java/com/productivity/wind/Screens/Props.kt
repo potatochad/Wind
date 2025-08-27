@@ -111,16 +111,18 @@ object Header {
                 }
 
                 if (app.Worth == 0) {
-                    edit(apps, app.id) {
+                    app.edit {
                         DoneTime = Time.value.toIntOrNull() ?: 0
                         Worth = Points.value.toIntOrNull() ?: 0
                     }
                 } else {
-                    add(apps) {
-                        name = selectedApp.value
-                        DoneTime = Time.value.toIntOrNull() ?: 0
-                        Worth = Points.value.toIntOrNull() ?: 0
-                    }
+                    apps.new(
+                        DataApps(
+                            name = selectedApp.value
+                            DoneTime = Time.value.toIntOrNull() ?: 0
+                            Worth = Points.value.toIntOrNull() ?: 0
+                        )
+                    )
                 }
 
                 selectedApp.value = ""
