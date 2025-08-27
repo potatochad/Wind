@@ -76,7 +76,7 @@ fun <T> LazzyList(
     items: List<T>,
     initialCount: Int = 6,
     delayMs: Long = 500,
-    chunkSize: Int = 50,
+    chunkSize: Int = 10,
     modifier: Modifier = Modifier.heightIn(max = 200.dp),
     itemContent: @Composable (T) -> Unit
 ) = NoLagCompose {
@@ -92,6 +92,7 @@ fun <T> LazzyList(
             val nextIndex = (currentIndex + chunkSize).coerceAtMost(items.size)
             loadedItems.addAll(items.subList(currentIndex, nextIndex))
             currentIndex = nextIndex
+            if (currentIndex >= items.size) break  // stop when all items loaded
             kotlinx.coroutines.delay(delayMs)
         }
     }
@@ -102,6 +103,7 @@ fun <T> LazzyList(
         }
     }
 }
+
 
 
 
