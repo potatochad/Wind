@@ -429,7 +429,7 @@ fun reflection(obj: Any, propertyName: String): Any? {
 fun <T> edit(
     list: SnapshotStateList<T>,
     which: Any,
-    edit: T.() -> T,
+    edit: T.() -> Unit,
 ) {
     val index = when (which) {
         is String -> list.indexOfFirst { reflection(it as Any, "id") == which }
@@ -443,10 +443,9 @@ fun <T> edit(
     }
 
     val item = list[index]
-    val newItem = item.edit()   // return a new item
-    list[index] = newItem       // triggers recomposition
+    item.edit()        // mutates item in-place
+    list[index] = item // reassign to trigger recomposition
 }
-
 
 inline fun <reified T : Any> add(list: SnapshotStateList<T>, Add: T.() -> Unit) {
     val item = T::class.createInstance()
