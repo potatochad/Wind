@@ -2,10 +2,17 @@ package com.productivity.wind.Screens
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.*
 import androidx.compose.material.icons.filled.*
-import androidx.compose.ui.graphics.Color
-
+import androidx.compose.ui.graphics.*
+import android.os.*
+import android.webkit.*
+import androidx.activity.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.*
+import androidx.compose.ui.viewinterop.*
 import com.productivity.wind.Imports.*
 
 @Composable
@@ -34,12 +41,45 @@ fun Web() {
 
         },
     ) {
-        UI.EmptyBox(text = "TO DO")
-
+        Browser()
     }
 
 
 
+}
+@Composable
+fun Browser() {
+    var url by remember { mutableStateOf("https://www.google.com") }
+
+    Column(Modifier.fillMaxSize()) {
+        Row(Modifier.padding(8.dp)) {
+            TextField(
+                value = url,
+                onValueChange = { url = it },
+                modifier = Modifier.weight(1f),
+                placeholder = { Text("Enter URL") }
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = { /* Load URL */ }) {
+                Text("Go")
+            }
+        }
+
+        // WebView inside Compose
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
+                    webViewClient = WebViewClient()
+                    settings.javaScriptEnabled = true
+                    loadUrl(url)
+                }
+            },
+            update = { webView ->
+                webView.loadUrl(url)
+            },
+            modifier = Modifier.weight(1f)
+        )
+    }
 }
 
 
