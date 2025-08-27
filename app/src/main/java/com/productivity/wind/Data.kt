@@ -170,7 +170,7 @@ fun MAINStart() {
 }
 @Composable
 fun AppStart() {
-    LaunchedEffect(Unit) {
+    eachSecond{
         refreshApps()
     }
     LazyMenu { Menu() }
