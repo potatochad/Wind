@@ -358,9 +358,9 @@ object UI {
 				unselectedColor = Color.Gray
         ),
         modifier = Modifier
-            .padding(3.dp)   // decreased outer padding by 5 (default is 8.dp → now 3.dp)
-            .size(22.dp)     // default is 24.dp → now 22.dp
-		)
+				.padding(start = 0.dp, end = 8.dp, top = 3.dp, bottom = 3.dp)
+				.size(20.dp)
+
 	}
 
 
