@@ -13,11 +13,11 @@ import androidx.compose.ui.unit.*
 fun Challenge() {
   LazyScreen(title = { Text("Challenge") }) {
     LazyItem(
-            BigIcon = Icons.Filled.Backup,
+            BigIcon = Icons.Filled.AccessTime,
             BigIconColor = DarkBlue,
             title = "App Usage",
             onClick = { 
-                goTo("AppUsage")
+              goTo("AppUsage")
             },
         )
     
