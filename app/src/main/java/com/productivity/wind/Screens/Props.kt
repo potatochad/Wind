@@ -256,8 +256,12 @@ fun AskUsagePermission(show: MutableState<Boolean>) {
     if (show.value) {
         LazyPopup(
             show = show,
-            title = "Need Usage Permission",
-            message = "Ahhh, mon cher, zis is ze moment, oui oui! We must, we must have ze permission, ha ha! Let us peeky-peek at ze screen time of your apps, magnifique—oh la la, ze app goes zoom-zoom perfectly, trés bien, oui oui!",
+            val title = "Need Usage Permission",
+            val message = """
+            To function correctly, this app requires access to your app usage data.
+            Granting this permission allows the app to monitor usage statistics and
+            manage app-related tasks efficiently. Without it, some features may not work.
+            """.trimIndent(),
             onConfirm = {
                 // Open Usage Access Settings
                 val context = Global1.context
