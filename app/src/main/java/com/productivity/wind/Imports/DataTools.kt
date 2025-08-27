@@ -420,53 +420,33 @@ object ListStorage {
 
 
 
-fun <R> if_Type(
-    value: Any,
-    if_Int: ((Int) -> R)? = null,
-    if_String: ((String) -> R)? = null,
-    if_Boolean: ((Boolean) -> R)? = null,
-    if_Other: ((Any) -> R)? = null
-): R? {
-    return when (value) {
-        is Int -> if_Int?.invoke(value)
-        is String -> if_String?.invoke(value)
-        is Boolean -> if_Boolean?.invoke(value)
-        else -> if_Other?.invoke(value)
-    }
-}
+
 fun reflection(obj: Any, propertyName: String): Any? {
     val prop = obj::class.members.find { it.name == propertyName }
     return prop?.call(obj)
 }
 
 fun <T> edit(
-    list: SnapshotStateList<T>,  
+    list: SnapshotStateList<T>,
     which: Any,
-    edit: T.() -> Unit
+    edit: T.() -> T
 ) {
-    var item: T? = null
-    var index: Int? = null
-    if_Type(which,
-        if_String = {
-            item = list.find { reflection(it as Any, "id") == which }
-            index = list.indexOf(item)
-        },
-        if_Int = {
-            item = list[which as Int]
-            index = which
-        }
-    )
+    val index = when (which) {
+        is String -> list.indexOfFirst { reflection(it, "id") == which }
+        is Int -> which
+        else -> -1
+    }
 
-    if (item == null) {Vlog("Item null: data, fun edit"); return}
+    if (index == -1) {
+        Vlog("[100er]Item missing")
+        return
+    }
 
-    val oldItem = item
-    oldItem?.edit()
-    list.removeAt(index!!)
-    list.add(index!!, oldItem!!)
-
-
-    
+    val item = list[index]
+    val newItem = item.edit()   // return a new item
+    list[index] = newItem       // triggers recomposition
 }
+
 
 inline fun <reified T : Any> add(list: SnapshotStateList<T>, Add: T.() -> Unit) {
     val item = T::class.createInstance()
