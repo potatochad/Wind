@@ -73,7 +73,7 @@ fun LazyImage(
 
 
 @Composable
-fun <T> LazzyListSmooth(
+fun <T> LazzyList(
     items: List<T>,
     initialCount: Int = 6,
     delayMs: Long = 50,
