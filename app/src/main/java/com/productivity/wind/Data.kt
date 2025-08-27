@@ -99,7 +99,7 @@ data class DataApps(
     var id: Str = Id(),
     var name: Str = "",
     var done: Bool = false,
-    var package: Str = "",
+    var pkg: Str = "",
     var NowTime: Int = 0,
     var DoneTime: Int = 0,
     var Worth: Int = 0,
