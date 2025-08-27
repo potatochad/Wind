@@ -201,7 +201,7 @@ fun refreshApps() {
         }
 
 		apps.forEach { app ->
-			app.edit {
+			apps.edit(app){
 				NowTime = getTodayAppUsage(app.pkg)
 			}
 		}
