@@ -105,16 +105,17 @@ fun LazyRuleCard(
 	Header: Str,
 	content: @Composable () -> Unit,
 ){
-	LazzyRow {
-		Text(
-			text = "$Header",
-			fontSize = 17.sp,        
-			color = Color.White,        
-			fontWeight = FontWeight.Bold,
-		)
-	}
-
 	LazyCard{
+		LazzyRow {
+			Text(
+				text = "$Header",
+				fontSize = 17.sp,        
+				color = Color.White,        
+				fontWeight = FontWeight.Bold,
+			)
+		}
+
+	
 		content()
 	}
 
