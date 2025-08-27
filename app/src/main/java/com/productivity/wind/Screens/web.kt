@@ -77,7 +77,6 @@ fun Browser() {
                 webView.loadUrl(url)
             },
         )
-    }
 }
 
 
