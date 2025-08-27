@@ -266,6 +266,30 @@ fun getAppIcon(packageName: String): Drawable? {
 }
 
 
+
+
+
+
+
+
+
+
+
+@Composable
+fun everySecond(onTick: () -> Unit) {
+    LaunchedEffect(Unit) {
+        while (true) {
+            onTick()
+            kotlinx.coroutines.delay(1000) // wait 1 second
+        }
+    }
+}
+
+
+
+
+
+
 object UI {
     //No synched with actual settingsItem function YET
     var SettingsItemCardColor = Color(0xFF121212)
