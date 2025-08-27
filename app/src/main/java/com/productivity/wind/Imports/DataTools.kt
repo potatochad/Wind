@@ -429,10 +429,10 @@ fun reflection(obj: Any, propertyName: String): Any? {
 fun <T> edit(
     list: SnapshotStateList<T>,
     which: Any,
-    edit: T.() -> T
+    edit: T.() -> T,
 ) {
     val index = when (which) {
-        is String -> list.indexOfFirst { reflection(it, "id") == which }
+        is String -> list.indexOfFirst { reflection(it as Any, "id") == which }
         is Int -> which
         else -> -1
     }
