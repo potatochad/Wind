@@ -90,24 +90,10 @@ object Header {
         UI.End {
             Icon.BigAdd(onClick = {
 
-                if (!UI.isUsageP_Enabled()) {
-                    show(Popup.AskUsagePermission)
-                    return@Add
-                }
-                when {
-                    Time.value.toInt() < 1 -> {
-                        Vlog("add time")
-                        return@Add
-                    }
-                    Points.value.toInt() < 1 -> {
-                        Vlog("add points")
-                        return@Add
-                    }
-                    selectedApp.value.isEmpty() -> {
-                        Vlog("select app")
-                        return@Add
-                    }
-                }
+                UI.check(!UI.isUsageP_Enabled())
+                UI.check(Time.value.toInt() < 1,"Add time")
+                UI.check(Points.value.toInt() < 1,"Add points")
+                UI.check(selectedApp.value.isEmpty(),"Select app")
 
                 val app = apps.find { it.name == selectedApp.value }
                 if (app == null) {
