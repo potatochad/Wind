@@ -77,8 +77,8 @@ fun LazyImage(
 fun <T> LazzyList(
     items: List<T>,
     initialCount: Int = 6,
-    delayMs: Long = 30,
-    chunkSize: Int = 5,
+    delayMs: Long = 100,
+    chunkSize: Int = 1,
     modifier: Modifier = Modifier.heightIn(max = 200.dp),
     itemContent: @Composable (T) -> Unit
 ) {
