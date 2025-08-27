@@ -73,42 +73,40 @@ fun LazyImage(
 
 
 @Composable
-fun <T> LazzyList(
+fun <T> LazzyListSmooth(
     items: List<T>,
     initialCount: Int = 6,
-    delayMs: Long = 150,   // smaller delay for smoother load
-    chunkSize: Int = 5,   // small chunk size for incremental loading
+    delayMs: Long = 50,
+    chunkSize: Int = 5,
     modifier: Modifier = Modifier.heightIn(max = 200.dp),
     itemContent: @Composable (T) -> Unit
 ) {
-    val loadedItems = remember { mutableStateListOf<T>() }
-    val listState = rememberLazyListState()
+    // Track which items have “appeared” visually
+    val appearedItems = remember { mutableStateListOf<T>() }
 
     LaunchedEffect(items) {
-        loadedItems.clear()
+        appearedItems.clear()
         val initialEnd = initialCount.coerceAtMost(items.size)
-        loadedItems.addAll(items.subList(0, initialEnd))
+        appearedItems.addAll(items.subList(0, initialEnd))
 
         var currentIndex = initialEnd
         while (currentIndex < items.size) {
             val nextIndex = (currentIndex + chunkSize).coerceAtMost(items.size)
-            loadedItems.addAll(items.subList(currentIndex, nextIndex))
+            appearedItems.addAll(items.subList(currentIndex, nextIndex))
             currentIndex = nextIndex
             if (currentIndex >= items.size) break
-            // very small delay, just enough to let Compose render
             kotlinx.coroutines.delay(delayMs)
         }
     }
 
-    LazyColumn(
-        state = listState,
-        modifier = modifier
-    ) {
-        items(loadedItems) { item ->
+    // Use LazyColumn with static snapshot of items
+    LazyColumn(modifier = modifier) {
+        items(appearedItems.toList()) { item -> // convert to immutable list
             itemContent(item)
         }
     }
 }
+
 
 
 
