@@ -179,32 +179,36 @@ fun PreloadBox(
 
 
 fun refreshApps() {
-    val context = Global1.context
-    val realApps: List<ResolveInfo> = getApps()
+    try {
+        val context = Global1.context
+        val realApps: List<ResolveInfo> = getApps()
 
-    if (!UI.isUsageP_Enabled()) {
-        return
-    }
-    realApps.forEach { info ->
+        if (!UI.isUsageP_Enabled()) return
+
+        realApps.forEach { info ->
             val pkg = getAppPackage(info)
             val label = getAppName(info)
-            val ListsApp= getListsApp(pkg)
+            val ListsApp = getListsApp(pkg)
             val AppUsage = getTodayAppUsage(pkg)
-            
+
             if (ListsApp != null) {
-				edit(apps, ListsApp.id){
+                edit(apps, ListsApp.id) {
                     NowTime = AppUsage
                     name = label
-				}
+                }
             } else {
-                    add(apps){
-                        name = label
-                        packageName = pkg
-                        NowTime = AppUsage
-					}
+                add(apps) {
+                    name = label
+                    packageName = pkg
+                    NowTime = AppUsage
+                }
             }
-    }  
+        }
+    } catch (e: Exception) {
+        Vlog("refreshApps: ${e.message ?: "unknown error"}")
+    }
 }
+
 
 fun getApps(): List<ResolveInfo> {
     val context = Global1.context
