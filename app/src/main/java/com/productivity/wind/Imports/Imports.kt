@@ -192,17 +192,16 @@ fun refreshApps() {
             val AppUsage = getTodayAppUsage(pkg)
             
             if (ListsApp != null) {
-                    ListsApp.NowTime = AppUsage
-                    ListsApp.name = label
+				edit(apps, ListsApp.id){
+                    NowTime = AppUsage
+                    name = label
+				}
             } else {
-                    apps.add(
-                            DataApps(
-                                    id = Id(),
-                                    name = label,
-                                    packageName = pkg,
-                                    NowTime = AppUsage,
-                            )
-                    )
+                    add(apps){
+                        name = label,
+                        packageName = pkg,
+                        NowTime = AppUsage,
+					}
             }
     }  
 }
