@@ -187,24 +187,20 @@ fun refreshApps() {
 
         realApps.forEach { info ->
             val pkg = getAppPackage(info)
-            val label = getAppName(info)
             val ListsApp = getListsApp(pkg)
-            val AppUsage = getTodayAppUsage(pkg)
 
             if (ListsApp = null) {
                 add(apps) {
-                    name = label
-                    package = pkg
-                    NowTime = AppUsage
+                    name = getAppName(info)
+                    pkg = pkg
+                    NowTime = getTodayAppUsage(pkg)
                 }
             }
         }
 
 		apps.forEach { app ->
-            val AppUsage = getTodayAppUsage(app.package)
-
             edit(apps, app.id) {
-				NowTime = AppUsage
+				NowTime = getTodayAppUsage(app.pkg)
 			}
 		}
     } catch (e: Exception) {
