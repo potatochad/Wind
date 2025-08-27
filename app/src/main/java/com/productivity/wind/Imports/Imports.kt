@@ -325,6 +325,41 @@ object UI {
 
 
 
+
+	@Composable
+	fun Checkbox(
+		isChecked: MutableState<Boolean>,
+	) {
+		Checkbox(
+			checked = isChecked.value,
+			onCheckedChange = { isChecked.value = it },
+			colors = CheckboxDefaults.colors(
+				checkedColor = Color(0xFFFFD700), // gold
+				uncheckedColor = Color.Gray,      // optional
+				checkmarkColor = Color.White      // optional
+			)
+		)
+	}
+
+	@Composable
+	fun CheckCircle(
+		index: Int,                  // unique index of this circle
+		selectedIndex: MutableState<Int>, // shared state of which is selected
+	) {
+		RadioButton(
+			selected = selectedIndex.value == index,
+			onClick = { selectedIndex.value = index },
+			colors = RadioButtonDefaults.colors(
+				selectedColor = Color(0xFFFFD700),
+				unselectedColor = Color.Gray
+			)
+		)
+	}
+
+
+
+
+
     @Composable
     fun MenuHeader(
         title: String = "Wind",
