@@ -53,7 +53,7 @@ fun Main() {
                     LazyCard {
                         LazzyRow {
                             Column() {
-                                Text("${app.name}: spent time ${app.NowTime}/${app.DoneTime}", fontSize = 14.sp)
+                                Text("${app.name}: ${app.NowTime}/${app.DoneTime}", fontSize = 14.sp)
                                 // Tiny progress bar for value
                                 Box(
                                     modifier = Modifier
