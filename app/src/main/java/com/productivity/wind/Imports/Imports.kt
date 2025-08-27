@@ -276,7 +276,7 @@ fun getAppIcon(packageName: String): Drawable? {
 
 
 @Composable
-fun everySecond(onTick: () -> Unit) {
+fun eachSecond(onTick: () -> Unit) {
     LaunchedEffect(Unit) {
         while (true) {
             onTick()
