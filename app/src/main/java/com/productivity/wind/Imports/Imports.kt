@@ -191,19 +191,22 @@ fun refreshApps() {
             val ListsApp = getListsApp(pkg)
             val AppUsage = getTodayAppUsage(pkg)
 
-            if (ListsApp != null) {
-                edit(apps, ListsApp.id) {
-                    NowTime = AppUsage
-                    name = label
-                }
-            } else {
+            if (ListsApp = null) {
                 add(apps) {
                     name = label
-                    packageName = pkg
+                    package = pkg
                     NowTime = AppUsage
                 }
             }
         }
+
+		apps.forEach { app ->
+            val AppUsage = getTodayAppUsage(app.package)
+
+            edit(apps, app.id) {
+				NowTime = AppUsage
+			}
+		}
     } catch (e: Exception) {
         Vlog("refreshApps: ${e.message ?: "unknown error"}")
     }
