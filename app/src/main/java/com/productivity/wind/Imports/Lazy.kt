@@ -71,54 +71,39 @@ fun LazyImage(
 }
 
 
+
 @Composable
 fun <T> LazzyList(
     items: List<T>,
     initialCount: Int = 6,
-    delayMs: Long = 500,
-    chunkSize: Int = 10,
+    delayMs: Long = 150,   // smaller delay for smoother load
+    chunkSize: Int = 5,   // small chunk size for incremental loading
     modifier: Modifier = Modifier.heightIn(max = 200.dp),
     itemContent: @Composable (T) -> Unit
 ) {
-    // State for items currently loaded
     val loadedItems = remember { mutableStateListOf<T>() }
-
-    // State for LazyColumn scroll
     val listState = rememberLazyListState()
 
-    // Current chunk size, can be temporarily increased
-    var currentChunkSize by remember { mutableStateOf(chunkSize) }
-    var doubledOnce by remember { mutableStateOf(false) }
-
-    // Gradual loading effect
     LaunchedEffect(items) {
         loadedItems.clear()
-        // Add initial batch
         val initialEnd = initialCount.coerceAtMost(items.size)
         loadedItems.addAll(items.subList(0, initialEnd))
 
-        // Load remaining items in chunks
         var currentIndex = initialEnd
         while (currentIndex < items.size) {
-            val nextIndex = (currentIndex + currentChunkSize).coerceAtMost(items.size)
+            val nextIndex = (currentIndex + chunkSize).coerceAtMost(items.size)
             loadedItems.addAll(items.subList(currentIndex, nextIndex))
             currentIndex = nextIndex
             if (currentIndex >= items.size) break
+            // very small delay, just enough to let Compose render
             kotlinx.coroutines.delay(delayMs)
         }
     }
 
-    // Scroll monitoring effect
-    LaunchedEffect(listState.firstVisibleItemIndex, listState.layoutInfo) {
-        val lastVisible = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
-        if (!doubledOnce && lastVisible >= loadedItems.size - 1 && loadedItems.size < items.size) {
-            currentChunkSize *= 2
-            doubledOnce = true
-        }
-    }
-
-    // Display loaded items
-    LazyColumn(state = listState, modifier = modifier) {
+    LazyColumn(
+        state = listState,
+        modifier = modifier
+    ) {
         items(loadedItems) { item ->
             itemContent(item)
         }
