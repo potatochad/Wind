@@ -77,7 +77,7 @@ fun LazyImage(
 fun <T> LazzyListSmooth(
     items: List<T>,
     initialCount: Int = 6,
-    delayMs: Long = 30,
+    delayMs: Long = 100,
     chunkSize: Int = 5,
     modifier: Modifier = Modifier.heightIn(max = 200.dp),
     itemContent: @Composable LazyItemScope.(T) -> Unit
