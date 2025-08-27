@@ -51,9 +51,7 @@ fun Web() {
 @Composable
 fun Browser() {
     var url by remember { mutableStateOf("https://www.google.com") }
-
-    Column(Modifier.fillMaxSize()) {
-        Row(Modifier.padding(8.dp)) {
+        LazzyRow() {
             TextField(
                 value = url,
                 onValueChange = { url = it },
@@ -76,9 +74,8 @@ fun Browser() {
                 }
             },
             update = { webView ->
-                webView.loadUrl(url) // re-load when url changes
+                webView.loadUrl(url)
             },
-            modifier = Modifier.weight(1f)
         )
     }
 }
