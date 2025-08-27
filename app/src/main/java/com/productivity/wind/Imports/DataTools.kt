@@ -430,48 +430,36 @@ object ListStorage {
 
 
 
-// Map each item to its SnapshotStateList
-private val itemLists = mutableMapOf<Any, SnapshotStateList<Any>>()
-
-// Register items automatically when added to a SnapshotStateList
-fun <T : Any> SnapshotStateList<T>.register(item: T) {
-    if (!itemLists.containsKey(item)) {
-        itemLists[item] = this as SnapshotStateList<Any>
-    }
+// Every model should have an ID
+interface Identifiable {
+    val id: String
 }
 
-// Extension to add and register automatically
+// Every model must support copy
+interface Copyable<T> {
+    fun copySelf(): T
+}
+
+// Extension to add new items
 fun <T : Any> SnapshotStateList<T>.new(item: T) {
     this.add(item)
-    this.register(item)
 }
 
-// Copy a data class via reflection
-fun <T : Any> T.copyDataClass(): T {
-    val clazz = this::class
-    if (!clazz.isData) throw IllegalArgumentException("Must be a data class")
-    val constructor = clazz.primaryConstructor!!
-    val args = clazz.memberProperties.associateWith { it.get(this) }
-    @Suppress("UNCHECKED_CAST")
-    return constructor.callBy(args.mapKeys { it.key.parameters.first() }) as T
-}
-
-// The magic edit extension
-fun <T : Any> T.edit(block: T.() -> Unit) {
-    val list = itemLists[this] ?: throw IllegalArgumentException("Item not in a registered SnapshotStateList")
-    val copy = this.copyDataClass()
-    copy.block()
-    val index = list.indexOf(this)
-    if (index != -1) list[index] = copy
-}
-fun <T : Any> SnapshotStateList<T>.idEdit(id: String, block: T.() -> Unit) {
-    val index = this.indexOfFirst {
-        val prop = it::class.memberProperties.find { p -> p.name == "id" } ?: return
-        prop.get(it) == id
-    }
+// Edit by index or object reference
+fun <T : Copyable<T>> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
+    val index = this.indexOf(item)
     if (index != -1) {
-        val copy = this[index].copyDataClass()
-        copy.block()
+        val copy = item.copySelf().apply(block)
+        this[index] = copy
+    }
+}
+
+// Edit by ID (for Identifiable)
+fun <T> SnapshotStateList<T>.idEdit(id: String, block: T.() -> Unit)
+    where T : Identifiable, T : Copyable<T> {
+    val index = this.indexOfFirst { it.id == id }
+    if (index != -1) {
+        val copy = this[index].copySelf().apply(block)
         this[index] = copy
     }
 }
