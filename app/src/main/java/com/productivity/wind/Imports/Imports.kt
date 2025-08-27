@@ -302,13 +302,18 @@ object UI {
 
 
 
-	inline fun check(condition: Boolean, message: String = "", action: () -> Unit = {}) {
+	inline fun check(
+		condition: Boolean,
+		message: String = "",
+		crossinline action: () -> Unit = {}
+	) {
 		if (condition) {
 			if (message.isNotEmpty()) Vlog(message)
-			action()
-			return
+			action()        // safe
+			return          // now valid, just returns from check()
 		}
 	}
+
 
     @Composable
 	fun End(content: @Composable () -> Unit) {
