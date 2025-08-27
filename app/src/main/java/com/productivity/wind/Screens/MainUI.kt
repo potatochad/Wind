@@ -140,15 +140,19 @@ fun Disipline() {
 
     if (Bar.HowManyDoneRetypes_InDay == 5) { }
     else {
-        Text("Done: ${Bar.HowManyDoneRetypes_InDay}/5")
-        Icon.Edit()
+        LazzyRow {
+            Text("Done: ${Bar.HowManyDoneRetypes_InDay}/5")
+            UI.End{
+                Icon.Edit()
+            }
+        }
         Text(
             text = coloredTarget,
             modifier = Modifier
                 .heightIn(max = 200.dp)
                 .verticalScroll(ScrollText)
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        UI.move(h = 20.dp)
 
         OutlinedTextField(
             value = Bar.currentInput,
