@@ -90,10 +90,10 @@ object Header {
         UI.End {
             Icon.Add(onClick = {
 
-                UI.check(!UI.isUsageP_Enabled()) {Popup.AskUsagePermission.value = true}
-                UI.check(Time.value.toInt() < 1,"Add time")
-                UI.check(Points.value.toInt() < 1,"Add points")
-                UI.check(selectedApp.value.isEmpty(),"Select app")
+                UI.check(!UI.isUsageP_Enabled()) {Popup.AskUsagePermission.value = true; return@Add}
+                UI.check(Time.value.toInt() < 1,"Add time") {return@Add}
+                UI.check(Points.value.toInt() < 1,"Add points") {return@Add}
+                UI.check(selectedApp.value.isEmpty(),"Select app") {return@Add}
 
 
                 val app = apps.find { it.name == selectedApp.value }
