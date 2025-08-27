@@ -55,7 +55,6 @@ fun Browser() {
             TextField(
                 value = url,
                 onValueChange = { url = it },
-                modifier = Modifier.weight(1f),
                 placeholder = { Text("Enter URL") }
             )
             Spacer(Modifier.width(8.dp))
