@@ -88,7 +88,7 @@ object Header {
     fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedApp: MutableState<String>) {
         Text("AppUsage")
         UI.End {
-            Icon.Add(onClick = {
+            Icon.BigAdd(onClick = {
 
                 if (!UI.isUsageP_Enabled()) {
                     show(Popup.AskUsagePermission)
