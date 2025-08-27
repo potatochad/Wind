@@ -189,7 +189,7 @@ fun refreshApps() {
             val pkg = getAppPackage(info)
             val ListsApp = getListsApp(pkg)
 
-            if (ListsApp = null) {
+            if (ListsApp == null) {
                 add(apps) {
                     name = getAppName(info)
                     pkg = pkg
