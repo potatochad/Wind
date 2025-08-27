@@ -96,14 +96,16 @@ val trackedLists = listOf(
 var apps = ml(DataApps())
 
 data class DataApps(
-    var id: Str = Id(),
-    var name: Str = "",
-    var done: Bool = false,
-    var pkg: Str = "",
+    override val id: String = Id(),
+    var name: String = "",
+    var done: Boolean = false,
+    var pkg: String = "",
     var NowTime: Int = 0,
     var DoneTime: Int = 0,
     var Worth: Int = 0,
-)
+) : Identifiable, Copyable<DataApps> {
+    override fun copySelf() = this.copy()
+}
 
 
 
