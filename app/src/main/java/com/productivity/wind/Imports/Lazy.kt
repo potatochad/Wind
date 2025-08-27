@@ -72,16 +72,17 @@ fun LazyImage(
 
 
 
+
 @Composable
-fun <T> LazzyList(
+fun <T> LazzyListSmooth(
     items: List<T>,
     initialCount: Int = 6,
-    delayMs: Long = 50,
+    delayMs: Long = 30,
     chunkSize: Int = 5,
     modifier: Modifier = Modifier.heightIn(max = 200.dp),
-    itemContent: @Composable (T) -> Unit
+    itemContent: @Composable LazyItemScope.(T) -> Unit
 ) {
-    // Track which items have “appeared” visually
+    val listState = rememberLazyListState()
     val appearedItems = remember { mutableStateListOf<T>() }
 
     LaunchedEffect(items) {
@@ -92,6 +93,7 @@ fun <T> LazzyList(
         var currentIndex = initialEnd
         while (currentIndex < items.size) {
             val nextIndex = (currentIndex + chunkSize).coerceAtMost(items.size)
+            // Add items in place without creating a new list
             appearedItems.addAll(items.subList(currentIndex, nextIndex))
             currentIndex = nextIndex
             if (currentIndex >= items.size) break
@@ -99,10 +101,13 @@ fun <T> LazzyList(
         }
     }
 
-    // Use LazyColumn with static snapshot of items
-    LazyColumn(modifier = modifier) {
-        items(appearedItems.toList()) { item -> // convert to immutable list
-            itemContent(item)
+    LazyColumn(state = listState, modifier = modifier) {
+        // Use key for each item to avoid recomposition
+        items(
+            count = appearedItems.size,
+            key = { appearedItems[it].hashCode() } // or your unique ID
+        ) { index ->
+            itemContent(appearedItems[index])
         }
     }
 }
@@ -217,8 +222,6 @@ fun LazyRuleCard(
 				fontWeight = FontWeight.Bold,
 			)
 		}
-
-	
 		content()
 	}
 
