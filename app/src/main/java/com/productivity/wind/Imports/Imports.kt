@@ -360,7 +360,7 @@ object UI {
         modifier = Modifier
 				.padding(start = 0.dp, end = 8.dp, top = 3.dp, bottom = 3.dp)
 				.size(20.dp)
-
+		)
 	}
 
 
