@@ -80,30 +80,66 @@ fun <T> LazzyList(
     modifier: Modifier = Modifier.heightIn(max = 200.dp),
     itemContent: @Composable (T) -> Unit
 ) = NoLagCompose {
+    // State for items currently loaded
     val loadedItems = remember { mutableStateListOf<T>() }
 
-    LaunchedEffect(items) {
-        loadedItems.clear()
-        // start with initial count
-        loadedItems.addAll(items.take(initialCount))
+    // State for LazyColumn scroll
+    val listState = rememberLazyListState()
 
+    // Current chunk size, can be temporarily increased
+    var currentChunkSize by remember { mutableStateOf(chunkSize) }
+    var doubledOnce by remember { mutableStateOf(false) }
+
+    /** Initialize the list with the first batch */
+    suspend fun initialize() {
+        loadedItems.clear()
+        addBatch(0, initialCount)
+    }
+
+    /** Add a batch of items safely */
+    suspend fun addBatch(startIndex: Int, batchSize: Int) {
+        val endIndex = (startIndex + batchSize).coerceAtMost(items.size)
+        loadedItems.addAll(items.subList(startIndex, endIndex))
+    }
+
+    /** Gradually load the remaining items in batches */
+    suspend fun gradualLoad() {
         var currentIndex = initialCount
         while (currentIndex < items.size) {
-            val nextIndex = (currentIndex + chunkSize).coerceAtMost(items.size)
-            loadedItems.addAll(items.subList(currentIndex, nextIndex))
-            currentIndex = nextIndex
-            if (currentIndex >= items.size) break  // stop when all items loaded
+            addBatch(currentIndex, currentChunkSize)
+            currentIndex += currentChunkSize
+            if (currentIndex >= items.size) break
             kotlinx.coroutines.delay(delayMs)
         }
     }
 
-    LazyColumn(modifier = modifier) {
+    /** Monitor scroll: if reached end, temporarily double chunk size */
+    fun handleScroll() {
+        val lastVisible = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
+        if (!doubledOnce && lastVisible >= loadedItems.size - 1 && loadedItems.size < items.size) {
+            currentChunkSize *= 2
+            doubledOnce = true
+        }
+    }
+
+    // Launch initialization and gradual load
+    LaunchedEffect(items) {
+        initialize()
+        gradualLoad()
+    }
+
+    // Monitor scroll changes
+    LaunchedEffect(listState.firstVisibleItemIndex, listState.layoutInfo) {
+        handleScroll()
+    }
+
+    // Display loaded items
+    LazyColumn(state = listState, modifier = modifier) {
         items(loadedItems) { item ->
             itemContent(item)
         }
     }
 }
-
 
 
 
