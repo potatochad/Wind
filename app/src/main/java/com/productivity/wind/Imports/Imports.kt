@@ -367,6 +367,7 @@ object UI {
         ),
 		radius = 8.dp,
         modifier = Modifier
+			    .size(10.dp)
 				.padding(start = 0.dp, end = 8.dp, top = 3.dp, bottom = 3.dp)
 		)
 	}
