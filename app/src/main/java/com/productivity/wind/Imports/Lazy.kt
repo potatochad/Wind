@@ -75,20 +75,24 @@ fun LazyImage(
 fun <T> LazzyList(
     items: List<T>,
     initialCount: Int = 6,
-    delayMs: Long = 20,
+    delayMs: Long = 50,
+    chunkSize: Int = 5,
     modifier: Modifier = Modifier.heightIn(max = 200.dp),
     itemContent: @Composable (T) -> Unit
-)= NoLagCompose{
+) = NoLagCompose {
     val loadedItems = remember { mutableStateListOf<T>() }
 
-    // gradually add items to the lazy list
     LaunchedEffect(items) {
         loadedItems.clear()
-        items.forEachIndexed { index, item ->
-            if (index >= initialCount) {
-                kotlinx.coroutines.delay(delayMs)
-            }
-            loadedItems.add(item)
+        // start with initial count
+        loadedItems.addAll(items.take(initialCount))
+
+        var currentIndex = initialCount
+        while (currentIndex < items.size) {
+            val nextIndex = (currentIndex + chunkSize).coerceAtMost(items.size)
+            loadedItems.addAll(items.subList(currentIndex, nextIndex))
+            currentIndex = nextIndex
+            kotlinx.coroutines.delay(delayMs)
         }
     }
 
