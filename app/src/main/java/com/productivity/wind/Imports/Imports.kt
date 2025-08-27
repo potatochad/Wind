@@ -301,6 +301,7 @@ object UI {
     var SettingsItemCardColor = Color(0xFF121212)
 
 
+
     @Composable
 	fun End(content: @Composable () -> Unit) {
 		Row(
