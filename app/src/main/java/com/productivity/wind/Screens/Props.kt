@@ -276,15 +276,6 @@ fun AppSelectPopup(
 ) {
     if (show.value) {
         val appList by remember { mutableStateOf(getApps()) }
-        var loadedCount by remember { mutableStateOf(6) }
-
-        // gradually increase loaded count
-        LaunchedEffect(Unit) {
-            for (i in 6..appList.size) {
-                wait(20)
-                loadedCount = i
-            }
-        }
 
         LazyPopup(
             show = show,
@@ -292,7 +283,7 @@ fun AppSelectPopup(
             message = "",
             content = {
                 // Only pass the loaded items to the LazyList
-                LazzyList(appList.take(loadedCount)) { appInfo ->
+                LazzyList(appList) { appInfo ->
                     val icon = getAppIcon(getAppPackage(appInfo))
                     LazzyRow {
                         UI.move(10)
