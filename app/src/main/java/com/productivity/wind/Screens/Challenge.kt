@@ -50,7 +50,7 @@ fun AppUsage() {
           UI.Cinput(Time)
           Text(" seconds")
           
-          Text("on ")
+          Text(" on ")
           UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
             show(Popup.AppSelect)
           }
