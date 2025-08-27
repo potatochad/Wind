@@ -89,6 +89,11 @@ object Header {
         Text("AppUsage")
         UI.End {
             Icon.Add(onClick = {
+
+                if (!UI.isUsageP_Enabled()) {
+                    show(Popup.AskUsagePermission)
+                    return@Add
+                }
                 when {
                     Time.value.toInt() < 1 -> {
                         Vlog("add time")
