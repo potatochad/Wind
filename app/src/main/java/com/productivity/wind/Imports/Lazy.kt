@@ -195,7 +195,6 @@ fun LazzyRow(
 
 	
 @Composable
-@Composable
 fun LazyCard(
     InputColor: Color = Color(0xFF1A1A1A),
     InnerPadding: Int = 16,
