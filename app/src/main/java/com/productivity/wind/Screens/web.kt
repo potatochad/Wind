@@ -47,6 +47,7 @@ fun Web() {
 
 
 }
+
 @Composable
 fun Browser() {
     var url by remember { mutableStateOf("https://www.google.com") }
@@ -59,28 +60,29 @@ fun Browser() {
                 modifier = Modifier.weight(1f),
                 placeholder = { Text("Enter URL") }
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { /* Load URL */ }) {
+            Spacer(Modifier.width(8.dp))
+            Button(onClick = { /* nothing here, handled in update */ }) {
                 Text("Go")
             }
         }
 
-        // WebView inside Compose
+        // WebView embedded inside Compose
         AndroidView(
             factory = { context ->
                 WebView(context).apply {
                     webViewClient = WebViewClient()
                     settings.javaScriptEnabled = true
-                    loadUrl(url)
+                    loadUrl(url) // initial load
                 }
             },
             update = { webView ->
-                webView.loadUrl(url)
+                webView.loadUrl(url) // re-load when url changes
             },
             modifier = Modifier.weight(1f)
         )
     }
 }
+
 
 
 @Composable
