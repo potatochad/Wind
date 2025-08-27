@@ -30,6 +30,7 @@ fun Challenge() {
 fun AppUsage() {
     var Time = remember { m("50") }
     var Points = remember { m("0") }
+    var WhichIf = remember { m(0) }
     selectedApp.value = ""
     LaunchedEffect(Unit) {
         refreshApps()  
@@ -41,6 +42,8 @@ fun AppUsage() {
     ) {
       LazyRuleCard("If"){
         LazzyRow{
+          //does nothing YET
+          UI.CheckCircle(1, WhichIf)
           Text("Spend ")
           UI.Cinput(Time)
           Text(" seconds")
