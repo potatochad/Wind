@@ -242,7 +242,7 @@ fun LazyRuleCard(
 }
 
 data class LazyCardStyle(
-	roundCorners: Int = 16,
+	var roundCorners: Int = 16,
 )
 @Composable
 fun LazyCard(
