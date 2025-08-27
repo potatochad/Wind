@@ -421,41 +421,46 @@ object ListStorage {
 
 
 
-fun reflection(obj: Any, propertyName: String): Any? {
-    val prop = obj::class.members.find { it.name == propertyName }
-    return prop?.call(obj)
-}
 
-fun <T> edit(
-    list: SnapshotStateList<T>,
-    which: Any,
-    edit: T.() -> Unit,
-) {
-    val index = when (which) {
-        is String -> list.indexOfFirst { reflection(it as Any, "id") == which }
-        is Int -> which
-        else -> -1
+
+
+
+
+
+
+
+
+// Map each item to its SnapshotStateList
+private val itemLists = mutableMapOf<Any, SnapshotStateList<Any>>()
+
+// Register items automatically when added to a SnapshotStateList
+fun <T : Any> SnapshotStateList<T>.register(item: T) {
+    if (!itemLists.containsKey(item)) {
+        itemLists[item] = this as SnapshotStateList<Any>
     }
-
-    if (index == -1) {
-        Vlog("[100er]Item missing")
-        return
-    }
-
-    val item = list[index]
-    item.edit()        // mutates item in-place
-    list[index] = item // reassign to trigger recomposition
 }
 
-inline fun <reified T : Any> add(list: SnapshotStateList<T>, Add: T.() -> Unit) {
-    val item = T::class.createInstance()
-    item.Add()
-    list.add(item)
+// Extension to add and register automatically
+fun <T : Any> SnapshotStateList<T>.addAndRegister(item: T) {
+    this.add(item)
+    this.register(item)
 }
 
+// Copy a data class via reflection
+fun <T : Any> T.copyDataClass(): T {
+    val clazz = this::class
+    if (!clazz.isData) throw IllegalArgumentException("Must be a data class")
+    val constructor = clazz.primaryConstructor!!
+    val args = clazz.memberProperties.associateWith { it.get(this) }
+    @Suppress("UNCHECKED_CAST")
+    return constructor.callBy(args.mapKeys { it.key.parameters.first() }) as T
+}
 
-
-
-
-
-
+// The magic edit extension
+fun <T : Any> T.edit(block: T.() -> Unit) {
+    val list = itemLists[this] ?: throw IllegalArgumentException("Item not in a registered SnapshotStateList")
+    val copy = this.copyDataClass()
+    copy.block()
+    val index = list.indexOf(this)
+    if (index != -1) list[index] = copy
+}
