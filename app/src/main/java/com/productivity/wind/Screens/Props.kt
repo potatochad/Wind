@@ -88,7 +88,7 @@ object Header {
     fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedApp: MutableState<String>) {
         Text("AppUsage")
         UI.End {
-            Icon.BigAdd(onClick = {
+            Icon.Add(onClick = {
 
                 UI.check(!UI.isUsageP_Enabled()) {Popup.AskUsagePermission.value = true}
                 UI.check(Time.value.toInt() < 1,"Add time")
@@ -99,7 +99,7 @@ object Header {
                 val app = apps.find { it.name == selectedApp.value }
                 if (app == null) {
                     Vlog("NO such app found")
-                    return@BigAdd
+                    return@Add
                 }
 
                 if (app.Worth == 0) {
