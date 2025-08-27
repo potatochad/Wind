@@ -99,7 +99,7 @@ object Header {
                 val app = apps.find { it.name == selectedApp.value }
                 if (app == null) {
                     Vlog("NO such app found")
-                    return@Add
+                    return@BigAdd
                 }
 
                 if (app.Worth == 0) {
