@@ -160,28 +160,6 @@ fun LazySwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
     )
 }
 
-@Composable 
-fun LazyRuleCard(
-	Header: Str,
-	content: @Composable () -> Unit,
-){
-	LazyCard(
-		style = LazyCardStyle(roundCorners = 8)
-	){
-		LazzyRow {
-			Text(
-				text = "$Header",
-				fontSize = 17.sp,        
-				color = Color.White,        
-				fontWeight = FontWeight.Bold,
-			)
-		}
-
-	
-		content()
-	}
-
-}
 
 
 
@@ -255,16 +233,38 @@ fun LazzyRow(
 	  	}
 }
       
+@Composable 
+fun LazyRuleCard(
+	Header: Str,
+	content: @Composable () -> Unit,
+){
+	LazyCard(
+		style = LazyCardStyle(roundCorners = 8)
+	){
+		LazzyRow {
+			Text(
+				text = Header,
+				fontSize = 17.sp,        
+				color = Color.White,        
+				fontWeight = FontWeight.Bold,
+			)
+		}
+
+	
+		content()
+	}
+
+}
 
 data class LazyCardStyle(
 	roundCorners: Int = 16,
 )
 @Composable
 fun LazyCard(
-    InputColor: Color = Color(0xFF1A1A1A),
-    InnerPadding: Int = 16,
+    inputColor: Color = Color(0xFF1A1A1A),
+    innerPadding: Int = 16,
+    style: LazyCardStyle = LazyCardStyle(),
     content: @Composable () -> Unit,
-	style: LazyCardStyle = LazyCardStyle(),
 ) {
     Card(
         modifier = Modifier
@@ -272,22 +272,21 @@ fun LazyCard(
             .fillMaxWidth(),
         shape = RoundedCornerShape(style.roundCorners.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = InputColor)
+        colors = CardDefaults.cardColors(containerColor = inputColor)
     ) {
         Column(
             modifier = Modifier.padding(
-                PaddingValues(
-                    start = InnerPadding.dp,
-                    end = InnerPadding.dp,
-                    bottom = InnerPadding.dp,
-                    top = (InnerPadding - 2).dp  // decrease top padding by 2.dp
-                )
+                start = innerPadding.dp,
+                end = innerPadding.dp,
+                bottom = innerPadding.dp,
+                top = (innerPadding - 2).dp // slight top adjustment
             )
         ) {
             content()
         }
     }
 }
+
 
 
 
