@@ -190,16 +190,18 @@ fun refreshApps() {
             val ListsApp = getListsApp(pkgApp)
 
             if (ListsApp == null) {
-                add(apps) {
-                    name = getAppName(info)
-                    pkg = pkgApp
-                    NowTime = getTodayAppUsage(pkgApp)
-                }
+                apps.new(
+				    DataApps(
+						name = getAppName(info),
+						pkg = pkgApp,
+						NowTime = getTodayAppUsage(pkgApp),
+					)
+                )
             }
         }
 
 		apps.forEach { app ->
-			edit(apps, app.id) {
+			app.edit {
 				NowTime = getTodayAppUsage(app.pkg)
 			}
 		}
