@@ -186,14 +186,14 @@ fun refreshApps() {
         if (!UI.isUsageP_Enabled()) return
 
         realApps.forEach { info ->
-            val pkg = getAppPackage(info)
-            val ListsApp = getListsApp(pkg)
+            val pkgApp = getAppPackage(info)
+            val ListsApp = getListsApp(pkgApp)
 
             if (ListsApp == null) {
                 add(apps) {
                     name = getAppName(info)
-                    pkg = pkg
-                    NowTime = getTodayAppUsage(pkg)
+                    pkg = pkgApp
+                    NowTime = getTodayAppUsage(pkgApp)
                 }
             }
         }
@@ -220,9 +220,9 @@ fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
     return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
 }
 
-fun getListsApp(packageName: String): DataApps? {
-    val map = apps.associateBy { it.packageName }
-    return map[packageName]
+fun getListsApp(pkg: String): DataApps? {
+    val map = apps.associateBy { it.pkg }
+    return map[pkg]
 }
 
 fun getTodayAppUsage(packageName: String): Int {
