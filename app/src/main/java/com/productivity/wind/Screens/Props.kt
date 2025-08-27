@@ -182,6 +182,14 @@ object Icon {
                         icon = Icons.Default.Add
                 )
         }
+        @Composable
+        fun BigAdd(onClick: () -> Unit = { goTo("Challenge") }) {
+                LazyIcon(
+                    onClick = onClick,
+                    BigIcon = Icons.Filled.Add,
+                    BigIconColor = Color(0xFFFFC107),
+                )
+        }
         
         @Composable
         fun Edit() {
