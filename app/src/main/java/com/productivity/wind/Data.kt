@@ -171,7 +171,7 @@ fun MAINStart() {
 @Composable
 fun AppStart() {
     eachSecond{
-        refreshApps()
+        
     }
     LazyMenu { Menu() }
     
@@ -180,6 +180,7 @@ fun AppStart() {
     val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
     LaunchedEffect(Unit) {
         DayChecker.start()
+        refreshApps()
     }
     
     
