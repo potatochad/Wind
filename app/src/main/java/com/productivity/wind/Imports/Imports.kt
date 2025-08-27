@@ -302,10 +302,11 @@ object UI {
 
 
 
-	inline fun check(condition: Boolean, message: String = "") {
+	inline fun check(condition: Boolean, message: String = "", action: () -> Unit = {}) {
 		if (condition) {
 			if (message.isNotEmpty()) Vlog(message)
-			return  // non-local return: exits the caller
+			action()
+			return
 		}
 	}
 
