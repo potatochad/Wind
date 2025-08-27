@@ -302,15 +302,14 @@ object UI {
 
 
 
-	inline fun check(
+	fun check(
 		condition: Boolean,
 		message: String = "",
-		crossinline action: () -> Unit = {}
+		action: () -> Unit = {},
 	) {
 		if (condition) {
 			if (message.isNotEmpty()) Vlog(message)
 			action()        // safe
-			return          // now valid, just returns from check()
 		}
 	}
 
