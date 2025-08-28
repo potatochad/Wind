@@ -72,7 +72,11 @@ fun LazyImage(
 
 
 
-
+data class LazzyListStyle(
+    var height: Dp = 400.dp,
+    var delayMs: Long = 40,
+    var chunkSize: Int = 1,
+)
 @Composable
 fun <T> LazzyList(
     items: List<T>,
