@@ -167,7 +167,7 @@ fun PreloadBox(
         Box(
             Modifier
                 .offset(x = (-1000).dp, y = (-1000).dp) // move it off-screen
-				.size(IntrinsicSize.Min) / // not 0f, forces measure/layout
+				.size(IntrinsicSize.Min) // not 0f, forces measure/layout
                 .clearAndSetSemantics { }
         ) { what() }
     }
