@@ -19,7 +19,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.font.*
@@ -166,8 +166,8 @@ fun PreloadBox(
     if (whenDo) {
         Box(
             Modifier
-                .size(1.dp)
-                .alpha(0f)
+                .size(0.dp) // keep it non-visible
+                .graphicsLayer(alpha = 0.01f) // not 0f, forces measure/layout
                 .clearAndSetSemantics { }
         ) { what() }
     }
