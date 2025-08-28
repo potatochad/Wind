@@ -77,38 +77,41 @@ fun LazyImage(
 fun <T> LazzyList(
     items: List<T>,
     initialCount: Int = 6,
-    delayMs: Long = 20,
-    chunkSize: Int = 1,
-    modifier: Modifier = Modifier.heightIn(max = 200.dp),
-    itemContent: @Composable (T) -> Unit
+    style: LazzyListStyle = LazzyListStyle(),
+    itemContent: @Composable (T) -> Unit,
 ) {
-    val scrollState = rememberScrollState()
+    val scrollPlace = rememberScrollState()
     val appearedItems = remember { mutableStateListOf<T>() }
 
-    // Gradual loading
-    LaunchedEffect(items) {
-        appearedItems.clear()
-        val initialEnd = initialCount.coerceAtMost(items.size)
-        appearedItems.addAll(items.subList(0, initialEnd))
+    // Immediately add the initial batch
+    val realInitialCount = initialCount.coerceAtMost(items.size)
+    if (appearedItems.isEmpty()) {
+        appearedItems.addAll(items.subList(0, realInitialCount))
+    }
 
-        var currentIndex = initialEnd
+    // Gradual loading for the rest
+    LaunchedEffect(items) {
+        var currentIndex = realInitialCount
         while (currentIndex < items.size) {
-            val nextIndex = (currentIndex + chunkSize).coerceAtMost(items.size)
+            val nextIndex = (currentIndex + style.chunkSize).coerceAtMost(items.size)
             appearedItems.addAll(items.subList(currentIndex, nextIndex))
             currentIndex = nextIndex
             if (currentIndex >= items.size) break
-            kotlinx.coroutines.delay(delayMs)
+            kotlinx.coroutines.delay(style.delayMs)
         }
     }
 
     Column(
-        modifier = modifier.verticalScroll(scrollState)
+        modifier = Modifier
+            .height(style.height)
+            .verticalScroll(scrollPlace)
     ) {
         appearedItems.forEach { item ->
             itemContent(item)
         }
     }
 }
+
 
 
 
