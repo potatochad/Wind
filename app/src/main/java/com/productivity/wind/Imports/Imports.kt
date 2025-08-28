@@ -302,7 +302,7 @@ object UI {
 
 
 
-	fun check(
+	inline fun check(
 		condition: Boolean,
 		message: String = "",
 		action: () -> Unit = {},
