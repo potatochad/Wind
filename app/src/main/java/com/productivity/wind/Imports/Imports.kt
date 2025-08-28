@@ -370,7 +370,7 @@ object UI {
 				unselectedColor = Color.Gray
 			),
 			modifier = Modifier
-				.scale(0.7f)
+				.scale(0.85f)
 				.padding(start = 0.dp, end = 8.dp, top = 3.dp, bottom = 3.dp)
 		)
 	}
