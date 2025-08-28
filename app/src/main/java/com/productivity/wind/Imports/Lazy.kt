@@ -633,7 +633,7 @@ fun LazyPopup(
 ) = NoLagCompose {
 	
 	PreloadBox(
-        whenDo = !show.value,
+        whenDo = true,
         what = { content?.invoke() ?: Text(message) }
     )
 	
