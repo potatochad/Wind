@@ -166,8 +166,8 @@ fun PreloadBox(
     if (whenDo) {
         Box(
             Modifier
-                .size(0.dp) // keep it non-visible
-                .graphicsLayer(alpha = 0.01f) // not 0f, forces measure/layout
+                .offset(x = (-1000).dp, y = (-1000).dp) // move it off-screen
+				.size(IntrinsicSize.Min) / // not 0f, forces measure/layout
                 .clearAndSetSemantics { }
         ) { what() }
     }
