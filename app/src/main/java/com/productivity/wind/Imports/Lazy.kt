@@ -73,7 +73,7 @@ fun LazyImage(
 
 
 data class LazzyListStyle(
-    var height: Dp = 400.dp,
+    var height: Dp = 200.dp,
     var delayMs: Long = 40,
     var chunkSize: Int = 1,
 )
