@@ -76,11 +76,11 @@ data class LazzyListStyle(
     var height: Dp = 200.dp,
     var delayMs: Long = 40,
     var chunkSize: Int = 1,
+	var IntFirst: Int = 0,
 )
 @Composable
 fun <T> LazzyList(
     items: List<T>,
-    initialCount: Int = 6,
     style: LazzyListStyle = LazzyListStyle(),
     itemContent: @Composable (T) -> Unit,
 ) {
@@ -88,7 +88,7 @@ fun <T> LazzyList(
     val appearedItems = remember { mutableStateListOf<T>() }
 
     // Immediately add the initial batch
-    val realInitialCount = initialCount.coerceAtMost(items.size)
+    val realInitialCount = style.IntFirst.coerceAtMost(items.size)
     if (appearedItems.isEmpty()) {
         appearedItems.addAll(items.subList(0, realInitialCount))
     }
