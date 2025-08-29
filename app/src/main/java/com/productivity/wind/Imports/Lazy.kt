@@ -642,23 +642,21 @@ fun LazyPopup(
 ) = NoLagCompose {
 	
     
-	AlertDialog(
-		modifier = Modifier.offset(
-        x = if (!show.value) {
-            // Random value between 1.dp and 10000.dp added to 100000.dp
-            100000.dp + Random.nextInt(1, 10000).dp
-        } else {
-            0.dp
-        },
-        y = 0.dp
-    ),
-		onDismissRequest = {
-			onDismiss?.invoke()
-		},
-			title = { Text(title) },
-			text = {
-				content?.invoke() ?: Text(message)
-			},
+	val preloadedContent: @Composable () -> Unit = {
+        content?.invoke() ?: Text(message)
+    }
+    Box(modifier = Modifier.offset(x = 1_000_000.dp, y = 0.dp)) {
+        preloadedContent() // force Compose to build everything
+    }
+
+    // 2️⃣ Only show the dialog when needed
+    if (show.value) {
+        AlertDialog(
+            onDismissRequest = { onDismiss?.invoke() },
+            title = { Text(title) },
+            text = {
+                preloadedContent()
+            },
 			confirmButton = {
 				if (showConfirm) {
 					TextButton(onClick = {
