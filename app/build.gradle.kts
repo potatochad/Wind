@@ -120,17 +120,10 @@ ktlint {
 
 
 dependencies {
-
-implementation("com.google.accompanist:accompanist-drawablepainter:0.37.3")
-
-
-implementation(platform(libs.androidx.compose.bom))
-
-// Needed for KeyboardOptions / KeyboardActions
-implementation("androidx.compose.foundation:foundation")
-
-// Needed for TextAlign, ImeAction, KeyboardType
-implementation("androidx.compose.ui:ui-text")
+    implementation("com.google.accompanist:accompanist-drawablepainter:0.37.3")
+    implementation(platform(libs.androidx.compose.bom))
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.ui:ui-text")
 
 
 
