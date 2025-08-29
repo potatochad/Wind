@@ -639,16 +639,18 @@ fun LazyPopup(
 
 ) = NoLagCompose {
 	
-	 val preparedContent: @Composable () -> Unit = remember(content, message) {
-        val cache = @Composable {
-            if (content != null) {
-                content()
-            } else {
-                Text(message)
-            }
+	 var preloaded by remember(content, message) { mutableStateOf<(@Composable () -> Unit)?>(null) }
+    LaunchedEffect(content, message) {
+        preloaded = {
+            if (content != null) content()
+            else Text(message)
         }
-        cache
-	 }
+    }
+
+    // 🔹 Invisible host – forces Compose to build content early
+    Box(modifier = Modifier.size(0.dp)) {
+        preloaded?.invoke()
+	}
 	
 	
     if (show.value) { 
