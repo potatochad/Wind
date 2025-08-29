@@ -28,9 +28,9 @@ fun Challenge() {
 
 @Composable
 fun AppUsage() {
-    var Time = remember { m("50") }
-    var Points = remember { m("0") }
-    var WhichIf = remember { m(0) }
+    var Time = r { m("50") }
+    var Points = r { m("0") }
+    var WhichIf = r { m(0) }
     selectedApp.value = ""
     LaunchedEffect(Unit) {
         refreshApps()  
