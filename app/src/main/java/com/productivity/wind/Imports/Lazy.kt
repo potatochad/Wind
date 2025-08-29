@@ -688,10 +688,10 @@ fun BetterAlertDialog(
         ) {
             // Dialog card
             Card(
-                shape = RoundedCornerShape(12.dp),
-                elevation = 8.dp,
-                modifier = Modifier.wrapContentSize()
-            ) {
+    shape = RoundedCornerShape(12.dp),
+    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp), // ✅ fix here
+    modifier = Modifier.wrapContentSize()
+) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(title, style = MaterialTheme.typography.titleMedium)
                     Spacer(Modifier.height(8.dp))
