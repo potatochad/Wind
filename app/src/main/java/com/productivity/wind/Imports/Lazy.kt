@@ -53,8 +53,6 @@ import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.productivity.wind.Global1
 import com.productivity.wind.Imports.*
 
-import androidx.compose.ui.layout.*
-
 @Composable
 fun LazyImage(
     source: Any?,
@@ -641,25 +639,11 @@ fun LazyPopup(
 
 ) = NoLagCompose {
 	
-	val subcomposeState = r { SubcomposeAsyncState() }
-
-    // ✅ Precompose the content immediately
-    LaunchedEffect(content, message) {
-        subcomposeState.precompose("dialogContent") {
+	 val preparedContent = remember(content, message) {
+        @Composable {
             content?.invoke() ?: Text(message)
         }
-    }
-
-    // ✅ Optionally keep the content mounted invisibly
-    SubcomposeLayout { constraints ->
-        // Do nothing visible – this just hosts the precomposed slot
-        val placeables = subcomposeState.subcompose("invisible") {
-            // Nothing visible here – can preload anything else
-        }.map { it.measure(constraints) }
-
-        layout(0, 0) {} // Don't actually draw anything
-	}
-
+	 }
 	
 	
     if (show.value) { 
@@ -669,12 +653,7 @@ fun LazyPopup(
 			},
 			title = { Text(title) },
 			text = {
-                val contentSlot = subcomposeState.subcompose("dialogContent") {
-                    content?.invoke() ?: Text(message)
-                }
-
-                // Render it (should be instant if precomposed)
-                contentSlot.forEach { it() }
+				preparedContent()
 			},
 			confirmButton = {
 				if (showConfirm) {
