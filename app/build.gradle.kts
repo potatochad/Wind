@@ -122,6 +122,7 @@ ktlint {
 dependencies {
 
     implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-util:1.8.2")
 
     // implementation("androidx.compose.ui:ui-text")
     // implementation("androidx.compose.ui:ui:1.8.2")
