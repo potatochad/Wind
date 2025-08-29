@@ -51,7 +51,7 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.productivity.wind.Global1
-
+import com.productivity.wind.Imports.*
 
 @Composable
 fun LazyImage(
@@ -86,7 +86,7 @@ fun <T> LazzyList(
     itemContent: @Composable (T) -> Unit,
 ) {
     val scrollPlace = rememberScrollState()
-    val appearedItems = remember { mutableStateListOf<T>() }
+    val appearedItems = r { mutableStateListOf<T>() }
 
     // Immediately add initial batch
     val realInitialCount = style.IntFirst.coerceAtMost(items.size)
@@ -333,7 +333,7 @@ fun LazyMore(
     initiallyExpanded: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    var expanded by remember { mutableStateOf(initiallyExpanded) }
+    var expanded by r { m(initiallyExpanded) }
     val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
 
     Column(modifier = modifier) {
@@ -481,7 +481,7 @@ fun LazyHeader(
 	Mheight: Int = 100,
 ) {
     val ui = rememberSystemUiController()
-    var DisableTB_Button by remember { mutableStateOf(false) }
+    var DisableTB_Button by r { m(false) }
     LaunchedEffect(Unit) {
         ui.setStatusBarColor(Color.Black, darkIcons = false)
     }
@@ -639,7 +639,7 @@ fun LazyPopup(
 
 ) = NoLagCompose {
 	
-	val preloadedContent = remember {
+	val preloadedContent = r {
         @Composable {
             content?.invoke() ?: Text(message)
         }
@@ -690,8 +690,8 @@ fun LazyMenu(
     onDismiss: (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
-    val visible = remember { mutableStateOf(false) }
-    val internalVisible = remember { mutableStateOf(false) }
+    val visible = r { m(false) }
+    val internalVisible = r { m(false) }
 
     // Trigger showing/hiding Popup
     LaunchedEffect(Bar.ShowMenu) {
