@@ -639,10 +639,15 @@ fun LazyPopup(
 
 ) = NoLagCompose {
 	
-	 val preparedContent = remember(content, message) {
-        @Composable {
-            content?.invoke() ?: Text(message)
+	 val preparedContent: @Composable () -> Unit = remember(content, message) {
+        val cache = @Composable {
+            if (content != null) {
+                content()
+            } else {
+                Text(message)
+            }
         }
+        cache
 	 }
 	
 	
