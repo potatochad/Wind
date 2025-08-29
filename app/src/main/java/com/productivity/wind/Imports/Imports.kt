@@ -166,8 +166,7 @@ fun PreloadBox(
     if (whenDo) {
         Box(
             Modifier
-                .offset(x = (-1000).dp, y = (-1000).dp) // move it off-screen
-				.size(IntrinsicSize.Min) // not 0f, forces measure/layout
+                .offset(x = (-10000).dp, y = (-10000).dp) // move it off-screen
                 .clearAndSetSemantics { }
         ) { what() }
     }
