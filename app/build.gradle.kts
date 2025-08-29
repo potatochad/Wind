@@ -12,7 +12,7 @@ plugins {
 android {
     namespace = "com.productivity.wind"
 
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.productivity.wind"
@@ -122,7 +122,6 @@ ktlint {
 dependencies {
 
     implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-util:1.8.2")
 
     // implementation("androidx.compose.ui:ui-text")
     // implementation("androidx.compose.ui:ui:1.8.2")
