@@ -53,6 +53,8 @@ import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.productivity.wind.Global1
 import com.productivity.wind.Imports.*
 
+import kotlin.random.*
+
 @Composable
 fun LazyImage(
     source: Any?,
@@ -639,28 +641,23 @@ fun LazyPopup(
 
 ) = NoLagCompose {
 	
-	 var preloaded by remember(content, message) { mutableStateOf<(@Composable () -> Unit)?>(null) }
-    LaunchedEffect(content, message) {
-        preloaded = {
-            if (content != null) content()
-            else Text(message)
-        }
-    }
-
-    // 🔹 Invisible host – forces Compose to build content early
-    Box(modifier = Modifier.size(0.dp)) {
-        preloaded?.invoke()
-	}
-	
-	
-    if (show.value) { 
-		AlertDialog(
-			onDismissRequest = {
-				onDismiss?.invoke()
-			},
+    
+	AlertDialog(
+		modifier = Modifier.offset(
+        x = if (!show.value) {
+            // Random value between 1.dp and 10000.dp added to 100000.dp
+            100000.dp + Random.nextInt(1, 10000).dp
+        } else {
+            0.dp
+        },
+        y = 0.dp
+    ),
+		onDismissRequest = {
+			onDismiss?.invoke()
+		},
 			title = { Text(title) },
 			text = {
-				preloaded?.invoke() ?: Text(message)
+				content?.invoke() ?: Text(message)
 			},
 			confirmButton = {
 				if (showConfirm) {
@@ -682,8 +679,7 @@ fun LazyPopup(
 					}
 				}
 			} else null
-     	)
-	}
+     )
 }
 
 
