@@ -638,37 +638,36 @@ fun LazyPopup(
     showConfirm: Boolean = true,
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
-
 ) = NoLagCompose {
-	
-    
-	val preloadedContent: @Composable () -> Unit = {
-    content?.invoke() ?: Text(message)
-	}
-	Box(modifier = Modifier.offset(x = 1_000_000.dp, y = 0.dp)) {
-		preloadedContent() // force Compose to build everything
+
+    // 1️⃣ Preload content offscreen
+    val preloadedContent: @Composable () -> Unit = {
+        content?.invoke() ?: Text(message)
+    }
+    Box(modifier = Modifier.offset(x = 1_000_000.dp, y = 0.dp)) {
+        preloadedContent() // forces Compose to build everything
+    }
+
+    // 2️⃣ Show BetterAlertDialog
+    BetterAlertDialog(
+        show = show,
+        title = title,
+        message = message, // pass message
+        content = preloadedContent,
+        showCancel = showCancel,
+        showConfirm = showConfirm,
+        onConfirm = onConfirm,
+        onCancel = onCancel,
+        scrimClickable = true
+    )
 }
-
-BetterAlertDialog(
-    show = show,
-    title = title,
-    content = preloadedContent,
-    showCancel = showCancel,
-    showConfirm = showConfirm,
-    onConfirm = onConfirm,
-    onCancel = onCancel,
-    scrimClickable = true
-)
-
-}
-
 
 @Composable
 fun BetterAlertDialog(
     show: MutableState<Boolean>,
     onDismiss: (() -> Unit)? = { show.value = false },
     title: String = "Info",
-    message: String,
+    message: String = "",
     content: (@Composable () -> Unit)? = null,
     showCancel: Boolean = true,
     showConfirm: Boolean = true,
@@ -677,32 +676,21 @@ fun BetterAlertDialog(
     scrimClickable: Boolean = true, // CONTROL scrim click
 ) = NoLagCompose {
 
+    if (show.value) {
         Box(
-            modifier = Modifier
-				.fillMaxSize()
-				.background(Color.Black.copy(alpha = if (!show.value) 0f else 0.5f))
-				.offset(
-					x = if (!show.value) 50_000_000.dp else 0.dp,
-					y = 0.dp
-				)
-				.let { baseModifier ->
-					if (show.value) {
-						baseModifier.clickable(
-							enabled = scrimClickable,
-							onClick = { onDismiss?.invoke() }
-						)
-					} else {
-						baseModifier
-					}
-				}
+            modifier = (
+                Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .clickable(enabled = scrimClickable) { onDismiss?.invoke() }
+            ),
             contentAlignment = Alignment.Center
         ) {
             // Dialog card
             Card(
                 shape = RoundedCornerShape(12.dp),
                 elevation = 8.dp,
-                modifier = Modifier
-                    .wrapContentSize()
+                modifier = Modifier.wrapContentSize()
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(title, style = MaterialTheme.typography.titleMedium)
@@ -735,7 +723,6 @@ fun BetterAlertDialog(
         }
     }
 }
-
 
 
 
