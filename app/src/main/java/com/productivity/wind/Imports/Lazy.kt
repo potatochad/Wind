@@ -9,7 +9,6 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.ui.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -53,6 +52,8 @@ import androidx.compose.ui.graphics.painter.Painter
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.productivity.wind.Global1
 import com.productivity.wind.Imports.*
+
+import androidx.compose.ui.layout.*
 
 @Composable
 fun LazyImage(
