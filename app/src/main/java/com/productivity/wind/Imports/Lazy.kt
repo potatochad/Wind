@@ -660,7 +660,7 @@ fun LazyPopup(
 			},
 			title = { Text(title) },
 			text = {
-				preparedContent()
+				preloaded?.invoke() ?: Text(message)
 			},
 			confirmButton = {
 				if (showConfirm) {
