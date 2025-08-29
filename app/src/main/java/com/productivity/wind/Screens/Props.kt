@@ -214,7 +214,7 @@ fun NeedMorePointsPopup(show: MutableState<Boolean>){
 
 @Composable
 fun EditPopUp(show: MutableState<Boolean>) {
-    var TemporaryTargetText by remember { mutableStateOf("") }
+    var TemporaryTargetText by r { m("") }
     TemporaryTargetText = Bar.targetText
     LazyPopup(
         show = show,
@@ -267,7 +267,7 @@ fun AppSelectPopup(
     show: MutableState<Boolean>,
 ) {
     if (show.value) {
-        val appList by remember { mutableStateOf(getApps()) }
+        val appList by r { m(getApps()) }
 
         LazyPopup(
             show = show,
