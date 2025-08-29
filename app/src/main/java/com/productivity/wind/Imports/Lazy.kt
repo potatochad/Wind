@@ -81,7 +81,7 @@ data class LazzyListStyle(
 @Composable
 fun <T> LazzyList(
     items: List<T>,
-    loadAll: Boolean = false,        // <-- added
+    loadAll: Boolean = true,      
     style: LazzyListStyle = LazzyListStyle(),
     itemContent: @Composable (T) -> Unit,
 ) {
