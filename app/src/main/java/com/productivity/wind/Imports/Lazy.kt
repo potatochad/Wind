@@ -639,17 +639,26 @@ fun LazyPopup(
 
 ) = NoLagCompose {
 	
-	val preloadedContent = r {
-        @Composable {
+	val subcomposeState = r { SubcomposeAsyncState() }
+
+    // ✅ Precompose the content immediately
+    LaunchedEffect(content, message) {
+        subcomposeState.precompose("dialogContent") {
             content?.invoke() ?: Text(message)
         }
     }
 
-    // Invisible preloading
-    PreloadBox(
-        whenDo = true,
-        what = { preloadedContent() }
-    )
+    // ✅ Optionally keep the content mounted invisibly
+    SubcomposeLayout { constraints ->
+        // Do nothing visible – this just hosts the precomposed slot
+        val placeables = subcomposeState.subcompose("invisible") {
+            // Nothing visible here – can preload anything else
+        }.map { it.measure(constraints) }
+
+        layout(0, 0) {} // Don't actually draw anything
+	}
+
+	
 	
     if (show.value) { 
 		AlertDialog(
@@ -657,7 +666,14 @@ fun LazyPopup(
 				onDismiss?.invoke()
 			},
 			title = { Text(title) },
-			text = {preloadedContent()},
+			text = {
+                val contentSlot = subcomposeState.subcompose("dialogContent") {
+                    content?.invoke() ?: Text(message)
+                }
+
+                // Render it (should be instant if precomposed)
+                contentSlot.forEach { it() }
+			},
 			confirmButton = {
 				if (showConfirm) {
 					TextButton(onClick = {
