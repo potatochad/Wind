@@ -81,27 +81,34 @@ data class LazzyListStyle(
 @Composable
 fun <T> LazzyList(
     items: List<T>,
+    loadAll: Boolean = false,        // <-- added
     style: LazzyListStyle = LazzyListStyle(),
     itemContent: @Composable (T) -> Unit,
 ) {
     val scrollPlace = rememberScrollState()
     val appearedItems = remember { mutableStateListOf<T>() }
 
-    // Immediately add the initial batch
+    // Immediately add initial batch
     val realInitialCount = style.IntFirst.coerceAtMost(items.size)
     if (appearedItems.isEmpty()) {
-        appearedItems.addAll(items.subList(0, realInitialCount))
+        if (loadAll) {
+            appearedItems.addAll(items)   // load all at once
+        } else {
+            appearedItems.addAll(items.subList(0, realInitialCount))
+        }
     }
 
-    // Gradual loading for the rest
-    LaunchedEffect(items) {
-        var currentIndex = realInitialCount
-        while (currentIndex < items.size) {
-            val nextIndex = (currentIndex + style.chunkSize).coerceAtMost(items.size)
-            appearedItems.addAll(items.subList(currentIndex, nextIndex))
-            currentIndex = nextIndex
-            if (currentIndex >= items.size) break
-            kotlinx.coroutines.delay(style.delayMs)
+    // Gradual loading for the rest (only if not loadAll)
+    if (!loadAll) {
+        LaunchedEffect(items) {
+            var currentIndex = realInitialCount
+            while (currentIndex < items.size) {
+                val nextIndex = (currentIndex + style.chunkSize).coerceAtMost(items.size)
+                appearedItems.addAll(items.subList(currentIndex, nextIndex))
+                currentIndex = nextIndex
+                if (currentIndex >= items.size) break
+                kotlinx.coroutines.delay(style.delayMs)
+            }
         }
     }
 
