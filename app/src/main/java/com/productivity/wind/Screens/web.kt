@@ -50,7 +50,7 @@ fun Web() {
 
 @Composable
 fun Browser() {
-    var url by remember { mutableStateOf("https://www.google.com") }
+    var url by r { m("https://www.google.com") }
         LazzyRow() {
             TextField(
                 value = url,
