@@ -103,6 +103,14 @@ fun <T> m(value: T) = mutableStateOf(value)
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> {
     return mutableStateListOf()
 }
+@Composable
+fun <T> r(value: () -> T) = remember { value() }
+
+
+
+
+
+
 inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
     return object : TypeToken<MutableList<T>>() {}.type
 }
