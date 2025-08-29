@@ -639,9 +639,16 @@ fun LazyPopup(
 
 ) = NoLagCompose {
 	
-	PreloadBox(
+	val preloadedContent = remember {
+        @Composable {
+            content?.invoke() ?: Text(message)
+        }
+    }
+
+    // Invisible preloading
+    PreloadBox(
         whenDo = true,
-        what = { content?.invoke() ?: Text(message) }
+        what = { preloadedContent() }
     )
 	
     if (show.value) { 
@@ -650,13 +657,7 @@ fun LazyPopup(
 				onDismiss?.invoke()
 			},
 			title = { Text(title) },
-			text = {
-					if (content == null) {Text(message) }
-					else {
-						content()
-					}
-		
-			},
+			text = {preloadedContent()},
 			confirmButton = {
 				if (showConfirm) {
 					TextButton(onClick = {
