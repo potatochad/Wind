@@ -120,8 +120,6 @@ ktlint {
 
 
 dependencies {
-    implementation("io.github.qdsfdhvh:precompose:1.6.0")
-
     implementation("androidx.compose.ui:ui")
     // implementation("androidx.compose.ui:ui-text")
     // implementation("androidx.compose.ui:ui:1.8.2")
