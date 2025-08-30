@@ -120,13 +120,11 @@ ktlint {
 
 
 dependencies {
+    implementation("io.github.qdsfdhvh:precompose:1.6.0")
 
     implementation("androidx.compose.ui:ui")
-
     // implementation("androidx.compose.ui:ui-text")
     // implementation("androidx.compose.ui:ui:1.8.2")
-
-
     implementation("com.google.accompanist:accompanist-drawablepainter:0.37.3")
     implementation(platform(libs.androidx.compose.bom))
     implementation("androidx.compose.foundation:foundation")
