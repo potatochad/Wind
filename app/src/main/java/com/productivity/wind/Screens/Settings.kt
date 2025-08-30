@@ -17,8 +17,7 @@ import com.productivity.wind.Imports.*
 
 //region Settings
 
-val DarkBlue = Color(0xFF00008B) 
-val Gold = Color(0xFFFFD700)
+
 
 @Composable
 fun SettingsScreen() {
