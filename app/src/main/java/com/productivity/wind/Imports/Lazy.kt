@@ -206,19 +206,22 @@ fun LazyLine(
   
 @Composable
 fun LazzyRow(
-	modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier,
     padding: Int = 0,
+    center: Boolean = false, // Kotlin uses 'Boolean', not 'Bool'
     content: @Composable () -> Unit,
-  ){
+) {
     Row(
-      modifier = modifier
-        .fillMaxWidth()
-        .padding(padding.dp),
-      verticalAlignment = Alignment.CenterVertically
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(padding.dp),
+        horizontalArrangement = if (center) Arrangement.Center else Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-      content()
-	  	}
+        content()
+    }
 }
+
       
 @Composable 
 fun LazyRuleCard(
@@ -650,14 +653,13 @@ fun LazyLoad(content: @Composable () -> Unit) = NoLagCompose{
         loadingJob.join()
         showLoading = false
     }
-
-    Box(contentAlignment = Alignment.Center) {
-        when {
-            isLoaded -> content()
-            showLoading -> CircularProgressIndicator()
-            else -> {} // blank for first 10ms
-        }
-    }
+	LazzyRow(center= true){
+		when {
+			isLoaded -> content()
+			showLoading -> CircularProgressIndicator()
+			else -> {} // blank for first 10ms
+		}
+	}
 }
 
 
