@@ -371,7 +371,7 @@ object UI {
 					selectedColor = Color(0xFFFFD700),
 					unselectedColor = Color.Gray
 				),
-				modifier = Modifier.fillMaxSize() // fills your exact box size
+				modifier = Modifier.scale(0.85f)
 			)
 		}
 	}
