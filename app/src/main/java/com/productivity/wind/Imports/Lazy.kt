@@ -632,19 +632,17 @@ fun LazyScreen(
 //region LAZY POPUP
 
 @Composable
-fun LazyLoad(content: @Composable () -> Unit) = NoLagCompose{
+fun LazyLoad(content: @Composable () -> Unit) {
     var isLoaded by remember { mutableStateOf(false) }
     var showLoading by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        delay(10) // do nothing for 10ms
-        // Start loading
-        val loadingJob = launch {
-            delay(500) // simulate loading task
+        delay(10) // Let composition settle
+        val loadingJob = launch(Dispatchers.Default) { // offload to background thread
+            delay(500) // simulate heavy work
             isLoaded = true
         }
 
-        // Show loading after 100ms if not loaded yet
         delay(100)
         if (!isLoaded) {
             showLoading = true
@@ -653,14 +651,18 @@ fun LazyLoad(content: @Composable () -> Unit) = NoLagCompose{
         loadingJob.join()
         showLoading = false
     }
-	LazzyRow(center= true){
-		when {
-			isLoaded -> content()
-			showLoading -> CircularProgressIndicator()
-			else -> {} // blank for first 10ms
-		}
-	}
+
+    LazyRow(horizontalArrangement = Arrangement.Center) {
+        item {
+            when {
+                isLoaded -> content()
+                showLoading -> CircularProgressIndicator()
+                else -> {} // blank for first 10ms
+            }
+        }
+    }
 }
+
 
 
 @Composable
