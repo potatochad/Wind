@@ -189,7 +189,7 @@ fun refreshApps() {
             val ListsApp = getListsApp(pkgApp)
 
             if (ListsApp == null) {
-				Vlog("add: ${ListsApp.name}")
+				Vlog("add: ${getAppName(info)}")
                 apps.new(
 				    DataApps(
 						name = getAppName(info),
