@@ -17,15 +17,11 @@ import com.productivity.wind.Imports.*
 
 @Composable
 fun Web() {
-    var url by r { m("https://www.google.com") }
+    var url = r { m("https://www.google.com") }
         
     LazyScreen(
         title = {
-            TextField(
-                value = url,
-                onValueChange = { url = it },
-                placeholder = { Text("Enter URL") }
-            )
+            UI.Ctext(url)
         },
     ) {
         AndroidView(
@@ -48,12 +44,12 @@ fun Web() {
                     // Optional: enable debugging for dev
                     WebView.setWebContentsDebuggingEnabled(true)
 
-                    loadUrl(url)
+                    loadUrl(url.value)
                 }
             },
             update = { webView ->
-                if (webView.url != url) {
-                    webView.loadUrl(url)
+                if (webView.url != url.value) {
+                    webView.loadUrl(url.value)
                 }
             }
         )
