@@ -629,7 +629,7 @@ fun LazyScreen(
 //region LAZY POPUP
 
 @Composable
-fun LazyLoad(content: @Composable () -> Unit) {
+fun LazyLoad(content: @Composable () -> Unit) = NoLagCompose{
     var isLoaded by remember { mutableStateOf(false) }
     var showLoading by remember { mutableStateOf(false) }
 
@@ -651,7 +651,7 @@ fun LazyLoad(content: @Composable () -> Unit) {
         showLoading = false
     }
 
-    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+    Box(contentAlignment = Alignment.Center) {
         when {
             isLoaded -> content()
             showLoading -> CircularProgressIndicator()
