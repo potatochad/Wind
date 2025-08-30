@@ -632,31 +632,6 @@ fun LazyScreen(
 //region LAZY POPUP
 
 @Composable
-fun LazyLoad(content: @Composable () -> Unit) = NoLagCompose{
-    var isLoading by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        delay(10) 
-        isLoading = true
-    }
-	Box {
-    // Background: loading text
-    LazzyRow(center = true) {
-        Text("Loading...")
-    }
-
-    // Foreground: content appears on top when not loading
-    if (!isLoading) {
-        LazzyRow(center = true) {
-            content
-        }
-    }
-}
-
-}
-
-
-@Composable
 fun LazyPopup(
     show: MutableState<Boolean>,
     onDismiss: (() -> Unit)? = { show.value = false },
@@ -669,6 +644,7 @@ fun LazyPopup(
     onCancel: (() -> Unit)? = null,
 ) {
     if (!show.value) return
+	
 
     AlertDialog(
         onDismissRequest = {
@@ -676,9 +652,7 @@ fun LazyPopup(
         },
         title = { Text(title) },
         text = {
-			LazyLoad {
-				content?.invoke() ?: Text(message)
-			}
+			content?.invoke() ?: Text(message)
         },
         confirmButton = {
             if (showConfirm) {
