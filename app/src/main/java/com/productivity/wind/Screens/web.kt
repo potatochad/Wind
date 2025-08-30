@@ -30,17 +30,7 @@ fun Web() {
 
 
 
-@Composable
-fun LazyBrowser(url: MutableState<String>) {
-    AndroidView(factory = { context ->
-        WebView(context).apply {
-            webViewClient = WebViewClient()
-            WebView.setWebContentsDebuggingEnabled(true)
-            settings.BrowserSettings()
 
-            loadUrl(url.value)
-        }
-    }, update = { webView ->
-        if (webView.url != url.value) webView.loadUrl(url.value)
-    }, modifier = Modifier.fillMaxSize())
-}
+
+
+
