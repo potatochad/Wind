@@ -54,7 +54,21 @@ import com.productivity.wind.Global1
 import com.productivity.wind.Imports.*
 import kotlin.random.*
 import androidx.compose.ui.*
+import android.webkit.*
+@Composable
+fun LazyBrowser(url: MutableState<String>) {
+    AndroidView(factory = { context ->
+        WebView(context).apply {
+            webViewClient = WebViewClient()
+            WebView.setWebContentsDebuggingEnabled(true)
+            settings.BrowserSettings()
 
+            loadUrl(url.value)
+        }
+    }, update = { webView ->
+        if (webView.url != url.value) webView.loadUrl(url.value)
+    }, modifier = Modifier.fillMaxSize())
+}
 
 @Composable
 fun LazyImage(
