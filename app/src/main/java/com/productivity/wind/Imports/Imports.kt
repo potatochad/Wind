@@ -374,7 +374,7 @@ object UI {
 				modifier = Modifier.scale(0.85f)
 			)
 		}
-		move(w=5)
+		move(w=8)
 	}
 
 
