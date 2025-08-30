@@ -361,17 +361,19 @@ object UI {
 		index: Int,                  // unique index of this circle
 		selectedIndex: MutableState<Int>, // shared state of which is selected
 	) {
-		RadioButton(
-			selected = selectedIndex.value == index,
-			onClick = { selectedIndex.value = index },
-			colors = RadioButtonDefaults.colors(
-				selectedColor = Color(0xFFFFD700),
-				unselectedColor = Color.Gray
-			),
-			modifier = Modifier
-				.scale(0.85f)
-				.padding(start = 0.dp, end = 8.dp, top = 3.dp, bottom = 3.dp)
-		)
+		Box(
+			modifier = Modifier.size(20.dp) // make box exactly the size you want
+		) {
+			RadioButton(
+				selected = selectedIndex.value == index,
+				onClick = { selectedIndex.value = index },
+				colors = RadioButtonDefaults.colors(
+					selectedColor = Color(0xFFFFD700),
+					unselectedColor = Color.Gray
+				),
+				modifier = Modifier.fillMaxSize() // fills your exact box size
+			)
+		}
 	}
 
 
