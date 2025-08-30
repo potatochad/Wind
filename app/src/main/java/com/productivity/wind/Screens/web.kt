@@ -17,96 +17,48 @@ import com.productivity.wind.Imports.*
 
 @Composable
 fun Web() {
+    var url by r { m("https://www.google.com") }
+        
     LazyScreen(
         title = {
-                    Text("Web")
-
-                    // WORK WEB
-                    UI.End {
-                        LazyIcon(
-                            onClick = { goTo("WorkWeb") },
-                            BigIcon = Icons.Default.Work,
-                            BigIconColor = Color(0xFF4CAF50), // Green
-                            OuterPadding = 0,
-                        )
-                        
-                        LazyIcon(
-                            onClick = { goTo("FunWeb") },
-                            BigIcon = Icons.Default.SentimentVerySatisfied,
-                            BigIconColor = Color(0xFFFFC107), // Amber
-                            OuterPadding = 0,
-                        )
-                    }
-
-
-        },
-    ) {
-        Browser()
-    }
-
-
-
-}
-
-@Composable
-fun Browser() {
-    var url by r { m("https://www.google.com") }
-        LazzyRow() {
             TextField(
                 value = url,
                 onValueChange = { url = it },
                 placeholder = { Text("Enter URL") }
             )
-            Spacer(Modifier.width(8.dp))
-            Button(onClick = { /* nothing here, handled in update */ }) {
-                Text("Go")
-            }
-        }
-
-        // WebView embedded inside Compose
+        },
+    ) {
         AndroidView(
-    factory = { context ->
-        WebView(context).apply {
-            webViewClient = WebViewClient()  // keeps navigation inside the WebView
-            settings.apply {
-                javaScriptEnabled = true       // websites need this
-                builtInZoomControls = true     // pinch zoom works
-                displayZoomControls = false    // hide ugly zoom buttons
-                loadWithOverviewMode = true   // scale to fit screen
-                useWideViewPort = true         // make responsive sites fit
+            factory = { context ->
+                WebView(context).apply {
+                    webViewClient = WebViewClient()   // keeps navigation inside
+                    settings.apply {
+                        javaScriptEnabled = true          // needed for most sites
+                        domStorageEnabled = true          // enables localStorage/sessionStorage
+                        databaseEnabled = true            // allows HTML5 DB APIs
+                        cacheMode = WebSettings.LOAD_DEFAULT  // use cached resources when possible
+                        builtInZoomControls = true
+                        displayZoomControls = false
+                        loadWithOverviewMode = true
+                        useWideViewPort = true
+                        allowFileAccess = true            // allow file:// access
+                        allowContentAccess = true         // allow content:// access
+                        mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW // https + http
+                    }
+                    // Optional: enable debugging for dev
+                    WebView.setWebContentsDebuggingEnabled(true)
+
+                    loadUrl(url)
+                }
+            },
+            update = { webView ->
+                if (webView.url != url) {
+                    webView.loadUrl(url)
+                }
             }
-            loadUrl(url)
-        }
-    },
-    update = { webView ->
-        webView.loadUrl(url)
+        )
     }
-)
-
 }
 
 
 
-@Composable
-fun FunWeb() {
-    LazyScreen(title = { Text("Fun Web") }) {
-        UI.EmptyBox(text = "TO DO")
-
-    }
-
-
-
-
-}
-
-
-@Composable
-fun WorkWeb() {
-    LazyScreen(title = {Text("Work Web")}) {
-        UI.EmptyBox(text = "TO DO")
-    }
-
-
-
-
-}
