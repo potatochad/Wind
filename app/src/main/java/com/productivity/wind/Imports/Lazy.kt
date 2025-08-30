@@ -633,26 +633,22 @@ fun LazyScreen(
 
 @Composable
 fun LazyLoad(content: @Composable () -> Unit) = NoLagCompose{
-    var showLoading by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         delay(10) 
-        showLoading = true
+        isLoading = true
     }
 	Box {
     // Background: loading text
     LazzyRow(center = true) {
-        item {
-            Text("Loading...")
-        }
+        Text("Loading...")
     }
 
     // Foreground: content appears on top when not loading
     if (!isLoading) {
         LazzyRow(center = true) {
-            item {
-                content
-            }
+            content
         }
     }
 }
