@@ -661,7 +661,7 @@ fun LazyPopup(
 			confirmButton = {
 				if (showConfirm) {
 					TextButton(onClick = {
-						LoadContent?.invoke()
+						onConfirm?.invoke()
 						show.value = false
 					}) {
 						Text("OK")
