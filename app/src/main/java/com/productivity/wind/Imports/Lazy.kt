@@ -627,45 +627,7 @@ fun LazyScreen(
 
 
 //region LAZY POPUP
-
-@Composable
-fun LazyPopup(
-    show: MutableState<Boolean>,
-    onDismiss: (() -> Unit)? = { show.value = false },
-    title: String = "Info",
-    message: String,
-    content: (suspend () -> (@Composable () -> Unit))? = null, // Lazy-loading content
-    showCancel: Boolean = true,
-    showConfirm: Boolean = true,
-    onConfirm: (() -> Unit)? = null,
-    onCancel: (() -> Unit)? = null,
-) {
-    if (!show.value) return
-
-    var isLoading by remember { mutableStateOf(true) }
-    var loadedContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
-
-    LaunchedEffect(show.value) {
-        if (show.value && content != null) {
-            val start = System.currentTimeMillis()
-
-            // Launch content loading
-            val loaded = content.invoke()
-
-            val elapsed = System.currentTimeMillis() - start
-            if (elapsed < 200) {
-                delay(200 - elapsed) // ensure minimum 200ms before showing
-            }
-
-            loadedContent = loaded
-            isLoading = false
-        } else {
-            // fallback to default content
-            loadedContent = { Text(message) }
-            isLoading = false
-        }
-	}
-    
+   
 @Composable
 fun LazyPopup(
     show: MutableState<Boolean>,
@@ -677,76 +639,70 @@ fun LazyPopup(
     showConfirm: Boolean = true,
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
-
-) = NoLagCompose {
-	
+) {
     if (!show.value) return
 
-	var isLoading by remember { mutableStateOf(true) }
+    var isLoading by remember { mutableStateOf(content != null) }
     var showSpinner by remember { mutableStateOf(false) }
-    var loadedContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
 
-    LaunchedEffect(show.value) {
-        // Start delayed spinner (after 200ms)
-        launch {
+    // Start delayed spinner
+    LaunchedEffect(Unit) {
+        if (isLoading) {
             delay(200)
-            if (isLoading) showSpinner = true
+            showSpinner = true
         }
-
-        // Load the actual content
-        val result = content()
-        loadedContent = result
-        isLoading = false
-        showSpinner = false
     }
 
+    AlertDialog(
+        onDismissRequest = {
+            onDismiss?.invoke()
+        },
+        title = { Text(title) },
+        text = {
+            when {
+                isLoading && showSpinner -> {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        CircularProgressIndicator(modifier = Modifier.size(20.dp))
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text("Loading...")
+                    }
+                }
 
+                content != null -> {
+                    // Directly render composable content (safe here)
+                    content()
+                    isLoading = false
+                    showSpinner = false
+                }
 
-	
-		AlertDialog(
-			onDismissRequest = {
-				onDismiss?.invoke()
-			},
-			title = { Text(title) },
-			text = {
-				when {
-					isLoading && showSpinner -> {
-						Row(verticalAlignment = Alignment.CenterVertically) {
-							CircularProgressIndicator(modifier = Modifier.size(20.dp))
-							Spacer(modifier = Modifier.width(10.dp))
-							Text("Loading...")
-						}
-					}
-					!isLoading -> {
-						loadedContent?.invoke()
-					}
-					else -> {
-						Spacer(modifier = Modifier.height(40.dp)) // Empty space before spinner (if fast load)
-					}
-				}
-			},
-			confirmButton = {
-				if (showConfirm) {
-					TextButton(onClick = {
-						onConfirm?.invoke()
-						show.value = false
-					}) {
-						Text("OK")
-					}
-				}
-			},
-			dismissButton = if (showCancel) {
-				{
-					TextButton(onClick = {
-						onCancel?.invoke()
-						show.value = false
-					}) {
-						Text("Cancel")
-					}
-				}
-			} else null
-     	)
+                else -> {
+                    Text(message)
+                }
+            }
+        },
+        confirmButton = {
+            if (showConfirm) {
+                TextButton(onClick = {
+                    onConfirm?.invoke()
+                    show.value = false
+                }) {
+                    Text("OK")
+                }
+            }
+        },
+        dismissButton = if (showCancel) {
+            {
+                TextButton(onClick = {
+                    onCancel?.invoke()
+                    show.value = false
+                }) {
+                    Text("Cancel")
+                }
+            }
+        } else null
+    )
 }
+
 
 
 
