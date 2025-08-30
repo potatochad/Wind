@@ -628,6 +628,7 @@ fun LazyScreen(
 
 //region LAZY POPUP
 
+
 @Composable
 fun LazyPopup(
     show: MutableState<Boolean>,
@@ -639,85 +640,47 @@ fun LazyPopup(
     showConfirm: Boolean = true,
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
-) {
-    // 1️⃣ Preload content offscreen (optional)
-    val preloadedContent: @Composable () -> Unit = {
-        content?.invoke() ?: Text(message)
-    }
-    Box(modifier = Modifier.offset(x = 1_000_000.dp, y = 0.dp)) {
-        preloadedContent() // forces Compose to build everything
-    }
 
-    // 2️⃣ Always overlay at top of screen
-    if (show.value) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .zIndex(100f) // force on top
-        ) {
-            BetterAlertDialog(
-                show = show,
-                title = title,
-                message = message,
-                content = preloadedContent,
-                showCancel = showCancel,
-                showConfirm = showConfirm,
-                onConfirm = onConfirm,
-                onCancel = onCancel,
-                scrimClickable = true
-            )
+) = NoLagCompose {
+	
+	val LoadContent = r {
+        @Composable {
+            content?.invoke() ?: Text(message)
         }
     }
+	
+    if (show.value) { 
+		AlertDialog(
+			onDismissRequest = {
+				onDismiss?.invoke()
+			},
+			title = { Text(title) },
+			text = {
+				LoadContent()
+			},
+			confirmButton = {
+				if (showConfirm) {
+					TextButton(onClick = {
+						LoadContent?.invoke()
+						show.value = false
+					}) {
+						Text("OK")
+					}
+				}
+			},
+			dismissButton = if (showCancel) {
+				{
+					TextButton(onClick = {
+						onCancel?.invoke()
+						show.value = false
+					}) {
+						Text("Cancel")
+					}
+				}
+			} else null
+     	)
+	}
 }
-
-@Composable
-fun BetterAlertDialog(
-    show: MutableState<Boolean>,
-    onDismiss: (() -> Unit)? = { show.value = false },
-    title: String = "Info",
-    message: String = "",
-    content: (@Composable () -> Unit)? = null,
-    showCancel: Boolean = true,
-    showConfirm: Boolean = true,
-    onConfirm: (() -> Unit)? = null,
-    onCancel: (() -> Unit)? = null,
-    scrimClickable: Boolean = true
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.5f))
-            .clickable(enabled = scrimClickable) { onDismiss?.invoke() },
-        contentAlignment = Alignment.Center
-    ) {
-        Card(
-            shape = RoundedCornerShape(12.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            modifier = Modifier.wrapContentSize()
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(title, style = MaterialTheme.typography.titleMedium)
-                Spacer(Modifier.height(8.dp))
-                content?.invoke() ?: Text(message)
-                Spacer(Modifier.height(16.dp))
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    if (showCancel) TextButton(onClick = {
-                        onCancel?.invoke()
-                        show.value = false
-                    }) { Text("Cancel") }
-                    if (showConfirm) TextButton(onClick = {
-                        onConfirm?.invoke()
-                        show.value = false
-                    }) { Text("OK") }
-                }
-            }
-        }
-    }
-}
-
 
 
 
