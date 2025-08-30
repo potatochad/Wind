@@ -683,28 +683,22 @@ fun LazyPopup(
     if (!show.value) return
 
 	var isLoading by remember { mutableStateOf(true) }
+    var showSpinner by remember { mutableStateOf(false) }
     var loadedContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
 
     LaunchedEffect(show.value) {
-        if (show.value && content != null) {
-            val start = System.currentTimeMillis()
-
-            // Launch content loading
-            val loaded = content.invoke()
-
-            val elapsed = System.currentTimeMillis() - start
-            if (elapsed < 200) {
-                delay(200 - elapsed) // ensure minimum 200ms before showing
-            }
-
-            loadedContent = loaded
-            isLoading = false
-        } else {
-            // fallback to default content
-            loadedContent = { Text(message) }
-            isLoading = false
+        // Start delayed spinner (after 200ms)
+        launch {
+            delay(200)
+            if (isLoading) showSpinner = true
         }
-	}
+
+        // Load the actual content
+        val result = content()
+        loadedContent = result
+        isLoading = false
+        showSpinner = false
+    }
 
 
 
@@ -715,14 +709,20 @@ fun LazyPopup(
 			},
 			title = { Text(title) },
 			text = {
-				if (isLoading) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    CircularProgressIndicator(modifier = Modifier.size(20.dp))
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text("Loading...")
-                }
-				} else {
-                loadedContent?.invoke() ?: Text(message)
+				when {
+					isLoading && showSpinner -> {
+						Row(verticalAlignment = Alignment.CenterVertically) {
+							CircularProgressIndicator(modifier = Modifier.size(20.dp))
+							Spacer(modifier = Modifier.width(10.dp))
+							Text("Loading...")
+						}
+					}
+					!isLoading -> {
+						loadedContent?.invoke()
+					}
+					else -> {
+						Spacer(modifier = Modifier.height(40.dp)) // Empty space before spinner (if fast load)
+					}
 				}
 			},
 			confirmButton = {
