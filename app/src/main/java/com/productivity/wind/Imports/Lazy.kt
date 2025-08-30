@@ -52,11 +52,8 @@ import androidx.compose.ui.graphics.painter.Painter
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.productivity.wind.Global1
 import com.productivity.wind.Imports.*
-
 import kotlin.random.*
 import androidx.compose.ui.*
-
-import androidx.compose.foundation.SubcomposeLayout
 
 
 @Composable
@@ -87,7 +84,7 @@ data class LazzyListStyle(
 @Composable
 fun <T> LazzyList(
     items: List<T>,
-    loadAll: Boolean = true,      
+    loadAll: Boolean = false,      
     style: LazzyListStyle = LazzyListStyle(),
     itemContent: @Composable (T) -> Unit,
 ) {
@@ -633,19 +630,6 @@ fun LazyScreen(
 
 
 //region LAZY POPUP
-@Composable
-fun <T> rememberPrecomposed(
-    key: String,
-    content: @Composable () -> T
-): State<T?> {
-    val state = remember { mutableStateOf<T?>(null) }
-    SubcomposeLayout { constraints ->
-        val result = subcompose(key) { content() }
-        state.value = result.firstOrNull() as? T
-        layout(0, 0) {} // don’t place anything yet
-    }
-    return state
-}
 
 @Composable
 fun LazyPopup(
