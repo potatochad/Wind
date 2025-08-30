@@ -641,7 +641,7 @@ fun LazyLoad(content: @Composable () -> Unit) = NoLagCompose{
     }
 	Box {
     // Background: loading text
-    LazyRow(center = true) {
+    LazzyRow(center = true) {
         item {
             Text("Loading...")
         }
@@ -649,7 +649,7 @@ fun LazyLoad(content: @Composable () -> Unit) = NoLagCompose{
 
     // Foreground: content appears on top when not loading
     if (!isLoading) {
-        LazyRow(center = true) {
+        LazzyRow(center = true) {
             item {
                 content
             }
