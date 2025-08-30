@@ -297,6 +297,8 @@ fun eachSecond(onTick: () -> Unit) {
 
 
 
+val DarkBlue = Color(0xFF00008B) 
+val Gold = Color(0xFFFFD700)
 
 object UI {
     //No synched with actual settingsItem function YET
