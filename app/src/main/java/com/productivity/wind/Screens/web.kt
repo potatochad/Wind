@@ -21,7 +21,7 @@ fun Web() {
         
     LazyScreen(
         title = {
-            UI.Ctext(url)
+            UI.Cinput(url)
         },
     ) {
         AndroidView(
