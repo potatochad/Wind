@@ -627,7 +627,40 @@ fun LazyScreen(
 
 
 //region LAZY POPUP
-   
+
+@Composable
+fun LazyLoad(content: @Composable () -> Unit) {
+    var isLoaded by remember { mutableStateOf(false) }
+    var showLoading by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        delay(10) // do nothing for 10ms
+        // Start loading
+        val loadingJob = launch {
+            delay(500) // simulate loading task
+            isLoaded = true
+        }
+
+        // Show loading after 100ms if not loaded yet
+        delay(100)
+        if (!isLoaded) {
+            showLoading = true
+        }
+
+        loadingJob.join()
+        showLoading = false
+    }
+
+    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+        when {
+            isLoaded -> content()
+            showLoading -> CircularProgressIndicator()
+            else -> {} // blank for first 10ms
+        }
+    }
+}
+
+
 @Composable
 fun LazyPopup(
     show: MutableState<Boolean>,
@@ -642,43 +675,15 @@ fun LazyPopup(
 ) {
     if (!show.value) return
 
-    var isLoading by remember { mutableStateOf(content != null) }
-    var showSpinner by remember { mutableStateOf(false) }
-
-    // Start delayed spinner
-    LaunchedEffect(Unit) {
-        if (isLoading) {
-            delay(200)
-            showSpinner = true
-        }
-    }
-
     AlertDialog(
         onDismissRequest = {
             onDismiss?.invoke()
         },
         title = { Text(title) },
         text = {
-            when {
-                isLoading && showSpinner -> {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        CircularProgressIndicator(modifier = Modifier.size(20.dp))
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text("Loading...")
-                    }
-                }
-
-                content != null -> {
-                    // Directly render composable content (safe here)
-                    content()
-                    isLoading = false
-                    showSpinner = false
-                }
-
-                else -> {
-                    Text(message)
-                }
-            }
+			LazyLoad {
+				content?.invoke() ?: Text(message)
+			}
         },
         confirmButton = {
             if (showConfirm) {
