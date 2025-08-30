@@ -56,7 +56,7 @@ import com.productivity.wind.Imports.*
 import kotlin.random.*
 import androidx.compose.ui.*
 
-import androidx.compose.foundation.layout.SubcomposeLayout
+import androidx.compose.foundation.SubcomposeLayout
 
 
 @Composable
