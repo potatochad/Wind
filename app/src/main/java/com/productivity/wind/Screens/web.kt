@@ -51,7 +51,10 @@ fun Web() {
                 if (webView.url != url.value) {
                     webView.loadUrl(url.value)
                 }
-            }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
         )
     }
 }
