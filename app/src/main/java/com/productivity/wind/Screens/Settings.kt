@@ -33,12 +33,19 @@ fun SettingsScreen() {
                             what = remember { m(Bar.Dpoints.toString()) },
                             MaxLetters = 5,
                         ) {
+
+
+                            Bar.Dpoints = it
+
+                            
+                            /*
                             val input = it.toIntOrNull() ?: 0
                             if (input > Bar.funTime) {
                                 Vlog("$input input > ${Bar.funTime}p= get more points", "one")
                             } else {
                                 Bar.Dpoints = input
                             }
+                            */
                         }
                 }
         )
