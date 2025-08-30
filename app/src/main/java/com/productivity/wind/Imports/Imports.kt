@@ -189,7 +189,7 @@ fun refreshApps() {
             val ListsApp = getListsApp(pkgApp)
 
             if (ListsApp == null) {
-				Vlog("add: ${getAppName(info)}")
+				Vlog("add: ${getAppName(info)}", "one")
                 apps.new(
 				    DataApps(
 						name = getAppName(info),
@@ -201,7 +201,7 @@ fun refreshApps() {
         }
 
 		apps.forEach { app ->
-			Vlog("edit: ${app.name}")
+			Vlog("edit: ${app.name}","one")
 			apps.edit(app){
 				NowTime = getTodayAppUsage(app.pkg)
 			}
