@@ -362,7 +362,7 @@ object UI {
 		selectedIndex: MutableState<Int>, // shared state of which is selected
 	) {
 		Box(
-			modifier = Modifier.size(20.dp) // make box exactly the size you want
+			modifier = Modifier.size(15.dp) // make box exactly the size you want
 		) {
 			RadioButton(
 				selected = selectedIndex.value == index,
