@@ -65,17 +65,24 @@ fun Browser() {
 
         // WebView embedded inside Compose
         AndroidView(
-            factory = { context ->
-                WebView(context).apply {
-                    webViewClient = WebViewClient()
-                    settings.javaScriptEnabled = true
-                    loadUrl(url) // initial load
-                }
-            },
-            update = { webView ->
-                webView.loadUrl(url)
-            },
-        )
+    factory = { context ->
+        WebView(context).apply {
+            webViewClient = WebViewClient()  // keeps navigation inside the WebView
+            settings.apply {
+                javaScriptEnabled = true       // websites need this
+                builtInZoomControls = true     // pinch zoom works
+                displayZoomControls = false    // hide ugly zoom buttons
+                loadWithOverviewMode = true   // scale to fit screen
+                useWideViewPort = true         // make responsive sites fit
+            }
+            loadUrl(url)
+        }
+    },
+    update = { webView ->
+        webView.loadUrl(url)
+    }
+)
+
 }
 
 
