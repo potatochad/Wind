@@ -457,16 +457,15 @@ fun <T : Any> SnapshotStateList<T>.new(item: T) {
 fun <T : Copyable<T>> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
     val index = indexOf(item)
     if (index != -1) {
-        // Create a modified copy
+        // create a modified copy
         val copy = item.copySelf().apply(block)
-        // Replace the item
+        // assign it back to the same index to trigger recomposition
         this[index] = copy
-        // Force Compose to recompose by re-assigning the whole list
-        val temp = this.toList()          // snapshot of current list
-        this.clear()                      // clear original
-        this.addAll(temp)                 // add back all items
+        // tiny trick: touch the list itself to force Compose
+        this[index] = this[index]
     }
 }
+
 
 // Edit by ID (for Identifiable)
 fun <T> SnapshotStateList<T>.idEdit(id: String, block: T.() -> Unit)
