@@ -55,6 +55,8 @@ import com.productivity.wind.Imports.*
 import kotlin.random.*
 import androidx.compose.ui.*
 import android.webkit.*
+import androidx.compose.ui.viewinterop.*
+
 @Composable
 fun LazyBrowser(url: MutableState<String>) {
     AndroidView(factory = { context ->
