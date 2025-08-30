@@ -630,6 +630,19 @@ fun LazyScreen(
 
 
 //region LAZY POPUP
+@Composable
+fun <T> rememberPrecomposed(
+    key: String,
+    content: @Composable () -> T
+): State<T?> {
+    val state = remember { mutableStateOf<T?>(null) }
+    SubcomposeLayout { constraints ->
+        val result = subcompose(key) { content() }
+        state.value = result.firstOrNull() as? T
+        layout(0, 0) {} // don’t place anything yet
+    }
+    return state
+}
 
 @Composable
 fun LazyPopup(
