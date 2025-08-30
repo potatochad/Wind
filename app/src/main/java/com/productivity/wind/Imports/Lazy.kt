@@ -628,7 +628,44 @@ fun LazyScreen(
 
 //region LAZY POPUP
 
+@Composable
+fun LazyPopup(
+    show: MutableState<Boolean>,
+    onDismiss: (() -> Unit)? = { show.value = false },
+    title: String = "Info",
+    message: String,
+    content: (suspend () -> (@Composable () -> Unit))? = null, // Lazy-loading content
+    showCancel: Boolean = true,
+    showConfirm: Boolean = true,
+    onConfirm: (() -> Unit)? = null,
+    onCancel: (() -> Unit)? = null,
+) {
+    if (!show.value) return
 
+    var isLoading by remember { mutableStateOf(true) }
+    var loadedContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
+
+    LaunchedEffect(show.value) {
+        if (show.value && content != null) {
+            val start = System.currentTimeMillis()
+
+            // Launch content loading
+            val loaded = content.invoke()
+
+            val elapsed = System.currentTimeMillis() - start
+            if (elapsed < 200) {
+                delay(200 - elapsed) // ensure minimum 200ms before showing
+            }
+
+            loadedContent = loaded
+            isLoading = false
+        } else {
+            // fallback to default content
+            loadedContent = { Text(message) }
+            isLoading = false
+        }
+	}
+    
 @Composable
 fun LazyPopup(
     show: MutableState<Boolean>,
@@ -643,20 +680,50 @@ fun LazyPopup(
 
 ) = NoLagCompose {
 	
-	val LoadContent = r {
-        @Composable {
-            content?.invoke() ?: Text(message)
+    if (!show.value) return
+
+	var isLoading by remember { mutableStateOf(true) }
+    var loadedContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
+
+    LaunchedEffect(show.value) {
+        if (show.value && content != null) {
+            val start = System.currentTimeMillis()
+
+            // Launch content loading
+            val loaded = content.invoke()
+
+            val elapsed = System.currentTimeMillis() - start
+            if (elapsed < 200) {
+                delay(200 - elapsed) // ensure minimum 200ms before showing
+            }
+
+            loadedContent = loaded
+            isLoading = false
+        } else {
+            // fallback to default content
+            loadedContent = { Text(message) }
+            isLoading = false
         }
-    }
+	}
+
+
+
 	
-    if (show.value) { 
 		AlertDialog(
 			onDismissRequest = {
 				onDismiss?.invoke()
 			},
 			title = { Text(title) },
 			text = {
-				LoadContent()
+				if (isLoading) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    CircularProgressIndicator(modifier = Modifier.size(20.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text("Loading...")
+                }
+				} else {
+                loadedContent?.invoke() ?: Text(message)
+				}
 			},
 			confirmButton = {
 				if (showConfirm) {
@@ -679,7 +746,6 @@ fun LazyPopup(
 				}
 			} else null
      	)
-	}
 }
 
 
