@@ -632,50 +632,35 @@ fun LazyScreen(
 //region LAZY POPUP
 
 @Composable
-@Composable
-fun LazyLoad(content: @Composable () -> Unit) {
+fun LazyLoad(content: @Composable () -> Unit) = NoLagCompose{
     var isLoaded by remember { mutableStateOf(false) }
     var showLoading by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        delay(10)
-        val job = launch {
-            delay(500) // fake work
+        delay(10) // do nothing for 10ms
+        // Start loading
+        val loadingJob = launch {
+            delay(500) // simulate loading task
             isLoaded = true
         }
 
+        // Show loading after 100ms if not loaded yet
         delay(100)
         if (!isLoaded) {
             showLoading = true
         }
 
-        job.join()
+        loadingJob.join()
         showLoading = false
     }
-
-    SubcomposeLayout { constraints ->
-        val placeables = when {
-            isLoaded -> {
-                val measurables = subcompose("content", content)
-                measurables.map { it.measure(constraints) }
-            }
-            showLoading -> {
-                val measurables = subcompose("loading") {
-                    CircularProgressIndicator()
-                }
-                measurables.map { it.measure(constraints) }
-            }
-            else -> emptyList()
-        }
-
-        layout(constraints.maxWidth, constraints.maxHeight) {
-            placeables.forEach {
-                it.placeRelative(0, 0)
-            }
-        }
-    }
+	LazzyRow(center= true){
+		when {
+			isLoaded -> content()
+			showLoading -> CircularProgressIndicator()
+			else -> {} // blank for first 10ms
+		}
+	}
 }
-
 
 
 @Composable
