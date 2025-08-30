@@ -24,40 +24,23 @@ fun Web() {
             UI.Cinput(what=url, WidthMax=150)
         },
     ) {
-        AndroidView(
-            factory = { context ->
-                WebView(context).apply {
-                    webViewClient = WebViewClient()   // keeps navigation inside
-                    settings.apply {
-                        javaScriptEnabled = true          // needed for most sites
-                        domStorageEnabled = true          // enables localStorage/sessionStorage
-                        databaseEnabled = true            // allows HTML5 DB APIs
-                        cacheMode = WebSettings.LOAD_DEFAULT  // use cached resources when possible
-                        builtInZoomControls = true
-                        displayZoomControls = false
-                        loadWithOverviewMode = true
-                        useWideViewPort = true
-                        allowFileAccess = true            // allow file:// access
-                        allowContentAccess = true         // allow content:// access
-                        mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW // https + http
-                    }
-                    // Optional: enable debugging for dev
-                    WebView.setWebContentsDebuggingEnabled(true)
-
-                    loadUrl(url.value)
-                }
-            },
-            update = { webView ->
-                if (webView.url != url.value) {
-                    webView.loadUrl(url.value)
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-        )
+        LazyBrowser(url)
     }
 }
 
 
 
+@Composable
+fun LazyBrowser(url: MutableState<String>) {
+    AndroidView(factory = { context ->
+        WebView(context).apply {
+            webViewClient = WebViewClient()
+            WebView.setWebContentsDebuggingEnabled(true)
+            settings.BrowserSettings()
+
+            loadUrl(url.value)
+        }
+    }, update = { webView ->
+        if (webView.url != url.value) webView.loadUrl(url.value)
+    }, modifier = Modifier.fillMaxSize())
+}
