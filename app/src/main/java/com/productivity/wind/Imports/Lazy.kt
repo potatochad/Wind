@@ -632,14 +632,15 @@ fun LazyScreen(
 //region LAZY POPUP
 
 @Composable
+@Composable
 fun LazyLoad(content: @Composable () -> Unit) {
     var isLoaded by remember { mutableStateOf(false) }
     var showLoading by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        delay(10) // Let composition settle
-        val loadingJob = launch(Dispatchers.Default) { // offload to background thread
-            delay(500) // simulate heavy work
+        delay(10)
+        val job = launch {
+            delay(500) // fake work
             isLoaded = true
         }
 
@@ -648,16 +649,28 @@ fun LazyLoad(content: @Composable () -> Unit) {
             showLoading = true
         }
 
-        loadingJob.join()
+        job.join()
         showLoading = false
     }
 
-    LazyRow(horizontalArrangement = Arrangement.Center) {
-        item {
-            when {
-                isLoaded -> content()
-                showLoading -> CircularProgressIndicator()
-                else -> {} // blank for first 10ms
+    SubcomposeLayout { constraints ->
+        val placeables = when {
+            isLoaded -> {
+                val measurables = subcompose("content", content)
+                measurables.map { it.measure(constraints) }
+            }
+            showLoading -> {
+                val measurables = subcompose("loading") {
+                    CircularProgressIndicator()
+                }
+                measurables.map { it.measure(constraints) }
+            }
+            else -> emptyList()
+        }
+
+        layout(constraints.maxWidth, constraints.maxHeight) {
+            placeables.forEach {
+                it.placeRelative(0, 0)
             }
         }
     }
