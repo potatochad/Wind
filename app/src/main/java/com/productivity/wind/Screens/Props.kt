@@ -36,8 +36,6 @@ fun NavGraphBuilder.ScreenNav() {
     url("AppUsage") { AppUsage() }
 
     url("Web") { Web() }
-    url("FunWeb") { FunWeb() }
-    url("WorkWeb") { WorkWeb() }
 
     url("SettingsScreen") { SettingsScreen() }
     url("SettingsOther") { SettingsOtherScreen() }
