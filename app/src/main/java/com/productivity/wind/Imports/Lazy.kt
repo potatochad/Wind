@@ -699,7 +699,9 @@ fun LazyPopup(
         },
         title = { Text(title) },
         text = {
-			content?.invoke() ?: Text(message)
+			Column{
+				content?.invoke() ?: Text(message)
+			}
         },
         confirmButton = {
             if (showConfirm) {
