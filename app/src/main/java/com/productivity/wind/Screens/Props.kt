@@ -289,25 +289,15 @@ fun AppSelectPopup(
 ) {
     if (show.value) {
         var appList by r { m(getApps()) }
-        var searchQuery by r { m("") }
 
         LazyPopup(
             show = show,
             title = "Select App",
             message = "",
             content = {
-                // Search field
-                LazySearch(searchQuery){ 
-                    searchQuery = it 
-                }
-
-                // Filter apps based on search query
-                val filteredList = appList.filter { appInfo ->
-                    getAppName(appInfo).contains(searchQuery, ignoreCase = true)
-                }
 
                 // Only pass the filtered items to the LazyList
-                LazzyList(filteredList) { appInfo ->
+                LazzyList(appList) { appInfo ->
                     val icon = getAppIcon(getAppPackage(appInfo))
                     LazzyRow {
                         UI.move(10)
