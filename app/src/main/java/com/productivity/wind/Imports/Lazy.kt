@@ -81,7 +81,7 @@ fun LazySearch(
 				look = LazyIconLook( Color = Color.Black),
             )
             UI.move(w=8)
-            LazyInput(searchQuery) { 
+            UI.Input(searchQuery) { 
                 onChange(it)
             }
         }
