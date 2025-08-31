@@ -133,7 +133,7 @@ data class LazzyListStyle(
 )
 
 data class LazyLoaderState<T>(
-    val scrollState: androidx.compose.foundation.ScrollState,
+    val scrollState: ScrollState,
     val appearedItems: SnapshotStateList<T>
 )
 
