@@ -189,7 +189,6 @@ fun each(time: Long = 10_000L, action: () -> Unit) {
 
 fun refreshApps() {
     try {
-        val context = Global.context
         val realApps: List<ResolveInfo> = getApps()
 
         if (!UI.isUsageP_Enabled()) return
@@ -222,13 +221,12 @@ fun refreshApps() {
 
 
 fun getApps(): List<ResolveInfo> {
-    val context = Global.context
-    val pm = context.packageManager
+    val pm = App.ctx.packageManager
     val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
     return pm.queryIntentActivities(launchIntent, 0).abcOrder()
 }
 fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
-    val pm = Global1.context.packageManager
+    val pm = App.ctx.packageManager
     return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
 }
 
@@ -238,7 +236,6 @@ fun getListsApp(pkg: String): DataApps? {
 }
 
 fun getTodayAppUsage(packageName: String): Int {
-    val context = Global1.context
     val end = System.currentTimeMillis()
     val cal = Calendar.getInstance().apply {
         set(Calendar.HOUR_OF_DAY, 0)
@@ -248,7 +245,7 @@ fun getTodayAppUsage(packageName: String): Int {
     }
     val start = cal.timeInMillis
 
-    val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+    val usm = App.ctx.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
 
     // Use INTERVAL_BEST and filter manually
     val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, start, end)
@@ -262,15 +259,13 @@ fun getAppPackage(ri: ResolveInfo): String {
     return ri.activityInfo.packageName
 }
 fun getAppName(info: ResolveInfo): String {
-    val context = Global1.context
     val pkg = info.activityInfo.packageName
-    return info.loadLabel(context.packageManager)?.toString() ?: pkg
+    return info.loadLabel(App.ctx.packageManager)?.toString() ?: pkg
 }
 
 @Composable
 fun getAppIcon(packageName: String): Drawable? {
-    val context = Global1.context
-    val pm = context.packageManager
+    val pm = App.ctx.packageManager
     return remember(packageName) {
         try {
             pm.getApplicationIcon(packageName)
@@ -295,7 +290,7 @@ fun eachSecond(onTick: () -> Unit) {
     LaunchedEffect(Unit) {
         while (true) {
             onTick()
-            kotlinx.coroutines.delay(1000) // wait 1 second
+            delay(1000) // wait 1 second
         }
     }
 }
@@ -784,25 +779,22 @@ object UI {
     }
 
     fun isNotificationEnabled(): Boolean {
-        val ctx = Global1.context
         return NotificationManagerCompat
-            .getEnabledListenerPackages(ctx)
-            .contains(ctx.packageName)
+            .getEnabledListenerPackages(App.ctx)
+            .contains(App.ctx.packageName)
     }
 
     fun isBatteryOptimizationDisabled(): Boolean {
-        val ctx = Global1.context
-        val pm = ctx.getSystemService(PowerManager::class.java)
-        return pm.isIgnoringBatteryOptimizations(ctx.packageName)
+        val pm = App.ctx.getSystemService(PowerManager::class.java)
+        return pm.isIgnoringBatteryOptimizations(App.ctx.packageName)
     }
 
     fun isUsageP_Enabled(): Boolean {
-        val ctx = Global1.context
-        val appOps = ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        val appOps = App.ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         return appOps.checkOpNoThrow(
             AppOpsManager.OPSTR_GET_USAGE_STATS,
             Process.myUid(),
-            ctx.packageName,
+            App.ctx.packageName,
         ) == AppOpsManager.MODE_ALLOWED
     }
 
@@ -908,7 +900,7 @@ fun WebSettings.BrowserSettings() {
 
 
 	
-fun goTo(route: String) = Global1.navController.navigate(route)
+fun goTo(route: String) = App.navHost.navigate(route)
 
 
 
