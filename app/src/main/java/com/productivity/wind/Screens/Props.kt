@@ -300,6 +300,7 @@ fun AppSelectPopup(
                 LazySearch(searchQuery){ 
                     searchQuery = it 
                 }
+                UI.move(h=100)
 
                 // Filter apps based on search query
                 val filteredList = appList.filter { appInfo ->
