@@ -189,7 +189,7 @@ fun each(time: Long = 10_000L, action: () -> Unit) {
 
 fun refreshApps() {
     try {
-        val context = Global1.context
+        val context = Global.context
         val realApps: List<ResolveInfo> = getApps()
 
         if (!UI.isUsageP_Enabled()) return
@@ -210,9 +210,6 @@ fun refreshApps() {
         }
 
 		apps.forEach { app ->
-			if (app.name == "Wind") {
-				Vlog("${app.name}, ${app.NowTime} NowTime","one")
-			}
 			apps.edit(app){
 				NowTime = getTodayAppUsage(app.pkg)
 			}
@@ -225,7 +222,7 @@ fun refreshApps() {
 
 
 fun getApps(): List<ResolveInfo> {
-    val context = Global1.context
+    val context = Global.context
     val pm = context.packageManager
     val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
     return pm.queryIntentActivities(launchIntent, 0).abcOrder()
