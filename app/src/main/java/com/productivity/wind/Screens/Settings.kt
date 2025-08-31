@@ -28,7 +28,7 @@ fun SettingsScreen() {
                 BigIconColor = Gold,
                 title = "Unlock Threshold",
                 endContent = {
-                        UI.GoldNumberInput(
+                        UI.Input(
                             value = Bar.Dpoints.toString(),
                             onValueChange = {
                                 val input = it.toIntOrNull() ?: 0
@@ -38,7 +38,6 @@ fun SettingsScreen() {
                                     else -> Bar.Dpoints = input
                                 }
                             },
-                            modifier = Modifier
                         )      
                 }
         )
