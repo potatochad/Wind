@@ -172,7 +172,7 @@ fun MAINStart() {
 }
 @Composable
 fun AppStart() {
-    each(10_000L){
+    each(1_000L){
         refreshApps()
     }
     LazyMenu { Menu() }
