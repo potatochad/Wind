@@ -57,6 +57,9 @@ import androidx.compose.ui.*
 import android.webkit.*
 import androidx.compose.ui.viewinterop.*
 
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.mutableStateListOf
+
 
 // needs fixing
 @Composable
@@ -121,12 +124,14 @@ fun LazyImage(
 
 
 
+
 data class LazzyListStyle(
     var height: Dp = 200.dp,
-    var delayMs: Long = 40,
+    var delayMs: Long = 40L,
     var chunkSize: Int = 1,
-	var IntFirst: Int = 0,
+    var IntFirst: Int = 0
 )
+
 data class LazyLoaderState<T>(
     val scrollState: androidx.compose.foundation.ScrollState,
     val appearedItems: SnapshotStateList<T>
@@ -135,7 +140,7 @@ data class LazyLoaderState<T>(
 @Composable
 fun <T> rememberLazyLoaderState(
     items: List<T>,
-    style: LazyStyle,         // your config: IntFirst, chunkSize, delayMs
+    style: LazzyListStyle,         // your config: IntFirst, chunkSize, delayMs
     loadAll: Boolean = false
 ): LazyLoaderState<T> {
     val scrollState = rememberScrollState()
