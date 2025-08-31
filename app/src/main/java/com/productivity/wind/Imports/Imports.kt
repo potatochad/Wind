@@ -474,6 +474,30 @@ object UI {
 		val isNumber: Bool = true,
 	)
 	@Composable
+	fun dynamicTextWidth(
+		text: String,
+		textStyle: TextStyle,
+		widthMin: Int,
+		widthMax: Int,
+		height: Dp
+	): Modifier {
+		val measurer = rememberTextMeasurer()
+		val density = LocalDensity.current
+
+		// Measure text width
+		val measuredWidth = measurer.measure(
+			text.ifEmpty { " " }, // fallback if empty
+			style = textStyle
+		).size.width
+
+		// Create modifier with dynamic width and fixed height
+		return Modifier
+        .width((with(density) { measuredWidth.toDp() } + 2.dp).coerceIn(widthMin.dp, widthMax.dp))
+        .height(height)
+	}
+
+
+	@Composable
     fun Input(
         what: Str,
         textSize: TextUnit = 14.sp,
@@ -485,7 +509,6 @@ object UI {
 
         onChange: (String) -> Unit,
     ) {
-        val value = what.value
         val TextColor = Color(0xFFFFD700)
         val FocusChange = TextMemory()
         val imeAction = ImeAction(null)
@@ -493,17 +516,10 @@ object UI {
 
         val TextStyling = CTextStyle(TextColor, textSize)
 		val isNumber = style.isNumber
-        val measurer = rememberTextMeasurer()
-        val density = LocalDensity.current
-        val measuredWidth = measurer.measure(
-            if (value.isEmpty()) " "
-            else value,
-            style = TextStyling,
-        ).size.width
-        val outerMod = Modifier.width(
-            (with(density) { measuredWidth.toDp() } + 2.dp)
-                .coerceIn(WidthMin.dp, WidthMax.dp),
-        )
+        val outerMod = dynamicTextWidth(
+			what, TextStyling, WidthMin, WidthMax, height
+		)
+
         OnLoseFocus(isFocused, null)
 
 
@@ -534,7 +550,7 @@ object UI {
 
 
 			
-            value = value,
+            value = what,
             onValueChange = {onChange()},
         )
 	}
