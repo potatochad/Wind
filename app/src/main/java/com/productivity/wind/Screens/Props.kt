@@ -278,9 +278,6 @@ fun AskUsagePermission(show: MutableState<Boolean>) {
 
 
 var selectedApp = m("")
-suspend fun wait(ms: Long) {
-    kotlinx.coroutines.delay(ms)
-}
 
 
 @Composable
