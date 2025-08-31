@@ -74,7 +74,7 @@ fun LazySearch(
 				shape = RoundedCornerShape(6.dp)
 			)
 			.background(Color.Transparent, RoundedCornerShape(6.dp))
-			.padding(horizontal = 8.dp, vertical = 8.dp)
+			.padding(8.dp)
 	) {
         LazzyRow{
             LazyIcon(
