@@ -474,13 +474,13 @@ object UI {
 		val isNumber: Bool = true,
 	)
 	@Composable
-    fun Cinput(
+    fun Input(
         what: Str,
         textSize: TextUnit = 14.sp,
         height: Dp = 36.dp,
         MaxLetters: Int? = 5,
         WidthMin: Int = 10,
-        WidthMax: Int = 100,
+        WidthMax: Int = 120,
 		style: InputStyle = InputStyle(),
 
         onChange: (String) -> Unit,
