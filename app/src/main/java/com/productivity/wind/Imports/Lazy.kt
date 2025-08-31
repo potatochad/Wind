@@ -56,8 +56,6 @@ import kotlin.random.*
 import androidx.compose.ui.*
 import android.webkit.*
 import androidx.compose.ui.viewinterop.*
-import androidx.compose.ui.graphics.*
-
 
 
 
@@ -80,7 +78,7 @@ fun LazySearch(
         LazzyRow{
             LazyIcon(
                 icon = Icons.Default.Search,
-				look = LazyIconLook( color = Color.Black),
+				look = LazyIconLook( Color = Color.Black),
             )
             UI.move(w=8)
             UI.Input(searchQuery) { 
@@ -326,7 +324,7 @@ fun LazyCard(
 
 
 data class LazyIconLook(
-    val color: Color = Color(0xFFFFD700) // gild
+    val Color: Color = Color(0xFFFFD700) // gild
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
