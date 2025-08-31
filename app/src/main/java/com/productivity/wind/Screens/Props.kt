@@ -297,7 +297,7 @@ fun AppSelectPopup(
             message = "",
             content = {
                 // Search field
-                SearchBox(searchQuery){ 
+                LazySearch(searchQuery){ 
                     searchQuery = it 
                 }
 
