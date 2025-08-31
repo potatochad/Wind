@@ -485,7 +485,6 @@ object UI {
 		TextField(
 			value = value,
 			onValueChange = { input ->
-				// filter: only digits allowed
 				val filtered = input.filter { it.isDigit() }
 				onValueChange(filtered)
 			},
@@ -501,17 +500,20 @@ object UI {
 					fontWeight = FontWeight.Bold
 				)
 			},
-			colors = TextFieldDefaults.textFieldColors(
-				containerColor = Color.Transparent,
+			colors = TextFieldDefaults.colors(
+				focusedContainerColor = Color.Transparent,
+				unfocusedContainerColor = Color.Transparent,
+				disabledContainerColor = Color.Transparent,
+				cursorColor = gold,
 				focusedIndicatorColor = Color.Transparent,
 				unfocusedIndicatorColor = Color.Transparent,
-				disabledIndicatorColor = Color.Transparent,
-				cursorColor = gold
+				disabledIndicatorColor = Color.Transparent
 			),
 			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 			modifier = modifier
 		)
 	}
+
 
 
     @Composable
