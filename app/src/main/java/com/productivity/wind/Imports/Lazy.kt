@@ -66,24 +66,24 @@ fun LazySearch(
     onChange: (String) -> Unit
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)
-            .background(Color(0xFFF5F5F5), RoundedCornerShape(12.dp))
-            .padding(horizontal = 12.dp, vertical = 8.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = "Search",
-                tint = Color.Gray,
-                modifier = Modifier.size(20.dp)
+		modifier = Modifier
+			.fillMaxWidth()
+			.border(
+				width = 1.dp,
+				color = Color.Black,
+				shape = RoundedCornerShape(6.dp)
+			)
+			.background(Color.Transparent, RoundedCornerShape(6.dp))
+			.padding(horizontal = 8.dp, vertical = 8.dp)
+	) {
+        LazzyRow{
+            LazyIcon(
+                icon = Icons.Default.Search,
+				look = LazyIconLook( color = Color.Black),
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            UI.move(w=8)
             UI.Input(searchQuery) { 
-                        onChange(it)
+                onChange(it)
             }
         }
     }
@@ -324,6 +324,9 @@ fun LazyCard(
 
 
 
+data class LazyIconLook(
+    val color: Color = Color(0xFFFFD700) // gild
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -337,6 +340,7 @@ fun LazyIcon(
     OuterPadding: Int = 5,          // outside space
     ButtonSize: Int = 40,           // actual button box (default M3 ~48)
     modifier: Modifier = Modifier,
+	look: LazyIconLook = LazyIconLook(),
 ) {
     CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
         IconButton(
@@ -349,7 +353,7 @@ fun LazyIcon(
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = Color(0xFFFFD700),
+                    tint = look.Color,
                     modifier = Modifier.size(24.dp)
                 )
             }
