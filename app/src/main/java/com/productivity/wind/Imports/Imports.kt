@@ -171,6 +171,16 @@ fun PreloadBox(
         ) { what() }
     }
 }
+@Composable
+fun each(time: Long = 10_000L, action: () -> Unit) {
+    LaunchedEffect(Unit) {
+        while (true) {
+            action()
+            wait(time)
+        }
+    }
+}
+
 
 //endregion NO LAG COMPOSE
 
