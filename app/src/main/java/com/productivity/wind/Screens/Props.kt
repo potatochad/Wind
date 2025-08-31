@@ -287,8 +287,8 @@ fun AppSelectPopup(
     show: MutableState<Boolean>,
 ) {
     if (show.value) {
-        val appList by r { m(getApps()) }
-        val searchQuery by r { m("") }
+        var appList by r { m(getApps()) }
+        var searchQuery by r { m("") }
 
         LazyPopup(
             show = show,
