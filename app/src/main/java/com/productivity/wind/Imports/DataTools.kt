@@ -237,7 +237,7 @@ object SettingsSaved {
         if (Bar.restoringFromFile) return
         Dosave = GlobalScope.launch {
             while (isActive) {
-                val data = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+                val data = App.ctx.getSharedPreferences("settings", Context.MODE_PRIVATE)
                 val edit = data.edit()
 
                 var CPU = 0
