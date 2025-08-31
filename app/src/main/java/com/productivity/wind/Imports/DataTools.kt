@@ -261,7 +261,7 @@ object SettingsSaved {
         }
     }
     fun init() {
-        val prefs = Global1.context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val prefs = App.ctx.getSharedPreferences("settings", Context.MODE_PRIVATE)
         if (prefs.all.isEmpty() || initOnce) return
         initOnce= true //MUST USE, ALL ARE ZERO OR NULL
 
