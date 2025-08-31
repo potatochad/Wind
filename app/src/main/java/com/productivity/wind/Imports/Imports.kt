@@ -474,44 +474,69 @@ object UI {
 		val isNumber: Bool = true,
 	)
 	@Composable
-	fun Input(
-		value: String,
-		onValueChange: (String) -> Unit,
-		hint: String = "",
-		modifier: Modifier = Modifier
-	) {
-		val gold = Color(0xFFFFD700)
+    fun Cinput(
+        what: Str,
+        textSize: TextUnit = 14.sp,
+        height: Dp = 36.dp,
+        MaxLetters: Int? = 5,
+        WidthMin: Int = 10,
+        WidthMax: Int = 100,
+		style: InputStyle = InputStyle(),
 
-		TextField(
-			value = value,
-			onValueChange = { input ->
-				val filtered = input.filter { it.isDigit() }
-				onValueChange(filtered)
-			},
-			singleLine = true,
-			textStyle = TextStyle(
-				color = gold,
-				fontWeight = FontWeight.Bold,
-			),
-			placeholder = {
-				Text(
-					text = hint,
-					color = gold.copy(alpha = 0.5f),
-					fontWeight = FontWeight.Bold
-				)
-			},
-			colors = TextFieldDefaults.colors(
-				focusedContainerColor = Color.Transparent,
-				unfocusedContainerColor = Color.Transparent,
-				disabledContainerColor = Color.Transparent,
-				cursorColor = gold,
-				focusedIndicatorColor = Color.Transparent,
-				unfocusedIndicatorColor = Color.Transparent,
-				disabledIndicatorColor = Color.Transparent
-			),
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-			modifier = modifier
-		)
+        onChange: (String) -> Unit,
+    ) {
+        val value = what.value
+        val TextColor = Color(0xFFFFD700)
+        val FocusChange = TextMemory()
+        val imeAction = ImeAction(null)
+        val isFocused by IsFocused(FocusChange)
+
+        val TextStyling = CTextStyle(TextColor, textSize)
+		val isNumber = style.isNumber
+        val measurer = rememberTextMeasurer()
+        val density = LocalDensity.current
+        val measuredWidth = measurer.measure(
+            if (value.isEmpty()) " "
+            else value,
+            style = TextStyling,
+        ).size.width
+        val outerMod = Modifier.width(
+            (with(density) { measuredWidth.toDp() } + 2.dp)
+                .coerceIn(WidthMin.dp, WidthMax.dp),
+        )
+        OnLoseFocus(isFocused, null)
+
+
+
+
+		
+        BasicTextField(
+			decorationBox = { innerTextField ->
+                FieldBox(
+                    height = height,
+                    BackgroundColor = Color.Transparent,
+                ) {
+                    innerTextField()
+                }
+            },
+			modifier = outerMod.height(height),
+            textStyle = TextStyling,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(type(true), imeAction),
+            keyboardActions = doneAction(null),
+            cursorBrush = grayCursor(),
+            interactionSource = FocusChange,
+
+
+
+
+
+
+
+			
+            value = value,
+            onValueChange = {onChange()},
+        )
 	}
 
 
