@@ -551,7 +551,7 @@ object UI {
 
 			
             value = what,
-            onValueChange = {onChange()},
+            onValueChange = onChange,
         )
 	}
 
