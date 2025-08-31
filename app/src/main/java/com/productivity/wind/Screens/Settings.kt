@@ -39,8 +39,7 @@ fun SettingsScreen() {
                                     else -> Bar.Dpoints = input
                                 }
                             },
-                            modifier = Modifier.widthIn(min = 50.dp) // Minimum width
-                                .then(Modifier.width((Bar.Dpoints.toString().length * 10).dp)) // Adjust width based on number of digits
+                            modifier = Modifier.width((Bar.Dpoints.toString().length * 10).dp + 50.dp)
                         )
 
                 }
