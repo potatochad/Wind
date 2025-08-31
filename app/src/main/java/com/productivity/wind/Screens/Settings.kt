@@ -31,14 +31,15 @@ fun SettingsScreen() {
                         UI.Input(
                             value = Bar.Dpoints.toString(),
                             onValueChange = {
-                                val input = it.toIntOrNull() ?: 0
+                                val filtered = it.filter { char -> char.isDigit() }.take(5)
+                                val input = filtered.toIntOrNull() ?: 0
                                 when {
                                     input > Bar.funTime -> Vlog("$input input > ${Bar.funTime} → get more points", "one")
-                                    input > 5 -> Vlog("Max 5 points", "one")
                                     else -> Bar.Dpoints = input
                                 }
                             },
-                        )      
+                            modifier = Modifier.width(100.dp)
+                        )
                 }
         )
 
