@@ -473,6 +473,46 @@ object UI {
 		*/
 		val isNumber: Bool = true,
 	)
+	@Composable
+	fun GoldNumberInput(
+		value: String,
+		onValueChange: (String) -> Unit,
+		hint: String = "",
+		modifier: Modifier = Modifier
+	) {
+		val gold = Color(0xFFFFD700)
+
+		TextField(
+			value = value,
+			onValueChange = { input ->
+				// filter: only digits allowed
+				val filtered = input.filter { it.isDigit() }
+				onValueChange(filtered)
+			},
+			singleLine = true,
+			textStyle = TextStyle(
+				color = gold,
+				fontWeight = FontWeight.Bold
+			),
+			placeholder = {
+				Text(
+					text = hint,
+					color = gold.copy(alpha = 0.5f),
+					fontWeight = FontWeight.Bold
+				)
+			},
+			colors = TextFieldDefaults.textFieldColors(
+				containerColor = Color.Transparent,
+				focusedIndicatorColor = Color.Transparent,
+				unfocusedIndicatorColor = Color.Transparent,
+				disabledIndicatorColor = Color.Transparent,
+				cursorColor = gold
+			),
+			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+			modifier = modifier
+		)
+	}
+
 
     @Composable
     fun Cinput(
