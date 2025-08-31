@@ -127,47 +127,72 @@ data class LazzyListStyle(
     var chunkSize: Int = 1,
 	var IntFirst: Int = 0,
 )
+data class LazyLoaderState<T>(
+    val scrollState: androidx.compose.foundation.ScrollState,
+    val appearedItems: SnapshotStateList<T>
+)
+
+@Composable
+fun <T> rememberLazyLoaderState(
+    items: List<T>,
+    style: LazyStyle,         // your config: IntFirst, chunkSize, delayMs
+    loadAll: Boolean = false
+): LazyLoaderState<T> {
+    val scrollState = rememberScrollState()
+    val appearedItems = remember { mutableStateListOf<T>() }
+
+    // Run once when items or loadAll change
+    LaunchedEffect(items, loadAll) {
+        appearedItems.clear()
+
+        if (loadAll) {
+            appearedItems.addAll(items)
+            return@LaunchedEffect
+        }
+
+        // initial batch
+        val realInitialCount = style.IntFirst.coerceAtMost(items.size)
+        if (realInitialCount > 0) {
+            appearedItems.addAll(items.subList(0, realInitialCount))
+        }
+
+        // gradual load remainder
+        var currentIndex = realInitialCount
+        while (currentIndex < items.size) {
+            val nextIndex = (currentIndex + style.chunkSize).coerceAtMost(items.size)
+            appearedItems.addAll(items.subList(currentIndex, nextIndex))
+            currentIndex = nextIndex
+            if (currentIndex >= items.size) break
+            delay(style.delayMs)
+        }
+    }
+
+    return LazyLoaderState(scrollState, appearedItems)
+}
+
 @Composable
 fun <T> LazzyList(
     items: List<T>,
-    loadAll: Boolean = false,      
+    loadAll: Boolean = false,
     style: LazzyListStyle = LazzyListStyle(),
+    key: ((T) -> Any)? = null,
     itemContent: @Composable (T) -> Unit,
 ) {
-    val scrollPlace = rememberScrollState()
-    val appearedItems = r { mutableStateListOf<T>() }
-
-    // Immediately add initial batch
-    val realInitialCount = style.IntFirst.coerceAtMost(items.size)
-    if (appearedItems.isEmpty()) {
-        if (loadAll) {
-            appearedItems.addAll(items)   // load all at once
-        } else {
-            appearedItems.addAll(items.subList(0, realInitialCount))
-        }
-    }
-
-    // Gradual loading for the rest (only if not loadAll)
-    if (!loadAll) {
-        LaunchedEffect(items) {
-            var currentIndex = realInitialCount
-            while (currentIndex < items.size) {
-                val nextIndex = (currentIndex + style.chunkSize).coerceAtMost(items.size)
-                appearedItems.addAll(items.subList(currentIndex, nextIndex))
-                currentIndex = nextIndex
-                if (currentIndex >= items.size) break
-                kotlinx.coroutines.delay(style.delayMs)
-            }
-        }
-    }
+    val loader = rememberLazyLoaderState(items, style, loadAll)
 
     Column(
         modifier = Modifier
             .height(style.height)
-            .verticalScroll(scrollPlace)
+            .verticalScroll(loader.scrollState)
     ) {
-        appearedItems.forEach { item ->
-            itemContent(item)
+        loader.appearedItems.forEach { item ->
+            if (key != null) {
+                androidx.compose.runtime.key(key(item)) {
+                    itemContent(item)
+                }
+            } else {
+                itemContent(item)
+            }
         }
     }
 }
