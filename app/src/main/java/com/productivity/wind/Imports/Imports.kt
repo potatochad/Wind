@@ -113,7 +113,7 @@ fun Vlog(msg: String, special: String = "none", delayLevel: Int = 0) {
     }
 
     Handler(Looper.getMainLooper()).postDelayed({
-        val toast = Toast.makeText(Global1.context, msg, Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(App.ctx, msg, Toast.LENGTH_SHORT)
         lastToast = toast
         toast.show()
     }, delayMs)
@@ -176,7 +176,7 @@ fun each(time: Long = 10_000L, action: () -> Unit) {
     LaunchedEffect(Unit) {
         while (true) {
             action()
-            wait(time)
+            delay(time)
         }
     }
 }
@@ -428,8 +428,6 @@ object UI {
         includePhoneInfo: Boolean = true,
         prefillMessage: String = "I'm experiencing the following issue with the app:\n\n",
     ) {
-        val context = Global1.context
-
         val body = buildString {
             appendLine()
             if (includePhoneInfo) {
@@ -453,7 +451,7 @@ object UI {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
 
-        context.startActivity(chooser)
+        App.ctx.startActivity(chooser)
     }
 
 
@@ -775,7 +773,7 @@ object UI {
             uri?.let { data = it }
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        Global1.context.startActivity(intent)
+        App.ctx.startActivity(intent)
     }
 
     fun isNotificationEnabled(): Boolean {
