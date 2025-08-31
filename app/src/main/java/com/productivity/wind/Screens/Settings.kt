@@ -29,8 +29,8 @@ fun SettingsScreen() {
 
         //region RESTORE/BACKUP
         
-        var restoreTrigger = remember { mutableStateOf(false) }
-        var backupTrigger by remember { mutableStateOf(false) }
+        var restoreTrigger = r { m(false) }
+        var backupTrigger by r { m(false) }
 
 
         LaunchedEffect(backupTrigger) {
