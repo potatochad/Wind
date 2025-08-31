@@ -28,17 +28,18 @@ fun SettingsScreen() {
                 BigIconColor = Gold,
                 title = "Unlock Threshold",
                 endContent = {
-                        UI.Input(   
+                        UI.GoldNumberInput(
                             value = Bar.Dpoints.toString(),
                             onValueChange = {
-                            val input = it.toIntOrNull() ?: 0
-                            when (input > Bar.funTime) -> Vlog("$input input > ${Bar.funTime}p= get more points", "one")
-                            when input>5 -> Vlog("Max 5 points")
-                            else Bar.Dpoints = input
-                            }},
-                            modifier = Modifier,
-                            )
-                        
+                                val input = it.toIntOrNull() ?: 0
+                                when {
+                                    input > Bar.funTime -> Vlog("$input input > ${Bar.funTime} → get more points", "one")
+                                    input > 5 -> Vlog("Max 5 points", "one")
+                                    else -> Bar.Dpoints = input
+                                }
+                            },
+                            modifier = Modifier
+                        )      
                 }
         )
 
