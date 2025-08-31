@@ -12,7 +12,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.*
-
 import com.productivity.wind.Imports.*
 
 //region Settings
@@ -29,24 +28,17 @@ fun SettingsScreen() {
                 BigIconColor = Gold,
                 title = "Unlock Threshold",
                 endContent = {
-                        UI.Cinput(   
-                            what = remember { m(Bar.Dpoints.toString()) },
-                            MaxLetters = 5,
-                        ) {
-
-
-                            //Bar.Dpoints = it
-
-                            
-                            /*
+                        UI.Input(   
+                            value = Bar.Dpoints.toString(),
+                            onValueChange = {
                             val input = it.toIntOrNull() ?: 0
-                            if (input > Bar.funTime) {
-                                Vlog("$input input > ${Bar.funTime}p= get more points", "one")
-                            } else {
-                                Bar.Dpoints = input
-                            }
-                            */
-                        }
+                            when (input > Bar.funTime) -> Vlog("$input input > ${Bar.funTime}p= get more points", "one")
+                            when input>5 -> Vlog("Max 5 points")
+                            else Bar.Dpoints = input
+                            }},
+                            modifier = Modifier,
+                            )
+                        
                 }
         )
 
