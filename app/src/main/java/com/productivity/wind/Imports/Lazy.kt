@@ -50,8 +50,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import com.productivity.wind.Global1
 import com.productivity.wind.Imports.*
+import com.productivity.wind.*
 import kotlin.random.*
 import androidx.compose.ui.*
 import android.webkit.*
@@ -605,7 +605,7 @@ fun LazyHeader(
                 IconButton(onClick = { if (DisableTB_Button) { }; if (!DisableTB_Button) { DisableTB_Button = true
 
                         onBackClick()
-                        Global1.navController.popBackStack()
+                        App.navHost.popBackStack()
                     }
 
                 }) {
