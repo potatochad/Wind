@@ -298,7 +298,7 @@ fun AppSelectPopup(
                 // Search field
                 UI.Input(searchQuery) { 
                     searchQuery = it 
-                },
+                }
                 
 
                 // Filter apps based on search query
