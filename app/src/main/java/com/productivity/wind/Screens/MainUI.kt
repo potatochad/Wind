@@ -51,6 +51,14 @@ fun Main() {
         
                 LazzyList(apps.filter { it.Worth > 0 }) { app ->
                     LazyCard {
+                        Icon.Add {
+                            apps.find { it.name == "Wind" }?.let { app ->
+                                apps.edit(app) {
+                                    Worth += 1
+                                }
+                            }
+
+                        }
                         LazzyRow {
                             Column() {
                                 Text("${app.name}: ${app.NowTime}/${app.DoneTime}", fontSize = 14.sp)
