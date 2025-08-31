@@ -474,7 +474,7 @@ object UI {
 		val isNumber: Bool = true,
 	)
 	@Composable
-	fun GoldNumberInput(
+	fun Input(
 		value: String,
 		onValueChange: (String) -> Unit,
 		hint: String = "",
