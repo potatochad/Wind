@@ -58,7 +58,7 @@ import android.webkit.*
 import androidx.compose.ui.viewinterop.*
 
 
-
+// needs fixing
 @Composable
 fun LazySearch(
     searchQuery: String,
@@ -81,7 +81,7 @@ fun LazySearch(
 				look = LazyIconLook( Color = Color.Black),
             )
             UI.move(w=8)
-            UI.Input(searchQuery) { 
+            LazyInput(searchQuery) { 
                 onChange(it)
             }
         }
