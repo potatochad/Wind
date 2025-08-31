@@ -49,12 +49,15 @@ fun Main() {
                                 
             
         
-                LazzyList(apps.filter { it.Worth > 0 }) { app ->
+                LazzyList(
+                    apps.filter { it.Worth > 0 },
+                    key = { it.id },
+                ) { app ->
                     LazyCard {
                         Icon.Add {
                             apps.find { it.name == "Wind" }?.let { app ->
                                 apps.edit(app) {
-                                    Worth += 1
+                                    DoneTime += 1
                                 }
                             }
 
