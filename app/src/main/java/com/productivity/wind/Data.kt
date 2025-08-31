@@ -144,8 +144,8 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     AppStart()
 
-                    Global1.navController = rememberNavController()
-                    MyNavGraph(navController = Global1.navController)
+                    App.navHost = rememberNavController()
+                    MyNavGraph(navController = App.navHost)
                 }
             }
         }
@@ -154,7 +154,7 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI(context: Context) {
-    Global1.context = context
+    App.ctx = context
     SettingsSaved.init()
     SettingsSaved.Bsave()
 
@@ -196,15 +196,15 @@ fun AppStart() {
 
 //region GLOBAL
 //* CONTEXT from anywhere!!!
-object Global1 {
+object App {
     /* APP CONTEXT
     Context is weirt:
     there is application, ok for most things
     ?and local
     !which used for popup etc...
     * */
-    lateinit var context: Context
-    lateinit var navController: NavHostController
+    lateinit var ctx: Context
+    lateinit var navHost: NavHostController
 
 
     /*POPUPS CRASHING??
