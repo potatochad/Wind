@@ -281,6 +281,34 @@ var selectedApp = m("")
 suspend fun wait(ms: Long) {
     kotlinx.coroutines.delay(ms)
 }
+@Composable
+fun SearchBox(
+    query: String,
+    onQueryChange: (String) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .background(Color(0xFFF5F5F5), RoundedCornerShape(12.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = "Search",
+                tint = Color.Gray,
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            UI.Input(searchQuery) { 
+                        searchQuery = it 
+            }
+        }
+    }
+}
 
 @Composable
 fun AppSelectPopup(
@@ -296,10 +324,9 @@ fun AppSelectPopup(
             message = "",
             content = {
                 // Search field
-                UI.Input(searchQuery) { 
+                SearchBox(searchQuery){ 
                     searchQuery = it 
                 }
-                
 
                 // Filter apps based on search query
                 val filteredList = appList.filter { appInfo ->
