@@ -35,7 +35,7 @@ fun SettingsScreen() {
                         ) {
 
 
-                            Bar.Dpoints = it
+                            //Bar.Dpoints = it
 
                             
                             /*
