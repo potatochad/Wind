@@ -285,7 +285,8 @@ fun AppSelectPopup(
     show: MutableState<Boolean>,
 ) {
     if (show.value) {
-        var appList by r { m(getApps()) }
+        val myPackage = LocalContext.current.packageName // your app's package
+        var appList by r { m(getApps().filter { getAppPackage(it) != myPackage }) } // filter self out
 
         LazyPopup(
             show = show,
