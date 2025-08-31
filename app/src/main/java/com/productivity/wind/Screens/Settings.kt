@@ -28,26 +28,15 @@ fun SettingsScreen() {
                 BigIconColor = Gold,
                 title = "Unlock Threshold",
                 endContent = {
-                    Box(
-                        contentAlignment = Alignment.CenterEnd // aligns content to the end
-                    ) {
-                        UI.Input(
-                            value = Bar.Dpoints.toString(),
-                            onValueChange = {
+                        UI.Input(Bar.Dpoints.toString()){
                                 val filtered = it.filter { char -> char.isDigit() }.take(5)
                                 val input = filtered.toIntOrNull() ?: 0
                                 when {
                                     input > Bar.funTime -> Vlog("$input input > ${Bar.funTime} → get more points", "one")
                                     else -> Bar.Dpoints = input
                                 }
-                            },
-                            modifier = Modifier
-                                .width(IntrinsicSize.Min) // shrink to content if you want
-                                .padding(0.dp) // remove any padding
-                        )
+                            }
                     }
-
-
                 }
         )
 
