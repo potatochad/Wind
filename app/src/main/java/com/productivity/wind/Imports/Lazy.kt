@@ -62,8 +62,8 @@ import androidx.compose.ui.viewinterop.*
 
 @Composable
 fun LazySearch(
-    query: String,
-    onQueryChange: (String) -> Unit
+    searchQuery: String,
+    onChange: (String) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -83,7 +83,7 @@ fun LazySearch(
             )
             Spacer(modifier = Modifier.width(8.dp))
             UI.Input(searchQuery) { 
-                        searchQuery = it 
+                        onChange(it)
             }
         }
     }
