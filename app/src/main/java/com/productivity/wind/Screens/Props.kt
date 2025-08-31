@@ -26,6 +26,7 @@ import androidx.compose.foundation.background
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.*
 import androidx.compose.animation.core.*
+import androidx.compose.ui.platform.*
 
 fun NavGraphBuilder.ScreenNav() {
     //Main—StartDestination    
@@ -267,10 +268,9 @@ fun AskUsagePermission(show: MutableState<Boolean>) {
             message = "To function correctly, this app requires access to your app usage data. Granting this permission allows the app to monitor usage statistics and manage app-related tasks efficiently. Without it, this feature won't work.",
             onConfirm = {
                 // Open Usage Access Settings
-                val context = Global1.context
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
-                context.startActivity(intent)
+                App.ctx.startActivity(intent)
             }
         )
     }
