@@ -478,7 +478,6 @@ object UI {
 		value: String,
 		onValueChange: (String) -> Unit,
 		hint: String = "",
-		end: Boolean= true,
 		modifier: Modifier = Modifier
 	) {
 		val gold = Color(0xFFFFD700)
@@ -493,9 +492,7 @@ object UI {
 			textStyle = TextStyle(
 				color = gold,
 				fontWeight = FontWeight.Bold,
-
-				textAlign = if (end) TextAlign.End else TextAlign.Start 
-     			),
+			),
 			placeholder = {
 				Text(
 					text = hint,
