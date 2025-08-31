@@ -33,13 +33,16 @@ fun SettingsScreen() {
                             onValueChange = {
                                 val filtered = it.filter { char -> char.isDigit() }.take(5)
                                 val input = filtered.toIntOrNull() ?: 0
+
                                 when {
                                     input > Bar.funTime -> Vlog("$input input > ${Bar.funTime} → get more points", "one")
                                     else -> Bar.Dpoints = input
                                 }
                             },
-                            modifier = Modifier.width(80.dp)
+                            modifier = Modifier.widthIn(min = 20.dp) // Minimum width
+                                .then(Modifier.width((Bar.Dpoints.toString().length * 10).dp)) // Adjust width based on number of digits
                         )
+
                 }
         )
 
