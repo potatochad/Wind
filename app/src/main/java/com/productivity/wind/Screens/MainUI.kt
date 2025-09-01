@@ -34,6 +34,47 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.*
 
+
+@Composable
+fun HealthRing(
+    progress: Float,      // 0f..1f
+    modifier: Modifier = Modifier,
+    strokeWidth: Dp = 6.dp,
+    color: Color = Color.Green,
+    trackColor: Color = Color.DarkGray
+) {
+    Canvas(modifier = modifier) {
+        val stroke = Stroke(
+            width = strokeWidth.toPx(),
+            cap = StrokeCap.Butt // sharp edges
+        )
+        val size = size.minDimension
+        val arcSize = Size(size, size)
+
+        // Background track
+        drawArc(
+            color = trackColor,
+            startAngle = -90f,
+            sweepAngle = 360f,
+            useCenter = false,
+            topLeft = Offset((this.size.width - size) / 2, (this.size.height - size) / 2),
+            size = arcSize,
+            style = stroke
+        )
+
+        // Progress arc
+        drawArc(
+            color = color,
+            startAngle = -90f,
+            sweepAngle = 360f * progress,
+            useCenter = false,
+            topLeft = Offset((this.size.width - size) / 2, (this.size.height - size) / 2),
+            size = arcSize,
+            style = stroke
+        )
+    }
+}
+
 @Composable
 fun Main() {
     
@@ -65,17 +106,16 @@ fun Main() {
 
                             // Icon with circular progress ring
                             Box(contentAlignment = Alignment.Center) {
-                                CircularProgressIndicator(
-                                    progress = { progress },
+                                HealthRing(
+                                    progress = progress,
                                     modifier = Modifier
                                         .matchParentSize()
-                                        .padding(4.dp), // ring wraps icon
-                                    strokeWidth = 3.dp,
-                                    color = Color.Green,
-                                    trackColor = Color.Gray.copy(alpha = 0.3f)
+                                        .padding(4.dp),
+                                    strokeWidth = 4.dp
                                 )
-                                LazyImage(icon) // natural icon size
                             }
+                            UI.move(10)
+                            LazyImage(icon)
                             UI.move(10)
                             // Priority star
                             Text(
