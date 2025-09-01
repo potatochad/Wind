@@ -137,6 +137,7 @@ object Header {
                         )
                     )
                 }
+                refreshApps()
 
                 selectedApp.value = ""
                 Points.value = "0"
