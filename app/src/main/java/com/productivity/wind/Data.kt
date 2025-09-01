@@ -152,7 +152,7 @@ class MainActivity : ComponentActivity() {
     }
     override fun onResume() {
         super.onResume()
-        Vlog("Resumed app")  // safe, just logging
+        refreshApps()
     }
     
 }
@@ -177,9 +177,6 @@ fun MAINStart() {
 }
 @Composable
 fun AppStart() {
-    each(1_000L){
-        refreshApps()
-    }
     LazyMenu { Menu() }
     
     PopUps()
