@@ -34,43 +34,63 @@ import androidx.compose.ui.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
+
+@Composable
+fun drawRing(
+    color: Color,
+    strokeWidth: Dp = 6.dp,
+    progress: Float = 1f,
+    strokeCap: StrokeCap = StrokeCap.Butt,
+    content: @Composable BoxScope.() -> Unit
+) {
+    Box(
+        contentAlignment = Alignment.Center
+    ) {
+        // The content goes here
+        content()
+
+        // Draw the ring around content
+        Canvas(modifier = Modifier.matchParentSize()) {
+            val radius = (size.minDimension / 2) + strokeWidth.toPx() / 2
+            val center = this.center
+            val stroke = Stroke(width = strokeWidth.toPx(), cap = strokeCap)
+
+            drawArc(
+                color = color,
+                startAngle = -90f,
+                sweepAngle = 360f * progress,
+                useCenter = false,
+                topLeft = Offset(center.x - radius, center.y - radius),
+                size = Size(radius * 2, radius * 2),
+                style = stroke
+            )
+        }
+    }
+}
+
+
 @Composable
 fun HealthRing(
-    progress: Float,      // 0f..1f
+    progress: Float,    
     modifier: Modifier = Modifier,
     strokeWidth: Dp = 6.dp,
     color: Color = Color.Green,
-    trackColor: Color = Color.DarkGray
-) {
-    Canvas(modifier = modifier) {
-        val stroke = Stroke(
-            width = strokeWidth.toPx(),
-            cap = StrokeCap.Butt // sharp edges
-        )
-        val size = size.minDimension
-        val arcSize = Size(size, size)
+    trackColor: Color = Color.DarkGray,
+    icon: Painter? = null // optional icon
+) {  
+    Box(contentAlignment = Alignment.Center, modifier = modifier) {
+        Canvas(modifier = Modifier.matchParentSize()) {
+            // Draw background track (full circle)
+            drawRing(color = trackColor, progress = 1f, strokeWidth = strokeWidth.toPx())
 
-        // Background track
-        drawArc(
-            color = trackColor,
-            startAngle = -90f,
-            sweepAngle = 360f,
-            useCenter = false,
-            topLeft = Offset((this.size.width - size) / 2, (this.size.height - size) / 2),
-            size = arcSize,
-            style = stroke
-        )
+            // Draw progress arc
+            drawRing(color = color, progress = progress, strokeWidth = strokeWidth.toPx())
+        }
 
-        // Progress arc
-        drawArc(
-            color = color,
-            startAngle = -90f,
-            sweepAngle = 360f * progress,
-            useCenter = false,
-            topLeft = Offset((this.size.width - size) / 2, (this.size.height - size) / 2),
-            size = arcSize,
-            style = stroke
-        )
+        // Center icon (if provided)
+        icon?.let {
+            Image(painter = it, contentDescription = null, modifier = Modifier.size(24.dp))
+        }
     }
 }
 
@@ -99,22 +119,22 @@ fun Main() {
                     val icon = getAppIcon(app.pkg)
                     val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
+                    
                     LazyCard {
                         LazzyRow {
                             UI.move(10)
 
                             // Icon with circular progress ring
-                            Box(contentAlignment = Alignment.Center) {
-                                HealthRing(
-                                    progress = progress,
-                                    modifier = Modifier
-                                        .matchParentSize()
-                                        .padding(4.dp),
-                                    strokeWidth = 4.dp
-                                )
+                            drawRing(
+                                color = Color.Red,
+                                strokeWidth = 8.dp,
+                                progress = 0.75f
+                            ) {
+                                Text("Hello", fontSize = 24.sp, color = Color.Black)
                             }
+
                             UI.move(10)
-                            LazyImage(icon)
+                            
                             UI.move(10)
                             // Priority star
                             Text(
