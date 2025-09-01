@@ -150,6 +150,10 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+    override fun onResume() {
+            Vlog("Resumed app")
+    }
+    
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
