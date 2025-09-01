@@ -43,19 +43,18 @@ import androidx.compose.runtime.*
 
 
 @Composable
-fun DrawRing(
+fun Ring(
     color: Color,
     strokeWidth: Dp = 2.dp,
     progress: Float = 1f,
     strokeCap: StrokeCap = StrokeCap.Butt,
     content: @Composable BoxScope.() -> Unit
 ) {
-    Box(contentAlignment = Alignment.Center) {
-        Canvas(
-            modifier = Modifier
-                .matchParentSize() 
-                .padding(strokeWidth / 2)
-        ) {
+    Box(
+        modifier = Modifier.size(120.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Canvas(modifier = Modifier.matchParentSize()) {
             val stroke = Stroke(width = strokeWidth.toPx(), cap = strokeCap)
             val radius = size.minDimension / 2
             val topLeft = Offset(center.x - radius, center.y - radius)
@@ -71,11 +70,7 @@ fun DrawRing(
             )
         }
 
-        Box(
-            contentAlignment = Alignment.Center
-        ) {
-            content()
-        }
+        content()
     }
 }
 
@@ -112,7 +107,7 @@ fun Main() {
                             // Icon with circular progress ring
                             val ringColor = lerp(Color.Red, Color.Green, progress)
                             
-                            DrawRing(
+                            Ring(
                                 color = ringColor,
                                 strokeWidth = 8.dp,
                                 progress = progress,
