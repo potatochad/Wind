@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.*
 import androidx.compose.ui.viewinterop.*
 import com.productivity.wind.Imports.*
 import org.mozilla.geckoview.*
+import android.content.*
+
 @Composable
 fun Web2() {
     var url = r { m("https://www.google.com") }
@@ -45,7 +47,6 @@ fun Web() {
 
     // Show GeckoView in Compose
     AndroidView(
-        modifier = modifier,
         factory = { ctx: Context ->
             GeckoView(ctx).apply {
                 setSession(geckoSession)
