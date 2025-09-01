@@ -886,27 +886,7 @@ object DayChecker {
         }
     }
 }
-fun WebSettings.BrowserSettings() {
-    javaScriptEnabled = true
-    domStorageEnabled = true
-    databaseEnabled = true
-    cacheMode = WebSettings.LOAD_DEFAULT
-    builtInZoomControls = true
-    displayZoomControls = false
-    loadWithOverviewMode = true
-    useWideViewPort = true
-    allowFileAccess = true
-    allowContentAccess = true
-    javaScriptCanOpenWindowsAutomatically = true
-    mediaPlaybackRequiresUserGesture = false
-    setSupportZoom(true)
-    textZoom = 100
-    safeBrowsingEnabled = true
-    loadsImagesAutomatically = true
-    offscreenPreRaster = true
-    mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-}
-    
+
 
 
 
