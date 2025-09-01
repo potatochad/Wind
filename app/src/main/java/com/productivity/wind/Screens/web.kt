@@ -29,14 +29,18 @@ fun Web() {
         },
     ) {
         val ctx = androidx.compose.ui.platform.LocalContext.current
-    val geckoRuntime = r { GeckoRuntime.create(ctx) }
-    val geckoSession = r {
-        GeckoSession().apply {
-            open(geckoRuntime)
-            loadUri(url.value)
+        val geckoRuntime = r { GeckoRuntime.create(ctx) }
+        val geckoSession = r {
+            GeckoSession().apply {
+                open(geckoRuntime)
+                loadUri(url.value)
+            }
         }
-    }
+        
         AndroidView(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(400.dp), 
             factory = { ctx: Context ->
                 GeckoView(ctx).apply {
                     setSession(geckoSession)
