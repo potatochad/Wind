@@ -35,6 +35,8 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.graphics.painter.*
+import androidx.compose.ui.layout.*
+
 
 
 
@@ -46,7 +48,7 @@ fun drawRing(
     strokeCap: StrokeCap = StrokeCap.Butt,
     content: @Composable BoxScope.() -> Unit
 ) {
-    var contentSize by remember { mutableStateOf(IntSize.Zero) }
+    var contentSize by r { m(IntSize.Zero) }
 
     Box(
         contentAlignment = Alignment.Center,
