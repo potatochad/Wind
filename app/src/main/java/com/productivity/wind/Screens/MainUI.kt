@@ -66,6 +66,7 @@ fun Main() {
                             Column() {
                                 Text("${app.name}: ${app.NowTime}/${app.DoneTime}", fontSize = 14.sp)
                                 // Tiny progress bar for value
+                                getAppIcon(app.pkg)
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth(0.5f) // half-width
