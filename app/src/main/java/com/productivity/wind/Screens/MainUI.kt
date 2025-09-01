@@ -45,7 +45,7 @@ import androidx.compose.runtime.*
 @Composable
 fun DrawRing(
     color: Color,
-    strokeWidth: Dp = 4.dp,
+    strokeWidth: Dp = 2.dp,
     progress: Float = 1f,
     strokeCap: StrokeCap = StrokeCap.Butt,
     content: @Composable BoxScope.() -> Unit
@@ -72,7 +72,6 @@ fun DrawRing(
         }
 
         Box(
-            modifier = Modifier.padding(strokeWidth),
             contentAlignment = Alignment.Center
         ) {
             content()
@@ -102,7 +101,7 @@ fun Main() {
                     apps.filter { it.Worth > 0 },
                     key = { it.id },
                 ) { app ->
-                    val icon = getAppIcon(app.pkg)
+                    val icon = RoundAppIcon(app.pkg)
                     val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
                     
