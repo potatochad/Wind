@@ -90,8 +90,7 @@ import com.productivity.wind.R
 import android.webkit.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.ui.graphics.painter.*
-import androidx.compose.ui.graphics.painter.rememberDrawablePainter
-
+import com.google.accompanist.drawablepainter.*
 
 
 //region log
