@@ -27,9 +27,12 @@ import com.productivity.wind.MAINStart
 import com.productivity.wind.*
 import com.productivity.wind.Imports.*
 
+import androidx.compose.material3.*
+
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.*
+import androidx.compose.ui.*
 
 @Composable
 fun Main() {
