@@ -37,7 +37,7 @@ fun Web() {
     var url by r { m("https://www.google.com") }
     // Create Gecko runtime once
     val ctx = androidx.compose.ui.platform.LocalContext.current
-    val geckoRuntime = r { (ctx) }
+    val geckoRuntime = r { GeckoRuntime.create(ctx) }
     val geckoSession = r {
         GeckoSession().apply {
             open(geckoRuntime)
