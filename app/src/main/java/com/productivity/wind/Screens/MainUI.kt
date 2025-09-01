@@ -113,7 +113,7 @@ fun Main() {
                             // Icon with circular progress ring
                             val ringColor = lerp(Color.Red, Color.Green, progress)
                             
-                            drawRing(
+                            DrawRing(
                                 color = ringColor,
                                 strokeWidth = 8.dp,
                                 progress = progress,
