@@ -118,10 +118,12 @@ fun Main() {
                             UI.move(10)
 
                             // Icon with circular progress ring
+                            val ringColor = lerp(Color.Red, Color.Green, progress)
+                            
                             drawRing(
-                                color = Color.Green,
+                                color = ringColor,
                                 strokeWidth = 8.dp,
-                                progress = 0.75f
+                                progress = progress,
                             ) {
                                 LazyImage(icon)
                             }
