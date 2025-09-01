@@ -53,46 +53,39 @@ fun Main() {
                     apps.filter { it.Worth > 0 },
                     key = { it.id },
                 ) { app ->
-                    LazyCard {
-                        Icon.Add {
-                            apps.find { it.name == "Wind" }?.let { app ->
-                                apps.edit(app) {
-                                    DoneTime += 1
-                                }
-                            }
+                    val icon = getAppIcon(app.pkg)
+                    val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
-                        }
+                    LazyCard {
                         LazzyRow {
-                            Column() {
-                                Text("${app.name}: ${app.NowTime}/${app.DoneTime}", fontSize = 14.sp)
-                                // Tiny progress bar for value
-                                getAppIcon(app.pkg)
-                                Box(
+                            UI.move(10)
+
+                            // Icon with circular progress ring
+                            Box(contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(
+                                    progress = { progress },
                                     modifier = Modifier
-                                        .fillMaxWidth(0.5f) // half-width
-                                        .height(4.dp)
-                                        .background(Color.Gray.copy(alpha = 0.3f))
-                                ) {
-                                    val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth(progress)
-                                            .height(4.dp)
-                                            .background(Color.Green)
-                                    )
-                                }
+                                        .matchParentSize()
+                                        .padding(4.dp), // ring wraps icon
+                                    strokeWidth = 3.dp,
+                                    color = Color.Green,
+                                    trackColor = Color.Gray.copy(alpha = 0.3f)
+                                )
+                                LazyImage(icon) // natural icon size
                             }
-                            // Tiny symbol representing value or priority
+                            UI.move(10)
+                            // Priority star
                             Text(
                                 "★",
                                 fontSize = 12.sp,
                                 color = if (app.Worth > 10) Color.Yellow else Color.Gray,
                                 modifier = Modifier.padding(start = 8.dp, top = 4.dp)
                             )
+                            
                         }
-
-                     }
+                    }
                 }
+
                             
 
 
