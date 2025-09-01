@@ -151,7 +151,8 @@ class MainActivity : ComponentActivity() {
         }
     }
     override fun onResume() {
-            Vlog("Resumed app")
+        super.onResume()
+        Vlog("Resumed app")  // safe, just logging
     }
     
 }
