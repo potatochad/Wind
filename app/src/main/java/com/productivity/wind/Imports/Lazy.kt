@@ -91,20 +91,31 @@ fun LazySearch(
     }
 }
 @Composable
-fun LazyBrowser(url: MutableState<String>) {
-    AndroidView(factory = { context ->
-        WebView(context).apply {
-            webViewClient = WebViewClient()
-            WebView.setWebContentsDebuggingEnabled(true)
-            settings.BrowserSettings()
+fun LazyBrowser(url: String, modifier: Modifier = Modifier) {
+    val ctx = LocalContext.current
 
-            loadUrl(url.value)
+    // Remember runtime and session so they are created only once
+    val geckoRuntime = remember { GeckoRuntime.create(ctx) }
+    val geckoSession = remember {
+        GeckoSession().apply {
+            open(geckoRuntime)
+            loadUri(url)
         }
-    }, update = { webView ->
-        if (webView.url != url.value) webView.loadUrl(url.value)
-    }, modifier = Modifier.fillMaxSize())
-}
+    }
 
+    AndroidView(
+        modifier = modifier,
+        factory = { context ->
+            GeckoView(context).apply {
+                setSession(geckoSession)
+            }
+        },
+        update = { view ->
+            // Reload when URL changes
+            view.session?.loadUri(url)
+        }
+    )
+}
 @Composable
 fun LazyImage(
     source: Any?,
