@@ -42,6 +42,8 @@ import androidx.compose.ui.unit.toDp
 import androidx.compose.ui.unit.toPx
 
 
+
+
 @Composable
 fun drawRing(
     color: Color,
@@ -50,27 +52,25 @@ fun drawRing(
     strokeCap: StrokeCap = StrokeCap.Butt,
     content: @Composable BoxScope.() -> Unit
 ) {
-    var contentSize by r { mutableStateOf(IntSize.Zero) }
+    var contentSize by remember { mutableStateOf(IntSize.Zero) }
+    val density = LocalDensity.current // Needed for toPx()/toDp()
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .padding(strokeWidth)
+        modifier = Modifier.padding(strokeWidth)
     ) {
         Box(
-            modifier = Modifier
-                .onSizeChanged { contentSize = it }
+            modifier = Modifier.onSizeChanged { contentSize = it }
         ) {
             content()
         }
 
         if (contentSize != IntSize.Zero) {
+            val widthDp = with(density) { (contentSize.width.toFloat() + strokeWidth.toPx() * 2).toDp() }
+            val heightDp = with(density) { (contentSize.height.toFloat() + strokeWidth.toPx() * 2).toDp() }
+
             Canvas(
-                modifier = Modifier
-                    .size(
-                        width = (contentSize.width + strokeWidth.toPx() * 2).toDp(),
-                        height = (contentSize.height + strokeWidth.toPx() * 2).toDp()
-                    )
+                modifier = Modifier.size(widthDp, heightDp)
             ) {
                 val stroke = Stroke(width = strokeWidth.toPx(), cap = strokeCap)
                 val radius = size.minDimension / 2
@@ -89,7 +89,6 @@ fun drawRing(
         }
     }
 }
-
 
 @Composable
 fun Main() {
