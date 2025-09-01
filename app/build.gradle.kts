@@ -32,7 +32,7 @@ android {
          * You can check if your overlay window is currently visible by calling View.getWindowVisibility(),
          * or you can override View.onWindowVisibilityChanged() to get notified whenever the visibility changes.
          */
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 16
         versionName = "2.2"
 
