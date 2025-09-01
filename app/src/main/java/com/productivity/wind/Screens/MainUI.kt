@@ -70,30 +70,6 @@ fun drawRing(
 }
 
 
-@Composable
-fun HealthRing(
-    progress: Float,    
-    modifier: Modifier = Modifier,
-    strokeWidth: Dp = 6.dp,
-    color: Color = Color.Green,
-    trackColor: Color = Color.DarkGray,
-    icon: Painter? = null // optional icon
-) {  
-    Box(contentAlignment = Alignment.Center, modifier = modifier) {
-        Canvas(modifier = Modifier.matchParentSize()) {
-            // Draw background track (full circle)
-            drawRing(color = trackColor, progress = 1f, strokeWidth = strokeWidth.toPx())
-
-            // Draw progress arc
-            drawRing(color = color, progress = progress, strokeWidth = strokeWidth.toPx())
-        }
-
-        // Center icon (if provided)
-        icon?.let {
-            Image(painter = it, contentDescription = null, modifier = Modifier.size(24.dp))
-        }
-    }
-}
 
 @Composable
 fun Main() {
