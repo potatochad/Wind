@@ -36,39 +36,55 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.graphics.painter.*
 
+
+
 @Composable
 fun drawRing(
     color: Color,
-    strokeWidth: Dp = 6.dp,
+    strokeWidth: Dp = 4.dp,
     progress: Float = 1f,
     strokeCap: StrokeCap = StrokeCap.Butt,
     content: @Composable BoxScope.() -> Unit
 ) {
+    var contentSize by remember { mutableStateOf(IntSize.Zero) }
+
     Box(
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .padding(strokeWidth) // give space for stroke
     ) {
-        // The content goes here
-        content()
+        Box(
+            modifier = Modifier
+                .onSizeChanged { contentSize = it }
+        ) {
+            content()
+        }
 
-        // Draw the ring around content
-        Canvas(modifier = Modifier.matchParentSize()) {
-            val radius = (size.minDimension / 2) + strokeWidth.toPx() / 2
-            val center = this.center
-            val stroke = Stroke(width = strokeWidth.toPx(), cap = strokeCap)
+        if (contentSize != IntSize.Zero) {
+            Canvas(
+                modifier = Modifier
+                    .size(
+                        width = (contentSize.width + strokeWidth.toPx() * 2).toDp(),
+                        height = (contentSize.height + strokeWidth.toPx() * 2).toDp()
+                    )
+            ) {
+                val stroke = Stroke(width = strokeWidth.toPx(), cap = strokeCap)
+                val radius = size.minDimension / 2
+                val center = this.center
 
-            drawArc(
-                color = color,
-                startAngle = -90f,
-                sweepAngle = 360f * progress,
-                useCenter = false,
-                topLeft = Offset(center.x - radius, center.y - radius),
-                size = Size(radius * 2, radius * 2),
-                style = stroke
-            )
+                drawArc(
+                    color = color,
+                    startAngle = -90f,
+                    sweepAngle = 360f * progress.coerceIn(0f, 1f),
+                    useCenter = false,
+                    topLeft = Offset(center.x - radius, center.y - radius),
+                    size = Size(radius * 2, radius * 2),
+                    style = stroke
+                )
+            }
         }
     }
 }
-
 
 
 @Composable
@@ -103,15 +119,12 @@ fun Main() {
 
                             // Icon with circular progress ring
                             drawRing(
-                                color = Color.Red,
+                                color = Color.Green,
                                 strokeWidth = 8.dp,
                                 progress = 0.75f
                             ) {
-                                Text("Hello", fontSize = 24.sp, color = Color.Black)
+                                LazyImage(icon)
                             }
-
-                            UI.move(10)
-                            
                             UI.move(10)
                             // Priority star
                             Text(
