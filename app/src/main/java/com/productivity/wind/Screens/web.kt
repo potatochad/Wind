@@ -19,7 +19,7 @@ import android.content.*
 
 @Composable
 fun Web() {
-    var url by r { m("https://www.google.com") }
+    var url = r { m("https://www.google.com") }
     // Create Gecko runtime once
 
     // Show GeckoView in Compose
@@ -33,7 +33,7 @@ fun Web() {
     val geckoSession = r {
         GeckoSession().apply {
             open(geckoRuntime)
-            loadUri(url)
+            loadUri(url.value)
         }
     }
         AndroidView(
@@ -44,7 +44,7 @@ fun Web() {
             },
             update = { view ->
                 // If you want to reload when url changes
-                view.session?.loadUri(url)
+                view.session?.loadUri(url.value)
             }
         )
     }
