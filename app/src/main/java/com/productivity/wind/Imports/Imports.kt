@@ -274,6 +274,21 @@ fun getAppIcon(packageName: String): Drawable? {
         }
     }
 }
+@Composable
+fun RoundAppIcon(packageName: String, size: Dp = 48.dp) {
+    val drawable = getAppIcon(packageName)
+    if (drawable != null) {
+        val painter = rememberDrawablePainter(drawable)
+        Image(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier
+                .size(size)
+                .clip(CircleShape)   // makes it circular
+        )
+    }
+}
+
 
 
 
