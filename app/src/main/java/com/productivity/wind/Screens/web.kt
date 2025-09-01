@@ -14,9 +14,9 @@ import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.viewinterop.*
 import com.productivity.wind.Imports.*
-
+import org.mozilla.geckoview.*
 @Composable
-fun Web() {
+fun Web2() {
     var url = r { m("https://www.google.com") }
         
     LazyScreen(
@@ -24,8 +24,38 @@ fun Web() {
             UI.Cinput(what=url, WidthMax=150)
         },
     ) {
-        LazyBrowser(url)
+        //LazyBrowser(url)
     }
+}
+
+
+
+@Composable
+fun Web() {
+    var url by r { m("https://www.google.com") }
+    // Create Gecko runtime once
+    val ctx = androidx.compose.ui.platform.LocalContext.current
+    val geckoRuntime = r { (ctx) }
+    val geckoSession = r {
+        GeckoSession().apply {
+            open(geckoRuntime)
+            loadUri(url)
+        }
+    }
+
+    // Show GeckoView in Compose
+    AndroidView(
+        modifier = modifier,
+        factory = { ctx: Context ->
+            GeckoView(ctx).apply {
+                setSession(geckoSession)
+            }
+        },
+        update = { view ->
+            // If you want to reload when url changes
+            view.session?.loadUri(url)
+        }
+    )
 }
 
 
