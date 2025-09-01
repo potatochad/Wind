@@ -38,54 +38,44 @@ import androidx.compose.ui.layout.*
 import androidx.compose.ui.platform.*
 import androidx.compose.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.unit.toDp
-import androidx.compose.ui.unit.toPx
 
 
 
 
 @Composable
-fun drawRing(
+fun DrawRing(
     color: Color,
     strokeWidth: Dp = 4.dp,
     progress: Float = 1f,
     strokeCap: StrokeCap = StrokeCap.Butt,
     content: @Composable BoxScope.() -> Unit
 ) {
-    var contentSize by remember { mutableStateOf(IntSize.Zero) }
-    val density = LocalDensity.current // Needed for toPx()/toDp()
-
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.padding(strokeWidth)
-    ) {
-        Box(
-            modifier = Modifier.onSizeChanged { contentSize = it }
+    Box(contentAlignment = Alignment.Center) {
+        Canvas(
+            modifier = Modifier
+                .matchParentSize() 
+                .padding(strokeWidth / 2)
         ) {
-            content()
+            val stroke = Stroke(width = strokeWidth.toPx(), cap = strokeCap)
+            val radius = size.minDimension / 2
+            val topLeft = Offset(center.x - radius, center.y - radius)
+
+            drawArc(
+                color = color,
+                startAngle = -90f,
+                sweepAngle = 360f * progress.coerceIn(0f, 1f),
+                useCenter = false,
+                topLeft = topLeft,
+                size = Size(radius * 2, radius * 2),
+                style = stroke
+            )
         }
 
-        if (contentSize != IntSize.Zero) {
-            val widthDp = with(density) { (contentSize.width.toFloat() + strokeWidth.toPx() * 2).toDp() }
-            val heightDp = with(density) { (contentSize.height.toFloat() + strokeWidth.toPx() * 2).toDp() }
-
-            Canvas(
-                modifier = Modifier.size(widthDp, heightDp)
-            ) {
-                val stroke = Stroke(width = strokeWidth.toPx(), cap = strokeCap)
-                val radius = size.minDimension / 2
-                val center = this.center
-
-                drawArc(
-                    color = color,
-                    startAngle = -90f,
-                    sweepAngle = 360f * progress.coerceIn(0f, 1f),
-                    useCenter = false,
-                    topLeft = Offset(center.x - radius, center.y - radius),
-                    size = Size(radius * 2, radius * 2),
-                    style = stroke
-                )
-            }
+        Box(
+            modifier = Modifier.padding(strokeWidth),
+            contentAlignment = Alignment.Center
+        ) {
+            content()
         }
     }
 }
