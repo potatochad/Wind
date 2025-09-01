@@ -1,7 +1,6 @@
 package com.productivity.wind.Screens
 
 import androidx.compose.material3.Text
-import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,6 +35,7 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.graphics.painter.*
 import androidx.compose.ui.layout.*
+import androidx.compose.ui.platform.*
 
 
 
