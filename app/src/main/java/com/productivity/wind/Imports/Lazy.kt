@@ -107,7 +107,7 @@ data class Info(
 @Composable
 fun LazyInfo(
     expanded: Boolean,
-    items: List<InfoItem>,
+    items: List<Info>,
     onDismiss: () -> Unit,
     onItemClick: (Info) -> Unit,
 ) {
