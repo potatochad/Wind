@@ -97,28 +97,31 @@ fun LazySearch(
 
 
 
-
 data class Info(
     val label: String,
     val icon: ImageVector? = null,
     val id: String = Id(),
+    val onClick: (() -> Unit)? = null, // new field for individual action
 )
 
 @Composable
 fun LazyInfo(
     items: List<Info>,
-    onDismiss: (() -> Unit)? = null,          // nullable
-    onItemClick: ((Info) -> Unit)? = null,  // nullable
-	content: @Composable () -> Unit,
+    onDismiss: (() -> Unit)? = null, // optional
+    content: @Composable () -> Unit
 ) {
-	var expanded by r { m(false) }
+    var expanded by remember { mutableStateOf(false) }
 
-	Box(modifier = Modifier.clickable { expanded = true }) {
-            content() // your content stays exactly the same
-	}
+    Box(modifier = Modifier.clickable { expanded = true }) {
+        content() // original content stays the same
+    }
+
     DropdownMenu(
         expanded = expanded,
-        onDismissRequest = { onDismiss?.invoke() }, // safely call if not null
+        onDismissRequest = { 
+            expanded = false
+            onDismiss?.invoke() 
+        },
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp))
             .padding(4.dp)
@@ -127,11 +130,15 @@ fun LazyInfo(
             DropdownMenuItem(
                 text = { Text(item.label) },
                 leadingIcon = { item.icon?.let { Icon(it, contentDescription = null) } },
-                onClick = { onItemClick?.invoke(item) } // safely call if not null
+                onClick = { 
+                    expanded = false
+                    item.onClick?.invoke()  // call the action in the item itself
+                }
             )
         }
     }
 }
+
 
 
 
