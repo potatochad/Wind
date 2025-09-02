@@ -145,7 +145,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // Set navigation bar black with white icons
-        window.navigationBarColor = Color.BLACK
+        window.navigationBarColor = android.graphics.Color.BLACK
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
 
         AppStart_beforeUI(applicationContext)
@@ -161,7 +161,7 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         // re-apply nav bar color to prevent flashing
-        window.navigationBarColor = Color.BLACK
+        window.navigationBarColor = android.graphics.Color.BLACK
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
 
         OnResume()
