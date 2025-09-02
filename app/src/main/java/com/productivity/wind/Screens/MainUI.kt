@@ -61,6 +61,10 @@ fun Ring(
             val radius = size.minDimension / 2
             val topLeft = Offset(center.x - radius, center.y - radius)
 
+            drawCircle(             
+                color = Color.Black.copy(alpha = 0.1f), // faint dark circle
+                radius = radius,                         // radius of the circle
+            )
             drawArc(
                 color = color,
                 startAngle = -90f,
@@ -68,7 +72,7 @@ fun Ring(
                 useCenter = false,
                 topLeft = topLeft,
                 size = Size(radius * 2, radius * 2),
-                style = stroke
+                style = stroke,
             )
         }
         Box(modifier = Modifier.padding((strokeWidth+ContentPadding).dp)) {
@@ -113,7 +117,7 @@ fun Main() {
                             Ring(
                                 color = ringColor,
                                 progress = progress,
-                                ContentPadding= -2,
+                                ContentPadding= -3,
                             ) {
                                 Box(
                                     contentAlignment = Alignment.Center,
