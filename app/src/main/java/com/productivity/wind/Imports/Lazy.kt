@@ -91,32 +91,44 @@ fun LazySearch(
         }
     }
 }
-@Composable
-fun LazyBrowser(url: String, modifier: Modifier = Modifier) {
-    val ctx = LocalContext.current
 
-    // Remember runtime and session so they are created only once
-    val geckoRuntime = remember { GeckoRuntime.create(ctx) }
-    val geckoSession = remember {
-        GeckoSession().apply {
-            open(geckoRuntime)
-            loadUri(url)
+
+
+
+
+
+
+data class Info(
+    val label: String,
+    val icon: ImageVector? = null,
+    val id: String = Id(),
+)
+
+@Composable
+fun LazyInfo(
+    expanded: Boolean,
+    items: List<InfoItem>,
+    onDismiss: () -> Unit,
+    onItemClick: (InfoItem) -> Unit
+) {
+    DropdownMenu(
+        expanded = expanded,
+        onDismissRequest = onDismiss,
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp))
+            .padding(4.dp)
+    ) {
+        items.forEach { item ->
+            DropdownMenuItem(
+                text = { Text(item.label) },
+                leadingIcon = { item.icon?.let { Icon(it, contentDescription = null) } },
+                onClick = { onItemClick(item) }
+            )
         }
     }
-
-    AndroidView(
-        modifier = modifier,
-        factory = { context ->
-            GeckoView(context).apply {
-                setSession(geckoSession)
-            }
-        },
-        update = { view ->
-            // Reload when URL changes
-            view.session?.loadUri(url)
-        }
-    )
 }
+
+
 @Composable
 fun LazyImage(
     source: Any?,
