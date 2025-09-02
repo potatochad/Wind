@@ -54,7 +54,7 @@ fun Ring(
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .background(Color.Black.copy(alpha = 0.25f))
+            .background(Color.Black.copy(alpha = 0.1f))
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val stroke = Stroke(width = strokeWidth.dp.toPx(), cap = strokeCap)
@@ -123,11 +123,11 @@ fun Main() {
                                     // Overlay circle on top
                                     Canvas(modifier = Modifier.matchParentSize()) {
                                         drawArc(
-                                            color = Color.Black.copy(alpha = 0.25f), // semi-transparent black
+                                            color = Color.Black,
                                             startAngle = 0f,                         // where the arc starts
                                             sweepAngle = 360f,                        // full circle
                                             useCenter = false,                        // don’t draw lines to the center
-                                            style = Stroke(width = 4.dp.toPx())       // stroke width, convert dp to pixels
+                                            style = Stroke(width = 10.dp.toPx())       // stroke width, convert dp to pixels
                                         )
                                     }
 
