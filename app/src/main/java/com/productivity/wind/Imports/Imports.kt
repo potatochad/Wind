@@ -348,6 +348,41 @@ object UI {
 
 
 	@Composable
+	fun ProgressIcon(
+		icon: Any,              // whatever LazyImage accepts (Drawable, URL, etc.)
+		progress: Float,
+		modifier: Modifier = Modifier
+	) {
+		val ringColor = UI.ProgressColor(progress)
+
+		UI.Ring(
+			color = ringColor,
+			progress = progress,
+			ContentPadding = -3,
+			modifier = modifier
+		) {
+			Box(contentAlignment = Alignment.Center) {
+				LazyImage(icon)
+
+				// Overlay circle on top
+				Canvas(
+					modifier = Modifier
+						.matchParentSize()
+						.padding(4.dp)
+				) {
+					drawArc(
+						color = Color(0xFF171717),   // ~10% darker overlay
+						startAngle = 0f,
+						sweepAngle = 360f,
+						useCenter = false,
+						style = Stroke(width = 2.dp.toPx())
+					)
+				}
+			}
+		}
+	}
+
+	@Composable
 	fun Ring(
 		color: Color,
 		strokeWidth: Int = 3,
