@@ -171,9 +171,7 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI(context: Context) {
-    window.navigationBarColor = Color.BLACK
-    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
-
+    
     App.ctx = context
     SettingsSaved.init()
     SettingsSaved.Bsave()
