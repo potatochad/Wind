@@ -123,7 +123,7 @@ fun Main() {
                                     // Overlay circle on top
                                     Canvas(modifier = Modifier.matchParentSize()) {
                                         drawCircle(
-                                            color = Color.White.copy(alpha = 0.5f), // adjust color/opacity
+                                            color = Color(0xFF1A1A1A),
                                             radius = size.minDimension / 2
                                         )
                                     }
