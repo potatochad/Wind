@@ -27,6 +27,7 @@ import androidx.core.*
 
 import androidx.compose.ui.graphics.*
 import androidx.core.view.*
+import android.graphics.*
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
