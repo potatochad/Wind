@@ -294,7 +294,6 @@ fun RoundAppIcon(packageName: String, size: Dp = 20.dp) {
                 painter = painter,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
             )
         }
     }
