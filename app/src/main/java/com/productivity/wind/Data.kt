@@ -190,7 +190,7 @@ fun MAINStart() {
         Bar.restoringFromFile = false
     }
 }
-@Composable
+
 fun OnResume(){
         refreshApps()  
 }
