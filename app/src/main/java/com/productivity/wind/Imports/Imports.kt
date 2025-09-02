@@ -91,6 +91,7 @@ import android.webkit.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.ui.graphics.painter.*
 import com.google.accompanist.drawablepainter.*
+import androidx.compose.ui.layout.*
 
 
 //region log
@@ -288,7 +289,6 @@ fun RoundAppIcon(packageName: String, size: Dp = 20.dp) {
                 .size(size)
                 .clip(CircleShape)
                 .background(Color.Red) // optional background
-                .align(Alignment.CenterVertically)
         ) {
             Image(
                 painter = painter,
