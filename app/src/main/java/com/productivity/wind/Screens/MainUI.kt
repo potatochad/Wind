@@ -45,7 +45,7 @@ import androidx.compose.runtime.*
 @Composable
 fun Ring(
     color: Color,
-    strokeWidth: Dp = 2.dp,
+    strokeWidth: Dp = 3.dp,
     progress: Float = 1f,
     strokeCap: StrokeCap = StrokeCap.Butt,
     content: @Composable BoxScope.() -> Unit
@@ -109,11 +109,12 @@ fun Main() {
                             
                             Ring(
                                 color = ringColor,
-                                strokeWidth = 8.dp,
+                                strokeWidth = 3.dp,
                                 progress = progress,
                             ) {
-                                LazyImage(icon)
+                                Text("App")
                             }
+                            LazyImage(icon)
                             UI.move(10)
                             // Priority star
                             Text(
