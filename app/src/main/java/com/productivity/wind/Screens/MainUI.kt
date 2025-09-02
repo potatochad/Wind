@@ -78,6 +78,14 @@ fun Ring(
         }
     }
 }
+fun ProgressColor(progress: Float): Color {
+    return when {
+        progress < 0.33f -> Color.Red
+        progress < 0.66f -> Color.Yellow
+        else -> Color.Green
+    }
+}
+
 
 @Composable
 fun Main() {
@@ -110,7 +118,7 @@ fun Main() {
                             UI.move(10)
 
                             // Icon with circular progress ring
-                            val ringColor = lerp(Color.Red, Color.Green, progress)
+                            val ringColor = ProgressColor(progress)
                             
                             Ring(
                                 color = ringColor,
@@ -125,14 +133,14 @@ fun Main() {
                                     // Overlay circle on top
                                     Canvas(modifier = Modifier
                                             .matchParentSize()
-                                            .padding(3.dp)
+                                            .padding(5.dp)
                                     ) {
                                         drawArc(
                                             color = Color(0xFF171717),//10%darker
                                             startAngle = 0f,                         // where the arc starts
                                             sweepAngle = 360f,                        // full circle
                                             useCenter = false,                        // don’t draw lines to the center
-                                            style = Stroke(width = 5.dp.toPx())       // stroke width, convert dp to pixels
+                                            style = Stroke(width = 3.dp.toPx())       // stroke width, convert dp to pixels
                                         )
                                     }
 
