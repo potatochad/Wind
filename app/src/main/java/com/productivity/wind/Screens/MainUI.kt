@@ -45,7 +45,7 @@ import androidx.compose.runtime.*
 @Composable
 fun Ring(
     color: Color,
-    strokeWidth: Dp = 3.dp,
+    strokeWidth: Int = 3,
     progress: Float = 1f,
     strokeCap: StrokeCap = StrokeCap.Butt,
     content: @Composable BoxScope.() -> Unit
@@ -54,7 +54,7 @@ fun Ring(
         contentAlignment = Alignment.Center
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
-            val stroke = Stroke(width = strokeWidth.toPx(), cap = strokeCap)
+            val stroke = Stroke(width = strokeWidth.dp.toPx(), cap = strokeCap)
             val radius = size.minDimension / 2
             val topLeft = Offset(center.x - radius, center.y - radius)
 
@@ -68,7 +68,7 @@ fun Ring(
                 style = stroke
             )
         }
-
+        UI.move(strokeWidth+1)
         content()
     }
 }
