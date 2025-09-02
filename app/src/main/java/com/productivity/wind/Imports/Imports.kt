@@ -277,18 +277,25 @@ fun getAppIcon(packageName: String): Drawable? {
     }
 }
 @Composable
-fun RoundAppIcon(packageName: String, size: Dp = 48.dp) {
-    val drawable = getAppIcon(packageName)
-    if (drawable != null) {
-        val painter = rememberDrawablePainter(drawable)
-        Image(
-            painter = painter,
-            contentDescription = null,
-            modifier = Modifier
-                .size(size)
-                .clip(CircleShape)   // makes it circular
-        )
-    }
+fun RoundAppIcon(packageName: String, size: Dp = 20.dp) {
+    val drawable = getAppIcon(packageName)
+    if (drawable != null) {
+        val painter = rememberDrawablePainter(drawable)
+        Box(
+            modifier = Modifier
+                .size(size)
+                .clip(CircleShape)
+                .background(Color.Red) // optional background for debugging
+                .align(Alignment.CenterVertically) // important if used in Row/Column
+        ) {
+            Image(
+                painter = painter,
+                contentDescription = null,
+                contentScale = ContentScale.Crop, // ensures filling
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
 }
 
 
