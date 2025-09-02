@@ -53,8 +53,6 @@ fun Ring(
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .background(Color.Black.copy(alpha = 0.1f))
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val stroke = Stroke(width = strokeWidth.dp.toPx(), cap = strokeCap)
@@ -134,7 +132,7 @@ fun Main() {
                                             startAngle = 0f,                         // where the arc starts
                                             sweepAngle = 360f,                        // full circle
                                             useCenter = false,                        // don’t draw lines to the center
-                                            style = Stroke(width = 2.dp.toPx())       // stroke width, convert dp to pixels
+                                            style = Stroke(width = 5.dp.toPx())       // stroke width, convert dp to pixels
                                         )
                                     }
 
