@@ -68,8 +68,9 @@ fun Ring(
                 style = stroke
             )
         }
-        UI.move(strokeWidth+1)
-        content()
+        Box(modifier = Modifier.padding((strokeWidth + 1).dp)) {
+            content()
+        }
     }
 }
 
@@ -95,7 +96,7 @@ fun Main() {
                     apps.filter { it.Worth > 0 },
                     key = { it.id },
                 ) { app ->
-                    val icon = RoundAppIcon(app.pkg)
+                    val icon = getAppIcon(app.pkg)
                     val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
                     
@@ -110,9 +111,8 @@ fun Main() {
                                 color = ringColor,
                                 progress = progress,
                             ) {
-                                Text("App")
+                                LazyImage(icon)
                             }
-                            LazyImage(icon)
                             UI.move(10)
                             // Priority star
                             Text(
