@@ -351,7 +351,6 @@ object UI {
 	fun ProgressIcon(
 		icon: Any,              // whatever LazyImage accepts (Drawable, URL, etc.)
 		progress: Float,
-		modifier: Modifier = Modifier
 	) {
 		val ringColor = UI.ProgressColor(progress)
 
@@ -359,7 +358,6 @@ object UI {
 			color = ringColor,
 			progress = progress,
 			ContentPadding = -3,
-			modifier = modifier
 		) {
 			Box(contentAlignment = Alignment.Center) {
 				LazyImage(icon)
