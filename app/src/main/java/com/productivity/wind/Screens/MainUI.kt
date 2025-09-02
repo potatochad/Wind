@@ -125,13 +125,16 @@ fun Main() {
                                     LazyImage(icon) // your image
 
                                     // Overlay circle on top
-                                    Canvas(modifier = Modifier.matchParentSize()) {
+                                    Canvas(modifier = Modifier
+                                            .matchParentSize()
+                                            .padding(3.dp)
+                                    ) {
                                         drawArc(
                                             color = Color.Black,
                                             startAngle = 0f,                         // where the arc starts
                                             sweepAngle = 360f,                        // full circle
                                             useCenter = false,                        // don’t draw lines to the center
-                                            style = Stroke(width = 10.dp.toPx())       // stroke width, convert dp to pixels
+                                            style = Stroke(width = 5.dp.toPx())       // stroke width, convert dp to pixels
                                         )
                                     }
 
