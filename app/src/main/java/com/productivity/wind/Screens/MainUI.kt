@@ -47,11 +47,14 @@ fun Ring(
     color: Color,
     strokeWidth: Int = 3,
     progress: Float = 1f,
+    ContentPadding: Int = 1,
     strokeCap: StrokeCap = StrokeCap.Butt,
     content: @Composable BoxScope.() -> Unit
 ) {
     Box(
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .background(Color.Black.copy(alpha = 0.1f))
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val stroke = Stroke(width = strokeWidth.dp.toPx(), cap = strokeCap)
@@ -68,7 +71,7 @@ fun Ring(
                 style = stroke
             )
         }
-        Box(modifier = Modifier.padding((strokeWidth + 1).dp)) {
+        Box(modifier = Modifier.padding((strokeWidth+ContentPadding).dp)) {
             content()
         }
     }
@@ -110,8 +113,22 @@ fun Main() {
                             Ring(
                                 color = ringColor,
                                 progress = progress,
+                                ContentPadding= -2,
                             ) {
-                                LazyImage(icon)
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    LazyImage(icon) // your image
+
+                                    // Overlay circle on top
+                                    Canvas(modifier = Modifier.matchParentSize()) {
+                                        drawCircle(
+                                            color = Color.White.copy(alpha = 0.5f), // adjust color/opacity
+                                            radius = size.minDimension / 2
+                                        )
+                                    }
+                                }
+
                             }
                             UI.move(10)
                             // Priority star
