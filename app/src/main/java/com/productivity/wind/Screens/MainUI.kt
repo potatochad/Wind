@@ -133,14 +133,14 @@ fun Main() {
                                     // Overlay circle on top
                                     Canvas(modifier = Modifier
                                             .matchParentSize()
-                                            .padding(5.dp)
+                                            .padding(4.dp)
                                     ) {
                                         drawArc(
                                             color = Color(0xFF171717),//10%darker
                                             startAngle = 0f,                         // where the arc starts
                                             sweepAngle = 360f,                        // full circle
                                             useCenter = false,                        // don’t draw lines to the center
-                                            style = Stroke(width = 3.dp.toPx())       // stroke width, convert dp to pixels
+                                            style = Stroke(width = 2.dp.toPx())       // stroke width, convert dp to pixels
                                         )
                                     }
 
