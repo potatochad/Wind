@@ -109,7 +109,7 @@ fun LazyInfo(
     expanded: Boolean,
     items: List<InfoItem>,
     onDismiss: () -> Unit,
-    onItemClick: (InfoItem) -> Unit
+    onItemClick: (Info) -> Unit,
 ) {
     DropdownMenu(
         expanded = expanded,
