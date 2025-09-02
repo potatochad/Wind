@@ -93,7 +93,14 @@ import androidx.compose.ui.graphics.painter.*
 import com.google.accompanist.drawablepainter.*
 import androidx.compose.ui.layout.*
 
-
+import androidx.compose.ui.geometry.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.graphics.painter.*
+import androidx.compose.ui.layout.*
+import androidx.compose.ui.platform.*
+import androidx.compose.*
+import androidx.compose.runtime.*
 //region log
 
 fun log(message: String, tag: String? = "Bad") {
