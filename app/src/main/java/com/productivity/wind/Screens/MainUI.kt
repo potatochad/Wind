@@ -71,9 +71,9 @@ fun Main() {
                             UI.move(10)
 
                             // Icon with circular progress ring
-                            val ringColor = ProgressColor(progress)
+                            val ringColor = UI.ProgressColor(progress)
                             
-                            Ring(
+                            UI.Ring(
                                 color = ringColor,
                                 progress = progress,
                                 ContentPadding= -3,
