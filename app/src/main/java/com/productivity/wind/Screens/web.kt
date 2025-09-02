@@ -52,7 +52,7 @@ fun Web() {
         
             AndroidView(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
                 factory = { ctx: Context ->
                     GeckoView(ctx).apply {
                     setSession(geckoSession)
