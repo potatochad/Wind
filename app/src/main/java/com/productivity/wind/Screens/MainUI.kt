@@ -70,12 +70,7 @@ fun Main() {
                         LazzyRow {
                             UI.move(10)
 
-                            LazyInfo(
-                                items = items = listOf(
-                                    Info("Add photos", Icons.Default.Photo),
-                                    Info("Take photo", Icons.Default.CameraAlt),
-                                ),
-                            ) {
+                            LazyInfo(listOf(Info("${app.NowTime}\${app.DoneTime}"))) {
                                 UI.ProgressIcon(icon, progress) 
                             }
 
