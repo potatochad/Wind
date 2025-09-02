@@ -24,6 +24,10 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.productivity.wind.Imports.*
 import androidx.compose.runtime.snapshots.*
 import androidx.core.*
+
+import androidx.compose.ui.graphics.*
+import androidx.core.view.*
+
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
 yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long ago dont remember what did)
