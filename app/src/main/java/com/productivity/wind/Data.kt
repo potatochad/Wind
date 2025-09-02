@@ -23,7 +23,7 @@ import com.productivity.wind.ui.theme.KeepAliveTheme
 import androidx.compose.ui.platform.LocalConfiguration
 import com.productivity.wind.Imports.*
 import androidx.compose.runtime.snapshots.*
-
+import androidx.core.*
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
 yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long ago dont remember what did)
@@ -138,27 +138,37 @@ object Popup {
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Set navigation bar black with white icons
+        window.navigationBarColor = Color.BLACK
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
+
         AppStart_beforeUI(applicationContext)
         setContent {
             KeepAliveTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     AppStart()
-
-                    App.navHost = rememberNavController()
-                    MyNavGraph(navController = App.navHost)
                 }
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
-        refreshApps()
+        // re-apply nav bar color to prevent flashing
+        window.navigationBarColor = Color.BLACK
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
+
+        OnResume()
     }
-    
 }
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI(context: Context) {
+    window.navigationBarColor = Color.BLACK
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
+
     App.ctx = context
     SettingsSaved.init()
     SettingsSaved.Bsave()
@@ -176,6 +186,10 @@ fun MAINStart() {
     }
 }
 @Composable
+fun OnResume(){
+        refreshApps()  
+}
+@Composable
 fun AppStart() {
     LazyMenu { Menu() }
     
@@ -185,11 +199,12 @@ fun AppStart() {
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
-    
+  
     
     ListStorage.SynchAll()
     
-    
+    App.navHost = rememberNavController()
+    MyNavGraph(navController = App.navHost)
 }
 
 
