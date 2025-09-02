@@ -41,7 +41,6 @@ fun Web() {
             UI.Cinput(what=url, WidthMax=150)
         },
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
             val ctx = LocalContext.current
             val geckoRuntime = r { GeckoRuntime.create(ctx) }
             val geckoSession = r {
@@ -54,7 +53,6 @@ fun Web() {
             AndroidView(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
                 factory = { ctx: Context ->
                     GeckoView(ctx).apply {
                     setSession(geckoSession)
@@ -65,7 +63,6 @@ fun Web() {
                     view.session?.loadUri(fullUrl)
                 }
             )
-        }
     }
 }
 
