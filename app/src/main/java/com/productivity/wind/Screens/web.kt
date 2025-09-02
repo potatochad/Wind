@@ -18,9 +18,21 @@ import org.mozilla.geckoview.*
 import android.content.*
 
 @Composable
+fun UrlConverter(input: String): String {
+    return remember(input) {
+        if (input.startsWith("http://") || input.startsWith("https://")) {
+            input
+        } else {
+            "https://$input"
+        }
+    }
+}
+
+@Composable
 fun Web() {
-    var url = r { m("https://www.google.com") }
+    var url = r { m("google.com") }
     // Create Gecko runtime once
+    val fullUrl = UrlConverter(url.value)
 
     // Show GeckoView in Compose
     LazyScreen(
@@ -28,29 +40,31 @@ fun Web() {
             UI.Cinput(what=url, WidthMax=150)
         },
     ) {
-        val ctx = androidx.compose.ui.platform.LocalContext.current
-        val geckoRuntime = r { GeckoRuntime.create(ctx) }
-        val geckoSession = r {
-            GeckoSession().apply {
-                open(geckoRuntime)
-                loadUri(url.value)
-            }
-        }
-        
-        AndroidView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(400.dp), 
-            factory = { ctx: Context ->
-                GeckoView(ctx).apply {
-                    setSession(geckoSession)
+        Column(modifier = Modifier.fillMaxSize()) {
+            val ctx = LocalContext.current
+            val geckoRuntime = r { GeckoRuntime.create(ctx) }
+            val geckoSession = r {
+                GeckoSession().apply {
+                    open(geckoRuntime)
+                    loadUri(fullUrl)
                 }
-            },
-            update = { view ->
-                // If you want to reload when url changes
-                view.session?.loadUri(url.value)
             }
-        )
+        
+            AndroidView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                factory = { ctx: Context ->
+                    GeckoView(ctx).apply {
+                    setSession(geckoSession)
+                    }
+                },
+                update = { view ->
+                    // If you want to reload when url changes
+                    view.session?.loadUri(fullUrl)
+                }
+            )
+        }
     }
 }
 
