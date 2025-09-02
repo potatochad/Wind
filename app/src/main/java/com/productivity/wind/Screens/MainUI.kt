@@ -70,7 +70,7 @@ fun Main() {
                         LazzyRow {
                             UI.move(10)
 
-                            ProgressIcon(icon, progress)
+                            UI.ProgressIcon(icon, progress)
                                 
                             UI.move(10)
                             // Priority star
