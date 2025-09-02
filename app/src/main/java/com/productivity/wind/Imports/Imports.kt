@@ -265,6 +265,7 @@ fun getAppName(info: ResolveInfo): String {
     return info.loadLabel(App.ctx.packageManager)?.toString() ?: pkg
 }
 
+
 @Composable
 fun getAppIcon(packageName: String): Drawable? {
     val pm = App.ctx.packageManager
@@ -276,27 +277,29 @@ fun getAppIcon(packageName: String): Drawable? {
         }
     }
 }
+
 @Composable
 fun RoundAppIcon(packageName: String, size: Dp = 20.dp) {
-    val drawable = getAppIcon(packageName)
-    if (drawable != null) {
-        val painter = rememberDrawablePainter(drawable)
-        Box(
-            modifier = Modifier
-                .size(size)
-                .clip(CircleShape)
-                .background(Color.Red) // optional background for debugging
-                .align(Alignment.CenterVertically) // important if used in Row/Column
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = null,
-                contentScale = ContentScale.Crop, // ensures filling
-                modifier = Modifier.fillMaxSize()
-            )
-        }
-    }
+    val drawable = getAppIcon(packageName)
+    if (drawable != null) {
+        val painter = rememberDrawablePainter(drawable) // make sure you import this or implement it
+        Box(
+            modifier = Modifier
+                .size(size)
+                .clip(CircleShape)
+                .background(Color.Red) // optional background
+                .align(Alignment.CenterVertically)
+        ) {
+            Image(
+                painter = painter,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
 }
+
 
 
 
