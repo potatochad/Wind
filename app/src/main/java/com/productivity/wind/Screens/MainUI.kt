@@ -108,7 +108,6 @@ fun Main() {
                             
                             Ring(
                                 color = ringColor,
-                                strokeWidth = 3.dp,
                                 progress = progress,
                             ) {
                                 Text("App")
