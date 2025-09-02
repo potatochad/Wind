@@ -70,8 +70,16 @@ fun Main() {
                         LazzyRow {
                             UI.move(10)
 
-                            UI.ProgressIcon(icon, progress)
-                                
+                            LazyInfo(
+                                items = items = listOf(
+                                    Info("Add photos", Icons.Default.Photo),
+                                    Info("Take photo", Icons.Default.CameraAlt),
+                                ),
+                            ) {
+                                UI.ProgressIcon(icon, progress) 
+                            }
+
+                            
                             UI.move(10)
                             // Priority star
                             Text(
