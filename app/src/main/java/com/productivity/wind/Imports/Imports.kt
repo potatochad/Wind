@@ -349,7 +349,7 @@ object UI {
 
 	@Composable
 	fun ProgressIcon(
-		icon: Any,              // whatever LazyImage accepts (Drawable, URL, etc.)
+		icon: Drawable?,              // whatever LazyImage accepts (Drawable, URL, etc.)
 		progress: Float,
 	) {
 		val ringColor = UI.ProgressColor(progress)
