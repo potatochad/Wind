@@ -108,12 +108,12 @@ data class Info(
 fun LazyInfo(
     expanded: Boolean,
     items: List<Info>,
-    onDismiss: () -> Unit,
-    onItemClick: (Info) -> Unit,
+    onDismiss: (() -> Unit)? = null,          // nullable
+    onItemClick: ((Info) -> Unit)? = null     // nullable
 ) {
     DropdownMenu(
         expanded = expanded,
-        onDismissRequest = onDismiss,
+        onDismissRequest = { onDismiss?.invoke() }, // safely call if not null
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp))
             .padding(4.dp)
@@ -122,11 +122,12 @@ fun LazyInfo(
             DropdownMenuItem(
                 text = { Text(item.label) },
                 leadingIcon = { item.icon?.let { Icon(it, contentDescription = null) } },
-                onClick = { onItemClick(item) }
+                onClick = { onItemClick?.invoke(item) } // safely call if not null
             )
         }
     }
 }
+
 
 
 @Composable
