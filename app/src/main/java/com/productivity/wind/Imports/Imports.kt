@@ -338,6 +338,53 @@ object UI {
 	}
 
 
+
+
+	@Composable
+	fun Ring(
+		color: Color,
+		strokeWidth: Int = 3,
+		progress: Float = 1f,
+		ContentPadding: Int = 1,
+		strokeCap: StrokeCap = StrokeCap.Butt,
+		content: @Composable BoxScope.() -> Unit
+	) {
+		Box(
+			contentAlignment = Alignment.Center,
+		) {
+			Canvas(modifier = Modifier.matchParentSize()) {
+				val stroke = Stroke(width = strokeWidth.dp.toPx(), cap = strokeCap)
+				val radius = size.minDimension / 2
+				val topLeft = Offset(center.x - radius, center.y - radius)
+
+				drawCircle(             
+					color = Color.Black.copy(alpha = 0.1f), // faint dark circle
+					radius = radius,                         // radius of the circle
+				)
+				drawArc(
+					color = color,
+					startAngle = -90f,
+					sweepAngle = 360f * progress.coerceIn(0f, 1f),
+					useCenter = false,
+					topLeft = topLeft,
+					size = Size(radius * 2, radius * 2),
+					style = stroke,
+				)
+			}
+			Box(modifier = Modifier.padding((strokeWidth+ContentPadding).dp)) {
+				content()
+			}
+		}
+	}
+	fun ProgressColor(progress: Float): Color {
+		return when {
+			progress < 0.33f -> Color.Red
+			progress < 0.66f -> Color.Yellow
+			else -> Color.Green
+		}
+	}
+
+
     @Composable
     fun move(s: Int = 0, w: Int = 0, h: Int = 0) {
         Spacer(
