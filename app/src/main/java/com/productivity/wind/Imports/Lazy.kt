@@ -106,11 +106,16 @@ data class Info(
 
 @Composable
 fun LazyInfo(
-    expanded: Boolean,
     items: List<Info>,
     onDismiss: (() -> Unit)? = null,          // nullable
-    onItemClick: ((Info) -> Unit)? = null     // nullable
+    onItemClick: ((Info) -> Unit)? = null,  // nullable
+	content: @Composable () -> Unit,
 ) {
+	var expanded by r { m(false) }
+
+	Box(modifier = Modifier.clickable { expanded = true }) {
+            content() // your content stays exactly the same
+	}
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = { onDismiss?.invoke() }, // safely call if not null
