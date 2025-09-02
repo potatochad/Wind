@@ -51,7 +51,6 @@ fun Ring(
     content: @Composable BoxScope.() -> Unit
 ) {
     Box(
-        modifier = Modifier.size(120.dp),
         contentAlignment = Alignment.Center
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
