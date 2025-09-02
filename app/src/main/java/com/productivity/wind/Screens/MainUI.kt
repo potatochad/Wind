@@ -70,36 +70,8 @@ fun Main() {
                         LazzyRow {
                             UI.move(10)
 
-                            // Icon with circular progress ring
-                            val ringColor = UI.ProgressColor(progress)
-                            
-                            UI.Ring(
-                                color = ringColor,
-                                progress = progress,
-                                ContentPadding= -3,
-                            ) {
-                                Box(
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    LazyImage(icon) // your image
-
-                                    // Overlay circle on top
-                                    Canvas(modifier = Modifier
-                                            .matchParentSize()
-                                            .padding(4.dp)
-                                    ) {
-                                        drawArc(
-                                            color = Color(0xFF171717),//10%darker
-                                            startAngle = 0f,                         // where the arc starts
-                                            sweepAngle = 360f,                        // full circle
-                                            useCenter = false,                        // don’t draw lines to the center
-                                            style = Stroke(width = 2.dp.toPx())       // stroke width, convert dp to pixels
-                                        )
-                                    }
-
-                                }
-
-                            }
+                            ProgressIcon(icon, progress)
+                                
                             UI.move(10)
                             // Priority star
                             Text(
