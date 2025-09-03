@@ -66,13 +66,13 @@ fun Web() {
 
 // Extension function to inject YouTube filter into a GeckoSession
 fun GeckoSession.setYouTubeFilter() {
-    // Runs on initial page load
-    setContentDelegate(object : GeckoSession.ContentDelegate() {
+    // Use ProgressDelegate instead of ContentDelegate
+    progressDelegate = object : GeckoSession.ProgressDelegate() {
         override fun onPageStop(session: GeckoSession, uri: String) {
-            super.onPageStop(session, uri)
+            // Inject JS when page load finishes
             injectYouTubeJS()
         }
-    })
+    }
 }
 
 // Inject JS that removes YouTube content and dynamically handles new elements
