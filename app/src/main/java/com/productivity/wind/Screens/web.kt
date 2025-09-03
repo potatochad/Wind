@@ -27,13 +27,15 @@ fun Web() {
     val geckoRuntime = r { GeckoRuntime.create(ctx) }
 
     // Create and configure Gecko session
-    val geckoSession = r {
+    val geckoSession = remember {
         GeckoSession().apply {
             open(geckoRuntime)
-            loadUri(youtube.com) // initial load
+            loadUri("https://youtube.com")
 
-            // Set up YouTube filter
-            setYouTubeFilter()
+
+            navigationDelegate = onlyAllowDomains(
+                listOf("youtube.com")
+            )
         }
     }
 
@@ -42,7 +44,9 @@ fun Web() {
     }
 
     LazyScreen(
-        title = { }
+        title = { LazyRow{
+            UI.Ctext("testing"){}
+        }}
     ) {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
@@ -53,4 +57,23 @@ fun Web() {
     }
 }
 
-// Extension function to inject YouTube filter into a GeckoSession
+
+
+fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDelegate {
+    return object : GeckoSession.NavigationDelegate {
+        override fun onLoadRequest(
+            session: GeckoSession,
+            request: GeckoSession.NavigationDelegate.LoadRequest
+        ): GeckoResult<GeckoSession.NavigationDelegate.LoadRequest> {
+            val url = request.uri ?: ""
+            val isAllowed = allowedDomains.any { domain -> url.contains(domain) }
+
+            return if (isAllowed) {
+                GeckoResult.fromValue(request) // ✅ allow
+            } else {
+                GeckoResult.fromValue(null)    // ❌ block
+            }
+        }
+    }
+}
+
