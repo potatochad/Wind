@@ -103,13 +103,14 @@ object Item {
     @Composable
     fun AppUsageChecker(){
         each(500L) {
-            apps.forEach{ app ->
-                if (app.NowTime > app.DoneTime-1 && app.Done=false){
+            apps.forEach { app ->
+                if (app.NowTime > app.DoneTime - 1 && !app.Done) {
                     Bar.funTime += app.Worth
-                    app.Done=true
+                    app.Done = true
                 }
             }
         }
+
     }
     
 }
