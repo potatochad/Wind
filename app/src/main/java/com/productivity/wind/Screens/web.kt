@@ -17,7 +17,7 @@ import com.productivity.wind.Imports.*
 import org.mozilla.geckoview.*
 import android.content.*
 import androidx.compose.ui.platform.*
-
+import androidx.compose.foundation.lazy.*
 
 @Composable
 fun Web() {
