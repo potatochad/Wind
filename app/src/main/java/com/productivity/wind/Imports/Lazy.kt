@@ -112,11 +112,10 @@ fun LazyInfo(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box {
-        Box(modifier = Modifier.clickable { expanded = true }) {
-            content()
-        }
-
+    Box(modifier = Modifier.clickable { expanded = true }) {
+        content()
+    }
+	Box(modifier = Modifier.size(20.dp)) {
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { 
@@ -136,10 +135,10 @@ fun LazyInfo(
                         item.onClick?.invoke()
                     },
                     contentPadding = PaddingValues(
-                        start = 8.dp,
-                        top = 4.dp,
-                        end = 8.dp,
-                        bottom = 4.dp
+                        start = 0.dp,
+                        top = 0.dp,
+                        end = 0.dp,
+                        bottom = 0.dp
                     )
                 )
             }
