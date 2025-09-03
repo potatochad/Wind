@@ -70,7 +70,7 @@ fun Main() {
                         LazzyRow {
                             UI.move(10)
 
-                            LazyInfo(listOf(Info("${app.NowTime}\${app.DoneTime}"))) {
+                            LazyInfo(listOf(Info("${app.NowTime}/${app.DoneTime}"))) {
                                 UI.ProgressIcon(icon, progress) 
                             }
 
