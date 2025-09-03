@@ -169,6 +169,13 @@ object Header {
 
 object Icon {
         @Composable
+        fun Diamond() {
+                LazyIcon(
+                        onClick = {},
+                        icon = Icons.Default.Diamond
+                )
+        }
+        @Composable
         fun Menu() {
                 LazyIcon(
                         onClick = { Bar.ShowMenu = true },
