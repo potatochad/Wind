@@ -220,15 +220,18 @@ fun <T> LazzyList(
     loadAll: Boolean = false,
     style: LazzyListStyle = LazzyListStyle(),
     key: ((T) -> Any)? = null,
+    modifier: Modifier = Modifier,
     itemContent: @Composable (T) -> Unit,
 ) {
     val loader = rememberLazyLoaderState(items, style, loadAll)
 
-    Column(
-        modifier = Modifier
-            .height(style.height)
-            .verticalScroll(loader.scrollState)
-    ) {
+    // Apply style.height only if caller did not override height manually
+    val finalModifier = modifier
+        .then(Modifier.height(style.height)) // default height
+        .fillMaxWidth()                     // always fill width
+        .verticalScroll(loader.scrollState)
+
+    Column(modifier = finalModifier) {
         loader.appearedItems.forEach { item ->
             if (key != null) {
                 androidx.compose.runtime.key(key(item)) {
