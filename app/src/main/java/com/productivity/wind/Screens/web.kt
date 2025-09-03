@@ -31,6 +31,8 @@ fun UrlConverter(input: String): String {
 @Composable
 fun Web() {
     var url = r { m("google.com") }
+    val fullUrl = UrlConverter(url.value)
+
     val ctx = LocalContext.current
 
     val geckoRuntime = r { GeckoRuntime.create(ctx) }
@@ -38,7 +40,7 @@ fun Web() {
     val geckoSession = r {
         GeckoSession().apply {
             open(geckoRuntime)
-            loadUri(url.value) // load once initially
+            loadUri(fullUrl) // load once initially
         }
     }
 
