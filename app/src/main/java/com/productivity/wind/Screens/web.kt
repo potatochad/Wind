@@ -68,17 +68,17 @@ fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDeleg
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<GeckoSession.NavigationDelegate.LoadRequest>? {
+        ): GeckoResult<GeckoSession.NavigationDelegate.LoadRequest> {
             val url = request.uri ?: ""
 
-            val isAllowed = allowedDomains.any { domain -> url.contains(domain) }
-
-            return if (isAllowed) {
-                // ✅ Allow loading
+            return if (allowedDomains.any { domain -> url.contains(domain) }) {
+                // ✅ Allow
                 GeckoResult.fromValue(request)
             } else {
-                // ❌ Block loading
-                null // returning null denies the navigation
+                // ❌ Block
+                GeckoResult.fromException(
+                    IllegalStateException("Blocked by onlyAllowDomains")
+                )
             }
         }
     }
