@@ -102,7 +102,7 @@ object Item {
     }
     @Composable
     fun AppUsageChecker(){
-        every(500L) {
+        each(500L) {
             apps.forEach{ app ->
                 if (app.NowTime > app.DoneTime-1 && !app.Done){
                     Bar.funTime += app.Worth
