@@ -271,9 +271,6 @@ fun AskUsagePermission(show: MutableState<Boolean>) {
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
                 App.ctx.startActivity(intent)
-
-                // Start universal bring-back check
-                UI.bringUserBackWhen { UI.isUsageP_Enabled() }
             }
         )
     }
