@@ -70,15 +70,15 @@ fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDeleg
             request: GeckoSession.NavigationDelegate.LoadRequest
         ): GeckoResult<GeckoSession.NavigationDelegate.LoadRequest>? {
             val url = request.uri ?: ""
+
             val isAllowed = allowedDomains.any { domain -> url.contains(domain) }
 
             return if (isAllowed) {
-                // ✅ Allow
+                // ✅ Allow loading
                 GeckoResult.fromValue(request)
             } else {
-                // ❌ Block by canceling
-                request.cancel() // cancels navigation
-                GeckoResult.fromValue(request) // still must return a GeckoResult
+                // ❌ Block loading
+                null // returning null denies the navigation
             }
         }
     }
