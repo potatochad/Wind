@@ -66,9 +66,11 @@ fun Web() {
 
 // Extension function to inject YouTube filter into a GeckoSession
 fun GeckoSession.setYouTubeFilter() {
-    contentDelegate = object : GeckoSession.ContentDelegate() {
-        override fun onLoadComplete(session: GeckoSession, uri: String) {
-            injectYouTubeJS()
+    progressDelegate = object : GeckoSession.ProgressDelegate {
+        override fun onProgressChange(session: GeckoSession, progress: Int) {
+            if (progress == 100) {
+                injectYouTubeJS()
+            }
         }
     }
 }
