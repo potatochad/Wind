@@ -168,12 +168,13 @@ data class LazzyListStyle(
     var height: Dp = 200.dp,
     var delayMs: Long = 40L,
     var chunkSize: Int = 1,
-    var IntFirst: Int = 0
+    var IntFirst: Int = 0,
+	var wrapContent: Boolean = false,
 )
 
 data class LazyLoaderState<T>(
     val scrollState: ScrollState,
-    val appearedItems: SnapshotStateList<T>
+    val appearedItems: SnapshotStateList<T>,
 )
 
 @Composable
@@ -227,13 +228,12 @@ fun <T> LazzyList(
 
     // Apply style.height only if caller did not override height manually
     val finalModifier = modifier
-        .then(
-            if (style.height != Dp.Unspecified) Modifier.height(style.height)
-            else Modifier // wrap content
-        )
-        .fillMaxWidth()
-        .verticalScroll(loader.scrollState)
-		
+		.then(
+			if (style.wrapContent) Modifier else Modifier.height(style.height)
+		)
+		.fillMaxWidth()
+		.verticalScroll(loader.scrollState)
+
     Column(modifier = finalModifier) {
         loader.appearedItems.forEach { item ->
             if (key != null) {
