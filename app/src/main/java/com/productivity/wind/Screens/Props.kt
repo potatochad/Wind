@@ -100,6 +100,7 @@ object Item {
             }
         )
     }
+    @Composable
     fun AppUsageChecker(){
         every(500L) {
             apps.forEach{ app ->
