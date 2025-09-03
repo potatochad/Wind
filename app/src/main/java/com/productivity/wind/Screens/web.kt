@@ -18,20 +18,9 @@ import org.mozilla.geckoview.*
 import android.content.*
 import androidx.compose.ui.platform.*
 
-@Composable
-fun UrlConverter(input: String): String {
-    return remember(input) {
-        if (input.startsWith("http://") || input.startsWith("https://")) {
-            input
-        } else {
-            "https://$input"
-        }
-    }
-}
+
 @Composable
 fun Web() {
-    var url = r { m("google.com") }
-    val fullUrl = UrlConverter(url.value)
     val ctx = LocalContext.current
 
     // Create Gecko runtime
@@ -41,7 +30,7 @@ fun Web() {
     val geckoSession = r {
         GeckoSession().apply {
             open(geckoRuntime)
-            loadUri(fullUrl) // initial load
+            loadUri(youtube.com) // initial load
 
             // Set up YouTube filter
             setYouTubeFilter()
@@ -53,7 +42,7 @@ fun Web() {
     }
 
     LazyScreen(
-        title = { UI.Cinput(what = url, WidthMax = 150) }
+        title = { }
     ) {
         AndroidView(
             modifier = Modifier.fillMaxWidth(),
