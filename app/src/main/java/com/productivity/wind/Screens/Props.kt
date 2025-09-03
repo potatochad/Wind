@@ -104,9 +104,9 @@ object Item {
     fun AppUsageChecker(){
         each(500L) {
             apps.forEach { app ->
-                if (app.NowTime > app.DoneTime - 1 && !app.Done) {
+                if (app.NowTime > app.DoneTime - 1 && !app.done) {
                     Bar.funTime += app.Worth
-                    app.Done = true
+                    app.done = true
                 }
             }
         }
