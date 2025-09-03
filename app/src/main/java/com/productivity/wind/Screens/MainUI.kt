@@ -60,13 +60,17 @@ fun Main() {
             
         
                 LazzyList(
-                    apps.filter { it.Worth > 0 },
+                    apps.filter { it.Worth > 0 && app.done = false},
                     key = { it.id },
                     style = LazzyListStyle(wrapContent =false),
                 ) { app ->
                     val icon = getAppIcon(app.pkg)
                     val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
-
+                    
+                    if (app.NowTime > app.DoneTime - 1 && !app.done) {
+                        Bar.funTime += app.Worth
+                        app.done = true
+                    }
                     
                     LazyCard {
                         LazzyRow {
