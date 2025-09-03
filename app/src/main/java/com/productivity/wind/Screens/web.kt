@@ -46,7 +46,9 @@ fun Web() {
     LazyScreen(
         title = { 
             LazyRow{
-                UI.Ctext("testing"){}
+                item {
+                    UI.Ctext("testing"){}
+                }
             }
         }
     ) {
