@@ -269,9 +269,32 @@ fun AskUsagePermission(show: MutableState<Boolean>) {
             message = "To function correctly, this app requires access to your app usage data. Granting this permission allows the app to monitor usage statistics and manage app-related tasks efficiently. Without it, this feature won't work.",
             onConfirm = {
                 // Open Usage Access Settings
+                // Open Usage Access Settings
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
                 App.ctx.startActivity(intent)
+
+                // Start checking permission
+                fun waitForUsagePermission() {
+                    val handler = Handler(Looper.getMainLooper())
+                    handler.postDelayed(object : Runnable {
+                        override fun run() {
+                            if (UI.isUsageP_Enabled()) {
+                                // Permission granted, return to your app
+                                val backIntent = Intent(App.ctx, MainActivity::class.java)
+                                backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                App.ctx.startActivity(backIntent)
+                            } else {
+                                // Check again in 1 second
+                                handler.postDelayed(this, 1000)
+                            }
+                        }
+                    }, 1000)
+                }
+
+// Call it
+waitForUsagePermission()
+
             }
         )
     }
