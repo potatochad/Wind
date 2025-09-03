@@ -28,9 +28,40 @@ fun UrlConverter(input: String): String {
         }
     }
 }
-
 @Composable
 fun Web() {
+    var url = r { m("google.com") }
+    val ctx = LocalContext.current
+
+    val geckoRuntime = r { GeckoRuntime.create(ctx) }
+
+    val geckoSession = r {
+        GeckoSession().apply {
+            open(geckoRuntime)
+            loadUri(url.value) // load once initially
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { geckoSession.close() }
+    }
+
+    LazyScreen(
+        title = {
+            UI.Cinput(what=url, WidthMax=150)
+        }
+    ) {
+        AndroidView(
+            modifier = Modifier.fillMaxWidth(),
+            factory = { ctx ->
+                GeckoView(ctx).apply { setSession(geckoSession) }
+            }
+        )
+    }
+}
+
+@Composable
+fun Web2() {
     var url = r { m("google.com") }
     // Create Gecko runtime once
     val fullUrl = UrlConverter(url.value)
