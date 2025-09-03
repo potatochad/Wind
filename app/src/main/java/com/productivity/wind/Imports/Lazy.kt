@@ -227,10 +227,13 @@ fun <T> LazzyList(
 
     // Apply style.height only if caller did not override height manually
     val finalModifier = modifier
-        .then(Modifier.height(style.height)) // default height
-        .fillMaxWidth()                     // always fill width
+        .then(
+            if (style.height != Dp.Unspecified) Modifier.height(style.height)
+            else Modifier // wrap content
+        )
+        .fillMaxWidth()
         .verticalScroll(loader.scrollState)
-
+		
     Column(modifier = finalModifier) {
         loader.appearedItems.forEach { item ->
             if (key != null) {
