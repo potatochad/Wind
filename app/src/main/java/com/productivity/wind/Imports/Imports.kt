@@ -887,6 +887,28 @@ object UI {
             App.ctx.packageName,
         ) == AppOpsManager.MODE_ALLOWED
     }
+	fun bringUserBackWhen(permissionCheck: () -> Boolean) {
+		val handler = Handler(Looper.getMainLooper())
+
+		val runnable = object : Runnable {
+			override fun run() {
+				if (permissionCheck()) {
+					// Permission (or condition) granted, return to app
+					val backIntent = Intent(App.ctx, MainActivity::class.java)
+					backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+					App.ctx.startActivity(backIntent)
+					// STOP checking forever
+					handler.removeCallbacks(this)
+				} else {
+					// Not yet granted, check again in 1 second
+					handler.postDelayed(this, 1000)
+				}
+			}
+		}
+
+		// Start the loop
+		handler.postDelayed(runnable, 1000)
+	}
 
 
 //endregion SETTING STUFF
