@@ -61,7 +61,7 @@ fun Main() {
                 LazzyList(
                     apps.filter { it.Worth > 0 },
                     key = { it.id },
-                    style = LazzyListStyle(height = Dp.Unspecified),
+                    style = LazzyListStyle(wrapContent =false),
                 ) { app ->
                     val icon = getAppIcon(app.pkg)
                     val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
@@ -78,12 +78,7 @@ fun Main() {
                             
                             UI.move(10)
                             // Priority star
-                            Text(
-                                "★",
-                                fontSize = 12.sp,
-                                color = if (app.Worth > 10) Color.Yellow else Color.Gray,
-                                modifier = Modifier.padding(start = 8.dp, top = 4.dp)
-                            )
+                            
                             
                         }
                     }
