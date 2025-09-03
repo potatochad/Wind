@@ -68,7 +68,7 @@ fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDeleg
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<*>? { // <- Use wildcard to satisfy the stub
+        ): GeckoResult<Any>? { // <- Use Any instead of AllowOrDeny
             val url = request.uri ?: ""
 
             return if (allowedDomains.any { url.contains(it) }) {
