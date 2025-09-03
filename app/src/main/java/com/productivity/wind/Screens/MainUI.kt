@@ -77,7 +77,8 @@ fun Main() {
 
                             
                             UI.move(10)
-                            // Priority star
+                            Text("${app.Worth} points")
+                            
                             
                             
                         }
