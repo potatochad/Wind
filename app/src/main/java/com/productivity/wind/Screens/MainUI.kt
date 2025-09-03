@@ -61,7 +61,7 @@ fun Main() {
                 LazzyList(
                     apps.filter { it.Worth > 0 },
                     key = { it.id },
-                    modifier = Modifier.fillMaxHeight(),
+                    style = LazzyListStyle(height = Dp.Unspecified),
                 ) { app ->
                     val icon = getAppIcon(app.pkg)
                     val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
