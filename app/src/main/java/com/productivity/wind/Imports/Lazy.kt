@@ -107,35 +107,42 @@ data class Info(
 @Composable
 fun LazyInfo(
     items: List<Info>,
-    onDismiss: (() -> Unit)? = null, // optional
+    onDismiss: (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.clickable { expanded = true }) {
-        content() // original content stays the same
-    }
+    Box {
+        Box(modifier = Modifier.clickable { expanded = true }) {
+            content()
+        }
 
-    DropdownMenu(
-        expanded = expanded,
-        onDismissRequest = { 
-            expanded = false
-            onDismiss?.invoke() 
-        },
-        modifier = Modifier
-            .wrapContentWidth() // ensures menu only wraps content
-            .background(MaterialTheme.colorScheme.surface)
-    ) {
-        items.forEach { item ->
-            DropdownMenuItem(
-                modifier = Modifier.padding(-10.dp), // padding around each item
-                text = { Text(item.label) },
-                leadingIcon = { item.icon?.let { Icon(it, contentDescription = null) } },
-                onClick = { 
-                    expanded = false
-                    item.onClick?.invoke()
-                }
-            )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { 
+                expanded = false
+                onDismiss?.invoke() 
+            },
+            modifier = Modifier
+                .wrapContentWidth()
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
+            items.forEach { item ->
+                DropdownMenuItem(
+                    text = { Text(item.label) },
+                    leadingIcon = { item.icon?.let { Icon(it, contentDescription = null) } },
+                    onClick = { 
+                        expanded = false
+                        item.onClick?.invoke()
+                    },
+                    contentPadding = PaddingValues(
+                        start = 8.dp,
+                        top = 4.dp,
+                        end = 8.dp,
+                        bottom = 4.dp
+                    )
+                )
+            }
         }
     }
 }
