@@ -60,7 +60,7 @@ fun Main() {
             
         
                 LazzyList(
-                    apps.filter { it.Worth > 0 && app.done = false},
+                    apps.filter { it.Worth > 0 && it.done = false},
                     key = { it.id },
                     style = LazzyListStyle(wrapContent =false),
                 ) { app ->
