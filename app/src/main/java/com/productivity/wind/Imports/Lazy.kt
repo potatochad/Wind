@@ -124,11 +124,11 @@ fun LazyInfo(
         },
         modifier = Modifier
             .wrapContentWidth() // ensures menu only wraps content
-            .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp))
+            .background(MaterialTheme.colorScheme.surface)
     ) {
         items.forEach { item ->
             DropdownMenuItem(
-                modifier = Modifier.padding(4.dp), // padding around each item
+                modifier = Modifier.padding(-10.dp), // padding around each item
                 text = { Text(item.label) },
                 leadingIcon = { item.icon?.let { Icon(it, contentDescription = null) } },
                 onClick = { 
