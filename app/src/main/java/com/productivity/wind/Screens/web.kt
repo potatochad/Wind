@@ -44,9 +44,11 @@ fun Web() {
     }
 
     LazyScreen(
-        title = { LazyRow{
-            UI.Ctext("testing"){}
-        }}
+        title = { 
+            LazyRow{
+                UI.Ctext("testing"){}
+            }
+        }
     ) {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
