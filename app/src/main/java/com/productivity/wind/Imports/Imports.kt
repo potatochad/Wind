@@ -190,6 +190,16 @@ fun each(time: Long = 10_000L, action: () -> Unit) {
         }
     }
 }
+@Composable
+fun UrlConverter(input: String): String {
+    return remember(input) {
+        if (input.startsWith("http://") || input.startsWith("https://")) {
+            input
+        } else {
+            "https://$input"
+        }
+    }
+}
 
 
 //endregion NO LAG COMPOSE
