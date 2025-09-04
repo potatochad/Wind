@@ -24,45 +24,40 @@ import org.mozilla.geckoview.AllowOrDeny
 fun Web() {
     val ctx = LocalContext.current
 
-    // Create Gecko runtime
-    val geckoRuntime = r { GeckoRuntime.create(ctx) }
-
-    // Create and configure Gecko session
-    val geckoSession = remember {
-        GeckoSession().apply {
-            open(geckoRuntime)
-            loadUri("https://youtube.com")
-
-
-            navigationDelegate = onlyAllowDomains(
-                listOf("youtube.com")
-            )
-        }
-    }
+    // ✅ Keep runtime & session across recompositions
+    val geckoRuntime = remember { GeckoRuntime.create(ctx) }
+    val geckoSession = remember { GeckoSession() }
 
     DisposableEffect(Unit) {
+        geckoSession.open(geckoRuntime)
+        geckoSession.navigationDelegate = onlyAllowDomains(listOf("youtube.com"))
+        geckoSession.loadUri("https://youtube.com")
+
         onDispose { geckoSession.close() }
     }
 
     LazyScreen(
         title = { 
-            LazyRow{
+            LazyRow {
                 item {
-                    UI.Ctext("URLS (click)"){}
+                    UI.Ctext("URLS (click)") { }
                 }
             }
         }
     ) {
+        // ✅ Give GeckoView real size
         AndroidView(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),   // instead of just fillMaxSize()
             factory = { ctx ->
-                GeckoView(ctx).apply { setSession(geckoSession) }
+                GeckoView(ctx).apply { 
+                    setSession(geckoSession) 
+                }
             }
         )
     }
 }
-
-
 
 fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDelegate {
     return object : GeckoSession.NavigationDelegate {
