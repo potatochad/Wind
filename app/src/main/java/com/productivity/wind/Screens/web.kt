@@ -20,8 +20,37 @@ import androidx.compose.ui.platform.*
 import androidx.compose.foundation.lazy.*
 import org.mozilla.geckoview.AllowOrDeny
 
+
 @Composable
 fun Web() {
+    val ctx = LocalContext.current
+
+    // Keep runtime & session across recompositions
+    val geckoRuntime = remember { GeckoRuntime.create(ctx) }
+    val geckoSession = remember { GeckoSession() }
+
+    DisposableEffect(Unit) {
+        geckoSession.open(geckoRuntime)
+        geckoSession.loadUri("https://youtube.com")
+
+        onDispose { geckoSession.close() }
+    }
+
+    AndroidView(
+        modifier = Modifier.fillMaxSize(),
+        factory = { context ->
+            GeckoView(context).apply {
+                setSession(geckoSession)
+            }
+        }
+    )
+}
+
+
+
+
+@Composable
+fun Web2() {
     val ctx = LocalContext.current
 
     // ✅ Keep runtime & session across recompositions
