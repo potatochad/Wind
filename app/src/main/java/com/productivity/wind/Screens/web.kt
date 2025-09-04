@@ -28,22 +28,31 @@ fun Web() {
     // Keep runtime & session across recompositions
     val geckoRuntime = remember { GeckoRuntime.create(ctx) }
     val geckoSession = remember { GeckoSession() }
-
-    DisposableEffect(Unit) {
-        geckoSession.open(geckoRuntime)
-        geckoSession.loadUri("https://youtube.com")
-
-        onDispose { geckoSession.close() }
-    }
-
-    AndroidView(
-        modifier = Modifier.fillMaxSize(),
-        factory = { context ->
-            GeckoView(context).apply {
-                setSession(geckoSession)
+    LazyScreen(
+        title = { 
+            LazyRow {
+                item {
+                    UI.Ctext("URLS (click)") { }
+                }
             }
         }
-    )
+    ) {
+        DisposableEffect(Unit) {
+            geckoSession.open(geckoRuntime)
+            geckoSession.loadUri("https://youtube.com")
+
+            onDispose { geckoSession.close() }
+        }
+
+        AndroidView(
+            modifier = Modifier.fillMaxSize(),
+            factory = { context ->
+                GeckoView(context).apply {
+                    setSession(geckoSession)
+                }
+            }
+        )
+    }
 }
 
 
