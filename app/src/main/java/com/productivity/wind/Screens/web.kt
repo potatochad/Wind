@@ -25,27 +25,27 @@ import org.mozilla.geckoview.AllowOrDeny
 fun Web() {
     val ctx = LocalContext.current
 
-    // Keep runtime & session across recompositions
     val geckoRuntime = remember { GeckoRuntime.create(ctx) }
     val geckoSession = remember { GeckoSession() }
+
+    // Open session once
+    LaunchedEffect(Unit) {
+        geckoSession.open(geckoRuntime)
+        geckoSession.loadUri("https://youtube.com")
+    }
+
     LazyScreen(
-        title = { 
+        title = {
             LazyRow {
-                item {
-                    UI.Ctext("URLS (click)") { }
-                }
+                item { UI.Ctext("URLS (click)") {} }
             }
         }
     ) {
-        DisposableEffect(Unit) {
-            geckoSession.open(geckoRuntime)
-            geckoSession.loadUri("https://youtube.com")
-
-            onDispose { geckoSession.close() }
-        }
-
+        // Give the WebView a fixed height
         AndroidView(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(600.dp), // fixed height inside lazy container
             factory = { context ->
                 GeckoView(context).apply {
                     setSession(geckoSession)
