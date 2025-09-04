@@ -18,6 +18,7 @@ import org.mozilla.geckoview.*
 import android.content.*
 import androidx.compose.ui.platform.*
 import androidx.compose.foundation.lazy.*
+import org.mozilla.geckoview.AllowOrDeny
 
 @Composable
 fun Web() {
@@ -68,21 +69,15 @@ fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDeleg
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<GeckoSession.NavigationDelegate.AllowOrDeny>? {
-            val url = request.uri ?: return GeckoResult.fromValue(
-                GeckoSession.NavigationDelegate.AllowOrDeny.DENY
-            )
+        ): GeckoResult<AllowOrDeny>? {   // ✅ FIXED
+            val url = request.uri ?: return GeckoResult.fromValue(AllowOrDeny.DENY)
 
             val isAllowed = allowedDomains.any { domain ->
                 url.contains(domain, ignoreCase = true)
             }
 
             return GeckoResult.fromValue(
-                if (isAllowed) {
-                    GeckoSession.NavigationDelegate.AllowOrDeny.ALLOW
-                } else {
-                    GeckoSession.NavigationDelegate.AllowOrDeny.DENY
-                }
+                if (isAllowed) AllowOrDeny.ALLOW else AllowOrDeny.DENY
             )
         }
     }
