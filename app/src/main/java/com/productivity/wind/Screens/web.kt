@@ -48,7 +48,7 @@ fun Web() {
         title = { 
             LazyRow{
                 item {
-                    UI.Ctext("testing"){}
+                    UI.Ctext("URLS (click)"){}
                 }
             }
         }
