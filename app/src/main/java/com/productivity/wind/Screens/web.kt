@@ -22,6 +22,12 @@ import org.mozilla.geckoview.AllowOrDeny
 
 typealias ManageTab = GeckoSession.NavigationDelegate
 typealias Tab = GeckoSession
+var Tab.ManageTab: ManageTab?
+    get() = this.navigationDelegate
+    set(value) {
+        this.navigationDelegate = value
+    }
+
 
 
 @Composable
@@ -51,7 +57,7 @@ fun Web() {
     ) {
         AndroidView(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
             factory = { ctx ->
                 GeckoView(ctx).apply { 
                     setSession(Tab) 
