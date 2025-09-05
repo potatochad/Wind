@@ -681,15 +681,12 @@ fun LazyHeader(
 				}
 				
             }
-
-            // Search icon
-            if (showSearch) {
-                LazyIcon(
-					onClick = onSearchClick,
-					icon = Icons.Default.Search,
-                    )
-                }
-            }
+		// Search icon
+        if (showSearch) {
+            LazyIcon(
+				onClick = onSearchClick,
+				icon = Icons.Default.Search,
+            )
         }
 
         if (showDivider) {
