@@ -590,7 +590,10 @@ fun LazyHeader(
     showBack: Bool = true,
     showSearch: Bool = false,
     modifier: Modifier = Modifier,
+	
     showDivider: Bool = true,
+	NoDividerPadding: Bool = false,
+	
 	Mheight: Int = 100,
 ) {
     val ui = rememberSystemUiController()
@@ -662,8 +665,11 @@ fun LazyHeader(
 
 		if (showDivider){
 			LazyLine(color = Color.Gray)		
-			UI.move(10)
+			if (NoDividerPadding){
+				UI.move(10)
+			}
 		}
+			
 	
     }
 }
