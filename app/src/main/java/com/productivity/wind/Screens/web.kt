@@ -83,7 +83,8 @@ fun Web() {
                 }
             }
         },
-        Scrollable = false
+        Scrollable = false,
+        DividerPadding = false,
     ) {
         // ✅ Give GeckoView real size
         AndroidView(
