@@ -34,25 +34,23 @@ var Tab.ManageTab: ManageTab?
 
 
 fun Tab.HideYoutubeRecommendations() {
-    this.ManageTab = object : ManageTab {
+fun GeckoSession.HideYoutubeRecommendations() {
+    this.navigationDelegate = object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
             session: GeckoSession,
-            request: GeckoSession.LoadRequest,
-            callback: GeckoSession.LoadRequestCallback
-        ) {
-            callback.proceed() // allow page load
-
-            this@HideYoutubeRecommendations.loadUri(
-                "javascript:(function(){" +
-                        "setInterval(function(){" +
-                        "var r=document.getElementById('related');" +
-                        "if(r){r.style.display='none';}" +
-                        "}, 1000);" +
-                        "})()"
-            )
+            request: GeckoSession.NavigationDelegate.LoadRequest
+        ): GeckoResult<AllowOrDeny> {
+            // Example: block YouTube recommendations by URL
+            val url = request.uri.toString()
+            return if (url.contains("www.youtube.com/watch") && url.contains("related")) {
+                GeckoResult.fromValue(AllowOrDeny.DENY) // block
+            } else {
+                GeckoResult.fromValue(AllowOrDeny.ALLOW) // allow everything else
+            }
         }
     }
 }
+
 
 
 
