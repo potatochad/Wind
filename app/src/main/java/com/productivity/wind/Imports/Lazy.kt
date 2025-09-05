@@ -576,7 +576,7 @@ fun LazyItem(
 	}
 }
 @Composable
-fun getStatudBarHeight(): Int {
+fun getStatusBarHeight(): Int {
     val insets = WindowInsets.statusBars.asPaddingValues()
     val density = LocalDensity.current
     return with(density) { insets.calculateTopPadding().toPx().toInt() }
@@ -603,7 +603,7 @@ fun LazyHeader(
     }
 
     Column {
-        UI.move(h=getStatudBarHeight())
+        UI.move(h=getStatusBarHeight()-20)
 
         Row(
             modifier = modifier
