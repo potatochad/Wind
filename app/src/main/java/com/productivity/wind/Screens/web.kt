@@ -33,7 +33,6 @@ var Tab.ManageTab: ManageTab?
 
 
 
-fun Tab.HideYoutubeRecommendations() {
 fun GeckoSession.HideYoutubeRecommendations() {
     this.navigationDelegate = object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
@@ -50,6 +49,25 @@ fun GeckoSession.HideYoutubeRecommendations() {
         }
     }
 }
+fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDelegate {
+    return object : GeckoSession.NavigationDelegate {
+        override fun onLoadRequest(
+            session: GeckoSession,
+            request: GeckoSession.NavigationDelegate.LoadRequest
+        ): GeckoResult<AllowOrDeny> {
+            val url = request.uri.toString() // uri is a Uri object, convert to string
+
+            val isAllowed = allowedDomains.any { domain ->
+                url.contains(domain, ignoreCase = true)
+            }
+
+            return GeckoResult.fromValue(
+                if (isAllowed) AllowOrDeny.ALLOW else AllowOrDeny.DENY
+            )
+        }
+    }
+}
+
 
 
 
@@ -96,22 +114,4 @@ fun Web() {
 
 
 
-//no clue if WORKS????
-fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDelegate {
-    return object : GeckoSession.NavigationDelegate {
-        override fun onLoadRequest(
-            session: GeckoSession,
-            request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<AllowOrDeny> {
-            val url = request.uri.toString() // uri is a Uri object, convert to string
 
-            val isAllowed = allowedDomains.any { domain ->
-                url.contains(domain, ignoreCase = true)
-            }
-
-            return GeckoResult.fromValue(
-                if (isAllowed) AllowOrDeny.ALLOW else AllowOrDeny.DENY
-            )
-        }
-    }
-}
