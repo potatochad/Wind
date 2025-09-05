@@ -20,8 +20,9 @@ import androidx.compose.ui.platform.*
 import androidx.compose.foundation.lazy.*
 import org.mozilla.geckoview.AllowOrDeny
 
-typealias ManageTab = NavigationDelegate
+typealias ManageTab = GeckoSession.NavigationDelegate
 typealias Tab = GeckoSession
+
 
 @Composable
 fun Web() {
@@ -62,7 +63,7 @@ fun Web() {
 
 
 fun Tab.HideYoutubeRecommendations() {
-    this.ManageTab = object : ManageTab {
+    this.NavigationDelegate = object : ManageTab {
         override fun onLoadRequest(
             request: GeckoSession.LoadRequest,
             callback: GeckoSession.LoadRequestCallback
