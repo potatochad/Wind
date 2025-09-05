@@ -31,7 +31,7 @@ fun Web() {
     // Open session once
     LaunchedEffect(Unit) {
         geckoSession.open(geckoRuntime)
-        geckoSession.loadUri("https://youtube.com")
+        geckoSession.loadUri("https://google.com")
     }
 
     LazyScreen(
