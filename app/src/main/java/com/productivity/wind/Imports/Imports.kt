@@ -142,7 +142,8 @@ fun getLogs(): String {
         "❌ Failed to read logs: ${e.message}"
     }
 }
-
+typealias Content = @Composable () -> Unit
+typealias Do = () -> Unit
 
 
 
@@ -159,7 +160,7 @@ fun getLogs(): String {
 * CUT LAG BY 80%, IN LISTS, ETC..
 * BY MAKING SURE NOT EVERYTHING LOADS AT THE SAME TIME*/
 @Composable
-fun NoLagCompose(content: @Composable () -> Unit) {
+fun NoLagCompose(content: Content) {
     LaunchedEffect(Unit) {
         while (true) {
             delay(50) // space out work; LET UI LOAD
@@ -171,7 +172,7 @@ fun NoLagCompose(content: @Composable () -> Unit) {
 @Composable
 fun PreloadBox(
     whenDo: Boolean,
-    what: @Composable () -> Unit
+    what: Content
 ) {
     if (whenDo) {
         Box(
@@ -182,7 +183,7 @@ fun PreloadBox(
     }
 }
 @Composable
-fun each(time: Long = 10_000L, action: () -> Unit) {
+fun each(time: Long = 10_000L, action: Do) {
     LaunchedEffect(Unit) {
         while (true) {
             action()
