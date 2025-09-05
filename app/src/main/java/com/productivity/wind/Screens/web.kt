@@ -45,7 +45,7 @@ fun Web() {
         AndroidView(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(600.dp), // fixed height inside lazy container
+                .height(900.dp), // fixed height inside lazy container
             factory = { context ->
                 GeckoView(context).apply {
                     setSession(geckoSession)
