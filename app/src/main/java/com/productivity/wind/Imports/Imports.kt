@@ -145,6 +145,14 @@ fun getLogs(): String {
 typealias Content = @Composable () -> Unit
 typealias Do = () -> Unit
 
+@Composable
+fun getStatusBarHeight(): Int {
+    val insets = WindowInsets.statusBars.asPaddingValues()
+    val density = LocalDensity.current
+    return with(density) { insets.calculateTopPadding().toPx().toInt() }
+}
+
+
 
 
 
