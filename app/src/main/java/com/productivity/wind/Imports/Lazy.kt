@@ -278,37 +278,6 @@ fun LazySwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
 
 
 
-
-@Composable
-fun <T> PreloadItems(
-    data: List<T>,
-    itemContent: @Composable (T) -> Unit
-) {
-    Box(Modifier.size(1.dp).alpha(0f)) {
-        Column {
-            data.forEach { element ->
-                key(element.hashCode()) {
-                    itemContent(element) // prebuild it invisibly
-                }
-            }
-        }
-    }
-}
-fun <T> LazyListScope.noLag(
-    data: List<T>,
-    preload: Boolean = true,
-    itemContent: @Composable (T) -> Unit
-) {
-    if (preload) {
-        item {
-            PreloadItems(data, itemContent)
-        }
-    }
-}
-
-
-
-
   
   
 @Composable
