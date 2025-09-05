@@ -19,14 +19,41 @@ import android.content.*
 import androidx.compose.ui.platform.*
 import androidx.compose.foundation.lazy.*
 import org.mozilla.geckoview.AllowOrDeny
+import org.mozilla.geckoview.*
 
-typealias ManageTab = GeckoSession.NavigationDelegate
 typealias Tab = GeckoSession
+typealias ManageTab = GeckoSession.NavigationDelegate
+
+
 var Tab.ManageTab: ManageTab?
     get() = this.navigationDelegate
     set(value) {
         this.navigationDelegate = value
     }
+
+
+
+fun Tab.HideYoutubeRecommendations() {
+    this.ManageTab = object : ManageTab {
+        override fun onLoadRequest(
+            session: GeckoSession,
+            request: GeckoSession.LoadRequest,
+            callback: GeckoSession.LoadRequestCallback
+        ) {
+            callback.proceed() // allow page load
+
+            this@HideYoutubeRecommendations.loadUri(
+                "javascript:(function(){" +
+                        "setInterval(function(){" +
+                        "var r=document.getElementById('related');" +
+                        "if(r){r.style.display='none';}" +
+                        "}, 1000);" +
+                        "})()"
+            )
+        }
+    }
+}
+
 
 
 
@@ -68,26 +95,7 @@ fun Web() {
 }
 
 
-fun Tab.HideYoutubeRecommendations() {
-    this.ManageTab = object : NavigationDelegate {
-        override fun onLoadRequest(
-            request: GeckoSession.LoadRequest,
-            callback: GeckoSession.LoadRequestCallback
-        ) {
-            callback.proceed() // always allow page load
 
-            // Inject JS to hide recommendations
-            this@HideYoutubeRecommendations.loadUri(
-                "javascript:(function(){" +
-                "setInterval(function(){" +
-                "var r=document.getElementById('related');" +
-                "if(r){r.style.display='none';}" +
-                "}, 1000);" +
-                "})()"
-            )
-        }
-    }
-}
 
 
 //no clue if WORKS????
