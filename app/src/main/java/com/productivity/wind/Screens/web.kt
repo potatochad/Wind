@@ -39,7 +39,8 @@ fun Web() {
             LazyRow {
                 item { UI.Ctext("URLS (click)") {} }
             }
-        }
+        },
+        DividerPadding = false,
     ) {
         // Give the WebView a fixed height
         AndroidView(
