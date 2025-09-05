@@ -69,7 +69,7 @@ fun Web() {
 
 
 fun Tab.HideYoutubeRecommendations() {
-    this.ManageTab = object : ManageTab {
+    this.ManageTab = object : NavigationDelegate {
         override fun onLoadRequest(
             request: GeckoSession.LoadRequest,
             callback: GeckoSession.LoadRequestCallback
