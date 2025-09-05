@@ -663,7 +663,7 @@ fun LazyHeader(
 							App.navHost.popBackStack()
 						}
 					},
-					Icon = Icons.Default.ArrowBack,
+					icon = Icons.Default.ArrowBack,
                     )
                 }
             }
@@ -686,7 +686,7 @@ fun LazyHeader(
             if (showSearch) {
                 LazyIcon(
 					onClick = onSearchClick,
-					Icons.Default.Search,
+					icon = Icons.Default.Search,
                     )
                 }
             }
