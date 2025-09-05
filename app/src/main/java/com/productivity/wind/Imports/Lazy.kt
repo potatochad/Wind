@@ -668,13 +668,53 @@ fun LazyHeader(
     }
 }
 
+@Composable
+fun ScreenModifier(
+    focusManager: FocusManager,
+    backgroundColor: Color = Color.Black,
+    onClick: (() -> Unit)? = null
+): Modifier {
+    var modifier = Modifier
+        .fillMaxSize()
+        .background(backgroundColor)
+        .clipToBounds()
 
+    // Add clickable only if onClick is provided
+    if (onClick != null) {
+        modifier = modifier.clickable(
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }
+        ) {
+            onClick()
+        }
+    }
+
+    return modifier
+}
+
+typealias Content = @Composable () -> Unit
+typealias Do = () -> Unit
+/*
+@Composable
+fun LazyScreen(
+    onSearchClick: Do = {}
+    onBackClick: Do = {},
+    showBack = true
+    showSearch = false
+    modifier = Modifier
+    showDivider = true
+	MheaderHeight = 44
+) {
+
+
+
+*/
 @Composable
 fun LazyScreen(
     title: @Composable () -> Unit,
     onSearchClick: () -> Unit = {},
     onBackClick: () -> Unit = {},
-    showBack: Boolean = true,
+    showBack = true,
     showSearch: Boolean = false,
     modifier: Modifier = Modifier,
     showDivider: Boolean = true,
@@ -682,16 +722,9 @@ fun LazyScreen(
     content: @Composable () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
-    val baseModifier = Modifier
-        .fillMaxSize()
-        .background(Color.Black)
-        .clipToBounds()
-        .clickable(
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }
-        ) {
-            focusManager.clearFocus()
-        }
+    val baseModifier = ScreenModifier(focusManager) {
+		focusManager.clearFocus()
+	}
 
 
 
@@ -709,10 +742,10 @@ fun LazyScreen(
 				Mheight = MheaderHeight,
             )
         }
-        item {
-		Column {
-			content()
-		}
+		item {
+			Column {
+				content()
+			}
         }
     }
 }
