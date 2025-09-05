@@ -309,7 +309,7 @@ fun getAppIcon(packageName: String): Drawable? {
 
 
 @Composable
-fun eachSecond(onTick: () -> Unit) {
+fun eachSecond(onTick: Do) {
     LaunchedEffect(Unit) {
         while (true) {
             onTick()
@@ -334,7 +334,7 @@ object UI {
 	inline fun check(
 		condition: Boolean,
 		message: String = "",
-		action: () -> Unit = {},
+		action: Do = {},
 	) {
 		if (condition) {
 			if (message.isNotEmpty()) Vlog(message)
@@ -344,7 +344,7 @@ object UI {
 
 
     @Composable
-	fun End(content: @Composable () -> Unit) {
+	fun End(content: Content) {
 		Row(
 			Modifier.fillMaxWidth(),
 			horizontalArrangement = Arrangement.End,
@@ -494,7 +494,7 @@ object UI {
 
     @Composable
     fun MenuHeader(
-        title: String = "Wind",
+        title: Str = "Wind",
         iconRes: Int = R.drawable.baseline_radar_24,
         iconSize: Dp = 60.dp,
         iconTint: Color = Color(0xFFFFD700),
@@ -526,10 +526,10 @@ object UI {
     }
 
     fun SendEmail(
-        recipient: String = "productivity.shield@gmail.com",
-        subject: String = "Support Request – App Issue",
-        includePhoneInfo: Boolean = true,
-        prefillMessage: String = "I'm experiencing the following issue with the app:\n\n",
+        recipient: Str = "productivity.shield@gmail.com",
+        subject: Str = "Support Request – App Issue",
+        includePhoneInfo: Bool = true,
+        prefillMessage: Str = "I'm experiencing the following issue with the app:\n\n",
     ) {
         val body = buildString {
             appendLine()
@@ -578,7 +578,7 @@ object UI {
 	)
 	@Composable
 	fun dynamicTextWidth(
-		text: String,
+		text: Str,
 		textStyle: TextStyle,
 		widthMin: Int,
 		widthMax: Int,
@@ -742,7 +742,7 @@ object UI {
         height: Dp = 40.dp,
         BackgroundColor: Color = Color.Gray,
         where: Alignment = Alignment.CenterStart,
-        content: @Composable () -> Unit,
+        content: Content,
     ) {
         Column {
             Box(
@@ -765,7 +765,7 @@ object UI {
         padding: Int = 0,
         hGap: Dp = 0.dp,          // space between items in a row
         vGap: Dp = 20.dp,          // space between rows
-        content: @Composable () -> Unit,
+        content: Content,
     ) {
         Layout(
             content = content,
@@ -822,9 +822,9 @@ object UI {
 
 
     @Composable
-    fun CopyIcon(text: String) {
+    fun CopyIcon(text: Str) {
         val context = LocalContext.current
-        var copied by remember { mutableStateOf(false) }
+        var copied by r { mutableStateOf(false) }
 
         LaunchedEffect(copied) {
             if (copied) {
@@ -852,8 +852,8 @@ object UI {
 
     @Composable
     fun Ctext(
-        text: String,
-        onClick: () -> Unit,
+        text: Str,
+        onClick: Do,
     ) {
         Text(
             text = text,
@@ -871,7 +871,7 @@ object UI {
 
 
     //Region SETTING STUFF
-    fun openPermissionSettings(action: String, uri: Uri? = null) {
+    fun openPermissionSettings(action: Str, uri: Uri? = null) {
         val intent = Intent(action).apply {
             uri?.let { data = it }
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -879,18 +879,18 @@ object UI {
         App.ctx.startActivity(intent)
     }
 
-    fun isNotificationEnabled(): Boolean {
+    fun isNotificationEnabled(): Bool {
         return NotificationManagerCompat
             .getEnabledListenerPackages(App.ctx)
             .contains(App.ctx.packageName)
     }
 
-    fun isBatteryOptimizationDisabled(): Boolean {
+    fun isBatteryOptimizationDisabled(): Bool {
         val pm = App.ctx.getSystemService(PowerManager::class.java)
         return pm.isIgnoringBatteryOptimizations(App.ctx.packageName)
     }
 
-    fun isUsageP_Enabled(): Boolean {
+    fun isUsageP_Enabled(): Bool {
         val appOps = App.ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         return appOps.checkOpNoThrow(
             AppOpsManager.OPSTR_GET_USAGE_STATS,
@@ -905,7 +905,7 @@ object UI {
 
     @Composable
     fun EmptyBox(
-        text: String = "No Items",
+        text: Str = "No Items",
         icon: ImageVector = Icons.Default.Block,
         height: Dp = Bar.halfHeight * 2 - 200.dp,
         iconSize: Dp = 64.dp,
@@ -981,7 +981,7 @@ object DayChecker {
 
 
 	
-fun goTo(route: String) = App.navHost.navigate(route)
+fun goTo(route: Str) = App.navHost.navigate(route)
 
 
 
@@ -996,8 +996,8 @@ fun MyNavGraph(navController: NavHostController) =NoLagCompose{
 
 // 3) Your DSL
 fun NavGraphBuilder.url(
-    route: String,
-    content: @Composable () -> Unit
+    route: Str,
+    content: Content
 ) {
     composable(route) { content() }
 }
