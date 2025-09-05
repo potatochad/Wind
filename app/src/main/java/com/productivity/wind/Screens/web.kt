@@ -22,7 +22,7 @@ import org.mozilla.geckoview.AllowOrDeny
 
 
 @Composable
-fun Web() {
+fun Web2() {
     val ctx = LocalContext.current
 
     val geckoRuntime = r { GeckoRuntime.create(ctx) }
@@ -60,12 +60,12 @@ fun Web() {
 
 
 @Composable
-fun Web2() {
+fun Web() {
     val ctx = LocalContext.current
 
     // ✅ Keep runtime & session across recompositions
-    val geckoRuntime = remember { GeckoRuntime.create(ctx) }
-    val geckoSession = remember { GeckoSession() }
+    val geckoRuntime = r { GeckoRuntime.create(ctx) }
+    val geckoSession = r { GeckoSession() }
 
     DisposableEffect(Unit) {
         geckoSession.open(geckoRuntime)
@@ -82,7 +82,8 @@ fun Web2() {
                     UI.Ctext("URLS (click)") { }
                 }
             }
-        }
+        },
+        Scrollable = false
     ) {
         // ✅ Give GeckoView real size
         AndroidView(
