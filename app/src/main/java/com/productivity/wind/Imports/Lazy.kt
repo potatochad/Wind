@@ -597,7 +597,7 @@ fun LazyHeader(
     }
 
     Column {
-        UI.move(h=getStatusBarHeight())
+        UI.move(h=getStatusBarHeight()/3)
 
         Row(
             modifier = modifier
