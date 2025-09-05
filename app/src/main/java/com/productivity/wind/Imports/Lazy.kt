@@ -313,7 +313,7 @@ fun <T> LazyListScope.noLag(
   
 @Composable
 fun LazyLine(
-    show: Boolean,
+    show: Boolean = true,
     color: Color = Color(0xFFFFD700),
     thickness: Dp = 1.dp,
     MoveY: Int = 0,
@@ -606,6 +606,12 @@ fun LazyItem(
 		}
 	}
 }
+@Composable
+fun getStatudBarHeight(): Int {
+    val insets = WindowInsets.statusBars.asPaddingValues()
+    val density = LocalDensity.current
+    return with(density) { insets.calculateTopPadding().toPx().toInt() }
+}
 
 @Composable
 fun LazyHeader(
@@ -625,11 +631,7 @@ fun LazyHeader(
     }
 
     Column {
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .statusBarsPadding()
-        )
+        UI.move(getStatudBarHeight())
 
         Row(
             modifier = modifier
@@ -689,14 +691,10 @@ fun LazyHeader(
             )
         }
 
-        if (showDivider) {
-            Divider(
-                color = Color.Gray,
-                thickness = 1.dp,
-                modifier = Modifier.fillMaxWidth()
-            )
-	    Spacer(modifier = Modifier.padding(bottom = 10.dp))
-        }
+		if (showDivider){
+			LazyLine(color = Color.Gray)		
+			UI.move(10)
+		}
 	
     }
 }
