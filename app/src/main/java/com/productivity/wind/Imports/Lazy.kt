@@ -653,18 +653,17 @@ fun LazyHeader(
              *
              * This protects Compose from crashing or losing its state tree.
              */
-            if (showBack ) {
-                IconButton(onClick = { if (DisableTB_Button) { }; if (!DisableTB_Button) { DisableTB_Button = true
-
-                        onBackClick()
-                        App.navHost.popBackStack()
-                    }
-
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color(0xFFFFD700)
+            if (showBack) {
+                LazyIcon(
+					onClick = { 
+						if (DisableTB_Button) {}
+						if (!DisableTB_Button) { 
+							DisableTB_Button = true
+							onBackClick()
+							App.navHost.popBackStack()
+						}
+					},
+					Icon = Icons.Default.ArrowBack,
                     )
                 }
             }
@@ -685,11 +684,9 @@ fun LazyHeader(
 
             // Search icon
             if (showSearch) {
-                IconButton(onClick = onSearchClick) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search",
-                        tint = Color(0xFFFFD700)
+                LazyIcon(
+					onClick = onSearchClick,
+					Icons.Default.Search,
                     )
                 }
             }
