@@ -20,59 +20,21 @@ import androidx.compose.ui.platform.*
 import androidx.compose.foundation.lazy.*
 import org.mozilla.geckoview.AllowOrDeny
 
-
-@Composable
-fun Web2() {
-    val ctx = LocalContext.current
-
-    val geckoRuntime = r { GeckoRuntime.create(ctx) }
-    val geckoSession = r { GeckoSession() }
-
-    // Open session once
-    LaunchedEffect(Unit) {
-        geckoSession.open(geckoRuntime)
-        geckoSession.loadUri("https://google.com")
-    }
-
-    LazyScreen(
-        title = {
-            LazyRow {
-                item { UI.Ctext("URLS (click)") {} }
-            }
-        },
-        DividerPadding = false,
-    ) {
-        // Give the WebView a fixed height
-        AndroidView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(Bar.halfHeight*2),
-            factory = { context ->
-                GeckoView(context).apply {
-                    setSession(geckoSession)
-                }
-            }
-        )
-    }
-}
-
-
-
+typealias ManageTab = NavigationDelegate
+typealias Tab = GeckoSession
 
 @Composable
 fun Web() {
     val ctx = LocalContext.current
-
-    // ✅ Keep runtime & session across recompositions
-    val geckoRuntime = r { GeckoRuntime.create(ctx) }
-    val geckoSession = r { GeckoSession() }
+    val Web = r { GeckoRuntime.create(ctx) }
+    val Tab = r { GeckoSession() }
 
     DisposableEffect(Unit) {
-        geckoSession.open(geckoRuntime)
-        geckoSession.navigationDelegate = onlyAllowDomains(listOf("youtube.com"))
-        geckoSession.loadUri("https://youtube.com")
+        Tab.open(Web)
+        Tab.ManageTab = onlyAllowDomains(listOf("youtube.com"))
+        Tab.loadUri("https://youtube.com")
 
-        onDispose { geckoSession.close() }
+        onDispose { Tab.close() }
     }
 
     LazyScreen(
@@ -86,26 +48,48 @@ fun Web() {
         Scrollable = false,
         DividerPadding = false,
     ) {
-        // ✅ Give GeckoView real size
         AndroidView(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),   // instead of just fillMaxSize()
+                .fillMaxSize()
             factory = { ctx ->
                 GeckoView(ctx).apply { 
-                    setSession(geckoSession) 
+                    setSession(Tab) 
                 }
             }
         )
     }
 }
 
-fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDelegate {
-    return object : GeckoSession.NavigationDelegate {
+
+fun Tab.HideYoutubeRecommendations() {
+    this.ManageTab = object : ManageTab {
         override fun onLoadRequest(
-            session: GeckoSession,
-            request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<AllowOrDeny>? {   // ✅ FIXED
+            request: GeckoSession.LoadRequest,
+            callback: GeckoSession.LoadRequestCallback
+        ) {
+            callback.proceed() // always allow page load
+
+            // Inject JS to hide recommendations
+            this@HideYoutubeRecommendations.loadUri(
+                "javascript:(function(){" +
+                "setInterval(function(){" +
+                "var r=document.getElementById('related');" +
+                "if(r){r.style.display='none';}" +
+                "}, 1000);" +
+                "})()"
+            )
+        }
+    }
+}
+
+
+//no clue if WORKS????
+fun onlyAllowDomains(allowedDomains: List<String>): Tab.ManageTab {
+    return object : Tab.ManageTab {
+        override fun onLoadRequest(
+            session: Tab,
+            ression.ManageTab.LoadRequest
+        ): GeckoResult<AllowOrDeny>? { 
             val url = request.uri ?: return GeckoResult.fromValue(AllowOrDeny.DENY)
 
             val isAllowed = allowedDomains.any { domain ->
