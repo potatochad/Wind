@@ -704,6 +704,7 @@ fun LazyScreen(
 	DividerPadding: Bool = true,
 	
 	MheaderHeight: Int = 44,
+	Scrollable: Bool = false,
     content: Content,
 ) {
     val focusManager = LocalFocusManager.current
@@ -713,27 +714,47 @@ fun LazyScreen(
 
 
 
-    LazyColumn(
-        modifier = baseModifier.then(modifier)
-    ) {
-        item {
-            LazyHeader(
-                titleContent = title,
+	if (Scrollable) {
+		LazyColumn(
+			modifier = baseModifier.then(modifier)
+		) {
+			// Header
+			item {
+				LazyHeader(
+					titleContent = title,
+					onSearchClick = onSearchClick,
+					onBackClick = onBackClick,
+					showBack = showBack,
+					showSearch = showSearch,
+					showDivider = showDivider,
+                    DividerPadding = DividerPadding,
+                    Mheight = MheaderHeight,
+				)
+			}
+			// Main content
+			item {
+				Column {
+					content()
+				}
+			}
+		}
+	} else {
+		Column(
+			modifier = baseModifier.then(modifier)
+		) {
+			LazyHeader(
+				titleContent = title,
                 onSearchClick = onSearchClick,
                 onBackClick = onBackClick,
                 showBack = showBack,
                 showSearch = showSearch,
                 showDivider = showDivider,
-				DividerPadding = DividerPadding,
-				Mheight = MheaderHeight,
-            )
-        }
-		item {
-			Column {
-				content()
-			}
-        }
-    }
+                DividerPadding = DividerPadding,
+				Mheight = MheaderHeight,			
+			)
+			content()
+		}
+	}
 }
 
 
