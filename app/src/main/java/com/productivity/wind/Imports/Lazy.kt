@@ -691,12 +691,6 @@ fun ScreenModifier(
 
 
 @Composable
-fun bottomSystemHeight(): Dp {
-    val insets = WindowInsets.navigationBars // includes bottom system bar
-    val density = LocalDensity.current
-    return with(density) { insets.getBottom(this).toDp() }
-}
-@Composable
 fun LazyScreen(
     title: Content,
     onSearchClick: Do = {},
@@ -736,7 +730,7 @@ fun LazyScreen(
 		LazyColumn(modifier = baseModifier.then(modifier)) {
 			stickyHeader { header() }
 			item { Column { content() } }
-			item { Spacer(modifier = Modifier.height(getBottomSystemHeight())) }
+			item { Spacer(modifier = Modifier.height(bottomSystemHeight())) }
 		}
 	} else {
 		Column(modifier = baseModifier.then(modifier)) {
