@@ -35,20 +35,31 @@ var Tab.ManageTab: ManageTab?
 
 fun GeckoSession.HideYoutubeRecommendations() {
     this.navigationDelegate = object : GeckoSession.NavigationDelegate {
+
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
         ): GeckoResult<AllowOrDeny> {
-            // Example: block YouTube recommendations by URL
-            val url = request.uri.toString()
-            return if (url.contains("www.youtube.com/watch") && url.contains("related")) {
-                GeckoResult.fromValue(AllowOrDeny.DENY) // block
-            } else {
-                GeckoResult.fromValue(AllowOrDeny.ALLOW) // allow everything else
+            return GeckoResult.fromValue(AllowOrDeny.ALLOW)
+        }
+
+        override fun onLoad(uri: Uri) {
+            val url = uri.toString()
+            if (url.contains("youtube.com/watch")) {
+                // JS runs every 1 second to hide recommendations
+                val js = """
+                    setInterval(() => {
+                        const related = document.getElementById('related');
+                        if (related) related.style.display = 'none';
+                    }, 1000);
+                """.trimIndent()
+
+                this@HideYoutubeRecommendations.loadUri("javascript:$js")
             }
         }
     }
 }
+
 fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDelegate {
     return object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
