@@ -603,7 +603,7 @@ fun LazyHeader(
     }
 
     Column {
-        UI.move(getStatudBarHeight())
+        UI.move(h=getStatudBarHeight())
 
         Row(
             modifier = modifier
