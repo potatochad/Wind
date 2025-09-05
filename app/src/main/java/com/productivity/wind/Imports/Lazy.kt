@@ -65,8 +65,8 @@ import androidx.compose.ui.focus.*
 // needs fixing
 @Composable
 fun LazySearch(
-    searchQuery: String,
-    onChange: (String) -> Unit
+    searchQuery: Str,
+    onChange: (Str) -> Unit
 ) {
     Box(
 		modifier = Modifier
@@ -98,7 +98,7 @@ fun LazySearch(
 
 
 data class Info(
-    val label: String,
+    val label: Str,
     val icon: ImageVector? = null,
     val id: String = Id(),
     val onClick: (() -> Unit)? = null, // new field for individual action
@@ -108,7 +108,7 @@ data class Info(
 fun LazyInfo(
     items: List<Info>,
     onDismiss: (() -> Unit)? = null,
-    content: @Composable () -> Unit
+    content: Content
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -176,7 +176,7 @@ data class LazzyListStyle(
     var delayMs: Long = 40L,
     var chunkSize: Int = 1,
     var IntFirst: Int = 0,
-	var wrapContent: Boolean = false,
+	var wrapContent: Bool = false,
 )
 
 data class LazyLoaderState<T>(
@@ -188,10 +188,10 @@ data class LazyLoaderState<T>(
 fun <T> rememberLazyLoaderState(
     items: List<T>,
     style: LazzyListStyle,         // your config: IntFirst, chunkSize, delayMs
-    loadAll: Boolean = false
+    loadAll: Bool = false
 ): LazyLoaderState<T> {
     val scrollState = rememberScrollState()
-    val appearedItems = remember { mutableStateListOf<T>() }
+    val appearedItems = r { mutableStateListOf<T>() }
 
     // Run once when items or loadAll change
     LaunchedEffect(items, loadAll) {
@@ -225,7 +225,7 @@ fun <T> rememberLazyLoaderState(
 @Composable
 fun <T> LazzyList(
     items: List<T>,
-    loadAll: Boolean = false,
+    loadAll: Bool = false,
     style: LazzyListStyle = LazzyListStyle(),
     key: ((T) -> Any)? = null,
     modifier: Modifier = Modifier,
@@ -282,7 +282,7 @@ fun LazySwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
   
 @Composable
 fun LazyLine(
-    show: Boolean = true,
+    show: Bool = true,
     color: Color = Color(0xFFFFD700),
     thickness: Dp = 1.dp,
     MoveY: Int = 0,
@@ -305,7 +305,7 @@ fun LazyLine(
 fun LazzyRow(
     modifier: Modifier = Modifier,
     padding: Int = 0,
-    center: Boolean = false, // Kotlin uses 'Boolean', not 'Bool'
+    center: Bool = false, // Kotlin uses 'Boolean', not 'Bool'
     content: @Composable () -> Unit,
 ) {
     Row(
@@ -323,7 +323,7 @@ fun LazzyRow(
 @Composable 
 fun LazyRuleCard(
 	Header: Str,
-	content: @Composable () -> Unit,
+	content: Content,
 ){
 	LazyCard(
 		style = LazyCardStyle(roundCorners = 8)
@@ -349,7 +349,7 @@ fun LazyCard(
     inputColor: Color = Color(0xFF1A1A1A),
     innerPadding: Int = 16,
     style: LazyCardStyle = LazyCardStyle(),
-    content: @Composable () -> Unit,
+    content: Content,
 ) {
     Card(
         modifier = Modifier
@@ -385,7 +385,7 @@ fun LazyIcon(
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
-    SquareIcon: Boolean = false,
+    SquareIcon: Bool = false,
     BigIconSize: Int = 30,
     OuterPadding: Int = 5,          // outside space
     ButtonSize: Int = 40,           // actual button box (default M3 ~48)
@@ -436,9 +436,9 @@ fun LazyIcon(
 @Composable
 fun LazyMore(
     modifier: Modifier = Modifier,
-    title: String = "Show more",
-    initiallyExpanded: Boolean = false,
-    content: @Composable () -> Unit
+    title: Str = "Show more",
+    initiallyExpanded: Bool = false,
+    content: Content
 ) {
     var expanded by r { m(initiallyExpanded) }
     val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
@@ -495,8 +495,8 @@ fun LazyMore(
 
 @Composable
 fun LazyItem(
-    title: String,
-    subtitle: String? = null,
+    title: Str,
+    subtitle: Str? = null,
     endContent: @Composable (() -> Unit)? = null,
     modifier: Modifier = Modifier,
 	
@@ -584,13 +584,13 @@ fun getStatudBarHeight(): Int {
 
 @Composable
 fun LazyHeader(
-    titleContent: @Composable () -> Unit,
-    onSearchClick: () -> Unit,
-    onBackClick: () -> Unit = {},
-    showBack: Boolean = true,
-    showSearch: Boolean = false,
+    titleContent: Content,
+    onSearchClick: Do ={},
+    onBackClick: Do = {},
+    showBack: Bool = true,
+    showSearch: Bool = false,
     modifier: Modifier = Modifier,
-    showDivider: Boolean = true,
+    showDivider: Bool = true,
 	Mheight: Int = 100,
 ) {
     val ui = rememberSystemUiController()
@@ -746,11 +746,11 @@ fun LazyScreen(
 fun LazyPopup(
     show: MutableState<Boolean>,
     onDismiss: (() -> Unit)? = { show.value = false },
-    title: String = "Info",
-    message: String,
+    title: Str = "Info",
+    message: Str,
     content: (@Composable () -> Unit)? = null,
-    showCancel: Boolean = true,
-    showConfirm: Boolean = true,
+    showCancel: Bool = true,
+    showConfirm: Bool = true,
     onConfirm: (() -> Unit)? = null,
     onCancel: (() -> Unit)? = null,
 ) {
@@ -796,7 +796,7 @@ fun LazyPopup(
 @Composable
 fun LazyMenu(
     onDismiss: (() -> Unit)? = null,
-    content: @Composable () -> Unit,
+    content: Content,
 ) {
     val visible = r { m(false) }
     val internalVisible = r { m(false) }
