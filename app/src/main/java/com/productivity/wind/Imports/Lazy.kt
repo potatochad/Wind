@@ -690,7 +690,12 @@ fun ScreenModifier(
 }
 
 
-
+@Composable
+fun bottomSystemHeight(): Dp {
+    val insets = WindowInsets.navigationBars // includes bottom system bar
+    val density = LocalDensity.current
+    return with(density) { insets.getBottom(this).toDp() }
+}
 @Composable
 fun LazyScreen(
     title: Content,
@@ -714,44 +719,28 @@ fun LazyScreen(
 
 
 
+	val header: Content = {
+		LazyHeader(
+			titleContent = title,
+			onSearchClick = onSearchClick,
+			onBackClick = onBackClick,
+			showBack = showBack,
+			showSearch = showSearch,
+			showDivider = showDivider,
+			DividerPadding = DividerPadding,
+			Mheight = MheaderHeight
+		)
+	}
+	
 	if (Scrollable) {
-		LazyColumn(
-			modifier = baseModifier.then(modifier)
-		) {
-			// Header
-			item {
-				LazyHeader(
-					titleContent = title,
-					onSearchClick = onSearchClick,
-					onBackClick = onBackClick,
-					showBack = showBack,
-					showSearch = showSearch,
-					showDivider = showDivider,
-                    DividerPadding = DividerPadding,
-                    Mheight = MheaderHeight,
-				)
-			}
-			// Main content
-			item {
-				Column {
-					content()
-				}
-			}
+		LazyColumn(modifier = baseModifier.then(modifier)) {
+			stickyHeader { header() }
+			item { Column { content() } }
+			item { Spacer(modifier = Modifier.height(getBottomSystemHeight())) }
 		}
 	} else {
-		Column(
-			modifier = baseModifier.then(modifier)
-		) {
-			LazyHeader(
-				titleContent = title,
-                onSearchClick = onSearchClick,
-                onBackClick = onBackClick,
-                showBack = showBack,
-                showSearch = showSearch,
-                showDivider = showDivider,
-                DividerPadding = DividerPadding,
-				Mheight = MheaderHeight,			
-			)
+		Column(modifier = baseModifier.then(modifier)) {
+			header()
 			content()
 		}
 	}
