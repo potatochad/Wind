@@ -592,7 +592,7 @@ fun LazyHeader(
     modifier: Modifier = Modifier,
 	
     showDivider: Bool = true,
-	NoDividerPadding: Bool = false,
+	DividerPadding: Bool = true,
 	
 	Mheight: Int = 100,
 ) {
@@ -665,7 +665,7 @@ fun LazyHeader(
 
 		if (showDivider){
 			LazyLine(color = Color.Gray)		
-			if (NoDividerPadding){
+			if (DividerPadding){
 				UI.move(10)
 			}
 		}
@@ -708,7 +708,10 @@ fun LazyScreen(
     showBack: Bool = true,
     showSearch: Bool = false,
     modifier: Modifier = Modifier,
+	
     showDivider: Bool = true,
+	DividerPadding: Bool = true,
+	
 	MheaderHeight: Int = 44,
     content: Content,
 ) {
@@ -730,6 +733,7 @@ fun LazyScreen(
                 showBack = showBack,
                 showSearch = showSearch,
                 showDivider = showDivider,
+				DividerPadding = DividerPadding,
 				Mheight = MheaderHeight,
             )
         }
