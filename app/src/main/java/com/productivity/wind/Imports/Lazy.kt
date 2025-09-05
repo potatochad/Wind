@@ -115,7 +115,7 @@ fun LazyInfo(
     Box(modifier = Modifier.clickable { expanded = true }) {
         content()
     }
-	Box(modifier = Modifier.size(20.dp)) {
+	Box(modifier = Modifier.scale(0.75f)) {
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { 
@@ -124,6 +124,7 @@ fun LazyInfo(
             },
             modifier = Modifier
                 .wrapContentWidth()
+				.scale(0.75f)
                 .background(MaterialTheme.colorScheme.surface)
         ) {
             items.forEach { item ->
