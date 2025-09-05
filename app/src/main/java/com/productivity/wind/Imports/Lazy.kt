@@ -640,11 +640,9 @@ fun LazyHeader(
 					icon = Icons.Default.ArrowBack,
                     )
                 }
-            }
 
-
-            // Title content
-            Box(
+			// Title content
+			Box(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = if (showBack) 8.dp else 0.dp),
@@ -654,14 +652,15 @@ fun LazyHeader(
 						titleContent()
 				}
 				
-            }
-		// Search icon
-        if (showSearch) {
-            LazyIcon(
-				onClick = onSearchClick,
-				icon = Icons.Default.Search,
-            )
-        }
+			}
+			// Search icon
+			if (showSearch) {
+				LazyIcon(
+					onClick = onSearchClick,
+					icon = Icons.Default.Search,
+				)
+			}
+		}
 
 		if (showDivider){
 			LazyLine(color = Color.Gray)		
@@ -669,8 +668,6 @@ fun LazyHeader(
 				UI.move(10)
 			}
 		}
-			
-	
     }
 }
 
