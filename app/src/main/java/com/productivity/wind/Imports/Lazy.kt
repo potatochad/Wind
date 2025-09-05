@@ -575,12 +575,6 @@ fun LazyItem(
 		}
 	}
 }
-@Composable
-fun getStatusBarHeight(): Int {
-    val insets = WindowInsets.statusBars.asPaddingValues()
-    val density = LocalDensity.current
-    return with(density) { insets.calculateTopPadding().toPx().toInt() }
-}
 
 @Composable
 fun LazyHeader(
