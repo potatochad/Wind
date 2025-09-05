@@ -60,7 +60,7 @@ import org.mozilla.geckoview.*
 import android.content.*
 import androidx.compose.runtime.snapshots.*
 import androidx.compose.runtime.*
-
+import androidx.compose.ui.focus.*
 
 // needs fixing
 @Composable
@@ -692,34 +692,19 @@ fun ScreenModifier(
     return modifier
 }
 
-typealias Content = @Composable () -> Unit
-typealias Do = () -> Unit
-/*
+
+
 @Composable
 fun LazyScreen(
-    onSearchClick: Do = {}
+    title: Content,
+    onSearchClick: Do = {},
     onBackClick: Do = {},
-    showBack = true
-    showSearch = false
-    modifier = Modifier
-    showDivider = true
-	MheaderHeight = 44
-) {
-
-
-
-*/
-@Composable
-fun LazyScreen(
-    title: @Composable () -> Unit,
-    onSearchClick: () -> Unit = {},
-    onBackClick: () -> Unit = {},
-    showBack = true,
-    showSearch: Boolean = false,
+    showBack: Bool = true,
+    showSearch: Bool = false,
     modifier: Modifier = Modifier,
-    showDivider: Boolean = true,
+    showDivider: Bool = true,
 	MheaderHeight: Int = 44,
-    content: @Composable () -> Unit,
+    content: Content,
 ) {
     val focusManager = LocalFocusManager.current
     val baseModifier = ScreenModifier(focusManager) {
