@@ -25,8 +25,8 @@ import org.mozilla.geckoview.AllowOrDeny
 fun Web() {
     val ctx = LocalContext.current
 
-    val geckoRuntime = remember { GeckoRuntime.create(ctx) }
-    val geckoSession = remember { GeckoSession() }
+    val geckoRuntime = r { GeckoRuntime.create(ctx) }
+    val geckoSession = r { GeckoSession() }
 
     // Open session once
     LaunchedEffect(Unit) {
