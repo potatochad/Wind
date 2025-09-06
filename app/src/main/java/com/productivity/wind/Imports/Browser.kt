@@ -60,6 +60,8 @@ import org.mozilla.geckoview.*
 import android.content.*
 import androidx.compose.runtime.snapshots.*
 import androidx.compose.runtime.*
+import org.mozilla.geckoview.GeckoSession.NavigationDelegate.*
+import org.mozilla.geckoview.GeckoSession.*
 
 
 fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDelegate {
