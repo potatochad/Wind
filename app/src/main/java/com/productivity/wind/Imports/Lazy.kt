@@ -65,6 +65,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.focus.*
 import androidx.compose.foundation.gestures.*
 import androidx.compose.ui.input.pointer.*
+import androidx.compose.ui.geometry.*
 
 // needs fixing
 @Composable
