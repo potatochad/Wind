@@ -199,8 +199,8 @@ object Icon {
         fun Edit() {
                 LazyIcon(
                         onClick = { 
-                                if (Bar.funTime > Bar.Dpoints) show(Popup.Edit)
-                                else show(Popup.NeedMorePoints)
+                                if (Bar.funTime < Bar.Dpoints) show(Popup.NeedMorePoints)
+                                else show(Popup.Edit)
                         },
                         icon = Icons.Default.Edit
                 )
