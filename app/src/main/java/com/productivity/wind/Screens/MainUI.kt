@@ -82,7 +82,7 @@ fun Main() {
                             }
 
                             
-                            UI.move(10)
+                            UI.move(12)
                             Text("${app.Worth} points")
                             
                             
