@@ -776,21 +776,17 @@ fun LazyPopup(
         },
         confirmButton = {
             if (showConfirm) {
-                TextButton(onClick = {
+                Ctext("OK"){
                     onConfirm?.invoke()
                     show.value = false
-                }) {
-                    Text("OK")
                 }
             }
         },
         dismissButton = if (showCancel) {
             {
-                TextButton(onClick = {
+				Ctext("Cancel"){
                     onCancel?.invoke()
                     show.value = false
-                }) {
-                    Text("Cancel")
                 }
             }
         } else null
