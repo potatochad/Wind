@@ -99,55 +99,57 @@ fun LazySearch(
 
 
 
-data class Info(
-    val label: Str,
-    val icon: ImageVector? = null,
-    val id: String = Id(),
-    val onClick: (() -> Unit)? = null, // new field for individual action
-)
+
+fun Modifier.clickOrHold(
+    hold: Boolean = false,
+    action: () -> Unit
+): Modifier {
+    return if (hold) {
+        this.pointerInput(Unit) {
+            detectTapGestures(onLongPress = { action() })
+        }
+    } else {
+        this.clickable { action() }
+    }
+}
+
 
 @Composable
 fun LazyInfo(
-    items: List<Info>,
+    text: Str = "",
     onDismiss: (() -> Unit)? = null,
-    content: Content
+    hold: Bool= false,
+	content: Content,
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    var show by r { m(false) }
 
-    Box(modifier = Modifier.clickable { expanded = true }) {
+    Box(Modifier.clickOrHold(hold){show=true}) {
         content()
-    }
-	Box(modifier = Modifier.scale(0.75f)) {
+	}
+
+    Box(modifier = Modifier.scale(0.50f)) {
         DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { 
+            expanded = show,
+            onDismissRequest = {
                 expanded = false
-                onDismiss?.invoke() 
+                onDismiss?.invoke()
             },
             modifier = Modifier
                 .wrapContentWidth()
-				.scale(0.75f)
+                .scale(0.50f)
                 .background(MaterialTheme.colorScheme.surface)
         ) {
-            items.forEach { item ->
-                DropdownMenuItem(
-                    text = { Text(item.label) },
-                    leadingIcon = { item.icon?.let { Icon(it, contentDescription = null) } },
-                    onClick = { 
-                        expanded = false
-                        item.onClick?.invoke()
-                    },
-                    contentPadding = PaddingValues(
-                        start = 0.dp,
-                        top = 0.dp,
-                        end = 0.dp,
-                        bottom = 0.dp
-                    )
-                )
-            }
+            DropdownMenuItem(
+                text = { Text(text, fontSize = 20.sp) },
+                onClick = {
+                    show = false
+                    onDismiss?.invoke()
+                }
+            )
         }
     }
 }
+
 
 
 
