@@ -69,7 +69,7 @@ fun Main() {
                     
                     if (app.NowTime > app.DoneTime - 1 && !app.done) {
                         Bar.funTime += app.Worth
-                        app.done = true
+                        apps.edit(app){ done = true }
                         Vlog("${app.name} completed")
                     }
                     
