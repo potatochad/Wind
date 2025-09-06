@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.productivity.wind.Imports
 
 import androidx.compose.ui.draw.*
@@ -689,7 +691,7 @@ fun ScreenModifier(
     return modifier
 }
 
-@file:OptIn(ExperimentalFoundationApi::class)
+
 @Composable
 fun LazyScreen(
     title: Content,
