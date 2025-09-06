@@ -37,19 +37,21 @@ fun Tab.HideYoutubeRecommendations() {
     this.ManageTab = object : ManageTab {
         override fun onLoadRequest(
             session: GeckoSession,
-            request: GeckoSession.LoadRequest,
-            callback: GeckoSession.LoadRequestCallback
-        ) {
-            callback.proceed() // allow page load
+            request: GeckoSession.NavigationDelegate.LoadRequest
+        ): GeckoSession.NavigationDelegate.Action {
+            // Always allow page load
+            val js = """
+                (function(){
+                    setInterval(function(){
+                        var r=document.getElementById('related');
+                        if(r){r.style.display='none';}
+                    },1000);
+                })()
+            """.trimIndent()
 
-            this@HideYoutubeRecommendations.loadUri(
-                "javascript:(function(){" +
-                        "setInterval(function(){" +
-                        "var r=document.getElementById('related');" +
-                        "if(r){r.style.display='none';}" +
-                        "}, 1000);" +
-                        "})()"
-            )
+            this@HideYoutubeRecommendations.loadUri("javascript:$js")
+
+            return GeckoSession.NavigationDelegate.Action.ALLOW
         }
     }
 }
