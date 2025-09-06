@@ -101,8 +101,7 @@ fun GeckoSession.setYouTubeFilter() {
             val url = request.uri.toString()
             val allowed = url.contains("youtube.com", ignoreCase = true)
             return GeckoResult.fromValue(
-                if (allowed) GeckoSession.NavigationDelegate.Action.ALLOW
-                else GeckoSession.NavigationDelegate.Action.DENY
+                if (allowed) AllowOrDeny.ALLOW else AllowOrDeny.DENY
             )
         }
     }
