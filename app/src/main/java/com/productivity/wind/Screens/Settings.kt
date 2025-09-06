@@ -22,11 +22,6 @@ import androidx.compose.ui.*
 fun SettingsScreen() {
     LazyScreen(title = { 
         Text("Settings") 
-        UI.End {
-           Icon.Info{
-               
-           }
-        }
     }) {
     
         
