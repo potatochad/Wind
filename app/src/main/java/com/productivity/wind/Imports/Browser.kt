@@ -97,7 +97,7 @@ fun GeckoSession.setYouTubeFilter() {
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<GeckoSession.NavigationDelegate.Action> {
+        ): GeckoResult<AllowOrDeny> {
             val url = request.uri.toString()
             val allowed = url.contains("youtube.com", ignoreCase = true)
             return GeckoResult.fromValue(
