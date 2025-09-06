@@ -61,15 +61,7 @@ import android.content.*
 import androidx.compose.runtime.snapshots.*
 import androidx.compose.runtime.*
 
-fun GeckoSession.setYouTubeFilter() {
-    progressDelegate = object : GeckoSession.ProgressDelegate {
-        override fun onProgressChange(session: GeckoSession, progress: Int) {
-            if (progress == 100) {
-                injectYouTubeJS()
-            }
-        }
-    }
-}
+
 fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDelegate {
     return object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
@@ -92,38 +84,53 @@ fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDeleg
 
 
 // Inject JS that removes YouTube content and dynamically handles new elements
+fun GeckoSession.setYouTubeFilter() {
+    // Use ProgressDelegate to run JS when page is fully loaded
+    progressDelegate = object : GeckoSession.ProgressDelegate {
+        override fun onProgressChange(session: GeckoSession, progress: Int) {
+            if (progress == 100) {
+                injectYouTubeJS()
+            }
+        }
+    }
+
+    // Also inject JS on every location change (SPA support)
+    navigationDelegate = object : GeckoSession.NavigationDelegate {
+        override fun onLocationChange(session: GeckoSession, uri: android.net.Uri) {
+            if (uri.toString().contains("youtube.com")) {
+                injectYouTubeJS()
+            }
+        }
+
+        override fun onLoadRequest(
+            session: GeckoSession,
+            request: GeckoSession.NavigationDelegate.LoadRequest
+        ): GeckoResult<GeckoSession.NavigationDelegate.AllowOrDeny> {
+            // Allow all for YouTube, block others if you want
+            return GeckoResult.fromValue(GeckoSession.NavigationDelegate.AllowOrDeny.ALLOW)
+        }
+    }
+}
+
+// Inject JS that removes YouTube recommendations dynamically
 private fun GeckoSession.injectYouTubeJS() {
     val js = """
     (function() {
-        const url = window.location.href;
-
-        if(url.includes('youtube.com')) {
-            // Remove suggestions sidebar on video pages
-            const suggestions = document.querySelector('#related');
-            if(suggestions) suggestions.remove();
-
-            // Remove search results
-            const searchResults = document.querySelectorAll('ytd-item-section-renderer, ytd-video-renderer, ytd-channel-renderer');
-            searchResults.forEach(el => el.remove());
-
-            // Remove recommended videos under video
-            const recommended = document.querySelector('#secondary');
-            if(recommended) recommended.remove();
-
-            // Dynamic observer for AJAX-loaded content
-            const observer = new MutationObserver(mutations => {
-                mutations.forEach(() => {
-                    const suggestions = document.querySelector('#related');
-                    if(suggestions) suggestions.remove();
-
-                    const searchResults = document.querySelectorAll('ytd-item-section-renderer, ytd-video-renderer, ytd-channel-renderer');
-                    searchResults.forEach(el => el.remove());
-                });
+        function removeYouTubeStuff() {
+            const selectors = ['#related', '#secondary', 'ytd-item-section-renderer', 'ytd-video-renderer', 'ytd-channel-renderer'];
+            selectors.forEach(sel => {
+                document.querySelectorAll(sel).forEach(el => el.remove());
             });
-            observer.observe(document.body, { childList: true, subtree: true });
         }
-    })();
-    """
-    loadUri("javascript:$js")
-}
 
+        // Initial removal
+        removeYouTubeStuff();
+
+        // Observe DOM for AJAX-loaded content
+        const observer = new MutationObserver(removeYouTubeStuff);
+        observer.observe(document.body, { childList: true, subtree: true });
+    })();
+    """.trimIndent()
+
+    this.loadUri("javascript:$js")
+}
