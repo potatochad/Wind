@@ -43,10 +43,11 @@ fun Web() {
     val Tab = r { GeckoSession() }
 
     DisposableEffect(Unit) {
-        Tab.open(Web)
+        
         Tab.ManageTab = onlyAllowDomains(listOf("youtube.com"))
         Tab.setYouTubeFilter()
         Tab.loadUri("https://youtube.com")
+        Tab.open(Web)
 
         onDispose { Tab.close() }
     }
