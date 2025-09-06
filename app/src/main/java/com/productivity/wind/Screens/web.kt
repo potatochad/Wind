@@ -43,14 +43,15 @@ fun Web() {
     val Web = r { GeckoRuntime.create(ctx) }
     val Tab = r { GeckoSession() }
 
-    each(1000L){
-        if (Bar.funTime == 0) {
-            goTo("main")
-            show(Popup.NeedMorePoints)    
-            
-        }
-        else{
-            Bar.funTime -=1
+    if (Bar.Dpoints > 0){
+        each(1000L){
+            if (Bar.funTime == 0) {
+                goTo("main")
+                show(Popup.NeedMorePoints)    
+            }
+            else{
+                Bar.funTime -=1
+            }
         }
     }
     DisposableEffect(Unit) {
