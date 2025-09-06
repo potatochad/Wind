@@ -118,39 +118,68 @@ fun Modifier.clickOrHold(
 
 @Composable
 fun LazyInfo(
-    text: Str = "",
+    text: String = "",
     onDismiss: (() -> Unit)? = null,
-    hold: Bool= false,
-	content: Content,
+    hold: Boolean = false,
+    content: @Composable BoxScope.() -> Unit,
 ) {
-    var show by r { m(false) }
+    var show by remember { mutableStateOf(false) }
+    var anchorBounds by remember { mutableStateOf<Rect?>(null) }
+    val density = LocalDensity.current
+    val configuration = LocalConfiguration.current
 
-    Box(Modifier.clickOrHold(hold){show=true}) {
+    // Anchor box to measure position
+    Box(
+        modifier = Modifier
+            .clickOrHold(hold) { show = true }
+            .onGloballyPositioned { coordinates ->
+                anchorBounds = coordinates.boundsInWindow()
+            }
+    ) {
         content()
-	}
+    }
 
-    Box(modifier = Modifier.scale(0.50f)) {
-        DropdownMenu(
-            expanded = show,
-            onDismissRequest = {
-                show = false
-                onDismiss?.invoke()
-            },
-            modifier = Modifier
-                .wrapContentWidth()
-                .scale(0.50f)
-                .background(MaterialTheme.colorScheme.surface),
-        ) {
-            DropdownMenuItem(
-                text = { Text(text, fontSize = 20.sp) },
-                onClick = {
+    // Show menu only if visible and we have anchor bounds
+    anchorBounds?.let { bounds ->
+        if (show) {
+            val screenHeightPx = with(density) { configuration.screenHeightDp.dp.toPx() }
+            val screenWidthPx = with(density) { configuration.screenWidthDp.dp.toPx() }
+            val menuWidth = 200.dp
+            val menuHeight = 200.dp
+            val menuWidthPx = with(density) { menuWidth.toPx() }
+            val menuHeightPx = with(density) { menuHeight.toPx() }
+
+            val offsetY = if (bounds.bottom + menuHeightPx <= screenHeightPx) {
+                bounds.bottom
+            } else {
+                (bounds.top - menuHeightPx).coerceAtLeast(0f)
+            }
+            val offsetX = bounds.left.coerceAtLeast(0f).coerceAtMost(screenWidthPx - menuWidthPx)
+
+            Popup(
+                onDismissRequest = {
                     show = false
                     onDismiss?.invoke()
+                },
+                properties = PopupProperties(focusable = true)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+                        .width(menuWidth)
+                        .height(menuHeight)
+                        .background(MaterialTheme.colorScheme.surface)
+                        .scale(0.5f)
+                ) {
+                    content()
                 }
-            )
+            }
         }
     }
 }
+
+
+
 
 
 
