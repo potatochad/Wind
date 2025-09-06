@@ -67,6 +67,8 @@ import androidx.compose.foundation.gestures.*
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.layout.*
+import androidx.compose.ui.window.*
+import kotlin.math.*
 
 // needs fixing
 @Composable
