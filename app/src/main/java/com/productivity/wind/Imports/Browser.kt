@@ -108,3 +108,27 @@ fun GeckoSession.setYouTubeFilter() {
         }
     }
 }
+// Extension function of GeckoSession
+private fun GeckoSession.injectYouTubeCleanJS() {
+    val js = """
+        (function() {
+            const hideThumbnails = () => {
+                document.querySelectorAll('img').forEach(img => img.style.display = 'none');
+                document.querySelectorAll('*').forEach(el => {
+                    const bg = window.getComputedStyle(el).backgroundImage;
+                    if (bg && bg !== 'none') el.style.backgroundImage = 'none';
+                });
+                const selectors = ['#related', '#secondary', 'ytd-item-section-renderer', 
+                                   'ytd-video-renderer', 'ytd-channel-renderer'];
+                selectors.forEach(sel => {
+                    document.querySelectorAll(sel).forEach(el => el.remove());
+                });
+            };
+            hideThumbnails();
+            new MutationObserver(hideThumbnails).observe(document.body, { childList: true, subtree: true });
+        })();
+    """.trimIndent()
+
+    val encodedJs = "javascript:" + java.net.URLEncoder.encode(js, "UTF-8")
+    this.loadUri(encodedJs)
+}
