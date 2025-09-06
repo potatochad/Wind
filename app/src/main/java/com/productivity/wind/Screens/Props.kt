@@ -179,7 +179,10 @@ object Icon {
         @Composable
         fun Chill() {
                 LazyIcon(
-                        onClick = { goTo("Web") },
+                        onClick = { 
+                            if (Bar.funTime < Bar.Dpoints) {show(Popup.NeedMorePoints)}
+                            else {goTo("Web")}
+                        },
                         icon = Icons.Default.SportsEsports
                 )
         }
