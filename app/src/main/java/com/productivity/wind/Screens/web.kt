@@ -43,17 +43,23 @@ fun GeckoSession.HideYoutubeRecommendations() {
             return GeckoResult.fromValue(AllowOrDeny.ALLOW)
         }
 
-        override fun onPageStop(session: GeckoSession, success: Boolean) {
-            val url = session.currentUri ?: return
-            if (url.contains("youtube.com/watch")) {
+        override fun onLocationChange(
+            session: GeckoSession,
+            url: String?,
+            perms: GeckoSession.PermissionDelegate? ,
+            hasUserGesture: Boolean
+        ) {
+            if (url?.contains("youtube.com/watch") == true) {
                 val js = """
-                    setInterval(() => {
-                        const related = document.getElementById('related');
-                        if (related) related.style.display = 'none';
-                    }, 1000);
+                    if (!window._ytHideRecommendations) {
+                        window._ytHideRecommendations = setInterval(() => {
+                            const related = document.getElementById('related');
+                            if (related) related.style.display = 'none';
+                        }, 1000);
+                    }
                 """.trimIndent()
 
-                session.evaluateJS(js)
+                session.evaluateJavascript(js)
             }
         }
     }
