@@ -85,41 +85,49 @@ fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDeleg
 
 
 
-// Inject JS that removes YouTube content and dynamically handles new elements
 fun GeckoSession.setYouTubeFilter() {
+    // 1️⃣ ProgressDelegate: inject JS when page fully loads
     progressDelegate = object : GeckoSession.ProgressDelegate {
         override fun onProgressChange(session: GeckoSession, progress: Int) {
             if (progress == 100) injectYouTubeJS()
         }
     }
 
+    // 2️⃣ NavigationDelegate: block YouTube thumbnails
     navigationDelegate = object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
         ): GeckoResult<AllowOrDeny> {
             val url = request.uri.toString()
-            val allowed = url.contains("youtube.com", ignoreCase = true)
+            
+            // Block all YouTube thumbnails from ytimg.com
+            val isThumbnail = url.contains("ytimg.com", ignoreCase = true)
+            
             return GeckoResult.fromValue(
-                if (allowed) AllowOrDeny.ALLOW else AllowOrDeny.DENY
+                if (isThumbnail) AllowOrDeny.DENY else AllowOrDeny.ALLOW
             )
         }
     }
 }
 
-// Inject JS that removes all images (thumbnails) dynamically
+// 3️⃣ JS Injection: remove recommendations dynamically
 private fun GeckoSession.injectYouTubeJS() {
     val js = """
         (function() {
-            const removeImages = () => {
-                document.querySelectorAll('img').forEach(img => img.remove());
+            const removeStuff = () => {
+                const selectors = ['#related', '#secondary', 'ytd-item-section-renderer', 
+                                   'ytd-video-renderer', 'ytd-channel-renderer'];
+                selectors.forEach(sel => {
+                    document.querySelectorAll(sel).forEach(el => el.remove());
+                });
             };
-            removeImages();
-            new MutationObserver(removeImages).observe(document.body, { childList: true, subtree: true });
+            removeStuff();
+            new MutationObserver(removeStuff).observe(document.body, { childList: true, subtree: true });
         })();
     """.trimIndent()
 
-    // URL-encode JS and call via loadUri
+    // URL-encode JS for GeckoView
     val encodedJs = "javascript:" + java.net.URLEncoder.encode(js, "UTF-8")
     this.loadUri(encodedJs)
 }
