@@ -44,11 +44,14 @@ fun Web() {
     val Tab = r { GeckoSession() }
 
     each(1000L){
-        if (Bar.funTime ==0) {
+        if (Bar.funTime == 0) {
             goTo("main")
-            show(Popup.NeedMorePoints)           
+            show(Popup.NeedMorePoints)    
+            
         }
-        Bar.funTime -=1
+        else{
+            Bar.funTime -=1
+        }
     }
     DisposableEffect(Unit) {
         
