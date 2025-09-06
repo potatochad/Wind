@@ -85,29 +85,23 @@ fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDeleg
 
 // Inject JS that removes YouTube content and dynamically handles new elements
 fun GeckoSession.setYouTubeFilter() {
-    // Use ProgressDelegate to run JS when page is fully loaded
     progressDelegate = object : GeckoSession.ProgressDelegate {
         override fun onProgressChange(session: GeckoSession, progress: Int) {
-            if (progress == 100) {
-                injectYouTubeJS()
-            }
+            if (progress == 100) injectYouTubeJS()
         }
     }
 
-    // Also inject JS on every location change (SPA support)
     navigationDelegate = object : GeckoSession.NavigationDelegate {
-        override fun onLocationChange(session: GeckoSession, uri: android.net.Uri) {
-            if (uri.toString().contains("youtube.com")) {
-                injectYouTubeJS()
-            }
-        }
-
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<GeckoSession.NavigationDelegate.AllowOrDeny> {
-            // Allow all for YouTube, block others if you want
-            return GeckoResult.fromValue(GeckoSession.NavigationDelegate.AllowOrDeny.ALLOW)
+        ): GeckoResult<GeckoSession.NavigationDelegate.Action> {
+            val url = request.uri.toString()
+            val allowed = url.contains("youtube.com", ignoreCase = true)
+            return GeckoResult.fromValue(
+                if (allowed) GeckoSession.NavigationDelegate.Action.ALLOW
+                else GeckoSession.NavigationDelegate.Action.DENY
+            )
         }
     }
 }
@@ -122,15 +116,10 @@ private fun GeckoSession.injectYouTubeJS() {
                 document.querySelectorAll(sel).forEach(el => el.remove());
             });
         }
-
-        // Initial removal
         removeYouTubeStuff();
-
-        // Observe DOM for AJAX-loaded content
         const observer = new MutationObserver(removeYouTubeStuff);
         observer.observe(document.body, { childList: true, subtree: true });
     })();
     """.trimIndent()
-
     this.loadUri("javascript:$js")
 }
