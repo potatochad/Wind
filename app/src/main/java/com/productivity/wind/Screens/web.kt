@@ -43,10 +43,9 @@ fun GeckoSession.HideYoutubeRecommendations() {
             return GeckoResult.fromValue(AllowOrDeny.ALLOW)
         }
 
-        override fun onLoad(uri: Uri) {
-            val url = uri.toString()
+        override fun onPageStop(session: GeckoSession, success: Boolean) {
+            val url = session.currentUri ?: return
             if (url.contains("youtube.com/watch")) {
-                // JS runs every 1 second to hide recommendations
                 val js = """
                     setInterval(() => {
                         const related = document.getElementById('related');
@@ -54,7 +53,7 @@ fun GeckoSession.HideYoutubeRecommendations() {
                     }, 1000);
                 """.trimIndent()
 
-                this@HideYoutubeRecommendations.loadUri("javascript:$js")
+                session.evaluateJS(js)
             }
         }
     }
