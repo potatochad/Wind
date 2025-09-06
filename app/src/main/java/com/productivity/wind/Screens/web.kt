@@ -33,37 +33,27 @@ var Tab.ManageTab: ManageTab?
 
 
 
-fun GeckoSession.HideYoutubeRecommendations() {
-    this.navigationDelegate = object : GeckoSession.NavigationDelegate {
-
+fun Tab.HideYoutubeRecommendations() {
+    this.ManageTab = object : ManageTab {
         override fun onLoadRequest(
             session: GeckoSession,
-            request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<AllowOrDeny> {
-            return GeckoResult.fromValue(AllowOrDeny.ALLOW)
-        }
-
-        override fun onLocationChange(
-            session: GeckoSession,
-            url: String?,
-            perms: GeckoSession.PermissionDelegate? ,
-            hasUserGesture: Boolean
+            request: GeckoSession.LoadRequest,
+            callback: GeckoSession.LoadRequestCallback
         ) {
-            if (url?.contains("youtube.com/watch") == true) {
-                val js = """
-                    if (!window._ytHideRecommendations) {
-                        window._ytHideRecommendations = setInterval(() => {
-                            const related = document.getElementById('related');
-                            if (related) related.style.display = 'none';
-                        }, 1000);
-                    }
-                """.trimIndent()
+            callback.proceed() // allow page load
 
-                session.evaluateJavascript(js)
-            }
+            this@HideYoutubeRecommendations.loadUri(
+                "javascript:(function(){" +
+                        "setInterval(function(){" +
+                        "var r=document.getElementById('related');" +
+                        "if(r){r.style.display='none';}" +
+                        "}, 1000);" +
+                        "})()"
+            )
         }
     }
 }
+
 
 fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDelegate {
     return object : GeckoSession.NavigationDelegate {
