@@ -36,7 +36,9 @@ yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long a
 
 fun onNewDay() {  
      apps.forEach{app ->
-             app.done = false
+          apps.edit(app){
+				done = false
+          }
      }   
 }
 
