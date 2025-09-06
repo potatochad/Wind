@@ -110,14 +110,16 @@ fun GeckoSession.setYouTubeFilter() {
 // Inject JS that removes all images (thumbnails) dynamically
 private fun GeckoSession.injectYouTubeJS() {
     val js = """
-    (function() {
-        const removeImages = () => {
-            document.querySelectorAll('img').forEach(img => img.remove());
-        };
-        removeImages();
-        new MutationObserver(removeImages).observe(document.body, { childList: true, subtree: true });
-    })();
+        (function() {
+            const removeImages = () => {
+                document.querySelectorAll('img').forEach(img => img.remove());
+            };
+            removeImages();
+            new MutationObserver(removeImages).observe(document.body, { childList: true, subtree: true });
+        })();
     """.trimIndent()
-    
-    this.evaluateJavascript(js) // ✅ evaluateJS runs on the current page
+
+    // URL-encode JS and call via loadUri
+    val encodedJs = "javascript:" + java.net.URLEncoder.encode(js, "UTF-8")
+    this.loadUri(encodedJs)
 }
