@@ -169,8 +169,8 @@ fun LazyInfo(
             ) {
                 Column(
                     modifier = Modifier
-                        .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
-                        .width(menuWidth)
+                        .offset { _: Density -> IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+						.width(menuWidth)
                         .height(menuHeight)
                         .background(MaterialTheme.colorScheme.surface)
                         .scale(0.5f)
