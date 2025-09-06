@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.*
 import androidx.compose.foundation.lazy.*
 import org.mozilla.geckoview.AllowOrDeny
 import org.mozilla.geckoview.*
+import androidx.compose.ui.semantics.Action
 
 typealias Tab = GeckoSession
 typealias ManageTab = GeckoSession.NavigationDelegate
