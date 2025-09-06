@@ -86,48 +86,25 @@ fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDeleg
 
 
 fun GeckoSession.setYouTubeFilter() {
-    // 1️⃣ ProgressDelegate: inject JS when page fully loads
-    progressDelegate = object : GeckoSession.ProgressDelegate {
-        override fun onProgressChange(session: GeckoSession, progress: Int) {
-            if (progress == 100) injectYouTubeJS()
-        }
-    }
-
-    // 2️⃣ NavigationDelegate: block YouTube thumbnails
+    // Block thumbnail network requests
     navigationDelegate = object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
         ): GeckoResult<AllowOrDeny> {
             val url = request.uri.toString()
-            
-            // Block all YouTube thumbnails from ytimg.com
-            val isThumbnail = url.contains("ytimg.com", ignoreCase = true)
-            
+            val blockedDomains = listOf("ytimg.com", "youtube.com/embed", "googlevideo.com")
+            val deny = blockedDomains.any { url.contains(it, ignoreCase = true) }
             return GeckoResult.fromValue(
-                if (isThumbnail) AllowOrDeny.DENY else AllowOrDeny.ALLOW
+                if (deny) AllowOrDeny.DENY else AllowOrDeny.ALLOW
             )
         }
     }
-}
 
-// 3️⃣ JS Injection: remove recommendations dynamically
-private fun GeckoSession.injectYouTubeJS() {
-    val js = """
-        (function() {
-            const removeStuff = () => {
-                const selectors = ['#related', '#secondary', 'ytd-item-section-renderer', 
-                                   'ytd-video-renderer', 'ytd-channel-renderer'];
-                selectors.forEach(sel => {
-                    document.querySelectorAll(sel).forEach(el => el.remove());
-                });
-            };
-            removeStuff();
-            new MutationObserver(removeStuff).observe(document.body, { childList: true, subtree: true });
-        })();
-    """.trimIndent()
-
-    // URL-encode JS for GeckoView
-    val encodedJs = "javascript:" + java.net.URLEncoder.encode(js, "UTF-8")
-    this.loadUri(encodedJs)
+    // Inject JS after full page load
+    progressDelegate = object : GeckoSession.ProgressDelegate {
+        override fun onProgressChange(session: GeckoSession, progress: Int) {
+            if (progress == 100) injectYouTubeCleanJS()
+        }
+    }
 }
