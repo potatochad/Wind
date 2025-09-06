@@ -42,6 +42,13 @@ fun Web() {
     val Web = r { GeckoRuntime.create(ctx) }
     val Tab = r { GeckoSession() }
 
+    each(1000L){
+        if (Bar.funTime ==0) {
+            goTo("main")
+            show(Popup.NeedMorePoints)           
+        }
+        Bar.funTime -=1
+    }
     DisposableEffect(Unit) {
         
         Tab.ManageTab = onlyAllowDomains(listOf("youtube.com"))
@@ -54,11 +61,7 @@ fun Web() {
 
     LazyScreen(
         title = { 
-            LazyRow {
-                item {
-                    UI.Ctext("URLS (click)") { }
-                }
-            }
+            Text("${Bar.funTime} points")
         },
         Scrollable = false,
         DividerPadding = false,
