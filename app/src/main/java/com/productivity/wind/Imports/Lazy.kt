@@ -63,6 +63,8 @@ import android.content.*
 import androidx.compose.runtime.snapshots.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.focus.*
+import androidx.compose.foundation.gestures.*
+import androidx.compose.ui.input.pointer.*
 
 // needs fixing
 @Composable
@@ -131,13 +133,13 @@ fun LazyInfo(
         DropdownMenu(
             expanded = show,
             onDismissRequest = {
-                expanded = false
+                show = false
                 onDismiss?.invoke()
             },
             modifier = Modifier
                 .wrapContentWidth()
                 .scale(0.50f)
-                .background(MaterialTheme.colorScheme.surface)
+                .background(MaterialTheme.colorScheme.surface),
         ) {
             DropdownMenuItem(
                 text = { Text(text, fontSize = 20.sp) },
@@ -778,7 +780,7 @@ fun LazyPopup(
         },
         confirmButton = {
             if (showConfirm) {
-                Ctext("OK"){
+                UI.Ctext("OK"){
                     onConfirm?.invoke()
                     show.value = false
                 }
@@ -786,7 +788,7 @@ fun LazyPopup(
         },
         dismissButton = if (showCancel) {
             {
-				Ctext("Cancel"){
+				UI.Ctext("Cancel"){
                     onCancel?.invoke()
                     show.value = false
                 }
