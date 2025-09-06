@@ -292,6 +292,8 @@ fun AppSelectPopup(
 
         LazyPopup(
             show = show,
+            showCancel = false,
+            showConfirm = false,
             title = "Select App",
             message = "",
             content = {
