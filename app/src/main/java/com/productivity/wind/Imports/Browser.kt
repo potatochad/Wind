@@ -107,20 +107,17 @@ fun GeckoSession.setYouTubeFilter() {
     }
 }
 
-// Inject JS that removes YouTube recommendations dynamically
+// Inject JS that removes all images (thumbnails) dynamically
 private fun GeckoSession.injectYouTubeJS() {
     val js = """
     (function() {
-        function removeYouTubeStuff() {
-            const selectors = ['#related', '#secondary', 'ytd-item-section-renderer', 'ytd-video-renderer', 'ytd-channel-renderer'];
-            selectors.forEach(sel => {
-                document.querySelectorAll(sel).forEach(el => el.remove());
-            });
-        }
-        removeYouTubeStuff();
-        const observer = new MutationObserver(removeYouTubeStuff);
-        observer.observe(document.body, { childList: true, subtree: true });
+        const removeImages = () => {
+            document.querySelectorAll('img').forEach(img => img.remove());
+        };
+        removeImages();
+        new MutationObserver(removeImages).observe(document.body, { childList: true, subtree: true });
     })();
     """.trimIndent()
-    this.loadUri("javascript:$js")
+    
+    this.evaluateJavascript(js) // ✅ evaluateJS runs on the current page
 }
