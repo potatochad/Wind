@@ -175,7 +175,6 @@ object Icon {
                         icon = Icons.Default.Menu
                 )
         }
-        
         @Composable
         fun Chill() {
                 LazyIcon(
