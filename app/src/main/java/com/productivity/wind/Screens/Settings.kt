@@ -20,7 +20,14 @@ import androidx.compose.ui.*
 
 @Composable
 fun SettingsScreen() {
-    LazyScreen(title = { Text("Settings") }) {
+    LazyScreen(title = { 
+        Text("Settings") 
+        UI.End {
+           Icon.Info{
+               
+           }
+        }
+    }) {
     
         
         Item.UnlockThreshold()
