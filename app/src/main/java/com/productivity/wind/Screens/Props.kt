@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.*
 import androidx.compose.animation.core.*
 import androidx.compose.ui.platform.*
+import kotlinx.coroutines.*
 
 fun NavGraphBuilder.ScreenNav() {
     //Main—StartDestination    
