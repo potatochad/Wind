@@ -151,21 +151,22 @@ fun Where_Info(
             modifier = Modifier
                 .onSizeChanged { contentSize = it } // measure content
                 .offset {
-                    // inline position calculation, no extra inputs
-                    val xPx = if (location.right + contentSize.width < screenWidthPx) {
-                        location.left
-                    } else {
-                        (location.right - contentSize.width).coerceAtLeast(0f)
-                    }
+					val contentWidth = contentSize.width.toFloat()
+					val contentHeight = contentSize.height.toFloat()
+					val xPx = if (location.right + contentWidth < screenWidthPx) {
+						location.left
+					} else {
+						(location.right - contentWidth).coerceAtLeast(0f)
+					}
 
-                    val yPx = if (location.bottom + contentSize.height < screenHeightPx) {
-                        location.bottom + 8f
-                    } else {
-                        (location.top - contentSize.height - 8f).coerceAtLeast(0f)
-                    }
+					val yPx = if (location.bottom + contentHeight < screenHeightPx) {
+						location.bottom + 8f
+					} else {
+						(location.top - contentHeight - 8f).coerceAtLeast(0f)
+					}
 
-                    IntOffset(xPx.roundToInt(), yPx.roundToInt())
-                }
+					IntOffset(xPx.roundToInt(), yPx.roundToInt())
+				}
                 .wrapContentSize()
         ) {
             content()
