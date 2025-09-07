@@ -869,11 +869,13 @@ object UI {
 		text: Str,
 		onClick: Do,
 	) {
+		val interactionSource = r { MutableInteractionSource() }
+
 		Text(
 			text = text,
 			modifier = Modifier.clickable(
-				onClick = onClick,
-				interactionSource = r { MutableInteractionSource() }
+				interactionSource = interactionSource,
+				onClick = onClick
 			),
 			style = TextStyle(
 				color = Color(0xFFFFD700),           // gold
