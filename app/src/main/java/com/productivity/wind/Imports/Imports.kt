@@ -430,7 +430,7 @@ object UI {
 				drawArc(
 					color = color,
 					startAngle = -90f,
-					sweepAngle = 360f * progress.coerceIn(0f, 1f),
+					sweepAngle = -360f * progress.coerceIn(0f, 1f),
 					useCenter = false,
 					topLeft = topLeft,
 					size = Size(radius * 2, radius * 2),
