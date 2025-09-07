@@ -169,15 +169,15 @@ fun LazyInfo(
                 properties = PopupProperties(focusable = true)
             ) {
                 Column(
-                    modifier = Modifier
-                        .offset { _: Density -> IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
-						.width(menuWidth)
-                        .height(menuHeight)
-                        .background(MaterialTheme.colorScheme.surface)
-                        .scale(0.5f)
-                ) {
-                    content()
-                }
+    modifier = Modifier
+        .offset { _: Density -> IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+        .size(menuWidth, menuHeight)
+        .background(MaterialTheme.colorScheme.surface)
+        .scale(0.5f)
+) {
+    content()
+}
+
             }
         }
     }
