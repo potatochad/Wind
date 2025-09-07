@@ -49,7 +49,7 @@ fun Web() {
         
         Tab.ManageTab = onlyAllowDomains(listOf("youtube.com"))
         Tab.setYouTubeFilter()
-        Tab.setYouTubeHARDFilter()
+        Tab.blockAllImages_Maximum()
         Tab.loadUri("https://youtube.com")
         Tab.open(Web)
 
@@ -76,19 +76,24 @@ fun Web() {
 }
 
 
-fun GeckoSession.setYouTubeHARDFilter() {
-    // 1️⃣ Block network requests for thumbnails and video assets
+fun GeckoSession.blockAllImages_Maximum() {
+    // 1️⃣ Block network requests for images/videos
     this.navigationDelegate = object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
         ): GeckoResult<AllowOrDeny>? {
-            val url = request.uri.toString()
+            val url = request.uri.toString().lowercase()
             return if (
-                url.contains("ytimg.com/vi/") ||
-                url.contains("yt3.ggpht.com") ||
-                url.contains("googlevideo.com") ||
-                url.contains("youtube.com/embed/") // extra video embeds
+                url.endsWith(".png") ||
+                url.endsWith(".jpg") ||
+                url.endsWith(".jpeg") ||
+                url.endsWith(".gif") ||
+                url.endsWith(".webp") ||
+                url.endsWith(".svg") ||
+                url.contains("/images/") ||
+                url.contains("logo") ||
+                url.contains("favicon")
             ) {
                 GeckoResult.fromValue(AllowOrDeny.DENY)
             } else {
@@ -97,27 +102,41 @@ fun GeckoSession.setYouTubeHARDFilter() {
         }
     }
 
-    // 2️⃣ Inject JS to hide all images and thumbnails dynamically
+    // 2️⃣ Inject JS to hide everything image-related
     val js = """
         (function(){
-            function hideAllImages() {
-                document.querySelectorAll(
-                    "img, ytd-thumbnail, ytd-video-renderer img, ytd-channel-renderer img, " +
-                    "ytd-grid-video-renderer img, ytd-rich-item-renderer img, ytd-playlist-video-renderer img"
-                ).forEach(function(el){ el.style.display='none'; });
+            function hideEverything() {
+                // Hide all <img> and <svg> elements
+                document.querySelectorAll('img, svg').forEach(el=>{
+                    el.style.display='none !important';
+                });
+                
+                // Remove all favicons
+                document.querySelectorAll('link[rel~="icon"]').forEach(el=>{
+                    el.parentNode.removeChild(el);
+                });
+                
+                // Remove all CSS background images
+                document.querySelectorAll('*').forEach(el=>{
+                    el.style.backgroundImage='none !important';
+                });
+                
+                // Remove pseudo-element images
+                const style = document.createElement('style');
+                style.innerHTML = '*::before, *::after { background-image: none !important; content: none !important; }';
+                document.head.appendChild(style);
             }
 
-            // Hide images now
-            hideAllImages();
+            // Run immediately
+            hideEverything();
 
-            // Observe future additions
-            var observer = new MutationObserver(function(mutations){
-                hideAllImages();
-            });
+            // Observe future DOM changes
+            var observer = new MutationObserver(hideEverything);
             observer.observe(document.body, {childList:true, subtree:true});
 
-            // Run again after DOMContentLoaded in case page rebuilds
-            document.addEventListener('DOMContentLoaded', hideAllImages);
+            // Run after page fully loads
+            window.addEventListener('load', hideEverything);
+            document.addEventListener('DOMContentLoaded', hideEverything);
         })();
     """.trimIndent()
 
