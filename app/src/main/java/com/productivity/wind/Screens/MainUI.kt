@@ -167,7 +167,6 @@ fun Disipline() {
 
         OutlinedTextField(
             value = Bar.currentInput,
-            cursorBrush = SolidColor(Color.Blue),
             onValueChange = {
                 if (it.length - Bar.currentInput.length <= 5) {
                     if (it.length > Bar.currentInput.length){
