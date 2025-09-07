@@ -157,7 +157,7 @@ fun LazyInfo(
     content: Content,
 ) {
     var show by r { m(false) }
-    var location by r { m(Rect(0f, 0f, 0f, 0f) }
+    var location by r { m(Rect(0f, 0f, 0f, 0f)) }
 	var ScreenHeight = Bar.halfHeight*2//dp
     var ScreenWidth = Bar.halfWidth*2//dp
 	
