@@ -131,13 +131,13 @@ fun Modifier.location(
 
 @Composable
 fun Where_Info(
-    show: Boolean,
+    show: MutableState<Boolean>,
     content: @Composable () -> Unit
 ) {
-    if (!show) return
+    if (!show.value) return
 
     Popup(
-        onDismissRequest = {show = false},
+        onDismissRequest = {show.value = false},
         properties = PopupProperties(focusable = true)
     ) {
         Box(
@@ -155,7 +155,7 @@ fun LazyInfo(
     hold: Bool = false,
     content: Content,
 ) {
-    var show by r { m(false) }
+    var show = r { m(false) }
 
     Box(
         modifier = Modifier.clickOrHold(hold) { show = true }
