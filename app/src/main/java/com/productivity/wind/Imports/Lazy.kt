@@ -164,10 +164,15 @@ fun LazyInfo(
     }
 
     Where_Info(show = show) {
-        LazyCard(corners = 6) {
-            Text(info)
-        }
-    }
+		LazyCard(
+			corners = 6,
+			modifier = Modifier
+				.padding(4.dp)
+				.wrapContentSize(),
+		) {
+			Text(info)
+		}
+	}
 }
 
 
@@ -376,12 +381,13 @@ fun LazyCard(
     inputColor: Color = Color(0xFF1A1A1A),
     innerPadding: Int = 16,
     corners: Int = 16,
+	modifier: Modifier = Modifier
+	     .padding(8.dp)
+         .fillMaxWidth(),
     content: Content,
 ) {
     Card(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(),
+        modifier = modifier,
         shape = RoundedCornerShape(corners.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(containerColor = inputColor)
