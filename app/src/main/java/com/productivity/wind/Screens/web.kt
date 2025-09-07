@@ -80,9 +80,9 @@ fun GeckoSession.setYouTubeHARDFilter() {
     // Block network requests for images
     this.navigationDelegate = object : GeckoSession.NavigationDelegate() {
         override fun onLoadRequest(
-            session: GeckoSession?,
+            session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
-        ): Boolean {
+        ): GeckoResult<AllowOrDeny> {
             val url = request.uri.toString()
             // Block all common YouTube image sources
             if (url.contains("ytimg.com/vi/") ||
