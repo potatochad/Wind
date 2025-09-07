@@ -118,8 +118,8 @@ fun Modifier.clickOrHold(
         }
     } else {
         clickable(
-            indication = if (animation) null else null, // no ripple if animation is false
-            interactionSource = remember { MutableInteractionSource() }
+            indication = if (animation) null else null,
+            interactionSource = MutableInteractionSource()
         ) {
             action()
         }
