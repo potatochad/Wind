@@ -43,17 +43,7 @@ fun Web() {
     val Web = r { GeckoRuntime.create(ctx) }
     val Tab = r { GeckoSession() }
 
-    if (Bar.Dpoints > 0){
-        each(1000L){
-            if (Bar.funTime == 0) {
-                goTo("main")
-                show(Popup.NeedMorePoints)    
-            }
-            else{
-                Bar.funTime -=1
-            }
-        }
-    }
+    
     DisposableEffect(Unit) {
         
         Tab.ManageTab = onlyAllowDomains(listOf("youtube.com"))
