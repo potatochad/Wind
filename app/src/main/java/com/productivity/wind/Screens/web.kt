@@ -77,7 +77,7 @@ fun Web() {
 
 
 fun GeckoSession.setYouTubeHARDFilter() {
-    // Block known image/video URLs
+    // 1️⃣ Block network requests for thumbnails and video assets
     this.navigationDelegate = object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
             session: GeckoSession,
@@ -87,7 +87,8 @@ fun GeckoSession.setYouTubeHARDFilter() {
             return if (
                 url.contains("ytimg.com/vi/") ||
                 url.contains("yt3.ggpht.com") ||
-                url.contains("googlevideo.com")
+                url.contains("googlevideo.com") ||
+                url.contains("youtube.com/embed/") // extra video embeds
             ) {
                 GeckoResult.fromValue(AllowOrDeny.DENY)
             } else {
@@ -96,15 +97,29 @@ fun GeckoSession.setYouTubeHARDFilter() {
         }
     }
 
-    // Inject CSS + MutationObserver to hide all current and future thumbnails
-    this.loadUri(
-        "javascript:(function(){" +
-            "var style=document.createElement('style');" +
-            "style.innerHTML='img, ytd-thumbnail, ytd-video-renderer ytd-thumbnail, ytd-channel-renderer img {display:none !important}';" +
-            "document.head.appendChild(style);" +
-            "var observer = new MutationObserver(function(){style.innerHTML='img, ytd-thumbnail, ytd-video-renderer ytd-thumbnail, ytd-channel-renderer img {display:none !important}'});" +
-            "observer.observe(document.body, {childList:true, subtree:true});" +
-        "})()"
-    )
-}
+    // 2️⃣ Inject JS to hide all images and thumbnails dynamically
+    val js = """
+        (function(){
+            function hideAllImages() {
+                document.querySelectorAll(
+                    "img, ytd-thumbnail, ytd-video-renderer img, ytd-channel-renderer img, " +
+                    "ytd-grid-video-renderer img, ytd-rich-item-renderer img, ytd-playlist-video-renderer img"
+                ).forEach(function(el){ el.style.display='none'; });
+            }
 
+            // Hide images now
+            hideAllImages();
+
+            // Observe future additions
+            var observer = new MutationObserver(function(mutations){
+                hideAllImages();
+            });
+            observer.observe(document.body, {childList:true, subtree:true});
+
+            // Run again after DOMContentLoaded in case page rebuilds
+            document.addEventListener('DOMContentLoaded', hideAllImages);
+        })();
+    """.trimIndent()
+
+    this.loadUri("javascript:$js")
+}
