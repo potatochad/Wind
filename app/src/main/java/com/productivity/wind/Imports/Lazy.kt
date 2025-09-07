@@ -130,40 +130,17 @@ fun Modifier.location(
 
 
 
-fun wherePlacePopup(
-    location: Rect,
-    contentSize: IntSize,
-    density: Density,
-    screenWidthPx: Float,
-    screenHeightPx: Float,
-    padding: Float = 8f
-): IntOffset {
-    val xPx = if (location.right + contentSize.width < screenWidthPx) {
-        location.left
-    } else {
-        (location.right - contentSize.width).coerceAtLeast(0f)
-    }
-
-    val yPx = if (location.bottom + contentSize.height < screenHeightPx) {
-        location.bottom + padding
-    } else {
-        (location.top - contentSize.height - padding).coerceAtLeast(0f)
-    }
-
-    return IntOffset(xPx.roundToInt(), yPx.roundToInt())
-}
-
-
-
 @Composable
 fun Where_Info(
-    show: Boolean,
+    show: Bool,
     location: Rect,
-    content: @Composable () -> Unit
+    content: Content,
 ) {
     if (!show) return
 
     val density = LocalDensity.current
+    val screenWidthPx = Bar.halfWidth * 2 
+    val screenHeightPx = Bar.halfHeight * 2 
     var contentSize by r { m(IntSize(0, 0)) }
 
     Popup(
@@ -173,13 +150,29 @@ fun Where_Info(
         Box(
             modifier = Modifier
                 .onSizeChanged { contentSize = it } // measure content
-                .offset { wherePlacePopup(location, contentSize) }
+                .offset {
+                    // inline position calculation, no extra inputs
+                    val xPx = if (location.right + contentSize.width < screenWidthPx) {
+                        location.left
+                    } else {
+                        (location.right - contentSize.width).coerceAtLeast(0f)
+                    }
+
+                    val yPx = if (location.bottom + contentSize.height < screenHeightPx) {
+                        location.bottom + 8f
+                    } else {
+                        (location.top - contentSize.height - 8f).coerceAtLeast(0f)
+                    }
+
+                    IntOffset(xPx.roundToInt(), yPx.roundToInt())
+                }
                 .wrapContentSize()
         ) {
             content()
         }
     }
 }
+
 
 
 
