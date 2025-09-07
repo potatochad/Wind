@@ -132,16 +132,14 @@ fun Modifier.location(
 
 @Composable
 fun Where_Info(
-    show: Bool,
+    show: Boolean,
     location: Rect,
     content: Content,
 ) {
     if (!show) return
 
     val density = LocalDensity.current
-    val screenWidthPx = Bar.halfWidth * 2 
-    val screenHeightPx = Bar.halfHeight * 2 
-    var contentSize by r { m(IntSize(0, 0)) }
+    var contentSize by remember { mutableStateOf(IntSize(0, 0)) }
 
     Popup(
         onDismissRequest = {},
@@ -149,31 +147,29 @@ fun Where_Info(
     ) {
         Box(
             modifier = Modifier
-                .onSizeChanged { contentSize = it } // measure content
+                .onSizeChanged { contentSize = it }
                 .offset {
-    
-    val contentWidth = contentSize.width.toFloat()
-    val contentHeight = contentSize.height.toFloat()
+                    val contentWidth = contentSize.width.toFloat()
+                    val contentHeight = contentSize.height.toFloat()
 
-    val screenWidthPx = with(density) { (Bar.halfWidth * 2).toPx() }
-    val screenHeightPx = with(density) { (Bar.halfHeight * 2).toPx() }
+                    // Use screen dimensions
+                    val screenWidthPx = with(density) { LocalConfiguration.current.screenWidthDp.dp.toPx() }
+                    val screenHeightPx = with(density) { LocalConfiguration.current.screenHeightDp.dp.toPx() }
 
-    val xPx = if (location.right + contentWidth < screenWidthPx) {
-        location.left
-    } else {
-        (location.right - contentWidth).coerceAtLeast(0f)
-    }
+                    val xPx = if (location.right + contentWidth < screenWidthPx) {
+                        location.left
+                    } else {
+                        (location.right - contentWidth).coerceAtLeast(0f)
+                    }
 
-    val yPx = if (location.bottom + contentHeight < screenHeightPx) {
-        location.bottom + 8f
-    } else {
-        (location.top - contentHeight - 8f).coerceAtLeast(0f)
-    }
+                    val yPx = if (location.bottom + contentHeight < screenHeightPx) {
+                        location.bottom + 8f
+                    } else {
+                        (location.top - contentHeight - 8f).coerceAtLeast(0f)
+                    }
 
-    IntOffset(xPx.roundToInt(), yPx.roundToInt())
-}
-
-                .wrapContentSize()
+                    IntOffset(xPx.roundToInt(), yPx.roundToInt())
+                }
         ) {
             content()
         }
@@ -185,29 +181,34 @@ fun Where_Info(
 
 @Composable
 fun LazyInfo(
-    info: Str = "",
-    hold: Bool = false,
+    info: String = "",
+    hold: Boolean = false,
     content: Content,
 ) {
-    var show by r { m(false) }
-    var location by r { m(Rect(0f, 0f, 0f, 0f)) }
-	
+    var show by remember { mutableStateOf(false) }
+    var location by remember { mutableStateOf(Rect(0f, 0f, 0f, 0f)) }
+
     Box(
         modifier = Modifier
             .clickOrHold(hold) { show = true }
-            .location { location = it }
+            .onGloballyPositioned { coordinates ->
+                val pos = coordinates.boundsInWindow()
+                location = pos
+            }
     ) {
         content()
     }
-	Where_Info(
-		show = show,
-		location= location,
-	) {
-		LazyCard(corners = 6){
-			Text(info)
-		}
-	}
+
+    Where_Info(
+        show = show,
+        location = location
+    ) {
+        LazyCard(corners = 6) {
+            Text(info)
+        }
+    }
 }
+
 
 
 
