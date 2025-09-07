@@ -151,22 +151,28 @@ fun Where_Info(
             modifier = Modifier
                 .onSizeChanged { contentSize = it } // measure content
                 .offset {
-					val contentWidth = contentSize.width.toFloat()
-					val contentHeight = contentSize.height.toFloat()
-					val xPx = if (location.right + contentWidth < screenWidthPx) {
-						location.left
-					} else {
-						(location.right - contentWidth).coerceAtLeast(0f)
-					}
+    val density = LocalDensity.current
+    val contentWidth = contentSize.width.toFloat()
+    val contentHeight = contentSize.height.toFloat()
 
-					val yPx = if (location.bottom + contentHeight < screenHeightPx) {
-						location.bottom + 8f
-					} else {
-						(location.top - contentHeight - 8f).coerceAtLeast(0f)
-					}
+    val screenWidthPx = with(density) { (Bar.halfWidth * 2).toPx() }
+    val screenHeightPx = with(density) { (Bar.halfHeight * 2).toPx() }
 
-					IntOffset(xPx.roundToInt(), yPx.roundToInt())
-				}
+    val xPx = if (location.right + contentWidth < screenWidthPx) {
+        location.left
+    } else {
+        (location.right - contentWidth).coerceAtLeast(0f)
+    }
+
+    val yPx = if (location.bottom + contentHeight < screenHeightPx) {
+        location.bottom + 8f
+    } else {
+        (location.top - contentHeight - 8f).coerceAtLeast(0f)
+    }
+
+    IntOffset(xPx.roundToInt(), yPx.roundToInt())
+}
+
                 .wrapContentSize()
         ) {
             content()
