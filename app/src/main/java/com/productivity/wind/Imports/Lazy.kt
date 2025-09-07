@@ -812,7 +812,7 @@ fun LazyPopup(
         },
         confirmButton = {
             if (showConfirm) {
-				UI.move(60)
+				UI.move(10)
                 UI.Ctext("OK"){
                     onConfirm?.invoke()
                     show.value = false
