@@ -836,7 +836,7 @@ fun LazyPopup(
         },
         confirmButton = {
             if (showConfirm) {
-				UI.move(25)
+				UI.move(35)
                 UI.Ctext("OK"){
                     onConfirm?.invoke()
                     show.value = false
@@ -845,7 +845,7 @@ fun LazyPopup(
         },
         dismissButton = if (showCancel) {
             {
-				UI.move(20)
+				UI.move(15)
 				UI.Ctext("Cancel"){
                     onCancel?.invoke()
                     show.value = false
