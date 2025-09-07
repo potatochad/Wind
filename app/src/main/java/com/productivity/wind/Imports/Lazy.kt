@@ -693,6 +693,7 @@ fun LazyHeader(
              * This protects Compose from crashing or losing its state tree.
              */
             if (showBack) {
+				UI.move(5)
                 LazyIcon(
 					onClick = { 
 						if (DisableTB_Button) {}
