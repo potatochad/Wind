@@ -127,34 +127,32 @@ fun Modifier.location(
         onBoundsChanged(bounds)
     }
 )
-@Composable
+
+
+
 fun wherePlacePopup(
     location: Rect,
     contentSize: IntSize,
+    density: Density,
+    screenWidthPx: Float,
+    screenHeightPx: Float,
     padding: Float = 8f
 ): IntOffset {
-    val density = LocalDensity.current
-    val screenHeight = Bar.halfHeight*2//dp
-    val screenWidth = Bar.halfWidth*2//dp
-	
-    val xPx = with(density) {
-        if (location.right + contentSize.width < screenWidth.toPx()) {
-            location.left
-        } else {
-            (location.right - contentSize.width).coerceAtLeast(0f)
-        }
+    val xPx = if (location.right + contentSize.width < screenWidthPx) {
+        location.left
+    } else {
+        (location.right - contentSize.width).coerceAtLeast(0f)
     }
 
-    val yPx = with(density) {
-        if (location.bottom + contentSize.height < screenHeight.toPx()) {
-            location.bottom + padding
-        } else {
-            (location.top - contentSize.height - padding).coerceAtLeast(0f)
-        }
+    val yPx = if (location.bottom + contentSize.height < screenHeightPx) {
+        location.bottom + padding
+    } else {
+        (location.top - contentSize.height - padding).coerceAtLeast(0f)
     }
 
     return IntOffset(xPx.roundToInt(), yPx.roundToInt())
 }
+
 
 
 @Composable
