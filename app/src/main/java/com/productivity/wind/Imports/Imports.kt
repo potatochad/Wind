@@ -875,6 +875,7 @@ object UI {
 			text = text,
 			modifier = Modifier.clickable(
 				interactionSource = interactionSource,
+				indication = LocalIndication.current, 
 				onClick = onClick
 			),
 			style = TextStyle(
