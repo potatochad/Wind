@@ -865,20 +865,24 @@ object UI {
 //region CLICKALE TEXTTTTT■■■■■■■■■■■
 
     @Composable
-    fun Ctext(
-        text: Str,
-        onClick: Do,
-    ) {
-        Text(
-            text = text,
-            modifier = Modifier.clickable(onClick = onClick),
-            style = TextStyle(
-                color = Color(0xFFFFD700),           // gold
-                fontWeight = FontWeight.Bold,        // bold
-                textDecoration = TextDecoration.None, // no underline
-            ),
-        )
-    }
+	fun Ctext(
+		text: Str,
+		onClick: Do,
+	) {
+		Text(
+			text = text,
+			modifier = Modifier.clickable(
+				onClick = onClick,
+				interactionSource = r { MutableInteractionSource() }
+			),
+			style = TextStyle(
+				color = Color(0xFFFFD700),           // gold
+				fontWeight = FontWeight.Bold,        // bold
+				textDecoration = TextDecoration.None // no underline
+			)
+		)
+	}
+
 
 
 //endregion CLICABLE TEXT ■■■■■■■■■
