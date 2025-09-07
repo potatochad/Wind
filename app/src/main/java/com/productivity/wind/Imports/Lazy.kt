@@ -141,21 +141,22 @@ fun Modifier.location(
 @Composable
 fun Where_Info(
     show: MutableState<Boolean>,
-    content: Content
+    content: @Composable () -> Unit
 ) {
-    var visible by r { m(show.value) }
+    // Local state to control if Popup is alive
+    var popupVisible by remember { mutableStateOf(false) }
 
-    // Sync with external show state
+    // Sync popupVisible with show.value
     LaunchedEffect(show.value) {
         if (show.value) {
-            visible = true 
+            popupVisible = true  // Show immediately
         } else {
-            delay(500L) 
-            visible = false
+            delay(200)           // Wait for fade-out duration
+            popupVisible = false // Then remove Popup
         }
     }
 
-    if (visible) {
+    if (popupVisible) {
         Popup(
             properties = PopupProperties(focusable = true)
         ) {
@@ -166,16 +167,17 @@ fun Where_Info(
                 contentAlignment = Alignment.Center
             ) {
                 AnimatedVisibility(
-					visible = show.value,
-					enter = fadeIn(animationSpec = tween(durationMillis = 500)),  // 0.5 seconds
-					exit = fadeOut(animationSpec = tween(durationMillis = 500))   // 0.5 seconds
-				) {
+                    visible = show.value,
+                    enter = fadeIn(animationSpec = tween(200)),
+                    exit = fadeOut(animationSpec = tween(200))
+                ) {
                     content()
                 }
             }
         }
     }
 }
+
 
 
 @Composable
@@ -197,9 +199,9 @@ fun LazyInfo(
 			modifier = Modifier
 				.wrapContentSize()
 				.border(
-					width = 1.dp,
+					width = 2.dp,
 					color = Color.Black.copy(alpha = 0.15f), // 15% opacity
-					shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+					shape = RoundedCornerShape(8.dp)
 				)
 		) {
 			LazyCard(
