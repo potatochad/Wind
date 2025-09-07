@@ -134,15 +134,15 @@ fun Where_Info(
     show: MutableState<Boolean>,
     content: @Composable () -> Unit
 ) {
-    if (!show.value) return
-
+	if (!show.value) return
+	
     Popup(
-        onDismissRequest = {show.value = false},
         properties = PopupProperties(focusable = true)
     ) {
         Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center // center the popup
+            modifier = Modifier.fillMaxSize()
+				.clickOrHold(){ show.value = false },
+            contentAlignment = Alignment.Center
         ) {
             content()
         }
@@ -167,7 +167,6 @@ fun LazyInfo(
 		LazyCard(
 			corners = 8,
 			modifier = Modifier
-				.padding(4.dp)
 				.wrapContentSize(),
 		) {
 			Text(info)
