@@ -811,10 +811,10 @@ fun LazyPopup(
                     show.value = false
                 }
             }
+			UI.move(30)
         },
         dismissButton = if (showCancel) {
             {
-				UI.move(30)
 				UI.Ctext("Cancel"){
                     onCancel?.invoke()
                     show.value = false
