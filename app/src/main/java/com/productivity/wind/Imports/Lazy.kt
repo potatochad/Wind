@@ -134,50 +134,26 @@ fun Modifier.location(
 fun Where_Info(
     show: Boolean,
     location: Rect,
-    content: Content,
+    content: @Composable () -> Unit
 ) {
     if (!show) return
-
-    val density = LocalDensity.current
-    var contentSize by remember { mutableStateOf(IntSize(0, 0)) }
-	val screenWidthPx = with(density) { LocalConfiguration.current.screenWidthDp.dp.toPx() }
-    val screenHeightPx = with(density) { LocalConfiguration.current.screenHeightDp.dp.toPx() }
-
 
     Popup(
         onDismissRequest = {},
         properties = PopupProperties(focusable = true)
     ) {
         Box(
-            modifier = Modifier
-                .onSizeChanged { contentSize = it }
-                .offset {
-                    val contentWidth = contentSize.width.toFloat()
-                    val contentHeight = contentSize.height.toFloat()
-
-                    // Use screen dimensions
-                    
-                    val xPx = if (location.right + contentWidth < screenWidthPx) {
-                        location.left
-                    } else {
-                        (location.right - contentWidth).coerceAtLeast(0f)
-                    }
-
-                    val yPx = if (location.bottom + contentHeight < screenHeightPx) {
-                        location.bottom + 8f
-                    } else {
-                        (location.top - contentHeight - 8f).coerceAtLeast(0f)
-                    }
-
-                    IntOffset(xPx.roundToInt(), yPx.roundToInt())
-                }
+            modifier = Modifier.offset {
+                // Always top-right of the target
+                val x = location.right.toInt()
+                val y = location.top.toInt()
+                IntOffset(x, y)
+            }
         ) {
             content()
         }
     }
 }
-
-
 
 
 @Composable
