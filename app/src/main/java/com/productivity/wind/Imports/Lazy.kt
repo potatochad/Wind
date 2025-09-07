@@ -175,7 +175,7 @@ fun Where_Info(
         Box(
             modifier = Modifier
                 .onSizeChanged { contentSize = it } // measure content
-                .offset { calculatePopupOffset(location, contentSize) }
+                .offset { wherePlacePopup(location, contentSize) }
                 .wrapContentSize()
         ) {
             content()
