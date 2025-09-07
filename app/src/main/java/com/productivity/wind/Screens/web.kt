@@ -77,33 +77,34 @@ fun Web() {
 
 
 fun GeckoSession.setYouTubeHARDFilter() {
+    // Block known image/video URLs
     this.navigationDelegate = object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
         ): GeckoResult<AllowOrDeny>? {
             val url = request.uri.toString()
-
             return if (
                 url.contains("ytimg.com/vi/") ||
                 url.contains("yt3.ggpht.com") ||
                 url.contains("googlevideo.com")
             ) {
-                // 🚫 Block request
                 GeckoResult.fromValue(AllowOrDeny.DENY)
             } else {
-                // ✅ Allow request
                 GeckoResult.fromValue(AllowOrDeny.ALLOW)
             }
         }
     }
 
-    // Inject CSS to hide thumbnails
+    // Inject CSS + MutationObserver to hide all current and future thumbnails
     this.loadUri(
         "javascript:(function(){" +
             "var style=document.createElement('style');" +
             "style.innerHTML='img, ytd-thumbnail, ytd-video-renderer ytd-thumbnail, ytd-channel-renderer img {display:none !important}';" +
             "document.head.appendChild(style);" +
+            "var observer = new MutationObserver(function(){style.innerHTML='img, ytd-thumbnail, ytd-video-renderer ytd-thumbnail, ytd-channel-renderer img {display:none !important}'});" +
+            "observer.observe(document.body, {childList:true, subtree:true});" +
         "})()"
     )
 }
+
