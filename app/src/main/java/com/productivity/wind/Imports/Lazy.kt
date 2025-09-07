@@ -150,7 +150,13 @@ fun Where_Info(
 				.clickOrHold(animation=false){ show.value = false },
             contentAlignment = Alignment.Center
         ) {
-            content()
+			AnimatedVisibility(
+                visible = show.value,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+				content()
+			}
         }
     }
 }
@@ -170,12 +176,22 @@ fun LazyInfo(
     }
 
     Where_Info(show = show) {
-		LazyCard(
-			corners = 8,
+		Box(
 			modifier = Modifier
-				.wrapContentSize(),
+				.wrapContentSize()
+				.border(
+					width = 1.dp,
+					color = Color.Black.copy(alpha = 0.15f), // 15% opacity
+					shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+				)
 		) {
-			Text(info)
+			LazyCard(
+				corners = 8,
+				modifier = Modifier
+					.wrapContentSize(),
+			) {
+				Text(info)
+			}
 		}
 	}
 }
