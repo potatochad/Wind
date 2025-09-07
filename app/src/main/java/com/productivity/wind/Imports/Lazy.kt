@@ -140,6 +140,9 @@ fun Where_Info(
 
     val density = LocalDensity.current
     var contentSize by remember { mutableStateOf(IntSize(0, 0)) }
+	val screenWidthPx = with(density) { LocalConfiguration.current.screenWidthDp.dp.toPx() }
+    val screenHeightPx = with(density) { LocalConfiguration.current.screenHeightDp.dp.toPx() }
+
 
     Popup(
         onDismissRequest = {},
@@ -153,9 +156,7 @@ fun Where_Info(
                     val contentHeight = contentSize.height.toFloat()
 
                     // Use screen dimensions
-                    val screenWidthPx = with(density) { LocalConfiguration.current.screenWidthDp.dp.toPx() }
-                    val screenHeightPx = with(density) { LocalConfiguration.current.screenHeightDp.dp.toPx() }
-
+                    
                     val xPx = if (location.right + contentWidth < screenWidthPx) {
                         location.left
                     } else {
