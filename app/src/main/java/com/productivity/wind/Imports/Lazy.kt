@@ -119,36 +119,37 @@ fun Modifier.clickOrHold(
         this.clickable { action() }
     }
 }
+fun Modifier.location(
+    onBoundsChanged: (Rect) -> Unit
+): Modifier = this.then(
+    Modifier.onGloballyPositioned { coordinates ->
+        val bounds = coordinates.boundsInWindow()
+        onBoundsChanged(bounds)
+    }
+)
 
 
 @Composable
 fun LazyInfo(
-    text: String = "",
+    text: Str = "",
     onDismiss: (() -> Unit)? = null,
-    hold: Boolean = false,
-    content: @Composable BoxScope.() -> Unit,
+    hold: Bool = false,
+    content: Content,
 ) {
-    var show by remember { mutableStateOf(false) }
-    var anchorBounds by remember { mutableStateOf<Rect?>(null) }
-    val density = LocalDensity.current
-    val configuration = LocalConfiguration.current
-
-    // Anchor box to measure position
+    var show by r { m(false) }
+    var location by r { m(Rect(0f, 0f, 0f, 0f) }
+	
     Box(
         modifier = Modifier
             .clickOrHold(hold) { show = true }
-            .onGloballyPositioned { coordinates ->
-                anchorBounds = coordinates.boundsInWindow()
-            }
+            .location { location = it }
     ) {
         content()
     }
 
-    // Show menu only if visible and we have anchor bounds
-    anchorBounds?.let { bounds ->
+    // Show menu only i
+    location{ bounds ->
         if (show) {
-            val screenHeightPx = with(density) { configuration.screenHeightDp.dp.toPx() }
-            val screenWidthPx = with(density) { configuration.screenWidthDp.dp.toPx() }
             val menuWidth = 200.dp
             val menuHeight = 200.dp
             val menuWidthPx = with(density) { menuWidth.toPx() }
