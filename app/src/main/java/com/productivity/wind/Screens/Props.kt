@@ -304,6 +304,8 @@ fun AppSelectPopup(
     if (show.value) {
         val myPackage = LocalContext.current.packageName // your app's package
         var appList by r { m(getApps().filter { getAppPackage(it) != myPackage }) } // filter self out
+        val scope = rememberCoroutineScope() // remember this once in the composable
+
 
         LazyPopup(
             show = show,
@@ -320,12 +322,14 @@ fun AppSelectPopup(
                         UI.move(10)
                         LazyImage(icon)
                         UI.move(10)
+                        
                         UI.Ctext(getAppName(appInfo)) {
                             selectedApp.value = getAppName(appInfo)
-                            
-                            rememberCoroutineScope().launch {
+
+                            scope.launch {      // use the remembered scope
                                 delay(100L)
                                 show.value = false
+
                             }
                         }
                     }
