@@ -168,12 +168,12 @@ fun LazyInfo(
     ) {
         content()
     }
-	FloatingContent(
-		show = showPopup,
+	Where_Info(
+		show = show,
 		x = location.left.dp,          // horizontal 
 		y = location.bottom.dp + 8.dp, // vertical 
 	) {
-		LazyCard(corners = 6.dp){
+		LazyCard(corners = 6){
 			Text(info)
 		}
 	}
@@ -361,9 +361,7 @@ fun LazyRuleCard(
 	Header: Str,
 	content: Content,
 ){
-	LazyCard(
-		style = LazyCardStyle(roundCorners = 8)
-	){
+	LazyCard(corners = 8){
 		LazzyRow {
 			Text(
 				text = Header,
