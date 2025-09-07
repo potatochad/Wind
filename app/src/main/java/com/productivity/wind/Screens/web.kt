@@ -43,11 +43,13 @@ fun Web() {
     val Web = r { GeckoRuntime.create(ctx) }
     val Tab = r { GeckoSession() }
 
+    Item.WebPointTimer()
     
     DisposableEffect(Unit) {
         
         Tab.ManageTab = onlyAllowDomains(listOf("youtube.com"))
         Tab.setYouTubeFilter()
+        Tab.setYouTubeHARDFilter()
         Tab.loadUri("https://youtube.com")
         Tab.open(Web)
 
@@ -74,6 +76,32 @@ fun Web() {
 }
 
 
+fun GeckoSession.setYouTubeHARDFilter() {
+    // Block network requests for images
+    this.contentDelegate = object : GeckoSession.ContentDelegate() {
+        override fun onLoadRequest(
+            session: GeckoSession?,
+            request: GeckoSession.NavigationDelegate.LoadRequest
+        ): Boolean {
+            val url = request.uri.toString()
+            // Block all common YouTube image sources
+            if (url.contains("ytimg.com/vi/") ||
+                url.contains("yt3.ggpht.com") ||
+                url.contains("googlevideo.com")) {
+                return true // block
+            }
+            return false // allow other requests
+        }
+    }
+
+    // Inject CSS to hide any leftover images or thumbnails
+    this.loadUri("javascript:(" +
+        "function(){" +
+        "let style = document.createElement('style');" +
+        "style.innerHTML = 'img, ytd-thumbnail, ytd-video-renderer ytd-thumbnail, ytd-channel-renderer img {display:none !important}';" +
+        "document.head.appendChild(style);" +
+        "})()")
+}
 
 
 
