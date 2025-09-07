@@ -144,6 +144,7 @@ fun Where_Info(
         Box(
             modifier = Modifier
                 .offset { IntOffset(x.roundToPx(), y.roundToPx()) } // controls position
+				.wrapContentSize()
         ) {
             content()
         }
@@ -158,8 +159,6 @@ fun LazyInfo(
 ) {
     var show by r { m(false) }
     var location by r { m(Rect(0f, 0f, 0f, 0f)) }
-	var ScreenHeight = Bar.halfHeight*2//dp
-    var ScreenWidth = Bar.halfWidth*2//dp
 	
     Box(
         modifier = Modifier
@@ -170,7 +169,7 @@ fun LazyInfo(
     }
 	Where_Info(
 		show = show,
-		x = location.left.dp,          // horizontal 
+		x = location.right.dp,          // horizontal 
 		y = location.bottom.dp + 8.dp, // vertical 
 	) {
 		LazyCard(corners = 6){
