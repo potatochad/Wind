@@ -151,7 +151,7 @@ fun Where_Info(
             modifier = Modifier
                 .onSizeChanged { contentSize = it } // measure content
                 .offset {
-    val density = LocalDensity.current
+    
     val contentWidth = contentSize.width.toFloat()
     val contentHeight = contentSize.height.toFloat()
 
