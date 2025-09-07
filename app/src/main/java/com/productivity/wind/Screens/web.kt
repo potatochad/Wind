@@ -81,21 +81,25 @@ fun GeckoSession.setYouTubeHARDFilter() {
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<GeckoSession.NavigationDelegate.AllowOrDeny> {
+        ): GeckoResult<GeckoSession.NavigationDelegate.LoadRequest.Action>? {
             val url = request.uri.toString()
             return if (
                 url.contains("ytimg.com/vi/") ||
                 url.contains("yt3.ggpht.com") ||
                 url.contains("googlevideo.com")
             ) {
-                GeckoResult.fromValue(GeckoSession.NavigationDelegate.DENY) // 🚫 block
+                GeckoResult.fromValue(
+                    GeckoSession.NavigationDelegate.LoadRequest.Action.DENY // 🚫 block
+                )
             } else {
-                GeckoResult.fromValue(GeckoSession.NavigationDelegate.ALLOW) // ✅ allow
+                GeckoResult.fromValue(
+                    GeckoSession.NavigationDelegate.LoadRequest.Action.ALLOW // ✅ allow
+                )
             }
         }
     }
 
-    // Inject CSS to hide leftover DOM thumbnails
+    // Inject CSS to hide any leftover thumbnails
     this.loadUri(
         "javascript:(function(){" +
             "var style=document.createElement('style');" +
@@ -104,5 +108,3 @@ fun GeckoSession.setYouTubeHARDFilter() {
         "})()"
     )
 }
-
-
