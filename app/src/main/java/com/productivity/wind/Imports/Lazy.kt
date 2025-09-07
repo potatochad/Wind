@@ -108,16 +108,22 @@ fun LazySearch(
 
 
 fun Modifier.clickOrHold(
-    hold: Boolean = false,
-    action: () -> Unit
+    hold: Bool = false,
+	animation: Bool = true,
+    action: Do,
 ): Modifier {
     return if (hold) {
-        this.pointerInput(Unit) {
+        pointerInput(Unit) {
             detectTapGestures(onLongPress = { action() })
         }
     } else {
-        this.clickable { action() }
-    }
+        clickable(
+            indication = if (animation) null else null, // no ripple if animation is false
+            interactionSource = remember { MutableInteractionSource() }
+        ) {
+            action()
+        }
+	}
 }
 fun Modifier.location(
     onBoundsChanged: (Rect) -> Unit
@@ -141,7 +147,7 @@ fun Where_Info(
     ) {
         Box(
             modifier = Modifier.fillMaxSize()
-				.clickOrHold(){ show.value = false },
+				.clickOrHold(animation=false){ show.value = false },
             contentAlignment = Alignment.Center
         ) {
             content()
