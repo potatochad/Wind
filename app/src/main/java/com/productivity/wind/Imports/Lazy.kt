@@ -137,7 +137,7 @@ fun Where_Info(
     if (!show) return
 
     Popup(
-        onDismissRequest = {},
+        onDismissRequest = {show = false},
         properties = PopupProperties(focusable = true)
     ) {
         Box(
@@ -151,11 +151,11 @@ fun Where_Info(
 
 @Composable
 fun LazyInfo(
-    info: String = "",
-    hold: Boolean = false,
-    content: @Composable () -> Unit
+    info: Str = "",
+    hold: Bool = false,
+    content: Content,
 ) {
-    var show by remember { mutableStateOf(false) }
+    var show by r { m(false) }
 
     Box(
         modifier = Modifier.clickOrHold(hold) { show = true }
@@ -165,7 +165,7 @@ fun LazyInfo(
 
     Where_Info(show = show) {
 		LazyCard(
-			corners = 6,
+			corners = 8,
 			modifier = Modifier
 				.padding(4.dp)
 				.wrapContentSize(),
