@@ -78,13 +78,13 @@ fun Main() {
                         LazzyRow {
                             UI.move(10)
 
-                            LazyInfo("${app.NowTime}s spent/${app.DoneTime}s left") {
+                            LazyInfo("${app.NowTime}s/${app.DoneTime}s") {
                                 UI.ProgressIcon(icon, progress) 
                             }
 
                             
                             UI.move(12)
-                            Text("${app.Worth} points")
+                            Text("Points ${app.Worth}")
                             
                             
                             
