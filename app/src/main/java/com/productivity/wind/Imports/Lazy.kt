@@ -129,11 +129,9 @@ fun Modifier.location(
 )
 
 
-
 @Composable
 fun Where_Info(
     show: Boolean,
-    location: Rect,
     content: @Composable () -> Unit
 ) {
     if (!show) return
@@ -143,48 +141,37 @@ fun Where_Info(
         properties = PopupProperties(focusable = true)
     ) {
         Box(
-            modifier = Modifier.offset {
-                // Always top-right of the target
-                val x = location.right.toInt()
-                val y = location.top.toInt()
-                IntOffset(x, y)
-            }
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center // center the popup
         ) {
             content()
         }
     }
 }
 
-
 @Composable
 fun LazyInfo(
     info: String = "",
     hold: Boolean = false,
-    content: Content,
+    content: @Composable () -> Unit
 ) {
     var show by remember { mutableStateOf(false) }
-    var location by remember { mutableStateOf(Rect(0f, 0f, 0f, 0f)) }
 
     Box(
-        modifier = Modifier
-            .clickOrHold(hold) { show = true }
-            .onGloballyPositioned { coordinates ->
-                val pos = coordinates.boundsInWindow()
-                location = pos
-            }
+        modifier = Modifier.clickOrHold(hold) { show = true }
     ) {
         content()
     }
 
-    Where_Info(
-        show = show,
-        location = location
-    ) {
+    Where_Info(show = show) {
         LazyCard(corners = 6) {
             Text(info)
         }
     }
 }
+
+
+
 
 
 
