@@ -422,7 +422,7 @@ fun LazyCard(
     innerPadding: Int = 16,
     corners: Int = 16,
 	modifier: Modifier = Modifier
-	     .padding(8.dp)
+	     .padding(horizontal = 8.dp, vertical = 10.dp)
          .fillMaxWidth(),
     content: Content,
 ) {
