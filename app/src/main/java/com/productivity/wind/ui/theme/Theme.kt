@@ -5,7 +5,6 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-// Single color palette: black background, white text everywhere
 private val AppColorScheme = darkColorScheme(
     background = Color.Black,
     onBackground = Color.White,
@@ -15,10 +14,19 @@ private val AppColorScheme = darkColorScheme(
     onPrimary = Color.White
 )
 
+private val BlueTextSelectionColors = TextSelectionColors(
+    handleColor = Color.Blue,                 // cursor handle
+    backgroundColor = Color.Blue.copy(alpha = 0.4f)  // selection highlight
+)
+
 @Composable
 fun WindTheme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        colorScheme = AppColorScheme,
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalTextSelectionColors provides BlueTextSelectionColors
+    ) {
+        MaterialTheme(
+            colorScheme = AppColorScheme,
+            content = content
+        )
+    }
 }
