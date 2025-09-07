@@ -135,31 +135,48 @@ fun Modifier.location(
 )
 
 
+
+
+
 @Composable
 fun Where_Info(
     show: MutableState<Boolean>,
-    content: @Composable () -> Unit
+    content: Content
 ) {
-	if (!show.value) return
-	
-    Popup(
-        properties = PopupProperties(focusable = true)
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-				.clickOrHold(animation=false){ show.value = false },
-            contentAlignment = Alignment.Center
+    var visible by r { m(show.value) }
+
+    // Sync with external show state
+    LaunchedEffect(show.value) {
+        if (show.value) {
+            visible = true 
+        } else {
+            delay(500L) 
+            visible = false
+        }
+    }
+
+    if (visible) {
+        Popup(
+            properties = PopupProperties(focusable = true)
         ) {
-			AnimatedVisibility(
-                visible = show.value,
-                enter = fadeIn(),
-                exit = fadeOut()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickOrHold(animation = false) { show.value = false },
+                contentAlignment = Alignment.Center
             ) {
-				content()
-			}
+                AnimatedVisibility(
+					visible = show.value,
+					enter = fadeIn(animationSpec = tween(durationMillis = 500)),  // 0.5 seconds
+					exit = fadeOut(animationSpec = tween(durationMillis = 500))   // 0.5 seconds
+				) {
+                    content()
+                }
+            }
         }
     }
 }
+
 
 @Composable
 fun LazyInfo(
@@ -828,13 +845,12 @@ fun LazyPopup(
         },
         confirmButton = {
             if (showConfirm) {
-				UI.move(10)
+				UI.move(15)
                 UI.Ctext("OK"){
                     onConfirm?.invoke()
                     show.value = false
                 }
             }
-			UI.move(10)
         },
         dismissButton = if (showCancel) {
             {
