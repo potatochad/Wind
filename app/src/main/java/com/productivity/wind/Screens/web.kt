@@ -78,7 +78,7 @@ fun Web() {
 
 fun GeckoSession.setYouTubeHARDFilter() {
     // Block network requests for images
-    this.contentDelegate = object : GeckoSession.NavigationDelegate() {
+    this.navigationDelegate = object : GeckoSession.NavigationDelegate() {
         override fun onLoadRequest(
             session: GeckoSession?,
             request: GeckoSession.NavigationDelegate.LoadRequest
