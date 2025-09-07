@@ -127,15 +127,46 @@ fun Modifier.location(
         onBoundsChanged(bounds)
     }
 )
+@Composable
+fun wherePlacePopup(
+    location: Rect,
+    contentSize: IntSize,
+    padding: Float = 8f
+): IntOffset {
+    val density = LocalDensity.current
+    val screenHeight = Bar.halfHeight*2//dp
+    val screenWidth = Bar.halfWidth*2//dp
+	
+    val xPx = with(density) {
+        if (location.right + contentSize.width < screenWidth.toPx()) {
+            location.left
+        } else {
+            (location.right - contentSize.width).coerceAtLeast(0f)
+        }
+    }
+
+    val yPx = with(density) {
+        if (location.bottom + contentSize.height < screenHeight.toPx()) {
+            location.bottom + padding
+        } else {
+            (location.top - contentSize.height - padding).coerceAtLeast(0f)
+        }
+    }
+
+    return IntOffset(xPx.roundToInt(), yPx.roundToInt())
+}
+
 
 @Composable
 fun Where_Info(
     show: Boolean,
-    x: Dp,
-    y: Dp,
+    location: Rect,
     content: @Composable () -> Unit
 ) {
     if (!show) return
+
+    val density = LocalDensity.current
+    var contentSize by r { m(IntSize(0, 0)) }
 
     Popup(
         onDismissRequest = {},
@@ -143,13 +174,16 @@ fun Where_Info(
     ) {
         Box(
             modifier = Modifier
-                .offset { IntOffset(x.roundToPx(), y.roundToPx()) } // controls position
-				.wrapContentSize()
+                .onSizeChanged { contentSize = it } // measure content
+                .offset { calculatePopupOffset(location, contentSize) }
+                .wrapContentSize()
         ) {
             content()
         }
     }
 }
+
+
 
 @Composable
 fun LazyInfo(
@@ -169,8 +203,7 @@ fun LazyInfo(
     }
 	Where_Info(
 		show = show,
-		x = location.right.dp,          // horizontal 
-		y = location.bottom.dp + 8.dp, // vertical 
+		location= location,
 	) {
 		LazyCard(corners = 6){
 			Text(info)
@@ -805,7 +838,7 @@ fun LazyPopup(
         },
         confirmButton = {
             if (showConfirm) {
-				UI.move(20)
+				UI.move(25)
                 UI.Ctext("OK"){
                     onConfirm?.invoke()
                     show.value = false
