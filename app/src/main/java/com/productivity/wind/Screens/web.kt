@@ -77,32 +77,32 @@ fun Web() {
 
 
 fun GeckoSession.setYouTubeHARDFilter() {
-    // Block network requests for images
-    this.navigationDelegate = object : GeckoSession.NavigationDelegate() {
+    this.navigationDelegate = object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
             session: GeckoSession,
             request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<AllowOrDeny> {
+        ): GeckoResult<GeckoSession.NavigationDelegate.AllowOrDeny> {
             val url = request.uri.toString()
-            // Block all common YouTube image sources
-            if (url.contains("ytimg.com/vi/") ||
+            return if (
+                url.contains("ytimg.com/vi/") ||
                 url.contains("yt3.ggpht.com") ||
-                url.contains("googlevideo.com")) {
-                return true // block
+                url.contains("googlevideo.com")
+            ) {
+                GeckoResult.fromValue(GeckoSession.NavigationDelegate.DENY) // 🚫 block
+            } else {
+                GeckoResult.fromValue(GeckoSession.NavigationDelegate.ALLOW) // ✅ allow
             }
-            return false // allow other requests
         }
     }
 
-    // Inject CSS to hide any leftover images or thumbnails
-    this.loadUri("javascript:(" +
-        "function(){" +
-        "let style = document.createElement('style');" +
-        "style.innerHTML = 'img, ytd-thumbnail, ytd-video-renderer ytd-thumbnail, ytd-channel-renderer img {display:none !important}';" +
-        "document.head.appendChild(style);" +
-        "})()")
+    // Inject CSS to hide leftover DOM thumbnails
+    this.loadUri(
+        "javascript:(function(){" +
+            "var style=document.createElement('style');" +
+            "style.innerHTML='img, ytd-thumbnail, ytd-video-renderer ytd-thumbnail, ytd-channel-renderer img {display:none !important}';" +
+            "document.head.appendChild(style);" +
+        "})()"
+    )
 }
-
-
 
 
