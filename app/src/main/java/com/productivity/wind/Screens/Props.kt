@@ -307,7 +307,11 @@ fun AppSelectPopup(
                         UI.move(10)
                         UI.Ctext(getAppName(appInfo)) {
                             selectedApp.value = getAppName(appInfo)
-                            show.value = false
+                            
+                            rememberCoroutineScope().launch {
+                                delay(100L)
+                                show.value = false
+                            }
                         }
                     }
                 }
