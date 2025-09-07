@@ -726,7 +726,6 @@ object UI {
             singleLine = true,
             keyboardOptions = KeyboardOptions(type(true), imeAction),
             keyboardActions = doneAction(null),
-            cursorBrush = SolidColor(Color.Blue),
             interactionSource = FocusChange,
 
 
