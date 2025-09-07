@@ -128,16 +128,38 @@ fun Modifier.location(
     }
 )
 
+@Composable
+fun Where_Info(
+    show: Boolean,
+    x: Dp,
+    y: Dp,
+    content: @Composable () -> Unit
+) {
+    if (!show) return
+
+    Popup(
+        onDismissRequest = {},
+        properties = PopupProperties(focusable = true)
+    ) {
+        Box(
+            modifier = Modifier
+                .offset { IntOffset(x.roundToPx(), y.roundToPx()) } // controls position
+        ) {
+            content()
+        }
+    }
+}
 
 @Composable
 fun LazyInfo(
-    text: Str = "",
-    onDismiss: (() -> Unit)? = null,
+    info: Str = "",
     hold: Bool = false,
     content: Content,
 ) {
     var show by r { m(false) }
     var location by r { m(Rect(0f, 0f, 0f, 0f) }
+	var ScreenHeight = Bar.halfHeight*2//dp
+    var ScreenWidth = Bar.halfWidth*2//dp
 	
     Box(
         modifier = Modifier
@@ -146,42 +168,15 @@ fun LazyInfo(
     ) {
         content()
     }
-
-    // Show menu only i
-    location{ bounds ->
-        if (show) {
-            val menuWidth = 200.dp
-            val menuHeight = 200.dp
-            val menuWidthPx = with(density) { menuWidth.toPx() }
-            val menuHeightPx = with(density) { menuHeight.toPx() }
-
-            val offsetY = if (bounds.bottom + menuHeightPx <= screenHeightPx) {
-                bounds.bottom
-            } else {
-                (bounds.top - menuHeightPx).coerceAtLeast(0f)
-            }
-            val offsetX = bounds.left.coerceAtLeast(0f).coerceAtMost(screenWidthPx - menuWidthPx)
-
-            Popup(
-                onDismissRequest = {
-                    show = false
-                    onDismiss?.invoke()
-                },
-                properties = PopupProperties(focusable = true)
-            ) {
-                Column(
-    modifier = Modifier
-        .offset { _: Density -> IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
-        .size(menuWidth, menuHeight)
-        .background(MaterialTheme.colorScheme.surface)
-        .scale(0.5f)
-) {
-    content()
-}
-
-            }
-        }
-    }
+	FloatingContent(
+		show = showPopup,
+		x = location.left.dp,          // horizontal 
+		y = location.bottom.dp + 8.dp, // vertical 
+	) {
+		LazyCard(corners = 6.dp){
+			Text(info)
+		}
+	}
 }
 
 
@@ -382,21 +377,19 @@ fun LazyRuleCard(
 
 }
 
-data class LazyCardStyle(
-	var roundCorners: Int = 16,
-)
+
 @Composable
 fun LazyCard(
     inputColor: Color = Color(0xFF1A1A1A),
     innerPadding: Int = 16,
-    style: LazyCardStyle = LazyCardStyle(),
+    corners: Int = 16,
     content: Content,
 ) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth(),
-        shape = RoundedCornerShape(style.roundCorners.dp),
+        shape = RoundedCornerShape(corners.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(containerColor = inputColor)
     ) {
