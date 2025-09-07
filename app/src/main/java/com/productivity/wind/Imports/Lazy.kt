@@ -158,7 +158,7 @@ fun LazyInfo(
     var show = r { m(false) }
 
     Box(
-        modifier = Modifier.clickOrHold(hold) { show = true }
+        modifier = Modifier.clickOrHold(hold) { show.value = true }
     ) {
         content()
     }
