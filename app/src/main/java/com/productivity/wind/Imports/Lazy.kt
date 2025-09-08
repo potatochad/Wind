@@ -139,7 +139,7 @@ fun Modifier.location(
 
 
 @Composable
-fun Popup(
+fun LazyPopup(
     show: MutableState<Boolean>,
     content: @Composable () -> Unit
 ) {
@@ -192,32 +192,28 @@ fun LazyInfo(
     Box(
         modifier = Modifier
             .clickOrHold(hold) { show.value = true }
-            .location { rect -> triggerBounds = rect } // 🔥 Capture trigger position
+            .location { rect -> triggerBounds = rect } // Capture trigger position
     ) {
         content()
     }
 
-    Popup(show = show) {
+    LazyPopup(show = show) {
         triggerBounds?.let { bounds ->
-            Popup(
-                offset = IntOffset(bounds.left.toInt(), bounds.bottom.toInt()), // position relative to trigger
-                properties = PopupProperties(focusable = true)
+            Box(
+                modifier = Modifier
+                    .offset { IntOffset(bounds.left.toInt(), bounds.bottom.toInt()) }
+                    .wrapContentSize()
+                    .border(
+                        width = 2.dp,
+                        color = Color.Black.copy(alpha = 0.15f),
+                        shape = RoundedCornerShape(8.dp)
+                    )
             ) {
-                Box(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .border(
-                            width = 2.dp,
-                            color = Color.Black.copy(alpha = 0.15f),
-                            shape = RoundedCornerShape(8.dp)
-                        )
+                LazyCard(
+                    corners = 8,
+                    modifier = Modifier.wrapContentSize()
                 ) {
-                    LazyCard(
-                        corners = 8,
-                        modifier = Modifier.wrapContentSize()
-                    ) {
-                        Text(info)
-                    }
+                    Text(info)
                 }
             }
         }
