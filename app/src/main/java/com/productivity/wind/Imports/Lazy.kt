@@ -134,6 +134,24 @@ fun Modifier.location(
     }
 )
 
+@Composable
+fun LazyMove(
+    x: Dp = 0.dp,
+    y: Dp = 0.dp
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Box(
+            modifier = Modifier
+                .offset(x = x, y = y)
+                .wrapContentSize()
+        )
+    }
+}
+
+
 
 
 
@@ -187,21 +205,23 @@ fun LazyInfo(
     content: @Composable () -> Unit
 ) {
     var show = remember { mutableStateOf(false) }
-    var triggerBounds by remember { mutableStateOf<Rect?>(null) }
+    var location by remember { mutableStateOf(Rect(0f, 0f, 0f, 0f)) }
 
     Box(
         modifier = Modifier
             .clickOrHold(hold) { show.value = true }
-            .location { triggerBounds = it } // Capture trigger position
+            .location { location = it }
     ) {
         content()
     }
 
     LazyPopup(show = show) {
-        triggerBounds?.let { it->
+		LazyMove(
+			x = 100.dp
+			y = 100.dp
+		){
             Box(
                 modifier = Modifier
-                    .offset { IntOffset(it.right.toInt(), it.top.toInt()) }
                     .wrapContentSize()
                     .border(
                         width = 2.dp,
@@ -216,6 +236,11 @@ fun LazyInfo(
                     Text(info)
                 }
             }
+		}
+
+
+
+			
         }
     }
 }
