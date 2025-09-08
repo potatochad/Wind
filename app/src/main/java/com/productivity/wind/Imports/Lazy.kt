@@ -216,10 +216,7 @@ fun LazyInfo(
     }
 
     LazyPopup(show = show) {
-		LazyMove(
-			x = 100.dp
-			y = 100.dp
-		){
+		LazyMove(100.dp, 100.dp){
             Box(
                 modifier = Modifier
                     .wrapContentSize()
