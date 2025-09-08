@@ -217,7 +217,7 @@ fun LazyInfo(
     ) {
         content()
     }
-	if(show) {Vlog("$location")}
+	if (show.value) {Vlog("location: $location")}
 
     LazyWindow(show = show) {
 		LazyMove(100.dp, 100.dp){
