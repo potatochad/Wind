@@ -139,7 +139,7 @@ fun Modifier.location(
 
 
 @Composable
-fun Where_Info(
+fun Popup(
     show: MutableState<Boolean>,
     content: @Composable () -> Unit
 ) {
@@ -182,37 +182,46 @@ fun Where_Info(
 
 @Composable
 fun LazyInfo(
-    info: Str = "",
-    hold: Bool = false,
-    content: Content,
+    info: String = "",
+    hold: Boolean = false,
+    content: @Composable () -> Unit
 ) {
-    var show = r { m(false) }
+    var show = remember { mutableStateOf(false) }
+    var triggerBounds by remember { mutableStateOf<Rect?>(null) }
 
     Box(
-        modifier = Modifier.clickOrHold(hold) { show.value = true }
+        modifier = Modifier
+            .clickOrHold(hold) { show.value = true }
+            .location { rect -> triggerBounds = rect } // 🔥 Capture trigger position
     ) {
         content()
     }
 
-    Where_Info(show = show) {
-		Box(
-			modifier = Modifier
-				.wrapContentSize()
-				.border(
-					width = 2.dp,
-					color = Color.Black.copy(alpha = 0.15f), // 15% opacity
-					shape = RoundedCornerShape(8.dp)
-				)
-		) {
-			LazyCard(
-				corners = 8,
-				modifier = Modifier
-					.wrapContentSize(),
-			) {
-				Text(info)
-			}
-		}
-	}
+    Popup(show = show) {
+        triggerBounds?.let { bounds ->
+            Popup(
+                offset = IntOffset(bounds.left.toInt(), bounds.bottom.toInt()), // position relative to trigger
+                properties = PopupProperties(focusable = true)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .border(
+                            width = 2.dp,
+                            color = Color.Black.copy(alpha = 0.15f),
+                            shape = RoundedCornerShape(8.dp)
+                        )
+                ) {
+                    LazyCard(
+                        corners = 8,
+                        modifier = Modifier.wrapContentSize()
+                    ) {
+                        Text(info)
+                    }
+                }
+            }
+        }
+    }
 }
 
 
