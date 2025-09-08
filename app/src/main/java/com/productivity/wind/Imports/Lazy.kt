@@ -137,7 +137,8 @@ fun Modifier.location(
 @Composable
 fun LazyMove(
     x: Dp = 0.dp,
-    y: Dp = 0.dp
+    y: Dp = 0.dp,
+	content: Content,
 ) {
     Box(
         modifier = Modifier
@@ -147,7 +148,9 @@ fun LazyMove(
             modifier = Modifier
                 .offset(x = x, y = y)
                 .wrapContentSize()
-        )
+        ){
+			content()
+		}
     }
 }
 
