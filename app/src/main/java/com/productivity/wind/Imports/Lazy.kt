@@ -192,16 +192,16 @@ fun LazyInfo(
     Box(
         modifier = Modifier
             .clickOrHold(hold) { show.value = true }
-            .location { rect -> triggerBounds = rect } // Capture trigger position
+            .location { triggerBounds = it } // Capture trigger position
     ) {
         content()
     }
 
     LazyPopup(show = show) {
-        triggerBounds?.let { bounds ->
+        triggerBounds?.let { it->
             Box(
                 modifier = Modifier
-                    .offset { IntOffset(bounds.left.toInt(), bounds.bottom.toInt()) }
+                    .offset { IntOffset(it.right.toInt(), it.top.toInt()) }
                     .wrapContentSize()
                     .border(
                         width = 2.dp,
