@@ -159,10 +159,10 @@ fun LazyMove(
 @Composable
 fun LazyWindow(
     show: MutableState<Boolean>,
-    content: @Composable () -> Unit
+    content: Content,
 ) {
     // Local state to control if Popup is alive
-    var popupVisible by remember { mutableStateOf(false) }
+    var popupVisible by r { m(false) }
 
     // Sync popupVisible with show.value
     LaunchedEffect(show.value) {
@@ -200,12 +200,12 @@ fun LazyWindow(
 
 @Composable
 fun LazyInfo(
-    info: String = "",
-    hold: Boolean = false,
-    content: @Composable () -> Unit
+    info: Str = "",
+    hold: Bool = false,
+    content: Content,
 ) {
-    var show = remember { mutableStateOf(false) }
-    var location by remember { mutableStateOf(Rect(0f, 0f, 0f, 0f)) }
+    var show = r { m(false) }
+    var location by r { m(Rect(0f, 0f, 0f, 0f)) }
 
     Box(
         modifier = Modifier
