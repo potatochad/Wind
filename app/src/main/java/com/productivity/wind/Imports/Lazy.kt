@@ -157,7 +157,7 @@ fun LazyMove(
 
 
 @Composable
-fun LazyPopup(
+fun LazyWindow(
     show: MutableState<Boolean>,
     content: @Composable () -> Unit
 ) {
@@ -215,7 +215,7 @@ fun LazyInfo(
         content()
     }
 
-    LazyPopup(show = show) {
+    LazyWindow(show = show) {
 		LazyMove(100.dp, 100.dp){
             Box(
                 modifier = Modifier
