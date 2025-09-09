@@ -170,7 +170,7 @@ fun decidePopupPosition(
     val bottom = rect.bottom.dp
 
     // Center horizontally with the rect
-    var x = ((left + right) / 2).dp - popupWidth / 2
+    var x = ((left + right) / 2).toFloat().dp - popupWidth / 2
 
     // Decide vertical placement: below if space, otherwise above
     val spaceBelow = UI.screenHeight - bottom.dp
