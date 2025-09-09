@@ -217,6 +217,8 @@ fun LazyInfo(
     ) {
         content()
     }
+	// UI.screenWidth 
+	// UI.screenHeight
 	if (show.value) {Vlog("location: $location")}
 
     LazyWindow(show = show) {
