@@ -217,9 +217,11 @@ fun LazyInfo(
     ) {
         content()
     }
-	// UI.screenWidth 
+	// if UI.screenWidth
 	// UI.screenHeight
-	if (show.value) {Vlog("location: $location")}
+	if (show.value) {Vlog("location: $location.left")}
+	if (location.top){}
+	if (location.left){}
 
     LazyWindow(show = show) {
 		LazyMove(100.dp, 100.dp){
