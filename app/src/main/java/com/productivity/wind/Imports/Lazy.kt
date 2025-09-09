@@ -154,6 +154,44 @@ fun LazyMove(
     }
 }
 
+data class PopupPosition(
+    val x: Dp,
+    val y: Dp
+)
+
+fun decidePopupPosition(
+    rect: Rect,
+    popupWidth: Dp,
+    popupHeight: Dp
+): PopupPosition {
+    val left = rect.left.dp
+    val top = rect.top.dp
+    val right = rect.right.dp
+    val bottom = rect.bottom.dp
+
+    // Center horizontally with the rect
+    var x = ((left + right) / 2).dp - popupWidth / 2
+
+    // Decide vertical placement: below if space, otherwise above
+    val spaceBelow = UI.screenHeight - bottom.dp
+    val spaceAbove = top
+
+    val y = if (spaceBelow >= popupHeight) {
+        bottom.dp // place below
+    } else if (spaceAbove >= popupHeight) {
+        top - popupHeight // place above
+    } else {
+        // Default: stick to screen center if no room
+        (UI.screenHeight / 2) - (popupHeight / 2)
+    }
+
+    // Clamp so popup stays on screen horizontally
+    x = x.coerceIn(0.dp, UI.screenWidth - popupWidth)
+
+    return PopupPosition(x, y)
+}
+
+
 
 
 
@@ -217,11 +255,14 @@ fun LazyInfo(
     ) {
         content()
     }
-	// if UI.screenWidth
-	// UI.screenHeight
-	if (show.value) {Vlog("location: $location.left")}
-	// if (location.top){}
-	// if (location.left){}
+	
+	val popup = decidePopupPosition(
+		location,
+		popupWidth = 100.dp,
+		popupHeight = 50.dp
+	)
+	if (show)Vlog("Popup at: x=${popup.x}, y=${popup.y}")
+
 
     LazyWindow(show = show) {
 		LazyMove(100.dp, 100.dp){
