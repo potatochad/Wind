@@ -159,37 +159,42 @@ data class PopupPosition(
     val y: Dp
 )
 
+@Composable
 fun decidePopupPosition(
     rect: Rect,
     popupWidth: Dp,
     popupHeight: Dp
 ): PopupPosition {
-    val left = rect.left.dp
-    val top = rect.top.dp
-    val right = rect.right.dp
-    val bottom = rect.bottom.dp
+    val density = LocalDensity.current
 
-    // Center horizontally with the rect
-    var x = (left + right) / 2 - popupWidth / 2
+    return with(density) {
+        val left = rect.left.toDp()
+        val top = rect.top.toDp()
+        val right = rect.right.toDp()
+        val bottom = rect.bottom.toDp()
 
-    // Decide vertical placement: below if space, otherwise above
-    val spaceBelow = UI.screenHeight - bottom
-    val spaceAbove = top
+        val screenWidth = UI.screenWidth
+        val screenHeight = UI.screenHeight
 
-    val y = if (spaceBelow >= popupHeight) {
-        bottom// place below
-    } else if (spaceAbove >= popupHeight) {
-        top - popupHeight // place above
-    } else {
-        // Default: stick to screen center if no room
-        (UI.screenHeight / 2) - (popupHeight / 2)
+        // Center horizontally
+        var x = (left + right) / 2 - popupWidth / 2
+
+        val spaceBelow = screenHeight - bottom
+        val spaceAbove = top
+
+        val y = when {
+            spaceBelow >= popupHeight -> bottom // below
+            spaceAbove >= popupHeight -> top - popupHeight // above
+            else -> (screenHeight / 2) - (popupHeight / 2) // center
+        }
+
+        // Clamp to screen bounds
+        x = x.coerceIn(0.dp, screenWidth - popupWidth)
+
+        PopupPosition(x, y)
     }
-
-    // Clamp so popup stays on screen horizontally
-    x = x.coerceIn(0.dp, UI.screenWidth - popupWidth)
-
-    return PopupPosition(x, y)
 }
+
 
 
 
