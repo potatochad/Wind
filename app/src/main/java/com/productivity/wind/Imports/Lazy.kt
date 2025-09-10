@@ -256,12 +256,14 @@ fun LazyInfo(
         content()
     }
 	
-	val popup = decidePopupPosition(
+	if (show.value) {
+		val popup = decidePopupPosition(
 		location,
 		popupWidth = 100.dp,
 		popupHeight = 50.dp
 	)
-	if (show.value) {Vlog("Popup at: x=${popup.x}, y=${popup.y}")}
+		Vlog("Popup at: x=${popup.x}, y=${popup.y}")
+	}
 
 
     LazyWindow(show = show) {
