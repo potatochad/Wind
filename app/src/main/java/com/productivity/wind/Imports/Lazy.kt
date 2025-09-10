@@ -173,11 +173,11 @@ fun decidePopupPosition(
     var x = (left + right) / 2 - popupWidth / 2
 
     // Decide vertical placement: below if space, otherwise above
-    val spaceBelow = UI.screenHeight - bottom.dp
+    val spaceBelow = UI.screenHeight - bottom
     val spaceAbove = top
 
     val y = if (spaceBelow >= popupHeight) {
-        bottom.dp // place below
+        bottom// place below
     } else if (spaceAbove >= popupHeight) {
         top - popupHeight // place above
     } else {
