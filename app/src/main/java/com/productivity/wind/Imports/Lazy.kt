@@ -261,7 +261,7 @@ fun LazyInfo(
 		popupWidth = 100.dp,
 		popupHeight = 50.dp
 	)
-	if (show)Vlog("Popup at: x=${popup.x}, y=${popup.y}")
+	if (show.value) {Vlog("Popup at: x=${popup.x}, y=${popup.y}")}
 
 
     LazyWindow(show = show) {
