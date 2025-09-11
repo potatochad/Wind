@@ -20,9 +20,38 @@ fun Challenge() {
               goTo("AppUsage")
             },
         )
+    LazyItem(
+            BigIcon = Icons.Filled.AccessTime,
+            BigIconColor = DarkBlue,
+            title = "Copy Paste",
+            onClick = { 
+              goTo("CopyPaste")
+            },
+        )
     
    }
 }
+
+
+@Composable
+fun CopyPaste() {
+    var Time = r { m("50") }
+    var Points = r { m("0") }
+    
+
+    LazyScreen(title = {
+            Text("missing")
+          }
+      ) {
+          LazyCard(""){
+             Text("Points per letter")
+             Text("Points on completion")
+          }
+
+    }
+
+}
+
 
 
 
