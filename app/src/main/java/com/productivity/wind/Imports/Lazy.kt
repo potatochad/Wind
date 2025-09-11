@@ -256,7 +256,7 @@ fun LazyWindow(
 
 @Composable
 fun LazyInfo(
-    info: Str = "",
+    infoContent: Content,
     hold: Bool = false,
     content: Content,
 ) {
@@ -305,11 +305,7 @@ if (show.value && popup != null) {
                         shape = RoundedCornerShape(8.dp)
                     )
             ) {
-                LazyCard(
-                    corners = 8,
-                    modifier = Modifier.wrapContentSize()
-                ) {
-                    Text(info)
+				infoContent()
                 }
             }
 		}
