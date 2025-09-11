@@ -86,7 +86,9 @@ fun Main() {
                             UI.move(12)
                             Text("Points ${app.Worth}")
                             UI.End{
-                                
+                                Icon.MoreMenu {
+                                    
+                                }
                             }
                             
                             
