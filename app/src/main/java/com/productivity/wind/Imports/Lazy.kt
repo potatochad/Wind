@@ -173,36 +173,6 @@ fun LazyMove(
 
 
 
-@Composable
-fun decidePopupPosition(
-    rect: DpRect,
-    popupWidth: Dp,
-    popupHeight: Dp
-): Offset {
-    val left = rect.left
-    val top = rect.top
-    val right = rect.right
-    val bottom = rect.bottom
-
-    val screenWidth = UI.screenWidth
-    val screenHeight = UI.screenHeight
-
-    var x = (left + right) / 2 - popupWidth / 2
-
-    val spaceBelow = screenHeight - bottom
-    val spaceAbove = top
-
-    val y = when {
-        spaceBelow >= popupHeight -> bottom
-        spaceAbove >= popupHeight -> top - popupHeight
-        else -> (screenHeight / 2) - (popupHeight / 2)
-    }
-
-    x = x.coerceIn(0.dp, screenWidth - popupWidth)
-
-    val density = LocalDensity.current
-    return with(density) { Offset(x.toPx(), y.toPx()) }
-}
 
 
 
@@ -258,36 +228,39 @@ fun LazyWindow(
 fun LazyInfo(
     infoContent: Content,
     hold: Bool = false,
+    popupWidth: Dp = 100.dp,
+    popupHeight: Dp = 50.dp,
     content: Content,
 ) {
     var show = r { m(false) }
-    var location by r { m(DpRect(0.dp, 0.dp, 0.dp, 0.dp)) }
-	val density = LocalDensity.current
-
+    var map by r { m(DpRect(0.dp, 0.dp, 0.dp, 0.dp)) }
+    val density = LocalDensity.current
 
     Box(
         modifier = Modifier
             .clickOrHold(hold) { show.value = true }
-            .DpLocation(density) { location = it }
+            .DpLocation(density) { map = it }
     ) {
         content()
     }
+
+    val xDp = ((map.left + map.right) / 2 - popupWidth / 2)
+        .coerceIn(0.dp, UI.screenWidth - popupWidth)
+
+    val yDp = when {
+        UI.screenHeight - map.bottom >= popupHeight -> map.bottom
+        map.top >= popupHeight -> map.top - popupHeight
+        else -> (UI.screenHeight / 2) - (popupHeight / 2)
+    }
+
+    val popupOffset = with(density) { Offset(xDp.toPx(), yDp.toPx()) }
+
 	
-	val popup = decidePopupPosition(
-		location,
-		popupWidth = 100.dp,
-		popupHeight = 50.dp
-	)
-
-	if (show.value) {
-		Vlog("Popup at: x=${popup.x}, y=${popup.y}")
-	}
-
-
-
+    // Logs
+	if (show.value) Vlog("Popup at: x=${popupOffset.x}, y=${popupOffset.y}")
 
     LazyWindow(show = show) {
-		LazyMove(100.dp, 100.dp){
+        LazyMove(100.dp, 100.dp) {
             Box(
                 modifier = Modifier
                     .wrapContentSize()
@@ -297,13 +270,11 @@ fun LazyInfo(
                         shape = RoundedCornerShape(8.dp)
                     )
             ) {
-			    infoContent()
+                infoContent()
             }
-		}
-	}
+        }
+    }
 }
-
-
 
 
 
