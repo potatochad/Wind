@@ -89,6 +89,7 @@ class Settings {
     //region LISTS
     
     var ListApps by m("")
+	var CopyPasteTasks by m("")
     
 }
 //m-mutable state, ml- mutablelistof
@@ -97,18 +98,31 @@ class Settings {
 
 val trackedLists = listOf(
         Dset("Bar.ListApps", "apps"),
+	    Dset("Bar.CopyPasteTasks", "copyTasks"),
         
     )
 
+var copyTasks = ml(CopyTasks())
+
+data class CopyTasks(
+    override val id: Str= Id(),
+    var title: Str = "",
+    var onMax: Bool = false,
+	var MaxTimes: Int = 5,
+    var Done_Worth: Int = 10,
+    var Letter_Worth: Int = 1,
+) : Identifiable, Copyable<CopyTasks> {
+    override fun copySelf() = this.copy()
+}
 
 
 var apps = ml(DataApps())
 
 data class DataApps(
-    override val id: String = Id(),
-    var name: String = "",
-    var done: Boolean = false,
-    var pkg: String = "",
+    override val id: Str = Id(),
+    var name: Str = "",
+    var done: Bool = false,
+    var pkg: Str = "",
     var NowTime: Int = 0,
     var DoneTime: Int = 0,
     var Worth: Int = 0,
