@@ -126,12 +126,15 @@ fun Modifier.clickOrHold(
         }
 	}
 }
+
+data class DpRect(val left: Dp, val top: Dp, val right: Dp, val bottom: Dp)
+
 fun Modifier.DpLocation(
+    density: Density, // pass it in!
     onBoundsChanged: (DpRect) -> Unit
 ): Modifier = this.then(
     Modifier.onGloballyPositioned { coordinates ->
-        val bounds = coordinates.boundsInWindow()
-        val density = coordinates.density  // get Density from LayoutCoordinates
+        val bounds: Rect = coordinates.boundsInWindow()
 
         val dpBounds = with(density) {
             DpRect(
@@ -145,6 +148,7 @@ fun Modifier.DpLocation(
         onBoundsChanged(dpBounds)
     }
 )
+
 
 
 @Composable
@@ -254,11 +258,13 @@ fun LazyInfo(
 ) {
     var show = r { m(false) }
     var location by r { m(DpRect(0.dp, 0.dp, 0.dp, 0.dp)) }
+	val density = LocalDensity.current
+
 
     Box(
         modifier = Modifier
             .clickOrHold(hold) { show.value = true }
-            .DpLocation { location = it }
+            .DpLocation(density) { location = it }
     ) {
         content()
     }
