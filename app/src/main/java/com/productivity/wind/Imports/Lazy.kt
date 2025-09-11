@@ -297,16 +297,12 @@ fun LazyInfo(
                         shape = RoundedCornerShape(8.dp)
                     )
             ) {
-				infoContent()
-                }
+			    infoContent()
             }
 		}
-
-
-
-			
-        }
+	}
 }
+
 
 
 
