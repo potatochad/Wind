@@ -21,8 +21,8 @@ fun Challenge() {
             },
         )
     LazyItem(
-            BigIcon = Icons.Filled.AccessTime,
-            BigIconColor = DarkBlue,
+            BigIcon = Icons.Filled.ContentPaste,
+            BigIconColor = Color(0xFF1E88E5), 
             title = "Copy Paste",
             onClick = { 
               goTo("CopyPaste")
