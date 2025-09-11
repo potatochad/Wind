@@ -262,13 +262,19 @@ fun LazyInfo(
     }
 	
 	if (show.value) {
-		val popup = decidePopupPosition(
-		location,
-		popupWidth = 100.dp,
-		popupHeight = 50.dp
-	)
-		Vlog("Popup at: x=${popup.x}, y=${popup.y}")
-	}
+		try {
+
+			val popup = decidePopupPosition(
+            location,
+            popupWidth = 100.dp,
+            popupHeight = 50.dp
+        )
+        Vlog("Popup at: x=${popup.x}, y=${popup.y}")
+    } catch (e: Exception) {
+        Vlog("Error deciding popup position: ${e.message}")
+    }
+}
+
 
 
     LazyWindow(show = show) {
