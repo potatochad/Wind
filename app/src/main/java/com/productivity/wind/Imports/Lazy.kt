@@ -125,14 +125,26 @@ fun Modifier.clickOrHold(
         }
 	}
 }
-fun Modifier.location(
-    onBoundsChanged: (Rect) -> Unit
+fun Modifier.DpLocation(
+    onBoundsChanged: (DpRect) -> Unit
 ): Modifier = this.then(
     Modifier.onGloballyPositioned { coordinates ->
         val bounds = coordinates.boundsInWindow()
-        onBoundsChanged(bounds)
+        val density = coordinates.density  // get Density from LayoutCoordinates
+
+        val dpBounds = with(density) {
+            DpRect(
+                left = bounds.left.toDp(),
+                top = bounds.top.toDp(),
+                right = bounds.right.toDp(),
+                bottom = bounds.bottom.toDp()
+            )
+        }
+
+        onBoundsChanged(dpBounds)
     }
 )
+
 
 @Composable
 fun LazyMove(
@@ -154,45 +166,34 @@ fun LazyMove(
     }
 }
 
-data class PopupPosition(
-    val x: Dp,
-    val y: Dp
-)
 
-@Composable
 fun decidePopupPosition(
-    rect: Rect,
+    rect: DpRect,
     popupWidth: Dp,
     popupHeight: Dp
-): PopupPosition {
-    val density = LocalDensity.current
+): Offset {
+    val left = rect.left
+    val top = rect.top
+    val right = rect.right
+    val bottom = rect.bottom
 
-    return with(density) {
-        val left = rect.left.toDp()
-        val top = rect.top.toDp()
-        val right = rect.right.toDp()
-        val bottom = rect.bottom.toDp()
+    val screenWidth = UI.screenWidth
+    val screenHeight = UI.screenHeight
 
-        val screenWidth = UI.screenWidth
-        val screenHeight = UI.screenHeight
+    var x = (left + right) / 2 - popupWidth / 2
 
-        // Center horizontally
-        var x = (left + right) / 2 - popupWidth / 2
+    val spaceBelow = screenHeight - bottom
+    val spaceAbove = top
 
-        val spaceBelow = screenHeight - bottom
-        val spaceAbove = top
-
-        val y = when {
-            spaceBelow >= popupHeight -> bottom // below
-            spaceAbove >= popupHeight -> top - popupHeight // above
-            else -> (screenHeight / 2) - (popupHeight / 2) // center
-        }
-
-        // Clamp to screen bounds
-        x = x.coerceIn(0.dp, screenWidth - popupWidth)
-
-        PopupPosition(x, y)
+    val y = when {
+        spaceBelow >= popupHeight -> bottom
+        spaceAbove >= popupHeight -> top - popupHeight
+        else -> (screenHeight / 2) - (popupHeight / 2)
     }
+
+    x = x.coerceIn(0.dp, screenWidth - popupWidth)
+
+    return Offset(x.value, y.value) // Offset uses Float, so convert Dp to Float
 }
 
 
@@ -251,12 +252,12 @@ fun LazyInfo(
     content: Content,
 ) {
     var show = r { m(false) }
-    var location by r { m(Rect(0f, 0f, 0f, 0f)) }
+    var location by r { m(DpRect(0.dp, 0.dp, 0.dp, 0.dp)) }
 
     Box(
         modifier = Modifier
             .clickOrHold(hold) { show.value = true }
-            .location { location = it }
+            .DpLocation { location = it }
     ) {
         content()
     }
