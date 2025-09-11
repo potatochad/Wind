@@ -43,7 +43,7 @@ fun CopyPaste() {
             Header.CopyPaste()
           }
       ) {
-          LazyCard(""){
+          LazyCard {
              Text("Points per letter")
              Text("Points on completion")
           }
