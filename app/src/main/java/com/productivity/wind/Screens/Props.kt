@@ -36,12 +36,14 @@ fun NavGraphBuilder.ScreenNav() {
     url("Achievements") { Achievements() }
     url("Challenge") { Challenge() }
     url("AppUsage") { AppUsage() }
+    url("CopyPaste") { CopyPaste() }
 
     url("Web") { Web() }
 
     url("SettingsScreen") { SettingsScreen() }
     url("SettingsOther") { SettingsOtherScreen() }
     url("LogsScreen") { LogsScreen() }
+  
     
 }
 
