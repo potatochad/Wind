@@ -40,7 +40,7 @@ fun CopyPaste() {
     
 
     LazyScreen(title = {
-            Text("missing")
+            Header.CopyPaste()
           }
       ) {
           LazyCard(""){
