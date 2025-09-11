@@ -162,6 +162,14 @@ object Header {
             })
         }
     }
+    @Composable
+    fun CopyPaste(){
+        UI.End {
+                Icon.Add {
+                    
+                }
+        }
+    }
 
 
     @Composable
