@@ -172,6 +172,8 @@ fun LazyMove(
 }
 
 
+
+@Composable
 fun decidePopupPosition(
     rect: DpRect,
     popupWidth: Dp,
@@ -198,8 +200,10 @@ fun decidePopupPosition(
 
     x = x.coerceIn(0.dp, screenWidth - popupWidth)
 
-    return Offset(x.value, y.value) // Offset uses Float, so convert Dp to Float
+    val density = LocalDensity.current
+    return with(density) { Offset(x.toPx(), y.toPx()) }
 }
+
 
 
 
