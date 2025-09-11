@@ -214,12 +214,20 @@ object Icon {
         }
         
         @Composable
-        fun Add(onClick: () -> Unit = { goTo("Challenge") }) {
+        fun Add(onClick: Do = { goTo("Challenge") }) {
                 LazyIcon(
                         onClick = onClick,
                         icon = Icons.Default.Add
                 )
         }
+        @Composable
+        fun MoreMenu(onClick: Do = {}) {
+            LazyIcon(
+                onClick = onClick,
+                icon = Icons.Default.MoreVert
+            )
+        }
+
         
         @Composable
         fun Edit() {
