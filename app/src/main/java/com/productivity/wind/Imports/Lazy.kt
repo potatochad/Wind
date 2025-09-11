@@ -273,23 +273,15 @@ fun LazyInfo(
         content()
     }
 	
-	val popup = remember(location) {
-    try {
-        decidePopupPosition(
-            location,
-            popupWidth = 100.dp,
-            popupHeight = 50.dp
-        )
-    } catch (e: Exception) {
-        Vlog("Error deciding popup position: ${e.message}")
-        null
-    }
-}
+	val popup = decidePopupPosition(
+		location,
+		popupWidth = 100.dp,
+		popupHeight = 50.dp
+	)
 
-if (show.value && popup != null) {
-    Vlog("Popup at: x=${popup.x}, y=${popup.y}")
-    // Use popup here for drawing
-}
+	if (show.value) {
+		Vlog("Popup at: x=${popup.x}, y=${popup.y}")
+	}
 
 
 
