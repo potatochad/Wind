@@ -78,7 +78,7 @@ fun Main() {
                         LazzyRow {
                             UI.move(10)
 
-                            LazyInfo("${app.NowTime}s/${app.DoneTime}s") {
+                            LazyInfo(infoContent = {Text("${app.NowTime}s/${app.DoneTime}s")}) {
                                 UI.ProgressIcon(icon, progress) 
                             }
 
