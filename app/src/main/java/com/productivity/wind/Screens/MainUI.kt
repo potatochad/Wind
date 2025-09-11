@@ -165,7 +165,8 @@ fun Disipline() {
         Text(
             text = coloredTarget,
             modifier = Modifier
-                .heightIn(max = 200.dp)
+                .heightIn(max = 150.dp)
+                .widthIn(max = 220.dp)
                 .verticalScroll(ScrollText)
         )
         UI.move(h = 20)
@@ -204,7 +205,7 @@ fun Disipline() {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(150.dp)
                 .verticalScroll(ScrollINPUTText),
             placeholder = { Text("Start typing...") }
         )
