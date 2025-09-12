@@ -301,6 +301,7 @@ fun PopUps(){
    EditPopUp(Popup.Edit)
    NeedMorePointsPopup(Popup.NeedMorePoints)
    AppSelectPopup(Popup.AppSelect)
+   
 }
 
 
@@ -310,10 +311,22 @@ fun NeedMorePointsPopup(show: MutableState<Boolean>){
     LazyPopup(
         show = show, 
         title = "Not EnoughPoints", 
-        message = "Need have ${Bar.Dpoints} points to do this. Only have ${Bar.funTime}"
+        message = "Need have ${Bar.Dpoints} points to do this. Only have ${Bar.funTime}",
+        showCancel = false,
     )
 }
-
+var restore = false
+@Composable
+fun CarefulRestore(show: MutableState<Boolean>){
+    LazyPopup(
+        show = show, 
+        title = "Careful", 
+        message = "Do you definetly want to restore? All current data WILL be LOST.",
+        onConfirm = {
+            restore = true
+        }
+    )
+}
 @Composable
 fun EditPopUp(show: MutableState<Boolean>) {
     var TemporaryTargetText by r { m("") }
