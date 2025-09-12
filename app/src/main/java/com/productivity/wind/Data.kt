@@ -150,8 +150,6 @@ object Popup {
     
     var AppSelect = m(false)
 
-	var CarefulRestore = m(false)
-
 }
 
 
