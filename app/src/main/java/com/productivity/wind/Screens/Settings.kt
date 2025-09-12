@@ -26,14 +26,8 @@ fun SettingsScreen() {
     
         
         Item.UnlockThreshold()
-
-
-
-        //region RESTORE/BACKUP
-        
-        
-
-        //endregion RESTORE/BACKUP
+        Item.Restore()
+        Item.Backup()
 
         
         LazyItem(
