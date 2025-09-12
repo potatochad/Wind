@@ -104,6 +104,43 @@ object Item {
         )
     }
     @Composable
+    fun Restore() {
+        var restoreTrigger = r { m(false) }
+
+        LazyItem(
+            BigIcon = Icons.Filled.Restore,
+            BigIconColor = DarkBlue,
+            title = "Restore",
+            onClick = { restoreTrigger.value = true },
+            bottomPadding = 2.dp
+        )
+
+        BrestoreFromFile(restoreTrigger)
+    }
+
+    @Composable
+    fun Backup() {
+        var backupTrigger by r { m(false) }
+
+        LaunchedEffect(backupTrigger) {
+            if (backupTrigger) {
+                delay(1000L)
+                backupTrigger = false
+            }
+        }
+
+        LazyItem(
+            topPadding = 1.dp,
+            BigIcon = Icons.Filled.Backup,
+            BigIconColor = DarkBlue,
+            title = "BackUp",
+            onClick = { backupTrigger = true }
+        )
+
+        BsaveToFile(backupTrigger)
+    }
+
+    @Composable
     fun WebPointTimer(){
         if (Bar.Dpoints > 0){
             each(1000L){
