@@ -110,7 +110,6 @@ fun LazySearch(
 
 fun Modifier.clickOrHold(
     hold: Bool = false,
-	animation: Bool = true,
     action: Do,
 ): Modifier {
     return if (hold) {
@@ -119,7 +118,7 @@ fun Modifier.clickOrHold(
         }
     } else {
         clickable(
-            indication = if (animation) null else null,
+            indication = null,
             interactionSource = MutableInteractionSource()
         ) {
             action()
@@ -228,7 +227,7 @@ fun LazyWindow(
 fun LazyInfo(
     infoContent: Content,
     hold: Bool = false,
-	ChangeY: Dp = 100.dp,
+	ChangeY: Dp = 120.dp,
     popupWidth: Dp = 100.dp,
     popupHeight: Dp = 50.dp,
     content: Content,
