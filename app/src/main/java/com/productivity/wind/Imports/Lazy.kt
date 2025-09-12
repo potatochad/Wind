@@ -246,7 +246,7 @@ fun LazyInfo(
 
     // Default top-right of the trigger
 	val Y = remember(map) {
-		if (map.top + 10.dp < popupHeight) map.bottom + 10.dp else map.top + 10.dp
+		if (map.top - 10.dp < popupHeight) map.bottom + 10.dp else map.top - 10.dp
 	}
 	val X = remember(map) {
 		if (map.left < popupWidth) map.right else map.left
@@ -264,7 +264,9 @@ fun LazyInfo(
                     )
 					.padding(10.dp),
             ) {
-                infoContent()
+				LazyCard{
+					infoContent()
+				}
             }
         }
     }
