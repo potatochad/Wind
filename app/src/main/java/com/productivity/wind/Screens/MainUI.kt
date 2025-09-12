@@ -162,11 +162,12 @@ fun Disipline() {
                 Icon.Edit()
             }
         }
+        UI.move(8)
         Text(
             text = coloredTarget,
             modifier = Modifier
                 .heightIn(max = 150.dp)
-                .widthIn(max = 220.dp)
+                .widthIn(max = 300.dp)
                 .verticalScroll(ScrollText)
         )
         UI.move(h = 20)
