@@ -149,6 +149,7 @@ object Popup {
     var EnableBlocking = m(false)
     
     var AppSelect = m(false)
+	var Web = m(false)
 
 }
 
