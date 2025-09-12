@@ -23,6 +23,8 @@ import org.mozilla.geckoview.AllowOrDeny
 import org.mozilla.geckoview.*
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate.*
 import org.mozilla.geckoview.GeckoSession.*
+import androidx.activity.compose.*
+
 
 typealias Tab = GeckoSession
 typealias ManageTab = GeckoSession.NavigationDelegate
