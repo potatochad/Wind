@@ -37,8 +37,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("Challenge") { Challenge() }
     url("AppUsage") { AppUsage() }
     url("CopyPaste") { CopyPaste() }
-
-    url("Web") { Web() }
+    
 
     url("SettingsScreen") { SettingsScreen() }
     url("SettingsOther") { SettingsOtherScreen() }
@@ -250,7 +249,7 @@ object Icon {
                 LazyIcon(
                         onClick = { 
                             if (Bar.funTime < Bar.Dpoints) {show(Popup.NeedMorePoints)}
-                            else {goTo("Web")}
+                            else {show(Popup.Web)}
                         },
                         icon = Icons.Default.SportsEsports
                 )
