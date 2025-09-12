@@ -73,26 +73,18 @@ fun Main() {
                         apps.edit(app){ done = true }
                         Vlog("${app.name} completed")
                     }
-                    LazyInfo(
-                        infoContent = {
-                            Text("WHO WAS LONG CLICKING MEEEEEEE")
-                        }, 
-                        hold=true
-                    ) {
                     
-        
-                        LazyCard {
-                            LazzyRow {
-                                UI.move(10)
+                    LazyCard {
+                        LazzyRow {
+                            UI.move(10)
 
-                                LazyInfo(infoContent = {Text("${app.NowTime}s/${app.DoneTime}s")}) {
-                                    UI.ProgressIcon(icon, progress) 
-                                }
+                            LazyInfo(infoContent = {Text("${app.NowTime}s/${app.DoneTime}s")}) {
+                                UI.ProgressIcon(icon, progress) 
+                            }
 
                             
-                                UI.move(12)
-                                Text("Points ${app.Worth}")
-                            }
+                            UI.move(12)
+                            Text("Points ${app.Worth}")
                         }
                     }
                 }
