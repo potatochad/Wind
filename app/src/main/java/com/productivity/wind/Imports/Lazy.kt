@@ -245,16 +245,15 @@ fun LazyInfo(
     }
 
     // Default top-right of the trigger
-	val Y_Placement = remember(map) {
+	val Y = r(map) {
 		if (map.top + 10.dp < popupHeight) map.bottom + 10.dp else map.top + 10.dp
 	}
-	val X_Placement = remember(map) {
+	val X = r(map) {
 		if (map.left < popupWidth) map.right else map.left
 	}
-	if (show.value) Vlog("Popup at: Y=$Y_Placement X=$X_Placement")
-
-    LazyWindow(show = show) {
-        LazyMove(100.dp, 100.dp) {
+	
+    LazyWindow(show) {
+        LazyMove(X, Y) {
             Box(
                 modifier = Modifier
                     .wrapContentSize()
