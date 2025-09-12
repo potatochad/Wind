@@ -228,7 +228,7 @@ fun LazyWindow(
 fun LazyInfo(
     infoContent: Content,
     hold: Bool = false,
-	ChangeY: Dp = 80.dp,
+	ChangeY: Dp = 100.dp,
     popupWidth: Dp = 100.dp,
     popupHeight: Dp = 50.dp,
     content: Content,
