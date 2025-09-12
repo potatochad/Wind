@@ -38,7 +38,8 @@ var Tab.ManageTab: ManageTab?
 
 
 @Composable
-fun Web() {
+fun Web(show = ) {
+    LazyWindow(){
     val ctx = LocalContext.current
     val Web = r { GeckoRuntime.create(ctx) }
     val Tab = r { GeckoSession() }
@@ -48,8 +49,6 @@ fun Web() {
     DisposableEffect(Unit) {
         
         Tab.ManageTab = onlyAllowDomains(listOf("youtube.com"))
-        Tab.setYouTubeFilter()
-        Tab.blockAllImages_Maximum()
         Tab.loadUri("https://youtube.com")
         Tab.open(Web)
 
@@ -73,72 +72,5 @@ fun Web() {
             }
         )
     }
-}
-
-
-fun GeckoSession.blockAllImages_Maximum() {
-    // 1️⃣ Block network requests for images/videos
-    this.navigationDelegate = object : GeckoSession.NavigationDelegate {
-        override fun onLoadRequest(
-            session: GeckoSession,
-            request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<AllowOrDeny>? {
-            val url = request.uri.toString().lowercase()
-            return if (
-                url.endsWith(".png") ||
-                url.endsWith(".jpg") ||
-                url.endsWith(".jpeg") ||
-                url.endsWith(".gif") ||
-                url.endsWith(".webp") ||
-                url.endsWith(".svg") ||
-                url.contains("/images/") ||
-                url.contains("logo") ||
-                url.contains("favicon")
-            ) {
-                GeckoResult.fromValue(AllowOrDeny.DENY)
-            } else {
-                GeckoResult.fromValue(AllowOrDeny.ALLOW)
-            }
-        }
     }
-
-    // 2️⃣ Inject JS to hide everything image-related
-    val js = """
-        (function(){
-            function hideEverything() {
-                // Hide all <img> and <svg> elements
-                document.querySelectorAll('img, svg').forEach(el=>{
-                    el.style.display='none !important';
-                });
-                
-                // Remove all favicons
-                document.querySelectorAll('link[rel~="icon"]').forEach(el=>{
-                    el.parentNode.removeChild(el);
-                });
-                
-                // Remove all CSS background images
-                document.querySelectorAll('*').forEach(el=>{
-                    el.style.backgroundImage='none !important';
-                });
-                
-                // Remove pseudo-element images
-                const style = document.createElement('style');
-                style.innerHTML = '*::before, *::after { background-image: none !important; content: none !important; }';
-                document.head.appendChild(style);
-            }
-
-            // Run immediately
-            hideEverything();
-
-            // Observe future DOM changes
-            var observer = new MutationObserver(hideEverything);
-            observer.observe(document.body, {childList:true, subtree:true});
-
-            // Run after page fully loads
-            window.addEventListener('load', hideEverything);
-            document.addEventListener('DOMContentLoaded', hideEverything);
-        })();
-    """.trimIndent()
-
-    this.loadUri("javascript:$js")
 }
