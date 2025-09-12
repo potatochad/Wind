@@ -262,7 +262,6 @@ fun LazyInfo(
                         color = Color.Black.copy(alpha = 0.15f),
                         shape = RoundedCornerShape(8.dp),
                     )
-					.padding(10.dp),
             ) {
 				LazyCard(
 					innerPadding = 10,
