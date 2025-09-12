@@ -259,7 +259,7 @@ fun LazyInfo(
                     .wrapContentSize()
 					.border(
                         width = 2.dp,
-                        color = Color.Black.copy(alpha = 0.15f),
+                        color = Color.Gray,
                         shape = RoundedCornerShape(8.dp),
                     )
             ) {
