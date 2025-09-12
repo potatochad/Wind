@@ -31,36 +31,7 @@ fun SettingsScreen() {
 
         //region RESTORE/BACKUP
         
-        var restoreTrigger = r { m(false) }
-        var backupTrigger by r { m(false) }
-
-
-        LaunchedEffect(backupTrigger) {
-                if (backupTrigger) {
-                        delay(1000L)
-                        backupTrigger = false
-                }
-        }
-
         
-        //! NOT ENCRIPTED WITH PREMIUM MIGHT BE A PROBLEM
-        LazyItem(
-                BigIcon = Icons.Filled.Restore,
-                BigIconColor = DarkBlue,
-                title = "Restore",
-                onClick = { restoreTrigger.value = true },
-                bottomPadding = 2.dp
-        )
-        LazyItem(
-                topPadding = 1.dp,
-                BigIcon = Icons.Filled.Backup,
-                BigIconColor = DarkBlue,
-                title = "BackUp",
-                onClick = { backupTrigger = true }
-        ) 
-        
-        BrestoreFromFile(restoreTrigger)
-        BsaveToFile(backupTrigger)
 
         //endregion RESTORE/BACKUP
 
