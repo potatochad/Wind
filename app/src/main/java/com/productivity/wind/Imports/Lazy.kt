@@ -257,15 +257,16 @@ fun LazyInfo(
             Box(
                 modifier = Modifier
                     .wrapContentSize()
-					.background(Color(0xFF1A1A1A), shape = RoundedCornerShape(8.dp))
-                    .border(
+					.border(
                         width = 2.dp,
                         color = Color.Black.copy(alpha = 0.15f),
                         shape = RoundedCornerShape(8.dp),
                     )
 					.padding(10.dp),
             ) {
-				infoContent()
+				Box(background(Color(0xFF1A1A1A), shape = RoundedCornerShape(8.dp)){
+					infoContent()
+				}
             }
         }
     }
