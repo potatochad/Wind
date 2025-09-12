@@ -301,6 +301,7 @@ fun PopUps(){
    EditPopUp(Popup.Edit)
    NeedMorePointsPopup(Popup.NeedMorePoints)
    AppSelectPopup(Popup.AppSelect)
+   Web(Popup.Web)
 }
 
 
