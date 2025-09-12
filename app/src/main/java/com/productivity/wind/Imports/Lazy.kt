@@ -206,7 +206,7 @@ fun LazyWindow(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickOrHold(animation = false) { show.value = false },
+                    .clickOrHold() { show.value = false },
                 contentAlignment = Alignment.Center
             ) {
                 AnimatedVisibility(
