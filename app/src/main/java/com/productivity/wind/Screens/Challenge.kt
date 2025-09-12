@@ -36,17 +36,21 @@ fun Challenge() {
 
 @Composable
 fun CopyPaste() {
-    var Time = r { m("50") }
-    var Points = r { m("0") }
+    var CompletionPoints = r { m("10") }
+    var Letter_points = r { m("1") }
+    var Letter_points = r { m("") }
     
 
     LazyScreen(title = {
             Header.CopyPaste()
           }
       ) {
-          LazyCard {
-             Text("Points per letter")
-             Text("Points on completion")
+          LazyRuleCard("Worth"){
+             Text("Letter: ${Letter_points} points")
+             Text("Completion: ${CompletionPoints} points")
+          }
+          LazyRuleCard("Limits"){
+             Text("Completions in a day: ${Letter_points}")
           }
 
     }
