@@ -38,8 +38,8 @@ var Tab.ManageTab: ManageTab?
 
 
 @Composable
-fun Web(show = ) {
-    LazyWindow(){
+fun Web(show: MutableState<Boolean>) {
+    LazyWindow(show){
     val ctx = LocalContext.current
     val Web = r { GeckoRuntime.create(ctx) }
     val Tab = r { GeckoSession() }
