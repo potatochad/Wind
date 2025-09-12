@@ -310,8 +310,8 @@ fun PopUps(){
 fun NeedMorePointsPopup(show: MutableState<Boolean>){
     LazyPopup(
         show = show, 
-        title = "Not EnoughPoints", 
-        message = "Need have ${Bar.Dpoints} points to do this. Only have ${Bar.funTime}",
+        title = "Get more points", 
+        message = "Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime-Bar.Dpoints}",
         showCancel = false,
     )
 }
