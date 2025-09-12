@@ -247,8 +247,8 @@ fun LazyInfo(
     // Default top-right of the trigger
 	val Y_Placement = map.up+10.dp
 	val X_Placement = map.left
-	if (Y_Placement < popupHeight) {Y_Placement = map.bottom+10.dp}
-	if (X_Placement < popupWidth) {X_Placement = map.right}
+	if (Y_Placement < popupHeight) Y_Placement = map.bottom+10.dp
+	if (X_Placement < popupWidth) X_Placement = map.right
 	
 	if (show.value) Vlog("Popup at: Y=$Y_Placement X=$X_Placement")
 
