@@ -111,7 +111,13 @@ object Item {
             BigIcon = Icons.Filled.Restore,
             BigIconColor = DarkBlue,
             title = "Restore",
-            onClick = { restoreTrigger.value = true },
+            onClick = { 
+                if (Bar.Dpoints > Bar.funTime) {
+                    show(Popup.NeedMorePoints)    
+                } else {
+                    restoreTrigger.value = true 
+                }
+            },
             bottomPadding = 2.dp
         )
 
