@@ -245,10 +245,8 @@ fun LazyInfo(
     }
 
     // Default top-right of the trigger
-	var Y_Placement = map.up+10.dp
-	var X_Placement = map.left
-	if (Y_Placement < popupHeight) Y_Placement = map.bottom+10.dp
-	if (X_Placement < popupWidth) X_Placement = map.right
+	var Y_Placement = if (map.up+10.dp < popupHeight) map.bottom+10.dp else map.up +10.dp
+	var X_Placement = if (map.left < popupWidth) map.right else map.left
 	
 	if (show.value) Vlog("Popup at: Y=$Y_Placement X=$X_Placement")
 
