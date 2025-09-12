@@ -301,11 +301,10 @@ fun PopUps(){
    EditPopUp(Popup.Edit)
    NeedMorePointsPopup(Popup.NeedMorePoints)
    AppSelectPopup(Popup.AppSelect)
-   
+   CarefulRestore(Popup.CarefulRestore)
 }
 
 
-// All other things
 @Composable
 fun NeedMorePointsPopup(show: MutableState<Boolean>){
     LazyPopup(
