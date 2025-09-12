@@ -264,7 +264,12 @@ fun LazyInfo(
                     )
 					.padding(10.dp),
             ) {
-				Box(modifier=Modifier.background(Color(0xFF1A1A1A), shape = RoundedCornerShape(8.dp))){
+				LazyCard(
+					innerPadding = 10,
+					corners = 8,
+					modifier = Modifier
+						.wrapContentSize(),
+					){
 					infoContent()
 				}
 			}
