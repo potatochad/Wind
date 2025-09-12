@@ -248,7 +248,7 @@ fun LazyInfo(
 	var Y_Placement = if (map.top +10.dp < popupHeight) map.bottom+10.dp else map.top +10.dp
 	var X_Placement = if (map.left < popupWidth) map.right else map.left
 	
-	if (show.value) Vlog("Popup at: Y=$Y_Placement X=$X_Placement")
+	if (show.value) Vlog("Popup at:map= $map Y=$Y_Placement X=$X_Placement")
 
     LazyWindow(show = show) {
         LazyMove(100.dp, 100.dp) {
