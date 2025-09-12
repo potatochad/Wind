@@ -115,8 +115,7 @@ object Item {
                 if (Bar.Dpoints > Bar.funTime) {
                     show(Popup.NeedMorePoints)    
                 } else {
-                    show(Popup.CarefulRestore)
-                    if (restore) restoreTrigger.value = true 
+                    restoreTrigger.value = true 
                 }
             },
             bottomPadding = 2.dp
@@ -315,18 +314,7 @@ fun NeedMorePointsPopup(show: MutableState<Boolean>){
         showCancel = false,
     )
 }
-var restore = false
-@Composable
-fun CarefulRestore(show: MutableState<Boolean>){
-    LazyPopup(
-        show = show, 
-        title = "Careful", 
-        message = "Do you definetly want to restore? All current data WILL be LOST.",
-        onConfirm = {
-            restore = true
-        }
-    )
-}
+
 @Composable
 fun EditPopUp(show: MutableState<Boolean>) {
     var TemporaryTargetText by r { m("") }
