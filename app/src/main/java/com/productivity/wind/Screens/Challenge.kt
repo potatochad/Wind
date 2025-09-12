@@ -36,25 +36,36 @@ fun Challenge() {
 
 @Composable
 fun CopyPaste() {
-    var CompletionPoints = r { m("10") }
-    var Letter_points = r { m("1") }
-    var Letter_points = r { m("") }
-    
+    // State variables
+    var completionPoints = r { m("10") }  // “If” completion points
+    var letterPoints = r { m("2") }       // “If” letter points
+    var Retypes = r { m("0") }         // “Do” limit points
 
-    LazyScreen(title = {
-            Header.CopyPaste()
-          }
-      ) {
-          LazyRuleCard("Worth"){
-             Text("Letter: ${Letter_points} points")
-             Text("Completion: ${CompletionPoints} points")
-          }
-          LazyRuleCard("Limits"){
-             Text("Completions in a day: ${Letter_points}")
-          }
+    LazyScreen(title = { 
+        Header.CopyPaste() 
+    }) {
+        // “If” section
+        LazyRuleCard("If") {
+            LazzyRow {
+                Text("Letter completed: ")
+                UI.Cinput(letterPoints)
+                Text(" points")
+            }
+            LazzyRow {
+                Text("Text retyped: ")
+                UI.Cinput(completionPoints)
+                Text(" points")
+            }
+        }
 
+        // “Do” section - action/reward
+        LazyRuleCard("Other") {
+            LazzyRow {
+                Text("Maximum retypes a day: ")
+                UI.Cinput(Retypes)
+            }
+        }
     }
-
 }
 
 
