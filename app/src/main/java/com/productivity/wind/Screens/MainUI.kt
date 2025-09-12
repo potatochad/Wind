@@ -166,7 +166,7 @@ fun Disipline() {
         Text(
             text = coloredTarget,
             modifier = Modifier
-                .heightIn(max = 150.dp)
+                .heightIn(max = 100.dp)
                 .widthIn(max = 300.dp)
                 .verticalScroll(ScrollText)
         )
