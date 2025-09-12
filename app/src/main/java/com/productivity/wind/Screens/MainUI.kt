@@ -73,7 +73,12 @@ fun Main() {
                         apps.edit(app){ done = true }
                         Vlog("${app.name} completed")
                     }
-                    LazyInfo(infoContent = {Text("${app.NowTime}s/${app.DoneTime}s")}) {
+                    LazyInfo(
+                        infoContent = {
+                            Text("WHO WAS LONG CLICKING MEEEEEEE")
+                        }, 
+                        hold=true
+                    ) {
                     
         
                         LazyCard {
