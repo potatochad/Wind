@@ -244,18 +244,17 @@ fun LazyInfo(
         content()
     }
 
-    val xDp = ((map.left + map.right) / 2 - popupWidth / 2)
-        .coerceIn(0.dp, UI.screenWidth - popupWidth)
+    val centerX = (map.left + map.right) / 2 - popupWidth / 2
+	val xDp = if (centerX < 0.dp) 0.dp
+          else if (centerX + popupWidth > UI.screenWidth) UI.screenWidth - popupWidth
+          else centerX
 
-    val yDp = when {
-        UI.screenHeight - map.bottom >= popupHeight -> map.bottom
-        map.top >= popupHeight -> map.top - popupHeight
-        else -> (UI.screenHeight / 2) - (popupHeight / 2)
-    }
+	val yDp = if (UI.screenHeight - map.bottom >= popupHeight) map.bottom
+          else if (map.top >= popupHeight) map.top - popupHeight
+          else (UI.screenHeight / 2) - (popupHeight / 2)
 
-    val popupOffset = with(density) { Offset(xDp.toPx(), yDp.toPx()) }
+	val popupOffset = with(density) { Offset(xDp.toPx(), yDp.toPx()) }
 
-	
     // Logs
 	if (show.value) Vlog("Popup at: x=${popupOffset.x}, y=${popupOffset.y}")
 
