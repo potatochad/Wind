@@ -264,13 +264,14 @@ fun LazyInfo(
                     )
 					.padding(10.dp),
             ) {
-				Box(Modifier.background(Color(0xFF1A1A1A), shape = RoundedCornerShape(8.dp)){
+				Box(modifier=Modifier.background(Color(0xFF1A1A1A), shape = RoundedCornerShape(8.dp))){
 					infoContent()
 				}
-            }
-        }
-    }
+			}
+		}
+	}
 }
+	
 
 
 
