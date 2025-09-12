@@ -1,5 +1,5 @@
 package com.productivity.wind
-//
+
 import com.productivity.wind.Screens.*
 import android.content.Context
 import android.os.Build
@@ -208,7 +208,6 @@ fun MAINStart() {
 }
 
 fun OnResume(){
-	    restore = false
         refreshApps()  
 }
 @Composable
