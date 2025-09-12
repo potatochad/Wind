@@ -244,16 +244,15 @@ fun LazyInfo(
         content()
     }
 
-    val centerX = (map.left + map.right) / 2 - popupWidth / 2
-	val xDp = if (centerX < 0.dp) 0.dp
-          else if (centerX + popupWidth > UI.screenWidth) UI.screenWidth - popupWidth
-          else centerX
+    // Default top-right of the trigger
+	val xDp = map.right
+	val yDp = map.top
 
-	val yDp = if (UI.screenHeight - map.bottom >= popupHeight) map.bottom
-          else if (map.top >= popupHeight) map.top - popupHeight
-          else (UI.screenHeight / 2) - (popupHeight / 2)
+	// Adjust if it goes off-screen
+	val finalX = if (xDp + popupWidth > UI.screenWidth) UI.screenWidth - popupWidth else xDp
+	val finalY = if (yDp + popupHeight > UI.screenHeight) UI.screenHeight - popupHeight else yDp
 
-	val popupOffset = with(density) { Offset(xDp.toPx(), yDp.toPx()) }
+	val popupOffset = with(density) { Offset(finalX.toPx(), finalY.toPx()) }
 
     // Logs
 	if (show.value) Vlog("Popup at: x=${popupOffset.x}, y=${popupOffset.y}")
@@ -266,8 +265,9 @@ fun LazyInfo(
                     .border(
                         width = 2.dp,
                         color = Color.Black.copy(alpha = 0.15f),
-                        shape = RoundedCornerShape(8.dp)
-                    )
+                        shape = RoundedCornerShape(8.dp),
+                    ),
+					.padding(10.dp),
             ) {
                 infoContent()
             }
