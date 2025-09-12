@@ -245,17 +245,12 @@ fun LazyInfo(
     }
 
     // Default top-right of the trigger
-	val xDp = map.right
-	val yDp = map.top
-
-	// Adjust if it goes off-screen
-	val finalX = if (xDp + popupWidth > UI.screenWidth) UI.screenWidth - popupWidth else xDp
-	val finalY = if (yDp + popupHeight > UI.screenHeight) UI.screenHeight - popupHeight else yDp
-
-	val popupOffset = with(density) { Offset(finalX.toPx(), finalY.toPx()) }
-
-    // Logs
-	if (show.value) Vlog("Popup at: x=${popupOffset.x}, y=${popupOffset.y}")
+	val Y_Placement = map.up+10.dp
+	val X_Placement = map.left
+	if (Y_Placement < popupHeight) {Y_Placement = map.bottom+10.dp}
+	if (X_Placement < popupWidth) {X_Placement = map.right}
+	
+	if (show.value) Vlog("Popup at: Y=$Y_Placement X=$X_Placement")
 
     LazyWindow(show = show) {
         LazyMove(100.dp, 100.dp) {
