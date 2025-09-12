@@ -265,7 +265,7 @@ fun LazyInfo(
                     )
             ) {
 				LazyCard(
-					innerPadding = 10,
+					innerPadding = 8,
 					corners = 8,
 					modifier = Modifier
 						.wrapContentSize(),
@@ -499,7 +499,7 @@ fun LazyCard(
                 start = innerPadding.dp,
                 end = innerPadding.dp,
                 bottom = innerPadding.dp,
-                top = (innerPadding - 2).dp // slight top adjustment
+                top = (innerPadding - 3).dp // slight top adjustment
             )
         ) {
             content()
