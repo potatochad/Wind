@@ -266,7 +266,7 @@ fun LazyInfo(
                         width = 2.dp,
                         color = Color.Black.copy(alpha = 0.15f),
                         shape = RoundedCornerShape(8.dp),
-                    ),
+                    )
 					.padding(10.dp),
             ) {
                 infoContent()
