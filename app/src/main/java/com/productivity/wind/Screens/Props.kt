@@ -115,7 +115,8 @@ object Item {
                 if (Bar.Dpoints > Bar.funTime) {
                     show(Popup.NeedMorePoints)    
                 } else {
-                    restoreTrigger.value = true 
+                    show(Popup.CarefulRestore)
+                    if (restore) restoreTrigger.value = true 
                 }
             },
             bottomPadding = 2.dp
