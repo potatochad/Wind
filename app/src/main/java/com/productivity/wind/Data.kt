@@ -208,6 +208,7 @@ fun MAINStart() {
 }
 
 fun OnResume(){
+	    restore = false
         refreshApps()  
 }
 @Composable
