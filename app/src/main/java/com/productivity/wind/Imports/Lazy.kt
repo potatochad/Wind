@@ -775,9 +775,7 @@ fun LazyScreen(
 			}
 
 
-            var screenHeight = LocalConfiguration.current.screenHeightDp.dp
-            var LazyScreenContentHeight= screenHeight-100.dp- bottomSystemHeight()
-			Column(
+        	Column(
 				modifier = baseModifier
 					.then(modifier)
                     .height(LazyScreenContentHeight)
