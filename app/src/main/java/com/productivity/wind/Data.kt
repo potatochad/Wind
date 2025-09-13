@@ -173,7 +173,7 @@ class MainActivity : ComponentActivity() {
             WindTheme {
                 Surface(modifier = Modifier
 						.fillMaxSize()
-						.padding(WindowInsets.systemBars.asPaddingValues())
+						.padding(WindowInsets.navigationBars.asPaddingValues())
 					   ) {
                     AppStart()
                 }
