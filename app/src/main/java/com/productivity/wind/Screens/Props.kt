@@ -297,22 +297,25 @@ object Icon {
 //region POPUP CONTROLLER
 
 //!Just call this on app start
-@Composable
-fun PopUps(){
-   AskUsagePermission(Popup.AskUsagePermission)
-   EditPopUp(Popup.Edit)
-   NeedMorePointsPopup(Popup.NeedMorePoints)
-   AppSelectPopup(Popup.AppSelect)
-}
-fun show(state: MutableState<Boolean>){ state.value = true }
+
+fun show(state: m_<Bool>){ state.value = true }
 
 object Popup {
     var Edit = m(false)
     var NeedMorePoints = m(false)
     var AskUsagePermission = m(false)
     var EnableBlocking = m(false)
-    
     var AppSelect = m(false)
+    
+    @Composable
+    fun PopUps(){
+        AskUsagePermission(Popup.AskUsagePermission)
+        EditPopUp(Popup.Edit)
+        NeedMorePointsPopup(Popup.NeedMorePoints)
+        AppSelectPopup(Popup.AppSelect)
+    }
+    
+    
 
 }
 
