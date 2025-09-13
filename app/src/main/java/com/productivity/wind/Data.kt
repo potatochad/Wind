@@ -67,14 +67,7 @@ class Settings {
     //endregion COPY PASTE Disipline
 
 
-    
-    //region MISALANIOUS
-
-
     var lastDate by m("")
-    var restoringFromFile by m(false)
-
-    //endregion MISALANIOUS
 
     
 
@@ -85,7 +78,7 @@ class Settings {
     //endregion
 
 
-    //region LISTS
+    // LISTS
     
     var ListApps by m("")
 	var CopyPasteTasks by m("")
@@ -229,9 +222,13 @@ object App {
     * */
     lateinit var ctx: Context
     lateinit var navHost: NavHostController
+	
 	var screenHeight by m(0.dp)
 	var screenWidth by m(0.dp)
 	var LazyScreenContentHeight by m(0.dp)
+	
+	var ShowMenu by m(false)
+	var restoringFromFile by m(false)
 	
 
 }
