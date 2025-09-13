@@ -258,7 +258,7 @@ fun LazyInfo(
                 modifier = Modifier
                     .wrapContentSize()
 					.border(
-                        width = 2.dp,
+                        width = 1.dp,
                         color = Color.Gray,
                         shape = RoundedCornerShape(8.dp),
                     )
