@@ -838,7 +838,8 @@ fun LazyScreen(
 	DividerPadding: Bool = true,
 	
 	MheaderHeight: Int = 44,
-	Scrollable: Bool = false,
+	ForceBottomBar: Bool = true,
+	Scrollable: Bool = true,
     content: Content,
 ) {
     val focusManager = LocalFocusManager.current
@@ -874,8 +875,12 @@ fun LazyScreen(
 	} else {
 		Column(baseModifier.then(modifier)) {
 			header()
-			Box(Modifier.weight(1f)) { 
-				content() 
+			if (ForceBottomBar) {
+				Box(Modifier.weight(1f)) { 
+					content() 
+				}
+			} else {
+				content()
 			}
 			LazzyRow {UI.move(bottomSystemHeight())}
 		}
