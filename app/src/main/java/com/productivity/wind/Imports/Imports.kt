@@ -144,7 +144,7 @@ fun getLogs(): String {
 }
 typealias Content = @Composable () -> Unit
 typealias Do = () -> Unit
-typealias Content<T> = @Composable (T) -> Unit
+typealias Content_<T> = @Composable (T) -> Unit
 
 
 @Composable
