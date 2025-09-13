@@ -114,9 +114,9 @@ object Item {
             title = "Restore",
             onClick = { 
                 if (Bar.Dpoints > Bar.funTime) {
-                    show(Popup.NeedMorePoints)    
+                    show(NeedMorePoints)    
                 } else {
-                    restoreTrigger.value = true 
+                    set(restoreTrigger, true) 
                 }
             },
             bottomPadding = 2.dp
@@ -200,9 +200,9 @@ object Header {
                 }
                 
 
-                selectedApp.value = ""
-                Points.value = "0"
-                Time.value = "0"
+                set(selectedApp, "")
+                set(Points, "0")
+                set(Time, "0")
 
                 goTo("Main")
             })
@@ -251,7 +251,7 @@ object Icon {
         fun Chill() {
                 LazyIcon(
                         onClick = { 
-                            if (Bar.funTime < Bar.Dpoints) {show(Popup.NeedMorePoints)}
+                            if (Bar.funTime < Bar.Dpoints) {show(NeedMorePoints)}
                             else {goTo("Web")}
                         },
                         icon = Icons.Default.SportsEsports
@@ -278,8 +278,8 @@ object Icon {
         fun Edit() {
                 LazyIcon(
                         onClick = { 
-                                if (Bar.funTime < Bar.Dpoints) show(Popup.NeedMorePoints)
-                                else show(Popup.Edit)
+                                if (Bar.funTime < Bar.Dpoints) show(NeedMorePoints)
+                                else show(Edit)
                         },
                         icon = Icons.Default.Edit
                 )
@@ -295,13 +295,10 @@ object Icon {
 
 
 //region POPUP CONTROLLER
+fun <T> set(state: m_<T>, value: T) {state.value = value}
 
-//!Just call this on app start
-
-fun True(state: m_<Bool>){ state.value = true }
-fun False(state: m_<Bool>){ state.value = false }
-fun show(state: m_<Bool>){ state.value = true }
-fun hide(state: m_<Bool>){ state.value = false }
+fun show(state: m_<Bool>) = set(state, true)
+fun hide(state: m_<Bool>) = set(state, false)
 
 var Edit = m(false)
 var NeedMorePoints = m(false)
