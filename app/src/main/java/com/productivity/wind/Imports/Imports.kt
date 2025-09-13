@@ -482,7 +482,7 @@ object UI {
 	) {
 		Checkbox(
 			checked = isChecked.value,
-			onCheckedChange = { isChecked.value = it },
+			onCheckedChange = { set(isChecked, it) },
 			colors = CheckboxDefaults.colors(
 				checkedColor = Color(0xFFFFD700), // gold
 				uncheckedColor = Color.Gray,      // optional
@@ -501,7 +501,7 @@ object UI {
 		) {
 			RadioButton(
 				selected = selectedIndex.value == index,
-				onClick = { selectedIndex.value = index },
+				onClick = { set(selectedIndex, index) },
 				colors = RadioButtonDefaults.colors(
 					selectedColor = Color(0xFFFFD700),
 					unselectedColor = Color.Gray
@@ -537,7 +537,7 @@ object UI {
         bottomPadding: Dp = 20.dp,
         StartPaddingRemove: Int = 40,
     ) {
-        val safeStartPadding = max(0.dp, (App.screenWidth+60) / 4 - StartPaddingRemove.dp)
+        val safeStartPadding = max(0.dp, (App.screenWidth+60.dp) / 4 - StartPaddingRemove.dp)
 
         Column(
             modifier = Modifier.padding(start = safeStartPadding),
@@ -737,7 +737,7 @@ object UI {
             onValueChange = {
                 val input = FilterInput(isInt, it)
                 if (MaxLetters == null || input.length <= MaxLetters) {
-					what.value = input
+					set(what, input)
                     onChange(input)
                 } else {
                     Vlog("max ${MaxLetters} letters")

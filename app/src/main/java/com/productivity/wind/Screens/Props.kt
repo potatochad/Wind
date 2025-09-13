@@ -57,22 +57,22 @@ fun Menu() {
         title ={ UI.MenuHeader()},
         showBack = false,
         showDivider = false,
-        headerHeight = 700,
+        headerHeight = 190,
     ) {
         LazyItem(
             icon = Icons.Outlined.Chat,
             title = "Contact Support",
-            onClick = { UI.SendEmail(); show(App.Menu) }
+            onClick = { UI.SendEmail(); App.Menu = true }
         )
         LazyItem(
             icon = Icons.Outlined.Landscape,
             title = "Settings",
-            onClick = { goTo("SettingsScreen"); show(App.Menu)  }
+            onClick = { goTo("SettingsScreen"); App.Menu = true }
         )
         LazyItem(
             icon = Icons.Outlined.QueryStats,
             title = "Achievements",
-            onClick = { goTo("Achievements"); show(App.Menu) }
+            onClick = { goTo("Achievements"); App.Menu = true }
         )
 
 
@@ -153,7 +153,7 @@ object Item {
             each(1000L){
                 if (Bar.funTime == 0) {
                     goTo("main")
-                    show(Popup.NeedMorePoints)    
+                    show(NeedMorePoints)
                 }
                 else{
                     Bar.funTime -=1
@@ -172,7 +172,7 @@ object Header {
         UI.End {
             Icon.Add(onClick = {
 
-                UI.check(!UI.isUsageP_Enabled()) {Popup.AskUsagePermission.value = true; return@Add}
+                UI.check(!UI.isUsageP_Enabled()) { show(AskUsagePermission); return@Add}
                 UI.check(Time.value.toInt() < 1,"Add time") {return@Add}
                 UI.check(Points.value.toInt() < 1,"Add points") {return@Add}
                 UI.check(selectedApp.value.isEmpty(),"Select app") {return@Add}
@@ -243,7 +243,7 @@ object Icon {
         @Composable
         fun Menu() {
                 LazyIcon(
-                        onClick = { show(App.Menu)},
+                        onClick = { App.Menu=true},
                         icon = Icons.Default.Menu
                 )
         }
@@ -295,10 +295,11 @@ object Icon {
 
 
 //region POPUP CONTROLLER
-fun <T> set(state: m_<T>, value: T) {state.value = value}
+fun <T> set(state: m_<T>?, value: T) { state?.value = value }
 
-fun show(state: m_<Bool>) = set(state, true)
-fun hide(state: m_<Bool>) = set(state, false)
+fun show(state: m_<Boolean>?) = set(state, true)
+fun hide(state: m_<Boolean>?) = set(state, false)
+
 
 var Edit = m(false)
 var NeedMorePoints = m(false)

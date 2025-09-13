@@ -67,7 +67,7 @@ import androidx.compose.ui.window.*
 import kotlin.math.*
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.layout.*
-
+import com.productivity.wind.Screens.set
 
 
 fun Modifier.clickOrHold(
@@ -87,28 +87,6 @@ fun Modifier.clickOrHold(
         }
 	}
 }
-
-data class DpRect(val left: Dp, val top: Dp, val right: Dp, val bottom: Dp)
-
-fun Modifier.DpLocation(
-    density: Density, // pass it in!
-    onBoundsChanged: Do_<DpRect>
-): Modifier = this.then(
-    Modifier.onGloballyPositioned { coordinates ->
-        val bounds: Rect = coordinates.boundsInWindow()
-
-        val dpBounds = with(density) {
-            DpRect(
-                left = bounds.left.toDp(),
-                top = bounds.top.toDp(),
-                right = bounds.right.toDp(),
-                bottom = bounds.bottom.toDp()
-            )
-        }
-
-        onBoundsChanged(dpBounds)
-    }
-)
 
 
 
@@ -151,7 +129,6 @@ fun LazyWindow(
     // Local state to control if Popup is alive
     var popupVisible by r { m(false) }
 
-    // Sync popupVisible with show.value
     LaunchedEffect(show.value) {
         if (show.value) {
             popupVisible = true  // Show immediately
@@ -168,7 +145,7 @@ fun LazyWindow(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickOrHold() { show.value = false },
+                    .clickOrHold() { set(show, false) },
                 contentAlignment = Alignment.Center
             ) {
                 AnimatedVisibility(
@@ -182,6 +159,32 @@ fun LazyWindow(
         }
     }
 }
+@Composable
+fun LazyMeasure(
+    x: m_<Dp>? = null,
+    y: m_<Dp>? = null,
+    w: m_<Dp>? = null,
+    h: m_<Dp>? = null,
+    modifier: Mod = Modifier,
+    content: Content
+) {
+    val density = LocalDensity.current
+
+    Box(
+        modifier = modifier.onGloballyPositioned { layoutCoordinates ->
+            val position = layoutCoordinates.positionInWindow()
+            val size = layoutCoordinates.size
+
+            set(x, with(density) { position.x.toDp() })
+            set(y, with(density) { position.y.toDp() })
+            set(w, with(density) { size.width.toDp() })
+            set(h, with(density) { size.height.toDp() })
+        }
+    ) {
+        content()
+    }
+}
+
 
 
 
@@ -195,27 +198,29 @@ fun LazyInfo(
     content: Content,
 ) {
     var show = r { m(false) }
-    var map by r { m(DpRect(0.dp, 0.dp, 0.dp, 0.dp)) }
-    val density = LocalDensity.current
+    var x = r { m(0.dp) }
+    var y = r { m(0.dp) }
+    var w = r { m(0.dp) }
+    var h = r { m(0.dp) }
 
-    Box(
+    LazyMeasure(
+        x, y, w, h,
         modifier = Modifier
             .clickOrHold(hold) { show.value = true }
-            .DpLocation(density) { map = it }
     ) {
         content()
     }
 
     // Default top-right of the trigger
-	val Y = remember(map) {
-		if (map.top - ChangeY < popupHeight) map.bottom else map.top - ChangeY
-	}
-	val X = remember(map) {
-		if (map.right < popupWidth) map.left else map.right
-	}
+    val popupX = remember(x.value, w.value) {
+        if ((x.value + w.value) < popupWidth) x.value else (x.value + w.value) - popupWidth
+    }
+    val popupY = remember(y.value) {
+        if (y.value - ChangeY < popupHeight) y.value + h.value else y.value - ChangeY
+    }
 	
     LazyWindow(show) {
-        LazyMove(X, Y) {
+        LazyMove(popupX, popupY) {
             Box(
                 modifier = Modifier
                     .wrapContentSize()
@@ -871,15 +876,15 @@ fun LazyMenu(
     val internalVisible = r { m(false) }
 
     // Trigger showing/hiding Popup
-    LaunchedEffect(App.ShowMenu) {
-        if (App.ShowMenu) {
-            visible.value = true
+    LaunchedEffect(App.Menu) {
+        if (App.Menu) {
+            set(visible, true)
             delay(16)
-            internalVisible.value = true
+            set(internalVisible, true)
         } else {
-            internalVisible.value = false
+            set(internalVisible, false)
             delay(200) // Wait for animation out
-            visible.value = false
+            set(visible, false)
         }
     }
 
@@ -903,7 +908,7 @@ fun LazyMenu(
         alignment = Alignment.TopStart,
         onDismissRequest = {
             onDismiss?.invoke()
-            App.ShowMenu = false
+            App.Menu = false
         }
     ) {
         Box(
@@ -912,10 +917,10 @@ fun LazyMenu(
                 .background(Color.Black.copy(alpha = backgroundAlpha))
                 .clickable(
                     indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
+                    interactionSource = r { MutableInteractionSource() }
                 ) {
                 onDismiss?.invoke()
-                    App.ShowMenu = false
+                    App.Menu = false
                 }
         )
 

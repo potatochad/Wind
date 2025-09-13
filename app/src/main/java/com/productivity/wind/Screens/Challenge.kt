@@ -76,7 +76,7 @@ fun AppUsage() {
     var Time = r { m("50") }
     var Points = r { m("0") }
     var WhichIf = r { m(0) }
-    selectedApp.value = ""
+    set(selectedApp, "")
     LaunchedEffect(Unit) {
         refreshApps()  
     }
@@ -95,7 +95,7 @@ fun AppUsage() {
           
           Text(" on ")
           UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
-            show(Popup.AppSelect)
+            show(AppSelect)
           }
         }
       }
