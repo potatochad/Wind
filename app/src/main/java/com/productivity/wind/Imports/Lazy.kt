@@ -872,7 +872,7 @@ fun LazyMenu(
 
     // Trigger showing/hiding Popup
     LaunchedEffect(Bar.ShowMenu) {
-        if (Bar.ShowMenu) {
+        if (App.ShowMenu) {
             visible.value = true
             delay(16)
             internalVisible.value = true
@@ -903,7 +903,7 @@ fun LazyMenu(
         alignment = Alignment.TopStart,
         onDismissRequest = {
             onDismiss?.invoke()
-            Bar.ShowMenu = false
+            App.ShowMenu = false
         }
     ) {
         Box(
@@ -915,15 +915,15 @@ fun LazyMenu(
                     interactionSource = remember { MutableInteractionSource() }
                 ) {
                 onDismiss?.invoke()
-                    Bar.ShowMenu = false
+                    App.ShowMenu = false
                 }
         )
 
         Box(
             modifier = Modifier
                 .offset { IntOffset(offsetX.roundToPx(), 0) }
-                .width(Bar.halfWidth)
-                .height(LocalConfiguration.current.screenHeightDp.dp)
+                .width(App.screenWidth/2+30.dp)
+                .height(App.screenHeight)
                 .background(Color.DarkGray)
         ) {
             content()
