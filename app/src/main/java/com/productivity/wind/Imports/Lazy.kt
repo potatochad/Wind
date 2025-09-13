@@ -862,15 +862,20 @@ fun LazyScreen(
 	}
 	
 	if (Scrollable) {
-		LazyColumn(modifier = baseModifier.then(modifier)) {
-			stickyHeader { header() }
-			item { Column { content() } }
-			item { Spacer(modifier = Modifier.height(bottomSystemHeight())) }
+		Box(modifier = Modifier.fillMaxSize()) {
+			LazyColumn(modifier = baseModifier.then(modifier)) {
+				stickyHeader { header() }
+				item { Column { content() } }
+			}
+			LazzyRow {
+				UI.move(bottomSystemHeight())
+			}
 		}
 	} else {
 		Column(modifier = baseModifier.then(modifier)) {
 			header()
 			content()
+			LazzyRow {UI.move(bottomSystemHeight())}
 		}
 	}
 }
