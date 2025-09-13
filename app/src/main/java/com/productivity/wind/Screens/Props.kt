@@ -62,17 +62,17 @@ fun Menu() {
         LazyItem(
             icon = Icons.Outlined.Chat,
             title = "Contact Support",
-            onClick = { UI.SendEmail(); App.ShowMenu = false }
+            onClick = { UI.SendEmail(); show(App.Menu) }
         )
         LazyItem(
             icon = Icons.Outlined.Landscape,
             title = "Settings",
-            onClick = { goTo("SettingsScreen"); App.ShowMenu = false  }
+            onClick = { goTo("SettingsScreen"); show(App.Menu)  }
         )
         LazyItem(
             icon = Icons.Outlined.QueryStats,
             title = "Achievements",
-            onClick = { goTo("Achievements"); App.ShowMenu = false }
+            onClick = { goTo("Achievements"); show(App.Menu) }
         )
 
 
@@ -243,7 +243,7 @@ object Icon {
         @Composable
         fun Menu() {
                 LazyIcon(
-                        onClick = { App.ShowMenu = true },
+                        onClick = { show(App.Menu)},
                         icon = Icons.Default.Menu
                 )
         }
@@ -298,13 +298,17 @@ object Icon {
 
 //!Just call this on app start
 
+fun True(state: m_<Bool>){ state.value = true }
+fun False(state: m_<Bool>){ state.value = false }
 fun show(state: m_<Bool>){ state.value = true }
+fun hide(state: m_<Bool>){ state.value = false }
+
+var Edit = m(false)
+var NeedMorePoints = m(false)
+var AskUsagePermission = m(false)
+var AppSelect = m(false)
 
 object Popup {
-    var Edit = m(false)
-    var NeedMorePoints = m(false)
-    var AskUsagePermission = m(false)
-    var AppSelect = m(false)
     
     @Composable
     fun Init(){
