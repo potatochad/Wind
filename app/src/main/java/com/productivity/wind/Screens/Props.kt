@@ -357,7 +357,7 @@ fun EditPopUp(show: m_<Bool>) {
 
 
 @Composable
-fun AskUsagePermission(show: m<Bool>) {
+fun AskUsagePermission(show: m_<Bool>) {
     if (show.value) {
         LazyPopup(
             show = show,
