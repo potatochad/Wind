@@ -234,10 +234,10 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
 
     LaunchedEffect(trigger.value) {
         if (trigger.value) {
-            Bar.restoringFromFile = true
+            App.restoringFromFile = true
             launcher.value.launch(arrayOf("text/plain"))
             delay(2000L)
-            Bar.restoringFromFile = false
+            App.restoringFromFile = false
             trigger.value = false
             Vlog("Successfully restored")
         }
