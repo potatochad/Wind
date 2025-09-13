@@ -871,7 +871,7 @@ fun LazyMenu(
     val internalVisible = r { m(false) }
 
     // Trigger showing/hiding Popup
-    LaunchedEffect(Bar.ShowMenu) {
+    LaunchedEffect(App.ShowMenu) {
         if (App.ShowMenu) {
             visible.value = true
             delay(16)
@@ -887,7 +887,7 @@ fun LazyMenu(
 
     // Slide offset
     val offsetX by animateDpAsState(
-        targetValue = if (internalVisible.value) 0.dp else -Bar.halfWidth,
+        targetValue = if (internalVisible.value) 0.dp else -App.screenWidth/2,
         animationSpec = tween(durationMillis = 200),
         label = "MenuSlide"
     )
