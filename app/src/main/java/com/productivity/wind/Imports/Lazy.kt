@@ -183,7 +183,7 @@ fun LazyMove(
 
 @Composable
 fun LazyWindow(
-    show: MutableState<Boolean>,
+    show: m_<Bool>,
     content: Content,
 ) {
     // Local state to control if Popup is alive
@@ -389,7 +389,7 @@ fun LazyLine(
   
 @Composable
 fun LazzyRow(
-    modifier: Modifier = Modifier,
+    modifier: Mod = Modifier,
     padding: Int = 0,
     center: Bool = false, // Kotlin uses 'Boolean', not 'Bool'
     content: Content,
@@ -431,7 +431,7 @@ fun LazyCard(
     inputColor: Color = Color(0xFF1A1A1A),
     innerPadding: Int = 16,
     corners: Int = 16,
-	modifier: Modifier = Modifier
+	modifier: Mod = Modifier
 	     .padding(horizontal = 8.dp, vertical = 10.dp)
          .fillMaxWidth(),
     content: Content,
@@ -456,15 +456,10 @@ fun LazyCard(
 }
 
 
-
-data class LazyIconLook(
-    val Color: Color = Color(0xFFFFD700) // gild
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LazyIcon(
-    onClick: () -> Unit = {},
+    onClick: Do = {},
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
@@ -472,10 +467,10 @@ fun LazyIcon(
     BigIconSize: Int = 30,
     OuterPadding: Int = 5,          // outside space
     ButtonSize: Int = 40,           // actual button box (default M3 ~48)
-    modifier: Modifier = Modifier,
-	look: LazyIconLook = LazyIconLook(),
+    modifier: Mod = Modifier,
+	color: Color = Color(0xFFFFD700),
 ) {
-    CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+	UI.ComposeCanBeTiny() {
         IconButton(
             onClick = onClick,
             modifier = modifier
@@ -486,7 +481,7 @@ fun LazyIcon(
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = look.Color,
+                    tint = color,
                     modifier = Modifier.size(24.dp)
                 )
             }
