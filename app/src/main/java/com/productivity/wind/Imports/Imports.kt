@@ -454,16 +454,28 @@ object UI {
 
 
     @Composable
-    fun move(s: Int = 0, w: Int = 0, h: Int = 0) {
-        Spacer(
-            modifier = when {
-                s > 0 -> Modifier.size(s.dp)
-                else -> Modifier
-                    .width(w.dp)
-                    .height(h.dp)
-            },
-        )
-    }
+	fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
+		// Convert s, w, h to Dp
+		fun Any.toDp(): Dp = when (this) {
+			is Int -> this.dp
+			is Dp -> this
+			else -> 0.dp
+		}
+
+		val sDp = s.toDp()
+		val wDp = w.toDp()
+		val hDp = h.toDp()
+
+
+		Spacer(
+			modifier = if (sDp > 0.dp) {
+				Modifier.size(sDp)  // uniform size
+			} else {
+				Modifier.width(wDp).height(hDp)
+			}
+		)
+	}
+
 
 
 
