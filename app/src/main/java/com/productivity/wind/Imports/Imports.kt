@@ -537,7 +537,7 @@ object UI {
         bottomPadding: Dp = 20.dp,
         StartPaddingRemove: Int = 40,
     ) {
-        val safeStartPadding = max(0.dp, Bar.halfWidth / 2 - StartPaddingRemove.dp)
+        val safeStartPadding = max(0.dp, (App.screenWidth+60) / 4 - StartPaddingRemove.dp)
 
         Column(
             modifier = Modifier.padding(start = safeStartPadding),
@@ -869,9 +869,9 @@ object UI {
     fun EmptyBox(
         text: Str = "No Items",
         icon: ImageVector = Icons.Default.Block,
-        height: Dp = Bar.halfHeight * 2 - 200.dp,
+        height: Dp = App.screenHeight - 150.dp,
         iconSize: Dp = 64.dp,
-        topSpacing: Dp = Bar.halfHeight - 190.dp,
+        topSpacing: Dp = App.screenHeight/2 - 160.dp,
         textSize: TextUnit = 18.sp,
         color: Color = Color.Gray,
     ) {
