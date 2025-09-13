@@ -178,7 +178,7 @@ fun AppStart_beforeUI(context: Context) {
 fun MAINStart() {
     LaunchedEffect(Unit) {
         delay(1_000L)
-        Bar.restoringFromFile = false
+        App.restoringFromFile = false
     }
 }
 
