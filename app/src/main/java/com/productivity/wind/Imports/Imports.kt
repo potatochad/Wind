@@ -142,12 +142,6 @@ fun getLogs(): String {
         "❌ Failed to read logs: ${e.message}"
     }
 }
-typealias Content = @Composable () -> Unit
-typealias Do = () -> Unit
-typealias Content_<T> = @Composable (T) -> Unit
-typealias Mod = Modifier
-typealias Do_<T> = (T) -> Unit
-typealias m_<T> = MutableState<T>
 
 
 @Composable
