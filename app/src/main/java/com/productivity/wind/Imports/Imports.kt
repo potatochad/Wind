@@ -342,9 +342,6 @@ val Gold = Color(0xFFFFD700)
 object UI {
     //No synched with actual settingsItem function YET
     var SettingsItemCardColor = Color(0xFF121212)
-	var screenWidth = Bar.halfWidth*2
-	var screenHeight = Bar.halfHeight*2
-
 
 
 	inline fun check(
