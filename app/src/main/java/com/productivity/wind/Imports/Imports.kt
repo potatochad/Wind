@@ -144,6 +144,8 @@ fun getLogs(): String {
 }
 typealias Content = @Composable () -> Unit
 typealias Do = () -> Unit
+typealias Content<T> = @Composable (T) -> Unit
+
 
 @Composable
 fun getStatusBarHeight(): Int {
