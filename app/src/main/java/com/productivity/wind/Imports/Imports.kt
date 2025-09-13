@@ -514,6 +514,7 @@ object UI {
 		}
 		move(w=8)
 	}
+	@OptIn(ExperimentalMaterial3Api::class)
 	@Composable
 	fun ComposeCanBeTiny(content: Content) {
 		CompositionLocalProvider(
@@ -592,65 +593,6 @@ object UI {
 
         App.ctx.startActivity(chooser)
     }
-
-
-	@Composable
-    fun Input(
-        what: Str,
-        textSize: TextUnit = 14.sp,
-        height: Dp = 36.dp,
-        MaxLetters: Int? = 5,
-        WidthMin: Int = 10,
-        WidthMax: Int = 120,
-		style: InputStyle = InputStyle(),
-
-        onChange: Do_<Str>,
-    ) {
-        val TextColor = Color(0xFFFFD700)
-        val FocusChange = TextMemory()
-        val imeAction = ImeAction(null)
-        val isFocused by IsFocused(FocusChange)
-
-        val TextStyling = CTextStyle(TextColor, textSize)
-		val isNumber = style.isNumber
-        val outerMod = dynamicTextWidth(
-			what, TextStyling, WidthMin, WidthMax, height
-		)
-
-        OnLoseFocus(isFocused, null)
-
-
-
-
-		
-        BasicTextField(
-			decorationBox = { innerTextField ->
-                FieldBox(
-                    height = height,
-                    BackgroundColor = Color.Transparent,
-                ) {
-                    innerTextField()
-                }
-            },
-			modifier = outerMod.height(height),
-            textStyle = TextStyling,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(type(true), imeAction),
-            keyboardActions = doneAction(null),
-            cursorBrush = grayCursor(),
-            interactionSource = FocusChange,
-
-
-
-
-
-
-
-			
-            value = what,
-            onValueChange = onChange,
-        )
-	}
 
 
 
