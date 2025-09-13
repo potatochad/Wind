@@ -259,7 +259,7 @@ object SettingsSaved {
 
     fun Bsave() {
         if (Dosave?.isActive == true) return
-        if (Bar.restoringFromFile) return
+        if (App.restoringFromFile) return
         Dosave = GlobalScope.launch {
             while (isActive) {
                 val data = App.ctx.getSharedPreferences("settings", Context.MODE_PRIVATE)
