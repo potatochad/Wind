@@ -48,20 +48,9 @@ fun Main() {
     MAINStart()
     
     LazyScreen( title ={ Header.Main() }, showBack = false) {
-        Column(
-            Modifier.wrapContentHeight()
-        ){
         
                 LazyCard{ Disipline() } 
 
-
-
-
-
-
-
-                                
-            
         
                 LazzyList(
                     apps.filter { it.Worth > 0 && it.done ==false},
