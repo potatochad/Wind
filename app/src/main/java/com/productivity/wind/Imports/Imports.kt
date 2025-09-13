@@ -185,7 +185,7 @@ fun NoLagCompose(content: Content) {
 }
 @Composable
 fun PreloadBox(
-    whenDo: Boolean,
+    whenDo: Bool,
     what: Content
 ) {
     if (whenDo) {
@@ -206,7 +206,7 @@ fun each(time: Long = 10_000L, action: Do) {
     }
 }
 @Composable
-fun UrlConverter(input: String): String {
+fun UrlConverter(input: Str): Str {
     return remember(input) {
         if (input.startsWith("http://") || input.startsWith("https://")) {
             input
@@ -265,12 +265,12 @@ fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
     return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
 }
 
-fun getListsApp(pkg: String): DataApps? {
+fun getListsApp(pkg: Str): DataApps? {
     val map = apps.associateBy { it.pkg }
     return map[pkg]
 }
 
-fun getTodayAppUsage(packageName: String): Int {
+fun getTodayAppUsage(packageName: Str): Int {
     val end = System.currentTimeMillis()
     val cal = Calendar.getInstance().apply {
         set(Calendar.HOUR_OF_DAY, 0)
@@ -290,17 +290,17 @@ fun getTodayAppUsage(packageName: String): Int {
 
     return (todayUsage / 1000L).toInt().coerceAtLeast(0)
 }
-fun getAppPackage(ri: ResolveInfo): String {
+fun getAppPackage(ri: ResolveInfo): Str {
     return ri.activityInfo.packageName
 }
-fun getAppName(info: ResolveInfo): String {
+fun getAppName(info: ResolveInfo): Str {
     val pkg = info.activityInfo.packageName
     return info.loadLabel(App.ctx.packageManager)?.toString() ?: pkg
 }
 
 
 @Composable
-fun getAppIcon(packageName: String): Drawable? {
+fun getAppIcon(packageName: Str): Drawable? {
     val pm = App.ctx.packageManager
     return remember(packageName) {
         try {
@@ -348,8 +348,8 @@ object UI {
 
 
 	inline fun check(
-		condition: Boolean,
-		message: String = "",
+		condition: Bool,
+		message: Str = "",
 		action: Do = {},
 	) {
 		if (condition) {
@@ -481,7 +481,7 @@ object UI {
 
 	@Composable
 	fun Checkbox(
-		isChecked: MutableState<Boolean>,
+		isChecked: m_<Boolean>,
 	) {
 		Checkbox(
 			checked = isChecked.value,
@@ -497,7 +497,7 @@ object UI {
 	@Composable
 	fun CheckCircle(
 		index: Int,                  // unique index of this circle
-		selectedIndex: MutableState<Int>, // shared state of which is selected
+		selectedIndex: m_<Int>, // shared state of which is selected
 	) {
 		Box(
 			modifier = Modifier.size(15.dp) // make box exactly the size you want
@@ -594,48 +594,6 @@ object UI {
     }
 
 
-
-	// IMPLEMENT LATEr...not synched with cinput
-    data class InputStyle(
-		/*
-		val textColor: Color = Color(0xFFFFD700),
-		val textSize: TextUnit = 14.sp,
-		val height: Dp = 36.dp,
-		val maxLetters: Int? = 5,
-		val widthMin: Dp = 10.dp,
-		val widthMax: Dp = 100.dp,
-		val backgroundColor: Color = Color.Transparent,
-		val singleLine: Boolean = true,
-		val keyboardType: KeyboardType = KeyboardType.Text,
-		val imeAction: ImeAction = ImeAction.Default,
-		val cursorColor: Color = Color.Gray,
-		*/
-		val isNumber: Bool = true,
-	)
-	@Composable
-	fun dynamicTextWidth(
-		text: Str,
-		textStyle: TextStyle,
-		widthMin: Int,
-		widthMax: Int,
-		height: Dp
-	): Modifier {
-		val measurer = rememberTextMeasurer()
-		val density = LocalDensity.current
-
-		// Measure text width
-		val measuredWidth = measurer.measure(
-			text.ifEmpty { " " }, // fallback if empty
-			style = textStyle
-		).size.width
-
-		// Create modifier with dynamic width and fixed height
-		return Modifier
-        .width((with(density) { measuredWidth.toDp() } + 2.dp).coerceIn(widthMin.dp, widthMax.dp))
-        .height(height)
-	}
-
-
 	@Composable
     fun Input(
         what: Str,
@@ -646,7 +604,7 @@ object UI {
         WidthMax: Int = 120,
 		style: InputStyle = InputStyle(),
 
-        onChange: (String) -> Unit,
+        onChange: Do_<Str>,
     ) {
         val TextColor = Color(0xFFFFD700)
         val FocusChange = TextMemory()
@@ -698,15 +656,15 @@ object UI {
 
     @Composable
     fun Cinput(
-        what: MutableState<String>,
+        what: m_<String>,
         textSize: TextUnit = 14.sp,
         height: Dp = 36.dp,
         MaxLetters: Int? = 5,
         WidthMin: Int = 10,
         WidthMax: Int = 100,
-		style: InputStyle = InputStyle(),
-
-        onChange: (String) -> Unit = {},
+		isInt: Bool = false,
+		
+        onChange: Do_<Str> = {},
     ) {
         val value = what.value
         val TextColor = Color(0xFFFFD700)
@@ -772,7 +730,7 @@ object UI {
 
     @Composable
     fun FieldBox(
-        modifier: Modifier = Modifier,
+        modifier: Mod = Modifier,
         horizontal: Dp = 0.dp,
         height: Dp = 40.dp,
         BackgroundColor: Color = Color.Gray,
@@ -795,71 +753,14 @@ object UI {
     }
 
 
-    @Composable
-    fun TextRow(
-        padding: Int = 0,
-        hGap: Dp = 0.dp,          // space between items in a row
-        vGap: Dp = 20.dp,          // space between rows
-        content: Content,
-    ) {
-        Layout(
-            content = content,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(padding.dp),
-        ) { measurables, constraints ->
-            val h = hGap.roundToPx()
-            val v = vGap.roundToPx()
-            val maxW = constraints.maxWidth
-            val placeables = measurables.map { it.measure(constraints.copy(minWidth = 0)) }
-
-            val rows = mutableListOf<MutableList<Placeable>>()
-            val rowHeights = mutableListOf<Int>()
-            var cur = mutableListOf<Placeable>()
-            var curW = 0
-            var curH = 0
-
-            fun pushRow() {
-                if (cur.isNotEmpty()) {
-                    rows += cur
-                    rowHeights += curH
-                    cur = mutableListOf(); curW = 0; curH = 0
-                }
-            }
-
-            for (p in placeables) {
-                val nextW = if (cur.isEmpty()) p.width else curW + h + p.width
-                if (nextW > maxW) pushRow()
-                if (cur.isNotEmpty()) curW += h
-                cur += p
-                curW += p.width
-                curH = maxOf(curH, p.height)
-            }
-            pushRow()
-
-            val height = rowHeights.sum() + v * (rowHeights.size - 1).coerceAtLeast(0)
-
-            layout(maxW, height) {
-                var y = 0
-                rows.forEachIndexed { i, row ->
-                    var x = 0
-                    val rowH = rowHeights[i]
-                    row.forEach { p ->
-                        val yCenter = y + (rowH - p.height) / 2
-                        p.placeRelative(x, yCenter)
-                        x += p.width + h
-                    }
-                    y += rowH + v
-                }
-            }
-        }
-    }
-
+    
+                    
+            
 
     @Composable
     fun CopyIcon(text: Str) {
         val context = LocalContext.current
-        var copied by r { mutableStateOf(false) }
+        var copied by r { m(false) }
 
         LaunchedEffect(copied) {
             if (copied) {
@@ -994,31 +895,6 @@ object UI {
         
         
                     
-object DayChecker {
-    private var job: Job? = null
-
-        
-    fun start() {
-        if (job?.isActive == true) return  // Already running
-        if (Bar.lastDate == "") { Bar.lastDate = LocalDate.now().toString() }
-            
-        job = CoroutineScope(Dispatchers.Default).launch {
-            while (coroutineContext.isActive) {
-                delay(60 * 1000L)
-                val today = LocalDate.now().toString()
-                if (today != Bar.lastDate) {
-                    Bar.lastDate = today
-                    onNewDay()
-                }
-            }
-        }
-    }
-}
-
-
-
-
-
 
 
 
