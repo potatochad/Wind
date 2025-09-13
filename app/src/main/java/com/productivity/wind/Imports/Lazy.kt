@@ -846,16 +846,20 @@ fun LazyScreen(
 @Composable
 fun LazyPopup(
     show: MutableState<Boolean>,
-    onDismiss: (() -> Unit)? = { show.value = false },
+    onDismiss: Do? = { show.value = false },
     title: Str = "Info",
     message: Str,
-    content: (@Composable () -> Unit)? = null,
+    content: Content? = null,
     showCancel: Bool = true,
     showConfirm: Bool = true,
-    onConfirm: (() -> Unit)? = null,
-    onCancel: (() -> Unit)? = null,
+    onConfirm: Do? = null,
+    onCancel: Do? = null,
 ) {
     if (!show.value) return
+
+	//scope.launch { 
+	//	delay(100L)
+	//}//Wait 100L before closing
 	
 
     AlertDialog(
