@@ -308,7 +308,7 @@ object Popup {
     var AppSelect = m(false)
     
     @Composable
-    fun PopUps(){
+    fun Init(){
         AskUsagePermission(Popup.AskUsagePermission)
         EditPopUp(Popup.Edit)
         NeedMorePointsPopup(Popup.NeedMorePoints)
