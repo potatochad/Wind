@@ -251,7 +251,7 @@ object Icon {
                 LazyIcon(
                         onClick = { 
                             if (Bar.funTime < Bar.Dpoints) {show(Popup.NeedMorePoints)}
-                            else {show(Popup.Web)}
+                            else {goTo("Web")}
                         },
                         icon = Icons.Default.SportsEsports
                 )
