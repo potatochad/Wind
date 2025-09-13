@@ -55,10 +55,6 @@ import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.productivity.wind.Imports.*
 import com.productivity.wind.*
 import kotlin.random.*
-import androidx.compose.ui.*
-import android.webkit.*
-import androidx.compose.ui.viewinterop.*
-import org.mozilla.geckoview.*
 import android.content.*
 import androidx.compose.runtime.snapshots.*
 import androidx.compose.runtime.*
@@ -287,7 +283,7 @@ fun <T> LazzyList(
 
         var currentIndex = 0
         while (currentIndex < Data.size) {
-            items.add(items[currentIndex])
+            items.add(Data[currentIndex])
             currentIndex++
             delay(100L) // delay between each item
         }

@@ -121,7 +121,7 @@ ktlint {
 
 dependencies {
     implementation("org.mozilla.geckoview:geckoview:141.0.20250806102122")
-
+//
 
     implementation("androidx.compose.ui:ui")
     // implementation("androidx.compose.ui:ui-text")

@@ -47,7 +47,7 @@ fun Main() {
     
     MAINStart()
     
-    LazyScreen( title ={ Header.Main() }, showBack = false) {
+    LazyScreen( title ={ Header.Main() }, showBack = false, Scrollable = false) {
         
                 LazyCard{ Disipline() } 
 
@@ -62,9 +62,7 @@ fun Main() {
         
                 LazzyList(
                     apps.filter { it.Worth > 0 && it.done ==false},
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                 ) { app ->
                     val icon = getAppIcon(app.pkg)
                     val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)

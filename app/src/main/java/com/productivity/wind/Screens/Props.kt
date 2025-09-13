@@ -304,15 +304,14 @@ object Popup {
     var Edit = m(false)
     var NeedMorePoints = m(false)
     var AskUsagePermission = m(false)
-    var EnableBlocking = m(false)
     var AppSelect = m(false)
     
     @Composable
     fun Init(){
-        AskUsagePermission(Popup.AskUsagePermission)
-        EditPopUp(Popup.Edit)
-        NeedMorePointsPopup(Popup.NeedMorePoints)
-        AppSelectPopup(Popup.AppSelect)
+        AskUsagePermission(AskUsagePermission)
+        EditPopUp(Edit)
+        NeedMorePointsPopup(NeedMorePoints)
+        AppSelectPopup(AppSelect)
     }
     
     
