@@ -72,40 +72,6 @@ import kotlin.math.*
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.layout.*
 
-// needs fixing
-@Composable
-fun LazySearch(
-    searchQuery: Str,
-    onChange: Do_<Str>
-) {
-    Box(
-		modifier = Modifier
-			.fillMaxWidth()
-			.border(
-				width = 1.dp,
-				color = Color.Black,
-				shape = RoundedCornerShape(6.dp)
-			)
-			.background(Color.Transparent, RoundedCornerShape(6.dp))
-			.padding(8.dp)
-	) {
-        LazzyRow{
-            LazyIcon(
-                icon = Icons.Default.Search,
-				color = Color.Black,
-            )
-            UI.move(w=8)
-            UI.Input(searchQuery) { 
-                onChange(it)
-            }
-        }
-    }
-}
-
-
-
-
-
 
 
 fun Modifier.clickOrHold(
