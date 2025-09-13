@@ -37,6 +37,8 @@ fun NavGraphBuilder.ScreenNav() {
     url("Challenge") { Challenge() }
     url("AppUsage") { AppUsage() }
     url("CopyPaste") { CopyPaste() }
+
+    url("Web") { Web() }
     
 
     url("SettingsScreen") { SettingsScreen() }
@@ -300,7 +302,6 @@ fun PopUps(){
    EditPopUp(Popup.Edit)
    NeedMorePointsPopup(Popup.NeedMorePoints)
    AppSelectPopup(Popup.AppSelect)
-   Web(Popup.Web)
 }
 
 
