@@ -43,39 +43,42 @@ var Tab.ManageTab: ManageTab?
 fun Web(show: MutableState<Boolean>) {
     LazyWindow(show){
         BackHandler {
-            show.value = false
+            
         }
-    val ctx = LocalContext.current
-    val Web = r { GeckoRuntime.create(ctx) }
-    val Tab = r { GeckoSession() }
+        val ctx = LocalContext.current
+        val Web = r { GeckoRuntime.create(ctx) }
+        val Tab = r { GeckoSession() }
 
-    Item.WebPointTimer()
+        Item.WebPointTimer()
     
-    DisposableEffect(Unit) {
+        DisposableEffect(Unit) {
         
-        Tab.ManageTab = onlyAllowDomains(listOf("youtube.com"))
-        Tab.loadUri("https://youtube.com")
-        Tab.open(Web)
+            Tab.ManageTab = onlyAllowDomains(listOf("youtube.com"))
+            Tab.loadUri("https://youtube.com")
+            Tab.open(Web)
 
-        onDispose { Tab.close() }
-    }
+            onDispose { Tab.close() }
+        }
 
-    LazyScreen(
-        title = { 
-            Text(" Points ${Bar.funTime}")
-        },
-        Scrollable = false,
-        DividerPadding = false,
-    ) {
-        AndroidView(
-            modifier = Modifier
-                .fillMaxSize(),
-            factory = { ctx ->
-                GeckoView(ctx).apply { 
-                    setSession(Tab) 
+        LazyScreen(
+            title = { 
+                Text(" Points ${Bar.funTime}")
+                onBackClick = {
+                    show.value = false
                 }
-            }
-        )
-    }
+            },
+            Scrollable = false,
+            DividerPadding = false,
+        ) {
+            AndroidView(
+                modifier = Modifier
+                .fillMaxSize(),
+                factory = { ctx ->
+                    GeckoView(ctx).apply { 
+                        setSession(Tab) 
+                    }
+                }
+            )
+        }
     }
 }
