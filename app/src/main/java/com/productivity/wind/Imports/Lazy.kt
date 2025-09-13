@@ -314,7 +314,7 @@ fun <T> LazzyList(
     modifier: Mod = Modifier.fillMaxWidth().height(200.dp),
     content: Content_<T>,
 ) {
-    val items = r { ml<T>() }
+    val items = r { mutableListOf<T>() }
 
     LaunchedEffect(items) {
         items.clear()
@@ -661,7 +661,7 @@ fun LazyHeader(
     onBackClick: Do = {},
     showBack: Bool = true,
     showSearch: Bool = false,
-    modifier: Modifier = Modifier,
+    modifier: Mod = Modifier,
 	
     showDivider: Bool = true,
 	DividerPadding: Bool = true,
