@@ -615,7 +615,6 @@ object UI {
         val isFocused by IsFocused(FocusChange)
 
         val TextStyling = CTextStyle(TextColor, textSize)
-		val isNumber = style.isNumber
         val measurer = rememberTextMeasurer()
         val density = LocalDensity.current
         val measuredWidth = measurer.measure(
@@ -658,7 +657,7 @@ object UI {
 			
             value = value,
             onValueChange = {
-                val input = FilterInput(isNumber, it)
+                val input = FilterInput(isInt, it)
                 if (MaxLetters == null || input.length <= MaxLetters) {
 					what.value = input
                     onChange(input)
