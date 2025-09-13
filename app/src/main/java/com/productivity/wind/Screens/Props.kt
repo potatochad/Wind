@@ -167,7 +167,7 @@ object Item {
 object Header {
     
     @Composable
-    fun AppUsage(Time: MutableState<String>, Points: MutableState<String>, selectedApp: MutableState<String>) {
+    fun AppUsage(Time: m_<Str>, Points: m_<Str>, selectedApp: m_<Str>) {
         Text("AppUsage")
         UI.End {
             Icon.Add(onClick = {
@@ -307,7 +307,7 @@ fun PopUps(){
 
 
 @Composable
-fun NeedMorePointsPopup(show: MutableState<Boolean>){
+fun NeedMorePointsPopup(show: m_<Bool>){
     LazyPopup(
         show = show, 
         title = "Get more points", 
@@ -317,7 +317,7 @@ fun NeedMorePointsPopup(show: MutableState<Boolean>){
 }
 
 @Composable
-fun EditPopUp(show: MutableState<Boolean>) {
+fun EditPopUp(show: m_<Bool>) {
     var TemporaryTargetText by r { m("") }
     TemporaryTargetText = Bar.targetText
     LazyPopup(
@@ -343,7 +343,7 @@ fun EditPopUp(show: MutableState<Boolean>) {
 
 
 @Composable
-fun AskUsagePermission(show: MutableState<Boolean>) {
+fun AskUsagePermission(show: m<Bool>) {
     if (show.value) {
         LazyPopup(
             show = show,
@@ -363,9 +363,7 @@ var selectedApp = m("")
 
 
 @Composable
-fun AppSelectPopup(
-    show: MutableState<Boolean>,
-) {
+fun AppSelectPopup(show: m_<Bool>) {
     if (show.value) {
         val myPackage = LocalContext.current.packageName // your app's package
         var appList by r { m(getApps().filter { getAppPackage(it) != myPackage }) } // filter self out
