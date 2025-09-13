@@ -65,7 +65,7 @@ fun Web() {
             AndroidView(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight(),
+                    .height(App.LazyScreenContentHeight),
                 factory = { ctx ->
                     GeckoView(ctx).apply { 
                         setSession(Tab) 
