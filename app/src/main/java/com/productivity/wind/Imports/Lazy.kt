@@ -285,7 +285,7 @@ fun <T> LazzyList(
         while (currentIndex < Data.size) {
             items.add(Data[currentIndex])
             currentIndex++
-            delay(100L) // delay between each item
+            delay(100L)
         }
     }
 
@@ -628,7 +628,7 @@ fun LazyHeader(
     showDivider: Bool = true,
 	DividerPadding: Bool = true,
 	
-	Mheight: Int = 100,
+	height: Int = 100,
 ) {
     val ui = rememberSystemUiController()
     var DisableTB_Button by r { m(false) }
@@ -644,7 +644,7 @@ fun LazyHeader(
                 .fillMaxWidth()
                 .background(Color.Black)
 				.padding(vertical = 12.dp)
-			.heightIn(max = Mheight.dp),
+			.height(height.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -743,7 +743,7 @@ fun LazyScreen(
     showDivider: Bool = true,
 	DividerPadding: Bool = true,
 	
-	MheaderHeight: Int = 44,
+	headerHeight: Int = 44,
 	ForceBottomBar: Bool = true,
 	Scrollable: Bool = true,
     content: Content,
@@ -764,19 +764,21 @@ fun LazyScreen(
 			showSearch = showSearch,
 			showDivider = showDivider,
 			DividerPadding = DividerPadding,
-			Mheight = MheaderHeight
+			height = headerHeight
 		)
 	}
 	
 	if (Scrollable) {
-		Box(Modifier.fillMaxSize()) {
+		Column(Modifier.fillMaxSize()) {
 			LazzyRow {
 				header()
 			}
+
+            var screenHeight = LocalConfiguration.current.screenHeightDp.dp
 			Column(
 				modifier = baseModifier
 					.then(modifier)
-					.fillMaxSize()
+                    .height(screenHeight-100.dp- bottomSystemHeight())
 					.verticalScroll(rememberScrollState())
 			) {
 				content()
