@@ -62,17 +62,17 @@ fun Menu() {
         LazyItem(
             icon = Icons.Outlined.Chat,
             title = "Contact Support",
-            onClick = { UI.SendEmail(); Bar.ShowMenu = false }
+            onClick = { UI.SendEmail(); App.ShowMenu = false }
         )
         LazyItem(
             icon = Icons.Outlined.Landscape,
             title = "Settings",
-            onClick = { goTo("SettingsScreen"); Bar.ShowMenu = false  }
+            onClick = { goTo("SettingsScreen"); App.ShowMenu = false  }
         )
         LazyItem(
             icon = Icons.Outlined.QueryStats,
             title = "Achievements",
-            onClick = { goTo("Achievements"); Bar.ShowMenu = false }
+            onClick = { goTo("Achievements"); App.ShowMenu = false }
         )
 
 
@@ -243,7 +243,7 @@ object Icon {
         @Composable
         fun Menu() {
                 LazyIcon(
-                        onClick = { Bar.ShowMenu = true },
+                        onClick = { App.ShowMenu = true },
                         icon = Icons.Default.Menu
                 )
         }
