@@ -45,6 +45,7 @@ fun onNewDay() {
 }
 
 
+
 class Settings {
     var funTime by m(0)
     var Dpoints by m(0)
@@ -72,6 +73,8 @@ class Settings {
     var halfHeight by m(0.dp)
     var halfWidth by m(0.dp)
     var ShowMenu by m(false)
+	var LazyScreenContentHeight by m(halfHeight*2-100.dp- bottomSystemHeight())
+		
 
 
     var lastDate by m("")
