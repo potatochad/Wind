@@ -308,88 +308,37 @@ fun LazyImage(
 
 
 
-data class LazzyListStyle(
-    var height: Dp = 200.dp,
-    var delayMs: Long = 40L,
-    var chunkSize: Int = 1,
-    var IntFirst: Int = 0,
-	var wrapContent: Bool = false,
-)
-
-data class LazyLoaderState<T>(
-    val scrollState: ScrollState,
-    val appearedItems: SnapshotStateList<T>,
-)
-
 @Composable
-fun <T> rememberLazyLoaderState(
-    items: List<T>,
-    style: LazzyListStyle,         // your config: IntFirst, chunkSize, delayMs
-    loadAll: Bool = false
-): LazyLoaderState<T> {
-    val scrollState = rememberScrollState()
-    val appearedItems = r { mutableStateListOf<T>() }
+fun <T> LazzyList(
+    Data: List<T>,
+    modifier: Modifier = Modifier.fillMaxWidth().height(200.dp),
+    content: Content<T>,
+) {
+    val items = remember { mutableStateListOf<T>() }
 
-    // Run once when items or loadAll change
-    LaunchedEffect(items, loadAll) {
-        appearedItems.clear()
+    LaunchedEffect(items) {
+        items.clear()
 
-        if (loadAll) {
-            appearedItems.addAll(items)
-            return@LaunchedEffect
-        }
-
-        // initial batch
-        val realInitialCount = style.IntFirst.coerceAtMost(items.size)
-        if (realInitialCount > 0) {
-            appearedItems.addAll(items.subList(0, realInitialCount))
-        }
-
-        // gradual load remainder
-        var currentIndex = realInitialCount
-        while (currentIndex < items.size) {
-            val nextIndex = (currentIndex + style.chunkSize).coerceAtMost(items.size)
-            appearedItems.addAll(items.subList(currentIndex, nextIndex))
-            currentIndex = nextIndex
-            if (currentIndex >= items.size) break
-            delay(style.delayMs)
+        var currentIndex = 0
+        while (currentIndex < Data.size) {
+            items.add(items[currentIndex])
+            currentIndex++
+            delay(100L) // delay between each item
         }
     }
 
-    return LazyLoaderState(scrollState, appearedItems)
-}
-
-@Composable
-fun <T> LazzyList(
-    items: List<T>,
-    loadAll: Bool = false,
-    style: LazzyListStyle = LazzyListStyle(),
-    key: ((T) -> Any)? = null,
-    modifier: Modifier = Modifier,
-    itemContent: @Composable (T) -> Unit,
-) {
-    val loader = rememberLazyLoaderState(items, style, loadAll)
-
-    // Apply style.height only if caller did not override height manually
-    val finalModifier = modifier
-		.then(
-			if (style.wrapContent) Modifier else Modifier.height(style.height)
-		)
-		.fillMaxWidth()
-		.verticalScroll(loader.scrollState)
-
-    Column(modifier = finalModifier) {
-        loader.appearedItems.forEach { item ->
-            if (key != null) {
-                androidx.compose.runtime.key(key(item)) {
-                    itemContent(item)
-                }
-            } else {
-                itemContent(item)
+    Column(
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+    ) {
+        items.forEachIndexed { index, item ->
+            key(index) {
+                content(item)
             }
         }
     }
 }
+
 
 
 
