@@ -170,7 +170,10 @@ class MainActivity : ComponentActivity() {
         AppStart_beforeUI(applicationContext)
         setContent {
             WindTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
+                Surface(modifier = Modifier
+						.fillMaxSize()
+						.padding(WindowInsets.systemBars.asPaddingValues())
+					   ) {
                     AppStart()
                 }
             }
