@@ -62,10 +62,10 @@ fun Web(show: MutableState<Boolean>) {
 
         LazyScreen(
             title = { 
-                Text(" Points ${Bar.funTime}")
+                Text(" Points ${Bar.funTime}"),
                 onBackClick = {
                     show.value = false
-                }
+                },
             },
             Scrollable = false,
             DividerPadding = false,
