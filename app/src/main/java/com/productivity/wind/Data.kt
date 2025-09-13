@@ -173,6 +173,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier
 						.fillMaxSize()
 						.padding(WindowInsets.navigationBars.asPaddingValues())
+						.background(Color.Black)
 					   ) {
                     AppStart()
                 }
