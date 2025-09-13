@@ -210,6 +210,7 @@ object Header {
     }
     @Composable
     fun CopyPaste(){
+        Text("Copy Paste")
         
         UI.End {
                 Icon.Add {
