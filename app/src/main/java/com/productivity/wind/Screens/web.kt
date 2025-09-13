@@ -41,10 +41,6 @@ var Tab.ManageTab: ManageTab?
 
 @Composable
 fun Web(show: MutableState<Boolean>) {
-    LazyWindow(show){
-        BackHandler {
-            
-        }
         val ctx = LocalContext.current
         val Web = r { GeckoRuntime.create(ctx) }
         val Tab = r { GeckoSession() }
@@ -64,9 +60,6 @@ fun Web(show: MutableState<Boolean>) {
             title = { 
                 Text(" Points ${Bar.funTime}")
             },
-            onBackClick = {
-                show.value = false
-            },
             Scrollable = false,
             DividerPadding = false,
         ) {
@@ -80,5 +73,4 @@ fun Web(show: MutableState<Boolean>) {
                 }
             )
         }
-    }
 }
