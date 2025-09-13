@@ -120,9 +120,9 @@ ktlint {
 
 
 dependencies {
-    implementation("org.mozilla.geckoview:geckoview:141.0.20250806102122")
-//
+    implementation("com.github.skydoves:balloon:1.6.13")
 
+    implementation("org.mozilla.geckoview:geckoview:141.0.20250806102122")
     implementation("androidx.compose.ui:ui")
     // implementation("androidx.compose.ui:ui-text")
     // implementation("androidx.compose.ui:ui:1.8.2")
