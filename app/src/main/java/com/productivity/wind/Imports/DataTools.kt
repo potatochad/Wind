@@ -93,20 +93,21 @@ import kotlin.reflect.full.*
 //region Vals/ Vars FOR DATA
 
 val gson = Gson()
-typealias Str = String
-typealias Bool = Boolean
-fun Id(): String {
-    return UUID.randomUUID().toString()
-}
-fun <T> m(value: T) = mutableStateOf(value)
 
-inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> {
-    return mutableStateListOf()
-}
 @Composable
 fun <T> r(value: () -> T) = remember { value() }
 
-
+fun <T> m(value: T) = mutableStateOf(value)
+inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
+fun Id(): String { return UUID.randomUUID().toString() }
+typealias Content = @Composable () -> Unit
+typealias Do = () -> Unit
+typealias Content_<T> = @Composable (T) -> Unit
+typealias Mod = Modifier
+typealias Do_<T> = (T) -> Unit
+typealias m_<T> = MutableState<T>
+typealias Str = String
+typealias Bool = Boolean
 
 
 
