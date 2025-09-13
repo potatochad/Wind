@@ -85,6 +85,13 @@ fun Main() {
                             
                             UI.move(12)
                             Text("Points ${app.Worth}")
+                            UI.End {
+                                LazyInfo(infoContent = {Text("you clicked MORE MENU")}) {
+                                    Icon.MoreMenu{}
+                                }
+                            }
+                            
+                            
                         }
                     }
                 }
