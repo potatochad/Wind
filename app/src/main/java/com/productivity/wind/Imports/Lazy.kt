@@ -276,7 +276,7 @@ fun <T> LazzyList(
     modifier: Mod = Modifier.fillMaxWidth().height(200.dp),
     content: Content_<T>,
 ) {
-    val items = r { mutableListOf<T>() }
+    val items = r { mutableStateListOf<T>() }
 
     LaunchedEffect(items) {
         items.clear()
