@@ -199,7 +199,7 @@ fun OnResume(){
 fun AppStart() {
     LazyMenu { Menu() }
     
-    PopUps()
+    Popup.Init()
     val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
     val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
     LaunchedEffect(Unit) {
