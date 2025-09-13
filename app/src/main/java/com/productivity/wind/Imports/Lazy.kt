@@ -92,7 +92,7 @@ fun LazySearch(
         LazzyRow{
             LazyIcon(
                 icon = Icons.Default.Search,
-				look = LazyIconLook( Color = Color.Black),
+				color = Color.Black,
             )
             UI.move(w=8)
             UI.Input(searchQuery) { 
