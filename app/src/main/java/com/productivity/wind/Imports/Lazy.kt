@@ -513,7 +513,7 @@ fun LazyIcon(
 @Stable
 @Composable
 fun LazyMore(
-    modifier: Modifier = Modifier,
+    modifier: Mod = Modifier,
     title: Str = "Show more",
     initiallyExpanded: Bool = false,
     content: Content
@@ -576,13 +576,13 @@ fun LazyItem(
     title: Str,
     subtitle: Str? = null,
     endContent: @Composable (() -> Unit)? = null,
-    modifier: Modifier = Modifier,
+    modifier: Mod = Modifier,
 	
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
 	
-    onClick: (() -> Unit)? = null,
+    onClick: Do? = null,
 
     topPadding: Dp= 7.dp,
     bottomPadding: Dp = 7.dp,
@@ -748,7 +748,7 @@ fun LazyHeader(
 fun ScreenModifier(
     focusManager: FocusManager,
     backgroundColor: Color = Color.Black,
-    onClick: (() -> Unit)? = null
+    onClick: Do? = null
 ): Modifier {
     var modifier = Modifier
         .fillMaxSize()
@@ -776,7 +776,7 @@ fun LazyScreen(
     onBackClick: Do = {},
     showBack: Bool = true,
     showSearch: Bool = false,
-    modifier: Modifier = Modifier,
+    modifier: Mod = Modifier,
 	
     showDivider: Bool = true,
 	DividerPadding: Bool = true,
@@ -840,7 +840,7 @@ fun LazyScreen(
 
 @Composable
 fun LazyPopup(
-    show: MutableState<Boolean>,
+    show: m_<Bool>,
     onDismiss: Do? = { show.value = false },
     title: Str = "Info",
     message: Str,
@@ -892,7 +892,7 @@ fun LazyPopup(
 
 @Composable
 fun LazyMenu(
-    onDismiss: (() -> Unit)? = null,
+    onDismiss: Do? = null,
     content: Content,
 ) {
     val visible = r { m(false) }
