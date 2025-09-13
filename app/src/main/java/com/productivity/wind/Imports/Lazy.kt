@@ -291,7 +291,7 @@ fun LazyInfo(
 @Composable
 fun LazyImage(
     source: Any?,
-    modifier: Modifier = Modifier
+    modifier: Mod = Modifier
         .size(34.dp)
 		.padding(5.dp)
 ) {
@@ -311,10 +311,10 @@ fun LazyImage(
 @Composable
 fun <T> LazzyList(
     Data: List<T>,
-    modifier: Modifier = Modifier.fillMaxWidth().height(200.dp),
+    modifier: Mod = Modifier.fillMaxWidth().height(200.dp),
     content: Content_<T>,
 ) {
-    val items = remember { mutableStateListOf<T>() }
+    val items = r { ml<T>() }
 
     LaunchedEffect(items) {
         items.clear()
@@ -347,7 +347,7 @@ fun <T> LazzyList(
 
 
 @Composable
-fun LazySwitch(isOn: Boolean, onToggle: (Boolean) -> Unit) {
+fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
     Switch(
       checked = isOn,
       onCheckedChange = onToggle,
