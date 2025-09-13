@@ -76,7 +76,7 @@ import androidx.compose.ui.layout.*
 @Composable
 fun LazySearch(
     searchQuery: Str,
-    onChange: (Str) -> Unit
+    onChange: Do_<Str>
 ) {
     Box(
 		modifier = Modifier
@@ -130,7 +130,7 @@ data class DpRect(val left: Dp, val top: Dp, val right: Dp, val bottom: Dp)
 
 fun Modifier.DpLocation(
     density: Density, // pass it in!
-    onBoundsChanged: (DpRect) -> Unit
+    onBoundsChanged: Do_<DpRect>
 ): Modifier = this.then(
     Modifier.onGloballyPositioned { coordinates ->
         val bounds: Rect = coordinates.boundsInWindow()
