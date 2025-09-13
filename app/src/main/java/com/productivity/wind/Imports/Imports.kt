@@ -520,6 +520,14 @@ object UI {
 		}
 		move(w=8)
 	}
+	@Composable
+	fun ComposeCanBeTiny(content: Content) {
+		CompositionLocalProvider(
+			LocalMinimumInteractiveComponentEnforcement provides false
+		) {
+			content()
+		}
+	}
 
 
 
