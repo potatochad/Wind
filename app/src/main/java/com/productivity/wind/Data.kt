@@ -227,7 +227,7 @@ object App {
 	var screenWidth by m(0.dp)
 	var LazyScreenContentHeight by m(0.dp)
 	
-	var ShowMenu by m(false)
+	var Menu by m(false)
 	var restoringFromFile by m(false)
 	
 
