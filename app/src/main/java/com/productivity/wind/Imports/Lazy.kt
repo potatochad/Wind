@@ -770,10 +770,18 @@ fun LazyScreen(
 	
 	if (Scrollable) {
 		Box(Modifier.fillMaxSize()) {
-			LazyColumn(modifier = baseModifier.then(modifier)) {
-				stickyHeader { header() }
-				item { Column { content() } }
+			LazzyRow {
+				header()
 			}
+			Column(
+				modifier = baseModifier
+					.then(modifier)
+					.fillMaxSize()
+					.verticalScroll(rememberScrollState())
+			) {
+				content()
+			}
+
 			LazzyRow {
 				UI.move(bottomSystemHeight())
 			}
