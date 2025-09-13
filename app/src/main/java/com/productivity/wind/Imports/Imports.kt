@@ -594,6 +594,87 @@ object UI {
         App.ctx.startActivity(chooser)
     }
 
+	@Composable
+	fun dynamicTextWidth(
+		text: Str,
+		textStyle: TextStyle,
+		widthMin: Int,
+		widthMax: Int,
+		height: Dp
+	): Modifier {
+		val measurer = rememberTextMeasurer()
+		val density = LocalDensity.current
+
+		// Measure text width
+		val measuredWidth = measurer.measure(
+			text.ifEmpty { " " }, // fallback if empty
+			style = textStyle
+		).size.width
+
+		// Create modifier with dynamic width and fixed height
+		return Modifier
+        .width((with(density) { measuredWidth.toDp() } + 2.dp).coerceIn(widthMin.dp, widthMax.dp))
+        .height(height)
+	}
+
+
+	@Composable
+    fun Input(
+        what: Str,
+        textSize: TextUnit = 14.sp,
+        height: Dp = 36.dp,
+        MaxLetters: Int? = 5,
+        WidthMin: Int = 10,
+        WidthMax: Int = 120,
+		isInt: Bool = false,
+
+        onChange: Do_<Str>,
+    ) {
+        val TextColor = Color(0xFFFFD700)
+        val FocusChange = TextMemory()
+        val imeAction = ImeAction(null)
+        val isFocused by IsFocused(FocusChange)
+
+        val TextStyling = CTextStyle(TextColor, textSize)
+        val outerMod = dynamicTextWidth(
+			what, TextStyling, WidthMin, WidthMax, height
+		)
+
+        OnLoseFocus(isFocused, null)
+
+
+
+
+		
+        BasicTextField(
+			decorationBox = { innerTextField ->
+                FieldBox(
+                    height = height,
+                    BackgroundColor = Color.Transparent,
+                ) {
+                    innerTextField()
+                }
+            },
+			modifier = outerMod.height(height),
+            textStyle = TextStyling,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(type(true), imeAction),
+            keyboardActions = doneAction(null),
+            cursorBrush = grayCursor(),
+            interactionSource = FocusChange,
+
+
+
+
+
+
+
+			
+            value = what,
+            onValueChange = onChange,
+        )
+	}
+
 
 
     @Composable
