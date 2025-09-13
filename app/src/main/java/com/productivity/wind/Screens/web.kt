@@ -60,12 +60,12 @@ fun Web() {
             title = { 
                 Text(" Points ${Bar.funTime}")
             },
-            Scrollable = false,
             DividerPadding = false,
         ) {
             AndroidView(
                 modifier = Modifier
-                .fillMaxSize(),
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
                 factory = { ctx ->
                     GeckoView(ctx).apply { 
                         setSession(Tab) 
