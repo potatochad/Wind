@@ -312,7 +312,7 @@ fun LazyImage(
 fun <T> LazzyList(
     Data: List<T>,
     modifier: Modifier = Modifier.fillMaxWidth().height(200.dp),
-    content: Content<T>,
+    content: Content_<T>,
 ) {
     val items = remember { mutableStateListOf<T>() }
 
@@ -392,7 +392,7 @@ fun LazzyRow(
     modifier: Modifier = Modifier,
     padding: Int = 0,
     center: Bool = false, // Kotlin uses 'Boolean', not 'Bool'
-    content: @Composable () -> Unit,
+    content: Content,
 ) {
     Row(
         modifier = modifier
