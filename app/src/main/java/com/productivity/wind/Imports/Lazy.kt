@@ -774,11 +774,13 @@ fun LazyScreen(
 				header()
 			}
 
+
             var screenHeight = LocalConfiguration.current.screenHeightDp.dp
+            var LazyScreenContentHeight= screenHeight-100.dp- bottomSystemHeight()
 			Column(
 				modifier = baseModifier
 					.then(modifier)
-                    .height(screenHeight-100.dp- bottomSystemHeight())
+                    .height(LazyScreenContentHeight)
 					.verticalScroll(rememberScrollState())
 			) {
 				content()
