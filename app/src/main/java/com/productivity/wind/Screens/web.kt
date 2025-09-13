@@ -40,7 +40,7 @@ var Tab.ManageTab: ManageTab?
 
 
 @Composable
-fun Web(show: MutableState<Boolean>) {
+fun Web() {
         val ctx = LocalContext.current
         val Web = r { GeckoRuntime.create(ctx) }
         val Tab = r { GeckoSession() }
