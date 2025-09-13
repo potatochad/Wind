@@ -43,7 +43,7 @@ fun onNewDay() {
           }
      }   
 }
-
+	
 
 
 class Settings {
@@ -69,12 +69,6 @@ class Settings {
 
     
     //region MISALANIOUS
-
-    var halfHeight by m(0.dp)
-    var halfWidth by m(0.dp)
-    var ShowMenu by m(false)
-	var LazyScreenContentHeight by m(halfHeight*2-100.dp- bottomSystemHeight())
-		
 
 
     var lastDate by m("")
@@ -200,14 +194,18 @@ fun OnResume(){
 }
 @Composable
 fun AppStart() {
+	App.screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    App.screenWidth = LocalConfiguration.current.screenWidthDp.dp
+	App.LazyScreenContentHeight = App.screenHeight-100.dp- bottomSystemHeight()
+	
     LazyMenu { Menu() }
     
     Popup.Init()
-    val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
-    val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
+	
     LaunchedEffect(Unit) {
         DayChecker.start()
     }
+	
   
     
     ListStorage.SynchAll()
@@ -231,10 +229,9 @@ object App {
     * */
     lateinit var ctx: Context
     lateinit var navHost: NavHostController
-
-
-    /*POPUPS CRASHING??
-    * USE LOCAL CONTEXT
-    * ? YEA GOT NO BETTER SOLUTION SORRRY*/
+	var screenHeight by m(0.dp)
+	var screenWidth by m(0.dp)
+	var LazyScreenContentHeight by m(0.dp)
+	
 
 }
