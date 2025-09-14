@@ -64,6 +64,7 @@ fun Main() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(itemHeight * filteredApps.size),
+            lazyMode = true,
         ) { app ->
             var x = r { m(0.dp) }
             var y = r { m(0.dp) }
