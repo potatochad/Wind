@@ -84,6 +84,37 @@ fun Menu() {
 
 
 object Item {
+    fun AppTaskUI(app: DataApps){
+            val icon = getAppIcon(app.pkg)
+            val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
+
+            if (app.NowTime > app.DoneTime - 1 && !app.done) {
+                Bar.funTime += app.Worth
+                apps.edit(app) { done = true }
+                Vlog("${app.name} completed")
+            }
+
+            LazyCard {
+                LazzyRow {
+                    UI.move(10)
+
+                    LazyInfo(infoContent = { Text("${app.NowTime}s/${app.DoneTime}s") }) {
+                        UI.ProgressIcon(icon, progress)
+                    }
+
+
+                    UI.move(12)
+                    Text("Points ${app.Worth}")
+                    UI.End {
+                        LazyInfo(infoContent = { Text("you clicked MORE MENU") }) {
+                            Icon.MoreMenu {}
+                        }
+                    }
+
+
+                }
+            }
+    }
     @Composable
     fun UnlockThreshold() {
         LazyItem(
