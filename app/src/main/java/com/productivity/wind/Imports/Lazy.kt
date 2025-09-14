@@ -784,6 +784,9 @@ fun LazyScreen(
 			) {
 				content()
 			}
+			
+			LazzyRow {UI.move(bottomSystemHeight())}
+			
 		}
 	} else {
 		Column(baseModifier.then(modifier)) {
