@@ -54,29 +54,13 @@ fun Main() {
 
 
 
-        val filteredApps = apps.filter { it.Worth > 0 && !it.done }
-        var itemHeight by r { m(92.dp) }
-
-        
         
         LazzyList(
             apps.filter { it.Worth > 0 && it.done == false },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(itemHeight * filteredApps.size),
+            modifier = Modifier.fillMaxWidth(),
             lazyMode = true,
         ) { app ->
-            var x = r { m(0.dp) }
-            var y = r { m(0.dp) }
-            var w = r { m(0.dp) }
-            var h = r { m(0.dp) }
-
-            LazyMeasure(
-                x, y, w, h
-            ) {
-                Item.AppTaskUI(app)
-            }
-            itemHeight = h.value
+            Item.AppTaskUI(app)
         }
 
 
