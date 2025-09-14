@@ -745,7 +745,6 @@ fun LazyScreen(
 	DividerPadding: Bool = true,
 	
 	headerHeight: Int = 44,
-	ForceBottomBar: Bool = true,
 	Scrollable: Bool = true,
     content: Content,
 ) {
@@ -768,38 +767,33 @@ fun LazyScreen(
 			height = headerHeight
 		)
 	}
+	val bottom: Content = {
+		LazzyRow {UI.move(bottomSystemHeight())}
+	}
 	
 	if (Scrollable) {
 		Column(Modifier.fillMaxSize()) {
 			LazzyRow {
-				header()
+				
 			}
+			header()
 
 
         	Column(
 				modifier = baseModifier
 					.then(modifier)
-                    .heightIn(max = App.LazyScreenContentHeight)
 					.verticalScroll(rememberScrollState())
 			) {
 				content()
-				LazzyRow {UI.move(bottomSystemHeight())}
+				bottom()
 			}
-			
-			LazzyRow {UI.move(bottomSystemHeight())}
 			
 		}
 	} else {
 		Column(baseModifier.then(modifier)) {
 			header()
-			if (ForceBottomBar) {
-				Box(Modifier.weight(1f)) { 
-					content() 
-				}
-			} else {
-				content()
-			}
-			LazzyRow {UI.move(bottomSystemHeight())}
+			content()
+			bottom()
 		}
 	}
 }
