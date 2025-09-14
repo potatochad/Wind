@@ -779,7 +779,7 @@ fun LazyScreen(
         	Column(
 				modifier = baseModifier
 					.then(modifier)
-                    .height(App.LazyScreenContentHeight)
+                    .heightIn(max = App.LazyScreenContentHeight)
 					.verticalScroll(rememberScrollState())
 			) {
 				content()
