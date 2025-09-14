@@ -783,6 +783,7 @@ fun LazyScreen(
 					.verticalScroll(rememberScrollState())
 			) {
 				content()
+				LazzyRow {UI.move(bottomSystemHeight())}
 			}
 			
 			LazzyRow {UI.move(bottomSystemHeight())}
