@@ -60,7 +60,30 @@ fun Main() {
             modifier = Modifier.fillMaxWidth(),
             lazyMode = true,
         ) { app ->
-            Item.AppTaskUI(app)
+            val context = LocalContext.current
+val balloon = remember {
+    Balloon.Builder(context)
+        .setText("App info: ${app.name}")
+        .setArrowOrientation(ArrowOrientation.TOP)
+        .setAutoDismissDuration(3000L) // optional
+        .build()
+}
+
+var show by remember { mutableStateOf(false) }
+
+BalloonTooltip(
+    balloon = balloon,
+    isVisible = show
+) {
+    Item.AppTaskUI(app,
+        modifier = Modifier.pointerInput(Unit) {
+            detectTapGestures(
+                onLongPress = { show = true }
+            )
+        }
+    )
+}
+
         }
 
 
