@@ -60,6 +60,7 @@ fun Web() {
             title = { 
                 Text(" Points ${Bar.funTime}")
             },
+            Scrollable = false,
             DividerPadding = false,
         ) {
             AndroidView(
