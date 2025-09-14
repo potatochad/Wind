@@ -277,34 +277,30 @@ fun LazyImage(
 
 @Composable
 fun <T> LazzyList(
-    Data: List<T>,
+    data: List<T>,
     modifier: Mod = Modifier.fillMaxWidth().height(200.dp),
+    lazyMode: Bool = false,
     content: Content_<T>,
 ) {
     val items = r { mutableStateListOf<T>() }
 
-    LaunchedEffect(items) {
+    LaunchedEffect(data) {
         items.clear()
-
-        var currentIndex = 0
-        while (currentIndex < Data.size) {
-            items.add(Data[currentIndex])
-            currentIndex++
+        data.forEachIndexed { i, item ->
+            items.add(item)
             delay(100L)
         }
     }
 
-    Column(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
-    ) {
+    val columnModifier = if (lazyMode) modifier else modifier.verticalScroll(rememberScrollState())
+
+    Column(modifier = columnModifier) {
         items.forEachIndexed { index, item ->
-            key(index) {
-                content(item)
-            }
+            key(index) { content(item) }
         }
     }
 }
+
 
 
 
