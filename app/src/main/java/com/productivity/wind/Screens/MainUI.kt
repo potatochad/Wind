@@ -57,37 +57,8 @@ fun Main() {
         val filteredApps = apps.filter { it.Worth > 0 && !it.done }
         var itemHeight by r { m(92.dp) }
 
-        @Composable
-        fun AppTaskUI(app: DataApps){
-            val icon = getAppIcon(app.pkg)
-            val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
-
-            if (app.NowTime > app.DoneTime - 1 && !app.done) {
-                Bar.funTime += app.Worth
-                apps.edit(app) { done = true }
-                Vlog("${app.name} completed")
-            }
-
-            LazyCard {
-                LazzyRow {
-                    UI.move(10)
-
-                    LazyInfo(infoContent = { Text("${app.NowTime}s/${app.DoneTime}s") }) {
-                        UI.ProgressIcon(icon, progress)
-                    }
-
-
-                    UI.move(12)
-                    Text("Points ${app.Worth}")
-                    UI.End {
-                        LazyInfo(infoContent = { Text("you clicked MORE MENU") }) {
-                            Icon.MoreMenu {}
-                        }
-                    }
-
-
-                }
-            }}
+        
+        
         LazzyList(
             apps.filter { it.Worth > 0 && it.done == false },
             modifier = Modifier
@@ -102,7 +73,7 @@ fun Main() {
             LazyMeasure(
                 x, y, w, h
             ) {
-                AppTaskUI(app)
+                Item.AppTaskUI(app)
             }
             itemHeight = h.value
         }
