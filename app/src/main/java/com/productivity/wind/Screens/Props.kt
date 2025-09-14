@@ -84,6 +84,7 @@ fun Menu() {
 
 
 object Item {
+    @Composable
     fun AppTaskUI(app: DataApps){
             val icon = getAppIcon(app.pkg)
             val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
