@@ -138,13 +138,12 @@ class MainActivity : ComponentActivity() {
         // Set navigation bar black with white icons
         window.navigationBarColor = android.graphics.Color.BLACK
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
+		WindowCompat.setDecorFitsSystemWindows(window, true)
 
         AppStart_beforeUI(applicationContext)
         setContent {
             WindTheme {
-                Surface(modifier = Modifier
-						.fillMaxSize()
-					   ) {
+                Surface(Modifier.fillMaxSize()) {
                     AppStart()
                 }
             }
