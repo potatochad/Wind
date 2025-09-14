@@ -136,9 +136,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // Set navigation bar black with white icons
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+
+        // Set navigation bar black with white icons
         window.navigationBarColor = android.graphics.Color.BLACK
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
-		WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightNavigationBars = false
+            show(WindowInsetsCompat.Type.systemBars()) // Force visible
+            systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_BARS_BY_TOUCH
+        }
 
         AppStart_beforeUI(applicationContext)
         setContent {
