@@ -47,34 +47,41 @@ import android.view.*
 import androidx.compose.foundation.gestures.*
 import androidx.compose.ui.input.pointer.*
 
-
-
 @Composable
-fun AppTaskUIWithBalloon(app: DataApps) {
+fun BalloonAboveButton() {
     val context = LocalContext.current
-    val parentView = LocalView.current // the Compose view tree root
-
-    val balloon = remember {
-        Balloon.Builder(context)
-            .setText("App info: ${app.name}")
-            .setArrowOrientation(ArrowOrientation.TOP)
-            .setAutoDismissDuration(3000L)
-            .build()
-    }
 
     Box(
-        modifier = Modifier
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onTap = {
-                        balloon.showAlignTop(parentView) // anchor directly
-                    }
-                )
-            }
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-        Item.AppTaskUI(app)
+        AndroidView(factory = { ctx ->
+            Button(ctx).apply {
+                text = "Click me BIG LŪNG TEXTTTTT"
+                setOnClickListener {
+                    // Create a balloon with custom view
+                    val balloon = Balloon.Builder(context)
+                        .setLayout(com.skydoves.balloon.R.layout.balloon_layout) // use default layout
+                        .setArrowOrientation(ArrowOrientation.BOTTOM)
+                        .setAutoDismissDuration(3000)
+                        .setText("Hello Balloon!") // text inside
+                        .setPadding(16, 16, 16, 16) // padding inside the balloon
+                        .setBackgroundDrawable(
+                            GradientDrawable().apply {
+                                setColor(Color.WHITE)
+                                setStroke(1, Color.GRAY) // 1.dp grey border
+                                cornerRadius = 8f
+                            }
+                        )
+                        .build()
+
+                    balloon.showAlignTop(this) // show above button
+                }
+            }
+        })
     }
 }
+
 
 
 @Composable
