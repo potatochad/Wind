@@ -52,13 +52,13 @@ import androidx.compose.ui.input.pointer.*
 
 
 @Composable
-fun AppTaskUIWithBalloon(app: App) {
+fun AppTaskUIWithBalloon(app: DataApps) {
     val context = LocalContext.current
     val anchorView = LocalView.current // use this as the real anchor
 
     val balloon = remember {
         Balloon.Builder(context)
-            .setText("App info: APP CLICKED")
+            .setText("App info: ${app.name}APP CLICKED")
             .setArrowOrientation(ArrowOrientation.TOP)
             .setAutoDismissDuration(3000L)
             .build()
