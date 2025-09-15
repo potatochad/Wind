@@ -56,7 +56,7 @@ fun AppTaskUIWithBalloon(app: App) {
 
     val balloon = remember {
         Balloon.Builder(context)
-            .setText("App info: ${app.name}")
+            .setText("App info: APP CLICKED")
             .setArrowOrientation(ArrowOrientation.TOP)
             .setAutoDismissDuration(3000L)
             .build()
