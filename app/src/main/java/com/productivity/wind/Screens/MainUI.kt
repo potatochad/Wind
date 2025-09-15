@@ -54,31 +54,28 @@ import androidx.compose.ui.input.pointer.*
 @Composable
 fun AppTaskUIWithBalloon(app: DataApps) {
     val context = LocalContext.current
-    val anchorView = LocalView.current // use this as the real anchor
+    val parentView = LocalView.current // the Compose view tree root
 
     val balloon = remember {
         Balloon.Builder(context)
-            .setText("App info: ${app.name}APP CLICKED")
+            .setText("App info: ${app.name}")
             .setArrowOrientation(ArrowOrientation.TOP)
             .setAutoDismissDuration(3000L)
             .build()
     }
 
-    Box {
-    AndroidView(
-        factory = { ctx ->
-            FrameLayout(ctx).apply {
-                setOnLongClickListener {
-                    balloon.showAlignTop(this) // this is now your real anchor
-                    true
-                }
+    Box(
+        modifier = Modifier
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onTap = {
+                        balloon.showAlignTop(parentView) // anchor directly
+                    }
+                )
             }
-        },
-        modifier = Modifier.size(1.dp) // tiny, just for positioning
-    )
-    Item.AppTaskUI(app)
-}
-
+    ) {
+        Item.AppTaskUI(app)
+    }
 }
 
 
