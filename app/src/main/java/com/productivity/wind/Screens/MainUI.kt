@@ -40,7 +40,6 @@ import androidx.compose.*
 import androidx.compose.runtime.*
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextFieldDefaults
-import com.skydoves.balloon.compose.*
 import com.skydoves.balloon.*
 
 
@@ -66,30 +65,38 @@ fun Main() {
 
 
             
-            val context = LocalContext.current
+            
 
-            // build balloon once
-            val balloon = remember {
-                Balloon.Builder(context)
-                    .setText("App info: ${app.name}")
-                    .setArrowOrientation(ArrowOrientation.TOP)
-                    .setAutoDismissDuration(3000L)
-                    .build()
-            }
 
-            Box(
-                modifier = Modifier
-                    .balloon(balloon) // attach tooltip to this Box
-                    .pointerInput(Unit) {
-                        detectTapGestures(
-                            onLongPress = {
-                                balloon.showAlignTop(this@pointerInput) // show tooltip on hold
-                            }
-                        )
+    val context = LocalContext.current
+
+    val balloon = remember {
+        Balloon.Builder(context)
+            .setText("App info: ${app.name}")
+            .setArrowOrientation(ArrowOrientation.TOP)
+            .setAutoDismissDuration(3000L)
+            .build()
+    }
+
+    Box {
+        AndroidView(
+            factory = { ctx ->
+                FrameLayout(ctx).apply {
+                    setOnLongClickListener {
+                        balloon.showAlignTop(this) // show balloon on hold
+                        true
                     }
-            ) {
-                Item.AppTaskUI(app) // your content
+                }
+            },
+            modifier = Modifier
+        ) { view ->
+            // Render your Compose UI inside the anchor View
+            view.setContent {
+                Item.AppTaskUI(app)
             }
+        }
+    }
+    
 
         }
     }
