@@ -64,17 +64,21 @@ fun AppTaskUIWithBalloon(app: DataApps) {
             .build()
     }
 
-    Box(
-        modifier = Modifier.pointerInput(Unit) {
-            detectTapGestures(
-                onLongPress = {
-                    balloon.showAlignTop(anchorView) // show balloon on hold
+    Box {
+    AndroidView(
+        factory = { ctx ->
+            FrameLayout(ctx).apply {
+                setOnLongClickListener {
+                    balloon.showAlignTop(this) // this is now your real anchor
+                    true
                 }
-            )
-        }
-    ) {
-        Item.AppTaskUI(app) // your Compose UI
-    }
+            }
+        },
+        modifier = Modifier.size(1.dp) // tiny, just for positioning
+    )
+    Item.AppTaskUI(app)
+}
+
 }
 
 
