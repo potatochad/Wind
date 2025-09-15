@@ -91,6 +91,28 @@ fun Main() {
 
 
 
+
+
+        val context = LocalContext.current
+val anchorView = LocalView.current
+
+val balloon = remember {
+    Balloon.Builder(context)
+        .setText("Hello Balloon!")
+        .setArrowOrientation(ArrowOrientation.TOP)
+        .build()
+}
+
+Button(onClick = {
+    balloon.showAlignTop(anchorView) // show balloon above current view
+}) {
+    Text("Show Balloon")
+}
+
+
+
+
+
         
         LazzyList(
             apps.filter { it.Worth > 0 && it.done == false },
