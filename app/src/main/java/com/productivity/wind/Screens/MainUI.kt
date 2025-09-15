@@ -46,31 +46,12 @@ import android.widget.*
 import android.view.*
 
 
+
+
+
 @Composable
-fun Main() {
-
-    MAINStart()
-
-    LazyScreen(title = { Header.Main() }, showBack = false) {
-
-        LazyCard { Disipline() }
-
-
-
-
-        
-        LazzyList(
-            apps.filter { it.Worth > 0 && it.done == false },
-            modifier = Modifier.fillMaxWidth(),
-            lazyMode = true,
-        ) { app ->
-
-
-
-            
-            
-
-
+fun AppTaskUIWithBalloon(app: App) {
+    val context = LocalContext.current
     val anchorView = LocalView.current // use this as the real anchor
 
     val balloon = remember {
@@ -89,12 +70,32 @@ fun Main() {
                 }
             )
         }
-        ) {
-                Item.AppTaskUI(app)
-            }
-        }
+    ) {
+        Item.AppTaskUI(app) // your Compose UI
+    }
+}
 
-    
+
+@Composable
+fun Main() {
+
+    MAINStart()
+
+    LazyScreen(title = { Header.Main() }, showBack = false) {
+
+        LazyCard { Disipline() }
+
+
+
+
+        
+        LazzyList(
+            apps.filter { it.Worth > 0 && it.done == false },
+            modifier = Modifier.fillMaxWidth(),
+            lazyMode = true,
+        ) { app ->
+            AppTaskUIWithBalloon(app)
+        }
     }
 }
 
