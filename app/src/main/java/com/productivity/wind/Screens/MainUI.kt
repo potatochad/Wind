@@ -71,7 +71,7 @@ fun Main() {
             
 
 
-    val context = LocalContext.current
+    val anchorView = LocalView.current // use this as the real anchor
 
     val balloon = remember {
         Balloon.Builder(context)
@@ -81,27 +81,20 @@ fun Main() {
             .build()
     }
 
-    Box {
-        AndroidView(
-            factory = { ctx ->
-                FrameLayout(ctx).apply {
-                    setOnLongClickListener {
-                        balloon.showAlignTop(this) // show balloon on hold
-                        true
-                    }
+    Box(
+        modifier = Modifier.pointerInput(Unit) {
+            detectTapGestures(
+                onLongPress = {
+                    balloon.showAlignTop(anchorView) // show balloon on hold
                 }
-            },
-            modifier = Modifier
-        ) { view ->
-            // Render your Compose UI inside the anchor View
-            view.setContent {
+            )
+        }
+        ) {
                 Item.AppTaskUI(app)
             }
         }
-    }
-    
 
-        }
+    
     }
 }
 
