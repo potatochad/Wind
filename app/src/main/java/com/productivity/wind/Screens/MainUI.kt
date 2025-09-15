@@ -51,23 +51,28 @@ import androidx.compose.ui.input.pointer.*
 
 
 @Composable
-fun SimpleBalloonExample() {
+fun BalloonAboveButton() {
     val context = LocalContext.current
+    val buttonRef = remember { mutableStateOf<View?>(null) }
 
-    val balloon = rememberBalloonBuilder {
-        setText("Hello from Balloon 🎈")
-        setArrowOrientation(ArrowOrientation.TOP)
-        setAutoDismissDuration(2000L) // 2s auto dismiss
-    }.build(context)
-
-    BalloonAnchor(
-        balloon = balloon
-    ) { balloonWindow ->
-        Button(onClick = { balloonWindow.showAlignTop() }) {
-            Text("Show Balloon")
-        }
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        AndroidView(factory = { ctx ->
+            Button(ctx).apply {
+                text = "Click me"
+                setOnClickListener {
+                    val balloon = Balloon.Builder(context)
+                        .setText("Hello Balloon!")
+                        .setArrowOrientation(ArrowOrientation.BOTTOM) // arrow pointing down to button
+                        .setAutoDismissDuration(3000)
+                        .build()
+                    balloon.showAlignTop(this) // show above this button
+                }
+                buttonRef.value = this
+            }
+        })
     }
 }
+
 
 @Composable
 fun AppTaskUIWithBalloon(app: DataApps) {
@@ -111,7 +116,7 @@ fun Main() {
 
 
 
-         SimpleBalloonExample() 
+         BalloonAboveButton() 
 
 
 
