@@ -50,41 +50,6 @@ import com.skydoves.balloon.ArrowOrientation
 import android.graphics.drawable.GradientDrawable
 
 
-@Composable
-fun BalloonAboveButton() {
-    val context = LocalContext.current
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        AndroidView(factory = { ctx ->
-            Button(ctx).apply {
-                text = "Click me"
-                setOnClickListener {
-                    val balloon = Balloon.Builder(context)
-                        .setText("Hello Balloon!")
-                        .setArrowOrientation(ArrowOrientation.BOTTOM)
-                        .setAutoDismissDuration(3000)
-                        .setPadding(32) // padding in px
-                        .setBackgroundDrawable(
-                            GradientDrawable().apply {
-                                setColor(android.graphics.Color.WHITE)
-                                setStroke(2, android.graphics.Color.GRAY) // 2px border
-                                cornerRadius = 16f
-                            }
-                        )
-                        .build()
-
-                    balloon.showAlignTop(this) // show above button
-                }
-            }
-        })
-    }
-}
-
-
-
 
 @Composable
 fun Main() {
