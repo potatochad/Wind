@@ -66,7 +66,7 @@ fun BalloonAboveButton() {
                         .setText("Hello Balloon!")
                         .setArrowOrientation(ArrowOrientation.BOTTOM)
                         .setAutoDismissDuration(3000)
-                        .setPadding(32, 32, 32, 32) // padding in px
+                        .setPadding(32) // padding in px
                         .setBackgroundDrawable(
                             GradientDrawable().apply {
                                 setColor(android.graphics.Color.WHITE)
