@@ -63,13 +63,6 @@ fun Main() {
 
 
 
-
-
-         BalloonAboveButton() 
-
-
-
-
         
         LazzyList(
             apps.filter { it.Worth > 0 && it.done == false },
