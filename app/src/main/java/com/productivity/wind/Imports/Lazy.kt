@@ -210,6 +210,18 @@ fun LazyInfo(
     ) {
         content()
     }
+	Box {
+		Canvas(
+			modifier = Modifier
+				.offset(x.value, y.value)
+				.size(w.value, h.value)
+		) {
+			drawRect(
+				color = Color.Red,
+				size = size
+			)
+		}
+	}
 
     // Default top-right of the trigger
     val popupX = remember(x.value, w.value) {
