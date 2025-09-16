@@ -60,20 +60,18 @@ fun BalloonAboveButton() {
     ) {
         AndroidView(factory = { ctx ->
             Button(ctx).apply {
-                text = "Click me BIG LŪNG TEXTTTTT"
+                text = "Click me"
                 setOnClickListener {
-                    // Create a balloon with custom view
                     val balloon = Balloon.Builder(context)
-                        .setLayout(com.skydoves.balloon.R.layout.balloon_layout) // use default layout
+                        .setText("Hello Balloon!")
                         .setArrowOrientation(ArrowOrientation.BOTTOM)
                         .setAutoDismissDuration(3000)
-                        .setText("Hello Balloon!") // text inside
-                        .setPadding(16, 16, 16, 16) // padding inside the balloon
+                        .setPadding(32, 32, 32, 32) // padding in px
                         .setBackgroundDrawable(
                             GradientDrawable().apply {
-                                setColor(Color.WHITE)
-                                setStroke(1, Color.GRAY) // 1.dp grey border
-                                cornerRadius = 8f
+                                setColor(android.graphics.Color.WHITE)
+                                setStroke(2, android.graphics.Color.GRAY) // 2px border
+                                cornerRadius = 16f
                             }
                         )
                         .build()
@@ -84,6 +82,7 @@ fun BalloonAboveButton() {
         })
     }
 }
+
 
 
 
@@ -112,7 +111,7 @@ fun Main() {
             modifier = Modifier.fillMaxWidth(),
             lazyMode = true,
         ) { app ->
-            AppTaskUIWithBalloon(app)
+            Item.AppTaskUI(app)
         }
     }
 }
