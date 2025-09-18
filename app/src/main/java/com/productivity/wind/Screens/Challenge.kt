@@ -37,9 +37,9 @@ fun Challenge() {
 @Composable
 fun CopyPaste() {
     // State variables
-    var completionPoints = r { m("10") }  // “If” completion points
-    var letterPoints = r { m("2") }       // “If” letter points
-    var Retypes = r { m("0") }         // “Do” limit points
+    var completionPoints = r_m("10")  // “If” completion points
+    var letterPoints = r_m("2")     // “If” letter points
+    var Retypes = r_m("0")         // “Do” limit points
 
     LazyScreen(title = { 
         Header.CopyPaste() 
@@ -73,9 +73,9 @@ fun CopyPaste() {
 
 @Composable
 fun AppUsage() {
-    var Time = r { m("50") }
-    var Points = r { m("0") }
-    var WhichIf = r { m(0) }
+    var Time = r_m("50")
+    var Points = r_m("0")
+    var WhichIf = r_m(0)
     set(selectedApp, "")
     LaunchedEffect(Unit) {
         refreshApps()  
