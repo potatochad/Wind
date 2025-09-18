@@ -74,7 +74,7 @@ fun SettingsOtherScreen() {
 @Composable
 fun LogsScreen()= NoLagCompose {
     
-    var logText by r { m("") }
+    var logText by r_m("")
 
     LaunchedEffect(Unit) {
         while (true) {
