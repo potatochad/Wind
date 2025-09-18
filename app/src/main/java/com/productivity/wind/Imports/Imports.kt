@@ -103,7 +103,7 @@ import androidx.compose.*
 import androidx.compose.runtime.*
 //region log
 
-fun log(message: String, tag: String? = "Bad") {
+fun log(message: Str, tag: Str? = "Bad") {
     var LogMessage = message ; val stackTrace = Thread.currentThread().stackTrace ; val element = stackTrace[3] ; val fileName = element.fileName ; val lineNumber = element.lineNumber
     LogMessage= "[$fileName:$lineNumber] $message"
     if ("bad".equals(tag, true)) { Log.w(tag, LogMessage) }
@@ -115,7 +115,7 @@ fun log(message: String, tag: String? = "Bad") {
 
 private var lastToast: Toast? = null
 
-fun Vlog(msg: String, special: String = "none", delayLevel: Int = 0) {
+fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
     val delayMs = (delayLevel.coerceIn(0, 100)) * 30L // Example: Level 2 = 60ms
 
     if (special.equals("one", true)) {
@@ -129,7 +129,7 @@ fun Vlog(msg: String, special: String = "none", delayLevel: Int = 0) {
     }, delayMs)
 }
 
-fun getLogs(): String {
+fun getLogs(): Str {
     return try {
         val process = Runtime.getRuntime().exec("logcat -d")
         val reader = process.inputStream.bufferedReader()
@@ -779,7 +779,7 @@ object UI {
     @Composable
     fun CopyIcon(text: Str) {
         val context = LocalContext.current
-        var copied by r { m(false) }
+        var copied by r_m(false)
 
         LaunchedEffect(copied) {
             if (copied) {
