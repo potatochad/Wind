@@ -243,7 +243,7 @@ fun LazyInfo(
 @Composable
 fun NormalVisual(
 	show: m_<Bool>,
-	popuoX: Dp,
+	popupX: Dp,
 	popupY: Dp,
 	content: Content,
 ){
