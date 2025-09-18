@@ -96,8 +96,9 @@ val gson = Gson()
 
 @Composable
 fun <T> r(value: () -> T) = remember { value() }
-
 fun <T> m(value: T) = mutableStateOf(value)
+@Composable
+fun <T> rm(initial: T) = remember { mutableStateOf(initial) }
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
 fun Id(): String { return UUID.randomUUID().toString() }
 typealias Content = @Composable () -> Unit
@@ -108,6 +109,7 @@ typealias Do_<T> = (T) -> Unit
 typealias m_<T> = MutableState<T>
 typealias Str = String
 typealias Bool = Boolean
+
 
 
 object DayChecker {
