@@ -127,7 +127,7 @@ fun LazyWindow(
     content: Content,
 ) {
     // Local state to control if Popup is alive
-    var popupVisible by r { m(false) }
+    var popupVisible by r_m(false)
 
     LaunchedEffect(show.value) {
         if (show.value) {
@@ -197,11 +197,11 @@ fun LazyInfo(
     popupHeight: Dp = 50.dp,
     content: Content,
 ) {
-    var show = r { m(false) }
-    var x = r { m(0.dp) }
-    var y = r { m(0.dp) }
-    var w = r { m(0.dp) }
-    var h = r { m(0.dp) }
+    var show = r_m(false)
+    var x = r_m(0.dp)
+    var y = r_m(0.dp)
+    var w = r_m(0.dp)
+    var h = r_m(0.dp)
 
     LazyMeasure(
         x, y, w, h,
@@ -477,7 +477,7 @@ fun LazyMore(
     initiallyExpanded: Bool = false,
     content: Content
 ) {
-    var expanded by r { m(initiallyExpanded) }
+    var expanded by r_m(initiallyExpanded)
     val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
 
     Column(modifier = modifier) {
@@ -534,7 +534,7 @@ fun LazyMore(
 fun LazyItem(
     title: Str,
     subtitle: Str? = null,
-    endContent: @Composable (() -> Unit)? = null,
+    endContent: Content? = null,
     modifier: Mod = Modifier,
 	
     icon: ImageVector? = null,
@@ -628,7 +628,7 @@ fun LazyHeader(
 	height: Int = 100,
 ) {
     val ui = rememberSystemUiController()
-    var DisableTB_Button by r { m(false) }
+    var DisableTB_Button by r_m(false)
     LaunchedEffect(Unit) {
         ui.setStatusBarColor(Color.Black, darkIcons = false)
     }
@@ -858,8 +858,8 @@ fun LazyMenu(
     onDismiss: Do? = null,
     content: Content,
 ) {
-    val visible = r { m(false) }
-    val internalVisible = r { m(false) }
+    val visible = r_m(false)
+    val internalVisible = r_m(false)
 
     // Trigger showing/hiding Popup
     LaunchedEffect(App.Menu) {
