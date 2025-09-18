@@ -98,7 +98,7 @@ val gson = Gson()
 fun <T> r(value: () -> T) = remember { value() }
 fun <T> m(value: T) = mutableStateOf(value)
 @Composable
-fun <T> rm(initial: T) = remember { mutableStateOf(initial) }
+fun <T> r_m(initial: T) = remember { mutableStateOf(initial) }
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
 fun Id(): String { return UUID.randomUUID().toString() }
 typealias Content = @Composable () -> Unit
