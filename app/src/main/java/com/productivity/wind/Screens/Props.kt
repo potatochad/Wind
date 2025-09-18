@@ -138,7 +138,7 @@ object Item {
     }
     @Composable
     fun Restore() {
-        var restoreTrigger = r { m(false) }
+        var restoreTrigger = r_m(false)
 
         LazyItem(
             BigIcon = Icons.Filled.Restore,
@@ -159,7 +159,7 @@ object Item {
 
     @Composable
     fun Backup() {
-        var backupTrigger by r { m(false) }
+        var backupTrigger by r_m(false)
 
         LaunchedEffect(backupTrigger) {
             if (backupTrigger) {
@@ -413,7 +413,7 @@ var selectedApp = m("")
 fun AppSelectPopup(show: m_<Bool>) {
     if (show.value) {
         val myPackage = LocalContext.current.packageName // your app's package
-        var appList by r { m(getApps().filter { getAppPackage(it) != myPackage }) } // filter self out
+        var appList by r_m(getApps().filter { getAppPackage(it) != myPackage }) // filter self out
 
         LazyPopup(
             show = show,
