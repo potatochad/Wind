@@ -217,8 +217,26 @@ fun LazyInfo(
     val popupY = remember(y.value) {
         if (y.value - ChangeY < popupHeight) y.value + h.value else y.value - ChangeY
     }
+	LazyWindow(show) {
+		LazyMove(popupX, popupY) {
+			// Red dot marking the click point
+			Box(
+				modifier = Modifier
+					.size(8.dp)
+					.background(Color.Red, CircleShape)
+			)
+		}
+	}
+
 	
 }
+
+
+
+
+
+
+
 
 //NormalVisual(show, popupX, popupY)
     
