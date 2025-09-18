@@ -192,7 +192,7 @@ fun LazyMeasure(
 fun LazyInfo(
     infoContent: Content,
     hold: Bool = false,
-	ChangeY: Dp = 80.dp,
+    ChangeY: Dp = 80.dp,
     popupWidth: Dp = 100.dp,
     popupHeight: Dp = 50.dp,
     content: Content,
@@ -205,25 +205,12 @@ fun LazyInfo(
 
     LazyMeasure(
         x, y, w, h,
-        modifier = Modifier
-            .clickOrHold(hold) { show.value = true }
+        modifier = Modifier.clickOrHold(hold) { show.value = true }
     ) {
         content()
     }
-	Box {
-		Canvas(
-			modifier = Modifier
-				.offset(x.value, y.value)
-				.size(w.value, h.value)
-		) {
-			drawRect(
-				color = Color.Red,
-				size = size
-			)
-		}
-	}
 
-    // Default top-right of the trigger
+    // Calculate popup position
     val popupX = remember(x.value, w.value) {
         if ((x.value + w.value) < popupWidth) x.value else (x.value + w.value) - popupWidth
     }
@@ -231,36 +218,33 @@ fun LazyInfo(
         if (y.value - ChangeY < popupHeight) y.value + h.value else y.value - ChangeY
     }
 	
-    LazyWindow(show) {
+}
+
+//NormalVisual(show, popupX, popupY)
+    
+@Composable
+fun NormalVisual(
+	show: m_<Bool>,
+	popuoX: Dp,
+	popupY: Dp,
+){
+	LazyWindow(show) {
         LazyMove(popupX, popupY) {
-            Box(
+            Card(
                 modifier = Modifier
                     .wrapContentSize()
-					.border(
-                        width = 1.dp,
-                        color = Color.Gray,
-                        shape = RoundedCornerShape(8.dp),
-                    )
+                    .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
+                shape = RoundedCornerShape(8.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
-				LazyCard(
-					innerPadding = 8,
-					corners = 8,
-					modifier = Modifier
-						.wrapContentSize(),
-					){
-					infoContent()
-				}
-			}
-		}
+                Box(modifier = Modifier.padding(8.dp)) {
+                    infoContent()
+                }
+            }
+        }
 	}
 }
-	
-
-
-
-
-
-
 
 
 
