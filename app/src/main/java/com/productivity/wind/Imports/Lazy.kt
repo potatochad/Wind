@@ -211,24 +211,33 @@ fun LazyInfo(
     }
 
     // Calculate popup position
-    var popupX = remember(x.value, w.value) {
-        if ((x.value + w.value) < popupWidth) x.value else (x.value + w.value) - popupWidth
+    val popupWidthState = r_m(0.dp)
+    val popupHeightState = r_m(0.dp)
+
+    // Compute popup position dynamically
+    val popupX = remember(x.value, w.value, popupWidthState.value) {
+        if ((x.value + w.value) < popupWidthState.value) x.value else (x.value + w.value) - popupWidthState.value
     }
-    var popupY = remember(y.value) {
-        if (y.value - ChangeY < popupHeight) y.value + h.value else y.value - ChangeY
-    }
+    val popupY = remember(y.value, h.value, popupHeightState.value) {
+        if (y.value - ChangeY < popupHeightState.value) y.value + h.value else y.value - ChangeY
+	}
 	LazyWindow(show) {
 		LazyMove(popupX, popupY) {
 			// Red dot marking the click point
-			Box(
-				modifier = Modifier
-					.size(8.dp)
-					.background(Color.Red, CircleShape)
-			)
-		}
-	}
+			BoxWithConstraints {
+                // Update measured size
+                set(popupWidthState, maxWidth)
+                set(popupHeightState, maxHeight)
 
-	
+                // Red dot marking click point
+                Box(
+                    modifier = Modifier
+                        .size(6.dp)
+                        .background(Color.Red, CircleShape)
+                )
+			}
+		}
+	}	
 }
 
 
