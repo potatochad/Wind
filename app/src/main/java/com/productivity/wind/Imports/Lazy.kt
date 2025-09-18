@@ -193,8 +193,8 @@ fun LazyInfo(
     infoContent: Content,
     hold: Bool = false,
     ChangeY: Dp = 80.dp,
-    popupWidth: Dp = 100.dp,
-    popupHeight: Dp = 50.dp,
+    popupWidth: Dp = 0.dp,
+    popupHeight: Dp = 0.dp,
     content: Content,
 ) {
     var show = r_m(false)
