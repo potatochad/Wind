@@ -211,10 +211,10 @@ fun LazyInfo(
     }
 
     // Calculate popup position
-    val popupX = remember(x.value, w.value) {
+    var popupX = remember(x.value, w.value) {
         if ((x.value + w.value) < popupWidth) x.value else (x.value + w.value) - popupWidth
     }
-    val popupY = remember(y.value) {
+    var popupY = remember(y.value) {
         if (y.value - ChangeY < popupHeight) y.value + h.value else y.value - ChangeY
     }
 	LazyWindow(show) {
@@ -238,13 +238,14 @@ fun LazyInfo(
 
 
 
-//NormalVisual(show, popupX, popupY)
+//NormalVisual(show, popupX, popupY){}
     
 @Composable
 fun NormalVisual(
 	show: m_<Bool>,
 	popuoX: Dp,
 	popupY: Dp,
+	content: Content,
 ){
 	LazyWindow(show) {
         LazyMove(popupX, popupY) {
@@ -257,7 +258,7 @@ fun NormalVisual(
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 Box(modifier = Modifier.padding(8.dp)) {
-                    infoContent()
+                    content()
                 }
             }
         }
