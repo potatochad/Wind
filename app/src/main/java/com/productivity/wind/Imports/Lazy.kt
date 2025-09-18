@@ -222,7 +222,7 @@ fun LazyInfo(
         if (y.value - ChangeY < popupHeightState.value) y.value + h.value else y.value - ChangeY
 	}
 	LazyWindow(show) {
-		LazyMove(popupX, popupY) {
+		LazyMove(x, y) {
 			// Red dot marking the click point
 			BoxWithConstraints {
                 // Update measured size
