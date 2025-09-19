@@ -172,7 +172,7 @@ fun LazyMeasure(
 
     Box(
         modifier = modifier.onGloballyPositioned { layoutCoordinates ->
-            val position = layoutCoordinates.positionInWindow()
+            val position = layoutCoordinates.positionInRoot()
             val size = layoutCoordinates.size
 
             set(x, with(density) { position.x.toDp() })
