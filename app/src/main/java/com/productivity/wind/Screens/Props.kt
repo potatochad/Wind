@@ -108,7 +108,9 @@ object Item {
                     Text("Points ${app.Worth}")
                     LazyInfo(infoContent = { Text("you clicked MORE MENU") }) {
                             UI.End {
-                               Icon.MoreMenu {}
+                                LazyInfo(infoContent = { Text("you clicked MORE MENU") }) {
+                                    Icon.MoreMenu {}
+                                }
                             }
                     }
                     
