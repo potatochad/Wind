@@ -214,10 +214,10 @@ fun LazyInfo(
     val popupW = r_m(0.dp)
     val popupH = r_m(0.dp)
 
-	val top by r_m(x.value - w.value)
-	val bottom by r_m(x.value)
-	val start by r_m(y.value)
-	val end by r_m(y.value + h.value)
+	val top by r_m(y.value - w.value)
+	val bottom by r_m(y.value)
+	val start by r_m(x.value)
+	val end by r_m(x.value + h.value)
     // Compute popup position dynamically
     val popupX = remember(x.value, w.value, popupW.value) {
         if (top > popupH.value + 20.dp) "top" else "bottom"
@@ -289,7 +289,7 @@ fun LazyInfo(
 	}
 	
 	LazyWindow(show) {
-		LazyMove(x.value + w.value, y.value - h.value) {
+		LazyMove(end, top) {
 			// Red dot marking the click point
 			BoxWithConstraints {
                 // Red dot marking click point
