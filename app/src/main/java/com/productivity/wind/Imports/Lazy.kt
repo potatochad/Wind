@@ -214,10 +214,10 @@ fun LazyInfo(
     val popupW = r_m(0.dp)
     val popupH = r_m(0.dp)
 
-	val top by derivedStateOf { r_m(y.value - h.value) }
-	val bottom by derivedStateOf { r_m(y.value) }
-	val start by derivedStateOf { r_m(x.value) }
-	val end by derivedStateOf { r_m(x.value + w.value) }
+	val top by derivedStateOf { y.value - h.value }
+	val bottom by derivedStateOf { y.value }
+	val start by derivedStateOf { x.value }
+	val end by derivedStateOf { x.value + w.value }
 
     // Compute popup position dynamically
     val popupX = remember(x.value, w.value, popupW.value) {
