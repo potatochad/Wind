@@ -237,7 +237,25 @@ fun LazyInfo(
                 )
 			}
 		}
-	}	
+	}
+	LazyWindow(show) {
+		LazyMove(x.value+w.value, y.value+h.value) {
+			// Red dot marking the click point
+			BoxWithConstraints {
+                // Update measured size
+                set(popupWidthState, maxWidth)
+                set(popupHeightState, maxHeight)
+
+                // Red dot marking click point
+                Box(
+                    modifier = Modifier
+                        .size(6.dp)
+                        .background(Color.Purple, CircleShape)
+                )
+			}
+		}
+	}
+	
 }
 
 
