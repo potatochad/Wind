@@ -357,7 +357,7 @@ object UI {
 
 
     @Composable
-	fun End(content: Content) {
+	fun End2(content: Content) {
 		Row(
 			Modifier.fillMaxWidth(),
 			horizontalArrangement = Arrangement.End,
@@ -367,6 +367,17 @@ object UI {
 			move(w = 10)
 		}
 	}
+	@Composable
+	fun End(content: @Composable () -> Unit) {
+		Box(
+			modifier = Modifier.fillMaxWidth(),
+			contentAlignment = Alignment.CenterEnd
+		) {
+			content()
+			move(w = 10)
+		}
+	}
+
 
 
 
