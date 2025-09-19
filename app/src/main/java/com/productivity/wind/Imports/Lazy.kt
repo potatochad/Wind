@@ -289,7 +289,7 @@ fun LazyInfo(
 	}
 	
 	LazyWindow(show) {
-		LazyMove(x.value - w.value, y.value + h.value) {
+		LazyMove(x.value + w.value, y.value - h.value) {
 			// Red dot marking the click point
 			BoxWithConstraints {
                 // Red dot marking click point
