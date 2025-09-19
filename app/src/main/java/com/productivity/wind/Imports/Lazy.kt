@@ -250,7 +250,7 @@ fun LazyInfo(
                 Box(
                     modifier = Modifier
                         .size(6.dp)
-                        .background(Color.Purple, CircleShape)
+                        .background(Color.Magenta, CircleShape)
                 )
 			}
 		}
