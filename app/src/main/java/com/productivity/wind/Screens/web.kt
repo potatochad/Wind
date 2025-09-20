@@ -126,12 +126,14 @@ fun Web() {
 
     Tab.loadUri("https://google.com")
     Tab.open(Web)
-    Tab.addProgressListener(object : GeckoSession.ProgressDelegate {
-        override fun onPageStop(session: GeckoSession, success: Boolean) {
-            // This method is called when the page finishes loading
-        println("Page fully loaded: ${session.uri}")
+    // Assuming 'Tab' is your GeckoSession instance
+Tab.setProgressDelegate(object : GeckoSession.ProgressDelegate {
+    override fun onPageStop(session: GeckoSession, success: Boolean) {
+        // This method is called when the page finishes loading
+        Vlog("Page fully loaded: ${session.uri}")
     }
 })
+
 
     // Implement other methods as needed
     }
