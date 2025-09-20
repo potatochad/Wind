@@ -40,7 +40,7 @@ var Tab.ManageTab: ManageTab?
 
 
 @Composable
-fun Web() {
+fun Web2() {
         val ctx = LocalContext.current
         val Web = r { GeckoRuntime.create(ctx) }
         val Tab = r { GeckoSession() }
@@ -75,3 +75,47 @@ fun Web() {
             )
         }
 }
+
+
+
+
+
+
+
+@Composable
+fun Web() {
+    val context = LocalContext.current
+    val geckoView = remember { GeckoView(context) }
+    val session = remember { GeckoSession() }
+
+    // Initialize GeckoRuntime once
+    val runtime = remember { GeckoRuntime.create(context) }
+
+    // Side-effect to open session and load page
+    LaunchedEffect(Unit) {
+        session.open(runtime)
+        geckoView.setSession(session)
+        session.loadUri("https://example.com")
+
+        // Wait for page load
+        session.addProgressListener { _, progress ->
+            if (progress == 100) {
+                val jsCode = """
+                    alert('Hello from GeckoView!');
+                    console.log('JS injected via Compose!');
+                """.trimIndent()
+
+                session.evaluateJavascript(jsCode) { result ->
+                    Log.d("GeckoViewJS", "Result: $result")
+                }
+            }
+        }
+    }
+
+    // Compose view container for GeckoView
+    AndroidView(
+        factory = { geckoView },
+        modifier = Modifier.fillMaxSize()
+    )
+}
+
