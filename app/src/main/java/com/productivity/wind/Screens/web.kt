@@ -86,13 +86,12 @@ fun Web2() {
 fun Web() {
         val ctx = App.ctx
         val Web = r { GeckoRuntime.create(ctx) }
+        Web.settings.imagesEnabled = false
         val Tab = r { GeckoSession() }
 
         Item.WebPointTimer()
     
         DisposableEffect(Unit) {
-        
-            Tab.ManageTab = onlyAllowDomains(listOf("youtube.com"))
             Tab.loadUri("https://youtube.com")
             Tab.open(Web)
 
