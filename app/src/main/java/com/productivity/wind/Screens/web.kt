@@ -83,14 +83,14 @@ fun Web2() {
 
 
 @Composable
-fun Web() {
+fun Web7() {
     val ctx = App.ctx
     val Web = r { GeckoRuntime.create(ctx) }
     val Tab = r { GeckoSession() }
 
     Item.WebPointTimer()
 
-    Tab.loadUri("https://youtube.com")
+    Tab.loadUri("https://google.com")
     Tab.open(Web)
     Tab.contentDelegate?.evaluateJavascript("alert('hi')")
 
@@ -114,3 +114,49 @@ fun Web() {
         )
     }
 }
+
+
+
+
+@Composable
+fun Web() {
+    val ctx = App.ctx
+    val engine = remember { GeckoRuntime.create(ctx) }        // Brain
+    val tab = remember { GeckoSession() }                     // Body
+
+    // Make JS injection after page is fully loaded
+    LaunchedEffect(Unit) {
+        tab.navigationDelegate = object : GeckoSession.NavigationDelegate() {
+            override fun onPageFinished(session: GeckoSession, uri: Uri) {
+                // Page loaded → inject JS
+                session.contentDelegate?.evaluateJavascript("alert('hi')")
+            }
+        }
+    }
+
+    // Open session with engine
+    DisposableEffect(Unit) {
+        tab.open(engine)
+        tab.loadUri("https://google.com")
+        onDispose { Web.shutdown() }
+    }
+
+    // UI
+    LazyScreen(
+        title = { Text(" Points ${Bar.funTime}")},
+        Scrollable = false,
+        DividerPadding = false,
+    ) {
+        AndroidView(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(App.LazyScreenContentHeight),
+            factory = { ctx ->
+                GeckoView(ctx).apply {
+                    setSession(tab)
+                }
+            }
+        )
+    }
+}
+
