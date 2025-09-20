@@ -84,36 +84,42 @@ fun Web2() {
 
 @Composable
 fun Web() {
-        val ctx = App.ctx
-        val Web = r { GeckoRuntime.create(ctx) }
-        Web.settings.imagesEnabled = false
-        val Tab = r { GeckoSession() }
+    val ctx = App.ctx
+    val settings = GeckoRuntimeSettings.Builder() 
+        .setJavaScriptEnabled(true)
+        .setImagesEnabled(false)
+        .build()
+    val Web = r { GeckoRuntime.create(ctx) }
+    val Tab = r { GeckoSession() }
 
-        Item.WebPointTimer()
+    Item.WebPointTimer()
+
+
     
-        DisposableEffect(Unit) {
-            Tab.loadUri("https://youtube.com")
-            Tab.open(Web)
 
-            onDispose { Tab.close() }
-        }
+    Tab.loadUri("https://youtube.com")
+    Tab.open(Web)
+    
+    DisposableEffect(Unit) {
+        onDispose { Web.shutdown() }
+    }
 
-        LazyScreen(
-            title = { 
-                Text(" Points ${Bar.funTime}")
-            },
-            Scrollable = false,
-            DividerPadding = false,
-        ) {
-            AndroidView(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(App.LazyScreenContentHeight),
-                factory = { ctx ->
-                    GeckoView(ctx).apply { 
-                        setSession(Tab) 
-                    }
+    LazyScreen(
+        title = { 
+            Text(" Points ${Bar.funTime}")
+        },
+        Scrollable = false,
+        DividerPadding = false,
+    ) {
+        AndroidView(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(App.LazyScreenContentHeight),
+            factory = { ctx ->
+                GeckoView(ctx).apply { 
+                    setSession(Tab) 
                 }
-            )
-        }
+            }
+        )
+    }
 }
