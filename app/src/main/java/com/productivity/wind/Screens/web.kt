@@ -92,16 +92,13 @@ fun Web() {
 
     Tab.loadUri("https://youtube.com")
     Tab.open(Web)
+
+    BackHandler {
+        Tab.goBack()
+    }
     
     DisposableEffect(Unit) {
         onDispose { Web.shutdown() }
-    }
-    BackHandler {
-        if (Tab.canGoBack()) {
-            Tab.goBack()   // go to previous page in history
-        } else {
-            // No more history → exit screen
-        }
     }
 
     LazyScreen(
