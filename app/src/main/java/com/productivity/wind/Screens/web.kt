@@ -85,17 +85,10 @@ fun Web2() {
 @Composable
 fun Web() {
     val ctx = App.ctx
-    val settings = GeckoRuntimeSettings.Builder() 
-        .setJavaScriptEnabled(true)
-        .setImagesEnabled(false)
-        .build()
     val Web = r { GeckoRuntime.create(ctx) }
     val Tab = r { GeckoSession() }
 
     Item.WebPointTimer()
-
-
-    
 
     Tab.loadUri("https://youtube.com")
     Tab.open(Web)
@@ -103,11 +96,16 @@ fun Web() {
     DisposableEffect(Unit) {
         onDispose { Web.shutdown() }
     }
+    BackHandler {
+        if (Tab.canGoBack()) {
+            Tab.goBack()   // go to previous page in history
+        } else {
+            // No more history → exit screen
+        }
+    }
 
     LazyScreen(
-        title = { 
-            Text(" Points ${Bar.funTime}")
-        },
+        title = { Text(" Points ${Bar.funTime}")},
         Scrollable = false,
         DividerPadding = false,
     ) {
