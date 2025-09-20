@@ -92,8 +92,7 @@ fun Web7() {
 
     Tab.loadUri("https://google.com")
     Tab.open(Web)
-    Tab.contentDelegate?.evaluateJavascript("alert('hi')")
-
+    
     BackHandler { Tab.goBack() }
     DisposableEffect(Unit) { onDispose { Web.shutdown() } }
 
@@ -121,28 +120,40 @@ fun Web7() {
 @Composable
 fun Web() {
     val ctx = App.ctx
-    val engine = remember { GeckoRuntime.create(ctx) }        // Brain
-    val tab = remember { GeckoSession() }                     // Body
+    val engine = remember { GeckoRuntime.create(ctx) }   // brain
+    val tab = remember { GeckoSession() }                // body (tab)
 
-    // Make JS injection after page is fully loaded
-
-    // Open session with engine
-    DisposableEffect(Unit) {
-        onDispose { engine.shutdown() }
+    // Inject JS after page finishes loading
+    LaunchedEffect(tab) {
+        tab.navigationDelegate = object : GeckoSession.NavigationDelegate() {
+            override fun onPageFinished(session: GeckoSession, uri: android.net.Uri?) {
+                // Use javascript: URI to execute code in page context
+                // (alert may be blocked on some sites — try simple DOM change instead)
+                session.loadUri("javascript:(function(){alert('hi');})();")
+                // safer alternative: append a big red box into page
+                // session.loadUri("javascript:(function(){let b=document.createElement('div');b.style.position='fixed';b.style.top='50px';b.style.left='50px';b.style.width='200px';b.style.height='200px';b.style.backgroundColor='red';b.style.zIndex='99999';document.body.appendChild(b);})();")
+            }
+        }
     }
-    tab.open(engine)
-    tab.contentDelegate = object : GeckoSession.ContentDelegate() {}
-    tab.settings.javaScriptEnabled = true
 
-    tab.loadUri("https://google.com")
-        
-    Handler(Looper.getMainLooper()).postDelayed({
-        tab.contentDelegate?.evaluateJavascript("alert('hi')")
-    }, 2000) // wait 2 seconds for page to load
+    // Open session and load page; clean up when composable leaves
+    DisposableEffect(engine) {
+        tab.open(engine)
+        tab.loadUri("https://example.com") // use example.com for predictable results
+        onDispose {
+            tab.close()
+            engine.shutdown()
+        }
+    }
 
-    // UI
+    // Optional: back button handled by session
+    BackHandler {
+        try { tab.goBack() } catch (e: Exception) { /* ignore if no history */ }
+    }
+
+    // UI: show the GeckoView
     LazyScreen(
-        title = { Text(" Points ${Bar.funTime}")},
+        title = { Text(" Points ${Bar.funTime}") },
         Scrollable = false,
         DividerPadding = false,
     ) {
@@ -158,4 +169,3 @@ fun Web() {
         )
     }
 }
-
