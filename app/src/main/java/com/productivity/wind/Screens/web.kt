@@ -92,14 +92,10 @@ fun Web() {
 
     Tab.loadUri("https://youtube.com")
     Tab.open(Web)
+    Tab.contentDelegate?.evaluateJavascript("alert('hi')")
 
-    BackHandler {
-        Tab.goBack()
-    }
-    
-    DisposableEffect(Unit) {
-        onDispose { Web.shutdown() }
-    }
+    BackHandler { Tab.goBack() }
+    DisposableEffect(Unit) { onDispose { Web.shutdown() } }
 
     LazyScreen(
         title = { Text(" Points ${Bar.funTime}")},
