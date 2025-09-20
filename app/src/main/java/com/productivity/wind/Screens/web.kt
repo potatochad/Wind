@@ -116,44 +116,25 @@ fun Web7() {
 
 
 
-
 @Composable
 fun Web() {
     val ctx = App.ctx
-    val engine = remember { GeckoRuntime.create(ctx) }   // brain
-    val tab = remember { GeckoSession() }                // body (tab)
+    val Web = r { GeckoRuntime.create(ctx) }
+    val Tab = r { GeckoSession() }
 
-    // Inject JS after page finishes loading
-    LaunchedEffect(tab) {
-        tab.navigationDelegate = object : GeckoSession.NavigationDelegate() {
-            override fun onPageFinished(session: GeckoSession, uri: android.net.Uri?) {
-                // Use javascript: URI to execute code in page context
-                // (alert may be blocked on some sites — try simple DOM change instead)
-                session.loadUri("javascript:(function(){alert('hi');})();")
-                // safer alternative: append a big red box into page
-                // session.loadUri("javascript:(function(){let b=document.createElement('div');b.style.position='fixed';b.style.top='50px';b.style.left='50px';b.style.width='200px';b.style.height='200px';b.style.backgroundColor='red';b.style.zIndex='99999';document.body.appendChild(b);})();")
-            }
-        }
+    Item.WebPointTimer()
+
+    Tab.loadUri("https://google.com")
+    Tab.open(Web)
+    Tab.addProgressListener { uri, status ->
+        Vlog("Page fully loaded: $uri")
     }
+    
+    BackHandler { Tab.goBack() }
+    DisposableEffect(Unit) { onDispose { Web.shutdown() } }
 
-    // Open session and load page; clean up when composable leaves
-    DisposableEffect(engine) {
-        tab.open(engine)
-        tab.loadUri("https://example.com") // use example.com for predictable results
-        onDispose {
-            tab.close()
-            engine.shutdown()
-        }
-    }
-
-    // Optional: back button handled by session
-    BackHandler {
-        try { tab.goBack() } catch (e: Exception) { /* ignore if no history */ }
-    }
-
-    // UI: show the GeckoView
     LazyScreen(
-        title = { Text(" Points ${Bar.funTime}") },
+        title = { Text(" Points ${Bar.funTime}")},
         Scrollable = false,
         DividerPadding = false,
     ) {
@@ -162,10 +143,14 @@ fun Web() {
                 .fillMaxWidth()
                 .height(App.LazyScreenContentHeight),
             factory = { ctx ->
-                GeckoView(ctx).apply {
-                    setSession(tab)
+                GeckoView(ctx).apply { 
+                    setSession(Tab) 
                 }
             }
         )
     }
 }
+
+
+
+
