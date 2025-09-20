@@ -125,21 +125,17 @@ fun Web() {
     val tab = remember { GeckoSession() }                     // Body
 
     // Make JS injection after page is fully loaded
-    LaunchedEffect(Unit) {
-        tab.navigationDelegate = object : GeckoSession.NavigationDelegate() {
-            override fun onPageFinished(session: GeckoSession, uri: Uri) {
-                // Page loaded → inject JS
-                session.contentDelegate?.evaluateJavascript("alert('hi')")
-            }
-        }
-    }
 
     // Open session with engine
     DisposableEffect(Unit) {
-        tab.open(engine)
-        tab.loadUri("https://google.com")
         onDispose { Web.shutdown() }
     }
+    tab.open(engine)
+    tab.loadUri("https://google.com")
+        
+    Handler(Looper.getMainLooper()).postDelayed({
+        tab.contentDelegate?.evaluateJavascript("alert('hi')")
+    }, 2000) // wait 2 seconds for page to load
 
     // UI
     LazyScreen(
