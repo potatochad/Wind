@@ -128,9 +128,12 @@ fun Web() {
 
     // Open session with engine
     DisposableEffect(Unit) {
-        onDispose { Web.shutdown() }
+        onDispose { engine.shutdown() }
     }
     tab.open(engine)
+    tab.contentDelegate = object : GeckoSession.ContentDelegate() {}
+    tab.settings.javaScriptEnabled = true
+
     tab.loadUri("https://google.com")
         
     Handler(Looper.getMainLooper()).postDelayed({
