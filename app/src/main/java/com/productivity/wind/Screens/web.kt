@@ -203,11 +203,14 @@ fun Web() {
     val context = LocalContext.current
     Item.WebPointTimer()
 
-    LazyScreen(
+    /*LazyScreen(
         title = { Text(" Points ${Bar.funTime}") },
         Scrollable = false,
         DividerPadding = false,
-    ) {
+    ) {*/
+        Column(
+    modifier = Modifier.fillMaxSize()
+) {
         // Decide what to load
         val finalUrl = if (URLUtil.isValidUrl(url)) {
             url
