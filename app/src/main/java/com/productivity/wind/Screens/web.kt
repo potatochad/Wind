@@ -241,19 +241,21 @@ fun Web() {
                     },
                     update = { webView ->
                         webView.loadData(
-                            """
-                            <html>
-                            <body style="margin:0;padding:0;overflow:hidden;">
-                            <iframe width="100%" height="100%" 
-                                src="https://www.youtube.com/embed/$videoId" 
-                                frameborder="0" allowfullscreen>
-                            </iframe>
-                            </body>
-                            </html>
-                            """.trimIndent(),
-                            "text/html",
-                            "utf-8"
-                        )
+    """
+    <html style="width:100%;height:100%;">
+    <body style="margin:0;padding:0;overflow:hidden;width:100%;height:100%;">
+    <iframe 
+        style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+        src="https://www.youtube.com/embed/$videoId" 
+        frameborder="0" allowfullscreen>
+    </iframe>
+    </body>
+    </html>
+    """.trimIndent(),
+    "text/html",
+    "utf-8"
+)
+
                     },
                     modifier = Modifier.fillMaxSize()
                 )
