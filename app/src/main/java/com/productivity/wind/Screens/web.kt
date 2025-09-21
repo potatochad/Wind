@@ -204,22 +204,31 @@ fun Web() {
     Item.WebPointTimer()
 
     LazyScreen(
-        title = { Text(" Points ${Bar.funTime}")},
+        title = { Text(" Points ${Bar.funTime}") },
         Scrollable = false,
         DividerPadding = false,
     ) {
-
-    
-
-        // WebView or YouTube player
-        val finalUrl = if (URLUtil.isValidUrl(url)) url else "https://www.google.com/search?q=$url"
+        // Decide what to load
+        val finalUrl = if (URLUtil.isValidUrl(url)) {
+            url
+        } else {
+            "https://www.google.com/search?q=$url"
+        }
 
         if (finalUrl.contains("youtube.com/watch") || finalUrl.contains("youtu.be/")) {
-            // Extract videoId from URL
-            val videoId = finalUrl.substringAfterLast("v=").substringBefore("&")
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(16f / 9f)) {
+            // Extract videoId safely
+            val videoId = when {
+                finalUrl.contains("v=") -> finalUrl.substringAfter("v=").substringBefore("&")
+                finalUrl.contains("youtu.be/") -> finalUrl.substringAfter("youtu.be/").substringBefore("?")
+                else -> ""
+            }
+
+            // YouTube embed in 16:9
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(16f / 9f)
+            ) {
                 AndroidView(
                     factory = { ctx ->
                         WebView(ctx).apply {
@@ -231,11 +240,10 @@ fun Web() {
                         }
                     },
                     update = { webView ->
-                        // Load YouTube embed for proper 16:9
                         webView.loadData(
                             """
                             <html>
-                            <body style="margin:0;padding:0;">
+                            <body style="margin:0;padding:0;overflow:hidden;">
                             <iframe width="100%" height="100%" 
                                 src="https://www.youtube.com/embed/$videoId" 
                                 frameborder="0" allowfullscreen>
@@ -243,15 +251,16 @@ fun Web() {
                             </body>
                             </html>
                             """.trimIndent(),
-                            "text/html", "utf-8"
+                            "text/html",
+                            "utf-8"
                         )
                     },
                     modifier = Modifier.fillMaxSize()
                 )
             }
         } else {
-            // Regular WebView for other URLs
-            Box(modifier = Modifier.fillMaxWidth()){
+            // Regular WebView
+            Box(modifier = Modifier.fillMaxWidth()) {
                 AndroidView(
                     factory = { ctx ->
                         WebView(ctx).apply {
@@ -269,4 +278,3 @@ fun Web() {
         }
     }
 }
-
