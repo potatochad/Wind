@@ -203,15 +203,9 @@ fun Web() {
     val context = LocalContext.current
     Item.WebPointTimer()
 
-    /*LazyScreen(
-        title = { Text(" Points ${Bar.funTime}") },
-        Scrollable = false,
-        DividerPadding = false,
-    ) {*/
-        Column(
-    modifier = Modifier.fillMaxSize()
-) {
-        // Decide what to load
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
         val finalUrl = if (URLUtil.isValidUrl(url)) {
             url
         } else {
@@ -219,14 +213,12 @@ fun Web() {
         }
 
         if (finalUrl.contains("youtube.com/watch") || finalUrl.contains("youtu.be/")) {
-            // Extract videoId safely
             val videoId = when {
                 finalUrl.contains("v=") -> finalUrl.substringAfter("v=").substringBefore("&")
                 finalUrl.contains("youtu.be/") -> finalUrl.substringAfter("youtu.be/").substringBefore("?")
                 else -> ""
             }
 
-            // YouTube embed in 16:9
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -243,29 +235,32 @@ fun Web() {
                         }
                     },
                     update = { webView ->
-                        webView.loadData(
-    """
-    <html style="width:100%;height:100%;">
-    <body style="margin:0;padding:0;overflow:hidden;width:100%;height:100%;">
-    <iframe 
-        style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-        src="https://www.youtube.com/embed/$videoId" 
-        frameborder="0" allowfullscreen>
-    </iframe>
-    </body>
-    </html>
-    """.trimIndent(),
-    "text/html",
-    "utf-8"
-)
+                        val html = """
+                            <html style="width:100%;height:100%;">
+                            <body style="margin:0;padding:0;overflow:hidden;width:100%;height:100%;">
+                                <iframe 
+                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                                    src="https://www.youtube.com/embed/$videoId" 
+                                    frameborder="0" allowfullscreen>
+                                </iframe>
+                            </body>
+                            </html>
+                        """.trimIndent()
 
+                        // Use loadDataWithBaseURL to give YouTube a proper host
+                        webView.loadDataWithBaseURL(
+                            "https://www.youtube.com",
+                            html,
+                            "text/html",
+                            "utf-8",
+                            null
+                        )
                     },
                     modifier = Modifier.fillMaxSize()
                 )
             }
         } else {
-            // Regular WebView
-            Box(modifier = Modifier.fillMaxWidth()) {
+            Box(modifier = Modifier.fillMaxSize()) { // fillMaxSize ensures full screen for regular pages
                 AndroidView(
                     factory = { ctx ->
                         WebView(ctx).apply {
