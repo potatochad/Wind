@@ -68,7 +68,7 @@ fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDeleg
     return object : GeckoSession.NavigationDelegate {
         override fun onLoadRequest(
             session: GeckoSession,
-            request: GeckoSession.NavigationDelegate.LoadRequest
+            request: LoadRequest
         ): GeckoResult<AllowOrDeny> {
             val url = request.uri.toString() // uri is a Uri object, convert to string
 
