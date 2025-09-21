@@ -161,39 +161,55 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+
 @Composable
-fun Web() {
-    var url by remember { mutableStateOf("") }
-    val context = LocalContext.current
+fun Web7() {
+    val ctx = App.ctx
+    val Web = r { GeckoRuntime.create(ctx) }
+    val Tab = r { GeckoSession() }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Item.WebPointTimer()
 
-        // Search Bar
-        Row(
+    Tab.loadUri("https://google.com")
+    Tab.open(Web)
+    
+    BackHandler { Tab.goBack() }
+    DisposableEffect(Unit) { onDispose { Web.shutdown() } }
+
+    LazyScreen(
+        title = { Text(" Points ${Bar.funTime}")},
+        Scrollable = false,
+        DividerPadding = false,
+    ) {
+        AndroidView(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            TextField(
-                value = url,
-                onValueChange = { url = it },
-                placeholder = { Text("Search or enter URL") },
-                modifier = Modifier
-                    .weight(1f)
-                    .height(56.dp),
-                singleLine = true
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Button(onClick = { /* trigger load */ }) {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search"
-                )
+                .height(App.LazyScreenContentHeight),
+            factory = { ctx ->
+                GeckoView(ctx).apply { 
+                    setSession(Tab) 
+                }
             }
-        }
+        )
+    }
+}
+
+
+
+@Composable
+fun Web() {
+    var url by r_m("")
+    val context = LocalContext.current
+    Item.WebPointTimer()
+
+    LazyScreen(
+        title = { Text(" Points ${Bar.funTime}")},
+        Scrollable = false,
+        DividerPadding = false,
+    ) {
+
+    
 
         // WebView or YouTube player
         val finalUrl = if (URLUtil.isValidUrl(url)) url else "https://www.google.com/search?q=$url"
@@ -255,60 +271,4 @@ fun Web() {
         }
     }
 }
-
-@Composable
-fun Web9() {
-    val context = LocalContext.current
-
-    AndroidView(
-        modifier = Modifier.fillMaxSize(),
-        factory = {
-            WebView(context).apply {
-                settings.javaScriptEnabled = true
-
-                webChromeClient = object : WebChromeClient() {}
-
-                webViewClient = object : WebViewClient() {
-                    override fun onPageFinished(view: WebView?, url: String?) {
-                        super.onPageFinished(view, url)
-
-                        val js = """
-                            (function() {
-                                // Create the box div
-                                let box = document.createElement('div');
-                                box.style.position = 'fixed';
-                                box.style.top = '50%';
-                                box.style.left = '50%';
-                                box.style.transform = 'translate(-50%, -50%)';
-                                box.style.width = '200px';
-                                box.style.height = '200px';
-                                box.style.backgroundColor = 'red';
-                                box.style.zIndex = '9999';
-                                box.style.borderRadius = '16px';
-                                box.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
-                                box.style.display = 'flex';
-                                box.style.justifyContent = 'center';
-                                box.style.alignItems = 'center';
-                                box.style.color = 'white';
-                                box.style.fontSize = '24px';
-                                box.style.fontWeight = 'bold';
-                                box.innerText = 'BIG RED BOX';
-
-                                // Append to body
-                                document.body.appendChild(box);
-                            })();
-                        """.trimIndent()
-
-                        view?.evaluateJavascript(js, null)
-                    }
-                }
-
-                loadUrl("https://google.com")
-            }
-        }
-    )
-}
-
-
-
 
