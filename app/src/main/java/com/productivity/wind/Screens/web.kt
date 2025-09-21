@@ -160,6 +160,10 @@ import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.*
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.*
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.*
+
 
 
 
@@ -197,15 +201,14 @@ fun Web7() {
 
 
 
+
 @Composable
 fun Web() {
     var url by r_m("")
     val context = LocalContext.current
     Item.WebPointTimer()
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    Column(modifier = Modifier.fillMaxSize()) {
         val finalUrl = if (URLUtil.isValidUrl(url)) {
             url
         } else {
@@ -213,6 +216,7 @@ fun Web() {
         }
 
         if (finalUrl.contains("youtube.com/watch") || finalUrl.contains("youtu.be/")) {
+            // Extract videoId safely
             val videoId = when {
                 finalUrl.contains("v=") -> finalUrl.substringAfter("v=").substringBefore("&")
                 finalUrl.contains("youtu.be/") -> finalUrl.substringAfter("youtu.be/").substringBefore("?")
@@ -226,41 +230,21 @@ fun Web() {
             ) {
                 AndroidView(
                     factory = { ctx ->
-                        WebView(ctx).apply {
-                            settings.javaScriptEnabled = true
-                            settings.domStorageEnabled = true
-                            settings.useWideViewPort = true
-                            settings.loadWithOverviewMode = true
-                            webViewClient = WebViewClient()
+                        YouTubePlayerView(ctx).apply {
+                            // Always call this in onCreate/onAttached for proper lifecycle
+                            addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                                override fun onReady(player: YouTubePlayer) {
+                                    player.loadVideo(videoId, 0f)
+                                }
+                            })
                         }
-                    },
-                    update = { webView ->
-                        val html = """
-                            <html style="width:100%;height:100%;">
-                            <body style="margin:0;padding:0;overflow:hidden;width:100%;height:100%;">
-                                <iframe 
-                                    style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-                                    src="https://www.youtube.com/embed/$videoId" 
-                                    frameborder="0" allowfullscreen>
-                                </iframe>
-                            </body>
-                            </html>
-                        """.trimIndent()
-
-                        // Use loadDataWithBaseURL to give YouTube a proper host
-                        webView.loadDataWithBaseURL(
-                            "https://www.youtube.com",
-                            html,
-                            "text/html",
-                            "utf-8",
-                            null
-                        )
                     },
                     modifier = Modifier.fillMaxSize()
                 )
             }
         } else {
-            Box(modifier = Modifier.fillMaxSize()) { // fillMaxSize ensures full screen for regular pages
+            // Regular WebView
+            Box(modifier = Modifier.fillMaxSize()) {
                 AndroidView(
                     factory = { ctx ->
                         WebView(ctx).apply {
@@ -278,3 +262,4 @@ fun Web() {
         }
     }
 }
+
