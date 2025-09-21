@@ -196,9 +196,103 @@ fun Web7() {
 }
 
 
-
 @Composable
 fun Web() {
+    var url by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        // Search Bar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextField(
+                value = url,
+                onValueChange = { url = it },
+                placeholder = { Text("Search or enter URL") },
+                modifier = Modifier
+                    .weight(1f)
+                    .height(56.dp),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Button(onClick = { /* trigger load */ }) {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search"
+                )
+            }
+        }
+
+        // WebView or YouTube player
+        val finalUrl = if (URLUtil.isValidUrl(url)) url else "https://www.google.com/search?q=$url"
+
+        if (finalUrl.contains("youtube.com/watch") || finalUrl.contains("youtu.be/")) {
+            // Extract videoId from URL
+            val videoId = finalUrl.substringAfterLast("v=").substringBefore("&")
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(16f / 9f)) {
+                AndroidView(
+                    factory = { ctx ->
+                        WebView(ctx).apply {
+                            settings.javaScriptEnabled = true
+                            settings.domStorageEnabled = true
+                            settings.useWideViewPort = true
+                            settings.loadWithOverviewMode = true
+                            webViewClient = WebViewClient()
+                        }
+                    },
+                    update = { webView ->
+                        // Load YouTube embed for proper 16:9
+                        webView.loadData(
+                            """
+                            <html>
+                            <body style="margin:0;padding:0;">
+                            <iframe width="100%" height="100%" 
+                                src="https://www.youtube.com/embed/$videoId" 
+                                frameborder="0" allowfullscreen>
+                            </iframe>
+                            </body>
+                            </html>
+                            """.trimIndent(),
+                            "text/html", "utf-8"
+                        )
+                    },
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        } else {
+            // Regular WebView for other URLs
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)) {
+                AndroidView(
+                    factory = { ctx ->
+                        WebView(ctx).apply {
+                            settings.javaScriptEnabled = true
+                            settings.domStorageEnabled = true
+                            settings.useWideViewPort = true
+                            settings.loadWithOverviewMode = true
+                            webViewClient = WebViewClient()
+                        }
+                    },
+                    update = { webView -> webView.loadUrl(finalUrl) },
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun Web12() {
     var url by r_m("")
     val context = LocalContext.current
     Item.WebPointTimer()
