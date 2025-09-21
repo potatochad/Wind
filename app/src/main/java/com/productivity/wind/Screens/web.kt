@@ -251,9 +251,7 @@ fun Web() {
             }
         } else {
             // Regular WebView for other URLs
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)) {
+            Box(modifier = Modifier.fillMaxWidth()){
                 AndroidView(
                     factory = { ctx ->
                         WebView(ctx).apply {
