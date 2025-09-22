@@ -239,7 +239,7 @@ fun Web() {
                 WebView(ctx).apply {
                     this.WebDefaults()
                     
-                    this.onPageLoaded { pageUrl, view ->
+                    this.onLoadedPage { pageUrl, view ->
                         if (pageUrl != null) {
                             url.value = pageUrl
                         }
