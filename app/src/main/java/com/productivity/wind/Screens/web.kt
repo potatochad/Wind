@@ -175,22 +175,16 @@ fun WebView.WebDefaults() {
     }
     webChromeClient = WebChromeClient()
 }
-fun WebView.updateUrl(urlState: MutableState<String>) {
+fun WebView.onLoadedPage(action: (pageUrl: String?, view: WebView?) -> Unit) {
     webViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView?, urlLoaded: String?) {
             super.onPageFinished(view, urlLoaded)
-            if (urlLoaded != null) {
-                urlState.value = urlLoaded  // Update the MutableState directly
-            }
+            action(urlLoaded, view)
         }
     }
 }
 
-fun WebView.updateWeb(url: String) {
-    if (this.url != url) {
-        this.loadUrl(url)
-    }
-}
+
 
 
 fun WebView.injectFixedSizeYouTube() {
@@ -245,21 +239,19 @@ fun Web() {
                 WebView(ctx).apply {
                     this.WebDefaults()
                     
-                    this.updateUrl(url)
+                    this.onPageLoaded { pageUrl, view ->
+                        if (pageUrl != null) {
+                            url.value = pageUrl
+                        }
 
-
-                    webViewClient = object : WebViewClient() {
-                        override fun onPageFinished(view: WebView?, urlLoaded: Str?) {
-                            super.onPageFinished(view, urlLoaded)                                
-                            
-                            if (url.value.contains("youtube.com")) {
-                                Vlog("Youtube!!!")
-                                view?.injectFixedSizeYouTube()
-                            } else {
-                                Vlog("No youtube")
-                            }
+                        if (pageUrl?.contains("youtube.com") == true) {
+                            Vlog("Youtube!!!")
+                            view?.injectFixedSizeYouTube()
+                        } else {
+                            Vlog("No youtube")
                         }
                     }
+
 
 
                     webViewRef.value = this
