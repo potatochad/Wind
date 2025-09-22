@@ -96,7 +96,6 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.ui.graphics.painter.*
 import com.google.accompanist.drawablepainter.*
 import androidx.compose.ui.layout.*
-
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
@@ -220,7 +219,7 @@ fun WebView.injectFullSizeYouTube() {
 @Composable
 fun Web() {
     var url by r_m("https://www.google.com") // default URL
-    val webViewRef = r_m(<WebView?>(null))
+    val webViewRef = remember { mutableStateOf<WebView?>(null) }
 
     // Back button handling
     BackHandler(enabled = webViewRef.value?.canGoBack() == true) {
