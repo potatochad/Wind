@@ -252,7 +252,7 @@ fun Web() {
                         override fun onPageFinished(view: WebView?, urlLoaded: Str?) {
                             super.onPageFinished(view, urlLoaded)                                
                             
-                            if (url.contains("youtube.com")) {
+                            if (url.value.contains("youtube.com")) {
                                 Vlog("Youtube!!!")
                                 view?.injectFixedSizeYouTube()
                             } else {
@@ -267,7 +267,7 @@ fun Web() {
                 }
             },
             update = { webView ->
-                webView.updateWeb(url)
+                webView.updateWeb(url.value)
             },
             modifier = Modifier
                 .fillMaxWidth()
