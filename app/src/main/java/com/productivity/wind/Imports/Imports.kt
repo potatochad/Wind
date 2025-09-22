@@ -638,7 +638,7 @@ object UI {
 
         onChange: Do_<Str>,
     ) {
-        val TextColor = Color(0xFFFFD700)
+        val TextColor = Color.White
         val FocusChange = TextMemory()
         val imeAction = ImeAction(null)
         val isFocused by IsFocused(FocusChange)
@@ -698,7 +698,7 @@ object UI {
         onChange: Do_<Str> = {},
     ) {
         val value = what.value
-        val TextColor = Color(0xFFFFD700)
+        val TextColor = Color.White
         val FocusChange = TextMemory()
         val imeAction = ImeAction(null)
         val isFocused by IsFocused(FocusChange)
