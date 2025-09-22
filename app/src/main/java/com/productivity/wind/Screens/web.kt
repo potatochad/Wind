@@ -222,8 +222,8 @@ fun Web() {
             Vlog("Youtube!!!")
             // Extract videoId safely
             val videoId = when {
-                url.contains("v=") -> finalUrl.substringAfter("v=").substringBefore("&")
-                url.contains("youtu.be/") -> finalUrl.substringAfter("youtu.be/").substringBefore("?")
+                url.contains("v=") -> url.substringAfter("v=").substringBefore("&")
+                url.contains("youtu.be/") -> url.substringAfter("youtu.be/").substringBefore("?")
                 else -> ""
             }
         }
