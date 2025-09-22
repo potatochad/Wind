@@ -176,6 +176,43 @@ fun WebView.WebDefaults() {
     }
     webChromeClient = WebChromeClient()
 }
+fun WebView.updateUrl(onUrlChanged: (String) -> Unit) {
+    webViewClient = object : WebViewClient() {
+        override fun onPageFinished(view: WebView?, urlLoaded: String?) {
+            super.onPageFinished(view, urlLoaded)
+            if (urlLoaded != null) {
+                onUrlChanged(urlLoaded)
+            }
+        }
+    }
+}
+fun WebView.updateWeb(url: String) {
+    if (this.url != url) {
+        this.loadUrl(url)
+    }
+}
+
+
+fun WebView.injectFullSizeYouTube() {
+    val js = """
+        javascript:(function() {
+            var iframes = document.getElementsByTagName('iframe');
+            for(var i=0;i<iframes.length;i++){
+                if(iframes[i].src.includes("youtube.com/embed")){
+                    iframes[i].style.position = "absolute";
+                    iframes[i].style.top = "0";
+                    iframes[i].style.left = "0";
+                    iframes[i].style.width = "100%";
+                    iframes[i].style.height = "100%";
+                }
+            }
+        })();
+    """.trimIndent()
+    this.evaluateJavascript(js, null)
+}
+
+
+
 
 
 
@@ -183,7 +220,7 @@ fun WebView.WebDefaults() {
 @Composable
 fun Web() {
     var url by r_m("https://www.google.com") // default URL
-    val webViewRef = remember { mutableStateOf<WebView?>(null) }
+    val webViewRef = r_m(<WebView?>(null))
 
     // Back button handling
     BackHandler(enabled = webViewRef.value?.canGoBack() == true) {
@@ -194,12 +231,6 @@ fun Web() {
 
     if (url.contains("youtube.com")) {
             Vlog("Youtube!!!")
-            // Extract videoId safely
-            val videoId = when {
-                url.contains("v=") -> url.substringAfter("v=").substringBefore("&")
-                url.contains("youtu.be/") -> url.substringAfter("youtu.be/").substringBefore("?")
-                else -> ""
-            }
     }
 
     LazyScreen(
@@ -212,25 +243,26 @@ fun Web() {
                 WebView(ctx).apply {
                     this.WebDefaults()
                     
+                    this.updateUrl{ url = it }
+
+
                     webViewClient = object : WebViewClient() {
                         override fun onPageFinished(view: WebView?, urlLoaded: String?) {
                             super.onPageFinished(view, urlLoaded)
-                            // Update url state whenever page changes
-                            if (urlLoaded != null) {
-                                url = urlLoaded
+                            
+                            if (url.contains("youtube.com")) {
+                                view?.injectFullSizeYouTube()
                             }
                         }
                     }
+
 
                     webViewRef.value = this
                     loadUrl(url)
                 }
             },
             update = { webView ->
-                // Make sure we always load the current url
-                if (webView.url != url) {
-                    webView.loadUrl(url)
-                }
+                webView.updateWeb(url)
             },
             modifier = Modifier
                 .fillMaxWidth()
