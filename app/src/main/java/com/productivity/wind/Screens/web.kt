@@ -235,7 +235,7 @@ fun Web() {
 
     LazyScreen(
         title = { 
-            Text(" Points ${Bar.funTime}: url= $url") 
+            Text(" Points ${Bar.funTime}: url= ${url.value}") 
         },
         Scrollable = false,
         DividerPadding = false,
