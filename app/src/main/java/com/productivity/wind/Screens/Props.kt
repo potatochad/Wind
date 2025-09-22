@@ -431,6 +431,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                     val icon = getAppIcon(getAppPackage(app))
                     LazzyRow(Modifier.clickOrHold{
                         selectedApp.value = getAppName(app)
+                        show.value = false
                     }) {
                         UI.move(10)
                         LazyImage(icon)
