@@ -520,7 +520,7 @@ fun LazyIcon(
     OuterPadding: Int = 5,          // outside space
     ButtonSize: Int = 40,           // actual button box (default M3 ~48)
     modifier: Mod = Modifier,
-	color: Color = Color(0xFFFFD700),
+	color: Color = Color.White,
 ) {
 	UI.ComposeCanBeTiny() {
         IconButton(
