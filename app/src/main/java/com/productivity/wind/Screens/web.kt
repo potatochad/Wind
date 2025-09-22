@@ -192,8 +192,8 @@ fun WebView.updateWeb(url: String) {
 }
 
 fun WebView.injectFixedSizeYouTube() {
-    val widthPx = (300 * resources.displayMetrics.density).toInt()
-    val heightPx = (100 * resources.displayMetrics.density).toInt()
+    val widthPx = (500 * resources.displayMetrics.density).toInt()
+    val heightPx = (800 * resources.displayMetrics.density).toInt()
     
     val js = """
         javascript:(function() {
