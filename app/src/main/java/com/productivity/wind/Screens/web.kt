@@ -206,60 +206,47 @@ fun Web7() {
 fun Web() {
     var url by r_m("")
     val context = LocalContext.current
+    val webViewRef = remember { mutableStateOf<WebView?>(null) }
+    BackHandler(enabled = webViewRef.value?.canGoBack() == true) {
+        webViewRef.value?.goBack()
+    }
+
     Item.WebPointTimer()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        val finalUrl = if (URLUtil.isValidUrl(url)) {
-            url
-        } else {
-            "https://www.google.com/search?q=$url"
-        }
-
-        if (finalUrl.contains("youtube.com/watch") || finalUrl.contains("youtu.be/")) {
+    LazyScreen(
+        title = { Text(" Points ${Bar.funTime}")},
+        Scrollable = false,
+        DividerPadding = false,
+    ) {
+        if (url.contains("youtube.com")) {
+            Vlog("Youtube!!!")
             // Extract videoId safely
             val videoId = when {
-                finalUrl.contains("v=") -> finalUrl.substringAfter("v=").substringBefore("&")
-                finalUrl.contains("youtu.be/") -> finalUrl.substringAfter("youtu.be/").substringBefore("?")
+                url.contains("v=") -> finalUrl.substringAfter("v=").substringBefore("&")
+                url.contains("youtu.be/") -> finalUrl.substringAfter("youtu.be/").substringBefore("?")
                 else -> ""
             }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16f / 9f)
-            ) {
-                AndroidView(
-                    factory = { ctx ->
-                        YouTubePlayerView(ctx).apply {
-                            // Always call this in onCreate/onAttached for proper lifecycle
-                            addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                                override fun onReady(player: YouTubePlayer) {
-                                    player.loadVideo(videoId, 0f)
-                                }
-                            })
-                        }
-                    },
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
-        } else {
-            // Regular WebView
-            Box(modifier = Modifier.fillMaxSize()) {
-                AndroidView(
-                    factory = { ctx ->
-                        WebView(ctx).apply {
-                            settings.javaScriptEnabled = true
-                            settings.domStorageEnabled = true
-                            settings.useWideViewPort = true
-                            settings.loadWithOverviewMode = true
-                            webViewClient = WebViewClient()
-                        }
-                    },
-                    update = { webView -> webView.loadUrl(finalUrl) },
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
         }
+
+                AndroidView(
+            factory = { ctx ->
+                WebView(ctx).apply {
+                    settings.javaScriptEnabled = true
+                    settings.domStorageEnabled = true
+                    settings.useWideViewPort = true
+                    settings.loadWithOverviewMode = true
+                    settings.builtInZoomControls = true
+                    webViewClient = WebViewClient()
+                    webViewRef.value = this   // store reference
+                }
+            },
+            update = { webView ->
+                if (url.isNotEmpty()) {
+                    webView.loadUrl(url)
+                }
+            },
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
 
