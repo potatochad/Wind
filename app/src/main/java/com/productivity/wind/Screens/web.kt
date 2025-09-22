@@ -185,7 +185,11 @@ fun WebView.onLoadedPage(action: (pageUrl: String?, view: WebView?) -> Unit) {
 }
 
 
-
+fun WebView.updateWeb(url: String) {
+    if (this.url != url) {
+        this.loadUrl(url)
+    }
+}
 
 fun WebView.injectFixedSizeYouTube() {
     val widthPx = (300 * resources.displayMetrics.density).toInt()
