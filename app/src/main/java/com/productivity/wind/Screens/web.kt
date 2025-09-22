@@ -175,22 +175,22 @@ fun WebView.WebDefaults() {
     }
     webChromeClient = WebChromeClient()
 }
-fun WebView.updateUrl(onUrlChanged: (String) -> Unit) {
+fun WebView.updateUrl(urlState: MutableState<String>) {
     webViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView?, urlLoaded: String?) {
             super.onPageFinished(view, urlLoaded)
             if (urlLoaded != null) {
-                onUrlChanged(urlLoaded)
+                urlState.value = urlLoaded  // Update the MutableState directly
             }
         }
     }
 }
+
 fun WebView.updateWeb(url: String) {
     if (this.url != url) {
         this.loadUrl(url)
     }
 }
-
 
 
 fun WebView.injectFixedSizeYouTube() {
@@ -222,7 +222,7 @@ fun WebView.injectFixedSizeYouTube() {
 
 @Composable
 fun Web() {
-    var url by r_m("https://www.google.com") // default URL
+    var url = r_m("https://www.google.com") // default URL
     val webViewRef = r { mutableStateOf<WebView?>(null) }
 
     // Back button handling
@@ -245,7 +245,7 @@ fun Web() {
                 WebView(ctx).apply {
                     this.WebDefaults()
                     
-                    this.updateUrl{ url = it }
+                    this.updateUrl(url)
 
 
                     webViewClient = object : WebViewClient() {
@@ -263,7 +263,7 @@ fun Web() {
 
 
                     webViewRef.value = this
-                    loadUrl(url)
+                    loadUrl(url.value)
                 }
             },
             update = { webView ->
