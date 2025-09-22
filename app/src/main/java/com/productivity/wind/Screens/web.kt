@@ -230,9 +230,6 @@ fun Web() {
 
     Item.WebPointTimer()
 
-    if (url.contains("youtube.com")) {
-            Vlog("Youtube!!!")
-    }
 
     LazyScreen(
         title = { Text(" Points ${Bar.funTime}") },
@@ -250,6 +247,10 @@ fun Web() {
                     webViewClient = object : WebViewClient() {
                         override fun onPageFinished(view: WebView?, urlLoaded: String?) {
                             super.onPageFinished(view, urlLoaded)
+
+                            if (url.contains("youtube.com")) {
+                                Vlog("Youtube!!!")
+                            }
                             
                             if (url.contains("youtube.com")) {
                                 view?.injectFullSizeYouTube()
