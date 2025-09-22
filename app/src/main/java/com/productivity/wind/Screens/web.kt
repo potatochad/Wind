@@ -198,11 +198,13 @@ fun WebView.injectFullSizeYouTube() {
             var iframes = document.getElementsByTagName('iframe');
             for(var i=0;i<iframes.length;i++){
                 if(iframes[i].src.includes("youtube.com/embed")){
+                    // Make sure it takes up full screen but maintains aspect ratio
                     iframes[i].style.position = "absolute";
                     iframes[i].style.top = "0";
                     iframes[i].style.left = "0";
                     iframes[i].style.width = "100%";
                     iframes[i].style.height = "100%";
+                    iframes[i].style.aspectRatio = "16/9"; // or whatever ratio suits your content
                 }
             }
         })();
