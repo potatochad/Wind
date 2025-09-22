@@ -252,7 +252,7 @@ fun Web() {
                             
                             if (url.contains("youtube.com")) {
                                 Vlog("Youtube!!!")
-                                view?.injectFullSizeYouTube()
+                                view?.injectFixedSizeYouTube()
                             } else {
                                 Vlog("No youtube")
                             }
