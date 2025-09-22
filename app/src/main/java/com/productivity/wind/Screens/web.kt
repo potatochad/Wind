@@ -192,23 +192,25 @@ fun WebView.updateWeb(url: String) {
 }
 
 
-fun WebView.injectFullSizeYouTube() {
+
+fun WebView.injectFixedSizeYouTube() {
+    val widthPx = (300 * resources.displayMetrics.density).toInt()
+    val heightPx = (100 * resources.displayMetrics.density).toInt()
+    
     val js = """
         javascript:(function() {
             var iframes = document.getElementsByTagName('iframe');
-            for(var i=0;i<iframes.length;i++){
-                if(iframes[i].src.includes("youtube.com/embed")){
-                    // Make sure it takes up full screen but maintains aspect ratio
-                    iframes[i].style.position = "absolute";
-                    iframes[i].style.top = "0";
-                    iframes[i].style.left = "0";
-                    iframes[i].style.width = "100%";
-                    iframes[i].style.height = "100%";
-                    iframes[i].style.aspectRatio = "16/9"; // or whatever ratio suits your content
+            for(var i = 0; i < iframes.length; i++) {
+                if(iframes[i].src.includes("youtube.com/embed")) {
+                    iframes[i].style.width = "${widthPx}px";
+                    iframes[i].style.height = "${heightPx}px";
+                    iframes[i].style.position = "relative"; // absolute not needed for fixed size
+                    iframes[i].style.border = "none";
                 }
             }
         })();
     """.trimIndent()
+
     this.evaluateJavascript(js, null)
 }
 
@@ -221,7 +223,7 @@ fun WebView.injectFullSizeYouTube() {
 @Composable
 fun Web() {
     var url by r_m("https://www.google.com") // default URL
-    val webViewRef = remember { mutableStateOf<WebView?>(null) }
+    val webViewRef = r { mutableStateOf<WebView?>(null) }
 
     // Back button handling
     BackHandler(enabled = webViewRef.value?.canGoBack() == true) {
@@ -232,7 +234,7 @@ fun Web() {
 
 
     LazyScreen(
-        title = { Text(" Points ${Bar.funTime}") },
+        title = { Text(" Points ${Bar.funTime}: url= $url") },
         Scrollable = false,
         DividerPadding = false,
     ) {
@@ -245,15 +247,14 @@ fun Web() {
 
 
                     webViewClient = object : WebViewClient() {
-                        override fun onPageFinished(view: WebView?, urlLoaded: String?) {
-                            super.onPageFinished(view, urlLoaded)
-
-                            if (url.contains("youtube.com")) {
-                                Vlog("Youtube!!!")
-                            }
+                        override fun onPageFinished(view: WebView?, urlLoaded: Str?) {
+                            super.onPageFinished(view, urlLoaded)                                
                             
                             if (url.contains("youtube.com")) {
+                                Vlog("Youtube!!!")
                                 view?.injectFullSizeYouTube()
+                            } else {
+                                Vlog("No youtube")
                             }
                         }
                     }
