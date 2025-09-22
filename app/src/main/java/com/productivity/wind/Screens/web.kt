@@ -217,11 +217,11 @@ fun WebView.injectFixedSizeYouTube() {
 @Composable
 fun Web() {
     var url = r_m("https://www.google.com") // default URL
-    val webViewRef = r { mutableStateOf<WebView?>(null) }
+    val webView = r { mutableStateOf<WebView?>(null) }
 
     // Back button handling
-    BackHandler(enabled = webViewRef.value?.canGoBack() == true) {
-        webViewRef.value?.goBack()
+    BackHandler(enabled = webView.value?.canGoBack() == true) {
+        webView.value?.goBack()
     }
 
     Item.WebPointTimer()
@@ -254,7 +254,7 @@ fun Web() {
 
 
 
-                    webViewRef.value = this
+                    webView.value = this
                     loadUrl(url.value)
                 }
             },
