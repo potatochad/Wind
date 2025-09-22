@@ -205,6 +205,8 @@ fun Web7() {
 @Composable
 fun Web() {
     var url by r_m("")
+    url = if (URLUtil.isValidUrl(url)) url else "https://www.google.com/search?q=$url"
+
     val context = LocalContext.current
     val webViewRef = remember { mutableStateOf<WebView?>(null) }
     BackHandler(enabled = webViewRef.value?.canGoBack() == true) {
