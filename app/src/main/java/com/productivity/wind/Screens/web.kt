@@ -165,38 +165,16 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.*
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.*
 
 
-
-
-@Composable
-fun Web7() {
-    val ctx = App.ctx
-    val Web = r { GeckoRuntime.create(ctx) }
-    val Tab = r { GeckoSession() }
-
-    Item.WebPointTimer()
-
-    Tab.loadUri("https://google.com")
-    Tab.open(Web)
-    
-    BackHandler { Tab.goBack() }
-    DisposableEffect(Unit) { onDispose { Web.shutdown() } }
-
-    LazyScreen(
-        title = { Text(" Points ${Bar.funTime}")},
-        Scrollable = false,
-        DividerPadding = false,
-    ) {
-        AndroidView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(App.LazyScreenContentHeight),
-            factory = { ctx ->
-                GeckoView(ctx).apply { 
-                    setSession(Tab) 
-                }
-            }
-        )
+fun WebView.WebDefaults() {
+    settings.apply {
+        javaScriptEnabled = true
+        domStorageEnabled = true
+        useWideViewPort = true
+        loadWithOverviewMode = true
+        builtInZoomControls = true
+        displayZoomControls = false
     }
+    webChromeClient = WebChromeClient()
 }
 
 
@@ -204,23 +182,17 @@ fun Web7() {
 
 @Composable
 fun Web() {
-    var url by r_m("")
-    url = if (URLUtil.isValidUrl(url)) url else "https://www.google.com/search?q=$url"
-
-    val context = LocalContext.current
+    var url by r_m("https://www.google.com") // default URL
     val webViewRef = remember { mutableStateOf<WebView?>(null) }
+
+    // Back button handling
     BackHandler(enabled = webViewRef.value?.canGoBack() == true) {
         webViewRef.value?.goBack()
     }
 
     Item.WebPointTimer()
 
-    LazyScreen(
-        title = { Text(" Points ${Bar.funTime}")},
-        Scrollable = false,
-        DividerPadding = false,
-    ) {
-        if (url.contains("youtube.com")) {
+    if (url.contains("youtube.com")) {
             Vlog("Youtube!!!")
             // Extract videoId safely
             val videoId = when {
@@ -228,27 +200,43 @@ fun Web() {
                 url.contains("youtu.be/") -> url.substringAfter("youtu.be/").substringBefore("?")
                 else -> ""
             }
-        }
+    }
 
-                AndroidView(
+    LazyScreen(
+        title = { Text(" Points ${Bar.funTime}") },
+        Scrollable = false,
+        DividerPadding = false,
+    ) {
+        AndroidView(
             factory = { ctx ->
                 WebView(ctx).apply {
-                    settings.javaScriptEnabled = true
-                    settings.domStorageEnabled = true
-                    settings.useWideViewPort = true
-                    settings.loadWithOverviewMode = true
-                    settings.builtInZoomControls = true
-                    webViewClient = WebViewClient()
-                    webViewRef.value = this   // store reference
+                    this.WebDefaults()
+                    
+                    webViewClient = object : WebViewClient() {
+                        override fun onPageFinished(view: WebView?, urlLoaded: String?) {
+                            super.onPageFinished(view, urlLoaded)
+                            // Update url state whenever page changes
+                            if (urlLoaded != null) {
+                                url = urlLoaded
+                            }
+                        }
+                    }
+
+                    webViewRef.value = this
+                    loadUrl(url)
                 }
             },
             update = { webView ->
-                if (url.isNotEmpty()) {
+                // Make sure we always load the current url
+                if (webView.url != url) {
                     webView.loadUrl(url)
                 }
             },
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(App.LazyScreenContentHeight)
         )
     }
 }
+
 
