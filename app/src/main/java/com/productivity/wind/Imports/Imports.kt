@@ -338,6 +338,7 @@ fun eachSecond(onTick: Do) {
 
 val DarkBlue = Color(0xFF00008B) 
 val Gold = Color(0xFFFFD700)
+val LightBlue = Color(0xFFADD8E6)
 
 object UI {
     //No synched with actual settingsItem function YET
@@ -495,7 +496,7 @@ object UI {
 			checked = isChecked.value,
 			onCheckedChange = { set(isChecked, it) },
 			colors = CheckboxDefaults.colors(
-				checkedColor = Color(0xFFFFD700), // gold
+				checkedColor = LightBlue, // gold
 				uncheckedColor = Color.Gray,      // optional
 				checkmarkColor = Color.White      // optional
 			)
@@ -514,7 +515,7 @@ object UI {
 				selected = selectedIndex.value == index,
 				onClick = { set(selectedIndex, index) },
 				colors = RadioButtonDefaults.colors(
-					selectedColor = Color(0xFFFFD700),
+					selectedColor = LightBlue,
 					unselectedColor = Color.Gray
 				),
 				modifier = Modifier.scale(0.85f)
