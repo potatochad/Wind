@@ -224,11 +224,6 @@ fun Web() {
     var url = r_m("https://www.google.com") // default URL
     val webView = r { mutableStateOf<WebView?>(null) }
 
-    // Back button handling
-    BackHandler(enabled = webView.value?.canGoBack() == true) {
-        webView.value?.goBack()
-    }
-
     Item.WebPointTimer()
 
 
@@ -238,7 +233,7 @@ fun Web() {
             val scrollState = rememberScrollState()
 
             Row(modifier = Modifier.horizontalScroll(scrollState)) {
-                Text("url= $url")
+                Text("url= ${url.value}")
             }
 
         },
@@ -250,16 +245,21 @@ fun Web() {
                 WebView(ctx).apply {
                     this.WebDefaults()
                     
-                    this.onLoadedPage { pageUrl, view ->
-                        if (pageUrl != null) {
-                            url.value = pageUrl
+                    webViewClient = object : WebViewClient() {
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            request: WebResourceRequest?
+                        ): Boolean {
+                            val newUrl = request?.url.toString()
+                            url.value = newUrl
+                            return false // allow WebView to load
                         }
 
-                        if (pageUrl?.contains("youtube.com") == true) {
-                            Vlog("Youtube!!!")
-                            view?.injectFixedSizeYouTube()
-                        } else {
-                            Vlog("No youtube")
+                        override fun onPageFinished(view: WebView?, urlLoaded: String?) {
+                            super.onPageFinished(view, urlLoaded)
+                            if (urlLoaded != null) {
+                                url.value = urlLoaded
+                            }
                         }
                     }
 
