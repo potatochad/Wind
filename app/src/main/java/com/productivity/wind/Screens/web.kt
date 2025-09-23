@@ -235,11 +235,12 @@ fun Web() {
     LazyScreen(
         title = { 
             Text(" Points ${Bar.funTime}: ") 
-            LazyRow {
-                item {
-                    Text("url= ${url.value}")
-                }
+            val scrollState = rememberScrollState()
+
+            Row(modifier = Modifier.horizontalScroll(scrollState)) {
+                Text("url= $url")
             }
+
         },
         Scrollable = false,
         DividerPadding = false,
