@@ -233,7 +233,10 @@ fun Web() {
 
     LazyScreen(
         title = { 
-            Text(" Points ${Bar.funTime}: url= ${url.value}") 
+            Text(" Points ${Bar.funTime}: ") 
+            LazyRow {
+                Text("url= ${url.value}")
+            }
         },
         Scrollable = false,
         DividerPadding = false,
