@@ -236,7 +236,9 @@ fun Web() {
         title = { 
             Text(" Points ${Bar.funTime}: ") 
             LazyRow {
-                Text("url= ${url.value}")
+                item {
+                    Text("url= ${url.value}")
+                }
             }
         },
         Scrollable = false,
