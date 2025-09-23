@@ -668,7 +668,7 @@ fun LazyItem(
 					Icon(
 						imageVector = icon,
 						contentDescription = null,
-						tint = Color(0xFFFFD700),
+						tint = Color.White,
 						modifier = Modifier
 							.padding(end = 10.dp)
 							.size(24.dp)
