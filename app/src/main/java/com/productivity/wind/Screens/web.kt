@@ -196,18 +196,19 @@ fun WebView.injectFixedSizeYouTube() {
     val heightPx = (1000 * resources.displayMetrics.density).toInt()
     
     val js = """
-        javascript:(function() {
-            var iframes = document.getElementsByTagName('iframe');
-            for(var i = 0; i < iframes.length; i++) {
-                if(iframes[i].src.includes("youtube.com/embed")) {
-                    iframes[i].style.width = "${widthPx}px";
-                    iframes[i].style.height = "${heightPx}px";
-                    iframes[i].style.position = "relative"; // absolute not needed for fixed size
-                    iframes[i].style.border = "none";
-                }
+    javascript:(function() {
+        var iframes = document.getElementsByTagName('iframe');
+        for(var i = 0; i < iframes.length; i++) {
+            if(iframes[i].src.includes("youtube.com/embed")) {
+                iframes[i].style.setProperty('width', '${widthPx}px', 'important');
+                iframes[i].style.setProperty('height', '${heightPx}px', 'important');
+                iframes[i].style.setProperty('border', 'none', 'important');
+                iframes[i].style.setProperty('position', 'relative', 'important');
             }
-        })();
-    """.trimIndent()
+        }
+    })();
+""".trimIndent()
+
 
     this.evaluateJavascript(js, null)
 }
