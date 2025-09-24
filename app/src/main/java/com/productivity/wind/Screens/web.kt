@@ -214,6 +214,19 @@ fun WebView.updateWeb(url: String) {
         this.loadUrl(url)
     }
 }
+@Composable
+fun UrlUpToDate(webView: State<WebView?>, url: MutableState<String>) {
+    LaunchedEffect(webView.value) {
+        val wv = webView.value ?: return@LaunchedEffect
+        while (true) {
+            val currentUrl = wv.url ?: "https://www.google.com"  // fallback if null
+            if (currentUrl != url.value) {
+                url.value = currentUrl
+            }
+            delay(100) // smooth enough
+        }
+    }
+}
 
 fun WebView.injectFixedSizeYouTube() {
     val widthPx = (500 * resources.displayMetrics.density).toInt()
@@ -250,16 +263,7 @@ fun Web() {
 
     Item.WebPointTimer()
 
-    LaunchedEffect(webView.value) {
-    val wv = webView.value ?: return@LaunchedEffect
-    while (true) {
-        val currentUrl = wv.url ?: "https://www.google.com"  // fallback if null
-        if (currentUrl != url.value) {
-            url.value = currentUrl
-        }
-        delay(100) // 100ms is smooth enough
-    }
-}
+    UrlUpToDate(webView, url)
 
 
 
@@ -285,6 +289,7 @@ fun Web() {
                         if (!pageUrl.isNullOrEmpty()) {
                             url.value = pageUrl
                         }
+                        this.injectFixedSizeYouTube()
                     }
                     
 
