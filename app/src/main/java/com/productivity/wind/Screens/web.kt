@@ -229,13 +229,14 @@ fun Web() {
     LaunchedEffect(webView.value) {
     val wv = webView.value ?: return@LaunchedEffect
     while (true) {
-        val currentUrl = wv.url
+        val currentUrl = wv.url ?: "https://www.google.com"  // fallback if null
         if (currentUrl != url.value) {
             url.value = currentUrl
         }
-        delay(100) // 100ms is smoother, safer
+        delay(100) // 100ms is smooth enough
     }
 }
+
 
 
 
