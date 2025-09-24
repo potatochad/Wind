@@ -246,29 +246,34 @@ fun Web() {
                     this.WebDefaults()
                     
                     
-                    webViewClient = object : WebViewClient() {
-                        override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                            val NewUrl = view?.url
-                            if (!NewUrl.isNullOrEmpty()){
-                                url.value = NewUrl
-                            }
-                        }
-                        override fun shouldOverrideUrlLoading(
-                            view: WebView?,
-                            request: WebResourceRequest?
-                        ): Boolean {
-                            val newUrl = request?.url.toString()
-                            url.value = newUrl
-                            return false // allow WebView to load
-                        }
+                    webView.webViewClient = object : WebViewClient() {
+    override fun shouldOverrideUrlLoading(
+        view: WebView?,
+        request: WebResourceRequest?
+    ): Boolean {
+        val newUrl = request?.url.toString()
+        url.value = newUrl
+        return false // allow WebView to load
+    }
 
-                        override fun onPageFinished(view: WebView?, urlLoaded: String?) {
-                            super.onPageFinished(view, urlLoaded)
-                            if (urlLoaded != null) {
-                                url.value = urlLoaded
-                            }
-                        }
-                    }
+    override fun onPageFinished(view: WebView?, urlLoaded: String?) {
+        super.onPageFinished(view, urlLoaded)
+        if (urlLoaded != null) {
+            url.value = urlLoaded
+        }
+    }
+}
+
+// Set a WebChromeClient to track progress
+webView.webChromeClient = object : WebChromeClient() {
+    override fun onProgressChanged(view: WebView?, newProgress: Int) {
+        val newUrl = view?.url
+        if (!newUrl.isNullOrEmpty()) {
+            url.value = newUrl
+        }
+    }
+}
+
 
 
 
