@@ -226,6 +226,18 @@ fun Web() {
 
     Item.WebPointTimer()
 
+    LaunchedEffect(webView.value) {
+    val wv = webView.value ?: return@LaunchedEffect
+    while (true) {
+        val currentUrl = wv.url
+        if (currentUrl != url.value) {
+            url.value = currentUrl
+        }
+        delay(100) // 100ms is smoother, safer
+    }
+}
+
+
 
     LazyScreen(
         title = { 
@@ -246,15 +258,7 @@ fun Web() {
                     this.WebDefaults()
                     
                     
-                    webChromeClient = object : WebChromeClient() {
-                override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                    val newUrl = view?.url
-                    if (!newUrl.isNullOrEmpty()) {
-                        url.value = newUrl
-                    }
-                }
-                    }
-}
+                
 
                         webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(
