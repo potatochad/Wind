@@ -164,7 +164,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.*
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.*
 
 
-fun WebView.WebDefaults() {
+fun WebView.webDefaults(initialUrl: String? = null) = apply {
     settings.apply {
         javaScriptEnabled = true
         domStorageEnabled = true
@@ -174,15 +174,39 @@ fun WebView.WebDefaults() {
         displayZoomControls = false
     }
     webChromeClient = WebChromeClient()
+    
+    // Load initial URL if provided
+    initialUrl?.let { loadUrl(it) }
 }
-fun WebView.onLoadedPage(action: (pageUrl: String?, view: WebView?) -> Unit) {
+
+// Reusable function for handling page finished
+fun WebView.onLoadedPage(action: (pageUrl: String?, view: WebView?) -> Unit) = apply {
     webViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView?, urlLoaded: String?) {
             super.onPageFinished(view, urlLoaded)
-            action(urlLoaded, view)
+            action(urlLoaded, view)  // run your custom action
         }
     }
 }
+
+fun WebView.overrideUrl(
+    url: MutableState<String>,
+    shouldOverride: (String) -> Boolean // you decide true/false per URL
+) = apply {
+    webViewClient = object : WebViewClient() {
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            val newUrl = request?.url.toString()
+            url.value = newUrl                 // update your state
+            return shouldOverride(newUrl)      // YOU decide: true = block, false = allow
+        }
+    }
+}
+
+
+
 
 
 fun WebView.updateWeb(url: String) {
@@ -256,33 +280,15 @@ fun Web() {
         AndroidView(
             factory = { ctx ->
                 WebView(ctx).apply {
-                    this.WebDefaults()
-                    
-                    
-                
-
-                        webViewClient = object : WebViewClient() {
-                override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    request: WebResourceRequest?
-                ): Boolean {
-                    val newUrl = request?.url.toString()
-                    url.value = newUrl
-                    return false // allow WebView to load
-                }
-
-                override fun onPageFinished(view: WebView?, urlLoaded: String?) {
-                    super.onPageFinished(view, urlLoaded)
-                    if (!urlLoaded.isNullOrEmpty()) {
-                        url.value = urlLoaded
-                    }
-                }
+                    this.webDefaults(url.value)
+                    this.onLoadedPage { pageUrl, _ ->
+                        if (!pageUrl.isNullOrEmpty()) {
+                            url.value = pageUrl
                         }
-
-
+                    }
+                    
 
                     webView.value = this
-                    loadUrl(url.value)
                 }
             },
             update = { webView ->
