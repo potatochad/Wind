@@ -246,13 +246,15 @@ fun Web() {
                     this.WebDefaults()
                     
                     
-                    webViewClient = object : WebViewClient() {
-                        override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                            val NewUrl = view?.url
-                            if (!NewUrl.isNullOrEmpty()){
-                                url.value = NewUrl
-                            }
-                        }
+                    webView.webChromeClient = object : WebChromeClient() {
+    override fun onProgressChanged(view: WebView?, newProgress: Int) {
+        val newUrl = view?.url
+        if (!newUrl.isNullOrEmpty()) {
+            url.value = newUrl
+        }
+    }
+}
+
                         override fun shouldOverrideUrlLoading(
                             view: WebView?,
                             request: WebResourceRequest?
