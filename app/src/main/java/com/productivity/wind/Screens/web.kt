@@ -246,31 +246,33 @@ fun Web() {
                     this.WebDefaults()
                     
                     
-                    webView.webChromeClient = object : WebChromeClient() {
-    override fun onProgressChanged(view: WebView?, newProgress: Int) {
-        val newUrl = view?.url
-        if (!newUrl.isNullOrEmpty()) {
-            url.value = newUrl
-        }
-    }
+                    webChromeClient = object : WebChromeClient() {
+                override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                    val newUrl = view?.url
+                    if (!newUrl.isNullOrEmpty()) {
+                        url.value = newUrl
+                    }
+                }
+                    }
 }
 
-                        override fun shouldOverrideUrlLoading(
-                            view: WebView?,
-                            request: WebResourceRequest?
-                        ): Boolean {
-                            val newUrl = request?.url.toString()
-                            url.value = newUrl
-                            return false // allow WebView to load
-                        }
+                        webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(
+                    view: WebView?,
+                    request: WebResourceRequest?
+                ): Boolean {
+                    val newUrl = request?.url.toString()
+                    url.value = newUrl
+                    return false // allow WebView to load
+                }
 
-                        override fun onPageFinished(view: WebView?, urlLoaded: String?) {
-                            super.onPageFinished(view, urlLoaded)
-                            if (urlLoaded != null) {
-                                url.value = urlLoaded
-                            }
-                        }
+                override fun onPageFinished(view: WebView?, urlLoaded: String?) {
+                    super.onPageFinished(view, urlLoaded)
+                    if (!urlLoaded.isNullOrEmpty()) {
+                        url.value = urlLoaded
                     }
+                }
+                        }
 
 
 
