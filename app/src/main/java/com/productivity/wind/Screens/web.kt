@@ -245,7 +245,14 @@ fun Web() {
                 WebView(ctx).apply {
                     this.WebDefaults()
                     
+                    
                     webViewClient = object : WebViewClient() {
+                        override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                            val NewUrl = view?.url
+                            if (!NewUrl.isNullOrEmpty()){
+                                url.value = NewUrl
+                            }
+                        }
                         override fun shouldOverrideUrlLoading(
                             view: WebView?,
                             request: WebResourceRequest?
