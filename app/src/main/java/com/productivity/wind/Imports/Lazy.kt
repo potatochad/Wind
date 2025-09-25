@@ -67,7 +67,6 @@ import androidx.compose.ui.window.*
 import kotlin.math.*
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.layout.*
-import com.productivity.wind.Screens.set
 
 
 fun Modifier.clickOrHold(
