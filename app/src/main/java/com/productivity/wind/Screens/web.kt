@@ -206,9 +206,6 @@ fun WebView.overrideUrl(
 }
 
 
-
-
-
 fun WebView.updateWeb(url: String) {
     if (this.url != url) {
         this.loadUrl(url)
@@ -228,7 +225,7 @@ fun UrlUpToDate(webView: State<WebView?>, url: MutableState<String>) {
     }
 }
 
-fun WebView.injectFixedSizeYouTube() {
+fun WebView.injectFixedSizeYouTubeINTERESTING() {
     val widthPx = (500 * resources.displayMetrics.density).toInt()
     val heightPx = (1000 * resources.displayMetrics.density).toInt()
     
@@ -258,9 +255,6 @@ fun WebView.injectFixedSizeYouTube() {
 
     this.evaluateJavascript(js, null)
 }
-
-
-
 
 
 
@@ -298,8 +292,12 @@ fun Web() {
                         if (!pageUrl.isNullOrEmpty()) {
                             url.value = pageUrl
                         }
-                        this.injectFixedSizeYouTube()
+                        //this.injectFixedSizeYouTube()
                     }
+                    this.overrideUrl(currentUrl) { link ->
+                        link.contains("shorts")
+                    }
+                        
                     
 
                     webView.value = this
