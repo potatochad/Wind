@@ -189,22 +189,6 @@ fun WebView.onLoadedPage(action: (pageUrl: String?, view: WebView?) -> Unit) = a
     }
 }
 
-fun WebView.overrideUrl(
-    url: MutableState<String>,
-    shouldOverride: (String) -> Boolean // you decide true/false per URL
-) = apply {
-    webViewClient = object : WebViewClient() {
-        override fun shouldOverrideUrlLoading(
-            view: WebView?,
-            request: WebResourceRequest?
-        ): Boolean {
-            val newUrl = request?.url.toString()
-            url.value = newUrl                 // update your state
-            return shouldOverride(newUrl)      // YOU decide: true = block, false = allow
-        }
-    }
-}
-
 
 fun WebView.updateWeb(url: String) {
     if (this.url != url) {
@@ -290,12 +274,13 @@ fun Web() {
                     this.webDefaults(url.value)
                     this.onLoadedPage { pageUrl, _ ->
                         if (!pageUrl.isNullOrEmpty()) {
-                            url.value = pageUrl
+                            if (!pageUrl.contains("shorts")) {
+                                Vlog("No SHORTS DETECTED")
+                            
+                                url.value = pageUrl
+                            }
                         }
                         //this.injectFixedSizeYouTube()
-                    }
-                    this.overrideUrl(currentUrl) { link ->
-                        link.contains("shorts")
                     }
                         
                     
