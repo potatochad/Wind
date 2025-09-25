@@ -272,16 +272,19 @@ fun Web() {
             factory = { ctx ->
                 WebView(ctx).apply {
                     this.webDefaults(url.value)
-                    this.onLoadedPage { pageUrl, _ ->
+                    this.onLoadedPage { pageUrl, webView ->
                         if (!pageUrl.isNullOrEmpty()) {
                             if (!pageUrl.contains("shorts")) {
-                                Vlog("No SHORTS DETECTED")
-                            
+                                //Vlog("No SHORTS DETECTED")
                                 url.value = pageUrl
+                            } else {
+                                Vlog("SHORTS BLOCKED")
+                                webView?.stopLoading()
+                                webView?.loadUrl("https://www.google.com") // optional redirect
                             }
                         }
-                        //this.injectFixedSizeYouTube()
                     }
+
                         
                     
 
