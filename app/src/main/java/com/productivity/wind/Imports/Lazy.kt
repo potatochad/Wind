@@ -927,21 +927,35 @@ fun LazyPopup(
             if (showConfirm) {
 				UI.move(15)
                 UI.Ctext("OK"){
-                    onConfirm?.invoke()
-                    show.value = false
+					LazyDelay {
+						onConfirm?.invoke()
+						hide(show)
+					}
                 }
             }
         },
         dismissButton = if (showCancel) {
             {
 				UI.Ctext("Cancel"){
-                    onCancel?.invoke()
-                    show.value = false
+					LazyDelay {
+						onCancel?.invoke()
+						hide(show)
+					}
                 }
             }
         } else null
     )
 }
+fun LazyDelay(
+    delayMillis: Long = 100L,
+	Action: Do,
+) {
+    CoroutineScope(Dispatchers.Main).launch {
+        delay(delayMillis)
+        Action()
+    }
+}
+
 
 
 
