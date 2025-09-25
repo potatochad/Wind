@@ -205,6 +205,12 @@ fun each(time: Long = 10_000L, action: Do) {
         }
     }
 }
+
+fun <T> set(state: m_<T>?, value: T) { state?.value = value }
+
+fun show(state: m_<Boolean>?) = set(state, true)
+fun hide(state: m_<Boolean>?) = set(state, false)
+
 @Composable
 fun UrlConverter(input: Str): Str {
     return remember(input) {
