@@ -330,10 +330,6 @@ object Icon {
 
 
 //region POPUP CONTROLLER
-fun <T> set(state: m_<T>?, value: T) { state?.value = value }
-
-fun show(state: m_<Boolean>?) = set(state, true)
-fun hide(state: m_<Boolean>?) = set(state, false)
 
 
 var Edit = m(false)
