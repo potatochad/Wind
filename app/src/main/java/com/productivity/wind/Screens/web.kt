@@ -234,17 +234,26 @@ fun WebView.injectFixedSizeYouTube() {
     
     val js = """
     javascript:(function() {
-        var iframes = document.getElementsByTagName('iframe');
-        for(var i = 0; i < iframes.length; i++) {
-            if(iframes[i].src.includes("youtube.com/embed")) {
-                iframes[i].style.setProperty('width', '${widthPx}px', 'important');
-                iframes[i].style.setProperty('height', '${heightPx}px', 'important');
-                iframes[i].style.setProperty('border', 'none', 'important');
-                iframes[i].style.setProperty('position', 'relative', 'important');
+        function resizePlayer() {
+            var video = document.querySelector("video");
+            if (video) {
+                video.style.setProperty('width', '${widthPx}px', 'important');
+                video.style.setProperty('height', '${heightPx}px', 'important');
+                video.style.setProperty('object-fit', 'contain', 'important');
+            }
+            var player = document.getElementById("movie_player");
+            if (player) {
+                player.style.setProperty('width', '${widthPx}px', 'important');
+                player.style.setProperty('height', '${heightPx}px', 'important');
             }
         }
+        
+        resizePlayer();
+        
+        setInterval(resizePlayer, 1000);
     })();
 """.trimIndent()
+
 
 
     this.evaluateJavascript(js, null)
