@@ -167,8 +167,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.*
 
 
 fun WebView.injectFixedSizeYouTube() {
-    val widthPx = (500 * resources.displayMetrics.density).toInt()
-    val heightPx = (1000 * resources.displayMetrics.density).toInt()
+    val widthPx = App.screenWidth.toInt() //screen width—dp
+    val heightPx = (App.screenHeight/2).toInt()
 
     val js = """
     javascript:(function() {
