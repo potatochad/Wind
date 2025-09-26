@@ -263,7 +263,7 @@ fun Web() {
     if (currentUrl.contains("/shorts/")) {
         Vlog("SHORTS DETECTED")
         // Force redirect away
-        web.loadUrl("https://www.google.com")
+        // web.loadUrl("https://www.google.com")
         url.value = "https://www.google.com"
     } else {
         Vlog("SAFEEEE")
