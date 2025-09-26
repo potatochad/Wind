@@ -173,39 +173,79 @@ fun Dp.toPx(): Int {
         context.resources.displayMetrics
     ).toInt()
 }
+
+
+
 fun WebView.injectFixedSizeYouTube() {
     val widthPx = App.screenWidth.toPx()//screen width—dp
-    val heightPx = (App.screenHeight/2).toPx()
+    val heightPx = (App.screenHeight/3).toPx()
 
     val js = """
     javascript:(function() {
-        function resizePlayer() {
-            var targets = [
-                document.querySelector("video"),
-                document.getElementById("movie_player"),
-                document.querySelector(".html5-video-container"),
-                document.querySelector("#player-container"),
-                document.querySelector("#player"),
-                document.querySelector("ytd-player")
-            ];
-            
-            targets.forEach(function(el) {
-                if (el) {
-                    el.style.setProperty('width', '${widthPx}px', 'important');
-                    el.style.setProperty('height', '${heightPx}px', 'important');
-                    el.style.setProperty('max-width', '${widthPx}px', 'important');
-                    el.style.setProperty('max-height', '${heightPx}px', 'important');
-                }
-            });
+        // Add a helper function to all elements
+        Element.prototype.makeUI = function(prop, value, priority) {
+            this.style.setProperty(prop, value, priority);
         }
-        
+
+        function resizePlayer() {
+            var video = document.querySelector("video");
+            if(video) {
+                video.makeUI('width', '${widthPx}px', 'important');
+                video.makeUI('height', '${heightPx}px', 'important');
+                video.makeUI('max-width', '${widthPx}px', 'important');
+                video.makeUI('max-height', '${heightPx}px', 'important');
+                video.makeUI('object-fit', 'contain', 'important');
+            }
+
+            var moviePlayer = document.getElementById("movie_player");
+            if(moviePlayer) {
+                moviePlayer.makeUI('width', '${widthPx}px', 'important');
+                moviePlayer.makeUI('height', '${heightPx}px', 'important');
+                moviePlayer.makeUI('max-width', '${widthPx}px', 'important');
+                moviePlayer.makeUI('max-height', '${heightPx}px', 'important');
+            }
+
+            var html5Container = document.querySelector(".html5-video-container");
+            if(html5Container) {
+                html5Container.makeUI('width', '${widthPx}px', 'important');
+                html5Container.makeUI('height', '${heightPx}px', 'important');
+                html5Container.makeUI('max-width', '${widthPx}px', 'important');
+                html5Container.makeUI('max-height', '${heightPx}px', 'important');
+            }
+
+            var playerContainer = document.querySelector("#player-container");
+            if(playerContainer) {
+                playerContainer.makeUI('width', '${widthPx}px', 'important');
+                playerContainer.makeUI('height', '${heightPx}px', 'important');
+                playerContainer.makeUI('max-width', '${widthPx}px', 'important');
+                playerContainer.makeUI('max-height', '${heightPx}px', 'important');
+            }
+
+            var player = document.querySelector("#player");
+            if(player) {
+                player.makeUI('width', '${widthPx}px', 'important');
+                player.makeUI('height', '${heightPx}px', 'important');
+                player.makeUI('max-width', '${widthPx}px', 'important');
+                player.makeUI('max-height', '${heightPx}px', 'important');
+            }
+
+            var ytdPlayer = document.querySelector("ytd-player");
+            if(ytdPlayer) {
+                ytdPlayer.makeUI('width', '${widthPx}px', 'important');
+                ytdPlayer.makeUI('height', '${heightPx}px', 'important');
+                ytdPlayer.makeUI('max-width', '${widthPx}px', 'important');
+                ytdPlayer.makeUI('max-height', '${heightPx}px', 'important');
+            }
+        }
+
         resizePlayer();
-        setInterval(resizePlayer, 1000); // keep fixing when YouTube reflows
+        setInterval(resizePlayer, 1000);
     })();
     """.trimIndent()
 
     this.evaluateJavascript(js, null)
 }
+
 
 
 
