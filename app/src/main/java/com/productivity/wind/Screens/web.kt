@@ -227,7 +227,7 @@ fun WebView.webDefaults() = apply {
     }
 }
 
-@@Composable
+@Composable
 fun UrlUpToDate(
     webView: State<WebView?>,
     url: MutableState<String>,
