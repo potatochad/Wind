@@ -176,9 +176,9 @@ fun Dp.toPx(): Int {
 
 
 
-fun WebView.injectFixedSizeYouTube() {
-    val widthPx = (App.screenWidth / 4 ).toPx() // screen width in px
-    val heightPx = (App.screenHeight / 10).toPx() // 1/3 screen height in px
+fun WebView.injectFixedSizeYouTubeWEIRD() {
+    val widthPx = (App.screenWidth * 0.3).toPx()
+    val heightPx = (widthPx * 9f / 16f)
 
     val js = """
     javascript:(function() {
@@ -217,6 +217,67 @@ fun WebView.injectFixedSizeYouTube() {
 
     this.evaluateJavascript(js, null)
 }
+
+
+fun WebView.injectFixedSizeYouTube() {
+    val widthPx = (App.screenWidth * 0.9).toPx()
+    val heightPx = (widthPx * 9f / 16f) // Maintain 16:9 aspect ratio
+
+    val js = """
+        javascript:(function() {
+            // Ensure viewport is set properly
+            const head = document.head || document.getElementsByTagName('head')[0];
+            const existingViewport = document.querySelector("meta[name='viewport']");
+            if (!existingViewport) {
+                const viewport = document.createElement('meta');
+                viewport.name = "viewport";
+                viewport.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+                head.appendChild(viewport);
+            }
+
+            // Prevent overflow
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+
+            // Extend element style override helper
+            Element.prototype.makeUI = function(prop, value, priority) {
+                this.style.setProperty(prop, value, priority);
+            }
+
+            function resizePlayer() {
+                const elements = [
+                    document.querySelector("video"),
+                    document.getElementById("movie_player"),
+                    document.querySelector(".html5-video-container"),
+                    document.querySelector("#player-container"),
+                    document.querySelector("#player"),
+                    document.querySelector("ytd-player")
+                ];
+
+                elements.forEach(el => {
+                    if (el) {
+                        el.makeUI('width', '${widthPx}px', 'important');
+                        el.makeUI('height', '${heightPx}px', 'important');
+                        el.makeUI('max-width', '${widthPx}px', 'important');
+                        el.makeUI('max-height', '${heightPx}px', 'important');
+                        el.makeUI('object-fit', 'fill', 'important');
+                        el.makeUI('margin', '0 auto', 'important');
+                        el.makeUI('padding', '0', 'important');
+                        el.makeUI('border', '0', 'important');
+                        el.makeUI('position', 'relative', 'important');
+                        el.makeUI('display', 'block', 'important');
+                    }
+                });
+            }
+
+            resizePlayer();
+            setInterval(resizePlayer, 1000);
+        })();
+    """.trimIndent()
+
+    this.evaluateJavascript(js, null)
+}
+
 
 
 
