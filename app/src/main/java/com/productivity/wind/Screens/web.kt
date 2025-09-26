@@ -177,7 +177,7 @@ fun Dp.toPx(): Int {
 
 
 fun WebView.injectFixedSizeYouTubeWEIRD() {
-    val widthPx = (App.screenWidth * 0.3).toPx()
+    val widthPx = (App.screenWidth / 3).toPx()
     val heightPx = (widthPx * 9f / 16f)
 
     val js = """
@@ -220,7 +220,7 @@ fun WebView.injectFixedSizeYouTubeWEIRD() {
 
 
 fun WebView.injectFixedSizeYouTube() {
-    val widthPx = (App.screenWidth * 0.9).toPx()
+    val widthPx = (App.screenWidth / 3).toPx()
     val heightPx = (widthPx * 9f / 16f) // Maintain 16:9 aspect ratio
 
     val js = """
