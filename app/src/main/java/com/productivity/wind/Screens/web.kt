@@ -166,33 +166,36 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.*
 
 
 
-fun WebView.injectFixedSizeYouTubeINTERESTING() {
+fun WebView.injectFixedSizeYouTube() {
     val widthPx = (500 * resources.displayMetrics.density).toInt()
     val heightPx = (1000 * resources.displayMetrics.density).toInt()
-    
+
     val js = """
     javascript:(function() {
         function resizePlayer() {
-            var video = document.querySelector("video");
-            if (video) {
-                video.style.setProperty('width', '${widthPx}px', 'important');
-                video.style.setProperty('height', '${heightPx}px', 'important');
-                video.style.setProperty('object-fit', 'contain', 'important');
-            }
-            var player = document.getElementById("movie_player");
-            if (player) {
-                player.style.setProperty('width', '${widthPx}px', 'important');
-                player.style.setProperty('height', '${heightPx}px', 'important');
-            }
+            var targets = [
+                document.querySelector("video"),
+                document.getElementById("movie_player"),
+                document.querySelector(".html5-video-container"),
+                document.querySelector("#player-container"),
+                document.querySelector("#player"),
+                document.querySelector("ytd-player")
+            ];
+            
+            targets.forEach(function(el) {
+                if (el) {
+                    el.style.setProperty('width', '${widthPx}px', 'important');
+                    el.style.setProperty('height', '${heightPx}px', 'important');
+                    el.style.setProperty('max-width', '${widthPx}px', 'important');
+                    el.style.setProperty('max-height', '${heightPx}px', 'important');
+                }
+            });
         }
         
         resizePlayer();
-        
-        setInterval(resizePlayer, 1000);
+        setInterval(resizePlayer, 1000); // keep fixing when YouTube reflows
     })();
-""".trimIndent()
-
-
+    """.trimIndent()
 
     this.evaluateJavascript(js, null)
 }
@@ -260,15 +263,14 @@ fun Web() {
     Item.WebPointTimer()
 
     UrlUpToDate(webView, url) { web, currentUrl ->
-    if (currentUrl.contains("/shorts/")) {
-        Vlog("SHORTS DETECTED")
-        // Force redirect away
-        // web.loadUrl("https://www.google.com")
-        url.value = "https://www.google.com"
-    } else {
-        Vlog("SAFEEEE")
+        if (currentUrl.contains("youtube")){
+            web.injectFixedSizeYouTube()
+        }
+        if (currentUrl.contains("/shorts/")) {
+            web.loadUrl("https://www.google.com")
+            url.value = "https://www.google.com"
+        }
     }
-}
 
 
     LazyScreen(
