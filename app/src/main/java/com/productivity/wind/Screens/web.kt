@@ -227,23 +227,27 @@ fun WebView.webDefaults() = apply {
     }
 }
 
-@Composable
+@@Composable
 fun UrlUpToDate(
     webView: State<WebView?>,
     url: MutableState<String>,
-    extraAction: (WebView) -> Unit = { wv ->
-        val currentUrl = wv.url ?: "https://www.google.com"
-        if (currentUrl != url.value) {
-            url.value = currentUrl
-            wv.loadUrl(currentUrl) // keep WebView in sync with state
-        }
-    }
+    extraAction: (WebView, String) -> Unit = { _, _ -> }
 ) {
     LaunchedEffect(webView.value) {
         val wv = webView.value ?: return@LaunchedEffect
         while (true) {
-            extraAction(wv)
-            delay(100)
+            val currentUrl = wv.url ?: "https://www.google.com"
+
+            if (currentUrl != url.value) {
+                // WebView navigated → update state
+                url.value = currentUrl
+                extraAction(wv, currentUrl)
+            } else if (url.value != (wv.url ?: "")) {
+                // State changed externally → update WebView
+                wv.loadUrl(url.value)
+            }
+
+            delay(200) // check often, but not too aggressive
         }
     }
 }
@@ -255,20 +259,17 @@ fun Web() {
 
     Item.WebPointTimer()
 
-    UrlUpToDate(webView, url) { web ->
-        val currentUrl = web.url ?: "https://www.google.com"
-        if (currentUrl != url.value) {
-            if (currentUrl.contains("/shorts/")) {
-                Vlog("SHORTS DETECTED")
-                // don’t update state, block shorts
-                web.loadUrl("https://www.google.com")
-            } else {
-                Vlog("SAFEEEE")
-                url.value = currentUrl
-                web.loadUrl(currentUrl)
-            }
-        }
+    UrlUpToDate(webView, url) { web, currentUrl ->
+    if (currentUrl.contains("/shorts/")) {
+        Vlog("SHORTS DETECTED")
+        // Force redirect away
+        web.loadUrl("https://www.google.com")
+        url.value = "https://www.google.com"
+    } else {
+        Vlog("SAFEEEE")
     }
+}
+
 
     LazyScreen(
         title = {
