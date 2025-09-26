@@ -196,18 +196,25 @@ fun WebView.updateWeb(url: String) {
     }
 }
 @Composable
-fun UrlUpToDate(webView: State<WebView?>, url: MutableState<String>) {
+fun UrlUpToDate(
+    webView: State<WebView?>,
+    url: MutableState<String>,
+    extraAction: (WebView) -> Unit = { wv ->
+        val currentUrl = wv.url ?: "https://www.google.com" // fallback if null
+        if (currentUrl != url.value) {
+            url.value = currentUrl
+        }
+    }
+) {
     LaunchedEffect(webView.value) {
         val wv = webView.value ?: return@LaunchedEffect
         while (true) {
-            val currentUrl = wv.url ?: "https://www.google.com"  // fallback if null
-            if (currentUrl != url.value) {
-                url.value = currentUrl
-            }
-            delay(100) // smooth enough
+            extraAction(wv)
+            delay(100) // check every 100ms
         }
     }
 }
+
 
 fun WebView.injectFixedSizeYouTubeINTERESTING() {
     val widthPx = (500 * resources.displayMetrics.density).toInt()
@@ -250,7 +257,17 @@ fun Web() {
 
     Item.WebPointTimer()
 
-    UrlUpToDate(webView, url)
+    UrlUpToDate(webView, url){ web ->
+        val currentUrl = web.url ?: "https://www.google.com"
+        if (currentUrl != url.value) {
+            if (currentUrl.contains("/shorts/")){  
+                Vlog("SHORTS DETECTED")
+            } else {
+                Vlog("SAFEEEE")
+                url.value = currentUrl  
+            }
+        }
+    }
 
 
 
@@ -272,22 +289,6 @@ fun Web() {
             factory = { ctx ->
                 WebView(ctx).apply {
                     this.webDefaults(url.value)
-                    this.onLoadedPage { pageUrl, webView ->
-                        if (!pageUrl.isNullOrEmpty()) {
-                            if (!pageUrl.contains("shorts")) {
-                                //Vlog("No SHORTS DETECTED")
-                                url.value = pageUrl
-                            } else {
-                                Vlog("SHORTS BLOCKED")
-                                webView?.stopLoading()
-                                webView?.loadUrl("https://www.google.com") // optional redirect
-                            }
-                        }
-                    }
-
-                        
-                    
-
                     webView.value = this
                 }
             },
