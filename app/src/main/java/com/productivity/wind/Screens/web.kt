@@ -177,65 +177,37 @@ fun Dp.toPx(): Int {
 
 
 fun WebView.injectFixedSizeYouTube() {
-    val widthPx = App.screenWidth.toPx()//screen width—dp
-    val heightPx = (App.screenHeight/3).toPx()
+    val widthPx = App.screenWidth.toPx() // screen width in px
+    val heightPx = (App.screenHeight / 4).toPx() // 1/3 screen height in px
 
     val js = """
     javascript:(function() {
-        // Add a helper function to all elements
         Element.prototype.makeUI = function(prop, value, priority) {
             this.style.setProperty(prop, value, priority);
         }
 
         function resizePlayer() {
-            var video = document.querySelector("video");
-            if(video) {
-                video.makeUI('width', '${widthPx}px', 'important');
-                video.makeUI('height', '${heightPx}px', 'important');
-                video.makeUI('max-width', '${widthPx}px', 'important');
-                video.makeUI('max-height', '${heightPx}px', 'important');
-                video.makeUI('object-fit', 'contain', 'important');
-            }
+            const elements = [
+                document.querySelector("video"),
+                document.getElementById("movie_player"),
+                document.querySelector(".html5-video-container"),
+                document.querySelector("#player-container"),
+                document.querySelector("#player"),
+                document.querySelector("ytd-player")
+            ];
 
-            var moviePlayer = document.getElementById("movie_player");
-            if(moviePlayer) {
-                moviePlayer.makeUI('width', '${widthPx}px', 'important');
-                moviePlayer.makeUI('height', '${heightPx}px', 'important');
-                moviePlayer.makeUI('max-width', '${widthPx}px', 'important');
-                moviePlayer.makeUI('max-height', '${heightPx}px', 'important');
-            }
-
-            var html5Container = document.querySelector(".html5-video-container");
-            if(html5Container) {
-                html5Container.makeUI('width', '${widthPx}px', 'important');
-                html5Container.makeUI('height', '${heightPx}px', 'important');
-                html5Container.makeUI('max-width', '${widthPx}px', 'important');
-                html5Container.makeUI('max-height', '${heightPx}px', 'important');
-            }
-
-            var playerContainer = document.querySelector("#player-container");
-            if(playerContainer) {
-                playerContainer.makeUI('width', '${widthPx}px', 'important');
-                playerContainer.makeUI('height', '${heightPx}px', 'important');
-                playerContainer.makeUI('max-width', '${widthPx}px', 'important');
-                playerContainer.makeUI('max-height', '${heightPx}px', 'important');
-            }
-
-            var player = document.querySelector("#player");
-            if(player) {
-                player.makeUI('width', '${widthPx}px', 'important');
-                player.makeUI('height', '${heightPx}px', 'important');
-                player.makeUI('max-width', '${widthPx}px', 'important');
-                player.makeUI('max-height', '${heightPx}px', 'important');
-            }
-
-            var ytdPlayer = document.querySelector("ytd-player");
-            if(ytdPlayer) {
-                ytdPlayer.makeUI('width', '${widthPx}px', 'important');
-                ytdPlayer.makeUI('height', '${heightPx}px', 'important');
-                ytdPlayer.makeUI('max-width', '${widthPx}px', 'important');
-                ytdPlayer.makeUI('max-height', '${heightPx}px', 'important');
-            }
+            elements.forEach(el => {
+                if (el) {
+                    el.makeUI('width', '${widthPx}px', 'important');
+                    el.makeUI('height', '${heightPx}px', 'important');
+                    el.makeUI('max-width', '${widthPx}px', 'important');
+                    el.makeUI('max-height', '${heightPx}px', 'important');
+                    el.makeUI('object-fit', 'fill', 'important'); // fills fully, no padding
+                    el.makeUI('margin', '0', 'important');
+                    el.makeUI('padding', '0', 'important');
+                    el.makeUI('border', '0', 'important');
+                }
+            });
         }
 
         resizePlayer();
