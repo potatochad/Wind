@@ -164,56 +164,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.*
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.*
 
 
-fun WebView.webDefaults(initialUrl: String? = null) = apply {
-    settings.apply {
-        javaScriptEnabled = true
-        domStorageEnabled = true
-        useWideViewPort = true
-        loadWithOverviewMode = true
-        builtInZoomControls = true
-        displayZoomControls = false
-    }
-    webChromeClient = WebChromeClient()
-    
-    // Load initial URL if provided
-    initialUrl?.let { loadUrl(it) }
-}
-
-// Reusable function for handling page finished
-fun WebView.onLoadedPage(action: (pageUrl: String?, view: WebView?) -> Unit) = apply {
-    webViewClient = object : WebViewClient() {
-        override fun onPageFinished(view: WebView?, urlLoaded: String?) {
-            super.onPageFinished(view, urlLoaded)
-            action(urlLoaded, view)  // run your custom action
-        }
-    }
-}
-
-
-fun WebView.updateWeb(url: String) {
-    if (this.url != url) {
-        this.loadUrl(url)
-    }
-}
-@Composable
-fun UrlUpToDate(
-    webView: State<WebView?>,
-    url: MutableState<String>,
-    extraAction: (WebView) -> Unit = { wv ->
-        val currentUrl = wv.url ?: "https://www.google.com" // fallback if null
-        if (currentUrl != url.value) {
-            url.value = currentUrl
-        }
-    }
-) {
-    LaunchedEffect(webView.value) {
-        val wv = webView.value ?: return@LaunchedEffect
-        while (true) {
-            extraAction(wv)
-            delay(100) // check every 100ms
-        }
-    }
-}
 
 
 fun WebView.injectFixedSizeYouTubeINTERESTING() {
@@ -250,37 +200,83 @@ fun WebView.injectFixedSizeYouTubeINTERESTING() {
 
 
 
+
+
+
+
+fun WebView.webDefaults() = apply {
+    settings.apply {
+        javaScriptEnabled = true
+        domStorageEnabled = true
+        useWideViewPort = true
+        loadWithOverviewMode = true
+        builtInZoomControls = true
+        displayZoomControls = false
+    }
+    webChromeClient = WebChromeClient()
+
+    webViewClient = object : WebViewClient() {
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            // Always load inside this WebView
+            view?.loadUrl(request?.url.toString())
+            return true
+        }
+    }
+}
+
+@Composable
+fun UrlUpToDate(
+    webView: State<WebView?>,
+    url: MutableState<String>,
+    extraAction: (WebView) -> Unit = { wv ->
+        val currentUrl = wv.url ?: "https://www.google.com"
+        if (currentUrl != url.value) {
+            url.value = currentUrl
+            wv.loadUrl(currentUrl) // keep WebView in sync with state
+        }
+    }
+) {
+    LaunchedEffect(webView.value) {
+        val wv = webView.value ?: return@LaunchedEffect
+        while (true) {
+            extraAction(wv)
+            delay(100)
+        }
+    }
+}
+
 @Composable
 fun Web() {
-    var url = r_m("https://www.google.com") // default URL
+    val url = r_m("https://www.google.com") // single source of truth
     val webView = r { mutableStateOf<WebView?>(null) }
 
     Item.WebPointTimer()
 
-    UrlUpToDate(webView, url){ web ->
+    UrlUpToDate(webView, url) { web ->
         val currentUrl = web.url ?: "https://www.google.com"
         if (currentUrl != url.value) {
-            if (currentUrl.contains("/shorts/")){  
+            if (currentUrl.contains("/shorts/")) {
                 Vlog("SHORTS DETECTED")
+                // don’t update state, block shorts
+                web.loadUrl("https://www.google.com")
             } else {
                 Vlog("SAFEEEE")
-                url.value = currentUrl  
+                url.value = currentUrl
+                web.loadUrl(currentUrl)
             }
         }
     }
 
-
-
-
     LazyScreen(
-        title = { 
-            Text(" Points ${Bar.funTime}: ") 
+        title = {
+            Text(" Points ${Bar.funTime}: ")
             val scrollState = rememberScrollState()
-
             Row(modifier = Modifier.horizontalScroll(scrollState)) {
                 Text("url= ${url.value}")
             }
-
         },
         Scrollable = false,
         DividerPadding = false,
@@ -288,12 +284,10 @@ fun Web() {
         AndroidView(
             factory = { ctx ->
                 WebView(ctx).apply {
-                    this.webDefaults(url.value)
+                    this.webDefaults()
                     webView.value = this
+                    loadUrl(url.value) // initial load only
                 }
-            },
-            update = { webView ->
-                webView.updateWeb(url.value)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -301,5 +295,3 @@ fun Web() {
         )
     }
 }
-
-
