@@ -165,10 +165,17 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.*
 
 
 
-
+fun Dp.toPx(): Int {
+    var context = App.ctx
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.value,
+        context.resources.displayMetrics
+    ).toInt()
+}
 fun WebView.injectFixedSizeYouTube() {
-    val widthPx = App.screenWidth.toInt() //screen width—dp
-    val heightPx = (App.screenHeight/2).toInt()
+    val widthPx = App.screenWidth.toPx()//screen width—dp
+    val heightPx = (App.screenHeight/2).toPx()
 
     val js = """
     javascript:(function() {
