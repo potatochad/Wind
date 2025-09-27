@@ -59,6 +59,7 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Intent
+import android.widget.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
@@ -111,7 +112,7 @@ var isDesktopSite: Bool = false
 var bookmarkList: ArrayList<Bookmark> = ArrayList()
 var bookmarkIndex: Int = -1
 lateinit var myPager: ViewPager2
-lateinit var tabsBtn: MaterialTextView
+lateinit var tabsBtn: TextView
 
 class WebClass : AppCompatActivity() {
 
