@@ -84,33 +84,6 @@ import com.google.android.material.imageview.*
 import android.graphics.*
 import android.graphics.drawable.*
 
-class MainApp : ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-        setContent {
-            Surface(Modifier.fillMaxSize()) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Button(
-                        onClick = {
-                            startActivity(Intent(this@MainApp, WebClass::class.java))
-                        },
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(text = "Open WebClass", fontSize = 20.sp)
-                    }
-                }
-            }
-        }
-
-    }
-}
-
 
 
 
