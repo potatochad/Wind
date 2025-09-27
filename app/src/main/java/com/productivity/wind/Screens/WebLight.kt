@@ -196,7 +196,7 @@ class WebClass : AppCompatActivity() {
 
             bindingTabs.tabsRV.setHasFixedSize(true)
             bindingTabs.tabsRV.layoutManager = LinearLayoutManager(this)
-            bindingTabs.tabsRV.adapter = TabAdapter(this, dialogTabs)
+            bindingTabs.tabsRV.adapter = TabAdapter(dialogTabs)
 
             dialogTabs.show()
 
@@ -206,8 +206,6 @@ class WebClass : AppCompatActivity() {
             pBtn.isAllCaps = false
             nBtn.isAllCaps = false
 
-            pBtn.setTextColor(Color.Black)
-            nBtn.setTextColor(Color.Black)
 
             pBtn.setCompoundDrawablesWithIntrinsicBounds(
                 ResourcesCompat.getDrawable(resources, R.drawable.ic_home, theme), null, null, null
@@ -889,6 +887,6 @@ class BookmarkActivity : AppCompatActivity() {
         find.rvBookmarks.setItemViewCacheSize(5)
         find.rvBookmarks.hasFixedSize()
         find.rvBookmarks.layoutManager = LinearLayoutManager(this)
-        find.rvBookmarks.adapter = BookmarkAdapter(this, isActivity = true)
+        find.rvBookmarks.adapter = BookmarkAdapter(isActivity = true)
     }
 }
