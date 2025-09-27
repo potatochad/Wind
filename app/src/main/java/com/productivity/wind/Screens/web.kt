@@ -1,5 +1,5 @@
 package com.productivity.wind.Screens
-//
+
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.material.icons.*
@@ -177,35 +177,35 @@ fun Dp.toPx(): Int {
 
 
 fun WebView.injectFixedSizeYouTubeWEIRD() {
-    val widthPx = (App.screenWidth / 8).toPx()
+    val widthPx = (App.screenWidth / 2.9).toPx()
     val heightPx = (widthPx * 9f / 16f)
 
     val js = """
     javascript:(function() {
-        Element.prototype.makeUI = function(prop, value, priority) {
-            this.style.setProperty(prop, value, priority);
+        Element.prototype.makeUI = function(prop, value) {
+            this.style.setProperty(prop, value, 'important');
         }
 
         function resizePlayer() {
             const elements = [
                 document.querySelector("video"),
-                document.getElementById("movie_player"),
-                document.querySelector(".html5-video-container"),
-                document.querySelector("#player-container"),
-                document.querySelector("#player"),
-                document.querySelector("ytd-player")
+                // document.getElementById("movie_player"),
+                // document.querySelector(".html5-video-container"),
+                // document.querySelector("#player-container"),
+                // document.querySelector("#player"),
+                // document.querySelector("ytd-player")
             ];
 
             elements.forEach(el => {
                 if (el) {
-                    el.makeUI('width', '${widthPx}px', 'important');
-                    el.makeUI('height', '${heightPx}px', 'important');
-                    el.makeUI('max-width', '${widthPx}px', 'important');
-                    el.makeUI('max-height', '${heightPx}px', 'important');
-                    el.makeUI('object-fit', 'fill', 'important'); // fills fully, no padding
-                    el.makeUI('margin', '0', 'important');
-                    el.makeUI('padding', '0', 'important');
-                    el.makeUI('border', '0', 'important');
+                    el.makeUI('width', '${widthPx}px');
+                    el.makeUI('height', '${heightPx}px');
+                    el.makeUI('max-width', '${widthPx}px');
+                    el.makeUI('max-height', '${heightPx}px');
+                    el.makeUI('object-fit', 'fill');
+                    el.makeUI('margin', '0');
+                    el.makeUI('padding', '0');
+                    el.makeUI('border', '0');
                 }
             });
         }
