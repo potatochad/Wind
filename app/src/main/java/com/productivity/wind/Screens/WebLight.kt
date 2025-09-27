@@ -760,8 +760,6 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
                         imgView.layoutParams.height = (Resources.getSystem().displayMetrics.heightPixels * .75).toInt()
                         imgView.requestLayout()
 
-                        imgDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
                     }
                     else changeTab(imgUrl, BrowseFragment(imgUrl))
                 }
