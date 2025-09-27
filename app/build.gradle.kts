@@ -121,13 +121,14 @@ ktlint {
 
 
 dependencies {
-    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.2")
+    implementation("com.google.android.material:material:1.13.0")
 
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.2")
     implementation("com.github.skydoves:balloon:1.6.13")
     implementation("org.mozilla.geckoview:geckoview:141.0.20250806102122")
     implementation("androidx.compose.ui:ui")
-    // implementation("androidx.compose.ui:ui-text")
-    // implementation("androidx.compose.ui:ui:1.8.2")
     implementation("com.google.accompanist:accompanist-drawablepainter:0.37.3")
     implementation(platform(libs.androidx.compose.bom))
     implementation("androidx.compose.foundation:foundation")
