@@ -75,10 +75,14 @@ import androidx.compose.ui.draw.*
 import androidx.compose.animation.core.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.*
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.productivity.wind.R
 import com.productivity.wind.databinding.*
 import kotlinx.coroutines.*
-
+import com.google.android.material.imageview.*
+import android.graphics.*
+import android.graphics.drawable.*
 
 class MainApp : ComponentActivity() {
 
@@ -524,7 +528,7 @@ class BookmarkAdapter(private val isActivity: Boolean = false) :
         try {
             //default bookmark image
             if (bookmarkList[position].imagePath != null) {
-                holder.image.background = ResourcesCompat.getDrawable(App.ctx.resources, bookmarkList[position].imagePath!!, context.theme)
+                holder.image.background = ResourcesCompat.getDrawable(App.ctx.resources, bookmarkList[position].imagePath!!, App.ctx.theme)
             } else {
                 val icon = BitmapFactory.decodeByteArray(
                     bookmarkList[position].image, 0,
@@ -842,7 +846,7 @@ class HomeFragment : Fragment() {
 
         binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(result: String?): Boolean {
-                if(checkForInternet(requireContext()))
+                if(checkForInternet())
                     changeTab(result!!, BrowseFragment(result))
                 else
                     Vlog("Internet Not Connected\uD83D\uDE03")
@@ -851,7 +855,7 @@ class HomeFragment : Fragment() {
             override fun onQueryTextChange(p0: String?): Boolean = false
         })
         mainActivityRef.find.goBtn.setOnClickListener {
-            if(checkForInternet(requireContext()))
+            if(checkForInternet())
                 changeTab(mainActivityRef.find.topSearchBar.text.toString(),
                     BrowseFragment(mainActivityRef.find.topSearchBar.text.toString())
                 )
@@ -862,7 +866,7 @@ class HomeFragment : Fragment() {
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.setItemViewCacheSize(5)
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 5)
-        binding.recyclerView.adapter = BookmarkAdapter(requireContext())
+        binding.recyclerView.adapter = BookmarkAdapter()
 
         if(bookmarkList.size < 1)
             binding.viewAllBtn.visibility = View.GONE
