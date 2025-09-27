@@ -60,7 +60,8 @@
         <activity
             android:name=".Screens.WebClass"
             android:configChanges="uiMode|keyboard|keyboardHidden|screenSize|screenLayout|smallestScreenSize|orientation"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         </activity>
 
 
