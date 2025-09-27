@@ -121,6 +121,8 @@ ktlint {
 
 
 dependencies {
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.2")
 
     implementation("com.github.skydoves:balloon:1.6.13")
