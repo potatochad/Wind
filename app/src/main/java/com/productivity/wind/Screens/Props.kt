@@ -284,12 +284,13 @@ object Icon {
         }
         @Composable
         fun Chill() {
+
+            val ctx = LocalContext.current
                 LazyIcon(
                         onClick = {
 
-                            // val context = LocalContext.current
-                            val intent = Intent(App.ctx, WebClass::class.java)
-                            App.ctx.startActivity(intent)
+                            val intent = Intent(ctx, WebClass::class.java)
+                            ctx.startActivity(intent)
 
                             // if (Bar.funTime < Bar.Dpoints) {show(NeedMorePoints)}
                             // else {goTo("Web")}
