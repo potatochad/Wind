@@ -177,7 +177,7 @@ fun Dp.toPx(): Int {
 
 
 fun WebView.injectFixedSizeYouTubeWEIRD() {
-    val widthPx = (App.screenWidth / 2.9).toPx()
+    val widthPx = ((App.screenWidth).toPx()/2.9)
     val heightPx = (widthPx * 9f / 16f)
 
     val js = """
