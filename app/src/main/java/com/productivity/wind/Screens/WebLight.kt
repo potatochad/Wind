@@ -94,7 +94,7 @@ var bookmarkList: ArrayList<Bookmark> = ArrayList()
 var bookmarkIndex: Int = -1
 lateinit var myPager: ViewPager2
 lateinit var tabsBtn: TextView
-//
+
 class WebClass : AppCompatActivity() {
 
     lateinit var find: ActivityMainBinding
