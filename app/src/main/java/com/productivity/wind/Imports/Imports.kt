@@ -85,6 +85,8 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import android.graphics.drawable.Drawable
 import android.content.pm.*
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import java.util.*
 import com.productivity.wind.R
 import android.webkit.*
@@ -329,7 +331,7 @@ fun getAppIcon(packageName: Str): Drawable? {
 
 @Suppress("DEPRECATION")
 fun checkForInternet(): Bool {
-    var content = App.ctx
+    var context = App.ctx
     val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
