@@ -19,7 +19,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import com.productivity.wind.ui.theme.*
 import androidx.compose.ui.platform.LocalConfiguration
 import com.productivity.wind.Imports.*
 import androidx.compose.runtime.snapshots.*

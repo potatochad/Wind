@@ -327,6 +327,22 @@ fun getAppIcon(packageName: Str): Drawable? {
 
 
 
+@Suppress("DEPRECATION")
+fun checkForInternet(): Bool {
+    var content = App.ctx
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+        activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+    } else {
+        val networkInfo = connectivityManager.activeNetworkInfo ?: return false
+        networkInfo.isConnected
+    }
+}
 
 @Composable
 fun eachSecond(onTick: Do) {
