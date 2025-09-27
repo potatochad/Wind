@@ -2,12 +2,14 @@ package com.productivity.wind.Screens
 
 
 import android.annotation.SuppressLint
+import android.content.*
 import android.app.Activity
 import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import androidx.compose.material3.*
 import android.os.Handler
 import android.print.PrintAttributes
 import android.print.PrintJob
@@ -73,7 +75,8 @@ import androidx.compose.ui.draw.*
 import androidx.compose.animation.core.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.*
-import com.productivity.wind.databinding.TabsViewBinding
+import com.productivity.wind.R
+import com.productivity.wind.databinding.*
 import kotlinx.coroutines.*
 
 
@@ -199,8 +202,8 @@ class WebClass : AppCompatActivity() {
             pBtn.isAllCaps = false
             nBtn.isAllCaps = false
 
-            pBtn.setTextColor(Color.BLACK)
-            nBtn.setTextColor(Color.BLACK)
+            pBtn.setTextColor(Color.Black)
+            nBtn.setTextColor(Color.Black)
 
             pBtn.setCompoundDrawablesWithIntrinsicBounds(
                 ResourcesCompat.getDrawable(resources, R.drawable.ic_home, theme), null, null, null
@@ -232,7 +235,7 @@ class WebClass : AppCompatActivity() {
 
             if (isFullscreen) {
                 dialogBinding.fullscreenBtn.apply {
-                    setIconTintResource(R.color.cool_blue)
+                    setIconTintResource(R.color.teal_200)
                     setTextColor(ContextCompat.getColor(this@WebClass, R.color.cool_blue))
                 }
             }
@@ -242,7 +245,7 @@ class WebClass : AppCompatActivity() {
                 if (bookmarkIndex != -1) {
 
                     dialogBinding.bookmarkBtn.apply {
-                        setIconTintResource(R.color.cool_blue)
+                        setIconTintResource(R.color.teal_200)
                         setTextColor(ContextCompat.getColor(this@WebClass, R.color.cool_blue))
                     }
                 }
@@ -250,7 +253,7 @@ class WebClass : AppCompatActivity() {
 
             if (isDesktopSite) {
                 dialogBinding.desktopBtn.apply {
-                    setIconTintResource(R.color.cool_blue)
+                    setIconTintResource(R.color.teal_200)
                     setTextColor(ContextCompat.getColor(this@WebClass, R.color.cool_blue))
                 }
             }
@@ -272,7 +275,7 @@ class WebClass : AppCompatActivity() {
                 dialog.dismiss()
                 if (frag != null)
                     saveAsPdf(web = frag.find.webView)
-                else Snackbar.make(find.root, "First Open A WebPage\uD83D\uDE03", 3000).show()
+                else Vlog("First Open A WebPage\uD83D\uDE03")
             }
 
             dialogBinding.desktopBtn.setOnClickListener {
@@ -293,11 +296,11 @@ class WebClass : AppCompatActivity() {
                                     " 'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024));",
                             null
                         )
-                        it.setIconTintResource(R.color.cool_blue)
+                        it.setIconTintResource(R.color.teal_200)
                         it.setTextColor(
                             ContextCompat.getColor(
                                 this@WebClass,
-                                R.color.cool_blue
+                                R.color.teal_200
                             )
                         )
                         true
@@ -364,17 +367,13 @@ class WebClass : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        printJob?.let {
-            when {
-                it.isCompleted -> Snackbar.make(
-                    find.root,
-                    "Successful -> ${it.info.label}",
-                    4000
-                ).show()
 
-                it.isFailed -> Snackbar.make(find.root, "Failed -> ${it.info.label}", 4000)
-                    .show()
-            }
+        printJob?.let {
+            Vlog(
+                if (it.isCompleted) "Successful -> ${it.info.label}"
+                else if (it.isFailed) "Failed -> ${it.info.label}"
+                else return@let
+            )
         }
     }
 
@@ -450,7 +449,7 @@ fun changeTab(url: Str, fragment: Fragment, isBackground: Bool = false) {
     if (!isBackground) myPager.currentItem = tabsList.size - 1
 }
 
-class TabAdapter(private val context: Context, private val dialog: AlertDialog): RecyclerView.Adapter<TabAdapter.MyHolder>() {
+class TabAdapter(private val dialog: AlertDialog): RecyclerView.Adapter<TabAdapter.MyHolder>() {
 
     class MyHolder(binding: TabBinding) :RecyclerView.ViewHolder(binding.root) {
         val cancelBtn = binding.cancelBtn
@@ -459,7 +458,7 @@ class TabAdapter(private val context: Context, private val dialog: AlertDialog):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
-        return MyHolder(TabBinding.inflate(LayoutInflater.from(context), parent, false))
+        return MyHolder(TabBinding.inflate(LayoutInflater.from(App.ctx), parent, false))
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -472,8 +471,8 @@ class TabAdapter(private val context: Context, private val dialog: AlertDialog):
 
         holder.cancelBtn.setOnClickListener {
             if(tabsList.size == 1 || position == myPager.currentItem)
-                Snackbar.make(myPager, "Can't Remove this tab", 3000).show()
-            else{
+                Vlog("Can't Remove this tab")
+            else {
                 tabsList.removeAt(position)
                 notifyDataSetChanged()
                 myPager.adapter?.notifyItemRemoved(position)
@@ -489,10 +488,10 @@ class TabAdapter(private val context: Context, private val dialog: AlertDialog):
 }
 
 
-class BookmarkAdapter(private val context: Context, private val isActivity: Boolean = false) :
+class BookmarkAdapter(private val isActivity: Boolean = false) :
     RecyclerView.Adapter<BookmarkAdapter.MyHolder>() {
 
-    private val colors = context.resources.getIntArray(R.array.myColors)
+    private val colors = App.ctx.resources.getIntArray(R.array.myColors)
 
     class MyHolder(
         binding: BookmarkViewBinding? = null,
@@ -507,14 +506,14 @@ class BookmarkAdapter(private val context: Context, private val isActivity: Bool
         if (isActivity)
             return MyHolder(
                 bindingL = LongBookmarkViewBinding.inflate(
-                    LayoutInflater.from(context),
+                    LayoutInflater.from(App.ctx),
                     parent,
                     false
                 )
             )
         return MyHolder(
             binding = BookmarkViewBinding.inflate(
-                LayoutInflater.from(context),
+                LayoutInflater.from(App.ctx),
                 parent,
                 false
             )
@@ -525,13 +524,13 @@ class BookmarkAdapter(private val context: Context, private val isActivity: Bool
         try {
             //default bookmark image
             if (bookmarkList[position].imagePath != null) {
-                holder.image.background = ResourcesCompat.getDrawable(context.resources, bookmarkList[position].imagePath!!, context.theme)
+                holder.image.background = ResourcesCompat.getDrawable(App.ctx.resources, bookmarkList[position].imagePath!!, context.theme)
             } else {
                 val icon = BitmapFactory.decodeByteArray(
                     bookmarkList[position].image, 0,
                     bookmarkList[position].image!!.size
                 )
-                holder.image.background = icon.toDrawable(context.resources)
+                holder.image.background = icon.toDrawable(App.ctx.resources)
             }
         } catch (e: Exception) {
             holder.image.setBackgroundColor(colors[(colors.indices).random()])
@@ -543,16 +542,15 @@ class BookmarkAdapter(private val context: Context, private val isActivity: Bool
 
         holder.root.setOnClickListener {
             when {
-                checkForInternet(context) -> {
+                checkForInternet() -> {
                     changeTab(
                         bookmarkList[position].name,
                         BrowseFragment(urlNew = bookmarkList[position].url)
                     )
-                    if (isActivity) (context as Activity).finish()
+                    if (isActivity) (App.ctx as Activity).finish()
                 }
 
-                else -> Snackbar.make(holder.root, "Internet Not Connected\uD83D\uDE03", 3000)
-                    .show()
+                else -> Vlog("Internet Not Connected\uD83D\uDE03")
             }
 
         }
@@ -779,7 +777,7 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
                             requireActivity().contentResolver,
                             finalImg, "Image", null
                         )
-                        Snackbar.make(find.root, "Image Saved Successfully", 3000).show()
+                        Vlog("Image Saved Successfully")
                     }
                     else startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(imgUrl)))
                 }
@@ -808,7 +806,7 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
                             .startChooser()
                     }
                 }
-                else Snackbar.make(find.root, "Not a Valid Link!", 3000).show()
+                else Vlog("Not a Valid Link!")
             }
             "Close" -> {}
         }
@@ -847,7 +845,7 @@ class HomeFragment : Fragment() {
                 if(checkForInternet(requireContext()))
                     changeTab(result!!, BrowseFragment(result))
                 else
-                    Snackbar.make(binding.root, "Internet Not Connected\uD83D\uDE03", 3000).show()
+                    Vlog("Internet Not Connected\uD83D\uDE03")
                 return true
             }
             override fun onQueryTextChange(p0: String?): Boolean = false
@@ -858,7 +856,7 @@ class HomeFragment : Fragment() {
                     BrowseFragment(mainActivityRef.find.topSearchBar.text.toString())
                 )
             else
-                Snackbar.make(binding.root, "Internet Not Connected\uD83D\uDE03", 3000).show()
+                Vlog("Internet Not Connected\uD83D\uDE03")
         }
 
         binding.recyclerView.setHasFixedSize(true)
