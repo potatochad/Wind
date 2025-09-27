@@ -73,6 +73,7 @@ import androidx.compose.ui.draw.*
 import androidx.compose.animation.core.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.*
+import com.productivity.wind.databinding.TabsViewBinding
 import kotlinx.coroutines.*
 
 
