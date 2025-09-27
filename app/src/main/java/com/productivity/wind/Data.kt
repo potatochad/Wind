@@ -149,10 +149,8 @@ class MainActivity : ComponentActivity() {
 
         AppStart_beforeUI(applicationContext)
         setContent {
-            WindTheme {
-                Surface(Modifier.fillMaxSize()) {
-                    AppStart()
-                }
+            Surface(Modifier.fillMaxSize()) {
+                AppStart()
             }
         }
     }
