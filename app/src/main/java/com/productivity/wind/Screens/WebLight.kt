@@ -1,9 +1,8 @@
-package com.harshRajpurohit.letsBrowse.activity
+package com.productivity.wind.Screens
+
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
@@ -39,8 +38,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ShareCompat
@@ -55,20 +52,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textview.MaterialTextView
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.harshRajpurohit.letsBrowse.R
-import com.harshRajpurohit.letsBrowse.databinding.*
-import com.harshrajpurohit.letsbrowse.*
 import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
+import android.content.Intent
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import com.productivity.wind.*
+import androidx.compose.ui.Modifier
+import com.productivity.wind.Imports.*
+import androidx.compose.foundation.background
+import androidx.compose.ui.draw.*
+import androidx.compose.animation.core.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.*
+import kotlinx.coroutines.*
 
 
 class MainApp : ComponentActivity() {
