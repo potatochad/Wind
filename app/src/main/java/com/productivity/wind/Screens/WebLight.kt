@@ -1,6 +1,5 @@
 package com.productivity.wind.Screens
 
-//
 import android.annotation.SuppressLint
 import android.content.*
 import android.app.Activity
@@ -391,16 +390,7 @@ class WebClass : AppCompatActivity() {
             val list: ArrayList<Bookmark> = GsonBuilder().create()
                 .fromJson(data, object : TypeToken<ArrayList<Bookmark>>() {}.type)
             bookmarkList.addAll(list)
-        } else {
-            // add default bookmarks
-            bookmarkList.add(
-                Bookmark(
-                    "Google",
-                    "https://www.google.com",
-                    null,
-                    R.drawable.ic_d_google
-                )
-            )
+        } else {     
             bookmarkList.add(
                 Bookmark(
                     "Youtube",
