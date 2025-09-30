@@ -147,11 +147,23 @@ class MainActivity : ComponentActivity() {
         }
 
         AppStart_beforeUI(applicationContext)
-        setContent {
-            Surface(Modifier.fillMaxSize()) {
-                AppStart()
-            }
-        }
+        // setContent {
+        //    Surface(Modifier.fillMaxSize()) {
+        //       AppStart()
+        //    }
+        //}
+
+		setContent {
+			MyApplicationTheme {  // <- This applies the default theme
+				Surface(
+					modifier = Modifier.fillMaxSize(),
+					color = MaterialTheme.colorScheme.background
+				) {
+					AppStart()
+				}
+			}
+		}
+
     }
 
     override fun onResume() {
