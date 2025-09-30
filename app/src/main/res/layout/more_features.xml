@@ -83,19 +83,6 @@
             android:textColor="@color/black"
             android:textAllCaps="false"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/fullscreenBtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:icon="@drawable/ic_fullscreen"
-            android:text="@string/fullscreen"
-            app:iconGravity="top"
-            android:background="?attr/selectableItemBackground"
-            app:iconTint="@color/black"
-            android:textColor="@color/black"
-            android:textAllCaps="false"/>
-
 
     </LinearLayout>
 

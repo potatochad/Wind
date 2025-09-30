@@ -87,7 +87,6 @@ import android.graphics.drawable.*
 
 
 var tabsList: ArrayList<Tab> = ArrayList()
-private var isFullscreen: Bool = true
 var isDesktopSite: Bool = false
 var bookmarkList: ArrayList<Bookmark> = ArrayList()
 var bookmarkIndex: Int = -1
@@ -206,13 +205,6 @@ class WebClass : AppCompatActivity() {
                 setBackgroundDrawable(ColorDrawable(0xFFFFFFFF.toInt()))
             }
             dialog.show()
-
-            if (isFullscreen) {
-                findDialog.fullscreenBtn.apply {
-                    setIconTintResource(R.color.teal_200)
-                    setTextColor(ContextCompat.getColor(this@WebClass, R.color.cool_blue))
-                }
-            }
 
             frag?.let {
                 bookmarkIndex = isBookmarked(it.find.webView.url!!)
