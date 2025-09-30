@@ -154,7 +154,7 @@ class MainActivity : ComponentActivity() {
         //}
 
 		setContent {
-			MyApplicationTheme {  // <- This applies the default theme
+			MyApplicationTheme {
 				Surface(
 					modifier = Modifier.fillMaxSize(),
 					color = MaterialTheme.colorScheme.background
