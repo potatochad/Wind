@@ -196,7 +196,7 @@ class WebClass : AppCompatActivity() {
             }
 
             val view = layoutInflater.inflate(R.layout.more_features, find.root, false)
-            val dialogBinding = MoreFeaturesBinding.bind(view)
+            val findDialog = MoreFeaturesBinding.bind(view)
 
             val dialog = MaterialAlertDialogBuilder(this).setView(view).create()
 
@@ -208,7 +208,7 @@ class WebClass : AppCompatActivity() {
             dialog.show()
 
             if (isFullscreen) {
-                dialogBinding.fullscreenBtn.apply {
+                findDialog.fullscreenBtn.apply {
                     setIconTintResource(R.color.teal_200)
                     setTextColor(ContextCompat.getColor(this@WebClass, R.color.cool_blue))
                 }
@@ -218,7 +218,7 @@ class WebClass : AppCompatActivity() {
                 bookmarkIndex = isBookmarked(it.find.webView.url!!)
                 if (bookmarkIndex != -1) {
 
-                    dialogBinding.bookmarkBtn.apply {
+                    findDialog.bookmarkBtn.apply {
                         setIconTintResource(R.color.teal_200)
                         setTextColor(ContextCompat.getColor(this@WebClass, R.color.cool_blue))
                     }
@@ -226,7 +226,7 @@ class WebClass : AppCompatActivity() {
             }
 
             if (isDesktopSite) {
-                dialogBinding.desktopBtn.apply {
+                findDialog.desktopBtn.apply {
                     setIconTintResource(R.color.teal_200)
                     setTextColor(ContextCompat.getColor(this@WebClass, R.color.cool_blue))
                 }
@@ -234,25 +234,25 @@ class WebClass : AppCompatActivity() {
 
 
 
-            dialogBinding.backBtn.setOnClickListener {
+            findDialog.backBtn.setOnClickListener {
                 onBackPressed()
             }
 
-            dialogBinding.forwardBtn.setOnClickListener {
+            findDialog.forwardBtn.setOnClickListener {
                 frag?.apply {
                     if (find.webView.canGoForward())
                         find.webView.goForward()
                 }
             }
 
-            dialogBinding.saveBtn.setOnClickListener {
+            findDialog.saveBtn.setOnClickListener {
                 dialog.dismiss()
                 if (frag != null)
                     saveAsPdf(web = frag.find.webView)
                 else Vlog("First Open A WebPage\uD83D\uDE03")
             }
 
-            dialogBinding.desktopBtn.setOnClickListener {
+            findDialog.desktopBtn.setOnClickListener {
                 it as MaterialButton
 
                 frag?.find?.webView?.apply {
@@ -285,12 +285,12 @@ class WebClass : AppCompatActivity() {
 
             }
 
-            dialogBinding.bookmarkBtn.setOnClickListener {
+            findDialog.bookmarkBtn.setOnClickListener {
                 frag?.let {
                     if (bookmarkIndex == -1) {
                         val viewB =
                             layoutInflater.inflate(R.layout.bookmark_dialog, find.root, false)
-                        val bBinding = BookmarkDialogBinding.bind(viewB)
+                        val findBookmark = BookmarkDialogBinding.bind(viewB)
                         val dialogB = MaterialAlertDialogBuilder(this)
                             .setTitle("Add Bookmark")
                             .setMessage("Url:${it.find.webView.url}")
@@ -300,7 +300,7 @@ class WebClass : AppCompatActivity() {
                                     it.webIcon?.compress(Bitmap.CompressFormat.PNG, 100, array)
                                     bookmarkList.add(
                                         Bookmark(
-                                            name = bBinding.bookmarkTitle.text.toString(),
+                                            name = findBookmark.bookmarkTitle.text.toString(),
                                             url = it.find.webView.url!!,
                                             array.toByteArray()
                                         )
@@ -308,7 +308,7 @@ class WebClass : AppCompatActivity() {
                                 } catch (e: Exception) {
                                     bookmarkList.add(
                                         Bookmark(
-                                            name = bBinding.bookmarkTitle.text.toString(),
+                                            name = findBookmark.bookmarkTitle.text.toString(),
                                             url = it.find.webView.url!!
                                         )
                                     )
@@ -318,7 +318,7 @@ class WebClass : AppCompatActivity() {
                             .setNegativeButton("Cancel") { self, _ -> self.dismiss() }
                             .setView(viewB).create()
                         dialogB.show()
-                        bBinding.bookmarkTitle.setText(it.find.webView.title)
+                        findBookmark.bookmarkTitle.setText(it.find.webView.title)
                     } else {
                         val dialogB = MaterialAlertDialogBuilder(this)
                             .setTitle("Remove Bookmark")
@@ -416,10 +416,10 @@ fun changeTab(url: Str, fragment: Fragment, isBackground: Bool = false) {
 
 class TabAdapter(private val dialog: AlertDialog): RecyclerView.Adapter<TabAdapter.MyHolder>() {
 
-    class MyHolder(binding: TabBinding) :RecyclerView.ViewHolder(binding.root) {
-        val cancelBtn = binding.cancelBtn
-        val name = binding.tabName
-        val root = binding.root
+    class MyHolder(find: TabBinding) :RecyclerView.ViewHolder(find.root) {
+        val cancelBtn = find.cancelBtn
+        val name = find.tabName
+        val root = find.root
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
@@ -459,25 +459,25 @@ class BookmarkAdapter(private val isActivity: Boolean = false) :
     private val colors = App.ctx.resources.getIntArray(R.array.myColors)
 
     class MyHolder(
-        binding: BookmarkViewBinding? = null,
-        bindingL: LongBookmarkViewBinding? = null
-    ) : RecyclerView.ViewHolder((binding?.root ?: bindingL?.root)!!) {
-        val image = (binding?.bookmarkIcon ?: bindingL?.bookmarkIcon)!!
-        val name = (binding?.bookmarkName ?: bindingL?.bookmarkName)!!
-        val root = (binding?.root ?: bindingL?.root)!!
+        find: BookmarkViewBinding? = null,
+        findL: LongBookmarkViewBinding? = null
+    ) : RecyclerView.ViewHolder((find?.root ?: findL?.root)!!) {
+        val image = (find?.bookmarkIcon ?: findL?.bookmarkIcon)!!
+        val name = (find?.bookmarkName ?: findL?.bookmarkName)!!
+        val root = (find?.root ?: findL?.root)!!
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         if (isActivity)
             return MyHolder(
-                bindingL = LongBookmarkViewBinding.inflate(
+                findL = LongBookmarkViewBinding.inflate(
                     LayoutInflater.from(App.ctx),
                     parent,
                     false
                 )
             )
         return MyHolder(
-            binding = BookmarkViewBinding.inflate(
+            find = BookmarkViewBinding.inflate(
                 LayoutInflater.from(App.ctx),
                 parent,
                 false
@@ -780,11 +780,11 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
 
 class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var find: FragmentHomeBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        binding = FragmentHomeBinding.bind(view)
+        find = FragmentHomeBinding.bind(view)
 
         return view
     }
@@ -798,12 +798,12 @@ class HomeFragment : Fragment() {
         tabsList[myPager.currentItem].name = "Home"
 
         mainActivityRef.find.topSearchBar.setText("")
-        binding.searchView.setQuery("",false)
+        find.searchView.setQuery("",false)
         mainActivityRef.find.webIcon.setImageResource(R.drawable.ic_search)
 
         mainActivityRef.find.refreshBtn.visibility = View.GONE
 
-        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        find.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(result: String?): Boolean {
                 if(checkForInternet())
                     changeTab(result!!, BrowseFragment(result))
@@ -822,14 +822,14 @@ class HomeFragment : Fragment() {
                 Vlog("Internet Not Connected\uD83D\uDE03")
         }
 
-        binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.setItemViewCacheSize(5)
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 5)
-        binding.recyclerView.adapter = BookmarkAdapter()
+        find.recyclerView.setHasFixedSize(true)
+        find.recyclerView.setItemViewCacheSize(5)
+        find.recyclerView.layoutManager = GridLayoutManager(requireContext(), 5)
+        find.recyclerView.adapter = BookmarkAdapter()
 
         if(bookmarkList.size < 1)
-            binding.viewAllBtn.visibility = View.GONE
-        binding.viewAllBtn.setOnClickListener {
+            find.viewAllBtn.visibility = View.GONE
+        find.viewAllBtn.setOnClickListener {
             startActivity(Intent(requireContext(), BookmarkActivity::class.java))
         }
     }

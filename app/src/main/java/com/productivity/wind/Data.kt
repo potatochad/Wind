@@ -29,6 +29,8 @@ import android.graphics.*
 import androidx.compose.foundation.layout.*
 import com.productivity.wind.Imports.*
 import androidx.compose.foundation.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
@@ -143,7 +145,7 @@ class MainActivity : ComponentActivity() {
             isAppearanceLightNavigationBars = false
             show(WindowInsetsCompat.Type.systemBars()) // Force visible
             systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_BARS_BY_TOUCH
+                WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
         }
 
         AppStart_beforeUI(applicationContext)
@@ -153,16 +155,14 @@ class MainActivity : ComponentActivity() {
         //    }
         //}
 
-		setContent {
-			MyApplicationTheme {
-				Surface(
-					modifier = Modifier.fillMaxSize(),
-					color = MaterialTheme.colorScheme.background
-				) {
-					AppStart()
-				}
-			}
-		}
+        setContent {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background // or any specific dark color
+            ) {
+                AppStart()
+            }
+        }
 
     }
 
@@ -175,6 +175,8 @@ class MainActivity : ComponentActivity() {
         OnResume()
     }
 }
+
+
 
 
 @RequiresApi(Build.VERSION_CODES.O)
