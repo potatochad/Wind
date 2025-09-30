@@ -151,7 +151,7 @@ class WebClass : AppCompatActivity() {
 
         find.tabsBtn.setOnClickListener {
             val viewTabs = layoutInflater.inflate(R.layout.tabs_view, find.root, false)
-            val bindingTabs = TabsViewBinding.bind(viewTabs)
+            val findTabs = TabsViewBinding.bind(viewTabs)
 
             val dialogTabs =
                 MaterialAlertDialogBuilder(this, R.style.roundCornerDialog).setView(viewTabs)
@@ -166,9 +166,9 @@ class WebClass : AppCompatActivity() {
                     }
                     .create()
 
-            bindingTabs.tabsRV.setHasFixedSize(true)
-            bindingTabs.tabsRV.layoutManager = LinearLayoutManager(this)
-            bindingTabs.tabsRV.adapter = TabAdapter(dialogTabs)
+            findTabs.tabsRV.setHasFixedSize(true)
+            findTabs.tabsRV.layoutManager = LinearLayoutManager(this)
+            findTabs.tabsRV.adapter = TabAdapter(dialogTabs)
 
             dialogTabs.show()
 
