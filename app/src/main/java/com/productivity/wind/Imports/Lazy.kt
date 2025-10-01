@@ -108,6 +108,10 @@ fun LazyMove(
 		}
     }
 }
+@Composable
+fun LazyTheme(content: Content) {
+	
+}
 
 
 
