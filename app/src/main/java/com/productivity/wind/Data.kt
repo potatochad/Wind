@@ -31,7 +31,7 @@ import com.productivity.wind.Imports.*
 import androidx.compose.foundation.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import com.productivity.wind.ui.theme.WindTheme
+import com.productivity.wind.theme.WindTheme
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
