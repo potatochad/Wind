@@ -331,69 +331,6 @@ class WebClass : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        printJob?.let {
-            Vlog(
-                if (it.isCompleted) "Successful -> ${it.info.label}"
-                else if (it.isFailed) "Failed -> ${it.info.label}"
-                else return@let
-            )
-        }
-    }
-
-    private fun saveAsPdf(web: WebView) {
-        val pm = getSystemService(Context.PRINT_SERVICE) as PrintManager
-
-        val jobName = "${URL(web.url).host}_${
-            SimpleDateFormat("HH:mm d_MMM_yy", Locale.ENGLISH)
-                .format(Calendar.getInstance().time)
-        }"
-        val printAdapter = web.createPrintDocumentAdapter(jobName)
-        val printAttributes = PrintAttributes.Builder()
-        printJob = pm.print(jobName, printAdapter, printAttributes.build())
-    }
-
-    fun isBookmarked(url: Str): Int {
-        bookmarkList.forEachIndexed { index, bookmark ->
-            if (bookmark.url == url) return index
-        }
-        return -1
-    }
-
-    fun saveBookmarks() {
-        //for storing bookmarks data using shared preferences
-        val editor = getSharedPreferences("BOOKMARKS", MODE_PRIVATE).edit()
-
-        val data = GsonBuilder().create().toJson(bookmarkList)
-        editor.putString("bookmarkList", data)
-
-        editor.apply()
-    }
-
-    private fun getAllBookmarks() {
-        //for getting bookmarks data using shared preferences from storage
-        bookmarkList = ArrayList()
-        val editor = getSharedPreferences("BOOKMARKS", MODE_PRIVATE)
-        val data = editor.getString("bookmarkList", null)
-
-        if (data != null) {
-            val list: ArrayList<Bookmark> = GsonBuilder().create()
-                .fromJson(data, object : TypeToken<ArrayList<Bookmark>>() {}.type)
-            bookmarkList.addAll(list)
-        } else {     
-            bookmarkList.add(
-                Bookmark(
-                    "Youtube",
-                    "https://youtube.com",
-                    null,
-                    R.drawable.ic_d_youtube
-                )
-            )
-        }
-    }
-
 }
 
 
