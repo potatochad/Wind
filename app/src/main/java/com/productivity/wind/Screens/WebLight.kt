@@ -11,34 +11,18 @@ import android.os.Bundle
 import androidx.compose.material3.*
 import android.os.Handler
 import android.print.PrintAttributes
-import android.print.PrintJob
-import android.print.PrintManager
+import android.print.*
 import android.provider.MediaStore
 import android.text.SpannableStringBuilder
 import android.util.Base64
-import android.view.ContextMenu
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.webkit.CookieManager
-import android.webkit.URLUtil
-import android.webkit.WebChromeClient
-import android.webkit.WebStorage
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.view.*
+import android.webkit.*
 import android.widget.SearchView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.appcompat.app.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ShareCompat
@@ -48,9 +32,7 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.GsonBuilder
@@ -88,6 +70,8 @@ import android.graphics.drawable.*
 
 var tabsList: ArrayList<Tab> = ArrayList()
 var isDesktopSite: Bool = false
+var bookmarkList: ArrayList<Bookmark> = ArrayList()
+var bookmarkIndex: Int = -1
 lateinit var myPager: ViewPager2
 lateinit var tabsBtn: TextView
 
