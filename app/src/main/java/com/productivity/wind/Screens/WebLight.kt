@@ -75,9 +75,6 @@ var bookmarkIndex: Int = -1
 lateinit var myPager: ViewPager2
 lateinit var tabsBtn: TextView
 
-
-showMoreFeaturesDialog()
-
 class WebClass : AppCompatActivity() {
 
     lateinit var find: ActivityMainBinding
@@ -93,8 +90,6 @@ class WebClass : AppCompatActivity() {
         find.myPager.isUserInputEnabled = false
         myPager = find.myPager
         tabsBtn = find.tabsBtn
-
-        initializeView()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -108,19 +103,6 @@ class WebClass : AppCompatActivity() {
         override fun getItemCount(): Int = tabsList.size
 
         override fun createFragment(position: Int): Fragment = tabsList[position].fragment
-    }
-
-
-    private fun initializeView() {
-
-        find.tabsBtn.setOnClickListener {
-            Vlog("TabsBtn click listener removed")
-        }
-
-        find.settingBtn.setOnClickListener {
-            showMoreFeaturesDialog()
-        }
-
     }
 
 }
