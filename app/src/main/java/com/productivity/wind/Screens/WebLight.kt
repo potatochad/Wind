@@ -76,30 +76,6 @@ lateinit var myPager: ViewPager2
 lateinit var tabsBtn: TextView
 
 
-@SuppressLint("NotifyDataSetChanged")
-fun handleBackPressed(activity: WebClass) {
-    val currentIndex = activity.find.myPager.currentItem
-    var frag: BrowseFragment? = null
-
-    try {
-        frag = tabsList[currentIndex].fragment as? BrowseFragment
-    } catch (_: Exception) { }
-
-    when {
-        // If the WebView can go back, go back
-        frag?.find?.webView?.canGoBack() == true -> frag.find.webView.goBack()
-
-        // If not first tab, remove current tab
-        currentIndex != 0 -> {
-            tabsList.removeAt(currentIndex)
-            activity.find.myPager.adapter?.notifyDataSetChanged()
-            activity.find.myPager.currentItem = tabsList.size - 1
-        }
-
-        // Otherwise, exit activity normally
-        else -> activity.onBackPressedDispatcher.onBackPressed()
-    }
-}
 
 
 class WebClass : AppCompatActivity() {
