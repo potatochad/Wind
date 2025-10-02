@@ -75,6 +75,7 @@ var bookmarkIndex: Int = -1
 lateinit var myPager: ViewPager2
 lateinit var tabsBtn: TextView
 
+
 class WebClass : AppCompatActivity() {
 
     lateinit var find: ActivityMainBinding
@@ -135,18 +136,6 @@ class TabAdapter(private val dialog: AlertDialog): RecyclerView.Adapter<TabAdapt
         holder.root.setOnClickListener {
             myPager.currentItem = position
             dialog.dismiss()
-        }
-
-        holder.cancelBtn.setOnClickListener {
-            if(tabsList.size == 1 || position == myPager.currentItem)
-                Vlog("Can't Remove this tab")
-            else {
-                tabsList.removeAt(position)
-                notifyDataSetChanged()
-                myPager.adapter?.notifyItemRemoved(position)
-            }
-
-
         }
     }
 
@@ -254,10 +243,7 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
         val mainRef = requireActivity() as WebClass
 
         find.webView.apply {
-            settings.javaScriptEnabled = true
-            settings.setSupportZoom(true)
-            settings.builtInZoomControls = true
-            settings.displayZoomControls = false
+            settings.applyDefaultConfig()
             webViewClient = object: WebViewClient(){
 
                 override fun onLoadResource(view: WebView?, url: String?) {
