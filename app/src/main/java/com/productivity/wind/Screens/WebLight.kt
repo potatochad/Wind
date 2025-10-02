@@ -76,7 +76,7 @@ lateinit var myPager: ViewPager2
 lateinit var tabsBtn: TextView
 
 
-
+showMoreFeaturesDialog()
 
 class WebClass : AppCompatActivity() {
 
@@ -118,30 +118,7 @@ class WebClass : AppCompatActivity() {
         }
 
         find.settingBtn.setOnClickListener {
-
-            var frag: BrowseFragment? = null
-            try {
-                frag = tabsList[find.myPager.currentItem].fragment as BrowseFragment
-            } catch (_: Exception) {
-            }
-
-            val view = layoutInflater.inflate(R.layout.more_features, find.root, false)
-            val findDialog = MoreFeaturesBinding.bind(view)
-
-            val dialog = MaterialAlertDialogBuilder(this).setView(view).create()
-
-            dialog.window?.apply {
-                attributes.gravity = Gravity.BOTTOM
-                attributes.y = 50
-                setBackgroundDrawable(ColorDrawable(0xFFFFFFFF.toInt()))
-            }
-            dialog.show()
-
-            findDialog.backBtn.setOnClickListener {
-                onBackPressed()
-            }
-
-            
+            showMoreFeaturesDialog()
         }
 
     }
