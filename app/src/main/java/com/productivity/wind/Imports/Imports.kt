@@ -94,7 +94,6 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.ui.graphics.painter.*
 import com.google.accompanist.drawablepainter.*
 import androidx.compose.ui.layout.*
-
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
@@ -103,6 +102,13 @@ import androidx.compose.ui.layout.*
 import androidx.compose.ui.platform.*
 import androidx.compose.*
 import androidx.compose.runtime.*
+import androidx.appcompat.app.*
+import com.productivity.wind.databinding.*
+
+
+
+
+
 //region log
 
 fun log(message: Str, tag: Str? = "Bad") {
