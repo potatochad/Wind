@@ -269,7 +269,13 @@ fun WebView.clearWebData() {
     CookieManager.getInstance().removeAllCookies(null)
     WebStorage.getInstance().deleteAllData()
 }
-
+@SuppressLint("SetJavaScriptEnabled")
+fun WebSettings.applyDefaultConfig() {
+    javaScriptEnabled = true
+    setSupportZoom(true)
+    builtInZoomControls = true
+    displayZoomControls = false
+}
 
 
 //endregion NO LAG COMPOSE
