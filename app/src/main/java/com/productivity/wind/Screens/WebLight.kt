@@ -320,8 +320,6 @@ class BookmarkAdapter(private val isActivity: Boolean = false) :
                     )
                     if (isActivity) (App.ctx as Activity).finish()
                 }
-
-                else -> Vlog("Internet Not Connected\uD83D\uDE03")
             }
 
         }
@@ -344,11 +342,7 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
         registerForContextMenu(find.webView)
 
         find.webView.apply {
-            when{
-                URLUtil.isValidUrl(urlNew) -> loadUrl(urlNew)
-                urlNew.contains(".com", ignoreCase = true) -> loadUrl(urlNew)
-                else -> loadUrl("https://www.google.com/search?q=$urlNew")
-            }
+            loadUrl("https://www.google.com/search?q=$urlNew")
         }
 
         return view
@@ -360,17 +354,7 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
         tabsList[myPager.currentItem].name = find.webView.url.toString()
         tabsBtn.text = tabsList.size.toString()
 
-        //for downloading file using external download manager
-        find.webView.setDownloadListener { url, _, _, _, _ -> startActivity(
-            Intent(Intent.ACTION_VIEW).setData(
-            Uri.parse(url))) }
-
         val mainRef = requireActivity() as WebClass
-
-        mainRef.find.refreshBtn.visibility = View.VISIBLE
-        mainRef.find.refreshBtn.setOnClickListener {
-            find.webView.reload()
-        }
 
         find.webView.apply {
             settings.javaScriptEnabled = true
@@ -409,7 +393,7 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
                 //for setting icon to our search bar
                 override fun onReceivedIcon(view: WebView?, icon: Bitmap?) {
                     super.onReceivedIcon(view, icon)
-                    Vlog("Does nothing")
+                    
                 }
 
                 override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
@@ -464,9 +448,9 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
         super.onCreateContextMenu(menu, v, menuInfo)
     }
 
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-    return super.onContextItemSelected(item)
-}
+    override fun onContextItemSelected(item: MenuItem): Bool {
+        return super.onContextItemSelected(item)
+    }
 
 
 }
@@ -500,8 +484,6 @@ class HomeFragment : Fragment() {
             override fun onQueryTextSubmit(result: Str?): Bool {
                 if(checkForInternet())
                     changeTab(result!!, BrowseFragment(result))
-                else
-                    Vlog("Internet Not Connected\uD83D\uDE03")
                 return true
             }
             override fun onQueryTextChange(p0: Str?): Bool = false
@@ -511,8 +493,6 @@ class HomeFragment : Fragment() {
                 changeTab(mainActivityRef.find.topSearchBar.text.toString(),
                     BrowseFragment(mainActivityRef.find.topSearchBar.text.toString())
                 )
-            else
-                Vlog("Internet Not Connected\uD83D\uDE03")
         }
 
         find.recyclerView.setHasFixedSize(true)
