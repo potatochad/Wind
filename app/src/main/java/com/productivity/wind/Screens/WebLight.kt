@@ -568,9 +568,10 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
         super.onCreateContextMenu(menu, v, menuInfo)
     }
 
-    override fun onContextItemSelected(item: MenuItem): Bool {
-        
-    }
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+    return super.onContextItemSelected(item)
+}
+
 
 }
 
