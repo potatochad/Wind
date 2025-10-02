@@ -223,6 +223,11 @@ fun UrlConverter(input: Str): Str {
         }
     }
 }
+fun setUpXML(activity: AppCompatActivity): ActivityMainBinding {
+    val binding = ActivityMainBinding.inflate(activity.layoutInflater)
+    activity.setContentView(binding.root)
+    return binding
+}
 
 
 //endregion NO LAG COMPOSE
