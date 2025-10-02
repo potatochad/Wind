@@ -114,41 +114,7 @@ class WebClass : AppCompatActivity() {
     private fun initializeView() {
 
         find.tabsBtn.setOnClickListener {
-            val viewTabs = layoutInflater.inflate(R.layout.tabs_view, find.root, false)
-            val findTabs = TabsViewBinding.bind(viewTabs)
-
-            val dialogTabs =
-                MaterialAlertDialogBuilder(this, R.style.roundCornerDialog).setView(viewTabs)
-                    .setTitle("Select Tab")
-                    .setPositiveButton("Home") { self, _ ->
-                        changeTab("Home", HomeFragment())
-                        self.dismiss()
-                    }
-                    .setNeutralButton("Google") { self, _ ->
-                        changeTab("Google", BrowseFragment(urlNew = "www.google.com"))
-                        self.dismiss()
-                    }
-                    .create()
-
-            findTabs.tabsRV.setHasFixedSize(true)
-            findTabs.tabsRV.layoutManager = LinearLayoutManager(this)
-            findTabs.tabsRV.adapter = TabAdapter(dialogTabs)
-
-            dialogTabs.show()
-
-            val pBtn = dialogTabs.getButton(AlertDialog.BUTTON_POSITIVE)
-            val nBtn = dialogTabs.getButton(AlertDialog.BUTTON_NEUTRAL)
-
-            pBtn.isAllCaps = false
-            nBtn.isAllCaps = false
-
-
-            pBtn.setCompoundDrawablesWithIntrinsicBounds(
-                ResourcesCompat.getDrawable(resources, R.drawable.ic_home, theme), null, null, null
-            )
-            nBtn.setCompoundDrawablesWithIntrinsicBounds(
-                ResourcesCompat.getDrawable(resources, R.drawable.ic_add, theme), null, null, null
-            )
+            Vlog("TabsBtn click listener removed")
         }
 
         find.settingBtn.setOnClickListener {
@@ -170,27 +136,12 @@ class WebClass : AppCompatActivity() {
                 setBackgroundDrawable(ColorDrawable(0xFFFFFFFF.toInt()))
             }
             dialog.show()
-            
-
-            if (isDesktopSite) {
-                findDialog.desktopBtn.apply {
-                    setIconTintResource(R.color.teal_200)
-                    setTextColor(ContextCompat.getColor(this@WebClass, R.color.cool_blue))
-                }
-            }
-
-
 
             findDialog.backBtn.setOnClickListener {
                 onBackPressed()
             }
 
-            findDialog.forwardBtn.setOnClickListener {
-                frag?.apply {
-                    if (find.webView.canGoForward())
-                        find.webView.goForward()
-                }
-            }
+            
         }
 
     }
@@ -417,17 +368,6 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
 
     override fun onPause() {
         super.onPause()
-
-        find.webView.apply {
-            clearMatches()
-            clearHistory()
-            clearFormData()
-            clearSslPreferences()
-            clearCache(true)
-
-            CookieManager.getInstance().removeAllCookies(null)
-            WebStorage.getInstance().deleteAllData()
-        }
 
     }
 
