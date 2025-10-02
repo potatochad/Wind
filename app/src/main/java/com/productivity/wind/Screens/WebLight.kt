@@ -513,16 +513,7 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
                 //for setting icon to our search bar
                 override fun onReceivedIcon(view: WebView?, icon: Bitmap?) {
                     super.onReceivedIcon(view, icon)
-                    try{
-                        mainRef.find.webIcon.setImageBitmap(icon)
-                        webIcon = icon
-                        bookmarkIndex = mainRef.isBookmarked(view?.url!!)
-                        if(bookmarkIndex != -1){
-                            val array = ByteArrayOutputStream()
-                            icon!!.compress(Bitmap.CompressFormat.PNG, 100, array)
-                            bookmarkList[bookmarkIndex].image = array.toByteArray()
-                        }
-                    }catch (e: Exception){}
+                    Vlog("Does nothing")
                 }
 
                 override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
@@ -559,8 +550,7 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
 
     override fun onPause() {
         super.onPause()
-        (requireActivity() as WebClass).saveBookmarks()
-        //for clearing all webview data
+
         find.webView.apply {
             clearMatches()
             clearHistory()
@@ -576,29 +566,6 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
-
-        val result = find.webView.hitTestResult
-        when(result.type){
-            WebView.HitTestResult.IMAGE_TYPE -> {
-                menu.add("View Image")
-                menu.add("Save Image")
-                menu.add("Share")
-                menu.add("Close")
-            }
-            WebView.HitTestResult.SRC_ANCHOR_TYPE, WebView.HitTestResult.ANCHOR_TYPE-> {
-                menu.add("Open in New Tab")
-                menu.add("Open Tab in Background")
-                menu.add("Share")
-                menu.add("Close")
-            }
-            WebView.HitTestResult.EDIT_TEXT_TYPE, WebView.HitTestResult.UNKNOWN_TYPE -> {}
-            else ->{
-                menu.add("Open in New Tab")
-                menu.add("Open Tab in Background")
-                menu.add("Share")
-                menu.add("Close")
-            }
-        }
     }
 
     override fun onContextItemSelected(item: MenuItem): Bool {
