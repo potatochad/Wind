@@ -88,16 +88,12 @@ import android.graphics.drawable.*
 
 var tabsList: ArrayList<Tab> = ArrayList()
 var isDesktopSite: Bool = false
-var bookmarkList: ArrayList<Bookmark> = ArrayList()
-var bookmarkIndex: Int = -1
 lateinit var myPager: ViewPager2
 lateinit var tabsBtn: TextView
 
 class WebClass : AppCompatActivity() {
 
     lateinit var find: ActivityMainBinding
-    private var printJob: PrintJob? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -223,90 +219,6 @@ class WebClass : AppCompatActivity() {
                     if (find.webView.canGoForward())
                         find.webView.goForward()
                 }
-            }
-
-            findDialog.desktopBtn.setOnClickListener {
-                it as MaterialButton
-
-                frag?.find?.webView?.apply {
-                    isDesktopSite = if (isDesktopSite) {
-                        settings.userAgentString = null
-                        it.setIconTintResource(R.color.black)
-                        it.setTextColor(ContextCompat.getColor(this@WebClass, R.color.black))
-                        false
-                    } else {
-                        settings.userAgentString =
-                            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0"
-                        settings.useWideViewPort = true
-                        evaluateJavascript(
-                            "document.querySelector('meta[name=\"viewport\"]').setAttribute('content'," +
-                                    " 'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024));",
-                            null
-                        )
-                        it.setIconTintResource(R.color.teal_200)
-                        it.setTextColor(
-                            ContextCompat.getColor(
-                                this@WebClass,
-                                R.color.teal_200
-                            )
-                        )
-                        true
-                    }
-                    reload()
-                    dialog.dismiss()
-                }
-
-            }
-
-            findDialog.bookmarkBtn.setOnClickListener {
-                frag?.let {
-                    if (bookmarkIndex == -1) {
-                        val viewB =
-                            layoutInflater.inflate(R.layout.bookmark_dialog, find.root, false)
-                        val findBookmark = BookmarkDialogBinding.bind(viewB)
-                        val dialogB = MaterialAlertDialogBuilder(this)
-                            .setTitle("Add Bookmark")
-                            .setMessage("Url:${it.find.webView.url}")
-                            .setPositiveButton("Add") { self, _ ->
-                                try {
-                                    val array = ByteArrayOutputStream()
-                                    it.webIcon?.compress(Bitmap.CompressFormat.PNG, 100, array)
-                                    bookmarkList.add(
-                                        Bookmark(
-                                            name = findBookmark.bookmarkTitle.text.toString(),
-                                            url = it.find.webView.url!!,
-                                            array.toByteArray()
-                                        )
-                                    )
-                                } catch (e: Exception) {
-                                    bookmarkList.add(
-                                        Bookmark(
-                                            name = findBookmark.bookmarkTitle.text.toString(),
-                                            url = it.find.webView.url!!
-                                        )
-                                    )
-                                }
-                                self.dismiss()
-                            }
-                            .setNegativeButton("Cancel") { self, _ -> self.dismiss() }
-                            .setView(viewB).create()
-                        dialogB.show()
-                        findBookmark.bookmarkTitle.setText(it.find.webView.title)
-                    } else {
-                        val dialogB = MaterialAlertDialogBuilder(this)
-                            .setTitle("Remove Bookmark")
-                            .setMessage("Url:${it.find.webView.url}")
-                            .setPositiveButton("Remove") { self, _ ->
-                                bookmarkList.removeAt(bookmarkIndex)
-                                self.dismiss()
-                            }
-                            .setNegativeButton("Cancel") { self, _ -> self.dismiss() }
-                            .create()
-                        dialogB.show()
-                    }
-                }
-
-                dialog.dismiss()
             }
         }
 
