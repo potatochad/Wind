@@ -258,6 +258,17 @@ fun handleBackPressed(activity: WebClass) {
         else -> activity.onBackPressedDispatcher.onBackPressed()
     }
 }
+@SuppressLint("SetJavaScriptEnabled")
+fun WebView.clearWebData() {
+    clearMatches()
+    clearHistory()
+    clearFormData()
+    clearSslPreferences()
+    clearCache(true)
+
+    CookieManager.getInstance().removeAllCookies(null)
+    WebStorage.getInstance().deleteAllData()
+}
 
 
 
