@@ -321,24 +321,7 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
 
             find.webView.reload()
         }
-
-
     }
-
-    override fun onPause() {
-        super.onPause()
-
-    }
-
-    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-    }
-
-    override fun onContextItemSelected(item: MenuItem): Bool {
-        return super.onContextItemSelected(item)
-    }
-
-
 }
 
 class HomeFragment : Fragment() {
@@ -396,8 +379,17 @@ class HomeFragment : Fragment() {
 
 
 
-data class Tab(var name: Str, val fragment: Fragment)
-data class Bookmark(val name: Str, val url: Str, var image: ByteArray? = null, var imagePath: Int? = null)
+data class Tab(
+    var name: Str, 
+    val fragment: Fragment
+)
+
+data class Bookmark(
+    val name: Str, 
+    val url: Str, 
+    var image: ByteArray? = null, 
+    var imagePath: Int? = null
+)
 
 class BookmarkActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
