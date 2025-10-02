@@ -105,8 +105,6 @@ class WebClass : AppCompatActivity() {
         find = ActivityMainBinding.inflate(layoutInflater)
         setContentView(find.root)
 
-        getAllBookmarks()
-
         tabsList.add(Tab("Home", HomeFragment()))
         find.myPager.adapter = TabsAdapter(supportFragmentManager, lifecycle)
         find.myPager.isUserInputEnabled = false
@@ -205,17 +203,7 @@ class WebClass : AppCompatActivity() {
                 setBackgroundDrawable(ColorDrawable(0xFFFFFFFF.toInt()))
             }
             dialog.show()
-
-            frag?.let {
-                bookmarkIndex = isBookmarked(it.find.webView.url!!)
-                if (bookmarkIndex != -1) {
-
-                    findDialog.bookmarkBtn.apply {
-                        setIconTintResource(R.color.teal_200)
-                        setTextColor(ContextCompat.getColor(this@WebClass, R.color.cool_blue))
-                    }
-                }
-            }
+            
 
             if (isDesktopSite) {
                 findDialog.desktopBtn.apply {
@@ -235,13 +223,6 @@ class WebClass : AppCompatActivity() {
                     if (find.webView.canGoForward())
                         find.webView.goForward()
                 }
-            }
-
-            findDialog.saveBtn.setOnClickListener {
-                dialog.dismiss()
-                if (frag != null)
-                    saveAsPdf(web = frag.find.webView)
-                else Vlog("First Open A WebPage\uD83D\uDE03")
             }
 
             findDialog.desktopBtn.setOnClickListener {
@@ -620,91 +601,10 @@ class BrowseFragment(private var urlNew: Str = "https://www.google.com") : Fragm
         }
     }
 
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-
-        val message = Handler().obtainMessage()
-        find.webView.requestFocusNodeHref(message)
-        val url = message.data.getString("url")
-        val imgUrl = message.data.getString("src")
-
-        when(item.title){
-            "Open in New Tab" -> {
-                changeTab(url.toString(), BrowseFragment(url.toString()))
-            }
-            "Open Tab in Background" ->{
-                changeTab(url.toString(), BrowseFragment(url.toString()), isBackground = true)
-            }
-            "View Image" ->{
-                if(imgUrl != null) {
-                    if (imgUrl.contains("base64")) {
-                        val pureBytes = imgUrl.substring(imgUrl.indexOf(",") + 1)
-                        val decodedBytes = Base64.decode(pureBytes, Base64.DEFAULT)
-                        val finalImg =
-                            BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-
-                        val imgView = ShapeableImageView(requireContext())
-                        imgView.setImageBitmap(finalImg)
-
-                        val imgDialog = MaterialAlertDialogBuilder(requireContext()).setView(imgView).create()
-                        imgDialog.show()
-
-                        imgView.layoutParams.width = Resources.getSystem().displayMetrics.widthPixels
-                        imgView.layoutParams.height = (Resources.getSystem().displayMetrics.heightPixels * .75).toInt()
-                        imgView.requestLayout()
-
-                    }
-                    else changeTab(imgUrl, BrowseFragment(imgUrl))
-                }
-            }
-
-            "Save Image" ->{
-                if(imgUrl != null) {
-                    if (imgUrl.contains("base64")) {
-                        val pureBytes = imgUrl.substring(imgUrl.indexOf(",") + 1)
-                        val decodedBytes = Base64.decode(pureBytes, Base64.DEFAULT)
-                        val finalImg =
-                            BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-
-                        MediaStore.Images.Media.insertImage(
-                            requireActivity().contentResolver,
-                            finalImg, "Image", null
-                        )
-                        Vlog("Image Saved Successfully")
-                    }
-                    else startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(imgUrl)))
-                }
-            }
-
-            "Share" -> {
-                val tempUrl = url ?: imgUrl
-                if(tempUrl != null){
-                    if(tempUrl.contains("base64")){
-
-                        val pureBytes = tempUrl.substring(tempUrl.indexOf(",") + 1)
-                        val decodedBytes = Base64.decode(pureBytes, Base64.DEFAULT)
-                        val finalImg = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-
-                        val path = MediaStore.Images.Media.insertImage(requireActivity().contentResolver,
-                            finalImg, "Image", null)
-
-                        ShareCompat.IntentBuilder(requireContext()).setChooserTitle("Sharing Url!")
-                            .setType("image/*")
-                            .setStream(Uri.parse(path))
-                            .startChooser()
-                    }
-                    else{
-                        ShareCompat.IntentBuilder(requireContext()).setChooserTitle("Sharing Url!")
-                            .setType("text/plain").setText(tempUrl)
-                            .startChooser()
-                    }
-                }
-                else Vlog("Not a Valid Link!")
-            }
-            "Close" -> {}
-        }
-
-        return super.onContextItemSelected(item)
+    override fun onContextItemSelected(item: MenuItem): Bool {
+        
     }
+
 }
 
 class HomeFragment : Fragment() {
@@ -733,14 +633,14 @@ class HomeFragment : Fragment() {
         mainActivityRef.find.refreshBtn.visibility = View.GONE
 
         find.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(result: String?): Boolean {
+            override fun onQueryTextSubmit(result: Str?): Bool {
                 if(checkForInternet())
                     changeTab(result!!, BrowseFragment(result))
                 else
                     Vlog("Internet Not Connected\uD83D\uDE03")
                 return true
             }
-            override fun onQueryTextChange(p0: String?): Boolean = false
+            override fun onQueryTextChange(p0: Str?): Bool = false
         })
         mainActivityRef.find.goBtn.setOnClickListener {
             if(checkForInternet())
