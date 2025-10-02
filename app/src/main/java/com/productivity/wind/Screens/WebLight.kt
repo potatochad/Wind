@@ -75,11 +75,7 @@ var bookmarkIndex: Int = -1
 lateinit var myPager: ViewPager2
 lateinit var tabsBtn: TextView
 
-fun setUpXML(activity: AppCompatActivity): ActivityMainBinding {
-    val binding = ActivityMainBinding.inflate(activity.layoutInflater)
-    activity.setContentView(binding.root)
-    return binding
-}
+
 
 
 class WebClass : AppCompatActivity() {
