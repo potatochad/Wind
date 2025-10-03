@@ -754,7 +754,6 @@ fun LazyItem(
 @Composable
 fun LazyHeader(
     titleContent: Content,
-    onSearchClick: Do ={},
     onBackClick: Do = {},
     showBack: Bool = true,
     modifier: Mod = Modifier,
@@ -837,7 +836,6 @@ fun LazyHeader(
 @Composable
 fun LazyScreen(
     title: Content,
-    onSearchClick: Do = {},
     onBackClick: Do = {},
     showBack: Bool = true,
     modifier: Mod = Modifier.background(Color.Black).fillMaxSize(),
@@ -852,7 +850,6 @@ fun LazyScreen(
 	val header: Content = {
 		LazyHeader(
 			titleContent = title,
-			onSearchClick = onSearchClick,
 			onBackClick = onBackClick,
 			showBack = showBack,
 			showDivider = showDivider,
@@ -866,7 +863,7 @@ fun LazyScreen(
 	
 	Column(modifier) {
 		header()
-		Column(Modifier.scrollVert(Scrollable)) {
+		Column(Modifier.scrollVert(Scrollable).height()) {
 			content()
 			bottom()
 		}		
