@@ -78,6 +78,24 @@ fun Modifier.clickOrHold(
         }
 	}
 }
+@Composable
+fun scrollVert(on: Bool): Mod {
+    return if (on) {
+        Modifier.verticalScroll(rememberScrollState())
+    } else {
+        Modifier
+    }
+}
+
+@Composable
+fun scrollHoriz(on: Bool): Mod {
+    return if (on) {
+        Modifier.horizontalScroll(rememberScrollState())
+    } else {
+        Modifier
+    }
+}
+val Modifier.maxSize get() = this.fillMaxSize()
 
 
 
@@ -88,11 +106,9 @@ fun LazyMove(
 	content: Content,
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+		Modifier.maxSize()
     ) {
-        Box(
-            modifier = Modifier
+        Box(Modifier
                 .offset(x = x, y = y)
                 .wrapContentSize()
         ){
@@ -733,7 +749,6 @@ fun LazyHeader(
     onSearchClick: Do ={},
     onBackClick: Do = {},
     showBack: Bool = true,
-    showSearch: Bool = false,
     modifier: Mod = Modifier,
 	
     showDivider: Bool = true,
@@ -799,13 +814,6 @@ fun LazyHeader(
 				}
 				
 			}
-			// Search icon
-			if (showSearch) {
-				LazyIcon(
-					onClick = onSearchClick,
-					icon = Icons.Default.Search,
-				)
-			}
 		}
 
 		if (showDivider){
@@ -817,30 +825,6 @@ fun LazyHeader(
     }
 }
 
-@Composable
-fun ScreenModifier(
-    focusManager: FocusManager,
-    backgroundColor: Color = Color.Black,
-    onClick: Do? = null
-): Modifier {
-    var modifier = Modifier
-        .fillMaxSize()
-        .background(backgroundColor)
-        .clipToBounds()
-
-    // Add clickable only if onClick is provided
-    if (onClick != null) {
-        modifier = modifier.clickable(
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }
-        ) {
-            onClick()
-        }
-    }
-
-    return modifier
-}
-
 
 @Composable
 fun LazyScreen(
@@ -848,8 +832,7 @@ fun LazyScreen(
     onSearchClick: Do = {},
     onBackClick: Do = {},
     showBack: Bool = true,
-    showSearch: Bool = false,
-    modifier: Mod = Modifier,
+    modifier: Mod = Modifier.background(Color.Black).fillMaxSize(),
 	
     showDivider: Bool = true,
 	DividerPadding: Bool = true,
@@ -858,20 +841,12 @@ fun LazyScreen(
 	Scrollable: Bool = true,
     content: Content,
 ) {
-    val focusManager = LocalFocusManager.current
-    val baseModifier = ScreenModifier(focusManager) {
-		focusManager.clearFocus()
-	}
-
-
-
 	val header: Content = {
 		LazyHeader(
 			titleContent = title,
 			onSearchClick = onSearchClick,
 			onBackClick = onBackClick,
 			showBack = showBack,
-			showSearch = showSearch,
 			showDivider = showDivider,
 			DividerPadding = DividerPadding,
 			height = headerHeight
@@ -881,30 +856,12 @@ fun LazyScreen(
 		LazzyRow {UI.move(bottomSystemHeight())}
 	}
 	
-	if (Scrollable) {
-		Column(Modifier.fillMaxSize()) {
-			LazzyRow {
-				
-			}
-			header()
-
-
-        	Column(
-				modifier = baseModifier
-					.then(modifier)
-					.verticalScroll(rememberScrollState())
-			) {
-				content()
-				bottom()
-			}
-			
-		}
-	} else {
-		Column(baseModifier.then(modifier)) {
-			header()
+	Column(modifier) {
+		header()
+		Column(Modifier.scrollVert(Scrollable)) {
 			content()
 			bottom()
-		}
+		}		
 	}
 }
 
