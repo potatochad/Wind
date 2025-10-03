@@ -685,7 +685,7 @@ fun LazyItem(
 ) {
 	Row(
         modifier = Modifier
-            .maxWidth()
+            .maxWidth
             .padding(
 		    top = topPadding,
 		    bottom = bottomPadding,
@@ -991,7 +991,7 @@ fun LazyMenu(
     ) {
         Box(
             modifier = Modifier
-                .maxSize()
+                .maxSize
                 .background(Color.Black.copy(alpha = backgroundAlpha))
                 .clickable(
                     indication = null,
