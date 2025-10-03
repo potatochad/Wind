@@ -177,29 +177,29 @@ fun LazyWindow(
     content: Content,
 ) {
     // Local state to control if Popup is alive
-    var popupVisible by r_m(false)
+    var popupVisible by r_m(no)
 
-    LaunchedEffect(show.value) {
-        if (show.value) {
-            popupVisible = true  // Show immediately
+    LaunchedEffect(show.it) {
+        if (show.it) {
+            popupVisible = yes  // Show immediately
         } else {
             delay(200)           // Wait for fade-out duration
-            popupVisible = false // Then remove Popup
+            popupVisible = no // Then remove Popup
         }
     }
 
     if (popupVisible) {
         Popup(
-            properties = PopupProperties(focusable = true)
+            properties = PopupProperties(focusable = yes)
         ) {
             Box(
                 modifier = Modifier
                     .maxSize()
-                    .clickOrHold() { set(show, false) },
+                    .clickOrHold() { set(show, no) },
                 contentAlignment = Alignment.Center
             ) {
                 AnimatedVisibility(
-                    visible = show.value,
+                    visible = show.it,
                     enter = fadeIn(animationSpec = tween(200)),
                     exit = fadeOut(animationSpec = tween(200))
                 ) {
@@ -241,13 +241,13 @@ fun LazyMeasure(
 @Composable
 fun LazyInfo(
     infoContent: Content,
-    hold: Bool = false,
+    hold: Bool = no,
     ChangeY: Dp = 80.dp,
     popupWidth: Dp = 0.dp,
     popupHeight: Dp = 0.dp,
     content: Content,
 ) {
-    var show = r_m(false)
+    var show = r_m(no)
     var x = r_m(0.dp)
     var y = r_m(0.dp)
     var w = r_m(0.dp)
@@ -264,17 +264,17 @@ fun LazyInfo(
     val popupW = r_m(0.dp)
     val popupH = r_m(0.dp)
 
-	val top by derivedStateOf { y.value - h.value }
-	val bottom by derivedStateOf { y.value }
-	val start by derivedStateOf { x.value }
-	val end by derivedStateOf { x.value + w.value }
+	val top by derivedStateOf { y.it - h.it }
+	val bottom by derivedStateOf { y.it }
+	val start by derivedStateOf { x.it }
+	val end by derivedStateOf { x.it + w.it }
 
     // Compute popup position dynamically
-    val popupX = remember(x.it, w.value, popupW.value) {
-        if (top > popupH.value + 20.dp) "top" else "bottom"
+    val popupX = remember(x.it, w.it, popupW.it) {
+        if (top > popupH.it + 20.dp) "top" else "bottom"
     }
-    val popupY = remember(y.value, h.value, popupH.value) {
-        if (end < popupW.value+ 20.dp) "end" else "start"
+    val popupY = remember(y.it, h.it, popupH.it) {
+        if (end < popupW.it+ 20.dp) "end" else "start"
 	}
 
 
@@ -282,25 +282,25 @@ fun LazyInfo(
 	
 
 	// Actual position calculations
-	val bopupX = remember(popupX, popupH.value) {
-		if (popupH.value == 0.dp) {
+	val bopupX = remember(popupX, popupH.it) {
+		if (popupH.it == 0.dp) {
 			0.dp
 		} else {
 			when (popupX) {
-				"top" -> x.value - popupW.value / 2   // Example placement
-				"bottom" -> x.value + popupW.value / 2
+				"top" -> x.it - popupW.it / 2   // Example placement
+				"bottom" -> x.it + popupW.it / 2
 				else -> 0.dp
 			}
 		}
 	}
 
-	val bopupY = remember(popupY, popupW.value) {
-		if (popupW.value == 0.dp) {
+	val bopupY = remember(popupY, popupW.it) {
+		if (popupW.it == 0.dp) {
 			0.dp
 		} else {
 			when (popupY) {
-				"start" -> y.value - popupH.value / 2
-				"end" -> y.value + popupH.value / 2
+				"start" -> y.it - popupH.it / 2
+				"end" -> y.it + popupH.it / 2
 				else -> 0.dp
 			}
 		}
@@ -325,7 +325,7 @@ fun LazyInfo(
 		}
 	}
 	LazyWindow(show) {
-		LazyMove(x.value, y.value) {
+		LazyMove(x.it, y.it) {
 			// Red dot marking the click point
 			BoxWithConstraints {
 
@@ -418,7 +418,7 @@ fun LazyImage(
 fun <T> LazzyList(
     data: List<T>,
     modifier: Mod = Modifier.maxWidth().height(200.dp),
-    lazyMode: Bool = false,
+    lazyMode: Bool = no,
     content: Content_<T>,
 ) {
     val items = r { mutableStateListOf<T>() }
@@ -470,7 +470,7 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
   
 @Composable
 fun LazyLine(
-    show: Bool = true,
+    show: Bool = yes,
     color: Color = Color(0xFFFFD700),
     thickness: Dp = 1.dp,
     MoveY: Int = 0,
@@ -493,7 +493,7 @@ fun LazyLine(
 fun LazzyRow(
     modifier: Mod = Modifier,
     padding: Int = 0,
-    center: Bool = false, // Kotlin uses 'Boolean', not 'Bool'
+    center: Bool = no, // Kotlin uses 'Boolean', not 'Bool'
     content: Content,
 ) {
     Row(
@@ -565,7 +565,7 @@ fun LazyIcon(
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
-    SquareIcon: Bool = false,
+    SquareIcon: Bool = no,
     BigIconSize: Int = 30,
     OuterPadding: Int = 5,          // outside space
     ButtonSize: Int = 40,           // actual button box (default M3 ~48)
@@ -617,7 +617,7 @@ fun LazyIcon(
 fun LazyMore(
     modifier: Mod = Modifier,
     title: Str = "Show more",
-    initiallyExpanded: Bool = false,
+    initiallyExpanded: Bool = no,
     content: Content
 ) {
     var expanded by r_m(initiallyExpanded)
@@ -760,18 +760,18 @@ fun LazyItem(
 fun LazyHeader(
     titleContent: Content,
     onBackClick: Do = {},
-    showBack: Bool = true,
+    showBack: Bool = yes,
     modifier: Mod = Modifier,
 	
-    showDivider: Bool = true,
-	DividerPadding: Bool = true,
+    showDivider: Bool = yes,
+	DividerPadding: Bool = yes,
 	
 	height: Int = 100,
 ) {
     val ui = rememberSystemUiController()
-    var DisableTB_Button by r_m(false)
+    var DisableTB_Button by r_m(no)
     LaunchedEffect(Unit) {
-        ui.setStatusBarColor(Color.Black, darkIcons = false)
+        ui.setStatusBarColor(Color.Black, darkIcons = no)
     }
 
     Column {
@@ -805,7 +805,7 @@ fun LazyHeader(
 					onClick = { 
 						if (DisableTB_Button) {}
 						if (!DisableTB_Button) { 
-							DisableTB_Button = true
+							DisableTB_Button = yes
 							onBackClick()
 							App.navHost.popBackStack()
 						}
@@ -842,16 +842,16 @@ fun LazyHeader(
 fun LazyScreen(
     title: Content,
     onBackClick: Do = {},
-    showBack: Bool = true,
+    showBack: Bool = yes,
     modifier: Mod = Modifier
         .background(Color.Black)
-        .fillMaxSize(),
+        .maxSize(),
 	
-    showDivider: Bool = true,
-	DividerPadding: Bool = true,
+    showDivider: Bool = yes,
+	DividerPadding: Bool = yes,
 	
 	headerHeight: Int = 44,
-	Scrollable: Bool = true,
+	Scrollable: Bool = yes,
     content: Content,
 ) {
 	val header: Content = {
@@ -890,16 +890,16 @@ fun LazyScreen(
 @Composable
 fun LazyPopup(
     show: m_<Bool>,
-    onDismiss: Do? = { show.value = false },
+    onDismiss: Do? = { show.value = no },
     title: Str = "Info",
     message: Str,
     content: Content? = null,
-    showCancel: Bool = true,
-    showConfirm: Bool = true,
+    showCancel: Bool = yes,
+    showConfirm: Bool = yes,
     onConfirm: Do? = null,
     onCancel: Do? = null,
 ) {
-    if (!show.value) return
+    if (!show.it) return
 
 	//scope.launch { 
 	//	delay(100L)
@@ -958,34 +958,34 @@ fun LazyMenu(
     onDismiss: Do? = null,
     content: Content,
 ) {
-    val visible = r_m(false)
-    val internalVisible = r_m(false)
+    val visible = r_m(yes)
+    val internalVisible = r_m(no)
 
     // Trigger showing/hiding Popup
     LaunchedEffect(App.Menu) {
         if (App.Menu) {
-            set(visible, true)
+            set(visible, yes)
             delay(16)
-            set(internalVisible, true)
+            set(internalVisible, yes)
         } else {
-            set(internalVisible, false)
+            set(internalVisible, no)
             delay(200) // Wait for animation out
-            set(visible, false)
+            set(visible, no)
         }
     }
 
-    if (!visible.value) return
+    if (!visible.it) return
 
     // Slide offset
     val offsetX by animateDpAsState(
-        targetValue = if (internalVisible.value) 0.dp else -App.screenWidth/2,
+        targetValue = if (internalVisible.it) 0.dp else -App.screenWidth/2,
         animationSpec = tween(durationMillis = 200),
         label = "MenuSlide"
     )
 
     // Background fade
     val backgroundAlpha by animateFloatAsState(
-        targetValue = if (internalVisible.value) 0.4f else 0f,
+        targetValue = if (internalVisible.it) 0.4f else 0f,
         animationSpec = tween(durationMillis = 200),
         label = "Fade"
     )
@@ -994,7 +994,7 @@ fun LazyMenu(
         alignment = Alignment.TopStart,
         onDismissRequest = {
             onDismiss?.invoke()
-            App.Menu = false
+            App.Menu = no
         }
     ) {
         Box(
@@ -1006,7 +1006,7 @@ fun LazyMenu(
                     interactionSource = r { MutableInteractionSource() }
                 ) {
                     onDismiss?.invoke()
-                    App.Menu = false
+                    App.Menu = no
                 }
         )
 
