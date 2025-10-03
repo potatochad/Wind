@@ -432,7 +432,9 @@ fun WebTest(){
         Scrollable = false,
         DividerPadding = false,
     ) {
-        BrowseScreenXml(url.value)
+        Box(modifier = Modifier.fillMaxWidth().height(600.dp)) {  // fixed height
+            BrowseScreenXml(url.value)
+        }
     }
 }
 
