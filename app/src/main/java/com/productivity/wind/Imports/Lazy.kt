@@ -863,7 +863,7 @@ fun LazyScreen(
 	
 	Column(modifier) {
 		header()
-		Column(Modifier.scrollVert(Scrollable).height()) {
+		Column(Modifier.scrollVert(Scrollable).height(App.LazyScreenContentHeight)) {
 			content()
 			bottom()
 		}		
