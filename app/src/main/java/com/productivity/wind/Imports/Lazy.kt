@@ -80,12 +80,15 @@ fun Modifier.clickOrHold(
         }
 	}
 }
+val yes = true
+val no = false
+
 
 
 @OptIn(ExperimentalFoundationApi::class)
 fun Modifier.scroll(
-    upDown: Bool = true,
-    on: Bool = true,
+    on: Bool = yes,
+	upDown: Bool = yes,
     onOverscroll: (Float) -> Unit = {}
 ): Modifier = if (!on) this else {
     val behavior = rememberOverscrollBehavior()
@@ -870,7 +873,7 @@ fun LazyScreen(
 	
 	Column(modifier) {
 		header()
-		Column(Modifier.scrollVert(Scrollable).height(App.LazyScreenContentHeight)) {
+		Column(Modifier.scroll(Scrollable).height(App.LazyScreenContentHeight)) {
 			content()
 			bottom()
 		}		
