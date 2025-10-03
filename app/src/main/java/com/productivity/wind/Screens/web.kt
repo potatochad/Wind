@@ -510,6 +510,7 @@ fun BrowseScreenXml(
 
             rootView
         },
+        modifier = Modifier.fillMaxSize(),
         update = { view ->
             val myWebView = view.findViewById<WebView>(R.id.myWebView)
             if (myWebView.url.isNullOrEmpty()) {
