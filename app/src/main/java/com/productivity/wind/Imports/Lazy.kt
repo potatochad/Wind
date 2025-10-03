@@ -84,25 +84,15 @@ fun Modifier.clickOrHold(
 
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Modifier.scroll(
-    on: Bool = yes,
-	upDown: Bool = yes,
-    onOverscroll: Do_<Float> = {}
-): Modifier = if (!on) this else {
-    val behavior = rememberOverscrollEffect()
-    val connection = object : NestedScrollConnection {
-        override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-            if (upDown && available.y != 0f) onOverscroll(available.y)
-            if (!upDown && available.x != 0f) onOverscroll(available.x)
-            return Offset.Zero
-        }
-    }
-    (if (upDown) verticalScroll(rememberScrollState()) else horizontalScroll(rememberScrollState()))
-        .overscroll(behavior)
-        .nestedScroll(connection)
+    on: Bool = true,
+    vertical: Bool = true
+): Mod = if (!on) this else {
+    if (vertical) verticalScroll(rememberScrollState())
+    else horizontalScroll(rememberScrollState())
 }
+
 
 
 fun Mod.maxSize(): Mod = fillMaxSize()
