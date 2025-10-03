@@ -10,7 +10,7 @@ import androidx.compose.material.icons.outlined.*
 
 @Composable
 fun Achievements()= NoLagCompose {
-    LazyScreen(title= { Text("Achievements") }, showSearch = false) {
+    LazyScreen(title= { Text("Achievements") }) {
             
         LazyItem(
             icon = Icons.Outlined.AdminPanelSettings,
