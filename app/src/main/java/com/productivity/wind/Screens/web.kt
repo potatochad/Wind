@@ -186,15 +186,17 @@ fun Web(){
         DividerPadding = false,
     ) {
         BrowseScreenXml(
+            webView = webView,
             url = url.value,
             onUrlChanged = {
-                if (url.contains("youtube") && webView.value?.canGoBack() == true) {
+                Vlog("new web")
+                if (it.contains("youtube") && webView.value?.canGoBack() == true) {
                     webView.value?.goBack()
                 }
             },
-            onProgressChanged: (Int) -> Unit = {},
-            onPageStarted: (String) -> Unit = {},
-            onPageFinished: (String) -> Unit = {},
+            onProgressChanged = {},
+            onPageStarted = {},
+            onPageFinished = {},
         )
     }
 }
