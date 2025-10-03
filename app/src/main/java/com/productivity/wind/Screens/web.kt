@@ -163,7 +163,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.*
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.*
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.*
 import android.graphics.Bitmap
-import android.text.SpannableStringBuilder
 import androidx.compose.ui.viewinterop.AndroidView
 
 
