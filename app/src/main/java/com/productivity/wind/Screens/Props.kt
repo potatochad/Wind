@@ -39,7 +39,6 @@ fun NavGraphBuilder.ScreenNav() {
     url("CopyPaste") { CopyPaste() }
 
     url("Web") { Web() }
-    url("WebTest") { WebTest() }
     
 
     url("SettingsScreen") { SettingsScreen() }
@@ -236,9 +235,9 @@ object Header {
                 }
                 
 
-                set(selectedApp, "")
-                set(Points, "0")
-                set(Time, "0")
+                selectedApp.it = ""
+                Points.it = "0"
+                Time.it = "0"
 
                 goTo("Main")
             })
@@ -289,14 +288,8 @@ object Icon {
             val ctx = LocalContext.current
                 LazyIcon(
                         onClick = {
-
-                            // val intent = Intent(ctx, WebClass::class.java)
-                            // ctx.startActivity(intent)
-
-                            // if (Bar.funTime < Bar.Dpoints) {show(NeedMorePoints)}
-                            // else {goTo("Web")}
-
-                            goTo("WebTest")
+                            if (Bar.funTime < Bar.Dpoints) {show(NeedMorePoints)}
+                            else {goTo("Web")}
                         },
                         icon = Icons.Default.SportsEsports
                 )
