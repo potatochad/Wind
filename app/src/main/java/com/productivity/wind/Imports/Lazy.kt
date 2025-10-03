@@ -59,6 +59,7 @@ import kotlin.math.*
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.layout.*
 import androidx.compose.foundation.text.selection.*
+import androidx.compose.foundation.overscroll.*
 
 
 fun Modifier.clickOrHold(
