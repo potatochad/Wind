@@ -92,11 +92,21 @@ import kotlin.reflect.full.*
 
 //region Vals/ Vars FOR DATA
 
+
+
+
 val gson = Gson()
+val yes = true
+val no = false
+val <T> State<T>.it: T
+    get() = this.value
 
 @Composable
 fun <T> r(value: () -> T) = remember { value() }
 fun <T> m(value: T) = mutableStateOf(value)
+fun <T> set(state: m_<T>?, value: T) { state?.value = value }
+fun show(state: m_<Bool>?) = set(state, yes)
+fun hide(state: m_<Bool>?) = set(state, no)
 @Composable
 fun <T> r_m(initial: T) = remember { mutableStateOf(initial) }
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }

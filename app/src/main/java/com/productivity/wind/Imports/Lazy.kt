@@ -56,13 +56,12 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.window.*
 import kotlin.math.*
-import androidx.compose.ui.unit.*
-import androidx.compose.ui.layout.*
 import androidx.compose.foundation.text.selection.*
+import androidx.compose.ui.input.nestedscroll.*
 import androidx.compose.foundation.gestures.*
 
-val yes = true
-val no = false
+
+
 
 fun Modifier.clickOrHold(
     hold: Bool = yes,
@@ -92,7 +91,7 @@ fun Modifier.scroll(
 	upDown: Bool = yes,
     onOverscroll: (Float) -> Unit = {}
 ): Modifier = if (!on) this else {
-    val behavior = rememberOverscrollBehavior()
+    val behavior = rememberOverscrollEffect()
     val connection = object : NestedScrollConnection {
         override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
             if (upDown && available.y != 0f) onOverscroll(available.y)
@@ -106,15 +105,10 @@ fun Modifier.scroll(
 }
 
 
+fun Mod.maxSize(): Mod = fillMaxSize()
+fun Mod.maxWidth(): Mod = fillMaxWidth()
+fun Mod.maxHeight(): Mod = fillMaxHeight()
 
-val Modifier.maxSize: Mod
-    get() = this.fillMaxSize()
-
-val Modifier.maxWidth: Mod
-    get() = this.fillMaxWidth()
-
-val Modifier.maxHeight: Mod
-    get() = this.fillMaxHeight()
 
 
 
@@ -125,11 +119,11 @@ fun LazyMove(
 	content: Content,
 ) {
     Box(
-		Modifier.maxSize
+		Modifier.maxSize()
     ) {
         Box(Modifier
-                .offset(x = x, y = y)
-                .wrapContentSize()
+            .offset(x = x, y = y)
+            .wrapContentSize()
         ){
 			content()
 		}
@@ -200,7 +194,7 @@ fun LazyWindow(
         ) {
             Box(
                 modifier = Modifier
-                    .maxSize
+                    .maxSize()
                     .clickOrHold() { set(show, false) },
                 contentAlignment = Alignment.Center
             ) {
@@ -261,7 +255,7 @@ fun LazyInfo(
 
     LazyMeasure(
         x, y, w, h,
-        modifier = Modifier.clickOrHold(hold) { show.value = true }
+        modifier = Mod.clickOrHold(hold) { show(show) }
     ) {
         content()
     }
@@ -276,7 +270,7 @@ fun LazyInfo(
 	val end by derivedStateOf { x.value + w.value }
 
     // Compute popup position dynamically
-    val popupX = remember(x.value, w.value, popupW.value) {
+    val popupX = remember(x.it, w.value, popupW.value) {
         if (top > popupH.value + 20.dp) "top" else "bottom"
     }
     val popupY = remember(y.value, h.value, popupH.value) {
@@ -405,7 +399,7 @@ fun LazyImage(
     source: Any?,
     modifier: Mod = Modifier
         .size(34.dp)
-		.padding(5.dp)
+        .padding(5.dp)
 ) {
     val contentDescription = "boring"
     when (source) {
@@ -423,7 +417,7 @@ fun LazyImage(
 @Composable
 fun <T> LazzyList(
     data: List<T>,
-    modifier: Mod = Modifier.maxWidth.height(200.dp),
+    modifier: Mod = Modifier.maxWidth().height(200.dp),
     lazyMode: Bool = false,
     content: Content_<T>,
 ) {
@@ -504,7 +498,7 @@ fun LazzyRow(
 ) {
     Row(
         modifier = modifier
-            .maxWidth
+            .maxWidth()
             .padding(padding.dp),
         horizontalArrangement = if (center) Arrangement.Center else Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
@@ -539,9 +533,9 @@ fun LazyCard(
     inputColor: Color = Color(0xFF1A1A1A),
     innerPadding: Int = 16,
     corners: Int = 16,
-	modifier: Mod = Modifier
+    modifier: Mod = Mod
 	     .padding(horizontal = 8.dp, vertical = 10.dp)
-         .maxWidth,
+         .maxWidth(),
     content: Content,
 ) {
     Card(
@@ -632,7 +626,7 @@ fun LazyMore(
     Column(modifier = modifier) {
         Row(
             modifier = Modifier
-                .maxWidth
+                .maxWidth()
                 .clickable { expanded = !expanded }
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -697,27 +691,27 @@ fun LazyItem(
 ) {
 	Row(
         modifier = Modifier
-            .maxWidth
+            .maxWidth()
             .padding(
-		    top = topPadding,
-		    bottom = bottomPadding,
-		    start = 7.dp,
-		    end = 7.dp
-	    ),
+                top = topPadding,
+                bottom = bottomPadding,
+                start = 7.dp,
+                end = 7.dp
+            ),
 		verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
 			modifier = modifier
-				.maxWidth
-				.clickable(enabled = onClick != null) { onClick?.invoke() },
+                .maxWidth()
+                .clickable(enabled = onClick != null) { onClick?.invoke() },
 			shape = RoundedCornerShape(12.dp),
 			colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
 			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 		) {
             Row(
 				modifier = Modifier
-					.maxWidth
-					.padding(5.dp),
+                    .maxWidth
+                    .padding(5.dp),
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				if (icon != null) {
@@ -726,8 +720,8 @@ fun LazyItem(
 						contentDescription = null,
 						tint = Color.White,
 						modifier = Modifier
-							.padding(end = 10.dp)
-							.size(24.dp)
+                            .padding(end = 10.dp)
+                            .size(24.dp)
 					)
 				}	    
 
@@ -785,10 +779,10 @@ fun LazyHeader(
 
         Row(
             modifier = modifier
-                .maxWidth
+                .maxWidth()
                 .background(Color.Black)
-				.padding(vertical = 12.dp)
-			.height(height.dp),
+                .padding(vertical = 12.dp)
+                .height(height.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -849,7 +843,9 @@ fun LazyScreen(
     title: Content,
     onBackClick: Do = {},
     showBack: Bool = true,
-    modifier: Mod = Modifier.background(Color.Black).fillMaxSize(),
+    modifier: Mod = Modifier
+        .background(Color.Black)
+        .fillMaxSize(),
 	
     showDivider: Bool = true,
 	DividerPadding: Bool = true,
@@ -871,14 +867,17 @@ fun LazyScreen(
 	val bottom: Content = {
 		LazzyRow {UI.move(bottomSystemHeight())}
 	}
-	
-	Column(modifier) {
-		header()
-		Column(Modifier.scroll(Scrollable).height(App.LazyScreenContentHeight)) {
-			content()
-			bottom()
-		}		
-	}
+
+    Column(modifier) {
+        header()
+        Column(Modifier
+            .scroll(Scrollable)
+            .height(App.LazyScreenContentHeight)) {
+            content()
+            bottom()
+        }
+    }
+
 }
 
 
@@ -1000,13 +999,13 @@ fun LazyMenu(
     ) {
         Box(
             modifier = Modifier
-                .maxSize
+                .maxSize()
                 .background(Color.Black.copy(alpha = backgroundAlpha))
                 .clickable(
                     indication = null,
                     interactionSource = r { MutableInteractionSource() }
                 ) {
-                onDismiss?.invoke()
+                    onDismiss?.invoke()
                     App.Menu = false
                 }
         )
@@ -1014,8 +1013,8 @@ fun LazyMenu(
         Box(
             modifier = Modifier
                 .offset { IntOffset(offsetX.roundToPx(), 0) }
-                .width(App.screenWidth/2+30.dp)
-                .maxHeight
+                .width(App.screenWidth / 2 + 30.dp)
+                .maxHeight()
                 .background(Color.DarkGray)
         ) {
             content()

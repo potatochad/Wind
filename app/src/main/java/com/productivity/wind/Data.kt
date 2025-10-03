@@ -151,7 +151,7 @@ class MainActivity : ComponentActivity() {
         AppStart_beforeUI(applicationContext)
         setContent {
             LazyTheme {
-                Surface(Modifier.fillMaxSize()) {
+                Surface(Modifier.maxSize()) {
                     AppStart()
 					
                 }

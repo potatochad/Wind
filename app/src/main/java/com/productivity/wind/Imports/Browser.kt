@@ -1,5 +1,7 @@
 package com.productivity.wind.Imports
 //
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.ui.draw.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
@@ -45,6 +47,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
@@ -56,79 +61,53 @@ import kotlin.random.*
 import androidx.compose.ui.*
 import android.webkit.*
 import androidx.compose.ui.viewinterop.*
-import org.mozilla.geckoview.*
-import android.content.*
-import androidx.compose.runtime.snapshots.*
-import androidx.compose.runtime.*
-import org.mozilla.geckoview.GeckoSession.NavigationDelegate.*
-import org.mozilla.geckoview.GeckoSession.*
 
+@Suppress("DEPRECATION")
+fun checkForInternet(): Bool {
+    val context = App.ctx
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-fun onlyAllowDomains(allowedDomains: List<String>): GeckoSession.NavigationDelegate {
-    return object : GeckoSession.NavigationDelegate {
-        override fun onLoadRequest(
-            session: GeckoSession,
-            request: LoadRequest
-        ): GeckoResult<AllowOrDeny> {
-            val url = request.uri.toString() // uri is a Uri object, convert to string
-
-            val isAllowed = allowedDomains.any { domain ->
-                url.contains(domain, ignoreCase = true)
-            }
-
-            return GeckoResult.fromValue(
-                if (isAllowed) AllowOrDeny.ALLOW else AllowOrDeny.DENY
-            )
-        }
+    val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val network = connectivityManager.activeNetwork
+        val activeNetwork = network?.let { connectivityManager.getNetworkCapabilities(it) }
+        activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true ||
+                activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true
+    } else {
+        val networkInfo = connectivityManager.activeNetworkInfo
+        networkInfo?.isConnected == true
     }
+
+    if (!isConnected) Vlog("No internet")
+    return isConnected
 }
 
+@SuppressLint("SetJavaScriptEnabled")
+fun WebView.clearWebData() {
+    clearMatches()
+    clearHistory()
+    clearFormData()
+    clearSslPreferences()
+    clearCache(true)
 
-
-fun GeckoSession.setYouTubeFilter() {
-    // Block thumbnail network requests
-    navigationDelegate = object : GeckoSession.NavigationDelegate {
-        override fun onLoadRequest(
-            session: GeckoSession,
-            request: GeckoSession.NavigationDelegate.LoadRequest
-        ): GeckoResult<AllowOrDeny> {
-            val url = request.uri.toString()
-            val blockedDomains = listOf("ytimg.com", "youtube.com/embed", "googlevideo.com")
-            val deny = blockedDomains.any { url.contains(it, ignoreCase = true) }
-            return GeckoResult.fromValue(
-                if (deny) AllowOrDeny.DENY else AllowOrDeny.ALLOW
-            )
-        }
-    }
-
-    // Inject JS after full page load
-    progressDelegate = object : GeckoSession.ProgressDelegate {
-        override fun onProgressChange(session: GeckoSession, progress: Int) {
-            if (progress == 100) injectYouTubeCleanJS()
-        }
-    }
+    CookieManager.getInstance().removeAllCookies(null)
+    WebStorage.getInstance().deleteAllData()
 }
-// Extension function of GeckoSession
-private fun GeckoSession.injectYouTubeCleanJS() {
-    val js = """
-        (function() {
-            const hideThumbnails = () => {
-                document.querySelectorAll('img').forEach(img => img.style.display = 'none');
-                document.querySelectorAll('*').forEach(el => {
-                    const bg = window.getComputedStyle(el).backgroundImage;
-                    if (bg && bg !== 'none') el.style.backgroundImage = 'none';
-                });
-                const selectors = ['#related', '#secondary', 'ytd-item-section-renderer', 
-                                   'ytd-video-renderer', 'ytd-channel-renderer'];
-                selectors.forEach(sel => {
-                    document.querySelectorAll(sel).forEach(el => el.remove());
-                });
-            };
-            hideThumbnails();
-            new MutationObserver(hideThumbnails).observe(document.body, { childList: true, subtree: true });
-        })();
-    """.trimIndent()
+@SuppressLint("SetJavaScriptEnabled")
+fun WebSettings.applyDefaultConfig() {
+    javaScriptEnabled = true
+    setSupportZoom(true)
+    builtInZoomControls = true
+    displayZoomControls = false
+}
 
-    val encodedJs = "javascript:" + java.net.URLEncoder.encode(js, "UTF-8")
-    this.loadUri(encodedJs)
+@Composable
+fun UrlConverter(input: Str): Str {
+    return remember(input) {
+        if (input.startsWith("http://") || input.startsWith("https://")) {
+            input
+        } else {
+            "https://$input"
+        }
+    }
 }

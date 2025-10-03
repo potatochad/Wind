@@ -214,69 +214,6 @@ fun each(time: Long = 10_000L, action: Do) {
     }
 }
 
-fun <T> set(state: m_<T>?, value: T) { state?.value = value }
-
-fun show(state: m_<Boolean>?) = set(state, true)
-fun hide(state: m_<Boolean>?) = set(state, false)
-
-@Composable
-fun UrlConverter(input: Str): Str {
-    return remember(input) {
-        if (input.startsWith("http://") || input.startsWith("https://")) {
-            input
-        } else {
-            "https://$input"
-        }
-    }
-}
-fun setUpXML(activity: AppCompatActivity): ActivityMainBinding {
-    val binding = ActivityMainBinding.inflate(activity.layoutInflater)
-    activity.setContentView(binding.root)
-    return binding
-}
-@SuppressLint("NotifyDataSetChanged")
-fun handleBackPressed(activity: WebClass) {
-    val currentIndex = activity.find.myPager.currentItem
-    var frag: BrowseFragment? = null
-
-    try {
-        frag = tabsList[currentIndex].fragment as? BrowseFragment
-    } catch (_: Exception) { }
-
-    when {
-        // If the WebView can go back, go back
-        frag?.find?.webView?.canGoBack() == true -> frag.find.webView.goBack()
-
-        // If not first tab, remove current tab
-        currentIndex != 0 -> {
-            tabsList.removeAt(currentIndex)
-            activity.find.myPager.adapter?.notifyDataSetChanged()
-            activity.find.myPager.currentItem = tabsList.size - 1
-        }
-
-        // Otherwise, exit activity normally
-        else -> activity.onBackPressedDispatcher.onBackPressed()
-    }
-}
-@SuppressLint("SetJavaScriptEnabled")
-fun WebView.clearWebData() {
-    clearMatches()
-    clearHistory()
-    clearFormData()
-    clearSslPreferences()
-    clearCache(true)
-
-    CookieManager.getInstance().removeAllCookies(null)
-    WebStorage.getInstance().deleteAllData()
-}
-@SuppressLint("SetJavaScriptEnabled")
-fun WebSettings.applyDefaultConfig() {
-    javaScriptEnabled = true
-    setSupportZoom(true)
-    builtInZoomControls = true
-    displayZoomControls = false
-}
-
 
 //endregion NO LAG COMPOSE
 
@@ -382,25 +319,6 @@ fun getAppIcon(packageName: Str): Drawable? {
 
 
 
-@Suppress("DEPRECATION")
-fun checkForInternet(): Boolean {
-    val context = App.ctx
-    val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-    val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        val network = connectivityManager.activeNetwork
-        val activeNetwork = network?.let { connectivityManager.getNetworkCapabilities(it) }
-        activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true ||
-                activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true
-    } else {
-        val networkInfo = connectivityManager.activeNetworkInfo
-        networkInfo?.isConnected == true
-    }
-
-    if (!isConnected) Vlog("No internet")
-    return isConnected
-}
 
 
 @Composable
