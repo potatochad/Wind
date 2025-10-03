@@ -418,7 +418,7 @@ fun Web() {
 
 @Composable
 fun WebTest(){
-    val url by r_m("https://www.google.com") // single source of truth
+    val url = r_m("https://www.google.com") // single source of truth
     val webView = r { mutableStateOf<WebView?>(null) }
 
     LazyScreen(
@@ -432,7 +432,7 @@ fun WebTest(){
         Scrollable = false,
         DividerPadding = false,
     ) {
-        BrowseScreenXml(url)
+        BrowseScreenXml(url.value)
     }
 }
 
