@@ -163,6 +163,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.*
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.*
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.*
 
+import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.text.SpannableStringBuilder
+import androidx.compose.ui.viewinterop.AndroidView
 
 
 fun Dp.toPx(): Int {
@@ -410,4 +414,86 @@ fun Web() {
                 .height(App.LazyScreenContentHeight)
         )
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@SuppressLint("SetJavaScriptEnabled")
+@Composable
+fun BrowseScreen(
+    urlNew: String = "https://www.google.com",
+    isDesktopSite: Boolean = false,
+    onUrlChanged: (String) -> Unit = {},
+    onProgressChanged: (Int) -> Unit = {},
+    onPageStarted: (String) -> Unit = {},
+    onPageFinished: (String) -> Unit = {},
+) {
+    var webView: WebView? by remember { mutableStateOf(null) }
+
+    AndroidView(
+        modifier = Modifier,
+        factory = { context ->
+            WebView(context).apply {
+                settings.apply {
+                    javaScriptEnabled = true
+                    domStorageEnabled = true
+                    useWideViewPort = true
+                    loadWithOverviewMode = true
+                }
+
+                webViewClient = object : WebViewClient() {
+                    override fun onLoadResource(view: WebView?, url: String?) {
+                        super.onLoadResource(view, url)
+                        if (isDesktopSite) {
+                            view?.evaluateJavascript(
+                                "document.querySelector('meta[name=\"viewport\"]').setAttribute('content'," +
+                                        "'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024));",
+                                null
+                            )
+                        }
+                    }
+
+                    override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
+                        super.doUpdateVisitedHistory(view, url, isReload)
+                        url?.let { onUrlChanged(it) }
+                    }
+
+                    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                        super.onPageStarted(view, url, favicon)
+                        url?.let { onPageStarted(it) }
+                    }
+
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        super.onPageFinished(view, url)
+                        url?.let { onPageFinished(it) }
+                        view?.zoomOut()
+                    }
+                }
+
+                webChromeClient = object : WebChromeClient() {
+                    override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                        super.onProgressChanged(view, newProgress)
+                        onProgressChanged(newProgress)
+                    }
+                }
+
+                loadUrl("https://www.google.com/search?q=$urlNew")
+                webView = this
+            }
+        },
+        update = { view ->
+            if (view.url.isNullOrEmpty()) {
+                view.loadUrl("https://www.google.com/search?q=$urlNew")
+            }
+        }
+    )
 }
