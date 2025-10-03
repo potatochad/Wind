@@ -165,118 +165,37 @@ import androidx.compose.ui.viewinterop.AndroidView
 
 
 
-fun WebView.webDefaults() = apply {
-    settings.apply {
-        javaScriptEnabled = true
-        domStorageEnabled = true
-        useWideViewPort = true
-        loadWithOverviewMode = true
-        builtInZoomControls = true
-        displayZoomControls = false
-    }
-    webChromeClient = WebChromeClient()
 
-    webViewClient = object : WebViewClient() {
-        override fun shouldOverrideUrlLoading(
-            view: WebView?,
-            request: WebResourceRequest?
-        ): Boolean {
-            // Always load inside this WebView
-            view?.loadUrl(request?.url.toString())
-            return true
-        }
-    }
-}
 
 @Composable
-fun UrlUpToDate(
-    webView: State<WebView?>,
-    url: MutableState<String>,
-    extraAction: (WebView, String) -> Unit = { _, _ -> }
-) {
-    LaunchedEffect(webView.value) {
-        val wv = webView.value ?: return@LaunchedEffect
-        while (true) {
-            val currentUrl = wv.url ?: "https://www.google.com"
-
-            if (currentUrl != url.value) {
-                // WebView navigated → update state
-                url.value = currentUrl
-                extraAction(wv, currentUrl)
-            } else if (url.value != (wv.url ?: "")) {
-                // State changed externally → update WebView
-                wv.loadUrl(url.value)
-            }
-
-            delay(200) // check often, but not too aggressive
-        }
-    }
-}
-
-@Composable
-fun Web() {
-    val url = r_m("https://www.google.com") // single source of truth
+fun Web(){
+    val url = r_m("") // single source of truth
     val webView = r { mutableStateOf<WebView?>(null) }
 
     Item.WebPointTimer()
 
-    UrlUpToDate(webView, url) { web, currentUrl ->
-        if (currentUrl.contains("youtube")){
-            //web.injectFixedSizeYouTube()
-        }
-        if (currentUrl.contains("/shorts/")) {
-            web.loadUrl("https://www.google.com")
-            url.value = "https://www.google.com"
-        }
-    }
-
-
     LazyScreen(
         title = {
             Text(" Points ${Bar.funTime}: ")
             val scrollState = rememberScrollState()
-            Row(modifier = Modifier.horizontalScroll(scrollState)) {
+            Row(Modifier.scroll(vertical=no)) {
                 Text("url= ${url.value}")
             }
         },
         Scrollable = false,
         DividerPadding = false,
     ) {
-        AndroidView(
-            factory = { ctx ->
-                WebView(ctx).apply {
-                    this.webDefaults()
-                    webView.value = this
-                    loadUrl(url.value) // initial load only
+        BrowseScreenXml(
+            url = url.value,
+            onUrlChanged = {
+                if (url.contains("youtube") && webView.value?.canGoBack() == true) {
+                    webView.value?.goBack()
                 }
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(App.LazyScreenContentHeight)
+            onProgressChanged: (Int) -> Unit = {},
+            onPageStarted: (String) -> Unit = {},
+            onPageFinished: (String) -> Unit = {},
         )
-    }
-}
-
-
-
-
-@Composable
-fun WebTest(){
-    val url = r_m("https://www.google.com") // single source of truth
-    val webView = r { mutableStateOf<WebView?>(null) }
-
-    LazyScreen(
-        title = {
-            Text(" Points ${Bar.funTime}: ")
-            val scrollState = rememberScrollState()
-            Row(modifier = Modifier.horizontalScroll(scrollState)) {
-                Text("url= ${url.value}")
-            }
-        },
-        Scrollable = false,
-        DividerPadding = false,
-    ) {
-        BrowseScreenXml(url.value)
     }
 }
 
@@ -289,14 +208,18 @@ fun WebTest(){
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun BrowseScreenXml(
-    urlNew: String = "https://www.google.com",
-    isDesktopSite: Boolean = false,
-    onUrlChanged: (String) -> Unit = {},
+    webView: WebView,
+    urlNew: Str = "https://www.google.com",
+    isDesktopSite: Bool = no,
+    onUrlChanged: (Str) -> Unit = {},
     onProgressChanged: (Int) -> Unit = {},
-    onPageStarted: (String) -> Unit = {},
-    onPageFinished: (String) -> Unit = {},
+    onPageStarted: (Str) -> Unit = {},
+    onPageFinished: (Str) -> Unit = {},
 ) {
-    var webView: WebView? by remember { mutableStateOf(null) }
+
+    BackHandler {
+        webView.goBack()
+    }
 
     AndroidView(
         factory = { context ->
