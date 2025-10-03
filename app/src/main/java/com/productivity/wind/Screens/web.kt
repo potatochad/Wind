@@ -419,7 +419,10 @@ fun Web() {
 
 
 
-
+@Composable
+fun WebTest(){
+    BrowseScreen()
+}
 
 
 
