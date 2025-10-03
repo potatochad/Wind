@@ -113,7 +113,7 @@ fun LazyMove(
 	content: Content,
 ) {
     Box(
-		Modifier.maxSize()
+		Modifier.maxSize
     ) {
         Box(Modifier
                 .offset(x = x, y = y)
@@ -188,7 +188,7 @@ fun LazyWindow(
         ) {
             Box(
                 modifier = Modifier
-                    .maxSize()
+                    .maxSize
                     .clickOrHold() { set(show, false) },
                 contentAlignment = Alignment.Center
             ) {
@@ -411,7 +411,7 @@ fun LazyImage(
 @Composable
 fun <T> LazzyList(
     data: List<T>,
-    modifier: Mod = Modifier.maxWidth().height(200.dp),
+    modifier: Mod = Modifier.maxWidth.height(200.dp),
     lazyMode: Bool = false,
     content: Content_<T>,
 ) {
@@ -492,7 +492,7 @@ fun LazzyRow(
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth()
+            .maxWidth
             .padding(padding.dp),
         horizontalArrangement = if (center) Arrangement.Center else Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
@@ -529,7 +529,7 @@ fun LazyCard(
     corners: Int = 16,
 	modifier: Mod = Modifier
 	     .padding(horizontal = 8.dp, vertical = 10.dp)
-         .fillMaxWidth(),
+         .maxWidth,
     content: Content,
 ) {
     Card(
@@ -620,7 +620,7 @@ fun LazyMore(
     Column(modifier = modifier) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
+                .maxWidth
                 .clickable { expanded = !expanded }
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -652,7 +652,7 @@ fun LazyMore(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .maxWidth
                     .padding(start = 32.dp, top = 4.dp) // indent content nicely
             ) {
                 content()
@@ -696,7 +696,7 @@ fun LazyItem(
     ) {
         Card(
 			modifier = modifier
-				.maxWidth()
+				.maxWidth
 				.clickable(enabled = onClick != null) { onClick?.invoke() },
 			shape = RoundedCornerShape(12.dp),
 			colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
@@ -704,7 +704,7 @@ fun LazyItem(
 		) {
             Row(
 				modifier = Modifier
-					.maxWidth()
+					.maxWidth
 					.padding(5.dp),
 				verticalAlignment = Alignment.CenterVertically
 			) {
@@ -774,7 +774,7 @@ fun LazyHeader(
 
         Row(
             modifier = modifier
-                .maxWidth()
+                .maxWidth
                 .background(Color.Black)
 				.padding(vertical = 12.dp)
 			.height(height.dp),
@@ -1006,7 +1006,7 @@ fun LazyMenu(
             modifier = Modifier
                 .offset { IntOffset(offsetX.roundToPx(), 0) }
                 .width(App.screenWidth/2+30.dp)
-                .height(App.screenHeight)
+                .maxHeight
                 .background(Color.DarkGray)
         ) {
             content()
