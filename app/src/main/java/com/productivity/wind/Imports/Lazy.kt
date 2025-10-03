@@ -59,7 +59,8 @@ import kotlin.math.*
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.layout.*
 import androidx.compose.foundation.text.selection.*
-import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.gestures.rememberOverscrollBehavior
+
 
 
 fun Modifier.clickOrHold(
@@ -82,30 +83,24 @@ fun Modifier.clickOrHold(
 
 
 @OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun Modifier.scrollVert(on: Bool): Mod {
-    return if (on) {
-        val behavior = rememberOverscrollBehavior()
-        this
-            .overscroll(behavior)
-            .verticalScroll(rememberScrollState())
-    } else {
-        this
+fun Modifier.scroll(
+    upDown: Bool = true,
+    on: Bool = true,
+    onOverscroll: (Float) -> Unit = {}
+): Modifier = if (!on) this else {
+    val behavior = rememberOverscrollBehavior()
+    val connection = object : NestedScrollConnection {
+        override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+            if (upDown && available.y != 0f) onOverscroll(available.y)
+            if (!upDown && available.x != 0f) onOverscroll(available.x)
+            return Offset.Zero
+        }
     }
+    (if (upDown) verticalScroll(rememberScrollState()) else horizontalScroll(rememberScrollState()))
+        .overscroll(behavior)
+        .nestedScroll(connection)
 }
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun Modifier.scrollHoriz(on: Bool): Mod {
-    return if (on) {
-        val behavior = rememberOverscrollBehavior()
-        this
-            .overscroll(behavior)
-            .horizontalScroll(rememberScrollState())
-    } else {
-        this
-    }
-}
 
 
 val Modifier.maxSize: Mod
