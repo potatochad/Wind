@@ -59,12 +59,13 @@ import kotlin.math.*
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.layout.*
 import androidx.compose.foundation.text.selection.*
-import androidx.compose.foundation.gestures.rememberOverscrollBehavior
+import androidx.compose.foundation.gestures.*
 
-
+val yes = true
+val no = false
 
 fun Modifier.clickOrHold(
-    hold: Bool = false,
+    hold: Bool = yes,
     action: Do,
 ): Modifier {
     return if (hold) {
@@ -80,12 +81,12 @@ fun Modifier.clickOrHold(
         }
 	}
 }
-val yes = true
-val no = false
+
 
 
 
 @OptIn(ExperimentalFoundationApi::class)
+@Composable
 fun Modifier.scroll(
     on: Bool = yes,
 	upDown: Bool = yes,
