@@ -152,14 +152,7 @@ import android.graphics.Bitmap
 import androidx.compose.ui.viewinterop.AndroidView
 
 
-fun Dp.toPx(): Int {
-    var context = App.ctx
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        this.value,
-        context.resources.displayMetrics
-    ).toInt()
-}
+
 
 
 
