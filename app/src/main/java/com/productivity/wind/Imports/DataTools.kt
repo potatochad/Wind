@@ -101,6 +101,16 @@ val no = false
 val <T> State<T>.it: T
     get() = this.value
 
+
+fun Dp.toPx(): Int {
+    var context = App.ctx
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.value,
+        context.resources.displayMetrics
+    ).toInt()
+}
+
 @Composable
 fun <T> r(value: () -> T) = remember { value() }
 fun <T> m(value: T) = mutableStateOf(value)
