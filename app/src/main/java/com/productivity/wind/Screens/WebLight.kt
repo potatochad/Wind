@@ -66,8 +66,6 @@ import android.graphics.*
 import android.graphics.drawable.*
 
 
-
-
 var tabsList: ArrayList<Tab> = ArrayList()
 var isDesktopSite: Bool = false
 var bookmarkList: ArrayList<Bookmark> = ArrayList()
@@ -111,11 +109,7 @@ class WebClass : AppCompatActivity() {
 
 @SuppressLint("NotifyDataSetChanged")
 fun changeTab(url: Str, fragment: Fragment, isBackground: Bool = false) {
-    tabsList.add(Tab(name = url, fragment = fragment))
-    myPager.adapter?.notifyDataSetChanged()
-    tabsBtn.text = tabsList.size.toString()
-
-    if (!isBackground) myPager.currentItem = tabsList.size - 1
+    Vlog("changeTab disabled")
 }
 
 class TabAdapter(private val dialog: AlertDialog): RecyclerView.Adapter<TabAdapter.MyHolder>() {
