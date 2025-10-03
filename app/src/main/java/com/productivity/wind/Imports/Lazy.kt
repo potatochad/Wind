@@ -95,7 +95,14 @@ fun scrollHoriz(on: Bool): Mod {
         Modifier
     }
 }
-val Modifier.maxSize get() = this.fillMaxSize()
+val Modifier.maxSize: Mod
+    get() = this.fillMaxSize()
+
+val Modifier.maxWidth: Mod
+    get() = this.fillMaxWidth()
+
+val Modifier.maxHeight: Mod
+    get() = this.fillMaxHeight()
 
 
 
@@ -181,7 +188,7 @@ fun LazyWindow(
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .maxSize()
                     .clickOrHold() { set(show, false) },
                 contentAlignment = Alignment.Center
             ) {
@@ -404,7 +411,7 @@ fun LazyImage(
 @Composable
 fun <T> LazzyList(
     data: List<T>,
-    modifier: Mod = Modifier.fillMaxWidth().height(200.dp),
+    modifier: Mod = Modifier.maxWidth().height(200.dp),
     lazyMode: Bool = false,
     content: Content_<T>,
 ) {
@@ -678,7 +685,7 @@ fun LazyItem(
 ) {
 	Row(
         modifier = Modifier
-            .fillMaxWidth()
+            .maxWidth()
             .padding(
 		    top = topPadding,
 		    bottom = bottomPadding,
@@ -689,7 +696,7 @@ fun LazyItem(
     ) {
         Card(
 			modifier = modifier
-				.fillMaxWidth()
+				.maxWidth()
 				.clickable(enabled = onClick != null) { onClick?.invoke() },
 			shape = RoundedCornerShape(12.dp),
 			colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
@@ -697,7 +704,7 @@ fun LazyItem(
 		) {
             Row(
 				modifier = Modifier
-					.fillMaxWidth()
+					.maxWidth()
 					.padding(5.dp),
 				verticalAlignment = Alignment.CenterVertically
 			) {
@@ -767,7 +774,7 @@ fun LazyHeader(
 
         Row(
             modifier = modifier
-                .fillMaxWidth()
+                .maxWidth()
                 .background(Color.Black)
 				.padding(vertical = 12.dp)
 			.height(height.dp),
@@ -984,7 +991,7 @@ fun LazyMenu(
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .maxSize()
                 .background(Color.Black.copy(alpha = backgroundAlpha))
                 .clickable(
                     indication = null,
