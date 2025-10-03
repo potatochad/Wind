@@ -112,17 +112,6 @@ import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.viewinterop.*
 import com.productivity.wind.Imports.*
-import com.productivity.wind.*
-import org.mozilla.geckoview.*
-import android.content.*
-import androidx.compose.ui.platform.*
-import androidx.compose.foundation.lazy.*
-import org.mozilla.geckoview.AllowOrDeny
-import org.mozilla.geckoview.*
-import org.mozilla.geckoview.GeckoSession.NavigationDelegate.*
-import org.mozilla.geckoview.GeckoSession.*
-import androidx.activity.compose.*
-import java.util.concurrent.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.*
@@ -159,9 +148,6 @@ import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.*
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.*
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.*
 import android.graphics.Bitmap
 import androidx.compose.ui.viewinterop.AndroidView
 
@@ -175,142 +161,7 @@ fun Dp.toPx(): Int {
     ).toInt()
 }
 
-@Composable
-fun SimpleBrowser(url: String) {
-    AndroidView(
-        factory = { context ->
-            WebView(context).apply {
-                settings.javaScriptEnabled = true
-                settings.domStorageEnabled = true
-                settings.mediaPlaybackRequiresUserGesture = false
-                settings.useWideViewPort = true
-                settings.loadWithOverviewMode = true
-                settings.allowFileAccess = true
-                settings.allowContentAccess = true
 
-                webChromeClient = WebChromeClient()
-                webViewClient = object : WebViewClient() {
-                    override fun shouldOverrideUrlLoading(
-                        view: WebView?,
-                        request: WebResourceRequest?
-                    ): Boolean {
-                        return false // Load URL inside WebView
-                    }
-                }
-
-                loadUrl(url)
-            }
-        },
-        update = { webView ->
-            webView.loadUrl(url)
-        },
-        modifier = Modifier.fillMaxSize()
-    )
-}
-
-
-
-fun WebView.injectFixedSizeYouTubeWEIRD() {
-    val widthPx = ((App.screenWidth).toPx()/2.9)
-    val heightPx = (widthPx * 9f / 16f)
-
-    val js = """
-    javascript:(function() {
-        Element.prototype.makeUI = function(prop, value) {
-            this.style.setProperty(prop, value, 'important');
-        }
-
-        function resizePlayer() {
-            const elements = [
-                document.querySelector("video"),
-                // document.getElementById("movie_player"),
-                // document.querySelector(".html5-video-container"),
-                // document.querySelector("#player-container"),
-                // document.querySelector("#player"),
-                // document.querySelector("ytd-player")
-            ];
-
-            elements.forEach(el => {
-                if (el) {
-                    el.makeUI('width', '${widthPx}px');
-                    el.makeUI('height', '${heightPx}px');
-                    el.makeUI('max-width', '${widthPx}px');
-                    el.makeUI('max-height', '${heightPx}px');
-                    el.makeUI('object-fit', 'fill');
-                    el.makeUI('margin', '0');
-                    el.makeUI('padding', '0');
-                    el.makeUI('border', '0');
-                }
-            });
-        }
-
-        resizePlayer();
-        setInterval(resizePlayer, 1000);
-    })();
-    """.trimIndent()
-
-    this.evaluateJavascript(js, null)
-}
-
-
-fun WebView.injectFixedSizeYouTube() {
-    val widthPx = (App.screenWidth / 3).toPx()
-    val heightPx = (widthPx * 9f / 16f) // Maintain 16:9 aspect ratio
-
-    val js = """
-        javascript:(function() {
-            // Ensure viewport is set properly
-            const head = document.head || document.getElementsByTagName('head')[0];
-            const existingViewport = document.querySelector("meta[name='viewport']");
-            if (!existingViewport) {
-                const viewport = document.createElement('meta');
-                viewport.name = "viewport";
-                viewport.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
-                head.appendChild(viewport);
-            }
-
-            // Prevent overflow
-            document.body.style.overflow = 'hidden';
-            document.documentElement.style.overflow = 'hidden';
-
-            // Extend element style override helper
-            Element.prototype.makeUI = function(prop, value, priority) {
-                this.style.setProperty(prop, value, priority);
-            }
-
-            function resizePlayer() {
-                const elements = [
-                    document.querySelector("video"),
-                    document.getElementById("movie_player"),
-                    document.querySelector(".html5-video-container"),
-                    document.querySelector("#player-container"),
-                    document.querySelector("#player"),
-                    document.querySelector("ytd-player")
-                ];
-
-                elements.forEach(el => {
-                    if (el) {
-                        el.makeUI('width', '${widthPx}px', 'important');
-                        el.makeUI('height', '${heightPx}px', 'important');
-                        el.makeUI('max-width', '${widthPx}px', 'important');
-                        el.makeUI('max-height', '${heightPx}px', 'important');
-                        el.makeUI('object-fit', 'fill', 'important');
-                        el.makeUI('margin', '0 auto', 'important');
-                        el.makeUI('padding', '0', 'important');
-                        el.makeUI('border', '0', 'important');
-                        el.makeUI('position', 'relative', 'important');
-                        el.makeUI('display', 'block', 'important');
-                    }
-                });
-            }
-
-            resizePlayer();
-            setInterval(resizePlayer, 1000);
-        })();
-    """.trimIndent()
-
-    this.evaluateJavascript(js, null)
-}
 
 
 
@@ -378,7 +229,7 @@ fun Web() {
 
     UrlUpToDate(webView, url) { web, currentUrl ->
         if (currentUrl.contains("youtube")){
-            web.injectFixedSizeYouTube()
+            //web.injectFixedSizeYouTube()
         }
         if (currentUrl.contains("/shorts/")) {
             web.loadUrl("https://www.google.com")

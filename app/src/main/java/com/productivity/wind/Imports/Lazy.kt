@@ -89,7 +89,7 @@ fun Modifier.clickOrHold(
 fun Modifier.scroll(
     on: Bool = yes,
 	upDown: Bool = yes,
-    onOverscroll: (Float) -> Unit = {}
+    onOverscroll: Do_<Float> = {}
 ): Modifier = if (!on) this else {
     val behavior = rememberOverscrollEffect()
     val connection = object : NestedScrollConnection {
@@ -658,7 +658,7 @@ fun LazyMore(
         ) {
             Column(
                 modifier = Modifier
-                    .maxWidth
+                    .maxWidth()
                     .padding(start = 32.dp, top = 4.dp) // indent content nicely
             ) {
                 content()
@@ -710,7 +710,7 @@ fun LazyItem(
 		) {
             Row(
 				modifier = Modifier
-                    .maxWidth
+                    .maxWidth()
                     .padding(5.dp),
 				verticalAlignment = Alignment.CenterVertically
 			) {
