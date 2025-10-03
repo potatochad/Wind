@@ -79,22 +79,23 @@ fun Modifier.clickOrHold(
 	}
 }
 @Composable
-fun scrollVert(on: Bool): Mod {
+fun Modifier.scrollVert(on: Bool): Mod {
     return if (on) {
-        Modifier.verticalScroll(rememberScrollState())
+        this.verticalScroll(rememberScrollState())
     } else {
-        Modifier
+        this
     }
 }
 
 @Composable
-fun scrollHoriz(on: Bool): Mod {
+fun Modifier.scrollHoriz(on: Bool): Mod {
     return if (on) {
-        Modifier.horizontalScroll(rememberScrollState())
+        this.horizontalScroll(rememberScrollState())
     } else {
-        Modifier
+        this
     }
 }
+
 val Modifier.maxSize: Mod
     get() = this.fillMaxSize()
 
