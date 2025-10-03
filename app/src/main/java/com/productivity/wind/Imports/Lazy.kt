@@ -78,23 +78,34 @@ fun Modifier.clickOrHold(
         }
 	}
 }
+
+
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Modifier.scrollVert(on: Bool): Mod {
     return if (on) {
-        this.verticalScroll(rememberScrollState())
+        val behavior = rememberOverscrollBehavior()
+        this
+            .overscroll(behavior)
+            .verticalScroll(rememberScrollState())
     } else {
         this
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Modifier.scrollHoriz(on: Bool): Mod {
     return if (on) {
-        this.horizontalScroll(rememberScrollState())
+        val behavior = rememberOverscrollBehavior()
+        this
+            .overscroll(behavior)
+            .horizontalScroll(rememberScrollState())
     } else {
         this
     }
 }
+
 
 val Modifier.maxSize: Mod
     get() = this.fillMaxSize()
