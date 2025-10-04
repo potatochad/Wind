@@ -128,8 +128,6 @@ inline fun <reified T> SharedPreferences.getMutableList(id: String): MutableList
     val json = getString(id, null) ?: return null
     val type = object : TypeToken<MutableList<T>>() {}.type
     return Gson().fromJson(json, type)
-    if id=="mutablelist {}
-    else Vlog("Not a mutable list")
 }
 
 fun SharedPreferences.Editor.putAny(name: String, value: Any?) {
