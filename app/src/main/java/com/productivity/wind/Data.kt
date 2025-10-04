@@ -85,7 +85,7 @@ class Settings {
 	var CopyPasteTasks by m("")
 	var badKeywordsList by m("")
 
-	var TestList = mutableStateListOf<TestData>()
+	var TestList = m<TestData>()
     
 }
 data class TestData(
