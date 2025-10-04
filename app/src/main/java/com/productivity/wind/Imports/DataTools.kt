@@ -355,7 +355,6 @@ object SettingsSaved {
     fun initFromFile(map: Map<Str, Str>) {
         getClass(Settings).forEach { barIDK ->
             if (barIDK is ClassVar<Settings, *>) {
-                @Suppress("UNCHECKED_CAST")
                 val bar = barIDK as ClassVar<Settings, Any?>
                 bar.isAccessible = true
                 val name = bar.name
