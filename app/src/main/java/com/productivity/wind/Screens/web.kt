@@ -169,7 +169,7 @@ fun goBackWeb(webView: WebView?) {
 }
 
 fun BlockKeyword(
-    webView: WebView?,
+    webView: m_<WebView?>,
     keyword: Str,
     Do: Do = { Vlog("Blocked keyword") },
 ) {
@@ -199,7 +199,7 @@ fun Web(){
                 Text("url= ${url.value}")
             }
             UI.End {
-                Icon.Reload
+                Icon.Reload(webView)
                 UI.move(10)
                 Icon.Add {
                     
@@ -234,7 +234,7 @@ fun Web(){
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun BrowseScreenXml(
-    webViewState: MutableState<WebView?>,
+    webViewState: m_<WebView?>,
     url: String = "https://www.google.com",
     isDesktopSite: Boolean = false,
     onUrlChanged: (String) -> Unit = {},
