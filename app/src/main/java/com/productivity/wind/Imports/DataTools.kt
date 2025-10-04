@@ -261,7 +261,7 @@ fun BsaveToFile(trigger: Bool) {
         if (uri != null) {
             val Data = getStoredData()
             ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
-                Data.all.forEach { (key, value) -> out.write("$key=$value\n") }
+                Data.all().forEach { (key, value) -> out.write("$key=$value\n") }
             }
         }
     }
@@ -327,7 +327,8 @@ object SettingsSaved {
         if (App.restoringFromFile) return
         Dosave = GlobalScope.launch {
             while (isActive) {
-                val Data = getStoredData().edit()
+                val Data2 = getStoredData()
+                    var Data = Data2.edit()
                 var CPU = 0
                 
                 getClass(Bar).forEach { bar ->
