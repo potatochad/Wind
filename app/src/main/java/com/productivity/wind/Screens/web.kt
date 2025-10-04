@@ -199,6 +199,8 @@ fun Web(){
                 Text("url= ${url.value}")
             }
             UI.End {
+                Icon.Reload
+                UI.move(10)
                 Icon.Add {
                     
                 }
