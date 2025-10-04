@@ -210,7 +210,6 @@ fun Web(){
     ) {
         BrowseScreenXml(
             webViewState = webView,
-            url = url.value,
             onUrlChanged = {
             
             },
@@ -234,8 +233,8 @@ fun Web(){
 @Composable
 fun BrowseScreenXml(
     webViewState: m_<WebView?>,
-    url: String = "https://www.google.com",
-    isDesktopSite: Boolean = false,
+    url: String = "",
+    isDesktopSite: Bool = false,
     onUrlChanged: (String) -> Unit = {},
     onProgressChanged: (Int) -> Unit = {},
     onPageStarted: (String) -> Unit = {},
