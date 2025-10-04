@@ -4,19 +4,15 @@ import com.productivity.wind.Screens.*
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
-import androidx.compose.runtime.MutableState
-import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.platform.LocalConfiguration
@@ -29,8 +25,7 @@ import android.graphics.*
 import androidx.compose.foundation.layout.*
 import com.productivity.wind.Imports.*
 import androidx.compose.foundation.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
+import androidx.compose.foundation.lazy.*
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
@@ -95,18 +90,18 @@ data class TestData(
 
 @Composable
 fun TestListDemo(testList: MutableList<TestData>) {
-    var inputName by remember { mutableStateOf("") }
+    var inputName by r { m("") }
 
     Column(
         modifier = Modifier
             .wrapContentHeight() // Only as tall as content
-            .fillMaxWidth()      // Still stretch horizontally if you want
+            .maxWidth()      // Still stretch horizontally if you want
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         // Input field + add button
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.maxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             TextField(
@@ -127,7 +122,7 @@ fun TestListDemo(testList: MutableList<TestData>) {
 
         // Display the list
         LazyColumn(
-            modifier = Modifier.fillMaxWidth().heightIn(max = 200.dp), // Limit height
+            modifier = Modifier.maxWidth().heightIn(max = 200.dp), // Limit height
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             items(testList) { item ->
