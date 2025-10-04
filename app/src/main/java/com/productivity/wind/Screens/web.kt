@@ -217,7 +217,7 @@ fun Web(){
             onProgressChanged = {},
             onPageStarted = {},
             onPageFinished = { 
-                BlockKeyword(webView, "youtube")
+                BlockKeyword(webView, "mrbeast")
             }
         )
     }
