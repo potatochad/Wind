@@ -120,18 +120,17 @@ fun getStoredData(
 ): SharedPreferences = App.ctx.getSharedPreferences(fileName, mode)
 
 
-fun <T> SharedPreferences.Editor.putMutableList(id: String, list: MutableList<T>?) {
-    if (list == null) {
-        putString(id, null) // handle null safely
-    } else {
-        val json = Gson().toJson(list) // convert list to JSON
-        putString(id, json)
-    }
+fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) {
+    if (list == null) Vlog("no mutable list") return
+    
+    val json = gson.toJson(list)
+    putString("MutableList $id", json)
 }
-inline fun <reified T> SharedPreferences.getMutableList(id: String): MutableList<T>? {
-    val json = getString(id, null) ?: return null
+
+inline fun <reified T> SharedPreferences.getMutableList(id: Str): MutableList<T>? {
+    val json = getString("MutableList $id", null) ?: return null
     val type = object : TypeToken<MutableList<T>>() {}.type
-    return Gson().fromJson(json, type)
+    return gson.fromJson(json, type)
 }
 
 fun SharedPreferences.Editor.putAny(name: String, value: Any?) {
@@ -141,7 +140,7 @@ fun SharedPreferences.Editor.putAny(name: String, value: Any?) {
         is Int -> putInt(name, value)
         is Float -> putFloat(name, value)
         is Long -> putLong(name, value)
-        else -> return
+        else -> Vlog("skip — $value")
     }
 }
 
