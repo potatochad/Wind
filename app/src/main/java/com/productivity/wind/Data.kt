@@ -83,6 +83,7 @@ class Settings {
     
     var ListApps by m("")
 	var CopyPasteTasks by m("")
+	var badKeywordsList by m("")
     
 }
 //m-mutable state, ml- mutablelistof
@@ -92,10 +93,12 @@ class Settings {
 val trackedLists = listOf(
         Dset("Bar.ListApps", "apps"),
 	    Dset("Bar.CopyPasteTasks", "copyTasks"),
-        
-    )
+     	Dset("Bar.badKeywordsList", "badWords"),
+)
 
 var copyTasks = ml(CopyTasks())
+var apps = ml(DataApps())
+var badWords = ml(BlockedKeywords())
 
 data class CopyTasks(
     override val id: Str= Id(),
@@ -108,9 +111,6 @@ data class CopyTasks(
     override fun copySelf() = this.copy()
 }
 
-
-var apps = ml(DataApps())
-
 data class DataApps(
     override val id: Str = Id(),
     var name: Str = "",
@@ -120,6 +120,13 @@ data class DataApps(
     var DoneTime: Int = 0,
     var Worth: Int = 0,
 ) : Identifiable, Copyable<DataApps> {
+    override fun copySelf() = this.copy()
+}
+
+data class BlockedKeywords(
+    override val id: Str = Id(),
+    var word: Str = "",
+) : Identifiable, Copyable<BlockedKeywords> {
     override fun copySelf() = this.copy()
 }
 
