@@ -85,7 +85,7 @@ class Settings {
 	var CopyPasteTasks by m("")
 	var badKeywordsList by m("")
 
-	var TestList = m<TestData>()
+	var TestList = ml<TestData>()
     
 }
 data class TestData(
