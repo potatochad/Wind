@@ -90,18 +90,18 @@ data class TestData(
 
 @Composable
 fun TestListDemo(testList: MutableList<TestData>) {
-    var inputName by r { m("") }
-
+    var inputName by remember { mutableStateOf("") }
+    
     Column(
         modifier = Modifier
-            .wrapContentHeight() // Only as tall as content
-            .maxWidth()      // Still stretch horizontally if you want
+            .wrapContentHeight()
+            .fillMaxWidth()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         // Input field + add button
         Row(
-            modifier = Modifier.maxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             TextField(
@@ -122,15 +122,56 @@ fun TestListDemo(testList: MutableList<TestData>) {
 
         // Display the list
         LazyColumn(
-            modifier = Modifier.maxWidth().heightIn(max = 200.dp), // Limit height
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = 300.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             items(testList) { item ->
-                Text("id=${item.id}, name=${item.name}")
+                var isEditing by remember { mutableStateOf(false) }
+                var editName by remember { mutableStateOf(item.name) }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    if (isEditing) {
+                        TextField(
+                            value = editName,
+                            onValueChange = { editName = it },
+                            modifier = Modifier.weight(1f)
+                        )
+                        Button(onClick = {
+                            if (editName.isNotBlank()) {
+                                val index = testList.indexOf(item)
+                                testList[index] = item.copy(name = editName)
+                                isEditing = false
+                            }
+                        }) {
+                            Text("Save")
+                        }
+                    } else {
+                        Text("id=${item.id}, name=${item.name}", modifier = Modifier.weight(1f))
+                        Row {
+                            Button(onClick = { isEditing = true }) {
+                                Text("Edit")
+                            }
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Button(onClick = { testList.remove(item) }) {
+                                Text("Delete")
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
+
+// Sample data class
+data class TestData(val id: Int = (0..1000).random(), val name: String)
+
 
 
 
