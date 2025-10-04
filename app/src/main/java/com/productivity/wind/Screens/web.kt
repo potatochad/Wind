@@ -186,7 +186,7 @@ fun Web(){
         DividerPadding = false,
     ) {
         BrowseScreenXml(
-            webView = webView,
+            webViewState = webView,
             url = url.value,
             onUrlChanged = {
                 Vlog("new web")
@@ -207,25 +207,24 @@ fun Web(){
 
 
 
+
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun BrowseScreenXml(
-    webView: WebView,
-    urlNew: Str = "https://www.google.com",
-    isDesktopSite: Bool = no,
-    onUrlChanged: (Str) -> Unit = {},
+    webViewState: MutableState<WebView?>,
+    urlNew: String = "https://www.google.com",
+    isDesktopSite: Boolean = false,
+    onUrlChanged: (String) -> Unit = {},
     onProgressChanged: (Int) -> Unit = {},
-    onPageStarted: (Str) -> Unit = {},
-    onPageFinished: (Str) -> Unit = {},
+    onPageStarted: (String) -> Unit = {},
+    onPageFinished: (String) -> Unit = {},
 ) {
-
     BackHandler {
-        webView.goBack()
+        webViewState.value?.goBack()
     }
 
     AndroidView(
         factory = { context ->
-            // Inflate your web.xml layout
             val rootView = LayoutInflater.from(context).inflate(R.layout.web, null, false)
             val myWebView = rootView.findViewById<WebView>(R.id.myWebView)
 
@@ -273,7 +272,7 @@ fun BrowseScreenXml(
             }
 
             myWebView.loadUrl("https://www.google.com/search?q=$urlNew")
-            webView = myWebView
+            webViewState.value = myWebView
 
             rootView
         },
