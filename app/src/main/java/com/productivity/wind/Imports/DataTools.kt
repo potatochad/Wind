@@ -100,8 +100,10 @@ import kotlin.reflect.full.*
 val gson = Gson()
 val yes = true
 val no = false
-val <T> State<T>.it: T
+var <T> m_<T>.it: T
     get() = this.value
+    set(value) { this.value = value }
+
 
 
 fun Dp.toPx(): Int {
@@ -258,7 +260,7 @@ fun BsaveToFile(trigger: Bool) {
     ) { uri ->
         if (uri != null) {
             val Data = getStoredData()
-            context.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
+            ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
                 Data.all.forEach { (key, value) -> out.write("$key=$value\n") }
             }
         }
