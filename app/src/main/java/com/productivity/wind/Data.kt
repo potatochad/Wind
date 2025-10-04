@@ -84,38 +84,16 @@ class Settings {
     var ListApps by m("")
 	var CopyPasteTasks by m("")
 	var badKeywordsList by m("")
+
+	var TestList by ml(TestData())
     
 }
-class LazyLists {
-    private val items = mutableListOf<Item>()
+data class TestData(
+    val id: m_<Str>= Id(),
+    var name: m_<Str> = "",
+)
 
-    // Add new item
-    fun add(name: String, age: Int): Item {
-        val item = Item(name, age)
-        items.add(item)
-        return item
-    }
 
-    // Find by ID
-    fun findById(id: Int): Item? = items.find { it.id == id }
-
-    // Find by name
-    fun findByName(name: String): List<Item> = items.filter { it.name == name }
-
-    // Edit item by ID
-    fun edit(id: Int, newName: String? = null, newAge: Int? = null): Boolean {
-        val item = findById(id) ?: return false
-        newName?.let { item.name = it }
-        newAge?.let { item.age = it }
-        return true
-    }
-
-    // Delete item by ID
-    fun delete(id: Int): Boolean = items.removeIf { it.id == id }
-
-    // List all items
-    fun listAll(): List<Item> = items.toList()
-}
 
 
 
