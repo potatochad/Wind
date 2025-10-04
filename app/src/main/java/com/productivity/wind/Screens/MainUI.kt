@@ -72,6 +72,10 @@ fun Main() {
             Item.AppTaskUI(app)
         }
 
+        LazyCard {
+            TestListDemo(Bar.TestList)
+        }
+
     }
 }
 
