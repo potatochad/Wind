@@ -341,7 +341,7 @@ object SettingsSaved {
                 
                     Data.putAny(bar.name, value)
                 }
-                edit.apply()
+                Data.apply()
                 delay(1_000L)
             }
         }
