@@ -1,7 +1,5 @@
 package com.productivity.wind.Imports
 
-@Suppress("UNCHECKED_CAST")
-
 import timber.log.Timber
 import android.app.usage.UsageStatsManager
 import androidx.compose.foundation.interaction.*
@@ -90,6 +88,8 @@ import android.content.pm.*
 import java.util.*
 import com.productivity.wind.R
 import kotlin.reflect.full.*
+
+@Suppress("UNCHECKED_CAST")
 
 
 //region Vals/ Vars FOR DATA
