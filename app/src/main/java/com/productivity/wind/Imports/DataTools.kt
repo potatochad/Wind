@@ -145,14 +145,16 @@ fun SharedPreferences.Editor.putAny(name: String, value: Any?) {
     }
 }
 
-fun getClass(obj: Any) = obj::class.memberProperties.also { props ->
-    props.forEach { prop ->
-        if (prop.visibility != KVisibility.PUBLIC) {
-            log("NO private stuff")
+fun <T : Any> getClass(obj: T): List<KProperty1<T, *>> =
+    obj::class.memberProperties
+        .also { props ->
+            props.forEach { prop ->
+                if (prop.visibility != KVisibility.PUBLIC) {
+                    log("NO private stuff")
+                }
+            }
         }
-    }
-}.filter { it.visibility == KVisibility.PUBLIC }
-
+        .filter { it.visibility == KVisibility.PUBLIC } as List<KProperty1<T, *>>
 
 @Composable
 fun <T> r(value: () -> T) = remember { value() }
