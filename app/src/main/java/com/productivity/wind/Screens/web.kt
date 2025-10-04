@@ -162,8 +162,26 @@ import androidx.activity.compose.*
 
 
 
+fun goBackWeb(webView: WebView?) {
+    if (webView?.canGoBack() == true) {
+        webView.goBack()
+    }
+}
 
-
+fun BlockKeyword(
+    webView: WebView?,
+    keyword: Str,
+    Do: Do = { Vlog("Blocked keyword") },
+) {
+    webView?.evaluateJavascript(
+        "(function() { return document.body.innerText; })();"
+    ) { html ->
+        if (html.contains(keyword, ignoreCase = true)) {
+            goBackWeb(webView)
+            Do()
+        }
+    }
+}
 
 
 @Composable
@@ -177,8 +195,13 @@ fun Web(){
         title = {
             Text(" Points ${Bar.funTime}: ")
             val scrollState = rememberScrollState()
-            Row(Modifier.scroll(vertical=no)) {
+            Row(Modifier.scroll(vertical=no).width(App.screenWidth*0.5)) {
                 Text("url= ${url.value}")
+            }
+            UI.End {
+                Icon.Add {
+                    
+                }
             }
         },
         Scrollable = false,
@@ -188,14 +211,13 @@ fun Web(){
             webViewState = webView,
             url = url.value,
             onUrlChanged = {
-                Vlog("new web")
-                if (it.contains("youtube") && webView.value?.canGoBack() == true) {
-                    webView.value?.goBack()
-                }
+            
             },
             onProgressChanged = {},
             onPageStarted = {},
-            onPageFinished = {},
+            onPageFinished = { 
+                BlockKeyword(webView, "youtube")
+            }
         )
     }
 }
