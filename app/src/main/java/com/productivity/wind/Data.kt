@@ -85,12 +85,12 @@ class Settings {
 	var CopyPasteTasks by m("")
 	var badKeywordsList by m("")
 
-	var TestList by ml(TestData())
+	var TestList = mutableStateListOf<TestData>()
     
 }
 data class TestData(
-    val id: m_<Str>= Id(),
-    var name: m_<Str> = "",
+    val id: Str = Id(),
+    var name: Str = "",
 )
 
 
