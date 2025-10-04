@@ -41,7 +41,7 @@ fun onNewDay() {
 }
 	
 
-
+//! unique names for each!!!
 class Settings {
     var funTime by m(0)
     var Dpoints by m(0)
