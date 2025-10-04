@@ -150,8 +150,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.graphics.Bitmap
 import androidx.compose.ui.viewinterop.AndroidView
-
-
+import androidx.activity.compose.*
 
 
 
@@ -212,7 +211,7 @@ fun Web(){
 @Composable
 fun BrowseScreenXml(
     webViewState: MutableState<WebView?>,
-    urlNew: String = "https://www.google.com",
+    url: String = "https://www.google.com",
     isDesktopSite: Boolean = false,
     onUrlChanged: (String) -> Unit = {},
     onProgressChanged: (Int) -> Unit = {},
