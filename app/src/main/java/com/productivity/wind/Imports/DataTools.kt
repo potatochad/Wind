@@ -113,6 +113,25 @@ fun Dp.toPx(): Int {
 fun getStoredData(fileName: String = "settings", mode: Int = Context.MODE_PRIVATE){
     App.ctx.getSharedPreferences(fileName, mode)
 }
+fun SharedPreferences.Editor.putAny(name: String, value: Any?) {
+    when (value) {
+        is Boolean -> putBoolean(name, value)
+        is String -> putString(name, value)
+        is Int -> putInt(name, value)
+        is Float -> putFloat(name, value)
+        is Long -> putLong(name, value)
+        else -> return
+    }
+}
+
+fun getClass(obj: Any) = obj::class.memberProperties.also { props ->
+    props.forEach { prop ->
+        if (prop.visibility != KVisibility.PUBLIC) {
+            log("NO private stuff")
+        }
+    }
+}.filter { it.visibility == KVisibility.PUBLIC }
+
 
 @Composable
 fun <T> r(value: () -> T) = remember { value() }
@@ -280,7 +299,7 @@ var initOnce= false
 object SettingsSaved {
     private var Dosave: Job? = null
     private const val PREFS = "settingsLISTS"
-    private val lastJson = mutableMapOf<String, String>()
+    private val lastJson = mutableMapOf<Str, Str>()
     private var autoSaveJob: Job? = null
 
 
@@ -289,26 +308,19 @@ object SettingsSaved {
         if (App.restoringFromFile) return
         Dosave = GlobalScope.launch {
             while (isActive) {
-                val data = getStoredData()
-                val edit = data.edit()
+                val Data = getStoredData().edit()
 
                 var CPU = 0
-                Settings::class.memberProperties.forEach { bar ->
+                getClass(settings).forEach { bar ->
                     /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
                     bar.isAccessible = true
                     val value = bar.get(Bar)
                     if (value is SnapshotStateList<*>) return@forEach
 
-                    when (value) {
-                        is Bool -> edit.putBoolean(bar.name, value)
-                        is Str -> edit.putString(bar.name, value)
-                        is Int -> edit.putInt(bar.name, value)
-                        is Float -> edit.putFloat(bar.name, value)
-                        is Long -> edit.putLong(bar.name, value)
-                    }
+                    Data.putAny(bar.name, value)
                 }
                 edit.apply()
-                delay(1_000L) // save every 5 seconds
+                delay(1_000L)
             }
         }
     }
