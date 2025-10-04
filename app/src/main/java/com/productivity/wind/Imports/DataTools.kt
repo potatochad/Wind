@@ -129,6 +129,8 @@ typealias Do_<T> = (T) -> Unit
 typealias m_<T> = MutableState<T>
 typealias Str = String
 typealias Bool = Boolean
+typealias ClassVar<T, R> = KMutableProperty1<T, R>
+
 
 
 
@@ -177,7 +179,7 @@ fun FindVar(listName: String, where: String = "com.productivity.wind.DataKt"): S
     }
 }
 
-fun FindBar(statePath: String): android.util.Pair<Any, KMutableProperty1<Any, String>>? {
+fun FindBar(statePath: Str): Pair<Any, ClassVar<Any, Str>>? {
     val parts = statePath.split(".")
     if (parts.size != 2) {
         Vlog("❌ Invalid state path: '$statePath'")
@@ -194,21 +196,21 @@ fun FindBar(statePath: String): android.util.Pair<Any, KMutableProperty1<Any, St
     }
 
     val stateProp = instance::class.memberProperties
-        .filterIsInstance<KMutableProperty1<Any, *>>()
-        .firstOrNull { it.name == propertyName } as? KMutableProperty1<Any, String>
+        .filterIsInstance<ClassVar<Any, *>>()
+        .firstOrNull { it.name == propertyName } as? ClassVar<Any, String>
         ?: run {
             Vlog("❌ Property '$propertyName' not found in object '$objectName'")
             return null
         }
 
-    return android.util.Pair(instance, stateProp) // 👈 THIS FIXES IT
+    return Pair(instance, stateProp)
 }
 
 //endregion Vals/ Vars FOR DATA
 
 
 @Composable
-fun BsaveToFile(trigger: Boolean) {
+fun BsaveToFile(trigger: Bool) {
     val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
