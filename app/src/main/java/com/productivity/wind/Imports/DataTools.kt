@@ -115,6 +115,23 @@ fun Dp.toPx(): Int {
 fun getStoredData(fileName: String = "settings", mode: Int = Context.MODE_PRIVATE){
     App.ctx.getSharedPreferences(fileName, mode)
 }
+
+fun <T> SharedPreferences.Editor.putMutableList(id: String, list: MutableList<T>?) {
+    if (list == null) {
+        putString(id, null) // handle null safely
+    } else {
+        val json = Gson().toJson(list) // convert list to JSON
+        putString(id, json)
+    }
+}
+inline fun <reified T> SharedPreferences.getMutableList(id: String): MutableList<T>? {
+    val json = getString(id, null) ?: return null
+    val type = object : TypeToken<MutableList<T>>() {}.type
+    return Gson().fromJson(json, type)
+    if id=="mutablelist {}
+    else Vlog("Not a mutable list")
+}
+
 fun SharedPreferences.Editor.putAny(name: String, value: Any?) {
     when (value) {
         is Boolean -> putBoolean(name, value)
@@ -317,8 +334,7 @@ object SettingsSaved {
                     /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
                     bar.isAccessible = true
                     val value = bar.get(Bar)
-                    if (value is SnapshotStateList<*>) return@forEach
-
+                
                     Data.putAny(bar.name, value)
                 }
                 edit.apply()
