@@ -236,8 +236,8 @@ object Header {
                 
 
                 set(selectedApp, "")
-                set(Points.it = "0")
-                set(Time.it = "0")
+                set(Points, "0")
+                set(Time, "0")
 
                 goTo("Main")
             })
