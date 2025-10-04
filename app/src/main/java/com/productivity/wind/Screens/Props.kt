@@ -284,9 +284,9 @@ object Icon {
                 )
         }
         @Composable
-        fun Reload(webView: m_<WebView>) {
+        fun Reload(webView: m_<WebView?>) {
             LazyIcon(
-                onClick = { webView.it.reload() },
+                onClick = { webView?.it.reload() },
                 icon = Icons.Default.Refresh
             )
         }
