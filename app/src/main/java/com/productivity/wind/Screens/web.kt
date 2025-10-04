@@ -186,7 +186,6 @@ fun BlockKeyword(
 
 @Composable
 fun Web(){
-    val url = r_m("") // single source of truth
     val webView = r { mutableStateOf<WebView?>(null) }
 
     Item.WebPointTimer()
@@ -195,8 +194,8 @@ fun Web(){
         title = {
             Text(" Points ${Bar.funTime}: ")
             val scrollState = rememberScrollState()
-            Row(Modifier.scroll(vertical=no).width(App.screenWidth)) {
-                Text("url= ${url.value}")
+            Row(Modifier.scroll(vertical=no).width(App.screenWidth/2)) {
+                Text("url= ${webView.value?.url ?: "Loading..."}")
             }
             UI.End {
                 Icon.Reload(webView)
