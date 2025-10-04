@@ -263,7 +263,7 @@ fun BsaveToFile(trigger: Bool) {
         if (uri != null) {
             val Data = getStoredData()
             ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
-                Data.all().forEach { (key, value) -> out.write("$key=$value\n") }
+                Data.all.forEach { (key, value) -> out.write("$key=$value\n") }
             }
         }
     }
