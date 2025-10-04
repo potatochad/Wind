@@ -270,7 +270,7 @@ fun BrowseScreenXml(
                 }
             }
 
-            myWebView.loadUrl("https://www.google.com/search?q=$urlNew")
+            myWebView.loadUrl("https://www.google.com/search?q=$url")
             webViewState.value = myWebView
 
             rootView
@@ -279,7 +279,7 @@ fun BrowseScreenXml(
         update = { view ->
             val myWebView = view.findViewById<WebView>(R.id.myWebView)
             if (myWebView.url.isNullOrEmpty()) {
-                myWebView.loadUrl("https://www.google.com/search?q=$urlNew")
+                myWebView.loadUrl("https://www.google.com/search?q=$url")
             }
         }
     )
