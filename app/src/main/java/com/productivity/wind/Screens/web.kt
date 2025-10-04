@@ -195,7 +195,7 @@ fun Web(){
         title = {
             Text(" Points ${Bar.funTime}: ")
             val scrollState = rememberScrollState()
-            Row(Modifier.scroll(vertical=no).width((App.screenWidth)) {
+            Row(Modifier.scroll(vertical=no).width(App.screenWidth)) {
                 Text("url= ${url.value}")
             }
             UI.End {
