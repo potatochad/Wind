@@ -114,9 +114,11 @@ fun Dp.toPx(): Int {
         context.resources.displayMetrics
     ).toInt()
 }
-fun getStoredData(fileName: String = "settings", mode: Int = Context.MODE_PRIVATE){
-    App.ctx.getSharedPreferences(fileName, mode)
-}
+fun getStoredData(
+    fileName: String = "settings",
+    mode: Int = Context.MODE_PRIVATE
+): SharedPreferences = App.ctx.getSharedPreferences(fileName, mode)
+
 
 fun <T> SharedPreferences.Editor.putMutableList(id: String, list: MutableList<T>?) {
     if (list == null) {
@@ -327,8 +329,7 @@ object SettingsSaved {
         if (App.restoringFromFile) return
         Dosave = GlobalScope.launch {
             while (isActive) {
-                val Data2 = getStoredData()
-                    var Data = Data2.edit()
+                val Data = getStoredData().edit()
                 var CPU = 0
                 
                 getClass(Bar).forEach { bar ->
