@@ -1,5 +1,7 @@
 package com.productivity.wind.Imports
 
+@Suppress("UNCHECKED_CAST")
+
 import timber.log.Timber
 import android.app.usage.UsageStatsManager
 import androidx.compose.foundation.interaction.*
@@ -309,9 +311,9 @@ object SettingsSaved {
         Dosave = GlobalScope.launch {
             while (isActive) {
                 val Data = getStoredData().edit()
-
                 var CPU = 0
-                getClass(settings).forEach { bar ->
+                
+                getClass(Settings).forEach { bar ->
                     /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
                     bar.isAccessible = true
                     val value = bar.get(Bar)
@@ -329,10 +331,9 @@ object SettingsSaved {
         if (prefs.all.isEmpty() || initOnce) return
         initOnce= true //MUST USE, ALL ARE ZERO OR NULL
 
-        Settings::class.memberProperties.forEach { barIDK ->
+        getClass(Settings).forEach { barIDK ->
             //best variable is variable//JUST MAKING SURE
             if (barIDK is ClassVar<Settings, *>) {
-                @Suppress("UNCHECKED_CAST")
                 val bar = barIDK as ClassVar<Settings, Any?>
                 bar.isAccessible = true
                 val name = bar.name
@@ -352,7 +353,7 @@ object SettingsSaved {
         ListStorage.initAll()
     }
     fun initFromFile(map: Map<Str, Str>) {
-        Settings::class.memberProperties.forEach { barIDK ->
+        getClass(Settings).forEach { barIDK ->
             if (barIDK is ClassVar<Settings, *>) {
                 @Suppress("UNCHECKED_CAST")
                 val bar = barIDK as ClassVar<Settings, Any?>
