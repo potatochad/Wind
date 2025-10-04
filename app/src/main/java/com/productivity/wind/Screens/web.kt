@@ -173,11 +173,11 @@ fun BlockKeyword(
     keyword: Str,
     Do: Do = { Vlog("Blocked keyword") },
 ) {
-    webView?.evaluateJavascript(
+    webView.it?.evaluateJavascript(
         "(function() { return document.body.innerText; })();"
     ) { html ->
         if (html.contains(keyword, ignoreCase = true)) {
-            goBackWeb(webView)
+            goBackWeb(webView.it)
             Do()
         }
     }
