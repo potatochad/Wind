@@ -93,6 +93,49 @@ data class TestData(
     var name: Str = "",
 )
 
+@Composable
+fun TestListDemo(testList: MutableList<TestData>) {
+    var inputName by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .wrapContentHeight() // Only as tall as content
+            .fillMaxWidth()      // Still stretch horizontally if you want
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        // Input field + add button
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            TextField(
+                value = inputName,
+                onValueChange = { inputName = it },
+                placeholder = { Text("Enter name") },
+                modifier = Modifier.weight(1f)
+            )
+            Button(onClick = {
+                if (inputName.isNotBlank()) {
+                    testList.add(TestData(name = inputName))
+                    inputName = ""
+                }
+            }) {
+                Text("Add")
+            }
+        }
+
+        // Display the list
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth().heightIn(max = 200.dp), // Limit height
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            items(testList) { item ->
+                Text("id=${item.id}, name=${item.name}")
+            }
+        }
+    }
+}
 
 
 
