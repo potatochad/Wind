@@ -135,11 +135,12 @@ inline fun <reified T> SharedPreferences.getMutableList(id: Str): MutableList<T>
 
 fun SharedPreferences.Editor.putAny(name: String, value: Any?) {
     when (value) {
-        is Boolean -> putBoolean(name, value)
-        is String -> putString(name, value)
+        is Bool -> putBoolean(name, value)
+        is Str -> putString(name, value)
         is Int -> putInt(name, value)
         is Float -> putFloat(name, value)
         is Long -> putLong(name, value)
+        is MutableList<*> -> putMutableList(name, value)
         else -> Vlog("skip — $value")
     }
 }
