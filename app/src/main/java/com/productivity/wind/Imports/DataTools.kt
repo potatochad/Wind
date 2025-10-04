@@ -118,7 +118,8 @@ fun <T> set(state: m_<T>?, value: T) { state?.value = value }
 fun show(state: m_<Bool>?) = set(state, yes)
 fun hide(state: m_<Bool>?) = set(state, no)
 @Composable
-fun <T> r_m(initial: T) = remember { mutableStateOf(initial) }
+fun <T> r_m(initial: T) = r { m(initial) }
+inline fun <reified T> ml(): MutableList<T> = mutableListOf()
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
 fun Id(): String { return UUID.randomUUID().toString() }
 typealias Content = @Composable () -> Unit
