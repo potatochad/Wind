@@ -1,5 +1,5 @@
 package com.productivity.wind.Imports
-//
+
 import timber.log.Timber
 import android.app.usage.UsageStatsManager
 import androidx.compose.foundation.interaction.*
@@ -110,6 +110,9 @@ fun Dp.toPx(): Int {
         context.resources.displayMetrics
     ).toInt()
 }
+fun getStoredData(fileName: String = "settings", mode: Int = Context.MODE_PRIVATE){
+    App.ctx.getSharedPreferences(fileName, mode)
+}
 
 @Composable
 fun <T> r(value: () -> T) = remember { value() }
@@ -131,7 +134,7 @@ typealias m_<T> = MutableState<T>
 typealias Str = String
 typealias Bool = Boolean
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
-
+typealias ClassVal<T, R> = KProperty1<T, R>
 
 
 
@@ -212,15 +215,15 @@ fun FindBar(statePath: Str): Pair<Any, ClassVar<Any, Str>>? {
 
 @Composable
 fun BsaveToFile(trigger: Bool) {
-    val context = LocalContext.current
+    val ctx = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("text/plain")
     ) { uri ->
         if (uri != null) {
-            val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+            val Data = getStoredData()
             context.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
-                prefs.all.forEach { (key, value) -> out.write("$key=$value\n") }
+                Data.all.forEach { (key, value) -> out.write("$key=$value\n") }
             }
         }
     }
@@ -229,7 +232,7 @@ fun BsaveToFile(trigger: Bool) {
     }
 }
 @Composable
-fun BrestoreFromFile(trigger: MutableState<Boolean>) {
+fun BrestoreFromFile(trigger: m_<Bool>) {
     val context = LocalContext.current
 
     val launcher = rememberUpdatedState(
@@ -251,19 +254,18 @@ fun BrestoreFromFile(trigger: MutableState<Boolean>) {
                     SettingsSaved.initFromFile(fileMap)
                 } catch (e: Exception) {
                     log("Restore failed: ${e.message}", "bad")
-                    //Vlog("Restore failed: ${e.message}")
                 }
             }
         }
     )
 
-    LaunchedEffect(trigger.value) {
-        if (trigger.value) {
-            App.restoringFromFile = true
+    LaunchedEffect(trigger.it) {
+        if (trigger.it) {
+            App.restoringFromFile = no
             launcher.value.launch(arrayOf("text/plain"))
             delay(2000L)
-            App.restoringFromFile = false
-            trigger.value = false
+            App.restoringFromFile = no
+            trigger.it = false
             Vlog("Successfully restored")
         }
     }
@@ -287,7 +289,7 @@ object SettingsSaved {
         if (App.restoringFromFile) return
         Dosave = GlobalScope.launch {
             while (isActive) {
-                val data = App.ctx.getSharedPreferences("settings", Context.MODE_PRIVATE)
+                val data = getStoredData()
                 val edit = data.edit()
 
                 var CPU = 0
@@ -298,8 +300,8 @@ object SettingsSaved {
                     if (value is SnapshotStateList<*>) return@forEach
 
                     when (value) {
-                        is Boolean -> edit.putBoolean(bar.name, value)
-                        is String -> edit.putString(bar.name, value)
+                        is Bool -> edit.putBoolean(bar.name, value)
+                        is Str -> edit.putString(bar.name, value)
                         is Int -> edit.putInt(bar.name, value)
                         is Float -> edit.putFloat(bar.name, value)
                         is Long -> edit.putLong(bar.name, value)
@@ -311,37 +313,37 @@ object SettingsSaved {
         }
     }
     fun init() {
-        val prefs = App.ctx.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val prefs = getStoredData()
         if (prefs.all.isEmpty() || initOnce) return
         initOnce= true //MUST USE, ALL ARE ZERO OR NULL
 
         Settings::class.memberProperties.forEach { barIDK ->
             //best variable is variable//JUST MAKING SURE
-            if (barIDK is KMutableProperty1<Settings, *>) {
+            if (barIDK is ClassVar<Settings, *>) {
                 @Suppress("UNCHECKED_CAST")
-                val bar = barIDK as KMutableProperty1<Settings, Any?>
+                val bar = barIDK as ClassVar<Settings, Any?>
                 bar.isAccessible = true
                 val name = bar.name
                 val type = bar.returnType.classifier
 
                 val stateProp = bar.getDelegate(Bar)
                 when {
-                    stateProp is MutableState<*> && type == Boolean::class -> (stateProp as MutableState<Boolean>).value = prefs.getBoolean(name, false)
-                    stateProp is MutableState<*> && type == String::class -> (stateProp as MutableState<String>).value = prefs.getString(name, "") ?: ""
-                    stateProp is MutableState<*> && type == Int::class -> (stateProp as MutableState<Int>).value = prefs.getInt(name, 0)
-                    stateProp is MutableState<*> && type == Float::class -> (stateProp as MutableState<Float>).value = prefs.getFloat(name, 0f)
-                    stateProp is MutableState<*> && type == Long::class -> (stateProp as MutableState<Long>).value = prefs.getLong(name, 0L)
+                    stateProp is m_<*> && type == Bool::class -> (stateProp as m_<Bool>).it = prefs.getBoolean(name, false)
+                    stateProp is m_<*> && type == Str::class -> (stateProp as m_<Str>).it = prefs.getString(name, "") ?: ""
+                    stateProp is m_<*> && type == Int::class -> (stateProp as m_<Int>).it = prefs.getInt(name, 0)
+                    stateProp is m_<*> && type == Float::class -> (stateProp as m_<Float>).it = prefs.getFloat(name, 0f)
+                    stateProp is m_<*> && type == Long::class -> (stateProp as m_<Long>).it = prefs.getLong(name, 0L)
                 }
             }
             else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
         }
         ListStorage.initAll()
     }
-    fun initFromFile(map: Map<String, String>) {
+    fun initFromFile(map: Map<Str, Str>) {
         Settings::class.memberProperties.forEach { barIDK ->
-            if (barIDK is KMutableProperty1<Settings, *>) {
+            if (barIDK is ClassVar<Settings, *>) {
                 @Suppress("UNCHECKED_CAST")
-                val bar = barIDK as KMutableProperty1<Settings, Any?>
+                val bar = barIDK as ClassVar<Settings, Any?>
                 bar.isAccessible = true
                 val name = bar.name
                 val type = bar.returnType.classifier
@@ -350,11 +352,11 @@ object SettingsSaved {
                 val raw = map[name]
 
                 when {
-                    stateProp is MutableState<*> && type == Boolean::class -> (stateProp as MutableState<Boolean>).value = raw?.toBoolean() ?: false
-                    stateProp is MutableState<*> && type == String::class -> (stateProp as MutableState<String>).value = raw ?: ""
-                    stateProp is MutableState<*> && type == Int::class -> (stateProp as MutableState<Int>).value = raw?.toIntOrNull() ?: 0
-                    stateProp is MutableState<*> && type == Float::class -> (stateProp as MutableState<Float>).value = raw?.toFloatOrNull() ?: 0f
-                    stateProp is MutableState<*> && type == Long::class -> (stateProp as MutableState<Long>).value = raw?.toLongOrNull() ?: 0L
+                    stateProp is m_<*> && type == Bool::class -> (stateProp as m_<Bool>).it = raw?.toBoolean() ?: no
+                    stateProp is m_<*> && type == Str::class -> (stateProp as m_<Str>).it = raw ?: ""
+                    stateProp is m_<*> && type == Int::class -> (stateProp as m_<Int>).it = raw?.toIntOrNull() ?: 0
+                    stateProp is m_<*> && type == Float::class -> (stateProp as m_<Float>).it = raw?.toFloatOrNull() ?: 0f
+                    stateProp is m_<*> && type == Long::class -> (stateProp as m_<Long>).it = raw?.toLongOrNull() ?: 0L
                 }
             } else {
                 log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad")
@@ -384,7 +386,7 @@ object ListStorage {
                 //log("🔍 Restoring $listFieldName from $jsonFieldName")
 
                 val jsonProp = Settings::class.memberProperties
-                    .firstOrNull { it.name == jsonFieldName } as? KProperty1<Settings, *>
+                    .firstOrNull { it.name == jsonFieldName } as? ClassVal<Settings, *>
                 val json = jsonProp?.get(Bar) as? String
                 if (json.isNullOrBlank()) {
                     log("⚠️ Skipping $listFieldName: JSON is blank")
@@ -435,7 +437,7 @@ object ListStorage {
 
 
     @Composable
-    fun SSet2(stateCommand: String) {
+    fun SSet2(stateCommand: Str) {
 
         LaunchedEffect(Unit) {
             val parts = stateCommand.split(",").map { it.trim() }
