@@ -187,7 +187,7 @@ object SettingsSaved {
     
                 when (FullBar) {
                     is MutableState<*> -> {
-                        loadMutableState(type, name, FullBar as m_<T>, Data)
+                        loadMutableState(type, name, FullBar, Data)
                     }
 
                     is SnapshotStateList<T> -> {
