@@ -57,17 +57,7 @@ inline fun <reified T> SharedPreferences.getMutableList(id: Str): MutableList<T>
     return gson.fromJson(json, type)
 }
 
-fun SharedPreferences.Editor.putAny(name: Str, value: Any?) {
-    when (value) {
-        is Bool -> putBoolean(name, value)
-        is Str -> putString(name, value)
-        is Int -> putInt(name, value)
-        is Float -> putFloat(name, value)
-        is Long -> putLong(name, value)
-        is MutableList<*> -> putMutableList(name, value)
-        else -> Vlog("skip — $value")
-    }
-}
+
 
 
 fun FindVar(listName: Str, where: Str = "com.productivity.wind.DataKt"): SnapshotStateList<Any>? {
@@ -105,7 +95,9 @@ fun FindBar(statePath: Str): Pair<Any, ClassVar<Any, Str>>? {
         .filterIsInstance<ClassVar<Any, *>>()
         .firstOrNull { it.name == propertyName } as? ClassVar<Any, String>
         ?: run {
-            Vlog("❌ Property '$propertyName' not found in object '$objectName'")
+    
+            
+        Vlog("❌ Property '$propertyName' not found in object '$objectName'")
             return null
         }
 
