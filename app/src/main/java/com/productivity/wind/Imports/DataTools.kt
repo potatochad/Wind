@@ -115,13 +115,16 @@ fun Dp.toPx(): Int {
     ).toInt()
 }
 fun getStoredData(
-    fileName: String = "settings",
+    fileName: Str = "settings",
     mode: Int = Context.MODE_PRIVATE
 ): SharedPreferences = App.ctx.getSharedPreferences(fileName, mode)
 
 
 fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) {
-    if (list == null) Vlog("no mutable list") return
+    if (list == null) {
+        Vlog("no mutable list")
+        return
+    }
     
     val json = gson.toJson(list)
     putString("MutableList $id", json)
@@ -369,15 +372,15 @@ object SettingsSaved {
         getClass(Bar).forEach { bar ->
                 val bar = bar as ClassVar<Settings, Any?>
                 val name = bar.name
-                val type = bar.getType()
+                var type = bar.getType()
 
                 val FullBar = bar.getDelegate(Bar)
                 when {
-                    FullBar is type == Bool::class -> (FullBar as m_<Bool>).it = Data.getBoolean(name, false)
-                    FullBar is type == Str::class -> (FullBar as m_<Str>).it = Data.getString(name, "") ?: ""
-                    FullBar is type == Int::class -> (FullBar as m_<Int>).it = Data.getInt(name, 0)
-                    FullBar is type == Float::class -> (FullBar as m_<Float>).it = Data.getFloat(name, 0f)
-                    FullBar is type == Long::class -> (FullBar as m_<Long>).it = Data.getLong(name, 0L)
+                    type == Bool::class -> (FullBar as m_<Bool>).it = Data.getBoolean(name, false)
+                    type == Str::class -> (FullBar as m_<Str>).it = Data.getString(name, "") ?: ""
+                    type == Int::class -> (FullBar as m_<Int>).it = Data.getInt(name, 0)
+                    type == Float::class -> (FullBar as m_<Float>).it = Data.getFloat(name, 0f)
+                    type == Long::class -> (FullBar as m_<Long>).it = Data.getLong(name, 0L)
                 }
         }
         ListStorage.initAll()
