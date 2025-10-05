@@ -179,25 +179,28 @@ object SettingsSaved {
         initOnce = true
 
         getClass(Bar).forEach { bar ->
-                val bar = bar as ClassVar<Settings, Any?>
-                val name = bar.name
-                var type = bar.getType()
+            val bar = bar as ClassVar<Settings, Any?>
+            val name = bar.name
+            var type = bar.getType()
+            bar.isAccessible = true
 
-                var FullBar: Any? = bar.getDelegate(Bar)
-    
-                when (FullBar) {
-                    is MutableState<*> -> {
-                        loadMutableState(type, name, FullBar as m_<Any>, Data)
-                    }
 
-                    is SnapshotStateList<*> -> {
-                        Vlog("loading mutable list: $name")
-                        FullBar = Data.getMutableList("MutableList $name")
-                    }
-                    else -> {
-                        Vlog("unsupported type for $name")
-                    }
+            var FullBar: Any? = bar.getDelegate(Bar)
+
+            when (FullBar) {
+                is MutableState<*> -> {
+                    loadMutableState(type, name, FullBar as m_<Any>, Data)
                 }
+
+                is SnapshotStateList<*> -> {
+                    Vlog("loading mutable list: $name")
+                    FullBar = Data.getMutableList("MutableList $name")
+                }
+
+                else -> {
+                    Vlog("unsupported type for $name")
+                }
+            }
         }
         ListStorage.initAll()
     }
