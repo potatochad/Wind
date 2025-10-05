@@ -62,6 +62,7 @@ import java.util.*
 import com.productivity.wind.R
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.drawscope.*
+import com.productivity.wind.Imports.Data.Bar
 import com.productivity.wind.Imports.Data.Bool
 import com.productivity.wind.Imports.Data.Content
 import com.productivity.wind.Imports.Data.Do
@@ -74,6 +75,7 @@ import com.productivity.wind.Imports.Data.new
 import com.productivity.wind.Imports.Data.r
 import com.productivity.wind.Imports.Data.r_m
 import com.productivity.wind.Imports.Data.set
+import java.time.LocalDate
 
 
 //region log
@@ -297,6 +299,30 @@ fun eachSecond(onTick: Do) {
         }
     }
 }
+
+
+
+object DayChecker {
+    private var job: Job? = null
+
+
+    fun start() {
+        if (job?.isActive == true) return  // Already running
+        if (Bar.lastDate == "") { Bar.lastDate = LocalDate.now().toString() }
+
+        job = CoroutineScope(Dispatchers.Default).launch {
+            while (coroutineContext.isActive) {
+                delay(60 * 1000L)
+                val today = LocalDate.now().toString()
+                if (today != Bar.lastDate) {
+                    Bar.lastDate = today
+                    onNewDay()
+                }
+            }
+        }
+    }
+}
+
 
 
 

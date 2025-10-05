@@ -27,8 +27,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import java.time.LocalDate
-import com.productivity.wind.Imports.Vlog
-import com.productivity.wind.Imports.log
+import com.productivity.wind.Imports.*
+import com.productivity.wind.Imports.Data.*
 
 @Suppress("UNCHECKED_CAST")
 
@@ -38,27 +38,7 @@ import com.productivity.wind.Imports.log
 
 
 
-val gson = Gson()
-val yes = true
-val no = false
-var <T> m_<T>.it: T
-    get() = this.value
-    set(value) { this.value = value }
 
-
-
-fun Dp.toPx(): Int {
-    var context = App.ctx
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        this.value,
-        context.resources.displayMetrics
-    ).toInt()
-}
-fun getStoredData(
-    fileName: Str = "settings",
-    mode: Int = Context.MODE_PRIVATE
-): SharedPreferences = App.ctx.getSharedPreferences(fileName, mode)
 
 
 fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) {
@@ -77,7 +57,7 @@ inline fun <reified T> SharedPreferences.getMutableList(id: Str): MutableList<T>
     return gson.fromJson(json, type)
 }
 
-fun SharedPreferences.Editor.putAny(name: String, value: Any?) {
+fun SharedPreferences.Editor.putAny(name: Str, value: Any?) {
     when (value) {
         is Bool -> putBoolean(name, value)
         is Str -> putString(name, value)
@@ -89,86 +69,6 @@ fun SharedPreferences.Editor.putAny(name: String, value: Any?) {
     }
 }
 
-fun <T : Any> getClass(obj: T): List<KProperty1<T, *>> =
-    obj::class.memberProperties
-        .also { props ->
-            props.forEach { prop ->
-                if (prop.visibility != KVisibility.PUBLIC) {
-                    log("NO private stuff")
-                }
-            }
-        }
-        .filter { it.visibility == KVisibility.PUBLIC } as List<KProperty1<T, *>>
-
-@Composable
-fun <T> r(value: () -> T) = remember { value() }
-fun <T> m(value: T) = mutableStateOf(value)
-fun <T> set(state: m_<T>?, value: T) { state?.value = value }
-fun show(state: m_<Bool>?) = set(state, yes)
-fun hide(state: m_<Bool>?) = set(state, no)
-@Composable
-fun <T> r_m(initial: T) = r { m(initial) }
-inline fun <reified T> ml(): MutableList<T> = mutableListOf()
-inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
-fun Id(): String { return UUID.randomUUID().toString() }
-typealias Content = @Composable () -> Unit
-typealias Do = () -> Unit
-typealias Content_<T> = @Composable (T) -> Unit
-typealias Mod = Modifier
-typealias Do_<T> = (T) -> Unit
-typealias m_<T> = MutableState<T>
-typealias Str = String
-typealias Bool = Boolean
-typealias ClassVar<T, R> = KMutableProperty1<T, R>
-typealias ClassVal<T, R> = KProperty1<T, R>
-
-//?FOR TYPES
-fun KProperty<*>.getType() = this.returnType.classifier
-val KClass<*>.isBool get() = this == Bool::class
-val KClass<*>.isInt get() = this == Int::class
-val KClass<*>.isFloat get() = this == Float::class
-val KClass<*>.isDouble get() = this == Double::class
-val KClass<*>.isLong get() = this == Long::class
-val KClass<*>.isStr get() = this == Str::class
-val KClass<*>.isShort get() = this == Short::class
-val KClass<*>.isByte get() = this == Byte::class
-val KClass<*>.isChar get() = this == Char::class
-val KClass<*>.isDp get() = this == Dp::class
-val KClass<*>.isMutableList get() = this == MutableList::class
-val KClass<*>.isList get() = this == List::class
-val KClass<*>.isMutableStateListOf get() = this == SnapshotStateList::class
-
-
-
-object DayChecker {
-    private var job: Job? = null
-
-        
-    fun start() {
-        if (job?.isActive == true) return  // Already running
-        if (Bar.lastDate == "") { Bar.lastDate = LocalDate.now().toString() }
-            
-        job = CoroutineScope(Dispatchers.Default).launch {
-            while (coroutineContext.isActive) {
-                delay(60 * 1000L)
-                val today = LocalDate.now().toString()
-                if (today != Bar.lastDate) {
-                    Bar.lastDate = today
-                    onNewDay()
-                }
-            }
-        }
-    }
-}
-
-
-
-
-
-
-inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
-    return object : TypeToken<MutableList<T>>() {}.type
-}
 
 fun FindVar(listName: Str, where: Str = "com.productivity.wind.DataKt"): SnapshotStateList<Any>? {
     return try {
@@ -318,11 +218,11 @@ object SettingsSaved {
 
                 val FullBar = bar.getDelegate(Bar)
                 when {
-                    type == Bool::class -> (FullBar as m_<Bool>).it = Data.getBoolean(name, false)
-                    type == Str::class -> (FullBar as m_<Str>).it = Data.getString(name, "") ?: ""
-                    type == Int::class -> (FullBar as m_<Int>).it = Data.getInt(name, 0)
-                    type == Float::class -> (FullBar as m_<Float>).it = Data.getFloat(name, 0f)
-                    type == Long::class -> (FullBar as m_<Long>).it = Data.getLong(name, 0L)
+                    type.isBool -> (FullBar as m_<Bool>).it = Data.getBoolean(name, false)
+                    type.isStr -> (FullBar as m_<Str>).it = Data.getString(name, "") ?: ""
+                    type.isInt -> (FullBar as m_<Int>).it = Data.getInt(name, 0)
+                    type.isFloat-> (FullBar as m_<Float>).it = Data.getFloat(name, 0f)
+                    type.isLong-> (FullBar as m_<Long>).it = Data.getLong(name, 0L)
                 }
         }
         ListStorage.initAll()

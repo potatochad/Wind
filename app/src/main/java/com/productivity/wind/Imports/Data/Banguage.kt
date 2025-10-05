@@ -85,6 +85,139 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import android.graphics.drawable.Drawable
 import android.content.pm.*
+import com.productivity.wind.Imports.log
 import java.util.*
 import com.productivity.wind.R
 import kotlin.reflect.full.*
+
+
+val gson = Gson()
+val yes = true
+val no = false
+var <T> m_<T>.it: T
+    get() = this.value
+    set(value) { this.value = value }
+
+
+fun Dp.toPx(): Int {
+    var context = App.ctx
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.value,
+        context.resources.displayMetrics
+    ).toInt()
+}
+fun getStoredData(
+    fileName: Str = "settings",
+    mode: Int = Context.MODE_PRIVATE
+): SharedPreferences = App.ctx.getSharedPreferences(fileName, mode)
+
+fun <T : Any> getClass(obj: T): List<KProperty1<T, *>> =
+    obj::class.memberProperties
+        .also { props ->
+            props.forEach { prop ->
+                if (prop.visibility != KVisibility.PUBLIC) {
+                    log("NO private stuff")
+                }
+            }
+        }
+        .filter { it.visibility == KVisibility.PUBLIC } as List<KProperty1<T, *>>
+
+
+
+fun <T> m(value: T) = mutableStateOf(value)
+fun <T> set(state: m_<T>?, value: T) { state?.value = value }
+fun show(state: m_<Bool>?) = set(state, yes)
+fun hide(state: m_<Bool>?) = set(state, no)
+
+fun Id(): Str { return UUID.randomUUID().toString() }
+typealias Content = @Composable () -> Unit
+typealias Do = () -> Unit
+typealias Content_<T> = @Composable (T) -> Unit
+typealias Mod = Modifier
+typealias Do_<T> = (T) -> Unit
+typealias m_<T> = MutableState<T>
+typealias Str = String
+typealias Bool = Boolean
+typealias ClassVar<T, R> = KMutableProperty1<T, R>
+typealias ClassVal<T, R> = KProperty1<T, R>
+
+
+
+
+
+//?FOR TYPES
+
+fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
+val KClass<*>.isBool get() = this == Bool::class
+val KClass<*>.isInt get() = this == Int::class
+val KClass<*>.isFloat get() = this == Float::class
+val KClass<*>.isDouble get() = this == Double::class
+val KClass<*>.isLong get() = this == Long::class
+val KClass<*>.isStr get() = this == Str::class
+val KClass<*>.isShort get() = this == Short::class
+val KClass<*>.isByte get() = this == Byte::class
+val KClass<*>.isChar get() = this == Char::class
+val KClass<*>.isDp get() = this == Dp::class
+val KClass<*>.isMutableList get() = this == MutableList::class
+val KClass<*>.isList get() = this == List::class
+val KClass<*>.isMutableStateListOf get() = this == SnapshotStateList::class
+
+val KClass<*>?.isBool get() = this == Bool::class
+val KClass<*>?.isInt get() = this == Int::class
+val KClass<*>?.isFloat get() = this == Float::class
+val KClass<*>?.isDouble get() = this == Double::class
+val KClass<*>?.isLong get() = this == Long::class
+val KClass<*>?.isStr get() = this == Str::class
+val KClass<*>?.isShort get() = this == Short::class
+val KClass<*>?.isByte get() = this == Byte::class
+val KClass<*>?.isChar get() = this == Char::class
+val KClass<*>?.isDp get() = this == Dp::class
+val KClass<*>?.isMutableList get() = this == MutableList::class
+val KClass<*>?.isList get() = this == List::class
+val KClass<*>?.isMutableStateListOf get() = this == SnapshotStateList::class
+
+
+
+
+@Suppress("UNCHECKED_CAST")
+fun <T : Any> loadMutableState(type: KClass<*>, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
+    when {
+        type.isBool -> fullBar.it = Data.getBoolean(name, no) as T
+        type.isStr -> fullBar.it = (Data.getString(name, "") ?: "") as T
+        type.isInt -> fullBar.it = Data.getInt(name, 0) as T
+        type.isFloat -> fullBar.it = Data.getFloat(name, 0f) as T
+        type.isLong -> fullBar.it = Data.getLong(name, 0L) as T
+        else -> log("Unsupported type: $type")
+    }
+}
+@Suppress("UNCHECKED_CAST")
+fun <T : Any> loadValue(type: KClass<*>, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
+    when {
+        type.isBool -> fullBar.it = Data.getBoolean(name, no) as T
+        type.isStr -> fullBar.it = (Data.getString(name, "") ?: "") as T
+        type.isInt -> fullBar.it = Data.getInt(name, 0) as T
+        type.isFloat -> fullBar.it = Data.getFloat(name, 0f) as T
+        type.isLong -> fullBar.it = Data.getLong(name, 0L) as T
+        else -> log("Unsupported type: $type")
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@Composable
+fun <T> r(value: () -> T) = remember { value() }
+@Composable
+fun <T> r_m(initial: T) = r { m(initial) }
+inline fun <reified T> ml(): MutableList<T> = mutableListOf()
+inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
