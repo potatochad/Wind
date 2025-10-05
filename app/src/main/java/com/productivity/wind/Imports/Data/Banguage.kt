@@ -197,11 +197,12 @@ fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) 
     putString("MutableList $id", json)
 }
 
-inline fun <reified T> SharedPreferences.getMutableList(id: Str): MutableList<T>? {
+inline fun SharedPreferences.getMutableList(id: Str): MutableList<Any>? {
     val json = getString("MutableList $id", null) ?: return null
-    val type = object : TypeToken<MutableList<T>>() {}.type
+    val type = object : TypeToken<MutableList<Any>>() {}.type
     return gson.fromJson(json, type)
 }
+
 
 
 @Suppress("UNCHECKED_CAST")
