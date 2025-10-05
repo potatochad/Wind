@@ -19,18 +19,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.productivity.wind.Imports.*
 import androidx.core.view.*
 import androidx.compose.foundation.lazy.*
-import com.productivity.wind.Imports.Data.Bool
-import com.productivity.wind.Imports.Data.Copyable
-import com.productivity.wind.Imports.Data.DayChecker
-import com.productivity.wind.Imports.Data.Dset
-import com.productivity.wind.Imports.Data.Id
-import com.productivity.wind.Imports.Data.Identifiable
-import com.productivity.wind.Imports.Data.ListStorage
-import com.productivity.wind.Imports.Data.SettingsSaved
-import com.productivity.wind.Imports.Data.Str
-import com.productivity.wind.Imports.Data.edit
-import com.productivity.wind.Imports.Data.m
-import com.productivity.wind.Imports.Data.ml
+import com.productivity.wind.Imports.Data.*
+import 
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
