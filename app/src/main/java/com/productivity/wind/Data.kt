@@ -88,7 +88,7 @@ class Settings {
 	var badKeywordsList by m("")
 
 	var TestList = ml<TestData>()
-    
+
 }
 data class TestData(
     val id: Str = Id(),

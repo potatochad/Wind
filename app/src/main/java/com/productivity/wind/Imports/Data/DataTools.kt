@@ -189,7 +189,8 @@ object SettingsSaved {
 
 
             log("bar: $bar", yes)
-            log("ByBar; $FullBar", yes)
+            log("type: $type", yes)
+            log("FullBar; $FullBar", yes)
 
 
 
