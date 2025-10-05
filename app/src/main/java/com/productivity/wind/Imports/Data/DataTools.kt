@@ -190,7 +190,7 @@ object SettingsSaved {
                         loadMutableState(type, name, FullBar as m_<Any>, Data)
                     }
 
-                    is SnapshotStateList<T> -> {
+                    is SnapshotStateList<*> -> {
                         Vlog("loading mutable list: $name")
                         FullBar = Data.getMutableList("MutableList $name")
                     }
