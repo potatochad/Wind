@@ -336,7 +336,6 @@ object SettingsSaved {
                 
                 getClass(Bar).forEach { bar ->
                     /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
-                    bar.isAccessible = true
                     val value = bar.get(Bar)
                 
                     Data.putAny(bar.name, value)
@@ -347,25 +346,23 @@ object SettingsSaved {
         }
     }
     fun init() {
-        val prefs = getStoredData()
-        if (prefs.all.isEmpty() || initOnce) return
-        initOnce= true //MUST USE, ALL ARE ZERO OR NULL
+        val Data = getStoredData()
+        if (Data.all.isEmpty() || initOnce) return
+        initOnce= true
 
         getClass(Bar).forEach { barIDK ->
-            //best variable is variable//JUST MAKING SURE
             if (barIDK is ClassVar<Settings, *>) {
                 val bar = barIDK as ClassVar<Settings, Any?>
-                bar.isAccessible = true
                 val name = bar.name
                 val type = bar.returnType.classifier
 
-                val stateProp = bar.getDelegate(Bar)
+                val FullBar = bar.getDelegate(Bar)
                 when {
-                    stateProp is m_<*> && type == Bool::class -> (stateProp as m_<Bool>).it = prefs.getBoolean(name, false)
-                    stateProp is m_<*> && type == Str::class -> (stateProp as m_<Str>).it = prefs.getString(name, "") ?: ""
-                    stateProp is m_<*> && type == Int::class -> (stateProp as m_<Int>).it = prefs.getInt(name, 0)
-                    stateProp is m_<*> && type == Float::class -> (stateProp as m_<Float>).it = prefs.getFloat(name, 0f)
-                    stateProp is m_<*> && type == Long::class -> (stateProp as m_<Long>).it = prefs.getLong(name, 0L)
+                    FullBar is m_<*> && type == Bool::class -> (FullBar as m_<Bool>).it = Data.getBoolean(name, false)
+                    FullBar is m_<*> && type == Str::class -> (FullBar as m_<Str>).it = Data.getString(name, "") ?: ""
+                    FullBar is m_<*> && type == Int::class -> (FullBar as m_<Int>).it = Data.getInt(name, 0)
+                    FullBar is m_<*> && type == Float::class -> (FullBar as m_<Float>).it = Data.getFloat(name, 0f)
+                    FullBar is m_<*> && type == Long::class -> (FullBar as m_<Long>).it = Data.getLong(name, 0L)
                 }
             }
             else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
