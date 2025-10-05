@@ -196,9 +196,16 @@ object SettingsSaved {
                     log("loading mutable list: $name")
                     FullBar = Data.getMutableList("MutableList $name")
                 }
+                is List<*> -> {
+                    log("List to SnapshotStateList for: $name")
+                    val newList = SnapshotStateList<Any?>()
+                    newList.addAll(FullBar)
+                    FullBar = newList
+                }
 
                 else -> {
-                    log("unsupported type for $name")
+                    log("unsupported type for NAME; $name")
+                    log("unsupported type for TYPE; $type")
                 }
             }
         }
