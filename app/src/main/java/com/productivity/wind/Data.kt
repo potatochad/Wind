@@ -169,9 +169,6 @@ fun TestListDemo(testList: MutableList<TestData>) {
     }
 }
 
-// Sample data class
-data class TestData(val id: Int = (0..1000).random(), val name: String)
-
 
 
 
