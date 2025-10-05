@@ -168,13 +168,13 @@ fun SharedPreferences.Editor.putAny(name: Str, value: Any?) {
         is Float -> putFloat(name, value)
         is Long -> putLong(name, value)
         is MutableList<*> -> putMutableList(name, value)
-        else -> Vlog("skip — $value")
+        else -> log("skip — $value")
     }
 }
 
 fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) {
     if (list == null) {
-        Vlog("no mutable list")
+        log("no mutable list")
         return
     }
     
@@ -194,7 +194,7 @@ inline fun SharedPreferences.getMutableList(id: Str): MutableList<Any>? {
 fun <T : Any> loadMutableState(type: KClass<*>?, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
     
     if (type == null) {
-        Vlog("type is null for $name")
+        log("type is null for $name")
         return
     }
     when {
