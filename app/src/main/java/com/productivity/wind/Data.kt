@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.productivity.wind.Imports.*
 import androidx.core.view.*
 import androidx.compose.foundation.lazy.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.productivity.wind.Imports.Data.*
 
 /*! NEVER move bar and lists to another FOLDER, or other file
@@ -87,7 +88,7 @@ class Settings {
 	var CopyPasteTasks by m("")
 	var badKeywordsList by m("")
 
-	var TestList = ml<TestData>()
+    var TestList: MutableList<TestData> = ml<TestData>()
 
 }
 data class TestData(

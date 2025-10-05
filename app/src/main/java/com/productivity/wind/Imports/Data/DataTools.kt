@@ -186,12 +186,15 @@ object SettingsSaved {
             var type = bar.getType()
             bar.isAccessible = true
             var FullBar: Any? = bar.getTheBy(Bar) ?: bar.get(Bar)
-
+            val isList = (bar.returnType.arguments.firstOrNull()?.type?.classifier) as? KClass<*>
 
             log("bar: $bar", yes)
             log("type: $type", yes)
             log("FullBar; $FullBar", yes)
 
+            if (isList != null){
+                FullBar as MutableList<*>
+            }
 
 
 
@@ -201,10 +204,16 @@ object SettingsSaved {
                 }
 
                 is SnapshotStateList<*> -> {
+                    log("✅✅✅ LIST snapshot")
+                    FullBar = Data.getMutableList("MutableList $name")
+                }
+                is MutableList<*> -> {
+                    log("✅✅✅ LIST mutable")
                     FullBar = Data.getMutableList("MutableList $name")
                 }
 
                 is Iterable<*> -> {
+                    log("✅✅✅ LIST iterable")
                     val newList = SnapshotStateList<Any?>()
                     newList.addAll(FullBar)
                     FullBar = newList
