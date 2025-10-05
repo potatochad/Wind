@@ -205,18 +205,18 @@ inline fun <reified T> SharedPreferences.getMutableList(id: Str): MutableList<T>
 
 
 @Suppress("UNCHECKED_CAST")
-fun <T : Any> loadMutableState(type: KClass<*>?, name: Str, fullBar: m_<*>, Data: SharedPreferences) {
+fun <T : Any> loadMutableState(type: KClass<*>?, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
     
     if (type == null) {
         Vlog("type is null for $name")
         return
     }
     when {
-        type.isBool -> (fullBar as m_<T>).it = Data.getBoolean(name, no) as T
-        type.isStr -> (fullBar as m_<T>).it = (Data.getString(name, "") ?: "") as T
-        type.isInt -> (fullBar as m_<T>).it = Data.getInt(name, 0) as T
-        type.isFloat -> (fullBar as m_<T>).it = Data.getFloat(name, 0f) as T
-        type.isLong -> (fullBar as m_<T>).it = Data.getLong(name, 0L) as T
+        type.isBool -> (fullBar).it = Data.getBoolean(name, no) as T
+        type.isStr -> (fullBar).it = (Data.getString(name, "") ?: "") as T
+        type.isInt -> (fullBar).it = Data.getInt(name, 0) as T
+        type.isFloat -> (fullBar).it = Data.getFloat(name, 0f) as T
+        type.isLong -> (fullBar).it = Data.getLong(name, 0L) as T
         else -> log("Unsupported type: $type")
     }
 }
