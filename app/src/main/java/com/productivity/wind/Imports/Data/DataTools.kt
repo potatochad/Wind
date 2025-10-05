@@ -192,8 +192,7 @@ object SettingsSaved {
 
                     is SnapshotStateList<T> -> {
                         Vlog("loading mutable list: $name")
-                        FullBar = Data.getMutableList("")
-                        
+                        FullBar = Data.getMutableList("MutableList $name")
                     }
                     else -> {
                         Vlog("unsupported type for $name")
