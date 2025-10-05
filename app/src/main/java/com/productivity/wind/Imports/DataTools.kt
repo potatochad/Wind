@@ -177,7 +177,22 @@ typealias Str = String
 typealias Bool = Boolean
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
 typealias ClassVal<T, R> = KProperty1<T, R>
+
+//?FOR TYPES
 fun KProperty<*>.getType() = this.returnType.classifier
+val KClass<*>.isBool get() = this == Bool::class
+val KClass<*>.isInt get() = this == Int::class
+val KClass<*>.isFloat get() = this == Float::class
+val KClass<*>.isDouble get() = this == Double::class
+val KClass<*>.isLong get() = this == Long::class
+val KClass<*>.isStr get() = this == Str::class
+val KClass<*>.isShort get() = this == Short::class
+val KClass<*>.isByte get() = this == Byte::class
+val KClass<*>.isChar get() = this == Char::class
+val KClass<*>.isDp get() = this == Dp::class
+val KClass<*>.isMutableList get() = this == MutableList::class
+val KClass<*>.isList get() = this == List::class
+val KClass<*>.isMutableStateListOf get() = this == SnapshotStateList::class
 
 
 
@@ -211,7 +226,7 @@ inline fun <reified T> getListType(list: SnapshotStateList<T>): Type {
     return object : TypeToken<MutableList<T>>() {}.type
 }
 
-fun FindVar(listName: String, where: String = "com.productivity.wind.DataKt"): SnapshotStateList<Any>? {
+fun FindVar(listName: Str, where: Str = "com.productivity.wind.DataKt"): SnapshotStateList<Any>? {
     return try {
         val clazz = Class.forName(where)
         val field = clazz.declaredFields.firstOrNull { it.name == listName }
@@ -358,11 +373,11 @@ object SettingsSaved {
 
                 val FullBar = bar.getDelegate(Bar)
                 when {
-                    FullBar is m_<*> && type == Bool::class -> (FullBar as m_<Bool>).it = Data.getBoolean(name, false)
-                    FullBar is m_<*> && type == Str::class -> (FullBar as m_<Str>).it = Data.getString(name, "") ?: ""
-                    FullBar is m_<*> && type == Int::class -> (FullBar as m_<Int>).it = Data.getInt(name, 0)
-                    FullBar is m_<*> && type == Float::class -> (FullBar as m_<Float>).it = Data.getFloat(name, 0f)
-                    FullBar is m_<*> && type == Long::class -> (FullBar as m_<Long>).it = Data.getLong(name, 0L)
+                    FullBar is type == Bool::class -> (FullBar as m_<Bool>).it = Data.getBoolean(name, false)
+                    FullBar is type == Str::class -> (FullBar as m_<Str>).it = Data.getString(name, "") ?: ""
+                    FullBar is type == Int::class -> (FullBar as m_<Int>).it = Data.getInt(name, 0)
+                    FullBar is type == Float::class -> (FullBar as m_<Float>).it = Data.getFloat(name, 0f)
+                    FullBar is type == Long::class -> (FullBar as m_<Long>).it = Data.getLong(name, 0L)
                 }
         }
         ListStorage.initAll()
