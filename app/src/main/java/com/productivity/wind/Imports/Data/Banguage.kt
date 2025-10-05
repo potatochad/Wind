@@ -189,6 +189,9 @@ inline fun SharedPreferences.getMutableList(id: Str): MutableList<Any>? {
 }
 
 
+fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {
+    return this.getDelegate(instance)
+}
 
 @Suppress("UNCHECKED_CAST")
 fun <T : Any> loadMutableState(type: KClass<*>?, name: Str, fullBar: m_<T>, Data: SharedPreferences) {

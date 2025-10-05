@@ -185,38 +185,33 @@ object SettingsSaved {
             val name = bar.name
             var type = bar.getType()
             bar.isAccessible = true
+            var ByBar: Any? = bar.getTheBy(Bar)
 
-
-            log("Data: $Data", yes)
             log("bar: $bar", yes)
+            log("ByBar; $ByBar", yes)
 
 
-            var FullBar: Any? = bar.getDelegate(Bar)
 
 
-            when (FullBar) {
+            when (ByBar) {
                 is MutableState<*> -> {
-                    loadMutableState(type, name, FullBar as m_<Any>, Data)
-                }
-
-                is SnapshotStateList<*> -> {
-                    log("loading mutable list: $name")
-                    FullBar = Data.getMutableList("MutableList $name")
-                }
-                is Iterable<*> -> {
-                    log("List to SnapshotStateList for: $name")
-                    val newList = SnapshotStateList<Any?>()
-                    newList.addAll(FullBar)
-                    FullBar = newList
+                    loadMutableState(type, name, ByBar as m_<Any>, Data)
                 }
                 else -> {
-                    if (FullBar == null ) {
-                        log("FullBar; $FullBar")
+                    var TheBar: Any? = bar.get(Bar)
+                    log("TheBar; $TheBar", yes)
+                    when (TheBar) {
+                        is SnapshotStateList<*> -> {
+                            TheBar = Data.getMutableList("MutableList $name")
+                        }
+                        is Iterable<*> -> {
+                            val newList = SnapshotStateList<Any?>()
+                            newList.addAll(TheBar)
+                            TheBar = newList
+                        }
                     }
-                    else {
-                        log("unsupported type for NAME; $name")
-                        log("unsupported type for TYPE; $type")
-                    }
+                    log("unsupported type for NAME; $name")
+                    log("unsupported type for TYPE; $type")
                 }
             }
         }
