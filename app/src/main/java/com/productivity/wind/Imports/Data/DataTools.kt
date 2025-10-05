@@ -35,31 +35,6 @@ import com.productivity.wind.Imports.Data.*
 
 //region Vals/ Vars FOR DATA
 
-
-
-
-
-
-
-fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) {
-    if (list == null) {
-        Vlog("no mutable list")
-        return
-    }
-    
-    val json = gson.toJson(list)
-    putString("MutableList $id", json)
-}
-
-inline fun <reified T> SharedPreferences.getMutableList(id: Str): MutableList<T>? {
-    val json = getString("MutableList $id", null) ?: return null
-    val type = object : TypeToken<MutableList<T>>() {}.type
-    return gson.fromJson(json, type)
-}
-
-
-
-
 fun FindVar(listName: Str, where: Str = "com.productivity.wind.DataKt"): SnapshotStateList<Any>? {
     return try {
         val clazz = Class.forName(where)
