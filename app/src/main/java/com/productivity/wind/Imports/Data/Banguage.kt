@@ -144,7 +144,7 @@ typealias ClassVal<T, R> = KProperty1<T, R>
 
 //?FOR TYPES
 
-fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
+fun KProperty<*>.getType(): KClass<*> = this.returnType.classifier as KClass<*>
 val KClass<*>.isBool get() = this == Bool::class
 val KClass<*>.isInt get() = this == Int::class
 val KClass<*>.isFloat get() = this == Float::class
@@ -158,21 +158,6 @@ val KClass<*>.isDp get() = this == Dp::class
 val KClass<*>.isMutableList get() = this == MutableList::class
 val KClass<*>.isList get() = this == List::class
 val KClass<*>.isMutableStateListOf get() = this == SnapshotStateList::class
-
-val KClass<*>?.isBool get() = this == Bool::class
-val KClass<*>?.isInt get() = this == Int::class
-val KClass<*>?.isFloat get() = this == Float::class
-val KClass<*>?.isDouble get() = this == Double::class
-val KClass<*>?.isLong get() = this == Long::class
-val KClass<*>?.isStr get() = this == Str::class
-val KClass<*>?.isShort get() = this == Short::class
-val KClass<*>?.isByte get() = this == Byte::class
-val KClass<*>?.isChar get() = this == Char::class
-val KClass<*>?.isDp get() = this == Dp::class
-val KClass<*>?.isMutableList get() = this == MutableList::class
-val KClass<*>?.isList get() = this == List::class
-val KClass<*>?.isMutableStateListOf get() = this == SnapshotStateList::class
-
 
 
 fun SharedPreferences.Editor.putAny(name: Str, value: Any?) {
