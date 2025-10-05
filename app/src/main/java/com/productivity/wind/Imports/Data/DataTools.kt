@@ -183,7 +183,7 @@ object SettingsSaved {
                 val name = bar.name
                 var type = bar.getType()
 
-                val FullBar = bar.getDelegate(Bar)
+                var FullBar = bar.getDelegate(Bar)
     
                 when (FullBar) {
                     is MutableState<*> -> {
