@@ -192,7 +192,7 @@ fun <T : Any> loadMutableState(type: KClass<*>, name: Str, fullBar: m_<T>, Data:
     }
 }
 @Suppress("UNCHECKED_CAST")
-fun <T : Any> loadValue(type: KClass<*>, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
+fun <T : Any> loadMutableState(type: KClass<*>, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
     when {
         type.isBool -> fullBar.it = Data.getBoolean(name, no) as T
         type.isStr -> fullBar.it = (Data.getString(name, "") ?: "") as T
