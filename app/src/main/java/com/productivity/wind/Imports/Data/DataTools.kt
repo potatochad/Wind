@@ -122,7 +122,7 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
 
                     SettingsSaved.initFromFile(fileMap)
                 } catch (e: Exception) {
-                    log("Restore failed: ${e.message}", "bad")
+                    log("Restore failed: ${e.message}")
                 }
             }
         }
@@ -163,7 +163,7 @@ object SettingsSaved {
                 
                 getClass(Bar).forEach { bar ->
                     /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {
-                    log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
+                    log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE") }//ADD SUPER UNIVERSAL STUFFF
                     val value = bar.get(Bar)
                 
                     Data.putAny(bar.name, value)
@@ -178,6 +178,8 @@ object SettingsSaved {
         if (Data.all.isEmpty() || initOnce) return
         initOnce = true
 
+
+
         getClass(Bar).forEach { bar ->
             val bar = bar as ClassVar<Settings, Any?>
             val name = bar.name
@@ -185,7 +187,12 @@ object SettingsSaved {
             bar.isAccessible = true
 
 
+            log("Data: $Data", yes)
+            log("bar: $bar", yes)
+
+
             var FullBar: Any? = bar.getDelegate(Bar)
+
 
             when (FullBar) {
                 is MutableState<*> -> {
@@ -196,16 +203,20 @@ object SettingsSaved {
                     log("loading mutable list: $name")
                     FullBar = Data.getMutableList("MutableList $name")
                 }
-                is List<*> -> {
+                is Iterable<*> -> {
                     log("List to SnapshotStateList for: $name")
                     val newList = SnapshotStateList<Any?>()
                     newList.addAll(FullBar)
                     FullBar = newList
                 }
-
                 else -> {
-                    log("unsupported type for NAME; $name")
-                    log("unsupported type for TYPE; $type")
+                    if (FullBar == null ) {
+                        log("FullBar; $FullBar")
+                    }
+                    else {
+                        log("unsupported type for NAME; $name")
+                        log("unsupported type for TYPE; $type")
+                    }
                 }
             }
         }

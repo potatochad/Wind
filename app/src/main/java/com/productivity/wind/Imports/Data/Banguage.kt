@@ -144,7 +144,7 @@ typealias ClassVal<T, R> = KProperty1<T, R>
 
 //?FOR TYPES
 
-fun KProperty<*>.getType(): KClass<*> = this.returnType.classifier as KClass<*>
+fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
 val KClass<*>.isBool get() = this == Bool::class
 val KClass<*>.isInt get() = this == Int::class
 val KClass<*>.isFloat get() = this == Float::class

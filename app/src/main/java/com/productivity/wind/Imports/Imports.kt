@@ -79,15 +79,13 @@ import java.time.LocalDate
 
 
 //region log
-
-fun log(message: String, tag: String = "Bad") {
-    // Skip synthetic frames: stackTrace[4] instead of [3]
-    val stackTrace = Thread.currentThread().stackTrace
-    val element = stackTrace.firstOrNull { it.className != Thread::class.java.name && !it.methodName.contains("log\$") }
-        ?: stackTrace[3]
-
-    val locationInfo = "${element.fileName}:${element.lineNumber} ${element.methodName}()"
-    Log.w(tag, "$message")
+private val loggedMessages = mutableSetOf<String>()
+fun log(message: String, once: Boolean = false, tag: String = "Bad") {
+    if (once) {
+        if (loggedMessages.contains(message)) return
+        loggedMessages.add(message)
+    }
+    Log.w(tag, message)
 }
 
 
