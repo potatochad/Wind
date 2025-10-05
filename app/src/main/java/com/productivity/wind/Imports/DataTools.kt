@@ -177,6 +177,7 @@ typealias Str = String
 typealias Bool = Boolean
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
 typealias ClassVal<T, R> = KProperty1<T, R>
+fun KProperty<*>.getType() = this.returnType.classifier
 
 
 
@@ -350,11 +351,10 @@ object SettingsSaved {
         if (Data.all.isEmpty() || initOnce) return
         initOnce= true
 
-        getClass(Bar).forEach { barIDK ->
-            if (barIDK is ClassVar<Settings, *>) {
-                val bar = barIDK as ClassVar<Settings, Any?>
+        getClass(Bar).forEach { bar ->
+                val bar = bar as ClassVar<Settings, Any?>
                 val name = bar.name
-                val type = bar.returnType.classifier
+                val type = bar.getType()
 
                 val FullBar = bar.getDelegate(Bar)
                 when {
@@ -364,14 +364,11 @@ object SettingsSaved {
                     FullBar is m_<*> && type == Float::class -> (FullBar as m_<Float>).it = Data.getFloat(name, 0f)
                     FullBar is m_<*> && type == Long::class -> (FullBar as m_<Long>).it = Data.getLong(name, 0L)
                 }
-            }
-            else { log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad") }
         }
         ListStorage.initAll()
     }
     fun initFromFile(map: Map<Str, Str>) {
         getClass(Bar).forEach { barIDK ->
-            if (barIDK is ClassVar<Settings, *>) {
                 val bar = barIDK as ClassVar<Settings, Any?>
                 bar.isAccessible = true
                 val name = bar.name
@@ -387,9 +384,6 @@ object SettingsSaved {
                     stateProp is m_<*> && type == Float::class -> (stateProp as m_<Float>).it = raw?.toFloatOrNull() ?: 0f
                     stateProp is m_<*> && type == Long::class -> (stateProp as m_<Long>).it = raw?.toLongOrNull() ?: 0L
                 }
-            } else {
-                log("SettingsManager: Property '${barIDK.name}' is not a var! Make it mutable if you want to sync it.", "Bad")
-            }
         }
         ListStorage.initAll()
     }
