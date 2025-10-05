@@ -191,6 +191,22 @@ fun SharedPreferences.Editor.putAny(name: Str, value: Any?) {
     }
 }
 
+fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) {
+    if (list == null) {
+        Vlog("no mutable list")
+        return
+    }
+    
+    val json = gson.toJson(list)
+    putString("MutableList $id", json)
+}
+
+inline fun <reified T> SharedPreferences.getMutableList(id: Str): MutableList<T>? {
+    val json = getString("MutableList $id", null) ?: return null
+    val type = object : TypeToken<MutableList<T>>() {}.type
+    return gson.fromJson(json, type)
+}
+
 
 @Suppress("UNCHECKED_CAST")
 fun <T : Any> loadMutableState(type: KClass<*>, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
@@ -200,13 +216,6 @@ fun <T : Any> loadMutableState(type: KClass<*>, name: Str, fullBar: m_<T>, Data:
         type.isInt -> fullBar.it = Data.getInt(name, 0) as T
         type.isFloat -> fullBar.it = Data.getFloat(name, 0f) as T
         type.isLong -> fullBar.it = Data.getLong(name, 0L) as T
-        else -> log("Unsupported type: $type")
-    }
-}
-@Suppress("UNCHECKED_CAST")
-fun <T : Any> loadMutableListOf(type: KClass<*>, name: Str, fullBar: , Data: SharedPreferences) {
-    when {
-        type.isStr -> fullBar = (Data.getString(name, "") ?: "") as T
         else -> log("Unsupported type: $type")
     }
 }
