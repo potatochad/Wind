@@ -192,6 +192,7 @@ object SettingsSaved {
 
                     is SnapshotStateList<T> -> {
                         Vlog("loading mutable list: $name")
+                        FullBar = Data.getMutableList("")
                         
                     }
                     else -> {
