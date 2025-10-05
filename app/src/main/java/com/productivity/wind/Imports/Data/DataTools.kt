@@ -184,12 +184,18 @@ object SettingsSaved {
                 var type = bar.getType()
 
                 val FullBar = bar.getDelegate(Bar)
-                when {
-                    type.isBool -> (FullBar as m_<Bool>).it = Data.getBoolean(name, false)
-                    type.isStr -> (FullBar as m_<Str>).it = Data.getString(name, "") ?: ""
-                    type.isInt -> (FullBar as m_<Int>).it = Data.getInt(name, 0)
-                    type.isFloat-> (FullBar as m_<Float>).it = Data.getFloat(name, 0f)
-                    type.isLong-> (FullBar as m_<Long>).it = Data.getLong(name, 0L)
+    
+                when (FullBar) {
+                    is MutableState<*> -> {
+                        loadMutableState(type, name, fullBar as m_<Any?>, Data)
+                    }
+
+                    is SnapshotStateList<*> -> {
+                        Vlog("loading mutable list: $name")
+                    }
+                    else -> {
+                        Vlog("unsupported type for $name")
+                    }
                 }
         }
         ListStorage.initAll()
