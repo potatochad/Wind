@@ -195,7 +195,7 @@ object SettingsSaved {
             if (isList != null){
                 FullBar as MutableList<*>
             }
-
+//
 
 
             when (FullBar) {
