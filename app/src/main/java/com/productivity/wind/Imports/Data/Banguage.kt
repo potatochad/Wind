@@ -179,6 +179,18 @@ val KClass<*>?.isMutableStateListOf get() = this == SnapshotStateList::class
 
 
 
+fun SharedPreferences.Editor.putAny(name: Str, value: Any?) {
+    when (value) {
+        is Bool -> putBoolean(name, value)
+        is Str -> putString(name, value)
+        is Int -> putInt(name, value)
+        is Float -> putFloat(name, value)
+        is Long -> putLong(name, value)
+        is MutableList<*> -> putMutableList(name, value)
+        else -> Vlog("skip — $value")
+    }
+}
+
 
 @Suppress("UNCHECKED_CAST")
 fun <T : Any> loadMutableState(type: KClass<*>, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
