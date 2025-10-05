@@ -20,7 +20,6 @@ import com.productivity.wind.Imports.*
 import androidx.core.view.*
 import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.Data.*
-import 
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
