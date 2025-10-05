@@ -3,14 +3,11 @@ package com.productivity.wind.Screens
 import android.content.Intent
 import android.provider.Settings
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.filled.*
@@ -22,13 +19,24 @@ import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import com.productivity.wind.Imports.*
-import androidx.compose.foundation.background
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.*
-import androidx.compose.animation.core.*
 import androidx.compose.ui.platform.*
 import kotlinx.coroutines.*
 import android.webkit.*
+import com.productivity.wind.Imports.Data.Bar
+import com.productivity.wind.Imports.Data.Bool
+import com.productivity.wind.Imports.Data.BrestoreFromFile
+import com.productivity.wind.Imports.Data.BsaveToFile
+import com.productivity.wind.Imports.Data.Do
+import com.productivity.wind.Imports.Data.Str
+import com.productivity.wind.Imports.Data.edit
+import com.productivity.wind.Imports.Data.it
+import com.productivity.wind.Imports.Data.m
+import com.productivity.wind.Imports.Data.m_
+import com.productivity.wind.Imports.Data.new
+import com.productivity.wind.Imports.Data.r
+import com.productivity.wind.Imports.Data.r_m
+import com.productivity.wind.Imports.Data.set
+import com.productivity.wind.Imports.Data.show
 
 fun NavGraphBuilder.ScreenNav() {
     //Main—StartDestination    
@@ -150,9 +158,9 @@ object Item {
             title = "Restore",
             onClick = { 
                 if (Bar.Dpoints > Bar.funTime) {
-                    show(NeedMorePoints)    
+                    show(NeedMorePoints)
                 } else {
-                    set(restoreTrigger, true) 
+                    set(restoreTrigger, true)
                 }
             },
             bottomPadding = 2.dp
@@ -297,7 +305,9 @@ object Icon {
             val ctx = LocalContext.current
                 LazyIcon(
                         onClick = {
-                            if (Bar.funTime < Bar.Dpoints) {show(NeedMorePoints)}
+                            if (Bar.funTime < Bar.Dpoints) {
+                                show(NeedMorePoints)
+                            }
                             else {goTo("Web")}
                         },
                         icon = Icons.Default.SportsEsports
@@ -368,7 +378,7 @@ fun NeedMorePointsPopup(show: m_<Bool>){
     LazyPopup(
         show = show, 
         title = "Get more points", 
-        message = "Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime-Bar.Dpoints}",
+        message = "Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime- Bar.Dpoints}",
         showCancel = false,
     )
 }

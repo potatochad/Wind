@@ -4,10 +4,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.material.icons.filled.*
-import com.productivity.wind.*
 import com.productivity.wind.Imports.*
-import androidx.compose.ui.unit.*
 import androidx.compose.ui.graphics.*
+import com.productivity.wind.Imports.Data.r_m
+import com.productivity.wind.Imports.Data.set
+import com.productivity.wind.Imports.Data.show
 
 
 @Composable

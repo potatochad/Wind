@@ -1,15 +1,11 @@
 package com.productivity.wind.Imports
 
-import timber.log.Timber
 import android.app.usage.UsageStatsManager
-import androidx.compose.foundation.interaction.*
 import android.app.*
 import androidx.core.app.*
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.unit.*
 import androidx.compose.material3.*
-import androidx.compose.foundation.text.*
-import androidx.compose.ui.text.input.*
 import androidx.compose.runtime.*
 import android.os.*
 import android.content.*
@@ -18,37 +14,20 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.font.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import kotlinx.coroutines.*
-import kotlin.reflect.full.memberProperties
-import kotlin.reflect.KMutableProperty1
-import kotlin.reflect.jvm.isAccessible
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlin.reflect.*
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import android.net.Uri
 import android.widget.Toast
 import com.productivity.wind.*
-import java.util.UUID
-import java.lang.reflect.Type
 import kotlin.collections.*
 import android.content.ClipData
 import android.content.ClipboardManager
-import java.lang.reflect.ParameterizedType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -62,16 +41,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 import android.content.Intent
-import java.time.LocalDate
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.annotation.RequiresApi
@@ -79,34 +55,25 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.productivity.wind.Screens.*
 import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.Placeable
 import android.graphics.drawable.Drawable
 import android.content.pm.*
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import java.util.*
 import com.productivity.wind.R
-import android.webkit.*
-import androidx.compose.foundation.shape.*
-import androidx.compose.ui.graphics.painter.*
-import com.google.accompanist.drawablepainter.*
-import androidx.compose.ui.layout.*
 import androidx.compose.ui.geometry.*
-import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
-import androidx.compose.ui.graphics.painter.*
-import androidx.compose.ui.layout.*
-import androidx.compose.ui.platform.*
-import androidx.compose.*
-import androidx.compose.runtime.*
-import androidx.appcompat.app.*
-import com.productivity.wind.databinding.*
-import android.annotation.*
-
-
+import com.productivity.wind.Imports.Data.Bool
+import com.productivity.wind.Imports.Data.Content
+import com.productivity.wind.Imports.Data.Do
+import com.productivity.wind.Imports.Data.Do_
+import com.productivity.wind.Imports.Data.Mod
+import com.productivity.wind.Imports.Data.Str
+import com.productivity.wind.Imports.Data.edit
+import com.productivity.wind.Imports.Data.m_
+import com.productivity.wind.Imports.Data.new
+import com.productivity.wind.Imports.Data.r
+import com.productivity.wind.Imports.Data.r_m
+import com.productivity.wind.Imports.Data.set
 
 
 //region log
@@ -345,9 +312,9 @@ object UI {
 
 
 	inline fun check(
-		condition: Bool,
-		message: Str = "",
-		action: Do = {},
+        condition: Bool,
+        message: Str = "",
+        action: Do = {},
 	) {
 		if (condition) {
 			if (message.isNotEmpty()) Vlog(message)
@@ -489,7 +456,7 @@ object UI {
 
 	@Composable
 	fun Checkbox(
-		isChecked: m_<Boolean>,
+        isChecked: m_<Boolean>,
 	) {
 		Checkbox(
 			checked = isChecked.value,
@@ -504,8 +471,8 @@ object UI {
 
 	@Composable
 	fun CheckCircle(
-		index: Int,                  // unique index of this circle
-		selectedIndex: m_<Int>, // shared state of which is selected
+        index: Int,                  // unique index of this circle
+        selectedIndex: m_<Int>, // shared state of which is selected
 	) {
 		Box(
 			modifier = Modifier.size(15.dp) // make box exactly the size you want
@@ -604,11 +571,11 @@ object UI {
 
 	@Composable
 	fun dynamicTextWidth(
-		text: Str,
-		textStyle: TextStyle,
-		widthMin: Int,
-		widthMax: Int,
-		height: Dp
+        text: Str,
+        textStyle: TextStyle,
+        widthMin: Int,
+        widthMax: Int,
+        height: Dp
 	): Modifier {
 		val measurer = rememberTextMeasurer()
 		val density = LocalDensity.current
@@ -634,7 +601,7 @@ object UI {
         MaxLetters: Int? = 5,
         WidthMin: Int = 10,
         WidthMax: Int = 120,
-		isInt: Bool = false,
+        isInt: Bool = false,
 
         onChange: Do_<Str>,
     ) {
@@ -693,8 +660,8 @@ object UI {
         MaxLetters: Int? = 5,
         WidthMin: Int = 10,
         WidthMax: Int = 100,
-		isInt: Bool = false,
-		
+        isInt: Bool = false,
+
         onChange: Do_<Str> = {},
     ) {
         val value = what.value
@@ -818,8 +785,8 @@ object UI {
 
     @Composable
 	fun Ctext(
-		text: Str,
-		onClick: Do,
+        text: Str,
+        onClick: Do,
 	) {
 		val interactionSource = r { MutableInteractionSource() }
 

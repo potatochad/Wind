@@ -11,7 +11,6 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.Color
@@ -19,19 +18,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.font.*
 import kotlinx.coroutines.*
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.*
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.window.Popup
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlin.collections.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,24 +37,28 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import com.productivity.wind.Imports.*
 import com.productivity.wind.*
-import kotlin.random.*
-import android.content.*
-import androidx.compose.runtime.snapshots.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.focus.*
 import androidx.compose.foundation.gestures.*
 import androidx.compose.ui.input.pointer.*
-import androidx.compose.ui.geometry.*
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.window.*
-import kotlin.math.*
 import androidx.compose.foundation.text.selection.*
-import androidx.compose.ui.input.nestedscroll.*
-import androidx.compose.foundation.gestures.*
-
-
+import com.productivity.wind.Imports.Data.Bool
+import com.productivity.wind.Imports.Data.Content
+import com.productivity.wind.Imports.Data.Content_
+import com.productivity.wind.Imports.Data.Do
+import com.productivity.wind.Imports.Data.Do_
+import com.productivity.wind.Imports.Data.Mod
+import com.productivity.wind.Imports.Data.Str
+import com.productivity.wind.Imports.Data.hide
+import com.productivity.wind.Imports.Data.it
+import com.productivity.wind.Imports.Data.m_
+import com.productivity.wind.Imports.Data.no
+import com.productivity.wind.Imports.Data.r
+import com.productivity.wind.Imports.Data.r_m
+import com.productivity.wind.Imports.Data.set
+import com.productivity.wind.Imports.Data.show
+import com.productivity.wind.Imports.Data.yes
 
 
 fun Modifier.clickOrHold(
@@ -106,7 +104,7 @@ fun Mod.maxHeight(): Mod = fillMaxHeight()
 fun LazyMove(
     x: Dp = 0.dp,
     y: Dp = 0.dp,
-	content: Content,
+    content: Content,
 ) {
     Box(
 		Modifier.maxSize()
@@ -356,10 +354,10 @@ fun LazyInfo(
     
 @Composable
 fun NormalVisual(
-	show: m_<Bool>,
-	popupX: Dp,
-	popupY: Dp,
-	content: Content,
+    show: m_<Bool>,
+    popupX: Dp,
+    popupY: Dp,
+    content: Content,
 ){
 	LazyWindow(show) {
         LazyMove(popupX, popupY) {
@@ -500,8 +498,8 @@ fun LazzyRow(
       
 @Composable 
 fun LazyRuleCard(
-	Header: Str,
-	content: Content,
+    Header: Str,
+    content: Content,
 ){
 	LazyCard(corners = 8){
 		LazzyRow {
@@ -560,7 +558,7 @@ fun LazyIcon(
     OuterPadding: Int = 5,          // outside space
     ButtonSize: Int = 40,           // actual button box (default M3 ~48)
     modifier: Mod = Modifier,
-	color: Color = Color.White,
+    color: Color = Color.White,
 ) {
 	UI.ComposeCanBeTiny() {
         IconButton(
@@ -669,11 +667,11 @@ fun LazyItem(
     subtitle: Str? = null,
     endContent: Content? = null,
     modifier: Mod = Modifier,
-	
+
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
-	
+
     onClick: Do? = null,
 
     topPadding: Dp= 7.dp,
@@ -752,11 +750,11 @@ fun LazyHeader(
     onBackClick: Do = {},
     showBack: Bool = yes,
     modifier: Mod = Modifier,
-	
+
     showDivider: Bool = yes,
-	DividerPadding: Bool = yes,
-	
-	height: Int = 100,
+    DividerPadding: Bool = yes,
+
+    height: Int = 100,
 ) {
     val ui = rememberSystemUiController()
     var DisableTB_Button by r_m(no)
@@ -836,12 +834,12 @@ fun LazyScreen(
     modifier: Mod = Modifier
         .background(Color.Black)
         .maxSize(),
-	
+
     showDivider: Bool = yes,
-	DividerPadding: Bool = yes,
-	
-	headerHeight: Int = 44,
-	Scrollable: Bool = yes,
+    DividerPadding: Bool = yes,
+
+    headerHeight: Int = 44,
+    Scrollable: Bool = yes,
     content: Content,
 ) {
 	val header: Content = {
@@ -931,7 +929,7 @@ fun LazyPopup(
 }
 fun LazyDelay(
     delayMillis: Long = 100L,
-	Action: Do,
+    Action: Do,
 ) {
     CoroutineScope(Dispatchers.Main).launch {
         delay(delayMillis)

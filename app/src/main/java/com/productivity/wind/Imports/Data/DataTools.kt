@@ -1,28 +1,9 @@
-package com.productivity.wind.Imports
+package com.productivity.wind.Imports.Data
 
-import timber.log.Timber
-import android.app.usage.UsageStatsManager
-import androidx.compose.foundation.interaction.*
-import android.app.*
-import androidx.core.app.*
-import androidx.compose.ui.draw.*
-import androidx.compose.ui.unit.*
-import androidx.compose.material3.*
-import androidx.compose.foundation.text.*
-import androidx.compose.ui.text.input.*
 import androidx.compose.runtime.*
-import android.os.*
 import android.content.*
 import android.util.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.*
-import androidx.compose.ui.text.font.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import kotlinx.coroutines.*
 import kotlin.reflect.full.memberProperties
@@ -35,59 +16,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlin.reflect.*
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import android.net.Uri
-import android.widget.Toast
 import com.productivity.wind.*
 import java.util.UUID
 import java.lang.reflect.Type
 import kotlin.collections.*
-import android.content.ClipData
-import android.content.ClipboardManager
 import java.lang.reflect.ParameterizedType
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.res.painterResource
-import android.content.Intent
 import java.time.LocalDate
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import androidx.annotation.RequiresApi
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import com.productivity.wind.Screens.*
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.Placeable
-import android.graphics.drawable.Drawable
-import android.content.pm.*
-import java.util.*
-import com.productivity.wind.R
-import kotlin.reflect.full.*
+import com.productivity.wind.Imports.Vlog
+import com.productivity.wind.Imports.log
 
 @Suppress("UNCHECKED_CAST")
 
@@ -354,7 +295,8 @@ object SettingsSaved {
                 var CPU = 0
                 
                 getClass(Bar).forEach { bar ->
-                    /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
+                    /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {
+                    log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE", "Bad") }//ADD SUPER UNIVERSAL STUFFF
                     val value = bar.get(Bar)
                 
                     Data.putAny(bar.name, value)
@@ -367,7 +309,7 @@ object SettingsSaved {
     fun init() {
         val Data = getStoredData()
         if (Data.all.isEmpty() || initOnce) return
-        initOnce= true
+        initOnce = true
 
         getClass(Bar).forEach { bar ->
                 val bar = bar as ClassVar<Settings, Any?>

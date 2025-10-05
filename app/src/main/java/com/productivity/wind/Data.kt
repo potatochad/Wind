@@ -17,15 +17,20 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.platform.LocalConfiguration
 import com.productivity.wind.Imports.*
-import androidx.compose.runtime.snapshots.*
-import androidx.core.*
-import androidx.compose.ui.graphics.*
 import androidx.core.view.*
-import android.graphics.*
-import androidx.compose.foundation.layout.*
-import com.productivity.wind.Imports.*
-import androidx.compose.foundation.*
 import androidx.compose.foundation.lazy.*
+import com.productivity.wind.Imports.Data.Bool
+import com.productivity.wind.Imports.Data.Copyable
+import com.productivity.wind.Imports.Data.DayChecker
+import com.productivity.wind.Imports.Data.Dset
+import com.productivity.wind.Imports.Data.Id
+import com.productivity.wind.Imports.Data.Identifiable
+import com.productivity.wind.Imports.Data.ListStorage
+import com.productivity.wind.Imports.Data.SettingsSaved
+import com.productivity.wind.Imports.Data.Str
+import com.productivity.wind.Imports.Data.edit
+import com.productivity.wind.Imports.Data.m
+import com.productivity.wind.Imports.Data.ml
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
@@ -185,10 +190,10 @@ var apps = ml(DataApps())
 var badWords = ml(BlockedKeywords())
 
 data class CopyTasks(
-    override val id: Str= Id(),
+    override val id: Str = Id(),
     var title: Str = "",
     var onMax: Bool = false,
-	var MaxTimes: Int = 5,
+    var MaxTimes: Int = 5,
     var Done_Worth: Int = 10,
     var Letter_Worth: Int = 1,
 ) : Identifiable, Copyable<CopyTasks> {
