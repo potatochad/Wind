@@ -205,7 +205,12 @@ inline fun <reified T> SharedPreferences.getMutableList(id: Str): MutableList<T>
 
 
 @Suppress("UNCHECKED_CAST")
-fun <T : Any> loadMutableState(type: KClass<*>, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
+fun <T : Any> loadMutableState(type: KClass<*>?, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
+    
+    if (type == null) {
+        Vlog("type is null for $name")
+        return
+    }
     when {
         type.isBool -> fullBar.it = Data.getBoolean(name, no) as T
         type.isStr -> fullBar.it = (Data.getString(name, "") ?: "") as T
