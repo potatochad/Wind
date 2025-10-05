@@ -192,13 +192,9 @@ fun <T : Any> loadMutableState(type: KClass<*>, name: Str, fullBar: m_<T>, Data:
     }
 }
 @Suppress("UNCHECKED_CAST")
-fun <T : Any> loadMutableState(type: KClass<*>, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
+fun <T : Any> loadMutableListOf(type: KClass<*>, name: Str, fullBar: , Data: SharedPreferences) {
     when {
-        type.isBool -> fullBar.it = Data.getBoolean(name, no) as T
-        type.isStr -> fullBar.it = (Data.getString(name, "") ?: "") as T
-        type.isInt -> fullBar.it = Data.getInt(name, 0) as T
-        type.isFloat -> fullBar.it = Data.getFloat(name, 0f) as T
-        type.isLong -> fullBar.it = Data.getLong(name, 0L) as T
+        type.isStr -> fullBar = (Data.getString(name, "") ?: "") as T
         else -> log("Unsupported type: $type")
     }
 }
