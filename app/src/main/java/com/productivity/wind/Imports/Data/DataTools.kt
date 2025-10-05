@@ -190,8 +190,9 @@ object SettingsSaved {
                         loadMutableState(type, name, fullBar as m_<Any?>, Data)
                     }
 
-                    is SnapshotStateList<*> -> {
+                    is SnapshotStateList<T> -> {
                         Vlog("loading mutable list: $name")
+                        
                     }
                     else -> {
                         Vlog("unsupported type for $name")
