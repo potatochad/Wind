@@ -35,7 +35,20 @@ fun onNewDay() {
 }
 	
 
-//! unique names for each!!!
+/*
+This is a special class
+*more info in dataTools.kt
+
+it looks for all vars.
+ONLY stores their data:
+IF (mutable state)
+IF (mutable list)
+
+SKIPS: any private info
+
+
+
+*/
 class Settings {
     var funTime by m(0)
     var Dpoints by m(0)
