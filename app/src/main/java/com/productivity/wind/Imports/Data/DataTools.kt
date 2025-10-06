@@ -162,6 +162,9 @@ object SettingsSaved {
                 var CPU = 0
                 
                 getClass(Bar).forEach { bar ->
+
+                    log("Bar, leaving $Bar")
+
                     /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {
                     log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE") }//ADD SUPER UNIVERSAL STUFFF
                     val value = bar.get(Bar)
@@ -195,7 +198,6 @@ object SettingsSaved {
             if (isList != null){
                 FullBar as MutableList<*>
             }
-//
 
 
             when (FullBar) {

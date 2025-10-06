@@ -177,6 +177,8 @@ fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) 
         log("no mutable list")
         return
     }
+
+    log("STORING MUTABLE LIST")
     
     val json = gson.toJson(list)
     putString("MutableList $id", json)
