@@ -178,17 +178,19 @@ fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) 
         return
     }
 
-    log("STORING MUTABLE LIST")
+    log("STORIng MUTABLE LIST $list")
     
     val json = gson.toJson(list)
     putString("MutableList $id", json)
 }
 
-inline fun SharedPreferences.getMutableList(id: Str): MutableList<Any>? {
+inline fun <reified T> SharedPreferences.getMutableList(id: String): MutableList<T>? {
     val json = getString("MutableList $id", null) ?: return null
-    val type = object : TypeToken<MutableList<Any>>() {}.type
+    val type = object : TypeToken<MutableList<T>>() {}.type
     return gson.fromJson(json, type)
 }
+
+
 
 
 fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {

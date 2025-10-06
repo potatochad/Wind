@@ -163,8 +163,6 @@ object SettingsSaved {
                 
                 getClass(Bar).forEach { bar ->
 
-                    log("Bar, leaving $Bar")
-
                     /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {
                     log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE") }//ADD SUPER UNIVERSAL STUFFF
                     val value = bar.get(Bar)
@@ -191,9 +189,6 @@ object SettingsSaved {
             var FullBar: Any? = bar.getTheBy(Bar) ?: bar.get(Bar)
             val isList = (bar.returnType.arguments.firstOrNull()?.type?.classifier) as? KClass<*>
 
-            log("bar: $bar", yes)
-            log("type: $type", yes)
-            log("FullBar; $FullBar", yes)
 
             if (isList != null){
                 FullBar as MutableList<*>
@@ -204,22 +199,35 @@ object SettingsSaved {
                 is MutableState<*> -> {
                     loadMutableState(type, name, FullBar as m_<Any>, Data)
                 }
-
-                is SnapshotStateList<*> -> {
-                    log("✅✅✅ LIST snapshot")
-                    FullBar = Data.getMutableList("MutableList $name")
-                }
                 is MutableList<*> -> {
-                    log("✅✅✅ LIST mutable")
-                    FullBar = Data.getMutableList("MutableList $name")
+                    log("bar: $bar", yes)
+                    log("type: $type", yes)
+                    log("FullBar; $FullBar", yes)
+
+                    // get the class of the list element
+                    val argType = bar.returnType.arguments.firstOrNull()?.type
+                    val classifier = argType?.classifier as? KClass<*>
+
+                    if (classifier != null) {
+                        try {
+                            // Create a parameterized type dynamically
+                            val typeToken = TypeToken.getParameterized(MutableList::class.java, classifier.java)
+                            val json = Data.getString("MutableList $name", null)
+                            if (json != null) {
+                                val newList = gson.fromJson<MutableList<*>>(json, typeToken.type)
+                                bar.set(Bar, newList)
+                                log("✅ Updated $name with loaded list: $newList")
+                            } else {
+                                log("⚠️ No data found for list $name")
+                            }
+                        } catch (e: Exception) {
+                            log("❌ Error loading list $name: ${e.message}")
+                        }
+                    } else {
+                        log("⚠️ Could not detect list element type for $name")
+                    }
                 }
 
-                is Iterable<*> -> {
-                    log("✅✅✅ LIST iterable")
-                    val newList = SnapshotStateList<Any?>()
-                    newList.addAll(FullBar)
-                    FullBar = newList
-                }
                 else -> {
                     log("unsupported type for NAME; $name")
                     log("unsupported type for TYPE; $type")
