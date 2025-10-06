@@ -204,7 +204,7 @@ object SettingsSaved {
                     log("type: $type", yes)
                     log("FullBar; $FullBar", yes)
 
-                    // get the class of the list element
+                    // get the class of the list element//
                     val argType = bar.returnType.arguments.firstOrNull()?.type
                     val classifier = argType?.classifier as? KClass<*>
 
