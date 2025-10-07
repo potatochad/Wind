@@ -222,9 +222,6 @@ fun AppStart() {
         DayChecker.start()
     }
 	
-  
-    
-    ListStorage.SynchAll()
     
     App.navHost = rememberNavController()
     MyNavGraph(navController = App.navHost)
