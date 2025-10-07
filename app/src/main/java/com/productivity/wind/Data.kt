@@ -108,10 +108,12 @@ data class TestData9(
     val id: Str = Id(),
     var name: Str = "",
 )
+
 data class TestData(
-    var name by mutableStateOf("")
-	var id by mutableStateOf("")
-)
+	val id: Str = Id(),
+) {
+	var name by mutableStateOf("")
+}
 
 @Composable
 fun TestListDemo(testList: MutableList<TestData>) {
