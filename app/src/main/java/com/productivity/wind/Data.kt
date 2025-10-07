@@ -47,6 +47,19 @@ IF (mutable list)
 
 SKIPS: any private info
 
+also...forgot how works.
+
+
+it only work with the defaults data....
+
+and yes MUST USE THE 
+var NAME by m(x)
+FORMAT!!!!!!!!
+
+for lists
+same thing...very important!!!!
+
+
 
 
 */
@@ -88,7 +101,7 @@ class Settings {
 	var CopyPasteTasks by m("")
 	var badKeywordsList by m("")
 
-    var TestList: MutableList<TestData> = ml<TestData>()
+    var TestList = ml<TestData>()
 
 }
 data class TestData(
