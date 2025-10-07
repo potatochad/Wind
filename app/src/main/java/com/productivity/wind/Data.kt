@@ -109,16 +109,19 @@ data class TestData9(
     var name: Str = "",
 )
 
+
 data class TestData(
-	val id: Str = Id(),
+    val id: String = UUID.randomUUID().toString() // using String for ID
 ) {
-	var name by mutableStateOf("")
+    var name by mutableStateOf("")
 }
 
 @Composable
-fun TestListDemo(testList: MutableList<TestData>) {
+fun TestListDemo() {
+    // Use a state list so Compose updates on changes
+    val testList = remember { mutableStateListOf<TestData>() }
     var inputName by remember { mutableStateOf("") }
-    
+
     Column(
         modifier = Modifier
             .wrapContentHeight()
@@ -126,7 +129,7 @@ fun TestListDemo(testList: MutableList<TestData>) {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // Input field + add button
+        // Input + Add button
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -139,7 +142,9 @@ fun TestListDemo(testList: MutableList<TestData>) {
             )
             Button(onClick = {
                 if (inputName.isNotBlank()) {
-                    testList.add(TestData(name = inputName))
+                    val newItem = TestData()
+                    newItem.name = inputName
+                    testList.add(newItem)
                     inputName = ""
                 }
             }) {
@@ -154,7 +159,7 @@ fun TestListDemo(testList: MutableList<TestData>) {
                 .heightIn(max = 300.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(testList) { item ->
+            items(testList, key = { it.id }) { item ->
                 var isEditing by remember { mutableStateOf(false) }
                 var editName by remember { mutableStateOf(item.name) }
 
@@ -171,23 +176,18 @@ fun TestListDemo(testList: MutableList<TestData>) {
                         )
                         Button(onClick = {
                             if (editName.isNotBlank()) {
-                                val index = testList.indexOf(item)
-                                testList[index] = item.copy(name = editName)
+                                item.name = editName // update mutable property directly
                                 isEditing = false
                             }
                         }) {
                             Text("Save")
                         }
                     } else {
-                        Text("id=${item.id}, name=${item.name}", modifier = Modifier.weight(1f))
+                        Text("id=${item.id.take(4)}, name=${item.name}", modifier = Modifier.weight(1f))
                         Row {
-                            Button(onClick = { isEditing = true }) {
-                                Text("Edit")
-                            }
+                            Button(onClick = { isEditing = true }) { Text("Edit") }
                             Spacer(modifier = Modifier.width(4.dp))
-                            Button(onClick = { testList.remove(item) }) {
-                                Text("Delete")
-                            }
+                            Button(onClick = { testList.remove(item) }) { Text("Delete") }
                         }
                     }
                 }
@@ -195,6 +195,7 @@ fun TestListDemo(testList: MutableList<TestData>) {
         }
     }
 }
+
 
 
 
