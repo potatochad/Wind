@@ -234,7 +234,6 @@ object SettingsSaved {
                 }
             }
         }
-        ListStorage.initAll()
     }
     fun initFromFile(map: Map<Str, Str>) {
         getClass(Bar).forEach { barIDK ->
@@ -254,7 +253,6 @@ object SettingsSaved {
                     stateProp is m_<*> && type == Long::class -> (stateProp as m_<Long>).it = raw?.toLongOrNull() ?: 0L
                 }
         }
-        ListStorage.initAll()
     }
 
 }
