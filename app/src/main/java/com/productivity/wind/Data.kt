@@ -97,114 +97,12 @@ class Settings {
 
     // LISTS
     
-    var ListApps by m("")
-	var CopyPasteTasks by m("")
-	var badKeywordsList by m("")
-
-    var TestList = ml<TestData>()
-
-}
-data class TestData(
-    val id: Str = Id(),
-    var name: Str = "",
-)
-
-
-
-@Composable
-fun TestListDemo(testList: MutableList<TestData>) {
-    // Use a state list so Compose updates on changes
-   var inputName by remember { mutableStateOf("") }
-
-    Column(
-        modifier = Modifier
-            .wrapContentHeight()
-            .fillMaxWidth()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        // Input + Add button
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            TextField(
-                value = inputName,
-                onValueChange = { inputName = it },
-                placeholder = { Text("Enter name") },
-                modifier = Modifier.weight(1f)
-            )
-            Button(onClick = {
-                if (inputName.isNotBlank()) {
-                    val newItem = TestData()
-                    newItem.name = inputName
-                    testList.add(newItem)
-                    inputName = ""
-                }
-            }) {
-                Text("Add")
-            }
-        }
-
-        // Display the list
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(max = 300.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            items(testList, key = { it.id }) { item ->
-                var isEditing by remember { mutableStateOf(false) }
-                var editName by remember { mutableStateOf(item.name) }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (isEditing) {
-                        TextField(
-                            value = editName,
-                            onValueChange = { editName = it },
-                            modifier = Modifier.weight(1f)
-                        )
-                        Button(onClick = {
-                            if (editName.isNotBlank()) {
-                                item.name = editName // update mutable property directly
-                                isEditing = false
-                            }
-                        }) {
-                            Text("Save")
-                        }
-                    } else {
-                        Text("id=${item.id.take(4)}, name=${item.name}", modifier = Modifier.weight(1f))
-                        Row {
-                            Button(onClick = { isEditing = true }) { Text("Edit") }
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Button(onClick = { testList.remove(item) }) { Text("Delete") }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    var copyTasks = ml(CopyTasks())
+	var apps = ml(DataApps())
+	var badWords = ml(BlockedKeywords())
 }
 
 
-
-
-
-
-
-val trackedLists = listOf(
-        Dset("Bar.ListApps", "apps"),
-	    Dset("Bar.CopyPasteTasks", "copyTasks"),
-     	Dset("Bar.badKeywordsList", "badWords"),
-)
-
-var copyTasks = ml(CopyTasks())
-var apps = ml(DataApps())
-var badWords = ml(BlockedKeywords())
 
 data class CopyTasks(
     override val id: Str = Id(),
