@@ -119,7 +119,7 @@ data class TestData(
 // MutableList<T> 
 
 @Composable
-fun TestListDemo(testList: SnapshotStateList<TestData>) {
+fun TestListDemo(testList: MutableList<TestData>) {
     // Use a state list so Compose updates on changes
    var inputName by remember { mutableStateOf("") }
 
