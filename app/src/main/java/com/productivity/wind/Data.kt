@@ -104,19 +104,12 @@ class Settings {
     var TestList = ml<TestData>()
 
 }
-data class TestData9(
+data class TestData(
     val id: Str = Id(),
     var name: Str = "",
 )
 
 
-data class TestData(
-    val id: Str = Id() // using String for ID
-) {
-    var name by m("")
-}
-
-// MutableList<T> 
 
 @Composable
 fun TestListDemo(testList: MutableList<TestData>) {
