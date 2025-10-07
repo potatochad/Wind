@@ -104,9 +104,13 @@ class Settings {
     var TestList = ml<TestData>()
 
 }
-data class TestData(
+data class TestData9(
     val id: Str = Id(),
     var name: Str = "",
+)
+data class TestData(
+    var name by mutableStateOf("")
+	var id by mutableStateOf("")
 )
 
 @Composable
