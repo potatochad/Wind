@@ -111,16 +111,15 @@ data class TestData9(
 
 
 data class TestData(
-    val id: String = UUID.randomUUID().toString() // using String for ID
+    val id: Str = Id() // using String for ID
 ) {
-    var name by mutableStateOf("")
+    var name by m("")
 }
 
 @Composable
-fun TestListDemo() {
+fun TestListDemo(testList: SnapshotStateList<TestData>) {
     // Use a state list so Compose updates on changes
-    val testList = remember { mutableStateListOf<TestData>() }
-    var inputName by remember { mutableStateOf("") }
+   var inputName by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
