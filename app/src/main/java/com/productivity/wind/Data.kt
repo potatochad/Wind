@@ -96,6 +96,8 @@ class Settings {
 
 
     // LISTS
+
+	// LISTS DONT BACKUP OR RESTORE!!!!!
     
     var copyTasks = ml(CopyTasks())
 	var apps = ml(DataApps())
