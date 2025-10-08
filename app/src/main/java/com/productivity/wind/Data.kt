@@ -114,6 +114,16 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
         println("Item not found!")
     }
 }
+fun <T> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
+    val index = this.indexOf(item)
+    if (index != -1) {
+        this[index].block()
+        println("Item updated!")
+    } else {
+        println("Item not found!")
+    }
+}
+
 
 data class CopyTasks(
     val id: Str = Id(),
