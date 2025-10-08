@@ -100,7 +100,7 @@ object Item {
 
             if (app.NowTime > app.DoneTime - 1 && !app.done) {
                 Bar.funTime += app.Worth
-                apps.edit(app) { done = true }
+                Bar.apps.edit(app) { done = true }
                 Vlog("${app.name} completed")
             }
 
@@ -222,19 +222,19 @@ object Header {
                 UI.check(selectedApp.value.isEmpty(),"Select app") {return@Add}
 
 
-                val app = apps.find { it.name == selectedApp.value }
+                val app = Bar.apps.find { it.name == selectedApp.value }
                 if (app == null) {
                     Vlog("NO such app found")
                     return@Add
                 }
 
                 if (app.Worth == 0) {
-                    apps.edit(app){
+                    Bar.apps.edit(app){
                         DoneTime = Time.value.toIntOrNull() ?: 0
                         Worth = Points.value.toIntOrNull() ?: 0
                     }
                 } else {
-                    apps.new(
+                    Bar.apps.new(
                         DataApps(
                             name = selectedApp.value,
                             DoneTime = Time.value.toIntOrNull() ?: 0,
