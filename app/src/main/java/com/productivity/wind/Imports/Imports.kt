@@ -200,7 +200,7 @@ fun refreshApps() {
             val ListsApp = getListsApp(pkgApp)
 
             if (ListsApp == null) {
-                apps.new(
+                Bar.apps.new(
 				    DataApps(
 						name = getAppName(info),
 						pkg = pkgApp,
@@ -210,8 +210,8 @@ fun refreshApps() {
             }
         }
 
-		apps.forEach { app ->
-			apps.edit(app){
+		Bar.apps.forEach { app ->
+			Bar.apps.edit(app){
 				NowTime = getTodayAppUsage(app.pkg)
 			}
 		}
@@ -233,7 +233,7 @@ fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
 }
 
 fun getListsApp(pkg: Str): DataApps? {
-    val map = apps.associateBy { it.pkg }
+    val map = Bar.apps.associateBy { it.pkg }
     return map[pkg]
 }
 
