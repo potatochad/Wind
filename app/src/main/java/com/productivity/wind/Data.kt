@@ -105,16 +105,15 @@ class Settings {
 }
 
 
-fun <T : Any> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
+fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
     val index = this.indexOf(item)
     if (index != -1) {
-        this[index].block()  // Apply the block
+        this[index].block()  // Apply the changes inside the block
         println("Item updated!")
     } else {
         println("Item not found!")
     }
 }
-
 
 
 data class CopyTasks(
