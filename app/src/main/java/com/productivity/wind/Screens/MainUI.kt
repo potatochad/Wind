@@ -42,7 +42,7 @@ fun Main() {
 
         
         LazzyList(
-            apps.filter { it.Worth > 0 && it.done == false },
+            Bar.apps.filter { it.Worth > 0 && it.done == false },
             modifier = Modifier.fillMaxWidth(),
             lazyMode = true,
         ) { app ->
