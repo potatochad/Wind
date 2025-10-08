@@ -28,8 +28,8 @@ yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long a
 */
 
 fun onNewDay() {  
-     apps.forEach{app ->
-          apps.edit(app){
+     Bar.apps.forEach{app ->
+          Bar.apps.edit(app){
 				done = false
           }
      }   
