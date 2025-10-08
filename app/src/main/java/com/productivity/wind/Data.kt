@@ -103,7 +103,7 @@ class Settings {
 	var apps = ml<DataApps>()
 	var badWords = ml<BlockedKeywords>()
 }
-
+//mutableListOf()
 
 fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
     val index = this.indexOf(item)
