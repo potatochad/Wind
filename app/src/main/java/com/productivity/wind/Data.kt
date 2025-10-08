@@ -106,6 +106,7 @@ class Settings {
 
 
 
+
 data class CopyTasks(
     override val id: Str = Id(),
     var title: Str = "",
