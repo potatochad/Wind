@@ -99,9 +99,9 @@ class Settings {
 
 	// LISTS DONT BACKUP OR RESTORE!!!!!
     
-    var copyTasks = ml(CopyTasks())
-	var apps = ml(DataApps())
-	var badWords = ml(BlockedKeywords())
+    var copyTasks = ml<CopyTasks>()
+	var apps = ml<DataApps>()
+	var badWords = ml<BlockedKeywords>()
 }
 
 
