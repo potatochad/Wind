@@ -105,7 +105,15 @@ class Settings {
 }
 
 
-
+fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
+    val index = this.indexOf(item)
+    if (index != -1) {
+        this[index].block()  // Apply the changes inside the block
+        println("Item updated!")
+    } else {
+        println("Item not found!")
+    }
+}
 
 data class CopyTasks(
     override val id: Str = Id(),
@@ -114,9 +122,7 @@ data class CopyTasks(
     var MaxTimes: Int = 5,
     var Done_Worth: Int = 10,
     var Letter_Worth: Int = 1,
-) : Identifiable, Copyable<CopyTasks> {
-    override fun copySelf() = this.copy()
-}
+)
 
 data class DataApps(
     override val id: Str = Id(),
@@ -126,16 +132,12 @@ data class DataApps(
     var NowTime: Int = 0,
     var DoneTime: Int = 0,
     var Worth: Int = 0,
-) : Identifiable, Copyable<DataApps> {
-    override fun copySelf() = this.copy()
-}
+)
 
 data class BlockedKeywords(
     override val id: Str = Id(),
     var word: Str = "",
-) : Identifiable, Copyable<BlockedKeywords> {
-    override fun copySelf() = this.copy()
-}
+)
 
 
 
