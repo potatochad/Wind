@@ -116,7 +116,7 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 }
 
 data class CopyTasks(
-    override val id: Str = Id(),
+    val id: Str = Id(),
     var title: Str = "",
     var onMax: Bool = false,
     var MaxTimes: Int = 5,
@@ -125,7 +125,7 @@ data class CopyTasks(
 )
 
 data class DataApps(
-    override val id: Str = Id(),
+    val id: Str = Id(),
     var name: Str = "",
     var done: Bool = false,
     var pkg: Str = "",
@@ -135,7 +135,7 @@ data class DataApps(
 )
 
 data class BlockedKeywords(
-    override val id: Str = Id(),
+    val id: Str = Id(),
     var word: Str = "",
 )
 
