@@ -52,7 +52,7 @@ fun BlockKeywords(
 
 
 
-
+val WebUrl = m("")
 @Composable
 fun Web(){
     val webView = r { mutableStateOf<WebView?>(null) }
@@ -64,11 +64,7 @@ fun Web(){
     LazyScreen(
         title = {
             Text(" Points ${Bar.funTime}: ")
-            val url = UrlShort(webView.value?.url ?: "https://google.com")
-            val scrollState = rememberScrollState()
-            Row(Modifier.scroll(vertical=no).width(App.screenWidth/3)) {
-                Text("$url")
-            }
+    
             UI.End {
                 Icon.Reload(webView)
                 UI.move(10)
@@ -100,11 +96,10 @@ fun Web(){
 
 
 @Composable
-fun Web(){
+fun BlockKeyword(){
     LazyScreen(
         title = {
-            Text(" Points ${Bar.funTime}: ")
-            val url = UrlShort(webView.value?.url ?: "https://google.com")
+            WebUrl = UrlShort(webView.value?.url ?: "https://google.com")
             val scrollState = rememberScrollState()
             Row(Modifier.scroll(vertical=no).width(App.screenWidth/3)) {
                 Text("$url")
