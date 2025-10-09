@@ -30,7 +30,7 @@ import com.productivity.wind.Imports.Data.r
 fun BlockKeywords(
     webView: m_<WebView?>,
     keywords: List<Str>,
-    Do: Do = { Vlog("Blocked keyword") },
+    Do: Do = { },
 ) {
     webView.it?.evaluateJavascript(
         "(function() { return document.body.innerText.toLowerCase(); })();"
@@ -41,6 +41,7 @@ fun BlockKeywords(
                 if (lowerHtml.contains(word.lowercase())) {
                     goBackWeb(webView.it)
                     Do()
+                    Vlog("Blocked $word") 
                     return@evaluateJavascript
                 }
             }
@@ -55,6 +56,8 @@ fun BlockKeywords(
 @Composable
 fun Web(){
     val webView = r { mutableStateOf<WebView?>(null) }
+    val badWords = listOf("mrbeast", "tiktok", "instagram", "clickbait")
+
 
     Item.WebPointTimer()
 
@@ -80,19 +83,50 @@ fun Web(){
         WebXml(
             webViewState = webView,
             onUrlChanged = {
-                BlockKeywords(webView, "mrbeast")
+                BlockKeywords(webView, badWords)
             },
             onProgressChanged = {
-                BlockKeywords(webView, "mrbeast")
+                BlockKeywords(webView, badWords)
             },
             onPageStarted = {
-                BlockKeywords(webView, "mrbeast")
+                BlockKeywords(webView, badWords)
             },
             onPageFinished = { 
-                BlockKeywords(webView, "mrbeast")
+                BlockKeywords(webView, badWords)
             }
         )
     }
 }
+
+
+@Composable
+fun Web(){
+    LazyScreen(
+        title = {
+            Text(" Points ${Bar.funTime}: ")
+            val url = UrlShort(webView.value?.url ?: "https://google.com")
+            val scrollState = rememberScrollState()
+            Row(Modifier.scroll(vertical=no).width(App.screenWidth/3)) {
+                Text("$url")
+            }
+            UI.End {
+                Icon.Reload(webView)
+                UI.move(10)
+                Icon.Add {
+                    
+                }
+            }
+        },
+    ) {
+        
+    }
+}
+
+
+
+
+
+
+
 
 
