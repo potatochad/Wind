@@ -156,7 +156,7 @@ fun UrlLong(input: Str): Str {
     }
 }
 @Composable
-fun UrlShort(input: String): String {
+fun UrlShort(input: Str): Str {
     return remember(input) {
         input.removePrefix("https://")
             .removePrefix("http://")
