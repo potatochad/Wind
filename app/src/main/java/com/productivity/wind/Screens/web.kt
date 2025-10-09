@@ -22,7 +22,7 @@ import com.productivity.wind.Imports.Data.*
 
 
 
-val WebUrl = m("")
+var WebUrl by m("")
 @Composable
 fun Web(){
     val webView = r { mutableStateOf<WebView?>(null) }
