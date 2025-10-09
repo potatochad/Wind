@@ -36,7 +36,7 @@ fun Web(){
 
     LazyScreen(
         title = {
-            Text(" Points ${Bar.funTime}: ")
+            Text(" Points ${Bar.funTime}")
     
             UI.End {
                 LazzyRow{
