@@ -9,8 +9,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import com.productivity.wind.*
 import android.webkit.*
-import com.productivity.wind.Imports.Data.Bool
-import com.productivity.wind.Imports.Data.Str
+import com.productivity.wind.Imports.Data.*
 
 @Suppress("DEPRECATION")
 fun checkForInternet(): Bool {
