@@ -27,20 +27,27 @@ import com.productivity.wind.Imports.Data.m_
 import com.productivity.wind.Imports.Data.no
 import com.productivity.wind.Imports.Data.r
 
-fun BlockKeyword(
+fun BlockKeywords(
     webView: m_<WebView?>,
-    keyword: Str,
+    keywords: List<Str>,
     Do: Do = { Vlog("Blocked keyword") },
 ) {
     webView.it?.evaluateJavascript(
-        "(function() { return document.body.innerText; })();"
+        "(function() { return document.body.innerText.toLowerCase(); })();"
     ) { html ->
-        if (html.contains(keyword, ignoreCase = true)) {
-            goBackWeb(webView.it)
-            Do()
+        if (html != null) {
+            val lowerHtml = html.lowercase()
+            for (word in keywords) {
+                if (lowerHtml.contains(word.lowercase())) {
+                    goBackWeb(webView.it)
+                    Do()
+                    return@evaluateJavascript
+                }
+            }
         }
     }
 }
+
 
 
 
@@ -73,16 +80,16 @@ fun Web(){
         WebXml(
             webViewState = webView,
             onUrlChanged = {
-                BlockKeyword(webView, "mrbeast")
+                BlockKeywords(webView, "mrbeast")
             },
             onProgressChanged = {
-                BlockKeyword(webView, "mrbeast")
+                BlockKeywords(webView, "mrbeast")
             },
             onPageStarted = {
-                BlockKeyword(webView, "mrbeast")
+                BlockKeywords(webView, "mrbeast")
             },
             onPageFinished = { 
-                BlockKeyword(webView, "mrbeast")
+                BlockKeywords(webView, "mrbeast")
             }
         )
     }
