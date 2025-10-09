@@ -59,9 +59,10 @@ fun Web(){
     LazyScreen(
         title = {
             Text(" Points ${Bar.funTime}: ")
+            var Url = UrlShort("webView.value?.url ?: https://google.com)
             val scrollState = rememberScrollState()
-            Row(Modifier.scroll(vertical= no).width(App.screenWidth/3)) {
-                Text("${webView.value?.url ?: "Loading..."}")
+            Row(Modifier.scroll(vertical=no).width(App.screenWidth/3)) {
+                Text("$Url")
             }
             UI.End {
                 Icon.Reload(webView)
