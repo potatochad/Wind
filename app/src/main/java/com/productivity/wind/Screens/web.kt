@@ -69,9 +69,9 @@ fun Web(){
 fun BlockKeyword(){
     LazyScreen(
         title = {
-            WebUrl = UrlShort(webView.value?.url ?: "https://google.com")
+            WebUrl = "${UrlShort(webView.value?.url ?: "https://google.com")}"
             val scrollState = rememberScrollState()
-            Row(Modifier.scroll(vertical=no).width(App.screenWidth/3)) {
+            Row(Modifier.scroll(vertical=no).width(App.screenWidth/3)) {           
                 Text("$url")
             }
             UI.End {
