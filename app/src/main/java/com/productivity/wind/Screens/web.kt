@@ -27,13 +27,6 @@ import com.productivity.wind.Imports.Data.m_
 import com.productivity.wind.Imports.Data.no
 import com.productivity.wind.Imports.Data.r
 
-
-fun goBackWeb(webView: WebView?) {
-    if (webView?.canGoBack() == true) {
-        webView.goBack()
-    }
-}
-
 fun BlockKeyword(
     webView: m_<WebView?>,
     keyword: Str,
@@ -48,6 +41,8 @@ fun BlockKeyword(
         }
     }
 }
+
+
 
 
 @Composable
@@ -78,10 +73,14 @@ fun Web(){
         BrowseScreenXml(
             webViewState = webView,
             onUrlChanged = {
-            
+                BlockKeyword(webView, "mrbeast")
             },
-            onProgressChanged = {},
-            onPageStarted = {},
+            onProgressChanged = {
+                BlockKeyword(webView, "mrbeast")
+            },
+            onPageStarted = {
+                BlockKeyword(webView, "mrbeast")
+            },
             onPageFinished = { 
                 BlockKeyword(webView, "mrbeast")
             }
