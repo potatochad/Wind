@@ -18,37 +18,7 @@ import android.webkit.WebViewClient
 import android.graphics.Bitmap
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.activity.compose.*
-import com.productivity.wind.Imports.Data.Bar
-import com.productivity.wind.Imports.Data.Bool
-import com.productivity.wind.Imports.Data.Do
-import com.productivity.wind.Imports.Data.Str
-import com.productivity.wind.Imports.Data.it
-import com.productivity.wind.Imports.Data.m_
-import com.productivity.wind.Imports.Data.no
-import com.productivity.wind.Imports.Data.r
-
-fun BlockKeywords(
-    webView: m_<WebView?>,
-    keywords: List<Str>,
-    Do: Do = { },
-) {
-    webView.it?.evaluateJavascript(
-        "(function() { return document.body.innerText.toLowerCase(); })();"
-    ) { html ->
-        if (html != null) {
-            val lowerHtml = html.lowercase()
-            for (word in keywords) {
-                if (lowerHtml.contains(word.lowercase())) {
-                    goBackWeb(webView.it)
-                    Do()
-                    Vlog("Blocked $word") 
-                    return@evaluateJavascript
-                }
-            }
-        }
-    }
-}
-
+import com.productivity.wind.Imports.Data.*
 
 
 
