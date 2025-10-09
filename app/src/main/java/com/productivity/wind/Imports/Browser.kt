@@ -31,6 +31,83 @@ fun checkForInternet(): Bool {
     if (!isConnected) Vlog("No internet")
     return isConnected
 }
+@SuppressLint("SetJavaScriptEnabled")
+@Composable
+fun WebXml(
+    webViewState: m_<WebView?>,
+    url: String = "",
+    isDesktopSite: Bool = no,
+    onUrlChanged: (String) -> Unit = {},
+    onProgressChanged: (Int) -> Unit = {},
+    onPageStarted: (String) -> Unit = {},
+    onPageFinished: (String) -> Unit = {},
+) {
+    BackHandler {
+        webViewState.value?.goBack()
+    }
+
+    AndroidView(
+        factory = { context ->
+            val rootView = LayoutInflater.from(context).inflate(R.layout.web, null, false)
+            val myWebView = rootView.findViewById<WebView>(R.id.myWebView)
+
+            myWebView.settings.apply {
+                javaScriptEnabled = true
+                domStorageEnabled = true
+                useWideViewPort = true
+                loadWithOverviewMode = true
+            }
+
+            myWebView.webViewClient = object : WebViewClient() {
+                override fun onLoadResource(view: WebView?, url: String?) {
+                    super.onLoadResource(view, url)
+                    if (isDesktopSite) {
+                        view?.evaluateJavascript(
+                            "document.querySelector('meta[name=\"viewport\"]').setAttribute('content'," +
+                                    "'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024));",
+                            null
+                        )
+                    }
+                }
+
+                override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
+                    super.doUpdateVisitedHistory(view, url, isReload)
+                    url?.let { onUrlChanged(it) }
+                }
+
+                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                    super.onPageStarted(view, url, favicon)
+                    url?.let { onPageStarted(it) }
+                }
+
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    url?.let { onPageFinished(it) }
+                    view?.zoomOut()
+                }
+            }
+
+            myWebView.webChromeClient = object : WebChromeClient() {
+                override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                    super.onProgressChanged(view, newProgress)
+                    onProgressChanged(newProgress)
+                }
+            }
+
+            myWebView.loadUrl("https://www.google.com/search?q=$url")
+            webViewState.value = myWebView
+
+            rootView
+        },
+        modifier = Modifier.fillMaxSize(),
+        update = { view ->
+            val myWebView = view.findViewById<WebView>(R.id.myWebView)
+            if (myWebView.url.isNullOrEmpty()) {
+                myWebView.loadUrl("https://www.google.com/search?q=$url")
+            }
+        }
+    )
+}
 
 @SuppressLint("SetJavaScriptEnabled")
 fun WebView.clearWebData() {
