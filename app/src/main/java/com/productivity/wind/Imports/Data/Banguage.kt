@@ -167,19 +167,21 @@ fun SharedPreferences.Editor.putAny(name: Str, value: Any?) {
         is Int -> putInt(name, value)
         is Float -> putFloat(name, value)
         is Long -> putLong(name, value)
+        is SnapshotStateList<*> -> putMutableStateList(name, value)
         is MutableList<*> -> putMutableList(name, value)
-        else -> log("skip — $value")
+        else -> log("skip — $value", yes)
     }
 }
 
 fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) {
     if (list == null) {
-        log("no mutable list")
+        log("no mutable list", yes)
         return
     }
 
-    log("STORIng MUTABLE LIST $list")
-    
+
+    log("STORIng MUTABLE LIST $list", yes)
+
     val json = gson.toJson(list)
     putString("MutableList $id", json)
 }
@@ -188,6 +190,28 @@ inline fun <reified T> SharedPreferences.getMutableList(id: String): MutableList
     val json = getString("MutableList $id", null) ?: return null
     val type = object : TypeToken<MutableList<T>>() {}.type
     return gson.fromJson(json, type)
+}
+
+fun <T> SharedPreferences.Editor.putMutableStateList(id: String, list: SnapshotStateList<T>?) {
+    if (list == null) {
+        log("no snapshot list")
+        return
+    }
+
+    log("STORIng MUTABLE STATE LIST $list")
+
+    val json = gson.toJson(list)
+    putString("SnapshotList $id", json)
+}
+
+fun <T : Any> SharedPreferences.getMutableStateList(id: String, clazz: Class<T>): SnapshotStateList<T> {
+    val json = getString("SnapshotList $id", null) ?: return mutableStateListOf()
+
+    log("RESTORING MUTABLESTATE LIST $id")
+    val listType = TypeToken.getParameterized(List::class.java, clazz).type
+    val normalList: List<T> = gson.fromJson(json, listType)
+    return mutableStateListOf<T>().apply { addAll(normalList)
+    }
 }
 
 

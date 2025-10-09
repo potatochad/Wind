@@ -199,6 +199,20 @@ object SettingsSaved {
                 is MutableState<*> -> {
                     loadMutableState(type, name, FullBar as m_<Any>, Data)
                 }
+                is SnapshotStateList<*> -> {
+
+                    log("bar: $bar", yes)
+                    log("type: $type", yes)
+                    log("FullBar; $FullBar", yes)
+
+
+                    val argType = bar.returnType.arguments.firstOrNull()?.type
+                    val classifier = argType?.classifier as? KClass<*> ?: return
+                    val clazz = classifier.java
+                    val newList = Data.getMutableStateList(name, clazz)
+                    bar.set(Bar, newList)
+
+                }
                 is MutableList<*> -> {
                     log("bar: $bar", yes)
                     log("type: $type", yes)
