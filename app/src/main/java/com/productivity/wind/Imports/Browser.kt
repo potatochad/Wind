@@ -52,7 +52,7 @@ fun WebSettings.applyDefaultConfig() {
 }
 
 @Composable
-fun UrlConverter(input: Str): Str {
+fun UrlLong(input: Str): Str {
     return remember(input) {
         if (input.startsWith("http://") || input.startsWith("https://")) {
             input
@@ -61,3 +61,11 @@ fun UrlConverter(input: Str): Str {
         }
     }
 }
+@Composable
+fun UrlShort(input: String): String {
+    return remember(input) {
+        input.removePrefix("https://")
+            .removePrefix("http://")
+    }
+}
+
