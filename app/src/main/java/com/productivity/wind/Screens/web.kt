@@ -69,7 +69,7 @@ fun Web(){
                 Icon.Reload(webView)
                 UI.move(10)
                 Icon.Add {
-                    
+                    goTo("BlockKeyword")
                 }
             }
         },
@@ -105,7 +105,6 @@ fun BlockKeyword(){
                 Text("$url")
             }
             UI.End {
-                Icon.Reload(webView)
                 UI.move(10)
                 Icon.Add {
                     
