@@ -48,6 +48,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("CopyPaste") { CopyPaste() }
 
     url("Web") { Web() }
+    url("BlockKeyword") { BlockKeyword() }
     
 
     url("SettingsScreen") { SettingsScreen() }
