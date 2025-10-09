@@ -12,7 +12,7 @@ import com.productivity.wind.*
 import android.webkit.*
 import com.productivity.wind.Imports.Data.*
 import androidx.compose.ui.viewinterop.*
-
+import android.view.*
 
 @Suppress("DEPRECATION")
 fun checkForInternet(): Bool {
