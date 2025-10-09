@@ -43,6 +43,13 @@ fun WebView.clearWebData() {
     CookieManager.getInstance().removeAllCookies(null)
     WebStorage.getInstance().deleteAllData()
 }
+
+fun goBackWeb(webView: WebView?) {
+    if (webView?.canGoBack() == true) {
+        webView.goBack()
+    }
+}
+
 @SuppressLint("SetJavaScriptEnabled")
 fun WebSettings.applyDefaultConfig() {
     javaScriptEnabled = true
