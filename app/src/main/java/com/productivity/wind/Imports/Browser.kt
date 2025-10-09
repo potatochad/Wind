@@ -1,18 +1,26 @@
 package com.productivity.wind.Imports
-//
+
 import android.annotation.SuppressLint
-import android.content.Context
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import android.content.*
+import androidx.compose.runtime.*
 import androidx.activity.compose.*
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import com.productivity.wind.*
-import android.webkit.*
-import com.productivity.wind.Imports.Data.*
 import androidx.compose.ui.viewinterop.*
 import android.view.*
+
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import com.productivity.wind.*
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import com.productivity.wind.R
+import com.productivity.wind.Imports.*
+import android.webkit.*
+import android.graphics.*
+import com.productivity.wind.Imports.Data.*
+
 
 @Suppress("DEPRECATION")
 fun checkForInternet(): Bool {
