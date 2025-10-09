@@ -72,7 +72,7 @@ fun BlockKeyword(){
             WebUrl = "${UrlShort(webView.value?.url ?: "https://google.com")}"
             val scrollState = rememberScrollState()
             Row(Modifier.scroll(vertical=no).width(App.screenWidth/3)) {           
-                Text("$url")
+                Text("$WebUrl")
             }
             UI.End {
                 UI.move(10)
