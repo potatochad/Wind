@@ -81,12 +81,14 @@ fun BlockKeyword(){
             UI.End {
                 UI.move(10)
                 Icon.Add {
-                    
+                    Bar.badWords.new {word = "test"}
                 }
             }
         },
     ) {
-        
+        items(badWords) { wordItem ->
+            Text(text = wordItem.word, modifier = Modifier.padding(8.dp))
+        }
     }
 }
 
