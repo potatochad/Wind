@@ -213,7 +213,7 @@ object SettingsSaved {
                     bar.set(Bar, newList)
 
                 }
-                is MutableList<*> -> {
+                is MutableList<*> -> {//
                     log("bar: $bar", yes)
                     log("type: $type", yes)
                     log("FullBar; $FullBar", yes)
