@@ -114,13 +114,7 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
         println("Item not found!")
     }
 }
-// Extension function for super-short creation
-fun <T> MutableList<T>.new(block: T.() -> Unit) where T : Any, T : Any {
-    val constructor = (this::class.java.genericSuperclass as? Class<T>)
-    // Actually, simpler: just pass type when calling. Better:
-}
 
-// Cleaner and simpler: use inline function with reified type
 inline fun <reified T> MutableList<T>.new(block: T.() -> Unit) where T : Any {
     val item = T::class.constructors.first().call() // call empty constructor
     item.block()
