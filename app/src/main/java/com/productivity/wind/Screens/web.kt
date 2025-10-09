@@ -28,6 +28,9 @@ fun Web(){
     val webView = r { mutableStateOf<WebView?>(null) }
     val badWords = listOf("mrbeast", "tiktok", "instagram", "clickbait")
 
+    WebUrl = "${UrlShort(webView.value?.url ?: "https://google.com")}"
+       
+
 
     Item.WebPointTimer()
 
@@ -69,7 +72,6 @@ fun Web(){
 fun BlockKeyword(){
     LazyScreen(
         title = {
-            WebUrl = "${UrlShort(webView.value?.url ?: "https://google.com")}"
             val scrollState = rememberScrollState()
             Row(Modifier.scroll(vertical=no).width(App.screenWidth/3)) {           
                 Text("$WebUrl")
