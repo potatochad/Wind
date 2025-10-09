@@ -61,7 +61,7 @@ fun Web(){
             Text(" Points ${Bar.funTime}: ")
             val scrollState = rememberScrollState()
             Row(Modifier.scroll(vertical= no).width(App.screenWidth/3)) {
-                Text("url= ${webView.value?.url ?: "Loading..."}")
+                Text("${webView.value?.url ?: "Loading..."}")
             }
             UI.End {
                 Icon.Reload(webView)
