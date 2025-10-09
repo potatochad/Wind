@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.activity.compose.*
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import com.productivity.wind.*
 import android.webkit.*
 import com.productivity.wind.Imports.Data.*
+import androidx.compose.ui.viewinterop.*
+
 
 @Suppress("DEPRECATION")
 fun checkForInternet(): Bool {
