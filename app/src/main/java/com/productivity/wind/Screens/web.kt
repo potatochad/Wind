@@ -39,10 +39,12 @@ fun Web(){
             Text(" Points ${Bar.funTime}: ")
     
             UI.End {
-                Icon.Reload(webView)
-                UI.move(10)
-                Icon.Add {
-                    goTo("BlockKeyword")
+                LazzyRow{
+                    Icon.Reload(webView)
+                    UI.move(10)
+                    Icon.Add {
+                        goTo("BlockKeyword")
+                    }
                 }
             }
         },
