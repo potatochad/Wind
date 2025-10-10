@@ -422,10 +422,9 @@ fun DebugPopup(show: m_<Bool>) {
             showConfirm = no,
             content = {
                 Column {
-                    LazzyRow {
-                        
-                    }
-                    
+                    LazzyRow { UI.CopyIcon(DebugPopupInfo) }
+
+                    Text(DebugPopupInfo)
                 }
             }
             
