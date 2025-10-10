@@ -28,9 +28,7 @@ import android.content.ClipboardManager
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
@@ -42,10 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import androidx.compose.ui.res.painterResource
 import android.content.Intent
 import androidx.navigation.NavGraphBuilder
@@ -62,20 +57,8 @@ import java.util.*
 import com.productivity.wind.R
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.drawscope.*
-import com.productivity.wind.Imports.Data.Bar
-import com.productivity.wind.Imports.Data.Bool
-import com.productivity.wind.Imports.Data.Content
-import com.productivity.wind.Imports.Data.Do
-import com.productivity.wind.Imports.Data.Do_
-import com.productivity.wind.Imports.Data.Mod
-import com.productivity.wind.Imports.Data.Str
-import com.productivity.wind.Imports.Data.edit
-import com.productivity.wind.Imports.Data.m_
-import com.productivity.wind.Imports.Data.new
-import com.productivity.wind.Imports.Data.r
-import com.productivity.wind.Imports.Data.r_m
-import com.productivity.wind.Imports.Data.set
-import java.time.LocalDate
+import com.productivity.wind.Imports.Data.*
+import java.time.*
 
 
 //region log
