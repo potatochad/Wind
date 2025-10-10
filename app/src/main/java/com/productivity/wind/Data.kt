@@ -135,8 +135,8 @@ fun add(list: MutableList<Any>, block: Any.() -> Unit) {
             Plog("bar: $bar, type: $type, classifier: $classifier, clazz: $clazz")
 
             // Example of creating a new instance of the type
-            val newItem = classifier.createInstance()
-            newItem.block()         // apply your block
+			val newItem = clazz.getDeclaredConstructor().newInstance()
+			newItem.block()         // apply your block
             list.add(newItem)       // add to list
         }
     } catch (e: Exception) {
