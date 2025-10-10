@@ -106,19 +106,26 @@ class Settings {
 //mutableListOf()
 
 fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
-    val index = this.indexOf(item)
-    if (index != -1) {
-        this[index].block()  // Apply the changes inside the block
-        println("Item updated!")
-    } else {
-        println("Item not found!")
-    }
+	try {
+		val index = this.indexOf(item)
+		if (index != -1) {
+			this[index].block()
+		} else {
+			Plog("failed to edit a list")
+		}  
+	} catch (e: Exception) {
+		Plog("Edit crashed for item $item: ${e.message}")
+	}
 }
 
 inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
-    val item = T::class.constructors.first().call()
-    item.block()
-    add(item)
+    try {
+		val item = T::class.constructors.first().call()
+		item.block()
+		add(item)
+	} catch (e: Exception) {
+        Plog("Add crashed for type ${T::class.simpleName}: ${e.message}")
+	}
 }
 
 
