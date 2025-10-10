@@ -119,8 +119,23 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 }
 
 fun add(list: MutableList<*>, block: *.() -> Unit) {
-	var ListClass= get list class
-    try {
+	try {
+		getClass(Bar).forEach { bar ->
+			val bar = bar as ClassVar<Settings, Any?>
+			val name = bar.name
+			var type = bar.getType()
+			bar.isAccessible = true
+			var FullBar: Any? = bar.getTheBy(Bar) ?: bar.get(Bar)
+			val isList = (bar.returnType.arguments.firstOrNull()?.type?.classifier) as? KClass<*>
+
+            Plog("bar: $bar,  type: $type,   FullBar; $FullBar")
+
+
+            val argType = bar.returnType.arguments.firstOrNull()?.type
+            val classifier = argType?.classifier as? KClass<*> ?: return
+            val clazz = classifier.java
+
+		}
         val item = ListClass()
         item.block()
         list.add(item)
@@ -128,6 +143,11 @@ fun add(list: MutableList<*>, block: *.() -> Unit) {
         Plog("Add crashed: ${e.message}")
     }
 }
+
+
+
+
+
 
 
 
