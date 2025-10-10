@@ -21,7 +21,7 @@ import androidx.core.view.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.productivity.wind.Imports.Data.*
-
+import kotlin.reflect.*
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
 yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long ago dont remember what did)
@@ -118,22 +118,26 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	}
 }
 
-fun add(list: MutableList<Any>, block: Any.() -> Unit) {
-	try {
-		getClass(Bar).forEach { bar ->
-			val bar = bar as ClassVar<Settings, Any?>
-			bar.isAccessible = true
-			val name = bar.name
-			val type = bar.returnType.arguments.firstOrNull()?.type
-			val classifier = argType?.classifier as? KClass<*> ?: return
-            val clazz = classifier.java
-            
-            Plog("bar: $bar,  type: $type,   FullBar; $FullBar,   classifier:  $classifier,  clazz:   $clazz")
 
-		}
-        // val item = ListClass()
-        // item.block()
-        // list.add(item)
+fun add(list: MutableList<Any>, block: Any.() -> Unit) {
+    try {
+        getClass(Bar).forEach { barRaw ->
+            val bar = barRaw as ClassVar<Settings, Any?>
+            bar.isAccessible = true
+
+            val name = bar.name
+            val type = bar.returnType.arguments.firstOrNull()?.type
+            val classifier = type?.classifier as? KClass<*> ?: return
+            val clazz = classifier.java
+
+            // Optional: log info
+            Plog("bar: $bar, type: $type, classifier: $classifier, clazz: $clazz")
+
+            // Example of creating a new instance of the type
+            val newItem = classifier.createInstance()
+            newItem.block()         // apply your block
+            list.add(newItem)       // add to list
+        }
     } catch (e: Exception) {
         Plog("Add crashed: ${e.message}")
     }
