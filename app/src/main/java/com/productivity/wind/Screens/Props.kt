@@ -353,11 +353,11 @@ object Icon {
 
 //region POPUP CONTROLLER
 
-
 var Edit = m(false)
 var NeedMorePoints = m(false)
 var AskUsagePermission = m(false)
 var AppSelect = m(false)
+var DebugPopup = m(false)
 
 object Popup {
     
@@ -367,6 +367,7 @@ object Popup {
         EditPopUp(Edit)
         NeedMorePointsPopup(NeedMorePoints)
         AppSelectPopup(AppSelect)
+        DebugPopup(DebugPopup)
     }
     
     
@@ -426,10 +427,24 @@ fun AskUsagePermission(show: m_<Bool>) {
     }
 }
 
+var DebugPopupInfo by m("")
+@Composable
+fun DebugPopup(show: m_<Bool>) {
+    if (show.value) {
+        LazyPopup(
+            show = show,
+            title = "ERROR",
+            message = DebugPopupInfo,
+            showCancel = no,
+            showConfirm = no,
+        )
+    }
+}
+
+
+
 
 var selectedApp = m("")
-
-
 @Composable
 fun AppSelectPopup(show: m_<Bool>) {
     if (show.value) {
@@ -438,8 +453,8 @@ fun AppSelectPopup(show: m_<Bool>) {
 
         LazyPopup(
             show = show,
-            showCancel = false,
-            showConfirm = false,
+            showCancel = no,
+            showConfirm = no,
             title = "Select App",
             message = "",
             content = {
