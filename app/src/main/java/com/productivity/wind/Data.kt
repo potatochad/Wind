@@ -118,15 +118,16 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	}
 }
 
-inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
+fun add(list: MutableList<*>, block: *.() -> Unit) {
     try {
-		val item = T::class.constructors.first().call()
-		item.block()
-		add(item)
-	} catch (e: Exception) {
-        Plog("Add crashed for type ${T::class.simpleName}: ${e.message}")
-	}
+        val item = MyClass()
+        item.block()
+        list.add(item)
+    } catch (e: Exception) {
+        Plog("Add crashed: ${e.message}")
+    }
 }
+
 
 
 
