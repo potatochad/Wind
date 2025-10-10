@@ -118,7 +118,7 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	}
 }
 
-fun add(list: MutableList<*>, block: *.() -> Unit) {
+fun add(list: MutableList<Any>, block: Any.() -> Unit) {
 	try {
 		getClass(Bar).forEach { bar ->
 			val bar = bar as ClassVar<Settings, Any?>
