@@ -119,43 +119,6 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	}
 }
 
-
-fun add2(list: MutableList<Any>, block: Any.() -> Unit) {
-    try {
-        getClass(Bar).forEach { barRaw ->
-            val bar = barRaw as ClassVar<Settings, Any?>
-            bar.isAccessible = true
-
-            val name = bar.name
-            val type = bar.returnType.arguments.firstOrNull()?.type
-            val classifier = type?.classifier as? KClass<*> ?: return
-            val clazz = classifier.java
-
-            // Optional: log info
-            Plog("bar: $bar, type: $type, classifier: $classifier, clazz: $clazz")
-
-            // Example of creating a new instance of the type
-			val newItem = clazz.getDeclaredConstructor().newInstance()
-			newItem.block()         // apply your block
-            list.add(newItem)       // add to list
-        }
-    } catch (e: Exception) {
-        Plog("Add crashed: ${e.message}")
-    }
-}
-fun <T : Any> add5(list: SnapshotStateList<T>, block: T.() -> Unit) {
-    try {
-        val clazz = list.firstOrNull()?.javaClass
-            ?: throw IllegalArgumentException("List is empty, can't infer class")
-
-        val item = clazz.getDeclaredConstructor().newInstance() as T
-        item.block()
-        list.add(item)
-    } catch (e: Exception) {
-        Plog("Add crashed: ${e.message}")
-    }
-}
-
 inline fun <reified T : Any> add(
     list: MutableList<T>,
     block: T.() -> Unit

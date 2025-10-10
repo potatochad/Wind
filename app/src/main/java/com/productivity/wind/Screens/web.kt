@@ -50,7 +50,6 @@ fun Web(){
                 }
             }
         },
-        Scrollable = false,
         DividerPadding = false,
     ) {
         WebXml(
@@ -73,36 +72,52 @@ fun Web(){
 
 
 @Composable
-fun BlockKeyword(){
-    var BadWord = r_m("")
-    
+fun BlockKeyword() {
+    var BadWord = r_m("Youtube")
+
     LazyScreen(
         title = {
-            val scrollState = rememberScrollState()
-            Row(Modifier.scroll(vertical=no).width(App.screenWidth/2)) {           
+            Row(
+                Modifier
+                    .scroll(vertical = no)
+                    .width(App.screenWidth / 2),
+            ) {
                 Text("$WebUrl")
             }
             UI.End {
                 Icon.Add {
-                    add(Bar.badWords){ word = "test" }
+                    add(Bar.badWords) { word = BadWord.it }
                 }
             }
         },
     ) {
-      LazyRuleCard("If"){
-        LazzyRow{
-          Text("Detect ")
-          Cinput(BadWord)
+        LazyRuleCard("If") {
+            LazzyRow {
+                Text("Detect ")
+                UI.Cinput(BadWord)
+            }
         }
-      }
-      LazyRuleCard("Do"){
-        LazzyRow{
-          Text("Go back")
+        LazyRuleCard("Do") {
+            LazzyRow {
+                Text("Go back")
+            }
         }
-      }
 
-        for (wordItem in Bar.badWords) {
-            Text(text = wordItem.word, modifier = Modifier.padding(8.dp))
+        LazyCard {
+            LazzyList(Bar.badWords, Modifier.maxWidth()) {it, index ->
+
+                LazzyRow {
+                    Text(text = it.word)
+
+                    Icon.Edit {
+                        Bar.badWords.edit(it) { it.word }
+                    }
+
+                    Icon.Delete {
+                        Bar.badWords.removeAt(index)
+                    }
+                }
+            }
         }
     }
 }

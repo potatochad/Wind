@@ -268,64 +268,79 @@ object Header {
 
 
 object Icon {
-        @Composable
-        fun Menu() {
-                LazyIcon(
-                        onClick = { App.Menu=true},
-                        icon = Icons.Default.Menu
-                )
-        }
-        @Composable
-        fun Reload(webView: m_<WebView?>) {
-            LazyIcon(
-                onClick = { webView.it?.reload() },
-                icon = Icons.Default.Refresh
-            )
-        }
+    @Composable
+    fun Menu() {
+        LazyIcon(
+            onClick = { App.Menu = true },
+            icon = Icons.Default.Menu,
+        )
+    }
 
-        @Composable
-        fun Chill() {
+    @Composable
+    fun Reload(webView: m_<WebView?>) {
+        LazyIcon(
+            onClick = { webView.it?.reload() },
+            icon = Icons.Default.Refresh,
+        )
+    }
 
-            val ctx = LocalContext.current
-                LazyIcon(
-                        onClick = {
-                            if (Bar.funTime < Bar.Dpoints) {
-                                show(NeedMorePoints)
-                            }
-                            else {goTo("Web")}
-                        },
-                        icon = Icons.Default.SportsEsports
-                )
-        }
-        
-        @Composable
-        fun Add(onClick: Do = { goTo("Challenge") }) {
-                LazyIcon(
-                        onClick = onClick,
-                        icon = Icons.Default.Add
-                )
-        }
-        @Composable
-        fun MoreMenu(onClick: Do = {}) {
-            LazyIcon(
-                onClick = onClick,
-                icon = Icons.Default.MoreVert
-            )
-        }
+    @Composable
+    fun Chill() {
+        LazyIcon(
+            onClick = {
+                if (Bar.funTime < Bar.Dpoints) {
+                    show(NeedMorePoints)
+                } else {
+                    goTo("Web")
+                }
+            },
+            icon = Icons.Default.SportsEsports,
+        )
+    }
 
-        
-        @Composable
-        fun Edit() {
-                LazyIcon(
-                        onClick = { 
-                                if (Bar.funTime < Bar.Dpoints) show(NeedMorePoints)
-                                else show(Edit)
-                        },
-                        icon = Icons.Default.Edit
-                )
-        }
+    @Composable
+    fun Add(onClick: Do = { goTo("Challenge") }) {
+        LazyIcon(
+            onClick = onClick,
+            icon = Icons.Default.Add,
+        )
+    }
 
- //ICONS!!!!!!-------------------------///
+    @Composable
+    fun MoreMenu(onClick: Do = {}) {
+        LazyIcon(
+            onClick = onClick,
+            icon = Icons.Default.MoreVert,
+        )
+    }
+
+
+    @Composable
+    fun Edit(
+        onClick: Do = {
+            if (Bar.funTime < Bar.Dpoints) show(NeedMorePoints)
+            else show(Edit)
+        },
+    ) {
+        LazyIcon(
+            onClick = {
+                onClick()
+            },
+            icon = Icons.Default.Edit,
+        )
+    }
+
+    @Composable
+    fun Delete(
+        onClick: Do = {},
+    ) {
+        LazyIcon(
+            onClick = { onClick() },
+            icon = Icons.Default.Delete,
+        )
+    }
+
+    //ICONS!!!!!!-------------------------///
 }
 
 

@@ -407,7 +407,7 @@ fun <T> LazzyList(
     data: List<T>,
     modifier: Mod = Modifier.maxWidth().height(200.dp),
     lazyMode: Bool = no,
-    content: Content_<T>,
+    content: @Composable (T, Int) -> Unit,
 ) {
     val items = r { mutableStateListOf<T>() }
 
@@ -423,7 +423,7 @@ fun <T> LazzyList(
 
     Column(modifier = columnModifier) {
         items.forEachIndexed { index, item ->
-            key(index) { content(item) }
+            key(index) { content(item, data.indexOf(item)) }
         }
     }
 }
