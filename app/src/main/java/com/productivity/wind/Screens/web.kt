@@ -20,6 +20,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.activity.compose.*
 import com.productivity.wind.Imports.Data.*
 import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.items
+
 
 
 var WebUrl by m("")
@@ -86,7 +88,7 @@ fun BlockKeyword(){
             }
         },
     ) {
-        items(Bar.badWords) { wordItem ->
+        for (wordItem in Bar.badWords) {
             Text(text = wordItem.word, modifier = Modifier.padding(8.dp))
         }
     }
