@@ -165,7 +165,7 @@ inline fun <reified T : Any> add(
         newItem.block()
         list.add(newItem)
     } catch (e: Exception) {
-        Plog"Add failed: ${e.message}")
+        Plog("Add failed: ${e.message}")
     }
 }
 
