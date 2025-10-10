@@ -119,7 +119,6 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
     val item = T::class.constructors.first().call()
     item.block()
     add(item)
-    println("✅ Added: $item")
 }
 
 
