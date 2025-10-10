@@ -119,8 +119,9 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 }
 
 fun add(list: MutableList<*>, block: *.() -> Unit) {
+	var ListClass= get list class
     try {
-        val item = MyClass()
+        val item = ListClass()
         item.block()
         list.add(item)
     } catch (e: Exception) {
