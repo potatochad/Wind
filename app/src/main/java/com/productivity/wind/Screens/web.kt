@@ -77,11 +77,10 @@ fun BlockKeyword(){
     LazyScreen(
         title = {
             val scrollState = rememberScrollState()
-            Row(Modifier.scroll(vertical=no).width(App.screenWidth/3)) {           
+            Row(Modifier.scroll(vertical=no).width(App.screenWidth/2)) {           
                 Text("$WebUrl")
             }
             UI.End {
-                UI.move(10)
                 Icon.Add {
                     Bar.badWords.add{ word = "test" }
                 }
