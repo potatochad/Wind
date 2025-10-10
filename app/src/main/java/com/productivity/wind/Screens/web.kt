@@ -81,7 +81,7 @@ fun BlockKeyword(){
             UI.End {
                 UI.move(10)
                 Icon.Add {
-                    Bar.badWords.new {word = "test"}
+                    Bar.badWords.add{ word = "test" }
                 }
             }
         },
