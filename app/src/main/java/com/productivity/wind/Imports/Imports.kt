@@ -88,6 +88,11 @@ fun log(message: String, once: Boolean = false, tag: String = "Bad") {
     Log.w(tag, message)
 }
 
+fun Plog(msg: Str="test"){
+    DebugPopupInfo = msg
+    show(DebugPopup)
+}
+
 
 
 private var lastToast: Toast? = null
