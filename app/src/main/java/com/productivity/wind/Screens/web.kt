@@ -110,7 +110,7 @@ fun BlockKeyword() {
 
                     Icon.Edit {
                         Bar.badWords.edit(it) { it.word }
-                    }
+                    } //
 
                     Icon.Delete {
                         Bar.badWords.remove(it)
