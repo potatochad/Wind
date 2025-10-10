@@ -74,6 +74,8 @@ fun Web(){
 
 @Composable
 fun BlockKeyword(){
+    var BadWord = r_m("")
+    
     LazyScreen(
         title = {
             val scrollState = rememberScrollState()
@@ -87,6 +89,18 @@ fun BlockKeyword(){
             }
         },
     ) {
+      LazyRuleCard("If"){
+        LazzyRow{
+          Text("Detect ")
+          
+        }
+      }
+      LazyRuleCard("Do"){
+        LazzyRow{
+          Text("Go back")
+        }
+      }
+
         for (wordItem in Bar.badWords) {
             Text(text = wordItem.word, modifier = Modifier.padding(8.dp))
         }
