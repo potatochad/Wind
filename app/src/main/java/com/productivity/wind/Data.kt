@@ -115,7 +115,7 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
     }
 }
 
-inline fun <reified T : Any> SnapshotStateList<T>.new(block: T.() -> Unit) {
+inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
     val item = T::class.constructors.first().call()
     item.block()
     add(item)
