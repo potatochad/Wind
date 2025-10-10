@@ -120,7 +120,7 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 }
 
 
-fun add(list: MutableList<Any>, block: Any.() -> Unit) {
+fun add2(list: MutableList<Any>, block: Any.() -> Unit) {
     try {
         getClass(Bar).forEach { barRaw ->
             val bar = barRaw as ClassVar<Settings, Any?>
@@ -143,7 +143,18 @@ fun add(list: MutableList<Any>, block: Any.() -> Unit) {
         Plog("Add crashed: ${e.message}")
     }
 }
+fun <T : Any> add(list: SnapshotStateList<T>, block: T.() -> Unit) {
+    try {
+        val clazz = list.firstOrNull()?.javaClass
+            ?: throw IllegalArgumentException("List is empty, can't infer class")
 
+        val item = clazz.getDeclaredConstructor().newInstance() as T
+        item.block()
+        list.add(item)
+    } catch (e: Exception) {
+        Plog("Add crashed: ${e.message}")
+    }
+}
 
 
 
