@@ -7,36 +7,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.unit.*
+import androidx.compose.foundation.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.OutlinedTextField
 import com.productivity.wind.*
-import com.productivity.wind.Achievements
-import androidx.compose.material.icons.outlined.Chat
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import com.productivity.wind.Imports.*
 import androidx.compose.ui.platform.*
 import kotlinx.coroutines.*
 import android.webkit.*
-import com.productivity.wind.Imports.Data.Bar
-import com.productivity.wind.Imports.Data.Bool
-import com.productivity.wind.Imports.Data.BrestoreFromFile
-import com.productivity.wind.Imports.Data.BsaveToFile
-import com.productivity.wind.Imports.Data.Do
-import com.productivity.wind.Imports.Data.Str
-import com.productivity.wind.Imports.Data.edit
-import com.productivity.wind.Imports.Data.it
-import com.productivity.wind.Imports.Data.m
-import com.productivity.wind.Imports.Data.m_
-import com.productivity.wind.Imports.Data.new
-import com.productivity.wind.Imports.Data.r
-import com.productivity.wind.Imports.Data.r_m
-import com.productivity.wind.Imports.Data.set
-import com.productivity.wind.Imports.Data.show
+import com.productivity.wind.Imports.Data.*
 
 fun NavGraphBuilder.ScreenNav() {
     //Main—StartDestination    
