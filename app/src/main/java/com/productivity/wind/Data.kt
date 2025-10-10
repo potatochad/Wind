@@ -143,7 +143,7 @@ fun add2(list: MutableList<Any>, block: Any.() -> Unit) {
         Plog("Add crashed: ${e.message}")
     }
 }
-fun <T : Any> add(list: SnapshotStateList<T>, block: T.() -> Unit) {
+fun <T : Any> add5(list: SnapshotStateList<T>, block: T.() -> Unit) {
     try {
         val clazz = list.firstOrNull()?.javaClass
             ?: throw IllegalArgumentException("List is empty, can't infer class")
@@ -155,6 +155,20 @@ fun <T : Any> add(list: SnapshotStateList<T>, block: T.() -> Unit) {
         Plog("Add crashed: ${e.message}")
     }
 }
+
+inline fun <reified T : Any> add(
+    list: MutableList<T>,
+    block: T.() -> Unit
+) {
+    try {
+        val newItem = T::class.java.getDeclaredConstructor().newInstance()
+        newItem.block()
+        list.add(newItem)
+    } catch (e: Exception) {
+        Plog"Add failed: ${e.message}")
+    }
+}
+
 
 
 
