@@ -839,7 +839,6 @@ fun LazyScreen(
     DividerPadding: Bool = yes,
 
     headerHeight: Int = 44,
-    Scrollable: Bool = yes,
     content: Content,
 ) {
 	val header: Content = {
@@ -859,7 +858,6 @@ fun LazyScreen(
     Column(modifier) {
         header()
         Column(Modifier
-            .scroll(Scrollable)
             .height(App.LazyScreenContentHeight)) {
             content()
             bottom()
