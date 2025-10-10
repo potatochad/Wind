@@ -41,9 +41,8 @@ fun Web(){
             Text(" Points ${Bar.funTime}")
     
             UI.End {
-                LazzyRow{
+                Row{
                     Icon.Reload(webView)
-                    UI.move(10)
                     Icon.Add {
                         goTo("BlockKeyword")
                     }
@@ -114,7 +113,7 @@ fun BlockKeyword() {
                     }
 
                     Icon.Delete {
-                        Bar.badWords.removeAt(index)
+                        Bar.badWords.remove(it)
                     }
                 }
             }

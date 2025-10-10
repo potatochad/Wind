@@ -423,7 +423,7 @@ fun <T> LazzyList(
 
     Column(modifier = columnModifier) {
         items.forEachIndexed { index, item ->
-            key(index) { content(item, data.indexOf(item)) }
+            key(index) { content(item, index) }
         }
     }
 }
