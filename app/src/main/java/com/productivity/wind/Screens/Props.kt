@@ -420,6 +420,15 @@ fun DebugPopup(show: m_<Bool>) {
             message = DebugPopupInfo,
             showCancel = no,
             showConfirm = no,
+            content = {
+                Column {
+                    LazzyRow {
+                        
+                    }
+                    
+                }
+            }
+            
         )
     }
 }
