@@ -182,6 +182,7 @@ object SettingsSaved {
 
 
         getClass(Bar).forEach { bar ->
+            try{
             val bar = bar as ClassVar<Settings, Any?>
             val name = bar.name
             var type = bar.getType()
@@ -198,8 +199,12 @@ object SettingsSaved {
             val classifier = argType?.classifier as? KClass<*> ?: return
             val clazz = classifier.java
 
-            val BAR: User? = prefs.getAny(name)
+            val BAR = Data.getAny(clazz, name)
 
+            bar.set(Bar, BAR)
+            } catch (e: Exception) {
+                Plog("Error loading ${field.name}: ${e.message}")
+            }
 
 
         }
