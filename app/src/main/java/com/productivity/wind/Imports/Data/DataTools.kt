@@ -207,9 +207,9 @@ object SettingsSaved {
 
             bar.set(Bar, BAR)
             } catch (e: Exception) {
-                Plog("Error loading $name: ${e.message},    bar: $bar type: $type   FullBar; $FullBar")
+                Plog("Error loading $name: ${e.message},    bar: $bar type: $type   FullBar; $FullBar", 10)
             }
-            Plog("BARS:  $ListSTUFF", 5)
+            Plog("BARS:  $ListSTUFF", 10)
 
 
         }
