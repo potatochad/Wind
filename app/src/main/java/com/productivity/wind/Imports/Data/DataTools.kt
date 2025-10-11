@@ -198,6 +198,8 @@ object SettingsSaved {
 
             val BAR = Data.getAny(clazz, name)
 
+            Plog("BAR:  $BAR")
+
             bar.set(Bar, BAR)
             } catch (e: Exception) {
                 Plog("Error loading $name: ${e.message},    bar: $bar type: $type   FullBar; $FullBar")
