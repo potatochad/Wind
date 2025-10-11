@@ -201,7 +201,7 @@ object SettingsSaved {
 
             val BAR = Data.getAny(clazz, name)
 
-            ListSTUFF.append("name: $name, BAR: $BAR")
+            ListSTUFF += "name: $name, BAR: $BAR"
 
             
 
