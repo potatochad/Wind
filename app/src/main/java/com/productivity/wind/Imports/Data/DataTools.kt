@@ -197,10 +197,8 @@ object SettingsSaved {
             val argType = bar.returnType.arguments.firstOrNull()?.type
             val classifier = argType?.classifier as? KClass<*> ?: return
             val clazz = classifier.java
-            val newList = Data.getMutableStateList(name, clazz)
-            bar.set(Bar, newList)
 
-            }
+
         }
     }
     fun initFromFile(map: Map<Str, Str>) {
