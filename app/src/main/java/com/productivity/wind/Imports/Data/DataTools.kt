@@ -203,7 +203,7 @@ object SettingsSaved {
 
             bar.set(Bar, BAR)
             } catch (e: Exception) {
-                Plog("Error loading ${field.name}: ${e.message}")
+                Plog("Error loading ${name}: ${e.message}")
             }
 
 
