@@ -189,63 +189,17 @@ object SettingsSaved {
             var FullBar: Any? = bar.getTheBy(Bar) ?: bar.get(Bar)
             val isList = (bar.returnType.arguments.firstOrNull()?.type?.classifier) as? KClass<*>
 
-
-            if (isList != null){
-                FullBar as MutableList<*>
-            }
-
-
-            when (FullBar) {
-                is MutableState<*> -> {
-                    loadMutableState(type, name, FullBar as m_<Any>, Data)
-                }
-                is SnapshotStateList<*> -> {
-
-                    log("bar: $bar", yes)
-                    log("type: $type", yes)
-                    log("FullBar; $FullBar", yes)
+            log("bar: $bar", yes)
+            log("type: $type", yes)
+            log("FullBar; $FullBar", yes)
 
 
-                    val argType = bar.returnType.arguments.firstOrNull()?.type
-                    val classifier = argType?.classifier as? KClass<*> ?: return
-                    val clazz = classifier.java
-                    val newList = Data.getMutableStateList(name, clazz)
-                    bar.set(Bar, newList)
+            val argType = bar.returnType.arguments.firstOrNull()?.type
+            val classifier = argType?.classifier as? KClass<*> ?: return
+            val clazz = classifier.java
+            val newList = Data.getMutableStateList(name, clazz)
+            bar.set(Bar, newList)
 
-                }
-                is MutableList<*> -> {//
-                    log("bar: $bar", yes)
-                    log("type: $type", yes)
-                    log("FullBar; $FullBar", yes)
-
-                    // get the class of the list element//
-                    val argType = bar.returnType.arguments.firstOrNull()?.type
-                    val classifier = argType?.classifier as? KClass<*>
-
-                    if (classifier != null) {
-                        try {
-                            // Create a parameterized type dynamically
-                            val typeToken = TypeToken.getParameterized(MutableList::class.java, classifier.java)
-                            val json = Data.getString("MutableList $name", null)
-                            if (json != null) {
-                                val newList = gson.fromJson<MutableList<*>>(json, typeToken.type)
-                                bar.set(Bar, newList)
-                                log("✅ Updated $name with loaded list: $newList")
-                            } else {
-                                log("⚠️ No data found for list $name")
-                            }
-                        } catch (e: Exception) {
-                            log("❌ Error loading list $name: ${e.message}")
-                        }
-                    } else {
-                        log("⚠️ Could not detect list element type for $name")
-                    }
-                }
-
-                else -> {
-                    log("unsupported type for NAME; $name")
-                    log("unsupported type for TYPE; $type")
-                }
             }
         }
     }
