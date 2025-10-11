@@ -71,10 +71,16 @@ fun log(message: String, once: Boolean = false, tag: String = "Bad") {
     Log.w(tag, message)
 }
 
-fun Plog(msg: Str="test"){
-    DebugPopupInfo = msg
-    show(DebugPopup)
+fun Plog(msg: String = "test", s: Int = 1) {
+    val delayMillis = s * 1000
+    CoroutineScope(Dispatchers.Main).launch {
+        delay(delayMillis.toLong())
+        DebugPopupInfo = msg
+        show(DebugPopup)
+    }
 }
+
+
 
 
 
