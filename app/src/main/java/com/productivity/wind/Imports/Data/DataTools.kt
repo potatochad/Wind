@@ -182,7 +182,6 @@ object SettingsSaved {
 
 
         getClass(Bar).forEach { bar ->
-            try{
             val bar = bar as ClassVar<Settings, Any?>
             val name = bar.name
             var type = bar.getType()
@@ -190,11 +189,9 @@ object SettingsSaved {
             var FullBar: Any? = bar.getTheBy(Bar) ?: bar.get(Bar)
             val isList = (bar.returnType.arguments.firstOrNull()?.type?.classifier) as? KClass<*>
 
-            log("bar: $bar", yes)
-            log("type: $type", yes)
-            log("FullBar; $FullBar", yes)
-
-
+            
+            
+            try{
             val argType = bar.returnType.arguments.firstOrNull()?.type
             val classifier = argType?.classifier as? KClass<*> ?: return
             val clazz = classifier.java
@@ -203,7 +200,7 @@ object SettingsSaved {
 
             bar.set(Bar, BAR)
             } catch (e: Exception) {
-                Plog("Error loading ${name}: ${e.message}")
+                Plog("Error loading $name: ${e.message},    bar: $bar type: $type   FullBar; $FullBar")
             }
 
 
