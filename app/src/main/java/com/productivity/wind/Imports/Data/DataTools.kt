@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.Dp
 import java.time.LocalDate
 import com.productivity.wind.Imports.*
 import com.productivity.wind.Imports.Data.*
+import kotlin.reflect.full.*
+
 
 @Suppress("UNCHECKED_CAST")
 
@@ -180,36 +182,27 @@ object SettingsSaved {
         initOnce = true
 
 
-        var ListSTUFF by m("")
-
-
-
         getClass(Bar).forEach { bar ->
             val bar = bar as ClassVar<Settings, Any?>
             val name = bar.name
-            var type = bar.getType()
             bar.isAccessible = true
-            var FullBar: Any? = bar.getTheBy(Bar) ?: bar.get(Bar)
-            val isList = (bar.returnType.arguments.firstOrNull()?.type?.classifier) as? KClass<*>
 
-            
-            
-            try{
-            val argType = bar.returnType.arguments.firstOrNull()?.type
-            val classifier = argType?.classifier as? KClass<*> ?: return
-            val clazz = classifier.java
+            val clazz = getJavaClass(bar, name) ?: return@forEach
+
+            log("clazz $clazz")
 
             val BAR = Data.getAny(clazz, name)
 
-            ListSTUFF += "name: $name, BAR: $BAR"
 
-            
+
+            log("BAR; $BAR")
+
+            if (BAR == null) {
+                log("BAR is NULL for $name, skipping")
+                return@forEach
+            }
 
             bar.set(Bar, BAR)
-            } catch (e: Exception) {
-                Plog("Error loading $name: ${e.message},    bar: $bar type: $type   FullBar; $FullBar", 10)
-            }
-            Plog("BARS:  $ListSTUFF", 10)
 
 
         }

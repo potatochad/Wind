@@ -154,23 +154,41 @@ inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotState
 
 
 
-inline fun <reified T> SharedPreferences.getAny3(name: Str): T? {
-    val json = getString(name, null) ?: return null
-    return try {
-        Gson().fromJson(json, T::class.java)
-    } catch (e: Exception) {
-        null
+fun getJavaClass(bar: Any, name: String): Class<*>? {
+    val kProperty = bar as? KProperty1<*, *> ?: return null  // ensure it’s a property
+    val classifier = kProperty.returnType.arguments.firstOrNull()?.type?.classifier as? KClass<*>
+
+    return when {
+        classifier != null -> classifier.java                        // generic type
+        kProperty.returnType.classifier is KClass<*> ->
+            (kProperty.returnType.classifier as KClass<*>).java     // plain type
+        else -> {
+            log("No type info for $name, skipping")
+            null
+        }
     }
 }
 
-fun <T> SharedPreferences.getAny(clazz: Class<T>, name: String): T? {
+fun <T> SharedPreferences.getAny(clazz: Class<T>, name: String): Any? {
     val json = getString(name, null) ?: return null
+    log("inGETany clazz $clazz")
+    log("inGETany json $json")
+
     return try {
         Gson().fromJson(json, clazz)
     } catch (e: Exception) {
-        null
+        try {
+            val type = TypeToken.getParameterized(List::class.java, clazz).type
+            log("inGETany type $type")
+            Gson().fromJson<List<T>>(json, type)
+
+        } catch (e: Exception) {
+            log("inGETany error ${e.message}")
+            null
+        }
     }
 }
+
 
 
 

@@ -62,12 +62,7 @@ import java.time.*
 
 
 //region log
-private val loggedMessages = mutableSetOf<String>()
-fun log(message: String, once: Boolean = false, tag: String = "Bad") {
-    if (once) {
-        if (loggedMessages.contains(message)) return
-        loggedMessages.add(message)
-    }
+fun log(message: String, tag: String = "Bad") {
     Log.w(tag, message)
 }
 
