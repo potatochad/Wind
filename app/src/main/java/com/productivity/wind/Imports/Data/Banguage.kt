@@ -175,23 +175,20 @@ fun <T> SharedPreferences.getAny(bar: ClassVar<Settings, Any?>): Any? {
     bar.isAccessible = true
 
     val clazz = getJavaClass(bar)
-
-    log("clazz $clazz")
-
     val json = getString(name, null)
-    log("inGETany clazz $clazz")
-    log("inGETany json $json")
+    log("json $json")
+    log("clazz $clazz")
 
     return try {
         Gson().fromJson(json, clazz)
     } catch (e: Exception) {
         try {
             val type = TypeToken.getParameterized(List::class.java, clazz).type
-            log("inGETany type $type")
+            log("type $type")
             Gson().fromJson<List<T>>(json, type)
 
         } catch (e: Exception) {
-            log("inGETany error ${e.message}")
+            log("error ${e.message}")
             null
         }
     }
