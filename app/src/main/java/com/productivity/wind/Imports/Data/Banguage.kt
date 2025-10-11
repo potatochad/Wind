@@ -137,122 +137,45 @@ typealias Str = String
 typealias Bool = Boolean
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
 typealias ClassVal<T, R> = KProperty1<T, R>
-
-
-
-
-
-//?FOR TYPES
-
+    
 fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
-val KClass<*>.isBool get() = this == Bool::class
-val KClass<*>.isInt get() = this == Int::class
-val KClass<*>.isFloat get() = this == Float::class
-val KClass<*>.isDouble get() = this == Double::class
-val KClass<*>.isLong get() = this == Long::class
-val KClass<*>.isStr get() = this == Str::class
-val KClass<*>.isShort get() = this == Short::class
-val KClass<*>.isByte get() = this == Byte::class
-val KClass<*>.isChar get() = this == Char::class
-val KClass<*>.isDp get() = this == Dp::class
-val KClass<*>.isMutableList get() = this == MutableList::class
-val KClass<*>.isList get() = this == List::class
-val KClass<*>.isMutableStateListOf get() = this == SnapshotStateList::class
-
-
-fun SharedPreferences.Editor.putAny(name: Str, value: Any?) {
-    when (value) {
-        is Bool -> putBoolean(name, value)
-        is Str -> putString(name, value)
-        is Int -> putInt(name, value)
-        is Float -> putFloat(name, value)
-        is Long -> putLong(name, value)
-        is SnapshotStateList<*> -> putMutableStateList(name, value)
-        is MutableList<*> -> putMutableList(name, value)
-        else -> log("skip — $value", yes)
-    }
-}
-
-fun <T> SharedPreferences.Editor.putMutableList(id: Str, list: MutableList<T>?) {
-    if (list == null) {
-        log("no mutable list", yes)
-        return
-    }
-
-
-    log("STORIng MUTABLE LIST $list", yes)
-
-    val json = gson.toJson(list)
-    putString("MutableList $id", json)
-}
-
-inline fun <reified T> SharedPreferences.getMutableList(id: String): MutableList<T>? {
-    val json = getString("MutableList $id", null) ?: return null
-    val type = object : TypeToken<MutableList<T>>() {}.type
-    return gson.fromJson(json, type)
-}
-
-fun <T> SharedPreferences.Editor.putMutableStateList(id: String, list: SnapshotStateList<T>?) {
-    if (list == null) {
-        log("no snapshot list")
-        return
-    }
-
-    log("STORIng MUTABLE STATE LIST $list")
-
-    val json = gson.toJson(list)
-    putString("SnapshotList $id", json)
-}
-
-fun <T : Any> SharedPreferences.getMutableStateList(id: String, clazz: Class<T>): SnapshotStateList<T> {
-    val json = getString("SnapshotList $id", null) ?: return mutableStateListOf()
-
-    log("RESTORING MUTABLESTATE LIST $id")
-    val listType = TypeToken.getParameterized(List::class.java, clazz).type
-    val normalList: List<T> = gson.fromJson(json, listType)
-    return mutableStateListOf<T>().apply { addAll(normalList)
-    }
-}
-
-
-
-
 fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {
     return this.getDelegate(instance)
 }
-
-@Suppress("UNCHECKED_CAST")
-fun <T : Any> loadMutableState(type: KClass<*>?, name: Str, fullBar: m_<T>, Data: SharedPreferences) {
-    
-    if (type == null) {
-        log("type is null for $name")
-        return
-    }
-    when {
-        type.isBool -> (fullBar).it = Data.getBoolean(name, no) as T
-        type.isStr -> (fullBar).it = (Data.getString(name, "") ?: "") as T
-        type.isInt -> (fullBar).it = Data.getInt(name, 0) as T
-        type.isFloat -> (fullBar).it = Data.getFloat(name, 0f) as T
-        type.isLong -> (fullBar).it = Data.getLong(name, 0L) as T
-        else -> log("Unsupported type: $type")
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 @Composable
 fun <T> r(value: () -> T) = remember { value() }
 @Composable
 fun <T> r_m(initial: T) = r { m(initial) }
 inline fun <reified T> ml(): MutableList<T> = mutableListOf()
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
+
+
+
+
+
+
+inline fun <reified T> SharedPreferences.getAny(name: Str): T? {
+    val json = getString(name, null) ?: return null
+    return try {
+        Gson().fromJson(json, T::class.java)
+    } catch (e: Exception) {
+        null
+    }
+}
+
+
+inline fun <reified T> SharedPreferences.Editor.putAny(name: Str, value: T?) {
+    val json = Gson().toJson(value)
+    putString(name, json)
+}
+
+
+
+
+
+
+
+
+
+
+
