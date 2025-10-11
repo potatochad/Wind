@@ -180,6 +180,9 @@ object SettingsSaved {
         initOnce = true
 
 
+        var ListSTUFF by m("")
+
+
 
         getClass(Bar).forEach { bar ->
             val bar = bar as ClassVar<Settings, Any?>
@@ -198,12 +201,15 @@ object SettingsSaved {
 
             val BAR = Data.getAny(clazz, name)
 
-            Plog("BAR:  $BAR")
+            ListSTUFF.append("name: $name, BAR: $BAR")
+
+            
 
             bar.set(Bar, BAR)
             } catch (e: Exception) {
                 Plog("Error loading $name: ${e.message},    bar: $bar type: $type   FullBar; $FullBar")
             }
+            Plog("BARS:  $ListSTUFF")
 
 
         }
