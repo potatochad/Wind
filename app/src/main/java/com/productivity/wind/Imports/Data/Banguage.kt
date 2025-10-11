@@ -154,7 +154,8 @@ inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotState
 
 
 
-fun getJavaClass(bar: Any, name: String): Class<*>? {
+fun getJavaClass(bar: ClassVar<Settings, Any?>): Class<*>? {
+    var name = bar.name
     val kProperty = bar as? KProperty1<*, *> ?: return null  // ensure it’s a property
     val classifier = kProperty.returnType.arguments.firstOrNull()?.type?.classifier as? KClass<*>
 
@@ -169,8 +170,15 @@ fun getJavaClass(bar: Any, name: String): Class<*>? {
     }
 }
 
-fun <T> SharedPreferences.getAny(clazz: Class<T>, name: String): Any? {
-    val json = getString(name, null) ?: return null
+fun <T> SharedPreferences.getAny(bar: ClassVar<Settings, Any?>): Any? {
+    val name = bar.name
+    bar.isAccessible = true
+
+    val clazz = getJavaClass(bar)
+
+    log("clazz $clazz")
+
+    val json = getString(name, null)
     log("inGETany clazz $clazz")
     log("inGETany json $json")
 

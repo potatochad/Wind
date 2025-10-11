@@ -184,21 +184,14 @@ object SettingsSaved {
 
         getClass(Bar).forEach { bar ->
             val bar = bar as ClassVar<Settings, Any?>
-            val name = bar.name
-            bar.isAccessible = true
-
-            val clazz = getJavaClass(bar, name) ?: return@forEach
-
-            log("clazz $clazz")
-
-            val BAR = Data.getAny(clazz, name)
+            val BAR = Data.getAny(bar)
 
 
 
             log("BAR; $BAR")
 
             if (BAR == null) {
-                log("BAR is NULL for $name, skipping")
+                log("BAR is NULL for ${bar.name}, skipping")
                 return@forEach
             }
 
