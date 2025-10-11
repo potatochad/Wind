@@ -154,7 +154,7 @@ inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotState
 
 
 
-inline fun <reified T> SharedPreferences.getAny(name: Str): T? {
+inline fun <reified T> SharedPreferences.getAny3(name: Str): T? {
     val json = getString(name, null) ?: return null
     return try {
         Gson().fromJson(json, T::class.java)
@@ -162,6 +162,16 @@ inline fun <reified T> SharedPreferences.getAny(name: Str): T? {
         null
     }
 }
+
+fun <T> SharedPreferences.getAny(clazz: Class<T>, name: String): T? {
+    val json = getString(name, null) ?: return null
+    return try {
+        Gson().fromJson(json, clazz)
+    } catch (e: Exception) {
+        null
+    }
+}
+
 
 
 inline fun <reified T> SharedPreferences.Editor.putAny(name: Str, value: T?) {
