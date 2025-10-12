@@ -809,12 +809,12 @@ fun LazyHeader(
                 contentAlignment = Alignment.CenterStart
             ) {
 				LazzyRow(){
-					Box(
-						modifier = Modifier
-							.fillMaxWidth()
+					Box(Modifier
+							.maxWidth()
 							.pointerInput(Unit) {
-								// consume all clicks so nothing passes through
-								awaitPointerEventScope { while (true) { awaitPointerEvent() } }
+								if (DisableHeader) { 
+									awaitPointerEventScope { while (true) { awaitPointerEvent() } }
+								}
 							}
 					) {
 						titleContent()
