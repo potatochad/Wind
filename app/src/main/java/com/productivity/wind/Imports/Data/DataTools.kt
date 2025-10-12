@@ -30,10 +30,10 @@ import java.time.LocalDate
 import com.productivity.wind.Imports.*
 import com.productivity.wind.Imports.Data.*
 import kotlin.reflect.full.*
+import kotlin.reflect.jvm.javaField
 
 
 @Suppress("UNCHECKED_CAST")
-
 
 //region Vals/ Vars FOR DATA
 
@@ -196,8 +196,6 @@ object SettingsSaved {
 
                 if (gotValue == null) { return@forEach }
 
-
-                //! Need give the gotValue the type
                 bar.set(Bar, gotValue)
 
                 log("2.5 NewBar: ${bar.get(Bar)}")

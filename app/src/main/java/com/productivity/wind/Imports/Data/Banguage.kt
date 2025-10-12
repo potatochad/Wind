@@ -184,7 +184,6 @@ fun SharedPreferences.getAny(bar: ClassVar<Settings, Any?>): Any? {
     log("1.2 clazz: $clazz")
 
     val storedValue = getString(name, null)
-    log("1.3 storedValue $storedValue")
 
     return try {
         gson.fromJson(storedValue, clazz)
