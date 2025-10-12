@@ -118,17 +118,15 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 		Plog("Edit crashed for item $item: ${e.message}")
 	}
 }
-inline fun <reified T : Any> SnapshotStateList<T>.addForce(block: T.() -> Unit) {
+
+@RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
+inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
     try {
         val newItem = T::class.java.getDeclaredConstructor().newInstance()
         newItem.block()
-        // Add normally
-        this.add(newItem)
-		
-		if (this.isNotEmpty()) {
-            val last = this.removeLast()
-            this.add(last)
-		}
+
+        this += newItem
+
     } catch (e: Exception) {
         println("Add failed: ${e.message}")
     }
@@ -187,12 +185,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             LazyTheme {
                 Surface(Modifier.maxSize()) {
-                    try {
-						AppStart()
-					} catch (e: Exception) {
-						log("$random error {e.message}")
-					}
-					
+					AppStart()
                 }
             }
 

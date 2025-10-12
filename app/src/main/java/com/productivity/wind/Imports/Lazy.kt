@@ -2,6 +2,7 @@
 
 package com.productivity.wind.Imports
 
+import android.annotation.SuppressLint
 import androidx.compose.ui.draw.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
@@ -226,6 +227,7 @@ fun LazyMeasure(
 
 
 
+@SuppressLint("UnusedBoxWithConstraintsScope", "UnrememberedMutableState")
 @Composable
 fun LazyInfo(
     infoContent: Content,
@@ -252,10 +254,10 @@ fun LazyInfo(
     val popupW = r_m(0.dp)
     val popupH = r_m(0.dp)
 
-	val top by derivedStateOf { y.it - h.it }
-	val bottom by derivedStateOf { y.it }
-	val start by derivedStateOf { x.it }
-	val end by derivedStateOf { x.it + w.it }
+	val top by r_m(y.it - h.it)
+	val bottom by r_m(y.it)
+	val start by r_m(x.it)
+	val end by r_m(x.it + w.it)
 
     // Compute popup position dynamically
     val popupX = remember(x.it, w.it, popupW.it) {
@@ -405,11 +407,13 @@ fun LazyImage(
 @Composable
 fun <T> LazzyList(
     data: List<T>,
-    modifier: Mod = Modifier.maxWidth().height(200.dp),
-    lazyMode: Bool = no,
+    modifier: Mod = Modifier
+        .maxWidth()
+        .height(200.dp),
+    lazyMode: Bool = false,
     content: @Composable (T, Int) -> Unit,
 ) {
-    val items = r { mutableStateListOf<T>() }
+    val items = remember { mutableStateListOf<T>() }
 
     LaunchedEffect(data) {
         items.clear()
@@ -423,7 +427,9 @@ fun <T> LazzyList(
 
     Column(modifier = columnModifier) {
         items.forEachIndexed { index, item ->
-            key(index) { content(item, index) }
+            key(item.hashCode() + index) {
+                content(item, index)
+            }
         }
     }
 }
@@ -808,17 +814,21 @@ fun LazyHeader(
                     .padding(start = if (showBack) 8.dp else 0.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
-				LazzyRow(){
-					Box(Modifier
-							.maxWidth()
-							.pointerInput(Unit) {
-								if (DisableHeader) { 
-									awaitPointerEventScope { while (true) { awaitPointerEvent() } }
-								}
-							}
-					) {
-						titleContent()
-					}
+                Box(Modifier
+                    .maxWidth()
+                    .pointerInput(Unit) {
+                        if (DisableHeader) {
+                            awaitPointerEventScope {
+                                while (true) {
+                                    awaitPointerEvent()
+                                }
+                            }
+                        }
+                    }
+                ) {
+                    LazzyRow {
+                        titleContent()
+                    }
 				}
 				
 			}
