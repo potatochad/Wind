@@ -191,7 +191,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             LazyTheme {
                 Surface(Modifier.maxSize()) {
-                    AppStart()
+                    try {
+						AppStart()
+					} catch (e: Exception) {
+						log("$random error {e.message}")
+					}
 					
                 }
             }
