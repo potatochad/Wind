@@ -118,20 +118,26 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 		Plog("Edit crashed for item $item: ${e.message}")
 	}
 }
-inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
+inline fun <reified T : Any> SnapshotStateList<T>.addForce(block: T.() -> Unit) {
     try {
         val newItem = T::class.java.getDeclaredConstructor().newInstance()
         newItem.block()
+        // Add normally
         this.add(newItem)
-
-        val tmp = this.toList()
+        // Force recomposition by swapping the backing list
+        val copy = snapshotFlow { this.toList() }.first() // safe snapshot copy
         this.clear()
-        this.addAll(tmp)
-
+        this.addAll(copy)
+		
+		if (this.isNotEmpty()) {
+            val last = this.removeLast()
+            this.add(last)
+		}
     } catch (e: Exception) {
         println("Add failed: ${e.message}")
     }
 }
+
 
 
 
