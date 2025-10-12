@@ -123,15 +123,16 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
         val newItem = T::class.java.getDeclaredConstructor().newInstance()
         newItem.block()
         this.add(newItem)
-		
-        val tmp = this.toList()
+
+        val tmp = this.toList()
         this.clear()
         this.addAll(tmp)
-		
+
     } catch (e: Exception) {
         println("Add failed: ${e.message}")
     }
 }
+
 
 
 data class CopyTasks(
