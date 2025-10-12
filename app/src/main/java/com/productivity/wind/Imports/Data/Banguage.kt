@@ -173,15 +173,10 @@ fun getJavaClass(bar: ClassVar<Settings, Any?>): Class<*>? {
 fun SharedPreferences.getAny(bar: ClassVar<Settings, Any?>): Any? {
     val name = bar.name
 
-    log("1.1 name: $name")
-    log("1.11 bar.returnType: ${bar.returnType}")
-
     bar.isAccessible = true
 
     val clazz = getJavaClass(bar)
     //! clazz ONLY GIVES TYPE that in the box box.
-
-    log("1.2 clazz: $clazz")
 
     val storedValue = getString(name, null)
 
@@ -190,11 +185,9 @@ fun SharedPreferences.getAny(bar: ClassVar<Settings, Any?>): Any? {
     } catch (e: Exception) {
         try {
             val type = TypeToken.getParameterized(List::class.java, clazz).type
-            log("1.4 type $type")
             gson.fromJson(storedValue, type)
 
         } catch (e: Exception) {
-            log("1.5 error ${e.message}")
             null
         }
     }

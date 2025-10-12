@@ -183,29 +183,36 @@ object SettingsSaved {
 
 
         getClass(Bar).forEach { bar ->
+            val bar = bar as ClassVar<Settings, Any?>
+            val gotValue = Data.getAny(bar) ?: return@forEach
 
+            log("gotValue: $gotValue, bar type: ${bar.returnType}")
 
             try {
-                val bar = bar as ClassVar<Settings, Any?>
-
-                log("1 bar: $bar")
-
-                val gotValue = Data.getAny(bar)
-
-                log("2 gotValue: $gotValue")
-
-                if (gotValue == null) { return@forEach }
-
-                bar.set(Bar, gotValue)//
-
-                log("2.5 NewBar: ${bar.get(Bar)}")
-
+                when (gotValue) {
+                    is SnapshotStateList<*> -> {
+                        (bar as? SnapshotStateList<Any?>)?.apply {
+                            clear()
+                            addAll(gotValue as SnapshotStateList<Any?>)
+                        } ?: bar.set(Bar, gotValue)
+                    }
+                    is List<*> -> {
+                        val snapshotValue = mutableStateListOf(*gotValue.toTypedArray())
+                        (bar as? SnapshotStateList<Any?>)?.apply {
+                            clear()
+                            addAll(snapshotValue)
+                        } ?: bar.set(Bar, snapshotValue)
+                    }
+                    else -> {
+                        bar.set(Bar, gotValue)
+                    }
+                }
             } catch (e: Exception) {
-                log("3 error:  ${e.message}")
+                log("init error: ${e.message}")
+                Vlog("init error: ${e.message}")
             }
-
-
         }
+
     }
     fun initFromFile(map: Map<Str, Str>) {
         getClass(Bar).forEach { barIDK ->
