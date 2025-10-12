@@ -196,7 +196,7 @@ object SettingsSaved {
 
                 if (gotValue == null) { return@forEach }
 
-                bar.set(Bar, gotValue)
+                bar.set(Bar, gotValue)//
 
                 log("2.5 NewBar: ${bar.get(Bar)}")
 
