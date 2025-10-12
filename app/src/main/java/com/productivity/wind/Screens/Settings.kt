@@ -78,7 +78,7 @@ fun LogsScreen()= NoLagCompose {
 
     LaunchedEffect(Unit) {
         while (true) {
-            logText = getLogs()
+            // logText = getLogs()
             delay(1_000)
         }
     }

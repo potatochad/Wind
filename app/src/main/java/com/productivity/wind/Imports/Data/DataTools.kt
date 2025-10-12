@@ -183,19 +183,28 @@ object SettingsSaved {
 
 
         getClass(Bar).forEach { bar ->
-            val bar = bar as ClassVar<Settings, Any?>
-            val BAR = Data.getAny(bar)
 
 
+            try {
+                val bar = bar as ClassVar<Settings, Any?>
 
-            log("BAR; $BAR")
+                log("1 bar: $bar")
 
-            if (BAR == null) {
-                log("BAR is NULL for ${bar.name}, skipping")
-                return@forEach
+                val gotValue = Data.getAny(bar)
+
+                log("2 gotValue: $gotValue")
+
+                if (gotValue == null) { return@forEach }
+
+
+                //! Need give the gotValue the type
+                bar.set(Bar, gotValue)
+
+                log("2.5 NewBar: ${bar.get(Bar)}")
+
+            } catch (e: Exception) {
+                log("3 error:  ${e.message}")
             }
-
-            bar.set(Bar, BAR)
 
 
         }

@@ -62,8 +62,10 @@ import java.time.*
 
 
 //region log
-fun log(message: String, tag: String = "Bad") {
-    Log.w(tag, message)
+fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
+    var msg = message.take(int)
+    if (msg.length >= int) {msg += " ..."}
+    Log.w(tag, msg)
 }
 
 fun Plog(msg: String = "test", s: Int = 1) {
@@ -93,20 +95,6 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
         lastToast = toast
         toast.show()
     }, delayMs)
-}
-
-fun getLogs(): Str {
-    return try {
-        val process = Runtime.getRuntime().exec("logcat -d")
-        val reader = process.inputStream.bufferedReader()
-        val logs = reader.readText()
-
-        // Optional: filter only your app logs
-        logs.lines()
-            .joinToString("\n")
-    } catch (e: Exception) {
-        "❌ Failed to read logs: ${e.message}"
-    }
 }
 
 
