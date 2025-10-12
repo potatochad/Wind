@@ -119,19 +119,6 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	}
 }
 
-inline fun <reified T : Any> add(
-    list: MutableList<T>,
-    block: T.() -> Unit
-) {
-    try {
-        val newItem = T::class.java.getDeclaredConstructor().newInstance()
-        newItem.block()
-        list.add(newItem)
-    } catch (e: Exception) {
-        Plog("Add failed: ${e.message}")
-    }
-}
-
 
 
 
