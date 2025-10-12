@@ -124,10 +124,6 @@ inline fun <reified T : Any> SnapshotStateList<T>.addForce(block: T.() -> Unit) 
         newItem.block()
         // Add normally
         this.add(newItem)
-        // Force recomposition by swapping the backing list
-        val copy = snapshotFlow { this.toList() }.first() // safe snapshot copy
-        this.clear()
-        this.addAll(copy)
 		
 		if (this.isNotEmpty()) {
             val last = this.removeLast()
