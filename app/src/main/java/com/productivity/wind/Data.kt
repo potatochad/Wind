@@ -119,7 +119,15 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	}
 }
 
-
+inline fun <reified T : Any> SnapshotStateList<T>.new(block: T.() -> Unit) {
+    try {
+        val newItem = T::class.java.getDeclaredConstructor().newInstance()
+        newItem.block()
+        this.add(newItem) // updates the state list, Compose will react
+    } catch (e: Exception) {
+        println("Add failed: ${e.message}")
+    }
+}
 
 
 
