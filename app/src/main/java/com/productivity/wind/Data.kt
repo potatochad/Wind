@@ -122,8 +122,12 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
     try {
         val newItem = T::class.java.getDeclaredConstructor().newInstance()
         newItem.block()
-        this.add(newItem) // updates the state list, Compose will react
-        this.replaceAll { it }
+        this.add(newItem)
+		
+        val tmp = this.toList()
+        this.clear()
+        this.addAll(tmp)
+		
     } catch (e: Exception) {
         println("Add failed: ${e.message}")
     }
