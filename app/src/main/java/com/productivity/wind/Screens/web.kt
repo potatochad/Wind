@@ -73,6 +73,7 @@ fun Web(){
 @Composable
 fun BlockKeyword() {
     var BadWord = r_m("Youtube")
+    var SynchList = r_m(Bar.badWords)
 
     LazyScreen(
         title = {
@@ -87,7 +88,6 @@ fun BlockKeyword() {
                 Icon.Add {
                     Bar.badWords.add { word = BadWord.it }
                 }
-                Bar.badWords = Bar.badWords.toMutableStateList()
             }
         },
     ) {
@@ -104,7 +104,7 @@ fun BlockKeyword() {
         }
 
         LazyCard {
-            LazzyList(Bar.badWords, Modifier.maxWidth()) {it, index ->
+            LazzyList(SynchList, Modifier.maxWidth()) {it, index ->
 
                 LazzyRow {
                     Text(text = it.word)
