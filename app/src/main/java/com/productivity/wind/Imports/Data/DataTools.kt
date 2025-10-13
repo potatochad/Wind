@@ -186,8 +186,6 @@ object SettingsSaved {
             val bar = bar as ClassVar<Settings, Any?>
             val gotValue = Data.getAny(bar) ?: return@forEach
 
-            log("gotValue: $gotValue, bar type: ${bar.returnType}")
-
             try {
                 when (gotValue) {
                     is SnapshotStateList<*> -> {

@@ -78,7 +78,7 @@ fun Menu() {
 
 object Item {
     @Composable
-    fun AppTaskUI(app: DataApps){
+    fun AppTaskUI(app: AppTsk){
             val icon = getAppIcon(app.pkg)
             val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
@@ -219,7 +219,7 @@ object Header {
                     }
                 } else {
                     Bar.apps.new(
-                        DataApps(
+                        AppTsk(
                             name = selectedApp.value,
                             DoneTime = Time.value.toIntOrNull() ?: 0,
                             Worth = Points.value.toIntOrNull() ?: 0,

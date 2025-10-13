@@ -44,22 +44,7 @@ import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.window.*
 import androidx.compose.foundation.text.selection.*
-import com.productivity.wind.Imports.Data.Bool
-import com.productivity.wind.Imports.Data.Content
-import com.productivity.wind.Imports.Data.Content_
-import com.productivity.wind.Imports.Data.Do
-import com.productivity.wind.Imports.Data.Do_
-import com.productivity.wind.Imports.Data.Mod
-import com.productivity.wind.Imports.Data.Str
-import com.productivity.wind.Imports.Data.hide
-import com.productivity.wind.Imports.Data.it
-import com.productivity.wind.Imports.Data.m_
-import com.productivity.wind.Imports.Data.no
-import com.productivity.wind.Imports.Data.r
-import com.productivity.wind.Imports.Data.r_m
-import com.productivity.wind.Imports.Data.set
-import com.productivity.wind.Imports.Data.show
-import com.productivity.wind.Imports.Data.yes
+import com.productivity.wind.Imports.Data.*
 
 
 fun Modifier.clickOrHold(
@@ -93,10 +78,9 @@ fun Modifier.scroll(
 }
 
 
-
-fun Mod.maxSize(): Mod = fillMaxSize()
-fun Mod.maxWidth(): Mod = fillMaxWidth()
-fun Mod.maxHeight(): Mod = fillMaxHeight()
+fun Modifier.maxS(): Mod= this.fillMaxSize()
+fun Modifier.maxW(): Mod= this.fillMaxWidth()
+fun Modifier.maxH(): Mod= this.fillMaxHeight()
 
 
 
@@ -108,7 +92,7 @@ fun LazyMove(
     content: Content,
 ) {
     Box(
-		Modifier.maxSize()
+		Modifier.maxS()
     ) {
         Box(Modifier
             .offset(x = x, y = y)
@@ -183,7 +167,7 @@ fun LazyWindow(
         ) {
             Box(
                 modifier = Modifier
-                    .maxSize()
+                    .maxS()
                     .clickOrHold() { set(show, no) },
                 contentAlignment = Alignment.Center
             ) {
@@ -402,37 +386,24 @@ fun LazyImage(
 }
 
 
-
-
 @Composable
 fun <T> LazzyList(
     data: List<T>,
     modifier: Mod = Modifier
-        .maxWidth()
         .height(200.dp),
-    lazyMode: Bool = false,
     content: @Composable (T, Int) -> Unit,
 ) {
-    val items = remember { mutableStateListOf<T>() }
+    var data2 by r_m(data)
 
-    LaunchedEffect(data) {
-        items.clear()
-        data.forEachIndexed { i, item ->
-            items.add(item)
-            delay(100L)
-        }
-    }
-
-    val columnModifier = if (lazyMode) modifier else modifier.verticalScroll(rememberScrollState())
-
-    Column(modifier = columnModifier) {
-        items.forEachIndexed { index, item ->
-            key(item.hashCode() + index) {
+    Column(modifier.scroll().maxW()) {
+        data2.forEachIndexed { index, item ->
+            key(item.hashCode()) {
                 content(item, index)
             }
         }
     }
 }
+
 
 
 
@@ -492,7 +463,7 @@ fun LazzyRow(
 ) {
     Row(
         modifier = modifier
-            .maxWidth()
+            .maxW()
             .padding(padding.dp),
         horizontalArrangement = if (center) Arrangement.Center else Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
@@ -529,7 +500,7 @@ fun LazyCard(
     corners: Int = 16,
     modifier: Mod = Mod
 	     .padding(horizontal = 8.dp, vertical = 10.dp)
-         .maxWidth(),
+         .maxW(),
     content: Content,
 ) {
     Card(
@@ -620,7 +591,7 @@ fun LazyMore(
     Column(modifier = modifier) {
         Row(
             modifier = Modifier
-                .maxWidth()
+                .maxW()
                 .clickable { expanded = !expanded }
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -652,7 +623,7 @@ fun LazyMore(
         ) {
             Column(
                 modifier = Modifier
-                    .maxWidth()
+                    .maxW()
                     .padding(start = 32.dp, top = 4.dp) // indent content nicely
             ) {
                 content()
@@ -685,7 +656,7 @@ fun LazyItem(
 ) {
 	Row(
         modifier = Modifier
-            .maxWidth()
+            .maxW()
             .padding(
                 top = topPadding,
                 bottom = bottomPadding,
@@ -696,7 +667,7 @@ fun LazyItem(
     ) {
         Card(
 			modifier = modifier
-                .maxWidth()
+                .maxW()
                 .clickable(enabled = onClick != null) { onClick?.invoke() },
 			shape = RoundedCornerShape(12.dp),
 			colors = CardDefaults.cardColors(containerColor = Color(0xFF121212)),
@@ -704,7 +675,7 @@ fun LazyItem(
 		) {
             Row(
 				modifier = Modifier
-                    .maxWidth()
+                    .maxW()
                     .padding(5.dp),
 				verticalAlignment = Alignment.CenterVertically
 			) {
@@ -773,7 +744,7 @@ fun LazyHeader(
 
         Row(
             modifier = modifier
-                .maxWidth()
+                .maxW()
                 .background(Color.Black)
                 .padding(vertical = 12.dp)
                 .height(height.dp),
@@ -815,7 +786,7 @@ fun LazyHeader(
                 contentAlignment = Alignment.CenterStart
             ) {
                 Box(Modifier
-                    .maxWidth()
+                    .maxW()
                     .pointerInput(Unit) {
                         if (DisableHeader) {
                             awaitPointerEventScope {
@@ -851,7 +822,7 @@ fun LazyScreen(
     showBack: Bool = yes,
     modifier: Mod = Modifier
         .background(Color.Black)
-        .maxSize(),
+        .maxS(),
 
     showDivider: Bool = yes,
     DividerPadding: Bool = yes,
@@ -1003,7 +974,7 @@ fun LazyMenu(
     ) {
         Box(
             modifier = Modifier
-                .maxSize()
+                .maxS()
                 .background(Color.Black.copy(alpha = backgroundAlpha))
                 .clickable(
                     indication = null,
@@ -1014,11 +985,10 @@ fun LazyMenu(
                 }
         )
 
-        Box(
-            modifier = Modifier
+        Box( Modifier
                 .offset { IntOffset(offsetX.roundToPx(), 0) }
                 .width(App.screenWidth / 2 + 30.dp)
-                .maxHeight()
+                .maxH()
                 .background(Color.DarkGray)
         ) {
             content()

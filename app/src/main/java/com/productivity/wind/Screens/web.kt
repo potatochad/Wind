@@ -68,12 +68,13 @@ fun Web(){
         )
     }
 }
-
-
 @Composable
 fun BlockKeyword() {
-    var BadWord = r_m("Youtube")
-    var SynchList by r_m(Bar.badWords)
+    var BadWord = r_m("1")
+
+    LaunchedEffect(Bar.badWords) {
+        BadWord.it = "${Bar.badWords.size}"
+    }
 
     LazyScreen(
         title = {
@@ -86,7 +87,9 @@ fun BlockKeyword() {
             }
             UI.End {
                 Icon.Add {
-                    Bar.badWords.add { word = BadWord.it }
+                    Bar.badWords.add {
+                        word = BadWord.it
+                    }
                 }
             }
         },
@@ -97,6 +100,7 @@ fun BlockKeyword() {
                 UI.Cinput(BadWord, isInt = true)
             }
         }
+
         LazyRuleCard("Do") {
             LazzyRow {
                 Text("Go back")
@@ -104,13 +108,17 @@ fun BlockKeyword() {
         }
 
         LazyCard {
-            LazzyList(SynchList, Modifier.maxWidth()) {it, index ->
+            LazzyList(Bar.badWords, Modifier.maxWidth()) { it, index ->
+
 
                 LazzyRow {
                     Text(text = it.word)
 
                     Icon.Edit {
-                        Bar.badWords.edit(it) { it.word }
+                        Bar.badWords.edit(it) {
+                            word = BadWord.it
+                        }
+
                     }
 
                     Icon.Delete {
@@ -121,9 +129,6 @@ fun BlockKeyword() {
         }
     }
 }
-
-
-
 
 
 

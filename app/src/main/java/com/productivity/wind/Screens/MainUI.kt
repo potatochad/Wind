@@ -44,7 +44,6 @@ fun Main() {
         LazzyList(
             Bar.apps.filter { it.Worth > 0 && it.done == false },
             modifier = Modifier.fillMaxWidth(),
-            lazyMode = true,
         ) { app, index ->
             Item.AppTaskUI(app)
         }

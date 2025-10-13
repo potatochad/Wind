@@ -59,6 +59,7 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.drawscope.*
 import com.productivity.wind.Imports.Data.*
 import java.time.*
+import kotlin.concurrent.schedule
 
 
 //region log
@@ -150,13 +151,9 @@ fun PreloadBox(
         ) { what() }
     }
 }
-@Composable
-fun each(time: Long = 10_000L, action: Do) {
-    LaunchedEffect(Unit) {
-        while (true) {
-            action()
-            delay(time)
-        }
+fun each(s: Long = 1000L, Do: Do) {
+    Timer().schedule(0, s) {
+        Do()
     }
 }
 
@@ -178,7 +175,7 @@ fun refreshApps() {
 
             if (ListsApp == null) {
                 Bar.apps.new(
-				    App(
+				    AppTsk(
 						name = getAppName(info),
 						pkg = pkgApp,
 						NowTime = getTodayAppUsage(pkgApp),
@@ -209,7 +206,7 @@ fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
     return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
 }
 
-fun getListsApp(pkg: Str): DataApps? {
+fun getListsApp(pkg: Str): AppTsk? {
     val map = Bar.apps.associateBy { it.pkg }
     return map[pkg]
 }
