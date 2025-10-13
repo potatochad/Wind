@@ -487,13 +487,15 @@ fun AppSelectPopup(show: m_<Bool>) {
 
                 // Only pass the filtered items to the LazyList
                 LazzyList(appList) { app, index ->
-                    val icon = getAppIcon(getAppPackage(app))
+                    val icon by produceState<Bitmap?>(initialValue = null, app) {
+                        value = getAppIcon(getAppPackage(app))
+                    }
                     LazzyRow(Modifier.clickOrHold{
                         selectedApp.value = getAppName(app)
                         show.value = false
                     }) {
                         UI.move(10)
-                        LazyImage(icon)
+                        icon?.let { LazyImage(it) }
                         UI.move(10)
                         
                         UI.Ctext(getAppName(app)) {
