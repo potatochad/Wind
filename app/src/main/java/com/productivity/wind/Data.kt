@@ -100,9 +100,9 @@ class Settings {
 
 	// LISTS DONT BACKUP OR RESTORE!!!!!
     
-    var copyTasks = mutableStateListOf<CopyTasks>()
-	var apps = mutableStateListOf<DataApps>()
-	var badWords = mutableStateListOf<BadKeywords>()
+    var copyTasks = mutableStateListOf<CopyTask>()
+	var apps = mutableStateListOf<App>()
+	var badWords = mutableStateListOf<WebWord>()
 }
 //mutableListOf()
 
@@ -135,7 +135,7 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 
 
 
-data class CopyTasks(
+data class CopyTask(
     val id: Str = Id(),
     var title: Str = "",
     var onMax: Bool = false,
@@ -144,7 +144,7 @@ data class CopyTasks(
     var Letter_Worth: Int = 1,
 )
 
-data class DataApps(
+data class App(
     val id: Str = Id(),
     var name: Str = "",
     var done: Bool = false,
@@ -154,7 +154,7 @@ data class DataApps(
     var Worth: Int = 0,
 )
 
-data class BadKeywords(
+data class WebWord(
     val id: Str = Id(),
     var word: Str = "",
 )
