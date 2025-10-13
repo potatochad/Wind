@@ -87,6 +87,7 @@ fun BlockKeyword() {
                 Icon.Add {
                     Bar.badWords.add { word = BadWord.it }
                 }
+                Bar.badWords = Bar.badWords.toMutableStateList()
             }
         },
     ) {
