@@ -73,7 +73,7 @@ fun Web(){
 @Composable
 fun BlockKeyword() {
     var BadWord = r_m("Youtube")
-    var SynchList = r_m(Bar.badWords)
+    var SynchList by r_m(Bar.badWords)
 
     LazyScreen(
         title = {
