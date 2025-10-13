@@ -108,7 +108,7 @@ fun BlockKeyword() {
         }
 
         LazyCard {
-            LazzyList(Bar.badWords, Modifier.maxWidth()) { it, index ->
+            LazzyList(Bar.badWords, Modifier.maxW()) { it, index ->
 
 
                 LazzyRow {
