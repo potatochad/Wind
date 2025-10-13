@@ -466,6 +466,18 @@ fun AppSelectPopup(show: m_<Bool>) {
             title = "Select App",
             message = "",
             content = {
+                
+
+            }
+        )
+
+        LazyPopup(
+            show = show,
+            showCancel = no,
+            showConfirm = no,
+            title = "Select App",
+            message = "",
+            content = {
                 Loaded = yes
                 Vlog("Loaded: $Loaded")
 
