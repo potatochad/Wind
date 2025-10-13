@@ -457,7 +457,7 @@ fun AppSelectPopup(show: m_<Bool>) {
         val myPackage = LocalContext.current.packageName // your app's package
         var appList by r_m(getApps().filter { getAppPackage(it) != myPackage }) // filter self out
 
-        var Loading by r_m(yes)
+        var Loading = r_m(yes)
 
         LazyPopup(
             show = Loading,
@@ -479,8 +479,8 @@ fun AppSelectPopup(show: m_<Bool>) {
             title = "Select App",
             message = "",
             content = {
-                Loading = no
-                Vlog("Loaded: $Loading")
+                Loading.it = no
+                Vlog("Loaded: ${Loading.it}")
 
                 // Only pass the filtered items to the LazyList
                 LazzyList(appList) { app, index ->
