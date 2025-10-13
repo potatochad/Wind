@@ -178,7 +178,7 @@ fun refreshApps() {
 
             if (ListsApp == null) {
                 Bar.apps.new(
-				    DataApps(
+				    App(
 						name = getAppName(info),
 						pkg = pkgApp,
 						NowTime = getTodayAppUsage(pkgApp),
