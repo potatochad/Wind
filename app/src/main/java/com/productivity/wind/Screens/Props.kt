@@ -498,16 +498,16 @@ fun AppSelectPopup(show: m_<Bool>) {
                 Loading.it = no
                 Vlog("Loaded: ${Loading.it}")
 
-                runOffMain {//
-                    getAppIcon(getAppPackage(app))
-                } onResult@{ icon ->
-                    Vlog("Got icon: $icon")
-                }
-
 
                 // Only pass the filtered items to the LazyList
                 LazzyList(appList) { app, index ->
-                    val icon = getAppIcon(getAppPackage(app))
+                    var icon by r_m<ImageBitmap?>(null)
+
+                    runOffMain(
+                        block = { getAppIcon(getAppPackage(app)) },
+                        onResult = { result -> icon = result }
+                    ) 
+                    
                     LazzyRow(Modifier.clickOrHold{
                         selectedApp.value = getAppName(app)
                         show.value = false
