@@ -454,11 +454,10 @@ fun DebugPopup(show: m_<Bool>) {
 
 
 fun <T> runOffMain(
-    dispatcher: CoroutineDispatcher = Dispatchers.IO,
     block: suspend () -> T,
     onResult: (T) -> Unit = {}
 ) {
-    CoroutineScope(dispatcher).launch {
+    CoroutineScope(Dispatchers.IO).launch {
         val result = block()
         withContext(Dispatchers.Main) {
             onResult(result)
