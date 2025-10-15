@@ -453,6 +453,20 @@ fun DebugPopup(show: m_<Bool>) {
 
 
 
+fun <T> runOffMain(
+    dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    block: suspend () -> T,
+    onResult: (T) -> Unit = {}
+) {
+    CoroutineScope(dispatcher).launch {
+        val result = block()
+        withContext(Dispatchers.Main) {
+            onResult(result)
+        }
+    }
+}
+
+
 var selectedApp = m("")
 @Composable
 fun AppSelectPopup(show: m_<Bool>) {
@@ -484,6 +498,13 @@ fun AppSelectPopup(show: m_<Bool>) {
             content = {
                 Loading.it = no
                 Vlog("Loaded: ${Loading.it}")
+
+                runOffMain {
+                    getAppIcon(getAppPackage(app))
+                } onResult@{ icon ->
+                    Vlog("Got icon: $icon")
+                }
+
 
                 // Only pass the filtered items to the LazyList
                 LazzyList(appList) { app, index ->
