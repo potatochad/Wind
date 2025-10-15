@@ -499,7 +499,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                 Loading.it = no
                 Vlog("Loaded: ${Loading.it}")
 
-                runOffMain {
+                runOffMain {//
                     getAppIcon(getAppPackage(app))
                 } onResult@{ icon ->
                     Vlog("Got icon: $icon")
