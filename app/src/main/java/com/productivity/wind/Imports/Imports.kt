@@ -240,17 +240,15 @@ fun getAppName(info: ResolveInfo): Str {
 }
 
 
-@Composable
-fun getAppIcon(packageName: Str): Drawable? {
+fun getAppIcon(packageName: String): Drawable? {
     val pm = App.ctx.packageManager
-    return remember(packageName) {
-        try {
-            pm.getApplicationIcon(packageName)
-        } catch (_: Exception) {
-            null
-        }
+    return try {
+        pm.getApplicationIcon(packageName)
+    } catch (e: Exception) {
+        null
     }
 }
+
 
 
 
