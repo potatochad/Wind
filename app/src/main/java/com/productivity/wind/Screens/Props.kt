@@ -506,7 +506,7 @@ fun AppSelectPopup(show: m_<Bool>) {
 
 
                 if (loading) {
-                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    UI.Center {
                         CircularProgressIndicator()
                     }
                 } else {
