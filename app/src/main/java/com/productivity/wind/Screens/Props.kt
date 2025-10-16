@@ -501,7 +501,7 @@ fun AppSelectPopup(show: m_<Bool>) {
 
                 // Only pass the filtered items to the LazyList
                 LazzyList(appList) { app, index ->
-                    var icon by r_m<ImageBitmap?>(null)
+                    var icon by r { mutableStateOf<ImageBitmap?>(null) }
 
                     runOffMain(
                         block = { getAppIcon(getAppPackage(app)) },
