@@ -506,9 +506,7 @@ fun AppSelectPopup(show: m_<Bool>) {
 
 
                 if (loading) {
-                    UI.Center {
-                        CircularProgressIndicator()
-                    }
+                    UI.LoadingIcon()
                 } else {
                 LazzyList(appList) { app, index ->
                     val icon = icons[app]
