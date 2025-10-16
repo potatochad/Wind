@@ -425,6 +425,18 @@ object UI {
 	}
 
 
+	@Composable
+	fun Center(content: Content) {
+		Box(
+			modifier = Modifier.maxS(),
+			contentAlignment = Alignment.Center
+		) {
+			content()
+		}
+	}
+
+
+
     @Composable
 	fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 		// Convert s, w, h to Dp
