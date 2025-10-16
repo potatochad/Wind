@@ -476,19 +476,7 @@ fun AppSelectPopup(show: m_<Bool>) {
         var appList by r_m(getApps().filter { getAppPackage(it) != myPackage }) // filter self out
 
         var Loading = r_m(yes)
-
-        LazyPopup(
-            show = Loading,
-            showCancel = no,
-            showConfirm = no,
-            title = "Select App",
-            message = "",
-            content = {
-                Box(modifier=Modifier.maxS(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
-                }
-            }
-        )
+        
 
         LazyPopup(
             show = show,
@@ -500,15 +488,30 @@ fun AppSelectPopup(show: m_<Bool>) {
                 Loading.it = no
                 Vlog("Loaded: ${Loading.it}")
 
+                val icons = r { mutableStateMapOf<String, Drawable?>() }
+                var loading by r { m(yes) }
 
-                // Only pass the filtered items to the LazyList
+                LaunchedEffect(appList) {
+                    appList.forEach { app ->
+                        runOffMain(
+                            block = { getAppIcon(getAppPackage(app)) },
+                            onResult = { result ->
+                                icons[app] = result
+                                if (icons.size == appList.size) loading = no
+                            }
+                        )
+                    }
+                }
+
+
+
+                if (loading) {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
+                } else {
                 LazzyList(appList) { app, index ->
-                    var icon by r { mutableStateOf<Drawable?>(null) }
-
-                    runOffMain(
-                        block = { getAppIcon(getAppPackage(app)) },
-                        onResult = { result -> icon = result }
-                    ) 
+                    val icon = icons[app]
                     
                     LazzyRow(Modifier.clickOrHold{
                         selectedApp.value = getAppName(app)
@@ -524,7 +527,22 @@ fun AppSelectPopup(show: m_<Bool>) {
                         }
                     }
                 }
+                }
             }
         )
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
