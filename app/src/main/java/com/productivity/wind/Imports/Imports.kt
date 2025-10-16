@@ -436,6 +436,15 @@ object UI {
 	}
 
 
+	@Composable
+	fun LoadingIcon() {
+		Center{
+			CircularProgressIndicator()
+		}
+	}
+
+
+
 
     @Composable
 	fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
