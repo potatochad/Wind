@@ -83,7 +83,11 @@ fun BlockKeyword() {
                     .scroll(vertical = no)
                     .width(App.screenWidth / 2),
             ) {
-                Text("$WebUrl")
+                Text(
+                    text = "$WebUrl",
+                    maxLines = 1,
+                    // overflow = TextOverflow.Ellipsis
+                )
             }
             UI.End {
                 Icon.Add {
