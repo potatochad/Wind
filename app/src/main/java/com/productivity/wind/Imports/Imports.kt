@@ -164,7 +164,8 @@ fun each(s: Long = 1000L, Do: Do) {
 
 fun refreshApps() {
     try {
-        val realApps: List<ResolveInfo> = getApps()
+		var realApps by m(getApps().filter { getAppPackage(it) != myPackage })
+
 
         if (!UI.isUsageP_Enabled()) return
 
