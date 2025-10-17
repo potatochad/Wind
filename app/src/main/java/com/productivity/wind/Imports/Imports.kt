@@ -129,7 +129,7 @@ fun bottomSystemHeight(): Dp {
 * BY MAKING SURE NOT EVERYTHING LOADS AT THE SAME TIME*/
 @Composable
 fun NoLagCompose(content: Content) {
-    LaunchedEffect(Unit) {
+    RunOnce(Unit) {
         while (true) {
             delay(50) // space out work; LET UI LOAD
             yield()
@@ -280,15 +280,6 @@ fun RunOnce(key: Any? = Unit, block: suspend () -> Unit) {
     }
 }
 
-@Composable
-fun eachSecond(onTick: Do) {
-    RunOnce(Unit) {
-        while (true) {
-            onTick()
-            delay(1000) // wait 1 second
-        }
-    }
-}
 
 
 
@@ -339,21 +330,10 @@ object UI {
 	}
 
 
-    @Composable
-	fun End2(content: Content) {
-		Row(
-			Modifier.fillMaxWidth(),
-			horizontalArrangement = Arrangement.End,
-			verticalAlignment = Alignment.CenterVertically
-		) {
-			content()
-			move(w = 10)
-		}
-	}
 	@Composable
-	fun End(content: @Composable () -> Unit) {
+	fun End(content: Content) {
 		Box(
-			modifier = Modifier.fillMaxWidth(),
+			Modifier.maxW(),
 			contentAlignment = Alignment.CenterEnd
 		) {
 			content()
@@ -446,7 +426,7 @@ object UI {
 	@Composable
 	fun Center(content: Content) {
 		Box(
-			modifier = Modifier.maxS(),
+			Modifier.maxS(),
 			contentAlignment = Alignment.Center
 		) {
 			content()
@@ -512,7 +492,7 @@ object UI {
         selectedIndex: m_<Int>, // shared state of which is selected
 	) {
 		Box(
-			modifier = Modifier.size(15.dp) // make box exactly the size you want
+			Modifier.size(15.dp) // make box exactly the size you want
 		) {
 			RadioButton(
 				selected = selectedIndex.value == index,
@@ -691,7 +671,7 @@ object UI {
 
     @Composable
     fun Cinput(
-        what: m_<String>,
+        what: m_<Str>,
         textSize: TextUnit = 14.sp,
         height: Dp = 36.dp,
         MaxLetters: Int? = 5,
@@ -768,7 +748,7 @@ object UI {
         horizontal: Dp = 0.dp,
         height: Dp = 40.dp,
         BackgroundColor: Color = Color.Gray,
-        where: Alignment = Alignment.CenterStart,
+        Where: Alignment = Alignment.CenterStart,
         content: Content,
     ) {
         Column {
@@ -779,7 +759,7 @@ object UI {
                     .wrapContentWidth()
                     .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
                     .background(BackgroundColor),
-                contentAlignment = where,
+                contentAlignment = Where,
             ) {
                 content()
             }
@@ -796,10 +776,10 @@ object UI {
         val context = LocalContext.current
         var copied by r_m(false)
 
-        LaunchedEffect(copied) {
+        RunOnce(copied) {
             if (copied) {
                 delay(1000) // Show checkmark for 1 second
-                copied = false
+                copied = no
             }
         }
 
@@ -888,13 +868,13 @@ object UI {
         color: Color = Color.Gray,
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
+            Modifier
+                .maxS()
                 .height(height),
         ) {
 
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.maxS(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Spacer(modifier = Modifier.height(topSpacing))
@@ -904,7 +884,7 @@ object UI {
                     tint = color,
                     modifier = Modifier.size(iconSize),
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(Modifier.height(8.dp))
                 Text(text, fontSize = textSize, color = color)
             }
         }
