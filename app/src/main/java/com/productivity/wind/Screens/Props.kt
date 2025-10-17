@@ -493,7 +493,7 @@ fun AppSelectPopup(show: m_<Bool>) {
 
                 LaunchedEffect(appList) {
                     appList.forEach { app ->
-                        var AppPkg = app.pkg
+                        var AppPkg = app.name
                         runOffMain(
                             block = { getAppIcon(AppPkg) },
                             onResult = { result ->
