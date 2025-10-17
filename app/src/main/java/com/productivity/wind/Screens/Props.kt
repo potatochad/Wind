@@ -496,7 +496,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                             block = { getAppIcon(AppPkg) },
                             onResult = { result ->
                                 icons[AppPkg] = result
-                                if (icons.size == appList.size) loading = no
+                                if (icons.size == Bar.apps.size) loading = no
                             }
                         )
                     }
@@ -519,7 +519,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                         LazyImage(icon)
                         UI.move(10)
                         
-                        UI.Ctext(getAppName(app)) {
+                        UI.Ctext(app.name) {
                             selectedApp.it = app.name
                             show.it = no
                         }
