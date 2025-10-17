@@ -493,10 +493,11 @@ fun AppSelectPopup(show: m_<Bool>) {
 
                 LaunchedEffect(appList) {
                     appList.forEach { app ->
+                        var AppPkg = app.pkg
                         runOffMain(
-                            block = { getAppIcon(getAppPackage(app)) },
+                            block = { getAppIcon(AppPkg) },
                             onResult = { result ->
-                                icons[app.pkg] = result
+                                icons[AppPkg] = result
                                 if (icons.size == appList.size) loading = no
                             }
                         )
@@ -509,7 +510,8 @@ fun AppSelectPopup(show: m_<Bool>) {
                     UI.LoadingIcon()
                 } else {
                 LazzyList(appList) { app, index ->
-                    val icon = icons[app.pkg]
+                    var AppPkg = app.pkg
+                    val icon = icons[AppPkg]
                     
                     LazzyRow(Modifier.clickOrHold{
                         selectedApp.value = getAppName(app)
