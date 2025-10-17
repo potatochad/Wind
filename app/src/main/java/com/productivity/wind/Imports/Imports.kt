@@ -802,7 +802,7 @@ object UI {
 //region CLICKALE TEXTTTTT■■■■■■■■■■■
 
     @Composable
-	fun Ctext(
+	fun Ctext3(
         text: Str,
         onClick: Do,
 	) {
@@ -822,6 +822,31 @@ object UI {
 			)
 		)
 	}
+	@Composable
+fun Ctext(
+    text: String,
+    onClick: () -> Unit,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Text(
+        text = text,
+        modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))        // smooth corners
+            .clickable(
+                interactionSource = interactionSource,
+                indication = LocalIndication.current,
+                onClick = onClick
+            )
+            .padding(horizontal = 16.dp, vertical = 8.dp), // bigger clickable area
+        style = TextStyle(
+            color = Color(0xFFFFD700),            // gold
+            fontWeight = FontWeight.Bold,          // bold
+            textDecoration = TextDecoration.None  // no underline
+        )
+    )
+}
+
 
 
 
