@@ -472,7 +472,6 @@ var selectedApp = m("")
 @Composable
 fun AppSelectPopup(show: m_<Bool>) {
     if (show.value) {
-        val myPackage = LocalContext.current.packageName // your app's package
         
         var Loading = r_m(yes)
         
