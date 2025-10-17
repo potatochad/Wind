@@ -261,9 +261,28 @@ fun getAppIcon(packageName: String): Drawable? {
 
 
 
+
+fun <T> runOffMain(
+    Get: suspend () -> T,
+    onResult: (T) -> Unit = {}
+) {
+    CoroutineScope(Dispatchers.IO).launch {
+        val result = Get()
+        withContext(Dispatchers.Main) {
+            onResult(result)
+        }
+    }
+}
+@Composable
+fun RunOnce(key: Any? = Unit, block: suspend () -> Unit) {
+    LaunchedEffect(key) {
+        block()
+    }
+}
+
 @Composable
 fun eachSecond(onTick: Do) {
-    LaunchedEffect(Unit) {
+    RunOnce(Unit) {
         while (true) {
             onTick()
             delay(1000) // wait 1 second
