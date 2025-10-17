@@ -164,6 +164,7 @@ fun each(s: Long = 1000L, Do: Do) {
 
 fun refreshApps() {
     try {
+		val myPackage = App.ctx.packageName
 		var realApps by m(getApps().filter { getAppPackage(it) != myPackage })
 
 
