@@ -496,7 +496,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                         runOffMain(
                             block = { getAppIcon(getAppPackage(app)) },
                             onResult = { result ->
-                                icons[app] = result
+                                icons[app.pkg] = result
                                 if (icons.size == appList.size) loading = no
                             }
                         )
@@ -509,7 +509,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                     UI.LoadingIcon()
                 } else {
                 LazzyList(appList) { app, index ->
-                    val icon = icons[app]
+                    val icon = icons[app.pkg]
                     
                     LazzyRow(Modifier.clickOrHold{
                         selectedApp.value = getAppName(app)
