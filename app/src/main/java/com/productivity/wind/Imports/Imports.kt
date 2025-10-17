@@ -802,20 +802,14 @@ object UI {
 //region CLICKALE TEXTTTTT
 	@Composable
 	fun Ctext(
-		text: String,
-		onClick: () -> Unit,
+		text: Str,
+		onClick: Do,
 	) {
-		val interactionSource = remember { MutableInteractionSource() }
-
 		Text(
 			text = text,
 			modifier = Modifier
 				.clip(RoundedCornerShape(8.dp))
-				.clickable(
-					interactionSource = interactionSource,
-					indication = LocalIndication.current,
-					onClick = onClick
-				)
+				.clickOrHold(no){ onClick() }
 				.padding(horizontal = 14.dp, vertical = 6.dp),
 			style = TextStyle(
 				color = Color(0xFFFFD700),
