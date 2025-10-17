@@ -62,7 +62,6 @@ import java.time.*
 import kotlin.concurrent.schedule
 
 
-//region log
 fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
     var msg = message.take(int)
     if (msg.length >= int) {msg += " ..."}
