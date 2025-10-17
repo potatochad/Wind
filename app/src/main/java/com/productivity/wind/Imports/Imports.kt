@@ -809,7 +809,7 @@ object UI {
 			modifier = Modifier
 				.clip(RoundedCornerShape(8.dp))
 				.clickOrHold(no){ onClick() }
-				.padding(horizontal = 14.dp, vertical = 6.dp),
+				.padding(horizontal = 16.dp, vertical = 8.dp),
 			style = TextStyle(
 				color = Color(0xFFFFD700),
 				fontWeight = FontWeight.Bold,
