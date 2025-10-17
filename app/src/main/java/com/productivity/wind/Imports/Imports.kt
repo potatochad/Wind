@@ -262,7 +262,7 @@ fun getAppIcon(packageName: String): Drawable? {
 
 
 
-fun <T> runOffMain(
+fun runOffMain(
     Do: suspend () -> Unit
 ) {
     CoroutineScope(Dispatchers.IO).launch {
