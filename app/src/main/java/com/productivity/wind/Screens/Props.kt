@@ -460,9 +460,6 @@ var selectedApp = m("")
 @Composable
 fun AppSelectPopup(show: m_<Bool>) {
     if (show.it) {
-        
-        var Loading = r_m(yes)
-        
 
         LazyPopup(
             show = show,
@@ -471,9 +468,7 @@ fun AppSelectPopup(show: m_<Bool>) {
             title = "Select App",
             message = "",
             content = {
-                Loading.it = no
-                Vlog("Loaded: ${Loading.it}")
-
+                
                 val icons = r { mutableStateMapOf<String, Drawable?>() }
                 var loading by r { m(yes) }
 
@@ -481,9 +476,15 @@ fun AppSelectPopup(show: m_<Bool>) {
                     Bar.apps.forEach { app ->
                         runOffMain { 
                             icons[app.pkg] = getAppIcon(app.pkg)
-                            if (icons.size >= (Bar.apps.size)/2) { loading = no }
+                            if (icons.size >= (Bar.apps.size)/2) { 
+                                loading = no 
+                                Vlog("loading = no")
+                            }
                         }
                     }
+                }
+                LazzyRow{
+                    Text("icons size: $icons")
                 }
 
                 LazzyList(Bar.apps, loading) { app, index ->
