@@ -388,20 +388,27 @@ fun LazyImage(
 
 @Composable
 fun <T> LazzyList(
-    data: List<T>,
-    modifier: Mod = Modifier
-        .height(200.dp),
+    Data: List<T>,
+	loading: Bool,
+    mod: Mod = Modifier
+        .height(200.dp)
+		.maxW(),
     content: @Composable (T, Int) -> Unit,
 ) {
-    var data2 by r_m(data)
-
-    Column(modifier.scroll().maxW()) {
-        data2.forEachIndexed { index, item ->
-            key(item.hashCode()) {
-                content(item, index)
-            }
-        }
-    }
+	if (loading) {
+		Column(modifier) {
+			UI.LoadingIcon()
+		}
+	}
+	else {
+		Column(modifier.scroll()) {
+			Data.forEachIndexed { index, item ->
+				key(item.hashCode()) {
+					content(item, index)
+				}
+			}
+		}
+	}
 }
 
 
