@@ -520,7 +520,6 @@ fun AppSelectPopup(show: m_<Bool>) {
                         }
                     }
                 }
-                }
             }
         )
     }
