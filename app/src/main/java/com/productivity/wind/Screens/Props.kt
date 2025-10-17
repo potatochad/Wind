@@ -505,7 +505,9 @@ fun AppSelectPopup(show: m_<Bool>) {
 
 
                 if (loading) {
-                    UI.LoadingIcon()
+                    Box {
+                        UI.LoadingIcon()
+                    }
                 } else {
                 LazzyList(Bar.apps) { app, index ->
                     var AppPkg = app.name
