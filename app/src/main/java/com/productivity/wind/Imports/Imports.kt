@@ -799,53 +799,31 @@ object UI {
 // -------- Core ----------
 
 
-//region CLICKALE TEXTTTTT■■■■■■■■■■■
-
-    @Composable
-	fun Ctext3(
-        text: Str,
-        onClick: Do,
+//region CLICKALE TEXTTTTT
+	@Composable
+	fun Ctext(
+		text: String,
+		onClick: () -> Unit,
 	) {
-		val interactionSource = r { MutableInteractionSource() }
+		val interactionSource = remember { MutableInteractionSource() }
 
 		Text(
 			text = text,
-			modifier = Modifier.clickable(
-				interactionSource = interactionSource,
-				indication = LocalIndication.current, 
-				onClick = onClick
-			),
+			modifier = Modifier
+				.clip(RoundedCornerShape(8.dp))
+				.clickable(
+					interactionSource = interactionSource,
+					indication = LocalIndication.current,
+					onClick = onClick
+				)
+				.padding(horizontal = 14.dp, vertical = 6.dp),
 			style = TextStyle(
-				color = Color(0xFFFFD700),           // gold
-				fontWeight = FontWeight.Bold,        // bold
-				textDecoration = TextDecoration.None // no underline
+				color = Color(0xFFFFD700),
+				fontWeight = FontWeight.Bold,
+				textDecoration = TextDecoration.None
 			)
 		)
 	}
-	@Composable
-fun Ctext(
-    text: String,
-    onClick: () -> Unit,
-) {
-    val interactionSource = remember { MutableInteractionSource() }
-
-    Text(
-        text = text,
-        modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))        // smooth corners
-            .clickable(
-                interactionSource = interactionSource,
-                indication = LocalIndication.current,
-                onClick = onClick
-            )
-            .padding(horizontal = 16.dp, vertical = 8.dp), // bigger clickable area
-        style = TextStyle(
-            color = Color(0xFFFFD700),            // gold
-            fontWeight = FontWeight.Bold,          // bold
-            textDecoration = TextDecoration.None  // no underline
-        )
-    )
-}
 
 
 
