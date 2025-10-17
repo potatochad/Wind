@@ -471,7 +471,7 @@ fun <T> runOffMain(
 var selectedApp = m("")
 @Composable
 fun AppSelectPopup(show: m_<Bool>) {
-    if (show.value) {
+    if (show.it) {
         
         var Loading = r_m(yes)
         
@@ -489,8 +489,8 @@ fun AppSelectPopup(show: m_<Bool>) {
                 val icons = r { mutableStateMapOf<String, Drawable?>() }
                 var loading by r { m(yes) }
 
-                LaunchedEffect(appList) {
-                    appList.forEach { app ->
+                LaunchedEffect(Bar.apps) {
+                    Bar.apps.forEach { app ->
                         var AppPkg = app.name
                         runOffMain(
                             block = { getAppIcon(AppPkg) },
@@ -507,12 +507,12 @@ fun AppSelectPopup(show: m_<Bool>) {
                 if (loading) {
                     UI.LoadingIcon()
                 } else {
-                LazzyList(appList) { app, index ->
+                LazzyList(Bar.apps) { app, index ->
                     var AppPkg = app.name
                     val icon = icons[AppPkg]
                     
                     LazzyRow(Modifier.clickOrHold{
-                        selectedApp.value = getAppName(app)
+                        selectedApp.it = app.name
                         show.value = false
                     }) {
                         UI.move(10)
@@ -520,8 +520,8 @@ fun AppSelectPopup(show: m_<Bool>) {
                         UI.move(10)
                         
                         UI.Ctext(getAppName(app)) {
-                            selectedApp.value = getAppName(app)
-                            show.value = false
+                            selectedApp.it = app.name
+                            show.it = no
                         }
                     }
                 }
