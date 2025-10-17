@@ -390,7 +390,7 @@ fun LazyImage(
 fun <T> LazzyList(
     Data: List<T>,
 	loading: Bool,
-    mod: Mod = Modifier
+    modifier: Mod = Modifier
         .height(200.dp)
 		.maxW(),
     content: @Composable (T, Int) -> Unit,
