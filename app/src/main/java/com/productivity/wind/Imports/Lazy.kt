@@ -872,7 +872,7 @@ fun LazyScreen(
 @Composable
 fun LazyPopup(
     show: m_<Bool>,
-    onDismiss: Do? = { show.value = no },
+    onDismiss: Do? = { show.it = no },
     title: Str = "Info",
     message: Str,
     content: Content? = null,
@@ -883,14 +883,9 @@ fun LazyPopup(
 ) {
     if (!show.it) return
 
-	//scope.launch { 
-	//	delay(100L)
-	//}//Wait 100L before closing
-	
-
     AlertDialog(
         onDismissRequest = {
-            onDismiss?.invoke()
+				onDismiss?.invoke()
         },
         title = { Text(title) },
         text = {
@@ -922,7 +917,7 @@ fun LazyPopup(
     )
 }
 fun LazyDelay(
-    delayMillis: Long = 100L,
+    delayMillis: Long = 120L,
     Action: Do,
 ) {
     CoroutineScope(Dispatchers.Main).launch {
