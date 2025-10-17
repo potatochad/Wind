@@ -479,9 +479,8 @@ fun AppSelectPopup(show: m_<Bool>) {
 
                 RunOnce(Bar.apps) {
                     Bar.apps.forEach { app ->
-                        var AppPkg = app.name
                         runOffMain(
-                            block = {  },
+                            block = { getAppIcon(app.pkg) },
                             onResult = { result ->
                                 icons[AppPkg] = result
                                 if (icons.size >= (Bar.apps.size)/2) loading = no
@@ -491,8 +490,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                 }
 
                 LazzyList(Bar.apps, loading) { app, index ->
-                    var AppPkg = app.name
-                    val icon = icons[AppPkg]
+                    val icon = icons[app.pkg]
                     
                     LazzyRow(Modifier.clickOrHold{
                         selectedApp.it = app.name
