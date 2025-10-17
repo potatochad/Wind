@@ -455,31 +455,6 @@ fun DebugPopup(show: m_<Bool>) {
 
 
 
-fun <T> runOffMain(
-    Get: suspend () -> T,
-    onResult: (T) -> Unit = {}
-) {
-    CoroutineScope(Dispatchers.IO).launch {
-        val result = Get()
-        withContext(Dispatchers.Main) {
-            onResult(result)
-        }
-    }
-}
-@Composable
-fun PreloadData(Get: suspend () -> T, list: list? = null, onResult: (T) -> Unit = {}) {
-    LaunchedEffect(Unit) {
-        if (list == null) {
-            list?.forEach { app ->
-                runOffMain(Get, onResult)
-            }
-        } else {
-            runOffMain(Get, onResult)
-        }
-    }
-    
-}
-
 
 var selectedApp = m("")
 @Composable
@@ -502,11 +477,11 @@ fun AppSelectPopup(show: m_<Bool>) {
                 val icons = r { mutableStateMapOf<String, Drawable?>() }
                 var loading by r { m(yes) }
 
-                LaunchedEffect(Bar.apps) {
+                RunOnce(Bar.apps) {
                     Bar.apps.forEach { app ->
                         var AppPkg = app.name
                         runOffMain(
-                            block = { getAppIcon(AppPkg) },
+                            block = {  },
                             onResult = { result ->
                                 icons[AppPkg] = result
                                 if (icons.size >= (Bar.apps.size)/2) loading = no
