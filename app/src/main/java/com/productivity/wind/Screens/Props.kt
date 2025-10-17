@@ -456,15 +456,28 @@ fun DebugPopup(show: m_<Bool>) {
 
 
 fun <T> runOffMain(
-    block: suspend () -> T,
+    Get: suspend () -> T,
     onResult: (T) -> Unit = {}
 ) {
     CoroutineScope(Dispatchers.IO).launch {
-        val result = block()
+        val result = Get()
         withContext(Dispatchers.Main) {
             onResult(result)
         }
     }
+}
+@Composable
+fun PreloadData(Get: suspend () -> T, list: list? = null, onResult: (T) -> Unit = {}) {
+    LaunchedEffect(Unit) {
+        if (list == null) {
+            list?.forEach { app ->
+                runOffMain(Get, onResult)
+            }
+        } else {
+            runOffMain(Get, onResult)
+        }
+    }
+    
 }
 
 
@@ -496,7 +509,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                             block = { getAppIcon(AppPkg) },
                             onResult = { result ->
                                 icons[AppPkg] = result
-                                if (icons.size == Bar.apps.size) loading = no
+                                if (icons.size >= (Bar.apps.size)/2) loading = no
                             }
                         )
                     }
