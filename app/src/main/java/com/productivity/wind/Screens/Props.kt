@@ -479,10 +479,8 @@ fun AppSelectPopup(show: m_<Bool>) {
 
                 RunOnce(Bar.apps) {
                     Bar.apps.forEach { app ->
-                        runOffMain(
-                            block = { getAppIcon(app.pkg) },
-                            onResult = { result ->
-                                icons[AppPkg] = result
+                        runOffMain(getAppIcon(app.pkg)){ result ->
+                                icons[app.pkg] = result
                                 if (icons.size >= (Bar.apps.size)/2) loading = no
                             }
                         )
