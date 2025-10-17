@@ -510,7 +510,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                     UI.LoadingIcon()
                 } else {
                 LazzyList(appList) { app, index ->
-                    var AppPkg = app.pkg
+                    var AppPkg = app.name
                     val icon = icons[AppPkg]
                     
                     LazzyRow(Modifier.clickOrHold{
