@@ -152,7 +152,7 @@ fun LazyWindow(
     // Local state to control if Popup is alive
     var popupVisible by r_m(no)
 
-    LaunchedEffect(show.it) {
+    RunOnce(show.it) {
         if (show.it) {
             popupVisible = yes  // Show immediately
         } else {
@@ -194,7 +194,7 @@ fun LazyMeasure(
     val density = LocalDensity.current
 
     Box(
-        modifier = modifier.onGloballyPositioned { layoutCoordinates ->
+        modifier.onGloballyPositioned { layoutCoordinates ->
             val position = layoutCoordinates.positionInRoot()
             val size = layoutCoordinates.size
 
@@ -305,7 +305,7 @@ fun LazyInfo(
 
                 // Red dot marking click point
                 Box(
-                    modifier = Modifier
+                    Modifier
                         .size(6.dp)
                         .background(Color.Red, CircleShape)
                 )
@@ -319,7 +319,7 @@ fun LazyInfo(
 			BoxWithConstraints {
                 // Red dot marking click point
                 Box(
-                    modifier = Modifier
+                    Modifier
                         .size(6.dp)
                         .background(Color.Magenta, CircleShape)
                 )
@@ -469,7 +469,7 @@ fun LazzyRow(
     content: Content,
 ) {
     Row(
-        modifier = modifier
+        modifier
             .maxW()
             .padding(padding.dp),
         horizontalArrangement = if (center) Arrangement.Center else Arrangement.Start,
@@ -517,7 +517,7 @@ fun LazyCard(
         colors = CardDefaults.cardColors(containerColor = inputColor)
     ) {
         Column(
-            modifier = Modifier.padding(
+            Modifier.padding(
                 start = innerPadding.dp,
                 end = innerPadding.dp,
                 bottom = innerPadding.dp,
@@ -564,7 +564,7 @@ fun LazyIcon(
                 val shape = if (SquareIcon) RoundedCornerShape(6.dp) else CircleShape
                 val innerSize = if (SquareIcon) 24.dp else 20.dp
                 Box(
-                    modifier = Modifier
+                    Modifier
                         .size(BigIconSize.dp)
                         .clip(shape)
                         .background(BigIconColor),
@@ -595,9 +595,9 @@ fun LazyMore(
     var expanded by r_m(initiallyExpanded)
     val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
 
-    Column(modifier = modifier) {
+    Column(modifier) {
         Row(
-            modifier = Modifier
+            Modifier
                 .maxW()
                 .clickable { expanded = !expanded }
                 .padding(8.dp),
@@ -629,7 +629,7 @@ fun LazyMore(
             )
         ) {
             Column(
-                modifier = Modifier
+                Modifier
                     .maxW()
                     .padding(start = 32.dp, top = 4.dp) // indent content nicely
             ) {
@@ -662,7 +662,7 @@ fun LazyItem(
     bottomPadding: Dp = 7.dp,
 ) {
 	Row(
-        modifier = Modifier
+        Modifier
             .maxW()
             .padding(
                 top = topPadding,
@@ -673,7 +673,7 @@ fun LazyItem(
 		verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
-			modifier = modifier
+			modifier
                 .maxW()
                 .clickable(enabled = onClick != null) { onClick?.invoke() },
 			shape = RoundedCornerShape(12.dp),
@@ -716,7 +716,7 @@ fun LazyItem(
 				}
 
 
-				Column(modifier = Modifier.weight(1f)) {
+				Column(Modifier.weight(1f)) {
 					Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
 					subtitle?.let {
 						Text(text = it, color = Color.Gray, fontSize = 12.sp)
@@ -742,7 +742,7 @@ fun LazyHeader(
 ) {
     val ui = rememberSystemUiController()
     var DisableHeader by r_m(no)
-    LaunchedEffect(Unit) {
+    RunOnce(Unit) {
         ui.setStatusBarColor(Color.Black, darkIcons = no)
     }
 
