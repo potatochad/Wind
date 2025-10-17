@@ -502,14 +502,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                     }
                 }
 
-
-
-                if (loading) {
-                    Box {
-                        UI.LoadingIcon()
-                    }
-                } else {
-                LazzyList(Bar.apps) { app, index ->
+                LazzyList(Bar.apps, loading) { app, index ->
                     var AppPkg = app.name
                     val icon = icons[AppPkg]
                     
