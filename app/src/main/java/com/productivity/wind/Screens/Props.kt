@@ -473,8 +473,7 @@ var selectedApp = m("")
 fun AppSelectPopup(show: m_<Bool>) {
     if (show.value) {
         val myPackage = LocalContext.current.packageName // your app's package
-        var appList by r_m(getApps().filter { getAppPackage(it) != myPackage }) // filter self out
-
+        
         var Loading = r_m(yes)
         
 
