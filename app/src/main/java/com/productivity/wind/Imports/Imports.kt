@@ -176,9 +176,9 @@ fun refreshApps() {
 
             if (ListsApp == null) {
                 Bar.apps.add {
-					name = getAppName(info),
-					pkg = pkgApp,
-					NowTime = getTodayAppUsage(pkgApp),
+					name = getAppName(info)
+					pkg = pkgApp
+					NowTime = getTodayAppUsage(pkgApp)
 				}
 			}
 		}
