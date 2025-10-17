@@ -475,12 +475,18 @@ fun AppSelectPopup(show: m_<Bool>) {
                 RunOnce(Bar.apps) {
                     Bar.apps.forEach { app ->
                         runOffMain { 
-                            icons[app.pkg] = getAppIcon(app.pkg)
-                            if (icons.size >= (Bar.apps.size)/2) { 
-                                loading = no 
-                                Vlog("loading = no")
+                            val icon = getAppIcon(app.pkg)
+    
+
+                            withContext(Dispatchers.Main) {
+                                icons[app.pkg] = icon
+                                if (icons.size >= (Bar.apps.size) / 2) { 
+                                    loading = false
+                                    Vlog("loading = no")
+                                }
                             }
                         }
+
                     }
                 }
                 LazzyRow{
