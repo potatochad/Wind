@@ -162,31 +162,27 @@ fun each(s: Long = 1000L, Do: Do) {
 
 
 
+	
 fun refreshApps() {
     try {
-		if (!UI.isUsageP_Enabled()) return
+        val realApps: List<ResolveInfo> = getApps()
 
-		val myPackage = App.ctx.packageName
-		var realApps by m(getApps().filter { getAppPackage(it) != myPackage })
+        if (!UI.isUsageP_Enabled()) return
 
         realApps.forEach { info ->
             val pkgApp = getAppPackage(info)
+            val ListsApp = getListsApp(pkgApp)
 
-			val foundApps = Bar.apps.filter { it.pkg == pkgApp }
-
-			if (foundApps.isEmpty()) {
-				Vlog("App adding")
-				Bar.apps.add(
-					AppTsk(
-					name = getAppName(info)
-					pkg = pkgApp
-					NowTime = getTodayAppUsage(pkgApp)
-				    )
-				)
-			} else {
-				Vlog("Empty")
-			}
-		}
+            if (ListsApp == null) {
+                Bar.apps.new(
+				    AppsTsk(
+						name = getAppName(info),
+						pkg = pkgApp,
+						NowTime = getTodayAppUsage(pkgApp),
+					)
+                )
+            }
+        }
 
 		Bar.apps.forEach { app ->
 			Bar.apps.edit(app){
@@ -198,7 +194,6 @@ fun refreshApps() {
 		Vlog("refreshApps: ${e.message?: "unknown error"}")
 	}
 }
-
 
 fun getApps(): List<ResolveInfo> {
     val pm = App.ctx.packageManager
