@@ -459,24 +459,21 @@ fun DebugPopup(show: m_<Bool>) {
 var selectedApp = m("")
 @Composable
 fun AppSelectPopup(show: m_<Bool>) {
-    var icons by remember { mutableStateOf<Map<String, Drawable?>>(emptyMap()) }
-    var loading by r { m(yes) }
+    val icons = r { mutableStateMapOf<String, Drawable?>() }
+                var loading by r { m(yes) }
 
-    RunOnce(Bar.apps) {
-        Bar.apps.forEach { app ->
-            runOffMain { 
-                val icon = getAppIcon(app.pkg)
-                
-                withContext(Dispatchers.Main) {
-                    icons = icons + (app.pkg to icon)
-                    if (icons.size >= (Bar.apps.size) / 2) {
-                        loading = false
-                        Vlog("loading = no")
+                RunOnce(Bar.apps) {
+                    Bar.apps.forEach { app ->
+                        var AppPkg = app.name
+                        runOffMain(
+                            block = { getAppIcon(AppPkg) },
+                            onResult = { result ->
+                                icons[AppPkg] = result
+                                if (icons.size == Bar.apps.size) loading = no
+                            }
+                        )
                     }
                 }
-            }
-        }
-    }
     if (show.it) {
         LazyPopup(
             show = show,
