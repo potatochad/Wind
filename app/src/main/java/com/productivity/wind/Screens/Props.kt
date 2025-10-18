@@ -468,7 +468,10 @@ fun AppSelectPopup(show: m_<Bool>) {
                 block = { getAppIcon(app.pkg) },
                 onResult = { result ->
                     icons[app.pkg] = result
-                    if (icons.size < Bar.apps.size) loading = no
+                    if (icons.size < Bar.apps.size) { 
+                        loading = no
+                        Vlog("GOT ALL ICONZ")
+                    }
                 }
             )
         }
@@ -485,8 +488,9 @@ fun AppSelectPopup(show: m_<Bool>) {
             message = "",
             content = {
                 RunOnce(Unit) {
-                    delay(1000L)
+                    delay(5000L)
                     loading = no
+                    Vlog("Safety trigger")
                 }
                 LazzyRow{
                     Text("icons: ${icons.size}, Bar apps ${Bar.apps.size}")
