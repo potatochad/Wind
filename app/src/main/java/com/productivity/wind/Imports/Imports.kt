@@ -166,6 +166,7 @@ fun refreshApps() {
     try {
 		val myPackage = App.ctx.packageName
 		var realApps by m(getApps().filter { getAppPackage(it) != myPackage })
+		Vlog("realApps: $realApps")
 
 
         if (!UI.isUsageP_Enabled()) return
