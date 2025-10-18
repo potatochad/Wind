@@ -175,7 +175,7 @@ fun refreshApps() {
 
             if (ListsApp == null) {
                 Bar.apps.new(
-				    AppsTsk(
+				    AppTsk(
 						name = getAppName(info),
 						pkg = pkgApp,
 						NowTime = getTodayAppUsage(pkgApp),
