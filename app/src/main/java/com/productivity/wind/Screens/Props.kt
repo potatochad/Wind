@@ -468,7 +468,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                 block = { getAppIcon(app.pkg) },
                 onResult = { result ->
                     icons[app.pkg] = result
-                    if (icons.size > Bar.apps.size) loading = no
+                    if (icons.size < Bar.apps.size) loading = no
                 }
             )
         }
