@@ -181,6 +181,8 @@ fun refreshApps() {
 					pkg = pkgApp
 					NowTime = getTodayAppUsage(pkgApp)
 				}
+			} else {
+				Vlog("Empty")
 			}
 		}
 
