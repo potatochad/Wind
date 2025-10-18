@@ -176,6 +176,7 @@ fun refreshApps() {
             val ListsApp = getListsApp(pkgApp)
 
             if (ListsApp == null) {
+				Vlog("Adding APP")
                 Bar.apps.add {
 					name = getAppName(info)
 					pkg = pkgApp
