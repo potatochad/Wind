@@ -164,17 +164,17 @@ fun each(s: Long = 1000L, Do: Do) {
 
 fun refreshApps() {
     try {
+		if (!UI.isUsageP_Enabled()) return
+
 		val myPackage = App.ctx.packageName
 		var realApps by m(getApps().filter { getAppPackage(it) != myPackage })
-
-        if (!UI.isUsageP_Enabled()) return
 
         realApps.forEach { info ->
             val pkgApp = getAppPackage(info)
             val ListsApp = getListsApp(pkgApp)
+			Vlog("ListsApp $ListsApp")
 
             if (ListsApp == null) {
-				Vlog("Adding APP")
                 Bar.apps.add {
 					name = getAppName(info)
 					pkg = pkgApp
