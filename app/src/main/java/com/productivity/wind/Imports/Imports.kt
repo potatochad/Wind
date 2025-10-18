@@ -176,11 +176,13 @@ fun refreshApps() {
 
 			if (foundApps.isEmpty()) {
 				Vlog("App adding")
-				Bar.apps.add {
+				Bar.apps.add(
+					AppTsk(
 					name = getAppName(info)
 					pkg = pkgApp
 					NowTime = getTodayAppUsage(pkgApp)
-				}
+				    )
+				)
 			} else {
 				Vlog("Empty")
 			}
