@@ -171,11 +171,12 @@ fun refreshApps() {
 
         realApps.forEach { info ->
             val pkgApp = getAppPackage(info)
-            val ListsApp = getListsApp(pkgApp)
-			Vlog("ListsApp $ListsApp")
 
-            if (ListsApp == null) {
-                Bar.apps.add {
+			val foundApps = Bar.apps.filter { it.pkg == pkgApp }
+
+			if (foundApps.isEmpty()) {
+				Vlog("App adding")
+				Bar.apps.add {
 					name = getAppName(info)
 					pkg = pkgApp
 					NowTime = getTodayAppUsage(pkgApp)
@@ -203,11 +204,6 @@ fun getApps(): List<ResolveInfo> {
 fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
     val pm = App.ctx.packageManager
     return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
-}
-
-fun getListsApp(pkg: Str): AppTsk? {
-    val map = Bar.apps.associateBy { it.pkg }
-    return map[pkg]
 }
 
 fun getTodayAppUsage(packageName: Str): Int {
