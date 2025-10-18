@@ -195,6 +195,11 @@ fun refreshApps() {
 	}
 }
 
+fun getListsApp(pkg: Str): AppTsk? {
+    val map = Bar.apps.associateBy { it.pkg }
+    return map[pkg]
+}
+
 fun getApps(): List<ResolveInfo> {
     val pm = App.ctx.packageManager
     val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
