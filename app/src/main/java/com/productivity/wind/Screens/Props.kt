@@ -473,6 +473,9 @@ fun AppSelectPopup(show: m_<Bool>) {
             )
         }
     }
+    
+
+    
     if (show.it) {
         LazyPopup(
             show = show,
@@ -481,6 +484,10 @@ fun AppSelectPopup(show: m_<Bool>) {
             title = "Select App",
             message = "",
             content = {
+                RunOnce(Unit) {
+                    delay(1000L)
+                    loading = no
+                }
                 LazzyRow{
                     Text("icons: ${icons.size}, Bar apps ${Bar.apps.size}")
                 }
