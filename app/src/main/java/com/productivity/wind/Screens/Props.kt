@@ -488,13 +488,17 @@ fun AppSelectPopup(show: m_<Bool>) {
             message = "",
             content = {
                 RunOnce(Unit) {
-                    delay(5000L)
+                    delay(2000L)
                     loading = no
                     Vlog("Safety trigger")
                 }
                 LazzyRow{
                     Text("icons: ${icons.size}, Bar apps ${Bar.apps.size}")
                 }
+                Bar.apps.forEach { app ->
+                    Text(app.name)
+                }
+
 
                 LazzyList(Bar.apps, loading) { app, index ->
                     
