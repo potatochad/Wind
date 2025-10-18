@@ -482,7 +482,7 @@ fun AppSelectPopup(show: m_<Bool>) {
             message = "",
             content = {
                 LazzyRow{
-                    Text("icons size: $icons")
+                    Text("icons: ${icons.size}, Bar apps ${Bar.apps.size}")
                 }
 
                 LazzyList(Bar.apps, loading) { app, index ->
