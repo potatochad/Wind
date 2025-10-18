@@ -262,11 +262,15 @@ fun getAppIcon(packageName: String): Drawable? {
 
 
 
-fun runOffMain(
-    Do: suspend () -> Unit
+fun <T> runOffMain(
+    block: suspend () -> T,
+    onResult: (T) -> Unit = {}
 ) {
     CoroutineScope(Dispatchers.IO).launch {
-		Do()
+        val result = block()
+        withContext(Dispatchers.Main) {
+            onResult(result)
+        }
     }
 }
 @Composable
