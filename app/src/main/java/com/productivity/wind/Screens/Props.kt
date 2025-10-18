@@ -460,20 +460,19 @@ var selectedApp = m("")
 @Composable
 fun AppSelectPopup(show: m_<Bool>) {
     val icons = r { mutableStateMapOf<String, Drawable?>() }
-                var loading by r { m(yes) }
+    var loading by r { m(yes) }
 
-                RunOnce(Bar.apps) {
-                    Bar.apps.forEach { app ->
-                        var AppPkg = app.name
-                        runOffMain(
-                            block = { getAppIcon(AppPkg) },
-                            onResult = { result ->
-                                icons[AppPkg] = result
-                                if (icons.size == Bar.apps.size) loading = no
-                            }
-                        )
-                    }
+    RunOnce(Bar.apps) {
+        Bar.apps.forEach { app ->
+            runOffMain(
+                block = { getAppIcon(app.pkg) },
+                onResult = { result ->
+                    icons[app.pkg] = result
+                    if (icons.size == Bar.apps.size) loading = no
                 }
+            )
+        }
+    }
     if (show.it) {
         LazyPopup(
             show = show,
