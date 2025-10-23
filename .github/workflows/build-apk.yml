@@ -40,7 +40,9 @@ jobs:
             --ks-key-alias "$KEY_ALIAS" \
             --ks-pass pass:"$KEYSTORE_PASSWORD" \
             --key-pass pass:"$KEY_PASSWORD" \
-            --out "$SIGNED_APK" "$UNSIGNED_APK" 2>/dev/null || { echo "⚠️ APK signing failed"; exit 1; }
+            --out "$SIGNED_APK" "$UNSIGNED_APK" 2> >(grep -v -i warning >&2) || { 
+            echo "⚠️ APK signing failed"; exit 1; 
+            }
           echo "✅ Signed APK created at: $SIGNED_APK"
 
       - name: Verify APK signature
