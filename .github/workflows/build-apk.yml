@@ -13,7 +13,7 @@ jobs:
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
     steps:
-      - name: Checkout code
+      - name: Get code
         uses: actions/checkout@v3
 
       - name: Set up JDK 17
@@ -22,10 +22,24 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Build unsigned debug APK
+      - name: Build APK
         run: ./gradlew assembleDebug -x ktlintCheck -x ktlintKotlinScriptCheck --quiet
 
-      - name: Sign debug APK manually with debug info
+
+
+      - name: Keystore to file
+        run: |
+          KEYSTORE_FILE=my-release-key.keystore
+          if [ ! -f "$KEYSTORE_FILE" ]; then
+            echo "Keystore not found, creating from secret..."
+          else
+            echo "Keystore already exists, overwriting with secret..."
+          fi
+          echo "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_FILE"
+          echo "✅ Keystore ready at $KEYSTORE_FILE"
+
+
+      - name: Sign APK
         run: |
           UNSIGNED_APK=app/build/outputs/apk/debug/app-debug.apk
           SIGNED_APK=app/build/outputs/apk/debug/app-debug-signed.apk
@@ -45,12 +59,12 @@ jobs:
             }
           echo "✅ Signed APK created at: $SIGNED_APK"
 
-      - name: Verify APK signature
+      - name: Verify APK
         run: |
           APKSIGNER=$(find "$ANDROID_SDK_ROOT/build-tools" -name apksigner | sort -V | tail -n 1)
           "$APKSIGNER" verify --print-certs app/build/outputs/apk/debug/app-debug-signed.apk
 
-      - name: Upload signed APK
+      - name: Ship APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-signed.apk
