@@ -1,5 +1,6 @@
-name: Build Signed APK
 
+name: Build APK
+# testing
 on: push
 
 jobs:
@@ -21,16 +22,12 @@ jobs:
         printf '%s' "$KEYSTORE_BASE64" | base64 --decode > my-release-key.keystore
         chmod 600 my-release-key.keystore
 
-    - name: Build Release APK (skip ktlint)
-      run: |
-        ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-          -Pandroid.injected.signing.store.file=my-release-key.keystore \
-          -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
-          -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
-          -Pandroid.injected.signing.key.password=$KEY_PASSWORD
 
-    - name: Upload Signed APK
+    - name: Build with Gradle
+      run: ./gradlew assembleDebug -x ktlintCheck -x ktlintKotlinScriptCheck
+
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: app-release.apk
-        path: app/build/outputs/apk/release/app-release.apk
+        name: app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
