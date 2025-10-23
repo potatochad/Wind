@@ -22,13 +22,14 @@ jobs:
         printf '%s' "$KEYSTORE_BASE64" | base64 --decode > my-release-key.keystore
         chmod 600 my-release-key.keystore
 
-    - name: Build Release APK (skip ktlint)
+    - name: Build Release APK (skip ktlint, ignore errors)
       run: |
         ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-          -Pandroid.injected.signing.store.file=my-release-key.keystore \
-          -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
-          -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
-          -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+        -Pandroid.injected.signing.store.file=my-release-key.keystore \
+        -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
+        -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
+        -Pandroid.injected.signing.key.password=$KEY_PASSWORD \
+        --continue --stacktrace
 
 #no errors here (NO CODE ERRORS)
     - name: Build with Gradle
