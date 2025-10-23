@@ -1,6 +1,5 @@
+name: Build and Sign Debug APK
 
-name: Build APK
-# testing
 on: push
 
 jobs:
@@ -8,35 +7,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: 17
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
 
-    - name: Decode keystore
-      run: |
-        printf '%s' "$KEYSTORE_BASE64" | base64 --decode > my-release-key.keystore
-        chmod 600 my-release-key.keystore
+      - name: Decode keystore
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 --decode > my-release-key.keystore
+          chmod 600 my-release-key.keystore
 
-    - name: Build Release APK (skip ktlint, ignore errors)
-      run: |
-        ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-        -Pandroid.injected.signing.store.file=my-release-key.keystore \
-        -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
-        -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
-        -Pandroid.injected.signing.key.password=$KEY_PASSWORD \
-        --continue --stacktrace
+      - name: Build unsigned debug APK
+        run: ./gradlew assembleDebug -x ktlintCheck -x ktlintKotlinScriptCheck
 
-#no errors here (NO CODE ERRORS)
-    - name: Build with Gradle
-      run: ./gradlew assembleDebug -x ktlintCheck -x ktlintKotlinScriptCheck
+      - name: Sign debug APK manually
+        run: |
+          # Variables
+          UNSIGNED_APK=app/build/outputs/apk/debug/app-debug.apk
+          SIGNED_APK=app/build/outputs/apk/debug/app-debug-signed.apk
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-debug.apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+          # Use apksigner to sign the debug APK
+          $ANDROID_SDK_ROOT/build-tools/*/apksigner sign \
+            --ks my-release-key.keystore \
+            --ks-key-alias "$KEY_ALIAS" \
+            --ks-pass pass:"$KEYSTORE_PASSWORD" \
+            --key-pass pass:"$KEY_PASSWORD" \
+            --out "$SIGNED_APK" "$UNSIGNED_APK"
+
+          echo "Signed APK created at: $SIGNED_APK"
+
+      - name: Verify APK signature
+        run: |
+          $ANDROID_SDK_ROOT/build-tools/*/apksigner verify \
+            --print-certs app/build/outputs/apk/debug/app-debug-signed.apk
+
+      - name: Upload signed APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-signed.apk
+          path: app/build/outputs/apk/debug/app-debug-signed.apk
