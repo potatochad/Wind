@@ -1,4 +1,4 @@
-name: Build and Sign Debug APK
+name: Build APK
 
 on: push
 
@@ -13,6 +13,13 @@ jobs:
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
     steps:
+      - name: Echo Info Safely
+        run: |
+          echo "Keystore password length: ${#KEYSTORE_PASSWORD}"
+          echo "Key alias is: $KEY_ALIAS"
+
+
+    
       - name: Checkout code
         uses: actions/checkout@v3
 
