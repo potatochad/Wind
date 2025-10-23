@@ -35,7 +35,7 @@ fun onNewDay() {
           }
      }   
 }
-	
+
 
 /*
 This is a special class
