@@ -38,6 +38,19 @@ jobs:
           echo "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_FILE"
           echo "✅ Keystore ready at $KEYSTORE_FILE"
 
+      - name: Verify Keystore
+        run: |
+          echo "Checking keystore file..."
+          ls -lh my-release-key.keystore
+          file my-release-key.keystore
+          
+          echo "Listing keystore contents..."
+          if ! keytool -list -keystore my-release-key.keystore -storepass "$KEYSTORE_PASSWORD"; then
+            echo "❌ Keystore verification failed! Check your secret or Base64 encoding."
+            exit 1
+          fi
+          echo "✅ Keystore verification passed"
+
 
       - name: Sign APK
         run: |
