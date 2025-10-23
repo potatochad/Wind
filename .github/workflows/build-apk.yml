@@ -12,7 +12,6 @@ jobs:
       KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -23,31 +22,37 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Decode keystore
+      - name: Decode keystore with debug info
         run: |
+          echo "Decoding keystore..."
+          echo "$KEYSTORE_BASE64" | head -c 60
+          echo "..." # Show just first 60 chars to avoid spamming logs
           echo "$KEYSTORE_BASE64" | base64 --decode > my-release-key.keystore
           chmod 600 my-release-key.keystore
+          echo "Keystore file size:"
+          ls -lh my-release-key.keystore
+          echo "Listing keystore content (check if password is correct):"
+          keytool -list -v -keystore my-release-key.keystore -storepass "$KEYSTORE_PASSWORD" || echo "⚠️ Failed to list keystore content. Check password or keystore!"
 
       - name: Build unsigned debug APK
         run: ./gradlew assembleDebug -x ktlintCheck -x ktlintKotlinScriptCheck
 
-      - name: Sign debug APK manually
+      - name: Sign debug APK manually with debug info
         run: |
           UNSIGNED_APK=app/build/outputs/apk/debug/app-debug.apk
           SIGNED_APK=app/build/outputs/apk/debug/app-debug-signed.apk
 
           # Find apksigner dynamically
           APKSIGNER=$(find "$ANDROID_SDK_ROOT/build-tools" -name apksigner | sort -V | tail -n 1)
-
           echo "Using apksigner at: $APKSIGNER"
 
-          # Sign the APK
+          echo "Signing APK..."
           "$APKSIGNER" sign \
-          --ks my-release-key.keystore \
-          --ks-key-alias "$KEY_ALIAS" \
-          --ks-pass pass:"$KEYSTORE_PASSWORD" \
-          --key-pass pass:"$KEY_PASSWORD" \
-          --out "$SIGNED_APK" "$UNSIGNED_APK"
+            --ks my-release-key.keystore \
+            --ks-key-alias "$KEY_ALIAS" \
+            --ks-pass pass:"$KEYSTORE_PASSWORD" \
+            --key-pass pass:"$KEY_PASSWORD" \
+            --out "$SIGNED_APK" "$UNSIGNED_APK" || { echo "⚠️ APK signing failed"; exit 1; }
           echo "✅ Signed APK created at: $SIGNED_APK"
 
       - name: Verify APK signature
