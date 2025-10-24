@@ -36,21 +36,47 @@ jobs:
           set -e
           echo "🔹 Starting keystore setup..."
           KEYSTORE_FILE=my-release-key.keystore
-          echo "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_FILE"
-          echo "✅ Keystore created: $KEYSTORE_FILE"
+          
+          # Debug Base64 length
+          echo "Keystore secret length: ${#KEYSTORE_BASE64}"
+          
+          # Decode safely (trim whitespace + fix multi-line issues)
+          echo "$KEYSTORE_BASE64" | tr -d '\n' | base64 --decode > "$KEYSTORE_FILE" || {
+            echo "❌ Failed to decode Base64 keystore secret! Check KEYSTORE_BASE64 value."
+            exit 1
+          }
+
+          echo "✅ Keystore file created at: $KEYSTORE_FILE"
+          echo "File info:"
           ls -lh "$KEYSTORE_FILE"
+          echo "First bytes (hex):"
+          xxd -l 32 "$KEYSTORE_FILE" || echo "Could not read hex preview"
+          echo "File type:"
+          file "$KEYSTORE_FILE"
 
       # Step 4: Verify Keystore
       - name: Verify Keystore
         run: |
           set -e
           echo "🔹 Verifying keystore..."
-          if keytool -list -v -keystore my-release-key.keystore -storepass "$KEYSTORE_PASSWORD"; then
-            echo "✅ Keystore verification passed"
-          else
-            echo "❌ Keystore verification failed! Exiting..."
-            exit 1
-          fi
+          echo "Keystore file type check:"
+          file my-release-key.keystore
+          
+          # Try multiple formats if default fails
+          for TYPE in JKS PKCS12; do
+            echo "Attempting to load as $TYPE..."
+            if keytool -list -storetype $TYPE -v -keystore my-release-key.keystore -storepass "$KEYSTORE_PASSWORD" >/dev/null 2>&1; then
+              echo "✅ Loaded successfully as $TYPE keystore"
+              echo "::set-output name=keystore_type::$TYPE"
+              exit 0
+            fi
+          done
+
+          echo "❌ Failed to recognize keystore format. Possible causes:"
+          echo " - Wrong Base64 encoding (make sure you used 'base64 my-release-key.keystore' to generate it)"
+          echo " - Secret saved with line breaks in GitHub"
+          echo " - Wrong keystore password"
+          exit 1
 
       # Step 5: Grant permission for Gradle wrapper
       - name: Grant Gradlew permissions
