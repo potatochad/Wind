@@ -55,10 +55,7 @@ jobs:
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-            2>&1 | grep -i "error" || { 
-              echo "❌ Build failed! Check errors above"; 
-              exit 1; 
-            }
+            --warning-mode=none --console=plain
 
           echo "✅ Build completed"
           ls -lh app/build/outputs/apk/release/
