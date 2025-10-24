@@ -27,7 +27,7 @@ jobs:
           KEYSTORE_FILE=my-release-key.keystore
           echo "🔹 Generating keystore using password..."
           
-          # Generate temporary keystore using secrets
+          # Generate keystore silently, show only errors
           keytool -genkeypair \
             -v \
             -keystore "$KEYSTORE_FILE" \
@@ -41,13 +41,13 @@ jobs:
             2> >(grep -i "error" >&2)
 
           echo "✅ Keystore generated: $KEYSTORE_FILE"
-          ls -lh "$KEYSTORE_FILE"
-          file "$KEYSTORE_FILE"
 
       - name: Verify Keystore
         run: |
           set -e
-          keytool -list -keystore my-release-key.keystore -storepass "$KEYSTORE_PASSWORD" -alias "$KEY_ALIAS" 2> >(grep -i "error" >&2) || echo "⚠️ Verification failed but continuing"
+          keytool -list -keystore my-release-key.keystore \
+            -storepass "$KEYSTORE_PASSWORD" \
+            -alias "$KEY_ALIAS" 2> >(grep -i "error" >&2) || echo "⚠️ Verification failed but continuing"
 
       - name: Grant Gradlew permission
         run: chmod +x gradlew
@@ -56,6 +56,7 @@ jobs:
         run: |
           set -e
           echo "🔹 Building signed APK..."
+          # Suppress all warnings, only show errors
           ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
             -Pandroid.injected.signing.store.file=my-release-key.keystore \
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
@@ -72,7 +73,8 @@ jobs:
         run: |
           set -e
           APKSIGNER=$(find "$ANDROID_SDK_ROOT/build-tools" -name apksigner | sort -V | tail -n 1)
-          "$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk 2> >(grep -i "error" >&2)
+          "$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk \
+            2> >(grep -i "error" >&2)
           echo "✅ APK signing verified"
 
       - name: Upload Release APK
