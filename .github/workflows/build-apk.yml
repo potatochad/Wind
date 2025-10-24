@@ -2,6 +2,23 @@ name: Build APK
 
 on: push
 
+
+build_signed_apk() {
+      echo "🔹 Building signed APK..."
+      ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
+        -Pandroid.injected.signing.store.file=my-release-key.keystore \
+        -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
+        -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
+        2>&1 | tee gradle_errors.log | grep -i "error" || { 
+          echo "❌ Build failed! Check gradle_errors.log"; 
+          exit 1; 
+        }
+      echo "✅ Build completed"
+      ls -lh app/build/outputs/apk/release/
+    }
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
