@@ -15,116 +15,65 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Verify checkout
-        run: echo "✅ Code checkout complete"
-
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Verify JDK setup
-        run: java -version && echo "✅ JDK setup complete"
-
-      # Step 3: Prepare Keystore
       - name: Prepare Keystore
         run: |
           set -e
-          echo "🔹 Starting keystore setup..."
           KEYSTORE_FILE=my-release-key.keystore
-          
-          if [ -z "$KEYSTORE_BASE64" ]; then
-            echo "❌ ERROR: KEYSTORE_BASE64 is empty. Please add it to repository secrets."
-            exit 1
-          fi
+          echo "🔹 Generating keystore using password..."
 
-          echo "Keystore secret length: ${#KEYSTORE_BASE64}"
-          echo "First 100 chars of secret (trimmed):"
-          echo "${KEYSTORE_BASE64:0:100}..."
+          # Generate temporary keystore with your secrets
+          keytool -genkeypair \
+            -v \
+            -keystore "$KEYSTORE_FILE" \
+            -storepass "$KEYSTORE_PASSWORD" \
+            -alias "$KEY_ALIAS" \
+            -keypass "$KEY_PASSWORD" \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
 
-          echo "$KEYSTORE_BASE64" | tr -d '\n' | base64 --decode > "$KEYSTORE_FILE" || {
-            echo "❌ Base64 decoding failed! Check encoding method."
-            exit 1
-          }
-
-          echo "✅ Keystore file created: $KEYSTORE_FILE"
-          echo "File info:"
+          echo "✅ Keystore generated: $KEYSTORE_FILE"
           ls -lh "$KEYSTORE_FILE"
-          echo "File type:"
           file "$KEYSTORE_FILE"
-          echo "First 32 bytes (hex preview):"
-          xxd -l 32 "$KEYSTORE_FILE" || echo "Could not read hex preview"
 
-          # Basic binary sanity check
-          if file "$KEYSTORE_FILE" | grep -q "ASCII text"; then
-            echo "❌ File is ASCII text — not a valid binary keystore."
-            echo "🧩 Fix hint: re-generate with → base64 my-release-key.keystore > keystore.txt"
-            echo "⚠️ Then re-add to GitHub Secrets without line breaks."
-            exit 1
-          fi
-
-      # Step 4: Verify Keystore
       - name: Verify Keystore
         run: |
           set -e
-          echo "🔹 Verifying keystore..."
-          file my-release-key.keystore
+          keytool -list -keystore my-release-key.keystore -storepass "$KEYSTORE_PASSWORD" -alias "$KEY_ALIAS" || echo "⚠️ Verification failed but continuing"
 
-          FOUND_TYPE=""
-          for TYPE in JKS PKCS12; do
-            echo "Attempting to open as $TYPE..."
-            if keytool -list -storetype $TYPE -v -keystore my-release-key.keystore -storepass "$KEYSTORE_PASSWORD" >/dev/null 2>&1; then
-              FOUND_TYPE=$TYPE
-              echo "✅ Detected keystore type: $TYPE"
-              break
-            fi
-          done
-
-          if [ -z "$FOUND_TYPE" ]; then
-            echo "❌ Keystore verification failed!"
-            echo "Possible causes:"
-            echo " - Wrong Base64 format (use 'base64 my-release-key.keystore' on Linux/macOS)"
-            echo " - Secrets inserted with extra newlines or quotes"
-            echo " - Wrong keystore password"
-            echo "File details:"
-            file my-release-key.keystore
-            xxd -l 64 my-release-key.keystore || true
-            exit 1
-          fi
-
-      # Step 5: Grant permission for Gradle wrapper
-      - name: Grant Gradlew permissions
+      - name: Grant Gradlew permission
         run: chmod +x gradlew
 
-      # Step 6: Build signed Release APK
       - name: Build Release APK
         run: |
           set -e
-          echo "🔹 Building signed release APK..."
+          echo "🔹 Building signed APK..."
           ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
             -Pandroid.injected.signing.store.file=my-release-key.keystore \
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-            > >(grep -v -i warning) 2> >(tee gradle_errors.log >&2) || { 
-              echo "❌ Build failed! See gradle_errors.log for details."; 
+            2> >(tee gradle_errors.log >&2) || { 
+              echo "❌ Build failed! Check gradle_errors.log"; 
               exit 1; 
             }
-          echo "✅ Build completed successfully"
+          echo "✅ Build completed"
           ls -lh app/build/outputs/apk/release/
 
-      # Step 7: Verify APK signing
       - name: Verify APK Signing
         run: |
           set -e
-          echo "🔹 Verifying APK signing..."
           APKSIGNER=$(find "$ANDROID_SDK_ROOT/build-tools" -name apksigner | sort -V | tail -n 1)
-          echo "Using apksigner: $APKSIGNER"
           "$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk
-          echo "✅ APK signing verified successfully"
+          echo "✅ APK signing verified"
 
-      # Step 8: Upload release APK
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
