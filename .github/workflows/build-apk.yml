@@ -26,8 +26,8 @@ jobs:
           set -e
           KEYSTORE_FILE=my-release-key.keystore
           echo "🔹 Generating keystore using password..."
-
-          # Generate temporary keystore with your secrets
+          
+          # Generate temporary keystore using secrets
           keytool -genkeypair \
             -v \
             -keystore "$KEYSTORE_FILE" \
@@ -37,7 +37,8 @@ jobs:
             -keyalg RSA \
             -keysize 2048 \
             -validity 10000 \
-            -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
+            -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US" \
+            2> >(grep -i "error" >&2)
 
           echo "✅ Keystore generated: $KEYSTORE_FILE"
           ls -lh "$KEYSTORE_FILE"
@@ -46,7 +47,7 @@ jobs:
       - name: Verify Keystore
         run: |
           set -e
-          keytool -list -keystore my-release-key.keystore -storepass "$KEYSTORE_PASSWORD" -alias "$KEY_ALIAS" || echo "⚠️ Verification failed but continuing"
+          keytool -list -keystore my-release-key.keystore -storepass "$KEYSTORE_PASSWORD" -alias "$KEY_ALIAS" 2> >(grep -i "error" >&2) || echo "⚠️ Verification failed but continuing"
 
       - name: Grant Gradlew permission
         run: chmod +x gradlew
@@ -60,7 +61,7 @@ jobs:
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-            2> >(tee gradle_errors.log >&2) || { 
+            2> >(grep -i "error" | tee gradle_errors.log >&2) || { 
               echo "❌ Build failed! Check gradle_errors.log"; 
               exit 1; 
             }
@@ -71,7 +72,7 @@ jobs:
         run: |
           set -e
           APKSIGNER=$(find "$ANDROID_SDK_ROOT/build-tools" -name apksigner | sort -V | tail -n 1)
-          "$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk
+          "$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk 2> >(grep -i "error" >&2)
           echo "✅ APK signing verified"
 
       - name: Upload Release APK
