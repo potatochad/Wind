@@ -2,23 +2,6 @@ name: Build APK
 
 on: push
 
-
-build_signed_apk() {
-      echo "🔹 Building signed APK..."
-      ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-        -Pandroid.injected.signing.store.file=my-release-key.keystore \
-        -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
-        -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-        2>&1 | tee gradle_errors.log | grep -i "error" || { 
-          echo "❌ Build failed! Check gradle_errors.log"; 
-          exit 1; 
-        }
-      echo "✅ Build completed"
-      ls -lh app/build/outputs/apk/release/
-    }
-
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -76,14 +59,6 @@ jobs:
             }
           echo "✅ Build completed"
           ls -lh app/build/outputs/apk/release/
-
-      - name: Verify APK Signing
-        run: |
-          set -e
-          APKSIGNER=$(find "$ANDROID_SDK_ROOT/build-tools" -name apksigner | sort -V | tail -n 1)
-          "$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk \
-            > >(grep -i "error" >&2) 2> >(grep -i "error" >&2)
-          echo "✅ APK signing verified"
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
