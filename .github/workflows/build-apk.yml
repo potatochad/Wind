@@ -53,10 +53,14 @@ jobs:
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-            > >(grep -i "error" | tee gradle_errors.log >&2) 2>&1 || { 
-              echo "❌ Build failed! Check gradle_errors.log"; 
-              exit 1; 
+            2> gradle_errors.log || { 
+            echo "❌ Build failed! Check gradle_errors.log"; 
+            exit 1; 
             }
+            
+            # Show only errors
+            grep -i "error" gradle_errors.log || true
+
           echo "✅ Build completed"
           ls -lh app/build/outputs/apk/release/
 
