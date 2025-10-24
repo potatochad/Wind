@@ -22,10 +22,6 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Build APK
-        run: ./gradlew assembleDebug -x ktlintCheck -x ktlintKotlinScriptCheck --quiet
-
-
 
       - name: Keystore to file
         run: |
@@ -52,25 +48,16 @@ jobs:
           echo "✅ Keystore verification passed"
 
 
-      - name: Sign APK
+      - name: Build APK
         run: |
-          UNSIGNED_APK=app/build/outputs/apk/debug/app-debug.apk
-          SIGNED_APK=app/build/outputs/apk/debug/app-debug-signed.apk
+          ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
+          -Pandroid.injected.signing.store.file=my-release-key.keystore \
+          -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
+          -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
+          -Pandroid.injected.signing.key.password=$KEY_PASSWORD 2> >(grep -v -i warning >&2) || { 
+          echo "⚠️ APK signing failed"; exit 1; 
+          }
 
-          # Find apksigner dynamically
-          APKSIGNER=$(find "$ANDROID_SDK_ROOT/build-tools" -name apksigner | sort -V | tail -n 1)
-          echo "Using apksigner at: $APKSIGNER"
-
-          echo "Signing APK..."
-          "$APKSIGNER" sign \
-            --ks my-release-key.keystore \
-            --ks-key-alias "$KEY_ALIAS" \
-            --ks-pass pass:"$KEYSTORE_PASSWORD" \
-            --key-pass pass:"$KEY_PASSWORD" \
-            --out "$SIGNED_APK" "$UNSIGNED_APK" 2> >(grep -v -i warning >&2) || { 
-            echo "⚠️ APK signing failed"; exit 1; 
-            }
-          echo "✅ Signed APK created at: $SIGNED_APK"
 
       - name: Verify APK
         run: |
