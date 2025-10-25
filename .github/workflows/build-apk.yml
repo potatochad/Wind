@@ -54,9 +54,7 @@ jobs:
             -Pandroid.injected.signing.store.file=my-release-key.keystore \
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-            -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-            --console=plain \
-            -Dorg.gradle.jvmargs="-Xlint:none"
+            -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
 
           echo "✅ Build completed"
           ls -lh app/build/outputs/apk/release/
