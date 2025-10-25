@@ -21,39 +21,64 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Prepare Keystore
+      - name: Prepare Keystore with logs
         run: |
-          set -e
-          mkdir -p app/app
-          KEYSTORE_FILE=app/app/my-release-key.keystore
-          echo "🔹 Generating keystore inside app/app/ folder..."
-          
-          keytool -genkeypair -v \
-            -keystore "$KEYSTORE_FILE" \
-            -storepass "$KEYSTORE_PASSWORD" \
-            -alias "$KEY_ALIAS" \
-            -keypass "$KEY_PASSWORD" \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US" \
-            > >(grep -i "error" >&2) 2> >(grep -i "error" >&2)
+          set -ex  # -x prints commands, -e exits on errors
+          MODULE_DIR=app
+          mkdir -p "$MODULE_DIR"
+          KEYSTORE_FILE="$MODULE_DIR/my-release-key.keystore"
 
-          echo "✅ Keystore generated: $KEYSTORE_FILE"
+          echo "🔹 Checking module folder: $MODULE_DIR"
+          ls -lh "$MODULE_DIR" || echo "❌ Folder empty"
+
+          if [ ! -f "$KEYSTORE_FILE" ]; then
+            echo "🔹 Generating keystore at $KEYSTORE_FILE..."
+            # Catch errors for better understanding
+            {
+              keytool -genkeypair -v \
+                -keystore "$KEYSTORE_FILE" \
+                -storepass "$KEYSTORE_PASSWORD" \
+                -alias "$KEY_ALIAS" \
+                -keypass "$KEY_PASSWORD" \
+                -keyalg RSA \
+                -keysize 2048 \
+                -validity 10000 \
+                -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
+            } || {
+              echo "❌ Keystore generation failed!"
+              ls -lh "$MODULE_DIR"
+              exit 1
+            }
+            echo "✅ Keystore generated: $KEYSTORE_FILE"
+          else
+            echo "✅ Keystore already exists: $KEYSTORE_FILE"
+            ls -lh "$MODULE_DIR"
+          fi
 
       - name: Grant Gradlew permission
-        run: chmod +x gradlew
-
-      - name: Build Release APK
         run: |
-          set -e
+          set -ex
+          chmod +x gradlew
+          echo "🔹 Gradlew permissions set"
+          ls -lh
+
+      - name: Build Release APK with verbose logs
+        run: |
+          set -ex
           echo "🔹 Building signed APK..."
           
-          ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-            -Pandroid.injected.signing.store.file=app/app/my-release-key.keystore \
-            -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
-            -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-            -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
+          {
+            ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
+              -Pandroid.injected.signing.store.file=app/my-release-key.keystore \
+              -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
+              -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+              -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
+          } || {
+            echo "❌ Gradle build failed!"
+            echo "🔹 Listing app folder contents for debugging:"
+            ls -Rlh app
+            exit 1
+          }
 
           echo "✅ Build completed"
           ls -lh app/build/outputs/apk/release/
