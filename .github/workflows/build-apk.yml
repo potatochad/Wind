@@ -40,8 +40,10 @@ jobs:
 
           echo "✅ Keystore generated: $KEYSTORE_FILE"
 
-          # Move keystore to root so Gradle can find it
-          mv "$KEYSTORE_FILE" .
+          # Only move if not already in root
+          if [ ! -f "./$KEYSTORE_FILE" ]; then
+            mv "$KEYSTORE_FILE" .
+          fi
 
       - name: Grant Gradlew permission
         run: chmod +x gradlew
