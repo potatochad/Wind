@@ -40,9 +40,8 @@ jobs:
 
           echo "✅ Keystore generated: $KEYSTORE_FILE"
 
-          # Move keystore to app/ folder so Gradle finds it
-          mkdir -p app
-          mv "$KEYSTORE_FILE" app/
+          # Move keystore to root so Gradle can find it
+          mv "$KEYSTORE_FILE" .
 
       - name: Grant Gradlew permission
         run: chmod +x gradlew
@@ -53,7 +52,7 @@ jobs:
           echo "🔹 Building signed APK..."
           
           ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-            -Pandroid.injected.signing.store.file=app/my-release-key.keystore \
+            -Pandroid.injected.signing.store.file=my-release-key.keystore \
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
