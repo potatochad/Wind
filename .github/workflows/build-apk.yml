@@ -39,7 +39,9 @@ jobs:
             > >(grep -i "error" >&2) 2> >(grep -i "error" >&2)
 
           echo "✅ Keystore generated: $KEYSTORE_FILE"
-          # 👇 Move it to app/ so Gradle finds it
+
+          # Move keystore to app/ folder so Gradle finds it
+          mkdir -p app
           mv "$KEYSTORE_FILE" app/
 
       - name: Grant Gradlew permission
