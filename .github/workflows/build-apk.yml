@@ -24,8 +24,9 @@ jobs:
       - name: Prepare Keystore
         run: |
           set -e
-          KEYSTORE_FILE=my-release-key.keystore
-          echo "🔹 Generating keystore using password..."
+          mkdir -p app
+          KEYSTORE_FILE=app/my-release-key.keystore
+          echo "🔹 Generating keystore inside app/ folder..."
           
           keytool -genkeypair -v \
             -keystore "$KEYSTORE_FILE" \
@@ -40,11 +41,6 @@ jobs:
 
           echo "✅ Keystore generated: $KEYSTORE_FILE"
 
-          # Only move if not already in root
-          if [ ! -f "./$KEYSTORE_FILE" ]; then
-            mv "$KEYSTORE_FILE" .
-          fi
-
       - name: Grant Gradlew permission
         run: chmod +x gradlew
 
@@ -54,7 +50,7 @@ jobs:
           echo "🔹 Building signed APK..."
           
           ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-            -Pandroid.injected.signing.store.file=my-release-key.keystore \
+            -Pandroid.injected.signing.store.file=app/my-release-key.keystore \
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
