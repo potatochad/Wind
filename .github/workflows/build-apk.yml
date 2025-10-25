@@ -27,7 +27,6 @@ jobs:
           KEYSTORE_FILE=my-release-key.keystore
           echo "🔹 Generating keystore using password..."
           
-          # Generate keystore, only show errors
           keytool -genkeypair -v \
             -keystore "$KEYSTORE_FILE" \
             -storepass "$KEYSTORE_PASSWORD" \
@@ -40,6 +39,8 @@ jobs:
             > >(grep -i "error" >&2) 2> >(grep -i "error" >&2)
 
           echo "✅ Keystore generated: $KEYSTORE_FILE"
+          # 👇 Move it to app/ so Gradle finds it
+          mv "$KEYSTORE_FILE" app/
 
       - name: Grant Gradlew permission
         run: chmod +x gradlew
@@ -49,9 +50,8 @@ jobs:
           set -e
           echo "🔹 Building signed APK..."
           
-          # Capture both stdout & stderr, filter out warnings
           ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-            -Pandroid.injected.signing.store.file=my-release-key.keystore \
+            -Pandroid.injected.signing.store.file=app/my-release-key.keystore \
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
