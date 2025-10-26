@@ -24,6 +24,15 @@ jobs:
       - name: Prepare Keystore with logs
         run: |
 
+          found=$(find / -type f -name "Imports.sh" 2>/dev/null)
+
+           if [ -n "$found" ]; then
+             log "Found Imports.sh at:"
+             log "$found"
+           else
+             log "Imports.sh not found"
+           fi
+
           source ./Imports.sh
 
           give_gradle_permission
