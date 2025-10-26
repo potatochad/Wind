@@ -25,10 +25,13 @@ jobs:
       - name: Prepare Keystore with logs
         run: |
 
+          alias log='echo'
           make_folder() {
-            mkdir -p "$folder"
-            echo "Folder '$folder' created or already exists"
+            mkdir -p "$1"
+            log "Folder '$1' created or already exists"
           }
+          
+
 
           mkdir -p "app"
           KEYSTORE_FILE="app/my-release-key.keystore"
