@@ -24,7 +24,6 @@ jobs:
 
       - name: Prepare Keystore with logs
         run: |
-          set -ex  # -x prints commands, -e exits on errors
           MODULE_DIR=app
           mkdir -p "$MODULE_DIR"
           KEYSTORE_FILE="$MODULE_DIR/my-release-key.keystore"
