@@ -53,6 +53,7 @@ jobs:
           }
 
           #IMPORTS ABOVEEEEEEE
+          #app/my-release-key.keystore
 
           make_folder app/my-release-key.keystore
           KEYSTORE_FILE = "app/my-release-key.keystore"
