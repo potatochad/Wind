@@ -26,9 +26,7 @@ jobs:
 
           source ./Imports.sh
 
-          chmod +x gradlew
-          log "Gradlew permissions set"
-          ls -lh
+          
 
           make_folder app/my-release-key.keystore
           KEYSTORE_FILE="app/my-release-key.keystore"
