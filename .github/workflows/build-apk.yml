@@ -6,10 +6,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
+    env: 
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
       KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      Variable2: 1
 
     steps:
       - name: Checkout code
