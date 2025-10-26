@@ -24,12 +24,11 @@ jobs:
 
       - name: Prepare Keystore with logs
         run: |
-          MODULE_DIR=app
-          mkdir -p "$MODULE_DIR"
-          KEYSTORE_FILE="$MODULE_DIR/my-release-key.keystore"
+          mkdir -p "app"
+          KEYSTORE_FILE="app/my-release-key.keystore"
 
-          echo "🔹 Checking module folder: $MODULE_DIR"
-          ls -lh "$MODULE_DIR" || echo "❌ Folder empty"
+          echo "🔹 Checking module folder: app"
+          ls -lh "app" || echo "❌ Folder empty"
 
           if [ ! -f "$KEYSTORE_FILE" ]; then
             echo "🔹 Generating keystore at $KEYSTORE_FILE..."
@@ -46,13 +45,13 @@ jobs:
                 -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
             } || {
               echo "❌ Keystore generation failed!"
-              ls -lh "$MODULE_DIR"
+              ls -lh "app"
               exit 1
             }
             echo "✅ Keystore generated: $KEYSTORE_FILE"
           else
             echo "✅ Keystore already exists: $KEYSTORE_FILE"
-            ls -lh "$MODULE_DIR"
+            ls -lh "app"
           fi
 
       - name: Grant Gradlew permission
