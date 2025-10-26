@@ -31,7 +31,7 @@ jobs:
           ls -lh
 
           make_folder app/my-release-key.keystore
-          KEYSTORE_FILE = "app/my-release-key.keystore"
+          KEYSTORE_FILE="app/my-release-key.keystore"
 
 
           log "Generating keystore at $KEYSTORE_FILE..."
