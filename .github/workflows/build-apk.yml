@@ -24,7 +24,6 @@ jobs:
       - name: Prepare Keystore with logs
         run: |
 
-          source app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
           source ./Ignore_Imports.sh
 
           give_gradle_permission
