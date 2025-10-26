@@ -10,7 +10,7 @@ jobs:
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
       KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-      Variable2: 1
+      Variable: 1
 
     steps:
       - name: Checkout code
@@ -24,6 +24,13 @@ jobs:
 
       - name: Prepare Keystore with logs
         run: |
+
+          make_folder() {
+          local folder="$1"    # "$1" = first argument you pass
+          mkdir -p "$folder"   # create folder safely
+          echo "Folder '$folder' created or already exists"
+          }
+
           mkdir -p "app"
           KEYSTORE_FILE="app/my-release-key.keystore"
 
