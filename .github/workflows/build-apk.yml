@@ -31,7 +31,7 @@ jobs:
           KEYSTORE_FILE = "app/my-release-key.keystore"
 
 
-          log "🔹 Generating keystore at $KEYSTORE_FILE..."
+          log "Generating keystore at $KEYSTORE_FILE..."
           # Catch errors for better understanding
           # keytool -genkeypair -v \
           # -keystore "$KEYSTORE_FILE" \
