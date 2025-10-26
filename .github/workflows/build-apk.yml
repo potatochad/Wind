@@ -26,10 +26,14 @@ jobs:
         run: |
 
           alias log='echo'
+          
           make_folder() {
             mkdir -p "$1"
-            log "Folder '$1' created or already exists"
+
+            if []
+            log "Folder '$(pwd)/$1' added/exists"
           }
+
           
 
 
