@@ -58,29 +58,17 @@ jobs:
           KEYSTORE_FILE = "app/my-release-key.keystore"
 
 
-          if [ ! -f "$KEYSTORE_FILE" ]; then
-            log "🔹 Generating keystore at $KEYSTORE_FILE..."
-            # Catch errors for better understanding
-            {
-              keytool -genkeypair -v \
-                -keystore "$KEYSTORE_FILE" \
-                -storepass "$KEYSTORE_PASSWORD" \
-                -alias "$KEY_ALIAS" \
-                -keypass "$KEY_PASSWORD" \
-                -keyalg RSA \
-                -keysize 2048 \
-                -validity 10000 \
-                -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
-            } || {
-              log "❌ Keystore generation failed!"
-              ls -lh "app"
-              exit 1
-            }
-            log "✅ Keystore generated: $KEYSTORE_FILE"
-          else
-            log "✅ Keystore already exists: $KEYSTORE_FILE"
-            ls -lh "app"
-          fi
+          log "🔹 Generating keystore at $KEYSTORE_FILE..."
+          # Catch errors for better understanding
+          keytool -genkeypair -v \
+          -keystore "$KEYSTORE_FILE" \
+          -storepass "$KEYSTORE_PASSWORD" \
+          -alias "$KEY_ALIAS" \
+          -keypass "$KEY_PASSWORD" \
+          -keyalg RSA \
+          -keysize 2048 \
+          -validity 10000 \
+          -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
 
       - name: Grant Gradlew permission
         run: |
