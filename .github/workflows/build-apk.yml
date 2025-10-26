@@ -24,6 +24,9 @@ jobs:
       - name: Prepare Keystore with logs
         run: |
 
+          source "$GITHUB_WORKSPACE/.github/workflows/Imports.sh"
+
+
           found=$(find / -type f -name "Imports.sh" 2>/dev/null)
 
            if [ -n "$found" ]; then
