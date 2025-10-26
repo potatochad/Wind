@@ -29,22 +29,17 @@ jobs:
           
           make_folder() {
             mkdir -p "$1"
-
-            if []
             log "Folder '$(pwd)/$1' added/exists"
           }
-
+          make_folder app
           
+          KEYSTORE_FILE = "app/my-release-key.keystore"
 
-
-          mkdir -p "app"
-          KEYSTORE_FILE="app/my-release-key.keystore"
-
-          echo "🔹 Checking module folder: app"
-          ls -lh "app" || echo "❌ Folder empty"
+          log "🔹 Checking module folder: app"
+          ls -lh "app" || log "❌ Folder empty"
 
           if [ ! -f "$KEYSTORE_FILE" ]; then
-            echo "🔹 Generating keystore at $KEYSTORE_FILE..."
+            log "🔹 Generating keystore at $KEYSTORE_FILE..."
             # Catch errors for better understanding
             {
               keytool -genkeypair -v \
@@ -57,13 +52,13 @@ jobs:
                 -validity 10000 \
                 -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
             } || {
-              echo "❌ Keystore generation failed!"
+              log "❌ Keystore generation failed!"
               ls -lh "app"
               exit 1
             }
-            echo "✅ Keystore generated: $KEYSTORE_FILE"
+            log "✅ Keystore generated: $KEYSTORE_FILE"
           else
-            echo "✅ Keystore already exists: $KEYSTORE_FILE"
+            log "✅ Keystore already exists: $KEYSTORE_FILE"
             ls -lh "app"
           fi
 
