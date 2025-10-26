@@ -28,8 +28,6 @@ jobs:
 
           give_gradle_permission
 
-          
-
           make_folder app/my-release-key.keystore
           KEYSTORE_FILE="app/my-release-key.keystore"
 
@@ -47,9 +45,6 @@ jobs:
           # -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
 
           
-
-          # BUILDING APK
-          set -ex
           log "🔹 Building signed APK..."
           
           {
