@@ -6,21 +6,18 @@ make_folder() {
 }
           
 try() {
-  CMD=()
-  FAIL=()
-  MODE="cmd"
+  local onfail=false
+  local fail_cmd=()
 
   for arg in "$@"; do
-  if [[ $arg == "onFail" ]]; then
-  MODE="fail"
-  continue
-  fi
-  if [[ $MODE == "cmd" ]]; then
-  CMD+=("$arg")
-  else
-  FAIL+=("$arg")
-  fi
+    if $onfail; then
+      fail_cmd+=("$arg")
+    elif [[ $arg == "onFail" ]]; then
+      onfail=true
+    else
+      cmd+=("$arg")
+    fi
   done
-  # Run main command
-  "${CMD[@]}" || "${FAIL[@]}"
+
+  "${cmd[@]}" || "${fail_cmd[@]}"
 }
