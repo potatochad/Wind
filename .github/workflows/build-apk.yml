@@ -32,12 +32,6 @@ jobs:
             log "Folder '$(pwd)/$1' added/exists"
           }
           
-          make_folder app/my-release-key.keystore
-          
-          KEYSTORE_FILE = "app/my-release-key.keystore"
-
-          onFail() { "$@" || echo "❌ Failed: $*"; }
-
           try() {
             CMD=()
             FAIL=()
@@ -58,8 +52,11 @@ jobs:
             "${CMD[@]}" || "${FAIL[@]}"
           }
 
+          #IMPORTS ABOVEEEEEEE
 
-          try ls -lh "app" onFail log "❌ Folder empty"
+          make_folder app/my-release-key.keystore
+          KEYSTORE_FILE = "app/my-release-key.keystore"
+
 
           if [ ! -f "$KEYSTORE_FILE" ]; then
             log "🔹 Generating keystore at $KEYSTORE_FILE..."
