@@ -26,6 +26,8 @@ jobs:
 
           source ./Imports.sh
 
+          give_gradle_permission
+
           
 
           make_folder app/my-release-key.keystore
