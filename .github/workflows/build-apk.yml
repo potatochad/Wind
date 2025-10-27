@@ -20,6 +20,7 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      # ⬇ Try to restore existing keystore (won’t fail if missing)
       - name: Restore Keystore (if exists)
         id: keystore
         uses: actions/download-artifact@v4
@@ -29,7 +30,7 @@ jobs:
         continue-on-error: true
 
       - name: Prepare Keystore and Build APK
-        run: | 
+        run: |
           set -e
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
           give_gradle_permission
@@ -38,7 +39,6 @@ jobs:
           KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
           log "Keystore path: $KEYSTORE_FILE"
 
-          # Create keystore only if not found
           if [ ! -f "$KEYSTORE_FILE" ]; then
             log "Creating new keystore (first run)..."
             keytool -genkeypair -v \
@@ -64,14 +64,17 @@ jobs:
           log "✅ Build completed"
           ls -lh app/build/outputs/apk/release/ || true
 
+      # ⬇ Always save the keystore (so it persists next run)
       - name: Save Keystore for Future Builds
-        if: steps.keystore.outcome == 'failure'
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: my-release-keystore
           path: app/my-release-key.keystore
 
+      # ⬇ Upload release APK (only if built successfully)
       - name: Upload Release APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: app-release.apk
