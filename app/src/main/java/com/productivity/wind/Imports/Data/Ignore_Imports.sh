@@ -83,14 +83,6 @@ Create_Keystore() {
 Build_APK() {
     set -e
 
-    # Make sure the app folder exists
-    
-    echo "🔹 Restoring keystore from GitHub secret..."
-    echo "$KEYSTORE_BASE64" | tr -d '\n' | base64 --decode > "$KEYSTORE_FILE"
-    else
-        
-    fi
-
     # Build the APK
     ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
         -Pandroid.injected.signing.store.file="$KEYSTORE_FILE" \
