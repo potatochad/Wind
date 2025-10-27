@@ -25,21 +25,16 @@ jobs:
       - name: Prepare Keystore
         run: |
           set -e
-          make_folder() { mkdir -p "$1"; }
-          log() { echo "[$(date +'%H:%M:%S')] $*"; }
-
-          make_folder app
+          mkdir -p app
           KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
 
-          # Restore keystore from base64 if provided
-          if [ -n "$KEYSTORE_BASE64" ] && [ ! -f "$KEYSTORE_FILE" ]; then
-            log "🔹 Restoring keystore from base64 secret..."
-            echo "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_FILE"
-          fi
-
-          # Create keystore if it doesn't exist
-          if [ ! -f "$KEYSTORE_FILE" ]; then
-            log "🔹 Creating new keystore..."
+          if [ -f "$KEYSTORE_FILE" ]; then
+            echo "✅ Keystore exists locally."
+          elif [ -n "$KEYSTORE_BASE64" ]; then
+            echo "🔹 Restoring keystore from GitHub secret..."
+            echo "$KEYSTORE_BASE64" | tr -d '\n' | base64 --decode > "$KEYSTORE_FILE"
+          else
+            echo "🔹 Creating new keystore..."
             keytool -genkeypair -v \
               -keystore "$KEYSTORE_FILE" \
               -storepass "$KEYSTORE_PASSWORD" \
@@ -49,29 +44,19 @@ jobs:
               -keysize 2048 \
               -validity 10000 \
               -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
-          else
-            log "✅ Keystore exists."
+            echo "📦 Base64 of keystore (copy into KEYSTORE_BASE64 secret):"
+            base64 "$KEYSTORE_FILE"
           fi
-
-          # Print keystore base64 for GitHub secret
-          log "📦 Base64 of keystore (copy this to KEYSTORE_BASE64 secret):"
-          base64 "$KEYSTORE_FILE"
 
       - name: Build APK
         run: |
           set -e
           KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
-          log() { echo "[$(date +'%H:%M:%S')] $*"; }
-
-          log "🔹 Building signed APK..."
           ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
             -Pandroid.injected.signing.store.file="$KEYSTORE_FILE" \
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
-
-          log "✅ Build completed"
-          ls -lh app/build/outputs/apk/release/
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
