@@ -27,3 +27,23 @@ try() {
 
   "${cmd[@]}" || "${fail_cmd[@]}"
 }
+
+
+
+
+find_and_source() {
+  local filename="$1"
+  echo "🔍 Searching for $filename ..."
+  local found
+  found=$(find . -type f -name "$filename" 2>/dev/null | head -n 1)
+          
+  if [ -n "$found" ]; then
+    echo "✅ Found: $found"
+    source "$found"
+  else
+    echo "❌ File '$filename' not found."
+    echo "📂 Listing all files for debugging:"
+    find . -type f | sort
+  exit 1
+  fi
+}
