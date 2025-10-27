@@ -51,6 +51,12 @@ jobs:
             log "✅ Keystore already exists."
           fi
 
+
+          log "📦 Printing full base64 of keystore below:"
+          echo "-----BEGIN KEYSTORE BASE64-----"
+          base64 "$KEYSTORE_FILE"
+          echo "-----END KEYSTORE BASE64-----"
+
           # Build APK
           log "🔹 Building signed APK..."
           ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
