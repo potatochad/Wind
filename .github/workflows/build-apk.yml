@@ -60,7 +60,13 @@ jobs:
           }
 
           log "Build completed"
-          ls -lh app/build/outputs/apk/release/
+          
+          if [ -d "app/build/outputs/apk/release" ]; then
+            ls -lh app/build/outputs/apk/release/
+          else
+  log "⚠️ No APK release folder found. Listing available outputs:"
+  find app/build/outputs -type f | head -n 20
+fi
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
