@@ -23,7 +23,7 @@ jobs:
       - name: Prepare Keystore and Build APK
         run: |
           set -e
-
+          
           # Source helper functions
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
 
