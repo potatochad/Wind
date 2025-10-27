@@ -7,11 +7,10 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64_PASWORD }}
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
       KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-      KEY_PASWORD: ${{ secrets.KEY_PASSWORD }}
-
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
     steps:
       - name: Checkout code
@@ -23,52 +22,56 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Prepare Keystore and Build APK
+      - name: Prepare Keystore
         run: |
           set -e
-          
-          # Source helper functions
-          source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
+          make_folder() { mkdir -p "$1"; }
+          log() { echo "[$(date +'%H:%M:%S')] $*"; }
 
-          give_gradle_permission
-
-          # Ensure app folder exists
           make_folder app
-
           KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
-          log "Keystore path: $KEYSTORE_FILE"
+
+          # Restore keystore from base64 if provided
+          if [ -n "$KEYSTORE_BASE64" ] && [ ! -f "$KEYSTORE_FILE" ]; then
+            log "🔹 Restoring keystore from base64 secret..."
+            echo "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_FILE"
+          fi
 
           # Create keystore if it doesn't exist
           if [ ! -f "$KEYSTORE_FILE" ]; then
-            log "Creating new keystore..."
+            log "🔹 Creating new keystore..."
             keytool -genkeypair -v \
               -keystore "$KEYSTORE_FILE" \
               -storepass "$KEYSTORE_PASSWORD" \
               -alias "$KEY_ALIAS" \
-              -keypass "$KEYSTORE_PASSWORD" \
+              -keypass "$KEY_PASSWORD" \
               -keyalg RSA \
               -keysize 2048 \
               -validity 10000 \
               -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
           else
-            log "✅ Keystore already exists."
+            log "✅ Keystore exists."
           fi
 
-
-          log "📦 Printing full base64 of keystore below:"
-          echo "-----BEGIN KEYSTORE BASE64-----"
+          # Print keystore base64 for GitHub secret
+          log "📦 Base64 of keystore (copy this to KEYSTORE_BASE64 secret):"
           base64 "$KEYSTORE_FILE"
-          echo "-----END KEYSTORE BASE64-----"
 
-          # Build APK
+      - name: Build APK
+        run: |
+          set -e
+          KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
+          log() { echo "[$(date +'%H:%M:%S')] $*"; }
+
           log "🔹 Building signed APK..."
           ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
             -Pandroid.injected.signing.store.file="$KEYSTORE_FILE" \
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-            -Pandroid.injected.signing.key.password="$KEYSTORE_PASSWORD"
+            -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
 
           log "✅ Build completed"
+          ls -lh app/build/outputs/apk/release/
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
