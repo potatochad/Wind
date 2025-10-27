@@ -20,24 +20,27 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Restore Keystore (if exists)
+        id: keystore
+        uses: actions/download-artifact@v4
+        with:
+          name: my-release-keystore
+          path: app/
+        continue-on-error: true
+
       - name: Prepare Keystore and Build APK
         run: |
           set -e
-          
-          # Source helper functions
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
-
           give_gradle_permission
 
-          # Ensure app folder exists
           make_folder app
-
           KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
           log "Keystore path: $KEYSTORE_FILE"
 
-          # Create keystore if it doesn't exist
+          # Create keystore only if not found
           if [ ! -f "$KEYSTORE_FILE" ]; then
-            log "Creating new keystore..."
+            log "Creating new keystore (first run)..."
             keytool -genkeypair -v \
               -keystore "$KEYSTORE_FILE" \
               -storepass "$KEYSTORE_PASSWORD" \
@@ -46,12 +49,11 @@ jobs:
               -keyalg RSA \
               -keysize 2048 \
               -validity 10000 \
-              -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
+              -dname "CN=Wind, OU=Wind, O=Wind, L=Earth, ST=Nowhere, C=US"
           else
-            log "✅ Keystore already exists."
+            log "✅ Using existing keystore."
           fi
 
-          # Build APK
           log "🔹 Building signed APK..."
           ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
             -Pandroid.injected.signing.store.file="$KEYSTORE_FILE" \
@@ -60,14 +62,14 @@ jobs:
             -Pandroid.injected.signing.key.password="$KEYSTORE_PASSWORD"
 
           log "✅ Build completed"
+          ls -lh app/build/outputs/apk/release/ || true
 
-          # List outputs
-          if [ -d "app/build/outputs/apk/release" ]; then
-            ls -lh app/build/outputs/apk/release/
-          else
-            log "⚠️ No release folder found. Listing outputs:"
-            find app/build/outputs -type f | head -n 20
-          fi
+      - name: Save Keystore for Future Builds
+        if: steps.keystore.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-release-keystore
+          path: app/my-release-key.keystore
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
