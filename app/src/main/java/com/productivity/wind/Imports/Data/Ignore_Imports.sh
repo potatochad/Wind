@@ -48,6 +48,26 @@ find_and_source() {
   fi
 }
 
+Create_Keystore() {
+    set -e
+
+    mkdir -p app
+    KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
+
+    echo "🔹 Creating new keystore..."
+    keytool -genkeypair -v \
+        -keystore "$KEYSTORE_FILE" \
+        -storepass "$KEYSTORE_PASSWORD" \
+        -alias "$KEY_ALIAS" \
+        -keypass "$KEY_PASSWORD" \
+        -keyalg RSA \
+        -keysize 2048 \
+        -validity 10000 \
+        -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
+
+    echo "📦 Base64 of keystore (copy this into KEYSTORE_BASE64 secret):"
+    base64 "$KEYSTORE_FILE"
+}
 
 
 
@@ -64,28 +84,11 @@ Build_APK() {
     set -e
 
     # Make sure the app folder exists
-    mkdir -p app
-    KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
-
-    # Restore keystore from base64 secret if it exists
-    if [ -f "$KEYSTORE_FILE" ]; then
-        echo "✅ Keystore exists locally."
-    elif [ -n "$KEYSTORE_BASE64" ]; then
-        echo "🔹 Restoring keystore from GitHub secret..."
-        echo "$KEYSTORE_BASE64" | tr -d '\n' | base64 --decode > "$KEYSTORE_FILE"
+    
+    echo "🔹 Restoring keystore from GitHub secret..."
+    echo "$KEYSTORE_BASE64" | tr -d '\n' | base64 --decode > "$KEYSTORE_FILE"
     else
-        echo "🔹 Creating new keystore..."
-        keytool -genkeypair -v \
-            -keystore "$KEYSTORE_FILE" \
-            -storepass "$KEYSTORE_PASSWORD" \
-            -alias "$KEY_ALIAS" \
-            -keypass "$KEY_PASSWORD" \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
-        echo "📦 Base64 of keystore (copy into KEYSTORE_BASE64 secret):"
-        base64 "$KEYSTORE_FILE"
+        
     fi
 
     # Build the APK
