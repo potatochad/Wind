@@ -58,12 +58,7 @@ jobs:
               -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
               -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
               -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
-          } || {
-            log "Gradle build failed!"
-            log "Last 50 log lines:"
-            tail -n 50 app/build/reports/*/*log* 2>/dev/null || echo "No log files found."
-            exit 1
-          }
+          } || { log "failed to build"; exit }
 
           log "Build completed"
 
