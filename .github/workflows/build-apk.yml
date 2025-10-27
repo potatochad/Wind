@@ -9,7 +9,6 @@ jobs:
     env:
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
       KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
     steps:
       - name: Checkout code
@@ -25,47 +24,48 @@ jobs:
         run: |
           set -e
 
+          # Source helper functions
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
 
           give_gradle_permission
 
-          # Create keystore path
+          # Ensure app folder exists
           make_folder app
-          
+
           KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
           log "Keystore path: $KEYSTORE_FILE"
 
-          # Generate or reuse keystore
+          # Create keystore if it doesn't exist
           if [ ! -f "$KEYSTORE_FILE" ]; then
             log "Creating new keystore..."
             keytool -genkeypair -v \
               -keystore "$KEYSTORE_FILE" \
               -storepass "$KEYSTORE_PASSWORD" \
               -alias "$KEY_ALIAS" \
-              -keypass "$KEY_PASSWORD" \
+              -keypass "$KEYSTORE_PASSWORD" \
               -keyalg RSA \
               -keysize 2048 \
               -validity 10000 \
               -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
           else
-            log "Keystore already exists."
+            log "✅ Keystore already exists."
           fi
 
-          log "Building signed APK..."
-          {
-            ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-              -Pandroid.injected.signing.store.file="$KEYSTORE_FILE" \
-              -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
-              -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-              -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
-          } || { log "failed to build"; exit }
+          # Build APK
+          log "🔹 Building signed APK..."
+          ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
+            -Pandroid.injected.signing.store.file="$KEYSTORE_FILE" \
+            -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$KEYSTORE_PASSWORD"
 
-          log "Build completed"
+          log "✅ Build completed"
 
+          # List outputs
           if [ -d "app/build/outputs/apk/release" ]; then
             ls -lh app/build/outputs/apk/release/
           else
-            log "No release folder found. Showing what exists:"
+            log "⚠️ No release folder found. Listing outputs:"
             find app/build/outputs -type f | head -n 20
           fi
 
