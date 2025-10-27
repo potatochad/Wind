@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env: 
+    env:
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
       KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
@@ -18,53 +18,59 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: 17
 
-      - name: Prepare Keystore with logs
+      - name: Prepare Keystore and Build APK
         run: |
+          set -e
+
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
 
           give_gradle_permission
 
-          make_folder app/my-release-key.keystore
-          KEYSTORE_FILE="app/my-release-key.keystore"
-
-
-          log "Generating keystore at $KEYSTORE_FILE..."
+          # Create keystore path
+          make_folder app
           
-          # keytool -genkeypair -v \
-          # -keystore "$KEYSTORE_FILE" \
-          # -storepass "$KEYSTORE_PASSWORD" \
-          # -alias "$KEY_ALIAS" \
-          # -keypass "$KEY_PASSWORD" \
-          # -keyalg RSA \
-          # -keysize 2048 \
-          # -validity 10000 \
-          # -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
+          KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
+          log "Keystore path: $KEYSTORE_FILE"
 
-          
-          log "🔹 Building signed APK..."
-          
+          # Generate or reuse keystore
+          if [ ! -f "$KEYSTORE_FILE" ]; then
+            log "Creating new keystore..."
+            keytool -genkeypair -v \
+              -keystore "$KEYSTORE_FILE" \
+              -storepass "$KEYSTORE_PASSWORD" \
+              -alias "$KEY_ALIAS" \
+              -keypass "$KEY_PASSWORD" \
+              -keyalg RSA \
+              -keysize 2048 \
+              -validity 10000 \
+              -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
+          else
+            log "Keystore already exists."
+          fi
+
+          log "Building signed APK..."
           {
             ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-              -Pandroid.injected.signing.store.file=app/my-release-key.keystore \
+              -Pandroid.injected.signing.store.file="$KEYSTORE_FILE" \
               -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
               -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
               -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
           } || {
             log "Gradle build failed!"
-            log "Listing app folder contents for debugging:"
+            log "Last 50 log lines:"
             tail -n 50 app/build/reports/*/*log* 2>/dev/null || echo "No log files found."
             exit 1
           }
 
           log "Build completed"
-          
+
           if [ -d "app/build/outputs/apk/release" ]; then
             ls -lh app/build/outputs/apk/release/
           else
-            log "⚠️ No APK release folder found. Listing available outputs:"
+            log "No release folder found. Showing what exists:"
             find app/build/outputs -type f | head -n 20
           fi
 
