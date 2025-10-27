@@ -7,8 +7,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64_PASWORD }}
       KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
       KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASWORD: ${{ secrets.KEY_PASSWORD }}
+
 
     steps:
       - name: Checkout code
