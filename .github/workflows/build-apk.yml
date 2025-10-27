@@ -23,7 +23,6 @@ jobs:
 
       - name: Prepare Keystore with logs
         run: |
-
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
 
           give_gradle_permission
@@ -33,7 +32,7 @@ jobs:
 
 
           log "Generating keystore at $KEYSTORE_FILE..."
-          # Catch errors for better understanding
+          
           # keytool -genkeypair -v \
           # -keystore "$KEYSTORE_FILE" \
           # -storepass "$KEYSTORE_PASSWORD" \
