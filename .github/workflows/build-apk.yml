@@ -20,27 +20,24 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # ⬇ Try to restore existing keystore (won’t fail if missing)
-      - name: Restore Keystore (if exists)
-        id: keystore
-        uses: actions/download-artifact@v4
-        with:
-          name: my-release-keystore
-          path: app/
-        continue-on-error: true
-
       - name: Prepare Keystore and Build APK
         run: |
           set -e
+          
+          # Source helper functions
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
+
           give_gradle_permission
 
+          # Ensure app folder exists
           make_folder app
+
           KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
           log "Keystore path: $KEYSTORE_FILE"
 
+          # Create keystore if it doesn't exist
           if [ ! -f "$KEYSTORE_FILE" ]; then
-            log "Creating new keystore (first run)..."
+            log "Creating new keystore..."
             keytool -genkeypair -v \
               -keystore "$KEYSTORE_FILE" \
               -storepass "$KEYSTORE_PASSWORD" \
@@ -49,11 +46,12 @@ jobs:
               -keyalg RSA \
               -keysize 2048 \
               -validity 10000 \
-              -dname "CN=Wind, OU=Wind, O=Wind, L=Earth, ST=Nowhere, C=US"
+              -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
           else
-            log "✅ Using existing keystore."
+            log "✅ Keystore already exists."
           fi
 
+          # Build APK
           log "🔹 Building signed APK..."
           ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
             -Pandroid.injected.signing.store.file="$KEYSTORE_FILE" \
@@ -62,19 +60,8 @@ jobs:
             -Pandroid.injected.signing.key.password="$KEYSTORE_PASSWORD"
 
           log "✅ Build completed"
-          ls -lh app/build/outputs/apk/release/ || true
 
-      # ⬇ Always save the keystore (so it persists next run)
-      - name: Save Keystore for Future Builds
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: my-release-keystore
-          path: app/my-release-key.keystore
-
-      # ⬇ Upload release APK (only if built successfully)
       - name: Upload Release APK
-        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: app-release.apk
