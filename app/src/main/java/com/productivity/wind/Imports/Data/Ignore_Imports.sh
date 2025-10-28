@@ -10,6 +10,11 @@ give_gradle_permission() {
   ls -lh gradlew
 }
 
+Errors_Only() {
+    --quiet 2>&1 | grep -i "error"
+}
+
+
           
 try() {
   local onfail=false
@@ -97,7 +102,7 @@ Build_APK() {
         -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
         -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
         -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-        --quiet 2>&1 | grep -i "error"
+        Errors_Only
 
     echo "✅ APK build finished! Find it in app/build/outputs/apk/release/"
 }
