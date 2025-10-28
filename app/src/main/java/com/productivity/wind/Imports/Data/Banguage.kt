@@ -153,6 +153,13 @@ inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotState
 
 
 
+@Composable
+fun TxtFileSaver(onFileCreated: (Uri?) -> Unit): ManagedActivityResultLauncher<String, Uri?> {
+    return rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument("text/plain"),
+        onResult = { uri -> onFileCreated(uri) }
+    )
+}
 
 fun getJavaClass(bar: ClassVar<Settings, Any?>): Class<*>? {
     var name = bar.name
