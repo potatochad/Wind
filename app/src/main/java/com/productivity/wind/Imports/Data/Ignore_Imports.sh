@@ -11,7 +11,8 @@ give_gradle_permission() {
 }
 
 CleanCommentsApk() {
-#2>&1 | grep -E "^(e:|FAILURE:|> Task .+ FAILED)"
+  :
+  # 2>&1 | grep -E "^(e:|FAILURE:|> Task .+ FAILED)"
 }
 
 
