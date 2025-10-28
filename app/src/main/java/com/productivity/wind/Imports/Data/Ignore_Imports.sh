@@ -52,7 +52,7 @@ set -e
 KEYSTORE_PASSWORD="123456"
 KEY_ALIAS="my-key"
 KEY_PASSWORD="123456"
-KEYSTORE_PATH="app/my-release-key.keystore"
+KEYSTORE_PATH="$(pwd)/app/my-release-key.keystore"
 
 Create_Keystore() {
     mkdir -p app
