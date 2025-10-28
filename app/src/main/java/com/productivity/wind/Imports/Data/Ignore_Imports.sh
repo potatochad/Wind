@@ -72,8 +72,8 @@ Create_Keystore() {
 
 
 
-        git config user.email "ci@example.com"
-        git config user.name "CI Bot"
+        git config user.email "narvydas.burinskas@gmail.com"
+        git config user.name "potatochad"
 
         # Commit & push automatically
         echo "📦 Adding keystore to git..."
