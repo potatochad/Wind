@@ -85,7 +85,7 @@ import com.productivity.wind.Imports.*
 import java.util.*
 import com.productivity.wind.R
 import kotlin.reflect.full.*
-import androidx.activity.result.*
+import androidx.activity.result.ManagedActivityResultLauncher
 
 val gson = Gson()
 val yes = true
