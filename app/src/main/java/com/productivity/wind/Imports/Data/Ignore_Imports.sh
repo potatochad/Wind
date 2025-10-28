@@ -103,12 +103,12 @@ Build_APK() {
 
     echo "🚀 Building signed APK..."
 
-    # Run gradle and filter only warnings/errors
+    # Run gradle and filter only errors
     ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
         -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
         -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
         -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" 2>&1 | grep -E "^(w:|e:|FAILURE:|> Task .+ FAILED)"
+        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" 2>&1 | grep -E "^(e:|FAILURE:|> Task .+ FAILED)"
 
     if [ "${PIPESTATUS[0]}" -ne 0 ]; then
         echo "❌ Build failed! Check the errors above."
@@ -117,3 +117,5 @@ Build_APK() {
         echo "✅ APK build finished! Find it in app/build/outputs/apk/release/"
     fi
 }
+
+
