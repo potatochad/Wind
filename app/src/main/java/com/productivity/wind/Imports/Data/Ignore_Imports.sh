@@ -1,5 +1,5 @@
 log() { echo "🔹 $*"; }
- 
+  
 make_folder() {
   mkdir -p "$1"
   log "Folder '$(pwd)/$1' added/exists"
