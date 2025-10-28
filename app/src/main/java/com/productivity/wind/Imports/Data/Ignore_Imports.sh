@@ -10,9 +10,14 @@ give_gradle_permission() {
   ls -lh gradlew
 }
 
-Errors_Only() {
-    --quiet 2>&1 | grep -i "error"
+removeLogs() {
+  grep -v "$1"
 }
+
+keepLogs() {
+  grep -i "$1" 
+}
+
 
 
           
@@ -103,7 +108,9 @@ Build_APK() {
             -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
-    } 2>&1 | grep -i "error" | grep -v "specific log text to hide" || true
+    } || {
+    
+    }
 
     echo "✅ APK build finished! Find it in app/build/outputs/apk/release/"
 }
