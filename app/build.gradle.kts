@@ -106,8 +106,6 @@ ktlint {
 
 
 dependencies {
-    implementation("androidx.activity:activity-ktx:1.9.0")
-
     implementation("androidx.compose.foundation:foundation:1.9.2")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
