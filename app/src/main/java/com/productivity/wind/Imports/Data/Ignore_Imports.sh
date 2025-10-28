@@ -48,46 +48,48 @@ find_and_source() {
   fi
 }
 
+set -e
+KEYSTORE_PASSWORD="123456"
+KEY_ALIAS="my-key"
+KEY_PASSWORD="123456"
+KEYSTORE_PATH="app/my-release-key.keystore"
+
 Create_Keystore() {
-
     mkdir -p app
-    KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
 
-    echo "🔹 Creating new keystore..."
-    keytool -genkeypair -v \
-        -keystore "$KEYSTORE_FILE" \
-        -storepass "$KEYSTORE_PASSWORD" \
-        -alias "$KEY_ALIAS" \
-        -keypass "$KEY_PASSWORD" \
-        -keyalg RSA \
-        -keysize 2048 \
-        -validity 10000 \
-        -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
+    if [ ! -f "$KEYSTORE_PATH" ]; then
+        echo "🔹 Keystore not found, creating new one..."
+        keytool -genkeypair -v \
+            -keystore "$KEYSTORE_PATH" \
+            -storepass "$KEYSTORE_PASSWORD" \
+            -alias "$KEY_ALIAS" \
+            -keypass "$KEY_PASSWORD" \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
+        echo "✅ Keystore created at $KEYSTORE_PATH"
 
-    echo "📦 Base64 of keystore (copy this into KEYSTORE_BASE64 secret):"
-    base64 "$KEYSTORE_FILE"
+        # Commit & push automatically
+        echo "📦 Adding keystore to git..."
+        git add "$KEYSTORE_PATH"
+        git commit -m "Add generated keystore"
+        git push
+        echo "✅ Keystore committed and pushed!"
+    else
+        echo "🔹 Keystore already exists, using existing file."
+    fi
 }
 
-
-
 Build_APK() {
-    set -e
-
     Create_Keystore
 
+    echo "🚀 Building signed APK..."
     ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-        -Pandroid.injected.signing.store.file="$KEYSTORE_FILE" \
+        -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
         -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
         -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
         -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
 
-    echo "✅ APK build finished!"
+    echo "✅ APK build finished! Find it in app/build/outputs/apk/release/"
 }
-
-
-
-
-
-
-
-
