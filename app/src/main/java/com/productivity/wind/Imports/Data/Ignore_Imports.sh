@@ -49,7 +49,6 @@ find_and_source() {
 }
 
 Create_Keystore() {
-    set -e
 
     mkdir -p app
     KEYSTORE_FILE="$(pwd)/app/my-release-key.keystore"
@@ -71,19 +70,11 @@ Create_Keystore() {
 
 
 
-
-
-
-
-
-
-
-
-
 Build_APK() {
     set -e
 
-    # Build the APK
+    Create_Keystore
+
     ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
         -Pandroid.injected.signing.store.file="$KEYSTORE_FILE" \
         -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
