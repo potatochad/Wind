@@ -70,6 +70,11 @@ Create_Keystore() {
             -dname "CN=Temp, OU=Temp, O=Temp, L=Temp, S=Temp, C=US"
         echo "✅ Keystore created at $KEYSTORE_PATH"
 
+
+
+        git config user.email "ci@example.com"
+        git config user.name "CI Bot"
+
         # Commit & push automatically
         echo "📦 Adding keystore to git..."
         git add -f "$KEYSTORE_PATH"
