@@ -85,8 +85,6 @@ import com.productivity.wind.Imports.*
 import java.util.*
 import com.productivity.wind.R
 import kotlin.reflect.full.*
-import androidx.activity.result.ManagedActivityResultLauncher
-
 
 
 
@@ -154,15 +152,6 @@ inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotState
 
 
 
-
-
-@Composable
-fun TxtFileSaver(onFileCreated: (Uri?) -> Unit): ManagedActivityResultLauncher<String, Uri?> {
-    return rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.CreateDocument("text/plain"),
-        onResult = { uri -> onFileCreated(uri) }
-    )
-}
 
 fun getJavaClass(bar: ClassVar<Settings, Any?>): Class<*>? {
     var name = bar.name
