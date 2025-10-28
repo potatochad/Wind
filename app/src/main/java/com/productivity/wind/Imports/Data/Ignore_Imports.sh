@@ -58,7 +58,7 @@ find_and_source() {
   fi
 }
 
-set -e
+
 KEYSTORE_PASSWORD="123456"
 KEY_ALIAS="my-key"
 KEY_PASSWORD="123456"
@@ -102,17 +102,18 @@ Build_APK() {
     Create_Keystore
 
     echo "🚀 Building signed APK..."
-    {
-        ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-            -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
-            -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
-            -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-            -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
-    } || {
-      keepLogs "file"
-      removeLogs "> Task :app"
-    }
 
-    echo "✅ APK build finished! Find it in app/build/outputs/apk/release/"
+    # Run gradle and filter only warnings/errors
+    ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
+        -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
+        -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
+        -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" 2>&1 | grep -E "^(w:|e:|FAILURE:|> Task .+ FAILED)"
+
+    if [ "${PIPESTATUS[0]}" -ne 0 ]; then
+        echo "❌ Build failed! Check the errors above."
+        return 1
+    else
+        echo "✅ APK build finished! Find it in app/build/outputs/apk/release/"
+    fi
 }
-
