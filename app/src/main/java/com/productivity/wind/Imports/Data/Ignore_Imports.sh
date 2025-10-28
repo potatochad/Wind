@@ -86,6 +86,8 @@ Create_Keystore() {
     fi
 }
 
+
+
 Build_APK() {
     Create_Keystore
 
@@ -94,7 +96,8 @@ Build_APK() {
         -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
         -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
         -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-        -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
+        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
+        --quiet 2>&1 | grep -i "error"
 
     echo "✅ APK build finished! Find it in app/build/outputs/apk/release/"
 }
