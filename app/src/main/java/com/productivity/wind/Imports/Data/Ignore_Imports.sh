@@ -72,7 +72,7 @@ Create_Keystore() {
 
         # Commit & push automatically
         echo "📦 Adding keystore to git..."
-        git add "$KEYSTORE_PATH"
+        git add -f "$KEYSTORE_PATH"
         git commit -m "Add generated keystore"
         git push
         echo "✅ Keystore committed and pushed!"
