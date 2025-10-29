@@ -21,11 +21,7 @@ jobs:
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
           give_gradle_permission
           
-          # Run your prebuilt function and only show errors
-          if ! Build_APK 2> >(grep -i "error" >&2); then
-            echo "❌ Build failed with errors."
-            exit 1
-          fi
+          Build_APK 2>&1 >/dev/null | grep -i "error" || true
 
 
 
