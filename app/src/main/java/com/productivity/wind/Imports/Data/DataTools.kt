@@ -107,7 +107,7 @@ fun BsaveToFile(trigger: Bool) {
 }
 @Composable
 fun BrestoreFromFile(trigger: m_<Bool>) {
-    val context = LocalContext.current
+    val ctx = LocalContext.current
 
     val launcher = rememberUpdatedState(
         newValue = rememberLauncherForActivityResult(
@@ -115,9 +115,9 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
         ) { uri ->
             if (uri != null) {
                 try {
-                    val fileMap = mutableMapOf<String, String>()
+                    val fileMap = mutableMapOf<Str, Str>()
 
-                    context.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
+                    ctx.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
                         lines.forEach { line ->
                             if (!line.contains("=")) { Vlog("Error...corrupted data"); return@forEach }
                             val (key, value) = line.split("=", limit = 2)
