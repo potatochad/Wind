@@ -47,9 +47,13 @@ fun BsaveToFile(trigger: Boolean) {
     val ctx = LocalContext.current
     val launcher = RememberLauncher(MakeTxtFile) {
         it?.let {
-            getStoredData().all.forEach { (key, value) ->
-                writeToFile(ctx, it, "$key=$value\n")
+            val allData = getStoredData().all
+            val text = buildString {
+                allData.forEach { (key, value) ->
+                    append("$key=$value\n")
+                }
             }
+            writeToFile(ctx, it, text)
         }
     }
     RunOnce(trigger) {
