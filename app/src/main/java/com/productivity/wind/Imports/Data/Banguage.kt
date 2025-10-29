@@ -87,9 +87,7 @@ import com.productivity.wind.R
 import kotlin.reflect.full.*
 
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.ManagedActivityResultLauncher
-
-
+import androidx.activity.result.ActivityResultLauncher
 
 val gson = Gson()
 val yes = true
