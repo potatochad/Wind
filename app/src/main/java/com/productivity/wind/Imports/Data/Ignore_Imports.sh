@@ -10,10 +10,6 @@ give_gradle_permission() {
   ls -lh gradlew
 }
 
-CleanCommentsApk() {
-  2>&1 | grep -E "^(e:|FAILURE:|> Task .+ FAILED)"
-}
-
 
           
 try() {
@@ -103,15 +99,22 @@ Build_APK() {
         -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
         -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
         -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" 
-        CleanCommentsApk()
+        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
+        2>&1 | grep -E "^(e:|FAILURE:|> Task .+ FAILED)"
 
-    if [ "${PIPESTATUS[0]}" -ne 0 ]; then
-        echo "❌ Build failed! Check the errors above."
-        return 1
-    else
-        echo "✅ APK build finished! Find it in app/build/outputs/apk/release/"
-    fi
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
