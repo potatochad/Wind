@@ -94,26 +94,26 @@ Build_APK() {
 
     log "🚀 Building signed APK..."
 
-    # Run Gradle, hide normal output, show only errors
+    # Run Gradle quietly — only show errors if it fails
     if ! ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
         -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
         -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
         -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-        2>&1 | grep -E "FAILURE|ERROR|Exception"; then
+        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" > /dev/null; then
+
         log "❌ Build failed!"
+        echo "---------------- ERROR DETAILS ----------------"
+        ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
+            -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
+            -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$KEY_PASSWORD" --stacktrace --info | grep "e:"
+        echo "-----------------------------------------------"
         exit 1
     else
         log "✅ Build finished successfully!"
     fi
 }
-
-
-
-
-
-
-
 
 
 
