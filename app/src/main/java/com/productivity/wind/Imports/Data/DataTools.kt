@@ -128,8 +128,8 @@ object SettingsSaved {
         initOnce = true
 
 
-        getClass(Bar).forEach { bar ->
-            val bar = bar as ClassVar<Settings, Any?>
+        getClass(Bar).forEach { barIdk ->
+            val bar = barIdk as ClassVar<Settings, Any?>
             val gotValue = Data.getAny(bar) ?: return@forEach
 
             try {
@@ -161,9 +161,9 @@ object SettingsSaved {
     fun initFromFile(map: Map<Str, Str>) {
         val Data = getStoredData()
 
-        getClass(Bar).forEach { bar ->
-            val bar = bar as ClassVar<Settings, Any?>
-            val outputRaw = map[Bar.name]
+        getClass(Bar).forEach { barIdk ->
+            val bar = barIdk as ClassVar<Settings, Any?>
+            val outputRaw = map[bar.name]
             val gotValue = outputRaw
 
             try {
