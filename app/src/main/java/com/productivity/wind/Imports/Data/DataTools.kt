@@ -114,13 +114,7 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
                 try {
                     val fileMap = mutableMapOf<Str, Str>()
 
-                    ctx.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
-                        lines.forEach { line ->
-                            if (!line.contains("=")) { Vlog("Error...corrupted data"); return@forEach }
-                            val (key, value) = line.split("=", limit = 2)
-                            fileMap[key] = value
-                        }
-                    }
+                    TxtFileToMap(ctx, uri, fileMap)
 
                     SettingsSaved.initFromFile(fileMap)
                 } catch (e: Exception) {
