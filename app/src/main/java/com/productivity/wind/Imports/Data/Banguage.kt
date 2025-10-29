@@ -235,4 +235,20 @@ fun TxtFileToMap(ctx: Context, uri: Uri, fileMap: MutableMap<String, String>) {
 }
 
 
+// Extension to add new items
+fun <T : Any> SnapshotStateList<T>.new(item: T) {
+    this.add(item)
+}
 
+// Edit by index or object reference
+fun <T : Copyable<T>> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
+    val index = indexOf(item)
+    if (index != -1) {
+        // create a modified copy
+        val copy = item.copySelf().apply(block)
+        // assign it back to the same index to trigger recomposition
+        this[index] = copy
+        // tiny trick: touch the list itself to force Compose
+        this[index] = this[index]
+    }
+}
