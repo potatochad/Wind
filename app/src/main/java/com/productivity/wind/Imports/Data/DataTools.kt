@@ -88,9 +88,7 @@ fun BsaveToFile2(trigger: Boolean) {
     val ctx = LocalContext.current
     RunOnce(trigger) {
         if (trigger) {
-            rememberLauncherForActivityResult(
-                ActivityResultContracts.CreateDocument("text/plain")
-            ) { uri ->
+            rememberLauncherForActivityResult(MakeTxtFile) { uri ->
                 uri?.let {
                     getStoredData().all.forEach { (k, v) ->
                         ctx.contentResolver.openOutputStream(it)?.bufferedWriter()?.use { w ->
@@ -106,9 +104,7 @@ fun BsaveToFile2(trigger: Boolean) {
 @Composable
 fun BsaveToFile(trigger: Bool) {
     val ctx = LocalContext.current
-    val launcher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("text/plain")
-    ) { uri ->
+    val launcher = rememberLauncherForActivityResult(MakeTxtFile) { uri ->
         if (uri != null) {
             
             val Data = getStoredData()
