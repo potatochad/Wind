@@ -36,7 +36,7 @@ import kotlin.reflect.jvm.javaField
 @Suppress("UNCHECKED_CAST")
 
 
-fun writeToFile(ctx: Context, uri: Uri, text: String) {
+fun writeToFile(ctx: Context, uri: Uri, text: Str) {
     ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { writer ->
         writer.write(text)
     }
