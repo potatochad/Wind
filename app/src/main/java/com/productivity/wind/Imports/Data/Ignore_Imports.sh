@@ -93,18 +93,11 @@ Build_APK() {
 
     log "🚀 Building signed APK..."
 
-    output=$(./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
+    ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
         -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
         -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
         -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" 2>&1)
-    status=$?
-
-    if [ $status -ne 0 ]; then
-        log "❌ Build failed"
-        echo "$output" | grep -i "error" || echo "$output"
-        exit $status
-    fi
+        -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
 }
 
 
