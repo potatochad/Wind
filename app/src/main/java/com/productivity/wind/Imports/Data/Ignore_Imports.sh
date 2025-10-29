@@ -91,8 +91,6 @@ Create_Keystore() {
 Build_APK() {
     Create_Keystore
 
-    set -e
-
     log "🚀 Building signed APK..."
 
     ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
