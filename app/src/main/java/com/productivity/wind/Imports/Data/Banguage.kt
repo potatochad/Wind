@@ -203,6 +203,12 @@ inline fun <reified T> SharedPreferences.Editor.putAny(name: Str, value: T?) {
 
 
 
+@Composable
+fun RunOnce(key1: Any? = Unit, block: suspend () -> Unit) {
+    LaunchedEffect(key1) {
+        block()
+    }
+}
 
 
 
