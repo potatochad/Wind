@@ -51,8 +51,11 @@ fun BsaveToFile(trigger: Boolean) {
             val allData = getStoredData().all
             val text = buildString {
                 allData.forEach { (key, value) ->
-                    append("$key=$value\n")
+                    appendLine("$key=$value")
                 }
+                appendLine()
+                appendLine("------ALL DATA, no filter------")
+                append(allData.toString())
             }
             writeToFile(ctx, it, text)
         }
