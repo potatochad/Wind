@@ -98,11 +98,12 @@ Build_APK() {
 
     # Run Gradle quietly — only show errors if it fails
     ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-        -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
-        -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
-        -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-        --warning-mode=none --quiet
+      -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
+      -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
+      -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+      -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
+      --warning-mode=none --quiet || { log "❌ Build failed"; exit 1; }
+
 }
 
 
