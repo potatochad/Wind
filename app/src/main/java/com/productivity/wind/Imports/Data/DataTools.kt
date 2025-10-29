@@ -83,12 +83,31 @@ fun FindBar(statePath: Str): Pair<Any, ClassVar<Any, Str>>? {
 
 //endregion Vals/ Vars FOR DATA
 
+@Composable
+fun BsaveToFile2(trigger: Boolean) {
+    val ctx = LocalContext.current
+    RunOnce(trigger) {
+        if (trigger) {
+            rememberLauncherForActivityResult(
+                ActivityResultContracts.CreateDocument("text/plain")
+            ) { uri ->
+                uri?.let {
+                    getStoredData().all.forEach { (k, v) ->
+                        ctx.contentResolver.openOutputStream(it)?.bufferedWriter()?.use { w ->
+                            w.write("$k=$v\n")
+                        }
+                    }
+                }
+            }.launch("WindBackUp.txt")
+        }
+    }
+}
 
 @Composable
 fun BsaveToFile(trigger: Bool) {
     val ctx = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.CreateDocument("text/plain")
+        ActivityResultContracts.CreateDocument("text/plain")
     ) { uri ->
         if (uri != null) {
             
