@@ -210,6 +210,7 @@ fun RunOnce(key1: Any? = Unit, block: suspend () -> Unit) {
     }
 }
 
+val MakeTxtFile = ActivityResultContracts.CreateDocument("text/plain")
 
 
 
