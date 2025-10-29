@@ -220,9 +220,10 @@ val MakeTxtFile = ActivityResultContracts.CreateDocument("text/plain")
 fun <I, O> RememberLauncher(
     contract: ActivityResultContract<I, O>,
     onResult: (O) -> Unit
-): ManagedActivityResultLauncher<I, O> {
+): ActivityResultLauncher<I> {
     return rememberLauncherForActivityResult(contract, onResult)
 }
+
 
 fun TxtFileToMap(ctx: Context, uri: Uri, fileMap: MutableMap<Str, Str>) {
     ctx.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
