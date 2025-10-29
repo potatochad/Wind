@@ -21,8 +21,10 @@ jobs:
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
           give_gradle_permission
           
-          Build_APK 2>&1 >/dev/null | grep -i "error" || true
-
+          if ! Build_APK 2>&1 | tee >(grep -i "error" >&2) >/dev/null; then
+            echo "❌ Build failed with errors."
+            exit 1
+          fi
 
 
         
