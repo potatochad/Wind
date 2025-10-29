@@ -221,13 +221,11 @@ object Header {
                         Worth = Points.value.toIntOrNull() ?: 0
                     }
                 } else {
-                    Bar.apps.new(
-                        AppTsk(
-                            name = selectedApp.value,
-                            DoneTime = Time.value.toIntOrNull() ?: 0,
-                            Worth = Points.value.toIntOrNull() ?: 0,
-                        )
-                    )
+                    Bar.apps.add {
+                        name = selectedApp.value
+                        DoneTime = Time.value.toIntOrNull() ?: 0
+                        Worth = Points.value.toIntOrNull() ?: 0
+                    }
                 }
                 
 
