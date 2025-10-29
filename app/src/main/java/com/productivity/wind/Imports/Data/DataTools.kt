@@ -38,17 +38,18 @@ import kotlin.reflect.jvm.javaField
 @Composable
 fun BsaveToFile(trigger: Boolean) {
     val ctx = LocalContext.current
+    val launcher = RememberLauncher(MakeTxtFile) { uri ->
+        uri?.let {
+            getStoredData().all.forEach { (k, v) ->
+                ctx.contentResolver.openOutputStream(it)?.bufferedWriter()?.use { w ->
+                    w.write("$k=$v\n")
+                }
+            }
+        }
+    }
     RunOnce(trigger) {
         if (trigger) {
-            RememberLauncher(MakeTxtFile) { uri ->
-                uri?.let {
-                    getStoredData().all.forEach { (k, v) ->
-                        ctx.contentResolver.openOutputStream(it)?.bufferedWriter()?.use { w ->
-                            w.write("$k=$v\n")
-                        }
-                    }
-                }
-            }.launch("WindBackUp.txt")
+            launcher.launch("WindBackUp.txt")
         }
     }
 }
