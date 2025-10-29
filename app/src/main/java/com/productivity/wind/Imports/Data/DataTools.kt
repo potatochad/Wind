@@ -84,11 +84,11 @@ fun FindBar(statePath: Str): Pair<Any, ClassVar<Any, Str>>? {
 //endregion Vals/ Vars FOR DATA
 
 @Composable
-fun BsaveToFile2(trigger: Boolean) {
+fun BsaveToFile(trigger: Boolean) {
     val ctx = LocalContext.current
     RunOnce(trigger) {
         if (trigger) {
-            rememberLauncherForActivityResult(MakeTxtFile) { uri ->
+            RememberLauncher(MakeTxtFile) { uri ->
                 uri?.let {
                     getStoredData().all.forEach { (k, v) ->
                         ctx.contentResolver.openOutputStream(it)?.bufferedWriter()?.use { w ->
@@ -101,32 +101,14 @@ fun BsaveToFile2(trigger: Boolean) {
     }
 }
 
-@Composable
-fun BsaveToFile(trigger: Bool) {
-    val ctx = LocalContext.current
-    val launcher = rememberLauncherForActivityResult(MakeTxtFile) { uri ->
-        if (uri != null) {
-            
-            val Data = getStoredData()
-            ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
-                Data.all.forEach { (key, value) -> out.write("$key=$value\n") }
-            }
-        }
-    }
 
-    RunOnce(trigger) { 
-        if (trigger) {
-            launcher.launch("WindBackUp.txt")
-        }
-    }
-}
 @Composable
 fun BrestoreFromFile(trigger: m_<Bool>) {
     val ctx = LocalContext.current
 
     val launcher = rememberUpdatedState(
-        newValue = rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.OpenDocument()
+        newValue = RememberLauncher(
+            ActivityResultContracts.OpenDocument()
         ) { uri ->
             if (uri != null) {
                 try {
