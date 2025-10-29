@@ -20,10 +20,17 @@ jobs:
         run: |
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
           give_gradle_permission
-          
-          if ! Build_APK 2>&1 | tee >(grep -i "error" >&2) >/dev/null; then
-            echo "❌ Build failed with errors."
-            exit 1
+          # Capture output into a variable
+          OUTPUT=$(Build_APK 2>&1)
+
+          # Extract only lines with 'error' (case-insensitive)
+          ERRORS=$(echo "$OUTPUT" | grep -i "error" || true)
+
+          # If any error lines exist, print them and fail
+          if [ -n "$ERRORS" ]; then
+          echo "$ERRORS"
+          echo "❌ Build failed with errors."
+          exit 1
           fi
 
 
