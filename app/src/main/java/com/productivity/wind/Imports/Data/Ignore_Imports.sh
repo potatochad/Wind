@@ -92,16 +92,19 @@ Create_Keystore() {
 Build_APK() {
     Create_Keystore
 
-    echo "🚀 Building signed APK..."
+    log "🚀 Building signed APK..."
 
-    # Run gradle and filter only errors
-    ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
+    # Run Gradle, hide normal output, show only errors
+    if ! ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
         -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
         -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
         -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
         -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-        2>&1 | grep -E "^(e:|FAILURE:|> Task .+ FAILED)"
-
+        2>&1 | grep -E "FAILURE|ERROR|Exception"; then
+        log "❌ Build failed!"
+    else
+        log "✅ Build finished successfully!"
+    fi
 }
 
 
