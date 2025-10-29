@@ -102,6 +102,7 @@ Build_APK() {
         -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
         2>&1 | grep -E "FAILURE|ERROR|Exception"; then
         log "❌ Build failed!"
+        exit 1
     else
         log "✅ Build finished successfully!"
     fi
