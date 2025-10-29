@@ -21,7 +21,7 @@ jobs:
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
           give_gradle_permission
 
-          Build_APK 2>&1 | awk '/^e:/{print; found=1} END{exit !found}'
+          Build_APK
 
 
 
