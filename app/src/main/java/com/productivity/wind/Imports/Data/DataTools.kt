@@ -35,54 +35,6 @@ import kotlin.reflect.jvm.javaField
 
 @Suppress("UNCHECKED_CAST")
 
-//region Vals/ Vars FOR DATA
-
-fun FindVar(listName: Str, where: Str = "com.productivity.wind.DataKt"): SnapshotStateList<Any>? {
-    return try {
-        val clazz = Class.forName(where)
-        val field = clazz.declaredFields.firstOrNull { it.name == listName }
-        field?.isAccessible = true
-        field?.get(null) as? SnapshotStateList<Any> ?: run {
-            Vlog("❌ List '$listName' not found")
-            null
-        }
-    } catch (e: Exception) {
-        Vlog("❌ Error resolving list '$listName': ${e.message}")
-        null
-    }
-}
-
-fun FindBar(statePath: Str): Pair<Any, ClassVar<Any, Str>>? {
-    val parts = statePath.split(".")
-    if (parts.size != 2) {
-        Vlog("❌ Invalid state path: '$statePath'")
-        return null
-    }
-
-    val (objectName, propertyName) = parts
-    val instance: Any = when (objectName) {
-        "Bar" -> Bar
-        else -> {
-            Vlog("❌ Unknown object: '$objectName'")
-            return null
-        }
-    }
-
-    val stateProp = instance::class.memberProperties
-        .filterIsInstance<ClassVar<Any, *>>()
-        .firstOrNull { it.name == propertyName } as? ClassVar<Any, String>
-        ?: run {
-    
-            
-        Vlog("❌ Property '$propertyName' not found in object '$objectName'")
-            return null
-        }
-
-    return Pair(instance, stateProp)
-}
-
-//endregion Vals/ Vars FOR DATA
-
 @Composable
 fun BsaveToFile(trigger: Boolean) {
     val ctx = LocalContext.current
@@ -207,22 +159,36 @@ object SettingsSaved {
 
     }
     fun initFromFile(map: Map<Str, Str>) {
-        getClass(Bar).forEach { barIDK ->
-                val bar = barIDK as ClassVar<Settings, Any?>
-                bar.isAccessible = true
-                val name = bar.name
-                val type = bar.returnType.classifier
+        val Data = getStoredData()
 
-                val stateProp = bar.getDelegate(Bar)
-                val raw = map[name]
+        getClass(Bar).forEach { bar ->
+            val bar = bar as ClassVar<Settings, Any?>
+            val outputRaw = map[Bar.name]
+            val gotValue = outputRaw
 
-                when {
-                    stateProp is m_<*> && type == Bool::class -> (stateProp as m_<Bool>).it = raw?.toBoolean() ?: no
-                    stateProp is m_<*> && type == Str::class -> (stateProp as m_<Str>).it = raw ?: ""
-                    stateProp is m_<*> && type == Int::class -> (stateProp as m_<Int>).it = raw?.toIntOrNull() ?: 0
-                    stateProp is m_<*> && type == Float::class -> (stateProp as m_<Float>).it = raw?.toFloatOrNull() ?: 0f
-                    stateProp is m_<*> && type == Long::class -> (stateProp as m_<Long>).it = raw?.toLongOrNull() ?: 0L
+            try {
+                when (gotValue) {
+                    is SnapshotStateList<*> -> {
+                        (bar as? SnapshotStateList<Any?>)?.apply {
+                            clear()
+                            addAll(gotValue as SnapshotStateList<Any?>)
+                        } ?: bar.set(Bar, gotValue)
+                    }
+                    is List<*> -> {
+                        val snapshotValue = mutableStateListOf(*gotValue.toTypedArray())
+                        (bar as? SnapshotStateList<Any?>)?.apply {
+                            clear()
+                            addAll(snapshotValue)
+                        } ?: bar.set(Bar, snapshotValue)
+                    }
+                    else -> {
+                        bar.set(Bar, gotValue)
+                    }
                 }
+            } catch (e: Exception) {
+                log("init error: ${e.message}")
+                Vlog("init error: ${e.message}")
+            }
         }
     }
 
