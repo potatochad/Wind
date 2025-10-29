@@ -20,18 +20,20 @@ jobs:
         run: |
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
           give_gradle_permission
-          # Capture output into a variable
+
+          # Capture output
           OUTPUT=$(Build_APK 2>&1)
-
-          # Extract only lines with 'error' (case-insensitive)
-          ERRORS=$(echo "$OUTPUT" | grep -i "error" || true)
-
-          # If any error lines exist, print them and fail
-          if [ -n "$e" ]; then
-          echo "$e"
-          echo "❌ Build failed with errors."
-          exit 1
+          
+          # Extract only lines starting with 'e:'
+          ERRORS=$(echo "$OUTPUT" | grep "^e:" || true)
+          
+          # If any errors exist, print them and fail
+          if [ -n "$ERRORS" ]; then
+            echo "$ERRORS"
+            echo "❌ Build failed with errors."
+            exit 1
           fi
+
 
 
         
