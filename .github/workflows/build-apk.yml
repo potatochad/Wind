@@ -19,16 +19,17 @@ jobs:
       - name: Build APK
         run: |
           source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
-
           give_gradle_permission
+          
+          # Run your prebuilt function and only show errors
+          if ! Build_APK 2> >(grep -i "error" >&2); then
+            echo "❌ Build failed with errors."
+            exit 1
+          fi
 
-          Build_APK
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
+
+        
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
