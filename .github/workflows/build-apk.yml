@@ -27,8 +27,8 @@ jobs:
           ERRORS=$(echo "$OUTPUT" | grep -i "error" || true)
 
           # If any error lines exist, print them and fail
-          if [ -n "$ERRORS" ]; then
-          echo "$ERRORS"
+          if [ -n "$e" ]; then
+          echo "$e"
           echo "❌ Build failed with errors."
           exit 1
           fi
