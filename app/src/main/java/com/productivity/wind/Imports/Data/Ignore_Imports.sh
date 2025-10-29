@@ -92,6 +92,8 @@ Create_Keystore() {
 Build_APK() {
     Create_Keystore
 
+    set -e
+
     log "🚀 Building signed APK..."
 
     # Run Gradle quietly — only show errors if it fails
@@ -99,7 +101,8 @@ Build_APK() {
         -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
         -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
         -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-        -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
+        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
+        --warning-mode=none --quiet
 }
 
 
