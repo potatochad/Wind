@@ -99,7 +99,7 @@ fun BsaveToFile(trigger: Bool) {
         }
     }
 
-    LaunchedEffect(trigger) { 
+    RunOnce(trigger) { 
         if (trigger) {
             launcher.launch("WindBackUp.txt")
         }
@@ -133,13 +133,13 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
         }
     )
 
-    LaunchedEffect(trigger.it) {
+    RunOnce(trigger.it) {
         if (trigger.it) {
             App.restoringFromFile = no
             launcher.value.launch(arrayOf("text/plain"))
             delay(2000L)
             App.restoringFromFile = no
-            trigger.it = false
+            trigger.it = no
             Vlog("Successfully restored")
         }
     }
