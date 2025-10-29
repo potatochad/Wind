@@ -35,15 +35,20 @@ import kotlin.reflect.jvm.javaField
 
 @Suppress("UNCHECKED_CAST")
 
+
+fun writeToFile(ctx: Context, uri: Uri, text: String) {
+    ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { writer ->
+        writer.write(text)
+    }
+}
+
 @Composable
 fun BsaveToFile(trigger: Boolean) {
     val ctx = LocalContext.current
-    val launcher = RememberLauncher(MakeTxtFile) { uri ->
-        uri?.let {
-            getStoredData().all.forEach { (k, v) ->
-                ctx.contentResolver.openOutputStream(it)?.bufferedWriter()?.use { w ->
-                    w.write("$k=$v\n")
-                }
+    val launcher = RememberLauncher(MakeTxtFile) {
+        it?.let {
+            getStoredData().all.forEach { (key, value) ->
+                writeToFile(ctx, it, "$key=$value\n")
             }
         }
     }
