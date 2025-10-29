@@ -88,26 +88,22 @@ Create_Keystore() {
 }
 
 
-
 Build_APK() {
     Create_Keystore
 
-    set -e
-
     log "🚀 Building signed APK..."
 
-    # Run Gradle quietly — only show errors if it fails
-    ./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
-      -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
-      -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
-      -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-      -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
-      --warning-mode=none --quiet || { log "❌ Build failed"; exit 1; }
+    if ! output=$(./gradlew assembleRelease -x ktlintCheck -x ktlintKotlinScriptCheck \
+        -Pandroid.injected.signing.store.file="$KEYSTORE_PATH" \
+        -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
+        -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+        -Pandroid.injected.signing.key.password="$KEY_PASSWORD" 2>&1); then
 
+        log "❌ Build failed"
+        echo "$output" | grep -i "error" || echo "$output"
+        exit 1
+    fi
 }
-
-
-
 
 
 
