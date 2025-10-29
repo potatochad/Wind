@@ -174,13 +174,11 @@ fun refreshApps() {
             val ListsApp = getListsApp(pkgApp)
 
             if (ListsApp == null) {
-                Bar.apps.new(
-				    AppTsk(
-						name = getAppName(info),
-						pkg = pkgApp,
-						NowTime = getTodayAppUsage(pkgApp),
-					)
-                )
+                Bar.apps.add{
+					name = getAppName(info)
+					pkg = pkgApp
+					NowTime = getTodayAppUsage(pkgApp)
+				}
             }
         }
 
