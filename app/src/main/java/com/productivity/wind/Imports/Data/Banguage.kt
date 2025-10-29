@@ -213,6 +213,13 @@ fun RunOnce(key1: Any? = Unit, block: suspend () -> Unit) {
 val MakeTxtFile = ActivityResultContracts.CreateDocument("text/plain")
 
 
+@Composable
+fun <I, O> RememberLauncher(
+    contract: ActivityResultContract<I, O>,
+    onResult: (O) -> Unit
+): ManagedActivityResultLauncher<I, O> {
+    return rememberLauncherForActivityResult(contract, onResult)
+}
 
 
 
