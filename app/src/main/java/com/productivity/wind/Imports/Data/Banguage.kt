@@ -221,6 +221,18 @@ fun <I, O> RememberLauncher(
     return rememberLauncherForActivityResult(contract, onResult)
 }
 
+fun TxtFileToMap(ctx: Context, uri: Uri, fileMap: MutableMap<String, String>) {
+    ctx.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
+        lines.forEach { line ->
+            if (!line.contains("=")) {
+                Vlog("Error...corrupted data")
+                return@forEach
+            }
+            val (key, value) = line.split("=", limit = 2)
+            fileMap[key] = value
+        }
+    }
+}
 
 
 
