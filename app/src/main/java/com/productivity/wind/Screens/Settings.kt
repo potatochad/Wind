@@ -79,11 +79,10 @@ fun LogsScreen() {
                 Text("Logs")
                 
                 UI.End {
-                    LazzyRow {
+                    Row {
                         Icon.Delete {
                             Bar.logs = ""
                         }
-                        UI.move(5)
                         Icon.Copy(Bar.logs) 
                     }
                 }
