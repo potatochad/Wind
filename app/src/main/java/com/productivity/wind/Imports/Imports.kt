@@ -746,34 +746,6 @@ object UI {
     }
 
 
-    
-                    
-            
-
-    @Composable
-    fun CopyIcon(text: Str) {
-        val context = LocalContext.current
-        var copied by r_m(false)
-
-        LaunchedEffect(copied) {
-            if (copied) {
-                delay(1000) // Show checkmark for 1 second
-                copied = false
-            }
-        }
-
-        LazyIcon(
-            icon = if (copied) Icons.Default.Check else Icons.Default.ContentCopy,
-            onClick = {
-                val clipboard =
-                    context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText("label", text)
-                clipboard.setPrimaryClip(clip)
-                copied = true
-            },
-        )
-    }
-
 // -------- Core ----------
 
 
