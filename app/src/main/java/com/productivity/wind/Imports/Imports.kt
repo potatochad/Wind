@@ -87,6 +87,8 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
         lastToast?.cancel()
     }
 
+	Bar.logs += msg
+
     Handler(Looper.getMainLooper()).postDelayed({
         val toast = Toast.makeText(App.ctx, msg, Toast.LENGTH_SHORT)
         lastToast = toast
