@@ -95,7 +95,8 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
         toast.show()
     }, delayMs)
 }
-fun getMyAppLogs(): List<Str> {
+
+fun getMyAppLogs(): Str {
     val process = Runtime.getRuntime().exec("logcat -d *:V")
     val reader = BufferedReader(InputStreamReader(process.inputStream))
     val logs = mutableListOf<Str>()
@@ -103,14 +104,15 @@ fun getMyAppLogs(): List<Str> {
 
     reader.forEachLine { line ->
         if (line.contains(myPackage)) {
-            // Remove everything before the first colon after log level
+            // Keep only the message after the last colon
             val clean = line.substringAfterLast(":").trim()
             logs.add(clean)
         }
     }
 
-    return logs
+    return logs.joinToString("\n")
 }
+
 
 
 
