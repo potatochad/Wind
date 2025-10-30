@@ -78,10 +78,6 @@ fun Plog(msg: String = "test", s: Int = 1) {
     }
 }
 
-
-
-
-
 private var lastToast: Toast? = null
 
 fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
