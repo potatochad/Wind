@@ -82,7 +82,7 @@ fun BlockKeyword() {
         title = {
             Row(
                 Modifier
-                    .scroll(vertical = no)
+                    .scroll(h = yes)
                     .width(App.screenWidth / 2),
             ) {
                 Text("$WebUrl")
