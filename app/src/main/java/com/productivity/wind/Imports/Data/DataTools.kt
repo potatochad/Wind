@@ -182,8 +182,18 @@ object SettingsSaved {
             try {
                 val type = bar.returnType.classifier
                 log("type $type")
-                val gotValue = outputRaw
+                val outputRaw = map[bar.name]
+                when (type) {
+                            Int::class -> outputRaw.toInt()
+                            Long::class -> outputRaw.toLong()
+                            Float::class -> outputRaw.toFloat()
+                            Double::class -> outputRaw.toDouble()
+                            Boolean::class -> outputRaw.toBooleanStrictOrNull()
+                            else -> outputRaw
+                }
 
+                val gotValue = outputRaw
+                
             
                 when (type) {
                     is SnapshotStateList<*> -> {
@@ -200,15 +210,6 @@ object SettingsSaved {
                         } ?: bar.set(Bar, snapshotValue)
                     }
                     else -> {
-                        val outputRaw = map[bar.name]
-                        when (type) {
-                            Int::class -> outputRaw.toInt()
-                            Long::class -> outputRaw.toLong()
-                            Float::class -> outputRaw.toFloat()
-                            Double::class -> outputRaw.toDouble()
-                            Boolean::class -> outputRaw.toBooleanStrictOrNull()
-                            else -> outputRaw
-                        }
                         bar.set(Bar, gotValue)
                     }
                 }
