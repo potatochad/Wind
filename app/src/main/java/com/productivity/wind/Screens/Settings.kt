@@ -93,11 +93,11 @@ fun LogsScreen() {
         Text(
             text = Bar.logs,
             modifier = Modifier
-                .horizontalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()) // use vertical scroll for multi-line
                 .maxW(),
-            softWrap = no,
-            maxLines = Int.MAX_VALUE
+            softWrap = yes, // allow wrapping and newlines
         )
+
 
         
     }
