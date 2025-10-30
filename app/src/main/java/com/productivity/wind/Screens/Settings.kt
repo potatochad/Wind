@@ -74,18 +74,16 @@ fun LogsScreen() {
     RunOnce {
         Bar.logs = getMyAppLogs().joinToString("\n")
     }
-
-    val scrollStateV = rememberScrollState()
-    val scrollStateH = rememberScrollState()
-
-    // Auto-scroll to the end when logs change
-    LaunchedEffect(Bar.logs) {
+    RunOnce(Bar.logs) {
         scrollStateV.scrollTo(scrollStateV.maxValue)
     }
+
+    Bar.logsTag 
 
     LazyScreen(
         title = {
             Text("Logs")
+            
             UI.End {
                 Row {
                     Icon.Delete { Bar.logs = "" }
@@ -96,8 +94,8 @@ fun LogsScreen() {
     ) {
         Box(
             modifier = Modifier
-                .verticalScroll(scrollStateV)
-                .horizontalScroll(scrollStateH)
+                .verticalScroll(rememberScrollState())
+                .horizontalScroll(rememberScrollState())
                 .maxW()
                 .padding(2.dp) 
         ) {
