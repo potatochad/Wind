@@ -181,22 +181,18 @@ object SettingsSaved {
 
             try {
                 val type = bar.returnType.classifier
-                val type2 = (bar.returnType.classifier as? KClass<*>)?.java
-
+                
                 log("type $type")
-                log("type2 java $type2")
-
+                
                 val outputRaw = map[bar.name]
-                when (type) {
-                    Int::class -> outputRaw.toString().toInt()
-                Long::class -> outputRaw.toString().toLong()
-                Float::class -> outputRaw.toString().toFloat()
-                Double::class -> outputRaw.toString().toDouble()
-                Boolean::class -> outputRaw.toString().toBooleanStrictOrNull()
-                else -> outputRaw // stays as String or whatever
-            }
-            val gotValue = outputRaw
-
+                val gotValue: Any? = when (type) {
+                    Int::class -> outputRaw?.toInt()
+                    Long::class -> outputRaw?.toLong()
+                    Float::class -> outputRaw?.toFloat()
+                    Double::class -> outputRaw?.toDouble()
+                    Boolean::class -> outputRaw?.toBooleanStrictOrNull()
+                    else -> outputRaw
+                }
             
                 when (gotValue) {
                     is SnapshotStateList<*> -> {
