@@ -66,7 +66,8 @@ import kotlin.concurrent.schedule
 fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
     var msg = message.take(int)
     if (msg.length >= int) {msg += " ..."}
-	Bar.logs += "$msg\n"
+	Bar.logs += "$msg\r\n"  // ensures new line on most systems
+
     Log.w(tag, msg)
 }
 
