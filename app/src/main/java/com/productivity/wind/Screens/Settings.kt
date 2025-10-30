@@ -73,30 +73,25 @@ fun SettingsOtherScreen() {
 
 @Composable
 fun LogsScreen()= NoLagCompose {
-    
-    var logText by r_m("")
-
-    LaunchedEffect(Unit) {
-        while (true) {
-            // logText = getLogs()
-            delay(1_000)
-        }
-    }
-        
     LazyScreen(
         title= {
                 Text("Logs")
                 
-                UI.End { UI.CopyIcon(logText) }
+                UI.End { 
+                    Icon.Delete {
+                        Bar.logs = ""
+                    }
+                    UI.CopyIcon(Bar.logs) 
+                }
         }) {
         
         
         Text(
-            text = logText,
+            text = Bar.logs,
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .fillMaxWidth(),
-            softWrap = false,
+                .maxW(),
+            softWrap = no,
             maxLines = Int.MAX_VALUE
         )
 
