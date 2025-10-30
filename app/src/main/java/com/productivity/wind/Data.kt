@@ -105,6 +105,7 @@ class Settings {
 	var badWords = mutableStateListOf<WebWord>()
 
 	var logs by m("")
+	var logsTag by m("")
 }
 //mutableListOf()
 
