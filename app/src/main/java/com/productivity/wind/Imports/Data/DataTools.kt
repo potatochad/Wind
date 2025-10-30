@@ -187,14 +187,7 @@ object SettingsSaved {
                 val outputRaw = map[bar.name]
                 val valueNow = bar.get(Bar)
                 
-                val gotValue: Any? = when (valueNow) {
-                    is Int -> outputRaw?.toInt()
-                    is Long -> outputRaw?.toLong()
-                    is Float -> outputRaw?.toFloat()
-                    is Double -> outputRaw?.toDouble()
-                    is Boolean -> outputRaw?.toBooleanStrictOrNull()
-                    else -> outputRaw
-                }
+                val gotValue = StrToSimpleValue(valueNow, outputRaw)
             
                 when (gotValue) {
                     is SnapshotStateList<*> -> {
