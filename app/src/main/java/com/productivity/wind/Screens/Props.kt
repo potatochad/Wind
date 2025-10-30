@@ -202,7 +202,7 @@ object Header {
     fun AppUsage(Time: m_<Str>, Points: m_<Str>, selectedApp: m_<Str>) {
         Text("AppUsage")
         UI.End {
-            Icon.Add(onClick = {
+            Icon.Add {
 
                 UI.check(!UI.isUsageP_Enabled()) { show(AskUsagePermission); return@Add}
                 UI.check(Time.value.toInt() < 1,"Add time") {return@Add}
@@ -235,7 +235,7 @@ object Header {
                 set(Time, "0")
 
                 goTo("Main")
-            })
+            }
         }
     }
     @Composable
@@ -272,10 +272,9 @@ object Header {
 object Icon {
     @Composable
     fun Menu() {
-        LazyIcon(
-            onClick = { App.Menu = true },
-            icon = Icons.Default.Menu,
-        )
+        LazyIcon(Icons.Default.Menu) {
+            App.Menu = true
+        }
     }
 
     @Composable
