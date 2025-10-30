@@ -78,7 +78,7 @@ fun LogsScreen() {
     
     RunOnce(Reload) {
         Bar.logs = getMyAppLogs()
-        scrollV.scrollTo(scrollV.maxValue)
+        scrollV.toBottom()
     }
 
     
