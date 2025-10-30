@@ -70,8 +70,8 @@ fun Modifier.clickOrHold(
 
 @Composable
 fun Modifier.scroll(
-    on: Bool = true,
-    vertical: Bool = true
+    on: Bool = yes,
+    vertical: Bool = yes
 ): Mod = if (!on) this else {
     if (vertical) verticalScroll(rememberScrollState())
     else horizontalScroll(rememberScrollState())
