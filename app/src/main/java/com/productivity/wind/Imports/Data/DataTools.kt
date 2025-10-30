@@ -180,8 +180,14 @@ object SettingsSaved {
             if (stop) return@forEach
 
             try {
+                val type = bar.returnType.classifier
+                val type2 = (bar.returnType.classifier as? KClass<*>)?.java
+
+                log("type $type")
+                log("type2 java $type2")
+
                 val outputRaw = map[bar.name]
-                when (bar.type) {
+                when (type) {
                     Int::class -> outputRaw.toString().toInt()
                 Long::class -> outputRaw.toString().toLong()
                 Float::class -> outputRaw.toString().toFloat()
