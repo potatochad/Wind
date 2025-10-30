@@ -252,6 +252,17 @@ fun StrToValue(valueNow: Any?, outputRaw: String?): Any? {
 }
 
 
-
+@Composable
+fun Modifier.scroll(
+    v: Bool = yes,
+    h: Bool = yes,
+    r_v: ScrollState = rememberScrollState(),
+    r_h: ScrollState = rememberScrollState(),
+): Mod {
+    var m = this
+    if (v) m = m.verticalScroll(r_v)
+    if (h) m = m.horizontalScroll(r_h)
+    return m
+}
 
 
