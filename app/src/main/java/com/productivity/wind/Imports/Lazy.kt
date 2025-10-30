@@ -517,7 +517,6 @@ fun LazyCard(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LazyIcon(
-    onClick: Do = {},
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
@@ -527,6 +526,7 @@ fun LazyIcon(
     ButtonSize: Int = 40,           // actual button box (default M3 ~48)
     modifier: Mod = Modifier,
     color: Color = Color.White,
+	onClick: Do = {},
 ) {
 	UI.ComposeCanBeTiny() {
         IconButton(
