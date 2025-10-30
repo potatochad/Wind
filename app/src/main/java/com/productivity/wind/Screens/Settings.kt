@@ -78,11 +78,14 @@ fun LogsScreen() {
         title= {
                 Text("Logs")
                 
-                UI.End { 
-                    Icon.Delete {
-                        Bar.logs = ""
+                UI.End {
+                    LazzyRow {
+                        Icon.Delete {
+                            Bar.logs = ""
+                        }
+                        UI.move(5)
+                        Icon.Copy(Bar.logs) 
                     }
-                    Icon.Copy(Bar.logs) 
                 }
         }) {
         
