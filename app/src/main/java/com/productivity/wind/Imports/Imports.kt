@@ -330,6 +330,14 @@ object UI {
 	}
 
 
+	fun copyToClipboard(ctx: Context, txt: Str) {
+		val clipboard = ctx.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+		val clip = ClipData.newPlainText("label", txt)
+		clipboard.setPrimaryClip(clip)
+	}
+	
+
+
 
 
 
