@@ -95,6 +95,20 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
         toast.show()
     }, delayMs)
 }
+fun getMyAppLogs(): List<Str> {
+    val process = Runtime.getRuntime().exec("logcat -d *:V")
+    val reader = BufferedReader(InputStreamReader(process.inputStream))
+    val logs = mutableListOf<Str>()
+    val myPackage = App.ctx.packageName
+
+    reader.forEachLine { line ->
+        if (line.contains(myPackage)) {
+            logs.add(line)
+        }
+    }
+
+    return logs
+}
 
 
 @Composable
