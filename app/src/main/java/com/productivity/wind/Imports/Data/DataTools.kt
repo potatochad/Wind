@@ -53,9 +53,6 @@ fun BsaveToFile(trigger: Boolean) {
                 allData.forEach { (key, value) ->
                     appendLine("$key=$value")
                 }
-                appendLine()
-                appendLine("------ALL DATA, no filter------")
-                append(allData.toString())
             }
             writeToFile(ctx, it, text)
         }
