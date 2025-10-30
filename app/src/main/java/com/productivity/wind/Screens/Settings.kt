@@ -70,23 +70,29 @@ fun SettingsOtherScreen() {
 
 @Composable
 fun LogsScreen() {
-
     var Reload by m(no)
-
-    var scrollV = rememberScrollState()
-    var scrollH = rememberScrollState()
+    var scrollV = r_Scroll()
+    var scrollH = r_Scroll()
     
     RunOnce(Reload) {
         Bar.logs = getMyAppLogs()
         scrollV.toBottom()
     }
 
-    
-    Bar.logsTag 
+    val filteredLogs = Bar.logs.lines()
+        .filter { it.contains(Bar.logsTag) }
+        .joinToString("\n")
 
     LazyScreen(
         title = {
             Text("Logs")
+
+            TextField(
+                value = Bar.logsTag,
+                onValueChange = { Bar.logsTag = it },
+                placeholder = { Text("Search...") },
+                modifier = Modifier.maxW().padding(2.dp)
+            )
             
             UI.End {
                 Row {
@@ -104,7 +110,7 @@ fun LogsScreen() {
                 .padding(2.dp) 
         ) {
             Text(
-                text = Bar.logs,
+                text = filteredLogs,
                 modifier = Modifier
                     .maxS(),
                 softWrap = yes,
@@ -112,7 +118,6 @@ fun LogsScreen() {
         }
     }
 }
-
 
 
 //endregion PERMISSIONS
