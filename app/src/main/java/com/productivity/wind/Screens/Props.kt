@@ -312,27 +312,21 @@ object Icon {
 
     @Composable
     fun Edit(
-        onClick: Do = {
+        Do: Do = {
             if (Bar.funTime < Bar.Dpoints) show(NeedMorePoints)
             else show(Edit)
         },
     ) {
-        LazyIcon(
-            onClick = {
-                onClick()
-            },
-            icon = Icons.Default.Edit,
-        )
+        LazyIcon(Icons.Default.Edit) {
+            Do()
+        }
     }
 
     @Composable
-    fun Delete(
-        onClick: Do = {},
-    ) {
-        LazyIcon(
-            onClick = { onClick() },
-            icon = Icons.Default.Delete,
-        )
+    fun Delete(Do: Do = {}) {
+        LazyIcon(Icons.Default.Delete){
+            Do()
+        }
     }
 
 
@@ -348,13 +342,10 @@ object Icon {
             }
         }
 
-        LazyIcon(
-            icon = if (copied) Icons.Default.Check else Icons.Default.ContentCopy,
-            onClick = {
-                UI.copyToClipboard(ctx, txt)
-                copied = yes
-            },
-        )
+        LazyIcon(if (copied) Icons.Default.Check else Icons.Default.ContentCopy){
+            UI.copyToClipboard(ctx, txt)
+            copied = yes
+        }
     }
 
 
