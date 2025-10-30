@@ -170,11 +170,14 @@ object SettingsSaved {
     }
     fun initFromFile(map: Map<Str, Str>) {
         val Data = getStoredData()
+        var stop = no
 
         getClass(Bar).forEach { barIdk ->
             val bar = barIdk as ClassVar<Settings, Any?>
             val outputRaw = map[bar.name]
             val gotValue = outputRaw
+
+            if (stop) return@forEach
 
             try {
                 when (gotValue) {
@@ -198,6 +201,7 @@ object SettingsSaved {
             } catch (e: Exception) {
                 log("init error: ${e.message}")
                 Vlog("init error: ${e.message}")
+                stop = yes
             }
         }
     }
