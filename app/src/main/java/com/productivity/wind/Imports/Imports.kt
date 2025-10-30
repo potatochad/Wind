@@ -317,23 +317,11 @@ object UI {
 			action()        // safe
 		}
 	}
-
-
-    @Composable
-	fun End2(content: Content) {
-		Row(
-			Modifier.fillMaxWidth(),
-			horizontalArrangement = Arrangement.End,
-			verticalAlignment = Alignment.CenterVertically
-		) {
-			content()
-			move(w = 10)
-		}
-	}
+	
 	@Composable
-	fun End(content: @Composable () -> Unit) {
+	fun End(content: Content) {
 		Box(
-			modifier = Modifier.fillMaxWidth(),
+			modifier = Modifier.maxW(),
 			contentAlignment = Alignment.CenterEnd
 		) {
 			content()
