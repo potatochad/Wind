@@ -95,8 +95,6 @@ class Settings {
 
     //endregion
 
-	var logs by m("")
-
 
     // LISTS
 
@@ -105,6 +103,8 @@ class Settings {
     var copyTasks = mutableStateListOf<CopyTsk>()
 	var apps = mutableStateListOf<AppTsk>()
 	var badWords = mutableStateListOf<WebWord>()
+
+	var logs by m("")
 }
 //mutableListOf()
 
