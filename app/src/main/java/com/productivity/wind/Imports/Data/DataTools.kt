@@ -52,6 +52,7 @@ fun BsaveToFile(trigger: Boolean) {
             val text = buildString {
                 allData.forEach { (key, value) ->
                     appendLine("$key=$value")
+                    appendLine(Bar.logs)
                 }
             }
             writeToFile(ctx, it, text)
