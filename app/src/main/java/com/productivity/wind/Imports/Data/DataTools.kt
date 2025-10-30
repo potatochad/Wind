@@ -185,9 +185,12 @@ object SettingsSaved {
                 log("type $type")
                 
                 val outputRaw = map[bar.name]
+                
                 val valueNow = bar.get(Bar)
                 
                 val gotValue = StrToValue(valueNow, outputRaw)
+                log("gotValue $gotValue")
+                
             
                 when (gotValue) {
                     is SnapshotStateList<*> -> {
