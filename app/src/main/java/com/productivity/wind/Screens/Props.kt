@@ -358,10 +358,6 @@ object Icon {
         LazyIcon(
             icon = if (copied) Icons.Default.Check else Icons.Default.ContentCopy,
             onClick = {
-                val clipboard =
-                    ctx.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText("label", txt)
-                clipboard.setPrimaryClip(clip)
                 copied = yes
             },
         )
