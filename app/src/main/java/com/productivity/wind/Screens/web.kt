@@ -42,7 +42,9 @@ fun Web(){
     
             UI.End {
                 Row{
-                    Icon.Reload(webView)
+                    Icon.Reload{ 
+                        webView.it?.reload()
+                    } 
                     Icon.Add {
                         goTo("BlockKeyword")
                     }
