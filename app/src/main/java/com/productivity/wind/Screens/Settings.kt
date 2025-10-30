@@ -88,9 +88,7 @@ fun LogsScreen() {
             Text("Logs")
             UI.End {
                 Row {
-                    Icon.Delete {
-                        Bar.logs = ""
-                    }
+                    Icon.Delete { Bar.logs = "" }
                     Icon.Copy(Bar.logs)
                 }
             }
