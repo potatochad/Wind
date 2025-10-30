@@ -103,12 +103,15 @@ fun getMyAppLogs(): List<Str> {
 
     reader.forEachLine { line ->
         if (line.contains(myPackage)) {
-            logs.add(line)
+            // Remove everything before the first colon after log level
+            val clean = line.substringAfterLast(":").trim()
+            logs.add(clean)
         }
     }
 
     return logs
 }
+
 
 
 @Composable
