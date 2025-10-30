@@ -265,4 +265,7 @@ fun Modifier.scroll(
     return m
 }
 
+suspend fun ScrollState.toBottom() {
+    scrollTo(maxValue)
+}
 
