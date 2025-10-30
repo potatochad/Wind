@@ -62,45 +62,57 @@ fun SettingsOtherScreen() {
                 title = "Logs",
                 onClick = { goTo("LogsScreen") }
         ) 
-
-
-        
     }
 }
 
 //endregion OTHER SCREEN
 
 
-
 @Composable
 fun LogsScreen() {
-
+    // Load logs once
     RunOnce {
         Bar.logs = getMyAppLogs().joinToString("\n")
     }
-    
+
+    val scrollStateV = rememberScrollState()
+    val scrollStateH = rememberScrollState()
+
+    // Auto-scroll to the end when logs change
+    LaunchedEffect(Bar.logs) {
+        scrollStateV.scrollTo(scrollStateV.maxValue)
+    }
+
     LazyScreen(
-        title= {
-                Text("Logs")
-                
-                UI.End {
-                    Row {
-                        Icon.Delete {
-                            Bar.logs = ""
-                        }
-                        Icon.Copy(Bar.logs) 
+        title = {
+            Text("Logs")
+            UI.End {
+                Row {
+                    Icon.Delete {
+                        Bar.logs = ""
                     }
+                    Icon.Copy(Bar.logs)
                 }
-        }) {
-        Text(
-            text = Bar.logs,
+            }
+        }
+    ) {
+        Box(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .maxW(),
-            softWrap = yes,
-        )
+                .verticalScroll(scrollStateV)
+                .horizontalScroll(scrollStateH)
+                .maxW()
+                .padding(2.dp) // optional spacing
+        ) {
+            Text(
+                text = Bar.logs,
+                modifier = Modifier
+                    .maxS(),
+                softWrap = yes,
+            )
+        }
     }
 }
+
 
 
 //endregion PERMISSIONS
