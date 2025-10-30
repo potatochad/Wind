@@ -341,6 +341,32 @@ object Icon {
         )
     }
 
+
+    @Composable
+    fun Copy(txt: Str) {
+        val ctx = LocalContext.current
+        var copied by r_m(no)
+
+        RunOnce(copied) {
+            if (copied) {
+                delay(1000)
+                copied = no
+            }
+        }
+
+        LazyIcon(
+            icon = if (copied) Icons.Default.Check else Icons.Default.ContentCopy,
+            onClick = {
+                val clipboard =
+                    ctx.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("label", txt)
+                clipboard.setPrimaryClip(clip)
+                copied = yes
+            },
+        )
+    }
+
+
     //ICONS!!!!!!-------------------------///
 }
 
