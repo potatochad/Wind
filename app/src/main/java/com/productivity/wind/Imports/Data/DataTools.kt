@@ -94,7 +94,6 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
             delay(2000L)
             App.restoringFromFile = no
             trigger.it = no
-            Vlog("Successfully restored")
         }
     }
 }
