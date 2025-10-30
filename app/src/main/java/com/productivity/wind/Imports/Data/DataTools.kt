@@ -187,7 +187,7 @@ object SettingsSaved {
                 val outputRaw = map[bar.name]
                 val valueNow = bar.get(Bar)
                 
-                val gotValue = StrToSimpleValue(valueNow, outputRaw)
+                val gotValue = StrToValue(valueNow, outputRaw)
             
                 when (gotValue) {
                     is SnapshotStateList<*> -> {
