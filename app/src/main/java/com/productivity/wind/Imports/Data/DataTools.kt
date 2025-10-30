@@ -44,7 +44,7 @@ fun writeToFile(ctx: Context, uri: Uri, text: Str) {
 }
 
 @Composable
-fun BsaveToFile(trigger: Boolean) {
+fun BsaveToFile(trigger: Bool) {
     val ctx = LocalContext.current
     val launcher = RememberLauncher(MakeTxtFile) {
         it?.let {
