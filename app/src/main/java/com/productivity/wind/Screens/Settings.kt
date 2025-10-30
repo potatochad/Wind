@@ -73,7 +73,7 @@ fun SettingsOtherScreen() {
 
 
 @Composable
-fun LogsScreen()= NoLagCompose {
+fun LogsScreen() {
     LazyScreen(
         title= {
                 Text("Logs")
