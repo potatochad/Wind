@@ -725,7 +725,7 @@ fun LazyHeader(
     height: Int = 100,
 ) {
     val ui = rememberSystemUiController()
-    var DisableHeader by r_m(no)
+    var clickedBack by r_m(no)
     LaunchedEffect(Unit) {
         ui.setStatusBarColor(Color.Black, darkIcons = no)
     }
@@ -759,8 +759,8 @@ fun LazyHeader(
 				UI.move(5)
                 LazyIcon(
 					onClick = { 
-						if (!DisableHeader) { 
-							DisableHeader = yes
+						if (!clickedBack) {
+							clickedBack = yes
 							onBackClick()
 							App.navHost.popBackStack()
 						}
@@ -778,15 +778,6 @@ fun LazyHeader(
             ) {
                 Box(Modifier
                     .maxW()
-                    .pointerInput(Unit) {
-                        if (DisableHeader) {
-                            awaitPointerEventScope {
-                                while (true) {
-                                    awaitPointerEvent()
-                                }
-                            }
-                        }
-                    }
                 ) {
                     LazzyRow {
                         titleContent()
