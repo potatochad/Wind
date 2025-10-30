@@ -74,6 +74,10 @@ fun SettingsOtherScreen() {
 
 @Composable
 fun LogsScreen() {
+
+    RunOnce {
+        Bar.logs = getMyAppLogs()
+    }
     LazyScreen(
         title= {
                 Text("Logs")
