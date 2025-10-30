@@ -639,11 +639,11 @@ fun LazyItem(
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
-
-    onClick: Do? = null,
-
+	
     topPadding: Dp= 7.dp,
     bottomPadding: Dp = 7.dp,
+	
+	onClick: Do? = null,
 ) {
 	Row(
         modifier = Modifier
@@ -757,17 +757,14 @@ fun LazyHeader(
              */
             if (showBack) {
 				UI.move(5)
-                LazyIcon(
-					onClick = { 
-						if (!clickedBack) {
+                LazyIcon(Icons.Default.ArrowBack) {
+					if (!clickedBack) {
 							clickedBack = yes
 							onBackClick()
 							App.navHost.popBackStack()
-						}
-					},
-					icon = Icons.Default.ArrowBack,
-                    )
-                }
+					}
+				}
+            }
 
 			// Title content
 			Box(
@@ -919,7 +916,7 @@ fun LazyMenu(
     val internalVisible = r_m(no)
 
     // Trigger showing/hiding Popup
-    LaunchedEffect(App.Menu) {
+    RunOnce(App.Menu) {
         if (App.Menu) {
             set(visible, yes)
             delay(16)
