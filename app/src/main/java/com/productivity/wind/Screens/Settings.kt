@@ -12,7 +12,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.*
 import com.productivity.wind.Imports.*
-import com.productivity.wind.Imports.Data.r_m
+import com.productivity.wind.Imports.Data.*
 
 //region Settings
 
