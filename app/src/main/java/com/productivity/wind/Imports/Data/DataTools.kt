@@ -172,14 +172,26 @@ object SettingsSaved {
         val Data = getStoredData()
         var stop = no
 
+        
+
         getClass(Bar).forEach { barIdk ->
             val bar = barIdk as ClassVar<Settings, Any?>
-            val outputRaw = map[bar.name]
-            val gotValue = outputRaw
 
             if (stop) return@forEach
 
             try {
+                val outputRaw = map[bar.name]
+                when (bar.type) {
+                    Int::class -> outputRaw.toString().toInt()
+                Long::class -> outputRaw.toString().toLong()
+                Float::class -> outputRaw.toString().toFloat()
+                Double::class -> outputRaw.toString().toDouble()
+                Boolean::class -> outputRaw.toString().toBooleanStrictOrNull()
+                else -> outputRaw // stays as String or whatever
+            }
+            val gotValue = outputRaw
+
+            
                 when (gotValue) {
                     is SnapshotStateList<*> -> {
                         (bar as? SnapshotStateList<Any?>)?.apply {
