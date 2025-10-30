@@ -358,6 +358,7 @@ object Icon {
         LazyIcon(
             icon = if (copied) Icons.Default.Check else Icons.Default.ContentCopy,
             onClick = {
+                UI.copyToClipboard(ctx, txt)
                 copied = yes
             },
         )
