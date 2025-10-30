@@ -78,6 +78,7 @@ fun LogsScreen() {
     RunOnce {
         Bar.logs = getMyAppLogs().joinToString("\n")
     }
+    
     LazyScreen(
         title= {
                 Text("Logs")
@@ -91,18 +92,13 @@ fun LogsScreen() {
                     }
                 }
         }) {
-        
-        
         Text(
             text = Bar.logs,
             modifier = Modifier
-                .verticalScroll(rememberScrollState()) // use vertical scroll for multi-line
+                .verticalScroll(rememberScrollState())
                 .maxW(),
-            softWrap = yes, // allow wrapping and newlines
+            softWrap = yes,
         )
-
-
-        
     }
 }
 
