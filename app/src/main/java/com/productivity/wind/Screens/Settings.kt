@@ -72,15 +72,16 @@ fun SettingsOtherScreen() {
 fun LogsScreen() {
 
     var Reload by m(no)
+
+    var scrollV = rememberScrollState()
+    var scrollH = rememberScrollState()
     
     RunOnce(Reload) {
         Bar.logs = getMyAppLogs().joinToString("\n")
-        scrollStateV.scrollTo(scrollStateV.maxValue)
+        scrollV.scrollTo(scrollV.maxValue)
     }
 
-    var scrollStateV = rememberScrollState()
-    var scrollStateH = rememberScrollState()
-
+    
     Bar.logsTag 
 
     LazyScreen(
@@ -100,8 +101,8 @@ fun LogsScreen() {
         }
     ) {
         Box(Modifier
-                .verticalScroll(scrollStateV)
-                .horizontalScroll(scrollStateH)
+                .verticalScroll(scrollV)
+                .horizontalScroll(scrollH)
                 .maxW()
                 .padding(2.dp) 
         ) {
