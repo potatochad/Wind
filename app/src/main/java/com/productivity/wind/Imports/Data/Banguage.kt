@@ -243,6 +243,10 @@ fun StrToSimpleValue(valueNow: Any?, outputRaw: String?): Any? {
         is Float -> outputRaw?.toFloatOrNull()
         is Double -> outputRaw?.toDoubleOrNull()
         is Boolean -> outputRaw?.toBooleanStrictOrNull()
+        is SnapshotStateList<*> -> {
+            val items = outputRaw?.split(",")?.map { it.trim() } ?: emptyList()
+            mutableStateListOf(*items.toTypedArray())
+        }
         else -> outputRaw
     }
 }
