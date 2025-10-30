@@ -236,7 +236,16 @@ fun TxtFileToMap(ctx: Context, uri: Uri, fileMap: MutableMap<Str, Str>) {
     }
 }
 
-
+fun StrToSimpleValue(valueNow: Any?, outputRaw: String?): Any? {
+    return when (valueNow) {
+        is Int -> outputRaw?.toIntOrNull()
+        is Long -> outputRaw?.toLongOrNull()
+        is Float -> outputRaw?.toFloatOrNull()
+        is Double -> outputRaw?.toDoubleOrNull()
+        is Boolean -> outputRaw?.toBooleanStrictOrNull()
+        else -> outputRaw
+    }
+}
 
 
 
