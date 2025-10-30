@@ -212,8 +212,8 @@ object SettingsSaved {
                 }
             } catch (e: Exception) {
                 log("init error: ${e.message}")
-                Vlog("init error: ${e.message}")
                 stop = yes
+                Vlog("ERROR")
             }
         }
     }
