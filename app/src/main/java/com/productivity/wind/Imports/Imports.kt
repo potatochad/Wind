@@ -66,6 +66,7 @@ import kotlin.concurrent.schedule
 fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
     var msg = message.take(int)
     if (msg.length >= int) {msg += " ..."}
+	Bar.logs += "$msg\n"
     Log.w(tag, msg)
 }
 
@@ -86,8 +87,6 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
     if (special.equals("one", true)) {
         lastToast?.cancel()
     }
-
-	Bar.logs += "$msg\n"
 
     Handler(Looper.getMainLooper()).postDelayed({
         val toast = Toast.makeText(App.ctx, msg, Toast.LENGTH_SHORT)
