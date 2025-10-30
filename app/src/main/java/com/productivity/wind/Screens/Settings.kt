@@ -77,7 +77,7 @@ fun LogsScreen() {
     var scrollH = rememberScrollState()
     
     RunOnce(Reload) {
-        Bar.logs = getMyAppLogs().joinToString("\n")
+        Bar.logs = getMyAppLogs()
         scrollV.scrollTo(scrollV.maxValue)
     }
 
@@ -92,17 +92,14 @@ fun LogsScreen() {
                 Row {
                     Icon.Delete { Bar.logs = "" }
                     Icon.Copy(Bar.logs)
-                    Icon.Reload {
-                        Reload = yes
-                    }
+                    Icon.Reload { Reload = yes }
                 }
             }
             
         }
     ) {
         Box(Modifier
-                .verticalScroll(scrollV)
-                .horizontalScroll(scrollH)
+                .scroll(yes, yes, scrollV, scrollH)
                 .maxW()
                 .padding(2.dp) 
         ) {
