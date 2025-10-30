@@ -279,40 +279,34 @@ object Icon {
 
     @Composable
     fun Reload(Do: Do) {
-        LazyIcon(
-            onClick = { Do() },
-            icon = Icons.Default.Refresh,
-        )
+        LazyIcon(Icons.Default.Refresh) { 
+            Do() 
+        }
     }
 
     @Composable
     fun Chill() {
-        LazyIcon(
-            onClick = {
-                if (Bar.funTime < Bar.Dpoints) {
+        LazyIcon(Icons.Default.SportsEsports) {
+            if (Bar.funTime < Bar.Dpoints) {
                     show(NeedMorePoints)
                 } else {
                     goTo("Web")
-                }
-            },
-            icon = Icons.Default.SportsEsports,
-        )
+            }
+        }
     }
 
     @Composable
-    fun Add(onClick: Do = { goTo("Challenge") }) {
-        LazyIcon(
-            onClick = onClick,
-            icon = Icons.Default.Add,
-        )
+    fun Add(Do: Do = { goTo("Challenge") }) {
+        LazyIcon(Icons.Default.Add) {
+            Do()
+        }
     }
 
     @Composable
-    fun MoreMenu(onClick: Do = {}) {
-        LazyIcon(
-            onClick = onClick,
-            icon = Icons.Default.MoreVert,
-        )
+    fun MoreMenu(Do: Do = {}) {
+        LazyIcon(Icons.Default.MoreVert) {
+            Do()
+        }
     }
 
 
