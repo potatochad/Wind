@@ -269,3 +269,6 @@ suspend fun ScrollState.toBottom() {
     scrollTo(maxValue)
 }
 
+@Composable
+fun r_Scroll() = rememberScrollState()
+
