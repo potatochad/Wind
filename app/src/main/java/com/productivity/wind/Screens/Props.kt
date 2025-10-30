@@ -22,6 +22,7 @@ import com.productivity.wind.Imports.Data.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.ui.*
+import android.content.*
 
 
 fun NavGraphBuilder.ScreenNav() {
@@ -51,8 +52,8 @@ fun NavGraphBuilder.ScreenNav() {
 fun Menu() {
     LazyScreen(
         title ={ UI.MenuHeader()},
-        showBack = false,
-        showDivider = false,
+        showBack = no,
+        showDivider = no,
         headerHeight = 190,
     ) {
         LazyItem(
@@ -87,7 +88,7 @@ object Item {
 
             if (app.NowTime > app.DoneTime - 1 && !app.done) {
                 Bar.funTime += app.Worth
-                Bar.apps.edit(app) { done = true }
+                Bar.apps.edit(app) { done = yes }
                 Vlog("${app.name} completed")
             }
 
@@ -464,7 +465,7 @@ fun DebugPopup(show: m_<Bool>) {
             showConfirm = no,
             content = {
                 Column {
-                    LazzyRow { UI.CopyIcon(DebugPopupInfo) }
+                    LazzyRow { Icon.Copy(DebugPopupInfo) }
 
                     Text(DebugPopupInfo)
                 }
