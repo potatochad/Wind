@@ -183,15 +183,6 @@ object SettingsSaved {
                 val type = bar.returnType.classifier
                 log("type $type")
                 val outputRaw = map[bar.name]
-                when (type) {
-                            Int::class -> outputRaw.toInt()
-                            Long::class -> outputRaw.toLong()
-                            Float::class -> outputRaw.toFloat()
-                            Double::class -> outputRaw.toDouble()
-                            Boolean::class -> outputRaw.toBooleanStrictOrNull()
-                            else -> outputRaw
-                }
-
                 val gotValue = outputRaw
                 
             
