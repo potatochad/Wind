@@ -87,12 +87,14 @@ fun LogsScreen() {
         title = {
             Text("Logs")
 
-            TextField(
-                value = Bar.logsTag,
-                onValueChange = { Bar.logsTag = it },
-                placeholder = { Text("Search...") },
-                modifier = Modifier.maxW().padding(2.dp)
-            )
+
+            Row(
+                Modifier
+                    .scroll(h = yes)
+                    .width(App.screenWidth / 2),
+            ) {
+                
+            }
             
             UI.End {
                 Row {
