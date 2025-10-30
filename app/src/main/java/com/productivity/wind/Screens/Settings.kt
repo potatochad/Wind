@@ -70,13 +70,16 @@ fun SettingsOtherScreen() {
 
 @Composable
 fun LogsScreen() {
-    // Load logs once
-    RunOnce {
+
+    var Reload by m(no)
+    
+    RunOnce(Reload) {
         Bar.logs = getMyAppLogs().joinToString("\n")
-    }
-    RunOnce(Bar.logs) {
         scrollStateV.scrollTo(scrollStateV.maxValue)
     }
+
+    var scrollStateV = rememberScrollState()
+    var scrollStateH = rememberScrollState()
 
     Bar.logsTag 
 
@@ -88,14 +91,17 @@ fun LogsScreen() {
                 Row {
                     Icon.Delete { Bar.logs = "" }
                     Icon.Copy(Bar.logs)
+                    Icon.Reload {
+                        Reload = yes
+                    }
                 }
             }
+            
         }
     ) {
-        Box(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .horizontalScroll(rememberScrollState())
+        Box(Modifier
+                .verticalScroll(scrollStateV)
+                .horizontalScroll(scrollStateH)
                 .maxW()
                 .padding(2.dp) 
         ) {
