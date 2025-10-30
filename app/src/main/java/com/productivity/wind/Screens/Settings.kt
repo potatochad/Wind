@@ -101,7 +101,7 @@ fun LogsScreen() {
                 .verticalScroll(scrollStateV)
                 .horizontalScroll(scrollStateH)
                 .maxW()
-                .padding(2.dp) // optional spacing
+                .padding(2.dp) 
         ) {
             Text(
                 text = Bar.logs,
