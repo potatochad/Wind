@@ -76,7 +76,7 @@ fun SettingsOtherScreen() {
 fun LogsScreen() {
 
     RunOnce {
-        Bar.logs = getMyAppLogs()
+        Bar.logs = getMyAppLogs().joinToString("\n")
     }
     LazyScreen(
         title= {
