@@ -185,12 +185,14 @@ object SettingsSaved {
                 log("type $type")
                 
                 val outputRaw = map[bar.name]
-                val gotValue: Any? = when (type) {
-                    Int::class -> outputRaw?.toInt()
-                    Long::class -> outputRaw?.toLong()
-                    Float::class -> outputRaw?.toFloat()
-                    Double::class -> outputRaw?.toDouble()
-                    Boolean::class -> outputRaw?.toBooleanStrictOrNull()
+                val valueNow = bar.get(Bar)
+                
+                val gotValue: Any? = when (valueNow) {
+                    is Int -> outputRaw?.toInt()
+                    is Long -> outputRaw?.toLong()
+                    is Float -> outputRaw?.toFloat()
+                    is Double -> outputRaw?.toDouble()
+                    is Boolean -> outputRaw?.toBooleanStrictOrNull()
                     else -> outputRaw
                 }
             
