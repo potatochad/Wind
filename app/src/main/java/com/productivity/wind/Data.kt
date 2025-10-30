@@ -95,6 +95,8 @@ class Settings {
 
     //endregion
 
+	var logs by m("")
+
 
     // LISTS
 
