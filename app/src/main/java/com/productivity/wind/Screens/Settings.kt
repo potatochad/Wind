@@ -81,7 +81,7 @@ fun LogsScreen()= NoLagCompose {
                     Icon.Delete {
                         Bar.logs = ""
                     }
-                    UI.CopyIcon(Bar.logs) 
+                    Icon.Copy(Bar.logs) 
                 }
         }) {
         
