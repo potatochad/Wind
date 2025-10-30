@@ -70,12 +70,18 @@ fun Modifier.clickOrHold(
 
 @Composable
 fun Modifier.scroll(
-    on: Bool = yes,
-    vertical: Bool = yes
-): Mod = if (!on) this else {
-    if (vertical) verticalScroll(rememberScrollState())
-    else horizontalScroll(rememberScrollState())
+    v: Bool = yes,
+    h: Bool = yes,
+    r_v: ScrollState = rememberScrollState(),
+    r_h: ScrollState = rememberScrollState(),
+): Mod {
+    var m = this
+    if (v) m = m.verticalScroll(r_v)
+    if (h) m = m.horizontalScroll(r_h)
+    return m
 }
+
+
 
 
 fun Modifier.maxS(): Mod= this.fillMaxSize()
