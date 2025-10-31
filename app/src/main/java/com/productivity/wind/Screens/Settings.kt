@@ -97,8 +97,6 @@ fun LogsScreen() {
         scrollV.toBottom()
     }
 
-
-
     val filteredLogs = Bar.Newlogs.lines()
         .filter { it.contains(Bar.logsTag) }
         .joinToString("\n")
@@ -132,7 +130,7 @@ fun LogsScreen() {
         Box(Modifier
                 .scroll(yes, yes, scrollV, scrollH)
                 .maxW()
-                .padding(2.dp) 
+                .move(h=6) 
         ) {
             Text(
                 text = filteredLogs,
