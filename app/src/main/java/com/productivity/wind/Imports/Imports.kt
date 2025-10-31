@@ -419,9 +419,9 @@ object UI {
 
     @Composable
 	fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
-		val sDp = s.toDp()
-		val wDp = w.toDp()
-		val hDp = h.toDp()
+		val sDp = toDp(s)
+		val wDp = toDp(w)
+		val hDp = toDp(h)
 
 
 		Spacer(
@@ -439,7 +439,7 @@ object UI {
 
 	@Composable
 	fun Checkbox(
-        isChecked: m_<Boolean>,
+        isChecked: m_<Bool>,
 	) {
 		Checkbox(
 			checked = isChecked.value,
@@ -501,17 +501,17 @@ object UI {
         val safeStartPadding = max(0.dp, (App.screenWidth+60.dp) / 4 - StartPaddingRemove.dp)
 
         Column(
-            modifier = Modifier.padding(start = safeStartPadding),
+            Modifier.space(start = safeStartPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(Modifier.height(topPadding))
+            Spacer(Modifier.h(topPadding))
             Icon(
                 painter = painterResource(id = iconRes),
                 contentDescription = "$title Icon",
                 tint = iconTint,
                 modifier = Modifier.size(iconSize),
             )
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.h(4))
             Text(
                 text = title,
                 fontSize = titleSize,
@@ -558,7 +558,7 @@ object UI {
         textStyle: TextStyle,
         widthMin: Int,
         widthMax: Int,
-        height: Dp
+        h: Dp
 	): Modifier {
 		val measurer = rememberTextMeasurer()
 		val density = LocalDensity.current
@@ -567,12 +567,12 @@ object UI {
 		val measuredWidth = measurer.measure(
 			text.ifEmpty { " " }, // fallback if empty
 			style = textStyle
-		).size.width
+		).size.w
 
 		// Create modifier with dynamic width and fixed height
 		return Modifier
-        .width((with(density) { measuredWidth.toDp() } + 2.dp).coerceIn(widthMin.dp, widthMax.dp))
-        .height(height)
+        .w((with(density) { measuredWidth.toDp() } + 2.dp).coerceIn(widthMin.dp, widthMax.dp))
+        .h(h)
 	}
 
 
@@ -584,7 +584,7 @@ object UI {
         MaxLetters: Int? = 5,
         WidthMin: Int = 10,
         WidthMax: Int = 120,
-        isInt: Bool = false,
+        isInt: Bool = no,
 
         onChange: Do_<Str>,
     ) {
