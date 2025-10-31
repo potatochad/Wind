@@ -93,8 +93,7 @@ fun LogsScreen() {
                 Modifier
                     .scroll(h = yes)
                     .width(App.screenWidth / 2)
-                    .border
-                    .background
+                    .background(CardColor)
             ) {
                 Cinput(
                     LogsTag,
