@@ -779,19 +779,6 @@ fun LazyHeader(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            /* 🔒 Btn Cooldown
-             *
-             * ⚠️ Problem:
-             * Rapid back clicks (especially after popupBackStack or screen transitions)
-             * sometimes cause a full black screen in Compose — likely due to
-             * navigation state confusion or overlapping recompositions.
-             *
-             * ✅ Fix:
-             * We temporarily disable this button after it's clicked once,
-             * using the `DisableTB_Button` flag, to prevent double-taps.
-             *
-             * This protects Compose from crashing or losing its state tree.
-             */
             if (showBack) {
 				UI.move(5)
                 LazyIcon(Icons.Default.ArrowBack) {
@@ -839,7 +826,7 @@ fun LazyScreen(
     modifier: Mod = Modifier
         .background(Color.Black)
         .maxS(),
-
+	
     showDivider: Bool = yes,
     DividerPadding: Bool = yes,
 
@@ -864,8 +851,9 @@ fun LazyScreen(
         header()
         Column(
 			Modifier
-				.height(App.LazyScreenContentHeight)
-				.padding(horizontal = 4.dp)
+				.height(
+					App.LazyScreenContentHeight
+				)
 			) {
 			content()
             bottom()
