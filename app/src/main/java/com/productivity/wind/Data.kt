@@ -23,6 +23,8 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.productivity.wind.Imports.Data.*
 import kotlin.reflect.*
 import kotlin.reflect.jvm.*
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
 yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long ago dont remember what did)
@@ -119,6 +121,7 @@ class Settings {
 	var logsTag by m("")
 }
 
+@Serializable
 data class CopyTsk(
     val id: Str = Id(),
     var title: Str = "",
@@ -128,6 +131,7 @@ data class CopyTsk(
     var Letter_Worth: Int = 1,
 )
 
+@Serializable
 data class AppTsk(
     val id: Str = Id(),
     var name: Str = "",
@@ -138,6 +142,7 @@ data class AppTsk(
     var Worth: Int = 0,
 )
 
+@Serializable
 data class WebWord(
     val id: Str = Id(),
     var word: Str = "",
