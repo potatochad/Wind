@@ -123,20 +123,21 @@ fun Modifier.space(
     }
 }
 
-fun Any?.toDp(): Dp = when (this) {
-    is Dp -> this
-    is Int -> this.dp
-    is Float -> this.dp
-    is Double -> this.dp
+fun toDp(value: Any?): Dp = when (value) {
+    is Dp -> value
+    is Int -> value.dp
+    is Float -> value.dp
+    is Double -> value.dp
     else -> 0.dp
 }
 
 
+
 fun Modifier.w(value: Any?): Modifier =
-    this.then(Modifier.width(value.toDp()))
+    this.then(Modifier.width(toDp(value)))
 
 fun Modifier.h(value: Any?): Modifier =
-    this.then(Modifier.height(value.toDp()))
+    this.then(Modifier.height(toDp(value)))
 
 
 fun Modifier.clickOrHold(
@@ -377,13 +378,12 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 
 @Composable
 fun BasicInput(
-    what: MutableState<String>,
-    height: Dp = 34.dp,
+    what: MutableState<Str>,
     isInt: Bool = no,
 	modifier: Modifier = Modifier
-		.height(height)
+		.h(34)
         .background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))
-        .padding(horizontal = 8.dp, vertical = 4.dp)
+        .space(h= 8, v= 4)
         .onFocusChanged {}, 
 	textStyle: TextStyle = TextStyle(),
     onChange: (Str) -> Unit = {},
@@ -403,7 +403,7 @@ fun BasicInput(
         value = what.value,
         onValueChange = {
             val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
-            what.value = filtered
+            what.it = filtered
             onChange(filtered)
         },
         textStyle = textStyle, 
