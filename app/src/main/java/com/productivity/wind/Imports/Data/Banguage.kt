@@ -302,3 +302,42 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
         println("Add failed: ${e.message}")
     }
 }
+
+
+
+
+
+@Composable
+fun BasicInput(
+    what: MutableState<String>,
+    textSize: TextUnit = 14.sp,
+    height: Dp = 34.dp,
+    isInt: Bool = no,
+	modifier = modifier
+		.height(height)
+        .background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))
+        .padding(horizontal = 8.dp, vertical = 4.dp)
+        .onFocusChanged {},  
+    onChange: (String) -> Unit = {},
+) {
+    val focusManager = LocalFocusManager.current
+
+    BasicTextField(
+        value = what.value,
+        onValueChange = {
+            val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
+            what.value = filtered
+            onChange(filtered)
+        },
+        textStyle = TextStyle(color = Color.White, fontSize = textSize),
+        singleLine = yes,
+        modifier = modifier, 
+		keyboardOptions = KeyboardOptions(
+            keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
+            imeAction = ImeAction.Done
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { focusManager.clearFocus() }
+        )
+    )
+}
