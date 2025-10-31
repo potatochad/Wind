@@ -74,6 +74,9 @@ fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
 
 fun Plog(msg: String = "test", s: Int = 1) {
     val delayMillis = s * 1000
+
+	Bar.logs += "$msg\r\n"  // ensures new line on most systems
+
     CoroutineScope(Dispatchers.Main).launch {
         delay(delayMillis.toLong())
         DebugPopupInfo = msg
@@ -89,6 +92,9 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
     if (special.equals("one", true)) {
         lastToast?.cancel()
     }
+
+	Bar.logs += "$msg\r\n"  // ensures new line on most systems
+
 
     Handler(Looper.getMainLooper()).postDelayed({
         val toast = Toast.makeText(App.ctx, msg, Toast.LENGTH_SHORT)
