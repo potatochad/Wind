@@ -252,7 +252,7 @@ fun LazyInfo(
                 set(popupH, maxHeight)
                 // Red dot marking click point
                 Box(
-                    modifier = Modifier
+                    Modifier
                         .size(20.dp)
                         .background(Color.Yellow)
                 )
@@ -266,7 +266,7 @@ fun LazyInfo(
 
                 // Red dot marking click point
                 Box(
-                    modifier = Modifier
+                    Modifier
                         .size(6.dp)
                         .background(Color.Red, CircleShape)
                 )
@@ -280,7 +280,7 @@ fun LazyInfo(
 			BoxWithConstraints {
                 // Red dot marking click point
                 Box(
-                    modifier = Modifier
+                    Modifier
                         .size(6.dp)
                         .background(Color.Magenta, CircleShape)
                 )
@@ -316,7 +316,7 @@ fun NormalVisual(
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
-                Box(modifier = Modifier.padding(8.dp)) {
+                Box(Modifier.space(8)) {
                     content()
                 }
             }
@@ -334,7 +334,7 @@ fun LazyImage(
     source: Any?,
     modifier: Mod = Modifier
         .size(34.dp)
-        .padding(5.dp)
+        .space(5)
 ) {
     val contentDescription = "boring"
     when (source) {
@@ -350,8 +350,7 @@ fun LazyImage(
 @Composable
 fun <T> LazzyList(
     data: List<T>,
-    modifier: Mod = Modifier
-        .height(200.dp),
+    modifier: Mod = Modifier.h(200),
     content: @Composable (T, Int) -> Unit,
 ) {
     var data2 by r_m(data)
@@ -374,7 +373,7 @@ fun LazyInput(
     isInt: Bool = no,
     maxLetters: Int = 20,
     modifier: Modifier = Modifier
-        .height(34.dp)
+        .h(34)
         .background(
             Color.Gray.copy(alpha = 0.2f),
             shape = RoundedCornerShape(4.dp)
@@ -726,7 +725,7 @@ fun LazyHeader(
     showDivider: Bool = yes,
     DividerPadding: Bool = yes,
 
-    height: Int = 100,
+    h: Int = 100,
 ) {
     val ui = rememberSystemUiController()
     var clickedBack by r_m(no)
@@ -742,7 +741,7 @@ fun LazyHeader(
                 .maxW()
                 .background(Color.Black)
                 .space(v = 12)
-                .height(height.dp),
+                .h(h),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
