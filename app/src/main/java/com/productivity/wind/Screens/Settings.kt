@@ -101,7 +101,7 @@ fun LogsScreen() {
 }
 
 
-    val filteredLogs = Bar.logs.lines()
+    val filteredLogs = Bar.Newlogs.lines()
         .filter { it.contains(Bar.logsTag) }
         .joinToString("\n")
 
@@ -123,8 +123,8 @@ fun LogsScreen() {
             
             UI.End {
                 Row {
-                    Icon.Delete { Bar.logs = "" }
-                    Icon.Copy(Bar.logs)
+                    Icon.Delete { Bar.Newlogs = "" }
+                    Icon.Copy(Bar.Newlogs)
                     Icon.Reload { Reload = yes }
                 }
             }
