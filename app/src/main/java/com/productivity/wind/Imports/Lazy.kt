@@ -421,7 +421,7 @@ fun LazyInput (
 	textStyle: TextStyle = TextStyle(
 		color = Color.White,
         fontSize = 14.sp,
-        textAlign = TextAlign.Start,
+        textAlign = TextAlign.Start
 	),
 	onChange: (Str) -> Unit = {},
 ) {
