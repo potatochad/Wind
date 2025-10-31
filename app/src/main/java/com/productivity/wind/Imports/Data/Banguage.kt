@@ -103,7 +103,7 @@ fun Modifier.move(
     bottom: Dp = 0.dp
 ) = this.padding(start = start, top = top, end = end, bottom = bottom)
 
-fun Modifier.pad(h: Dp = 0.dp, v: Dp = 0.dp) = this.padding(horizontal = h, vertical = v)
+fun Modifier.move(h: Dp = 0.dp, v: Dp = 0.dp) = this.padding(horizontal = h, vertical = v)
 
 
 
