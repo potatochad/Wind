@@ -358,7 +358,7 @@ object UI {
 				Canvas(
 					modifier = Modifier
 						.matchParentSize()
-						.padding(4.dp)
+						.space(4)
 				) {
 					drawArc(
 						color = Color(0xFF171717),   // ~10% darker overlay
@@ -403,7 +403,7 @@ object UI {
 					style = stroke,
 				)
 			}
-			Box(modifier = Modifier.padding((strokeWidth+ContentPadding).dp)) {
+			Box(Modifier.space(strokeWidth+ContentPadding)) {
 				content()
 			}
 		}
@@ -419,13 +419,6 @@ object UI {
 
     @Composable
 	fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
-		// Convert s, w, h to Dp
-		fun Any.toDp(): Dp = when (this) {
-			is Int -> this.dp
-			is Dp -> this
-			else -> 0.dp
-		}
-
 		val sDp = s.toDp()
 		val wDp = w.toDp()
 		val hDp = h.toDp()
