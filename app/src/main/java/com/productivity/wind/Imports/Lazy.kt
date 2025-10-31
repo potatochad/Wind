@@ -68,10 +68,6 @@ fun LazyMove(
     }
 }
 
-
-
-
-
 @Composable
 fun LazyTheme(content: Content) {
     val appColorScheme = darkColorScheme(
@@ -449,7 +445,7 @@ fun LazyLine(
         thickness = thickness,
         modifier = Modifier
             .offset(y = MoveY.dp)
-            .padding(horizontal = paddingHorizontal)
+            .space(h=paddingHorizontal)
             .then(if (width != Dp.Unspecified) Modifier.width(width) else Modifier)
     )
 }
