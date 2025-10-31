@@ -310,7 +310,6 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 @Composable
 fun BasicInput(
     what: MutableState<String>,
-    textSize: TextUnit = 14.sp,
     height: Dp = 34.dp,
     isInt: Bool = no,
 	modifier: Modifier = Modifier
@@ -319,7 +318,7 @@ fun BasicInput(
         .padding(horizontal = 8.dp, vertical = 4.dp)
         .onFocusChanged {}, 
 	textStyle: TextStyle = TextStyle(),
-    onChange: (String) -> Unit = {},
+    onChange: (Str) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 
