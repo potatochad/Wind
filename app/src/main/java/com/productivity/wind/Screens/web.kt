@@ -22,6 +22,9 @@ import com.productivity.wind.Imports.Data.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.unit.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.ui.text.style.*
+
 
 
 var WebUrl by m("")
