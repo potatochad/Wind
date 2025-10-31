@@ -50,35 +50,6 @@ import androidx.compose.ui.text.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.*
 
-
-fun Modifier.clickOrHold(
-    hold: Bool = yes,
-    action: Do,
-): Modifier {
-    return if (hold) {
-        pointerInput(Unit) {
-            detectTapGestures(onLongPress = { action() })
-        }
-    } else {
-        clickable(
-            indication = null,
-            interactionSource = MutableInteractionSource()
-        ) {
-            action()
-        }
-	}
-}
-
-
-
-
-fun Modifier.maxS(): Mod= this.fillMaxSize()
-fun Modifier.maxW(): Mod= this.fillMaxWidth()
-fun Modifier.maxH(): Mod= this.fillMaxHeight()
-
-
-
-
 @Composable
 fun LazyMove(
     x: Dp = 0.dp,
