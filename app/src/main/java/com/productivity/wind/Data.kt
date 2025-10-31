@@ -102,7 +102,21 @@ class Settings {
     
     var copyTasks = mutableStateListOf<CopyTsk>()
 	var apps = mutableStateListOf<AppTsk>()
-	var badWords = mutableStateListOf<WebWord>()
+	var badWords = mutableStateListOf<WebWord>().apply {
+		addAll(
+			listOf(
+				WebWord(word = "anime"),
+				WebWord(word = "youtube.com"),
+				WebWord(word = "facebook.com"),
+				WebWord(word = "instagram.com"),
+				WebWord(word = "x.com"),
+				WebWord(word = "tiktok.com"),
+			)
+		)
+	}
+
+}
+
 
 	var logs by m("")
 	var logsTag by m("")
