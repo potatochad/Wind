@@ -86,14 +86,11 @@ fun LogsScreen() {
 
     LazyScreen(
         title = {
-            Text("Logs")
-
-
             Row(
                 Modifier
                     .scroll(h = yes)
-                    .width(App.screenWidth / 2)
-                    .background(CardColor)
+                    .width(App.screenWidth / 3)
+                    .background(CardColor, shape = RoundedCornerShape(4.dp))
             ) {
                 UI.Cinput(
                     LogsTag,
