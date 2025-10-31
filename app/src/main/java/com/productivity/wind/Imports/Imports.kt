@@ -61,6 +61,7 @@ import com.productivity.wind.Imports.Data.*
 import java.time.*
 import kotlin.concurrent.schedule
 import java.io.*
+import androidx.compose.ui.text.input.*
 
 //region log
 fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
@@ -677,7 +678,8 @@ object UI {
 				.padding(horizontal = 8.dp, vertical = 4.dp),
 			keyboardOptions = KeyboardOptions(
 				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
-			)    
+			),
+			imeAction = ImeAction.Done
 		)
 	}
 
