@@ -97,27 +97,28 @@ var <T> m_<T>.it: T
     set(value) { this.value = value }
 
 fun Modifier.move(
-    s: Dp? = null,          // same value for all sides
-    h: Dp? = null,             // horizontal
-    v: Dp? = null,             // vertical
-    start: Dp? = null,         // individual sides
-    top: Dp? = null,
-    end: Dp? = null,
-    bottom: Dp? = null
+    s: Int? = null,      
+    h: Int? = null,      
+    v: Int? = null,       
+    start: Int? = null,   
+    top: Int? = null,
+    end: Int? = null,
+    bottom: Int? = null
 ): Modifier {
-    return if (s != null) {
-        this.padding(s)
-    } else if (h != null || v != null) {
-        this.padding(horizontal = h ?: 0.dp, vertical = v ?: 0.dp)
-    } else {
-        this.padding(
-            start = start ?: 0.dp,
-            top = top ?: 0.dp,
-            end = end ?: 0.dp,
-            bottom = bottom ?: 0.dp
+    fun i(x: Int?) = (x ?: 0).dp
+
+    return when {
+        s != null -> this.padding(i(s))
+        h != null || v != null -> this.padding(horizontal = i(h), vertical = i(v))
+        else -> this.padding(
+            start = i(start),
+            top = i(top),
+            end = i(end),
+            bottom = i(bottom)
         )
     }
 }
+
 
 
 
