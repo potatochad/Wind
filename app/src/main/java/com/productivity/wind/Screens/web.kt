@@ -58,7 +58,7 @@ fun Web(){
                 }
             }
         },
-        DividerPadding = false,
+        DividerPadding = no,
     ) {
         WebXml(
             webViewState = webView,
@@ -77,6 +77,7 @@ fun Web(){
         )
     }
 }
+
 @Composable
 fun BlockKeyword() {
     var BadWord = r_m("1")
@@ -92,7 +93,7 @@ fun BlockKeyword() {
                     .scroll(h = yes)
                     .width(App.screenWidth / 2),
             ) {
-                Text("$WebUrl")
+                Text(WebUrl, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
             UI.End {
                 Icon.Add {
