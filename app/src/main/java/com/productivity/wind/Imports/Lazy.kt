@@ -403,7 +403,7 @@ fun LazyInput (
 	textSize: TextUnit = 14.sp,
 	isInt: Bool = no,
 	maxLetters: Int = 20,
-	modifier = modifier
+	modifier: Modifier = modifier
 		.height(34.dp)
 		.background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))		
 		.padding(horizontal = 8.dp, vertical = 4.dp)
