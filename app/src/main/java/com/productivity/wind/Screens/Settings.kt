@@ -73,6 +73,7 @@ fun LogsScreen() {
     var Reload by m(no)
     var scrollV = r_Scroll()
     var scrollH = r_Scroll()
+    var LogsTag = r_m("")
     
     RunOnce(Reload) {
         Bar.logs = getMyAppLogs()
@@ -91,9 +92,18 @@ fun LogsScreen() {
             Row(
                 Modifier
                     .scroll(h = yes)
-                    .width(App.screenWidth / 2),
+                    .width(App.screenWidth / 2)
+                    .border
+                    .background
             ) {
-                
+                Cinput(
+                    LogsTag,
+                    MaxLetters = 20,
+                    WidthMin = 10,
+                    WidthMax = 100,
+                ) {
+                    Bar.logsTag = LogsTag
+                }
             }
             
             UI.End {
