@@ -93,7 +93,7 @@ fun AppUsage() {
           Text(" seconds")
           
           Text(" on ")
-          LazyInput(if (selectedApp.it.isEmpty()) "app" else selectedApp.it) {
+          UI.Ctext(if (selectedApp.it.isEmpty()) "app" else selectedApp.it) {
             show(AppSelect)
           }
         }
