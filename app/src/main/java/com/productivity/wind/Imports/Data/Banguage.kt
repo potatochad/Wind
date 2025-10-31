@@ -313,7 +313,7 @@ fun BasicInput(
     textSize: TextUnit = 14.sp,
     height: Dp = 34.dp,
     isInt: Bool = no,
-	modifier: Modifier = modifier
+	modifier: Modifier = Modifier
 		.height(height)
         .background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))
         .padding(horizontal = 8.dp, vertical = 4.dp)
