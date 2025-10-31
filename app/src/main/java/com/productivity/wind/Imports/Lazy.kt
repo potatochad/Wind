@@ -407,7 +407,9 @@ fun LazyInput (
 		.height(34.dp)
 		.background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))		
 		.padding(horizontal = 8.dp, vertical = 4.dp)
-		.onFocusChanged {},  
+		.onFocusChanged {}
+		.wrapContentHeight(Alignment.CenterVertically),
+	textAlign: TextAlign = TextAlign.Start,
 	onChange: (Str) -> Unit = {},
 ) {
 	BasicInput(
@@ -415,6 +417,7 @@ fun LazyInput (
 		textSize = textSize,
 		isInt = no,
 		modifier = modifier,
+		textAlign = textAlign,
 	) { 
 		if (isInt && it.isEmpty()) {
 			what.it = "0"
