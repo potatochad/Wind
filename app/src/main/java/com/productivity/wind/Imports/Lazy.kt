@@ -68,7 +68,6 @@ fun Modifier.clickOrHold(
 
 
 
-
 fun Modifier.maxS(): Mod= this.fillMaxSize()
 fun Modifier.maxW(): Mod= this.fillMaxWidth()
 fun Modifier.maxH(): Mod= this.fillMaxHeight()
@@ -143,7 +142,7 @@ fun LazyWindow(
     // Local state to control if Popup is alive
     var popupVisible by r_m(no)
 
-    LaunchedEffect(show.it) {
+    RunOnce(show.it) {
         if (show.it) {
             popupVisible = yes  // Show immediately
         } else {
@@ -486,7 +485,6 @@ fun LazyRuleCard(
 
 @Composable
 fun LazyCard(
-    inputColor: Color = Color(0xFF1A1A1A),
     innerPadding: Int = 16,
     corners: Int = 16,
     modifier: Mod = Mod
@@ -498,7 +496,7 @@ fun LazyCard(
         modifier = modifier,
         shape = RoundedCornerShape(corners.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = inputColor)
+        colors = CardDefaults.cardColors(CardColor),
     ) {
         Column(
             modifier = Modifier.padding(
