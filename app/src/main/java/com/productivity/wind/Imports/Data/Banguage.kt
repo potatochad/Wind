@@ -124,12 +124,14 @@ fun Modifier.space(
 }
 
 fun toDp(value: Any?): Dp = when (value) {
-    is Dp -> value
-    is Int -> value.dp
-    is Float -> value.dp
-    is Double -> value.dp
-    else -> 0.dp
+    is Dp -> value           // already Dp
+    is Int -> value.dp       // Int → Dp
+    is Float -> value.dp     // Float → Dp
+    is Double -> value.dp    // Double → Dp
+    null -> 0.dp             // null → 0.dp
+    else -> 0.dp             // anything else → 0.dp
 }
+
 
 
 
