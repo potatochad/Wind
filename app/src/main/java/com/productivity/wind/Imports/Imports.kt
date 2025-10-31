@@ -650,38 +650,7 @@ object UI {
             onValueChange = onChange,
         )
 	}
-
-
-
-
-
-	@Composable
-	fun Cinput(
-		what: MutableState<String>,
-		textSize: TextUnit = 14.sp,
-		height: Dp = 36.dp,
-		isInt: Boolean = false,
-		onChange: (String) -> Unit = {},
-	) {
-		BasicTextField(
-			value = what.value,
-			onValueChange = {
-				val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
-				what.value = filtered
-				onChange(filtered)
-			},
-			textStyle = TextStyle(color = Color.White, fontSize = textSize),
-			singleLine = true,
-			modifier = Modifier
-				.height(height)
-				.background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))
-				.padding(horizontal = 8.dp, vertical = 4.dp),
-			keyboardOptions = KeyboardOptions(
-				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
-				imeAction = ImeAction.Done,
-			),
-		)
-	}
+	
 
 
 
