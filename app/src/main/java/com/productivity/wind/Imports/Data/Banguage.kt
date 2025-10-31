@@ -318,7 +318,7 @@ fun BasicInput(
         .background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))
         .padding(horizontal = 8.dp, vertical = 4.dp)
         .onFocusChanged {}, 
-	textAlign: TextAlign = TextAlign.Start,
+	textStyle: TextStyle = TextStyle(),
     onChange: (String) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
@@ -330,11 +330,7 @@ fun BasicInput(
             what.value = filtered
             onChange(filtered)
         },
-        textStyle = TextStyle(
-            color = Color.White,
-            fontSize = textSize,
-            textAlign = textAlign,
-        ),
+        textStyle = textStyle, 
 		singleLine = yes,
         modifier = modifier, 
 		keyboardOptions = KeyboardOptions(
