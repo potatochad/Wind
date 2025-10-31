@@ -161,7 +161,7 @@ object Item {
     fun Backup() {
         var backupTrigger by r_m(false)
 
-        LaunchedEffect(backupTrigger) {
+        RunOnce(backupTrigger) {
             if (backupTrigger) {
                 delay(1000L)
                 backupTrigger = false
@@ -406,12 +406,12 @@ fun EditPopUp(show: m_<Bool>) {
                 value = TemporaryTargetText,
                 onValueChange = { TemporaryTargetText = it },
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .maxW()
                     .heightIn(min = 100.dp, max = 200.dp)
                     .verticalScroll(rememberScrollState())
             )
         },
-        showCancel = true,
+        showCancel = yes,
         onConfirm = { Bar.targetText = TemporaryTargetText; Bar.FirstEditText = false },
         onCancel = { TemporaryTargetText = Bar.targetText }
     )
@@ -475,7 +475,7 @@ fun AppSelectPopup(show: m_<Bool>) {
             title = "Select App",
             message = "",
             content = {
-                Box(modifier=Modifier.maxS(), contentAlignment = Alignment.Center) {
+                Box(Modifier.maxS(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator()
                 }
             }
@@ -495,16 +495,16 @@ fun AppSelectPopup(show: m_<Bool>) {
                 LazzyList(appList) { app, index ->
                     val icon = getAppIcon(getAppPackage(app))
                     LazzyRow(Modifier.clickOrHold{
-                        selectedApp.value = getAppName(app)
-                        show.value = false
+                        selectedApp.it = getAppName(app)
+                        show.it = no
                     }) {
                         UI.move(10)
                         LazyImage(icon)
                         UI.move(10)
                         
                         UI.Ctext(getAppName(app)) {
-                            selectedApp.value = getAppName(app)
-                            show.value = false
+                            selectedApp.it = getAppName(app)
+                            show.it = no
                         }
                     }
                 }
