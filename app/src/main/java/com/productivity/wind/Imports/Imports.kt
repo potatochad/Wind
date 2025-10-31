@@ -107,9 +107,13 @@ fun getMyAppLogs(): Str {
         if (line.contains(myPackage)) {
             // Keep only the message after the last colon
             val clean = line.substringAfter(":").trim()
-			val clean2 = clean.substringAfter(":").trim()
-			val clean3 = clean2.substringAfter(":").trim()
-			logs.add(clean3)
+                .substringAfter(":").trim()
+                .substringAfter(":").trim()
+
+            // Truncate if longer than 70 chars
+            val finalLine = if (clean.length > 70) clean.take(70) + "..." else clean
+            
+			logs.add(finalLine)
         }
     }
 
