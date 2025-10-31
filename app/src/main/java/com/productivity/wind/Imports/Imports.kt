@@ -112,8 +112,8 @@ fun getMyAppLogs(): Str {
     reader.forEachLine { line ->
         if (line.contains(myPackage)) {
             // Keep only the message after the last colon
-            // val clean = line.substringAfterLast(":").trim()
-            logs.add(line)
+            val clean = line.substringAfter(":").trim()
+            logs.add(clean)
         }
     }
 
