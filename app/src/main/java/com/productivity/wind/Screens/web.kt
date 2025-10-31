@@ -32,7 +32,7 @@ fun Web(){
 
     RunOnce(Bar.badWords) {
         Bar.badWords.forEach {
-            badWords += it.name
+            badWords += it.word
         }
     }
 
