@@ -95,7 +95,7 @@ fun LogsScreen() {
                     .width(App.screenWidth / 2)
                     .background(CardColor)
             ) {
-                Cinput(
+                UI.Cinput(
                     LogsTag,
                     MaxLetters = 20,
                     WidthMin = 10,
