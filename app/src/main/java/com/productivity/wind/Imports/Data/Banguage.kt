@@ -96,6 +96,16 @@ var <T> m_<T>.it: T
     get() = this.value
     set(value) { this.value = value }
 
+fun Modifier.move(
+    start: Dp = 0.dp,
+    top: Dp = 0.dp,
+    end: Dp = 0.dp,
+    bottom: Dp = 0.dp
+) = this.padding(start = start, top = top, end = end, bottom = bottom)
+
+fun Modifier.pad(h: Dp = 0.dp, v: Dp = 0.dp) = this.padding(horizontal = h, vertical = v)
+
+
 
 fun Dp.toPx(): Int {
     var context = App.ctx
