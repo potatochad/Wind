@@ -147,34 +147,6 @@ fun bottomSystemHeight(): Dp {
 //endregion
 
 //region NO LAG COMPOSE
-
-/*EXPLANATION
-*
-* CUT LAG BY 80%, IN LISTS, ETC..
-* BY MAKING SURE NOT EVERYTHING LOADS AT THE SAME TIME*/
-@Composable
-fun NoLagCompose(content: Content) {
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(50) // space out work; LET UI LOAD
-            yield()
-        }
-    }
-    content()
-}
-@Composable
-fun PreloadBox(
-    whenDo: Bool,
-    what: Content
-) {
-    if (whenDo) {
-        Box(
-            Modifier
-                .offset(x = (-10000).dp, y = (-10000).dp) // move it off-screen
-                .clearAndSetSemantics { }
-        ) { what() }
-    }
-}
 fun each(s: Long = 1000L, Do: Do) {
     Timer().schedule(0, s) {
         Do()
@@ -288,7 +260,7 @@ fun getAppIcon(packageName: Str): Drawable? {
 
 @Composable
 fun eachSecond(onTick: Do) {
-    LaunchedEffect(Unit) {
+    RunOnce(Unit) {
         while (true) {
             onTick()
             delay(1000) // wait 1 second
@@ -347,7 +319,7 @@ object UI {
 	@Composable
 	fun End(content: Content) {
 		Box(
-			modifier = Modifier.maxW(),
+			Modifier.maxW(),
 			contentAlignment = Alignment.CenterEnd
 		) {
 			content()
