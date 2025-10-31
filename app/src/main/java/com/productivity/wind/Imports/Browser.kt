@@ -160,6 +160,7 @@ fun UrlShort(input: Str): Str {
     return remember(input) {
         input.removePrefix("https://")
             .removePrefix("http://")
+            .removePrefix("www.")
     }
 }
 
@@ -184,3 +185,9 @@ fun BlockKeywords(
         }
     }
 }
+
+
+
+
+
+
