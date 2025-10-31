@@ -28,8 +28,15 @@ var WebUrl by m("")
 @Composable
 fun Web(){
     val webView = r { mutableStateOf<WebView?>(null) }
-    val badWords = listOf("mrbeast", "tiktok", "instagram", "clickbait")
+    val badWords = mutableListOf<Str>()
 
+    RunOnce(Bar.badWords) {
+        Bar.badWords.forEach {
+            badWords += it.name
+        }
+    }
+
+    
     WebUrl = "${UrlShort(webView.value?.url ?: "https://google.com")}"
        
 
