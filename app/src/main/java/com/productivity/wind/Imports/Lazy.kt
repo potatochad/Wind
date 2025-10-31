@@ -862,13 +862,12 @@ fun LazyScreen(
 
     Column(modifier) {
         header()
-        Column(Modifier
-            .height(App.LazyScreenContentHeight)) {
-			Box(
-				Modifier.padding(horizontal = 4.dp)
+        Column(
+			Modifier
+				.height(App.LazyScreenContentHeight)
+				.padding(horizontal = 4.dp)
 			) {
-				content()
-			}
+			content()
             bottom()
         }
     }
