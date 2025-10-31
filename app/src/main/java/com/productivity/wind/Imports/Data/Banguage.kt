@@ -96,28 +96,38 @@ var <T> m_<T>.it: T
     get() = this.value
     set(value) { this.value = value }
 
-fun Modifier.move(
-    s: Int? = null,      
-    h: Int? = null,      
-    v: Int? = null,       
-    start: Int? = null,   
-    top: Int? = null,
-    end: Int? = null,
-    bottom: Int? = null
+fun Modifier.space(
+    s: Number? = null,
+    h: Number? = null,
+    v: Number? = null,
+    start: Number? = null,
+    top: Number? = null,
+    end: Number? = null,
+    bottom: Number? = null
 ): Modifier {
-    fun i(x: Int?) = (x ?: 0).dp
+    fun toDp(x: Number?) = when (x) {
+        is Dp -> x
+        is Int -> x.dp
+        is Float -> x.dp
+        is Double -> x.dp
+        else -> 0.dp
+    }
 
     return when {
-        s != null -> this.padding(i(s))
-        h != null || v != null -> this.padding(horizontal = i(h), vertical = i(v))
+        s != null -> this.padding(toDp(s))
+        h != null || v != null -> this.padding(
+            horizontal = toDp(h),
+            vertical = toDp(v)
+        )
         else -> this.padding(
-            start = i(start),
-            top = i(top),
-            end = i(end),
-            bottom = i(bottom)
+            start = toDp(start),
+            top = toDp(top),
+            end = toDp(end),
+            bottom = toDp(bottom)
         )
     }
 }
+
 fun Modifier.clickOrHold(
     hold: Bool = yes,
     action: Do,
