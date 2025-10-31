@@ -400,7 +400,6 @@ fun <T> LazzyList(
 @Composable
 fun LazyInput (
 	what: MutableState<Str>,
-	textSize: TextUnit = 14.sp,
 	isInt: Bool = no,
 	maxLetters: Int = 20,
 	modifier: Modifier = Modifier
@@ -409,15 +408,18 @@ fun LazyInput (
 		.padding(horizontal = 8.dp, vertical = 4.dp)
 		.onFocusChanged {}
 		.wrapContentHeight(Alignment.CenterVertically),
-	textAlign: TextAlign = TextAlign.Start,
+	textStyle: TextStyle = TextStyle(
+		color = Color.White,
+        fontSize = 14.sp,
+        textAlign = TextAlign.Start,
+	),
 	onChange: (Str) -> Unit = {},
 ) {
 	BasicInput(
 		what = what,
-		textSize = textSize,
 		isInt = no,
 		modifier = modifier,
-		textAlign = textAlign,
+		textStyle = textStyle,
 	) { 
 		if (isInt && it.isEmpty()) {
 			what.it = "0"
