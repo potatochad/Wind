@@ -100,13 +100,13 @@ var <T> m_<T>.it: T
     set(value) { this.value = value }
 
 fun Modifier.space(
-    s: Number? = null,
-    h: Number? = null,
-    v: Number? = null,
-    start: Number? = null,
-    top: Number? = null,
-    end: Number? = null,
-    bottom: Number? = null
+    s: Any? = null,
+    h: Any? = null,
+    v: Any? = null,
+    start: Any? = null,
+    top: Any? = null,
+    end: Any? = null,
+    bottom: Any? = null
 ): Modifier {
     return when {
         s != null -> this.padding(toDp(s))
