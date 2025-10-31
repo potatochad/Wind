@@ -45,7 +45,7 @@ import androidx.compose.ui.layout.*
 import androidx.compose.ui.window.*
 import androidx.compose.foundation.text.selection.*
 import com.productivity.wind.Imports.Data.*
-
+import androidx.compose.ui.focus.*
 
 fun Modifier.clickOrHold(
     hold: Bool = yes,
