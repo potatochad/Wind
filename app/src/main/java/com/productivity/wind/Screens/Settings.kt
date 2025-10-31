@@ -96,10 +96,7 @@ fun LogsScreen() {
                     .background(CardColor, shape = RoundedCornerShape(4.dp))
             ) {
                 UI.Cinput(
-                    LogsTag,
-                    MaxLetters = 20,
-                    WidthMin = 10,
-                    WidthMax = 100,
+                    LogsTag
                 ) {
                     Bar.logsTag = LogsTag.it
                 }
