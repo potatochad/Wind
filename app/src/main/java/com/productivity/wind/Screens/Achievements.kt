@@ -9,7 +9,7 @@ import com.productivity.wind.Imports.Data.Bar
 
 
 @Composable
-fun Achievements()= NoLagCompose {
+fun Achievements() {
     LazyScreen(title= { Text("Achievements") }) {
             
         LazyItem(
