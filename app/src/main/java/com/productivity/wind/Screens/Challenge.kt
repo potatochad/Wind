@@ -49,12 +49,12 @@ fun CopyPaste() {
         LazyRuleCard("If") {
             LazzyRow {
                 Text("Letter completed: ")
-                UI.Cinput(letterPoints)
+                LazyInput(letterPoints)
                 Text(" points")
             }
             LazzyRow {
                 Text("Text retyped: ")
-                UI.Cinput(completionPoints)
+                LazyInput(completionPoints)
                 Text(" points")
             }
         }
@@ -63,7 +63,7 @@ fun CopyPaste() {
         LazyRuleCard("Other") {
             LazzyRow {
                 Text("Maximum retypes a day: ")
-                UI.Cinput(Retypes)
+                LazyInput(Retypes)
             }
         }
     }
@@ -78,7 +78,8 @@ fun AppUsage() {
     var Points = r_m("0")
     var WhichIf = r_m(0)
     set(selectedApp, "")
-    LaunchedEffect(Unit) {
+    
+    RunOnce {
         refreshApps()  
     }
 
@@ -91,11 +92,11 @@ fun AppUsage() {
           //does nothing YET
           UI.CheckCircle(1, WhichIf)
           Text("Spend ")
-          UI.Cinput(Time)
+          LazyInput(Time)
           Text(" seconds")
           
           Text(" on ")
-          UI.Ctext(if (selectedApp.value.isEmpty()) "app" else selectedApp.value) {
+          LazyInput(if (selectedApp.it.isEmpty()) "app" else selectedApp.it) {
             show(AppSelect)
           }
         }
@@ -103,7 +104,7 @@ fun AppUsage() {
       LazyRuleCard("Do"){
         LazzyRow{
           Text("Add ")
-          UI.Cinput(Points)
+          LazyInput(Points)
           Text(" points")
         }
       }
