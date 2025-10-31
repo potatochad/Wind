@@ -626,22 +626,20 @@ object UI {
 
     @Composable
     fun FieldBox(
-        modifier: Mod = Modifier,
-        horizontal: Dp = 0.dp,
-        height: Dp = 40.dp,
+        modifier: Mod = Modifier
+			.space(h = 0.dp)
+            .height(40.dp)
+            .wrapContentWidth()
+            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+            .background(BackgroundColor),
         BackgroundColor: Color = Color.Gray,
-        where: Alignment = Alignment.CenterStart,
+        Where: Alignment = Alignment.CenterStart,
         content: Content,
     ) {
         Column {
             Box(
-                modifier = modifier
-                    .padding(horizontal = horizontal)
-                    .height(height)
-                    .wrapContentWidth()
-                    .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
-                    .background(BackgroundColor),
-                contentAlignment = where,
+                modifier,   
+                contentAlignment = Where,
             ) {
                 content()
             }
@@ -726,22 +724,22 @@ object UI {
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .height(height),
+                .maxS()
+                .h(height),
         ) {
 
             Column(
-                modifier = Modifier.fillMaxSize(),
+                Modifier.maxS(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Spacer(modifier = Modifier.height(topSpacing))
+                Spacer(Modifier.h(topSpacing))
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
                     tint = color,
                     modifier = Modifier.size(iconSize),
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                UI.move(h = 8)
                 Text(text, fontSize = textSize, color = color)
             }
         }
