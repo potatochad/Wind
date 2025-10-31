@@ -397,7 +397,31 @@ fun <T> LazzyList(
 
 
 
-
+@Composable
+fun LazyInput (
+	what: MutableState<Str>,
+	textSize: TextUnit = 14.sp,
+	isInt: Bool = no,
+	maxLetters: Int = 20,
+	modifier = modifier
+		.height(34.dp)
+		.background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))		
+		.padding(horizontal = 8.dp, vertical = 4.dp)
+		.onFocusChanged {},  
+		onChange: (Str) -> Unit = {},
+) {
+	BasicInput(
+		what = what,
+		textSize = textSize,
+		isInt = no,
+		modifier = modifier,
+	) { 
+		if (isInt && input.isEmpty()) {
+			what.it = "0"
+		} 	
+		what.it = input.take(maxLetters)
+	}
+}
 
 
 
