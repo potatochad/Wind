@@ -678,8 +678,8 @@ object UI {
 				.padding(horizontal = 8.dp, vertical = 4.dp),
 			keyboardOptions = KeyboardOptions(
 				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
+				imeAction = ImeAction.Done,
 			),
-			imeAction = ImeAction.Done
 		)
 	}
 
