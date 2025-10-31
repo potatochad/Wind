@@ -403,12 +403,12 @@ fun LazyInput (
 	textSize: TextUnit = 14.sp,
 	isInt: Bool = no,
 	maxLetters: Int = 20,
-	modifier: Modifier = modifier
+	modifier: Modifier = Modifier
 		.height(34.dp)
 		.background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))		
 		.padding(horizontal = 8.dp, vertical = 4.dp)
 		.onFocusChanged {},  
-		onChange: (Str) -> Unit = {},
+	onChange: (Str) -> Unit = {},
 ) {
 	BasicInput(
 		what = what,
