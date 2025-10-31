@@ -115,7 +115,7 @@ fun getMyAppLogs(): Str {
             val clean = line.substringAfter(":").trim()
 			val clean2 = clean.substringAfter(":").trim()
 			val clean3 = clean2.substringAfter(":").trim()
-			logs.add(clean)
+			logs.add(clean3)
         }
     }
 
