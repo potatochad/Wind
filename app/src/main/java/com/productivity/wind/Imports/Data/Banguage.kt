@@ -88,6 +88,9 @@ import kotlin.reflect.full.*
 import androidx.compose.ui.focus.*
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.ActivityResultLauncher
+import androidx.compose.foundation.gestures.*
+import androidx.compose.ui.input.pointer.*
+
 
 val gson = Gson()
 val yes = true
