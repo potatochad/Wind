@@ -379,7 +379,7 @@ fun LazyInput(
             Color.Gray.copy(alpha = 0.2f),
             shape = RoundedCornerShape(4.dp)
         )
-        .padding(horizontal = 8.dp, vertical = 4.dp)
+        .space(h= 8, v= 4)
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically),
     textStyle: TextStyle = TextStyle(
@@ -435,7 +435,7 @@ fun LazyLine(
     color: Color = Color(0xFFFFD700),
     thickness: Dp = 1.dp,
     MoveY: Int = 0,
-    paddingHorizontal: Dp = 0.dp,
+    spaceH: Dp = 0.dp,
     width: Dp = Dp.Unspecified,
   ) {
     if (!show) return
@@ -445,7 +445,7 @@ fun LazyLine(
         thickness = thickness,
         modifier = Modifier
             .offset(y = MoveY.dp)
-            .space(h=paddingHorizontal)
+            .space(h=spaceH)
             .then(if (width != Dp.Unspecified) Modifier.width(width) else Modifier)
     )
 }
@@ -453,14 +453,14 @@ fun LazyLine(
 @Composable
 fun LazzyRow(
     modifier: Mod = Modifier,
-    padding: Int = 0,
+    space: Int = 0,
     center: Bool = no, // Kotlin uses 'Boolean', not 'Bool'
     content: Content,
 ) {
     Row(
         modifier = modifier
             .maxW()
-            .padding(padding.dp),
+            .space(space),
         horizontalArrangement = if (center) Arrangement.Center else Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -494,7 +494,7 @@ fun LazyCard(
     innerPadding: Int = 16,
     corners: Int = 16,
     modifier: Mod = Mod
-	     .padding(horizontal = 8.dp, vertical = 10.dp)
+	     .space(h= 8, v = 10)
          .maxW(),
     content: Content,
 ) {
@@ -505,7 +505,7 @@ fun LazyCard(
         colors = CardDefaults.cardColors(CardColor),
     ) {
         Column(
-            modifier = Modifier.padding(
+            modifier = Modifier.space(
                 start = innerPadding.dp,
                 end = innerPadding.dp,
                 bottom = innerPadding.dp,
@@ -536,7 +536,7 @@ fun LazyIcon(
         IconButton(
             onClick = onClick,
             modifier = modifier
-                .padding(OuterPadding.dp) // OUTER padding
+                .space(OuterPadding) // OUTER padding
                 .size(ButtonSize.dp)      // controls inner room around icon
         ) {
             if (icon != null) {
@@ -588,7 +588,7 @@ fun LazyMore(
             modifier = Modifier
                 .maxW()
                 .clickable { expanded = !expanded }
-                .padding(8.dp),
+                .space(8),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -617,9 +617,9 @@ fun LazyMore(
             )
         ) {
             Column(
-                modifier = Modifier
+                Modifier
                     .maxW()
-                    .padding(start = 32.dp, top = 4.dp) // indent content nicely
+                    .space(start = 32, top = 4)
             ) {
                 content()
             }
@@ -643,16 +643,16 @@ fun LazyItem(
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
-	
-    topPadding: Dp= 7.dp,
-    bottomPadding: Dp = 7.dp,
+
+	topPadding: Dp = 7.dp,
+	bottomPadding: Dp = 7.dp,
 	
 	onClick: Do? = null,
 ) {
 	Row(
-        modifier = Modifier
+        Modifier
             .maxW()
-            .padding(
+            .space(
                 top = topPadding,
                 bottom = bottomPadding,
                 start = 7.dp,
@@ -671,7 +671,7 @@ fun LazyItem(
             Row(
 				modifier = Modifier
                     .maxW()
-                    .padding(5.dp),
+                    .space(5.dp),
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				if (icon != null) {
@@ -680,7 +680,7 @@ fun LazyItem(
 						contentDescription = null,
 						tint = Color.White,
 						modifier = Modifier
-                            .padding(end = 10.dp)
+                            .space(end = 10)
                             .size(24.dp)
 					)
 				}	    
@@ -688,7 +688,7 @@ fun LazyItem(
 				if (BigIcon != null && BigIconColor != null) {
 					Box(
                         modifier = Modifier
-                            .padding(end = 10.dp)
+                            .space(end = 10)
                             .size(30.dp)
                             .clip(CircleShape)
                             .background(BigIconColor),
@@ -704,7 +704,7 @@ fun LazyItem(
 				}
 
 
-				Column(modifier = Modifier.weight(1f)) {
+				Column(Modifier.weight(1f)) {
 					Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
 					subtitle?.let {
 						Text(text = it, color = Color.Gray, fontSize = 12.sp)
@@ -730,7 +730,7 @@ fun LazyHeader(
 ) {
     val ui = rememberSystemUiController()
     var clickedBack by r_m(no)
-    LaunchedEffect(Unit) {
+    RunOnce(Unit) {
         ui.setStatusBarColor(Color.Black, darkIcons = no)
     }
 
@@ -738,10 +738,10 @@ fun LazyHeader(
         UI.move(h=getStatusBarHeight()/3)
 
         Row(
-            modifier = modifier
+            modifier
                 .maxW()
                 .background(Color.Black)
-                .padding(vertical = 12.dp)
+                .space(v = 12)
                 .height(height.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -759,9 +759,9 @@ fun LazyHeader(
 
 			// Title content
 			Box(
-                modifier = Modifier
+                Modifier
                     .weight(1f)
-                    .padding(start = if (showBack) 8.dp else 0.dp),
+                    .space(start = if (showBack) 8 else 0),
                 contentAlignment = Alignment.CenterStart
             ) {
                 Box(Modifier
