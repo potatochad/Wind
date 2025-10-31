@@ -80,9 +80,26 @@ fun LogsScreen() {
     var LogsTag = r_m("")
     
     RunOnce(Reload) {
-        Bar.logs = getMyAppLogs()
-        scrollV.toBottom()
-    }
+        val currentLogs = getMyAppLogs()
+        val oldLogs = Bar.Oldlogs
+
+        // Compare old vs new
+        Bar.Newlogs = if (currentLogs != oldLogs) {
+            val diff = currentLogs.lines().filterNot { oldLogs.contains(it) }
+            if (diff.isNotEmpty()) {
+                oldLogs + "\n----new----\n" + diff.joinToString("\n")
+            } else {
+                oldLogs // nothing new
+            }
+        } else {
+            Vlog("no new logs")
+            oldLogs
+        }
+
+    Bar.Oldlogs = currentLogs
+    scrollV.toBottom()
+}
+
 
     val filteredLogs = Bar.logs.lines()
         .filter { it.contains(Bar.logsTag) }
