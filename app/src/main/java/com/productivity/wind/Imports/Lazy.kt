@@ -429,11 +429,11 @@ fun LazyInput(
         textStyle = textStyle,
     ) { input ->
         if (isInt && input.isEmpty()) {
-            what.value = "0"
+            what.it = "0"
         } else {
-            what.value = input.take(maxLetters)
+            what.it = input.take(maxLetters)
         }
-        onChange(what.value)
+        onChange(what.it)
     }
 }
 
