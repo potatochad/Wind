@@ -316,7 +316,7 @@ object DayChecker {
 
 
 
-
+var CardColor = Color(0xFF1A1A1A)
 val DarkBlue = Color(0xFF00008B) 
 val Gold = Color(0xFFFFD700)
 val LightBlue = Color(0xFFADD8E6)
