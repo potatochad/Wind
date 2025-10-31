@@ -399,45 +399,41 @@ fun <T> LazzyList(
 
 
 @Composable
-fun LazyInput (
-	what: MutableState<Str>,
-	isInt: Bool = no,
-	maxLetters: Int = 20,
-	modifier: Modifier = Modifier
-		.height(34.dp)
-		.background(
-			Color.Gray.copy(alpha = 0.2f), 
-			shape = RoundedCornerShape(4.dp)
-		)		
-		.padding(
-			horizontal = 8.dp, 
-			vertical = 4.dp
-		)
-		.onFocusChanged {
-			
-		}
-		.wrapContentHeight(
-			Alignment.CenterVertically
-		),
-	textStyle: TextStyle = TextStyle(
-		color = Color.White,
-        fontSize = 14.sp,
-        textAlign = TextAlign.Start
-	),
-	onChange: (Str) -> Unit = {},
+fun LazyInput(
+    what: MutableState<Str>,
+    isInt: Bool = no,
+    maxLetters: Int = 20,
+    modifier: Modifier = Modifier
+        .height(34.dp)
+        .background(
+            Color.Gray.copy(alpha = 0.2f),
+            shape = RoundedCornerShape(4.dp)
+        )
+        .padding(horizontal = 8.dp, vertical = 4.dp)
+        .onFocusChanged { }
+        .wrapContentHeight(Alignment.CenterVertically),
+    textStyle: TextStyle = TextStyle(
+        color = Color.White,
+        fontSize = 14.sp,
+        textAlign = TextAlign.Start
+    ),
+    onChange: (Str) -> Unit = {},
 ) {
-	BasicInput(
-		what = what,
-		isInt = no,
-		modifier = modifier,
-		textStyle = textStyle,
-	) { 
-		if (isInt && it.isEmpty()) {
-			what.it = "0"
-		} 	
-		what.it = it.take(maxLetters)
-	}
+    BasicInput(
+        what = what,
+        isInt = isInt,
+        modifier = modifier,
+        textStyle = textStyle,
+    ) { input ->
+        if (isInt && input.isEmpty()) {
+            what.value = "0"
+        } else {
+            what.value = input.take(maxLetters)
+        }
+        onChange(what.value)
+    }
 }
+
 
 
 
