@@ -93,7 +93,8 @@ fun LogsScreen() {
                 Modifier
                     .scroll(h = yes)
                     .width(App.screenWidth / 3)
-                    .background(CardColor, shape = RoundedCornerShape(4.dp))
+                    .background(CardColor, shape = RoundedCornerShape(4.dp)),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 LazyInput(
                     LogsTag
