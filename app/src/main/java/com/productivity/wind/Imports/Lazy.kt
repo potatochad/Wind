@@ -47,6 +47,7 @@ import androidx.compose.foundation.text.selection.*
 import com.productivity.wind.Imports.Data.*
 import androidx.compose.ui.focus.*
 import androidx.compose.ui.text.*
+import androidx.compose.ui.text.TextStyle
 
 fun Modifier.clickOrHold(
     hold: Bool = yes,
@@ -413,10 +414,10 @@ fun LazyInput(
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically),
     textStyle: TextStyle = TextStyle(
-        color = Color.White,
-        fontSize = 14.sp,
-        textAlign = TextAlign.Start
-    ),
+		color = Color.White,
+		fontSize = 14.sp,
+		textAlign = TextAlign.Start
+	),
     onChange: (Str) -> Unit = {},
 ) {
     BasicInput(
