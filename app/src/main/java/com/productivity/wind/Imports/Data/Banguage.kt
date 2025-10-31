@@ -105,14 +105,6 @@ fun Modifier.space(
     end: Number? = null,
     bottom: Number? = null
 ): Modifier {
-    fun toDp(x: Number?) = when (x) {
-        is Dp -> x
-        is Int -> x.dp
-        is Float -> x.dp
-        is Double -> x.dp
-        else -> 0.dp
-    }
-
     return when {
         s != null -> this.padding(toDp(s))
         h != null || v != null -> this.padding(
@@ -127,6 +119,22 @@ fun Modifier.space(
         )
     }
 }
+
+fun Any?.toDp(): Dp = when (this) {
+    is Dp -> this
+    is Int -> this.dp
+    is Float -> this.dp
+    is Double -> this.dp
+    else -> 0.dp
+}
+
+
+fun Modifier.w(value: Any?): Modifier =
+    this.then(Modifier.width(value.toDp()))
+
+fun Modifier.h(value: Any?): Modifier =
+    this.then(Modifier.height(value.toDp()))
+
 
 fun Modifier.clickOrHold(
     hold: Bool = yes,
