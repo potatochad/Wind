@@ -107,36 +107,6 @@ class Settings {
 	var logs by m("")
 	var logsTag by m("")
 }
-//mutableListOf()
-
-fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
-	try {
-		val index = this.indexOf(item)
-		if (index != -1) {
-			this[index].block()
-		} else {
-			Plog("failed to edit a list")
-		}  
-	} catch (e: Exception) {
-		Plog("Edit crashed for item $item: ${e.message}")
-	}
-}
-
-@RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
-inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
-    try {
-        val newItem = T::class.java.getDeclaredConstructor().newInstance()
-        newItem.block()
-
-        this += newItem
-
-    } catch (e: Exception) {
-        println("Add failed: ${e.message}")
-    }
-}
-
-
-
 
 data class CopyTsk(
     val id: Str = Id(),
