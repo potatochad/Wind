@@ -404,10 +404,20 @@ fun LazyInput (
 	maxLetters: Int = 20,
 	modifier: Modifier = Modifier
 		.height(34.dp)
-		.background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))		
-		.padding(horizontal = 8.dp, vertical = 4.dp)
-		.onFocusChanged {}
-		.wrapContentHeight(Alignment.CenterVertically),
+		.background(
+			Color.Gray.copy(alpha = 0.2f), 
+			shape = RoundedCornerShape(4.dp)
+		)		
+		.padding(
+			horizontal = 8.dp, 
+			vertical = 4.dp
+		)
+		.onFocusChanged {
+			
+		}
+		.wrapContentHeight(
+			Alignment.CenterVertically
+		),
 	textStyle: TextStyle = TextStyle(
 		color = Color.White,
         fontSize = 14.sp,
