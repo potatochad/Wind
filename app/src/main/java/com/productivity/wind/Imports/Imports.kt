@@ -67,15 +67,11 @@ import androidx.compose.ui.text.input.*
 fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
     var msg = message.take(int)
     if (msg.length >= int) {msg += " ..."}
-	Bar.logs += "$msg\r\n"  // ensures new line on most systems
-
     Log.w(tag, msg)
 }
 
 fun Plog(msg: String = "test", s: Int = 1) {
     val delayMillis = s * 1000
-
-	Bar.logs += "$msg\r\n"  // ensures new line on most systems
 
     CoroutineScope(Dispatchers.Main).launch {
         delay(delayMillis.toLong())
