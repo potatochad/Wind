@@ -15,6 +15,9 @@ import com.productivity.wind.Imports.*
 import com.productivity.wind.*
 import com.productivity.wind.Imports.Data.*
 import androidx.compose.ui.unit.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.ui.text.style.*
+
 //region Settings
 
 
