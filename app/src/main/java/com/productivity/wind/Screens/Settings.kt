@@ -95,7 +95,7 @@ fun LogsScreen() {
                     .width(App.screenWidth / 3)
                     .background(CardColor, shape = RoundedCornerShape(4.dp))
             ) {
-                UI.Cinput(
+                LazyInput(
                     LogsTag
                 ) {
                     Bar.logsTag = LogsTag.it
