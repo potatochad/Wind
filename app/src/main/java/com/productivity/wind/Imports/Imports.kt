@@ -780,7 +780,7 @@ fun goTo(route: Str) = App.navHost.navigate(route)
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MyNavGraph(navController: NavHostController) =NoLagCompose{
+fun MyNavGraph(navController: NavHostController) {
         NavHost(navController = navController, startDestination = "Main") {
             ScreenNav()
         }
