@@ -6,10 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.material.icons.filled.*
 import com.productivity.wind.Imports.*
 import androidx.compose.ui.graphics.*
-import com.productivity.wind.Imports.Data.r_m
-import com.productivity.wind.Imports.Data.set
-import com.productivity.wind.Imports.Data.show
-
+import com.productivity.wind.Imports.Data.*
 
 @Composable
 fun Challenge() {
