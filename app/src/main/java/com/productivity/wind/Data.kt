@@ -117,7 +117,8 @@ class Settings {
 		)
 	}
 
-	var logs by m("")
+	var Newlogs by m("")
+	var Oldlogs by m("")
 	var logsTag by m("")
 }
 
