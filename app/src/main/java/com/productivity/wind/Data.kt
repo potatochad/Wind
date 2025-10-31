@@ -115,9 +115,6 @@ class Settings {
 		)
 	}
 
-}
-
-
 	var logs by m("")
 	var logsTag by m("")
 }
