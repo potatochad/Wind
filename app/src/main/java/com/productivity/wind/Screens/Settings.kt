@@ -101,7 +101,7 @@ fun LogsScreen() {
                     WidthMin = 10,
                     WidthMax = 100,
                 ) {
-                    Bar.logsTag = LogsTag
+                    Bar.logsTag = LogsTag.it
                 }
             }
             
