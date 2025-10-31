@@ -416,10 +416,10 @@ fun LazyInput (
 		isInt = no,
 		modifier = modifier,
 	) { 
-		if (isInt && input.isEmpty()) {
+		if (isInt && it.isEmpty()) {
 			what.it = "0"
 		} 	
-		what.it = input.take(maxLetters)
+		what.it = it.take(maxLetters)
 	}
 }
 
