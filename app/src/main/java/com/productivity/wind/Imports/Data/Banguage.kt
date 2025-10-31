@@ -322,6 +322,15 @@ fun BasicInput(
 ) {
     val focusManager = LocalFocusManager.current
 
+
+	Box(
+        modifier = Modifier
+            .clickable(
+                indication = null,
+                interactionSource = r { MutableInteractionSource() }
+            ) { focusManager.clearFocus() }
+    ) {
+
     BasicTextField(
         value = what.value,
         onValueChange = {
@@ -340,6 +349,7 @@ fun BasicInput(
             onDone = { focusManager.clearFocus() }
         )
     )
+	}
 }
 
 
