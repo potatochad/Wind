@@ -628,10 +628,6 @@ object UI {
 
         OnLoseFocus(isFocused, null)
 
-
-
-
-		
         BasicTextField(
 			decorationBox = { innerTextField ->
                 FieldBox(
@@ -649,13 +645,6 @@ object UI {
             cursorBrush = grayCursor(),
             interactionSource = FocusChange,
 
-
-
-
-
-
-
-			
             value = what,
             onValueChange = onChange,
         )
@@ -663,77 +652,38 @@ object UI {
 
 
 
-    @Composable
-    fun Cinput(
-        what: m_<String>,
-        textSize: TextUnit = 14.sp,
-        height: Dp = 36.dp,
-        MaxLetters: Int? = 5,
-        WidthMin: Int = 10,
-        WidthMax: Int = 100,
-        isInt: Bool = false,
 
-        onChange: Do_<Str> = {},
-    ) {
-        val value = what.value
-        val TextColor = Color.White
-        val FocusChange = TextMemory()
-        val imeAction = ImeAction(null)
-        val isFocused by IsFocused(FocusChange)
 
-        val TextStyling = CTextStyle(TextColor, textSize)
-        val measurer = rememberTextMeasurer()
-        val density = LocalDensity.current
-        val measuredWidth = measurer.measure(
-            if (value.isEmpty()) " "
-            else value,
-            style = TextStyling,
-        ).size.width
-        val outerMod = Modifier.width(
-            (with(density) { measuredWidth.toDp() } + 2.dp)
-                .coerceIn(WidthMin.dp, WidthMax.dp),
-        )
-        OnLoseFocus(isFocused, null)
+	@Composable
+	fun Cinput(
+		what: MutableState<String>,
+		textSize: TextUnit = 14.sp,
+		height: Dp = 36.dp,
+		isInt: Boolean = false,
+		onChange: (String) -> Unit = {},
+	) {
+		BasicTextField(
+			value = what.value,
+			onValueChange = {
+				val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
+				what.value = filtered
+				onChange(filtered)
+			},
+			textStyle = TextStyle(color = Color.White, fontSize = textSize),
+			singleLine = true,
+			modifier = Modifier
+				.height(height)
+				.background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))
+				.padding(horizontal = 8.dp, vertical = 4.dp),
+			keyboardOptions = KeyboardOptions(
+				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
+			)    
+		)
+	}
 
 
 
 
-		
-        BasicTextField(
-			decorationBox = { innerTextField ->
-                FieldBox(
-                    height = height,
-                    BackgroundColor = Color.Transparent,
-                ) {
-                    innerTextField()
-                }
-            },
-			modifier = outerMod.height(height),
-            textStyle = TextStyling,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(type(true), imeAction),
-            keyboardActions = doneAction(null),
-            interactionSource = FocusChange,
-
-
-
-
-
-
-
-			
-            value = value,
-            onValueChange = {
-                val input = FilterInput(isInt, it)
-                if (MaxLetters == null || input.length <= MaxLetters) {
-					set(what, input)
-                    onChange(input)
-                } else {
-                    Vlog("max ${MaxLetters} letters")
-                }
-            },
-        )
-    }
 
 
     @Composable
