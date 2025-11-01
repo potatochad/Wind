@@ -467,3 +467,47 @@ fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
     if (msg.length >= int) {msg += " ..."}
     Log.w(tag, msg)
 }
+
+
+
+fun getTodayAppUsage(packageName: Str): Int {
+    val end = System.currentTimeMillis()
+    val cal = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+    val start = cal.timeInMillis
+
+    val usm = App.ctx.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+
+    // Use INTERVAL_BEST and filter manually
+    val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, start, end)
+    val todayUsage = stats
+        .filter { it.packageName == packageName && it.lastTimeUsed >= start }
+        .sumOf { it.totalTimeInForeground }
+
+    return (todayUsage / 1000L).toInt().coerceAtLeast(0)
+}
+fun getAppPackage(ri: ResolveInfo): Str {
+    return ri.activityInfo.packageName
+}
+fun getAppName(info: ResolveInfo): Str {
+    val pkg = info.activityInfo.packageName
+    return info.loadLabel(App.ctx.packageManager)?.toString() ?: pkg
+}
+
+
+@Composable
+fun getAppIcon(packageName: Str): Drawable? {
+    val pm = App.ctx.packageManager
+    return remember(packageName) {
+        try {
+            pm.getApplicationIcon(packageName)
+        } catch (_: Exception) {
+            null
+        }
+    }
+}
+
