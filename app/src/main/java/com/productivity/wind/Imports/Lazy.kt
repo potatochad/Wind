@@ -390,13 +390,13 @@ fun LazyInput(
 ) {
 	val whatState: MutableState<Str> = when (what) {
         is MutableState<*> -> what as MutableState<Str>
-        is Int -> r { mutableStateOf(what.toString()) }
-        is Str-> r { mutableStateOf(what) }
-        else -> r { mutableStateOf("") }
+        is Int -> r { m(what.toString()) }
+        is Str-> r { m(what) }
+        else -> r { m("") }
 	}
 	
     BasicInput(
-        what = what, //expect mutableState string
+        what = whatState, //expect mutableState string
         isInt = isInt,
         modifier = modifier,
         textStyle = textStyle,
@@ -813,7 +813,7 @@ fun LazyScreen(
 			showBack = showBack,
 			showDivider = showDivider,
 			DividerPadding = DividerPadding,
-			height = headerHeight
+			h = headerHeight
 		)
 	}
 	val bottom: Content = {
