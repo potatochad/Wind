@@ -278,7 +278,7 @@ object Icon {
     @Composable
     fun Menu() {
         LazyIcon(Icons.Default.Menu) {
-            App.Menu = true
+            App.Menu = yes
         }
     }
 
