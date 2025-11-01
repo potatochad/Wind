@@ -151,7 +151,7 @@ fun refreshApps() {
     try {
         val realApps: List<ResolveInfo> = getApps()
 
-        if (!UI.isUsageP_Enabled()) return
+        if (!isUsageP_Enabled()) return
 
         realApps.forEach { info ->
             val pkgApp = getAppPackage(info)
