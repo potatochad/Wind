@@ -388,6 +388,7 @@ fun LazyInput(
 	),
     onChange: (Str) -> Unit = {},
 ) {
+	var WhatAny = What
 
 	when (what) {
 		is MutableState<Str> -> {
