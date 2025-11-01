@@ -112,7 +112,8 @@ fun BlockKeyword() {
                 Text("Detect ")
                 LazyInput(
                     BadWord, 
-                    maxW = 120
+                    no,
+                    Modifier.w(40, 120)
                 )
             }
         }
