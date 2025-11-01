@@ -134,20 +134,20 @@ object Item {
             BigIconColor = Gold,
             title = "Unlock Threshold",
             endContent = {
-                LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) {
-                    
-                    Bar.Dpoints = PastValue
+                LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5, onMutableChangeIt = {
                     Item.enoughPoints {
                         
                     }
+
+                    it.it = Bar.Dpoints
                     if (Bar.funTime < Bar.Dpoints) {
                         show(NeedMorePoints)
                         Vlog("triggerd")
                     } else {
                         Vlog("NOT TRIGERRRINGGGG")
-                        Bar.Dpoints = it.toInt()
+                        Bar.Dpoints = it.it.toInt()
                     }
-                }
+                })
             }
         )
     }
