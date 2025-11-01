@@ -384,13 +384,12 @@ fun LazyInput(
 
 	val defaultMod = Modifier
         .h(34)
-        .background(CardColor, shape = RoundedCornerShape(4.dp))
         .space(h = 8, v = 4)
 		.w(40, 90)
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically)
 
-    val finalMod = defaultMod.then(modifier)
+    val finalMod = defaultMod.then(modifier).background(CardColor, shape = RoundedCornerShape(4.dp))
 
 	val whatState: m_<Str> = when (what) {
         is MutableState<*> -> what as MutableState<Str>
