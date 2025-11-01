@@ -372,7 +372,7 @@ fun LazyInput(
     what: Any,
     isInt: Bool = no,
     maxLetters: Int = 20,
-    mod: Mod = Modifier,
+    modifier: Mod = Modifier,
     textStyle: TextStyle = TextStyle(
 		color = Color.White,
 		fontSize = 14.sp,
@@ -389,7 +389,7 @@ fun LazyInput(
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically)
 
-    val finalMod = defaultMod.then(mod)
+    val finalMod = defaultMod.then(modifier)
 
 	val whatState: MutableState<Str> = when (what) {
         is MutableState<*> -> what as MutableState<Str>
