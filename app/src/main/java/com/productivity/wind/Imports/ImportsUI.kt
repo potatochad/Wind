@@ -219,7 +219,7 @@ object DayChecker {
 
 
     fun start() {
-        if (job?.isActive == true) return  // Already running
+        if (job?.isActive == yes) return  // Already running
         if (Bar.lastDate == "") { Bar.lastDate = LocalDate.now().toString() }
 
         job = CoroutineScope(Dispatchers.Default).launch {
