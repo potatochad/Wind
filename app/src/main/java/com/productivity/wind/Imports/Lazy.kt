@@ -373,6 +373,7 @@ fun LazyInput(
     isInt: Bool = no,
     maxLetters: Int = 20,
     modifier: Mod = Modifier,
+	maxW: Int? = null,
     textStyle: TextStyle = TextStyle(
 		color = Color.White,
 		fontSize = 14.sp,
@@ -382,10 +383,12 @@ fun LazyInput(
 ) {
 
 	val defaultMod = Modifier
-        .height(34.dp)
+        .h(34)
         .background(Color.Gray.copy(alpha = 0.15f), shape = RoundedCornerShape(4.dp))
-        .padding(horizontal = 8.dp, vertical = 4.dp)
-        .width(50.dp)
+        .space(h = 8, v = 4)
+		.then(
+			if (maxW != null) Modifier.widthIn(max = maxW.dp) else Modifier.w(30)
+		)
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically)
 
