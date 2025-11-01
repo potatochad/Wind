@@ -385,7 +385,7 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 
 @Composable
 fun BasicInput(
-    what: MutableState<Str>,
+    what: Any,
     isInt: Bool = no,
 	modifier: Modifier = Modifier
 		.h(34)
@@ -399,6 +399,14 @@ fun BasicInput(
     val focusManager = LocalFocusManager.current
 
 
+	val whatState: m_<Str> = when (what) {
+        is m_<*> -> what as m_<Str>
+        is Int -> r { m("$what") }
+        is Str-> r { m(what) }
+        else -> r { m("") }
+	}
+
+
 	Box(
         modifier = Modifier
             .clickable(
@@ -408,12 +416,12 @@ fun BasicInput(
     ) {
 
     BasicTextField(
-        value = what.it,
+        value = whatState.it,
         onValueChange = {
             val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
-            what.it = filtered
+            whatState.it = filtered
             onChange(filtered)
-			onMutableChangeIt(what)
+			onMutableChangeIt(whatState)
         },
         textStyle = textStyle, 
 		singleLine = yes,
