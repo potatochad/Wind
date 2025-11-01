@@ -375,7 +375,7 @@ fun LazyInput(
     modifier: Modifier = Modifier
         .h(34)
         .background(
-            Color.Gray.copy(alpha = 0.2f),
+            Color.Gray.copy(alpha = 0.15f),
             shape = RoundedCornerShape(4.dp)
         )
         .space(h= 8, v= 4)
