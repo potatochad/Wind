@@ -450,3 +450,13 @@ fun openPermissionSettings(action: Str, uri: Uri? = null) {
             App.ctx.packageName,
         ) == AppOpsManager.MODE_ALLOWED
 	}
+
+
+
+
+@Composable
+fun bottomSystemHeight(): Dp {
+    val insets = WindowInsets.navigationBars // includes bottom system bar
+    val density = LocalDensity.current
+    return with(density) { insets.getBottom(this).toDp() }
+}
