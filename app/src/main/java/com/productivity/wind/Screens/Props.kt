@@ -204,7 +204,7 @@ object Header {
         UI.End {
             Icon.Add {
 
-                UI.check(!UI.isUsageP_Enabled()) { show(AskUsagePermission); return@Add}
+                UI.check(!isUsageP_Enabled()) { show(AskUsagePermission); return@Add}
                 UI.check(Time.value.toInt() < 1,"Add time") {return@Add}
                 UI.check(Points.value.toInt() < 1,"Add points") {return@Add}
                 UI.check(selectedApp.value.isEmpty(),"Select app") {return@Add}
