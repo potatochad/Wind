@@ -136,7 +136,7 @@ object Item {
                     Item.enoughPoints {
                         
                     }
-                    if (Bar.funTime < Bar.Dpoints)h {
+                    if (Bar.funTime < Bar.Dpoints) {
                         show(NeedMorePoints)
                     } else Bar.Dpoints = it.toInt()
                 }
