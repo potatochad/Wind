@@ -373,8 +373,6 @@ fun LazyInput(
     isInt: Bool = no,
     maxLetters: Int = 20,
     modifier: Mod = Modifier,
-	maxW: Int? = null,
-	minW: Int = 60,
     textStyle: TextStyle = TextStyle(
 		color = Color.White,
 		fontSize = 14.sp,
@@ -388,7 +386,7 @@ fun LazyInput(
         .h(34)
         .background(CardColor, shape = RoundedCornerShape(4.dp))
         .space(h = 8, v = 4)
-		.w(60)
+		.w(40, 90)
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically)
 
