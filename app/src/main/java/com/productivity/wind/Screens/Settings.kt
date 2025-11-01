@@ -100,7 +100,12 @@ fun LogsScreen() {
             ) {
                 LazyInput(
                     LogsTag,
-                    modifier = Modifier.w(App.screenWidth / 3)
+                    modifier = Modifier
+                        .h(34)
+                        .space(h = 8, v = 4)
+                        .w(60)
+                        .background(CardColor, shape = RoundedCornerShape(4.dp))
+                        .wrapContentHeight(Alignment.CenterVertically)
                 ) {
                     Bar.logsTag = LogsTag.it
                 }
