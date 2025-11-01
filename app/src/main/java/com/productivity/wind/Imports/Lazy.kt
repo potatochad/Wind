@@ -371,8 +371,6 @@ fun LazyInput(
     what: Any,
     isInt: Bool = no,
 	modifier: Mod = Modifier,//DOES NOTHING
-	maxW: Int = 90,
-	minW: Int = 40,
     maxLetters: Int = 20,
     textStyle: TextStyle = TextStyle(
 		color = Color.White,
@@ -386,7 +384,7 @@ fun LazyInput(
 	val defaultMod = Modifier
         .h(34)
         .space(h = 8, v = 4)
-		.w(40, 90)
+		.w(60)
 		.background(CardColor, shape = RoundedCornerShape(4.dp))
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically)
