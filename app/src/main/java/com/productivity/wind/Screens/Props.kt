@@ -83,12 +83,12 @@ fun Menu() {
 object Item {
 
     @Composable
-    fun enoughPoints(GetMore: Do,Enough: Do) {
+    fun enoughPoints(getMore: Do, enough: Do) {
         if (Bar.funTime < Bar.Dpoints) {
-            GetMore()
+            getMore()
             show(NeedMorePoints)
         }
-        else Do
+        else enough
     }
     @Composable
     fun AppTaskUI(app: AppTsk){
