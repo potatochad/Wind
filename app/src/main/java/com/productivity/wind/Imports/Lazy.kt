@@ -369,7 +369,7 @@ fun <T> LazzyList(
 
 @Composable
 fun LazyInput(
-    what: MutableState<Str>,
+    what: Any,
     isInt: Bool = no,
     maxLetters: Int = 20,
     modifier: Modifier = Modifier
@@ -388,21 +388,15 @@ fun LazyInput(
 	),
     onChange: (Str) -> Unit = {},
 ) {
-	var WhatAny = What
-
-	when (what) {
-		is MutableState<Str> -> {
-			
-		}
-		is Int -> {
-			
-		}
-		is Str -> {
-			
-		}
+	val whatState: MutableState<Str> = when (what) {
+        is MutableState<*> -> what as MutableState<Str>
+        is Int -> r { mutableStateOf(what.toString()) }
+        is Str-> r { mutableStateOf(what) }
+        else -> r { mutableStateOf("") }
 	}
+	
     BasicInput(
-        what = what,
+        what = what, //expect mutableState string
         isInt = isInt,
         modifier = modifier,
         textStyle = textStyle,
