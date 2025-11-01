@@ -393,6 +393,7 @@ fun BasicInput(
         .space(h= 8, v= 4)
         .onFocusChanged {}, 
 	textStyle: TextStyle = TextStyle(),
+	onMutableChangeIt: (MutableState<Str>) -> Unit = {},
     onChange: (Str) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
@@ -407,11 +408,12 @@ fun BasicInput(
     ) {
 
     BasicTextField(
-        value = what.value,
+        value = what.it,
         onValueChange = {
             val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
             what.it = filtered
             onChange(filtered)
+			onMutableChangeIt(what)
         },
         textStyle = textStyle, 
 		singleLine = yes,
