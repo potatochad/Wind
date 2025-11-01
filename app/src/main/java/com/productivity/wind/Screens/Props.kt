@@ -124,7 +124,7 @@ object Item {
             BigIconColor = Gold,
             title = "Unlock Threshold",
             endContent = {
-                UI.Input(Bar.Dpoints.toString()) { it ->
+                LazyInput(Bar.Dpoints.toString()) { it ->
                     val filtered = it.filter { it.isDigit() }.take(5)
                     val input = filtered.toIntOrNull() ?: 0
                     if (input > Bar.funTime) {
