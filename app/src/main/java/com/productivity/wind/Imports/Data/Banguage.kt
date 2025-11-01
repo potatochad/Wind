@@ -157,6 +157,9 @@ fun Modifier.clickOrHold(
 fun Modifier.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
 fun Modifier.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
 
+fun Modifier.maxS(): Mod= this.fillMaxSize()
+fun Modifier.maxW(): Mod= this.fillMaxWidth()
+fun Modifier.maxH(): Mod= this.fillMaxHeight()
 
 
 
