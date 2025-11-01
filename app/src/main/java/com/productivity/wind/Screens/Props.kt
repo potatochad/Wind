@@ -81,6 +81,15 @@ fun Menu() {
 
 
 object Item {
+
+    @Composable
+    fun enoughPoints(GetMore: Do,Enough: Do) {
+        if (Bar.funTime < Bar.Dpoints) {
+            GetMore()
+            show(NeedMorePoints)
+        }
+        else Do
+    }
     @Composable
     fun AppTaskUI(app: AppTsk){
             val icon = getAppIcon(app.pkg)
@@ -125,9 +134,12 @@ object Item {
             title = "Unlock Threshold",
             endContent = {
                 LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) { it ->
+
+                    checkPoints{
+                       getMore = { Vlog("$input input > ${Bar.funTime} → get more points", "one") }
+                    }
                     if (it > Bar.funTime) {
-                        Vlog("$input input > ${Bar.funTime} → get more points", "one")
-                    } else {
+                               } else {
                         Bar.Dpoints = it
                     }
                 }
