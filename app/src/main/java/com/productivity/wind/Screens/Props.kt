@@ -132,7 +132,7 @@ object Item {
             BigIconColor = Gold,
             title = "Unlock Threshold",
             endContent = {
-                LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) { it ->
+                LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) {
                     Item.enoughPoints {
                         Bar.Dpoints = it
                     }
