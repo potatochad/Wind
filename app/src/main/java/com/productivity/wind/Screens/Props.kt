@@ -88,7 +88,7 @@ object Item {
             getMore()
             show(NeedMorePoints)
         }
-        else enough
+        else enough()
     }
     @Composable
     fun AppTaskUI(app: AppTsk){
@@ -143,16 +143,14 @@ object Item {
     }
     @Composable
     fun Restore() {
-        var restoreTrigger = r_m(false)
+        var restoreTrigger = r_m(no)
 
         LazyItem(
             BigIcon = Icons.Filled.Restore,
             BigIconColor = DarkBlue,
             title = "Restore",
             onClick = { 
-                if (Bar.Dpoints > Bar.funTime) {
-                    show(NeedMorePoints)
-                } else {
+                enoughPoints {
                     set(restoreTrigger, true)
                 }
             },
@@ -164,12 +162,12 @@ object Item {
 
     @Composable
     fun Backup() {
-        var backupTrigger by r_m(false)
+        var backupTrigger by r_m(no)
 
         RunOnce(backupTrigger) {
             if (backupTrigger) {
                 delay(1000L)
-                backupTrigger = false
+                backupTrigger = no
             }
         }
 
@@ -178,7 +176,7 @@ object Item {
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "BackUp",
-            onClick = { backupTrigger = true }
+            onClick = { backupTrigger = no }
         )
 
         BsaveToFile(backupTrigger)
