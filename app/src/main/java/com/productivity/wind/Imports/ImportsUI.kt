@@ -64,11 +64,6 @@ import java.io.*
 import androidx.compose.ui.text.input.*
 
 //region log
-fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
-    var msg = message.take(int)
-    if (msg.length >= int) {msg += " ..."}
-    Log.w(tag, msg)
-}
 
 fun Plog(msg: Str = "test", s: Int = 1) {
     val delayMillis = s * 1000
