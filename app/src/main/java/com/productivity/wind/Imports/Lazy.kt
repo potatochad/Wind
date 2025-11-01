@@ -380,7 +380,7 @@ fun LazyInput(
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start
 	),
-	onMutableChangeIt: (MutableState<Str>) -> Unit = {},
+	onMutableChangeIt: (m_<Str>) -> Unit = {},
     onChange: (Str) -> Unit = {},
 ) {
 
@@ -399,20 +399,13 @@ fun LazyInput(
         .wrapContentHeight(Alignment.CenterVertically)
 
     val finalMod = defaultMod.then(modifier)
-
-	val whatState: MutableState<Str> = when (what) {
-        is MutableState<*> -> what as MutableState<Str>
-        is Int -> r { m("$what") }
-        is Str-> r { m(what) }
-        else -> r { m("") }
-	}
 	
     BasicInput(
-        what = whatState, //expect mutableState string
+        what = what, //expect mutableState string
         isInt = isInt,
         modifier = finalMod,
         textStyle = textStyle,
-		onMutableChangeIt= onMutableChangeIt,
+		onMutableChangeIt = onMutableChangeIt,
     ) { input ->
         if (isInt && input.isEmpty()) {
             whatState.it = "0"
