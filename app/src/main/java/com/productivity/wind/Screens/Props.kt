@@ -124,13 +124,11 @@ object Item {
             BigIconColor = Gold,
             title = "Unlock Threshold",
             endContent = {
-                LazyInput(Bar.Dpoints.toString()) { it ->
-                    val filtered = it.filter { it.isDigit() }.take(5)
-                    val input = filtered.toIntOrNull() ?: 0
-                    if (input > Bar.funTime) {
+                LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) { it ->
+                    if (it > Bar.funTime) {
                         Vlog("$input input > ${Bar.funTime} → get more points", "one")
                     } else {
-                        Bar.Dpoints = input
+                        Bar.Dpoints = it
                     }
                 }
             }
