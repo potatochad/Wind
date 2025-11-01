@@ -134,7 +134,7 @@ object Item {
             endContent = {
                 LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) {
                     Item.enoughPoints {
-                        Bar.Dpoints = it
+                        Bar.Dpoints = it.toInt()
                     }
                 }
             }
