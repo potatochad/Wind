@@ -135,6 +135,7 @@ object Item {
             title = "Unlock Threshold",
             endContent = {
                 LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5, onMutableChangeIt = {
+                    log("$it—it, Bar.Dpoints—${Bar.Dpoints}, ❔️,  PastValue—$PastValue ")
                     Item.enoughPoints {
                         
                     }
