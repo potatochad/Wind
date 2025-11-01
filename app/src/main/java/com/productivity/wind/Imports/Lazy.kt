@@ -374,6 +374,7 @@ fun LazyInput(
     maxLetters: Int = 20,
     modifier: Mod = Modifier,
 	maxW: Int? = null,
+	minW: Int = 60,
     textStyle: TextStyle = TextStyle(
 		color = Color.White,
 		fontSize = 14.sp,
@@ -387,7 +388,11 @@ fun LazyInput(
         .background(Color.Gray.copy(alpha = 0.15f), shape = RoundedCornerShape(4.dp))
         .space(h = 8, v = 4)
 		.then(
-			if (maxW != null) Modifier.widthIn(max = maxW.dp) else Modifier.w(30)
+			if (maxW != null) { 
+				Modifier.maxW(maxW).minW(minW)
+			} else { 
+				Modifier.w(60)
+			}
 		)
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically)
@@ -396,7 +401,7 @@ fun LazyInput(
 
 	val whatState: MutableState<Str> = when (what) {
         is MutableState<*> -> what as MutableState<Str>
-        is Int -> r { m(what.toString()) }
+        is Int -> r { m("$what") }
         is Str-> r { m(what) }
         else -> r { m("") }
 	}
