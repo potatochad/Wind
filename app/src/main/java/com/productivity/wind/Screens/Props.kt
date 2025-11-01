@@ -134,8 +134,11 @@ object Item {
             endContent = {
                 LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) {
                     Item.enoughPoints {
-                        Bar.Dpoints = it.toInt()
+                        
                     }
+                    if (Bar.funTime < Bar.Dpoints)h {
+                        show(NeedMorePoints)
+                    } else Bar.Dpoints = it.toInt()
                 }
             }
         )
