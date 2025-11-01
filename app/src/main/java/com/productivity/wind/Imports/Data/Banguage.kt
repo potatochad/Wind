@@ -460,3 +460,10 @@ fun bottomSystemHeight(): Dp {
     val density = LocalDensity.current
     return with(density) { insets.getBottom(this).toDp() }
 }
+
+
+fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
+    var msg = message.take(int)
+    if (msg.length >= int) {msg += " ..."}
+    Log.w(tag, msg)
+}
