@@ -147,7 +147,17 @@ object Item {
             BigIconColor = Gold,
             title = "Unlock Threshold",
             endContent = {
-                LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5, onMutableChangeIt = {
+                LazyInput(
+                    Bar.Dpoints, 
+                    isInt = yes, 
+                    modifier = Modifier
+                        .h(34)
+                        .space(h = 8, v = 4)
+                        .w(60)
+                        .background(CardColor, shape = RoundedCornerShape(4.dp))
+                        .wrapContentHeight(Alignment.CenterVertically), 
+                    maxLetters = 5, 
+                    onMutableChangeIt = {
                     Vlog("Bar.Dpoints ${Bar.Dpoints}")
                 })
             }
