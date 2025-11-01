@@ -370,7 +370,9 @@ fun <T> LazzyList(
 fun LazyInput(
     what: Any,
     isInt: Bool = no,
-	modifier: Mod = Modifier,
+	modifier: Mod = Modifier,//DOES NOTHING
+	maxW: Int = 90,
+	minW: Int = 40,
     maxLetters: Int = 20,
     textStyle: TextStyle = TextStyle(
 		color = Color.White,
@@ -385,10 +387,11 @@ fun LazyInput(
         .h(34)
         .space(h = 8, v = 4)
 		.w(40, 90)
+		.background(CardColor, shape = RoundedCornerShape(4.dp))
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically)
 
-    val finalMod = defaultMod.then(modifier).background(CardColor, shape = RoundedCornerShape(4.dp))
+    val finalMod = defaultMod
 
 	val whatState: m_<Str> = when (what) {
         is MutableState<*> -> what as MutableState<Str>
