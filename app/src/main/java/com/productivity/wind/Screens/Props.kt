@@ -127,7 +127,6 @@ object Item {
     }
     @Composable
     fun UnlockThreshold() {
-        var 
         LazyItem(
             topPadding = 1.dp,
             BigIcon = Icons.Filled.LockOpen,
@@ -135,7 +134,7 @@ object Item {
             title = "Unlock Threshold",
             endContent = {
                 LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) { it ->
-                    enoughPoints(){
+                    enoughPoints {
                         Bar.Dpoints = it
                     }
                 }
