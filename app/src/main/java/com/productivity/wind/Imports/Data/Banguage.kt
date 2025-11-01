@@ -154,21 +154,8 @@ fun Modifier.clickOrHold(
 	}
 }
 
-fun Modifier.maxW(value: Any?) = this.widthIn(max = toDp(value))
-fun Modifier.minW(value: Any?) = this.widthIn(min = toDp(value))
-fun Modifier.maxH(value: Any?) = this.heightIn(max = toDp(value))
-fun Modifier.minH(value: Any?) = this.heightIn(min = toDp(value))
-
-fun Modifier.maxS(): Mod= this.fillMaxSize()
-fun Modifier.maxW(): Mod= this.fillMaxWidth()
-fun Modifier.maxH(): Mod= this.fillMaxHeight()
-
-fun Modifier.w(value: Any?): Modifier =
-    this.then(Modifier.width(toDp(value)))
-
-fun Modifier.h(value: Any?): Modifier =
-    this.then(Modifier.height(toDp(value)))
-
+fun Modifier.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
+fun Modifier.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
 
 
 
