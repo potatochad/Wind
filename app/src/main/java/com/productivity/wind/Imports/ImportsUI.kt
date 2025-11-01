@@ -106,7 +106,7 @@ fun getMyAppLogs(): Str {
                 .substringAfter(":").trim()
 
             // Truncate if longer than 70 chars
-            val finalLine = if (clean.length > 70) clean.take(70) + "..." else clean
+            val finalLine = if (clean.length > 100) clean.take(70) + "..." else clean
             
 			logs.add(finalLine)
         }
