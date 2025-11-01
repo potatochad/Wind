@@ -388,13 +388,7 @@ fun LazyInput(
         .h(34)
         .background(CardColor, shape = RoundedCornerShape(4.dp))
         .space(h = 8, v = 4)
-		.then(
-			if (maxW != null) { 
-				Modifier.maxW(maxW).minW(minW)
-			} else { 
-				Modifier.w(60)
-			}
-		)
+		.w(60)
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically)
 
