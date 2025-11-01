@@ -138,7 +138,11 @@ object Item {
                     }
                     if (Bar.funTime < Bar.Dpoints) {
                         show(NeedMorePoints)
-                    } else Bar.Dpoints = it.toInt()
+                        Vlog("triggerd")
+                    } else {
+                        Vlog("NOT TRIGERRRINGGGG")
+                        Bar.Dpoints = it.toInt()
+                    }
                 }
             }
         )
