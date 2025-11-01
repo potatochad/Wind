@@ -23,6 +23,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.ui.*
 import android.content.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.ui.focus.*
+
 
 
 fun NavGraphBuilder.ScreenNav() {
@@ -96,7 +99,6 @@ object Item {
             .space(h = 8, v = 4)
             .w(60)
             .background(CardColor, shape = RoundedCornerShape(4.dp))
-            .onFocusChanged { }
             .wrapContentHeight(Alignment.CenterVertically)
 
         LazyInput(what=what, isInt=isInt, modifier= smallMod, maxLetters = maxLetters)
