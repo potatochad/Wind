@@ -123,11 +123,11 @@ fun Modifier.space(
     }
 }
 
-fun toDp(value: Any?): Dp = when (value) {
-    is Dp -> value           // already Dp
-    is Int -> value.dp       // Int → Dp
-    is Float -> value.dp     // Float → Dp
-    is Double -> value.dp    // Double → Dp
+fun toDp(it: Any?): Dp = when (it) {
+    is Dp -> it           // already Dp
+    is Int -> it.dp       // Int → Dp
+    is Float -> it.dp     // Float → Dp
+    is Double -> it.dp    // Double → Dp
     null -> 0.dp             // null → 0.dp
     else -> 0.dp             // anything else → 0.dp
 }
@@ -374,11 +374,7 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 fun BasicInput(
     what: m_<Str>,
     isInt: Bool = no,
-	modifier: Modifier = Modifier
-		.h(34)
-        .background(Color.Gray.copy(alpha = 0.2f), shape = RoundedCornerShape(4.dp))
-        .space(h= 8, v= 4)
-        .onFocusChanged {}, 
+	modifier: Modifier = Modifier, 
 	textStyle: TextStyle = TextStyle(),
 	onMutableChangeIt: (MutableState<Str>) -> Unit = {},
     onChange: (Str) -> Unit = {},
