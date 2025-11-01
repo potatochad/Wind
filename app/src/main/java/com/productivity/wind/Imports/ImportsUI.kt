@@ -520,53 +520,6 @@ object UI {
 	}
 
 
-	@Composable
-    fun Input(
-        what: Str,
-        textSize: TextUnit = 14.sp,
-        height: Dp = 36.dp,
-        MaxLetters: Int? = 5,
-        WidthMin: Int = 10,
-        WidthMax: Int = 120,
-        isInt: Bool = no,
-
-        onChange: Do_<Str>,
-    ) {
-        val TextColor = Color.White
-        val FocusChange = TextMemory()
-        val imeAction = ImeAction(null)
-        val isFocused by IsFocused(FocusChange)
-
-        val TextStyling = CTextStyle(TextColor, textSize)
-        val outerMod = dynamicTextWidth(
-			what, TextStyling, WidthMin, WidthMax, height
-		)
-
-        OnLoseFocus(isFocused, null)
-
-        BasicTextField(
-			decorationBox = { innerTextField ->
-                FieldBox(
-                    height = height,
-                    BackgroundColor = Color.Transparent,
-                ) {
-                    innerTextField()
-                }
-            },
-			modifier = outerMod.height(height),
-            textStyle = TextStyling,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(type(true), imeAction),
-            keyboardActions = doneAction(null),
-            cursorBrush = grayCursor(),
-            interactionSource = FocusChange,
-
-            value = what,
-            onValueChange = onChange,
-        )
-	}
-
-
     @Composable
 	fun Ctext(
         text: Str,
