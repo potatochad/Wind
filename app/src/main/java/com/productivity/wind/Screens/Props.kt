@@ -90,6 +90,19 @@ object Item {
     }
 
     @Composable
+    fun TinyInput(what: Any, isInt: Bool=yes, maxLetters = 5){
+        val smallMod = Modifier
+            .h(34)
+            .space(h = 8, v = 4)
+            .w(60)
+            .background(CardColor, shape = RoundedCornerShape(4.dp))
+            .onFocusChanged { }
+            .wrapContentHeight(Alignment.CenterVertically)
+
+        LazyInput(what=what, isInt=isInt, modifier= smallMod, maxLetters = maxLetters)
+    }
+
+    @Composable
     fun AppTaskUI(app: AppTsk){
             val icon = getAppIcon(app.pkg)
             val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
