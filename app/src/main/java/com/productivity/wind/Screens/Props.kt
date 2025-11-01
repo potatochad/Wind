@@ -139,8 +139,6 @@ object Item {
     }
     @Composable
     fun UnlockThreshold() {
-        var PastValue by m(Bar.Dpoints)
-        
         LazyItem(
             topPadding = 1.dp,
             BigIcon = Icons.Filled.LockOpen,
@@ -148,19 +146,7 @@ object Item {
             title = "Unlock Threshold",
             endContent = {
                 LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5, onMutableChangeIt = {
-                    log("$it—it, Bar.Dpoints—${Bar.Dpoints}, ❔️,  PastValue—$PastValue ")
-                    Item.enoughPoints {
-                        
-                    }
-
-                    it.it = "${Bar.Dpoints}"
-                    if (Bar.funTime < Bar.Dpoints) {
-                        show(NeedMorePoints)
-                        Vlog("triggerd")
-                    } else {
-                        Vlog("NOT TRIGERRRINGGGG")
-                        Bar.Dpoints = it.it.toInt()
-                    }
+                    Vlog("Bar.Dpoints ${Bar.Dpoints}")
                 })
             }
         )
