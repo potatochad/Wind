@@ -137,7 +137,6 @@ object Item {
                 LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) {
                     
                     Bar.Dpoints = PastValue
-                    it = Bar.Dpoints
                     Item.enoughPoints {
                         
                     }
