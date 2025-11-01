@@ -423,4 +423,30 @@ fun BasicInput(
 }
 
 
+fun openPermissionSettings(action: Str, uri: Uri? = null) {
+        val intent = Intent(action).apply {
+            uri?.let { data = it }
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        App.ctx.startActivity(intent)
+    }
 
+    fun isNotificationEnabled(): Bool {
+        return NotificationManagerCompat
+            .getEnabledListenerPackages(App.ctx)
+            .contains(App.ctx.packageName)
+    }
+
+    fun isBatteryOptimizationDisabled(): Bool {
+        val pm = App.ctx.getSystemService(PowerManager::class.java)
+        return pm.isIgnoringBatteryOptimizations(App.ctx.packageName)
+    }
+
+    fun isUsageP_Enabled(): Bool {
+        val appOps = App.ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        return appOps.checkOpNoThrow(
+            AppOpsManager.OPSTR_GET_USAGE_STATS,
+            Process.myUid(),
+            App.ctx.packageName,
+        ) == AppOpsManager.MODE_ALLOWED
+	}
