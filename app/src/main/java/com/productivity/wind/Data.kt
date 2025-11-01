@@ -33,7 +33,7 @@ yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long a
 fun onNewDay() {  
      Bar.apps.forEach{app ->
           Bar.apps.edit(app){
-				done = false
+				done = no
           }
      }   
 }
@@ -76,7 +76,7 @@ class Settings {
     
     //region COPY PASTE THING Disipline
 
-    var FirstEditText by m(true)
+    var FirstEditText by m(no)
     var targetText by m("ALWAYS BE KIND")
     var LetterToTime by m(1)
     var DoneRetype_to_time by m(60)
@@ -126,7 +126,7 @@ class Settings {
 data class CopyTsk(
     val id: Str = Id(),
     var title: Str = "",
-    var onMax: Bool = false,
+    var onMax: Bool = no,
     var MaxTimes: Int = 5,
     var Done_Worth: Int = 10,
     var Letter_Worth: Int = 1,
@@ -136,7 +136,7 @@ data class CopyTsk(
 data class AppTsk(
     val id: Str = Id(),
     var name: Str = "",
-    var done: Bool = false,
+    var done: Bool = no,
     var pkg: Str = "",
     var NowTime: Int = 0,
     var DoneTime: Int = 0,
@@ -197,9 +197,9 @@ class MainActivity : ComponentActivity() {
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun AppStart_beforeUI(context: Context) {
+fun AppStart_beforeUI(ctx: Context) {
     
-    App.ctx = context
+    App.ctx = ctx
     SettingsSaved.init()
     SettingsSaved.Bsave()
 
@@ -210,9 +210,9 @@ fun AppStart_beforeUI(context: Context) {
 
 @Composable
 fun MAINStart() {
-    LaunchedEffect(Unit) {
+    RunOnce {
         delay(1_000L)
-        App.restoringFromFile = false
+        App.restoringFromFile = no
     }
 }
 
@@ -229,7 +229,7 @@ fun AppStart() {
     
     Popup.Init()
 	
-    LaunchedEffect(Unit) {
+    RunOnce {
         DayChecker.start()
     }
 	
@@ -258,8 +258,8 @@ object App {
 	var screenWidth by m(0.dp)
 	var LazyScreenContentHeight by m(0.dp)
 	
-	var Menu by m(false)
-	var restoringFromFile by m(false)
+	var Menu by m(no)
+	var restoringFromFile by m(no)
 	
 
 }
