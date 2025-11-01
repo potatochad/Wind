@@ -291,9 +291,7 @@ object Icon {
     @Composable
     fun Chill() {
         LazyIcon(Icons.Default.SportsEsports) {
-            if (Bar.funTime < Bar.Dpoints) {
-                    show(NeedMorePoints)
-                } else {
+            enoughPoints{
                     goTo("Web")
             }
         }
@@ -317,8 +315,9 @@ object Icon {
     @Composable
     fun Edit(
         Do: Do = {
-            if (Bar.funTime < Bar.Dpoints) show(NeedMorePoints)
-            else show(Edit)
+            enoughPoints{
+                show(Edit)
+            }
         },
     ) {
         LazyIcon(Icons.Default.Edit) {
@@ -364,11 +363,11 @@ object Icon {
 
 //region POPUP CONTROLLER
 
-var Edit = m(false)
-var NeedMorePoints = m(false)
-var AskUsagePermission = m(false)
-var AppSelect = m(false)
-var DebugPopup = m(false)
+var Edit = m(no)
+var NeedMorePoints = m(no)
+var AskUsagePermission = m(no)
+var AppSelect = m(no)
+var DebugPopup = m(no)
 
 object Popup {
     
@@ -392,7 +391,7 @@ fun NeedMorePointsPopup(show: m_<Bool>){
         show = show, 
         title = "Get more points", 
         message = "Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime- Bar.Dpoints}",
-        showCancel = false,
+        showCancel = no,
     )
 }
 
