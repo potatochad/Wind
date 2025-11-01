@@ -139,7 +139,7 @@ object Item {
                         
                     }
 
-                    it.it = Bar.Dpoints
+                    it.it = "${Bar.Dpoints}"
                     if (Bar.funTime < Bar.Dpoints) {
                         show(NeedMorePoints)
                         Vlog("triggerd")
