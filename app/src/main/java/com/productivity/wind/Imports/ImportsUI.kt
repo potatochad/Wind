@@ -496,30 +496,6 @@ object UI {
         App.ctx.startActivity(chooser)
     }
 
-	@Composable
-	fun dynamicTextWidth(
-        text: Str,
-        textStyle: TextStyle,
-        widthMin: Int,
-        widthMax: Int,
-        h: Dp
-	): Modifier {
-		val measurer = rememberTextMeasurer()
-		val density = LocalDensity.current
-
-		// Measure text width
-		val measuredWidth = measurer.measure(
-			text.ifEmpty { " " }, // fallback if empty
-			style = textStyle
-		).size.w
-
-		// Create modifier with dynamic width and fixed height
-		return Modifier
-        .w((with(density) { measuredWidth.toDp() } + 2.dp).coerceIn(widthMin.dp, widthMax.dp))
-        .h(h)
-	}
-
-
     @Composable
 	fun Ctext(
         text: Str,
