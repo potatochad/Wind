@@ -135,11 +135,7 @@ object Item {
             endContent = {
                 LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) { it ->
 
-                    checkPoints{
-                       getMore = { Vlog("$input input > ${Bar.funTime} → get more points", "one") }
-                    }
-                    if (it > Bar.funTime) {
-                               } else {
+                    enoughPoints{
                         Bar.Dpoints = it
                     }
                 }
