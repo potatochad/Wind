@@ -369,7 +369,7 @@ fun <T> LazzyList(
 
 @Composable
 fun LazyInput(
-    what: Any,
+    what: m_<Str>,
     isInt: Bool = no,
     maxLetters: Int = 20,
     modifier: Mod = Modifier,
