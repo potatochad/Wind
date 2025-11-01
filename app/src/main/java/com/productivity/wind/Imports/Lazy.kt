@@ -385,7 +385,7 @@ fun LazyInput(
 
 	val defaultMod = Modifier
         .h(34)
-        .background(Color.Gray.copy(alpha = 0.15f), shape = RoundedCornerShape(4.dp))
+        .background(CardColor, shape = RoundedCornerShape(4.dp))
         .space(h = 8, v = 4)
 		.then(
 			if (maxW != null) { 
