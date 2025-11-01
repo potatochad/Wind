@@ -371,8 +371,8 @@ fun <T> LazzyList(
 fun LazyInput(
     what: Any,
     isInt: Bool = no,
+	modifier: Mod = Modifier,
     maxLetters: Int = 20,
-    modifier: Mod = Modifier,
     textStyle: TextStyle = TextStyle(
 		color = Color.White,
 		fontSize = 14.sp,
