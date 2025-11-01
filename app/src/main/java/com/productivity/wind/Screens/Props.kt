@@ -82,7 +82,6 @@ fun Menu() {
 
 object Item {
 
-    @Composable
     fun enoughPoints(enough: Do) {
         if (Bar.funTime < Bar.Dpoints) {
             show(NeedMorePoints)
@@ -134,7 +133,7 @@ object Item {
             title = "Unlock Threshold",
             endContent = {
                 LazyInput(Bar.Dpoints, isInt = yes, maxLetters = 5) { it ->
-                    enoughPoints {
+                    Item.enoughPoints {
                         Bar.Dpoints = it
                     }
                 }
