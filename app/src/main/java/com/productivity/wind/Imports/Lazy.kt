@@ -380,6 +380,7 @@ fun LazyInput(
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start
 	),
+	onMutableChangeIt: (MutableState<Str>) -> Unit = {},
     onChange: (Str) -> Unit = {},
 ) {
 
@@ -411,6 +412,7 @@ fun LazyInput(
         isInt = isInt,
         modifier = finalMod,
         textStyle = textStyle,
+		onMutableChangeIt= onMutableChangeIt,
     ) { input ->
         if (isInt && input.isEmpty()) {
             whatState.it = "0"
