@@ -388,6 +388,18 @@ fun LazyInput(
 	),
     onChange: (Str) -> Unit = {},
 ) {
+
+	when (what) {
+		is MutableState<Str> -> {
+			
+		}
+		is Int -> {
+			
+		}
+		is Str -> {
+			
+		}
+	}
     BasicInput(
         what = what,
         isInt = isInt,
