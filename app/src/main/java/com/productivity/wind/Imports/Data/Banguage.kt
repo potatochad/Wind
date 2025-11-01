@@ -134,6 +134,11 @@ fun toDp(value: Any?): Dp = when (value) {
 
 
 
+fun goTo(route: Str) = App.navHost.navigate(route)
+
+
+
+
 
 fun Modifier.w(value: Any?): Modifier =
     this.then(Modifier.width(toDp(value)))
