@@ -635,15 +635,6 @@ object UI {
 
 
 
-            
-        
-        
-                    
-
-
-
-	
-fun goTo(route: Str) = App.navHost.navigate(route)
 
 
 
