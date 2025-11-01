@@ -83,9 +83,8 @@ fun Menu() {
 object Item {
 
     @Composable
-    fun enoughPoints(getMore: Do, enough: Do) {
+    fun enoughPoints(enough: Do) {
         if (Bar.funTime < Bar.Dpoints) {
-            getMore()
             show(NeedMorePoints)
         }
         else enough()
@@ -291,7 +290,7 @@ object Icon {
     @Composable
     fun Chill() {
         LazyIcon(Icons.Default.SportsEsports) {
-            enoughPoints{
+            Item.enoughPoints{
                     goTo("Web")
             }
         }
@@ -315,7 +314,7 @@ object Icon {
     @Composable
     fun Edit(
         Do: Do = {
-            enoughPoints{
+            Item.enoughPoints{
                 show(Edit)
             }
         },
