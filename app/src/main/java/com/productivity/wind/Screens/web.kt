@@ -110,7 +110,10 @@ fun BlockKeyword() {
         LazyRuleCard("If") {
             LazzyRow {
                 Text("Detect ")
-                LazyInput(BadWord)
+                LazyInput(
+                    BadWord, 
+                    modifier = Modifier.widthIn(max = 120.dp)
+                )
             }
         }
 
