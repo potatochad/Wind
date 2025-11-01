@@ -402,11 +402,11 @@ fun LazyInput(
         textStyle = textStyle,
     ) { input ->
         if (isInt && input.isEmpty()) {
-            what.it = "0"
+            whatState.it = "0"
         } else {
-            what.it = input.take(maxLetters)
+            whatState.it = input.take(maxLetters)
         }
-        onChange(what.it)
+        onChange(whatState.it)
     }
 }
 
