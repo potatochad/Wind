@@ -623,35 +623,6 @@ object UI {
 	}
 
 
-
-    @Composable
-    fun FieldBox(
-        modifier: Mod = Modifier
-			.space(h = 0.dp)
-            .height(40.dp)
-            .wrapContentWidth()
-            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
-            .background(BackgroundColor),
-        BackgroundColor: Color = Color.Gray,
-        Where: Alignment = Alignment.CenterStart,
-        content: Content,
-    ) {
-        Column {
-            Box(
-                modifier,   
-                contentAlignment = Where,
-            ) {
-                content()
-            }
-        }
-    }
-
-
-// -------- Core ----------
-
-
-//region CLICKALE TEXTTTTT■■■■■■■■■■■
-
     @Composable
 	fun Ctext(
         text: Str,
@@ -673,43 +644,6 @@ object UI {
 			)
 		)
 	}
-
-
-
-//endregion CLICABLE TEXT ■■■■■■■■■
-
-
-    //Region SETTING STUFF
-    fun openPermissionSettings(action: Str, uri: Uri? = null) {
-        val intent = Intent(action).apply {
-            uri?.let { data = it }
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        App.ctx.startActivity(intent)
-    }
-
-    fun isNotificationEnabled(): Bool {
-        return NotificationManagerCompat
-            .getEnabledListenerPackages(App.ctx)
-            .contains(App.ctx.packageName)
-    }
-
-    fun isBatteryOptimizationDisabled(): Bool {
-        val pm = App.ctx.getSystemService(PowerManager::class.java)
-        return pm.isIgnoringBatteryOptimizations(App.ctx.packageName)
-    }
-
-    fun isUsageP_Enabled(): Bool {
-        val appOps = App.ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        return appOps.checkOpNoThrow(
-            AppOpsManager.OPSTR_GET_USAGE_STATS,
-            Process.myUid(),
-            App.ctx.packageName,
-        ) == AppOpsManager.MODE_ALLOWED
-    }
-	
-	
-//endregion SETTING STUFF
 
 
     @Composable
