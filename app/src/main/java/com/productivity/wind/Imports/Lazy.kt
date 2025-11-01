@@ -379,6 +379,7 @@ fun LazyInput(
             shape = RoundedCornerShape(4.dp)
         )
         .space(h= 8, v= 4)
+		.w(50.dp)
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically),
     textStyle: TextStyle = TextStyle(
