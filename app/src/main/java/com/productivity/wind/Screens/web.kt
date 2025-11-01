@@ -85,7 +85,7 @@ fun Web(){
 fun BlockKeyword() {
     var BadWord = r_m("1")
 
-    LaunchedEffect(Bar.badWords) {
+    RunOnce(Bar.badWords) {
         BadWord.it = "${Bar.badWords.size}"
     }
 
@@ -112,7 +112,7 @@ fun BlockKeyword() {
                 Text("Detect ")
                 LazyInput(
                     BadWord, 
-                    modifier = Modifier.widthIn(max = 120.dp)
+                    maxW = 120
                 )
             }
         }
