@@ -86,12 +86,24 @@ fun CopyPaste() {
         LazyRuleCard("If") {
             LazzyRow {
                 Text("Letter completed: ")
-                LazyInput(letterPoints, yes, Modifier.w(40, 120))
+                LazyInput(letterPoints, yes, modifier = Modifier
+                        .h(34)
+                        .space(h = 8, v = 4)
+                        .w(60)
+                        .background(CardColor, shape = RoundedCornerShape(4.dp))
+                        .wrapContentHeight(Alignment.CenterVertically), 
+                    )
                 Text(" points")
             }
             LazzyRow {
                 Text("Text retyped: ")
-                LazyInput(completionPoints, yes, Modifier.w(40, 120))
+                LazyInput(completionPoints, yes, modifier = Modifier
+                        .h(34)
+                        .space(h = 8, v = 4)
+                        .w(60)
+                        .background(CardColor, shape = RoundedCornerShape(4.dp))
+                        .wrapContentHeight(Alignment.CenterVertically), 
+                    )
                 Text(" points")
             }
         }
@@ -100,7 +112,13 @@ fun CopyPaste() {
         LazyRuleCard("Other") {
             LazzyRow {
                 Text("Maximum retypes a day: ")
-                LazyInput(Retypes, yes, Modifier.w(40, 120))
+                LazyInput(Retypes, yes, modifier = Modifier
+                        .h(34)
+                        .space(h = 8, v = 4)
+                        .w(60)
+                        .background(CardColor, shape = RoundedCornerShape(4.dp))
+                        .wrapContentHeight(Alignment.CenterVertically), 
+                    )
             }
         }
     }
@@ -129,7 +147,13 @@ fun AppUsage() {
           //does nothing YET
           UI.CheckCircle(1, WhichIf)
           Text("Spend ")
-          LazyInput(Time, yes, Modifier.w(40, 120))
+          LazyInput(Time, yes, modifier = Modifier
+                        .h(34)
+                        .space(h = 8, v = 4)
+                        .w(60)
+                        .background(CardColor, shape = RoundedCornerShape(4.dp))
+                        .wrapContentHeight(Alignment.CenterVertically), 
+                    )
           Text(" seconds")
           
           Text(" on ")
@@ -141,7 +165,13 @@ fun AppUsage() {
       LazyRuleCard("Do"){
         LazzyRow{
           Text("Add ")
-          LazyInput(Points, yes, Modifier.w(40, 120))
+          LazyInput(Points, yes, modifier = Modifier
+                        .h(34)
+                        .space(h = 8, v = 4)
+                        .w(60)
+                        .background(CardColor, shape = RoundedCornerShape(4.dp))
+                        .wrapContentHeight(Alignment.CenterVertically), 
+                    )
           Text(" points")
         }
       }
