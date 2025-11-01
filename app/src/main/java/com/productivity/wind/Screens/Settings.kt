@@ -78,24 +78,15 @@ fun LogsScreen() {
     var scrollV = r_Scroll()
     var scrollH = r_Scroll()
     var LogsTag = r_m("")
+
     
-    RunOnce(Reload) {
-        val currentLogs = getMyAppLogs().lines()
-        val oldLogs = Bar.Oldlogs.lines()
-
-        // Get only new lines
-        val newLines = currentLogs.filterNot { oldLogs.contains(it) }
-
-        Bar.Newlogs = if (newLines.isNotEmpty()) {
-            (oldLogs + listOf("----new----") + newLines).joinToString("\n")
-        } else {
-            Vlog("no new logs")
-            oldLogs.joinToString("\n")
-        }
-        
-        Bar.Oldlogs = currentLogs.joinToString("\n")
+    RunOnce(Reload, Bar.Oldlogs) {
+        val logs = getMyAppLogs().lines()
+        Bar.Newlogs = logs - Bar.Oldlogs.toSet()
+        Bar.Oldlogs = logs
         scrollV.toBottom()
     }
+
 
     val filteredLogs = Bar.Newlogs.lines()
         .filter { it.contains(Bar.logsTag) }
@@ -117,7 +108,10 @@ fun LogsScreen() {
             
             UI.End {
                 Row {
-                    Icon.Delete { Bar.Newlogs = "" }
+                    Icon.Delete { 
+                        Bar.Newlogs = ""
+                        Bar.Oldlogs = getMyAppLogs().lines()
+                    }
                     Icon.Copy(Bar.Newlogs)
                     Icon.Reload { Reload = yes }
                 }
