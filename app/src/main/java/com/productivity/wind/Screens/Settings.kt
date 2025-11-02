@@ -106,8 +106,6 @@ fun LogsScreen() {
                     modifier = Modifier
                         .h(34)
                         .w(120)
-                        .background(CardColor, shape = RoundedCornerShape(4.dp))
-                        .Alignment.CenterVertically
                 ) {
                     Bar.logsTag = LogsTag.it
                 }
