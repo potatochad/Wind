@@ -112,7 +112,7 @@ object Item {
                     }
 
 
-                    UI.move(12)
+                    move(12)
                     Text("Points ${app.Worth}")
                     LazyInfo(infoContent = { Text("you clicked MORE MENU") }) {
                             UI.End {
@@ -270,7 +270,7 @@ object Header {
         Icon.Menu()
         Icon.Chill()
         
-        UI.move(w = 12)
+        move(w = 12)
         
         Text("Points ${Bar.funTime}")
         
@@ -511,9 +511,9 @@ fun AppSelectPopup(show: m_<Bool>) {
                         selectedApp.it = getAppName(app)
                         show.it = no
                     }) {
-                        UI.move(10)
+                        move(10)
                         LazyImage(icon)
-                        UI.move(10)
+                        move(10)
                         
                         UI.Ctext(getAppName(app)) {
                             selectedApp.it = getAppName(app)
