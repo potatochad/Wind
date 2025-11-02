@@ -387,9 +387,10 @@ fun BasicInput(
         modifier = Modifier
             .pointerInput(Unit) {
 				detectTapGestures(onTap = { focusManager.clearFocus() })
-			},
-		contentAlignment = Alignment.CenterStart, 
+			}, 
     ) {
+		LazzyRow {
+		
 		BasicTextField(
 			value = what.it,
 			onValueChange = {
@@ -408,7 +409,7 @@ fun BasicInput(
 				onDone = { focusManager.clearFocus() }
 			)
 		)
-	}
+	}}
 }
 
 
