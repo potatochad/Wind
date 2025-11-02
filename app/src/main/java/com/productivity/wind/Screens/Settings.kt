@@ -137,7 +137,7 @@ fun LogsScreen() {
                 .space(h=6) 
         ) {
             if (filteredLogs.isEmpty()){
-                EmptyBox("Try refreshing")
+            UI.EmptyBox("Try refreshing")
             } else {
                 Text(
                     text = filteredLogs,
