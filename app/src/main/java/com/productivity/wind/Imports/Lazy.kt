@@ -377,20 +377,11 @@ fun LazyInput(
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start
 	),
-	onMutableChangeIt: (m_<Str>) -> Unit = {},
+	custom: Bool=no,
     onChange: (Str) -> Unit = {},
 ) {
-
-	//! not used
-	val defaultMod = Modifier
-        .h(34)
-        .space(h = 8, v = 4)
-		.w(60)
-		.background(CardColor, shape = RoundedCornerShape(4.dp))
-        .onFocusChanged { }
-        .wrapContentHeight(Alignment.CenterVertically)
-
-    val finalMod = modifier.space(h = 8, v = 4)
+    val finalMod = modifier.space(h = 8, v = 4).background(CardColor, shape = RoundedCornerShape(4.dp))
+       
 
 	val whatState: m_<Str> = when (what) {
         is MutableState<*> -> what as MutableState<Str>
@@ -400,18 +391,21 @@ fun LazyInput(
 	}
 	
     BasicInput(
-        what = whatState, //expect mutableState string
+        what = whatState,
         isInt = isInt,
         modifier = finalMod,
         textStyle = textStyle,
-		onMutableChangeIt = onMutableChangeIt,
     ) { input ->
-        if (isInt && input.isEmpty()) {
-            whatState.it = "0"
-        } else {
-            whatState.it = input.take(maxLetters)
-        }
-        onChange(whatState.it)
+		if (custom) {
+			onChange(input)
+		} else {
+			if (isInt && input.isEmpty()) {
+				whatState.it = "0"
+			} else {
+				whatState.it = input.take(maxLetters)
+			}
+			onChange(whatState.it)
+		}
     }
 }
 
