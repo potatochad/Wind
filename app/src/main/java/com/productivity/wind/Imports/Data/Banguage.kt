@@ -379,7 +379,6 @@ fun BasicInput(
     isInt: Bool = no,
 	modifier: Modifier = Modifier, 
 	textStyle: TextStyle = TextStyle(),
-	onMutableChangeIt: (MutableState<Str>) -> Unit = {},
     onChange: (Str) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
@@ -398,7 +397,6 @@ fun BasicInput(
             val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
             what.it = filtered
             onChange(filtered)
-			onMutableChangeIt(what)
         },
         textStyle = textStyle, 
 		singleLine = yes,
