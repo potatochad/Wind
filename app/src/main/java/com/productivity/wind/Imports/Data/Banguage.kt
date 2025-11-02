@@ -381,16 +381,6 @@ fun BasicInput(
 	textStyle: TextStyle = TextStyle(),
     onChange: (Str) -> Unit = {},
 ) {
-    val focusManager = LocalFocusManager.current
-
-	Box(
-        modifier = Modifier
-            .pointerInput(Unit) {
-				detectTapGestures(onTap = { focusManager.clearFocus() })
-			}, 
-    ) {
-		LazzyRow {
-		
 		BasicTextField(
 			value = what.it,
 			onValueChange = {
@@ -409,7 +399,7 @@ fun BasicInput(
 				onDone = { focusManager.clearFocus() }
 			)
 		)
-	}}
+	
 }
 
 
