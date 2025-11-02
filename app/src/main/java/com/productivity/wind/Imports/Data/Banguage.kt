@@ -381,6 +381,11 @@ fun BasicInput(
 	textStyle: TextStyle = TextStyle(),
     onChange: (Str) -> Unit = {},
 ) {
+	Row(
+		modifier = modifier,
+		verticalAlignment = Alignment.CenterVertically,
+		horizontalArrangement = Arrangement.Start       
+	) {
 		BasicTextField(
 			value = what.it,
 			onValueChange = {
@@ -390,7 +395,7 @@ fun BasicInput(
 			},
 			textStyle = textStyle, 
 			singleLine = yes,
-			modifier = modifier, 
+			// modifier = modifier, 
 			keyboardOptions = KeyboardOptions(
 				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
 				imeAction = ImeAction.Done
@@ -399,6 +404,7 @@ fun BasicInput(
 				onDone = { focusManager.clearFocus() }
 			)
 		)
+	}
 	
 }
 
