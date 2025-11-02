@@ -98,7 +98,7 @@ fun Disipline() {
                 Icon.Edit()
             }
         }
-        UI.move(8)
+        move(8)
         Text(
             text = coloredTarget,
             modifier = Modifier
@@ -106,7 +106,7 @@ fun Disipline() {
                 .widthIn(max = 300.dp)
                 .verticalScroll(ScrollText)
         )
-        UI.move(h = 20)
+        move(h = 20)
 
         OutlinedTextField(
             value = Bar.currentInput,
