@@ -360,23 +360,6 @@ object UI {
 	}
 
 
-    @Composable
-	fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
-		val sDp = toDp(s)
-		val wDp = toDp(w)
-		val hDp = toDp(h)
-
-
-		Spacer(
-			modifier = if (sDp > 0.dp) {
-				Modifier.size(sDp)  // uniform size
-			} else {
-				Modifier.width(wDp).height(hDp)
-			}
-		)
-	}
-
-
 
 
 
