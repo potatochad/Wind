@@ -232,7 +232,12 @@ fun <T> r_m(initial: T) = r { m(initial) }
 inline fun <reified T> ml(): MutableList<T> = mutableListOf()
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
 
-
+fun NavGraphBuilder.url(
+    route: Str,
+    content: Content
+) {
+    composable(route) { content() }
+}
 
 
 fun getJavaClass(bar: ClassVar<Settings, Any?>): Class<*>? {
