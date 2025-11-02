@@ -388,7 +388,8 @@ fun BasicInput(
             .clickable(
                 indication = null,
                 interactionSource = r { MutableInteractionSource() }
-            ) { focusManager.clearFocus() }
+            ) { focusManager.clearFocus() },
+		contentAlignment = Alignment.CenterStart, 
     ) {
 
     BasicTextField(
