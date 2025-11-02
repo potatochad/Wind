@@ -388,6 +388,7 @@ fun BasicInput(
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
+		UI.move(w=5)
 		BasicTextField(
 			value = what.it,
 			onValueChange = {
