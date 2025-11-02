@@ -144,10 +144,11 @@ object Item {
                         .w(60)
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
-                    maxLetters = 5, 
-                    onMutableChangeIt = {
-                    Vlog("Bar.Dpoints ${Bar.Dpoints}")
-                })
+                    maxLetters = 5,
+                    custome = yes,
+                ) {
+                  Vlog("it $it")  
+                }
             }
         )
     }
