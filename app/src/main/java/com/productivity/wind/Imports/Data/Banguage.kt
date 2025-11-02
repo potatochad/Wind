@@ -156,12 +156,27 @@ fun Modifier.clickOrHold(
 
 fun Modifier.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
 fun Modifier.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
+fun Modifier.s(value: Any?) = this.size(toDp(value))
 
 fun Modifier.maxS(): Mod= this.fillMaxSize()
 fun Modifier.maxW(): Mod= this.fillMaxWidth()
 fun Modifier.maxH(): Mod= this.fillMaxHeight()
 
+@Composable
+fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
+	val sDp = toDp(s)
+	val wDp = toDp(w)
+	val hDp = toDp(h)
 
+
+	Spacer(
+		modifier = if (sDp > 0.dp) {
+			Modifier.s(sDp)  // uniform size
+		} else {
+			Modifier.w(wDp).h(hDp)
+		}
+	)
+}
 
 fun Dp.toPx(): Int {
     var context = App.ctx
