@@ -381,6 +381,8 @@ fun BasicInput(
 	textStyle: TextStyle = TextStyle(),
     onChange: (Str) -> Unit = {},
 ) {
+	val focusManager = LocalFocusManager.current
+
 	Row(
 		modifier = modifier,
 		verticalAlignment = Alignment.CenterVertically,
