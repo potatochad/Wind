@@ -104,9 +104,9 @@ fun LogsScreen() {
                 LazyInput(
                     LogsTag,
                     modifier = Modifier
-                        .h(34)
-                        .space(h = 8, v = 4)
-                        .w(60)
+                        .h(50)//34
+                        .space(h = 18, v = 14)
+                        .w(120)
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
