@@ -145,7 +145,7 @@ object Item {
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
                     maxLetters = 5,
-                    custome = yes,
+                    custom = yes,
                 ) {
                   Vlog("it $it")  
                 }
