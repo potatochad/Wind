@@ -390,7 +390,7 @@ fun LazyInput(
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically)
 
-    val finalMod = modifier
+    val finalMod = modifier.space(h = 8, v = 4)
 
 	val whatState: m_<Str> = when (what) {
         is MutableState<*> -> what as MutableState<Str>
