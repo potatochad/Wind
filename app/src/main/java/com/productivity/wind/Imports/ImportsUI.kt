@@ -100,15 +100,14 @@ fun getMyAppLogs(): Str {
 
     reader.forEachLine { line ->
         if (line.contains(myPackage)) {
-            // Keep only the message after the last colon
             val clean = line.substringAfter(":").trim()
                 .substringAfter(":").trim()
                 .substringAfter(":").trim()
 
-            // Truncate if longer than 70 chars
             val finalLine = if (clean.length > 100) clean.take(70) + "..." else clean
-            
-			logs.add(finalLine)
+            val tag = Regex("[A-Z]/([^:]+):").find(line)?.groupValues?.get(1) ?: "?"
+
+            logs.add("$tag: $finalLine") 
         }
     }
 
