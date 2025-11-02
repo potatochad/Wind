@@ -81,7 +81,7 @@ fun LogsScreen() {
 
     
     RunOnce(Reload) {
-        val logs = getMyAppLogs().lines()
+        val logs = getMyAppLogs()
         Bar.Newlogs = logs - Bar.Oldlogs.toSet()
         Bar.Oldlogs = logs
         scrollV.toBottom()
