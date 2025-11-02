@@ -131,14 +131,14 @@ fun LogsScreen() {
             
         }
     ) {
-        Box(Modifier
-                .scroll(yes, yes, scrollV, scrollH)
-                .maxW()
-                .space(h=6) 
-        ) {
-            if (filteredLogs.isEmpty()){
-            UI.EmptyBox("Try refreshing")
-            } else {
+        if (Bar.Newlogs.isEmpty()){
+              UI.EmptyBox("No logs, Try refreshing")
+        } else {
+            Box(Modifier
+                    .scroll(yes, yes, scrollV, scrollH)
+                    .maxW()
+                    .space(h=6) 
+               ) {
                 Text(
                     text = filteredLogs,
                     modifier = Modifier
