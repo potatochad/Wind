@@ -80,11 +80,12 @@ fun LogsScreen() {
     var LogsTag = r_m("")
 
     
-    RunOnce(Reload, Bar.Oldlogs) {
+    RunOnce(Reload) {
         val logs = getMyAppLogs().lines()
         Bar.Newlogs = logs - Bar.Oldlogs.toSet()
         Bar.Oldlogs = logs
         scrollV.toBottom()
+        Reload=no
     }
 
 
@@ -116,6 +117,7 @@ fun LogsScreen() {
                     Icon.Delete { 
                         Bar.Newlogs = ""
                         Bar.Oldlogs = getMyAppLogs().lines()
+                        Reload = yes
                     }
                     Icon.Copy(Bar.Newlogs)
                     Icon.Reload { Reload = yes }
