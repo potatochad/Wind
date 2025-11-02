@@ -93,14 +93,13 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
 }
 
 fun getMyAppLogs(): Str {
-	val process = Runtime.getRuntime().exec("logcat -d | grep ${App.ctx.packageName}")
-
-    // val process = Runtime.getRuntime().exec("logcat -d *:V")
+    val process = Runtime.getRuntime().exec("logcat -d *:V")
     val reader = BufferedReader(InputStreamReader(process.inputStream))
     val logs = mutableListOf<Str>()
     val myPackage = App.ctx.packageName
 
     reader.forEachLine { line ->
+		/*
         if (line.contains(myPackage)) {
             val clean = line.substringAfter(":").trim()
                 .substringAfter(":").trim()
@@ -111,6 +110,7 @@ fun getMyAppLogs(): Str {
 
             logs.add("$tag: $finalLine") 
         }
+		*/
     }
 
     return logs.joinToString("\n")
