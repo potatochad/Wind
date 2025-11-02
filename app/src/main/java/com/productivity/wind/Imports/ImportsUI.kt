@@ -224,7 +224,7 @@ object DayChecker {
         job = CoroutineScope(Dispatchers.Default).launch {
             while (coroutineContext.isActive) {
                 delay(60 * 1000L)
-                val today = LocalDate.now().toString()
+                val today = "${LocalDate.now()}"
                 if (today != Bar.lastDate) {
                     Bar.lastDate = today
                     onNewDay()
@@ -437,7 +437,7 @@ object UI {
                 tint = iconTint,
                 modifier = Modifier.size(iconSize),
             )
-            Spacer(Modifier.h(4))
+            move(h=4)
             Text(
                 text = title,
                 fontSize = titleSize,
@@ -505,32 +505,22 @@ object UI {
     fun EmptyBox(
         text: Str = "No Items",
         icon: ImageVector = Icons.Default.Block,
-        height: Dp = App.screenHeight - 150.dp,
         iconSize: Dp = 64.dp,
-        topSpacing: Dp = App.screenHeight/2 - 160.dp,
         textSize: TextUnit = 18.sp,
         color: Color = Color.Gray,
     ) {
         Box(
-            modifier = Modifier
-                .maxS()
-                .h(height),
+			Modifier.maxS(),
+			contentAlignment = Alignment.Center,
         ) {
-
-            Column(
-                Modifier.maxS(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Spacer(Modifier.h(topSpacing))
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = color,
-                    modifier = Modifier.size(iconSize),
-                )
-                UI.move(h = 8)
-                Text(text, fontSize = textSize, color = color)
-            }
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = color,
+                modifier = Modifier.s(iconSize),
+            )
+            move(h=8)
+			Text(text, fontSize = textSize, color = color)
         }
     }
 
@@ -558,13 +548,7 @@ fun MyNavGraph(navController: NavHostController) {
 }
 
 
-// 3) Your DSL
-fun NavGraphBuilder.url(
-    route: Str,
-    content: Content
-) {
-    composable(route) { content() }
-}
+
 
 
 
