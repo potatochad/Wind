@@ -381,6 +381,7 @@ fun LazyInput(
     onChange: (Str) -> Unit = {},
 ) {
 
+	//! not used
 	val defaultMod = Modifier
         .h(34)
         .space(h = 8, v = 4)
@@ -389,7 +390,7 @@ fun LazyInput(
         .onFocusChanged { }
         .wrapContentHeight(Alignment.CenterVertically)
 
-    val finalMod = defaultMod
+    val finalMod = modifier
 
 	val whatState: m_<Str> = when (what) {
         is MutableState<*> -> what as MutableState<Str>
