@@ -105,7 +105,7 @@ object Item {
 
             LazyCard {
                 LazzyRow {
-                    UI.move(10)
+                    move(10)
 
                     LazyInfo(infoContent = { Text("${app.NowTime}s/${app.DoneTime}s") }) {
                         UI.ProgressIcon(icon, progress)
