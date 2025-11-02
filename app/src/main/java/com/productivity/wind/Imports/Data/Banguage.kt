@@ -385,31 +385,29 @@ fun BasicInput(
 
 	Box(
         modifier = Modifier
-            .clickable(
-                indication = null,
-                interactionSource = r { MutableInteractionSource() }
-            ) { focusManager.clearFocus() },
+            .pointerInput(Unit) {
+				detectTapGestures(onTap = { focusManager.clearFocus() })
+			},
 		contentAlignment = Alignment.CenterStart, 
     ) {
-
-    BasicTextField(
-        value = what.it,
-        onValueChange = {
-            val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
-            what.it = filtered
-            onChange(filtered)
-        },
-        textStyle = textStyle, 
-		singleLine = yes,
-        modifier = modifier, 
-		keyboardOptions = KeyboardOptions(
-            keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
-            imeAction = ImeAction.Done
-        ),
-        keyboardActions = KeyboardActions(
-            onDone = { focusManager.clearFocus() }
-        )
-    )
+		BasicTextField(
+			value = what.it,
+			onValueChange = {
+			val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
+				what.it = filtered
+				onChange(filtered)
+			},
+			textStyle = textStyle, 
+			singleLine = yes,
+			modifier = modifier, 
+			keyboardOptions = KeyboardOptions(
+				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
+				imeAction = ImeAction.Done
+			),
+			keyboardActions = KeyboardActions(
+				onDone = { focusManager.clearFocus() }
+			)
+		)
 	}
 }
 
