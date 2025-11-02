@@ -122,7 +122,10 @@ fun LogsScreen() {
                         Reload = yes
                     }
                     Icon.Copy(Bar.Newlogs)
-                    Icon.Reload { Reload = yes }
+                    Icon.Reload { 
+                        Reload = yes
+                        log("refreshed")
+                    }
                 }
             }
             
@@ -133,12 +136,16 @@ fun LogsScreen() {
                 .maxW()
                 .space(h=6) 
         ) {
-            Text(
-                text = filteredLogs,
-                modifier = Modifier
-                    .maxS(),
-                softWrap = yes,
-            )
+            if (filteredLogs.isEmpty()){
+                EmptyBox("Try refreshing")
+            } else {
+                Text(
+                    text = filteredLogs,
+                    modifier = Modifier
+                        .maxS(),
+                    softWrap = yes,
+                )
+            }
         }
     }
 }
