@@ -266,7 +266,7 @@ fun LazyInfo(
                 // Red dot marking click point
                 Box(
                     Modifier
-                        .size(6.dp)
+                        .s(6)
                         .background(Color.Red, CircleShape)
                 )
 			}
@@ -280,7 +280,7 @@ fun LazyInfo(
                 // Red dot marking click point
                 Box(
                     Modifier
-                        .size(6.dp)
+                        .s(6.dp)
                         .background(Color.Magenta, CircleShape)
                 )
 			}
@@ -332,7 +332,7 @@ fun NormalVisual(
 fun LazyImage(
     source: Any?,
     modifier: Mod = Modifier
-        .size(34.dp)
+        .s(34)
         .space(5)
 ) {
     val contentDescription = "boring"
@@ -542,7 +542,7 @@ fun LazyIcon(
             onClick = onClick,
             modifier = modifier
                 .space(OuterPadding) // OUTER padding
-                .size(ButtonSize.dp)      // controls inner room around icon
+                .s(ButtonSize)      // controls inner room around icon
         ) {
             if (icon != null) {
                 Icon(
@@ -558,7 +558,7 @@ fun LazyIcon(
                 val innerSize = if (SquareIcon) 24.dp else 20.dp
                 Box(
                     modifier = Modifier
-                        .size(BigIconSize.dp)
+                        .s(BigIconSize)
                         .clip(shape)
                         .background(BigIconColor),
                     contentAlignment = Alignment.Center
@@ -567,7 +567,7 @@ fun LazyIcon(
                         imageVector = BigIcon,
                         contentDescription = null,
                         tint = Color.White,
-                        modifier = Modifier.size(innerSize)
+                        modifier = Modifier.s(innerSize)
                     )
                 }
             }
@@ -686,7 +686,7 @@ fun LazyItem(
 						tint = Color.White,
 						modifier = Modifier
                             .space(end = 10)
-                            .size(24.dp)
+                            .s(24)
 					)
 				}	    
 
@@ -694,7 +694,7 @@ fun LazyItem(
 					Box(
                         modifier = Modifier
                             .space(end = 10)
-                            .size(30.dp)
+                            .s(30)
                             .clip(CircleShape)
                             .background(BigIconColor),
                         contentAlignment = Alignment.Center
@@ -752,7 +752,7 @@ fun LazyHeader(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             if (showBack) {
-				UI.move(5)
+				move(5)
                 LazyIcon(Icons.Default.ArrowBack) {
 					if (!clickedBack) {
 							clickedBack = yes
@@ -783,7 +783,7 @@ fun LazyHeader(
 		if (showDivider){
 			LazyLine(color = Color.Gray)		
 			if (DividerPadding){
-				UI.move(10)
+				move(10)
 			}
 		}
     }
@@ -872,7 +872,7 @@ fun LazyPopup(
         },
         confirmButton = {
             if (showConfirm) {
-				UI.move(15)
+				move(15)
                 UI.Ctext("OK"){
 					LazyDelay {
 						onConfirm?.invoke()
@@ -966,7 +966,7 @@ fun LazyMenu(
 
         Box( Modifier
                 .offset { IntOffset(offsetX.roundToPx(), 0) }
-                .width(App.screenWidth / 2 + 30.dp)
+                .w(App.screenWidth / 2 + 30.dp)
                 .maxH()
                 .background(Color.DarkGray)//
         ) {
