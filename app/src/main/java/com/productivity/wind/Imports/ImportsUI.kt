@@ -512,23 +512,25 @@ object UI {
     fun EmptyBox(
         text: Str = "No Items",
         icon: ImageVector = Icons.Default.Block,
-        iconSize: Dp = 64.dp,
+        iconSize: Dp = 70.dp,
         textSize: TextUnit = 18.sp,
         color: Color = Color.Gray,
     ) {
         Box(
 			Modifier.maxS(),
 			contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = color,
-                modifier = Modifier.s(iconSize),
-            )
-            move(h=8)
-			Text(text, fontSize = textSize, color = color)
-        }
+        ) { 
+			Column {
+				Icon(
+					imageVector = icon,
+					contentDescription = null,
+					tint = color,
+					modifier = Modifier.s(iconSize),
+				)
+				move(h=8)
+				Text(text, fontSize = textSize, color = color)
+			}
+		}
     }
 
 
