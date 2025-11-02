@@ -816,7 +816,7 @@ fun LazyScreen(
 		)
 	}
 	val bottom: Content = {
-		LazzyRow {UI.move(bottomSystemHeight())}
+		LazzyRow {move(bottomSystemHeight())}
 	}
 
     Column(modifier) {
