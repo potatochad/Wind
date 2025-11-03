@@ -100,12 +100,14 @@ fun getMyAppLogs(): Str {
 
     reader.forEachLine { line ->
 		val time = Regex("""\d{2}:\d{2}:\d{2}\.\d{3}""").find(line)?.value ?: ""
-		
-		// Cut everything before the time
-		val clean = if (time.isNotEmpty()) line.substringAfter(time).trim() else line.trim()
+
+		var line2 = ""
+		if (time.isNotEmpty()) {
+			line2 = line.substringAfter(time).trim().replace(Regex("""^\s*\d+\s+\d+\s+"""), "")
+		} else line.trim()
 
 		// Shorten long lines
-		val short = if (clean.length > 300) clean.take(300) + "..." else clean
+		val short = if (line2.length > 300) line2.take(300) + "..." else line2
 
 		// Add time at front
 		logs.add("[$time] $short")
