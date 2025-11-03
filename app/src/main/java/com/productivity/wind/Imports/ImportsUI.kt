@@ -92,7 +92,7 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
     }, delayMs)
 }
 
-fun getMyAppLogs(): String {
+fun getMyAppLogs(): Str {
     val process = Runtime.getRuntime().exec("logcat -d *:V")
     val reader = BufferedReader(InputStreamReader(process.inputStream))
     val logs = mutableListOf<String>()
@@ -101,15 +101,12 @@ fun getMyAppLogs(): String {
     reader.forEachLine { line ->
 		// Capture only the time part
 		val time = Regex("""\d{2}:\d{2}:\d{2}\.\d{3}""")
-			.find(line)?.value ?: "??:??:??"
+			.find(line)?.value?.let { "[$it]" } ?: ""
+
 		val clean = line.substringAfter(time).trim()
 		val line2 = if (clean.length > 300) clean.take(300) + "..." else clean
-
-		if (time == "??:??:??") {
-			logs.add(line2)
-		} else {
-			logs.add("[$time] $line2")
-		}
+		
+		logs.add("$time $line2")
 	}
 
     return logs.joinToString("\n")
