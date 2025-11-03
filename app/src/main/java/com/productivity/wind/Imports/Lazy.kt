@@ -67,69 +67,6 @@ fun LazyMove(
     }
 }
 
-@Composable
-fun LazyTheme2(content: Content) {
-    val appColorScheme = darkColorScheme(
-        background = Color.Black,
-        onBackground = Color.White,
-        surface = Color.Black,
-        onSurface = Color.White,
-        primary = Color.Black,
-        onPrimary = Color.White
-    )
-
-    val blueTextSelectionColors = TextSelectionColors(
-        handleColor = Color.Blue,                 
-        backgroundColor = Color.Blue.copy(alpha = 0.4f)  
-    )
-
-    CompositionLocalProvider(
-        LocalTextSelectionColors provides blueTextSelectionColors
-    ) {
-        MaterialTheme(
-            colorScheme = appColorScheme,
-            content = content
-        )
-    }
-}
-
-
-@Composable
-fun LazyTheme(content: @Composable () -> Unit) {
-    val appColorScheme = darkColorScheme(
-        background = Color.Black,
-        onBackground = Color.White,
-        surface = Color.Black,
-        onSurface = Color.White,
-        primary = Color.Black,
-        onPrimary = Color.White
-    )
-
-    val blueTextSelectionColors = TextSelectionColors(
-        handleColor = Color(0xFF1E90FF), // Dodger Blue (classic highlight look)
-        backgroundColor = Color(0xFF1E90FF).copy(alpha = 0.4f)
-    )
-
-    CompositionLocalProvider(
-        LocalTextSelectionColors provides blueTextSelectionColors
-    ) {
-        MaterialTheme(
-            colorScheme = appColorScheme,
-            content = content
-        )
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 @Composable
