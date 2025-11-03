@@ -510,11 +510,10 @@ object UI {
         textSize: TextUnit = 18.sp,
         color: Color = Color.Gray,
     ) {
-        Box(
-			Modifier.maxS(),
-			contentAlignment = Alignment.Center,
-        ) { 
-			Column {
+			Column(
+				Modifier.maxS(),
+				verticalArrangement = Arrangement.Center,
+			) {
 				Icon(
 					imageVector = icon,
 					contentDescription = null,
@@ -524,7 +523,6 @@ object UI {
 				move(h=8)
 				Text(text, fontSize = textSize, color = color)
 			}
-		}
     }
 
 
