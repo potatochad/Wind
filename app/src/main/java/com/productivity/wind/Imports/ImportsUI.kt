@@ -99,23 +99,7 @@ fun getMyAppLogs(): Str {
     val myPackage = App.ctx.packageName
 
     reader.forEachLine { line ->
-		/*
-        if (line.contains(myPackage)) {
-            val clean = line.substringAfter(":").trim()
-                .substringAfter(":").trim()
-                .substringAfter(":").trim()
-
-            val finalLine = if (clean.length > 100) clean.take(70) + "..." else clean
-            val tag = Regex("[A-Z]/([^:]+):").find(line)?.groupValues?.get(1) ?: "?"
-
-            logs.add("$tag: $finalLine") 
-        }
-		*/
-
-        // Remove the numbers after the timestamp (e.g., "11-02 21:14:23.123  1234  5678")
-        val cleanLine = line.replace(Regex("""\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\.\d{3}\s+\d+\s+\d+\s"""), "")
-        logs.add(cleanLine)
-
+        logs.add(line)
     }
 
     return logs.joinToString("\n")
