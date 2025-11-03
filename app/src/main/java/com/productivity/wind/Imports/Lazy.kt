@@ -261,9 +261,9 @@ fun LazyTheme(content: @Composable () -> Unit) {
     val appColorScheme = darkColorScheme(
         background = Color.Black,
         onBackground = Color.White,
-        surface = Color.Black,
+        // surface = Color.Black,
         onSurface = Color.White,
-        // primary = Color.Black,
+        // primary = Color.Black, ✅️
         onPrimary = Color.White,
     )
     MaterialTheme(
