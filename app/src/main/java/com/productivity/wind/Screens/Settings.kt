@@ -129,7 +129,7 @@ fun LogsScreen() {
         }
     ) {
         if (Bar.Newlogs.isEmpty()){
-              UI.EmptyBox("No logs, Try refreshing")
+              UI.EmptyBox("No logs")
         } else {
             Box(Modifier
                     .scroll(yes, yes, scrollV, scrollH)
