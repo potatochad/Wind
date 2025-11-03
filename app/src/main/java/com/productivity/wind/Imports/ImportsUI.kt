@@ -92,20 +92,6 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
     }, delayMs)
 }
 
-fun getMyAppLogs66(): Str {
-    val process = Runtime.getRuntime().exec("logcat -d *:V")
-    val reader = BufferedReader(InputStreamReader(process.inputStream))
-    val logs = mutableListOf<Str>()
-    val myPackage = App.ctx.packageName
-
-    reader.forEachLine { line ->
-		val line2 = if (line.length > 300) line.take(300) + "..." else line
-
-        logs.add(line2)
-    }
-
-    return logs.joinToString("\n")
-}
 fun getMyAppLogs(): String {
     val process = Runtime.getRuntime().exec("logcat -d *:V")
     val reader = BufferedReader(InputStreamReader(process.inputStream))
@@ -118,7 +104,12 @@ fun getMyAppLogs(): String {
         val clean = line.substringAfter(time).trim()
         val line2 = if (clean.length > 300) clean.take(300) + "..." else clean
 
-        logs.add("[$time] $line2")
+
+		if (time == "??:??:??") {
+			logs.add("$line2")
+		} else {
+			logs.add("[$time] $line2")
+		}
     }
 
     return logs.joinToString("\n")
