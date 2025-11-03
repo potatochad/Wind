@@ -99,15 +99,18 @@ fun getMyAppLogs(): Str {
     val myPackage = App.ctx.packageName
 
     reader.forEachLine { line ->
-		// Capture only the time part
-		val time = Regex("""\d{2}:\d{2}:\d{2}\.\d{3}""")
-			.find(line)?.value?.let { "[$it]" } ?: ""
-
-		val clean = line.substringAfter(time).trim()
-		val line2 = if (clean.length > 300) clean.take(300) + "..." else clean
+		val time = Regex("""\d{2}:\d{2}:\d{2}\.\d{3}""").find(line)?.value ?: ""
 		
-		logs.add("$time $line2")
+		// Cut everything before the time
+		val clean = if (time.isNotEmpty()) line.substringAfter(time).trim() else line.trim()
+
+		// Shorten long lines
+		val short = if (clean.length > 300) clean.take(300) + "..." else clean
+
+		// Add time at front
+		logs.add("[$time] $short")
 	}
+
 
     return logs.joinToString("\n")
 }
