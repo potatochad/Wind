@@ -256,6 +256,21 @@ fun LazyInfo(
 
 
 
+@Composable
+fun LazyTheme(content: @Composable () -> Unit) {
+    val appColorScheme = darkColorScheme(
+        background = Color.Black,
+        onBackground = Color.White,
+        surface = Color.Black,
+        onSurface = Color.White,
+        primary = Color.Black,
+        onPrimary = Color.White,
+    )
+    MaterialTheme(
+        colorScheme = appColorScheme,
+        content = content
+    )
+}
 
 
 
