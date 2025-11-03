@@ -174,11 +174,13 @@ class MainActivity : ComponentActivity() {
 
         AppStart_beforeUI(applicationContext)
         setContent {
+			LazyTheme {
             Surface(Modifier.maxS()) {
 				SelectionContainer {
 					AppStart()
 				}
             }
+			}
         }
 
     }
