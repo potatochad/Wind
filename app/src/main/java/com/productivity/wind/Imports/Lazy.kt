@@ -263,7 +263,7 @@ fun LazyTheme(content: @Composable () -> Unit) {
         onBackground = Color.White,
         surface = Color.Black,
         onSurface = Color.White,
-        primary = Color.Black,
+        // primary = Color.Black,
         onPrimary = Color.White,
     )
     MaterialTheme(
