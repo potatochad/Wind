@@ -513,6 +513,7 @@ object UI {
 			Column(
 				Modifier.maxS(),
 				verticalArrangement = Arrangement.Center,
+				horizontalAlignment = Alignment.CenterHorizontally,
 			) {
 				Icon(
 					imageVector = icon,
