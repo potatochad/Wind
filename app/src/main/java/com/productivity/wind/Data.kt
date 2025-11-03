@@ -25,6 +25,7 @@ import kotlin.reflect.*
 import kotlin.reflect.jvm.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
+import androidx.compose.foundation.text.selection.*
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
 yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long ago dont remember what did)
@@ -175,7 +176,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             LazyTheme {
                 Surface(Modifier.maxS()) {
-					AppStart()
+					SelectionContainer {
+						AppStart()
+					}
                 }
             }
 
