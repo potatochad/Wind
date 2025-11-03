@@ -99,6 +99,8 @@ fun getMyAppLogs(): Str {
     val myPackage = App.ctx.packageName
 
     reader.forEachLine { line ->
+		val text = if (line.length > 300) myString.take(70) + "..." else myString
+
         logs.add(line)
     }
 
