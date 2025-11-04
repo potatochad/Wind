@@ -571,3 +571,25 @@ fun getMyAppLogs(): Str {
 	
     return logs.joinToString("\n")
 }
+
+
+
+
+fun wait(x: Long = 100L, Do: () -> Unit) {
+    CoroutineScope(Dispatchers.Main).launch {
+        delay(x)
+        Do()
+    }
+}
+
+fun <T> runHeavyTask(
+    task: () -> T,            // heavy computation or IO
+    onResult: (T) -> Unit     // UI update with result
+) {
+    CoroutineScope(Dispatchers.Default).launch { // off UI
+        val result = task()                       // run heavy work
+        withContext(Dispatchers.Main) {           // back to UI
+            onResult(result)                      // update Compose with result
+        }
+    }
+}
