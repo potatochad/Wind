@@ -81,10 +81,7 @@ fun LogsScreen() {
 
     
     RunOnce(Reload) {
-        val logs = getMyAppLogs() // logs is String
-        val newLines = logs.lines() - Bar.Oldlogs.lines().toSet() // List<String>
-        Bar.Newlogs = newLines.joinToString("\n")               // String
-        Bar.Oldlogs = logs     
+        Bar.Newlogs = getMyAppLogs()
         
         delay(100)
 
@@ -99,41 +96,14 @@ fun LogsScreen() {
 
     LazyScreen(
         title = {
-            Row(
-                Modifier.scroll(h = yes),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                LazyInput(
-                    LogsTag,
-                    modifier = Modifier
-                        .h(34)
-                        .w(120)
-                ) {
-                    Bar.logsTag = LogsTag.it
-                }
-            }
             
-            UI.End {
-                Row {
-                    Icon.Delete { 
-                        Bar.Newlogs = ""
-                        Bar.Oldlogs = getMyAppLogs()
-                        Reload = yes
-                    }
-                    Icon.Copy(Bar.Newlogs)
-                    Icon.Reload { 
-                        Reload = yes
-                        log("refreshed")
-                    }
-                }
-            }
             
         }
     ) {
         if (Bar.Newlogs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
-            
+           Item.Logs(filteredLogs) 
         }
     }
 }
