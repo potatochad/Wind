@@ -133,22 +133,7 @@ fun LogsScreen() {
         if (Bar.Newlogs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
-            Box(Modifier
-                    .w(App.screenWidth - 10.dp)
-                    .move(w=10)
-                    .h(App.screenHeight - 25.dp)
-               ) {
-                Box(Modifier
-                    .scroll(yes, yes, scrollV, scrollH)
-                ) {
-                    Text(
-                        text = filteredLogs,
-                        modifier = Modifier.maxS(),
-                        softWrap = yes,
-                        fontSize = 14.sp
-                    )
-                }
-            }
+            
         }
     }
 }
