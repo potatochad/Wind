@@ -230,6 +230,37 @@ object Item {
 }
 
 object Header {
+
+    @Composable
+    fun Logs(LogsTag: m_<Str>, Reload: m_<Bool>) {
+            Row(
+                Modifier.scroll(h=yes),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                LazyInput(
+                    LogsTag,
+                    modifier = Modifier
+                        .h(34)
+                        .w(120)
+                ) {
+                    Bar.logsTag = LogsTag.it
+                }
+            }
+            
+            UI.End {
+                Row {
+                    Icon.Delete { 
+                        Bar.Newlogs = getMyAppLogs()
+                        Reload.it = yes
+                    }
+                    Icon.Copy(Bar.Newlogs)
+                    Icon.Reload { 
+                        Reload.it = yes
+                        log("refreshed")
+                    }
+                }
+            }
+    }
     
     @Composable
     fun AppUsage(Time: m_<Str>, Points: m_<Str>, selectedApp: m_<Str>) {
