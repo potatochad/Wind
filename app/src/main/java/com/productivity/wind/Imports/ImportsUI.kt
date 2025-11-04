@@ -99,7 +99,10 @@ fun getMyAppLogs(): Str {
     val myPackage = App.ctx.packageName
 
     reader.forEachLine { line ->
-		val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), "")
+		val s = line.replace(
+			Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+""")
+			, " "
+		)
 		logs.add(if (s.length > 300) s.take(300) + "..." else s)
 	}
 
