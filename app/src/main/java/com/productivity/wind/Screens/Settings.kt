@@ -143,6 +143,7 @@ fun LogsScreen() {
                     modifier = Modifier
                         .maxS(),
                     softWrap = yes,
+                    fontSize = 13.sp
                 )
             }
         }
