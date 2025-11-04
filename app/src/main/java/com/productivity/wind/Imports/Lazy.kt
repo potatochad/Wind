@@ -519,7 +519,10 @@ fun LazyIcon(
 ) {
 	UI.ComposeCanBeTiny() {
         IconButton(
-            onClick = onClick,
+            onClick = {scope.launch {
+                delay(100L) // wait 100 milliseconds
+                onClick()    // then trigger original click
+			}},
             modifier = modifier
                 .space(OuterPadding) // OUTER padding
                 .s(ButtonSize)      // controls inner room around icon
@@ -537,7 +540,7 @@ fun LazyIcon(
                 val shape = if (SquareIcon) RoundedCornerShape(6.dp) else CircleShape
                 val innerSize = if (SquareIcon) 24.dp else 20.dp
                 Box(
-                    modifier = Modifier
+                    Modifier
                         .s(BigIconSize)
                         .clip(shape)
                         .background(BigIconColor),
