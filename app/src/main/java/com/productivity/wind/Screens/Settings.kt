@@ -133,11 +133,10 @@ fun LogsScreen() {
         if (Bar.Newlogs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
-            Row {
-            move(10)
             Box(Modifier
                     .scroll(yes, yes, scrollV, scrollH)
                     .w(App.screenWidth - 10.dp)
+                    .move(w=10)
                     .h(App.screenHeight - 20.dp)
                ) {
                 Text(
@@ -146,7 +145,6 @@ fun LogsScreen() {
                     softWrap = yes,
                     fontSize = 14.sp
                 )
-            }
             }
         }
     }
