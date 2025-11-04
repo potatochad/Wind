@@ -177,6 +177,15 @@ fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 		}
 	)
 }
+fun Modifier.move(s: Any = 0, h: Any = s, w: Any = s): Modifier =
+    this.then(
+        Modifier.offset(
+            x = toDp(w), 
+            y = toDp(h)
+        )
+    )
+
+
 
 fun Dp.toPx(): Int {
     var context = App.ctx
