@@ -135,7 +135,6 @@ fun LogsScreen() {
         } else {
             Box(Modifier
                     .scroll(yes, yes, scrollV, scrollH)
-                    .maxW()
                     .w(App.screenWidth - 10.dp)
                     .h(App.screenHeight - 10.dp)
                ) {
@@ -143,7 +142,7 @@ fun LogsScreen() {
                     text = filteredLogs,
                     modifier = Modifier.maxS(),
                     softWrap = yes,
-                    fontSize = 13.sp
+                    fontSize = 14.sp
                 )
             }
         }
