@@ -519,10 +519,11 @@ fun LazyIcon(
 ) {
 	UI.ComposeCanBeTiny() {
         IconButton(
-            onClick = {scope.launch {
-                delay(100L) // wait 100 milliseconds
-                onClick()    // then trigger original click
-			}},
+            onClick = {
+				wait(100L) {
+					onClick()
+				}
+			},
             modifier = modifier
                 .space(OuterPadding) // OUTER padding
                 .s(ButtonSize)      // controls inner room around icon
