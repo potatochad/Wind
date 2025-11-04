@@ -134,17 +134,20 @@ fun LogsScreen() {
               UI.EmptyBox("No logs")
         } else {
             Box(Modifier
-                    .scroll(yes, yes, scrollV, scrollH)
                     .w(App.screenWidth - 10.dp)
                     .move(w=10)
                     .h(App.screenHeight - 20.dp)
                ) {
-                Text(
-                    text = filteredLogs,
-                    modifier = Modifier.maxS(),
-                    softWrap = yes,
-                    fontSize = 14.sp
-                )
+                Box(Modifier
+                    .scroll(yes, yes, scrollV, scrollH)
+                ) {
+                    Text(
+                        text = filteredLogs,
+                        modifier = Modifier.maxS(),
+                        softWrap = yes,
+                        fontSize = 14.sp
+                    )
+                }
             }
         }
     }
