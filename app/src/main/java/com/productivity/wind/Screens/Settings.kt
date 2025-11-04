@@ -141,8 +141,7 @@ fun LogsScreen() {
                ) {
                 Text(
                     text = filteredLogs,
-                    modifier = Modifier
-                        .maxS(),
+                    modifier = Modifier.maxS(),
                     softWrap = yes,
                     fontSize = 13.sp
                 )
