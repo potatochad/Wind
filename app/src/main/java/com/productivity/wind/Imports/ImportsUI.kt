@@ -92,29 +92,6 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
     }, delayMs)
 }
 
-fun getMyAppLogs(): Str {
-    val process = Runtime.getRuntime().exec("logcat -d *:V")
-    val reader = BufferedReader(InputStreamReader(process.inputStream))
-    val logs = mutableListOf<String>()
-    val myPackage = App.ctx.packageName
-
-    reader.forEachLine { line ->
-		val s = line.replace(
-			Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+""")
-			, " "
-		)
-		logs.add(if (s.length > 300) s.take(300) + "..." else s)
-	}
-
-
-
-
-    return logs.joinToString("\n")
-}
-
-
-
-
 @Composable
 fun getStatusBarHeight(): Int {
     val insets = WindowInsets.statusBars.asPaddingValues()
