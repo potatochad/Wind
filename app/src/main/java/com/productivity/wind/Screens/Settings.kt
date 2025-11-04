@@ -136,7 +136,7 @@ fun LogsScreen() {
             Box(Modifier
                     .scroll(yes, yes, scrollV, scrollH)
                     .maxW()
-                    .space(h=10) 
+                    .space(start=10, end = 15, bottom = 10) 
                ) {
                 Text(
                     text = filteredLogs,
