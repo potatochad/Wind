@@ -85,6 +85,25 @@ fun Menu() {
 
 object Item {
 
+    @Composable
+    fun Logs(txt: Str) {
+    Box(Modifier
+                    .w(App.screenWidth - 10.dp)
+                    .move(w=10)
+                    .h(App.screenHeight - 25.dp)
+               ) {
+                Box(Modifier
+                    .scroll(yes, yes, scrollV, scrollH)
+                ) {
+                    Text(
+                        text = txt,
+                        modifier = Modifier.maxS(),
+                        softWrap = yes,
+                        fontSize = 14.sp
+                    )
+                }
+    }}
+
     fun enoughPoints(enough: Do) {
         if (Bar.funTime < Bar.Dpoints) {
             show(NeedMorePoints)
