@@ -74,19 +74,18 @@ fun SettingsOtherScreen() {
 
 @Composable
 fun LogsScreen() {
-    var Reload by m(no)
+    var Reload = r_m(no)
     var scrollV = r_Scroll()
     var scrollH = r_Scroll()
     var LogsTag = r_m("")
 
     
-    RunOnce(Reload) {
+    RunOnce(Reload.it) {
         Bar.Newlogs = getMyAppLogs()
         
         delay(100)
-
         scrollV.toBottom()
-        Reload=no
+        Reload.it=no
     }
 
 
@@ -94,12 +93,7 @@ fun LogsScreen() {
         .filter { it.contains(Bar.logsTag) }
         .joinToString("\n")
 
-    LazyScreen(
-        title = {
-            
-            
-        }
-    ) {
+    LazyScreen(Header.Logs(LogsTag, Reload)) {
         if (Bar.Newlogs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
