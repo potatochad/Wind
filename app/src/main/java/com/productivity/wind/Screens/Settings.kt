@@ -103,7 +103,7 @@ fun LogsScreen() {
         if (Bar.Newlogs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
-           Item.Logs(filteredLogs) 
+           Item.Logs(filteredLogs, scrollV, scrollH) 
         }
     }
 }
