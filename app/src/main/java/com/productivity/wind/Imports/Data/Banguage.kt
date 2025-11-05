@@ -569,7 +569,7 @@ fun getMyAppLogs(): Str {
 		logs.add(if (s.length > 300) s.take(300) + "..." else s)
 	}
 	
-    return logs.take(500)joinToString("\n")
+    return logs.take(500).joinToString("\n")
 }
 
 
