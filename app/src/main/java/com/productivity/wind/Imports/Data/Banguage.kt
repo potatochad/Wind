@@ -556,7 +556,7 @@ fun getAppIcon(packageName: Str): Drawable? {
     }
 }
 fun getMyAppLogs(): Str {
-	val process = Runtime.getRuntime().exec("logcat -d -t 500 *:V")
+	val process = Runtime.getRuntime().exec("logcat -d *:V")
 	val reader = BufferedReader(InputStreamReader(process.inputStream))
     val logs = mutableListOf<Str>()
     val myPackage = App.ctx.packageName
@@ -569,7 +569,7 @@ fun getMyAppLogs(): Str {
 		logs.add(if (s.length > 300) s.take(300) + "..." else s)
 	}
 	
-    return logs.joinToString("\n")
+    return logs.take(500)joinToString("\n")
 }
 
 
