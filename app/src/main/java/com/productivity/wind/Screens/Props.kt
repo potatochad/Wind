@@ -243,18 +243,15 @@ object Header {
                     modifier = Modifier
                         .h(34)
                         .w(120)
-                ) {
-                    Bar.logsTag = LogsTag.it
-                }
+                )
             }
             
             UI.End {
                 Row {
                     Icon.Delete { 
-                        Bar.Newlogs = ""// getMyAppLogs()
-                        // Reload.it = yes
+                        Bar.logs = ""
                     }
-                    Icon.Copy(Bar.Newlogs)
+                    Icon.Copy(Bar.logs)
                     Icon.Reload { 
                         Reload.it = yes
                         Vlog("refreshed")
