@@ -90,7 +90,7 @@ object Item {
         Box(Modifier
                     .w(App.screenWidth - 10.dp)
                     .move(w=10)
-                    .h(App.screenHeight - 30.dp)
+                    .h(App.screenHeight - 35.dp)
                ) {
                 Box(Modifier
                     .scroll(yes, yes, scrollV, scrollH)
