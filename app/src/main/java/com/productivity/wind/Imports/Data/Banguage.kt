@@ -588,6 +588,9 @@ fun getMyAppLogs(): Str {
 			Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+""")
 			, " "
 		)
+
+        if ("setRequestedFrameRate" in s) return@forEachLine
+		
 		logs.add(if (s.length > 300) s.take(300) + "..." else s)
 	}
 	
