@@ -509,6 +509,10 @@ fun bottomSystemHeight(): Dp {
 fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
     var msg = message.take(int)
     if (msg.length >= int) {msg += " ..."}
+
+	//18:21:27.105
+	val time = SimpleDateFormat("HH:mm:ss.SSS").format(Date())
+	Bar.TempLogs = "$time $tag | $msg"
     Log.w(tag, msg)
 }
 
