@@ -89,7 +89,7 @@ object Item {
     fun Logs(txt: String, scrollV: ScrollState, scrollH: ScrollState) {
         Box(Modifier
                     .w(App.screenWidth - 10.dp)
-                    .move(w=10)
+                    .move(w=5)
                     .h(App.screenHeight - 35.dp)
                ) {
                 Box(Modifier
