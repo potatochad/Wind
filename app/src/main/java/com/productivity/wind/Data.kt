@@ -120,6 +120,7 @@ class Settings {
 
 	//USED in banguage-better language
 	var logs by m("")
+	var TempLogs by m("")
 }
 
 @Serializable
