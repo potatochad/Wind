@@ -96,8 +96,6 @@ import androidx.compose.ui.geometry.*
 
 fun BanguageSettings(){
 	var Newlogs by m("")
-	var Oldlogs by m("")
-	var logsTag by m("")
 }
 
 val gson = Gson()
