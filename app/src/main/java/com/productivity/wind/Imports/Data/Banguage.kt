@@ -513,7 +513,9 @@ fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
 
 	//18:21:27.105
 	val time = SimpleDateFormat("HH:mm:ss.SSS").format(Date())
-	Bar.TempLogs = "$time $tag | $msg"
+	
+	val logMessage = "$time $tag | $msg"
+	Bar.TempLogs += "$logMessage\n"
     Log.w(tag, msg)
 }
 
