@@ -86,7 +86,7 @@ fun Menu() {
 object Item {
 
     @Composable
-    fun Logs(txt: String, scrollV: ScrollState, scrollH: ScrollState) {
+    fun Logs(txt: Str, scrollV: ScrollState, scrollH: ScrollState) {
         Box(Modifier
                     .w(App.screenWidth - 10.dp)
                     .move(w=5)
@@ -240,9 +240,7 @@ object Header {
             ) {
                 LazyInput(
                     LogsTag,
-                    modifier = Modifier
-                        .h(34)
-                        .w(120)
+                    modifier = Modifier.h(34).w(120)
                 )
             }
             
@@ -254,6 +252,7 @@ object Header {
                     Icon.Copy(Bar.logs)
                     Icon.Reload { 
                         Reload.it = yes
+                        log("refreshed")
                         Vlog("refreshed")
                     }
                 }
