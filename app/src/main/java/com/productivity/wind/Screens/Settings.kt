@@ -90,6 +90,10 @@ fun LogsScreen() {
         // Bar.TempLogs = "$time $tag | $msg"
 
         // filter by time > <, and intercept it in there
+
+
+        Bar.logs = mergeAndSortLogsByTime(Bar.logs ,Bar.TempLogs)
+        Bar.TempLogs = ""
         
         delay(100)
         scrollV.toBottom()
