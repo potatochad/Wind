@@ -529,7 +529,7 @@ fun extractLogsTime(line: Str): Long {
 
 fun mergeAndSortLogsByTime(logs1: Str, logs2: Str): Str {
     val allLines = (logs1.lines() + logs2.lines()).filter { it.isNotBlank() }
-    val sorted = allLines.sortedBy { extractTimeMillis(it) }
+    val sorted = allLines.sortedBy { extractLogsTime(it) }
     return sorted.joinToString("\n")
 }
 
