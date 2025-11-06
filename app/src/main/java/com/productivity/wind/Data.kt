@@ -119,7 +119,7 @@ class Settings {
 	}
 
 	//USED in banguage-better language
-	BanguageSettings()
+	
 }
 
 @Serializable
