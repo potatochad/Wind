@@ -118,9 +118,8 @@ class Settings {
 		)
 	}
 
-	var Newlogs by m("")
-	var Oldlogs by m("")
-	var logsTag by m("")
+	//USED in banguage-better language
+	BanguageSettings()
 }
 
 @Serializable
