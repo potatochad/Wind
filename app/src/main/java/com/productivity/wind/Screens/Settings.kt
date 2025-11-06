@@ -90,7 +90,7 @@ fun LogsScreen() {
 
 
     val filteredLogs = Bar.Newlogs.lines()
-        .filter { it.contains(Bar.logsTag) }
+        .filter { it.contains(LogsTag) }
         .joinToString("\n")
 
     LazyScreen({Header.Logs(LogsTag, Reload)}) {
