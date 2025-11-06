@@ -81,7 +81,7 @@ fun LogsScreen() {
 
     
     RunOnce(Reload.it) {
-        Bar.Newlogs = getMyAppLogs()
+        Bar.logs = getMyAppLogs()
         
         delay(100)
         scrollV.toBottom()
@@ -89,12 +89,12 @@ fun LogsScreen() {
     }
 
 
-    val filteredLogs = Bar.Newlogs.lines()
+    val filteredLogs = Bar.logs.lines()
         .filter { it.contains(LogsTag) }
         .joinToString("\n")
 
     LazyScreen({Header.Logs(LogsTag, Reload)}) {
-        if (Bar.Newlogs.isEmpty()){
+        if (Bar.logs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
            Item.Logs(filteredLogs, scrollV, scrollH) 
