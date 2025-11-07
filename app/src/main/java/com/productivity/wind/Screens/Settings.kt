@@ -82,7 +82,7 @@ fun LogsScreen() {
     var Logs = Bar.logs.lines().toMutableList()  // split old logs into list
 
     
-    RunOnce(Reload.it) { 
+    RunOnce { 
         getMyAppLogs() 
 
         Bar.logs.lines().forEach { line ->
@@ -93,7 +93,6 @@ fun LogsScreen() {
         
         delay(100)
         scrollV.toBottom()
-        Reload.it=no
     }
 
 
