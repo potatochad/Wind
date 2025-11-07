@@ -590,9 +590,7 @@ fun getMyAppLogs(): Str {
 			, " "
 		)
 
-        // if ("setRequestedFrameRate" in s) return@forEachLine
-		// if ("ApkAssets: Deleting" in s) return@forEachLine
-		// if ("VRI[" in s) return@forEachLine
+		if ("ApkAssets: Deleting" in s) return@forEachLine
 		
 		logs.add(if (s.length > 300) s.take(300) + "..." else s)
 	}
