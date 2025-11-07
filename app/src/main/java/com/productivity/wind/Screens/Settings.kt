@@ -81,21 +81,8 @@ fun LogsScreen() {
 
     
     RunOnce(Reload.it) {
-
-        //THIS SHOULD NOT WORK; BUT DOES: ‼️CAUTION
-        var PastLogs = Bar.logs
         Bar.logs = getMyAppLogs()
-
-        if (Bar.logs == PastLogs) {
-            Bar.logs += Bar.TempLogs
-        } else {
-            Bar.logs = mergeAndSortLogsByTime(Bar.logs ,Bar.TempLogs)
-        }
-        Bar.TempLogs = ""
-        // IDK why works
-
-        
-        
+             
         delay(100)
         scrollV.toBottom()
         Reload.it=no
