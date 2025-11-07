@@ -79,29 +79,27 @@ fun LogsScreen() {
     var scrollH = r_Scroll()
     var LogsTag = r_m("")
 
-    var Logs = Bar.logs.lines().toMutableList()  // split old logs into list
+    var logs = Bar.logs.lines().toMutableList()  // split old logs into list
 
     
     RunOnce { 
         getMyAppLogs() 
 
         Bar.logs.lines().forEach { line ->
-            if (line !in Logs) Logs.add(line)  // add only new lines
+            if (line !in logs) logs.add(line)  // add only new lines
         }
 
-        
-        
         delay(100)
         scrollV.toBottom()
     }
 
 
-    val filteredLogs = Bar.logs.lines()
+    val filteredLogs = logs.lines()
         .filter { it.contains(LogsTag.it) }
         .joinToString("\n")
 
-    LazyScreen({Header.Logs(LogsTag, Reload)}) {
-        if (Bar.logs.isEmpty()){
+    LazyScreen({Header.Logs(LogsTag)}) {
+        if (logs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
            Item.Logs(filteredLogs, scrollV, scrollH) 
