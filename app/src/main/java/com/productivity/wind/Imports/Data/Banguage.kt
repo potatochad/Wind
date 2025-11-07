@@ -579,8 +579,7 @@ fun getAppIcon(packageName: Str): Drawable? {
 
 fun getMyAppLogs(): Str {
 	val pid = android.os.Process.myPid()
-    val process = Runtime.getRuntime().exec("logcat --pid=$pid -d")
-	//val process = Runtime.getRuntime().exec("logcat -d *:V")
+    val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W -d")
 	val reader = BufferedReader(InputStreamReader(process.inputStream))
     val logs = mutableListOf<Str>()
     val myPackage = App.ctx.packageName
