@@ -88,8 +88,8 @@ fun LogsScreen() {
             Bar.logs += Bar.TempLogs
         } else {
             Bar.logs = mergeAndSortLogsByTime(Bar.logs ,Bar.TempLogs)
-            Bar.TempLogs = ""
         }
+        Bar.TempLogs = ""
         
         delay(100)
         scrollV.toBottom()
