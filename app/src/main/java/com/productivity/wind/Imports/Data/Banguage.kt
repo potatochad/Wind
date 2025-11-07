@@ -578,7 +578,7 @@ fun mergeAndSortLogsByTime(logs1: String, logs2: String): String {
 }
 
 
-fun getMyAppLogs(): Str {
+fun getMyAppLogs2(): Str {
 	val pid = android.os.Process.myPid()
     val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W -d")
 	val reader = BufferedReader(InputStreamReader(process.inputStream))
@@ -599,6 +599,28 @@ fun getMyAppLogs(): Str {
 	
     return FullLogs
 }
+
+
+fun getMyAppLogs(): String {
+    val pid = android.os.Process.myPid()
+    val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W -d")
+    val reader = BufferedReader(InputStreamReader(process.inputStream))
+    val logs = mutableListOf<String>()
+
+    reader.forEachLine { line ->
+        if ("ApkAssets: Deleting" in line) return@forEachLine
+        logs.add(if (line.length > 300) line.take(300) + "..." else line)
+    }
+
+    val recentLogs = logs.takeLast(500).joinToString("\n")
+    val recentTempLogs = Bar.TempLogs.takeLast(500).joinToString("\n")
+
+    val fullLogs = mergeAndSortLogsByTime(recentLogs, recentTempLogs)
+
+    Bar.TempLogs = fullLogs.takeLast(500) // keep latest 500 lines for next merge
+    return fullLogs
+}
+
 
 
 
