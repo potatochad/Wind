@@ -556,25 +556,7 @@ fun log(message: Str, int: Int = 200, tag: Str = "bad") {
     var msg = message.take(int)
     if (msg.length >= int) {msg += " ..."}
 
-	//18:21:27.105
-	val time = SimpleDateFormat("HH:mm:ss.SSS").format(Date())
-	
-	val logMessage = "$time $tag | $msg"
-	// Bar.TempLogs += "$logMessage\n"
     Log.w(tag, msg)
-}
-
-
-fun extractLogsTime(line: String): Long {
-    val regex = Regex("""\d{2}:\d{2}:\d{2}\.\d{3}""")
-    val time = regex.find(line)?.value ?: return Long.MIN_VALUE
-    val parts = time.split(":", ".").map { it.toInt() }
-    return parts[0]*3600000L + parts[1]*60000L + parts[2]*1000L + parts[3]
-}
-
-fun mergeAndSortLogsByTime(logs1: String, logs2: String): String {
-    val allLines = (logs1.lines() + logs2.lines()).filter { it.isNotBlank() }
-    return allLines.sortedBy { extractLogsTime(it) }.joinToString("\n")
 }
 
 
@@ -597,30 +579,6 @@ fun getMyAppLogs(onLog: (Str) -> Unit) {
 	}
 	}.start()
 }
-
-
-fun getMyAppLogs2(): Str {
-	val pid = android.os.Process.myPid()
-    val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W -d")
-	val reader = BufferedReader(InputStreamReader(process.inputStream))
-    val logs = mutableListOf<Str>()
-
-    reader.forEachLine { line ->
-		val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), " ")
-		if ("ApkAssets: Deleting" in s) return@forEachLine
-		
-		logs.add(if (s.length > 300) s.take(300) + "..." else s)
-	}
-
-	var SomeLogs= logs.takeLast(500).joinToString("\n")
-
-	var FullLogs = mergeAndSortLogsByTime(SomeLogs, Bar.TempLogs)
-
-	Bar.TempLogs = Bar.TempLogs.takeLast(500)
-	
-    return FullLogs
-}
-
 
 
 
