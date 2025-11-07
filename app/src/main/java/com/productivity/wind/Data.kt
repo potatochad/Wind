@@ -202,7 +202,7 @@ class MainActivity : ComponentActivity() {
 fun AppStart_beforeUI(ctx: Context) {
     
     App.ctx = ctx
-	pkg = ctx.packageName
+	App.pkg = ctx.packageName
 	
     SettingsSaved.init()
     SettingsSaved.Bsave()
