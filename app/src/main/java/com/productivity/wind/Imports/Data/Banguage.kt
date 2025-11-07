@@ -507,19 +507,6 @@ fun bottomSystemHeight(): Dp {
 }
 
 
-fun log(message: Str, int: Int = 200, tag: Str = "bad") {
-    var msg = message.take(int)
-    if (msg.length >= int) {msg += " ..."}
-
-	//18:21:27.105
-	val time = SimpleDateFormat("HH:mm:ss.SSS").format(Date())
-	
-	val logMessage = "$time $tag | $msg"
-	Bar.TempLogs += "$logMessage\n"
-    Log.w(tag, msg)
-}
-
-
 
 
 fun getTodayAppUsage(packageName: Str): Int {
@@ -565,6 +552,19 @@ fun getAppIcon(packageName: Str): Drawable? {
 
 
 
+fun log(message: Str, int: Int = 200, tag: Str = "bad") {
+    var msg = message.take(int)
+    if (msg.length >= int) {msg += " ..."}
+
+	//18:21:27.105
+	val time = SimpleDateFormat("HH:mm:ss.SSS").format(Date())
+	
+	val logMessage = "$time $tag | $msg"
+	Bar.TempLogs += "$logMessage\n"
+    Log.w(tag, msg)
+}
+
+
 fun extractLogsTime(line: Str): Long {
     val regex = Regex("""^\d{2}:\d{2}:\d{2}\.\d{3}""")
     val time = regex.find(line)?.value ?: return Long.MAX_VALUE
@@ -583,7 +583,6 @@ fun getMyAppLogs(): Str {
     val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W -d")
 	val reader = BufferedReader(InputStreamReader(process.inputStream))
     val logs = mutableListOf<Str>()
-    val myPackage = App.ctx.packageName
 
     reader.forEachLine { line ->
 		val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), " ")
@@ -597,11 +596,8 @@ fun getMyAppLogs(): Str {
 	var FullLogs = mergeAndSortLogsByTime(SomeLogs, Bar.TempLogs)
 
 	Bar.TempLogs = Bar.TempLogs.takeLast(500)
-
 	
-	
-	
-    return 
+    return FullLogs
 }
 
 
