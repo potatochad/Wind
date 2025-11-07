@@ -85,7 +85,7 @@ fun LogsScreen() {
     RunOnce(Reload.it) { 
         getMyAppLogs() 
 
-        Bar.logs.forEach { line ->
+        Bar.logs.lines().forEach { line ->
             if (line !in Logs) Logs.add(line)  // add only new lines
         }
 
