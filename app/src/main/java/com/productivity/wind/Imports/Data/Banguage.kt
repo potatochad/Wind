@@ -578,7 +578,9 @@ fun getAppIcon(packageName: Str): Drawable? {
 }
 
 fun getMyAppLogs(): Str {
-	val process = Runtime.getRuntime().exec("logcat -d *:V")
+	val pid = android.os.Process.myPid()
+    val process = Runtime.getRuntime().exec("logcat --pid=$pid -d")
+	//val process = Runtime.getRuntime().exec("logcat -d *:V")
 	val reader = BufferedReader(InputStreamReader(process.inputStream))
     val logs = mutableListOf<Str>()
     val myPackage = App.ctx.packageName
@@ -589,9 +591,9 @@ fun getMyAppLogs(): Str {
 			, " "
 		)
 
-        if ("setRequestedFrameRate" in s) return@forEachLine
-		if ("ApkAssets: Deleting" in s) return@forEachLine
-		if ("VRI[" in s) return@forEachLine
+        // if ("setRequestedFrameRate" in s) return@forEachLine
+		// if ("ApkAssets: Deleting" in s) return@forEachLine
+		// if ("VRI[" in s) return@forEachLine
 		
 		logs.add(if (s.length > 300) s.take(300) + "..." else s)
 	}
