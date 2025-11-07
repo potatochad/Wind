@@ -567,7 +567,7 @@ fun log(message: Str, int: Int = 200, tag: Str = "bad") {
 
 fun extractLogsTime(line: String): Long {
     val regex = Regex("""\d{2}:\d{2}:\d{2}\.\d{3}""")
-    val time = regex.find(line)?.value ?: return Long.MAX_VALUE
+    val time = regex.find(line)?.value ?: return Long.MIN_VALUE
     val parts = time.split(":", ".").map { it.toInt() }
     return parts[0]*3600000L + parts[1]*60000L + parts[2]*1000L + parts[3]
 }
@@ -598,27 +598,6 @@ fun getMyAppLogs2(): Str {
 	Bar.TempLogs = Bar.TempLogs.takeLast(500)
 	
     return FullLogs
-}
-
-
-fun getMyAppLogs(): String {
-    val pid = android.os.Process.myPid()
-    val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W -d")
-    val reader = BufferedReader(InputStreamReader(process.inputStream))
-    val logs = mutableListOf<String>()
-
-    reader.forEachLine { line ->
-        if ("ApkAssets: Deleting" in line) return@forEachLine
-        logs.add(if (line.length > 300) line.take(300) + "..." else line)
-    }
-
-    val recentLogs = logs.takeLast(500).joinToString("\n")
-    val recentTempLogs = Bar.TempLogs.lines().takeLast(500).joinToString("\n")
-
-    val fullLogs = mergeAndSortLogsByTime(recentLogs, recentTempLogs)
-
-    Bar.TempLogs = fullLogs.takeLast(500) // keep latest 500 lines for next merge
-    return fullLogs
 }
 
 
