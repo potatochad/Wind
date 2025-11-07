@@ -94,6 +94,7 @@ object Item {
                ) {
                 Box(Modifier
                     .scroll(yes, yes, scrollV, scrollH)
+                    .scrollbar(scrollV)
                 ) {
                     Text(
                         text = txt,
