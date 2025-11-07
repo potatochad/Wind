@@ -83,15 +83,6 @@ fun LogsScreen() {
     RunOnce(Reload.it) {
         Bar.logs = getMyAppLogs()
 
-
-
-        // 18:21:27.105
-        // val time = SimpleDateFormat("HH:mm:ss.SSS").format(Date())
-        // Bar.TempLogs = "$time $tag | $msg"
-
-        // filter by time > <, and intercept it in there
-
-
         Bar.logs = mergeAndSortLogsByTime(Bar.logs ,Bar.TempLogs)
         Bar.TempLogs = ""
         
