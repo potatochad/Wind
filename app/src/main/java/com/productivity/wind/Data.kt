@@ -202,6 +202,8 @@ class MainActivity : ComponentActivity() {
 fun AppStart_beforeUI(ctx: Context) {
     
     App.ctx = ctx
+	pkg = ctx.packageName
+	
     SettingsSaved.init()
     SettingsSaved.Bsave()
 
@@ -255,6 +257,8 @@ object App {
     * */
     lateinit var ctx: Context
     lateinit var navHost: NavHostController
+	lateinit var pkg: Str
+
 	
 	var screenHeight by m(0.dp)
 	var screenWidth by m(0.dp)
