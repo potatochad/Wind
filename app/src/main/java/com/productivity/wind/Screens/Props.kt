@@ -246,6 +246,10 @@ object Header {
             
             UI.End {
                 Row {
+                    Icon.Delete {
+                        Bar.TempLogs = ""
+                        Bar.logs = ""
+                    }
                     Icon.Copy(Bar.logs)
                     Icon.Reload { 
                         Reload.it = yes
