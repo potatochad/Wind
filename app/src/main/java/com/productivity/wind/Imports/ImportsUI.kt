@@ -84,7 +84,7 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
         lastToast?.cancel()
     }
 
-	log("$msg")
+	log("$msg", tag="Vlog")
 
 
     Handler(Looper.getMainLooper()).postDelayed({
