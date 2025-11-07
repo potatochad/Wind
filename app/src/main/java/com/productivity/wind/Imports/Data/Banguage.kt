@@ -578,7 +578,28 @@ fun mergeAndSortLogsByTime(logs1: String, logs2: String): String {
 }
 
 
-fun getMyAppLogs(): Str {
+fun getMyAppLogs(onLog: (Str) -> Unit) {
+	Thread {
+	val pid = android.os.Process.myPid()
+    val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W")
+	val reader = BufferedReader(InputStreamReader(process.inputStream))
+    val logs = mutableListOf<Str>()
+
+    reader.forEachLine { line ->
+		val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), " ")
+		if ("ApkAssets: Deleting" in s) return@forEachLine
+		
+		logs.add(if (s.length > 300) s.take(300) + "..." else s)
+
+		var CutLogs = logs.takeLast(2000).joinToString("\n")
+
+		onLog(CutLogs)
+	}
+	}.start()
+}
+
+
+fun getMyAppLogs2(): Str {
 	val pid = android.os.Process.myPid()
     val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W -d")
 	val reader = BufferedReader(InputStreamReader(process.inputStream))
