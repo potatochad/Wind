@@ -507,7 +507,7 @@ fun bottomSystemHeight(): Dp {
 }
 
 
-fun log(message: Str, int: Int = 200, tag: Str = "Bad") {
+fun log(message: Str, int: Int = 200, tag: Str = "bad") {
     var msg = message.take(int)
     if (msg.length >= int) {msg += " ..."}
 
@@ -591,6 +591,7 @@ fun getMyAppLogs(): Str {
 
         if ("setRequestedFrameRate" in s) return@forEachLine
 		if ("ApkAssets: Deleting" in s) return@forEachLine
+		if ("VRI[MainActivity]@6c730e1: ViewPostIme" in s) return@forEachLine
 		
 		logs.add(if (s.length > 300) s.take(300) + "..." else s)
 	}
