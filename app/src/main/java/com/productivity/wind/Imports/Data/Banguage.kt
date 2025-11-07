@@ -565,18 +565,18 @@ fun log(message: Str, int: Int = 200, tag: Str = "bad") {
 }
 
 
-fun extractLogsTime(line: Str): Long {
-    val regex = Regex("""^\d{2}:\d{2}:\d{2}\.\d{3}""")
+fun extractLogsTime(line: String): Long {
+    val regex = Regex("""\d{2}:\d{2}:\d{2}\.\d{3}""")
     val time = regex.find(line)?.value ?: return Long.MAX_VALUE
     val parts = time.split(":", ".").map { it.toInt() }
     return parts[0]*3600000L + parts[1]*60000L + parts[2]*1000L + parts[3]
 }
 
-fun mergeAndSortLogsByTime(logs1: Str, logs2: Str): Str {
+fun mergeAndSortLogsByTime(logs1: String, logs2: String): String {
     val allLines = (logs1.lines() + logs2.lines()).filter { it.isNotBlank() }
-    val sorted = allLines.sortedBy { extractLogsTime(it) }
-    return sorted.joinToString("\n")
+    return allLines.sortedBy { extractLogsTime(it) }.joinToString("\n")
 }
+
 
 fun getMyAppLogs(): Str {
 	val pid = android.os.Process.myPid()
