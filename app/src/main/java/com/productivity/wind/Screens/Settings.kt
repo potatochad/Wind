@@ -94,7 +94,7 @@ fun LogsScreen() {
     }
 
 
-    val filteredLogs = logs.lines()
+    val filteredLogs = logs
         .filter { it.contains(LogsTag.it) }
         .joinToString("\n")
 
