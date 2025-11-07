@@ -80,7 +80,11 @@ fun LogsScreen() {
     var LogsTag = r_m("")
 
     
-    RunOnce(Reload.it) {           
+    RunOnce(Reload.it) { 
+        getMyAppLogs() 
+
+        
+        
         delay(100)
         scrollV.toBottom()
         Reload.it=no
