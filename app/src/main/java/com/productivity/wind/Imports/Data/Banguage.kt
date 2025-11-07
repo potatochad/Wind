@@ -613,7 +613,7 @@ fun getMyAppLogs(): String {
     }
 
     val recentLogs = logs.takeLast(500).joinToString("\n")
-    val recentTempLogs = Bar.TempLogs.takeLast(500).joinToString("\n")
+    val recentTempLogs = Bar.TempLogs.lines().takeLast(500).joinToString("\n")
 
     val fullLogs = mergeAndSortLogsByTime(recentLogs, recentTempLogs)
 
