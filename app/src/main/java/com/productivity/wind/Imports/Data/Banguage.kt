@@ -578,7 +578,7 @@ fun mergeAndSortLogsByTime(logs1: String, logs2: String): String {
 }
 
 
-fun getMyAppLogs2(): Str {
+fun getMyAppLogs(): Str {
 	val pid = android.os.Process.myPid()
     val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W -d")
 	val reader = BufferedReader(InputStreamReader(process.inputStream))
