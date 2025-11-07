@@ -81,7 +81,10 @@ fun LogsScreen() {
 
     
     RunOnce(Reload.it) {
-        Bar.logs = getMyAppLogs()
+
+        getMyAppLogs {
+            Bar.logs = it
+        }
              
         delay(100)
         scrollV.toBottom()
