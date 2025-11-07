@@ -358,8 +358,14 @@ fun Modifier.scrollbar(
     thumbColor: Color = Color.DarkGray
 ) = this.then(
     drawBehind {
+        if (scrollState.maxValue == 0) return@drawBehind // nothing to draw
+
         // Track
-        drawRect(color = color, topLeft = Offset(size.width - width.toPx(), 0f), size = Size(width.toPx(), size.height))
+        drawRect(
+            color = color,
+            topLeft = Offset(size.width - width.toPx(), 0f),
+            size = Size(width.toPx(), size.height)
+        )
 
         // Thumb
         val visibleRatio = size.height / scrollState.maxValue.toFloat().coerceAtLeast(1f)
@@ -373,6 +379,7 @@ fun Modifier.scrollbar(
         )
     }
 )
+
 
 @Composable
 fun Modifier.scroll(
