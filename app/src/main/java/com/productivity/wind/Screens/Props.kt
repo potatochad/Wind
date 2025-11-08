@@ -171,10 +171,10 @@ object Item {
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
                 ) {
-                    var input = it.take(5)
+                    var input = it.take(5).toInt()
                     if (Bar.funTime>Bar.Dpoints) {
                         if (it<Bar.funTime) {
-                            Bar.Dpoints = input.toInt()
+                            Bar.Dpoints = input
                         } else {
                             Vlog("Need more points")
                         }
