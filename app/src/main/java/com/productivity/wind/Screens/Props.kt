@@ -156,6 +156,10 @@ object Item {
             BigIconColor = Gold,
             title = "Unlock Threshold",
             endContent = {
+                Icon.Add {
+                    Bar.funTime += 1
+                }
+                
                 LazyInput(
                     Bar.Dpoints, 
                     isInt = yes, 
@@ -168,7 +172,15 @@ object Item {
                     maxLetters = 5,
                     custom = yes,
                 ) {
-                  Vlog("it $it")  
+                    log("it $it")
+                    enoughPoints {
+                        log("enoughPoints")
+                        if (it < Bar.funTime) {
+                            log("it < Bar.funTime, $it < ${Bar.funTime}")
+                            Bar.Dpoints = it
+                        }  
+                    }
+                    
                 }
             }
         )
