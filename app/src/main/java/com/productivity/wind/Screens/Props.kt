@@ -176,10 +176,10 @@ object Item {
                         if (input<Bar.funTime) {
                             Bar.Dpoints = input
                         } else {
-                            Vlog("Need more points")
+                            Vlog("More points: ${Bar.funTime} < $input ")
                         }
                     } else {
-                        Vlog("Need more points")
+                        Vlog("More points: ${Bar.funTime} < ${Bar.Dpoints} ")
                     }
                 }
             }
