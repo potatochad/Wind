@@ -375,6 +375,7 @@ fun LazyInput(
         isInt = isInt,
         modifier = finalMod,
         textStyle = textStyle,
+		custom = custom,
     ) { input ->
 		if (custom) {
 			onChange(input)
