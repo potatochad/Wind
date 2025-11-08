@@ -433,16 +433,48 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 }
 
 
+@Composable
+fun BasicInput(
+    value: Str,
+    isInt: Bool = no,
+	modifier: Modifier = Modifier, 
+	textStyle: TextStyle = TextStyle(),
+    onChange: (Str) -> Unit = {},
+) {
+	val focusManager = LocalFocusManager.current
 
+	Row(
+		modifier = modifier,
+		verticalAlignment = Alignment.CenterVertically,
+		horizontalArrangement = Arrangement.Start       
+	) {
+		move(w=5)
+		BasicTextField(
+			value = value,
+			onValueChange = {	
+				onChange(it)
+			},
+			textStyle = textStyle, 
+			singleLine = yes, 
+			keyboardOptions = KeyboardOptions(
+				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
+				imeAction = ImeAction.Done
+			),
+			keyboardActions = KeyboardActions(
+				onDone = { focusManager.clearFocus() }
+			)
+		)
+	}
+	
+}
 
 
 @Composable
-fun BasicInput(
+fun Input(
     what: m_<Str>,
     isInt: Bool = no,
 	modifier: Modifier = Modifier, 
 	textStyle: TextStyle = TextStyle(),
-	custom: Bool = no,
     onChange: (Str) -> Unit = {},
 ) {
 	val focusManager = LocalFocusManager.current
@@ -458,9 +490,8 @@ fun BasicInput(
 			onValueChange = {
 				val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
 
-				if (!custom) {
-					what.it = filtered
-				}
+				what.it = filtered
+		
 				onChange(filtered)
 			},
 			textStyle = textStyle, 
