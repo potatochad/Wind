@@ -580,9 +580,14 @@ fun getMyAppLogs() {
 		
 			logs.add(if (s.length > 300) s.take(300) + "..." else s)
 
-			var CutLogs = logs.takeLast(2000).joinToString("\n")
+			var cutLines = logs.takeLast(2000)
 
-			Bar.logs = CutLogs
+			cutLines.forEach { line ->
+				if (line !in Bar.logs) {
+					Bar.logs += "\n$line" // add only new lines to Bar.logs
+				}
+			}
+			Bar.logs = Bar.logs.lines().takeLast(2000).joinToString("\n")
 		}
 	}.start()
 }
