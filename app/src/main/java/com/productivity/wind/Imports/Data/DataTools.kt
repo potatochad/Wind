@@ -86,7 +86,6 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
                 }
             }
         }
-    )
 
     RunOnce(trigger.it) {
         if (trigger.it) {
