@@ -74,10 +74,9 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
     // log("70 line triggerd..BrestoreFromFile")
     val ctx = LocalContext.current
 
-    val launcher = rememberUpdatedState(
-        newValue = RememberLauncher(
-            ActivityResultContracts.OpenDocument()
-        ) { uri ->
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri ->
             if (uri != null) {
                 try {
                     val fileMap = mutableMapOf<Str, Str>()
@@ -95,7 +94,7 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
     RunOnce(trigger.it) {
         if (trigger.it) {
             App.restoringFromFile = no
-            launcher.value.launch(arrayOf("text/plain"))
+            launcher.launch(arrayOf("text/plain"))
             delay(2000L)
             App.restoringFromFile = no
             trigger.it = no
