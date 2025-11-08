@@ -48,7 +48,7 @@ fun writeToFile(ctx: Context, uri: Uri, text: Str) {
 fun BsaveToFile(trigger: Bool) {
     val ctx = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
-        contract = MakeTxtFile
+        contract = ActivityResultContracts.CreateDocument("text/plain")
     ) { uri ->
         if (uri != null) {
             val allData = getStoredData().all
@@ -60,9 +60,10 @@ fun BsaveToFile(trigger: Bool) {
             writeToFile(ctx, uri, text)
         }
     }
+
     RunOnce(trigger) {
         if (trigger) {
-            launcher.launch("WindBackUp.txt")
+            launcher.launch("WindBackUp.txt")  // now works
         }
     }
 }
