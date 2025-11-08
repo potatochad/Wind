@@ -67,6 +67,7 @@ fun BsaveToFile(trigger: Bool) {
 
 @Composable
 fun BrestoreFromFile(trigger: m_<Bool>) {
+    log("70 line triggerd..BrestoreFromFile")
     val ctx = LocalContext.current
 
     val launcher = rememberUpdatedState(
