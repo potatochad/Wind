@@ -442,6 +442,7 @@ fun BasicInput(
     isInt: Bool = no,
 	modifier: Modifier = Modifier, 
 	textStyle: TextStyle = TextStyle(),
+	custom: Bool = no,
     onChange: (Str) -> Unit = {},
 ) {
 	val focusManager = LocalFocusManager.current
@@ -455,8 +456,11 @@ fun BasicInput(
 		BasicTextField(
 			value = what.it,
 			onValueChange = {
-			val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
-				what.it = filtered
+				val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
+
+				if (!custom) {
+					what.it = filtered
+				}
 				onChange(filtered)
 			},
 			textStyle = textStyle, 
