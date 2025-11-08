@@ -375,16 +375,12 @@ fun LazyInput(
         modifier = finalMod,
         textStyle = textStyle,
     ) { input ->
-		if (custom) {
-			onChange(input)
+		if (isInt && input.isEmpty()) {
+			whatState.it = "0"
 		} else {
-			if (isInt && input.isEmpty()) {
-				whatState.it = "0"
-			} else {
-				whatState.it = input.take(maxLetters)
-			}
-			onChange(whatState.it)
+			whatState.it = input.take(maxLetters)
 		}
+		onChange(whatState.it)
     }
 }
 
