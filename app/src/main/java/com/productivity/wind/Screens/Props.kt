@@ -171,7 +171,7 @@ object Item {
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
                 ) {
-                    var input = it.take(5).toInt()
+                    val input = it.take(5).toIntOrNull() ?: 0
                     if (Bar.funTime>Bar.Dpoints) {
                         if (input<Bar.funTime) {
                             Bar.Dpoints = input
