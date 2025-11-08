@@ -161,7 +161,7 @@ object Item {
                 }
                 
                 BasicInput(
-                    Bar.Dpoints, 
+                    "${Bar.Dpoints}", 
                     isInt = yes, 
                     modifier = Modifier
                         .h(34)
