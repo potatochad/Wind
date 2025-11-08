@@ -66,14 +66,16 @@ fun BsaveToFile(trigger: Bool) {
 }
 
 
+
 @Composable
 fun BrestoreFromFile(trigger: m_<Bool>) {
-    log("70 line triggerd..BrestoreFromFile")
+    // log("70 line triggerd..BrestoreFromFile")
     val ctx = LocalContext.current
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocument()
-    ) { uri ->
+    val launcher = rememberUpdatedState(
+        newValue = RememberLauncher(
+            ActivityResultContracts.OpenDocument()
+        ) { uri ->
             if (uri != null) {
                 try {
                     val fileMap = mutableMapOf<Str, Str>()
@@ -86,11 +88,12 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
                 }
             }
         }
+    )
 
     RunOnce(trigger.it) {
         if (trigger.it) {
             App.restoringFromFile = no
-            launcher.launch(arrayOf("text/plain"))
+            launcher.value.launch(arrayOf("text/plain"))
             delay(2000L)
             App.restoringFromFile = no
             trigger.it = no
