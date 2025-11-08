@@ -160,7 +160,7 @@ object Item {
                     Bar.funTime += 1
                 }
                 
-                LazyInput(
+                BasicInput(
                     Bar.Dpoints, 
                     isInt = yes, 
                     modifier = Modifier
@@ -170,17 +170,10 @@ object Item {
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
                     maxLetters = 5,
-                    custom = yes,
                 ) {
-                    log("it $it")
-                    enoughPoints {
-                        log("enoughPoints")
-                        if (it.toInt() < Bar.funTime) {
-                            log("it < Bar.funTime, $it < ${Bar.funTime}")
-                            Bar.Dpoints = it.toInt()
-                        }  
+                    if (Bar.funTime>Bar.Dpoints) {
+                        Bar.Dpoints = it.toInt()
                     }
-                    
                 }
             }
         )
