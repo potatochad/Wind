@@ -32,6 +32,7 @@ import com.productivity.wind.Imports.Data.*
 import kotlin.reflect.full.*
 import kotlin.reflect.jvm.javaField
 import android.net.*
+import androidx.activity.compose.*
 
 
 @Suppress("UNCHECKED_CAST")
@@ -70,10 +71,9 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
     log("70 line triggerd..BrestoreFromFile")
     val ctx = LocalContext.current
 
-    val launcher = rememberUpdatedState(
-        newValue = RememberLauncher(
-            ActivityResultContracts.OpenDocument()
-        ) { uri ->
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri ->
             if (uri != null) {
                 try {
                     val fileMap = mutableMapOf<Str, Str>()
