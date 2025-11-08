@@ -608,6 +608,8 @@ fun getMyAppLogs() {
 		reader.forEachLine { line ->
 			val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), " ")
 			if ("ApkAssets: Deleting" in s) return@forEachLine
+			if ("WindowOnBackDispatcher" in s) return@forEachLine
+		
 		
 			logs.add(if (s.length > 300) s.take(300) + "..." else s)
 
