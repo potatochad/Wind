@@ -64,8 +64,10 @@ fun BsaveToFile(trigger: Bool) {
 
     LaunchedEffect(trigger) { 
         log("LAUNCHING BsaveTofile")
-        if (trigger) 
-        launcher.launch("WindBackUp.txt")
+        if (trigger) {
+            log("LAUNCHIG REALLY REALLY")
+            launcher.launch("WindBackUp.txt")
+        }
     }
 }
 
