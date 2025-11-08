@@ -357,7 +357,6 @@ fun LazyInput(
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start
 	),
-	custom: Bool=no,
     onChange: (Str) -> Unit = {},
 ) {
     val finalMod = modifier.space(h = 8, v = 4).background(CardColor, shape = RoundedCornerShape(4.dp))
@@ -370,12 +369,11 @@ fun LazyInput(
         else -> r { m("") }
 	}
 	
-    BasicInput(
+    Input(
         what = whatState,
         isInt = isInt,
         modifier = finalMod,
         textStyle = textStyle,
-		custom = custom,
     ) { input ->
 		if (custom) {
 			onChange(input)
