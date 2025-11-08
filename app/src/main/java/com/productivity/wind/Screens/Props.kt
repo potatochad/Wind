@@ -169,10 +169,10 @@ object Item {
                         .w(60)
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
-                    maxLetters = 5,
                 ) {
+                    var input = it.take(5)
                     if (Bar.funTime>Bar.Dpoints) {
-                        Bar.Dpoints = it.toInt()
+                        Bar.Dpoints = input.toInt()
                     }
                 }
             }
