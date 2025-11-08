@@ -438,7 +438,11 @@ fun BasicInput(
     value: Str,
     isInt: Bool = no,
 	modifier: Modifier = Modifier, 
-	textStyle: TextStyle = TextStyle(),
+	textStyle: TextStyle = TextStyle(
+		color = Color.White,
+		fontSize = 14.sp,
+		textAlign = TextAlign.Start
+	),
     onChange: (Str) -> Unit = {},
 ) {
 	val focusManager = LocalFocusManager.current
