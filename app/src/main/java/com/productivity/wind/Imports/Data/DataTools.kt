@@ -90,7 +90,7 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
     RunOnce(trigger.it) {
         if (trigger.it) {
             App.restoringFromFile = no
-            launcher.value.launch(arrayOf("text/plain"))
+            launcher.launch(arrayOf("text/plain"))
             delay(2000L)
             App.restoringFromFile = no
             trigger.it = no
