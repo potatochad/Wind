@@ -78,19 +78,12 @@ fun LogsScreen() {
     var scrollV = r_Scroll()
     var scrollH = r_Scroll()
     var LogsTag = r_m("")
-
-    var logs = Bar.logs.lines().toMutableList()  // split old logs into list
-
     
     RunOnce { 
-        getMyAppLogs() 
-
-        Bar.logs.lines().forEach { line ->
-            if (line !in logs) logs.add(line)  // add only new lines
-        }
-
         delay(100)
         scrollV.toBottom()
+        
+        getMyAppLogs() 
     }
 
 
