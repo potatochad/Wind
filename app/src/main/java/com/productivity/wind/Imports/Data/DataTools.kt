@@ -44,30 +44,25 @@ fun writeToFile(ctx: Context, uri: Uri, text: Str) {
     }
 }
 
+
 @Composable
 fun BsaveToFile(trigger: Bool) {
     val ctx = LocalContext.current
+
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("text/plain")
     ) { uri ->
         if (uri != null) {
-            val allData = getStoredData().all
-            val text = buildString {
-                allData.forEach { (key, value) ->
-                    appendLine("$key=$value")
-                }
+            val Data = getStoredData()
+            ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
+                Data.all.forEach { (key, value) -> out.write("$key=$value\n") }
             }
-            writeToFile(ctx, uri, text)
         }
     }
 
-    RunOnce(trigger) {
-        if (trigger) {
-            launcher.launch("WindBackUp.txt")  // now works
-        }
+    LaunchedEffect(trigger) { if (trigger) launcher.launch("WindBackUp.txt")
     }
 }
-
 
 
 @Composable
