@@ -60,14 +60,18 @@ fun BsaveToFile(trigger: Bool) {
         }
     }
 
-    LaunchedEffect(trigger) { if (trigger) launcher.launch("WindBackUp.txt")
+    log("BsaveTofile fun activatedd")
+
+    LaunchedEffect(trigger) { 
+        log("LAUNCHING BsaveTofile")
+        if (trigger) 
+        launcher.launch("WindBackUp.txt")
     }
 }
 
 
 @Composable
 fun BrestoreFromFile(trigger: m_<Bool>) {
-    // log("70 line triggerd..BrestoreFromFile")
     val ctx = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
