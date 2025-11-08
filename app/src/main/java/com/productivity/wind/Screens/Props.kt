@@ -173,7 +173,7 @@ object Item {
                 ) {
                     var input = it.take(5).toInt()
                     if (Bar.funTime>Bar.Dpoints) {
-                        if (it<Bar.funTime) {
+                        if (input<Bar.funTime) {
                             Bar.Dpoints = input
                         } else {
                             Vlog("Need more points")
