@@ -159,6 +159,7 @@ object Item {
                 Icon.Add {
                     Bar.funTime += 1
                 }
+                Text("${Bar.funTime}")
                 
                 BasicInput(
                     "${Bar.Dpoints}", 
@@ -172,7 +173,13 @@ object Item {
                 ) {
                     var input = it.take(5)
                     if (Bar.funTime>Bar.Dpoints) {
-                        Bar.Dpoints = input.toInt()
+                        if (it<Bar.funTime) {
+                            Bar.Dpoints = input.toInt()
+                        } else {
+                            Vlog("Need more points")
+                        }
+                    } else {
+                        Vlog("Need more points")
                     }
                 }
             }
