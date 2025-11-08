@@ -47,15 +47,17 @@ fun writeToFile(ctx: Context, uri: Uri, text: Str) {
 @Composable
 fun BsaveToFile(trigger: Bool) {
     val ctx = LocalContext.current
-    val launcher = RememberLauncher(MakeTxtFile) {
-        it?.let {
+    val launcher = rememberLauncherForActivityResult(
+        contract = MakeTxtFile
+    ) { uri ->
+        if (uri != null) {
             val allData = getStoredData().all
             val text = buildString {
                 allData.forEach { (key, value) ->
                     appendLine("$key=$value")
                 }
             }
-            writeToFile(ctx, it, text)
+            writeToFile(ctx, uri, text)
         }
     }
     RunOnce(trigger) {
