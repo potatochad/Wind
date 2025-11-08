@@ -177,7 +177,7 @@ object Item {
                         log("enoughPoints")
                         if (it < Bar.funTime) {
                             log("it < Bar.funTime, $it < ${Bar.funTime}")
-                            Bar.Dpoints = it
+                            Bar.Dpoints = it.toInt()
                         }  
                     }
                     
