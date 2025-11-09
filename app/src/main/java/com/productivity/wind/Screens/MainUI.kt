@@ -39,8 +39,7 @@ fun Main() {
         LazyCard { Disipline() }
        
         LazzyList(
-            Bar.apps.filter { it.Worth > 0 && it.done == no },
-            modifier = Modifier.maxW(),
+            Bar.apps.filter { it.Worth > 0 && it.done == no }
         ) { app, index ->
             Item.AppTaskUI(app)
         }
