@@ -141,6 +141,14 @@ fun goTo(route: Str){
 	App.navHost.navigate(route)
 }
 
+
+@Composable
+fun click(x: Content, Do: Do) {
+	Box(Modifier.click(Do){
+		x()
+	}
+}
+
 fun Modifier.click(
     Do: Do
 ): Modifier {
