@@ -128,7 +128,11 @@ object Item {
                 LazzyRow {
                     move(10)
 
-                    UI.ProgressIcon(icon, progress)
+                    click({
+                        UI.ProgressIcon(icon, progress)
+                    }){
+                        Plog
+                    }
 
 
                     move(12)
