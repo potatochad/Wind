@@ -128,7 +128,7 @@ object Item {
         }
 
         LazyCard {
-            Row(Modifier.maxW()) {
+            LazzyRow {
                 move(10)
 
                 click({
