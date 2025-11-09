@@ -488,7 +488,6 @@ fun EditPopUp(show: m_<Bool>) {
 
 @Composable
 fun AskUsagePermission(show: m_<Bool>) {
-    if (show.value) {
         LazyPopup(
             show = show,
             title = "Need Usage Permission",
@@ -499,13 +498,11 @@ fun AskUsagePermission(show: m_<Bool>) {
                 App.ctx.startActivity(intent)
             }
         )
-    }
 }
 
 var DebugPopupInfo by m("")
 @Composable
 fun DebugPopup(show: m_<Bool>) {
-    if (show.value) {
         LazyPopup(
             show = show,
             title = "ERROR",
@@ -521,20 +518,29 @@ fun DebugPopup(show: m_<Bool>) {
             }
             
         )
-    }
 }
 
 
 
 
-var selectedApp = m("")
+var selectedApp2 = m("")
 @Composable
-fun AppSelectPopup(show: m_<Bool>) {
-    if (show.value) {
+fun AppSelectPopup2(show: m_<Bool>) {
         val myPackage = LocalContext.current.packageName // your app's package
-        var appList by r_m(getApps().filter { getAppPackage(it) != myPackage }) // filter self out
+        var appList by r_m<List<App>>(emptyList())
+        var loading by r_m(yes)
 
-        var Loading by r_m(yes)
+        LaunchedEffect(Unit) {
+            runHeavyTask(
+                task = {
+                    getApps().filter { getAppPackage(it) != ctx.packageName }
+                },
+                onResult = {
+                    appList = it
+                    loading = no
+                }
+            )
+        }
 
         LazyPopup(
             show = show,
@@ -563,5 +569,68 @@ fun AppSelectPopup(show: m_<Bool>) {
                 }
             }
         )
+    
+}
+
+
+
+
+
+var selectedApp = m("")
+
+@Composable
+fun AppSelectPopup(show: m_<Bool>) {
+    if (!show.value) return
+
+    val ctx = LocalContext.current
+    var appList by r_m<List<Pair<App, Drawable>>>(emptyList()) // App + Icon
+    var loading by r_m(true)
+
+    // Load apps + icons off the main thread
+    LaunchedEffect(Unit) {
+        runHeavyTask(
+            task = {
+                getApps()
+                    .filter { getAppPackage(it) != ctx.packageName } // exclude self
+                    .map { app ->
+                        val icon = getAppIcon(getAppPackage(app)) // preload icon
+                        app to icon
+                    }
+            },
+            onResult = {
+                appList = it
+                loading = no
+            }
+        )
     }
+
+    LazyPopup(
+        show = show,
+        showCancel = no,
+        showConfirm = no,
+        title = "Select App",
+        message = "",
+        content = {
+            if (loading) {
+                Text("Loading...")
+            } else {
+                LazzyList(appList) { (app, icon), _ ->
+                    LazzyRow(
+                        Modifier.click {
+                            selectedApp.it = getAppName(app)
+                            show.it = no
+                        }
+                    ) {
+                        move(10)
+                        LazyImage(icon)
+                        move(10)
+                        UI.Ctext(getAppName(app)) {
+                            selectedApp.it = getAppName(app)
+                            show.it = no
+                        }
+                    }
+                }
+            }
+        }
+    )
 }
