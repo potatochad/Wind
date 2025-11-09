@@ -547,7 +547,7 @@ fun AppSelectPopup(show: m_<Bool>) {
                 getApps()
                     .filter { getAppPackage(it) != ctx.packageName } // exclude self
                     .map { app ->
-                        val icon = getAppIcon(getAppPackage(app)) // preload icon
+                        val icon = getAppIcon(getAppPackage(app))
                         app to icon
                     }
             },
