@@ -65,7 +65,7 @@ import androidx.compose.ui.text.input.*
 
 //region log
 
-fun Plog(msg: Str = "test", s: Int = 1) {
+fun Plog(msg: Str = "test", s: Int = 0) {
     val delayMillis = s * 1000
 
     CoroutineScope(Dispatchers.Main).launch {
