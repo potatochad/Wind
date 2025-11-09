@@ -116,12 +116,13 @@ object Item {
     @Composable
     fun AppTaskUI(app: AppTsk){
             val icon = getAppIcon(app.pkg)
+            var name = app.name
             val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
             if (app.NowTime > app.DoneTime - 1 && !app.done) {
                 Bar.funTime += app.Worth
                 Bar.apps.edit(app) { done = yes }
-                Vlog("${app.name} completed")
+                Vlog("$name completed")
             }
 
             LazyCard {
@@ -131,7 +132,7 @@ object Item {
                     click({
                         UI.ProgressIcon(icon, progress)
                     }){
-                        Plog
+                        Plog("$name app progress is $progress; ${app.Worth/app.NowTime}points/s ")
                     }
 
 
