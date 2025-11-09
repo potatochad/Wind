@@ -52,6 +52,7 @@ fun BsaveToFile() {
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("text/plain")
     ) { uri ->
+        log("Launcher called")
         if (uri != null) {
             val Data = getStoredData()
             log("Stored Data: $Data")
