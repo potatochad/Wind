@@ -137,7 +137,9 @@ fun toDp(it: Any?): Dp = when (it) {
 
 
 
-fun goTo(route: Str) = App.navHost.navigate(route)
+fun goTo(route: Str){
+	App.navHost.navigate(route)
+}
 
 fun Modifier.clickOrHold(
     hold: Bool = yes,
