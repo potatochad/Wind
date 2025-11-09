@@ -87,6 +87,12 @@ fun Menu() {
 
 object Item {
 
+
+    @Composavle
+    fun TskInput() {
+        
+    }
+
     @Composable
     fun Logs(txt: Str, scrollV: ScrollState, scrollH: ScrollState) {
         Box(Modifier
