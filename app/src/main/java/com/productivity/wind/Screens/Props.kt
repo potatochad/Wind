@@ -128,22 +128,11 @@ object Item {
                 LazzyRow {
                     move(10)
 
-                    LazyInfo(infoContent = { Text("${app.NowTime}s/${app.DoneTime}s") }) {
-                        UI.ProgressIcon(icon, progress)
-                    }
+                    UI.ProgressIcon(icon, progress)
 
 
                     move(12)
                     Text("Points ${app.Worth}")
-                    LazyInfo(infoContent = { Text("you clicked MORE MENU") }) {
-                            UI.End {
-                                LazyInfo(infoContent = { Text("you clicked MORE MENU") }) {
-                                    Icon.MoreMenu {}
-                                }
-                            }
-                    }
-                    
-
 
                 }
             }
