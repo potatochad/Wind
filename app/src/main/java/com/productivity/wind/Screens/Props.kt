@@ -157,12 +157,7 @@ object Item {
             BigIcon = Icons.Filled.LockOpen,
             BigIconColor = Gold,
             title = "Unlock Threshold",
-            endContent = {
-                Icon.Add {
-                    Bar.funTime += 1
-                }
-                Text("${Bar.funTime}")
-                
+            endContent = {             
                 BasicInput(
                     "${Bar.Dpoints}", 
                     isInt = yes, 
