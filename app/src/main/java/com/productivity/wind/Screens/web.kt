@@ -32,6 +32,7 @@ var WebUrl by m("")
 fun Web(){
     val webView = r { mutableStateOf<WebView?>(null) }
     val badWords = mutableListOf<Str>()
+    var on = r_m(yes)
 
     RunOnce(Bar.badWords) {
         Bar.badWords.forEach {
@@ -44,7 +45,7 @@ fun Web(){
        
 
 
-    Item.WebPointTimer()
+    Item.WebPointTimer(on)
 
     LazyScreen(
         title = {
