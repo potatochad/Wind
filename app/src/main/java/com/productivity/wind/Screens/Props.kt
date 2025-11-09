@@ -246,7 +246,7 @@ object Item {
 object Header {
 
     @Composable
-    fun Logs(LogsTag: m_<Str>) {
+    fun Logs(LogsTag: m_<Str>, filteredLogs: Str) {
             Row(
                 Modifier.scroll(h=yes),
                 verticalAlignment = Alignment.CenterVertically
@@ -262,7 +262,7 @@ object Header {
                     Icon.Delete {
                         Bar.logs = ""
                     }
-                    Icon.Copy(Bar.logs)
+                    Icon.Copy(filteredLogs)
                     Icon.Reload { 
                         Vlog("refreshed")
                     }
