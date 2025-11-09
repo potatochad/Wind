@@ -37,14 +37,10 @@ fun Main() {
     LazyScreen(title = { Header.Main() }, showBack = false) {
 
         LazyCard { Disipline() }
-
-
-
-
-        
+       
         LazzyList(
-            Bar.apps.filter { it.Worth > 0 && it.done == false },
-            modifier = Modifier.fillMaxWidth(),
+            Bar.apps.filter { it.Worth > 0 && it.done == no },
+            modifier = Modifier.maxW(),
         ) { app, index ->
             Item.AppTaskUI(app)
         }
