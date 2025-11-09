@@ -534,20 +534,7 @@ fun AppSelectPopup(show: m_<Bool>) {
         val myPackage = LocalContext.current.packageName // your app's package
         var appList by r_m(getApps().filter { getAppPackage(it) != myPackage }) // filter self out
 
-        var Loading = r_m(yes)
-
-        LazyPopup(
-            show = Loading,
-            showCancel = no,
-            showConfirm = no,
-            title = "Select App",
-            message = "",
-            content = {
-                Box(Modifier.maxS(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
-                }
-            }
-        )
+        var Loading by r_m(yes)
 
         LazyPopup(
             show = show,
@@ -556,13 +543,11 @@ fun AppSelectPopup(show: m_<Bool>) {
             title = "Select App",
             message = "",
             content = {
-                Loading.it = no
-                Vlog("Loaded: ${Loading.it}")
-
-                // Only pass the filtered items to the LazyList
+                Loading = no
+                
                 LazzyList(appList) { app, index ->
                     val icon = getAppIcon(getAppPackage(app))
-                    LazzyRow(Modifier.clickOrHold{
+                    LazzyRow(Modifier.click{
                         selectedApp.it = getAppName(app)
                         show.it = no
                     }) {
