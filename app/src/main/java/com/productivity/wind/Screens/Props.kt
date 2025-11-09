@@ -534,18 +534,14 @@ var selectedApp = m("")
 
 @Composable
 fun AppSelectPopup(show: m_<Bool>) {
-    if (!show.value) return
+    var appList by r_m<List<Pair<ResolveInfo, Drawable?>>>(emptyList())
+    var loading by r_m(no)
 
-    val ctx = LocalContext.current
-    var appList by r_m<List<Pair<App, Drawable>>>(emptyList()) // App + Icon
-    var loading by r_m(true)
-
-    // Load apps + icons off the main thread
-    LaunchedEffect(Unit) {
+    RunOnce {
         runHeavyTask(
             task = {
                 getApps()
-                    .filter { getAppPackage(it) != ctx.packageName } // exclude self
+                    .filter { getAppPackage(it) != App.pkg }
                     .map { app ->
                         val icon = getAppIcon(getAppPackage(app))
                         app to icon
