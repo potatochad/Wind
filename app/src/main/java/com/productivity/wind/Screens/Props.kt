@@ -139,6 +139,14 @@ object Item {
                     move(12)
                     Text("Points ${app.Worth}")
 
+                    Icon.Edit{
+                        Vlog("does nothing")
+                    }
+                    Icon.Delete{
+                        Vlog("does nothing, add an are sure")
+                        
+                    }
+
                 }
             }
     }
@@ -185,7 +193,7 @@ object Item {
         LazyItem(
             BigIcon = Icons.Filled.Restore,
             BigIconColor = DarkBlue,
-            title = "Restore",
+            title = "Restore [not work]",
             onClick = { 
                 restoring = yes
             },
@@ -205,7 +213,7 @@ object Item {
             topPadding = 1.dp,
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
-            title = "BackUp",
+            title = "BackUp [not work]",
             onClick = { 
                 backup = yes
             }
