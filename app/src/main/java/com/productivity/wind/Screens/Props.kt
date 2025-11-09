@@ -126,13 +126,13 @@ object Item {
             }
 
             LazyCard {
-                LazzyRow {
+                Row {
                     move(10)
 
                     click({
                         UI.ProgressIcon(icon, progress)
                     }){
-                        Plog("$name app progress is $progress; ${app.Worth/app.NowTime}points/s ")
+                        Plog("$name app progress is ${progress*100}%; ${app.Worth/app.NowTime}points/s ")
                     }
 
 
