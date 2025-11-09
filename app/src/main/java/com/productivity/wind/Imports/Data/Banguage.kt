@@ -144,7 +144,7 @@ fun goTo(route: Str){
 
 @Composable
 fun click(x: Content, Do: Do) {
-	Box(Modifier.click(Do){
+	Box(Modifier.click(Do)){
 		x()
 	}
 }
