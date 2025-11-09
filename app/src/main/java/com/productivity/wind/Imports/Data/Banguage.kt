@@ -141,6 +141,20 @@ fun goTo(route: Str){
 	App.navHost.navigate(route)
 }
 
+fun Modifier.click(
+    Do: Do
+): Modifier {
+    return this.then(
+        clickable(
+            indication = null,
+            interactionSource = MutableInteractionSource()
+        ) {
+            Do()
+        }
+    )
+}
+
+
 fun Modifier.clickOrHold(
     hold: Bool = yes,
     action: Do,
