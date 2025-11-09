@@ -46,7 +46,7 @@ fun writeToFile(ctx: Context, uri: Uri, text: Str) {
 
 
 @Composable
-fun BsaveToFile(trigger: Bool) {
+fun BsaveToFile() {
     val ctx = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
@@ -60,20 +60,15 @@ fun BsaveToFile(trigger: Bool) {
         }
     }
 
-    log("BsaveTofile fun activatedd")
-
-    LaunchedEffect(trigger) { 
+    RunOnce { 
         log("LAUNCHING BsaveTofile")
-        if (trigger) {
-            log("LAUNCHIG REALLY REALLY")
-            launcher.launch("WindBackUp.txt")
-        }
+        launcher.launch("WindBackUp.txt")
     }
 }
 
 
 @Composable
-fun BrestoreFromFile(trigger: m_<Bool>) {
+fun BrestoreFromFile() {
     val ctx = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
@@ -92,14 +87,8 @@ fun BrestoreFromFile(trigger: m_<Bool>) {
             }
         }
 
-    RunOnce(trigger.it) {
-        if (trigger.it) {
-            App.restoringFromFile = no
-            launcher.launch(arrayOf("text/plain"))
-            delay(2000L)
-            App.restoringFromFile = no
-            trigger.it = no
-        }
+    RunOnce() {
+        launcher.launch(arrayOf("text/plain"))
     }
 }
 
