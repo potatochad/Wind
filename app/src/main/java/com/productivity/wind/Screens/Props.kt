@@ -187,43 +187,26 @@ object Item {
     }
     @Composable
     fun Restore() {
-        var restoreTrigger = r_m(no)
-
         LazyItem(
             BigIcon = Icons.Filled.Restore,
             BigIconColor = DarkBlue,
             title = "Restore",
             onClick = { 
-                enoughPoints {
-                    set(restoreTrigger, true)
-                }
+                BrestoreFromFile()
             },
             bottomPadding = 2.dp
         )
-
-        BrestoreFromFile(restoreTrigger)
     }
 
     @Composable
     fun Backup() {
-        var backupTrigger by r_m(no)
-
-        RunOnce(backupTrigger) {
-            if (backupTrigger) {
-                delay(1000L)
-                backupTrigger = no
-            }
-        }
-
         LazyItem(
             topPadding = 1.dp,
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "BackUp",
-            onClick = { backupTrigger = no }
+            onClick = { BsaveToFile() }
         )
-
-        BsaveToFile(backupTrigger)
     }
 
     @Composable
