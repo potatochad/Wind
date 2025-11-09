@@ -86,6 +86,31 @@ fun Menu() {
 
 
 object Item {
+
+    @Composable
+    fun TskInput() {
+        BasicInput(
+                    "${Bar.Dpoints}", 
+                    isInt = yes, 
+                    modifier = Modifier
+                        .h(34)
+                        .space(h = 8, v = 4)
+                        .w(60)
+                        .background(CardColor, shape = RoundedCornerShape(4.dp))
+                        .wrapContentHeight(Alignment.CenterVertically), 
+                ) {
+                    val input = it.take(5).toIntOrNull() ?: 0
+                    if (Bar.funTime>Bar.Dpoints) {
+                        if (input<Bar.funTime) {
+                            Bar.Dpoints = input
+                        } else {
+                            Vlog("More points: ${Bar.funTime} < $input ")
+                        }
+                    } else {
+                        Vlog("More points: ${Bar.funTime} < ${Bar.Dpoints} ")
+                    }
+        }
+    }
     @Composable
     fun Logs(txt: Str, scrollV: ScrollState, scrollH: ScrollState) {
         Box(Modifier
