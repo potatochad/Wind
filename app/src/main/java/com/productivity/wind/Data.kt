@@ -26,6 +26,8 @@ import kotlin.reflect.jvm.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import androidx.compose.foundation.text.selection.*
+
+
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
 yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long ago dont remember what did)
@@ -120,7 +122,6 @@ class Settings {
 
 	//USED in banguage-better language
 	var logs by m("")
-	var TempLogs by m("")
 }
 
 @Serializable
@@ -216,13 +217,13 @@ fun AppStart_beforeUI(ctx: Context) {
 fun MAINStart() {
     RunOnce {
         delay(1_000L)
-        App.restoringFromFile = no
     }
 }
 
 fun OnResume(){
         refreshApps()  
 }
+
 @Composable
 fun AppStart() {
 	App.screenHeight = LocalConfiguration.current.screenHeightDp.dp
@@ -265,7 +266,6 @@ object App {
 	var LazyScreenContentHeight by m(0.dp)
 	
 	var Menu by m(no)
-	var restoringFromFile by m(no)
 	
 
 }
