@@ -187,38 +187,56 @@ object Item {
     }
     @Composable
     fun Restore() {
+        var restoring by r_m(no)
         LazyItem(
             BigIcon = Icons.Filled.Restore,
             BigIconColor = DarkBlue,
             title = "Restore",
             onClick = { 
-                BrestoreFromFile()
+                restoring = yes
             },
             bottomPadding = 2.dp
         )
+        if (restoring) {
+            BrestoreFromFile()
+            restoring = no
+        }
     }
 
     @Composable
     fun Backup() {
+        var backup by r_m(no)
+        
         LazyItem(
             topPadding = 1.dp,
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "BackUp",
-            onClick = { BsaveToFile() }
+            onClick = { 
+                backup = yes
+            }
         )
+        if (backup) {
+            BsaveToFile()
+            backup = no
+        }   
     }
 
     @Composable
     fun WebPointTimer(){
-        if (Bar.Dpoints > 0){
-            each(1000L){
-                if (Bar.funTime == 0) {
-                    goTo("main")
-                    show(NeedMorePoints)
-                }
-                else{
-                    Bar.funTime -=1
+        var on by r_m(yes)
+        RunOnce {
+            while(on) {
+                if (Bar.Dpoints > 0){
+                    each(1000L){
+                        if (Bar.funTime < 1) {
+                            goTo("main")
+                            show(NeedMorePoints)
+                        }
+                        else{
+                            Bar.funTime -=1
+                        }
+                    }
                 }
             }
         }
@@ -243,7 +261,6 @@ object Header {
             UI.End {
                 Row {
                     Icon.Delete {
-                        Bar.TempLogs = ""
                         Bar.logs = ""
                     }
                     Icon.Copy(Bar.logs)
