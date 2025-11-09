@@ -107,7 +107,7 @@ object SettingsSaved {
 
     fun Bsave() {
         if (Dosave?.isActive == true) return
-        if (App.restoringFromFile) return
+        
         Dosave = GlobalScope.launch {
             while (isActive) {
                 val Data = getStoredData().edit()
@@ -127,6 +127,7 @@ object SettingsSaved {
         }
     }
     fun init() {
+        log("initializing data")
         val Data = getStoredData()
         if (Data.all.isEmpty() || initOnce) return
         initOnce = true
