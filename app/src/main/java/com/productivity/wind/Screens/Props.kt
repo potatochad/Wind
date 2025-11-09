@@ -115,40 +115,40 @@ object Item {
 
     @Composable
     fun AppTaskUI(app: AppTsk){
-            val icon = getAppIcon(app.pkg)
-            var name = app.name
-            val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
+        val icon = getAppIcon(app.pkg)
+        var name = app.name
+        val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
-            if (app.NowTime > app.DoneTime - 1 && !app.done) {
-                Bar.funTime += app.Worth
-                Bar.apps.edit(app) { done = yes }
-                Vlog("$name completed")
-            }
+        if (app.NowTime > app.DoneTime - 1 && !app.done) {
+            Bar.funTime += app.Worth
+            Bar.apps.edit(app) { done = yes }
+            Vlog("$name completed")
+        }
 
-            LazyCard {
-                Row {
-                    move(10)
+        LazyCard {
+            Row(Modifier.maxW()) {
+                move(10)
 
-                    click({
-                        UI.ProgressIcon(icon, progress)
-                    }){
-                        Plog("$name app progress is ${progress*100}%; ${app.Worth/app.NowTime}points/s ")
-                    }
-
-
-                    move(12)
-                    Text("Points ${app.Worth}")
-
-                    Icon.Edit{
-                        Vlog("does nothing")
-                    }
-                    Icon.Delete{
-                        Vlog("does nothing, add an are sure")
-                        
-                    }
-
+                click({
+                    UI.ProgressIcon(icon, progress)
+                }){
+                    Plog("$name app progress is ${progress*100}%; ${app.Worth/app.NowTime}points/s ")
                 }
+
+
+                move(12)
+                Text("Points ${app.Worth}")
+
+                Icon.Edit{
+                    Vlog("does nothing")
+                }
+                Icon.Delete{
+                    Vlog("does nothing, add an are sure")
+                        
+                }
+
             }
+        }
     }
     @Composable
     fun UnlockThreshold() {
