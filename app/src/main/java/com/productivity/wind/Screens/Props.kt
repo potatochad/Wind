@@ -523,54 +523,7 @@ fun DebugPopup(show: m_<Bool>) {
 
 
 
-var selectedApp2 = m("")
-@Composable
-fun AppSelectPopup2(show: m_<Bool>) {
-        val myPackage = LocalContext.current.packageName // your app's package
-        var appList by r_m<List<App>>(emptyList())
-        var loading by r_m(yes)
 
-        LaunchedEffect(Unit) {
-            runHeavyTask(
-                task = {
-                    getApps().filter { getAppPackage(it) != ctx.packageName }
-                },
-                onResult = {
-                    appList = it
-                    loading = no
-                }
-            )
-        }
-
-        LazyPopup(
-            show = show,
-            showCancel = no,
-            showConfirm = no,
-            title = "Select App",
-            message = "",
-            content = {
-                Loading = no
-                
-                LazzyList(appList) { app, index ->
-                    val icon = getAppIcon(getAppPackage(app))
-                    LazzyRow(Modifier.click{
-                        selectedApp.it = getAppName(app)
-                        show.it = no
-                    }) {
-                        move(10)
-                        LazyImage(icon)
-                        move(10)
-                        
-                        UI.Ctext(getAppName(app)) {
-                            selectedApp.it = getAppName(app)
-                            show.it = no
-                        }
-                    }
-                }
-            }
-        )
-    
-}
 
 
 
