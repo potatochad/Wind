@@ -59,8 +59,7 @@ fun BsaveToFile() {
             }
         }
     }
-
-    RunOnce { 
+    RunOnce {
         log("LAUNCHING BsaveTofile")
         launcher.launch("WindBackUp.txt")
     }
@@ -87,7 +86,7 @@ fun BrestoreFromFile() {
             }
         }
 
-    RunOnce() {
+    RunOnce {
         launcher.launch(arrayOf("text/plain"))
     }
 }
