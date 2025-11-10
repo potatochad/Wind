@@ -113,7 +113,7 @@ var <T> m_<T>.it: T
 fun Modifier.space(
     s: Any? = null,
     h: Any? = null,
-    v: Any? = null,
+    w: Any? = null,
     start: Any? = null,
     top: Any? = null,
     end: Any? = null,
@@ -123,7 +123,7 @@ fun Modifier.space(
         s != null -> this.padding(toDp(s))
         h != null || v != null -> this.padding(
             horizontal = toDp(h),
-            vertical = toDp(v)
+            vertical = toDp(w)
         )
         else -> this.padding(
             start = toDp(start),
@@ -461,7 +461,10 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 fun BasicInput(
     value: Str,
     isInt: Bool = no,
-	modifier: Modifier = Modifier, // GrayBlue
+	modifier: Modifier = Modifier
+		.h(34).space(h = 8, w = 4).w(60)
+		.background(GrayBlue, shape = RoundedCornerShape(4.dp))
+		.wrapContentHeight(Alignment.CenterVertically),            
 	textStyle: TextStyle = TextStyle(
 		color = Gold,
 		fontSize = 14.sp,
