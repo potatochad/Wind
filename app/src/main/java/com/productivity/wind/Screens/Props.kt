@@ -88,21 +88,12 @@ fun Menu() {
 object Item {
 
     @Composable
-    fun TskInput() {
+    fun TskInput(txt: m_<Str>) {
         BasicInput(
-                    "${Bar.Dpoints}", 
-                    isInt = yes, 
-                 ) {
-                    val input = it.take(5).toIntOrNull() ?: 0
-                    if (Bar.funTime>Bar.Dpoints) {
-                        if (input<Bar.funTime) {
-                            Bar.Dpoints = input
-                        } else {
-                            Vlog("More points: ${Bar.funTime} < $input ")
-                        }
-                    } else {
-                        Vlog("More points: ${Bar.funTime} < ${Bar.Dpoints} ")
-                    }
+            txt.it, 
+            isInt = yes, 
+        ) {
+            txt.it = it
         }
     }
     @Composable
@@ -181,12 +172,6 @@ object Item {
                 BasicInput(
                     "${Bar.Dpoints}", 
                     isInt = yes, 
-                    modifier = Modifier
-                        .h(34)
-                        .space(h = 8, w = 4)
-                        .w(60)
-                        .background(CardColor, shape = RoundedCornerShape(4.dp))
-                        .wrapContentHeight(Alignment.CenterVertically), 
                 ) {
                     val input = it.take(5).toIntOrNull() ?: 0
                     if (Bar.funTime>Bar.Dpoints) {
