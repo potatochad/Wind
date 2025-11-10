@@ -359,7 +359,7 @@ fun LazyInput(
 	),
     onChange: (Str) -> Unit = {},
 ) {
-    val finalMod = modifier.space(h = 8, v = 4).background(CardColor, shape = RoundedCornerShape(4.dp))
+    val finalMod = modifier.space(h = 8, w = 4).background(CardColor, shape = RoundedCornerShape(4.dp))
        
 
 	val whatState: m_<Str> = when (what) {
@@ -474,7 +474,7 @@ fun LazyCard(
     innerPadding: Int = 16,
     corners: Int = 16,
     modifier: Mod = Mod
-	     .space(h= 8, v = 10)
+	     .space(h= 8, w = 10)
          .maxW(),
     content: Content,
 ) {
@@ -725,7 +725,7 @@ fun LazyHeader(
             modifier
                 .maxW()
                 .background(Color.Black)
-                .space(v = 12)
+                .space(w = 12)
                 .h(h),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
