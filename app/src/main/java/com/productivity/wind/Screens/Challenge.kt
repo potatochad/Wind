@@ -88,7 +88,7 @@ fun CopyPaste() {
                 Text("Letter completed: ")
                 LazyInput(letterPoints, yes, modifier = Modifier
                         .h(34)
-                        .space(h = 8, v = 4)
+                        .space(h = 8, w = 4)
                         .w(60)
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
@@ -99,7 +99,7 @@ fun CopyPaste() {
                 Text("Text retyped: ")
                 LazyInput(completionPoints, yes, modifier = Modifier
                         .h(34)
-                        .space(h = 8, v = 4)
+                        .space(h = 8, w = 4)
                         .w(60)
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
@@ -114,7 +114,7 @@ fun CopyPaste() {
                 Text("Maximum retypes a day: ")
                 LazyInput(Retypes, yes, modifier = Modifier
                         .h(34)
-                        .space(h = 8, v = 4)
+                        .space(h = 8, w = 4)
                         .w(60)
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
@@ -149,7 +149,7 @@ fun AppUsage() {
           Text("Spend ")
           LazyInput(Time, yes, modifier = Modifier
                         .h(34)
-                        .space(h = 8, v = 4)
+                        .space(h = 8, w = 4)
                         .w(60)
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
@@ -167,7 +167,7 @@ fun AppUsage() {
           Text("Add ")
           LazyInput(Points, yes, modifier = Modifier
                         .h(34)
-                        .space(h = 8, v = 4)
+                        .space(h = 8, w = 4)
                         .w(60)
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
