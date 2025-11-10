@@ -98,6 +98,7 @@ import androidx.compose.ui.text.style.*
 
 
 var CardColor = Color(0xFF1A1A1A)
+var GrayBlue = Color(0xFF1A1C2A)
 val DarkBlue = Color(0xFF00008B) 
 val Gold = Color(0xFFFFD700)
 val LightBlue = Color(0xFFADD8E6)
@@ -460,7 +461,7 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 fun BasicInput(
     value: Str,
     isInt: Bool = no,
-	modifier: Modifier = Modifier, 
+	modifier: Modifier = Modifier, // GrayBlue
 	textStyle: TextStyle = TextStyle(
 		color = Gold,
 		fontSize = 14.sp,
