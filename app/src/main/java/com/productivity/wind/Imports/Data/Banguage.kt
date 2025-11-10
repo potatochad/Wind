@@ -121,7 +121,7 @@ fun Modifier.space(
 ): Modifier {
     return when {
         s != null -> this.padding(toDp(s))
-        h != null || v != null -> this.padding(
+        h != null || w != null -> this.padding(
             horizontal = toDp(h),
             vertical = toDp(w)
         )
