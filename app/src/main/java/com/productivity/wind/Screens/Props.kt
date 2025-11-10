@@ -183,7 +183,7 @@ object Item {
                     isInt = yes, 
                     modifier = Modifier
                         .h(34)
-                        .space(h = 8, v = 4)
+                        .space(h = 8, w = 4)
                         .w(60)
                         .background(CardColor, shape = RoundedCornerShape(4.dp))
                         .wrapContentHeight(Alignment.CenterVertically), 
