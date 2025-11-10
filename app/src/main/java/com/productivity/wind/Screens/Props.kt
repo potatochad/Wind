@@ -92,13 +92,7 @@ object Item {
         BasicInput(
                     "${Bar.Dpoints}", 
                     isInt = yes, 
-                    modifier = Modifier
-                        .h(34)
-                        .space(h = 8, v = 4)
-                        .w(60)
-                        .background(CardColor, shape = RoundedCornerShape(4.dp))
-                        .wrapContentHeight(Alignment.CenterVertically), 
-                ) {
+                 ) {
                     val input = it.take(5).toIntOrNull() ?: 0
                     if (Bar.funTime>Bar.Dpoints) {
                         if (input<Bar.funTime) {
