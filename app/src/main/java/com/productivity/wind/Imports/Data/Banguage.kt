@@ -95,6 +95,13 @@ import java.io.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.text.style.*
 
+
+
+var CardColor = Color(0xFF1A1A1A)
+val DarkBlue = Color(0xFF00008B) 
+val Gold = Color(0xFFFFD700)
+val LightBlue = Color(0xFFADD8E6)
+
 val gson = Gson()
 val yes = true
 val no = false
@@ -455,7 +462,7 @@ fun BasicInput(
     isInt: Bool = no,
 	modifier: Modifier = Modifier, 
 	textStyle: TextStyle = TextStyle(
-		color = Color.White,
+		color = Gold,
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start
 	),
