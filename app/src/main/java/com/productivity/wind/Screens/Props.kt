@@ -156,8 +156,8 @@ object Item {
                         Vlog("does nothing")
                     }
                     Icon.Delete{
-                        Vlog("does nothing, add an are sure")
-                        
+                        app.Worth = 0
+                        Vlog("app.Worth: ${app.Worth} ")
                     }
                 }
 
