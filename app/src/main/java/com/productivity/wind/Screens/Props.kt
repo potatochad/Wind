@@ -143,7 +143,7 @@ object Item {
                 click({
                     UI.ProgressIcon(icon, progress)
                 }){
-                    Plog("$name app progress is ${progress*100}%; ${app.Worth/app.NowTime}points/s ")
+                    Plog("$name app progress is ${progress*100}%; ${app.Worth.it/app.NowTime}points/s ")
                 }
 
 
@@ -294,10 +294,10 @@ object Header {
                     return@Add
                 }
 
-                if (app.Worth == 0) {
+                if (app.Worth.it == 0) {
                     Bar.apps.edit(app){
-                        DoneTime = Time.value.toIntOrNull() ?: 0
-                        Worth.it = Points.value.toIntOrNull() ?: 0
+                        DoneTime = Time.it.toIntOrNull() ?: 0
+                        Worth.it = Points.it.toIntOrNull() ?: 0
                     }
                 } else {
                     Bar.apps.add {
