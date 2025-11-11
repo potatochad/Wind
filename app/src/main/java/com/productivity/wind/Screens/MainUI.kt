@@ -31,25 +31,13 @@ import androidx.compose.ui.unit.*
 
 @Composable
 fun Main() {
-
-
-    val Test by track { 
-        Bar.apps
-    }
-
-    RunOnce(Test) {
-        Vlog("Bar.apps changed")
-    }
-
     MAINStart()
 
     LazyScreen(title = { Header.Main() }, showBack = false) {
 
         LazyCard { Disipline() }
 
-        val TskApps by track { Bar.apps.filter { it.Worth > 0 && it.done == no } }
-
-        TskApps.forEach { app ->
+        Bar.apps.filter { it.Worth > 0 && it.done == no }.forEach { app ->
             Item.AppTaskUI(app)
         }
 
