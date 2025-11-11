@@ -275,6 +275,9 @@ fun <T> r(value: () -> T) = remember { value() }
 fun <T> r_m(initial: T) = r { m(initial) }
 inline fun <reified T> ml(): MutableList<T> = mutableListOf()
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
+@Composable
+fun <T> track(value: () -> T): State<T> = r { derivedStateOf(value) }
+
 
 fun NavGraphBuilder.url(
     route: Str,
