@@ -157,7 +157,6 @@ object Item {
                     }
                     Icon.Delete{
                         app.Worth = 0
-                        Vlog("app.Worth: ${app.Worth} ")
                     }
                 }
 
