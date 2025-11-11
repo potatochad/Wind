@@ -37,9 +37,7 @@ fun Main() {
 
         LazyCard { Disipline() }
 
-        val Test by track { Bar.apps.filter { it.Worth > 0 && it.done == no } }
-            
-        Test.forEach { app ->
+        Bar.apps.filter { it.Worth > 0 && it.done == no }.forEach { app ->
             Item.AppTaskUI(app)
         }
 
