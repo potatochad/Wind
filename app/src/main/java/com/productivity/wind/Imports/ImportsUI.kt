@@ -233,8 +233,10 @@ object UI {
 			Modifier.maxW(),
 			contentAlignment = Alignment.CenterEnd
 		) {
-			content()
-			move(w = 10)
+			Row {
+				content()
+				move(w = 10)
+			}
 		}
 	}
 
