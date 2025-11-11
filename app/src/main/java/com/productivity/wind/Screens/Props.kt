@@ -131,7 +131,7 @@ object Item {
         val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
         if (app.NowTime > app.DoneTime - 1 && !app.done) {
-            Bar.funTime += app.Worth
+            Bar.funTime += app.Worth.it
             Bar.apps.edit(app) { done = yes }
             Vlog("$name completed")
         }
@@ -157,7 +157,7 @@ object Item {
                     }
                     Icon.Delete{
                         Bar.apps.edit(app) {
-                            Worth = 0
+                            Worth.it = 0
                         }
                     }
                 }
@@ -297,13 +297,13 @@ object Header {
                 if (app.Worth == 0) {
                     Bar.apps.edit(app){
                         DoneTime = Time.value.toIntOrNull() ?: 0
-                        Worth = Points.value.toIntOrNull() ?: 0
+                        Worth.it = Points.value.toIntOrNull() ?: 0
                     }
                 } else {
                     Bar.apps.add {
                         name = selectedApp.value
                         DoneTime = Time.value.toIntOrNull() ?: 0
-                        Worth = Points.value.toIntOrNull() ?: 0
+                        Worth.it = Points.value.toIntOrNull() ?: 0
                     }
                 }
                 
