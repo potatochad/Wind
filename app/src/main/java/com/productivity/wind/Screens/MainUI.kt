@@ -32,7 +32,12 @@ import androidx.compose.ui.unit.*
 @Composable
 fun Main() {
 
-    RunOnce(Bar.apps) {
+
+    val Test by track { 
+        Bar.apps
+    }
+
+    RunOnce(Test) {
         Vlog("Bar.apps changed")
     }
 
