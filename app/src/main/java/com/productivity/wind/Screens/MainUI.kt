@@ -38,6 +38,11 @@ fun Main() {
 
         LazyCard { Disipline() }
 
+        val filteredApps by remember { 
+    derivedStateOf { Bar.apps.filter { it.Worth > 0 && it.done == no } } 
+}
+
+
 
 
         Bar.apps.filter { it.Worth > 0 && it.done == no }.forEach { app ->
