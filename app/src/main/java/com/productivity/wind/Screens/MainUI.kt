@@ -37,7 +37,7 @@ fun Main() {
 
         LazyCard { Disipline() }
 
-        Bar.apps.filter { it.Worth > 0 && it.done == no }.forEach { app ->
+        Bar.apps.filter { it.Worth.it > 0 && it.done == no }.forEach { app ->
             Item.AppTaskUI(app)
         }
 
