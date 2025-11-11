@@ -148,7 +148,7 @@ object Item {
 
 
                 move(12)
-                Text("Points ${app.Worth}")
+                Text("Points ${app.Worth.it}")
 
 
                 UI.End {
