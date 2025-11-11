@@ -32,6 +32,10 @@ import androidx.compose.ui.unit.*
 @Composable
 fun Main() {
 
+    RunOnce(Bar.apps) {
+        Vlog("Bar.apps changed")
+    }
+
     MAINStart()
 
     LazyScreen(title = { Header.Main() }, showBack = false) {
