@@ -150,12 +150,15 @@ object Item {
                 move(12)
                 Text("Points ${app.Worth}")
 
-                Icon.Edit{
-                    Vlog("does nothing")
-                }
-                Icon.Delete{
-                    Vlog("does nothing, add an are sure")
+
+                UI.End {
+                    Icon.Edit{
+                        Vlog("does nothing")
+                    }
+                    Icon.Delete{
+                        Vlog("does nothing, add an are sure")
                         
+                    }
                 }
 
             }
