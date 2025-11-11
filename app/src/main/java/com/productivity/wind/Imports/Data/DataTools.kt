@@ -119,6 +119,8 @@ object SettingsSaved {
                     /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {
                     log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE") }//ADD SUPER UNIVERSAL STUFFF
                     val value = bar.get(Bar)
+
+                    log("Bsaving ${bar.name}, $value ")
                 
                     Data.putAny(bar.name, value)
                 }
@@ -131,7 +133,7 @@ object SettingsSaved {
         log("initializing data")
         val Data = getStoredData()
         if (Data.all.isEmpty() || initOnce) return
-        initOnce = true
+        initOnce = yes
 
 
         getClass(Bar).forEach { barIdk ->
