@@ -44,13 +44,6 @@ fun Main() {
             Item.AppTaskUI(app)
         }
 
-       
-        LazzyList(
-            Bar.apps.filter { it.Worth > 0 && it.done == no }
-        ) { app, index ->
-            Item.AppTaskUI(app)
-        }
-
     }
 }
 
