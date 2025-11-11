@@ -98,7 +98,7 @@ import androidx.compose.ui.text.style.*
 
 
 var CardColor = Color(0xFF1A1A1A)
-var GrayBlue = Color(0xFF1A1C2A)
+var InputColor = Color(0xFF272727)
 val DarkBlue = Color(0xFF00008B) 
 val Gold = Color(0xFFFFD700)
 val LightBlue = Color(0xFFADD8E6)
@@ -463,14 +463,14 @@ fun BasicInput(
     isInt: Bool = no,
 	modifier: Modifier = Modifier
 		.h(34).space(h = 8, w = 4).w(60)
-		.background(GrayBlue, shape = RoundedCornerShape(4.dp))
+		.background(InputColor, shape = RoundedCornerShape(4.dp))
 		.wrapContentHeight(Alignment.CenterVertically),            
 	textStyle: TextStyle = TextStyle(
 		color = Gold,
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start
 	),
-    onChange: (Str) -> Unit = {},
+    Do: (Str) -> Unit = {},
 ) {
 	val focusManager = LocalFocusManager.current
 
@@ -482,9 +482,7 @@ fun BasicInput(
 		move(w=5)
 		BasicTextField(
 			value = value,
-			onValueChange = {	
-				onChange(it)
-			},
+			onValueChange = { Do(it) },
 			textStyle = textStyle, 
 			singleLine = yes, 
 			keyboardOptions = KeyboardOptions(
