@@ -320,16 +320,16 @@ object Header {
                     return@Add
                 }
 
-                if (app.Worth.it == 0) {
+                if (app.Worth == 0) {
                     Bar.apps.edit(app){
                         DoneTime = Time.it.toIntOrNull() ?: 0
-                        Worth.it = Points.it.toIntOrNull() ?: 0
+                        Worth = Points.it.toIntOrNull() ?: 0
                     }
                 } else {
                     Bar.apps.add {
                         name = selectedApp.value
                         DoneTime = Time.value.toIntOrNull() ?: 0
-                        Worth.it = Points.value.toIntOrNull() ?: 0
+                        Worth = Points.value.toIntOrNull() ?: 0
                     }
                 }
                 
