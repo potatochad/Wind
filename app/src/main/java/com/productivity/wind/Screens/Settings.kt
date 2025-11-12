@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.*
+import androidx.compose.foundation.lazy.*
 
 //region Settings
 
