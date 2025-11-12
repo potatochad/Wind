@@ -27,8 +27,7 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.ui.focus.*
 import android.graphics.drawable.*
 import android.content.pm.*
-
-
+import androidx.compose.foundation.lazy.*
 
 fun NavGraphBuilder.ScreenNav() {
     //Main—StartDestination    
