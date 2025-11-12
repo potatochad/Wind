@@ -416,7 +416,7 @@ fun Modifier.scroll(
     r_h: ScrollState = rememberScrollState(),
 ): Mod {
     var m = this
-    if (v) m = m.verticalScroll(r_v)
+    if (w) m = m.verticalScroll(r_w)
     if (h) m = m.horizontalScroll(r_h)
     return m
 }
