@@ -94,6 +94,7 @@ import androidx.compose.ui.input.pointer.*
 import java.io.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.text.style.*
+import androidx.compose.foundation.lazy.*
 
 
 
@@ -425,8 +426,11 @@ suspend fun ScrollState.toBottom() {
     scrollTo(maxValue)
 }
 suspend fun LazyListState.toBottom() {
-    scrollToItem(layoutInfo.totalItemsCount - 1)
+    if (layoutInfo.totalItemsCount > 0) {
+        scrollToItem(layoutInfo.totalItemsCount - 1)
+    }
 }
+
 
 @Composable
 fun r_Scroll() = rememberScrollState()
