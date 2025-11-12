@@ -424,6 +424,9 @@ fun Modifier.scroll(
 suspend fun ScrollState.toBottom() {
     scrollTo(maxValue)
 }
+suspend fun LazyListState.toBottom() {
+    scrollToItem(layoutInfo.totalItemsCount - 1)
+}
 
 @Composable
 fun r_Scroll() = rememberScrollState()
