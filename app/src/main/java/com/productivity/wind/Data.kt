@@ -138,7 +138,7 @@ class RecomposeList<T>(initial: List<T> = emptyList()) {
     }
 
     fun add(item: T) {
-        _list.add(item) // triggers recomposition
+        _list.add(item)
     }
 
     fun removeAt(index: Int) {
