@@ -143,7 +143,8 @@ data class AppTsk(
     var pkg: Str = "",
     var NowTime: Int = 0,
     var DoneTime: Int = 0,
-    var Worth: m_<Int> = m(0),
+    // var Worth: Int by m(0),
+	var Worth: Int = 0,
 )
 
 @Serializable
