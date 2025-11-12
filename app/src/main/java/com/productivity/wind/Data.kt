@@ -137,13 +137,17 @@ class RecomposeList<T>(initial: List<T> = emptyList()) {
         _list[index] = value // triggers recomposition automatically
     }
 
-    fun add(item: T) {
+	fun add(item: T) {
         _list.add(item)
     }
 
     fun removeAt(index: Int) {
-        _list.removeAt(index) // triggers recomposition
+        _list.removeAt(index)
     }
+
+    fun edit(item: T, block: T.() -> Unit) {
+        _list.edit(item, block)
+	}
 
     fun update(index: Int, block: (T) -> T) {
         _list[index] = block(_list[index]) // auto recompose
