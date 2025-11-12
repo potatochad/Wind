@@ -103,17 +103,19 @@ object Item {
                     .move(w=5)
                     .h(App.screenHeight - 35.dp)
                ) {
-                Box(Modifier
-                    .scroll(yes, yes, scrollV, scrollH)
-                    //.scrollbar(scrollV)
-                ) {
-                    Text(
-                        text = txt,
-                        modifier = Modifier.maxS(),
-                        softWrap = yes,
-                        fontSize = 14.sp
-                    )
-                }
+                    LazyColumn(
+                        Modifier.scroll(yes, yes, scrollV, scrollH)
+                    ) {
+                        items(logs.lines()) { line ->
+                            Text(
+                                text = line,
+                                modifier = Modifier.maxS(),
+                                softWrap = yes,
+                                fontSize = 14.sp
+                            )
+                        }
+                    }
+                
         }
     }
 
