@@ -75,7 +75,7 @@ fun SettingsOtherScreen() {
 @Composable
 fun LogsScreen() {
     var Reload = r_m(no)
-    var scrollV = r_Scroll()
+    var scrollV = rememberLazyListState()
     var scrollH = r_Scroll()
     var LogsTag = r_m("")
     
