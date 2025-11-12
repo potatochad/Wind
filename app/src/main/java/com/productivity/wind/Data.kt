@@ -124,6 +124,36 @@ class Settings {
 	var logs by m("")
 }
 
+
+
+
+class RecomposeList<T>(initial: List<T> = emptyList()) {
+    private val _list = mutableStateListOf<T>().apply { addAll(initial) }
+    val list: SnapshotStateList<T> get() = _list
+
+    operator fun get(index: Int) = _list[index]
+
+    operator fun set(index: Int, value: T) {
+        _list[index] = value // triggers recomposition automatically
+    }
+
+    fun add(item: T) {
+        _list.add(item) // triggers recomposition
+    }
+
+    fun removeAt(index: Int) {
+        _list.removeAt(index) // triggers recomposition
+    }
+
+    fun update(index: Int, block: (T) -> T) {
+        _list[index] = block(_list[index]) // auto recompose
+    }
+
+    fun asList(): List<T> = _list
+}
+
+
+
 @Serializable
 data class CopyTsk(
     val id: Str = Id(),
