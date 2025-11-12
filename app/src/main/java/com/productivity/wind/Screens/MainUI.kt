@@ -33,11 +33,11 @@ import androidx.compose.ui.unit.*
 fun Main() {
     MAINStart()
 
-    LazyScreen(title = { Header.Main() }, showBack = false) {
+    LazyScreen(title = { Header.Main() }, showBack = no) {
 
         LazyCard { Disipline() }
 
-        Bar.apps.filter { it.Worth.it > 0 && it.done }.forEach { app ->
+        Bar.apps.filter { it.Worth > 0 && it.done }.forEach { app ->
             Item.AppTaskUI(app)
         }
 
