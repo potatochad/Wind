@@ -96,7 +96,7 @@ object Item {
         }
     }
     @Composable
-    fun Logs(txt: Str, scrollV: ScrollState, scrollH: ScrollState) {
+    fun Logs3(txt: Str, scrollV: ScrollState, scrollH: ScrollState) {
         Box(Modifier
                     .w(App.screenWidth - 10.dp)
                     .move(w=5)
@@ -105,18 +105,45 @@ object Item {
                     Column(
                         Modifier.scroll(yes, yes, scrollV, scrollH)
                     ) {
-                        items(txt.lines()) { line ->
                             Text(
-                                text = line,
+                                text = txt,
                                 modifier = Modifier.maxS(),
                                 softWrap = yes,
                                 fontSize = 14.sp
                             )
-                        }
                     }
                 
         }
     }
+
+
+    @Composable
+fun Logs(txt: String, scrollV: LazyListState, scrollH: ScrollState) {
+    Box(
+        Modifier
+            .width(App.screenWidth - 10.dp)
+            .move(w = 5)
+            .height(App.screenHeight - 35.dp)
+    ) {
+        Box(
+            Modifier.horizontalScroll(scrollH)
+        ) {
+            LazyColumn(
+                state = scrollV,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(txt.lineSequence().toList()) { line ->
+                    Text(
+                        text = line,
+                        fontSize = 14.sp,
+                        softWrap = false // disable wrap so horizontal scroll works
+                    )
+                }
+            }
+        }
+    }
+}
+
 
     fun enoughPoints(enough: Do) {
         if (Bar.funTime < Bar.Dpoints) {
