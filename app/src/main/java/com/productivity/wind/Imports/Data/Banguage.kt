@@ -410,9 +410,9 @@ fun Modifier.scrollbar(
 
 @Composable
 fun Modifier.scroll(
-    v: Bool = yes,
+    w: Bool = yes,
     h: Bool = yes,
-    r_v: ScrollState = rememberScrollState(),
+    r_w: ScrollState = rememberScrollState(),
     r_h: ScrollState = rememberScrollState(),
 ): Mod {
     var m = this
