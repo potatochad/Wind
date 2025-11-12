@@ -103,7 +103,7 @@ object Item {
                     .h(App.screenHeight - 35.dp)
                ) {
                     LazyColumn(
-                        Modifier.scroll(yes, yes, scrollV, scrollH)
+                        Modifier.scroll(yes, scrollV)
                     ) {
                         items(txt.lines()) { line ->
                             Text(
