@@ -159,7 +159,7 @@ fun Logs(txt: String, scrollV: LazyListState, scrollH: ScrollState) {
         val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
         if (app.NowTime > app.DoneTime - 1 && !app.done) {
-            Bar.funTime += app.Worth.it
+            Bar.funTime += app.Worth
             Bar.apps.edit(app) { done = yes }
             Vlog("$name completed")
         }
@@ -171,12 +171,12 @@ fun Logs(txt: String, scrollV: LazyListState, scrollH: ScrollState) {
                 click({
                     UI.ProgressIcon(icon, progress)
                 }){
-                    Plog("$name app progress is ${progress*100}%; ${app.Worth.it/app.NowTime}points/s ")
+                    Plog("$name app progress is ${progress*100}%; ${app.Worth/app.NowTime}points/s ")
                 }
 
 
                 move(12)
-                Text("Points ${app.Worth.it}")
+                Text("Points ${app.Worth}")
 
 
                 UI.End {
@@ -184,7 +184,7 @@ fun Logs(txt: String, scrollV: LazyListState, scrollH: ScrollState) {
                         Vlog("does nothing")
                     }
                     Icon.Delete{
-                        app.Worth.it = 0
+                        app.Worth = 0
                     }
                 }
 
