@@ -105,7 +105,7 @@ object Item {
                     LazyColumn(
                         Modifier.scroll(yes, yes, scrollV, scrollH)
                     ) {
-                        items(logs.lines()) { line ->
+                        items(txt.lines()) { line ->
                             Text(
                                 text = line,
                                 modifier = Modifier.maxS(),
