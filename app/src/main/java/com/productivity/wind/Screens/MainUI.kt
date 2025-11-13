@@ -39,6 +39,7 @@ fun Main() {
     }
 
     LazyScreen(title = { Header.Main() }, showBack = no) {
+        Column(Modifier.Wscroll()){
 
         LazyCard { Disipline() }
 
@@ -47,6 +48,7 @@ fun Main() {
         Copy.forEach {
  //           if (it.Worth > 0 && it.done == no ){
                 Item.AppTaskUI(it)
+        }
         }
     }
 }
