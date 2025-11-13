@@ -421,6 +421,27 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
     }
 }
 
+/*
+fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
+    try {
+        val index = indexOf(item)
+        if (index != -1) {
+            val element = this[index]
+            element.block()      // apply your changes
+            this[index] = element // re-assign single item (partial recompose)
+        }
+
+        // Force full list recompose
+        val copy = this.toMutableList()  // create new list object
+        clear()
+        addAll(copy)                     // replace internal content → full redraw
+
+    } catch (e: Exception) {
+        Vlog("Edit crashed for $item: ${e.message}")
+    }
+}
+*/
+
 
 
 
