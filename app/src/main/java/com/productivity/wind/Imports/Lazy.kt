@@ -775,8 +775,7 @@ fun LazyScreen(
     onBackClick: Do = {},
     showBack: Bool = yes,
     modifier: Mod = Modifier
-        .background(Color.Black)
-        .maxS(),
+        .background(Color.Black),
 	
     showDivider: Bool = yes,
     DividerPadding: Bool = yes,
@@ -800,13 +799,10 @@ fun LazyScreen(
 
     Column(modifier) {
         header()
-        Column(
-			Modifier
-				.height(
-					App.LazyScreenContentHeight
-				)
-			) {
-			content()
+        Column(Modifier.h(App.LazyScreenContentHeight)) {
+			Box(modifier) {
+				content()
+			}
             bottom()
         }
     }
