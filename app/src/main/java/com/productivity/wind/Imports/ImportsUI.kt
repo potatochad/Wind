@@ -141,7 +141,7 @@ fun refreshApps() {
 				}
             }
         }
-		var ListCopy = Bar.apps
+		var ListCopy = Bar.apps.toList()
 
 		ListCopy.forEach { app ->
 			Bar.apps.edit(app){
