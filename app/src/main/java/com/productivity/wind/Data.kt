@@ -157,14 +157,15 @@ data class WebWord(
 
 
 //region OnAppStart
-var crashed = no
+var appCrashed = no
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 		Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 			Log.e("GlobalCrash", "Crashed in ${thread.name}: ${throwable.message}")
-			crashed = yes
+			appCrashed = yes
+			Vlog("app crashed!!")
 
 			exitProcess(0)
 		}
