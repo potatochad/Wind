@@ -800,7 +800,7 @@ fun LazyScreen(
     Column(modifier) {
         header()
         Column(Modifier.h(App.LazyScreenContentHeight)) {
-			Box(modifier) {
+			Column(modifier) {
 				content()
 			}
             bottom()
@@ -829,10 +829,6 @@ fun LazyPopup(
     onCancel: Do? = null,
 ) {
     if (!show.it) return
-
-	//scope.launch { 
-	//	delay(100L)
-	//}//Wait 100L before closing
 	
 
     AlertDialog(
