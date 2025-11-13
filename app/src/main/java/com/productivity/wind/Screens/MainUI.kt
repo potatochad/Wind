@@ -35,9 +35,6 @@ fun Main() {
     MAINStart()
 
     RunOnce(Bar.apps) {
-        if (appCrashed) {
-            goTo("LogsScreen")
-        }
         Vlog("Bar.apps changed")
     }
 
@@ -45,11 +42,12 @@ fun Main() {
 
         LazyCard { Disipline() }
 
+        var Copy = Bar.apps.toList()
         
-        // Bar.apps.forEach {
-            //if (it.Worth > 0 && it.done == no ){
-          //      Item.AppTaskUI(it)
-        //}
+        Copy.forEach {
+ //           if (it.Worth > 0 && it.done == no ){
+                Item.AppTaskUI(it)
+        }
     }
 }
 
