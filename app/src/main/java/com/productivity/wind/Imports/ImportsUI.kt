@@ -141,8 +141,9 @@ fun refreshApps() {
 				}
             }
         }
+		var ListCopy = Bar.apps
 
-		Bar.apps.forEach { app ->
+		ListCopy.forEach { app ->
 			Bar.apps.edit(app){
 				NowTime = getTodayAppUsage(app.pkg)
 			}
