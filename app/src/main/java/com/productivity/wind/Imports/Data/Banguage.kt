@@ -409,18 +409,18 @@ suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scr
 
 
 fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
-	try {
-		val index = this.indexOf(item)
-		val itemCopy = this[index] // get the item
-        this.removeAt(index)       // remove old item
-
-        itemCopy.block()           // apply the changes directly
-
-        this.add(index, itemCopy) 
-	} catch (e: Exception) {
-		Vlog("Edit crashed for item $item: ${e.message}")
-	}
+    try {
+        val index = indexOf(item)
+        if (index != -1) {
+            val element = this[index]
+            element.block()
+            this[index] = element // re-assign → triggers recompose
+        }
+    } catch (e: Exception) {
+        Vlog("Edit crashed for $item: ${e.message}")
+    }
 }
+
 
 
 
