@@ -443,14 +443,18 @@ fun r_Scroll() = rememberScrollState()
 
 fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	try {
+		// this.removeAt(index)
+		// this.add{
+		
+		// }
 		val index = this.indexOf(item)
 		if (index != -1) {
 			this[index].block()
 		} else {
-			Plog("failed to edit a list")
-		}  
+			Vlog("failed to edit a list")
+		} 
 	} catch (e: Exception) {
-		Plog("Edit crashed for item $item: ${e.message}")
+		Vlog("Edit crashed for item $item: ${e.message}")
 	}
 }
 
