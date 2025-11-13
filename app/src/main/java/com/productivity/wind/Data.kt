@@ -105,9 +105,9 @@ class Settings {
 
 	// LISTS DONT BACKUP OR RESTORE!!!!!
     
-    var copyTasks = mutableStateListOf<CopyTsk>()
-	var apps = mutableStateListOf<AppTsk>()
-	var badWords = mutableStateListOf<WebWord>().apply {
+    var copyTasks = mList<CopyTsk>()
+	var apps = mList<AppTsk>()// mutablestatelistof
+	var badWords = mList<WebWord>().apply {
 		addAll(
 			listOf(
 				WebWord(word = "anime"),
