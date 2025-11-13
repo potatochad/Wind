@@ -46,10 +46,10 @@ fun Main() {
         LazyCard { Disipline() }
 
         
-        Bar.apps.forEach {
+        // Bar.apps.forEach {
             //if (it.Worth > 0 && it.done == no ){
-                Item.AppTaskUI(it)
-        }
+          //      Item.AppTaskUI(it)
+        //}
     }
 }
 
