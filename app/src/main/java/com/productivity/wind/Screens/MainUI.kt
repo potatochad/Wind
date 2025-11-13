@@ -37,7 +37,9 @@ fun Main() {
 
         LazyCard { Disipline() }
 
-        Bar.apps.forEach {
+        var apps by track { Bar.apps }
+
+        apps.forEach {
             if (it.Worth > 0 && it.done == no ){
                 Item.AppTaskUI(it)
             }
