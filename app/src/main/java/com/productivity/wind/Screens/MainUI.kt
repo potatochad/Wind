@@ -38,7 +38,7 @@ fun Main() {
         Vlog("Bar.apps changed")
     }
 
-    LazyScreen(title = { Header.Main() }, showBack = no) {
+    LazyScreen(title = { Header.Main() }, showBack = no, modifier=Modifier.scroll(yes, no)) {
 
         LazyCard { Disipline() }
 
