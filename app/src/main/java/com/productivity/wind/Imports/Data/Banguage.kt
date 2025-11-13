@@ -385,19 +385,19 @@ fun r_Scroll() = rememberScrollState()
 
 @Composable
 fun Modifier.scroll(
-    w: Bool = yes,
+    v: Bool = yes,
     h: Bool = yes,
-    r_w: ScrollState = r_Scroll(),
+    r_v: ScrollState = r_Scroll(),
     r_h: ScrollState = r_Scroll(),
 ): Mod {
     var m = this
-    if (w) m = m.verticalScroll(r_w)
+    if (v) m = m.verticalScroll(r_v)
     if (h) m = m.horizontalScroll(r_h)
     return m
 }
 
 @Composable
-fun Modifier.Wscroll(r_w: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_w)}
+fun Modifier.Vscroll(r_v: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_v)}
 @Composable
 fun Modifier.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
 
