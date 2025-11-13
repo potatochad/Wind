@@ -132,7 +132,7 @@ data class CopyTsk(
     var onMax: Bool = no,
     var MaxTimes: Int = 5,
     var Done_Worth: Int = 10,
-    var Letter_Worth: Int = 1,
+    var Letter_Worth: Int = 1
 )
 
 @Serializable
@@ -143,13 +143,13 @@ data class AppTsk(
     var pkg: Str = "",
     var NowTime: Int = 0,
     var DoneTime: Int = 0,
-    var Worth: Int = 0,
+    var Worth: Int = 0
 )
 
 @Serializable
 data class WebWord(
     val id: Str = Id(),
-    var word: Str = "",
+    var word: Str = ""
 )
 
 
