@@ -35,7 +35,7 @@ fun Main() {
 
     RunOnce(Bar.apps) {
         if (appCrashed) {
-            goTo("logs")
+            goTo("LogsScreen")
         }
         Vlog("Bar.apps changed")
     }
@@ -48,7 +48,6 @@ fun Main() {
         Bar.apps.forEach {
             //if (it.Worth > 0 && it.done == no ){
                 Item.AppTaskUI(it)
-            //}
         }
     }
 }
