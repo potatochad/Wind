@@ -39,7 +39,7 @@ fun Main() {
     }
 
     LazyScreen(title = { Header.Main() }, showBack = no) {
-        Column(Modifier.Wscroll()){
+        Column(modifier =Modifier.Wscroll()){
 
         LazyCard { Disipline() }
 
