@@ -397,9 +397,9 @@ fun Modifier.scroll(
 }
 
 @Composable
-fun Modifier.Wscroll(r_w: ScrollState=r_Scroll()){this.scroll(yes, no, r_w)}
+fun Modifier.Wscroll(r_w: ScrollState=r_Scroll()): Mod{this.scroll(yes, no, r_w)}
 @Composable
-fun Modifier.Hscroll(r_h: ScrollState=r_Scroll()){this.scroll(no, yes, r_h=r_h)}
+fun Modifier.Hscroll(r_h: ScrollState=r_Scroll()): Mod{this.scroll(no, yes, r_h=r_h)}
 
 suspend fun ScrollState.toBottom() { scrollTo(maxValue)}
 suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scrollToItem(layoutInfo.totalItemsCount - 1) }}
@@ -442,7 +442,7 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 fun BasicInput(
     value: Str,
     isInt: Bool = no,
-	modifier: Modifier = Modifier
+	modifier: Mod = Modifier
 		.h(34).space(h = 8, w = 4).w(60)
 		.background(InputColor, shape = RoundedCornerShape(4.dp))
 		.wrapContentHeight(Alignment.CenterVertically),            
@@ -483,7 +483,7 @@ fun BasicInput(
 fun Input(
     what: m_<Str>,
     isInt: Bool = no,
-	modifier: Modifier = Modifier, 
+	modifier: Mod = Modifier, 
 	textStyle: TextStyle = TextStyle(),
     onChange: (Str) -> Unit = {},
 ) {
