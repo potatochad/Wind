@@ -34,6 +34,9 @@ fun Main() {
     MAINStart()
 
     RunOnce(Bar.apps) {
+        if (crashed) {
+            goTo("logs")
+        }
         Vlog("Bar.apps changed")
     }
 
