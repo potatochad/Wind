@@ -456,16 +456,18 @@ fun <T> MutableList<T>.edit3(item: T, block: T.() -> Unit) {
 }
 
 
-fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
+fun <T> MutableList<T>.edit(item: T, block: T.() -> T) {
     try {
         val index = this.indexOf(item)
         if (index != -1) {
-            this[index].block() // mutate the existing object directly
+            val newItem = item.block()       // create the edited version
+            this[index] = newItem            // replace in place
         }
     } catch (e: Exception) {
         Vlog("Edit crashed for item $item: ${e.message}")
     }
 }
+
 
 
 @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
