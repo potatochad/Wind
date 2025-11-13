@@ -157,26 +157,16 @@ data class WebWord(
 
 
 //region OnAppStart
-
+var crashed = no
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 		Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-        Log.e("GlobalCrash", "Crashed in ${thread.name}: ${throwable.message}")
+			Log.e("GlobalCrash", "Crashed in ${thread.name}: ${throwable.message}")
+			crashed = yes
 
-        // Stop crash loops or mark crash
-        getSharedPreferences("app", MODE_PRIVATE)
-            .edit()
-            .putBoolean("crashed", true)
-            .apply()
-
-        // Optional: restart clean
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
-
-        exitProcess(0)
+			exitProcess(0)
 		}
 
         // Set navigation bar black with white icons
