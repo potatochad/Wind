@@ -397,9 +397,9 @@ fun Modifier.scroll(
 }
 
 @Composable
-fun Modifier.Wscroll(r_w: ScrollState=r_Scroll()): Mod{this.scroll(yes, no, r_w)}
+fun Modifier.Wscroll(r_w: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_w)}
 @Composable
-fun Modifier.Hscroll(r_h: ScrollState=r_Scroll()): Mod{this.scroll(no, yes, r_h=r_h)}
+fun Modifier.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
 
 suspend fun ScrollState.toBottom() { scrollTo(maxValue)}
 suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scrollToItem(layoutInfo.totalItemsCount - 1) }}
