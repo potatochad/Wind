@@ -380,35 +380,6 @@ fun StrToValue(valueNow: Any?, outputRaw: String?): Any? {
 
 
 
-fun Modifier.scrollbar(
-    scrollState: ScrollState,
-    width: Dp = 4.dp,
-    color: Color = Color.Gray,
-    thumbColor: Color = Color.DarkGray
-) = this.then(
-    drawBehind {
-        if (scrollState.maxValue == 0) return@drawBehind // nothing to draw
-
-        // Track
-        drawRect(
-            color = color,
-            topLeft = Offset(size.width - width.toPx(), 0f),
-            size = Size(width.toPx(), size.height)
-        )
-
-        // Thumb
-        val visibleRatio = size.height / scrollState.maxValue.toFloat().coerceAtLeast(1f)
-        val thumbHeight = size.height * visibleRatio
-        val thumbY = (scrollState.value / scrollState.maxValue.toFloat()) * (size.height - thumbHeight)
-
-        drawRect(
-            color = thumbColor,
-            topLeft = Offset(size.width - width.toPx(), thumbY),
-            size = Size(width.toPx(), thumbHeight)
-        )
-    }
-)
-
 
 @Composable
 fun Modifier.scroll(
@@ -422,6 +393,12 @@ fun Modifier.scroll(
     if (h) m = m.horizontalScroll(r_h)
     return m
 }
+
+@Composable
+fun Modifier.Wscroll(){
+	
+}
+fun Hscroll= modifier.scroll(no, yes, r_h)
 
 suspend fun ScrollState.toBottom() {
     scrollTo(maxValue)
