@@ -26,6 +26,7 @@ import kotlin.reflect.jvm.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import androidx.compose.foundation.text.selection.*
+import kotlin.system.*
 
 
 /*! NEVER move bar and lists to another FOLDER, or other file
@@ -163,7 +164,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
 		Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-			Log.e("GlobalCrash", "Crashed in ${thread.name}: ${throwable.message}")
+			log("Crashed in ${thread.name}: ${throwable.message}")
 			appCrashed = yes
 			Vlog("app crashed!!")
 
