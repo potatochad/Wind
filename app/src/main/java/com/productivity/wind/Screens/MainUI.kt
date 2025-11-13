@@ -45,10 +45,12 @@ fun Main() {
 
         var Copy = Bar.apps.toList()
         
-        Copy.forEach {
+        // Copy.forEach {
+        LazzyList(Copy, Modifier.maxW()) { it, index ->
+
  //           if (it.Worth > 0 && it.done == no ){
                 Item.AppTaskUI(it)
-        }
+           }
         }
     }
 }
