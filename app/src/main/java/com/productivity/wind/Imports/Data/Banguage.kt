@@ -380,13 +380,15 @@ fun StrToValue(valueNow: Any?, outputRaw: String?): Any? {
 
 
 
+@Composable
+fun r_Scroll() = rememberScrollState()
 
 @Composable
 fun Modifier.scroll(
     w: Bool = yes,
     h: Bool = yes,
-    r_w: ScrollState = rememberScrollState(),
-    r_h: ScrollState = rememberScrollState(),
+    r_w: ScrollState = r_Scroll(),
+    r_h: ScrollState = r_Scroll(),
 ): Mod {
     var m = this
     if (w) m = m.verticalScroll(r_w)
@@ -395,24 +397,12 @@ fun Modifier.scroll(
 }
 
 @Composable
-fun Modifier.Wscroll(){
-	
-}
-fun Hscroll= modifier.scroll(no, yes, r_h)
-
-suspend fun ScrollState.toBottom() {
-    scrollTo(maxValue)
-}
-suspend fun LazyListState.toBottom() {
-    if (layoutInfo.totalItemsCount > 0) {
-        scrollToItem(layoutInfo.totalItemsCount - 1)
-    }
-}
-
-
+fun Modifier.Wscroll(r_w: ScrollState=r_Scroll()){this.scroll(yes, no, r_w)}
 @Composable
-fun r_Scroll() = rememberScrollState()
+fun Modifier.Hscroll(r_h: ScrollState=r_Scroll()){this.scroll(no, yes, r_h=r_h)}
 
+suspend fun ScrollState.toBottom() { scrollTo(maxValue)}
+suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scrollToItem(layoutInfo.totalItemsCount - 1) }}
 
 
 
