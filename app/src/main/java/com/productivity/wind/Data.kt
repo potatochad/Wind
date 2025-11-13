@@ -158,18 +158,9 @@ data class WebWord(
 
 
 //region OnAppStart
-var appCrashed = no
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-		Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-			log("Crashed in ${thread.name}: ${throwable.message}")
-			appCrashed = yes
-			Vlog("app crashed!!")
-
-			exitProcess(0)
-		}
 
         // Set navigation bar black with white icons
         WindowCompat.setDecorFitsSystemWindows(window, true)
