@@ -216,9 +216,7 @@ fun AppStart_beforeUI(ctx: Context) {
 
 @Composable
 fun MAINStart() {
-    RunOnce {
-        delay(1_000L)
-    }
+    
 }
 
 fun OnResume(){
