@@ -34,23 +34,18 @@ import kotlin.system.*
 fun Main() {
     MAINStart()
 
-    RunOnce(Bar.apps) {
-        Vlog("Bar.apps changed")
-    }
-
     LazyScreen(title = { Header.Main() }, showBack = no) {
         Column(Modifier.Wscroll()){
 
-        LazyCard { Disipline() }
+            LazyCard { Disipline() }
 
-        var Copy = Bar.apps.toList()
+            var Copy = Bar.apps.toList()
         
-        // Copy.forEach {
-        LazzyList(Copy, Modifier.maxW()) { it, index ->
-
- //           if (it.Worth > 0 && it.done == no ){
-                Item.AppTaskUI(it)
-           }
+            Copy.forEach {
+                if (it.Worth > 0 && it.done == no ){
+                    Item.AppTaskUI(it)
+                }
+            }
         }
     }
 }
