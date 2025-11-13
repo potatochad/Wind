@@ -33,6 +33,10 @@ import androidx.compose.ui.unit.*
 fun Main() {
     MAINStart()
 
+    RunOnce(Bar.apps) {
+        Vlog("Bar.apps changed")
+    }
+
     LazyScreen(title = { Header.Main() }, showBack = no) {
 
         LazyCard { Disipline() }
