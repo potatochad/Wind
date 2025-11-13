@@ -149,7 +149,8 @@ fun refreshApps() {
 		}
 
     } catch (e: Exception) {
-		Vlog("refreshApps: ${e.message?: "unknown error"}")
+		Vlog("refreshApps crashed: ${e.message ?: "unknown error, check logs"}")
+		e.printStackTrace()
 	}
 }
 
