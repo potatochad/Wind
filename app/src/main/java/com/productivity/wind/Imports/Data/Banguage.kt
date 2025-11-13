@@ -441,7 +441,7 @@ fun r_Scroll() = rememberScrollState()
 
 
 
-fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
+fun <T> MutableList<T>.edit3(item: T, block: T.() -> Unit) {
 	try {
 		val index = this.indexOf(item)
 		val itemCopy = this[index] // get the item
@@ -454,6 +454,19 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 		Vlog("Edit crashed for item $item: ${e.message}")
 	}
 }
+
+
+fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
+    try {
+        val index = this.indexOf(item)
+        if (index != -1) {
+            this[index].block() // mutate the existing object directly
+        }
+    } catch (e: Exception) {
+        Vlog("Edit crashed for item $item: ${e.message}")
+    }
+}
+
 
 @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
