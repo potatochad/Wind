@@ -110,42 +110,6 @@ fun getStatusBarHeight(): Int {
 
 //endregion
 
-
-
-
-fun refreshApps() {
-    try {
-        val realApps: List<ResolveInfo> = getApps()
-
-        if (!isUsageP_Enabled()) return
-
-        realApps.forEach { info ->
-            val pkgApp = getAppPackage(info)
-            val ListsApp = getListsApp(pkgApp)
-
-            if (ListsApp == null) {
-                Bar.apps.add {
-					name = getAppName(info)
-					pkg = pkgApp
-					NowTime = getTodayAppUsage(pkgApp)
-				}
-            }
-        }
-		var ListCopy = Bar.apps.toList()
-
-		ListCopy.forEach { app ->
-			Bar.apps.edit(app){
-				NowTime = getTodayAppUsage(app.pkg)
-			}
-		}
-
-    } catch (e: Exception) {
-		Vlog("refreshApps crashed: ${e.message ?: "unknown error, check logs"}")
-		e.printStackTrace()
-	}
-}
-
-
 fun getApps(): List<ResolveInfo> {
     val pm = App.ctx.packageManager
     val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
@@ -156,16 +120,6 @@ fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
     return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
 }
 
-fun getListsApp(pkg: Str): AppTsk? {
-    val map = Bar.apps.associateBy { it.pkg }
-    return map[pkg]
-}
-
-
-
-
-
-
 
 
 
@@ -175,7 +129,7 @@ fun eachSecond(onTick: Do) {
     RunOnce(Unit) {
         while (true) {
             onTick()
-            delay(1000) // wait 1 second
+            delay(1000)
         }
     }
 }
