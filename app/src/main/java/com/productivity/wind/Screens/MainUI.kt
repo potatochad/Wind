@@ -38,12 +38,22 @@ fun Main() {
         Column(Modifier.Vscroll()){
             
             LazyCard { Disipline() }
-            
-            Bar.apps.forEach {
-                if (it.Worth > 0 && it.done == no ){
-                    Item.AppTaskUI(it)
+
+            val counter by r { m(0) }
+
+            each(1000L){
+                counter++
+            }
+
+            key(counter) {
+                Bar.apps.forEach {
+                    if (it.Worth > 0 && it.done == no) {
+                        Item.AppTaskUI(it)
+                    }
                 }
             }
+
+            
         }
     }
 }
