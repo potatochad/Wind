@@ -74,10 +74,14 @@ fun Challenge() {
 
 @Composable
 fun CopyPaste() {
-    // State variables
-    var completionPoints = r_m("10")  // “If” completion points
-    var letterPoints = r_m("2")     // “If” letter points
-    var Retypes = r_m("0")         // “Do” limit points
+    var completionPoints = r_m("10")
+    var letterPoints = r_m("2")     
+    var Retypes = r_m("0")        
+
+    var txt = r_m("")
+    var DailyMax = r_m(5)
+    var Done_Worth = r_m(10)
+    var Letter_Worth = r_m(1)
 
     LazyScreen(title = { 
         Header.CopyPaste() 
