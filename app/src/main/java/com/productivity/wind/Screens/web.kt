@@ -126,7 +126,8 @@ fun BlockKeyword() {
         }
 
         LazyCard {
-            LazzyList(Bar.badWords, Modifier.maxW()) { it, index ->
+            Bar.badWords.forEach {
+                Column(Modifier.Vscroll()){
 
 
                 LazzyRow {
@@ -142,7 +143,7 @@ fun BlockKeyword() {
                     Icon.Delete {
                         Bar.badWords.remove(it)
                     }
-                }
+                }}
             }
         }
     }
