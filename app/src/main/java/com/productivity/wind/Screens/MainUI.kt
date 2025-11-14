@@ -34,10 +34,6 @@ import kotlin.system.*
 fun Main() {
     MAINStart()
 
-    RunOnce(Bar.apps){
-        Vlog("<runnn apps bar>")
-    }
-
     LazyScreen(title = { Header.Main() }, showBack = no) {
         Column(Modifier.Vscroll()){
 
