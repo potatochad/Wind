@@ -90,12 +90,12 @@ fun CopyPaste() {
         LazyRuleCard("If") {
             LazzyRow {
                 Text("Letter completed: ")
-                TskInput(letterPoints)
+                Item.TskInput(letterPoints)
                 Text(" points")
             }
             LazzyRow {
                 Text("Text retyped: ")
-                TskInput(completionPoints)
+                Item.TskInput(completionPoints)
                 Text(" points")
             }
         }
@@ -103,7 +103,7 @@ fun CopyPaste() {
         LazyRuleCard("Other") {
             LazzyRow {
                 Text("Maximum retypes a day: ")
-                TskInput(Retypes)
+                Item.TskInput(Retypes)
             }
         }
     }
@@ -128,7 +128,7 @@ fun AppUsage() {
           //does nothing YET
           UI.CheckCircle(1, WhichIf)
           Text("Spend ")
-          TskInput(Time)
+          Item.TskInput(Time)
           Text(" seconds")
           
           Text(" on ")
@@ -140,7 +140,7 @@ fun AppUsage() {
       LazyRuleCard("Do"){
         LazzyRow{
           Text("Add ")
-          TskInput(Points)
+          Item.TskInput(Points)
           Text(" points")
         }
       }
