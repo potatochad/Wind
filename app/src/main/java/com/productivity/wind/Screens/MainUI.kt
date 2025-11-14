@@ -35,24 +35,19 @@ import androidx.compose.runtime.*
 fun Main() {
     MAINStart()
 
-    var counter by r { m(0) }
-
     
     LazyScreen(title = { Header.Main() }, showBack = no) {
         Column(Modifier.Vscroll()){
             
             LazyCard { Disipline() }
 
-            each(1000L){
-                counter++
-            }
 
-                Bar.apps.forEach {
-                    if (it.Worth > 0 && it.done == no) {
-                        Item.AppTaskUI(it)
-                    }
+            Bar.apps.forEach {
+                if (it.Worth > 0 && it.done == no) {
+                    Item.AppTaskUI(it)
                 }
             }
+        }
     }
 }
 
