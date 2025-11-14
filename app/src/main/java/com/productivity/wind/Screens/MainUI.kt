@@ -34,12 +34,21 @@ import kotlin.system.*
 fun Main() {
     MAINStart()
 
+    var copy by r { m(Bar.apps.toList()) }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            if (copy != Bar.apps) {
+                copy = Bar.apps.toList()
+            }
+            delay(100L)
+        }
+    }
+    
     LazyScreen(title = { Header.Main() }, showBack = no) {
-        Column(Modifier.Vscroll()){
+                LazyCard { Disipline() }
 
-            LazyCard { Disipline() }
-
-            Bar.apps.forEach {
+            copy.forEach {
                 if (it.Worth > 0 && it.done == no ){
                     Item.AppTaskUI(it)
                 }
