@@ -46,8 +46,8 @@ fun Main() {
                 if (!it.done) {
                     if (it.NowTime > it.DoneTime - 1 && !it.done) {
                         Bar.funTime += it.Worth
-                        Bar.apps.edit(app) { done = yes }
-                        Vlog("${app.name} completed")
+                        Bar.apps.edit(it) { done = yes }
+                        Vlog("${it.name} completed")
                     }
                     
                     Item.AppTaskUI(it)
