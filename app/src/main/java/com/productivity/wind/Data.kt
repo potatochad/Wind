@@ -74,33 +74,24 @@ same thing...very important!!!!
 class Settings {
     var funTime by m(0)
     var Dpoints by m(0)
+	var lastDate by m("")
     
     
 
 
     
-    //region COPY PASTE THING Disipline
-
+    //COPY PASTE
     var FirstEditText by m(no)
     var targetText by m("ALWAYS BE KIND")
     var LetterToTime by m(1)
     var DoneRetype_to_time by m(60)
     var HowManyDoneRetypes_InDay by m(0)
     var currentInput by m("")
-    var highestCorrect by m(0)
-
-    //endregion COPY PASTE Disipline
-
-
-    var lastDate by m("")
-
+    var highestCorrect by m(0)    
     
 
-    //region ACHIEVEMENTS
-
+    //ACHIEVEMENTS
     var TotalTypedLetters by m(0)
-
-    //endregion
 
 
     // LISTS
@@ -130,12 +121,13 @@ class Settings {
 @Serializable
 data class CopyTsk(
     val id: Str = Id(),
-    var title: Str = "",
-    var onMax: Bool = no,
-    var MaxTimes: Int = 5,
+    var txt: Str = "",
+	var input: Str = "",
+    var done: Bool = no,
+    var DailyMax: Int = 5,
     var Done_Worth: Int = 10,
     var Letter_Worth: Int = 1
-)
+)   
 
 @Serializable
 data class AppTsk(
