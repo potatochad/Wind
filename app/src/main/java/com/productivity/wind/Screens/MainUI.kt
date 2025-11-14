@@ -38,7 +38,7 @@ fun Main() {
 
     RunOnce {
         each(1000L) {
-            copy = Bar.apps.toList()
+            copy=Bar.apps
         }
     }
     
