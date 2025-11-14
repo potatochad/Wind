@@ -220,7 +220,7 @@ fun MAINStart() {
 }
 
 fun OnResume(){
-        refreshApps()  
+	
 }
 
 @Composable
