@@ -427,6 +427,19 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
         Vlog("Edit crashed for $item: ${e.message}")
     }
 }
+fun <T> MutableList<T>.edit2(item: T, block: T.() -> Unit) {
+	try {
+		val index = this.indexOf(item)
+		val itemCopy = this[index] // get the item
+        this.removeAt(index)       // remove old item
+
+        itemCopy.block()           // apply the changes directly
+
+        this.add(index, itemCopy) 
+	} catch (e: Exception) {
+		Vlog("Edit crashed for item $item: ${e.message}")
+	}
+}
 
 
 
