@@ -284,43 +284,30 @@ object Header {
     @Composable
     fun AppUsage(Time: m_<Str>, Points: m_<Str>, selectedApp: m_<Str>) {
         Text("AppUsage")
+        
         UI.End {
             Icon.Add {
-
                 UI.check(!isUsageP_Enabled()) { show(AskUsagePermission); return@Add}
-                UI.check(Time.value.toInt() < 1,"Add time") {return@Add}
-                UI.check(Points.value.toInt() < 1,"Add points") {return@Add}
-                UI.check(selectedApp.value.isEmpty(),"Select app") {return@Add}
+                UI.check(Time.it.toInt() < 1,"Add time") {return@Add}
+                UI.check(Points.it.toInt() < 1,"Add points") {return@Add}
+                UI.check(selectedApp.it.isEmpty(),"Select app") {return@Add}
 
-
-                val app = Bar.apps.find { it.name == selectedApp.value }
-                if (app == null) {
-                    Vlog("NO such app found")
-                    return@Add
-                }
-
-                if (app.Worth == 0) {
-                    Bar.apps.edit(app){
-                        DoneTime = Time.it.toIntOrNull() ?: 0
-                        Worth = Points.it.toIntOrNull() ?: 0
-                    }
-                } else {
-                    Bar.apps.add {
-                        name = selectedApp.value
-                        DoneTime = Time.value.toIntOrNull() ?: 0
-                        Worth = Points.value.toIntOrNull() ?: 0
-                    }
+                Bar.apps.add {
+                    name = selectedApp.it
+                    DoneTime = Time.it.toIntOrNull() ?: 0
+                    Worth = Points.it.toIntOrNull() ?: 0
                 }
                 
 
-                set(selectedApp, "")
-                set(Points, "0")
-                set(Time, "0")
+                selectedApp.it= ""
+                Points.it= "0"
+                Time.it= "0"
 
                 goTo("Main")
             }
         }
     }
+    
     @Composable
     fun CopyPaste(){
         Text("Copy Paste")
