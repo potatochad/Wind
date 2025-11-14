@@ -110,16 +110,6 @@ fun getStatusBarHeight(): Int {
 
 //endregion
 
-//region NO LAG COMPOSE
-fun each(s: Long = 1000L, Do: Do) {
-    Timer().schedule(0, s) {
-        Do()
-    }
-}
-
-
-//endregion NO LAG COMPOSE
-
 
 
 
