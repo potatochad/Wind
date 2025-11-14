@@ -34,16 +34,11 @@ import kotlin.system.*
 fun Main() {
     MAINStart()
 
-    val copy = r { mutableStateListOf<AppTsk>() }
+    val copy = r { mList<AppTsk>() }
 
-    LaunchedEffect(Unit) {
-        while (true) {
-            val current = Bar.apps.toList()
-            if (copy != current) {
-                copy.clear()
-                copy.addAll(current)
-            }
-            kotlinx.coroutines.delay(100L)
+    RunOnce {
+        every(1000L) {
+            copy = Bar.apps.toList()
         }
     }
     
