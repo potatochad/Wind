@@ -37,7 +37,7 @@ fun Main() {
     var copy = r { mList<AppTsk>() }
 
     RunOnce {
-        every(1000L) {
+        each(1000L) {
             copy = Bar.apps.toList()
         }
     }
