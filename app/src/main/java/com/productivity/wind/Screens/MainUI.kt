@@ -43,7 +43,7 @@ fun Main() {
 
 
             Bar.apps.forEach {
-                if (it.Worth > 0 && it.done == no) {
+                if (!it.done) {
                     Item.AppTaskUI(it)
                 }
             }
