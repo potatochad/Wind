@@ -33,21 +33,13 @@ import kotlin.system.*
 @Composable
 fun Main() {
     MAINStart()
-
-    var copy = r { mList<AppTsk>() }
-
-    RunOnce {
-        each(1000L) {
-            copy=Bar.apps
-        }
-    }
     
     LazyScreen(title = { Header.Main() }, showBack = no) {
         Column(Modifier.Vscroll()){
             
             LazyCard { Disipline() }
             
-            copy.forEach {
+            Bar.apps.forEach {
                 if (it.Worth > 0 && it.done == no ){
                     Item.AppTaskUI(it)
                 }
