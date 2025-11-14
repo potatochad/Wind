@@ -96,7 +96,7 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.foundation.lazy.*
 import java.util.*
-
+import kotlin.concurrent.*
 
 
 var CardColor = Color(0xFF1A1A1A)
