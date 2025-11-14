@@ -28,18 +28,20 @@ import com.productivity.wind.Imports.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.*
 import kotlin.system.*
+import androidx.compose.runtime.*
 
 
 @Composable
 fun Main() {
     MAINStart()
+
+    var counter by r { m(0) }
+
     
     LazyScreen(title = { Header.Main() }, showBack = no) {
         Column(Modifier.Vscroll()){
             
             LazyCard { Disipline() }
-
-            var counter by r { m(0) }
 
             each(1000L){
                 counter++
