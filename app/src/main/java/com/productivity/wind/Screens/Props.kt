@@ -137,12 +137,6 @@ object Item {
         var name = app.name
         val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
-        if (app.NowTime > app.DoneTime - 1 && !app.done) {
-            Bar.funTime += app.Worth
-            Bar.apps.edit(app) { done = yes }
-            Vlog("$name completed")
-        }
-
         LazyCard {
             LazzyRow {
                 move(10)
