@@ -34,14 +34,16 @@ import kotlin.system.*
 fun Main() {
     MAINStart()
 
+    RunOnce(Bar.apps){
+        Vlog("<runnn apps bar>")
+    }
+
     LazyScreen(title = { Header.Main() }, showBack = no) {
         Column(Modifier.Vscroll()){
 
             LazyCard { Disipline() }
 
-            var Copy = Bar.apps.toList()
-        
-            Copy.forEach {
+            Bar.apps.forEach {
                 if (it.Worth > 0 && it.done == no ){
                     Item.AppTaskUI(it)
                 }
