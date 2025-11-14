@@ -34,7 +34,7 @@ import kotlin.system.*
 fun Main() {
     MAINStart()
 
-    val copy = r { mList<AppTsk>() }
+    var copy = r { mList<AppTsk>() }
 
     RunOnce {
         every(1000L) {
