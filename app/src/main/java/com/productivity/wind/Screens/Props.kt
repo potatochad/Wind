@@ -163,7 +163,7 @@ object Item {
                         Vlog("does nothing")
                     }
                     Icon.Delete{
-                        app.remove
+                        Bar.apps.remove(it)
                     }
                 }
 
