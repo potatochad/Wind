@@ -132,11 +132,7 @@ fun AppUsage() {
     var Time = r_m("50")
     var Points = r_m("0")
     var WhichIf = r_m(0)
-    set(selectedApp, "")
-    
-    RunOnce {
-        refreshApps()  
-    }
+    selectedApp.it= ""
 
     LazyScreen(title = {
         Header.AppUsage(Time, Points, selectedApp)
