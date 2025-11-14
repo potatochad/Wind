@@ -95,54 +95,33 @@ object Item {
             txt.it = it
         }
     }
+    
     @Composable
-    fun Logs3(txt: Str, scrollV: ScrollState, scrollH: ScrollState) {
-        Box(Modifier
-                    .w(App.screenWidth - 10.dp)
-                    .move(w=5)
-                    .h(App.screenHeight - 35.dp)
-               ) {
-                    Column(
-                        Modifier.scroll(yes, yes, scrollV, scrollH)
-                    ) {
-                            Text(
-                                text = txt,
-                                modifier = Modifier.maxS(),
-                                softWrap = yes,
-                                fontSize = 14.sp
-                            )
-                    }
-                
-        }
-    }
-
-
-    @Composable
-fun Logs(txt: String, scrollV: LazyListState, scrollH: ScrollState) {
-    Box(
-        Modifier
-            .width(App.screenWidth - 10.dp)
-            .move(w = 5)
-            .height(App.screenHeight - 35.dp)
-    ) {
+    fun Logs(txt: Str, scrollV: LazyListState, scrollH: ScrollState) {
         Box(
-            Modifier.horizontalScroll(scrollH)
+            Modifier
+                .w(App.screenWidth - 10.dp)
+                .move(w = 5)
+                .h(App.screenHeight - 35.dp)
         ) {
-            LazyColumn(
-                state = scrollV,
-                modifier = Modifier.fillMaxWidth()
+            Box(
+                Modifier.Hscroll(scrollH)
             ) {
-                items(txt.lineSequence().toList()) { line ->
-                    Text(
-                        text = line,
-                        fontSize = 14.sp,
-                        softWrap = false // disable wrap so horizontal scroll works
-                    )
+                LazyColumn(
+                    state = scrollV,
+                    modifier = Modifier.maxW()
+                ) {
+                    items(txt.lineSequence().toList()) { line ->
+                        Text(
+                            text = line,
+                            fontSize = 14.sp,
+                            softWrap = no
+                        )
+                    }
                 }
             }
         }
     }
-}
 
 
     fun enoughPoints(enough: Do) {
