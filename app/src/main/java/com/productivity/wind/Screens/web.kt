@@ -95,7 +95,7 @@ fun BlockKeyword() {
             Row(
                 Modifier
                     .scroll(h = yes)
-                    .width(App.screenWidth / 2),
+                    .w(App.screenWidth / 2),
             ) {
                 Text(WebUrl, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
@@ -134,14 +134,18 @@ fun BlockKeyword() {
                     Text(text = it.word)
 
                     Icon.Edit {
-                        Bar.badWords.edit(it) {
-                            word = BadWord.it
+                        Item.enoughPoints{
+                            Bar.badWords.edit(it) {
+                                word = BadWord.it
+                            }
                         }
 
                     }
 
                     Icon.Delete {
-                        Bar.badWords.remove(it)
+                        Item.enoughPoints {
+                            Bar.badWords.remove(it)
+                        }
                     }
                 }}
             }
