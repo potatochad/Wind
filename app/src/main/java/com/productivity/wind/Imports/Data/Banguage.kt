@@ -663,3 +663,11 @@ fun <T> runHeavyTask(
         }
     }
 }
+
+
+
+fun each(s: Long = 1000L, Do: Do) {
+    Timer().schedule(0, s) {
+        Do()
+    }
+}
