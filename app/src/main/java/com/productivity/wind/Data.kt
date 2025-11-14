@@ -39,7 +39,8 @@ fun onNewDay() {
           Bar.apps.edit(app){
 				done = no
           }
-     }   
+     } 
+	 Bar.HowManyDoneRetypes_InDay = 0
 }
 
 
