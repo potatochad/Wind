@@ -93,18 +93,17 @@ object Item {
             return
         }
 
-        
-        /*
+    
         BasicInput(
-            "${txt.it}",
+            "${TxtState.it}",
             isInt = yes, 
         ) {
-            txt.it = if (txt.it is Int) {
+            TxtState.it = if (TxtState.it is Int) {
                  it.toInt()
             } else {
                 it
             }
-        }*/
+        }
     }
     
     @Composable
