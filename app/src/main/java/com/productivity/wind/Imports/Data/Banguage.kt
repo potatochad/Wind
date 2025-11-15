@@ -42,8 +42,7 @@ import com.productivity.wind.*
 import java.util.UUID
 import java.lang.reflect.Type
 import kotlin.collections.*
-import android.content.ClipData
-import android.content.ClipboardManager
+import android.content.*
 import java.lang.reflect.ParameterizedType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -72,7 +71,6 @@ import android.content.Intent
 import java.time.LocalDate
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.annotation.RequiresApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.productivity.wind.Screens.*
@@ -97,6 +95,29 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.foundation.lazy.*
 import java.util.*
 import kotlin.concurrent.*
+import androidx.annotation.RequiresApi
+
+
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.platform.LocalConfiguration
+import com.productivity.wind.Imports.*
+import androidx.core.view.*
+import androidx.compose.foundation.lazy.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.productivity.wind.Imports.Data.*
+import kotlin.reflect.*
+import kotlin.reflect.jvm.*
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
+import androidx.compose.foundation.text.selection.*
+import kotlin.system.*
 
 
 var CardColor = Color(0xFF1A1A1A)
@@ -674,5 +695,44 @@ inline fun <T> MutableList<T>.each(
         val item = this[i]
         this.block(item)
         i++
+    }
+}
+
+
+
+
+
+
+
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Set navigation bar black with white icons
+        WindowCompat.setDecorFitsSystemWindows(window, yes)
+
+        // Set navigation bar black with white icons
+        window.navigationBarColor = android.graphics.Color.BLACK
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightNavigationBars = no
+            show(WindowInsetsCompat.Type.systemBars()) // Force visible
+            systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+        }
+
+        AppStart_beforeUI(applicationContext)
+        setContent {
+			AppContent()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // re-apply nav bar color to prevent flashing
+        window.navigationBarColor = android.graphics.Color.BLACK
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
+
+        OnResume()
     }
 }
