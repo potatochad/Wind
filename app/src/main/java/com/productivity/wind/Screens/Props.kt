@@ -318,18 +318,18 @@ object Header {
     }
     
     @Composable
-    fun CopyPaste(text: m_<Str>, DailyMax: m_<Int>, Done_Worth: m_<Int>, Letter_Worth: m_<Int>){
+    fun CopyPaste(text: m_<Str>, dailyMax: m_<Int>, doneWorth: m_<Int>, letterWorth: m_<Int>){
         Text("Copy Paste")
         
         UI.End {
                 Icon.Add {
                     UI.check(text.it.isEmpty(),"Add text") {return@Add}
                     
-                    Bar.copyTsk.add{
+                    Bar.copyTsk.add {
                         txt = text.it
-                        DailyMax = DailyMax.it
-                        Done_Worth = Done_Worth.it
-                        Letter_Worth = Letter_Worth.it
+                        DailyMax = dailyMax.it
+                        Done_Worth = doneWorth.it
+                        Letter_Worth = letterWorth.it
                     }                  
                 }
         }
