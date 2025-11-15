@@ -87,7 +87,7 @@ fun Menu() {
 object Item {
 
     @Composable
-    fun TskInput(txt: m_<Any>) {       
+    fun TskInput(txt: m_<T>) {       
         BasicInput(
             "${txt.it}",
             isInt = yes, 
