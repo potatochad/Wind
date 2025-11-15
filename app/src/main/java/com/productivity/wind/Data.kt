@@ -156,18 +156,22 @@ data class WebWord(
 
 
 
+
+fun appClick() {
+	Vlog("app click")
+}
 //region OnAppStart
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Set navigation bar black with white icons
-        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.setDecorFitsSystemWindows(window, yes)
 
         // Set navigation bar black with white icons
         window.navigationBarColor = android.graphics.Color.BLACK
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightNavigationBars = false
+            isAppearanceLightNavigationBars = no
             show(WindowInsetsCompat.Type.systemBars()) // Force visible
             systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
@@ -180,7 +184,7 @@ class MainActivity : ComponentActivity() {
 				SelectionContainer {
 					
 					Box(Modifier.click{
-						Vlog("clicked")
+						appClick()
 					}){
 						AppStart()
 					}				
