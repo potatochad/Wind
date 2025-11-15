@@ -30,17 +30,6 @@ import androidx.compose.ui.unit.*
 import kotlin.system.*
 import androidx.compose.runtime.*
 
-inline fun <T> MutableList<T>.each(
-    block: MutableList<T>.(T) -> Unit
-) {
-    var i = 0
-    while (i < this.size) {
-        val item = this[i]
-        this.block(item)
-        i++
-    }
-}
-
 
 
 @Composable
@@ -52,6 +41,10 @@ fun Main() {
         Column(Modifier.Vscroll()){
             
             LazyCard { Disipline() }
+
+            Bar.copyTsk.each {
+                Text("Do later")
+            }
 
 
             Bar.apps.each {
