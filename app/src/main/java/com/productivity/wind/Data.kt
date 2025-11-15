@@ -160,6 +160,8 @@ data class WebWord(
 fun appClick() {
 	Vlog("app click")
 }
+
+@Composable
 fun AppContent() {
 	LazyTheme {
         Surface(Modifier.maxS()) {
