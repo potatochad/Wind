@@ -154,7 +154,9 @@ object Item {
 
                 UI.End {
                     Icon.Edit{
-                        app.Worth +=1
+                        Bar.apps.edit(app){
+                            Worth +=1
+                        }
                         Vlog("${app.Worth}")
                     }
                     Icon.Delete{
