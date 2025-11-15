@@ -43,6 +43,8 @@ fun Main() {
             LazyCard { Disipline() }
 
             Bar.copyTsk.each {
+
+				/*
                 txt: Str = "",
                 var input: Str = "",
     var done: Bool = no,
@@ -50,6 +52,8 @@ fun Main() {
 	var DailyDone: Int = 0,
     var Done_Worth: Int = 10,
     var Letter_Worth: Int = 1
+
+				*/
                 Text("Do later")
             }
 
@@ -71,19 +75,14 @@ fun Main() {
 
 @Composable
 fun Disipline() {
-    val ScrollText = rememberScrollState()
+    val ScrollText = r_Scroll()
+	val ScrollINPUTText = r_Scroll()
+
 
     RunOnce(Bar.highestCorrect) {
         if (Bar.highestCorrect > 20) {
             ScrollText.animateScrollBy(1f)
-        }
-    }
-
-    val ScrollINPUTText = rememberScrollState()
-
-    RunOnce(Bar.highestCorrect) {
-        if (Bar.highestCorrect > 20) {
-            ScrollINPUTText.animateScrollBy(15f)
+			ScrollINPUTText.animateScrollBy(15f)
         }
     }
 
