@@ -180,7 +180,7 @@ class MainActivity : ComponentActivity() {
 				SelectionContainer {
 					
 					Box(Modifier.click{
-						
+						Vlog("clicked")
 					}){
 						AppStart()
 					}				
