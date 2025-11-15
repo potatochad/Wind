@@ -74,7 +74,7 @@ fun Challenge() {
 
 @Composable
 fun CopyPaste() {
-    var txt = r_m("")
+    var txt = r_m("Be always kind")
     var DailyMax = r_m(5)
     var Done_Worth = r_m(10)
     var Letter_Worth = r_m(1)
@@ -114,8 +114,8 @@ fun CopyPaste() {
 
 @Composable
 fun AppUsage() {
-    var Time = r_m("50")
-    var Points = r_m("0")
+    var Time = r_m("60")
+    var Points = r_m("10")
     var WhichIf = r_m(0)
     selectedApp.it= ""
 
