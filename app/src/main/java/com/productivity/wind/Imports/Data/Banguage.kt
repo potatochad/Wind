@@ -1,5 +1,6 @@
 package com.productivity.wind.Imports.Data
 
+import android.annotation.SuppressLint
 import timber.log.Timber
 import java.text.*
 import android.app.usage.UsageStatsManager
@@ -171,6 +172,7 @@ fun click(x: Content, Do: Do) {
 	}
 }
 
+@SuppressLint("SuspiciousModifierThen")
 fun Modifier.click(Do: Do): Mod {
     return this.then(
         pointerInput(Unit) {

@@ -9,6 +9,7 @@ import kotlinx.coroutines.delay
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -26,6 +27,7 @@ import kotlin.reflect.jvm.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import androidx.compose.foundation.text.selection.*
+import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.system.*
 
 
@@ -157,9 +159,6 @@ data class WebWord(
 
 
 
-fun appClick() {
-	Vlog("app click")
-}
 
 @Composable
 fun AppContent() {
@@ -167,7 +166,7 @@ fun AppContent() {
         Surface(Modifier.maxS()) {
 			SelectionContainer {					
 				Box(Modifier.click{
-					appClick()
+
 				}){
 					AppStart()
 				}				
