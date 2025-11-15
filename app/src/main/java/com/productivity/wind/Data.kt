@@ -35,12 +35,17 @@ yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long a
 */
 
 fun onNewDay() {  
-     Bar.apps.forEach{app ->
-          Bar.apps.edit(app){
+     Bar.apps.each{
+          Bar.apps.edit(it){
 				done = no
           }
-     } 
-	 Bar.HowManyDoneRetypes_InDay = 0
+     }
+	 Bar.copyTsk.each{
+		 Bar.copyTsk.edit(it){
+			 done = no
+			 DailyDone = 0
+		 }
+	 }
 }
 
 
@@ -98,7 +103,7 @@ class Settings {
 
 	// LISTS DONT BACKUP OR RESTORE!!!!!
     
-    var copyTasks = mList<CopyTsk>()
+    var copyTsk = mList<CopyTsk>()
 	var apps = mList<AppTsk>()// mutablestatelistof
 	var badWords = mList<WebWord>().apply {
 		addAll(
@@ -125,6 +130,7 @@ data class CopyTsk(
 	var input: Str = "",
     var done: Bool = no,
     var DailyMax: Int = 5,
+	var DailyDone: Int = 0,
     var Done_Worth: Int = 10,
     var Letter_Worth: Int = 1
 )   
