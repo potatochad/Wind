@@ -317,7 +317,7 @@ object Header {
         
         UI.End {
                 Icon.Add {
-                    UI.check(txt.isEmpty(),"Add text") {return@Add}
+                    UI.check(txt.it.isEmpty(),"Add text") {return@Add}
                     
                     Bar.copyTsk.add{
                         txt = txt,
