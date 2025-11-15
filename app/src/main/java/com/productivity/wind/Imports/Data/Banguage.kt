@@ -100,18 +100,9 @@ import androidx.annotation.RequiresApi
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.*
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.platform.LocalConfiguration
-import com.productivity.wind.Imports.*
 import androidx.core.view.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.productivity.wind.Imports.Data.*
 import kotlin.reflect.*
 import kotlin.reflect.jvm.*
 import kotlinx.serialization.*
