@@ -407,26 +407,6 @@ suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scr
 
 
 
-
-
-fun <T> MutableList<T>.edit2(item: T, block: T.() -> Unit) {
-    try {
-        val index = indexOf(item)
-        if (index != -1) {
-            val element = this[index]
-            element.block()      // apply your changes
-            this[index] = element // re-assign single item (partial recompose)
-        }
-
-        // Force full list recompose
-        val copy = this.toMutableList()  // create new list object
-        clear()
-        addAll(copy)                     // replace internal content → full redraw
-
-    } catch (e: Exception) {
-        Vlog("Edit crashed for $item: ${e.message}")
-    }
-}
 fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	try {
 		val index = this.indexOf(item)
@@ -440,8 +420,6 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 		Vlog("Edit crashed for item $item: ${e.message}")
 	}
 }
-
-
 
 
 @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
@@ -474,9 +452,10 @@ fun BasicInput(
     Do: (Str) -> Unit = {},
 ) {
 	val focusManager = LocalFocusManager.current
+	val focusRequester = r { FocusRequester() }
 
 	Row(
-		modifier = modifier,
+		modifier = modifier.click { focusRequester.requestFocus() },
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
@@ -492,7 +471,8 @@ fun BasicInput(
 			),
 			keyboardActions = KeyboardActions(
 				onDone = { focusManager.clearFocus() }
-			)
+			),
+			modifier = Modifier.focusRequester(focusRequester)
 		)
 	}
 	
