@@ -103,7 +103,7 @@ fun CopyPaste() {
             }
             LazzyRow {
                 Text("Text: ")
-                Item.TskInput(txt)
+                Item.TskInput(txt, 5000)
             }
         }
     }
