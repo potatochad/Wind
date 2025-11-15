@@ -175,38 +175,7 @@ fun AppContent() {
 		}
 	}
 }
-//region OnAppStart
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        // Set navigation bar black with white icons
-        WindowCompat.setDecorFitsSystemWindows(window, yes)
-
-        // Set navigation bar black with white icons
-        window.navigationBarColor = android.graphics.Color.BLACK
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightNavigationBars = no
-            show(WindowInsetsCompat.Type.systemBars()) // Force visible
-            systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
-        }
-
-        AppStart_beforeUI(applicationContext)
-        setContent {
-			AppContent()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // re-apply nav bar color to prevent flashing
-        window.navigationBarColor = android.graphics.Color.BLACK
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
-
-        OnResume()
-    }
-}
 
 
 
