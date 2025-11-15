@@ -43,6 +43,13 @@ fun Main() {
             LazyCard { Disipline() }
 
             Bar.copyTsk.each {
+                txt: Str = "",
+                var input: Str = "",
+    var done: Bool = no,
+    var DailyMax: Int = 5,
+	var DailyDone: Int = 0,
+    var Done_Worth: Int = 10,
+    var Letter_Worth: Int = 1
                 Text("Do later")
             }
 
@@ -66,7 +73,7 @@ fun Main() {
 fun Disipline() {
     val ScrollText = rememberScrollState()
 
-    LaunchedEffect(Bar.highestCorrect) {
+    RunOnce(Bar.highestCorrect) {
         if (Bar.highestCorrect > 20) {
             ScrollText.animateScrollBy(1f)
         }
@@ -74,7 +81,7 @@ fun Disipline() {
 
     val ScrollINPUTText = rememberScrollState()
 
-    LaunchedEffect(Bar.highestCorrect) {
+    RunOnce(Bar.highestCorrect) {
         if (Bar.highestCorrect > 20) {
             ScrollINPUTText.animateScrollBy(15f)
         }
@@ -115,7 +122,7 @@ fun Disipline() {
             modifier = Modifier
                 .heightIn(max = 100.dp)
                 .widthIn(max = 300.dp)
-                .verticalScroll(ScrollText)
+                .Vscroll(ScrollText)
         )
         move(h = 20)
 
@@ -152,9 +159,9 @@ fun Disipline() {
                 }
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .height(150.dp)
-                .verticalScroll(ScrollINPUTText),
+                .maxW()
+                .h(150)
+                .Vscroll(ScrollINPUTText),
             placeholder = { Text("Start typing...") }
         )
     }
