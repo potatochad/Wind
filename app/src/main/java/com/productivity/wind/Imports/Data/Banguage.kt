@@ -159,18 +159,16 @@ fun click(x: Content, Do: Do) {
 	}
 }
 
-fun Modifier.click(
-    Do: Do
-): Modifier {
+fun Modifier.click(Do: Do): Mod {
     return this.then(
-        clickable(
-            indication = null,
-            interactionSource = MutableInteractionSource()
-        ) {
-            Do()
+        pointerInput(Unit) {
+            detectTapGestures {
+                Do()
+            }
         }
     )
 }
+
 
 
 fun Modifier.clickOrHold(
