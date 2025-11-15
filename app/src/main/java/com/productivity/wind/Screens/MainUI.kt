@@ -73,6 +73,19 @@ fun Main() {
     }
 }
 
+
+
+fun correctStr.Builder.appendAnnotated(text: Str, correctUntil: Int) {
+        for (i in text.indices) {
+            if (i < correctUntil) {
+                pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
+                append(text[i]); pop()
+            } else {
+                append(text[i])
+            }
+        }
+}
+
 @Composable
 fun Disipline() {
     val ScrollText = r_Scroll()
@@ -86,16 +99,6 @@ fun Disipline() {
         }
     }
 
-    fun AnnotatedString.Builder.appendAnnotated(text: Str, correctUntil: Int) {
-        for (i in text.indices) {
-            if (i < correctUntil) {
-                pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
-                append(text[i]); pop()
-            } else {
-                append(text[i])
-            }
-        }
-    }
     val coloredTarget by produceState(initialValue = AnnotatedString(""), Bar.targetText, Bar.currentInput) {
         withContext(Dispatchers.Default) {
             val correctChars = Bar.targetText.zip(Bar.currentInput)
