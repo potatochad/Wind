@@ -88,6 +88,12 @@ object Item {
 
     @Composable
     fun TskInput(txt: Any) {  
+        val TxtState = txt as? MutableState<Any> ?: run {
+            Vlog("expected mutable")
+            return
+        }
+
+        
         /*
         BasicInput(
             "${txt.it}",
