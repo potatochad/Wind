@@ -178,7 +178,12 @@ class MainActivity : ComponentActivity() {
 			LazyTheme {
             Surface(Modifier.maxS()) {
 				SelectionContainer {
-					AppStart()
+					
+					Box(Modifier.click{
+						
+					}){
+						AppStart()
+					}				
 				}
             }
 			}
