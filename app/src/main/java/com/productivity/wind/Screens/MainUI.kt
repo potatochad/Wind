@@ -1,4 +1,4 @@
-package com.productivity.wind.Screens
+qpackage com.productivity.wind.Screens
 
 import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -75,7 +75,7 @@ fun Main() {
 
 
 
-fun correctStr.Builder.appendAnnotated(text: Str, correctUntil: Int) {
+fun AnnotatedString.Builder.correctStr(text: Str, correctUntil: Int) {
         for (i in text.indices) {
             if (i < correctUntil) {
                 pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
@@ -105,7 +105,7 @@ fun Disipline() {
                 .takeWhile { it.first == it.second }
                 .size
             value = buildAnnotatedString {
-                appendAnnotated(Bar.targetText, correctChars)
+                correctStr(Bar.targetText, correctChars)
             }
         }
     }
