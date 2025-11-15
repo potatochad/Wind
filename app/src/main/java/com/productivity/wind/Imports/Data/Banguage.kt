@@ -472,7 +472,13 @@ fun BasicInput(
 			keyboardActions = KeyboardActions(
 				onDone = { focusManager.clearFocus() }
 			),
-			modifier = Modifier.focusRequester(focusRequester)
+			modifier = Modifier.focusRequester(focusRequester).onFocusChanged { state ->
+                state.isFocused
+                if (!state.isFocused) {
+                    // TextField lost focus
+                    Vlog("TextField lost focus!")
+                }
+			}
 		)
 	}
 	
