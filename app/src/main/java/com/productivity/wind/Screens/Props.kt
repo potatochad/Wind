@@ -87,21 +87,22 @@ fun Menu() {
 object Item {
 
     @Composable
-    fun TskInput(txt: Any) {  
+    fun TskInput(txt: Any, maxLetters: Int = 5) {  
         val TxtState = txt as? MutableState<Any> ?: run {
             Vlog("expected mutable")
             return
         }
 
-    
         BasicInput(
             "${TxtState.it}",
             isInt = yes, 
         ) {
+            val input = it.take(maxLetters)
+            
             TxtState.it = if (TxtState.it is Int) {
-                 it.toInt()
+                 input.toInt()
             } else {
-                it
+                input
             }
         }
     }
