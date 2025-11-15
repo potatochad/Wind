@@ -74,36 +74,36 @@ fun Challenge() {
 
 @Composable
 fun CopyPaste() {
-    var completionPoints = r_m("10")
-    var letterPoints = r_m("2")     
-    var Retypes = r_m("0")        
-
     var txt = r_m("")
     var DailyMax = r_m(5)
     var Done_Worth = r_m(10)
     var Letter_Worth = r_m(1)
 
     LazyScreen(title = { 
-        Header.CopyPaste() 
+        Header.CopyPaste(txt, DailyMax, Done_Worth, Letter_Worth) 
     }) {
         // “If” section
         LazyRuleCard("If") {
             LazzyRow {
-                Text("Letter completed: ")
-                Item.TskInput(letterPoints)
+                Text("Letter typed correctly: ")
+                Item.TskInput(Letter_Worth)
                 Text(" points")
             }
             LazzyRow {
-                Text("Text retyped: ")
-                Item.TskInput(completionPoints)
+                Text("Text typed correctly: ")
+                Item.TskInput(Done_Worth)
                 Text(" points")
             }
         }
 
         LazyRuleCard("Other") {
             LazzyRow {
-                Text("Maximum retypes a day: ")
-                Item.TskInput(Retypes)
+                Text("DailyMax: ")
+                Item.TskInput(DailyMax)
+            }
+            LazzyRow {
+                Text("Text: ")
+                Item.TskInput(txt)
             }
         }
     }
