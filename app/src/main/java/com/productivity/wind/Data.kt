@@ -165,12 +165,9 @@ fun AppContent() {
 	LazyTheme {
         Surface(Modifier.maxS()) {
 			SelectionContainer {
-				var appClicked by m(no)
 				Box(Modifier.click{
-					appClicked=yes
-					appClicked=no
+					
 				}){
-					if (appClicked) Vlog("appClicked")
 					AppStart()
 				}				
 			}
