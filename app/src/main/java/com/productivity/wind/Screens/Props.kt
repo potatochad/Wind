@@ -87,7 +87,7 @@ fun Menu() {
 object Item {
 
     @Composable
-    fun TskInput(txt: Any, maxLetters: Int = 5) {  
+    fun TskInput(txt: Any, maxLetters: Int = 5, isInt: Bool =yes) {  
         val TxtState = txt as? MutableState<Any> ?: run {
             Vlog("expected mutable")
             return
@@ -95,7 +95,7 @@ object Item {
 
         BasicInput(
             "${TxtState.it}",
-            isInt = yes, 
+            isInt = isInt, 
         ) {
             val input = it.take(maxLetters)
             
