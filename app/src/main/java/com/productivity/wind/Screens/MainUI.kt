@@ -86,7 +86,7 @@ fun Disipline() {
         }
     }
 
-    fun AnnotatedString.Builder.appendAnnotated(text: String, correctUntil: Int) {
+    fun AnnotatedString.Builder.appendAnnotated(text: Str, correctUntil: Int) {
         for (i in text.indices) {
             if (i < correctUntil) {
                 pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
@@ -119,8 +119,8 @@ fun Disipline() {
         Text(
             text = coloredTarget,
             modifier = Modifier
-                .heightIn(max = 100.dp)
-                .widthIn(max = 300.dp)
+                .h(0, 100)
+                .w(0, 300)
                 .Vscroll(ScrollText)
         )
         move(h = 20)
@@ -152,7 +152,7 @@ fun Disipline() {
                     if (correctInput == Bar.targetText) {
                         Bar.funTime += Bar.DoneRetype_to_time
                         Bar.HowManyDoneRetypes_InDay +=1
-                        Bar.currentInput = ""  // Reset input when completed
+                        Bar.currentInput = ""
                         Bar.highestCorrect = 0
                     }
                 }
