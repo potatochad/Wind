@@ -320,9 +320,9 @@ object Header {
                     UI.check(text.it.isEmpty(),"Add text") {return@Add}
                     
                     Bar.copyTsk.add{
-                        txt = text.it,
-                        DailyMax = DailyMax.it,
-                        Done_Worth = Done_Worth.it,
+                        txt = text.it
+                        DailyMax = DailyMax.it
+                        Done_Worth = Done_Worth.it
                         Letter_Worth = Letter_Worth.it
                     }                  
                 }
