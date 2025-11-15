@@ -75,16 +75,6 @@ fun Main() {
 
 
 
-fun AnnotatedString.Builder.correctStr(text: Str, correctUntil: Int) {
-        for (i in text.indices) {
-            if (i < correctUntil) {
-                pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
-                append(text[i]); pop()
-            } else {
-                append(text[i])
-            }
-        }
-}
 
 @Composable
 fun Disipline() {
