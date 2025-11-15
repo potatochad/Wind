@@ -685,3 +685,16 @@ fun each(s: Long = 1000L, Do: Do) {
         Do()
     }
 }
+
+
+
+inline fun <T> MutableList<T>.each(
+    block: MutableList<T>.(T) -> Unit
+) {
+    var i = 0
+    while (i < this.size) {
+        val item = this[i]
+        this.block(item)
+        i++
+    }
+}
