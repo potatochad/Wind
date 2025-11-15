@@ -313,15 +313,13 @@ object Header {
         UI.End {
                 Icon.Add {
                     UI.check(txt.isEmpty(),"Add text") {return@Add}
-
-                    txt: Str = "",
-                    var input: Str = "",
-                    var done: Bool = no,
-                    var DailyMax: Int = 5,
-                    var Done_Worth: Int = 10,
-                    var Letter_Worth: Int = 1
                     
-                    
+                    Bar.copyTsk.add{
+                        txt = txt,
+                        DailyMax = DailyMax,
+                        Done_Worth = Done_Worth,
+                        Letter_Worth = Letter_Worth
+                    }                  
                 }
         }
     }
