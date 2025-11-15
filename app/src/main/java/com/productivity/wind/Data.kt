@@ -160,6 +160,19 @@ data class WebWord(
 fun appClick() {
 	Vlog("app click")
 }
+fun AppContent() {
+	LazyTheme {
+        Surface(Modifier.maxS()) {
+			SelectionContainer {					
+				Box(Modifier.click{
+					appClick()
+				}){
+					AppStart()
+				}				
+			}
+		}
+	}
+}
 //region OnAppStart
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -179,20 +192,8 @@ class MainActivity : ComponentActivity() {
 
         AppStart_beforeUI(applicationContext)
         setContent {
-			LazyTheme {
-            Surface(Modifier.maxS()) {
-				SelectionContainer {
-					
-					Box(Modifier.click{
-						appClick()
-					}){
-						AppStart()
-					}				
-				}
-            }
-			}
+			AppContent()
         }
-
     }
 
     override fun onResume() {
