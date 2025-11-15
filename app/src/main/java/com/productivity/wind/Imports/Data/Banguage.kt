@@ -409,7 +409,7 @@ suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scr
 
 
 
-fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
+fun <T> MutableList<T>.edit2(item: T, block: T.() -> Unit) {
     try {
         val index = indexOf(item)
         if (index != -1) {
@@ -427,7 +427,7 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
         Vlog("Edit crashed for $item: ${e.message}")
     }
 }
-fun <T> MutableList<T>.edit2(item: T, block: T.() -> Unit) {
+fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	try {
 		val index = this.indexOf(item)
 		val itemCopy = this[index] // get the item
