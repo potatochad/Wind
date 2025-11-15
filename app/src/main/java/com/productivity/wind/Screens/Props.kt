@@ -308,7 +308,7 @@ object Header {
     }
     
     @Composable
-    fun CopyPaste(){
+    fun CopyPaste(Time: m_<Str>, Time: m_<Str>, Time: m_<Str>){
         Text("Copy Paste")
         
         UI.End {
