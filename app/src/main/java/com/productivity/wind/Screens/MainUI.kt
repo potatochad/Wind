@@ -30,6 +30,18 @@ import androidx.compose.ui.unit.*
 import kotlin.system.*
 import androidx.compose.runtime.*
 
+inline fun <T> MutableList<T>.each(
+    block: MutableList<T>.(T) -> Unit
+) {
+    var i = 0
+    while (i < this.size) {
+        val item = this[i]
+        this.block(item)
+        i++
+    }
+}
+
+
 
 @Composable
 fun Main() {
@@ -42,7 +54,7 @@ fun Main() {
             LazyCard { Disipline() }
 
 
-            Bar.apps.forEach {
+            Bar.apps.each {
                 if (!it.done) {
                     if (it.NowTime > it.DoneTime - 1 && !it.done) {
                         Bar.funTime += it.Worth
