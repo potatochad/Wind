@@ -288,7 +288,6 @@ object Header {
             Icon.Add {
                 UI.check(!isUsageP_Enabled()) { show(AskUsagePermission); return@Add}
                 UI.check(Time.it.toInt() < 1,"Add time") {return@Add}
-                UI.check(Points.it.toInt() < 1,"Add points") {return@Add}
                 UI.check(selectedApp.it.isEmpty(),"Select app") {return@Add}
 
                 Bar.apps.add {
@@ -308,11 +307,12 @@ object Header {
     }
     
     @Composable
-    fun CopyPaste(Time: m_<Str>, Time: m_<Str>, Time: m_<Str>){
+    fun CopyPaste(txt: m_<Str>, DailyMax: m_<Int>, Done_Worth: m_<Int>, Letter_Worth: m_<Int>){
         Text("Copy Paste")
         
         UI.End {
                 Icon.Add {
+                    UI.check(txt.isEmpty(),"Add text") {return@Add}
                     
                     
                 }
