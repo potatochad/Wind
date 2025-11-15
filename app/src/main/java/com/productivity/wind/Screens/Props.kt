@@ -320,10 +320,10 @@ object Header {
                     UI.check(txt.it.isEmpty(),"Add text") {return@Add}
                     
                     Bar.copyTsk.add{
-                        txt = txt,
-                        DailyMax = DailyMax,
-                        Done_Worth = Done_Worth,
-                        Letter_Worth = Letter_Worth
+                        txt = txt.it,
+                        DailyMax = DailyMax.it,
+                        Done_Worth = Done_Worth.it,
+                        Letter_Worth = Letter_Worth.it
                     }                  
                 }
         }
