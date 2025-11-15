@@ -147,6 +147,8 @@ object Item {
                     Plog("$name app progress is ${progress*100}%; ${app.Worth/app.NowTime}points/s ")
                 }
 
+                UI.ProgressIcon(icon, progress)
+
 
                 move(12)
                 Text("Points ${app.Worth}")
