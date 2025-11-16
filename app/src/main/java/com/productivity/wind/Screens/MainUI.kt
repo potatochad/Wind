@@ -95,7 +95,7 @@ fun Disipline() {
                 .takeWhile { it.first == it.second }
                 .size
             value = buildAnnotatedString {
-                UI.correctStr(Bar.targetText, correctChars)
+                correctStr(Bar.targetText, correctChars)
             }
         }
     }
