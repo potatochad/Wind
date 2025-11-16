@@ -157,6 +157,15 @@ fun toDp(it: Any?): Dp = when (it) {
     null -> 0.dp             // null → 0.dp
     else -> 0.dp             // anything else → 0.dp
 }
+fun toF(it: Any?): Float = when (it) {
+    is Float -> it
+    is Int -> it.toFloat()
+    is Double -> it.toFloat()
+    is Dp -> it.value      // Dp → Float
+    null -> 0f
+    else -> 0f
+}
+
 
 
 
@@ -416,6 +425,10 @@ fun Modifier.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, ye
 
 suspend fun ScrollState.toBottom() { scrollTo(maxValue)}
 suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scrollToItem(layoutInfo.totalItemsCount - 1) }}
+
+suspend fun ScrollState.scroll(it: Any) {
+    animateScrollBy(toF(it))
+}
 
 
 
