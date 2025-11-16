@@ -57,7 +57,6 @@ fun Main() {
     var Letter_Worth: Int = 1
 
 				*/
-                Text("Do later")
             }
 
 
@@ -99,9 +98,7 @@ fun CopyTskUI(it: CopyTsk) {
     
     LazzyRow {
         Text("Done: ${Bar.HowManyDoneRetypes_InDay}/5")
-        UI.End{
-            Icon.Edit()
-        }
+        UI.End{ Icon.Edit() }
     }
     move(8)
     Text(
