@@ -613,33 +613,22 @@ fun getAppName(info: ResolveInfo): Str {
     val pkg = info.activityInfo.packageName
     return info.loadLabel(App.ctx.packageManager)?.toString() ?: pkg
 }
-
-fun getAppIcon2(packageName: Str): Drawable? {
-    val pm = App.ctx.packageManager
-    return try {
-        pm.getApplicationIcon(packageName)
-    } catch (_: Exception) {
-        null
+fun getAppIcon(packageName: Str?): Drawable? {
+    if (packageName.isNullOrBlank()) {
+        log("PackageName is NULL or blank")
+        return App.ctx.getDrawable(android.R.drawable.sym_def_app_icon)
     }
-}
-fun getAppIcon3(packageName: Str): Drawable? {
-    val pm = App.ctx.packageManager
-    return try {
-        pm.getApplicationIcon(packageName)
-    } catch (e: PackageManager.NameNotFoundException) {
-        App.ctx.getDrawable(android.R.drawable.sym_def_app_icon)
-    }
-}
 
-fun getAppIcon(packageName: Str): Drawable? {
     val pm = App.ctx.packageManager
     return try {
         val info = pm.getApplicationInfo(packageName, 0)
-        info.loadIcon(pm)   // <— this always gives the real real icon
-    } catch (_: Exception) {
+        info.loadIcon(pm)
+    } catch (e: Exception) {
+        log("Bad package: $packageName")
         App.ctx.getDrawable(android.R.drawable.sym_def_app_icon)
     }
 }
+
 
 
 
