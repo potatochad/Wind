@@ -82,14 +82,16 @@ fun Main() {
 
 @Composable
 fun CopyTskUI(it: CopyTsk) {
-	if (Bar.HowManyDoneRetypes_InDay == 5) return
+	if (it.DailyDone == it.DailyMax) return
 
     val txtScroll = r_Scroll()
 	val inputScroll = r_Scroll()
 
+	var highestCorrect by r_m(0)
 
-    RunOnce(Bar.highestCorrect) {
-        if (Bar.highestCorrect > 20) {
+
+    RunOnce(highestCorrect) {
+        if (highestCorrect > 20) {
             txtScroll.scroll(1)
 			inputScroll.scroll(15)
         }
@@ -99,7 +101,7 @@ fun CopyTskUI(it: CopyTsk) {
 
     
     LazzyRow {
-        Text("Done: ${Bar.HowManyDoneRetypes_InDay}/5")
+        Text("Done: ${it.DailyDone}/${it.DailyMax}")
         UI.End{ Icon.Edit() }
     }
     move(8)
@@ -130,7 +132,7 @@ fun CopyTskUI(it: CopyTsk) {
                     Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
 
                     }
-                    Bar.highestCorrect = correctInput.length
+                    highestCorrect = correctInput.length
                 }
 
                 if (correctInput == Bar.targetText) {
