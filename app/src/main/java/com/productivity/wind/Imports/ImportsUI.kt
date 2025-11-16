@@ -167,6 +167,25 @@ fun AnnotatedString.Builder.correctStr(text: Str, correctUntil: Int) {
             }
         }
 }
+@Composable
+fun fullCorrectStr(target: String, input: String): AnnotatedString {
+    val colored by produceState(
+        initialValue = AnnotatedString(""),
+        target, input
+    ) {
+        withContext(Dispatchers.Default) {
+            val correct = target.zip(input)
+                .takeWhile { it.first == it.second }
+                .size
+
+            value = buildAnnotatedString {
+                correctStr(target, correct)
+            }
+        }
+    }
+    return colored
+}
+
 
 object UI {
     //No synched with actual settingsItem function YET
