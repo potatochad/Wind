@@ -608,17 +608,18 @@ fun getTodayAppUsage(packageName: Str): Int {
 }
 fun getAppPkg(input: Any): Str {
     val pm = App.ctx.packageManager
-    return when (input) {
+    val result: Str = when (input) {
         is ResolveInfo -> input.activityInfo.packageName
-        is String -> {
+        is Str -> {
             // Try to find package by app name
-            val apps = pm.getInstalledApplications(0)
-            apps.firstOrNull { 
-                pm.getApplicationLabel(it).toString().equals(input, ignoreCase = true) 
-            }?.packageName
+            pm.getInstalledApplications(0)
+                .firstOrNull { 
+                    pm.getApplicationLabel(it).toString().equals(input, ignoreCase = true) 
+                }?.packageName ?: ""
         }
         else -> ""
     }
+    return Str(result)
 }
 
 fun getAppName(info: ResolveInfo): Str {
