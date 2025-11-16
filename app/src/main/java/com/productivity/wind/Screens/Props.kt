@@ -353,16 +353,18 @@ object Header {
         Text("Copy Paste")
         
         UI.End {
-                Icon.Add {
-                    UI.check(text.it.isEmpty(),"Add text") {return@Add}
+            Icon.Add {
+                UI.check(text.it.isEmpty(),"Add text") {return@Add}
                     
-                    Bar.copyTsk.add {
-                        txt = text.it
-                        DailyMax = dailyMax.it
-                        Done_Worth = doneWorth.it
-                        Letter_Worth = letterWorth.it
-                    }                  
-                }
+                Bar.copyTsk.add {
+                    txt = text.it
+                    DailyMax = dailyMax.it
+                    Done_Worth = doneWorth.it
+                    Letter_Worth = letterWorth.it
+                }      
+
+                goTo("Main")
+            }
         }
     }
 
