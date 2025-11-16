@@ -116,10 +116,12 @@ fun CopyTskUI(tsk: CopyTsk) {
                 if (it.length > tsk.input.length){
                     Bar.TotalTypedLetters += 1
                 }
-                    
-                tsk.input = it
 
-                val correctChars = Bar.targetText.zip(tsk.input)
+				Bar.copyTsk.edit(tsk){
+					tsk.input = it
+				}
+
+                val correctChars = tsk.txt.zip(tsk.input)
                     .takeWhile { it.first == it.second }.size
                 val correctInput = tsk.input.take(correctChars)
 
@@ -127,17 +129,21 @@ fun CopyTskUI(tsk: CopyTsk) {
                 val newlyEarned = correctInput.length - tsk.goodStr
                 if (newlyEarned > 0) {
                     var oldFunTime = Bar.funTime
-                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
+                    Bar.funTime += newlyEarned * tsk.Letter_Worth; if (oldFunTime === Bar.funTime) {
 
                     }
-                    tsk.goodStr = correctInput.length
+					Bar.copyTsk.edit(tsk){
+						tsk.goodStr = correctInput.length
+					}
                 }
 
                 if (correctInput == tsk.txt) {
-                    Bar.funTime += Bar.DoneRetype_to_time
-                    Bar.HowManyDoneRetypes_InDay +=1
-                    tsk.input = ""
-                    tsk.goodStr = 0
+					Bar.copyTsk.edit(tsk){
+						tsk.DailyDone +=1
+						tsk.input = ""
+						tsk.goodStr = 0
+					}
+                    Bar.funTime += tsk.Done_Worth
                 }
             }
         },
