@@ -86,6 +86,18 @@ fun Menu() {
 
 object Item {
 
+    fun UpdateAppTsk(){
+        Bar.apps.each {
+            Bar.apps.edit(it) { it.NowTime = getTodayAppUsage(it.pkg) }
+
+            if (it.NowTime > it.DoneTime - 1 && !it.done) {
+                Bar.funTime += it.Worth
+                Bar.apps.edit(it) { done = yes }
+                Vlog("${it.name} completed")
+            }
+        }
+    }
+
     @Composable
     fun TskInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes) {  
         val TxtState = txt as? MutableState<Any> ?: run {
