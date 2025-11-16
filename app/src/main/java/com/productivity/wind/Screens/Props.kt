@@ -175,15 +175,16 @@ object Item {
                 move(12)
                 Text("Points ${app.Worth}")
 
+                var delete by r_m(no)
+
+                 isSure(delete){
+                    Bar.apps.remove(app)
+                 }
+
 
                 UI.End {
-                    Icon.Edit{
-                        Bar.apps.edit(app){
-                            Worth +=1
-                        }
-                    }
                     Icon.Delete{
-                        Bar.apps.remove(app)
+                       delete = yes
                     }
                 }
 
@@ -470,6 +471,7 @@ object Popup {
         NeedMorePointsPopup(NeedMorePoints)
         AppSelectPopup(AppSelect)
         DebugPopup(DebugPopup)
+        
     }
     
     
@@ -545,6 +547,18 @@ fun DebugPopup(show: m_<Bool>) {
             }
             
         )
+}
+@Composable
+fun isSure(show: m_<Bool>, Do: Do) {
+    LazyPopup(
+        show = show,
+        title = "Really?",
+        onConfirm = {Do()},
+        message = "",
+        content = {
+            Text("Are you sure?")
+        }
+    )
 }
 
 
