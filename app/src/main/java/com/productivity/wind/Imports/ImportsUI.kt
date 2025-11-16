@@ -157,6 +157,17 @@ object DayChecker {
     }
 }
 
+fun AnnotatedString.Builder.correctStr(text: Str, correctUntil: Int) {
+        for (i in text.indices) {
+            if (i < correctUntil) {
+                pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
+                append(text[i]); pop()
+            } else {
+                append(text[i])
+            }
+        }
+}
+
 object UI {
     //No synched with actual settingsItem function YET
     var SettingsItemCardColor = Color(0xFF121212)
