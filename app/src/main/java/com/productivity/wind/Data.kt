@@ -191,11 +191,11 @@ fun AppStart_beforeUI(ctx: Context) {
 
 @Composable
 fun MAINStart() {
-    
+    Item.UpdateAppTsk()
 }
 
 fun OnResume(){
-	
+	Item.UpdateAppTsk()
 
 	
 }
