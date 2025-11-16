@@ -472,7 +472,7 @@ fun BasicInput(
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start
 	),
-	oneLine: Bool= no,
+	oneLine: Bool= yes,
     Do: (Str) -> Unit = {},
 ) {
 	val focusManager = LocalFocusManager.current
