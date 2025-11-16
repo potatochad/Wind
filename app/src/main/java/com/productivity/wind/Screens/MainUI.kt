@@ -48,17 +48,6 @@ fun Main() {
 				LazyCard { 
 					CopyTskUI(it)
 				}
-
-				/*
-                txt: Str = "",
-                var input: Str = "",
-    var done: Bool = no,
-    var DailyMax: Int = 5,
-	var DailyDone: Int = 0,
-    var Done_Worth: Int = 10,
-    var Letter_Worth: Int = 1
-
-				*/
             }
 
 
@@ -95,7 +84,18 @@ fun CopyTskUI(tsk: CopyTsk) {
         }
     }
 
-	val coloredTarget = fullCorrectStr(Bar.targetText, Bar.currentInput)
+	/*
+                txt: Str = "",
+                var input: Str = "",
+    var done: Bool = no,
+    var DailyMax: Int = 5,
+	var DailyDone: Int = 0,
+    var Done_Worth: Int = 10,
+    var Letter_Worth: Int = 1
+
+				*/
+
+	val coloredTarget = fullCorrectStr(tsk.txt, tsk.input)
 
     
     LazzyRow {
@@ -110,18 +110,18 @@ fun CopyTskUI(tsk: CopyTsk) {
     move(h = 20)
 
     OutlinedTextField(
-        value = Bar.currentInput,
+        value = tsk.input,
         onValueChange = {
-            if (it.length - Bar.currentInput.length <= 5) {
-                if (it.length > Bar.currentInput.length){
+            if (it.length - tsk.input.length <= 5) {
+                if (it.length > tsk.input.length){
                     Bar.TotalTypedLetters += 1
                 }
                     
-                Bar.currentInput = it
+                tsk.input = it
 
-                val correctChars = Bar.targetText.zip(Bar.currentInput)
+                val correctChars = Bar.targetText.zip(tsk.input)
                     .takeWhile { it.first == it.second }.size
-                val correctInput = Bar.currentInput.take(correctChars)
+                val correctInput = tsk.input.take(correctChars)
 
 
                 val newlyEarned = correctInput.length - tsk.goodStr
@@ -133,10 +133,10 @@ fun CopyTskUI(tsk: CopyTsk) {
                     tsk.goodStr = correctInput.length
                 }
 
-                if (correctInput == Bar.targetText) {
+                if (correctInput == tsk.txt) {
                     Bar.funTime += Bar.DoneRetype_to_time
                     Bar.HowManyDoneRetypes_InDay +=1
-                    Bar.currentInput = ""
+                    tsk.input = ""
                     tsk.goodStr = 0
                 }
             }
