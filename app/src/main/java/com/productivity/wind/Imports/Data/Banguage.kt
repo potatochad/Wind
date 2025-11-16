@@ -614,7 +614,7 @@ fun getAppName(info: ResolveInfo): Str {
     return info.loadLabel(App.ctx.packageManager)?.toString() ?: pkg
 }
 
-fun getAppIcon(packageName: Str): Drawable? {
+fun getAppIcon2(packageName: Str): Drawable? {
     val pm = App.ctx.packageManager
     return try {
         pm.getApplicationIcon(packageName)
@@ -622,6 +622,15 @@ fun getAppIcon(packageName: Str): Drawable? {
         null
     }
 }
+fun getAppIcon(packageName: String): Drawable? {
+    val pm = App.ctx.packageManager
+    return try {
+        pm.getApplicationIcon(packageName)
+    } catch (e: PackageManager.NameNotFoundException) {
+        pm.getApplicationIcon(android.R.drawable.sym_def_app_icon)
+    }
+}
+
 
 
 
