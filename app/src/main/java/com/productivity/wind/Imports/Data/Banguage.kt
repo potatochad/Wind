@@ -606,7 +606,7 @@ fun getTodayAppUsage(packageName: Str): Int {
 
     return (todayUsage / 1000L).toInt().coerceAtLeast(0)
 }
-fun getAppPkg(input: Any): String? {
+fun getAppPkg(input: Any): Str {
     val pm = App.ctx.packageManager
     return when (input) {
         is ResolveInfo -> input.activityInfo.packageName
@@ -617,7 +617,7 @@ fun getAppPkg(input: Any): String? {
                 pm.getApplicationLabel(it).toString().equals(input, ignoreCase = true) 
             }?.packageName
         }
-        else -> null
+        else -> ""
     }
 }
 
