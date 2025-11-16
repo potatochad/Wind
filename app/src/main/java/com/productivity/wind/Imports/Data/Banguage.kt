@@ -622,7 +622,7 @@ fun getAppIcon2(packageName: Str): Drawable? {
         null
     }
 }
-fun getAppIcon(packageName: Str): Drawable? {
+fun getAppIcon3(packageName: Str): Drawable? {
     val pm = App.ctx.packageManager
     return try {
         pm.getApplicationIcon(packageName)
@@ -630,6 +630,17 @@ fun getAppIcon(packageName: Str): Drawable? {
         App.ctx.getDrawable(android.R.drawable.sym_def_app_icon)
     }
 }
+
+fun getAppIcon(packageName: Str): Drawable? {
+    val pm = App.ctx.packageManager
+    return try {
+        val info = pm.getApplicationInfo(packageName, 0)
+        info.loadIcon(pm)   // <— this always gives the real real icon
+    } catch (_: Exception) {
+        App.ctx.getDrawable(android.R.drawable.sym_def_app_icon)
+    }
+}
+
 
 
 
