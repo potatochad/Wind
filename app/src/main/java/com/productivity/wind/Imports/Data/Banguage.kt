@@ -97,8 +97,6 @@ import androidx.compose.foundation.lazy.*
 import java.util.*
 import kotlin.concurrent.*
 import androidx.annotation.RequiresApi
-
-
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
@@ -619,7 +617,7 @@ fun getAppPkg(input: Any): Str {
         }
         else -> ""
     }
-    return Str(result)
+    return result
 }
 
 fun getAppName(info: ResolveInfo): Str {
