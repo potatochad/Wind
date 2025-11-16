@@ -615,7 +615,7 @@ fun getAppName(info: ResolveInfo): Str {
 }
 fun getAppIcon(packageName: Str?): Drawable? {
     if (packageName.isNullOrBlank()) {
-        log("PackageName is NULL or blank")
+        log("PackageName: [ $packageName ] is NULL or blank")
         return App.ctx.getDrawable(android.R.drawable.sym_def_app_icon)
     }
 
