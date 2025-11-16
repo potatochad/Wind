@@ -622,14 +622,15 @@ fun getAppIcon2(packageName: Str): Drawable? {
         null
     }
 }
-fun getAppIcon(packageName: String): Drawable? {
+fun getAppIcon(packageName: Str): Drawable? {
     val pm = App.ctx.packageManager
     return try {
         pm.getApplicationIcon(packageName)
     } catch (e: PackageManager.NameNotFoundException) {
-        pm.getApplicationIcon(android.R.drawable.sym_def_app_icon)
+        App.ctx.getDrawable(android.R.drawable.sym_def_app_icon)
     }
 }
+
 
 
 
