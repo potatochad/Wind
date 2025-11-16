@@ -606,9 +606,21 @@ fun getTodayAppUsage(packageName: Str): Int {
 
     return (todayUsage / 1000L).toInt().coerceAtLeast(0)
 }
-fun getAppPackage(ri: ResolveInfo): Str {
-    return ri.activityInfo.packageName
+fun getAppPkg(input: Any): String? {
+    val pm = App.ctx.packageManager
+    return when (input) {
+        is ResolveInfo -> input.activityInfo.packageName
+        is String -> {
+            // Try to find package by app name
+            val apps = pm.getInstalledApplications(0)
+            apps.firstOrNull { 
+                pm.getApplicationLabel(it).toString().equals(input, ignoreCase = true) 
+            }?.packageName
+        }
+        else -> null
+    }
 }
+
 fun getAppName(info: ResolveInfo): Str {
     val pkg = info.activityInfo.packageName
     return info.loadLabel(App.ctx.packageManager)?.toString() ?: pkg
