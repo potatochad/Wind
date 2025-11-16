@@ -472,7 +472,7 @@ fun BasicInput(
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start
 	),
-	oneLine: Bool= yes,
+	oneLine: Bool= no,
     Do: (Str) -> Unit = {},
 ) {
 	val focusManager = LocalFocusManager.current
@@ -483,8 +483,7 @@ fun BasicInput(
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
-		Column{
-		move(w=5)
+		move(w=3)
 		BasicTextField(
 			value = value,
 			onValueChange = { Do(it) },
@@ -499,7 +498,7 @@ fun BasicInput(
 			),
 			modifier = Modifier.focusRequester(focusRequester)
 		)
-	}}
+	}
 	
 }
 
