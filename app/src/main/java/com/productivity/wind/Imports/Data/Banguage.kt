@@ -472,6 +472,7 @@ fun BasicInput(
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start
 	),
+	oneLine: Bool= yes,
     Do: (Str) -> Unit = {},
 ) {
 	val focusManager = LocalFocusManager.current
@@ -487,7 +488,7 @@ fun BasicInput(
 			value = value,
 			onValueChange = { Do(it) },
 			textStyle = textStyle, 
-			singleLine = yes, 
+			singleLine = oneLine, 
 			keyboardOptions = KeyboardOptions(
 				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
 				imeAction = ImeAction.Done
