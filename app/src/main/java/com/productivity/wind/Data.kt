@@ -134,7 +134,8 @@ data class CopyTsk(
     var DailyMax: Int = 5,
 	var DailyDone: Int = 0,
     var Done_Worth: Int = 10,
-    var Letter_Worth: Int = 1
+    var Letter_Worth: Int = 1,
+	var goodStr: Int = 0,
 )   
 
 @Serializable
