@@ -165,11 +165,7 @@ fun AppContent() {
 	LazyTheme {
         Surface(Modifier.maxS()) {
 			SelectionContainer {
-				Box(Modifier.click{
-					
-				}){
-					AppStart()
-				}				
+				AppStart()			
 			}
 		}
 	}
@@ -199,6 +195,17 @@ fun MAINStart() {
 }
 
 fun OnResume(){
+	Bar.apps.each {
+		Bar.apps.edit(it) { it.NowTime = yes }
+	}
+	Bar.apps.each {
+        if (it.NowTime > it.DoneTime - 1 && !it.done) {
+            Bar.funTime += it.Worth
+            Bar.apps.edit(it) { done = yes }
+            Vlog("${it.name} completed")
+		}
+	}
+
 	
 }
 
