@@ -34,7 +34,9 @@ import androidx.compose.runtime.*
 
 @Composable
 fun Main() {
-    MAINStart()
+	RunOnce{
+		MAINStart()
+	}
 
     
     LazyScreen(title = { Header.Main() }, showBack = no) {
