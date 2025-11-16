@@ -99,6 +99,25 @@ object Item {
     }
 
     @Composable
+    fun BigTskInput(txt: Any, maxLetters: Int = 5000, modifier=Modifier.maxW().h(150)){
+        val TxtState = txt as? MutableState<Any> ?: run {
+            Vlog("expected mutable")
+            return
+        }
+        
+        OutlinedTextField(
+            value = "${TxtState.it}",
+            onValueChange = {
+                val input = it.take(maxLetters)
+                
+                TxtState.it =  input
+            },
+            modifier = modifier,
+            placeholder = { Text("Start typing...") }
+        )
+    }
+
+    @Composable
     fun TskInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes) {  
         val TxtState = txt as? MutableState<Any> ?: run {
             Vlog("expected mutable")
