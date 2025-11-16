@@ -188,8 +188,6 @@ fun AppStart_beforeUI(ctx: Context) {
     //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }
 }
 
-
-@Composable
 fun MAINStart() {
     Item.UpdateAppTsk()
 }
