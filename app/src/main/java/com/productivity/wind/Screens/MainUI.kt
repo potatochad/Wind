@@ -44,7 +44,7 @@ fun Main() {
 
             Bar.copyTsk.each {
 				LazyCard { 
-					Text("Do later")
+					CopyTskUI(it)
 				}
 
 				/*
@@ -80,7 +80,7 @@ fun Main() {
 
 
 @Composable
-fun CopyTskUI(copyTsk: ) {
+fun CopyTskUI(it: CopyTsk) {
 	if (Bar.HowManyDoneRetypes_InDay == 5) return
 
     val txtScroll = r_Scroll()
