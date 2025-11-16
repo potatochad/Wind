@@ -86,8 +86,8 @@ fun Disipline() {
 
     RunOnce(Bar.highestCorrect) {
         if (Bar.highestCorrect > 20) {
-            txtScroll.animateScrollBy(1f)
-			inputScroll.animateScrollBy(15f)
+            txtScroll.scroll(1)
+			inputScroll.scroll(15)
         }
     }
 
