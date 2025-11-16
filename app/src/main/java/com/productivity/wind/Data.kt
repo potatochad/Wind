@@ -195,15 +195,7 @@ fun MAINStart() {
 }
 
 fun OnResume(){
-	Bar.apps.each {
-		Bar.apps.edit(it) { it.NowTime = getTodayAppUsage(it.pkg) }
-
-        if (it.NowTime > it.DoneTime - 1 && !it.done) {
-            Bar.funTime += it.Worth
-            Bar.apps.edit(it) { done = yes }
-            Vlog("${it.name} completed")
-		}
-	}
+	
 
 	
 }
