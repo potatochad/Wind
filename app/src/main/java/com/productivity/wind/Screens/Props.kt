@@ -175,7 +175,7 @@ object Item {
                 move(12)
                 Text("Points ${app.Worth}")
 
-                var delete by r_m(no)
+                var delete = r_m(no)
 
                  isSure(delete){
                     Bar.apps.remove(app)
@@ -184,7 +184,7 @@ object Item {
 
                 UI.End {
                     Icon.Delete{
-                       delete = yes
+                       delete.it = yes
                     }
                 }
 
