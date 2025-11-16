@@ -300,6 +300,7 @@ object Header {
                 UI.check(selectedApp.it.isEmpty(),"Select app") {return@Add}
 
                 Bar.apps.add {
+                    pkg = getAppPkg(selectedApp.it)
                     name = selectedApp.it
                     DoneTime = Time.it.toIntOrNull() ?: 0
                     Worth = Points.it.toIntOrNull() ?: 0
@@ -554,9 +555,9 @@ fun AppSelectPopup(show: m_<Bool>) {
         runHeavyTask(
             task = {
                 getApps()
-                    .filter { getAppPackage(it) != App.pkg }
+                    .filter { getAppPkg(it) != App.pkg }
                     .map { app ->
-                        val icon = getAppIcon(getAppPackage(app))
+                        val icon = getAppIcon(getAppPkg(app))
                         app to icon
                     }
             },
