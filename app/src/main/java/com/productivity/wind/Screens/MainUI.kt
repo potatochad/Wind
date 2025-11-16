@@ -87,11 +87,9 @@ fun CopyTskUI(it: CopyTsk) {
     val txtScroll = r_Scroll()
 	val inputScroll = r_Scroll()
 
-	var highestCorrect by r_m(0)
 
-
-    RunOnce(highestCorrect) {
-        if (highestCorrect > 20) {
+    RunOnce(it.goodStr) {
+        if (it.goodStr > 20) {
             txtScroll.scroll(1)
 			inputScroll.scroll(15)
         }
@@ -126,20 +124,20 @@ fun CopyTskUI(it: CopyTsk) {
                 val correctInput = Bar.currentInput.take(correctChars)
 
 
-                val newlyEarned = correctInput.length - Bar.highestCorrect
+                val newlyEarned = correctInput.length - it.goodStr
                 if (newlyEarned > 0) {
                     var oldFunTime = Bar.funTime
                     Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
 
                     }
-                    highestCorrect = correctInput.length
+                    it.goodStr = correctInput.length
                 }
 
                 if (correctInput == Bar.targetText) {
                     Bar.funTime += Bar.DoneRetype_to_time
                     Bar.HowManyDoneRetypes_InDay +=1
                     Bar.currentInput = ""
-                    Bar.highestCorrect = 0
+                    it.goodStr = 0
                 }
             }
         },
