@@ -40,9 +40,12 @@ fun Main() {
     LazyScreen(title = { Header.Main() }, showBack = no) {
         Column(Modifier.Vscroll()){
             
-            LazyCard { Disipline() }
+            // LazyCard { Disipline() }
 
             Bar.copyTsk.each {
+				LazyCard { 
+					Text("Do later")
+				}
 
 				/*
                 txt: Str = "",
@@ -77,7 +80,7 @@ fun Main() {
 
 
 @Composable
-fun Disipline() {
+fun CopyTskUI(copyTsk: ) {
 	if (Bar.HowManyDoneRetypes_InDay == 5) return
 
     val txtScroll = r_Scroll()
