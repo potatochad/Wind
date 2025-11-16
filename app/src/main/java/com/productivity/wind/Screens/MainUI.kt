@@ -78,85 +78,70 @@ fun Main() {
 
 @Composable
 fun Disipline() {
-    val ScrollText = r_Scroll()
-	val ScrollINPUTText = r_Scroll()
+	if (Bar.HowManyDoneRetypes_InDay == 5) return
+
+    val txtScroll = r_Scroll()
+	val inputScroll = r_Scroll()
 
 
     RunOnce(Bar.highestCorrect) {
         if (Bar.highestCorrect > 20) {
-            ScrollText.animateScrollBy(1f)
-			ScrollINPUTText.animateScrollBy(15f)
+            txtScroll.animateScrollBy(1f)
+			inputScroll.animateScrollBy(15f)
         }
     }
 
-    val coloredTarget by produceState(initialValue = AnnotatedString(""), Bar.targetText, Bar.currentInput) {
-        withContext(Dispatchers.Default) {
-            val correctChars = Bar.targetText.zip(Bar.currentInput)
-                .takeWhile { it.first == it.second }
-                .size
-            value = buildAnnotatedString {
-                correctStr(Bar.targetText, correctChars)
-            }
+	val coloredTarget = fullCorrectStr(Bar.targetText, Bar.currentInput)
+
+    
+    LazzyRow {
+        Text("Done: ${Bar.HowManyDoneRetypes_InDay}/5")
+        UI.End{
+            Icon.Edit()
         }
     }
+    move(8)
+    Text(
+        text = coloredTarget,
+        modifier = Modifier.h(0, 100).w(0, 300).Vscroll(txtScroll)
+    )
+    move(h = 20)
 
-    if (Bar.HowManyDoneRetypes_InDay == 5) { }
-    else {
-        LazzyRow {
-            Text("Done: ${Bar.HowManyDoneRetypes_InDay}/5")
-            UI.End{
-                Icon.Edit()
-            }
-        }
-        move(8)
-        Text(
-            text = coloredTarget,
-            modifier = Modifier
-                .h(0, 100)
-                .w(0, 300)
-                .Vscroll(ScrollText)
-        )
-        move(h = 20)
-
-        OutlinedTextField(
-            value = Bar.currentInput,
-            onValueChange = {
-                if (it.length - Bar.currentInput.length <= 5) {
-                    if (it.length > Bar.currentInput.length){
-                        Bar.TotalTypedLetters += 1
-                    }
-                    
-                    Bar.currentInput = it
-
-                    val correctChars = Bar.targetText.zip(Bar.currentInput)
-                        .takeWhile { it.first == it.second }.size
-                    val correctInput = Bar.currentInput.take(correctChars)
-
-
-                    val newlyEarned = correctInput.length - Bar.highestCorrect
-                    if (newlyEarned > 0) {
-                        var oldFunTime = Bar.funTime
-                        Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
-
-                        }
-                        Bar.highestCorrect = correctInput.length
-                    }
-
-                    if (correctInput == Bar.targetText) {
-                        Bar.funTime += Bar.DoneRetype_to_time
-                        Bar.HowManyDoneRetypes_InDay +=1
-                        Bar.currentInput = ""
-                        Bar.highestCorrect = 0
-                    }
+    OutlinedTextField(
+        value = Bar.currentInput,
+        onValueChange = {
+            if (it.length - Bar.currentInput.length <= 5) {
+                if (it.length > Bar.currentInput.length){
+                    Bar.TotalTypedLetters += 1
                 }
-            },
-            modifier = Modifier
-                .maxW()
-                .h(150)
-                .Vscroll(ScrollINPUTText),
-            placeholder = { Text("Start typing...") }
-        )
-    }
+                    
+                Bar.currentInput = it
+
+                val correctChars = Bar.targetText.zip(Bar.currentInput)
+                    .takeWhile { it.first == it.second }.size
+                val correctInput = Bar.currentInput.take(correctChars)
+
+
+                val newlyEarned = correctInput.length - Bar.highestCorrect
+                if (newlyEarned > 0) {
+                    var oldFunTime = Bar.funTime
+                    Bar.funTime += newlyEarned * Bar.LetterToTime; if (oldFunTime === Bar.funTime) {
+
+                    }
+                    Bar.highestCorrect = correctInput.length
+                }
+
+                if (correctInput == Bar.targetText) {
+                    Bar.funTime += Bar.DoneRetype_to_time
+                    Bar.HowManyDoneRetypes_InDay +=1
+                    Bar.currentInput = ""
+                    Bar.highestCorrect = 0
+                }
+            }
+        },
+        modifier = Modifier.maxW().h(150).Vscroll(inputScroll),
+		placeholder = { Text("Start typing...") }
+    )
 }
 
 
