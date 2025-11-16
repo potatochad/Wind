@@ -104,7 +104,7 @@ fun CopyPaste() {
             LazzyRow {
                 Text("Text: ")
                 Column {
-                Item.TskInput(txt, 5000, no)
+                Item.BigTskInput(txt)
             }}
         }
     }
