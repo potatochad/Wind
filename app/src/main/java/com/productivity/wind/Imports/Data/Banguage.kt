@@ -483,6 +483,7 @@ fun BasicInput(
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
+		Column{
 		move(w=5)
 		BasicTextField(
 			value = value,
@@ -498,7 +499,7 @@ fun BasicInput(
 			),
 			modifier = Modifier.focusRequester(focusRequester)
 		)
-	}
+	}}
 	
 }
 
