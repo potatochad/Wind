@@ -108,6 +108,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import androidx.compose.foundation.text.selection.*
 import kotlin.system.*
+import androidx.navigation.*
 
 
 var CardColor = Color(0xFF1A1A1A)
