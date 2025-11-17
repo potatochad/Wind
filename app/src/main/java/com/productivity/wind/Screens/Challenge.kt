@@ -124,9 +124,11 @@ fun AppUsage(id: Str = "") {
     if (!id.isEmpty()) {
       val app = Bar.apps.find { it.id == id }
 
-      Time.it = app.DoneTime
-      Points.it = app.Worth
-      selectedApp.it = app.name
+      if (app != null) {
+        Time.it = app.DoneTime
+        Points.it = app.Worth
+        selectedApp.it = app.name
+      }
     }
 
     LazyScreen(title = {
