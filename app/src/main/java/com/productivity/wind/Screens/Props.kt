@@ -205,7 +205,9 @@ object Item {
 
                 UI.End {
                     Icon.Edit{
-                        goTo("AppUsage/${app.id}")
+                        enoughPoints {
+                            goTo("AppUsage/${app.id}")
+                        }
                     }
                     Icon.Delete{
                        delete.it = yes
