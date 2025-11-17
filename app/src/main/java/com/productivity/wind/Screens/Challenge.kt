@@ -122,7 +122,12 @@ fun AppUsage(id: Str = "") {
     selectedApp.it= ""
   
     if (!id.isEmpty()) {
-      Vlog("id: $id")
+      val app = Bar.apps.find { it.id == id }
+
+      var Time = r_m("60")
+    var Points = r_m("10")
+    var WhichIf = r_m(0)
+    selectedApp.it= ""
     }
 
     LazyScreen(title = {
