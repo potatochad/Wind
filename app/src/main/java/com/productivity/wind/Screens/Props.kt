@@ -400,9 +400,7 @@ object Header {
         Text("Points ${Bar.funTime}")
         
         UI.End {
-            Item.enoughPoints{
-                Icon.Add()
-            }
+            Icon.Add()
         }
     }
 
@@ -436,8 +434,10 @@ object Icon {
 
     @Composable
     fun Add(Do: Do = { goTo("Challenge") }) {
-        LazyIcon(Icons.Default.Add) {
-            Do()
+        LazyIcon(Icons.Default.Add) {     
+            Item.enoughPoints{
+                Do()
+            }
         }
     }
 
