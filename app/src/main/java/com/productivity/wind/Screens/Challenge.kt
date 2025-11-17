@@ -124,10 +124,9 @@ fun AppUsage(id: Str = "") {
     if (!id.isEmpty()) {
       val app = Bar.apps.find { it.id == id }
 
-      var Time = r_m("60")
-    var Points = r_m("10")
-    var WhichIf = r_m(0)
-    selectedApp.it= ""
+      Time.it = app.DoneTime
+      Points.it = app.Worth
+      selectedApp.it = app.name
     }
 
     LazyScreen(title = {
@@ -136,7 +135,6 @@ fun AppUsage(id: Str = "") {
     ) {
       LazyRuleCard("If"){
         LazzyRow{
-          //does nothing YET
           UI.CheckCircle(1, WhichIf)
           Text("Spend ")
           Item.TskInput(Time)
