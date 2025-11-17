@@ -468,8 +468,9 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 fun BasicInput(
     value: Str,
     isInt: Bool = no,
+	w: Int=60,
 	modifier: Mod = Modifier
-		.h(34).space(h = 8, w = 4).w(60)
+		.h(34).space(h = 8, w = 4).w(w)
 		.background(InputColor, shape = RoundedCornerShape(4.dp))
 		.wrapContentHeight(Alignment.CenterVertically),            
 	textStyle: TextStyle = TextStyle(
