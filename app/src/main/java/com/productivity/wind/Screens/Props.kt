@@ -35,7 +35,13 @@ fun NavGraphBuilder.ScreenNav() {
 
     url("Achievements") { Achievements() }
     url("Challenge") { Challenge() }
-    url("AppUsage") { AppUsage() }
+    url("AppUsage/{appId}") { 
+        val appId = it.arguments?.getString("appId") ?: ""
+        AppUsage()
+    }
+
+        AppUsage() 
+    }
     url("CopyPaste") { CopyPaste() }
 
     url("Web") { Web() }
