@@ -56,7 +56,7 @@ fun Challenge() {
             BigIconColor = DarkBlue,
             title = "App Usage",
             onClick = { 
-              goTo("AppUsage")
+              goTo("AppUsage/_")
             },
         )
     LazyItem(
