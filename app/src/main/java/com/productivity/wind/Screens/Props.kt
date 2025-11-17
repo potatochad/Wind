@@ -191,7 +191,7 @@ object Item {
                 click({
                     UI.ProgressIcon(icon, progress)
                 }){
-                    Plog("$name app progress is ${progress*100}%; ${app.Worth/app.NowTime}points/s ")
+                    Plog("$name app progress is ${progress*100}%; ${app.Worth/app.NowTime}points/s")
                 }
 
 
@@ -576,18 +576,10 @@ var DebugPopupInfo by m("")
 fun DebugPopup(show: m_<Bool>) {
         LazyPopup(
             show = show,
-            title = "ERROR",
+            title = "Info",
             message = DebugPopupInfo,
             showCancel = no,
-            showConfirm = no,
-            content = {
-                Column {
-                    LazzyRow { Icon.Copy(DebugPopupInfo) }
-
-                    Text(DebugPopupInfo)
-                }
-            }
-            
+            showConfirm = no,         
         )
 }
 @Composable
@@ -602,6 +594,7 @@ fun isSure(show: m_<Bool>, Do: Do) {
         }
     )
 }
+
 
 
 
