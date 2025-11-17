@@ -84,7 +84,7 @@ fun Web(){
 
 @Composable
 fun BlockKeyword() {
-    var BadWord = r_m("1")
+    var BadWord = r_m("someWord")
 
     RunOnce(Bar.badWords) {
         BadWord.it = "${Bar.badWords.size}"
@@ -111,11 +111,7 @@ fun BlockKeyword() {
         LazyRuleCard("If") {
             LazzyRow {
                 Text("Detect ")
-                LazyInput(
-                    BadWord, 
-                    no,
-                    Modifier.w(40, 120)
-                )
+                Item.TskInput(BadWord, w=150, isInt=no)
             }
         }
 
