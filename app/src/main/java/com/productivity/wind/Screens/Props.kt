@@ -338,12 +338,26 @@ object Header {
                 UI.check(Time.it < 1,"Add time") {return@Add}
                 UI.check(selectedApp.it.isEmpty(),"Select app") {return@Add}
 
-                Bar.apps.add {
-                    pkg = getAppPkg(selectedApp.it)
-                    name = selectedApp.it
-                    DoneTime = Time.it
-                    Worth = Points.it
+
+                var isAdded = Bar.apps.find { it.name = selectedApp.it }
+
+                if (isAdded==null){
+                    Bar.apps.add {
+                        pkg = getAppPkg(selectedApp.it)
+                        name = selectedApp.it
+                        DoneTime = Time.it
+                        Worth = Points.it
+                    }
+                } else {
+                    Bar.apps.edit(isAdded) {
+                        pkg = getAppPkg(selectedApp.it)
+                        name = selectedApp.it
+                        DoneTime = Time.it
+                        Worth = Points.it
+                    }
                 }
+
+                
                 
 
                 selectedApp.it= ""
