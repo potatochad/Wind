@@ -39,6 +39,11 @@ fun NavGraphBuilder.ScreenNav() {
         val appId = it.arguments?.getString("appId") ?: ""
         AppUsage(appId)
     }
+    /*
+    url("AppUsage/{appId}") { 
+        AppUsage(it.URL("appId"))
+    }
+    */
 
     url("CopyPaste") { CopyPaste() }
 
