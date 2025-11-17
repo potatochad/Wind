@@ -116,8 +116,8 @@ fun CopyPaste() {
 
 @Composable
 fun AppUsage(id: Str = "") {
-    var Time = r_m("60")
-    var Points = r_m("10")
+    var Time = r_m(60)
+    var Points = r_m(10)
     var WhichIf = r_m(0)
     selectedApp.it= ""
   
