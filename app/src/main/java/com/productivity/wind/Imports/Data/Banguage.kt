@@ -171,6 +171,16 @@ fun goTo(route: Str){
 	App.navHost.navigate(route)
 }
 
+fun NavGraphBuilder.url(
+    route: Str,
+    content: @Composable (NavBackStackEntry) -> Unit
+) {
+    composable(route) { backStackEntry ->
+        content(backStackEntry)
+    }
+}
+
+
 
 @Composable
 fun click(x: Content, Do: Do) {
@@ -299,14 +309,6 @@ inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotState
 @Composable
 fun <T> track(value: () -> T): State<T> = r { derivedStateOf(value) }
 fun <T> mList() = mutableStateListOf<T>()
-
-
-fun NavGraphBuilder.url(
-    route: Str,
-    content: Content
-) {
-    composable(route) { content() }
-}
 
 
 fun getJavaClass(bar: ClassVar<Settings, Any?>): Class<*>? {
