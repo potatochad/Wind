@@ -180,6 +180,10 @@ fun NavGraphBuilder.url(
         content(backStackEntry)
     }
 }
+fun NavBackStackEntry.url(key: Str): Str {
+    return this.arguments?.getString(key) ?: ""
+}
+
 
 @Composable
 fun click(x: Content, Do: Do) {
