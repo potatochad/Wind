@@ -37,7 +37,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("Challenge") { Challenge() }
     url("AppUsage/{appId}") { 
         val appId = it.arguments?.getString("appId") ?: ""
-        AppUsage()
+        AppUsage(appId)
     }
 
     url("CopyPaste") { CopyPaste() }
