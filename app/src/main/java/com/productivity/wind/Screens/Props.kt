@@ -191,7 +191,7 @@ object Item {
                 click({
                     UI.ProgressIcon(icon, progress)
                 }){
-                    // Plog("$name app progress is ${progress*100}%; current ${app.NowTime}s/${app.DoneTime}s; ${app.Worth/app.NowTime}points/s")
+                    openApp(app.pkg)
                 }
 
 
