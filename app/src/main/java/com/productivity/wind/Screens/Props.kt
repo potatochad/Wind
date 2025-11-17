@@ -339,7 +339,7 @@ object Header {
                 UI.check(selectedApp.it.isEmpty(),"Select app") {return@Add}
 
 
-                var isAdded = Bar.apps.find { it.name = selectedApp.it }
+                var isAdded = Bar.apps.find { it.name == selectedApp.it }
 
                 if (isAdded==null){
                     Bar.apps.add {
