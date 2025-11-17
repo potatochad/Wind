@@ -114,7 +114,7 @@ object Item {
             onValueChange = {
                 val input = it.take(maxLetters)
                 
-                TxtState.it =  input
+                TxtState.it = input
             },
             modifier = modifier,
             placeholder = { Text("Start typing...") }
@@ -135,7 +135,7 @@ object Item {
             val input = it.take(maxLetters)
             
             TxtState.it = if (TxtState.it is Int) {
-                 input.toInt()
+                 if (input.isEmpty()) 0 else input.toInt()
             } else {
                 input
             }
