@@ -181,8 +181,6 @@ fun NavGraphBuilder.url(
     }
 }
 
-
-
 @Composable
 fun click(x: Content, Do: Do) {
 	Box(Modifier.click(Do)){
@@ -622,6 +620,15 @@ fun getAppPkg(input: Any): Str {
         else -> ""
     }
     return result
+}
+fun openApp(pkg: Str) {
+    val pm: PackageManager = App.ctx.packageManager
+    val launchIntent: Intent? = pm.getLaunchIntentForPackage(pkg)
+    if (launchIntent != null) {
+        App.ctx.startActivity(launchIntent)
+    } else {
+        Vlog("App not installed")
+    }
 }
 
 fun getAppName(info: ResolveInfo): Str {
