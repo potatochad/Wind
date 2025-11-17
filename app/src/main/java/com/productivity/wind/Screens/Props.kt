@@ -119,7 +119,7 @@ object Item {
     }
 
     @Composable
-    fun TskInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes) {  
+    fun TskInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60,) {  
         val TxtState = txt as? MutableState<Any> ?: run {
             Vlog("expected mutable")
             return
@@ -128,6 +128,7 @@ object Item {
         BasicInput(
             "${TxtState.it}",
             isInt = isInt, 
+            w=w,
         ) {
             val input = it.take(maxLetters)
             
