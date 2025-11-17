@@ -348,7 +348,7 @@ object Header {
                         DoneTime = Time.it
                         Worth = Points.it
                     }
-                } else {
+                } else {   
                     Bar.apps.edit(isAdded) {
                         pkg = getAppPkg(selectedApp.it)
                         name = selectedApp.it
@@ -400,7 +400,9 @@ object Header {
         Text("Points ${Bar.funTime}")
         
         UI.End {
+            Item.enoughPoints{
                 Icon.Add()
+            }
         }
     }
 
