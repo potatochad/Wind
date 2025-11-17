@@ -100,7 +100,11 @@ fun CopyTskUI(tsk: CopyTsk) {
     
     LazzyRow {
         Text("Done: ${tsk.DailyDone}/${tsk.DailyMax}")
-        UI.End{ Icon.Edit() }
+        UI.End{ 
+			Icon.Edit {
+				
+			}
+		}
     }
     move(8)
     Text(
