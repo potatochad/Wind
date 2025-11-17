@@ -115,11 +115,15 @@ fun CopyPaste() {
 
 
 @Composable
-fun AppUsage() {
+fun AppUsage(id: Str = "") {
     var Time = r_m("60")
     var Points = r_m("10")
     var WhichIf = r_m(0)
     selectedApp.it= ""
+  
+    if (!id.isEmpty()) {
+      Vlog("id: $id")
+    }
 
     LazyScreen(title = {
         Header.AppUsage(Time, Points, selectedApp)
