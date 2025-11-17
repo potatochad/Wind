@@ -182,11 +182,7 @@ object Item {
         log("app.pkg: ${app.pkg}")
         val icon = getAppIcon(app.pkg)
         var name = app.name
-        val progress = if (app.DoneTime > 0) {
-            (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
-        } else {
-            0f
-        }
+        val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
 
         LazyCard {
             LazzyRow {
@@ -195,7 +191,7 @@ object Item {
                 click({
                     UI.ProgressIcon(icon, progress)
                 }){
-                    Plog("$name app progress is ${progress*100}%; current ${app.NowTime}s/${app.DoneTime}s; ${app.Worth/app.NowTime}points/s")
+                    // Plog("$name app progress is ${progress*100}%; current ${app.NowTime}s/${app.DoneTime}s; ${app.Worth/app.NowTime}points/s")
                 }
 
 
