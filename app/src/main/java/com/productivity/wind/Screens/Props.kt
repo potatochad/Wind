@@ -40,8 +40,6 @@ fun NavGraphBuilder.ScreenNav() {
         AppUsage()
     }
 
-        AppUsage() 
-    }
     url("CopyPaste") { CopyPaste() }
 
     url("Web") { Web() }
