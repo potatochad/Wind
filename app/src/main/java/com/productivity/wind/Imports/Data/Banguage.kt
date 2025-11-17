@@ -184,7 +184,7 @@ fun NavGraphBuilder.url(
 
 
 @Composable
-fun click(x: Content, Do: Do) {
+fun click(x: Content=Box{}, Do: Do) {
 	Box(Modifier.click(Do)){
 		x()
 	}
