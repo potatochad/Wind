@@ -452,8 +452,8 @@ object Icon {
 
     @Composable
     fun Edit(
-        Do: Do,
         noPoints: Bool=no,
+        Do: Do,
     ) {
         LazyIcon(Icons.Default.Edit) {
             if (!noPoints){
