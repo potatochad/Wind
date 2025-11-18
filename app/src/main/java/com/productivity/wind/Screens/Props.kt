@@ -527,7 +527,7 @@ object Popup {
 fun NeedMorePointsPopup(show: m_<Bool>){
     LazyPopup(
         show = show, 
-        title = "Get more points", 
+        title = "Get ${Bar.funTime- Bar.Dpoints} more points", 
         message = "Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime- Bar.Dpoints}",
         showCancel = no,
     )
