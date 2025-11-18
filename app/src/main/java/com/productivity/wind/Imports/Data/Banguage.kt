@@ -700,7 +700,7 @@ fun getMyAppLogs() {
 
 
 
-fun wait(x: Long = 100L, Do: () -> Unit) {
+fun wait(x: Long = 100L, Do: Do) {
     CoroutineScope(Dispatchers.Main).launch {
         delay(x)
         Do()
