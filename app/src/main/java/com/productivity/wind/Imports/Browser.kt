@@ -9,7 +9,6 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.compose.ui.viewinterop.*
 import android.view.*
-
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import com.productivity.wind.*
@@ -47,13 +46,13 @@ fun WebXml(
     webViewState: m_<WebView?>,
     url: String = "",
     isDesktopSite: Bool = no,
-    onUrlChanged: (String) -> Unit = {},
+    onUrlChanged: (Str) -> Unit = {},
     onProgressChanged: (Int) -> Unit = {},
-    onPageStarted: (String) -> Unit = {},
-    onPageFinished: (String) -> Unit = {},
+    onPageStarted: (Str) -> Unit = {},
+    onPageFinished: (Str) -> Unit = {},
 ) {
     BackHandler {
-        webViewState.value?.goBack()
+        webViewState.iy?.goBack()
     }
 
     AndroidView(
@@ -62,10 +61,10 @@ fun WebXml(
             val myWebView = rootView.findViewById<WebView>(R.id.myWebView)
 
             myWebView.settings.apply {
-                javaScriptEnabled = true
-                domStorageEnabled = true
-                useWideViewPort = true
-                loadWithOverviewMode = true
+                javaScriptEnabled = yes
+                domStorageEnabled = yes
+                useWideViewPort = yes
+                loadWithOverviewMode = yes
             }
 
             myWebView.webViewClient = object : WebViewClient() {
@@ -105,7 +104,7 @@ fun WebXml(
             }
 
             myWebView.loadUrl("https://www.google.com/search?q=$url")
-            webViewState.value = myWebView
+            webViewState.it = myWebView
 
             rootView
         },
@@ -132,17 +131,17 @@ fun WebView.clearWebData() {
 }
 
 fun goBackWeb(webView: WebView?) {
-    if (webView?.canGoBack() == true) {
+    if (webView?.canGoBack()) {
         webView.goBack()
     }
 }
 
 @SuppressLint("SetJavaScriptEnabled")
 fun WebSettings.applyDefaultConfig() {
-    javaScriptEnabled = true
-    setSupportZoom(true)
-    builtInZoomControls = true
-    displayZoomControls = false
+    javaScriptEnabled = yes
+    setSupportZoom(yes)
+    builtInZoomControls = yes
+    displayZoomControls = no
 }
 
 @Composable
