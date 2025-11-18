@@ -109,7 +109,7 @@ fun CopyTskUI(tsk: CopyTsk) {
             
 			Icon.Edit{
                 Item.enoughPoints {
-					// goTo("AppUsage/${app.id}")
+					goTo("AppUsage/${app.id}")
                 }
             }
             
