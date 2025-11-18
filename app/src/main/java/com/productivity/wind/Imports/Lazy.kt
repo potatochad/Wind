@@ -784,7 +784,7 @@ fun LazyScreen(
     content: Content,
 ) {
 
-	val header: Content = {
+	val header: Content = @Composable {
 		LazyHeader(
 			titleContent = toUI(title),
 			onBackClick = onBackClick,
