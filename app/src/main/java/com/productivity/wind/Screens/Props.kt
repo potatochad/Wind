@@ -542,7 +542,6 @@ fun EditPopUp(show: m_<Bool>) {
         show = show,
         onDismiss = { TemporaryTargetText = Bar.targetText },
         title = "Edit Text",
-        message = "",
         content = {
             OutlinedTextField(
                 value = TemporaryTargetText,
@@ -591,7 +590,6 @@ fun isSure(show: m_<Bool>, Do: Do) {
         show = show,
         title = "Really?",
         onConfirm = {Do()},
-        message = "",
         content = {
             Text("Are you sure?")
         }
@@ -637,7 +635,6 @@ fun AppSelectPopup(show: m_<Bool>) {
         showCancel = no,
         showConfirm = no,
         title = "Select App",
-        message = "",
         content = {
             if (loading) {
                 Text("Loading...")
