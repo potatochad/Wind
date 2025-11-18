@@ -37,7 +37,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("Challenge") { Challenge() }
     url("AppUsage/{appId}") { AppUsage(it.url("appId")) }
 
-    url("CopyPaste") { CopyPaste() }
+    url("CopyPaste/{appId}") { CopyPaste(it.url("appId")) }
 
     url("Web") { Web() }
     url("BlockKeyword") { BlockKeyword() }
