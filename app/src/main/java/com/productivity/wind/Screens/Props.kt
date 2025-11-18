@@ -566,7 +566,7 @@ fun isSure(show: m_<Bool>, Do: Do) {
     LazyPopup(
         show,
         "Really?",
-        "Are you sure?"
+        "Are you sure?",
         onConfirm = {Do()},
     )
 }
@@ -631,4 +631,5 @@ fun AppSelectPopup(show: m_<Bool>) {
                     }
                 }
             }
+    }
 }
