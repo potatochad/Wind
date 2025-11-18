@@ -819,9 +819,9 @@ fun LazyScreen(
 @Composable
 fun LazyPopup(
     show: m_<Bool>,
-    onDismiss: Do? = { show.value = no },
+    onDismiss: Do? = { show.it = no },
     title: Str = "Info",
-    message: Str,
+    message: Str = "",
     content: Content? = null,
     showCancel: Bool = yes,
     showConfirm: Bool = yes,
