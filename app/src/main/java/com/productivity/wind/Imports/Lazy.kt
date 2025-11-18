@@ -864,15 +864,6 @@ fun LazyPopup(
         } else null
     )
 }
-fun LazyDelay(
-    delayMillis: Long = 100L,
-    Action: Do,
-) {
-    CoroutineScope(Dispatchers.Main).launch {
-        delay(delayMillis)
-        Action()
-    }
-}
 
 
 
