@@ -771,7 +771,8 @@ fun LazyHeader(
 
 @Composable
 fun LazyScreen(
-    title: Content,
+	head: Str = "",
+    title: Content = Box{},
     onBackClick: Do = {},
     showBack: Bool = yes,
     modifier: Mod = Modifier
