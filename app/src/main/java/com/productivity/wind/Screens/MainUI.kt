@@ -101,8 +101,20 @@ fun CopyTskUI(tsk: CopyTsk) {
     LazzyRow {
         Text("Done: ${tsk.DailyDone}/${tsk.DailyMax}")
         UI.End{ 
-			Icon.Edit {
-				
+			var delete = r_m(no)
+
+            isSure(delete){
+                Bar.copyTsk.remove(tsk)
+            }
+            
+			Icon.Edit{
+                enoughPoints {
+					// goTo("AppUsage/${app.id}")
+                }
+            }
+            
+			Icon.Delete{
+                delete.it = yes
 			}
 		}
     }
