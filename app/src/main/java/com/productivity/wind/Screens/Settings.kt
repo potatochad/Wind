@@ -91,7 +91,7 @@ fun LogsScreen() {
         .filter { it.contains(LogsTag.it) }
         .joinToString("\n")
 
-    LazyScreen({Header.Logs(LogsTag, filteredLogs)}) {
+    LazyScreen(title={Header.Logs(LogsTag, filteredLogs)}) {
         if (Bar.logs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
