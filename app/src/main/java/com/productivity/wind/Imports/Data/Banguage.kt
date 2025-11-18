@@ -177,10 +177,10 @@ fun toL(it: Any?): Long = when (it) {
 fun toUI(it: Any): Content {
     return when (it) {
         is Str-> { Text(it) }
-        is Do -> { it() }
+        // is Do -> { it() }
         is Content -> { it() }
-        else -> { Vlog("Unsupported type (toUI) $it") }
-    }
+        else -> { Text("Unsupported type (toUI) $it") }
+    }	
 }
 
 
