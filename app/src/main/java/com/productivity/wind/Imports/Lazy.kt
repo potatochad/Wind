@@ -820,7 +820,7 @@ fun LazyScreen(
 fun LazyPopup(
     show: m_<Bool>,
     title: Str = "Info",
-	msg: Str = ""
+	msg: Str = "",
     showCancel: Bool = yes,
     showConfirm: Bool = yes,
     onConfirm: Do? = null,
