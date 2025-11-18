@@ -64,7 +64,7 @@ fun Challenge() {
             BigIconColor = Color(0xFF1E88E5), 
             title = "Copy Paste",
             onClick = { 
-              goTo("CopyPaste")
+              goTo("CopyPaste/_")
             },
         )
     
