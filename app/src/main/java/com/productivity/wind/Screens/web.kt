@@ -100,6 +100,9 @@ fun BlockKeyword() {
                 Text(WebUrl, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
             UI.End {
+                Icon.MoreMenu{
+                    goTo("filterExtraWeb")
+                }
                 Icon.Add {
                     Bar.badWords.add {
                         word = BadWord.it
