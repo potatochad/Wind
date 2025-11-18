@@ -784,7 +784,7 @@ fun LazyScreen(
     content: Content,
 ) {
 
-	val header: Content {
+	val header: Content = {
 		LazyHeader(
 			titleContent = title,
 			onBackClick = onBackClick,
