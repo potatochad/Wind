@@ -52,7 +52,7 @@ fun WebXml(
     onPageFinished: (Str) -> Unit = {},
 ) {
     BackHandler {
-        webViewState.iy?.goBack()
+        webViewState.it?.goBack()
     }
 
     AndroidView(
@@ -131,7 +131,7 @@ fun WebView.clearWebData() {
 }
 
 fun goBackWeb(webView: WebView?) {
-    if (webView?.canGoBack()) {
+    if (webView?.canGoBack()==yes) {
         webView.goBack()
     }
 }
