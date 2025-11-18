@@ -428,7 +428,7 @@ object Icon {
     fun Chill() {
         LazyIcon(Icons.Default.SportsEsports) {
             Item.enoughPoints{
-                    goTo("Web")
+                goTo("Web")
             }
         }
     }
@@ -443,7 +443,7 @@ object Icon {
     }
 
     @Composable
-    fun MoreMenu(Do: Do = {}) {
+    fun MoreMenu(Do: Do) {
         LazyIcon(Icons.Default.MoreVert) {
             Do()
         }
@@ -452,14 +452,17 @@ object Icon {
 
     @Composable
     fun Edit(
-        Do: Do = {
-            Item.enoughPoints{
-                show(Edit)
-            }
-        },
+        Do: Do,
+        noPoints: Bool=no,
     ) {
         LazyIcon(Icons.Default.Edit) {
-            Do()
+            if (!noPoints){
+                Item.enoughPoints{
+                    Do()
+                }
+            } else {
+                Do()
+            }
         }
     }
 
@@ -501,7 +504,6 @@ object Icon {
 
 //region POPUP CONTROLLER
 
-var Edit = m(no)
 var NeedMorePoints = m(no)
 var AskUsagePermission = m(no)
 var AppSelect = m(no)
@@ -512,7 +514,6 @@ object Popup {
     @Composable
     fun Init(){
         AskUsagePermission(AskUsagePermission)
-        EditPopUp(Edit)
         NeedMorePointsPopup(NeedMorePoints)
         AppSelectPopup(AppSelect)
         DebugPopup(DebugPopup)
@@ -527,34 +528,10 @@ object Popup {
 @Composable
 fun NeedMorePointsPopup(show: m_<Bool>){
     LazyPopup(
-        show = show, 
-        title = "Get ${Bar.funTime- Bar.Dpoints} more points", 
-        message = "Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime- Bar.Dpoints}",
+        show, 
+        "Get ${Bar.funTime- Bar.Dpoints} more points", 
+        "Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime- Bar.Dpoints}",
         showCancel = no,
-    )
-}
-
-@Composable
-fun EditPopUp(show: m_<Bool>) {
-    var TemporaryTargetText by r { m("") }
-    TemporaryTargetText = Bar.targetText
-    LazyPopup(
-        show = show,
-        onDismiss = { TemporaryTargetText = Bar.targetText },
-        title = "Edit Text",
-        content = {
-            OutlinedTextField(
-                value = TemporaryTargetText,
-                onValueChange = { TemporaryTargetText = it },
-                modifier = Modifier
-                    .maxW()
-                    .heightIn(min = 100.dp, max = 200.dp)
-                    .verticalScroll(rememberScrollState())
-            )
-        },
-        showCancel = yes,
-        onConfirm = { Bar.targetText = TemporaryTargetText; Bar.FirstEditText = false },
-        onCancel = { TemporaryTargetText = Bar.targetText }
     )
 }
 
@@ -562,9 +539,9 @@ fun EditPopUp(show: m_<Bool>) {
 @Composable
 fun AskUsagePermission(show: m_<Bool>) {
         LazyPopup(
-            show = show,
-            title = "Need Usage Permission",
-            message = "To function correctly, this app requires access to your app usage data. Granting this permission allows the app to monitor usage statistics and manage app-related tasks efficiently. Without it, this feature won't work.",
+            show,
+            "Need Usage Permission",
+            "To function correctly, this app requires access to your app usage data. Granting this permission allows the app to monitor usage statistics and manage app-related tasks efficiently. Without it, this feature won't work.",
             onConfirm = {
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
@@ -577,9 +554,9 @@ var DebugPopupInfo by m("")
 @Composable
 fun DebugPopup(show: m_<Bool>) {
         LazyPopup(
-            show = show,
-            title = "Info",
-            message = DebugPopupInfo,
+            show,
+            "Info",
+            DebugPopupInfo,
             showCancel = no,
             showConfirm = no,         
         )
@@ -587,12 +564,10 @@ fun DebugPopup(show: m_<Bool>) {
 @Composable
 fun isSure(show: m_<Bool>, Do: Do) {
     LazyPopup(
-        show = show,
-        title = "Really?",
+        show,
+        "Really?",
+        "Are you sure?"
         onConfirm = {Do()},
-        content = {
-            Text("Are you sure?")
-        }
     )
 }
 
@@ -634,8 +609,8 @@ fun AppSelectPopup(show: m_<Bool>) {
         show = show,
         showCancel = no,
         showConfirm = no,
-        title = "Select App",
-        content = {
+        title = "Select App"
+    ){
             if (loading) {
                 Text("Loading...")
             } else {
@@ -656,6 +631,4 @@ fun AppSelectPopup(show: m_<Bool>) {
                     }
                 }
             }
-        }
-    )
 }
