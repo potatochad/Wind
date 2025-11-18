@@ -91,7 +91,7 @@ fun CopyPaste(id: Str ="") {
     }
 
     LazyScreen(title = { 
-        Header.CopyPaste(txt, DailyMax, Done_Worth, Letter_Worth) 
+        Header.CopyPaste(txt, DailyMax, Done_Worth, Letter_Worth, id) 
     }) {
         // “If” section
         LazyRuleCard("If") {
