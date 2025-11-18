@@ -820,12 +820,13 @@ fun LazyScreen(
 fun LazyPopup(
     show: m_<Bool>,
     title: Str = "Info",
+	msg: Str = ""
     showCancel: Bool = yes,
     showConfirm: Bool = yes,
     onConfirm: Do? = null,
     onCancel: Do? = null,
 	onDismiss: Do? = { show.it = no },
-	content: Content,
+	content: Content? = null,
 ) {
     if (!show.it) return
 	
@@ -837,7 +838,7 @@ fun LazyPopup(
         title = { Text(title) },
         text = {
 			Column{
-				content()
+				content?.invoke() ?: Text(msg)
 			}
         },
         confirmButton = {
