@@ -78,6 +78,17 @@ fun CopyPaste(id: Str ="") {
     var DailyMax = r_m(5)
     var Done_Worth = r_m(10)
     var Letter_Worth = r_m(1)
+    
+    if (!id.isEmpty()) {
+      val tsk = Bar.copyTsk.find { it.id == id }
+
+      if (app != null) {
+        txt.it =
+        DailyMax.it =
+        Done_Worth.it =
+        Letter_Worth.it =
+      }
+    }
 
     LazyScreen(title = { 
         Header.CopyPaste(txt, DailyMax, Done_Worth, Letter_Worth) 
