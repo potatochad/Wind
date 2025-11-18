@@ -783,24 +783,6 @@ fun LazyScreen(
     headerHeight: Int = 44,
     content: Content,
 ) {
-	val Title2: @Composable () -> Unit = when (title) {
-
-    is Str -> {
-        { Text(title) }
-    }
-
-    is Function0<*> -> {
-        { title() }
-    }
-
-    is Content -> {
-        { title() }
-    }
-
-    else -> {
-        { Vlog("Unsupported type") }
-    }
-}
 
 	val header: Content = {
 		LazyHeader(
