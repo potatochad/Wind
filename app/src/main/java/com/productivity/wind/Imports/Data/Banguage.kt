@@ -176,11 +176,10 @@ fun toL(it: Any?): Long = when (it) {
 @Composable
 fun toUI(it: Any): Content {
     return when (it) {
-        is Str-> { Text(it) }
-        // is Do -> { it() }
-        is Content -> { it() }
-        else -> { Text("Unsupported type (toUI) $it") }
-    }	
+        is Str -> { { Text(it) } }        // wrap in lambda
+        is Content -> it                   // return lambda directly
+        else -> { { Text("Unsupported type (toUI) $it") } }  // wrap in lambda
+    }
 }
 
 
