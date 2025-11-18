@@ -41,6 +41,7 @@ fun NavGraphBuilder.ScreenNav() {
 
     url("Web") { Web() }
     url("BlockKeyword") { BlockKeyword() }
+    url("filterExtraWeb") { filterExtraWeb() }
     
 
     url("SettingsScreen") { SettingsScreen() }
