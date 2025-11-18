@@ -173,8 +173,15 @@ fun toL(it: Any?): Long = when (it) {
     null -> 0L
     else -> 0L
 }
-
-
+@Composable
+fun toUI(it: Any): Content {
+    return when (it) {
+        is Str-> { Text(it) }
+        is Do -> { it() }
+        is Content -> { it() }
+        else -> { Vlog("Unsupported type (toUI) $it") }
+    }
+}
 
 
 
