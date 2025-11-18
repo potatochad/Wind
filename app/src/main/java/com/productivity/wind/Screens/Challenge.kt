@@ -83,10 +83,10 @@ fun CopyPaste(id: Str ="") {
       val tsk = Bar.copyTsk.find { it.id == id }
 
       if (app != null) {
-        txt.it =
-        DailyMax.it =
-        Done_Worth.it =
-        Letter_Worth.it =
+        txt.it = tsk.txt
+        DailyMax.it = tsk.DailyMax
+        Done_Worth.it = tsk.Done_Worth
+        Letter_Worth.it = tsk.Letter_Worth
       }
     }
 
