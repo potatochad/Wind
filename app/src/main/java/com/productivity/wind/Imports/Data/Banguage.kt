@@ -164,6 +164,16 @@ fun toF(it: Any?): Float = when (it) {
     null -> 0f
     else -> 0f
 }
+fun toL(it: Any?): Long = when (it) {
+    is Long -> it
+    is Int -> it.toLong()
+    is Float -> it.toLong()
+    is Double -> it.toLong()
+    is String -> it.toLongOrNull() ?: 0L
+    null -> 0L
+    else -> 0L
+}
+
 
 
 
@@ -700,9 +710,9 @@ fun getMyAppLogs() {
 
 
 
-fun wait(x: Long = 100L, Do: Do) {
+fun wait(x: Any = 100, Do: Do) {
     CoroutineScope(Dispatchers.Main).launch {
-        delay(x)
+        delay(toL(x))
         Do()
     }
 }
