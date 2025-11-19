@@ -79,12 +79,12 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     RunOnce(tsk.goodStr) {
         if (tsk.goodStr > 20) {
-			val txtMax = txtScroll.maxScroll();   // total scroll size
-			val inputMax = inputScroll.maxScroll();
+			val txtMax = txtScroll.maxValue   // total scroll size
+			val inputMax = inputScroll.maxValue
 
 			var Done = tsk.goodStr/tsk.txt.length
 
-			Vlog("Done, $Done")
+			Vlog("Done, $Done, txtMax: $txtMax")
         
 			txtScroll.scroll(2)
 			inputScroll.scroll(inputMax) 
