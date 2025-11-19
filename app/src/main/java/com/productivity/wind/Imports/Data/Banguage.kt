@@ -123,6 +123,10 @@ val no = false
 var <T> m_<T>.it: T
     get() = this.value
     set(value) { this.value = value }
+var ScrollState.it: Int
+    get() = this.value
+    set(value) { this.scrollTo(value) }
+
 
 fun Modifier.space(
     s: Any? = null,
