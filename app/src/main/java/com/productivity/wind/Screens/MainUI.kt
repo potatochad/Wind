@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.*
 import kotlin.system.*
 import androidx.compose.runtime.*
 import kotlinx.coroutines.*
+import androidx.compose.foundation.*
 
 
 
