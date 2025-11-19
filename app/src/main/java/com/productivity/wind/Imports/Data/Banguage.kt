@@ -719,7 +719,7 @@ fun getMyAppLogs() {
 
 
 
-fun wait(x: Any = 100, Do: Do) {
+fun wait(x: Any = 100, Do: Do={}) {
     CoroutineScope(Dispatchers.Main).launch {
         delay(toL(x))
         Do()
