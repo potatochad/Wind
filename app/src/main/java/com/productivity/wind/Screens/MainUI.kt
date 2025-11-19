@@ -67,18 +67,6 @@ fun Main() {
 }
 
 
-suspend fun scrollToProgress(progress: Float, scroll: ScrollState) {
-	delay(300)
-
-    val maxValue = toF(scroll.maxValue)
-    val currentValue = toF(scroll.it)
-    val target = maxValue * progress
-    val move = target - currentValue
-
-    scroll.scrollTo(move.toInt())
-}
-
-
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
 	if (tsk.DailyDone == tsk.DailyMax) return
