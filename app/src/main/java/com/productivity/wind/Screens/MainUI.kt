@@ -76,21 +76,20 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 
     RunOnce(tsk.goodStr) {
-        if (tsk.goodStr > 20) {
-			val txtMax = txtScroll.maxValue   // total scroll size
-			val inputMax = inputScroll.maxValue
+		if (tsk.goodStr > 20) {
 
-			var Done = toF(tsk.goodStr)/toF(tsk.txt.length)
+			val max = txtScroll.maxValue
+			val current = txtScroll.it   // must be current position
+			val done = toF(tsk.goodStr) / toF(tsk.txt.length)
 
-			Vlog("Done, $Done, txtMax: $txtMax")
+			val target = max * done
+			val move = target - current
 
-			wait {
-        
-			txtScroll.scroll(txtMax* done)
-			inputScroll.scroll(inputMax) 
-			}
-        }
-    }
+			txtScroll.scroll(move)
+			inputScroll.scroll(inputScroll.maxValue)
+		}
+	}
+
 
 	val coloredTarget = fullCorrectStr(tsk.txt, tsk.input)
 
