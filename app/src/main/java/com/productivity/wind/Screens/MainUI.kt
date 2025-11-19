@@ -41,8 +41,6 @@ fun Main() {
     
     LazyScreen(title = { Header.Main() }, showBack = no) {
         Column(Modifier.Vscroll()){
-            
-            // LazyCard { Disipline() }
 
             Bar.copyTsk.each {
 				LazyCard { 
@@ -85,6 +83,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 			var Done = toF(tsk.goodStr)/toF(tsk.txt.length)
 
 			Vlog("Done, $Done, txtMax: $txtMax")
+
+			wait()
         
 			txtScroll.scroll(txtMax*Done)
 			inputScroll.scroll(inputMax) 
