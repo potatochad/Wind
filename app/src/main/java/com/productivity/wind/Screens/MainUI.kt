@@ -86,7 +86,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 			Vlog("Done, $Done, txtMax: $txtMax")
         
-			txtScroll.scroll(inputMax*Done)
+			txtScroll.scroll(txtMax*Done)
 			inputScroll.scroll(inputMax) 
         }
     }
