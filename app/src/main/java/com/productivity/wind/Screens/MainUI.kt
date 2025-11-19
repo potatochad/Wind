@@ -84,10 +84,11 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 			Vlog("Done, $Done, txtMax: $txtMax")
 
-			wait()
+			wait {
         
-			txtScroll.scroll(txtMax*Done)
+			txtScroll.scroll(txtMax* done)
 			inputScroll.scroll(inputMax) 
+			}
         }
     }
 
