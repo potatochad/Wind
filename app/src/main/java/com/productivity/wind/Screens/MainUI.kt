@@ -79,14 +79,9 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     if (tsk.goodStr > 20) {
 
-		delay(300)
+		val done = tsk.goodStr.toFloat() / tsk.txt.length.toFloat()
 
-        val max = txtScroll.maxValue.toFloat()
-        val current = txtScroll.it.toFloat()
-        val done = tsk.goodStr.toFloat() / tsk.txt.length.toFloat()
-
-        val target = max * done
-        val move = target - current
+		scrollToProgress(done, txtScroll)
 
         txtScroll.scrollTo(move.toInt())
     }
