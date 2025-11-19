@@ -459,6 +459,16 @@ suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scr
 suspend fun ScrollState.scroll(it: Any) {
     animateScrollBy(toF(it))
 }
+suspend fun scrollToProgress(progress: Float, scroll: ScrollState) {
+	delay(300)
+
+    val maxValue = toF(scroll.maxValue)
+    val currentValue = toF(scroll.it)
+    val target = maxValue * progress
+    val move = target - currentValue
+
+    scroll.scrollTo(move.toInt())
+}
 
 
 
