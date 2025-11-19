@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.unit.*
 import kotlin.system.*
 import androidx.compose.runtime.*
+import kotlinx.coroutines.*
 
 
 
@@ -87,7 +88,7 @@ fun CopyTskUI(tsk: CopyTsk) {
         val target = max * done
         val move = target - current
 
-        txtScroll.scrollTo(move)
+        txtScroll.scrollTo(move.toInt())
         inputScroll.scrollTo(inputScroll.maxValue)
     }
 }
