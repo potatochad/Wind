@@ -400,6 +400,7 @@ object Header {
                     Done_Worth = doneWorth.it
                     Letter_Worth = letterWorth.it     
                 }
+                goTo("Main")
             }
         }
     }
