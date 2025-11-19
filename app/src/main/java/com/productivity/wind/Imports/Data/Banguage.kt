@@ -197,9 +197,11 @@ fun NavGraphBuilder.url(
         content(backStackEntry)
     }
 }
-fun NavBackStackEntry.url(key: Str): Str {
-    return this.arguments?.getString(key) ?: ""
+fun NavBackStackEntry.url(key: String): String {
+    val value = this.arguments?.getString(key) ?: ""
+    return if (value == "_") "" else value
 }
+
 
 
 @Composable
