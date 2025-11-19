@@ -66,6 +66,16 @@ fun Main() {
 }
 
 
+suspend fun scrollToProgress(progress: Float, scroll: ScrollState) {
+	delay(300)
+
+    val maxValue = toF(scroll.maxValue)
+    val currentValue = toF(scroll.it)
+    val target = maxValue * progress
+    val move = target - currentValue
+
+    scroll.scrollTo(move.toInt())
+}
 
 
 @Composable
@@ -77,20 +87,21 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 
     RunOnce(tsk.goodStr) {
+
     if (tsk.goodStr > 20) {
 
 		delay(300)
 
         val max = txtScroll.maxValue.toFloat()
-        val current = txtScroll.value.toFloat()
+        val current = txtScroll.it.toFloat()
         val done = tsk.goodStr.toFloat() / tsk.txt.length.toFloat()
 
         val target = max * done
         val move = target - current
 
         txtScroll.scrollTo(move.toInt())
-        inputScroll.scrollTo(inputScroll.maxValue)
     }
+	inputScroll.scrollTo(inputScroll.maxValue)
 }
 
 
