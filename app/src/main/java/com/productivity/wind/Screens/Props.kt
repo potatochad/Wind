@@ -379,29 +379,27 @@ object Header {
                 UI.check(text.it.isEmpty(),"Add text") {return@Add}
 
                 if (!id.isEmpty()) {
+                    Vlog("ID: $id ")
                     val tsk = Bar.copyTsk.find { it.id == id }
 
                     if (tsk!=null){
                         Bar.copyTsk.edit(tsk) {
-                        txt = text.it
-                        DailyMax = dailyMax.it
-                        Done_Worth = doneWorth.it
-                        Letter_Worth = letterWorth.it
-                    }  
-                    }else{
-                        Vlog("Error Task not found")
+                            txt = text.it
+                            DailyMax = dailyMax.it
+                            Done_Worth = doneWorth.it
+                            Letter_Worth = letterWorth.it
+                        }  
+                        goTo("Main")
                     }
-
-                    
-                } else {
-                    Bar.copyTsk.add {
-                        txt = text.it
-                        DailyMax = dailyMax.it
-                        Done_Worth = doneWorth.it
-                        Letter_Worth = letterWorth.it
-                    }      
+                    return@Add
                 }
-                goTo("Main")
+
+                Bar.copyTsk.add {
+                    txt = text.it
+                    DailyMax = dailyMax.it
+                    Done_Worth = doneWorth.it
+                    Letter_Worth = letterWorth.it     
+                }
             }
         }
     }
