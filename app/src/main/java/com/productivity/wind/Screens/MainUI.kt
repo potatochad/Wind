@@ -79,11 +79,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     RunOnce(tsk.goodStr) {
         if (tsk.goodStr > 20) {
-            // txtScroll.scroll(1)
-			// inputScroll.scroll(15)
-			val scrollPos = tsk.goodStr.toFloat() / tsk.txt.length.toFloat().coerceAtLeast(1f)
-			txtScroll.scroll(scrollPos)
-			inputScroll.scroll(scrollPos * 15) 
+			txtScroll.scroll(2)
+			inputScroll.scroll(30) 
         }
     }
 
