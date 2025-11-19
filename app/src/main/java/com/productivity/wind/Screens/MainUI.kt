@@ -78,6 +78,8 @@ fun CopyTskUI(tsk: CopyTsk) {
     RunOnce(tsk.goodStr) {
     if (tsk.goodStr > 20) {
 
+		delay(300)
+
         val max = txtScroll.maxValue.toFloat()
         val current = txtScroll.value.toFloat()
         val done = tsk.goodStr.toFloat() / tsk.txt.length.toFloat()
@@ -85,8 +87,8 @@ fun CopyTskUI(tsk: CopyTsk) {
         val target = max * done
         val move = target - current
 
-        txtScroll.scroll(move)
-        inputScroll.scroll(inputScroll.maxValue)
+        txtScroll.scrollTo(move)
+        inputScroll.scrollTo(inputScroll.maxValue)
     }
 }
 
