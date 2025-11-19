@@ -125,7 +125,11 @@ var <T> m_<T>.it: T
     set(value) { this.value = value }
 var ScrollState.it: Int
     get() = this.value
-    set(value) { this.scrollTo(value) }
+    set(value) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@it.scrollTo(value)
+        }
+    }
 
 
 fun Modifier.space(
