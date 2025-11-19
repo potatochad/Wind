@@ -79,21 +79,13 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     RunOnce(tsk.goodStr) {
         if (tsk.goodStr > 20) {
-            txtScroll.scroll(1)
-			inputScroll.scroll(15)
+            // txtScroll.scroll(1)
+			// inputScroll.scroll(15)
+			val scrollPos = correctInput.length.toFloat() / tsk.txt.length.toFloat().coerceAtLeast(1f)
+			txtScroll.scroll(scrollPos)
+			inputScroll.scroll(scrollPos * 15) 
         }
     }
-
-	/*
-                txt: Str = "",
-                var input: Str = "",
-    var done: Bool = no,
-    var DailyMax: Int = 5,
-	var DailyDone: Int = 0,
-    var Done_Worth: Int = 10,
-    var Letter_Worth: Int = 1
-
-				*/
 
 	val coloredTarget = fullCorrectStr(tsk.txt, tsk.input)
 
