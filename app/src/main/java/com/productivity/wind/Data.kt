@@ -29,11 +29,13 @@ import kotlinx.serialization.json.*
 import androidx.compose.foundation.text.selection.*
 import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.system.*
+
+/*
 import kotlin.script.experimental.host.*
 import kotlin.script.experimental.jvmhost.*
 import kotlin.script.experimental.jvm.*
 import kotlin.script.experimental.api.*
-
+*/
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
