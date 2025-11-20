@@ -164,7 +164,8 @@ fun CopyTskUI(tsk: CopyTsk) {
         },
         modifier = Modifier.maxW().h(150).Vscroll(inputScroll).onFocusChanged {
 			RunOnce{
-				inputScroll.scrollTo(inputScroll.maxValue)
+				tsk.goodStr-=1
+				tsk.goodStr+=1		
 			}
 		},
 		placeholder = { Text("Start typing...") }
