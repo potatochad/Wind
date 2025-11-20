@@ -139,7 +139,8 @@ data class CopyTsk(
 	var goodStr: Int = 0,
 ) 
 
-fun runDo(cmd: Str) {
+@Composable
+suspend fun runDo(cmd: Str) {
     val name = cmd.substringBefore("(")
     val args = cmd.substringAfter("(").substringBefore(")")
 
