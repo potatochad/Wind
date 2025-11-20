@@ -83,7 +83,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 		scrollToProgress(done, txtScroll)
 
-        txtScroll.scrollTo(move.toInt())
     }
 	inputScroll.scrollTo(inputScroll.maxValue)
 }
