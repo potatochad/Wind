@@ -158,6 +158,9 @@ implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:2.0.10")
 }
 
 
+configurations.all {
+    exclude(group = "com.google.guava", module = "listenablefuture")
+}
 
 
 
