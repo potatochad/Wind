@@ -106,6 +106,14 @@ ktlint {
 
 
 dependencies {
+
+
+implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:2.0.10")
+implementation("org.jetbrains.kotlin:kotlin-scripting-host:2.0.10")
+implementation("org.jetbrains.kotlin:kotlin-scripting-common:2.0.10")
+implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:2.0.10")
+
+
     implementation("androidx.compose.foundation:foundation:1.9.2")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
