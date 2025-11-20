@@ -29,6 +29,10 @@ import kotlinx.serialization.json.*
 import androidx.compose.foundation.text.selection.*
 import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.system.*
+import kotlin.script.experimental.host.*
+import kotlin.script.experimental.jvmhost.*
+import kotlin.script.experimental.jvm.*
+
 
 
 /*! NEVER move bar and lists to another FOLDER, or other file
@@ -148,6 +152,22 @@ fun runDo(cmd: Str) {
         "scroll" -> scroll(args.toInt())
     }
 }
+
+fun main() {
+    val script = """
+        println("Hello from mod!")
+        val x = 5
+        println("x * 2 = ${'$'}{x*2}")
+    """.toScriptSource()
+
+    val host = BasicJvmScriptingHost()
+    val result = host.eval(script) {
+        jvm {
+            dependenciesFromCurrentContext(wholeClasspath = true)
+        }
+    }
+}
+
 
 
 @Serializable
