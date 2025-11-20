@@ -34,7 +34,6 @@ import kotlin.script.experimental.jvmhost.*
 import kotlin.script.experimental.jvm.*
 
 
-
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
 yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long ago dont remember what did)
@@ -78,37 +77,19 @@ FORMAT!!!!!!!!
 for lists
 same thing...very important!!!!
 
-
-
-
 */
+
 class Settings {
     var funTime by m(0)
     var Dpoints by m(0)
-	var lastDate by m("")
-    
-    
-
-
-    
-    //COPY PASTE
-    var FirstEditText by m(no)
-    var targetText by m("ALWAYS BE KIND")
-    var LetterToTime by m(1)
-    var DoneRetype_to_time by m(60)
-    var HowManyDoneRetypes_InDay by m(0)
-    var currentInput by m("")
-    var highestCorrect by m(0)    
+	var lastDate by m("") 
     
 
     //ACHIEVEMENTS
     var TotalTypedLetters by m(0)
-
-
-    // LISTS
+	
 
 	// LISTS DONT BACKUP OR RESTORE!!!!!
-    
     var copyTsk = mList<CopyTsk>()
 	var waits = mList<Waits>()
 	var apps = mList<AppTsk>()// mutablestatelistof
@@ -143,17 +124,8 @@ data class CopyTsk(
 	var goodStr: Int = 0,
 ) 
 
-@Composable
-fun runDo(cmd: Str) {
-    val name = cmd.substringBefore("(")
-    val args = cmd.substringAfter("(").substringBefore(")")
 
-    when (name) {
-        "scroll" -> scroll(args.toInt())
-    }
-}
-
-fun main() {
+fun mainLOL() {
     val script = """
         println("Hello from mod!")
         val x = 5
@@ -161,11 +133,15 @@ fun main() {
     """.toScriptSource()
 
     val host = BasicJvmScriptingHost()
-    val result = host.eval(script) {
-        jvm {
-            dependenciesFromCurrentContext(wholeClasspath = true)
-        }
-    }
+    val result = host.eval(
+		script,
+		ScriptCompilationConfiguration(),
+		ScriptEvaluationConfiguration {
+			jvm {
+				dependenciesFromCurrentContext(wholeClasspath = yes)
+			}
+		}
+	)
 }
 
 
