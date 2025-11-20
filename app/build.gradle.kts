@@ -94,7 +94,7 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
             excludes += "kotlin/reflect/reflect.kotlin_builtins"
-   
+            excludes += "kotlin/coroutines/coroutines.kotlin_builtins"
         }
     }
 }
