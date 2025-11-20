@@ -135,19 +135,12 @@ fun mainLOL() {
 
     val host = BasicJvmScriptingHost()
     val result = host.eval(
-    script,
-    ScriptCompilationConfiguration {
-        jvm {
-            dependenciesFromCurrentContext(wholeClasspath = true)
+        script,
+        ScriptCompilationConfiguration { /* empty or minimal */ },
+        ScriptEvaluationConfiguration { 
+            baseClassLoader(this::class.java.classLoader) // Android-safe
         }
-    },
-    ScriptEvaluationConfiguration {
-        jvm {
-            baseClassLoader(this::class.java.classLoader)
-        }
-    }
-)
-
+    )
 }
 
 
