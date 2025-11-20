@@ -125,7 +125,7 @@ data class CopyTsk(
 	var goodStr: Int = 0,
 ) 
 
-
+/*
 fun mainLOL() {
     val script = """
         println("Hello from mod!")
@@ -134,15 +134,18 @@ fun mainLOL() {
     """.toScriptSource()
 
     val host = BasicJvmScriptingHost()
+
     val result = host.eval(
         script,
-        ScriptCompilationConfiguration { /* empty or minimal */ },
-        ScriptEvaluationConfiguration { 
-            baseClassLoader(this::class.java.classLoader) // Android-safe
-        }
+        ScriptCompilationConfiguration {
+            jvm {
+                dependenciesFromCurrentContext(wholeClasspath = true) // includes standard Kotlin classes
+            }
+        },
+        ScriptEvaluationConfiguration()
     )
 }
-
+*/
 
 
 @Serializable
