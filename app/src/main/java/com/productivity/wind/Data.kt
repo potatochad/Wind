@@ -145,6 +145,25 @@ fun mainLOL() {
         ScriptEvaluationConfiguration()
     )
 }
+
+
+
+fun runKotlinCode(scriptStr: String) {
+    try {
+        val script = scriptStr.toScriptSource()
+        val host = BasicJvmScriptingHost()
+        host.eval(
+            script,
+            ScriptCompilationConfiguration {
+                jvm { dependenciesFromCurrentContext(wholeClasspath = true) }
+            },
+            ScriptEvaluationConfiguration()
+        )
+    } catch (e: Exception) {
+        println("Script error: ${e.message}") // just report, no stops
+    }
+}
+
 */
 
 
