@@ -75,11 +75,18 @@ fun CopyTskUI(tsk: CopyTsk) {
 	val inputScroll = r_Scroll()
 
 	
-    RunOnce(tsk.goodStr) {
+    RunOnce {
 		if (tsk.goodStr > 20) {
 			val done = tsk.goodStr.toFloat() / tsk.txt.length.toFloat()
 
 			scrollToProgress(done, txtScroll)
+		}
+		inputScroll.scrollTo(inputScroll.maxValue)
+	}
+
+	RunOnce(tsk.goodStr) {
+		if (tsk.goodStr > 20) {
+			txtScroll.scroll(2)
 		}
 		inputScroll.scrollTo(inputScroll.maxValue)
 	}
@@ -91,7 +98,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     
     LazzyRow {
         Text("Done: ${tsk.DailyDone}/${tsk.DailyMax}")
-        UI.End{ 
+        UI.End { 
 			var delete = r_m(no)
 
             isSure(delete){
@@ -154,7 +161,9 @@ fun CopyTskUI(tsk: CopyTsk) {
                 }
             }
         },
-        modifier = Modifier.maxW().h(150).Vscroll(inputScroll),
+        modifier = Modifier.maxW().h(150).Vscroll(inputScroll).onFocusChange {
+			inputScroll.scrollTo(inputScroll.maxValue)
+		},
 		placeholder = { Text("Start typing...") }
     )
 }
