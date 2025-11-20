@@ -178,7 +178,6 @@ object Item {
 
     @Composable
     fun AppTaskUI(app: AppTsk){
-        log("app.pkg: ${app.pkg}")
         val icon = getAppIcon(app.pkg)
         var name = app.name
         val progress = (app.NowTime.toFloat() / app.DoneTime.toFloat()).coerceIn(0f, 1f)
