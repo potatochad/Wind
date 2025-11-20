@@ -161,7 +161,7 @@ fun CopyTskUI(tsk: CopyTsk) {
                 }
             }
         },
-        modifier = Modifier.maxW().h(150).Vscroll(inputScroll).onFocusChange {
+        modifier = Modifier.maxW().h(150).Vscroll(inputScroll).onFocusChanged {
 			RunOnce{
 				inputScroll.scrollTo(inputScroll.maxValue)
 			}
