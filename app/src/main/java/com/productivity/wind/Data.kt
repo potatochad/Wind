@@ -106,6 +106,7 @@ class Settings {
 	// LISTS DONT BACKUP OR RESTORE!!!!!
     
     var copyTsk = mList<CopyTsk>()
+	var waits = mList<Waits>()
 	var apps = mList<AppTsk>()// mutablestatelistof
 	var badWords = mList<WebWord>().apply {
 		addAll(
@@ -136,7 +137,15 @@ data class CopyTsk(
     var Done_Worth: Int = 10,
     var Letter_Worth: Int = 1,
 	var goodStr: Int = 0,
-)   
+) 
+
+@Serializable
+data class Waits(
+    val id: Str = Id(),
+    var whenStart: Bool = no,
+    var whenDo: Bool = no,
+    var Do: Do = {},
+)
 
 @Serializable
 data class AppTsk(
