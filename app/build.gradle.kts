@@ -93,8 +93,6 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            excludes += "kotlin/reflect/reflect.kotlin_builtins"
-            excludes += "kotlin/coroutines/coroutines.kotlin_builtins"
         }
     }
 }
@@ -158,12 +156,6 @@ implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:2.0.10")
     debugImplementation(libs.androidx.ui.test.manifest)
     debugImplementation(libs.androidx.ui.tooling)
 }
-
-
-configurations.all {
-    exclude(group = "com.google.guava", module = "listenablefuture")
-}
-
 
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
