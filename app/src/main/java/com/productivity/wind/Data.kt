@@ -139,12 +139,24 @@ data class CopyTsk(
 	var goodStr: Int = 0,
 ) 
 
+fun runDo(cmd: Str) {
+    val name = cmd.substringBefore("(")
+    val args = cmd.substringAfter("(").substringBefore(")")
+
+    when (name) {
+        "scrollToProgress" -> scrollToProgress(args.toFloat())
+        "scroll" -> scroll(args.toInt())
+        "shake" -> shake()
+    }
+}
+
+
 @Serializable
 data class Waits(
     val id: Str = Id(),
     var whenStart: Bool = no,
     var whenDo: Bool = no,
-    var Do: Do = {},
+    var DoStr: Str = "",
 )
 
 @Serializable
