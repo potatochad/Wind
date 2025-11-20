@@ -140,14 +140,12 @@ data class CopyTsk(
 ) 
 
 @Composable
-suspend fun runDo(cmd: Str) {
+fun runDo(cmd: Str) {
     val name = cmd.substringBefore("(")
     val args = cmd.substringAfter("(").substringBefore(")")
 
     when (name) {
-        "scrollToProgress" -> scrollToProgress(args.toFloat())
         "scroll" -> scroll(args.toInt())
-        "shake" -> shake()
     }
 }
 
