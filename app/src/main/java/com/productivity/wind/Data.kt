@@ -135,14 +135,19 @@ fun mainLOL() {
 
     val host = BasicJvmScriptingHost()
     val result = host.eval(
-		script,
-		ScriptCompilationConfiguration(),
-		ScriptEvaluationConfiguration {
-			jvm {
-				dependenciesFromCurrentContext(wholeClasspath = yes)
-			}
-		}
-	)
+    script,
+    ScriptCompilationConfiguration {
+        jvm {
+            dependenciesFromCurrentContext(wholeClasspath = true)
+        }
+    },
+    ScriptEvaluationConfiguration {
+        jvm {
+            baseClassLoader(this::class.java.classLoader)
+        }
+    }
+)
+
 }
 
 
