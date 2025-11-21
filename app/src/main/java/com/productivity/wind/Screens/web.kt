@@ -86,8 +86,96 @@ fun Web(){
     }
 }
 
+fun getYoutubeVideoTitle(webViewState: m_<WebView?>) {
+    val webView = webViewState.it ?: return
 
-fun blockYoutubeChannel(webViewState: m_<WebView?>) {
+val jsCode = """
+(function() {
+    function extractHandle(str) {
+        const m = str.match(/@[\w\d_]+/);
+        return m ? m[0] : null;
+    }
+
+    function extractChannelId(str) {
+        const m = str.match(/UC[\w\d_-]{22}/);
+        return m ? m[0] : null;
+    }
+
+    function scan(root) {
+        const result = { handle: '', id: '', title: '' };
+        if (!root || typeof root !== 'object') return result;
+
+        const visited = new Set();
+        const queue = [root];
+        const MAX = 3000;
+        let i = 0;
+
+        while (queue.length && i < MAX && (!result.handle || !result.id || !result.title)) {
+            const cur = queue.shift();
+            i++;
+
+            if (!cur || typeof cur !== 'object') continue;
+            if (visited.has(cur)) continue;
+            visited.add(cur);
+
+            if (Array.isArray(cur)) {
+                for (const item of cur) {
+                    if (typeof item === 'string') {
+                        if (!result.handle) {
+                            const h = extractHandle(item);
+                            if (h) result.handle = h;
+                        }
+                        if (!result.id) {
+                            const id = extractChannelId(item);
+                            if (id) result.id = id;
+                        }
+                        if (!result.title && item.length < 200 && item.trim().length > 0) {
+                            result.title = item;
+                        }
+                    } else if (item && typeof item === 'object') {
+                        queue.push(item);
+                    }
+                }
+                continue;
+            }
+
+            for (const v of Object.values(cur)) {
+                if (typeof v === 'string') {
+                    if (!result.handle) {
+                        const h = extractHandle(v);
+                        if (h) result.handle = h;
+                    }
+                    if (!result.id) {
+                        const id = extractChannelId(v);
+                        if (id) result.id = id;
+                    }
+                    if (!result.title && v.length < 200 && v.trim().length > 0) {
+                        result.title = v;
+                    }
+                } else if (v && typeof v === 'object') {
+                    queue.push(v);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    return scan(window["ytInitialData"] || {});
+})();
+""".trimIndent()
+try {
+        webView.evaluateJavascript(jsCode) { jsonResult ->
+            // jsonResult is a JSON string like: {"handle":"@xyz","id":"UCabc..."}
+            Vlog("Channel info: $jsonResult")
+            // Here you can parse it and do your blocking logic
+        }
+    } catch (e: Exception) {
+        Vlog("Error evaluating JS: $e")
+    }
+}
+
+fun getYoutubeVideoChannel(webViewState: m_<WebView?>) {
     val webView = webViewState.it ?: return
 
     val jsCode = """
