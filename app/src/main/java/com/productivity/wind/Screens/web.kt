@@ -26,6 +26,69 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.ui.text.style.*
 
 
+fun hideYoutubeShorts(webViewState: m_<WebView?>) {
+    val webView = webViewState.it ?: return
+
+    val js = """
+        (function() {
+            if (window._hideShortsInstalled) return;
+            window._hideShortsInstalled = true;
+
+            const css = `
+                /* Shorts shelf on homepage */
+                ytd-rich-shelf-renderer[is-shorts],
+                ytd-rich-shelf-renderer:has(#shorts),
+                ytd-reel-shelf-renderer,
+                ytd-reel-player-renderer,
+
+                /* Shorts in feed */
+                ytd-rich-item-renderer:has(a[href*="/shorts/"]),
+                ytd-video-renderer:has(a[href*="/shorts/"]),
+
+                /* Shorts buttons */
+                a[href*="/shorts/"],
+                ytd-guide-entry-renderer[role="shorts"],
+                ytd-mini-guide-entry-renderer[role="shorts"],
+
+                /* Shorts on channel page */
+                ytd-reel-shelf-renderer,
+                #shorts-container,
+                #shorts-player,
+                .ytd-reel-shelf-renderer,
+
+                /* Shorts player */
+                #player-container ytd-shorts,
+                ytd-shorts,
+                #shorts {
+                    display: none !important;
+                    visibility: hidden !important;
+                    height: 0 !important;
+                    max-height: 0 !important;
+                    overflow: hidden !important;
+                }
+            `;
+
+            // Add CSS
+            const style = document.createElement("style");
+            style.id = "hide-shorts-style";
+            style.appendChild(document.createTextNode(css));
+            document.head.appendChild(style);
+
+            // Mutation observer to kill new Shorts elements
+            const kill = () => {
+                document.querySelectorAll('a[href*="/shorts/"]').forEach(e => e.remove());
+                document.querySelectorAll('#shorts, ytd-shorts, ytd-reel-shelf-renderer')
+                    .forEach(e => e.remove());
+            };
+
+            kill();
+            setInterval(kill, 600);  // YouTube loves recreating shorts
+        })();
+    """.trimIndent()
+
+    webView.evaluateJavascript(js, null)
+}
+
 
 var WebUrl by m("")
 @Composable
@@ -36,6 +99,7 @@ fun Web(){
 
     RunOnce {
         webView.it?.loadUrl("https://youtube.com")
+        hideYoutubeShorts(webView)
     }
 
     RunOnce(Bar.badWords) {
