@@ -67,15 +67,19 @@ fun Web(){
         WebXml(
             webViewState = webView,
             onUrlChanged = {
+                blockYoutubeChannel(webView)
                 BlockKeywords(webView, badWords)
             },
             onProgressChanged = {
+                blockYoutubeChannel(webView)
                 BlockKeywords(webView, badWords)
             },
             onPageStarted = {
+                blockYoutubeChannel(webView)
                 BlockKeywords(webView, badWords)
             },
             onPageFinished = { 
+                blockYoutubeChannel(webView)
                 BlockKeywords(webView, badWords)
             }
         )
@@ -83,78 +87,89 @@ fun Web(){
 }
 
 
-fun BlockYoutubeChannel(webViewState: m_<WebView?>) {
+fun blockYoutubeChannel(webViewState: m_<WebView?>) {
     val webView = webViewState.it ?: return
 
-    // Get YouTube page JSON
-    val jsGetData = """
+    val jsCode = """
         (function() {
-            return JSON.stringify(window["ytInitialData"] || {});
+            function extractHandleFromString(str) {
+                const match = str.match(/@[\w\d_]+/);
+                return match ? match[0] : null;
+            }
+
+            function extractChannelIdFromString(str) {
+                const match = str.match(/UC[\w\d_-]{22}/);
+                return match ? match[0] : null;
+            }
+
+            function scanDataForChannelIdentifiers(root) {
+                const result = { handle: '', id: '' };
+                if (!root || typeof root !== 'object') return result;
+
+                const visited = new Set();
+                const queue = [root];
+                const MAX_ITERATIONS = 2000;
+                let iterations = 0;
+
+                while (queue.length && iterations < MAX_ITERATIONS && (!result.handle || !result.id)) {
+                    const current = queue.shift();
+                    iterations++;
+
+                    if (!current || typeof current !== 'object') continue;
+                    if (visited.has(current)) continue;
+                    visited.add(current);
+
+                    if (Array.isArray(current)) {
+                        for (const item of current) {
+                            if (typeof item === 'string') {
+                                if (!result.handle) {
+                                    const handle = extractHandleFromString(item);
+                                    if (handle) result.handle = handle;
+                                }
+                                if (!result.id) {
+                                    const id = extractChannelIdFromString(item);
+                                    if (id) result.id = id;
+                                }
+                            } else if (item && typeof item === 'object') {
+                                queue.push(item);
+                            }
+                            if (result.handle && result.id) break;
+                        }
+                        continue;
+                    }
+
+                    for (const value of Object.values(current)) {
+                        if (typeof value === 'string') {
+                            if (!result.handle) {
+                                const handle = extractHandleFromString(value);
+                                if (handle) result.handle = handle;
+                            }
+                            if (!result.id) {
+                                const id = extractChannelIdFromString(value);
+                                if (id) result.id = id;
+                            }
+                        } else if (value && typeof value === 'object') {
+                            queue.push(value);
+                        }
+
+                        if (result.handle && result.id) break;
+                    }
+                }
+                return result;
+            }
+
+            return scanDataForChannelIdentifiers(window["ytInitialData"] || {});
         })();
-    function scanDataForChannelIdentifiers(root) {
-    const result = { handle: '', id: '' };
-    if (!root || typeof root !== 'object') return result;
-
-    const visited = new Set();
-    const queue = [root];
-    const MAX_ITERATIONS = 2000;
-    let iterations = 0;
-
-    while (queue.length && iterations < MAX_ITERATIONS && (!result.handle || !result.id)) {
-        const current = queue.shift();
-        iterations++;
-
-        if (!current || typeof current !== 'object') continue;
-        if (visited.has(current)) continue;
-        visited.add(current);
-
-        if (Array.isArray(current)) {
-            for (const item of current) {
-                if (typeof item === 'string') {
-                    if (!result.handle) {
-                        const handle = extractHandleFromString(item);
-                        if (handle) result.handle = handle;
-                    }
-                    if (!result.id) {
-                        const id = extractChannelIdFromString(item);
-                        if (id) result.id = id;
-                    }
-                } else if (item && typeof item === 'object' && !visited.has(item) && !(item instanceof Element) && !(item instanceof Node) && item !== window) {
-                    queue.push(item);
-                }
-                if (result.handle && result.id) break;
-            }
-            continue;
-        }
-
-        for (const value of Object.values(current)) {
-            if (typeof value === 'string') {
-                if (!result.handle) {
-                    const handle = extractHandleFromString(value);
-                    if (handle) result.handle = handle;
-                }
-                if (!result.id) {
-                    const id = extractChannelIdFromString(value);
-                    if (id) result.id = id;
-                }
-            } else if (value && typeof value === 'object' && !visited.has(value) && !(value instanceof Element) && !(value instanceof Node) && value !== window) {
-                queue.push(value);
-            }
-
-            if (result.handle && result.id) break;
-        }
-    }
-
-    return result;
-}
     """.trimIndent()
-    
-try{
-    webView.evaluateJavascript(jsGetData) { jsonResult ->
-        
-        } catch (e: Exception) {
-            log("$e")
+
+    try {
+        webView.evaluateJavascript(jsCode) { jsonResult ->
+            // jsonResult is a JSON string like: {"handle":"@xyz","id":"UCabc..."}
+            log("Channel info: $jsonResult")
+            // Here you can parse it and do your blocking logic
         }
+    } catch (e: Exception) {
+        log("Error evaluating JS: $e")
     }
 }
 
