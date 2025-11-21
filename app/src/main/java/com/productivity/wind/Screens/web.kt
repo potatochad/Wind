@@ -34,6 +34,10 @@ fun Web(){
     val badWords = mutableListOf<Str>()
     var on = r_m(yes)
 
+    RunOnce {
+        webView.loadUrl("https://youtube.com")
+    }
+
     RunOnce(Bar.badWords) {
         Bar.badWords.forEach {
             badWords += it.word
@@ -41,7 +45,7 @@ fun Web(){
     }
 
     
-    WebUrl = "${UrlShort(webView.value?.url ?: "https://youtube.com")}"
+    WebUrl = "${UrlShort(webView.it?.url ?: "https://youtube.com")}"
        
 
 
