@@ -165,11 +165,11 @@ fun blockYoutubeChannel(webViewState: m_<WebView?>) {
     try {
         webView.evaluateJavascript(jsCode) { jsonResult ->
             // jsonResult is a JSON string like: {"handle":"@xyz","id":"UCabc..."}
-            log("Channel info: $jsonResult")
+            Vlog("Channel info: $jsonResult")
             // Here you can parse it and do your blocking logic
         }
     } catch (e: Exception) {
-        log("Error evaluating JS: $e")
+        Vlog("Error evaluating JS: $e")
     }
 }
 
