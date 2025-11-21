@@ -70,21 +70,25 @@ fun Web(){
                 getYoutubeVideoTitle(webView)
                 getYoutubeVideoChannel(webView)
                 BlockKeywords(webView, badWords)
+                hideYoutubeSidebar(webView)
             },
             onProgressChanged = {
                 getYoutubeVideoTitle(webView)
                 getYoutubeVideoChannel(webView)
                 BlockKeywords(webView, badWords)
+                hideYoutubeSidebar(webView)
             },
             onPageStarted = {
                 getYoutubeVideoTitle(webView)
                 getYoutubeVideoChannel(webView)
                 BlockKeywords(webView, badWords)
+                hideYoutubeSidebar(webView)
             },
             onPageFinished = { 
                 getYoutubeVideoTitle(webView)
                 getYoutubeVideoChannel(webView)
                 BlockKeywords(webView, badWords)
+                hideYoutubeSidebar(webView)
             }
         )
     }
@@ -178,6 +182,32 @@ try {
         Vlog("Error evaluating JS: $e")
     }
 }
+
+fun hideYoutubeSidebar(webViewState: m_<WebView?>) {
+    val webView = webViewState.it ?: return
+
+    val js = """
+        (function() {
+            const hide = () => {
+                const sidebar = document.getElementById("related");
+                if (sidebar) {
+                    sidebar.style.display = "none";
+                }
+            };
+
+            // run now
+            hide();
+
+            // run again every 500ms because YouTube reloads DOM
+            if (!window._sidebarHider) {
+                window._sidebarHider = setInterval(hide, 500);
+            }
+        })();
+    """.trimIndent()
+
+    webView.evaluateJavascript(js, null)
+}
+
 
 fun getYoutubeVideoChannel(webViewState: m_<WebView?>) {
     val webView = webViewState.it ?: return
