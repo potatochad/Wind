@@ -35,7 +35,7 @@ fun Web(){
     var on = r_m(yes)
 
     RunOnce {
-        webView.loadUrl("https://youtube.com")
+        webView.it?.loadUrl("https://youtube.com")
     }
 
     RunOnce(Bar.badWords) {
