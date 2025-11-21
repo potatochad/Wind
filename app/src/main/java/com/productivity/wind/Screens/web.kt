@@ -82,6 +82,82 @@ fun Web(){
     }
 }
 
+
+fun BlockYoutubeChannel(webViewState: m_<WebView?>) {
+    val webView = webViewState.it ?: return
+
+    // Get YouTube page JSON
+    val jsGetData = """
+        (function() {
+            return JSON.stringify(window["ytInitialData"] || {});
+        })();
+    function scanDataForChannelIdentifiers(root) {
+    const result = { handle: '', id: '' };
+    if (!root || typeof root !== 'object') return result;
+
+    const visited = new Set();
+    const queue = [root];
+    const MAX_ITERATIONS = 2000;
+    let iterations = 0;
+
+    while (queue.length && iterations < MAX_ITERATIONS && (!result.handle || !result.id)) {
+        const current = queue.shift();
+        iterations++;
+
+        if (!current || typeof current !== 'object') continue;
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        if (Array.isArray(current)) {
+            for (const item of current) {
+                if (typeof item === 'string') {
+                    if (!result.handle) {
+                        const handle = extractHandleFromString(item);
+                        if (handle) result.handle = handle;
+                    }
+                    if (!result.id) {
+                        const id = extractChannelIdFromString(item);
+                        if (id) result.id = id;
+                    }
+                } else if (item && typeof item === 'object' && !visited.has(item) && !(item instanceof Element) && !(item instanceof Node) && item !== window) {
+                    queue.push(item);
+                }
+                if (result.handle && result.id) break;
+            }
+            continue;
+        }
+
+        for (const value of Object.values(current)) {
+            if (typeof value === 'string') {
+                if (!result.handle) {
+                    const handle = extractHandleFromString(value);
+                    if (handle) result.handle = handle;
+                }
+                if (!result.id) {
+                    const id = extractChannelIdFromString(value);
+                    if (id) result.id = id;
+                }
+            } else if (value && typeof value === 'object' && !visited.has(value) && !(value instanceof Element) && !(value instanceof Node) && value !== window) {
+                queue.push(value);
+            }
+
+            if (result.handle && result.id) break;
+        }
+    }
+
+    return result;
+}
+    """.trimIndent()
+
+    webView.evaluateJavascript(jsGetData) { jsonResult ->
+        
+        } catch (e: Exception) {
+            log("$e")
+        }
+    }
+}
+
+
 @Composable
 fun BlockKeyword() {
     var BadWord = r_m("someWord")
