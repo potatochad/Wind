@@ -110,9 +110,9 @@ dependencies {
 
 // implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.10")
 // implementation("org.jetbrains.kotlin:kotlin-scripting-common:1.9.10")
-implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:1.9.10")
+  // implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:1.9.10")
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.10")
+
     implementation("androidx.compose.foundation:foundation:1.9.2")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
