@@ -41,7 +41,7 @@ fun Web(){
     }
 
     
-    WebUrl = "${UrlShort(webView.value?.url ?: "https://google.com")}"
+    WebUrl = "${UrlShort(webView.value?.url ?: "https://youtube.com")}"
        
 
 
@@ -187,26 +187,134 @@ fun hideYoutubeSidebar(webViewState: m_<WebView?>) {
     val webView = webViewState.it ?: return
 
     val js = """
-        (function() {
-            const hide = () => {
-                const sidebar = document.getElementById("related");
-                if (sidebar) {
-                    sidebar.style.display = "none";
+        (function(){
+            // Only install once
+            if (window._killYoutubeSidebarInstalled) return;
+            window._killYoutubeSidebarInstalled = true;
+
+            // 1) Inject strong CSS rule to hide common sidebar elements
+            const css = `
+                /* main related/secondary containers */
+                #related, #secondary, ytd-watch-next-secondary-results-renderer, ytd-browse, ytd-two-column-browse-results-renderer {
+                    display: none !important;
+                    visibility: hidden !important;
+                    width: 0 !important;
+                    max-width: 0 !important;
+                    overflow: hidden !important;
+                }
+                /* homepage/side panels */
+                ytd-rich-grid-renderer, ytd-rich-section-renderer, #contents > ytd-rich-item-renderer {
+                    display: none !important;
+                }
+            `;
+            let style = document.getElementById('__hideYoutubeSidebarStyle');
+            if (!style) {
+                style = document.createElement('style');
+                style.id = '__hideYoutubeSidebarStyle';
+                style.appendChild(document.createTextNode(css));
+                document.head && document.head.appendChild(style);
+            }
+
+            // 2) Helper to remove nodes that slip through
+            const selectors = [
+                '#related',
+                '#secondary',
+                'ytd-watch-next-secondary-results-renderer',
+                'ytd-compact-video-renderer',
+                'ytd-rich-grid-renderer',
+                'ytd-rich-section-renderer',
+                'ytd-browse'
+            ];
+
+            function zapOnce() {
+                let found = false;
+                for (const sel of selectors) {
+                    const nodes = document.querySelectorAll(sel);
+                    nodes.forEach(n => {
+                        // hide aggressively
+                        n.style.setProperty('display', 'none', 'important');
+                        n.style.setProperty('visibility', 'hidden', 'important');
+                        n.remove && n.remove(); // remove if possible
+                        found = true;
+                    });
+                }
+                return found;
+            }
+
+            // run immediately a few times (page may still be constructing)
+            zapOnce();
+            setTimeout(zapOnce, 200);
+            setTimeout(zapOnce, 700);
+
+            // 3) MutationObserver to catch dynamically added recommendation nodes
+            if (!window.__hideYoutubeSidebarObserver) {
+                window.__hideYoutubeSidebarObserver = new MutationObserver(mutations => {
+                    for (const m of mutations) {
+                        if (m.addedNodes && m.addedNodes.length) {
+                            zapOnce();
+                        }
+                    }
+                });
+
+                try {
+                    window.__hideYoutubeSidebarObserver.observe(document.documentElement || document.body, {
+                        childList: true,
+                        subtree: true
+                    });
+                } catch (e) {
+                    // fallback: periodic zap
+                    if (!window.__hideYoutubeSidebarInterval) {
+                        window.__hideYoutubeSidebarInterval = setInterval(zapOnce, 700);
+                    }
+                }
+            }
+
+            // 4) Grab SPA nav events used by YouTube to re-apply on navigation
+            function reapplyOnNav() {
+                zapOnce();
+                // sometimes yt fires special events
+                document.dispatchEvent(new Event('hide-sidebar-check'));
+            }
+
+            // Listen to known YouTube navigation events
+            window.addEventListener('yt-navigate-finish', reapplyOnNav);
+            window.addEventListener('yt-page-data-updated', reapplyOnNav);
+            window.addEventListener('yt-player-updated', reapplyOnNav);
+            // general history changes
+            const pushState = history.pushState;
+            history.pushState = function() {
+                pushState.apply(this, arguments);
+                setTimeout(reapplyOnNav, 200);
+            };
+            const replaceState = history.replaceState;
+            history.replaceState = function() {
+                replaceState.apply(this, arguments);
+                setTimeout(reapplyOnNav, 200);
+            };
+
+            // 5) expose a manual cleanup function (optional)
+            window.killYoutubeSidebar = {
+                remove: function() {
+                    if (window.__hideYoutubeSidebarObserver) {
+                        try { window.__hideYoutubeSidebarObserver.disconnect(); } catch(e){}
+                        window.__hideYoutubeSidebarObserver = null;
+                    }
+                    if (window.__hideYoutubeSidebarInterval) {
+                        clearInterval(window.__hideYoutubeSidebarInterval);
+                        window.__hideYoutubeSidebarInterval = null;
+                    }
+                    const s = document.getElementById('__hideYoutubeSidebarStyle');
+                    if (s) s.remove();
+                    window._killYoutubeSidebarInstalled = false;
                 }
             };
 
-            // run now
-            hide();
-
-            // run again every 500ms because YouTube reloads DOM
-            if (!window._sidebarHider) {
-                window._sidebarHider = setInterval(hide, 500);
-            }
         })();
     """.trimIndent()
 
     webView.evaluateJavascript(js, null)
 }
+
 
 
 fun getYoutubeVideoChannel(webViewState: m_<WebView?>) {
