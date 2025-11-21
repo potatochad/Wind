@@ -148,7 +148,8 @@ fun BlockYoutubeChannel(webViewState: m_<WebView?>) {
     return result;
 }
     """.trimIndent()
-
+    
+try{
     webView.evaluateJavascript(jsGetData) { jsonResult ->
         
         } catch (e: Exception) {
