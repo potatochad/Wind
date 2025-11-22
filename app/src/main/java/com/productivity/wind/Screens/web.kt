@@ -38,7 +38,6 @@ fun Web(){
 
     RunOnce {
         webView.it?.loadUrl("https://youtube.com")
-        hideYoutubeShorts(webView)
     }
 
     RunOnce(Bar.badWords) {
