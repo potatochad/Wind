@@ -86,6 +86,8 @@ fun WebXml(
                 }
 
                 override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+
+                    //ONLY WORKS WHEN GPING TO COMPLETLY NEW PAGR
                     val raw = request?.url.toString()
 
                     // YOUR CUSTOM CODE decides
@@ -99,6 +101,21 @@ fun WebXml(
 
                     return false
                 }
+
+                override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
+                    val raw = request.url.toString()
+
+                    // YOUR CUSTOM CODE decides
+                    val stop = loadPage(view, raw)
+
+                    if (!stop) {
+                        Vlog("Page blocked by custom logic: $raw")
+                        // Return empty response to stop the request
+                        return WebResourceResponse("text/plain", "utf-8", null)
+                    }
+                    return super.shouldInterceptRequest(view, request)
+                }
+
 
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
