@@ -73,15 +73,17 @@ fun Web(){
         WebXml(
             webViewState = webView,
             loadPage={ web, url ->
-                for (item in Bar.badWords) {
+                var allow = true
 
+                for (item in Bar.badWords) {
                     if (url.contains(item.word, ignoreCase = true)) {
                         web?.loadUrl("https://www.google.com")
-                        return@loadPage false // stop page
+                        allow = false
+                        break
                     }
                 }
 
-                return@loadPage true
+                allow
    
             },
         )
