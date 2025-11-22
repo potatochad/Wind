@@ -42,9 +42,6 @@ fun Web(){
             badWords += it.word
         }
     }
-    RunOnce(webView.it?.url){
-        BlockKeywords(webView, badWords)
-    }
 
     
     WebUrl = "${webView.it?.url ?: "https://youtube.com"}"
