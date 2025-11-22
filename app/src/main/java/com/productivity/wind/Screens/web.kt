@@ -70,6 +70,7 @@ fun Web(){
         WebXml(
             webViewState = webView,
             loadPage={ web, url ->
+                Vlog("loading PAGE....")
                 var allow = true
 
                 for (item in Bar.badWords) {
