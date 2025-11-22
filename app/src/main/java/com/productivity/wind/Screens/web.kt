@@ -74,28 +74,16 @@ fun Web(){
         WebXml(
             webViewState = webView,
             onUrlChanged = {
-                getYoutubeVideoTitle(webView)
-                getYoutubeVideoChannel(webView)
                 BlockKeywords(webView, badWords)
-                hideYoutubeSidebar(webView)
             },
             onProgressChanged = {
-                getYoutubeVideoTitle(webView)
-                getYoutubeVideoChannel(webView)
                 BlockKeywords(webView, badWords)
-                hideYoutubeSidebar(webView)
             },
             onPageStarted = {
-                getYoutubeVideoTitle(webView)
-                getYoutubeVideoChannel(webView)
                 BlockKeywords(webView, badWords)
-                hideYoutubeSidebar(webView)
             },
-            onPageFinished = { 
-                getYoutubeVideoTitle(webView)
-                getYoutubeVideoChannel(webView)
+            onPageFinished = {
                 BlockKeywords(webView, badWords)
-                hideYoutubeSidebar(webView)
             }
         )
     }
