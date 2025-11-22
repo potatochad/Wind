@@ -166,8 +166,10 @@ fun WebView.clearWebData() {
 }
 
 fun goBackWeb(webView: WebView?) {
-    if (webView?.canGoBack()==yes) {
-        webView.goBack()
+    webView?.post {
+        if (webView?.canGoBack()==yes) {
+            webView.goBack()
+        }
     }
 }
 
