@@ -75,7 +75,6 @@ fun Web(){
 
                 for (item in Bar.badWords) {
                     if (url.contains(item.word, ignoreCase = true)) {
-                        web?.loadUrl("https://www.google.com")
                         allow = false
                         break
                     }
