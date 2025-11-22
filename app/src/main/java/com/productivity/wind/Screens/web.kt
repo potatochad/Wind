@@ -48,7 +48,7 @@ fun Web(){
     }
 
     
-    WebUrl = "${UrlShort(webView.it?.url ?: "https://youtube.com")}"
+    WebUrl = "${webView.it?.url ?: "https://youtube.com"}"
        
 
 
