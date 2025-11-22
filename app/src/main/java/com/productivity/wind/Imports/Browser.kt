@@ -84,6 +84,13 @@ fun WebXml(
                     url?.let { onUrlChanged(it) }
                 }
 
+                override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                    val url = request?.url.toString().lowercase()
+
+                    return false
+                }
+
+
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
                     url?.let { onPageStarted(it) }
