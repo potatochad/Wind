@@ -42,6 +42,9 @@ fun Web(){
             badWords += it.word
         }
     }
+    RunOnce(webView.it?.url){
+        BlockKeywords(webView, badWords)
+    }
 
     
     WebUrl = "${webView.it?.url ?: "https://youtube.com"}"
@@ -70,16 +73,16 @@ fun Web(){
         WebXml(
             webViewState = webView,
             onUrlChanged = {
-                BlockKeywords(webView, badWords)
+                
             },
             onProgressChanged = {
-                BlockKeywords(webView, badWords)
+                
             },
             onPageStarted = {
-                BlockKeywords(webView, badWords)
+                
             },
             onPageFinished = {
-                BlockKeywords(webView, badWords)
+                
             }
         )
     }
