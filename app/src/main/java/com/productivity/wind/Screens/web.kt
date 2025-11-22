@@ -72,18 +72,14 @@ fun Web(){
     ) {
         WebXml(
             webViewState = webView,
-            onUrlChanged = {
-                
+            loadPage={ web, url
+                Bar.badWords.each {
+                    if (url.contains(it.word)) {
+                        view?.loadUrl("https://www.google.com")
+                        no
+                    } else yes
+                }
             },
-            onProgressChanged = {
-                
-            },
-            onPageStarted = {
-                
-            },
-            onPageFinished = {
-                
-            }
         )
     }
 }
