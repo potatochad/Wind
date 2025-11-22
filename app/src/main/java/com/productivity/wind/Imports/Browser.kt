@@ -50,6 +50,7 @@ fun WebXml(
     onProgressChanged: (Int) -> Unit = {},
     onPageStarted: (Str) -> Unit = {},
     onPageFinished: (Str) -> Unit = {},
+    loadPage: (view: WebView?, url: String) -> Boolean = { _, _ -> false },
 ) {
     BackHandler {
         webViewState.it?.goBack()
@@ -85,7 +86,16 @@ fun WebXml(
                 }
 
                 override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                    val url = request?.url.toString().lowercase()
+                    val raw = request?.url.toString()
+
+                    // YOUR CUSTOM CODE decides
+
+                    val stop = loadPage(view, raw)
+
+                    if (!stop) {
+                        Vlog("Page blocked by custom logic: $raw")
+                        return true
+                    }
 
                     return false
                 }
