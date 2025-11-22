@@ -38,9 +38,6 @@ fun Web(){
 
     RunOnce {
         webView.it?.loadUrl("https://youtube.com")
-    }
-
-    RunOnce(Bar.badWords) {
         Bar.badWords.forEach {
             badWords += it.word
         }
