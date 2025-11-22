@@ -111,6 +111,7 @@ fun WebXml(
                     if (!stop) {
                         Vlog("Page blocked by custom logic: $raw")
                         // Return empty response to stop the request
+                        goBackWeb(view)
                         return WebResourceResponse("text/plain", "utf-8", null)
                     }
                     return super.shouldInterceptRequest(view, request)
