@@ -76,8 +76,8 @@ fun Web(){
                 Bar.badWords.forEach {
                     if (url.contains(it.word)) {
                         web?.loadUrl("https://www.google.com")
-                        no
-                    } else yes
+                        return@loadPage no
+                    } else return@loadPage yes
                 }
             },
         )
