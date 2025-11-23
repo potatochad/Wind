@@ -57,7 +57,7 @@ fun WebXml(
     }
 
     RunOnce(webViewState) {
-        //Bar.Url = webViewState.it?.url
+        Bar.Url = webViewState.it?.url
     }
     AndroidView(
         factory = { context ->
