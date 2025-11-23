@@ -86,6 +86,7 @@ class Settings {
     var funTime by m(0)
     var Dpoints by m(0)
 	var lastDate by m("") 
+	var Url by m("")
     
 
     //ACHIEVEMENTS
