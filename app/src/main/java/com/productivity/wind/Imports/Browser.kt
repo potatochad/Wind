@@ -85,21 +85,6 @@ fun WebXml(
                     url?.let { onUrlChanged(it) }
                 }
 
-                override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-
-                    //ONLY WORKS WHEN GPING TO COMPLETLY NEW PAGE       
-                    val Url = view?.url ?: ""
-
-                    // YOUR CUSTOM CODE decides
-                    val stop = loadPage(view, Url)
-
-                    if (!stop){
-                        return true
-                    }
-
-                    return false
-                }
-
                 override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
                     val raw = request.url.toString()
                     log("raw = $raw")
