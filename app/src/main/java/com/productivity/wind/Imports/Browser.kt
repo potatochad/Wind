@@ -57,7 +57,7 @@ fun WebXml(
     }
 
     RunOnce(webViewState.it) {
-        each(100L) {
+        each(1000) {
             Bar.Url = webViewState.it?.url ?: ""
             log("Bar.Url = ${Bar.Url}")
         }
