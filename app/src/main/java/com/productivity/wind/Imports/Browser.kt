@@ -57,9 +57,10 @@ fun WebXml(
     }
 
     RunOnce(webViewState.it) {
-        each(1000) {
+        while (true) {
             Bar.Url = webViewState.it?.url ?: ""
             log("Bar.Url = ${Bar.Url}")
+            delay(1000)
         }
     }
     AndroidView(
