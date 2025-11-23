@@ -57,6 +57,7 @@ fun WebXml(
     }
 
     RunOnce(webViewState) {
+        log("WEBVIEWSTATEEEEEE")
         Bar.Url = webViewState.it?.url ?: ""
     }
     AndroidView(
