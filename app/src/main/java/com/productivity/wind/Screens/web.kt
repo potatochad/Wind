@@ -71,7 +71,7 @@ fun Web(){
             webViewState = webView,
             loadPage={ web, urlDumb ->
                 val url = Bar.Url
-                Vlog("loading = ${url}")
+                // Vlog("loading = ${url}")
                 var allow = true
 
                 for (item in Bar.badWords) {
