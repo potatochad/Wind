@@ -56,6 +56,9 @@ fun WebXml(
         webViewState.it?.goBack()
     }
 
+    RunOnce(webViewState) {
+        //Bar.Url = webViewState.it?.url
+    }
     AndroidView(
         factory = { context ->
             val rootView = LayoutInflater.from(context).inflate(R.layout.web, null, false)
@@ -89,10 +92,8 @@ fun WebXml(
                     val raw = request.url.toString()
                     log("raw = $raw")
                     
-                    val Url = webViewState.it?.url ?: ""
-
                     // YOUR CUSTOM CODE decides
-                    val stop = loadPage(view, Url)
+                    val stop = loadPage(view, raw)
 
                     if (!stop) {
                         goBackWeb(view)
