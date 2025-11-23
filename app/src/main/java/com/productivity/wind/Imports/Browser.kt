@@ -56,7 +56,7 @@ fun WebXml(
         webViewState.it?.goBack()
     }
 
-    RunOnce(webViewState.it?) {
+    RunOnce(webViewState.it) {
         log("WEBVIEWSTATEEEEEE")
         Bar.Url = webViewState.it?.url ?: ""
     }
