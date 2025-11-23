@@ -57,8 +57,8 @@ fun WebXml(
     }
 
     RunOnce(webViewState.it) {
-        log("WEBVIEWSTATEEEEEE")
         Bar.Url = webViewState.it?.url ?: ""
+        log("Bar.Url = ${Bar.Url}")
     }
     AndroidView(
         factory = { context ->
