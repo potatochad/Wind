@@ -89,7 +89,7 @@ fun WebXml(
                     val raw = request.url.toString()
                     log("raw = $raw")
                     
-                    val Url = view?.url ?: ""
+                    val Url = webViewState.it?.url ?: ""
 
                     // YOUR CUSTOM CODE decides
                     val stop = loadPage(view, Url)
