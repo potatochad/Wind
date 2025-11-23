@@ -91,7 +91,7 @@ fun WebXml(
 
                 override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
                     val raw = request.url.toString()
-                    log("raw = $raw")
+                    // log("raw = $raw")
                     
                     // YOUR CUSTOM CODE decides
                     val stop = loadPage(view, raw)
