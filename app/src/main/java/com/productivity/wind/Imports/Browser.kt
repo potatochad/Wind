@@ -89,9 +89,9 @@ fun WebXml(
 
                     //ONLY WORKS WHEN GPING TO COMPLETLY NEW PAGR
                     val raw = request?.url.toString()
-                    log("youtube RAW: $raw")
+                    log("raw = $raw")
                     
-                    val Url = view?.url
+                    val Url = view?.url ?: ""
 
                     // YOUR CUSTOM CODE decides
 
