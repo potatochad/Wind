@@ -89,10 +89,13 @@ fun WebXml(
 
                     //ONLY WORKS WHEN GPING TO COMPLETLY NEW PAGR
                     val raw = request?.url.toString()
+                    log("youtube RAW: $raw")
+                    
+                    val Url = view?.url
 
                     // YOUR CUSTOM CODE decides
 
-                    val stop = loadPage(view, raw)
+                    val stop = loadPage(view, Url)
 
                     if (!stop) {
                         Vlog("Page blocked by custom logic: $raw")
