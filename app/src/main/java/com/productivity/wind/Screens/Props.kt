@@ -441,9 +441,7 @@ object Icon {
     @Composable
     fun Chill() {
         LazyIcon(Icons.Default.SportsEsports) {
-            Item.enoughPoints{
-                goTo("Web")
-            }
+            goTo("Web")
         }
     }
 
