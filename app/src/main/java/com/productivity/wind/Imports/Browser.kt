@@ -94,11 +94,20 @@ fun WebXml(
                 }
 
                 override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
-                    val raw = request.url.toString()
+                    val raw = "${request.url}"
                     // log("raw = $raw")
                     
                     // YOUR CUSTOM CODE decides
                     val stop = loadPage(view, raw)
+
+                    if (url.endsWith(".jpg", yes) ||
+                            url.endsWith(".jpeg", yes) ||
+                            url.endsWith(".png", yes) ||
+                            url.endsWith(".gif", yes) ||
+                            url.contains("i.ytimg.com")
+                       ) {
+                        return WebResourceResponse("text/plain", "utf-8", null)
+                    }
 
                     if (!stop) {
                         goBackWeb(view)
