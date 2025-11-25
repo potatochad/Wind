@@ -31,11 +31,11 @@ fun checkForInternet(): Bool {
     val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         val network = connectivityManager.activeNetwork
         val activeNetwork = network?.let { connectivityManager.getNetworkCapabilities(it) }
-        activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true ||
-                activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true
+        activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == yes ||
+                activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == yes
     } else {
         val networkInfo = connectivityManager.activeNetworkInfo
-        networkInfo?.isConnected == true
+        networkInfo?.isConnected == yes
     }
 
     if (!isConnected) Vlog("No internet")
@@ -47,11 +47,11 @@ fun WebXml(
     webViewState: m_<WebView?>,
     url: String = "",
     isDesktopSite: Bool = no,
-    onUrlChanged: Do_<Str> = {},
-    onProgressChanged: Do_<Int> = {},
-    onPageStarted: Do_<Str> = {},
-    onPageFinished: Do_<Str> = {},
-    loadPage: (view: WebView?, url: Str) -> Boolean = { _, _ -> false },
+    onUrlChanged: DoStr = {},
+    onProgressChanged: DoInt = {},
+    onPageStarted: DoStr = {},
+    onPageFinished: DoStr = {},
+    loadPage: (view: WebView?, url: Str) -> Bool = { _, _ -> no },
 ) {
     BackHandler {
         webViewState.it?.goBack()
@@ -66,7 +66,7 @@ fun WebXml(
     }
     AndroidView(
         factory = { context ->
-            val rootView = LayoutInflater.from(context).inflate(R.layout.web, null, false)
+            val rootView = LayoutInflater.from(context).inflate(R.layout.web, null, no)
             val myWebView = rootView.findViewById<WebView>(R.id.myWebView)
 
             myWebView.settings.apply {
@@ -77,7 +77,7 @@ fun WebXml(
             }
 
             myWebView.webViewClient = object : WebViewClient() {
-                override fun onLoadResource(view: WebView?, url: String?) {
+                override fun onLoadResource(view: WebView?, url: Str?) {
                     super.onLoadResource(view, url)
                     if (isDesktopSite) {
                         view?.evaluateJavascript(
@@ -88,7 +88,7 @@ fun WebXml(
                     }
                 }
 
-                override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
+                override fun doUpdateVisitedHistory(view: WebView?, url: Str?, isReload: Bool) {
                     super.doUpdateVisitedHistory(view, url, isReload)
                     url?.let { onUrlChanged(it) }
                 }
@@ -118,12 +118,12 @@ fun WebXml(
 
 
 
-                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                override fun onPageStarted(view: WebView?, url: Str?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
                     url?.let { onPageStarted(it) }
                 }
 
-                override fun onPageFinished(view: WebView?, url: String?) {
+                override fun onPageFinished(view: WebView?, url: Str?) {
                     super.onPageFinished(view, url)
                     url?.let { onPageFinished(it) }
                     view?.zoomOut()
@@ -142,7 +142,7 @@ fun WebXml(
 
             rootView
         },
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.maxS(),
         update = { view ->
             val myWebView = view.findViewById<WebView>(R.id.myWebView)
             if (myWebView.url.isNullOrEmpty()) {
@@ -158,7 +158,7 @@ fun WebView.clearWebData() {
     clearHistory()
     clearFormData()
     clearSslPreferences()
-    clearCache(true)
+    clearCache(yes)
 
     CookieManager.getInstance().removeAllCookies(null)
     WebStorage.getInstance().deleteAllData()
