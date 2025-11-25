@@ -137,7 +137,7 @@ fun WebXml(
         update = { view ->
             val myWebView = view.findViewById<WebView>(R.id.myWebView)
             if (myWebView.url.isNullOrEmpty()) {
-                myWebView.loadUrl("https://www.google.com/search?q=$url")
+                myWebView.url("https://www.google.com/search?q=$url")
             }
         }
     )
