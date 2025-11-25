@@ -47,11 +47,11 @@ fun WebXml(
     webViewState: m_<WebView?>,
     url: String = "",
     isDesktopSite: Bool = no,
-    onUrlChanged: (Str) -> Unit = {},
-    onProgressChanged: (Int) -> Unit = {},
-    onPageStarted: (Str) -> Unit = {},
-    onPageFinished: (Str) -> Unit = {},
-    loadPage: (view: WebView?, url: String) -> Boolean = { _, _ -> false },
+    onUrlChanged: Do_<Str> = {},
+    onProgressChanged: Do_<Str> = {},
+    onPageStarted: Do_<Str> = {},
+    onPageFinished: Do_<Str> = {},
+    loadPage: (view: WebView?, url: Str) -> Boolean = { _, _ -> false },
 ) {
     BackHandler {
         webViewState.it?.goBack()
