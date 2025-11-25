@@ -131,6 +131,11 @@ var ScrollState.it: Int
         }
     }
 
+fun WebView.url(url: Str) {
+    this.loadUrl(url)
+}
+
+
 
 fun Modifier.space(
     s: Any? = null,
