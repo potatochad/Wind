@@ -24,9 +24,9 @@ import com.productivity.wind.Imports.Data.*
 
 @Suppress("DEPRECATION")
 fun checkForInternet(): Bool {
-    val context = App.ctx
+    val ctx = App.ctx
     val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         val network = connectivityManager.activeNetwork
@@ -41,11 +41,12 @@ fun checkForInternet(): Bool {
     if (!isConnected) Vlog("No internet")
     return isConnected
 }
+
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebXml(
     webViewState: m_<WebView?>,
-    url: String = "",
+    url: Str = "",
     isDesktopSite: Bool = no,
     onUrlChanged: DoStr = {},
     onProgressChanged: DoInt = {},
@@ -57,13 +58,6 @@ fun WebXml(
         webViewState.it?.goBack()
     }
 
-    RunOnce(webViewState.it) {
-        while (true) {
-            Bar.Url = webViewState.it?.url ?: ""
-            log("Bar.Url = ${Bar.Url}")
-            delay(1000)
-        }
-    }
     AndroidView(
         factory = { context ->
             val rootView = LayoutInflater.from(context).inflate(R.layout.web, null, no)
