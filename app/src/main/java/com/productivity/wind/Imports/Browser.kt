@@ -48,7 +48,7 @@ fun WebXml(
     url: String = "",
     isDesktopSite: Bool = no,
     onUrlChanged: Do_<Str> = {},
-    onProgressChanged: Do_<Str> = {},
+    onProgressChanged: Do_<Int> = {},
     onPageStarted: Do_<Str> = {},
     onPageFinished: Do_<Str> = {},
     loadPage: (view: WebView?, url: Str) -> Boolean = { _, _ -> false },
