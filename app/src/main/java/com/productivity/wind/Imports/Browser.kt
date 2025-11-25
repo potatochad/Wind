@@ -23,10 +23,9 @@ import com.productivity.wind.Imports.Data.*
 
 
 @Suppress("DEPRECATION")
-fun checkForInternet(): Bool {
+fun gotInternet(): Bool {
     val ctx = App.ctx
-    val connectivityManager =
-        ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val connectivityManager = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         val network = connectivityManager.activeNetwork
@@ -59,8 +58,8 @@ fun WebXml(
     }
 
     AndroidView(
-        factory = { context ->
-            val rootView = LayoutInflater.from(context).inflate(R.layout.web, null, no)
+        factory = { ctx ->
+            val rootView = LayoutInflater.from(ctx).inflate(R.layout.web, null, no)
             val myWebView = rootView.findViewById<WebView>(R.id.myWebView)
 
             myWebView.settings.apply {
@@ -196,7 +195,7 @@ fun UrlShort(input: Str): Str {
 fun BlockKeywords(
     webView: m_<WebView?>,
     keywords: List<Str>,
-    Do: Do = { },
+    Do: Do = {},
 ) {
     webView.it?.evaluateJavascript(
         "(function() { return document.body.innerText.toLowerCase(); })();"
