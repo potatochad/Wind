@@ -128,7 +128,7 @@ fun WebXml(
                 }
             }
 
-            myWebView.loadUrl("https://www.google.com/search?q=$url")
+            myWebView.url("https://www.google.com/search?q=$url")
             webViewState.it = myWebView
 
             rootView
