@@ -37,7 +37,7 @@ fun Web(){
     var on = r_m(yes)
 
     RunOnce {
-        webView.it?.loadUrl("https://youtube.com")
+        webView.it?.url("https://youtube.com")
         Bar.badWords.forEach {
             badWords += it.word
         }
@@ -71,12 +71,12 @@ fun Web(){
             webViewState = webView,
             loadPage={ web, urlDumb ->
                 val url = Bar.Url
-                // Vlog("loading = ${url}")
-                var allow = true
+                
+                var allow = yes
 
                 for (item in Bar.badWords) {
-                    if (url.contains(item.word, ignoreCase = true)) {
-                        allow = false
+                    if (url.contains(item.word, ignoreCase = yes)) {
+                        allow = no
                         break
                     }
                 }
