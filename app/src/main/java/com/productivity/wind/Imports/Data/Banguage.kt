@@ -144,6 +144,14 @@ val WebView?.url: Str
 val MutableState<WebView?>.url: Str
     get() = this.value?.url ?: ""
 
+fun goBackWeb(webView: WebView?) {
+    webView?.post {
+        if (webView?.canGoBack()==yes) {
+            webView.goBack()
+        }
+    }
+}
+
 
 
 
