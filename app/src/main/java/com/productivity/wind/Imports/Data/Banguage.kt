@@ -132,9 +132,19 @@ var ScrollState.it: Int
         }
     }
 
-fun WebView?.url(url: String) {
+fun WebView?.url(url: Str) {
     this?.loadUrl(url)
 }
+fun WebView.url(url: Str) {
+    this.loadUrl(url)
+}
+fun MutableState<WebView?>.url(url: Str) {
+    this.value?.loadUrl(url)
+}
+fun MutableState<WebView>.url(url: Str) {
+    this.value.loadUrl(url)
+}
+
 
 
 
