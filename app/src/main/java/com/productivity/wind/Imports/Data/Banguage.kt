@@ -135,13 +135,13 @@ var ScrollState.it: Int
 fun WebView?.url(url: Str) {
     this?.loadUrl(url)
 }
-fun MutableState<WebView?>.url(url: Str) {
+fun m_<WebView?>.url(url: Str) {
     this.value?.loadUrl(url)
 }
 val WebView?.url: Str
     get() = this?.url ?: ""
 
-val MutableState<WebView?>.url: Str
+val m_<WebView?>.url: Str
     get() = this.value?.url ?: ""
 
 fun goBackWeb(webView: WebView?) {
