@@ -138,6 +138,14 @@ fun WebView?.url(url: Str) {
 fun MutableState<WebView?>.url(url: Str) {
     this.value?.loadUrl(url)
 }
+// returns the url you passed in
+val WebView?.url: Str
+    get() = this?.url ?: ""
+
+val MutableState<WebView?>.url: Str
+    get() = this.value?.url ?: ""
+
+
 
 
 
