@@ -132,16 +132,16 @@ var ScrollState.it: Int
         }
     }
 
-fun WebView?.url(url: Str) {
+fun Web?.url(url: Str) {
     this?.loadUrl(url)
 }
-fun m_<WebView?>.url(url: Str) {
+fun m_<Web?>.url(url: Str) {
     this.value?.loadUrl(url)
 }
-val WebView?.url: Str
+val Web?.url: Str
     get() = this?.url ?: ""
 
-val m_<WebView?>.url: Str
+val m_<Web?>.url: Str
     get() = this.value?.url ?: ""
 
 fun goBackWeb(webView: WebView?) {
@@ -339,6 +339,7 @@ fun <T> m(value: T) = mutableStateOf(value)
 fun <T> set(state: m_<T>?, value: T) { state?.value = value }
 fun show(state: m_<Bool>?) = set(state, yes)
 fun hide(state: m_<Bool>?) = set(state, no)
+typealias Web = WebView
 
 fun Id(): Str { return UUID.randomUUID().toString() }
 typealias Content = @Composable () -> Unit
