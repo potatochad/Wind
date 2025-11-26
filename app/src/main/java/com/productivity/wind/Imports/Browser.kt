@@ -183,7 +183,7 @@ fun UrlShort(input: Str): Str {
 }
 
 fun BlockKeywords(
-    webView: m_<WebView?>,
+    webView: m_<Web?>,
     keywords: List<Str>,
     Do: Do = {},
 ) {
