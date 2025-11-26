@@ -144,10 +144,10 @@ val Web?.url: Str
 val m_<Web?>.url: Str
     get() = this.value?.url ?: ""
 
-fun goBackWeb(webView: WebView?) {
-    webView?.post {
-        if (webView?.canGoBack()==yes) {
-            webView.goBack()
+fun goBackWeb(web: Web?) {
+    web?.post {
+        if (web?.canGoBack()==yes) {
+            web.goBack()
         }
     }
 }
