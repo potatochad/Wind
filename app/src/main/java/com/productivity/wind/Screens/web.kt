@@ -95,10 +95,6 @@ fun Web(){
 fun BlockKeyword() {
     var BadWord = r_m("someWord")
 
-    RunOnce(Bar.badWords) {
-        BadWord.it = "${Bar.badWords.size}"
-    }
-
     LazyScreen(
         title = {
             Row(
