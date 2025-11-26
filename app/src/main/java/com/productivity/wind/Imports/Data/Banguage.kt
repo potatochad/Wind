@@ -132,9 +132,10 @@ var ScrollState.it: Int
         }
     }
 
-fun WebView.url(url: Str) {
-    this.loadUrl(url)
+fun WebView?.url(url: String) {
+    this?.loadUrl(url)
 }
+
 
 
 
