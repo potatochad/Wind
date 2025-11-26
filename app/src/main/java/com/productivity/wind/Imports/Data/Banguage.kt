@@ -345,18 +345,16 @@ fun <T> m(value: T) = mutableStateOf(value)
 fun <T> set(state: m_<T>?, value: T) { state?.value = value }
 fun show(state: m_<Bool>?) = set(state, yes)
 fun hide(state: m_<Bool>?) = set(state, no)
-typealias Web = WebView
-
 fun Id(): Str { return UUID.randomUUID().toString() }
-typealias Content = @Composable () -> Unit
-//typealias UI =  @Composable () -> Unit
+
+typealias Web = WebView
+typealias UI =  @Composable () -> Unit
 typealias Do = () -> Unit
-typealias Content_<T> = @Composable (T) -> Unit
+typealias UI_<T> = @Composable (T) -> Unit
 typealias Mod = Modifier
 typealias Do_<T> = (T) -> Unit
 typealias DoStr = (Str) -> Unit     
 typealias DoInt = (Int) -> Unit        
-typealias DoT<T> = (T) -> Unit
 typealias m_<T> = MutableState<T>
 typealias Str = String
 typealias Bool = Boolean
