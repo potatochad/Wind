@@ -26,13 +26,9 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.ui.text.style.*
 
 
-
-
-
-var WebUrl by m("")
 @Composable
 fun Web(){
-    val webView = r { mutableStateOf<WebView?>(null) }
+    val webView = r { mutableStateOf<Web?>(null) }
     val badWords = mutableListOf<Str>()
     var on = r_m(yes)
 
@@ -44,7 +40,7 @@ fun Web(){
     }
 
     
-    WebUrl = "${webView.url ?: "https://youtube.com"}"
+    Bar.Url = "${webView.url ?: "https://youtube.com"}"
        
 
 
@@ -102,7 +98,7 @@ fun BlockKeyword() {
                     .scroll(h = yes)
                     .w(App.screenWidth / 2),
             ) {
-                Text(WebUrl, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(Bar.Url, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
             UI.End {
                 Icon.MoreMenu{
