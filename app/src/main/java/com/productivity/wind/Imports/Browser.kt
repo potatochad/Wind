@@ -155,14 +155,6 @@ fun WebView.clearWebData() {
     WebStorage.getInstance().deleteAllData()
 }
 
-fun goBackWeb(webView: WebView?) {
-    webView?.post {
-        if (webView?.canGoBack()==yes) {
-            webView.goBack()
-        }
-    }
-}
-
 @SuppressLint("SetJavaScriptEnabled")
 fun WebSettings.applyDefaultConfig() {
     javaScriptEnabled = yes
