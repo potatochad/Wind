@@ -214,10 +214,10 @@ fun toL(it: Any?): Long = when (it) {
     else -> 0L
 }
 @Composable
-fun toUI(it: Any?): Content {
+fun toUI(it: Any?): UI {
     return when (it) {
         is Str -> { { Text(it) } }
-        is Function0<*> -> it as Content   // unsafe cast but works at runtime
+        is Function0<*> -> it as UI   // unsafe cast but works at runtime
         else -> { { Text("Unsupported type (toUI) $it") } }
     }
 }
@@ -237,7 +237,7 @@ fun NavGraphBuilder.url(
         content(backStackEntry)
     }
 }
-fun NavBackStackEntry.url(key: String): String {
+fun NavBackStackEntry.url(key: Str): Str {
     val value = this.arguments?.getString(key) ?: ""
     return if (value == "_") "" else value
 }
@@ -245,7 +245,7 @@ fun NavBackStackEntry.url(key: String): String {
 
 
 @Composable
-fun click(x: Content, Do: Do) {
+fun click(x: UI, Do: Do) {
 	Box(Modifier.click(Do)){
 		x()
 	}
@@ -349,6 +349,8 @@ fun Id(): Str { return UUID.randomUUID().toString() }
 
 typealias Web = WebView
 typealias UI =  @Composable () -> Unit
+typealias Content = @Composable () -> Unit
+typealias Content_<T> = @Composable (T) -> Unit
 typealias Do = () -> Unit
 typealias UI_<T> = @Composable (T) -> Unit
 typealias Mod = Modifier
@@ -449,7 +451,7 @@ fun TxtFileToMap(ctx: Context, uri: Uri, fileMap: MutableMap<Str, Str>) {
     }
 }
 
-fun StrToValue(valueNow: Any?, outputRaw: String?): Any? {
+fun StrToValue(valueNow: Any?, outputRaw: Str?): Any? {
     return when (valueNow) {
         is Int -> outputRaw?.toIntOrNull()
         is Long -> outputRaw?.toLongOrNull()
@@ -551,7 +553,7 @@ fun BasicInput(
 		textAlign = TextAlign.Start
 	),
 	oneLine: Bool= yes,
-    Do: (Str) -> Unit = {},
+    Do: DoStr = {},
 ) {
 	val focusManager = LocalFocusManager.current
 	val focusRequester = r { FocusRequester() }
@@ -587,7 +589,7 @@ fun Input(
     isInt: Bool = no,
 	modifier: Mod = Modifier, 
 	textStyle: TextStyle = TextStyle(),
-    onChange: (Str) -> Unit = {},
+    onChange: DoStr = {},
 ) {
 	val focusManager = LocalFocusManager.current
 
@@ -781,7 +783,7 @@ fun wait(x: Any = 100, Do: Do={}) {
 
 fun <T> runHeavyTask(
     task: () -> T,            // heavy computation or IO
-    onResult: (T) -> Unit     // UI update with result
+    onResult: Do_<T>     // UI update with result
 ) {
     CoroutineScope(Dispatchers.Default).launch { // off UI
         val result = task()                       // run heavy work
