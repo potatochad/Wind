@@ -929,7 +929,7 @@ fun LazyMenu(
 
         Box( Modifier
                 .offset { IntOffset(offsetX.roundToPx(), 0) }
-                .w(App.screenWidth / 2 + 30.dp)
+                .w(App.w / 2 + 30.dp)
                 .maxH()
                 .background(Color.DarkGray)//
         ) {
