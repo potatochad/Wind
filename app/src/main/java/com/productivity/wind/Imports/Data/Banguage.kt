@@ -349,6 +349,7 @@ fun Id(): Str { return UUID.randomUUID().toString() }
 
 typealias Web = WebView
 typealias UI = Content
+typealias ui = @Composable () -> Unit
 typealias Content = @Composable () -> Unit
 typealias Content_<T> = @Composable (T) -> Unit
 typealias Do = () -> Unit
