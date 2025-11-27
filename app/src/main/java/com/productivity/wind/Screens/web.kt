@@ -59,12 +59,10 @@ fun Web(){
             webViewState = web,
             loadPage={ page, urlDumb ->
                 val url = Bar.Url
-                
-                var allow = yes
 
-                for (item in Bar.badWords) {
-                    if (url.contains(item.word, ignoreCase = yes)) {
-                        allow = no
+                Bar.badWords.each {
+                    if (url.contains(it.word, ignoreCase = yes)) {
+                        var allow = no
                         break
                     }
                 }
