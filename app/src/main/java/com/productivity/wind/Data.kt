@@ -204,7 +204,7 @@ data class WebWord(
 @Composable
 fun AppContent() {
 	LazyTheme {
-        Surface(Modifier.maxS()) {
+        Surface(Mod.maxS()) {
 			SelectionContainer {
 				AppStart()			
 			}
@@ -217,7 +217,7 @@ fun AppContent() {
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun AppStart_beforeUI(ctx: Context) {
+fun AppStart_beforeUI(ctx: ctx) {
     
     App.ctx = ctx
 	App.pkg = ctx.packageName
