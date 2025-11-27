@@ -370,7 +370,7 @@ object UI {
         bottomPadding: Dp = 20.dp,
         StartPaddingRemove: Int = 40,
     ) {
-        val safeStartPadding = max(0.dp, (App.screenWidth+60.dp) / 4 - StartPaddingRemove.dp)
+        val safeStartPadding = max(0.dp, (App.w+60.dp) / 4 - StartPaddingRemove.dp)
 
         Column(
             Modifier.space(start = safeStartPadding),
