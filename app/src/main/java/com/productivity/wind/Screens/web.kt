@@ -60,9 +60,11 @@ fun Web(){
             loadPage={ page, urlDumb ->
                 val url = Bar.Url
 
+                var allow = yes
+
                 Bar.badWords.each {
                     if (url.contains(it.word, ignoreCase = yes)) {
-                        var allow = no
+                        allow = no
                         return@each
                     }
                 }
