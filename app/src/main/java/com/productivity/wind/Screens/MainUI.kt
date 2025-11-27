@@ -43,7 +43,7 @@ fun Main() {
 
     
     LazyScreen(title = { Header.Main() }, showBack = no) {
-        Column(Modifier.Vscroll()){
+        Column(Mod.Vscroll()){
 
             Bar.copyTsk.each {
 				LazyCard { 
@@ -124,7 +124,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     move(8)
     Text(
         text = coloredTarget,
-        modifier = Modifier.h(0, 100).w(0, 300).Vscroll(txtScroll)
+        modifier = Mod.h(0, 100).w(0, 300).Vscroll(txtScroll)
     )
     move(h = 20)
 
@@ -166,7 +166,7 @@ fun CopyTskUI(tsk: CopyTsk) {
                 }
             }
         },
-        modifier = Modifier.maxW().h(150).Vscroll(inputScroll).onFocusChanged {
+        modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged {
 			inputBottom +=1
 		},
 		placeholder = { Text("Start typing...") }
