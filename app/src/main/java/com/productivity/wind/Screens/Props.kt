@@ -422,7 +422,7 @@ object Icon {
     @Composable
     fun Menu() {
         LazyIcon(Icons.Default.Menu) {
-            App.Menu = yes
+            App.menu = yes
         }
     }
 
