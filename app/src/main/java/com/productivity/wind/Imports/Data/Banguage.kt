@@ -773,17 +773,9 @@ fun getMyAppLogs() {
 
 
 
-
-fun wait(x: Any = 100, Do: Do={}) {
-    CoroutineScope(Dispatchers.Main).launch {
-        delay(toL(x))
-        Do()
-    }
-}
-
 fun <T> runHeavyTask(
-    task: () -> T,            // heavy computation or IO
-    onResult: Do_<T>     // UI update with result
+    task: () -> T,         
+    onResult: Do_<T>  
 ) {
     CoroutineScope(Dispatchers.Default).launch { // off UI
         val result = task()                       // run heavy work
@@ -793,13 +785,22 @@ fun <T> runHeavyTask(
     }
 }
 
-
-
-fun each(s: Long = 1000L, Do: Do) {
-    Timer().schedule(0, s) {
+fun wait(x: Any = 100, Do: Do={}) {
+    CoroutineScope(Dispatchers.Main).launch {
+        delay(toL(x))
         Do()
     }
 }
+
+fun each(s: Any = 1000, Do: Do) {
+    CoroutineScope(Dispatchers.Main).launch {
+        while (yes) {
+            Do()
+            delay(toL(s))
+        }
+    }
+}
+
 
 
 
