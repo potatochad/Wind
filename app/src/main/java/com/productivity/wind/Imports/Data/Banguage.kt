@@ -164,7 +164,7 @@ fun goBackWeb(web: Web?) {
 
 
 
-fun Modifier.space(
+fun Mod.space(
     s: Any? = null,
     h: Any? = null,
     w: Any? = null,
@@ -252,7 +252,7 @@ fun click(x: UI, Do: Do) {
 }
 
 @SuppressLint("SuspiciousModifierThen")
-fun Modifier.click(Do: Do): Mod {
+fun Mod.click(Do: Do): Mod {
     return this.then(
         pointerInput(Unit) {
             detectTapGestures {
@@ -264,7 +264,7 @@ fun Modifier.click(Do: Do): Mod {
 
 
 
-fun Modifier.clickOrHold(
+fun Mod.clickOrHold(
     hold: Bool = yes,
     action: Do,
 ): Mod {
@@ -282,13 +282,13 @@ fun Modifier.clickOrHold(
 	}
 }
 
-fun Modifier.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
-fun Modifier.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
-fun Modifier.s(value: Any?) = this.size(toDp(value))
+fun Mod.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
+fun Mod.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
+fun Mod.s(value: Any?) = this.size(toDp(value))
 
 fun Modifier.maxS(): Mod= this.fillMaxSize()
-fun Modifier.maxW(): Mod= this.fillMaxWidth()
-fun Modifier.maxH(): Mod= this.fillMaxHeight()
+fun Mod.maxW(): Mod= this.fillMaxWidth()
+fun Mod.maxH(): Mod= this.fillMaxHeight()
 
 @Composable
 fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
@@ -305,7 +305,7 @@ fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 		}
 	)
 }
-fun Modifier.move(s: Any = 0, h: Any = s, w: Any = s): Modifier =
+fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Modifier =
     this.then(
         Modifier.offset(
             x = toDp(w), 
@@ -356,6 +356,7 @@ typealias Content_<T> = @Composable (T) -> Unit
 typealias Do = () -> Unit
 typealias UI_<T> = @Composable (T) -> Unit
 typealias Mod = Modifier
+typealias mod = Modifier
 typealias Do_<T> = (T) -> Unit
 typealias DoStr = (Str) -> Unit     
 typealias DoInt = (Int) -> Unit        
@@ -475,7 +476,7 @@ fun StrToValue(valueNow: Any?, outputRaw: Str?): Any? {
 fun r_Scroll() = rememberScrollState()
 
 @Composable
-fun Modifier.scroll(
+fun Mod.scroll(
     v: Bool = yes,
     h: Bool = yes,
     r_v: ScrollState = r_Scroll(),
@@ -488,9 +489,9 @@ fun Modifier.scroll(
 }
 
 @Composable
-fun Modifier.Vscroll(r_v: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_v)}
+fun Mod.Vscroll(r_v: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_v)}
 @Composable
-fun Modifier.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
+fun Mod.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
 
 suspend fun ScrollState.toBottom() { scrollTo(maxValue)}
 suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scrollToItem(layoutInfo.totalItemsCount - 1) }}
