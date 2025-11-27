@@ -192,7 +192,7 @@ object UI {
 	@Composable
 	fun End(ui: ui) {
 		Box(
-			Modifier.maxW(),
+			Mod.maxW(),
 			contentAlignment = Alignment.CenterEnd
 		) {
 			Row {
@@ -300,7 +300,7 @@ object UI {
         isChecked: m_<Bool>,
 	) {
 		Checkbox(
-			checked = isChecked.value,
+			checked = isChecked.it,
 			onCheckedChange = { set(isChecked, it) },
 			colors = CheckboxDefaults.colors(
 				checkedColor = LightBlue, // gold
@@ -316,7 +316,7 @@ object UI {
         selectedIndex: m_<Int>, // shared state of which is selected
 	) {
 		Box(
-			modifier = Modifier.s(15) // make box exactly the size you want
+			modifier = Mod.s(15) // make box exactly the size you want
 		) {
 			RadioButton(
 				selected = selectedIndex.value == index,
@@ -325,7 +325,7 @@ object UI {
 					selectedColor = LightBlue,
 					unselectedColor = Color.Gray
 				),
-				modifier = Modifier.scale(0.85f)
+				modifier = Mod.scale(0.85f)
 			)
 		}
 		move(w=8)
@@ -362,7 +362,7 @@ object UI {
             Modifier.space(start = safeStartPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(Modifier.h(topPadding))
+            Spacer(Mod.h(topPadding))
             Icon(
                 painter = painterResource(id = iconRes),
                 contentDescription = "$title Icon",
@@ -442,7 +442,7 @@ object UI {
         color: Color = Color.Gray,
     ) {
 			Column(
-				Modifier.maxS(),
+				Mod.maxS(),
 				verticalArrangement = Arrangement.Center,
 				horizontalAlignment = Alignment.CenterHorizontally,
 			) {
@@ -450,7 +450,7 @@ object UI {
 					imageVector = icon,
 					contentDescription = null,
 					tint = color,
-					modifier = Modifier.s(iconSize),
+					modifier = Mod.s(iconSize),
 				)
 				move(h=8)
 				Text(text, fontSize = textSize, color = color)
