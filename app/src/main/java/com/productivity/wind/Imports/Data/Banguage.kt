@@ -792,8 +792,9 @@ fun wait(x: Any = 100, Do: Do={}) {
     }
 }
 
-fun each(s: Any = 1000, Do: Do) {
-    CoroutineScope(Dispatchers.Main).launch {
+@Composable
+fun Each(s: Any = 1000, Do: Do) {
+    RunOnce {
         while (yes) {
             Do()
             delay(toL(s))
