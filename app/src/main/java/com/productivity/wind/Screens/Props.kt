@@ -144,17 +144,14 @@ object Item {
     @Composable
     fun Logs(txt: Str, scrollV: LazyListState, scrollH: ScrollState) {
         Box(
-            Modifier
-                .w(App.w - 10.dp)
-                .move(w = 5)
-                .h(App.h - 35.dp)
+            Mod.w(App.w - 10.dp).move(w = 5).h(App.h - 35.dp)
         ) {
             Box(
-                Modifier.Hscroll(scrollH)
+                Mod.Hscroll(scrollH)
             ) {
                 LazyColumn(
                     state = scrollV,
-                    modifier = Modifier.maxW()
+                    modifier = Mod.maxW()
                 ) {
                     items(txt.lineSequence().toList()) { line ->
                         Text(
@@ -302,12 +299,12 @@ object Header {
     @Composable
     fun Logs(LogsTag: m_<Str>, filteredLogs: Str) {
             Row(
-                Modifier.scroll(h=yes),
+                Mod.scroll(h=yes),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 LazyInput(
                     LogsTag,
-                    modifier = Modifier.h(34).w(120)
+                    modifier = Mod.h(34).w(120)
                 )
             }
             
@@ -623,7 +620,7 @@ fun AppSelectPopup(show: m_<Bool>) {
             } else {
                 LazzyList(appList) { (app, icon), _ ->
                     LazzyRow(
-                        Modifier.click {
+                        Mod.click {
                             selectedApp.it = getAppName(app)
                             show.it = no
                         }
