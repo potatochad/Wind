@@ -88,7 +88,7 @@ fun BlockKeyword() {
             Row(
                 Modifier
                     .scroll(h = yes)
-                    .w(App.screenWidth / 2),
+                    .w(App.w / 2),
             ) {
                 Text(Bar.Url, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
