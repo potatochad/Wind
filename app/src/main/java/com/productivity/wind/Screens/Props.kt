@@ -294,7 +294,7 @@ object Item {
                         Bar.funTime -= 1
                     }
                 }
-                delay(1000L) 
+                wait(1000) 
             }
         }
     }
@@ -379,7 +379,6 @@ object Header {
                 UI.check(text.it.isEmpty(),"Add text") {return@Add}
 
                 if (!id.isEmpty()) {
-                    Vlog("ID: $id ")
                     val tsk = Bar.copyTsk.find { it.id == id }
 
                     if (tsk!=null){
