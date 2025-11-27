@@ -348,7 +348,7 @@ fun hide(state: m_<Bool>?) = set(state, no)
 fun Id(): Str { return UUID.randomUUID().toString() }
 
 typealias Web = WebView
-typealias UI =  @Composable () -> Unit
+typealias UI = Content
 typealias Content = @Composable () -> Unit
 typealias Content_<T> = @Composable (T) -> Unit
 typealias Do = () -> Unit
