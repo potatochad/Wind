@@ -53,7 +53,7 @@ import androidx.compose.ui.text.style.*
 fun LazyMove(
     x: Dp = 0.dp,
     y: Dp = 0.dp,
-    content: Content,
+    ui: ui,
 ) {
     Box(
 		Modifier.maxS()
@@ -62,7 +62,7 @@ fun LazyMove(
             .offset(x = x, y = y)
             .wrapContentSize()
         ){
-			content()
+			ui()
 		}
     }
 }
@@ -72,7 +72,7 @@ fun LazyMove(
 @Composable
 fun LazyWindow(
     show: m_<Bool>,
-    content: Content,
+    ui: ui,
 ) {
     // Local state to control if Popup is alive
     var popupVisible by r_m(no)
@@ -101,7 +101,7 @@ fun LazyWindow(
                     enter = fadeIn(animationSpec = tween(200)),
                     exit = fadeOut(animationSpec = tween(200))
                 ) {
-                    content()
+                    ui()
                 }
             }
         }
@@ -114,7 +114,7 @@ fun LazyMeasure(
     w: m_<Dp>? = null,
     h: m_<Dp>? = null,
     modifier: Mod = Modifier,
-    content: Content
+    ui: ui
 ) {
     val density = LocalDensity.current
 
@@ -129,7 +129,7 @@ fun LazyMeasure(
             set(h, with(density) { size.height.toDp() })
         }
     ) {
-        content()
+        ui()
     }
 }
 
@@ -144,7 +144,7 @@ fun LazyInfo(
     ChangeY: Dp = 80.dp,
     popupWidth: Dp = 0.dp,
     popupHeight: Dp = 0.dp,
-    content: Content,
+    ui: ui,
 ) {
     var show = r_m(no)
     var x = r_m(0.dp)
@@ -156,7 +156,7 @@ fun LazyInfo(
         x, y, w, h,
         modifier = Mod.clickOrHold(hold) { show(show) }
     ) {
-        content()
+        ui()
     }
 
     // Calculate popup position
@@ -257,7 +257,7 @@ fun LazyInfo(
 
 
 @Composable
-fun LazyTheme(content: Content) {
+fun LazyTheme(content: ui) {
     val appColorScheme = darkColorScheme(
         background = Color.Black,
         onBackground = Color.White,
@@ -283,7 +283,7 @@ fun NormalVisual(
     show: m_<Bool>,
     popupX: Dp,
     popupY: Dp,
-    content: Content,
+    ui: ui,
 ){
 	LazyWindow(show) {
         LazyMove(popupX, popupY) {
@@ -296,7 +296,7 @@ fun NormalVisual(
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 Box(Modifier.space(8)) {
-                    content()
+                    ui()
                 }
             }
         }
@@ -435,7 +435,7 @@ fun LazzyRow(
     modifier: Mod = Modifier,
     space: Int = 0,
     center: Bool = no, // Kotlin uses 'Boolean', not 'Bool'
-    content: Content,
+    ui: ui,
 ) {
     Row(
         modifier = modifier
@@ -444,7 +444,7 @@ fun LazzyRow(
         horizontalArrangement = if (center) Arrangement.Center else Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        content()
+        ui()
     }
 }
 
@@ -452,7 +452,7 @@ fun LazzyRow(
 @Composable 
 fun LazyRuleCard(
     Header: Str,
-    content: Content,
+    ui: ui,
 ){
 	LazyCard(corners = 8){
 		LazzyRow {
@@ -463,7 +463,7 @@ fun LazyRuleCard(
 				fontWeight = FontWeight.Bold,
 			)
 		}
-		content()
+		ui()
 	}
 
 }
@@ -476,7 +476,7 @@ fun LazyCard(
     modifier: Mod = Mod
 	     .space(h= 8, w = 10)
          .maxW(),
-    content: Content,
+    ui: ui,
 ) {
     Card(
         modifier = modifier,
@@ -492,7 +492,7 @@ fun LazyCard(
                 top = (innerPadding - 3).dp // slight top adjustment
             )
         ) {
-            content()
+            ui()
         }
     }
 }
@@ -562,7 +562,7 @@ fun LazyMore(
     modifier: Mod = Modifier,
     title: Str = "Show more",
     initiallyExpanded: Bool = no,
-    content: Content
+    ui: ui
 ) {
     var expanded by r_m(initiallyExpanded)
     val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
@@ -605,7 +605,7 @@ fun LazyMore(
                     .maxW()
                     .space(start = 32, top = 4)
             ) {
-                content()
+                ui()
             }
         }
     }
@@ -702,7 +702,7 @@ fun LazyItem(
 
 @Composable
 fun LazyHeader(
-    titleContent: Content,
+    titleContent: ui,
     onBackClick: Do = {},
     showBack: Bool = yes,
     modifier: Mod = Modifier,
@@ -771,7 +771,7 @@ fun LazyHeader(
 
 @Composable
 fun LazyScreen(
-    title: Content,
+    title: ui,
     onBackClick: Do = {},
     showBack: Bool = yes,
     modifier: Mod = Modifier
@@ -781,10 +781,10 @@ fun LazyScreen(
     DividerPadding: Bool = yes,
 
     headerHeight: Int = 44,
-    content: Content,
+    content: ui,
 ) {
 
-	val header: Content = {
+	val header: ui = {
 		LazyHeader(
 			titleContent = title,
 			onBackClick = onBackClick,
@@ -794,7 +794,7 @@ fun LazyScreen(
 			h = headerHeight
 		)
 	}
-	val bottom: Content = {
+	val bottom: ui = {
 		LazzyRow {move(bottomSystemHeight())}
 	}
 
@@ -827,7 +827,7 @@ fun LazyPopup(
     onConfirm: Do? = null,
     onCancel: Do? = null,
 	onDismiss: Do? = { show.it = no },
-	content: Content? = null,
+	ui: ui? = null,
 ) {
     if (!show.it) return
 	
@@ -839,7 +839,7 @@ fun LazyPopup(
         title = { Text(title) },
         text = {
 			Column{
-				content?.invoke() ?: Text(msg)
+				ui?.invoke() ?: Text(msg)
 			}
         },
         confirmButton = {
@@ -873,7 +873,7 @@ fun LazyPopup(
 @Composable
 fun LazyMenu(
     onDismiss: Do? = null,
-    content: Content,
+    ui: ui,
 ) {
     val visible = r_m(yes)
     val internalVisible = r_m(no)
@@ -933,7 +933,7 @@ fun LazyMenu(
                 .maxH()
                 .background(Color.DarkGray)//
         ) {
-            content()
+            ui()
         }
     }
 }
