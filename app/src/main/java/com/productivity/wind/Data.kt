@@ -276,11 +276,11 @@ object App {
 	lateinit var pkg: Str
 
 	
-	var screenHeight by m(0.dp)
-	var screenWidth by m(0.dp)
-	var LazyScreenContentHeight by m(0.dp)
+	var h by m(0.dp)
+	var w by m(0.dp)
+	var lazyH by m(0.dp)
 	
-	var Menu by m(no)
+	var menu by m(no)
 	
 
 }
