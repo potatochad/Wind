@@ -58,6 +58,7 @@ import com.productivity.wind.R
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.drawscope.*
 import com.productivity.wind.Imports.Data.*
+import com.productivity.wind.Imports.Data.UI
 import java.time.*
 import kotlin.concurrent.schedule
 import java.io.*
@@ -204,7 +205,7 @@ object UI {
 	}
 	
 	@Composable
-	fun End(content: Content) {
+	fun End(content: UI) {
 		Box(
 			Modifier.maxW(),
 			contentAlignment = Alignment.CenterEnd
