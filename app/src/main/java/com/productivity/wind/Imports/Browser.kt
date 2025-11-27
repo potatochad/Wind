@@ -51,7 +51,7 @@ fun WebXml(
     onProgressChanged: DoInt = {},
     onPageStarted: DoStr = {},
     onPageFinished: DoStr = {},
-    loadPage: (view: WebView?, url: Str) -> Bool = { _, _ -> no },
+    loadPage: (view: Web?, url: Str) -> Bool = { _, _ -> no },
 ) {
     BackHandler {
         webViewState.it?.goBack()
