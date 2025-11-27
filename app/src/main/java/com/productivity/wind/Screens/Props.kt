@@ -65,17 +65,17 @@ fun Menu() {
         LazyItem(
             icon = Icons.Outlined.Chat,
             title = "Contact Support",
-            onClick = { UI.SendEmail(); App.Menu = false }
+            onClick = { UI.SendEmail(); App.menu = no }
         )
         LazyItem(
             icon = Icons.Outlined.Landscape,
             title = "Settings",
-            onClick = { goTo("SettingsScreen"); App.Menu = false }
+            onClick = { goTo("SettingsScreen"); App.menu = no }
         )
         LazyItem(
             icon = Icons.Outlined.QueryStats,
             title = "Achievements",
-            onClick = { goTo("Achievements"); App.Menu = false }
+            onClick = { goTo("Achievements"); App.menu = no }
         )
 
 
