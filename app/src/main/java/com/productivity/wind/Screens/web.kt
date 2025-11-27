@@ -28,14 +28,14 @@ import androidx.compose.ui.text.style.*
 
 @Composable
 fun Web(){
-    val webView = r { mutableStateOf<Web?>(null) }
+    val web = r { mutableStateOf<Web?>(null) }
 
     RunOnce {
-        webView.url("https://youtube.com")
+        web.url("https://youtube.com")
     }
 
     
-    Bar.Url = "${webView.url ?: "https://youtube.com"}"
+    Bar.Url = "${web.url ?: "https://youtube.com"}"
        
 
 
@@ -48,7 +48,7 @@ fun Web(){
             UI.End {
                 Row{
                     Icon.Reload{ 
-                        webView.it?.reload()
+                        web.it?.reload()
                     } 
                     Icon.Add {
                         goTo("BlockKeyword")
@@ -59,8 +59,8 @@ fun Web(){
         DividerPadding = no,
     ) {
         WebXml(
-            webViewState = webView,
-            loadPage={ web, urlDumb ->
+            webViewState = web,
+            loadPage={ page, urlDumb ->
                 val url = Bar.Url
                 
                 var allow = yes
