@@ -145,9 +145,9 @@ object Item {
     fun Logs(txt: Str, scrollV: LazyListState, scrollH: ScrollState) {
         Box(
             Modifier
-                .w(App.screenWidth - 10.dp)
+                .w(App.w - 10.dp)
                 .move(w = 5)
-                .h(App.screenHeight - 35.dp)
+                .h(App.h - 35.dp)
         ) {
             Box(
                 Modifier.Hscroll(scrollH)
