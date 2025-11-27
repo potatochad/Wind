@@ -168,7 +168,7 @@ fun AnnotatedString.Builder.correctStr(text: Str, correctUntil: Int) {
         }
 }
 @Composable
-fun fullCorrectStr(target: String, input: String): AnnotatedString {
+fun fullCorrectStr(target: Str, input: Str): AnnotatedString {
     val colored by produceState(
         initialValue = AnnotatedString(""),
         target, input
@@ -330,7 +330,7 @@ object UI {
         selectedIndex: m_<Int>, // shared state of which is selected
 	) {
 		Box(
-			modifier = Modifier.size(15.dp) // make box exactly the size you want
+			modifier = Modifier.s(15) // make box exactly the size you want
 		) {
 			RadioButton(
 				selected = selectedIndex.value == index,
@@ -395,7 +395,7 @@ object UI {
     fun SendEmail(
         recipient: Str = "productivity.shield@gmail.com",
         subject: Str = "Support Request – App Issue",
-        includePhoneInfo: Bool = true,
+        includePhoneInfo: Bool = yes,
         prefillMessage: Str = "I'm experiencing the following issue with the app:\n\n",
     ) {
         val body = buildString {
