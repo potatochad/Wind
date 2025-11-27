@@ -172,7 +172,7 @@ fun Modifier.space(
     top: Any? = null,
     end: Any? = null,
     bottom: Any? = null
-): Modifier {
+): Mod {
     return when {
         s != null -> this.padding(toDp(s))
         h != null || w != null -> this.padding(
@@ -267,7 +267,7 @@ fun Modifier.click(Do: Do): Mod {
 fun Modifier.clickOrHold(
     hold: Bool = yes,
     action: Do,
-): Modifier {
+): Mod {
     return if (hold) {
         pointerInput(Unit) {
             detectTapGestures(onLongPress = { action() })
