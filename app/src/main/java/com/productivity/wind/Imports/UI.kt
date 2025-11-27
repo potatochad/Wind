@@ -180,12 +180,12 @@ object UI {
 
 	inline fun check(
         condition: Bool,
-        message: Str = "",
-        action: Do = {},
+        msg: Str = "",
+        Do: Do = {},
 	) {
 		if (condition) {
-			if (message.isNotEmpty()) Vlog(message)
-			action()        // safe
+			if (msg.isNotEmpty()) Vlog(msg)
+			Do()        // safe
 		}
 	}
 	
