@@ -441,7 +441,7 @@ fun RunOnce(key1: Any? = Unit, block: suspend () -> Unit) {
 val MakeTxtFile = ActivityResultContracts.CreateDocument("text/plain")
 
 
-fun TxtFileToMap(ctx: Context, uri: Uri, fileMap: MutableMap<Str, Str>) {
+fun TxtFileToMap(ctx: ctx, uri: Uri, fileMap: MutableMap<Str, Str>) {
     ctx.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
         lines.forEach { line ->
             if (!line.contains("=")) {
@@ -590,7 +590,7 @@ fun BasicInput(
 fun Input(
     what: m_<Str>,
     isInt: Bool = no,
-	modifier: Mod = Modifier, 
+	modifier: Mod = Mod, 
 	textStyle: TextStyle = TextStyle(),
     onChange: DoStr = {},
 ) {
