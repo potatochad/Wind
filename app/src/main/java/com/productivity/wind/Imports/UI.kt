@@ -122,20 +122,6 @@ fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
 
 
 
-
-
-@Composable
-fun eachSecond(onTick: Do) {
-    RunOnce(Unit) {
-        while (true) {
-            onTick()
-            delay(1000)
-        }
-    }
-}
-
-
-
 object DayChecker {
     private var job: Job? = null
 
@@ -204,7 +190,7 @@ object UI {
 	}
 	
 	@Composable
-	fun End(content: UI) {
+	fun End(content: ui) {
 		Box(
 			Modifier.maxW(),
 			contentAlignment = Alignment.CenterEnd
