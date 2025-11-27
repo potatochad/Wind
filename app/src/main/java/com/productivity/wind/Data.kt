@@ -241,9 +241,9 @@ fun OnResume(){
 
 @Composable
 fun AppStart() {
-	App.screenHeight = LocalConfiguration.current.screenHeightDp.dp
-    App.screenWidth = LocalConfiguration.current.screenWidthDp.dp
-	App.LazyScreenContentHeight = App.screenHeight-100.dp- bottomSystemHeight()
+	App.h = LocalConfiguration.current.screenHeightDp.dp
+    App.w = LocalConfiguration.current.screenWidthDp.dp
+	App.lazyH = App.h - 100.dp - bottomSystemHeight()
 	
     LazyMenu { Menu() }
     
