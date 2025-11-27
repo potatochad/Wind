@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.*
 fun Web(){
     val webView = r { mutableStateOf<Web?>(null) }
     val badWords = mutableListOf<Str>()
-    var on = r_m(yes)
 
     RunOnce {
         webView.url("https://youtube.com")
@@ -44,7 +43,7 @@ fun Web(){
        
 
 
-    Item.WebPointTimer(on)
+    Item.WebPointTimer()
 
     LazyScreen(
         title = {
