@@ -63,7 +63,7 @@ fun Web(){
                 Bar.badWords.each {
                     if (url.contains(it.word, ignoreCase = yes)) {
                         var allow = no
-                        break
+                        return@each
                     }
                 }
 
