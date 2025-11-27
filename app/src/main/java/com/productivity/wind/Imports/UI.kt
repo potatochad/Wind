@@ -190,13 +190,13 @@ object UI {
 	}
 	
 	@Composable
-	fun End(content: UI) {
+	fun End(ui: ui) {
 		Box(
 			Modifier.maxW(),
 			contentAlignment = Alignment.CenterEnd
 		) {
 			Row {
-				content()
+				ui()
 				move(w = 10)
 			}
 		}
