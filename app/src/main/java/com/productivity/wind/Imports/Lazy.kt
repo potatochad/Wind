@@ -56,9 +56,9 @@ fun LazyMove(
     ui: ui,
 ) {
     Box(
-		Modifier.maxS()
+		Mod.maxS()
     ) {
-        Box(Modifier
+        Box(Mod
             .offset(x = x, y = y)
             .wrapContentSize()
         ){
@@ -113,7 +113,7 @@ fun LazyMeasure(
     y: m_<Dp>? = null,
     w: m_<Dp>? = null,
     h: m_<Dp>? = null,
-    modifier: Mod = Modifier,
+    modifier: Mod = Mod,
     ui: ui
 ) {
     val density = LocalDensity.current
@@ -139,7 +139,7 @@ fun LazyMeasure(
 @SuppressLint("UnusedBoxWithConstraintsScope", "UnrememberedMutableState")
 @Composable
 fun LazyInfo(
-    infoContent: Content,
+    infoContent: ui,
     hold: Bool = no,
     ChangeY: Dp = 80.dp,
     popupWidth: Dp = 0.dp,
@@ -215,11 +215,7 @@ fun LazyInfo(
 				set(popupW, maxWidth)
                 set(popupH, maxHeight)
                 // Red dot marking click point
-                Box(
-                    Modifier
-                        .s(20)
-                        .background(Color.Yellow)
-                )
+                Box(Mod.s(20).background(Color.Yellow))
 			}
 		}
 	}
@@ -229,11 +225,7 @@ fun LazyInfo(
 			BoxWithConstraints {
 
                 // Red dot marking click point
-                Box(
-                    Modifier
-                        .s(6)
-                        .background(Color.Red, CircleShape)
-                )
+                Box(Mod.s(6).background(Color.Red, CircleShape))
 			}
 		}
 	}
@@ -243,11 +235,7 @@ fun LazyInfo(
 			// Red dot marking the click point
 			BoxWithConstraints {
                 // Red dot marking click point
-                Box(
-                    Modifier
-                        .s(6)
-                        .background(Color.Magenta, CircleShape)
-                )
+                Box(Mod.s(6).background(Color.Magenta, CircleShape))
 			}
 		}
 	}
@@ -288,7 +276,7 @@ fun NormalVisual(
 	LazyWindow(show) {
         LazyMove(popupX, popupY) {
             Card(
-                modifier = Modifier
+                modifier = Mod
                     .wrapContentSize()
                     .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
                 shape = RoundedCornerShape(8.dp),
@@ -311,9 +299,7 @@ fun NormalVisual(
 @Composable
 fun LazyImage(
     source: Any?,
-    modifier: Mod = Modifier
-        .s(34)
-        .space(5)
+    modifier: Mod = Mod.s(34).space(5)
 ) {
     val contentDescription = "boring"
     when (source) {
@@ -329,7 +315,7 @@ fun LazyImage(
 @Composable
 fun <T> LazzyList(
     data: List<T>,
-    modifier: Mod = Modifier.h(200),
+    modifier: Mod = Mod.h(200),
     content: @Composable (T, Int) -> Unit,
 ) {
     var data2 by r_m(data)
@@ -350,7 +336,7 @@ fun <T> LazzyList(
 fun LazyInput(
     what: Any,
     isInt: Bool = no,
-	modifier: Mod = Modifier,//DOES NOTHING
+	modifier: Mod = Mod,//DOES NOTHING
     maxLetters: Int = 20,
     textStyle: TextStyle = TextStyle(
 		color = Color.White,
@@ -423,7 +409,7 @@ fun LazyLine(
     Divider(
         color = color,
         thickness = thickness,
-        modifier = Modifier
+        modifier = Mod
             .offset(y = MoveY.dp)
             .space(h=spaceH)
             .then(if (width != Dp.Unspecified) Modifier.width(width) else Modifier)
@@ -432,7 +418,7 @@ fun LazyLine(
   
 @Composable
 fun LazzyRow(
-    modifier: Mod = Modifier,
+    modifier: Mod = Mod,
     space: Int = 0,
     center: Bool = no, // Kotlin uses 'Boolean', not 'Bool'
     ui: ui,
@@ -473,9 +459,7 @@ fun LazyRuleCard(
 fun LazyCard(
     innerPadding: Int = 16,
     corners: Int = 16,
-    modifier: Mod = Mod
-	     .space(h= 8, w = 10)
-         .maxW(),
+    modifier: Mod = Mod.space(h= 8, w = 10).maxW(),
     ui: ui,
 ) {
     Card(
@@ -508,7 +492,7 @@ fun LazyIcon(
     BigIconSize: Int = 30,
     OuterPadding: Int = 5,          // outside space
     ButtonSize: Int = 40,           // actual button box (default M3 ~48)
-    modifier: Mod = Modifier,
+    modifier: Mod = Mod,
     color: Color = Color.White,
 	onClick: Do = {},
 ) {
@@ -536,17 +520,14 @@ fun LazyIcon(
                 val shape = if (SquareIcon) RoundedCornerShape(6.dp) else CircleShape
                 val innerSize = if (SquareIcon) 24.dp else 20.dp
                 Box(
-                    Modifier
-                        .s(BigIconSize)
-                        .clip(shape)
-                        .background(BigIconColor),
+                    Mod.s(BigIconSize).clip(shape).background(BigIconColor),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = BigIcon,
                         contentDescription = null,
                         tint = Color.White,
-                        modifier = Modifier.s(innerSize)
+                        modifier = Mod.s(innerSize)
                     )
                 }
             }
@@ -559,7 +540,7 @@ fun LazyIcon(
 @Stable
 @Composable
 fun LazyMore(
-    modifier: Mod = Modifier,
+    modifier: Mod = Mod,
     title: Str = "Show more",
     initiallyExpanded: Bool = no,
     ui: ui
@@ -569,7 +550,7 @@ fun LazyMore(
 
     Column(modifier = modifier) {
         Row(
-            modifier = Modifier
+            modifier = Mod
                 .maxW()
                 .clickable { expanded = !expanded }
                 .space(8),
@@ -578,13 +559,13 @@ fun LazyMore(
             Icon(
                 imageVector = Icons.Default.ChevronRight,
                 contentDescription = if (expanded) "Show less" else "Show more",
-                modifier = Modifier.rotate(rotation),
+                modifier = Mod.rotate(rotation),
                 tint = Color(0xFFFFD700) // GOLD icon
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Mod.w(8))
             Text(
                 text = title,
-                modifier = Modifier.weight(1f),
+                modifier = Mod.weight(1f),
                 color = Color(0xFFFFD700) // GOLD text
             )
         }
@@ -601,7 +582,7 @@ fun LazyMore(
             )
         ) {
             Column(
-                Modifier
+                Mod
                     .maxW()
                     .space(start = 32, top = 4)
             ) {
@@ -621,8 +602,8 @@ fun LazyMore(
 fun LazyItem(
     title: Str,
     subtitle: Str? = null,
-    endContent: Content? = null,
-    modifier: Mod = Modifier,
+    endContent: ui? = null,
+    modifier: Mod = Mod,
 
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
@@ -634,7 +615,7 @@ fun LazyItem(
 	onClick: Do? = null,
 ) {
 	Row(
-        Modifier
+        Mod
             .maxW()
             .space(
                 top = topPadding,
@@ -653,7 +634,7 @@ fun LazyItem(
 			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 		) {
             Row(
-				Modifier
+				Mod
                     .maxW()
                     .space(5.dp),
 				verticalAlignment = Alignment.CenterVertically
@@ -663,7 +644,7 @@ fun LazyItem(
 						imageVector = icon,
 						contentDescription = null,
 						tint = Color.White,
-						modifier = Modifier
+						modifier = Mod
                             .space(end = 10)
                             .s(24)
 					)
@@ -671,7 +652,7 @@ fun LazyItem(
 
 				if (BigIcon != null && BigIconColor != null) {
 					Box(
-                        modifier = Modifier
+                        modifier = Mod
                             .space(end = 10)
                             .s(30)
                             .clip(CircleShape)
@@ -682,7 +663,7 @@ fun LazyItem(
                             imageVector = BigIcon,
                             contentDescription = null,
                             tint = Color.White,
-                            modifier = Modifier.size(20.dp)
+                            modifier = Mod.s(20)
                         )
                     }
 				}
@@ -705,7 +686,7 @@ fun LazyHeader(
     titleContent: ui,
     onBackClick: Do = {},
     showBack: Bool = yes,
-    modifier: Mod = Modifier,
+    modifier: Mod = Mod,
 
     showDivider: Bool = yes,
     DividerPadding: Bool = yes,
@@ -748,7 +729,7 @@ fun LazyHeader(
                     .space(start = if (showBack) 8 else 0),
                 contentAlignment = Alignment.CenterStart
             ) {
-                Box(Modifier
+                Box(Mod
                     .maxW()
                 ) {
                     LazzyRow {
@@ -774,8 +755,7 @@ fun LazyScreen(
     title: ui,
     onBackClick: Do = {},
     showBack: Bool = yes,
-    modifier: Mod = Modifier
-        .background(Color.Black),
+    modifier: Mod = Mod.background(Color.Black),
 	
     showDivider: Bool = yes,
     DividerPadding: Bool = yes,
@@ -800,7 +780,7 @@ fun LazyScreen(
 
     Column(modifier) {
         header()
-        Column(Modifier.h(App.lazyH)) {
+        Column(Mod.h(App.lazyH)) {
 			Column(modifier) {
 				content()
 			}
@@ -915,7 +895,7 @@ fun LazyMenu(
         }
     ) {
         Box(
-            modifier = Modifier
+            modifier = Mod
                 .maxS()
                 .background(Color.Black.copy(alpha = backgroundAlpha))
                 .clickable(
@@ -927,11 +907,11 @@ fun LazyMenu(
                 }
         )
 
-        Box( Modifier
+        Box( Mod
                 .offset { IntOffset(offsetX.roundToPx(), 0) }
                 .w(App.w / 2 + 30.dp)
                 .maxH()
-                .background(Color.DarkGray)//
+                .background(Color.DarkGray)
         ) {
             ui()
         }
