@@ -29,13 +29,9 @@ import androidx.compose.ui.text.style.*
 @Composable
 fun Web(){
     val webView = r { mutableStateOf<Web?>(null) }
-    val badWords = mutableListOf<Str>()
 
     RunOnce {
         webView.url("https://youtube.com")
-        Bar.badWords.each {
-            badWords += it.word
-        }
     }
 
     
