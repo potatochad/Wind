@@ -203,7 +203,7 @@ object UI {
 	}
 
 
-	fun copyToClipboard(ctx: Context, txt: Str) {
+	fun copyToClipboard(ctx: ctx, txt: Str) {
 		val clipboard = ctx.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 		val clip = ClipData.newPlainText("label", txt)
 		clipboard.setPrimaryClip(clip)
@@ -332,11 +332,11 @@ object UI {
 	}
 	@OptIn(ExperimentalMaterial3Api::class)
 	@Composable
-	fun ComposeCanBeTiny(content: Content) {
+	fun ComposeCanBeTiny(ui: ui) {
 		CompositionLocalProvider(
 			LocalMinimumInteractiveComponentEnforcement provides false
 		) {
-			content()
+			ui()
 		}
 	}
 
