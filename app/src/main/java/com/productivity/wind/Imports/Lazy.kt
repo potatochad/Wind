@@ -217,7 +217,7 @@ fun LazyInfo(
                 // Red dot marking click point
                 Box(
                     Modifier
-                        .size(20.dp)
+                        .s(20)
                         .background(Color.Yellow)
                 )
 			}
@@ -245,7 +245,7 @@ fun LazyInfo(
                 // Red dot marking click point
                 Box(
                     Modifier
-                        .s(6.dp)
+                        .s(6)
                         .background(Color.Magenta, CircleShape)
                 )
 			}
@@ -257,7 +257,7 @@ fun LazyInfo(
 
 
 @Composable
-fun LazyTheme(content: @Composable () -> Unit) {
+fun LazyTheme(content: Content) {
     val appColorScheme = darkColorScheme(
         background = Color.Black,
         onBackground = Color.White,
@@ -357,7 +357,7 @@ fun LazyInput(
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start
 	),
-    onChange: (Str) -> Unit = {},
+    onChange: DoStr = {},
 ) {
     val finalMod = modifier.space(h = 8, w = 4).background(CardColor, shape = RoundedCornerShape(4.dp))
        
@@ -394,7 +394,7 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
     Switch(
       checked = isOn,
       onCheckedChange = onToggle,
-      modifier = Modifier.size(34.dp), // default ~39dp → minus 5dp
+      modifier = Modifier.s(34), // default ~39dp → minus 5dp
       colors = SwitchDefaults.colors(
           checkedThumbColor = Color(0xFFFFD700),
           uncheckedThumbColor = Color.LightGray,
@@ -800,7 +800,7 @@ fun LazyScreen(
 
     Column(modifier) {
         header()
-        Column(Modifier.h(App.LazyScreenContentHeight)) {
+        Column(Modifier.h(App.lazyH)) {
 			Column(modifier) {
 				content()
 			}
@@ -879,8 +879,8 @@ fun LazyMenu(
     val internalVisible = r_m(no)
 
     // Trigger showing/hiding Popup
-    RunOnce(App.Menu) {
-        if (App.Menu) {
+    RunOnce(App.menu) {
+        if (App.menu) {
             set(visible, yes)
             delay(16)
             set(internalVisible, yes)
@@ -911,7 +911,7 @@ fun LazyMenu(
         alignment = Alignment.TopStart,
         onDismissRequest = {
             onDismiss?.invoke()
-            App.Menu = no
+            App.menu = no
         }
     ) {
         Box(
@@ -923,7 +923,7 @@ fun LazyMenu(
                     interactionSource = r { MutableInteractionSource() }
                 ) {
                     onDismiss?.invoke()
-                    App.Menu = no
+                    App.menu = no
                 }
         )
 
