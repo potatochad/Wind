@@ -57,7 +57,7 @@ fun Web(){
     ) {
         WebXml(
             webViewState = web,
-            loadPage={ page, urlDumb ->
+            loadPage={
                 val url = Bar.Url
 
                 var allow = yes
