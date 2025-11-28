@@ -157,13 +157,6 @@ fun goBackWeb(web: Web?) {
         }
     }
 }
-fun Web?.txt(done: DoStr = {}) {
-    this?.evaluateJavascript(
-        "(function(){ return document.body.innerText; })();"
-    ) { text ->
-        done(text ?: "")
-    }
-}
 fun m_<Web?>.txt(done: DoStr = {}) {
     this.it?.evaluateJavascript(
         "(function(){ return document.body.innerText; })();"
