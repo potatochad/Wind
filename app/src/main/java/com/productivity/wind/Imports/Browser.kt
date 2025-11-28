@@ -47,10 +47,7 @@ fun WebXml(
     webViewState: m_<WebView?>,
     url: Str = "",
     isDesktopSite: Bool = no,
-    onUrlChanged: DoStr = {
-        Bar.Url = it
-        Vlog("url: [$it]")
-    },
+    onUrlChanged: DoStr = {},
     onProgressChanged: DoInt = {},
     onPageStarted: DoStr = {},
     onPageFinished: DoStr = {},
