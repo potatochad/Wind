@@ -54,7 +54,7 @@ fun WebXml(
     onProgressChanged: DoInt = {},
     onPageStarted: DoStr = {},
     onPageFinished: DoStr = {},
-    loadPage: (view: Web?, url: Str) -> Bool = { _, _ -> no },
+    loadPage: (url: Str) -> Bool = { yes },
 ) {
     BackHandler {
         webViewState.it?.goBack()
@@ -94,7 +94,7 @@ fun WebXml(
                 override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
                     val raw = "${request.url}"
 
-                    val stop = loadPage(view, raw)
+                    val stop = loadPage(raw)
 
                     if (url.endsWith(".jpg", yes) ||
                             url.endsWith(".jpeg", yes) ||
