@@ -65,12 +65,12 @@ fun Web(){
                 Bar.Url = it
                 //Vlog("url: [$it]")
 
-                web.txt{
-                    Vlog("htnl: [$it]")
+                web.txt{x->
+                    Vlog("htnl: [$x]")
                 }
 
-                Bar.badWords.each {
-                    if (it.contains(it.word, ignoreCase = yes)) {
+                Bar.badWords.each { y->
+                    if (Bar.Url.contains(y.word, ignoreCase = yes)) {
                         goBackWeb(web)
                         return@each
                     }
