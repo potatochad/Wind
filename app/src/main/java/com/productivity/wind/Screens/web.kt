@@ -40,7 +40,11 @@ fun Web(){
 
     LazyScreen(
         title = {
-            Text(" Points ${Bar.funTime}")
+            Text(" Points ${Bar.funTime}  ")
+
+            Row(Mod.scroll(h = yes).w(App.w / 2)) {
+                Text(Bar.Url, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
     
             UI.End {
                 Row{
@@ -59,16 +63,18 @@ fun Web(){
             webViewState = web,
             onUrlChanged={
                 Bar.Url = it
-                Vlog("url: [$it]")
+                //Vlog("url: [$it]")
+
+                web.txt{
+                    Vlog("htnl: [$it]")
+                }
 
                 Bar.badWords.each {
                     if (it.contains(it.word, ignoreCase = yes)) {
+                        goBackWeb(web)
                         return@each
                     }
                 }
-            },
-            loadPage={
-   
             },
         )
     }
