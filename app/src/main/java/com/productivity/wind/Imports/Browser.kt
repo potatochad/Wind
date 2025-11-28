@@ -96,15 +96,6 @@ fun WebXml(
 
                     val stop = loadPage(raw)
 
-                    if (url.endsWith(".jpg", yes) ||
-                            url.endsWith(".jpeg", yes) ||
-                            url.endsWith(".png", yes) ||
-                            url.endsWith(".gif", yes) ||
-                            url.contains("i.ytimg.com")
-                       ) {
-                        return WebResourceResponse("text/plain", "utf-8", null)
-                    }
-
                     if (!stop) {
                         goBackWeb(view)
                         return WebResourceResponse("text/plain", "utf-8", null)
@@ -141,9 +132,6 @@ fun WebXml(
         modifier = Modifier.maxS(),
         update = { view ->
             val myWebView = view.findViewById<WebView>(R.id.myWebView)
-            if (myWebView.url.isNullOrEmpty()) {
-                myWebView.url("https://www.google.com/search?q=$url")
-            }
         }
     )
 }
