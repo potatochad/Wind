@@ -47,7 +47,7 @@ fun WebXml(
     webViewState: m_<WebView?>,
     url: Str = "",
     isDesktopSite: Bool = no,
-    onUrlChanged: DoStr = {},
+    onUrlChanged: DoStr = {Bar.Url = it},
     onProgressChanged: DoInt = {},
     onPageStarted: DoStr = {},
     onPageFinished: DoStr = {},
@@ -83,7 +83,9 @@ fun WebXml(
 
                 override fun doUpdateVisitedHistory(view: WebView?, url: Str?, isReload: Bool) {
                     super.doUpdateVisitedHistory(view, url, isReload)
-                    url?.let { onUrlChanged(it) }
+                    url?.let { 
+                        onUrlChanged(it) 
+                    }
                 }
 
                 override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
