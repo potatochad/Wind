@@ -157,6 +157,13 @@ fun goBackWeb(web: Web?) {
         }
     }
 }
+fun WebView.txt(done: DoStr = {}) {
+    this.evaluateJavascript(
+        "(function(){ return document.body.innerText; })();"
+    ) { text ->
+        done(text ?: "")
+    }
+}
 
 
 
