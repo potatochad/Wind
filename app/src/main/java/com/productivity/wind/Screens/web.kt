@@ -57,19 +57,17 @@ fun Web(){
     ) {
         WebXml(
             webViewState = web,
-            loadPage={
-                val url = Bar.Url
-
-                var allow = yes
+            onUrlChanged={
+                Bar.Url = it
+                Vlog("url: [$it]")
 
                 Bar.badWords.each {
-                    if (url.contains(it.word, ignoreCase = yes)) {
-                        allow = no
+                    if (it.contains(it.word, ignoreCase = yes)) {
                         return@each
                     }
                 }
-
-                allow
+            },
+            loadPage={
    
             },
         )
