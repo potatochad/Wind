@@ -106,24 +106,6 @@ ktlint {
 
 
 dependencies {
-
-/*
-[versions]
-agp = "8.6.0"
-composeBom = "2024.09.00"
-composePlugin = "1.7.0-beta01"
-espressoCore = "3.6.1"
-junit = "4.13.2"
-junitVersion = "1.2.1"
-kotlin = "2.0.10"
-ktlint = "12.1.1"
-lifecycleRuntimeKtx = "2.8.5"
-runtimeLivedata = "1.7.0"
-appcompat = "1.7.1"
-viewpager2 = "1.1.0"
-material = "1.13.0"
-
-*/
     implementation("androidx.compose.foundation:foundation:1.9.2")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
@@ -159,14 +141,6 @@ material = "1.13.0"
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
-
-
-
-
-   // androidTestImplementation(libs.androidx.ui.test.junit4)
-    //androidTestImplementation(platform(libs.androidx.compose.bom))
-    //debugImplementation(libs.androidx.ui.test.manifest)
-   // debugImplementation(libs.androidx.ui.tooling)
 }
 
 
