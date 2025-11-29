@@ -143,13 +143,12 @@ material = "1.13.0"
     implementation("androidx.compose.material3:material3-window-size-class:1.3.2")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
 
-    //implementation(libs.androidx.activity.compose)
-implementation("androidx.activity:activity-compose:1.9.2")
+    implementation("androidx.activity:activity-compose:1.9.2")
+    implementation("androidx.compose.runtime:runtime-livedata:1.7.0")
 
-    //implementation(libs.androidx.compose.runtime.livedata)
-implementation("androidx.compose.runtime:runtime-livedata:1.7.0")
+    //implementation(libs.androidx.core.ktx)
+implementation("androidx.core:core-ktx:1.13.1")
 
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.material3)
