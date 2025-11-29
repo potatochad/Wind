@@ -66,7 +66,7 @@ fun Web(){
                 //Vlog("url: [$it]")
 
                 web.txt{x->
-                    Vlog("htnl: [$x]")
+                    //Vlog("htnl: [$x]")
                 }
 
                 Bar.badWords.each { y->
