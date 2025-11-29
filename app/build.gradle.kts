@@ -144,22 +144,21 @@ material = "1.13.0"
     implementation("androidx.activity:activity-compose:1.9.2")
     implementation("androidx.compose.runtime:runtime-livedata:1.7.0")
     implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
+    implementation("androidx.compose.material3:material3:1.3.2")
 
 
 
-implementation("androidx.datastore:datastore-preferences:1.1.0")
-implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
-implementation("androidx.compose.material3:material3:1.3.2")
+implementation("androidx.navigation:navigation-compose:2.7.0")
+implementation("androidx.compose.ui:ui:1.7.0")
 
-
-   // implementation(libs.androidx.datastore.preferences)
- //   implementation(libs.androidx.lifecycle.runtime.ktx)
- //   implementation(libs.androidx.material3)
+   // implementation(libs.androidx.navigation.compose)
+  //  implementation(libs.androidx.ui)
 
 
 
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.ui)
+
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.kotlinx.serialization.json)
