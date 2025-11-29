@@ -154,21 +154,16 @@ material = "1.13.0"
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
+    testImplementation("junit:junit:4.13.2")
 
-
-implementation("androidx.appcompat:appcompat:1.7.1")
-implementation("androidx.viewpager2:viewpager2:1.1.0")
-testImplementation("junit:junit:4.13.2")
-
-
-   // implementation(libs.androidx.appcompat)
-   // implementation(libs.androidx.viewpager2)
-   // testImplementation(libs.junit)
+androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+androidTestImplementation("androidx.test.ext:junit:1.2.1")
 
 
 
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
+
     androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.androidx.ui.test.manifest)
