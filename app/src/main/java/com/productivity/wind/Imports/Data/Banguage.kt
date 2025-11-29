@@ -158,12 +158,14 @@ fun goBackWeb(web: Web?) {
     }
 }
 fun goBackWeb(web: m_<Web?>) {
-    web.it?.post {
-        if (web.it?.canGoBack()==yes) {
-            web.it.goBack()
+    val w = web.it   // snapshot the reference
+    w?.post {
+        if (w.canGoBack()) {
+            w.goBack()
         }
     }
 }
+
 fun m_<Web?>.txt(done: DoStr = {}) {
     this.it?.evaluateJavascript(
         "(function(){ return document.body.innerText; })();"
