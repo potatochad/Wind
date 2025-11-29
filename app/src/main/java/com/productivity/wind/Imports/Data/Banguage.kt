@@ -159,8 +159,8 @@ fun goBackWeb(web: Web?) {
 }
 fun goBackWeb(web: m_<Web?>) {
     web.it?.post {
-        if (web?.canGoBack()==yes) {
-            web.goBack()
+        if (web.it?.canGoBack()==yes) {
+            web.it.goBack()
         }
     }
 }
