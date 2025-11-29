@@ -147,23 +147,24 @@ material = "1.13.0"
     implementation("androidx.datastore:datastore-preferences:1.1.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
     implementation("androidx.compose.material3:material3:1.3.2")
+    implementation("androidx.navigation:navigation-compose:2.7.0")
+    implementation("androidx.compose.ui:ui:1.7.0")
 
 
-
-implementation("androidx.navigation:navigation-compose:2.7.0")
-implementation("androidx.compose.ui:ui:1.7.0")
-
-   // implementation(libs.androidx.navigation.compose)
-  //  implementation(libs.androidx.ui)
-
+implementation("androidx.compose.ui:ui-graphics:1.7.0")
+implementation("androidx.compose.ui:ui-tooling-preview:1.7.0")
+implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+implementation("com.squareup.okhttp3:okhttp:4.11.0")
+implementation("com.jakewharton.timber:timber:5.0.1")
 
 
+   // implementation(libs.androidx.ui.graphics)
+//    implementation(libs.androidx.ui.tooling.preview)
+//    implementation(libs.kotlinx.serialization.json)
+//    implementation(libs.okhttp3)
+//    implementation(libs.timber)
 
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.okhttp3)
-    implementation(libs.timber)
+
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.viewpager2)
     testImplementation(libs.junit)
