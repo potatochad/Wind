@@ -106,6 +106,26 @@ ktlint {
 
 
 dependencies {
+
+/*
+[versions]
+activityCompose = "1.9.2"
+agp = "8.6.0"
+composeBom = "2024.09.00"
+composePlugin = "1.7.0-beta01"
+coreKtx = "1.13.1"
+espressoCore = "3.6.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+kotlin = "2.0.10"
+ktlint = "12.1.1"
+lifecycleRuntimeKtx = "2.8.5"
+runtimeLivedata = "1.7.0"
+appcompat = "1.7.1"
+viewpager2 = "1.1.0"
+material = "1.13.0"
+
+*/
     implementation("androidx.compose.foundation:foundation:1.9.2")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
@@ -124,7 +144,9 @@ dependencies {
     implementation("androidx.compose.material3:material3-window-size-class:1.3.2")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
 
-    implementation(libs.androidx.activity.compose)
+    //implementation(libs.androidx.activity.compose)
+implementation("androidx.activity:activity-compose:1.9.2")
+
     implementation(libs.androidx.compose.runtime.livedata)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.datastore.preferences)
