@@ -109,7 +109,6 @@ dependencies {
 
 /*
 [versions]
-activityCompose = "1.9.2"
 agp = "8.6.0"
 composeBom = "2024.09.00"
 composePlugin = "1.7.0-beta01"
@@ -147,7 +146,9 @@ material = "1.13.0"
     //implementation(libs.androidx.activity.compose)
 implementation("androidx.activity:activity-compose:1.9.2")
 
-    implementation(libs.androidx.compose.runtime.livedata)
+    //implementation(libs.androidx.compose.runtime.livedata)
+implementation("androidx.compose.runtime:runtime-livedata:1.7.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.runtime.ktx)
