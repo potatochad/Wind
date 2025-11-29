@@ -157,6 +157,13 @@ fun goBackWeb(web: Web?) {
         }
     }
 }
+fun goBackWeb(web: m_<Web?>) {
+    web.it?.post {
+        if (web?.canGoBack()==yes) {
+            web.goBack()
+        }
+    }
+}
 fun m_<Web?>.txt(done: DoStr = {}) {
     this.it?.evaluateJavascript(
         "(function(){ return document.body.innerText; })();"
