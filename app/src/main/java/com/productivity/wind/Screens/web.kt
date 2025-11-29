@@ -36,7 +36,7 @@ fun Web(){
     }
 
 
-    Item.WebPointTimer()
+    // Item.WebPointTimer()
 
     LazyScreen(
         title = {
