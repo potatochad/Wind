@@ -157,17 +157,16 @@ material = "1.13.0"
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
     testImplementation("junit:junit:4.13.2")
-
-androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-androidTestImplementation("androidx.test.ext:junit:1.2.1")
-
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
 
 
 
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    debugImplementation(libs.androidx.ui.test.manifest)
-    debugImplementation(libs.androidx.ui.tooling)
+
+   // androidTestImplementation(libs.androidx.ui.test.junit4)
+    //androidTestImplementation(platform(libs.androidx.compose.bom))
+    //debugImplementation(libs.androidx.ui.test.manifest)
+   // debugImplementation(libs.androidx.ui.tooling)
 }
 
 
