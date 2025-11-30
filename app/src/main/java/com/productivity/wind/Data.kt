@@ -29,16 +29,42 @@ import kotlinx.serialization.json.*
 import androidx.compose.foundation.text.selection.*
 import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.system.*
+import dalvik.system.*
+import java.io.File
 
-//import javax.script.ScriptEngineManager
+fun ModabilitySetup(){
+    val ModsFolder = File(App.ctx.filesDir, "mods")
+    if (!ModsFolder.exists()) ModsFolder.mkdir()
+
+    val newModsFolder = File(App.ctx.filesDir, "newMods")
+    if (!newModsFolder.exists()) newModsFolder.mkdir()
+
+    fun loadMod(file: Str) {
+        val modFile = File(App.ctx.filesDir, "mods/$file")
+        if (!modFile.exists()) Vlog("No mod file found"); return
+
+        val modPath = modFile.absolutePath
+        val newModsPath = newModsFolder.absolutePath
+
+        val modLoaded = DexClassLoader(
+            modPath,
+            newModsPath,
+            null,
+            App.ctx.classLoader
+        )
 
 
-/*
-import kotlin.script.experimental.host.*
-import kotlin.script.experimental.jvmhost.*
-import kotlin.script.experimental.jvm.*
-import kotlin.script.experimental.api.*
-*/
+        try {
+            val modClass = modLoaded.loadClass("com.productivity.wind.ModClass")
+
+            val modInstance = modClass.getDeclaredConstructor().newInstance()
+            val runMethod = modClass.getMethod("runMod")
+            runMethod.invoke(modInstance)
+        } catch (e: Exception) {
+            Vlog("Failed to run mod: ${e.message}")
+        }
+    }
+}
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
@@ -131,17 +157,7 @@ data class CopyTsk(
 	var goodStr: Int = 0,
 ) 
 
-/*
-fun scipting() {
-    val engine = ScriptEngineManager().getEngineByExtension("kts")
-    val input = readLine() ?: ""
-    try {
-        val result = engine.eval(input)
-        println(result)
-    } catch (e: Exception) {
-        println("Error: ${e.message}")
-    }
-}*/
+
 
 
 
