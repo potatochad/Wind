@@ -93,25 +93,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
-
-excludes += setOf(
-                "META-INF/kotlin/internal/internal.kotlin_builtins"
-            )
-
         }
     }
-
-
-
-configurations.all {
-    resolutionStrategy.eachDependency {
-        if (requested.group == "org.jetbrains.kotlin") {
-            useVersion("1.9.0")
-        }
-    }
-}
-
-
 }
 
 ktlint {
@@ -123,11 +106,6 @@ ktlint {
 
 
 dependencies {
-
-implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
-implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
-implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.9.0")
-
     implementation("androidx.compose.foundation:foundation:1.9.2")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
@@ -139,9 +117,7 @@ implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.9.0")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.34.0")
     implementation("androidx.datastore:datastore-preferences:1.1.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
-
-   // implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.10")
-
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.10")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.compose.material3:material3:1.3.2")
