@@ -106,11 +106,10 @@ ktlint {
 
 
 dependencies {
-implementation("org.jetbrains.kotlin:kotlin-scripting-common:1.9.23")
-implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.23")
-implementation("org.jetbrains.kotlin:kotlin-scripting-dependencies:1.9.23")
-implementation("org.jetbrains.kotlin:kotlin-scripting-dependencies-maven:1.9.23")
-
+implementation("org.jetbrains.kotlin:kotlin-scripting-common:2.0.10")
+implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:2.0.10")
+implementation("org.jetbrains.kotlin:kotlin-scripting-dependencies:2.0.10")
+implementation("org.jetbrains.kotlin:kotlin-scripting-dependencies-maven:2.0.10")
 
 
     implementation("androidx.compose.foundation:foundation:1.9.2")
