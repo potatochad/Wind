@@ -30,6 +30,9 @@ import androidx.compose.foundation.text.selection.*
 import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.system.*
 
+import javax.script.ScriptEngineManager
+
+
 /*
 import kotlin.script.experimental.host.*
 import kotlin.script.experimental.jvmhost.*
@@ -128,46 +131,18 @@ data class CopyTsk(
 	var goodStr: Int = 0,
 ) 
 
-/*
-fun mainLOL() {
-    val script = """
-        println("Hello from mod!")
-        val x = 5
-        println("x * 2 = ${'$'}{x*2}")
-    """.toScriptSource()
 
-    val host = BasicJvmScriptingHost()
-
-    val result = host.eval(
-        script,
-        ScriptCompilationConfiguration {
-            jvm {
-                dependenciesFromCurrentContext(wholeClasspath = true) // includes standard Kotlin classes
-            }
-        },
-        ScriptEvaluationConfiguration()
-    )
-}
-
-
-
-fun runKotlinCode(scriptStr: String) {
+fun scipting() {
+    val engine = ScriptEngineManager().getEngineByExtension("kts")
+    val input = readLine() ?: ""
     try {
-        val script = scriptStr.toScriptSource()
-        val host = BasicJvmScriptingHost()
-        host.eval(
-            script,
-            ScriptCompilationConfiguration {
-                jvm { dependenciesFromCurrentContext(wholeClasspath = true) }
-            },
-            ScriptEvaluationConfiguration()
-        )
+        val result = engine.eval(input)
+        println(result)
     } catch (e: Exception) {
-        println("Script error: ${e.message}") // just report, no stops
+        println("Error: ${e.message}")
     }
 }
 
-*/
 
 
 @Serializable
