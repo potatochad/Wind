@@ -30,7 +30,7 @@ import androidx.compose.foundation.text.selection.*
 import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.system.*
 
-import javax.script.ScriptEngineManager
+//import javax.script.ScriptEngineManager
 
 
 /*
@@ -131,7 +131,7 @@ data class CopyTsk(
 	var goodStr: Int = 0,
 ) 
 
-
+/*
 fun scipting() {
     val engine = ScriptEngineManager().getEngineByExtension("kts")
     val input = readLine() ?: ""
@@ -141,7 +141,7 @@ fun scipting() {
     } catch (e: Exception) {
         println("Error: ${e.message}")
     }
-}
+}*/
 
 
 
