@@ -33,15 +33,8 @@ import dalvik.system.*
 import java.io.File
 
 fun ModabilitySetup(){
-    val ModsFolder = File(App.ctx.filesDir, "mods")
-    if (!ModsFolder.exists()) ModsFolder.mkdir()
-
-    val newModsFolder = File(App.ctx.filesDir, "newMods")
-    if (!newModsFolder.exists()) newModsFolder.mkdir()
-
     fun loadMod(file: Str) {
         val modFile = File(App.ctx.filesDir, "mods/$file")
-        if (!modFile.exists()) Vlog("No mod file found"); return
 
         val modPath = modFile.absolutePath
         val newModsPath = newModsFolder.absolutePath
@@ -55,7 +48,11 @@ fun ModabilitySetup(){
 
 
         try {
-            val modClass = modLoaded.loadClass("com.productivity.wind.ModClass")
+            //need add class???
+            val newMods = modLoaded.loadClass(
+                "com.productivity.wind.Imports.NewMods.NewMods"
+            )
+            val modClass = modLoaded.loadClass("com.productivity.wind.Imports.Mods.ModsClass")
 
             val modInstance = modClass.getDeclaredConstructor().newInstance()
             val runMethod = modClass.getMethod("runMod")
