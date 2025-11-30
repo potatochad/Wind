@@ -106,6 +106,10 @@ ktlint {
 
 
 dependencies {
+implementation("org.jetbrains.kotlin:kotlin-scripting-common:1.9.23")
+implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.23")
+implementation("org.jetbrains.kotlin:kotlin-scripting-dependencies:1.9.23")
+implementation("org.jetbrains.kotlin:kotlin-scripting-dependencies-maven:1.9.23")
 
 
 
