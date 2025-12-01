@@ -32,6 +32,7 @@ import kotlin.system.*
 import dalvik.system.*
 import java.io.File
 
+/*
 fun ModabilitySetup(){
 	val newModsFolder = File(App.ctx.filesDir, "NewMods").apply {
 		if (!exists()) {
@@ -75,6 +76,7 @@ fun ModabilitySetup(){
         }
     }
 }
+*/
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
