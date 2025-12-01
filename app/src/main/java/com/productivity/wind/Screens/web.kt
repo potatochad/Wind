@@ -32,7 +32,7 @@ fun Web(){
 
     RunOnce {
         Bar.Url = "${web.url}"
-        web.url("https://youtube.com")
+        web.url("https://player.fm/series/my-first-million")
     }
 
 
