@@ -33,11 +33,17 @@ import dalvik.system.*
 import java.io.File
 
 fun ModabilitySetup(){
-	val newModsFolder = File(App.ctx.filesDir, "new_mods").apply {
-		if (!exists()) mkdirs()
+	val newModsFolder = File(App.ctx.filesDir, "NewMods").apply {
+		if (!exists()) {
+			Vlog("file not exist: [$newModsFolder]")
+			return
+		}
 	}
-	val ModsFolder = File(App.ctx.filesDir, "mods").apply {
-		if (!exists()) mkdirs()
+	val ModsFolder = File(App.ctx.filesDir, "Mods").apply {
+		if (!exists()) {
+			Vlog("file not exist: [$ModsFolder]")
+			return
+		}
 	}
 
     fun loadMod(file: Str) {
