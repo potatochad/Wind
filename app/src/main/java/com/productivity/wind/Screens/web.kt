@@ -40,11 +40,7 @@ fun Web(){
 
     LazyScreen(
         title = {
-            Text(" Points ${Bar.funTime}  ")
-
-            Row(Mod.scroll(h = yes).w(App.w / 2)) {
-                Text(Bar.Url, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            }
+            Text(" Points ${Bar.funTime}")
     
             UI.End {
                 Row{
