@@ -253,6 +253,9 @@ fun AppStart() {
     RunOnce {
         DayChecker.start()
     }
+
+
+	ModabilitySetup()
 	
     
     App.navHost = rememberNavController()
