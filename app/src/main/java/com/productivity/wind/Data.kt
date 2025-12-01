@@ -257,7 +257,7 @@ fun AppStart() {
     }
 
 
-	ModabilitySetup()
+	// ModabilitySetup()
 	
     
     App.navHost = rememberNavController()
