@@ -35,13 +35,13 @@ import java.io.File
 fun ModabilitySetup(){
     val newModsFolder = File(App.ctx.filesDir, "NewMods")
 	if (!newModsFolder.exists()) {
-		Vlog("file not exist: [$newModsFolder]")
+		Vlog("folder not exist: [$newModsFolder]")
 		return
 	}
 
     val modsFolder = File(App.ctx.filesDir, "Mods")
 	if (!modsFolder.exists()) {
-		Vlog("file not exist: [$modsFolder]")
+		Vlog("folder not exist: [$modsFolder]")
 		return
 	}
 
