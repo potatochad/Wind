@@ -39,12 +39,7 @@ fun ModabilitySetup(){
 		val modPath = newFolder("Mods").file(file).absolutePath
         val newModsPath = newFolder("NewMods").absolutePath
 
-        val modLoaded = DexClassLoader(
-            modPath,
-            newModsPath,
-            null,
-            App.ctx.classLoader
-        )
+        val modLoaded = DexClassLoader(modPath, newModsPath, null, App.ctx.classLoader)
 
 
         try {
