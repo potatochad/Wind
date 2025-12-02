@@ -42,7 +42,7 @@ fun Main() {
 	}
 
     
-    LazyScreen(title = { Header.Main() }, showBack = no) {
+    LazyScreen(top = { Header.Main() }, showBack = no) {
         Column(Mod.Vscroll()){
 
             Bar.copyTsk.each {
