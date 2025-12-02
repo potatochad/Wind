@@ -32,7 +32,9 @@ fun SettingsScreen() {
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
                 title = "Extension",
-                onClick = {}
+                onClick = {
+                    goTo("ExtensionsScreen")
+                }
         ) 
         LazyItem(
                 BigIcon = Icons.Filled.Tune,
