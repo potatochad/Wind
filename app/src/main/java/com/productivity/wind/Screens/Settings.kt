@@ -43,26 +43,66 @@ fun SettingsScreen() {
     }
 }
 
+@Composable
+fun ExtensionsScreen() {
+    var mods by r_m(mList("Mod A", "Mod B"))
+    var newModName by r_m("")
 
-//region PERMISSIONS
+    LazyScreen("Extensions") {
+        LazyColumn(Mod.maxS().space(16)) {
+            item {
+                Text("Your Mods")
+                move(16)
+            }
 
+        items(mods) { mod ->
+            LazyCard {
+                LazyRow {
+                    Text(mod)
+                    Icon.Delete{
+                        mods.remove(mod)
+                    }
+                }
+            }
+        }
 
-//region OTHER SCREEN
+        item {
+            move(24)
+            OutlinedTextField(
+                value = newModName,
+                onValueChange = { newModName = it },
+                label = { Text("New Mod Name") },
+                modifier = Mod.maxW()
+            )
+            move(8)
+            Button(
+                onClick = {
+                    if (newModName.isNotBlank()) {
+                        mods.add(newModName)
+                        newModName = ""
+                    }
+                },
+                modifier = Mod.maxW()
+            ) {
+                Text("Add Mod")
+            }
+            move(h=16)
+        }
+    }
+}
+
 
 @Composable
 fun SettingsOtherScreen() {
     LazyScreen("Settings") {
-
         LazyItem(
-                BigIcon = Icons.Filled.ListAlt,
-                BigIconColor = Color(0xFF90A4AE),
-                title = "Logs",
-                onClick = { goTo("LogsScreen") }
+            BigIcon = Icons.Filled.ListAlt,
+            BigIconColor = Color(0xFF90A4AE),
+            title = "Logs",
+            onClick = { goTo("LogsScreen") }
         ) 
     }
 }
-
-//endregion OTHER SCREEN
 
 
 @Composable
@@ -83,7 +123,9 @@ fun LogsScreen() {
         .filter { it.contains(LogsTag.it) }
         .joinToString("\n")
 
-    LazyScreen(top={Header.Logs(LogsTag, filteredLogs)}) {
+    LazyScreen(top = {
+        Header.Logs(LogsTag, filteredLogs)
+    }) {
         if (Bar.logs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
@@ -93,9 +135,5 @@ fun LogsScreen() {
 }
 
 
-//endregion PERMISSIONS
-
 class MyNotificationListener : NotificationListenerService()
 
-
-//endregion
