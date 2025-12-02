@@ -63,7 +63,7 @@ fun RuntimeKotlin(){
             val newMods = modLoaded.loadClass(
                 "com.productivity.wind.Imports.NewMods.NewMods"
             )
-            val modClass = modLoaded.loadClass("com.productivity.wind.Imports.Mods.ModsClass")
+			val modClass = modLoaded.loadClass("com.productivity.wind.Imports.Mods.ModClass")
 
             val modInstance = modClass.getDeclaredConstructor().newInstance()
             val runMethod = modClass.getMethod("runMod")
