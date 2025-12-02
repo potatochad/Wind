@@ -46,9 +46,6 @@ fun RuntimeKotlin(){
 
 		try {
 			newFolder("Mods").file("Mod.kt").writeText(code)
-
-
-			
 		} catch (e: Exception) {
 			Vlog("Failed mod [${e.message}]")
 		}
@@ -88,6 +85,7 @@ fun RuntimeKotlin(){
     fun executeKotlinFile(file: Str){
 		val modPath = newFolder("Mods").file(file).absolutePath
         val newModsPath = newFolder("NewMods").absolutePath
+		val ModDex = compileKtToDex(newFolder("Mods").file(file))
 
         val modLoaded = DexClassLoader(modPath, newModsPath, null, App.ctx.classLoader)
 
