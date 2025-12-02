@@ -33,31 +33,60 @@ import dalvik.system.*
 import java.io.File
 
 fun RuntimeKotlin(){
-	fun makeKotlinFile(){
+	fun createKotlinMod(
+		code: Str = """fun runMod() { Vlog("MOD $modName JUST RAN") }""",
+	) {
 		val modsFolder = newFolder("Mods")
+		val modFile = File(modsFolder, "$modName.kt")
 
-        val testModFile = File(modsFolder, "TestMod.kt")
+		val fullCode = """
+		package com.productivity.wind.Imports.Mods
 
-		val modCode = """
-            package com.productivity.wind.Imports.Mods
+        import com.productivity.wind.Screens.*
+		import android.content.Context
+		import android.os.Build
+		import androidx.annotation.RequiresApi
+		import androidx.navigation.NavHostController
+		import kotlinx.coroutines.delay
+		import android.os.Bundle
+		import androidx.activity.ComponentActivity
+		import androidx.activity.compose.setContent
+		import androidx.compose.foundation.gestures.detectTapGestures
+		import androidx.compose.foundation.layout.*
+		import androidx.compose.material3.*
+		import androidx.compose.runtime.*
+		import androidx.compose.ui.*
+		import androidx.compose.ui.unit.dp
+		import androidx.navigation.compose.rememberNavController
+		import androidx.compose.ui.platform.LocalConfiguration
+		import com.productivity.wind.Imports.*
+		import androidx.core.view.*
+		import androidx.compose.foundation.lazy.*
+		import androidx.compose.runtime.snapshots.SnapshotStateList
+		import com.productivity.wind.Imports.Data.*
+		import kotlin.reflect.*
+		import kotlin.reflect.jvm.*
+		import kotlinx.serialization.*
+		import kotlinx.serialization.json.*
+		import androidx.compose.foundation.text.selection.*
+		import androidx.compose.ui.input.pointer.pointerInput
+		import kotlin.system.*
+		import dalvik.system.*
+		import java.io.File
 
-            import com.productivity.wind.Screens.Settings.TestVariable
-            import com.productivity.wind.Imports.Data.Vlog
-
-            class ModsClass {
-                fun runMod() {
-                    Vlog("MOD JUST RAN")
-                }
-            }
+		class ModClass {
+     	    $code
+		}
 		""".trimIndent()
 
-        try {
-			testModFile.writeBytes(modCode.toByteArray())
-            Vlog("Test mod created: ${testModFile.absolutePath}")
-        } catch (e: Exception) {
-            Vlog("Failed to create test mod: ${e.message}")
-        }
+		try {
+			modFile.writeText(fullCode)
+			Vlog("Mod create File.absolutePath}")
+		} catch (e: Exception) {
+			Vlog("Failed to create mod $modName: ${e.message}")
+		}
 	}
+
 	
     fun executeKotlinFile(file: Str){
 		val modPath = newFolder("Mods").file(file).absolutePath
