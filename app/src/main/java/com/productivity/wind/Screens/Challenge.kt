@@ -50,7 +50,7 @@ import androidx.compose.ui.text.style.*
 
 @Composable
 fun Challenge() {
-  LazyScreen(top = { Text("Challenge") }) {
+  LazyScreen("Challenge") {
     LazyItem(
             BigIcon = Icons.Filled.AccessTime,
             BigIconColor = DarkBlue,
