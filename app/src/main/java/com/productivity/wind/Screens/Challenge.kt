@@ -50,7 +50,7 @@ import androidx.compose.ui.text.style.*
 
 @Composable
 fun Challenge() {
-  LazyScreen(title = { Text("Challenge") }) {
+  LazyScreen(top = { Text("Challenge") }) {
     LazyItem(
             BigIcon = Icons.Filled.AccessTime,
             BigIconColor = DarkBlue,
@@ -90,7 +90,7 @@ fun CopyPaste(id: Str ="") {
       }
     }
 
-    LazyScreen(title = { 
+    LazyScreen(top = { 
         Header.CopyPaste(txt, DailyMax, Done_Worth, Letter_Worth, id) 
     }) {
         // “If” section
@@ -142,7 +142,7 @@ fun AppUsage(id: Str = "") {
       }
     }
 
-    LazyScreen(title = {
+    LazyScreen(top = {
         Header.AppUsage(Time, Points, selectedApp)
        }
     ) {
