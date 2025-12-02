@@ -54,43 +54,43 @@ fun ExtensionsScreen() {
                 Text("Your Mods")
                 move(16)
             }
-
-        items(mods) { mod ->
-            LazyCard {
-                LazyRow {
-                    Text(mod)
-                    Icon.Delete{
-                        mods.remove(mod)
+            
+            items(mods) { mod ->
+                LazyCard {
+                    LazyRow {
+                        Text(mod)
+                        Icon.Delete{
+                            mods.remove(mod)
+                        }
                     }
                 }
             }
-        }
 
-        item {
-            move(24)
-            OutlinedTextField(
-                value = newModName,
-                onValueChange = { newModName = it },
-                label = { Text("New Mod Name") },
-                modifier = Mod.maxW()
-            )
-            move(8)
-            Button(
-                onClick = {
-                    if (newModName.isNotBlank()) {
-                        mods.add(newModName)
-                        newModName = ""
-                    }
-                },
-                modifier = Mod.maxW()
-            ) {
-                Text("Add Mod")
+            item {
+                move(24)
+                OutlinedTextField(
+                    value = newModName,
+                    onValueChange = { newModName = it },
+                    label = { Text("New Mod Name") },
+                    modifier = Mod.maxW()
+                )
+                move(8)
+                Button(
+                    onClick = {
+                        if (newModName.isNotBlank()) {
+                            mods.add(newModName)
+                            newModName = ""
+                        }
+                    },
+                    modifier = Mod.maxW()
+                ) {
+                    Text("Add Mod")
+                }
+                move(h=16)
             }
-            move(h=16)
         }
     }
 }
-
 
 @Composable
 fun SettingsOtherScreen() {
