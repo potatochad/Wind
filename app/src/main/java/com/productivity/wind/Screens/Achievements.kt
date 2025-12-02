@@ -10,7 +10,7 @@ import com.productivity.wind.Imports.Data.Bar
 
 @Composable
 fun Achievements() {
-    LazyScreen(top = { Text("Achievements") }) {
+    LazyScreen("Achievements") {
             
         LazyItem(
             icon = Icons.Outlined.AdminPanelSettings,
