@@ -752,7 +752,7 @@ fun LazyHeader(
 
 @Composable
 fun LazyScreen(
-    title: ui,
+    top: ui = { Text("^_^") },
     onBackClick: Do = {},
     showBack: Bool = yes,
     modifier: Mod = Mod.background(Color.Black),
@@ -766,7 +766,7 @@ fun LazyScreen(
 
 	val header: ui = {
 		LazyHeader(
-			titleContent = title,
+			titleContent = top,
 			onBackClick = onBackClick,
 			showBack = showBack,
 			showDivider = showDivider,
