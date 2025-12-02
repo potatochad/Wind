@@ -20,22 +20,16 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.ui.*
 import androidx.compose.foundation.lazy.*
 
-//region Settings
-
-
 
 @Composable
 fun SettingsScreen() {
     LazyScreen(title = { 
         Text("Settings") 
     }) {
-    
-        
         Item.UnlockThreshold()
         Item.Restore()
         Item.Backup()
 
-        
         LazyItem(
                 BigIcon = Icons.Filled.Extension,
                 BigIconColor = Color(0xFF9C27B0),
