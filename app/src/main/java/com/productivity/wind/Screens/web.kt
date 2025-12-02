@@ -39,7 +39,7 @@ fun Web(){
     Item.WebPointTimer()
 
     LazyScreen(
-        title = {
+        top = {
             Text(" Points ${Bar.funTime}")
     
             UI.End {
@@ -84,7 +84,7 @@ fun BlockKeyword() {
     var BadWord = r_m("someWord")
 
     LazyScreen(
-        title = {
+        top = {
             Row(Mod.scroll(h = yes).w(App.w / 2)) {
                 Text(Bar.Url, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
@@ -146,7 +146,7 @@ fun BlockKeyword() {
 @Composable
 fun filterExtraWeb() {
     LazyScreen(
-        title = {
+        top = {
             Text("fancy blocking")
         },
     ) {
