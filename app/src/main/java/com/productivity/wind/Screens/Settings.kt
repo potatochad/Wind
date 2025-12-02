@@ -47,8 +47,6 @@ fun SettingsScreen() {
 
 @Composable
 fun ExtensionsScreen() {
-    var mods by r_m(mList("Mod A", "Mod B"))
-    var newModName by r_m("")
 
     LazyScreen("Extensions") {
 
