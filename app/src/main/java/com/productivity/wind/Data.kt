@@ -36,7 +36,30 @@ var TestVariable by m(50)
 
 fun ModabilitySetup(){
 	fun makeTestMod(){
-		
+		val modsFolder = newFolder("Mods")
+
+        val testModFile = File(modsFolder, "TestMod.kt")
+
+		val modCode = """
+            package com.productivity.wind.Imports.Mods
+
+            import com.productivity.wind.Screens.Settings.TestVariable
+            import com.productivity.wind.Imports.Data.Vlog
+
+            class ModsClass {
+                fun runMod() {
+                    TestVariable += 1
+                    Vlog("TestVariable increased to $$TestVariable")
+                }
+            }
+		""".trimIndent()
+
+        try {
+            testModFile.writeBytes(modCode) 
+            Vlog("Test mod created: ${testModFile.absolutePath}")
+        } catch (e: Exception) {
+            Vlog("Failed to create test mod: ${e.message}")
+        }
 	}
 	
     fun loadMod(file: Str){
