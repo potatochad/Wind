@@ -34,24 +34,20 @@ import java.io.File
 
 fun RuntimeKotlin(){
 	fun createKotlinMod(
-		code: Str = """fun runMod() { Vlog("MOD $modName JUST RAN") }""",
+		kt: Str = """fun runMod() { Vlog("MOD $modName JUST RAN") }""",
 	) {
-		val modsFolder = newFolder("Mods")
-		val modFile = File(modsFolder, "Mod.kt")
-
-		val fullCode = """
+		val code = """
 		package com.productivity.wind.Imports.Mods
 
 		class ModClass {
-     	    $code
+     	    $kt
 		}
 		""".trimIndent()
 
 		try {
-			modFile.writeText(fullCode)
-			Vlog("Mod create File.absolutePath}")
+			newFolder("Mods").file("Mod.kt").writeText(fullCode)
 		} catch (e: Exception) {
-			Vlog("Failed to create mod $modName: ${e.message}")
+			Vlog("Failed mod [${e.message}]")
 		}
 	}
 
