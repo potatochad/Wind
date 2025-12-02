@@ -46,10 +46,43 @@ fun RuntimeKotlin(){
 
 		try {
 			newFolder("Mods").file("Mod.kt").writeText(code)
+
+
+			
 		} catch (e: Exception) {
 			Vlog("Failed mod [${e.message}]")
 		}
 	}
+	fun compileKtToDex(ktFile: File): File {
+    // 1️⃣ Prepare folders
+    val compiledFolder = File(ktFile.parentFile, "Compiled")
+    if (!compiledFolder.exists()) compiledFolder.mkdirs()
+
+    val dexFolder = File(ktFile.parentFile, "Dex")
+    if (!dexFolder.exists()) dexFolder.mkdirs()
+
+    // 2️⃣ Compile Kotlin file -> .class
+    val outputJar = File(compiledFolder, "mod.jar")
+    val exitCode = org.jetbrains.kotlin.cli.jvm.K2JVMCompiler().exec(
+        System.out, arrayOf(
+            ktFile.absolutePath,
+            "-d", outputJar.absolutePath
+        )
+    )
+    if (exitCode != 0) throw Exception("Kotlin compilation failed")
+
+    // 3️⃣ Convert .class (.jar) -> .dex
+    val dexFile = File(dexFolder, "mod.dex")
+    com.android.tools.r8.D8.run(
+        arrayOf(
+            "--output", dexFolder.absolutePath,
+            outputJar.absolutePath
+        )
+    )
+
+    return dexFile
+}
+
 
 	
     fun executeKotlinFile(file: Str){
