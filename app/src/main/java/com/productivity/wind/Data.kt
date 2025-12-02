@@ -32,8 +32,14 @@ import kotlin.system.*
 import dalvik.system.*
 import java.io.File
 
+var TestVariable by m(50)
+
 fun ModabilitySetup(){
-    fun loadMod(file: Str) {
+	fun makeTestMod(){
+		
+	}
+	
+    fun loadMod(file: Str){
 		val modPath = newFolder("Mods").file(file).absolutePath
         val newModsPath = newFolder("NewMods").absolutePath
 
