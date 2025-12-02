@@ -145,11 +145,7 @@ fun BlockKeyword() {
 
 @Composable
 fun filterExtraWeb() {
-    LazyScreen(
-        top = {
-            Text("fancy blocking")
-        },
-    ) {
+    LazyScreen("fancy blocking") {
         
     }
 }
