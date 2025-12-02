@@ -32,8 +32,8 @@ import kotlin.system.*
 import dalvik.system.*
 import java.io.File
 
-fun ModabilitySetup(){
-	fun makeTestMod(){
+fun RuntimeKotlin(){
+	fun makeKotlinFile(){
 		val modsFolder = newFolder("Mods")
 
         val testModFile = File(modsFolder, "TestMod.kt")
@@ -59,7 +59,7 @@ fun ModabilitySetup(){
         }
 	}
 	
-    fun loadMod(file: Str){
+    fun executeKotlinFile(file: Str){
 		val modPath = newFolder("Mods").file(file).absolutePath
         val newModsPath = newFolder("NewMods").absolutePath
 
@@ -260,7 +260,7 @@ fun AppStart() {
     }
 
 
-	ModabilitySetup()
+	RuntimeKotlin()
 	
     
     App.navHost = rememberNavController()
