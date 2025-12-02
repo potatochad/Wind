@@ -46,8 +46,7 @@ fun ModabilitySetup(){
 
             class ModsClass {
                 fun runMod() {
-                    TestVariable += 1
-                    Vlog("TestVariable increased to $$TestVariable")
+                    Vlog("MOD JUST RAN")
                 }
             }
 		""".trimIndent()
