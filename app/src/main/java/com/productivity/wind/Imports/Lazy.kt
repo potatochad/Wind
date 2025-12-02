@@ -752,7 +752,8 @@ fun LazyHeader(
 
 @Composable
 fun LazyScreen(
-    top: ui = { Text("^_^") },
+	txt: Str = "Hi",
+    top: ui = { Text("$txt") },
     onBackClick: Do = {},
     showBack: Bool = yes,
     modifier: Mod = Mod.background(Color.Black),
