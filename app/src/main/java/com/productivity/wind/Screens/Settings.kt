@@ -23,7 +23,7 @@ import androidx.compose.foundation.lazy.*
 
 @Composable
 fun SettingsScreen() {
-    LazyScreen(title = { 
+    LazyScreen(top = { 
         Text("Settings") 
     }) {
         Item.UnlockThreshold()
@@ -53,7 +53,7 @@ fun SettingsScreen() {
 
 @Composable
 fun SettingsOtherScreen() {
-    LazyScreen(title = { Text("Settings") }) {
+    LazyScreen(top = { Text("Settings") }) {
 
         LazyItem(
                 BigIcon = Icons.Filled.ListAlt,
