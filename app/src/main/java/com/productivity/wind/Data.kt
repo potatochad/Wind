@@ -32,8 +32,6 @@ import kotlin.system.*
 import dalvik.system.*
 import java.io.File
 
-var TestVariable by m(50)
-
 fun ModabilitySetup(){
 	fun makeTestMod(){
 		val modsFolder = newFolder("Mods")
@@ -55,7 +53,7 @@ fun ModabilitySetup(){
 		""".trimIndent()
 
         try {
-            testModFile.writeBytes(modCode) 
+			testModFile.writeBytes(modCode.toByteArray())
             Vlog("Test mod created: ${testModFile.absolutePath}")
         } catch (e: Exception) {
             Vlog("Failed to create test mod: ${e.message}")
