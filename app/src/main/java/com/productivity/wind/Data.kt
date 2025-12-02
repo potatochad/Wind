@@ -33,8 +33,6 @@ import dalvik.system.*
 import java.io.File
 
 fun ModabilitySetup(){
-    
-
     fun loadMod(file: Str) {
 		val modPath = newFolder("Mods").file(file).absolutePath
         val newModsPath = newFolder("NewMods").absolutePath
@@ -43,7 +41,6 @@ fun ModabilitySetup(){
 
 
         try {
-            //need add class???
             val newMods = modLoaded.loadClass(
                 "com.productivity.wind.Imports.NewMods.NewMods"
             )
