@@ -336,7 +336,7 @@ fun <T> LazzyList(
 fun LazyInput(
     what: Any,
     isInt: Bool = no,
-	modifier: Mod = Mod,//DOES NOTHING
+	modifier: Mod = Mod,
     maxLetters: Int = 20,
     textStyle: TextStyle = TextStyle(
 		color = Color.White,
@@ -380,7 +380,7 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
     Switch(
       checked = isOn,
       onCheckedChange = onToggle,
-      modifier = Modifier.s(34), // default ~39dp → minus 5dp
+      modifier = Mod.s(34), // default ~39dp → minus 5dp
       colors = SwitchDefaults.colors(
           checkedThumbColor = Color(0xFFFFD700),
           uncheckedThumbColor = Color.LightGray,
@@ -420,7 +420,7 @@ fun LazyLine(
 fun LazzyRow(
     modifier: Mod = Mod,
     space: Int = 0,
-    center: Bool = no, // Kotlin uses 'Boolean', not 'Bool'
+    center: Bool = no,
     ui: ui,
 ) {
     Row(
