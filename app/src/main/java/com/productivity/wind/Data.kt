@@ -33,15 +33,11 @@ import dalvik.system.*
 import java.io.File
 
 fun ModabilitySetup(){
-    val newModsFolder = newFolder("NewMods")
-	val modsFolder = newFolder("Mods")
-
+    
 
     fun loadMod(file: Str) {
-        val modFile = File(App.ctx.filesDir, "mods/$file")
-
-        val modPath = modFile.absolutePath
-        val newModsPath = newModsFolder.absolutePath
+		val modPath = newFolder("Mods").file(file).absolutePath
+        val newModsPath = newFolder("NewMods").absolutePath
 
         val modLoaded = DexClassLoader(
             modPath,
