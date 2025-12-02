@@ -45,6 +45,7 @@ fun NavGraphBuilder.ScreenNav() {
     
 
     url("SettingsScreen") { SettingsScreen() }
+    url("ExtensionsScreen") { ExtensionsScreen() }
     url("SettingsOtherScreen") { SettingsOtherScreen() }
     url("LogsScreen") { LogsScreen() }
   
