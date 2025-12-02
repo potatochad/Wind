@@ -57,7 +57,7 @@ fun NavGraphBuilder.ScreenNav() {
 @Composable
 fun Menu() {
     LazyScreen(
-        title ={ UI.MenuHeader()},
+        top = { UI.MenuHeader() },
         showBack = no,
         showDivider = no,
         headerHeight = 190,
