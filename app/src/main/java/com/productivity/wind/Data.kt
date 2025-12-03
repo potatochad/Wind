@@ -41,7 +41,9 @@ fun RuntimeKotlin(){
 		import com.productivity.wind.Imports.*
 
 		class ModClass {
-     	    Vlog("ModClass executed")
+		    init {
+              Vlog("ModClass executed")
+		   }
 		}
 	""".trimIndent()
 
