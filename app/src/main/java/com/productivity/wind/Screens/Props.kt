@@ -402,6 +402,10 @@ object Header {
     fun Main(){
         Icon.Menu()
         Icon.Chill()
+
+        Icon.Delete{
+            RuntimeKotlin()
+        }
         
         move(w = 12)
         
