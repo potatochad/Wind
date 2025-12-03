@@ -47,19 +47,18 @@ fun RuntimeKotlin(){
 
 	try {
 		modFile.writeText(code)
+		
+		var Worked = ktToJar(
+			modFile, 
+			folder("JarMods").file("1ZipMod.jar")
+		)
 	
-
-	var Worked = ktToJar(
-		modFile, 
-		folder("JarMods").file("1ZipMod.jar")
-	)
-	
-	if (Worked){
-		Vlog("worked: [yes]")
-	} else {
-		Vlog("worked: [no]")
-		return
-	}
+		if (Worked){
+			Vlog("worked: [yes]")
+		} else {
+			Vlog("worked: [no]")
+			return
+		}
 
 	} catch (e: Exception) {
 		Vlog("Failed mod [${e.message}]")
