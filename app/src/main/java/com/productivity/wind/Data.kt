@@ -49,10 +49,10 @@ fun RuntimeKotlin(){
 		Vlog("Failed mod [${e.message}]")
 	}
 
-	
-	folder("JarMods").file("1ZipMod.jar")
-
-	var Worked = ktToJar()
+	var Worked = ktToJar(
+		folder("Mods").file("1Mod.kt"), 
+		folder("JarMods").file("1ZipMod.jar")
+	)
 
 	/*
     val JarCode = K2JVMCompiler().exec(
