@@ -846,6 +846,17 @@ fun folder(folderName: Str): File {
 fun File.file(name: Str): File {
     return File(this, name)
 }
+fun ktToJar(ktFile: File, outputJar: File): Bool {
+    val result = K2JVMCompiler().exec(
+        System.out,
+        arrayOf(
+            ktFile.absolutePath,
+            "-d", outputJar.absolutePath
+        )
+    ).code
+    return result == 0
+}
+
 
 
 
