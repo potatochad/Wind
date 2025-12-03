@@ -33,14 +33,11 @@ import dalvik.system.*
 import java.io.File
 
 fun RuntimeKotlin(){
-	fun createKotlinMod(
-		kt: Str = """fun runMod() { Vlog("MOD $modName JUST RAN") }""",
-	) {
 		val code = """
 		package com.productivity.wind.Imports.Mods
 
 		class ModClass {
-     	    $kt
+     	    Vlog("ModClass executed")
 		}
 		""".trimIndent()
 
@@ -49,7 +46,6 @@ fun RuntimeKotlin(){
 		} catch (e: Exception) {
 			Vlog("Failed mod [${e.message}]")
 		}
-	}
 	fun compileKtToDex(ktFile: File): File {
     // 1️⃣ Prepare folders
     val compiledFolder = File(ktFile.parentFile, "Compiled")
