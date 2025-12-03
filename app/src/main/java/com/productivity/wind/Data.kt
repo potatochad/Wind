@@ -33,6 +33,8 @@ import dalvik.system.*
 import java.io.File
 
 fun RuntimeKotlin(){
+	var modFile = folder("Mods").file("1Mod.kt")
+	
 	val code = """
 		package com.productivity.wind.Mods
 
@@ -44,15 +46,22 @@ fun RuntimeKotlin(){
 	""".trimIndent()
 
 	try {
-		folder("Mods").file("1Mod.kt").writeText(code)
+		modFile.writeText(code)
 	} catch (e: Exception) {
 		Vlog("Failed mod [${e.message}]")
 	}
 
 	var Worked = ktToJar(
-		folder("Mods").file("1Mod.kt"), 
+		modFile, 
 		folder("JarMods").file("1ZipMod.jar")
 	)
+	
+	if (Worked){
+		Vlog("worked: [yes]")
+	} else {
+		Vlog("worked: [no]")
+		return
+	}
 
 	/*
     val JarCode = K2JVMCompiler().exec(
