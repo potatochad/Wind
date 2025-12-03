@@ -33,7 +33,7 @@ import dalvik.system.*
 import java.io.File
 
 fun RuntimeKotlin(){
-		val code = """
+	val code = """
 		package com.productivity.wind.Mods
 
 		import com.productivity.wind.Imports.*
@@ -41,24 +41,18 @@ fun RuntimeKotlin(){
 		class ModClass {
      	    Vlog("ModClass executed")
 		}
-		""".trimIndent()
+	""".trimIndent()
 
-		try {
-			newFolder("Mods").file("Mod.kt").writeText(code)
-		} catch (e: Exception) {
-			Vlog("Failed mod [${e.message}]")
-		}
-		
-    // 1️⃣ Prepare folders
-    val compiledFolder = File(ktFile.parentFile, "Compiled")
-    if (!compiledFolder.exists()) compiledFolder.mkdirs()
+	try {
+		newFolder("Mods").file("1Mod.kt").writeText(code)
+	} catch (e: Exception) {
+		Vlog("Failed mod [${e.message}]")
+	}
 
-    val dexFolder = File(ktFile.parentFile, "Dex")
-    if (!dexFolder.exists()) dexFolder.mkdirs()
-
-    // 2️⃣ Compile Kotlin file -> .class
-    val outputJar = File(compiledFolder, "mod.jar")
-    val exitCode = org.jetbrains.kotlin.cli.jvm.K2JVMCompiler().exec(
+	/*
+	newFolder("DexMods").file("1ZipMod.jar")
+    
+    val JarCode = K2JVMCompiler().exec(
         System.out, arrayOf(
             ktFile.absolutePath,
             "-d", outputJar.absolutePath
@@ -66,34 +60,33 @@ fun RuntimeKotlin(){
     )
     if (exitCode != 0) throw Exception("Kotlin compilation failed")
 
-    // 3️⃣ Convert .class (.jar) -> .dex
-    val dexFile = File(dexFolder, "mod.dex")
-    com.android.tools.r8.D8.run(
+	D8.run(
         arrayOf(
             "--output", dexFolder.absolutePath,
             outputJar.absolutePath
         )
     )
 
-		val modPath = newFolder("Mods").file(file).absolutePath
-        val newModsPath = newFolder("NewMods").absolutePath
-		val ModDex = compileKtToDex(newFolder("Mods").file(file))
+	val modPath = newFolder("Mods").file(file).absolutePath
+    val newModsPath = newFolder("NewMods").absolutePath
+	val ModDex = compileKtToDex(newFolder("Mods").file(file))
 
-        val modLoaded = DexClassLoader(modPath, newModsPath, null, App.ctx.classLoader)
+    val modLoaded = DexClassLoader(modPath, newModsPath, null, App.ctx.classLoader)
 
 
-        try {
-            val newMods = modLoaded.loadClass(
-                "com.productivity.wind.Imports.NewMods.NewMods"
-            )
-			val modClass = modLoaded.loadClass("com.productivity.wind.Imports.Mods.ModClass")
+    try {
+        val newMods = modLoaded.loadClass(
+            "com.productivity.wind.Imports.NewMods.NewMods"
+        )
+		val modClass = modLoaded.loadClass("com.productivity.wind.Imports.Mods.ModClass")
 
-            val modInstance = modClass.getDeclaredConstructor().newInstance()
-            val runMethod = modClass.getMethod("runMod")
-            runMethod.invoke(modInstance)
-        } catch (e: Exception) {
-            Vlog("Failed to run mod: ${e.message}")
-        }
+        val modInstance = modClass.getDeclaredConstructor().newInstance()
+        val runMethod = modClass.getMethod("runMod")
+        runMethod.invoke(modInstance)
+    } catch (e: Exception) {
+        Vlog("Failed to run mod: ${e.message}")
+    }
+	*/
 }
 
 /*! NEVER move bar and lists to another FOLDER, or other file
