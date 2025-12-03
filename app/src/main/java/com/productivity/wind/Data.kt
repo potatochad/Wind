@@ -273,9 +273,6 @@ fun AppStart() {
     RunOnce {
         DayChecker.start()
     }
-
-
-	RuntimeKotlin()
 	
     
     App.navHost = rememberNavController()
