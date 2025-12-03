@@ -49,9 +49,10 @@ fun RuntimeKotlin(){
 		Vlog("Failed mod [${e.message}]")
 	}
 
+	
+	folder("JarMods").file("1ZipMod.jar")
+
 	/*
-	newFolder("DexMods").file("1ZipMod.jar")
-    
     val JarCode = K2JVMCompiler().exec(
         System.out, arrayOf(
             ktFile.absolutePath,
