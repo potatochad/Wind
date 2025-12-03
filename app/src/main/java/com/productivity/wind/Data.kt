@@ -52,6 +52,8 @@ fun RuntimeKotlin(){
 	
 	folder("JarMods").file("1ZipMod.jar")
 
+	var Worked = ktToJar()
+
 	/*
     val JarCode = K2JVMCompiler().exec(
         System.out, arrayOf(
