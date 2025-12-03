@@ -850,14 +850,14 @@ fun folder(folderName: Str): File {
 fun File.file(name: Str): File {
     return File(this, name)
 }
-fun ktToJar(ktFile: File, outputJar: File): Bool {
-    val result = K2JVMCompiler().exec(
+fun ktToJar(ktFile: File, outputJar: File): Boolean {
+    val exitCode = K2JVMCompiler().exec(
         System.out,
-        ktFile.absolutePath,
-        "-d", outputJar.absolutePath
+        arrayOf(ktFile.absolutePath, "-d", outputJar.absolutePath)
     )
-    return result == ExitCode.OK
+    return exitCode == ExitCode.OK
 }
+
 
 
 
