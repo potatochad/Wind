@@ -836,7 +836,7 @@ inline fun <T> MutableList<T>.each(
 }
 
 
-fun newFolder(folderName: Str): File {
+fun folder(folderName: Str): File {
     val folder = File(App.ctx.filesDir, folderName)
     if (!folder.exists()) {
         folder.mkdirs()
