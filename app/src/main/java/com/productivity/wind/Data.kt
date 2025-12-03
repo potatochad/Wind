@@ -44,7 +44,7 @@ fun RuntimeKotlin(){
 	""".trimIndent()
 
 	try {
-		newFolder("Mods").file("1Mod.kt").writeText(code)
+		folder("Mods").file("1Mod.kt").writeText(code)
 	} catch (e: Exception) {
 		Vlog("Failed mod [${e.message}]")
 	}
