@@ -47,9 +47,7 @@ fun RuntimeKotlin(){
 
 	try {
 		modFile.writeText(code)
-	} catch (e: Exception) {
-		Vlog("Failed mod [${e.message}]")
-	}
+	
 
 	var Worked = ktToJar(
 		modFile, 
@@ -61,6 +59,10 @@ fun RuntimeKotlin(){
 	} else {
 		Vlog("worked: [no]")
 		return
+	}
+
+	} catch (e: Exception) {
+		Vlog("Failed mod [${e.message}]")
 	}
 
 	/*
