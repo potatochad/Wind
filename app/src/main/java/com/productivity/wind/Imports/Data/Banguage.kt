@@ -161,7 +161,7 @@ fun goBackWeb(web: Web?) {
     }
 }
 fun goBackWeb(web: m_<Web?>) {
-    val w = web.it   // snapshot the reference
+    val w = web.it
     w?.post {
         if (w.canGoBack()) {
             w.goBack()
@@ -852,12 +852,10 @@ fun File.file(name: Str): File {
 fun ktToJar(ktFile: File, outputJar: File): Bool {
     val result = K2JVMCompiler().exec(
         System.out,
-        arrayOf(
-            ktFile.absolutePath,
-            "-d", outputJar.absolutePath
-        )
-    ).code
-    return result == 0
+        ktFile.absolutePath,
+        "-d", outputJar.absolutePath
+    )
+    return result == ExitCode.OK
 }
 
 
