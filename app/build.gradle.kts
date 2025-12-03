@@ -110,7 +110,7 @@ ktlint {
 
 dependencies {
 
-    implementation("org.jetbrains.kotlin:kotlin-compiler-embeddable:2.1.10")
+    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:2.1.10")
 
     
     implementation("androidx.compose.foundation:foundation:1.9.2")
