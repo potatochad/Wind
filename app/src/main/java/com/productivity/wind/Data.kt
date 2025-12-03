@@ -34,7 +34,9 @@ import java.io.File
 
 fun RuntimeKotlin(){
 		val code = """
-		package com.productivity.wind.Imports.Mods
+		package com.productivity.wind.Mods
+
+		import com.productivity.wind.Imports.*
 
 		class ModClass {
      	    Vlog("ModClass executed")
@@ -46,7 +48,7 @@ fun RuntimeKotlin(){
 		} catch (e: Exception) {
 			Vlog("Failed mod [${e.message}]")
 		}
-	fun compileKtToDex(ktFile: File): File {
+		
     // 1️⃣ Prepare folders
     val compiledFolder = File(ktFile.parentFile, "Compiled")
     if (!compiledFolder.exists()) compiledFolder.mkdirs()
@@ -73,12 +75,6 @@ fun RuntimeKotlin(){
         )
     )
 
-    return dexFile
-}
-
-
-	
-    fun executeKotlinFile(file: Str){
 		val modPath = newFolder("Mods").file(file).absolutePath
         val newModsPath = newFolder("NewMods").absolutePath
 		val ModDex = compileKtToDex(newFolder("Mods").file(file))
@@ -98,7 +94,6 @@ fun RuntimeKotlin(){
         } catch (e: Exception) {
             Vlog("Failed to run mod: ${e.message}")
         }
-    }
 }
 
 /*! NEVER move bar and lists to another FOLDER, or other file
