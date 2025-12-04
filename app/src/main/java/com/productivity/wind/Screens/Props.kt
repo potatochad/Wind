@@ -404,7 +404,7 @@ object Header {
         Icon.Chill()
 
         Icon.Delete{
-            RuntimeKotlin()
+            RunJs()
         }
         
         move(w = 12)
