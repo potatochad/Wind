@@ -32,6 +32,19 @@ import kotlin.system.*
 import dalvik.system.*
 import java.io.File
 
+import javax.script.ScriptEngineManager
+import javax.script.ScriptException
+
+
+fun runJs(jsCode: Str) {
+    val engine = ScriptEngineManager().getEngineByName("nashorn") // JavaScript engine
+    try {
+        engine.eval(jsCode)
+    } catch (e: ScriptException) {
+        println("JS Error: ${e.message}")
+    }
+}
+
 fun RunJs(){
 	
 	
