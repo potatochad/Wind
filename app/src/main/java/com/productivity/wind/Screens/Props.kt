@@ -533,6 +533,7 @@ object Popup {
 
 }
 
+/*
 // 2. Popup manager that generates states automatically
 object Popup {
     private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_Bool> >>()
@@ -551,6 +552,16 @@ object Popup {
         }
     }
 }
+val NeedMorePoints = Popup.register(::NeedMorePointsPopup)
+val AskUsagePermission = Popup.register(::AskUsagePermission)
+val AppSelect = Popup.register(::AppSelectPopup)
+val DebugPopup = Popup.register(::DebugPopup)
+
+// Toggle any popup
+NeedMorePoints.value = yes // show
+NeedMorePoints.value = no  // hide
+
+*/
 
 
 
