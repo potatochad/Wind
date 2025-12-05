@@ -93,7 +93,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			tsk.goodStr = 0
 		}
         Bar.funTime += tsk.Done_Worth
-		txtScroll.scrollTo(0)
+		txtScroll.goTo(0)
 	}
 
 	RunOnce(tsk.goodStr) {
