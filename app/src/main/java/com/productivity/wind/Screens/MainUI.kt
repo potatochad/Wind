@@ -82,7 +82,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 			scrollToProgress(done, txtScroll)
 		}
-		inputScroll.toBottom
+		inputScroll.toBottom()
 	}
 	
 	fun Done() {
@@ -99,7 +99,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		if (tsk.goodStr > 20) {
 			txtScroll.scroll(2)
 		}
-		inputScroll.toBottom
+		inputScroll.toBottom()
 	}
 
 
@@ -168,7 +168,7 @@ fun CopyTskUI(tsk: CopyTsk) {
             }
         },
         modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged {
-			inputScroll.toBottom
+			inputScroll.toBottom()
 		},
 		placeholder = { Text("Start typing...") }
     )
