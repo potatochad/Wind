@@ -374,7 +374,6 @@ typealias Content = @Composable () -> Unit
 typealias Content_<T> = @Composable (T) -> Unit
 typealias ui = @Composable () -> Unit
 typealias ctx = Context
-typealias ui = @Composable () -> Unit
 typealias ui_<T> = @Composable (T) -> Unit
 typealias Do = () -> Unit
 typealias UI_<T> = @Composable (T) -> Unit
