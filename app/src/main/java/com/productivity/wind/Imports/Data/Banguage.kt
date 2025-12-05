@@ -110,7 +110,6 @@ import androidx.compose.foundation.text.selection.*
 import kotlin.system.*
 import androidx.navigation.*
 import android.webkit.*
-
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
 
@@ -519,6 +518,12 @@ suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scr
 suspend fun ScrollState.scroll(it: Any) {
     animateScrollBy(toF(it))
 }
+fun ScrollState.scrollTo(it: Any) {
+    GlobalScope.launch {
+        this@scrollTo.scrollTo(toF(it))
+    }
+}
+
 suspend fun scrollToProgress(progress: Float, scroll: ScrollState) {
 	delay(300)
 
