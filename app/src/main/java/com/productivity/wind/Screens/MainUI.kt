@@ -86,6 +86,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		inputScroll.scrollTo(inputScroll.maxValue)
 	}
 	fun Done() {
+		RunOnce {
 		Bar.copyTsk.edit(tsk){
 			tsk.DailyDone +=1
 			tsk.input = ""
@@ -93,6 +94,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
         Bar.funTime += tsk.Done_Worth
 		txtScroll.scrollTo(0)
+		}
 	}
 
 	RunOnce(tsk.goodStr) {
