@@ -110,9 +110,10 @@ ktlint {
 
 dependencies {
 
-    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:2.1.10")
+    implementation("org.mozilla:rhino:1.7.15")
 
-    
+
+    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:2.1.10")
     implementation("androidx.compose.foundation:foundation:1.9.2")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
