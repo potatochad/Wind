@@ -518,7 +518,7 @@ suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scr
 suspend fun ScrollState.scroll(it: Any) {
     animateScrollBy(toF(it))
 }
-fun ScrollState.scrollTo(it: Any) {
+fun ScrollState.goTo(it: Any) {
     GlobalScope.launch {
         this@scrollTo.scrollTo(toF(it))
     }
