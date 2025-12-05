@@ -85,6 +85,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 		inputScroll.scrollTo(inputScroll.maxValue)
 	}
+	
+	@Composable
 	fun Done() {
 		RunOnce {
 		Bar.copyTsk.edit(tsk){
