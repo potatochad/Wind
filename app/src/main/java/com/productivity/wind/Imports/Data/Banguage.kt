@@ -370,6 +370,8 @@ val maxInt = Int.MAX_VALUE
 
 typealias Web = WebView
 typealias UI = Content
+typealias Content = @Composable () -> Unit
+typealias Content_<T> = @Composable (T) -> Unit
 typealias ui = @Composable () -> Unit
 typealias ctx = Context
 typealias ui = @Composable () -> Unit
