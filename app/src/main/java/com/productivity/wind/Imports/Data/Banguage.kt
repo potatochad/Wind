@@ -515,13 +515,13 @@ fun Mod.Vscroll(r_v: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_
 fun Mod.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
 
 fun ScrollState.toBottom() {
-    GlobalScope.launch {
+    App.UI.launch {
         scrollTo(maxValue)
     }
 }
 
 fun LazyListState.toBottom() {
-    GlobalScope.launch {
+    App.UI.launch {
         if (layoutInfo.totalItemsCount > 0) {
             scrollToItem(layoutInfo.totalItemsCount - 1)
         }
@@ -529,13 +529,13 @@ fun LazyListState.toBottom() {
 }
 
 fun ScrollState.scroll(it: Any) {
-    GlobalScope.launch {
+    App.UI.launch {
         animateScrollBy(toF(it))
     }
 }
 
 fun ScrollState.goTo(it: Int) {
-    GlobalScope.launch {
+    App.UI.launch {
         scrollTo(it)
     }
 }
