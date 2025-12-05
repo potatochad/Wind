@@ -85,6 +85,15 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 		inputScroll.scrollTo(inputScroll.maxValue)
 	}
+	fun Done() {
+		Bar.copyTsk.edit(tsk){
+			tsk.DailyDone +=1
+			tsk.input = ""
+			tsk.goodStr = 0
+		}
+        Bar.funTime += tsk.Done_Worth
+		txtScroll.scrollTo(txtScroll.minValue)
+	}
 
 	RunOnce(tsk.goodStr) {
 		if (tsk.goodStr > 20) {
@@ -157,12 +166,7 @@ fun CopyTskUI(tsk: CopyTsk) {
                 }
 
                 if (correctInput == tsk.txt) {
-					Bar.copyTsk.edit(tsk){
-						tsk.DailyDone +=1
-						tsk.input = ""
-						tsk.goodStr = 0
-					}
-                    Bar.funTime += tsk.Done_Worth
+					Done()
                 }
             }
         },
