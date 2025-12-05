@@ -533,6 +533,26 @@ object Popup {
 
 }
 
+// 2. Popup manager that generates states automatically
+object Popup {
+    private val popups = mutableListOf<Pair<m_<Bool>, PopupComposable>>()
+
+    // Register popup, generates its own state
+    fun register(popup: PopupComposable): m_<Bool> {
+        val state = m(no) // create state internally
+        popups.add(state to popup)
+        return state       // return it in case you want to toggle it
+    }
+
+    @Composable
+    fun Init() {
+        for ((state, popup) in popups) {
+            popup(state)
+        }
+    }
+}
+
+
 
 @Composable
 fun NeedMorePointsPopup(show: m_<Bool>){
