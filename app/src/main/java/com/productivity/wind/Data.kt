@@ -32,6 +32,8 @@ import kotlin.system.*
 import dalvik.system.*
 import java.io.File
 
+/*
+
 import org.mozilla.javascript.Context
 import org.mozilla.javascript.Scriptable
 
@@ -44,7 +46,7 @@ fun runJs(jsCode: String) {
         Context.exit()
     }
 }
-
+*/
 
 fun RunJs(){
 	
