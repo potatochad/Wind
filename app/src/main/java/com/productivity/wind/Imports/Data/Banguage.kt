@@ -514,15 +514,29 @@ fun Mod.Vscroll(r_v: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_
 @Composable
 fun Mod.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
 
-suspend fun ScrollState.toBottom() { scrollTo(maxValue)}
-suspend fun LazyListState.toBottom() { if (layoutInfo.totalItemsCount > 0) { scrollToItem(layoutInfo.totalItemsCount - 1) }}
-
-suspend fun ScrollState.scroll(it: Any) {
-    animateScrollBy(toF(it))
+fun ScrollState.toBottom() {
+    CoroutineScope(Dispatchers.Main).launch {
+        scrollTo(maxValue)
+    }
 }
+
+fun LazyListState.toBottom() {
+    CoroutineScope(Dispatchers.Main).launch {
+        if (layoutInfo.totalItemsCount > 0) {
+            scrollToItem(layoutInfo.totalItemsCount - 1)
+        }
+    }
+}
+
+fun ScrollState.scroll(it: Any) {
+    CoroutineScope(Dispatchers.Main).launch {
+        animateScrollBy(toF(it))
+    }
+}
+
 fun ScrollState.goTo(it: Int) {
-    GlobalScope.launch {
-        this@goTo.scrollTo(it)
+    CoroutineScope(Dispatchers.Main).launch {
+        scrollTo(it)
     }
 }
 
