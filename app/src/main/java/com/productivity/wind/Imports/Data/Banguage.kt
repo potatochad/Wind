@@ -520,7 +520,7 @@ suspend fun ScrollState.scroll(it: Any) {
 }
 fun ScrollState.goTo(it: Any) {
     GlobalScope.launch {
-        this@scrollTo.scrollTo(toF(it))
+        this@goTo.scrollTo(toF(it))
     }
 }
 
