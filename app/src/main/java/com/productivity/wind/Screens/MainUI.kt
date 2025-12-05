@@ -99,7 +99,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		if (tsk.goodStr > 20) {
 			txtScroll.scroll(2)
 		}
-		inputScroll.scrollTo(inputScroll.maxValue)
+		inputScroll.scrollTo(0)
 	}
 	RunOnce(inputBottom) {
 		inputScroll.scrollTo(inputScroll.maxValue)
