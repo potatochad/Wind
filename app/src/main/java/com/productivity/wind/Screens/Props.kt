@@ -102,7 +102,7 @@ object Item {
     }
 
     @Composable
-    fun BigTskInput(txt: Any, maxLetters: Int = 5000, modifier: Mod =Modifier.maxW().h(150)){
+    fun BigTskInput(txt: Any, maxLetters: Int = 5000, modifier: Mod =Mod.maxW().h(150)){
         val TxtState = txt as? MutableState<Any> ?: run {
             Vlog("expected mutable")
             return
