@@ -32,18 +32,19 @@ import kotlin.system.*
 import dalvik.system.*
 import java.io.File
 
-import javax.script.ScriptEngineManager
-import javax.script.ScriptException
+import org.mozilla.javascript.Context
+import org.mozilla.javascript.Scriptable
 
-
-fun runJs(jsCode: Str) {
-    val engine = ScriptEngineManager().getEngineByName("nashorn") // JavaScript engine
+fun runJs(jsCode: String) {
+    val cx = Context.enter()
     try {
-        engine.eval(jsCode)
-    } catch (e: ScriptException) {
-        println("JS Error: ${e.message}")
+        val scope: Scriptable = cx.initStandardObjects()
+        cx.evaluateString(scope, jsCode, "JS", 1, null)
+    } finally {
+        Context.exit()
     }
 }
+
 
 fun RunJs(){
 	
