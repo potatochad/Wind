@@ -49,7 +49,6 @@ fun NavGraphBuilder.ScreenNav() {
     url("SettingsOtherScreen") { SettingsOtherScreen() }
     url("LogsScreen") { LogsScreen() }
   
-    
 }
 
 
@@ -534,15 +533,13 @@ object Popup {
 }
 
 /*
-// 2. Popup manager that generates states automatically
 object Popup {
-    private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_Bool> >>()
+    private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_<Bool>> >>()
 
-    // Register popup, generates its own state
-    fun register(popup: ui_<m_Bool>): m_<Bool> {
-        val state = m(no) // create state internally
+    fun register(popup: ui_<m_<Bool>>): ui_<m_<Bool>> {
+        val state = m(no)
         popups.add(state to popup)
-        return state       // return it in case you want to toggle it
+        return state
     }
 
     @Composable
@@ -557,10 +554,8 @@ val AskUsagePermission = Popup.register(::AskUsagePermission)
 val AppSelect = Popup.register(::AppSelectPopup)
 val DebugPopup = Popup.register(::DebugPopup)
 
-// Toggle any popup
-NeedMorePoints.value = yes // show
-NeedMorePoints.value = no  // hide
-
+NeedMorePoints.value = yes 
+NeedMorePoints.value = no
 */
 
 
