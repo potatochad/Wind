@@ -366,6 +366,8 @@ fun show(state: m_<Bool>?) = set(state, yes)
 fun hide(state: m_<Bool>?) = set(state, no)
 fun Id(): Str { return UUID.randomUUID().toString() }
 
+val maxInt = Int.MAX_VALUE
+
 typealias Web = WebView
 typealias UI = Content
 typealias ui = @Composable () -> Unit
