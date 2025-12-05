@@ -222,7 +222,7 @@ fun AppStart() {
 	val scope = rememberCoroutineScope()
 
 	RunOnce {
-		App.UI = scope
+		App.run = scope
         DayChecker.start()
 	}
 	
@@ -254,7 +254,7 @@ object App {
     lateinit var ctx: Context
     lateinit var navHost: NavHostController
 	lateinit var pkg: Str
-	lateinit var UI: CoroutineScope
+	lateinit var run: CoroutineScope
 
 	
 	var h by m(0.dp)
