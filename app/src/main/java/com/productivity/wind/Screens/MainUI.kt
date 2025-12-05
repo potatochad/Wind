@@ -74,7 +74,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     val txtScroll = r_Scroll()
 	val inputScroll = r_Scroll()
-	var inputBottom by r_m(0)
 
 	
     RunOnce {
@@ -83,7 +82,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 			scrollToProgress(done, txtScroll)
 		}
-		inputScroll.goTo(maxInt)
+		inputScroll.toBottom
 	}
 	
 	fun Done() {
@@ -100,10 +99,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		if (tsk.goodStr > 20) {
 			txtScroll.scroll(2)
 		}
-		inputScroll.scrollTo(0)
-	}
-	RunOnce(inputBottom) {
-		inputScroll.scrollTo(inputScroll.maxValue)
+		inputScroll.toBottom
 	}
 
 
@@ -172,7 +168,7 @@ fun CopyTskUI(tsk: CopyTsk) {
             }
         },
         modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged {
-			inputBottom +=1
+			inputScroll.toBottom
 		},
 		placeholder = { Text("Start typing...") }
     )
