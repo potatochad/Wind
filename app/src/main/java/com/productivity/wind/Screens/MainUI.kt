@@ -146,9 +146,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 					tsk.input = it
 				}
 
-                val correctChars = tsk.txt.zip(tsk.input)
-                    .takeWhile { it.first == it.second }.size
-                val correctInput = tsk.input.take(correctChars)
+                val correctInput = CopyTskCorrectInput(tsk)
 
 
                 val newlyEarned = correctInput.length - tsk.goodStr
@@ -180,10 +178,15 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 
 
-if (it.length - tsk.input.length <= 5) {
-        if (it.length > tsk.input.length){
-            Bar.TotalTypedLetters += 1
-		}
+
+
+
+
+fun CopyTskCorrectInput(tsk: CopyTsk): Str {
+    val correctChars = tsk.txt.zip(tsk.input)
+        .takeWhile { it.first == it.second }
+        .size
+    return tsk.input.take(correctChars)
 }
 
 
