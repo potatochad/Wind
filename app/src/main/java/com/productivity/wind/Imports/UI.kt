@@ -153,6 +153,13 @@ fun AnnotatedString.Builder.correctStr(text: Str, correctUntil: Int) {
             }
         }
 }
+
+fun CopyTskCorrectInput(tsk: CopyTsk): Str {
+    val correctChars = tsk.txt.zip(tsk.input)
+        .takeWhile { it.first == it.second }
+        .size
+    return tsk.input.take(correctChars)
+}
 @Composable
 fun fullCorrectStr(target: Str, input: Str): AnnotatedString {
     val colored by produceState(
