@@ -516,8 +516,7 @@ fun Mod.Vscroll(r_v: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_
 fun Mod.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
 
 fun ScrollState.toBottom() {
-    App.run.launch {
-		wait(10)
+    wait(10) {
         scrollTo(maxValue)
     }
 }
