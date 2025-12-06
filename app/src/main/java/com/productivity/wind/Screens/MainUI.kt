@@ -101,10 +101,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		inputScroll.toBottom()
 	}
 
-
-
-	val coloredTarget = fullCorrectStr(tsk.txt, tsk.input)
-
     
     LazzyRow {
         Text("Done: ${tsk.DailyDone}/${tsk.DailyMax}")
@@ -126,7 +122,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     }
     move(8)
     Text(
-        text = coloredTarget,
+        text = fullCorrectStr(tsk.txt, tsk.input),
         modifier = Mod.h(0, 100).w(0, 300).Vscroll(txtScroll)
     )
     move(h = 20)
