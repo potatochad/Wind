@@ -180,21 +180,26 @@ fun fullCorrectStr(target: Str, input: Str): AnnotatedString {
 }
 
 object Popup {
-    private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_<Bool>> >>()
+    private val popups = mutableListOf<
+        kotlin.Pair<m_<Bool>, ui_<m_<Bool>>>
+    >()
 
     fun add(popup: ui_<m_<Bool>>): m_<Bool> {
         val state = m(no)
-        popups.add(state to popup)
+        popups.add(kotlin.Pair(state, popup))
         return state
     }
 
     @Composable
     fun Init() {
-        for ((state, popup) in popups) {
-            popup(state)
+        for (pair in popups) {
+            val state = pair.first
+            val block = pair.second
+            block(state)
         }
     }
 }
+
 
 
 
