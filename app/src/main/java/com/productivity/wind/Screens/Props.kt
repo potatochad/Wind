@@ -525,7 +525,7 @@ object Popup {
 }
 
 
-object Popup {
+object Popup2 {
     private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_<Bool>> >>()
 
     fun register(popup: ui_<m_<Bool>>): ui_<m_<Bool>> {
