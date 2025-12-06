@@ -882,6 +882,24 @@ fun File.file(name: Str): File {
 val Str.size get() = length
 
 
+object Popup {
+    private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_<Bool>> >>()
+
+    fun add(popup: ui_<m_<Bool>>): m_<Bool> {
+        val state = m(no)
+        popups.add(state to popup)
+        return state
+    }
+
+    @Composable
+    fun Init() {
+        for ((state, popup) in popups) {
+            popup(state)
+        }
+    }
+}
+
+
 
 
 
