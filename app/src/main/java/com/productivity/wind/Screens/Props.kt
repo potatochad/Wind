@@ -507,10 +507,10 @@ object Icon {
 
 
 
-val NeedMorePoints = Popup.add(::NeedMorePointsPopup)
-val AskUsagePermission = Popup.add(::AskUsagePermission)
-val AppSelect = Popup.add(::AppSelectPopup)
-val DebugPopup = Popup.add(::DebugPopup)
+var NeedMorePoints = Popup.add(::NeedMorePointsPopup)
+var AskUsagePermission = Popup.add(::AskUsagePermission)
+var AppSelect = Popup.add(::AppSelectPopup)
+var DebugPopup = Popup.add(::DebugPopup)
 
 
 object Popup {
