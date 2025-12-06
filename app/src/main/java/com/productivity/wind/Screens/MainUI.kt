@@ -139,7 +139,7 @@ fun CopyTskUI(tsk: CopyTsk) {
         onValueChange = {
 			if (it.length - tsk.input.length <= 2) {
 				
-                if (it.length > tsk.input.length) Bar.TotalTypedLetters += 1
+                if (it.length > tsk.input.length) Bar.LettersTyped += 1
 				
 				Bar.copyTsk.edit(tsk){ tsk.input = it }
 
