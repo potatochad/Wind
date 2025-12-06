@@ -176,3 +176,23 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 
 
+
+
+
+
+if (it.length - tsk.input.length <= 5) {
+        if (it.length > tsk.input.length){
+            Bar.TotalTypedLetters += 1
+		}
+}
+
+
+
+
+
+
+
+
+
+
+				
