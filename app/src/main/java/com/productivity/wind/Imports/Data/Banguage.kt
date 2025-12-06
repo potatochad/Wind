@@ -524,7 +524,7 @@ fun ScrollState.toBottom() {
 
 fun LazyListState.toBottom() {
     App.run.launch {
-		//wait(10)
+		wait(10)
         if (layoutInfo.totalItemsCount > 0) {
             scrollToItem(layoutInfo.totalItemsCount - 1)
         }
@@ -533,12 +533,14 @@ fun LazyListState.toBottom() {
 
 fun ScrollState.scroll(it: Any) {
     App.run.launch {
+		wait(10)
         animateScrollBy(toF(it))
     }
 }
 
 fun ScrollState.goTo(it: Int) {
     App.run.launch {
+		wait(10)
         scrollTo(it)
     }
 }
