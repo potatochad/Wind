@@ -177,9 +177,26 @@ fun m_<Web?>.txt(done: DoStr = {}) {
     }
 }
 
+object Popup {
+    private val popups = mutableListOf<
+        kotlin.Pair<m_<Bool>, ui_<m_<Bool>>>
+    >()
 
+    fun add(popup: ui_<m_<Bool>>): m_<Bool> {
+        val state = m(no)
+        popups.add(kotlin.Pair(state, popup))
+        return state
+    }
 
-
+    @Composable
+    fun Init() {
+        for (pair in popups) {
+            val state = pair.first
+            val block = pair.second
+            block(state)
+        }
+    }
+}
 
 
 
