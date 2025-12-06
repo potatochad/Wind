@@ -182,12 +182,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 
 
-fun CopyTskCorrectInput(tsk: CopyTsk): Str {
-    val correctChars = tsk.txt.zip(tsk.input)
-        .takeWhile { it.first == it.second }
-        .size
-    return tsk.input.take(correctChars)
-}
+
 
 
 
