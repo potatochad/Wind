@@ -379,6 +379,7 @@ typealias Do = () -> Unit
 typealias UI_<T> = @Composable (T) -> Unit
 typealias Mod = Modifier
 typealias mod = Modifier
+typealias Wait = suspend () -> Unit
 typealias Do_<T> = (T) -> Unit
 typealias DoStr = (Str) -> Unit     
 typealias DoInt = (Int) -> Unit        
@@ -834,7 +835,7 @@ fun <T> runHeavyTask(
     }
 }
 
-fun wait(x: Any = 100, Do: Do) {
+fun wait(x: Any = 100, Do: Wait) {
     App.run.launch {
         delay(toL(x))
         Do()
