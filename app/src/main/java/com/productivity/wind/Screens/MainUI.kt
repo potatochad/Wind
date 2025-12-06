@@ -137,8 +137,9 @@ fun CopyTskUI(tsk: CopyTsk) {
     OutlinedTextField(
         value = tsk.input,
         onValueChange = {
-			if (it.length > tsk.input.length && it.length - tsk.input.length <= 2) {
-				Bar.TotalTypedLetters += 1
+			if (it.length - tsk.input.length <= 2) {
+				
+                if (it.length > tsk.input.length) Bar.TotalTypedLetters += 1
 				
 				Bar.copyTsk.edit(tsk){ tsk.input = it }
 
