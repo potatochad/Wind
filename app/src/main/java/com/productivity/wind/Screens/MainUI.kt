@@ -78,7 +78,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 	
     RunOnce {
 		if (tsk.goodStr > 20) {
-			val done = toF(tsk.goodStr) / toF(tsk.txt.length)
+			val done = toF(tsk.goodStr) / toF(tsk.txt.size)
 
 			scrollToProgress(done, txtScroll)
 		}
@@ -136,18 +136,18 @@ fun CopyTskUI(tsk: CopyTsk) {
         onValueChange = {
 			if (it.size - tsk.input.size <= 2) {
 				
-                if (it.length > tsk.input.length) Bar.LettersTyped += 1
+                if (it.size > tsk.input.size) Bar.LettersTyped += 1
 				
 				Bar.copyTsk.edit(tsk){ tsk.input = it }
 
                 val correctInput = CopyTskCorrectInput(tsk)
 
-                val newlyEarned = correctInput.length - tsk.goodStr
+                val newlyEarned = correctInput.size - tsk.goodStr
                 if (newlyEarned > 0) {
                     var oldFunTime = Bar.funTime
                     Bar.funTime += newlyEarned * tsk.Letter_Worth
 					
-					Bar.copyTsk.edit(tsk){ tsk.goodStr = correctInput.length }
+					Bar.copyTsk.edit(tsk){ tsk.goodStr = correctInput.size }
                 }
 
                 if (correctInput == tsk.txt) Done()
