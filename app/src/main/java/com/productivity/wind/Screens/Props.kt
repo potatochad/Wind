@@ -512,26 +512,6 @@ var AskUsagePermission = Popup.add { AskUsagePermission(it) }
 var AppSelect = Popup.add { AppSelectPopup(it) }
 var DebugPopup = Popup.add { DebugPopup(it) }
 
-
-object Popup {
-    private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_<Bool>> >>()
-
-    fun add(popup: ui_<m_<Bool>>): m_<Bool> {
-        val state = m(no)
-        popups.add(state to popup)
-        return state
-    }
-
-    @Composable
-    fun Init() {
-        for ((state, popup) in popups) {
-            popup(state)
-        }
-    }
-}
-
-
-
 @Composable
 fun NeedMorePointsPopup(show: m_<Bool>){
     LazyPopup(
