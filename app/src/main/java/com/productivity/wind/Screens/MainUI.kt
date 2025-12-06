@@ -78,11 +78,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 	
     RunOnce {
 		if (tsk.goodStr > 20) {
-			val done = tsk.goodStr.toFloat() / tsk.txt.length.toFloat()
+			val done = toF(tsk.goodStr) / toF(tsk.txt.length)
 
 			scrollToProgress(done, txtScroll)
 		}
-		inputScroll.toBottom()
 	}
 	
 	fun Done() {
@@ -122,9 +121,7 @@ fun CopyTskUI(tsk: CopyTsk) {
                 }
             }
             
-			Icon.Delete{
-                delete.it = yes
-			}
+			Icon.Delete{ delete.it = yes }
 		}
     }
     move(8)
@@ -150,9 +147,7 @@ fun CopyTskUI(tsk: CopyTsk) {
                     var oldFunTime = Bar.funTime
                     Bar.funTime += newlyEarned * tsk.Letter_Worth
 					
-					Bar.copyTsk.edit(tsk){
-						tsk.goodStr = correctInput.length
-					}
+					Bar.copyTsk.edit(tsk){ tsk.goodStr = correctInput.length }
                 }
 
                 if (correctInput == tsk.txt) Done()
