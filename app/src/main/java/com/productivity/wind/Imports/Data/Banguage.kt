@@ -879,6 +879,8 @@ fun File.file(name: Str): File {
 }
 
 
+val Str.s get() = length
+
 
 
 
