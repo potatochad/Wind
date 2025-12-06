@@ -517,12 +517,14 @@ fun Mod.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_
 
 fun ScrollState.toBottom() {
     App.run.launch {
+		wait(10)
         scrollTo(maxValue)
     }
 }
 
 fun LazyListState.toBottom() {
     App.run.launch {
+		//wait(10)
         if (layoutInfo.totalItemsCount > 0) {
             scrollToItem(layoutInfo.totalItemsCount - 1)
         }
