@@ -507,10 +507,10 @@ object Icon {
 
 
 
-var NeedMorePoints = Popup.add(::NeedMorePointsPopup)
-var AskUsagePermission = Popup.add(::AskUsagePermission)
-var AppSelect = Popup.add(::AppSelectPopup)
-var DebugPopup = Popup.add(::DebugPopup)
+var NeedMorePoints = Popup.add { NeedMorePointsPopup(it) }
+var AskUsagePermission = Popup.add { AskUsagePermission(it) }
+var AppSelect = Popup.add { AppSelectPopup(it) }
+var DebugPopup = Popup.add { DebugPopup(it) }
 
 
 object Popup {
@@ -521,7 +521,6 @@ object Popup {
         popups.add(state to popup)
         return state
     }
-
 
     @Composable
     fun Init() {
