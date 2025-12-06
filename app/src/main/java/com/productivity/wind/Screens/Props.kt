@@ -507,11 +507,6 @@ object Icon {
 
 
 
-
-
-
-//region POPUP CONTROLLER
-
 var NeedMorePoints = m(no)
 var AskUsagePermission = m(no)
 var AppSelect = m(no)
@@ -527,12 +522,9 @@ object Popup {
         DebugPopup(DebugPopup)
         
     }
-    
-    
-
 }
 
-/*
+
 object Popup {
     private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_<Bool>> >>()
 
@@ -549,6 +541,8 @@ object Popup {
         }
     }
 }
+
+/*
 val NeedMorePoints = Popup.register(::NeedMorePointsPopup)
 val AskUsagePermission = Popup.register(::AskUsagePermission)
 val AppSelect = Popup.register(::AppSelectPopup)
