@@ -833,12 +833,17 @@ fun <T> runHeavyTask(
     }
 }
 
-fun wait(x: Any = 100, Do: Do={}) {
+fun wait(x: Any = 100, Do: Do) {
     CoroutineScope(Dispatchers.Main).launch {
         delay(toL(x))
         Do()
     }
 }
+/*
+fun wait(x: Any = 100) {
+    delay(toL(x))
+}
+*/
 
 @Composable
 fun Each(s: Any = 1000, Do: Do) {
