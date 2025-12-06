@@ -108,7 +108,7 @@ class Settings {
     
 
     //ACHIEVEMENTS
-    var TotalTypedLetters by m(0)
+    var LettersTyped by m(0)
 	
 
 	// LISTS DONT BACKUP OR RESTORE!!!!!
