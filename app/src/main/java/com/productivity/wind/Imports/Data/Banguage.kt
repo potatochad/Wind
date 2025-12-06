@@ -839,7 +839,7 @@ fun wait(x: Any = 100, Do: Do) {
         Do()
     }
 }
-fun wait(x: Any = 100) {
+suspend fun wait(x: Any = 100) {
     delay(toL(x))
 }
 
