@@ -152,17 +152,14 @@ fun CopyTskUI(tsk: CopyTsk) {
                 val newlyEarned = correctInput.length - tsk.goodStr
                 if (newlyEarned > 0) {
                     var oldFunTime = Bar.funTime
-                    Bar.funTime += newlyEarned * tsk.Letter_Worth; if (oldFunTime === Bar.funTime) {
-
-                    }
+                    Bar.funTime += newlyEarned * tsk.Letter_Worth
+					
 					Bar.copyTsk.edit(tsk){
 						tsk.goodStr = correctInput.length
 					}
                 }
 
-                if (correctInput == tsk.txt) {
-					Done()
-                }
+                if (correctInput == tsk.txt) Done()
             }
         },
         modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged {
