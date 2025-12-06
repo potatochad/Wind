@@ -507,28 +507,16 @@ object Icon {
 
 
 
-var NeedMorePoints = m(no)
-var AskUsagePermission = m(no)
-var AppSelect = m(no)
-var DebugPopup = m(no)
+val NeedMorePoints = Popup.add(::NeedMorePointsPopup)
+val AskUsagePermission = Popup.add(::AskUsagePermission)
+val AppSelect = Popup.add(::AppSelectPopup)
+val DebugPopup = Popup.add(::DebugPopup)
+
 
 object Popup {
-    
-    @Composable
-    fun Init(){
-        AskUsagePermission(AskUsagePermission)
-        NeedMorePointsPopup(NeedMorePoints)
-        AppSelectPopup(AppSelect)
-        DebugPopup(DebugPopup)
-        
-    }
-}
-
-
-object Popup2 {
     private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_<Bool>> >>()
 
-    fun register(popup: ui_<m_<Bool>>): m_<Bool> {
+    fun add(popup: ui_<m_<Bool>>): m_<Bool> {
         val state = m(no)
         popups.add(state to popup)
         return state
@@ -542,16 +530,6 @@ object Popup2 {
         }
     }
 }
-
-/*
-val NeedMorePoints = Popup.register(::NeedMorePointsPopup)
-val AskUsagePermission = Popup.register(::AskUsagePermission)
-val AppSelect = Popup.register(::AppSelectPopup)
-val DebugPopup = Popup.register(::DebugPopup)
-
-NeedMorePoints.value = yes 
-NeedMorePoints.value = no
-*/
 
 
 
