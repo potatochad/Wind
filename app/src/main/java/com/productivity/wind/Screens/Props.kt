@@ -528,11 +528,12 @@ object Popup {
 object Popup2 {
     private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_<Bool>> >>()
 
-    fun register(popup: ui_<m_<Bool>>): ui_<m_<Bool>> {
+    fun register(popup: ui_<m_<Bool>>): m_<Bool> {
         val state = m(no)
         popups.add(state to popup)
         return state
     }
+
 
     @Composable
     fun Init() {
