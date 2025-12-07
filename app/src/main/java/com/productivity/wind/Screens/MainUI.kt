@@ -111,14 +111,8 @@ fun CopyTskUI(tsk: CopyTsk) {
                 }
             }
 
-			var delete = r_m(no)
-
-			isSure(delete){
-				Bar.copyTsk.remove(tsk)
-			}
-			
 			Icon.Delete{ 
-				delete.it = yes
+				Bar.copyTsk.remove(tsk)
 			}
 			
 		}
