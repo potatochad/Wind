@@ -476,9 +476,14 @@ object Icon {
 
     @Composable
     fun Delete(Do: Do = {}) {
+        var show = r_m(no)
+        
         LazyIcon(Icons.Default.Delete){
-            Do()
+            show.it=yes
         }
+		isSure(show){
+			Do()
+		}
     }
 
 
