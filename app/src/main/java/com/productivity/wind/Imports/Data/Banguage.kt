@@ -848,8 +848,7 @@ fun <T> runHeavyTask(
         }
     }
 }
-
-fun wait(x: Any = 100, Do: Wait) {
+fun wait(x: Any = 100, Do: ui) {
     App.run.launch {
         delay(toL(x))
         Do()
