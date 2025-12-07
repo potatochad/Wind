@@ -112,6 +112,7 @@ import androidx.navigation.*
 import android.webkit.*
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
+import com.productivity.wind.Imports.Data.*
 
 
 
@@ -349,32 +350,7 @@ fun <T : Any> getClass(obj: T): List<KProperty1<T, *>> =
 
 
 
-fun <T> m(value: T) = mutableStateOf(value)
-fun <T> set(state: m_<T>?, value: T) { state?.value = value }
-fun show(state: m_<Bool>?) = set(state, yes)
-fun hide(state: m_<Bool>?) = set(state, no)
-fun Id(): Str { return UUID.randomUUID().toString() }
 
-val maxInt = Int.MAX_VALUE
-
-typealias Web = WebView
-typealias UI = Content
-typealias Content = @Composable () -> Unit
-typealias Content_<T> = @Composable (T) -> Unit
-typealias ui = @Composable () -> Unit
-typealias ctx = Context
-typealias ui_<T> = @Composable (T) -> Unit
-typealias Do = () -> Unit
-typealias UI_<T> = @Composable (T) -> Unit
-typealias Mod = Modifier
-typealias mod = Modifier
-typealias Wait = suspend () -> Unit
-typealias Do_<T> = (T) -> Unit
-typealias DoStr = (Str) -> Unit     
-typealias DoInt = (Int) -> Unit        
-typealias m_<T> = MutableState<T>
-typealias Str = String
-typealias Bool = Boolean
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
 typealias ClassVal<T, R> = KProperty1<T, R>
     
