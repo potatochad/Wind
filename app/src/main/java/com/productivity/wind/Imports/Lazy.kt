@@ -499,7 +499,7 @@ fun LazyIcon(
 	UI.ComposeCanBeTiny() {
         IconButton(
             onClick = {
-				wait(100L) {
+				wait(100) {
 					onClick()
 				}
 			},
