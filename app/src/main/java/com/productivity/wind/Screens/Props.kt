@@ -193,13 +193,6 @@ object Item {
                 move(12)
                 Text("Points ${app.Worth}")
 
-                var delete = r_m(no)
-
-                 isSure(delete){
-                    Bar.apps.remove(app)
-                 }
-
-
                 UI.End {
                     Icon.Edit{
                         enoughPoints {
@@ -207,7 +200,7 @@ object Item {
                         }
                     }
                     Icon.Delete{
-                       delete.it = yes
+                       Bar.apps.remove(app)
                     }
                 }
 
@@ -557,8 +550,8 @@ fun DebugPopup(show: m_<Bool>) {
 fun isSure(show: m_<Bool>, Do: Do) {
     LazyPopup(
         show,
-        "Really?",
-        "Are you sure?",
+        "Delete",
+        "Are you certain you want to delete this item for ever?",
         onConfirm = {Do()},
     )
 }
