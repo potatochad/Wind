@@ -66,6 +66,14 @@ fun Main() {
         }
     }
 }
+fun isSure(onYes: Do) {
+    AlertDialog.Builder(App.ctx)
+        .setTitle("Are you sure?")
+        .setMessage("This will delete it.")
+        .setPositiveButton("Yes") { _, _ -> onYes() }
+        .setNegativeButton("No", null)
+        .show()
+}
 
 
 @Composable
@@ -105,19 +113,20 @@ fun CopyTskUI(tsk: CopyTsk) {
     LazzyRow {
         Text("Done: ${tsk.DailyDone}/${tsk.DailyMax}")
         UI.End { 
-			var delete = r_m(no)
-
-            isSure(delete){
-                Bar.copyTsk.remove(tsk)
-            }
             
 			Icon.Edit{
                 Item.enoughPoints {
 					goTo("CopyPaste/${tsk.id}")
                 }
             }
-            
-			Icon.Delete{ delete.it = yes }
+
+			
+			
+			Icon.Delete{ 
+				isSure {
+				   Bar.copyTsk.remove(tsk)
+				}
+			}
 		}
     }
     move(8)
