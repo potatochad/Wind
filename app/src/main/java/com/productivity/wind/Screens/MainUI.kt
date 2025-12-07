@@ -75,8 +75,21 @@ fun rememberCorrectStr(target: String, input: String): AnnotatedString {
         var i = 0
         while (i < min && target[i] == input[i]) i++
 
+        // ZERO lag version
         buildAnnotatedString {
-            correctStr(target, i)
+            // 1) matched part — colored
+            append(
+                AnnotatedString(
+                    target.substring(0, i),
+                    spanStyle = SpanStyle(
+                        color = Color.Green,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            )
+
+            // 2) rest — plain text
+            append(target.substring(i))
         }
     }
 }
