@@ -496,11 +496,15 @@ fun LazyIcon(
     color: Color = Color.White,
 	onClick: ui = {},
 ) {
+	var clicked by m(no)
+
+	if (clicked) onClick()
+	
 	UI.ComposeCanBeTiny() {
         IconButton(
             onClick = {
 				wait(100) {
-					onClick()
+					clicked = yes
 				}
 			},
             modifier = modifier
