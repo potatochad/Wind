@@ -790,12 +790,7 @@ fun folder(folderName: Str): File {
     }
     return folder
 }
-fun File.file(name: Str): File {
-    return File(this, name)
-}
 
-
-val Str.size get() = length
 
 
 
