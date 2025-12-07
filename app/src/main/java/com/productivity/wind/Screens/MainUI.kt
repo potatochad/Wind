@@ -66,15 +66,6 @@ fun Main() {
         }
     }
 }
-fun isSure(onYes: Do) {
-    AlertDialog.Builder(App.ctx)
-        .setTitle("Are you sure?")
-        .setMessage("This will delete it.")
-        .setPositiveButton("Yes") { _, _ -> onYes() }
-        .setNegativeButton("No", null)
-        .show()
-}
-
 
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
@@ -127,6 +118,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 				   Bar.copyTsk.remove(tsk)
 				}
 			}
+			
 		}
     }
     move(8)
