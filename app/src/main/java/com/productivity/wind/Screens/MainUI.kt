@@ -117,7 +117,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     }
     move(8)
     Text(
-        text = rememberCorrectStr(tsk.txt, tsk.input),
+        text = correctStr(tsk.txt, tsk.input),
         modifier = Mod.h(0, 100).w(0, 300).Vscroll(txtScroll)
     )
     move(h = 20)
