@@ -161,7 +161,7 @@ fun CopyTskCorrectInput(tsk: CopyTsk): Str {
     return tsk.input.take(correctChars)
 }
 @Composable
-fun fullCorrectStr48484(target: String, input: String): AnnotatedString {
+fun fullCorrectStr(target: String, input: String): AnnotatedString {
     val correct by produceState(initialValue = 0, target, input) {
         // Runs in background thread
         val minLen = minOf(target.length, input.length)
@@ -177,26 +177,7 @@ fun fullCorrectStr48484(target: String, input: String): AnnotatedString {
     }
 }
 
-@Composable
-fun fullCorrectStr(target: String, input: String): AnnotatedString {
-    val correct by produceState(initialValue = 0, target, input) {
-        withContext(Dispatchers.Default) { // compute off main thread
-            val minLen = minOf(target.length, input.length)
-            var i = 0
-            while (i < minLen && target[i] == input[i]) i++
-            value = i
-        }
-    }
 
-    // Only rebuild AnnotatedString when correct changes
-    return remember(target, correct) {
-        buildAnnotatedString {
-            append(target.substring(0, correct)) // correct part
-            append(target.substring(correct))    // remaining part
-            // add color spans if needed here
-        }
-    }
-}
 
 
 
