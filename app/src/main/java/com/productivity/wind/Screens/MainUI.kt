@@ -71,12 +71,6 @@ fun Main() {
 fun CopyTskUI(tsk: CopyTsk) {
 	if (tsk.DailyDone == tsk.DailyMax) return
 
-	var THING = Popup.add {
-		isSure(it){
-			Bar.copyTsk.remove(tsk)
-		}
-	}
-
     val txtScroll = r_Scroll()
 	val inputScroll = r_Scroll()
 
@@ -116,9 +110,15 @@ fun CopyTskUI(tsk: CopyTsk) {
 					goTo("CopyPaste/${tsk.id}")
                 }
             }
+
+			var delete = r_m(no)
+
+			isSure(delete){
+				Bar.copyTsk.remove(tsk)
+			}
 			
 			Icon.Delete{ 
-				THING.it = yes
+				delete.it = yes
 			}
 			
 		}
