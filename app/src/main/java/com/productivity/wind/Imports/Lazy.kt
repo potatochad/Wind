@@ -497,8 +497,6 @@ fun LazyIcon(
 	onClick: ui = {},
 ) {
 	var clicked by m(no)
-
-	if (clicked) onClick()
 	
 	UI.ComposeCanBeTiny() {
         IconButton(
@@ -537,6 +535,10 @@ fun LazyIcon(
             }
         }
     }
+	if (clicked) {
+		onClick()
+		clicked = no
+	}
 }
 
 
