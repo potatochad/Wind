@@ -110,14 +110,12 @@ fun CopyTskUI(tsk: CopyTsk) {
 					goTo("CopyPaste/${tsk.id}")
                 }
             }
-
-			var Test = r_m(yes)
-
-			
 			
 			Icon.Delete{ 
-				isSure(Test) {
-				   Bar.copyTsk.remove(tsk)
+				Popup.add {
+					isSure(m(yes)){
+						Bar.copyTsk.remove(tsk)
+					}
 				}
 			}
 			
