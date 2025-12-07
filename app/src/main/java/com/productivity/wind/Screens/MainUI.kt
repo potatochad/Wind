@@ -67,6 +67,21 @@ fun Main() {
     }
 }
 
+
+@Composable
+fun rememberCorrectStr(target: String, input: String): AnnotatedString {
+    return remember(target, input) {
+        val min = minOf(target.length, input.length)
+        var i = 0
+        while (i < min && target[i] == input[i]) i++
+
+        buildAnnotatedString {
+            correctStr(target, i)
+        }
+    }
+}
+
+
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
 	if (tsk.DailyDone == tsk.DailyMax) return
@@ -119,7 +134,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     }
     move(8)
     Text(
-        text = fullCorrectStr(tsk.txt, tsk.input),
+        text = rememberCorrectStr(tsk.txt, tsk.input),
         modifier = Mod.h(0, 100).w(0, 300).Vscroll(txtScroll)
     )
     move(h = 20)
