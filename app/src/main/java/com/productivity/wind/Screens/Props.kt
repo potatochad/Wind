@@ -475,7 +475,7 @@ object Icon {
     }
 
     @Composable
-    fun Delete(Do: ui = {}) {
+    fun Delete(Do: Do = {}) {
         LazyIcon(Icons.Default.Delete){
             Do()
         }
