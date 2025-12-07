@@ -113,19 +113,7 @@ import android.webkit.*
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
 
-val gson = Gson()
-val yes = true
-val no = false
-var <T> m_<T>.it: T
-    get() = this.value
-    set(value) { this.value = value }
-var ScrollState.it: Int
-    get() = this.value
-    set(value) {
-        CoroutineScope(Dispatchers.Main).launch {
-            this@it.scrollTo(value)
-        }
-    }
+
 
 fun Web?.url(url: Str) {
     this?.loadUrl(url)
