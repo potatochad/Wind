@@ -67,30 +67,6 @@ fun Main() {
     }
 }
 
-
-@Composable
-fun rememberCorrectStr(target: Str, input: Str): AnnotatedString {
-    return remember(target, input) {
-        val min = minOf(target.size, input.size)
-        var i = 0
-        while (i < min && target[i] == input[i]) i++
-		
-        buildAnnotatedString {
-            append(
-                AnnotatedString(
-                    target.substring(0, i),
-                    spanStyle = SpanStyle(
-                        color = Color.Green,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            )
-            append(target.substring(i))
-        }
-    }
-}
-
-
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
 	if (tsk.DailyDone == tsk.DailyMax) return
