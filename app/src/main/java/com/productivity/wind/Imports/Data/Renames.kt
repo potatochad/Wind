@@ -222,6 +222,14 @@ fun ScrollState.goTo(it: Int) {
     }
 }
 
+fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Modifier =
+    this.then(
+        Modifier.offset(
+            x = toDp(w), 
+            y = toDp(h)
+        )
+    )
+
 
 
 fun File.file(name: Str): File {
