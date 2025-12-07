@@ -458,36 +458,6 @@ fun Mod.scroll(
     return m
 }
 
-@Composable
-fun Mod.Vscroll(r_v: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_v)}
-@Composable
-fun Mod.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
-
-fun ScrollState.toBottom() {
-    wait(10) {
-        scrollTo(maxValue)
-    }
-}
-
-fun LazyListState.toBottom() {
-    wait(10) {
-        if (layoutInfo.totalItemsCount > 0) {
-            scrollToItem(layoutInfo.totalItemsCount - 1)
-        }
-    }
-}
-
-fun ScrollState.scroll(it: Any) {
-    wait(10) {
-        animateScrollBy(toF(it))
-    }
-}
-
-fun ScrollState.goTo(it: Int) {
-    wait(10) {
-        scrollTo(it)
-    }
-}
 
 
 suspend fun scrollToProgress(progress: Float, scroll: ScrollState) {
