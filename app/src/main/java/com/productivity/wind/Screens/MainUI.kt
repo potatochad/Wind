@@ -34,7 +34,6 @@ import androidx.compose.foundation.*
 import androidx.compose.ui.focus.*
 
 
-
 @Composable
 fun Main() {
 	RunOnce{
@@ -74,7 +73,6 @@ fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = r_Scroll()
 	val inputScroll = r_Scroll()
 
-	
     RunOnce {
 		if (tsk.goodStr > 20) {
 			val done = toF(tsk.goodStr) / toF(tsk.txt.size)
@@ -134,7 +132,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 
                 val newlyEarned = correctInput.size - tsk.goodStr
                 if (newlyEarned > 0) {
-                    var oldFunTime = Bar.funTime
                     Bar.funTime += newlyEarned * tsk.Letter_Worth
 					
 					Bar.copyTsk.edit(tsk){ tsk.goodStr = correctInput.size }
