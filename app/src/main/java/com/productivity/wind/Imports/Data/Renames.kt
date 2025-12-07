@@ -112,6 +112,7 @@ import androidx.navigation.*
 import android.webkit.*
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
+import com.productivity.wind.Imports.Data.*
 
 
 var CardColor = Color(0xFF1A1A1A)
@@ -119,6 +120,21 @@ var InputColor = Color(0xFF272727)
 val DarkBlue = Color(0xFF00008B) 
 val Gold = Color(0xFFFFD700)
 val LightBlue = Color(0xFFADD8E6)
+
+
+val gson = Gson()
+val yes = true
+val no = false
+var <T> m_<T>.it: T
+    get() = this.value
+    set(value) { this.value = value }
+var ScrollState.it: Int
+    get() = this.value
+    set(value) {
+        CoroutineScope(Dispatchers.Main).launch {
+            this@it.scrollTo(value)
+        }
+    }
 
 fun Mod.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
 fun Mod.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
