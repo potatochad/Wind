@@ -161,18 +161,23 @@ fun CopyTskCorrectInput(tsk: CopyTsk): Str {
     return tsk.input.take(correctChars)
 }
 @Composable
-fun fullCorrectStr(target: String, input: String): AnnotatedString {
-    val correct by produceState(initialValue = 0, target, input) {
-        // Runs in background thread
-        val minLen = minOf(target.length, input.length)
+fun correctStr(target: Str, input: Str): AnnotatedString {
+    return remember(target, input) {
+        val min = minOf(target.size, input.size)
         var i = 0
-        while (i < minLen && target[i] == input[i]) i++
-        value = i
-    }
-
-    return remember(target, correct) {
+        while (i < min && target[i] == input[i]) i++
+		
         buildAnnotatedString {
-            correctStr(target, correct) // your coloring logic
+            append(
+                AnnotatedString(
+                    target.substring(0, i),
+                    spanStyle = SpanStyle(
+                        color = Color.Green,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            )
+            append(target.substring(i))
         }
     }
 }
