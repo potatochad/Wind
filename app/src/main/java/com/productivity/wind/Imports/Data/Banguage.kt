@@ -113,14 +113,6 @@ import android.webkit.*
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
 
-
-
-var CardColor = Color(0xFF1A1A1A)
-var InputColor = Color(0xFF272727)
-val DarkBlue = Color(0xFF00008B) 
-val Gold = Color(0xFFFFD700)
-val LightBlue = Color(0xFFADD8E6)
-
 val gson = Gson()
 val yes = true
 val no = false
