@@ -221,3 +221,12 @@ fun ScrollState.goTo(it: Int) {
         scrollTo(it)
     }
 }
+
+
+
+fun File.file(name: Str): File {
+    return File(this, name)
+}
+
+
+val Str.size get() = length
