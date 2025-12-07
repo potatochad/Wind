@@ -114,6 +114,12 @@ import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
 
 
+var CardColor = Color(0xFF1A1A1A)
+var InputColor = Color(0xFF272727)
+val DarkBlue = Color(0xFF00008B) 
+val Gold = Color(0xFFFFD700)
+val LightBlue = Color(0xFFADD8E6)
+
 fun Mod.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
 fun Mod.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
 fun Mod.s(value: Any?) = this.size(toDp(value))
