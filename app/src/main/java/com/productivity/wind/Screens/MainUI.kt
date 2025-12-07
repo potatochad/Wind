@@ -113,7 +113,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 			
 			Icon.Delete{ 
 				Popup.add {
-					isSure(m(yes)){
+					it.it = yes
+					isSure(it){
 						Bar.copyTsk.remove(tsk)
 					}
 				}
