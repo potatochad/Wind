@@ -134,9 +134,6 @@ fun CopyTskUI(tsk: CopyTsk) {
         value = tsk.input,
         onValueChange = {
 			if (it.size - tsk.input.size <= 2) {
-				
-                if (it.size > tsk.input.size) Bar.LettersTyped += 1
-				
 				Bar.copyTsk.edit(tsk){ tsk.input = it }
 
                 val correctInput = CopyTskCorrectInput(tsk)
@@ -148,6 +145,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 					
 					Bar.copyTsk.edit(tsk){ tsk.goodStr = correctInput.size }
                 }
+
+				if (it.size > tsk.input.size) Bar.LettersTyped ++
 
                 if (correctInput == tsk.txt) Done()
             }
