@@ -351,24 +351,6 @@ fun <T : Any> getClass(obj: T): List<KProperty1<T, *>> =
 
 
 
-typealias ClassVar<T, R> = KMutableProperty1<T, R>
-typealias ClassVal<T, R> = KProperty1<T, R>
-    
-fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
-fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {
-    return this.getDelegate(instance)
-}
-@Composable
-fun <T> r(value: () -> T) = remember { value() }
-@Composable
-fun <T> r_m(initial: T) = r { m(initial) }
-inline fun <reified T> ml(): MutableList<T> = mutableListOf()
-inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
-@Composable
-fun <T> track(value: () -> T): State<T> = r { derivedStateOf(value) }
-fun <T> mList() = mutableStateListOf<T>()
-
-
 fun getJavaClass(bar: ClassVar<Settings, Any?>): Class<*>? {
     var name = bar.name
     val kProperty = bar as? KProperty1<*, *> ?: return null  // ensure it’s a property
