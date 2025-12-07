@@ -69,15 +69,13 @@ fun Main() {
 
 
 @Composable
-fun rememberCorrectStr(target: String, input: String): AnnotatedString {
+fun rememberCorrectStr(target: Str, input: Str): AnnotatedString {
     return remember(target, input) {
-        val min = minOf(target.length, input.length)
+        val min = minOf(target.size, input.size)
         var i = 0
         while (i < min && target[i] == input[i]) i++
-
-        // ZERO lag version
+		
         buildAnnotatedString {
-            // 1) matched part — colored
             append(
                 AnnotatedString(
                     target.substring(0, i),
@@ -87,8 +85,6 @@ fun rememberCorrectStr(target: String, input: String): AnnotatedString {
                     )
                 )
             )
-
-            // 2) rest — plain text
             append(target.substring(i))
         }
     }
