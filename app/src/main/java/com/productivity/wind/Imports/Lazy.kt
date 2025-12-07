@@ -494,7 +494,7 @@ fun LazyIcon(
     ButtonSize: Int = 40,           // actual button box (default M3 ~48)
     modifier: Mod = Mod,
     color: Color = Color.White,
-	onClick: Do = {},
+	onClick: ui = {},
 ) {
 	UI.ComposeCanBeTiny() {
         IconButton(
