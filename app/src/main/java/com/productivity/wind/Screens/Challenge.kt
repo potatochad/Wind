@@ -120,6 +120,25 @@ fun CopyPaste(id: Str ="") {
     }
 }
 
+fun CopyTskInput(tsk: CopyTsk, newInput: Str, Done: Do) {
+    // Update input
+    Bar.copyTsk.edit(tsk) { tsk.input = newInput }
+
+    // Calculate new correct letters
+    val goodStr = CopyTskCorrectInput(tsk).size
+    val delta = goodStr - tsk.goodStr
+    if (delta > 0) {
+        Bar.funTime += delta * tsk.Letter_Worth
+        Bar.copyTsk.edit(tsk) { tsk.goodStr = goodStr }
+    }
+
+    // Count letters typed
+    if (newInput.length > tsk.input.length) Bar.LettersTyped++
+
+    // Check if done
+    if (CopyTskCorrectInput(tsk) == tsk.txt) Done()
+}
+
 
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
@@ -181,21 +200,7 @@ fun CopyTskUI(tsk: CopyTsk) {
         value = tsk.input,
         onValueChange = {
 			if (it.size - tsk.input.size <= 2) {
-				Bar.copyTsk.edit(tsk){ tsk.input = it }
-
-                val goodStr = CopyTskCorrectInput(tsk).size
-
-                val newStr = goodStr - tsk.goodStr
-                if (newStr > 0) {
-                    Bar.funTime += newStr * tsk.Letter_Worth
-					
-                  Bar.copyTsk.edit(tsk){ tsk.goodStr = goodStr }
-                }
-                 if (it.size > tsk.input.size) Bar.LettersTyped ++
-
-                if (goodStr == tsk.txt) Done()
-
-
+				CopyTskInput(tsk, it) { Done() }
 				
 
 				val input5 = tsk.input.last(5)
