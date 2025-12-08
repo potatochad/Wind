@@ -120,19 +120,9 @@ fun CopyPaste(id: Str ="") {
         }
 
 		LazyMore("Extra"){
-			var AutoCorrect = m(yes)
-			LazzyRow(Mod.click {
-				if (AutoCorrect.it) {
-					AutoCorrect.it = no
-				}
-				if (!AutoCorrect.it) {
-					AutoCorrect.it = yes
-				}
-			}) {
-				UI.Checkbox(AutoCorrect)
-				
-                Text("DailyMax: ")
-			}
+			var checked = m(yes)
+			UI.CheckRow("Auto correct", checked)
+			
 		}
 
 		
