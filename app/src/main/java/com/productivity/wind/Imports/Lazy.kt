@@ -541,9 +541,10 @@ fun LazyIcon(
 @Stable
 @Composable
 fun LazyMore(
-    modifier: Mod = Mod,
     title: Str = "Show more",
-    initiallyExpanded: Bool = no,
+	initiallyExpanded: Bool = no,
+	modifier: Mod = Mod,
+    
     ui: ui
 ) {
     var expanded by r_m(initiallyExpanded)
