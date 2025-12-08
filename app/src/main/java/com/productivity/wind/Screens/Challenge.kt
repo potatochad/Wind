@@ -190,9 +190,6 @@ fun CopyTskUI(tsk: CopyTsk) {
         onValueChange = {
 			if (it.size - tsk.input.size <= 2) {
 				CopyTskInput(tsk, it) { Done() }
-				
-				CopyTskSimpleAutoCorrect(tsk)
-				
             }
         },
         modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { inputScroll.toBottom() },
