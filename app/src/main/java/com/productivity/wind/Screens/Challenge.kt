@@ -129,9 +129,8 @@ fun CopyPaste(id: Str ="") {
 					AutoCorrect.it = yes
 				}
 			}) {
-				UI.Checkbox(AutoCorrect.it){
-					AutoCorrect.it = it
-				}
+				UI.Checkbox(AutoCorrect)
+				
                 Text("DailyMax: ")
 			}
 		}
