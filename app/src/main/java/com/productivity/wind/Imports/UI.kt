@@ -348,27 +348,21 @@ object UI {
 		isChecked: m_<Bool>,
 		EndUI: ui = {}
 	) {
-		Row{
-		Row(
-			Mod.click {
-				isChecked.it = !isChecked.it
-			}.space(4),
-			verticalAlignment = Alignment.CenterVertically
-		) {
-			Checkbox(
-				checked = isChecked.it,
-				onCheckedChange = { isChecked.it = it },
-				colors = CheckboxDefaults.colors(
-					checkedColor = Gold,
-					uncheckedColor = Color.Gray,
-					checkmarkColor = Color.White
+		LazzyRow{
+			LazzyRow(Mod.click { isChecked.it = !isChecked.it }, 0) {
+				Checkbox(
+					checked = isChecked.it,
+					onCheckedChange = { isChecked.it = it },
+					colors = CheckboxDefaults.colors(
+						checkedColor = Gold,
+						uncheckedColor = Color.Gray,
+						checkmarkColor = Color.White
+					)
 				)
-			)
-
-			Text(text = txt, modifier = Modifier.padding(start = 4.dp))
-		}
-
-		EndUI()
+				move(5)
+				Text(txt)
+			}
+			EndUI()
 		}
 	}
 
