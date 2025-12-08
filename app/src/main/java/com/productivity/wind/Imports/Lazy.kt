@@ -276,14 +276,13 @@ fun NormalVisual(
 	LazyWindow(show) {
         LazyMove(popupX, popupY) {
             Card(
-                modifier = Mod
-                    .wrapContentSize()
+                modifier = Mod.wrapContentSize()
                     .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
                 shape = RoundedCornerShape(8.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
-                Box(Modifier.space(8)) {
+                Box(Mod.space(8)) {
                     ui()
                 }
             }
