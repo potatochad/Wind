@@ -120,7 +120,11 @@ fun CopyPaste(id: Str ="") {
         }
 
 		LazyMore("Extra"){
-			Text("hello")
+			var AutoCorrect = m(yes)
+			LazzyRow {
+				Checkbox(AutoCorrect)
+                Text("DailyMax: ")
+			}
 		}
 
 		
