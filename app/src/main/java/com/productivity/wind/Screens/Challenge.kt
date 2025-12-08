@@ -133,7 +133,7 @@ fun CopyTskInput(tsk: CopyTsk, newInput: Str, Done: Do) {
     if (newInput.length > tsk.input.length) Bar.LettersTyped++
     if (CopyTskCorrectInput(tsk) == tsk.txt) Done()
 }
-fun CopyTskSimpleAutoCorrect(tsk: Task) {
+fun CopyTskSimpleAutoCorrect(tsk: CopyTsk) {
     val input5 = tsk.input.takeLast(5)
     val good5 = tsk.txt.fromTo(tsk.goodStr, tsk.goodStr + 5)
 
