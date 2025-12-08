@@ -121,10 +121,8 @@ fun CopyPaste(id: Str ="") {
 }
 
 fun CopyTskInput(tsk: CopyTsk, newInput: Str, Done: Do) {
-    // Update input
     Bar.copyTsk.edit(tsk) { tsk.input = newInput }
 
-    // Calculate new correct letters
     val goodStr = CopyTskCorrectInput(tsk).size
     val delta = goodStr - tsk.goodStr
     if (delta > 0) {
@@ -132,12 +130,28 @@ fun CopyTskInput(tsk: CopyTsk, newInput: Str, Done: Do) {
         Bar.copyTsk.edit(tsk) { tsk.goodStr = goodStr }
     }
 
-    // Count letters typed
     if (newInput.length > tsk.input.length) Bar.LettersTyped++
-
-    // Check if done
     if (CopyTskCorrectInput(tsk) == tsk.txt) Done()
 }
+fun CopyTskSimpleAutoCorrect(tsk: Task) {
+    val input5 = tsk.input.takeLast(5)
+    val good5 = tsk.txt.fromTo(tsk.goodStr, tsk.goodStr + 5)
+
+    if (good5.length < 5 || input5.length < 5) return
+
+    val g = good5.take(4)
+    val i = input5.take(4)
+
+    val diff = g.zip(i).count { it.first != it.second }
+
+    if (diff == 1) {
+        val diffIndex = g.indices.first { g[it] != i[it] }
+        val fixed = tsk.input.toCharArray()
+        fixed[tsk.input.length - 5 + diffIndex] = good5[diffIndex]
+        tsk.input = String(fixed)
+    }
+}
+
 
 
 @Composable
@@ -202,33 +216,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 			if (it.size - tsk.input.size <= 2) {
 				CopyTskInput(tsk, it) { Done() }
 				
-
-				val input5 = tsk.input.last(5)
-				var good5 = tsk.txt.fromTo(tsk.goodStr, tsk.goodStr+5)
-
-				if (good5.size < 5 || input5.size < 5){}
-				else{
-
-				val g = good5.take(4)
-				val i = input5.take(4)
-
-				// Count differences
-				val diff = g.zip(i).count { it.first != it.second }
-
-				// Only one difference → fix it
-				if (diff == 1) {
-					val diffIndex = g.indices.first { g[it] != i[it] }
-					val fixed = tsk.input.toCharArray()
-					fixed[tsk.input.length - 5 + diffIndex] = good5[diffIndex]
-
-					tsk.input = String(fixed)
-
-					Vlog("Fixed 1 letter")
-				}
-
-				log("input5: [$input5]")
-
-				}
+				CopyTskSimpleAutoCorrect(tsk)
+				
             }
         },
         modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { inputScroll.toBottom() },
