@@ -343,19 +343,34 @@ object UI {
 
 
 	@Composable
-	fun Checkbox(
-        isChecked: m_<Bool>,
+	fun CheckRow(
+		txt: Str,
+		isChecked: m_<Bool>,
+		EndUI: ui = {}
 	) {
-		Checkbox(
-			checked = isChecked.it,
-			onCheckedChange = { isChecked.it = it },
-			colors = CheckboxDefaults.colors(
-				checkedColor = LightBlue,
-				uncheckedColor = Color.Gray,
-				checkmarkColor = Color.White
+		Row(
+			modifier = Modifier
+				.clickable {
+					isChecked.it = !isChecked.it
+				}
+				.padding(8.dp),
+			verticalAlignment = Alignment.CenterVertically
+		) {
+			Checkbox(
+				checked = isChecked.it,
+				onCheckedChange = { isChecked.it = it },
+				colors = CheckboxDefaults.colors(
+					checkedColor = LightBlue,
+					uncheckedColor = Color.Gray,
+					checkmarkColor = Gold
+				)
 			)
-		)
+			Text(text = txt, modifier = Modifier.padding(start = 8.dp))
+
+			EndUI()
+		}
 	}
+
 
 	@Composable
 	fun CheckCircle(
