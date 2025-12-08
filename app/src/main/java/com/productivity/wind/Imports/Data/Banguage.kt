@@ -263,7 +263,7 @@ fun NavBackStackEntry.url(key: Str): Str {
 
 @Composable
 fun click(x: UI, Do: Do) {
-	Box(Modifier.click(Do)){
+	Box(Modifier.click{Do()}){
 		x()
 	}
 }
