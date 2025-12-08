@@ -348,6 +348,7 @@ object UI {
 		isChecked: m_<Bool>,
 		EndUI: ui = {}
 	) {
+		Row{
 		Row(
 			Mod.click {
 				isChecked.it = !isChecked.it
@@ -368,6 +369,7 @@ object UI {
 		}
 
 		EndUI()
+		}
 	}
 
 
