@@ -272,7 +272,7 @@ fun click(x: UI, Do: Do) {
 fun Modifier.click(
 	animate: Bool = yes,
     Do: Do,
-): Modifier {
+): Mod {
     return if (animate) {
         this.pointerInput(Unit) {
             detectTapGestures { Do() }
@@ -280,16 +280,12 @@ fun Modifier.click(
     } else {
         this.clickable(
             indication = null,
-            interactionSource = r { MutableInteractionSource() }
+            interactionSource = MutableInteractionSource()
         ) {
             Do()
         }
     }
 }
-
-
-
-
 
 fun Mod.clickOrHold(
     hold: Bool = yes,
