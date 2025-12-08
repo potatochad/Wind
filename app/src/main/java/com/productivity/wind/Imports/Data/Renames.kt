@@ -239,6 +239,7 @@ fun File.file(name: Str): File {
 
 val Str.size get() = length
 fun Str.last(n: Int): Str = this.takeLast(n)
+fun Str.fromTo(start: Int, end: Int): Str = this.substring(start, end)
 
 
 
