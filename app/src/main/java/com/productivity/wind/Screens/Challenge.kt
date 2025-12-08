@@ -196,6 +196,24 @@ fun CopyTskUI(tsk: CopyTsk) {
                 if (correctInput == tsk.txt) Done()
 
 
+				
+
+				val input5 = tsk.input.take(5)
+
+				log("input5: [$input5]")
+
+				tsk.txt.windowed(5, 1, false)
+					.mapIndexed { i, w -> i to w.zip(input5).count { it.first != it.second } }
+					.minByOrNull { it.second }
+				?.takeIf { it.second <= 1 }
+				?.let { (idx, _) ->
+					val fixed = tsk.txt.substring(idx, idx + 5) + tsk.input.drop(5)
+					Bar.copyTsk.edit(tsk) { tsk.input = fixed }
+					Vlog("AutoFix: $fixed")
+				}
+
+
+
                 
             }
         },
