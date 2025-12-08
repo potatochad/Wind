@@ -120,40 +120,6 @@ fun CopyPaste(id: Str ="") {
     }
 }
 
-fun CopyTskInput(tsk: CopyTsk, newInput: Str, Done: Do) {
-    Bar.copyTsk.edit(tsk) { tsk.input = newInput }
-
-    val goodStr = CopyTskCorrectInput(tsk).size
-    val delta = goodStr - tsk.goodStr
-    if (delta > 0) {
-        Bar.funTime += delta * tsk.Letter_Worth
-        Bar.copyTsk.edit(tsk) { tsk.goodStr = goodStr }
-    }
-
-    if (newInput.length > tsk.input.length) Bar.LettersTyped++
-    if (CopyTskCorrectInput(tsk) == tsk.txt) Done()
-}
-fun CopyTskSimpleAutoCorrect(tsk: CopyTsk) {
-    val input5 = tsk.input.takeLast(5)
-    val good5 = tsk.txt.fromTo(tsk.goodStr, tsk.goodStr + 5)
-
-    if (good5.length < 5 || input5.length < 5) return
-
-    val g = good5.take(4)
-    val i = input5.take(4)
-
-    val diff = g.zip(i).count { it.first != it.second }
-
-    if (diff == 1) {
-        val diffIndex = g.indices.first { g[it] != i[it] }
-        val fixed = tsk.input.toCharArray()
-        fixed[tsk.input.length - 5 + diffIndex] = good5[diffIndex]
-        tsk.input = String(fixed)
-    }
-}
-
-
-
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
 	if (tsk.DailyDone == tsk.DailyMax) return
