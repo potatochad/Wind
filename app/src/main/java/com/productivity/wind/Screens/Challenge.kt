@@ -204,7 +204,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 				
 
 				val input5 = tsk.input.last(5)
-				var good5 = tsk.txt.take(tsk.goodStr) - tsk.txt.take(tsk.goodStr+5)
+				var good5 = tsk.txt.fromTo(tsk.goodStr, tsk.goodStr+5)
 
 				if (good5.size < 5 || input5.size < 5) return
 
