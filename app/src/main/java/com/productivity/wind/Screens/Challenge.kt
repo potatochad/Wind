@@ -217,13 +217,16 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 				// Only one difference → fix it
 				if (diff == 1) {
-					Vlog("1 difference")
+					val diffIndex = g.indices.first { g[it] != i[it] }
+					val fixed = tsk.input.toCharArray()
+					fixed[tsk.input.length - 5 + diffIndex] = good5[diffIndex]
+
+					tsk.input = String(fixed)
+
+					Vlog("Fixed 1 letter")
 				}
-				
 
 				log("input5: [$input5]")
-
-
 
 				}
             }
