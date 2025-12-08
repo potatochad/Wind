@@ -348,11 +348,11 @@ object UI {
 	) {
 		Checkbox(
 			checked = isChecked.it,
-			onCheckedChange = { set(isChecked, it) },
+			onCheckedChange = { isChecked.it = it },
 			colors = CheckboxDefaults.colors(
-				checkedColor = LightBlue, // gold
-				uncheckedColor = Color.Gray,      // optional
-				checkmarkColor = Color.White      // optional
+				checkedColor = LightBlue,
+				uncheckedColor = Color.Gray,
+				checkmarkColor = Color.White
 			)
 		)
 	}
