@@ -193,7 +193,7 @@ fun CopyTskUI(tsk: CopyTsk) {
                 }
                  if (it.size > tsk.input.size) Bar.LettersTyped ++
 
-                if (correctInput == tsk.txt) Done()
+                if (goodStr == tsk.txt) Done()
 
 
 				
