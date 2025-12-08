@@ -352,20 +352,21 @@ object UI {
 			modifier = Modifier
 				.clickable {
 					isChecked.it = !isChecked.it
-				}
-				.padding(8.dp),
+				},
 			verticalAlignment = Alignment.CenterVertically
 		) {
 			Checkbox(
 				checked = isChecked.it,
 				onCheckedChange = { isChecked.it = it },
+				modifier = Modifier.size(20.dp), 
 				colors = CheckboxDefaults.colors(
-					checkedColor = LightBlue,
+					checkedColor = Gold,
 					uncheckedColor = Color.Gray,
-					checkmarkColor = Gold
+					checkmarkColor = Color.White
 				)
 			)
-			Text(text = txt, modifier = Modifier.padding(start = 8.dp))
+
+			Text(text = txt, modifier = Modifier.padding(start = 4.dp))
 
 			EndUI()
 		}
