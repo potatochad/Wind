@@ -455,14 +455,12 @@ fun Mod.scroll(
 
 
 fun scrollToProgress(progress: Float, scroll: ScrollState) {
-	wait(30) {
-		val maxValue = toF(scroll.maxValue)
-		val currentValue = toF(scroll.it)
-		val target = maxValue * progress
-		val move = target - currentValue
+	val maxValue = toF(scroll.maxValue)
+	val currentValue = toF(scroll.it)
+	val target = maxValue * progress
+	val move = target - currentValue
 
-		scroll.scrollTo(move.toInt())
-	}
+	scroll.goTo(move.toInt())
 }
 
 
