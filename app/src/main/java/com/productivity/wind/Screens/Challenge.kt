@@ -121,7 +121,14 @@ fun CopyPaste(id: Str ="") {
 
 		LazyMore("Extra"){
 			var AutoCorrect = m(yes)
-			LazzyRow {
+			LazzyRow(Mod.click {
+				if (AutoCorrect.it) {
+					AutoCorrect.it = no
+				}
+				if (!AutoCorrect.it) {
+					AutoCorrect.it = yes
+				}
+			}) {
 				Checkbox(AutoCorrect)
                 Text("DailyMax: ")
 			}
