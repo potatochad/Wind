@@ -198,9 +198,22 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 				
 
-				val input5 = tsk.input.take(5)
+				val input5 = tsk.input.last(5)
+				var good5 = tsk.txt.take(tsk.goodStr) - tsk.txt.take(tsk.goodStr+5)
 
-				tsk.txt.take(tsk.goodStr) - tsk.txt.take(tsk.goodStr)
+				if (good5.size < 5 || input5.size < 5) return
+
+				val g = good5.take(4)
+				val i = input5.take(4)
+
+				// Count differences
+				val diff = g.zip(i).count { it.first != it.second }
+
+				// Only one difference → fix it
+				if (diff == 1) {
+					Vlog("1 difference")
+				}
+				
 
 				log("input5: [$input5]")
 
