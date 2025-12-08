@@ -183,13 +183,13 @@ fun CopyTskUI(tsk: CopyTsk) {
 			if (it.size - tsk.input.size <= 2) {
 				Bar.copyTsk.edit(tsk){ tsk.input = it }
 
-                val correctInput = CopyTskCorrectInput(tsk)
+                val goodStr = CopyTskCorrectInput(tsk).size
 
-                val newlyEarned = correctInput.size - tsk.goodStr
-                if (newlyEarned > 0) {
-                    Bar.funTime += newlyEarned * tsk.Letter_Worth
+                val newStr = goodStr - tsk.goodStr
+                if (newStr > 0) {
+                    Bar.funTime += newStr * tsk.Letter_Worth
 					
-                  Bar.copyTsk.edit(tsk){ tsk.goodStr = correctInput.size }
+                  Bar.copyTsk.edit(tsk){ tsk.goodStr = goodStr }
                 }
                  if (it.size > tsk.input.size) Bar.LettersTyped ++
 
@@ -200,17 +200,9 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 				val input5 = tsk.input.take(5)
 
-				log("input5: [$input5]")
+				tsk.txt.take(tsk.goodStr) - tsk.txt.take(tsk.goodStr)
 
-				tsk.txt.windowed(5, 1, false)
-					.mapIndexed { i, w -> i to w.zip(input5).count { it.first != it.second } }
-					.minByOrNull { it.second }
-				?.takeIf { it.second <= 1 }
-				?.let { (idx, _) ->
-					val fixed = tsk.txt.substring(idx, idx + 5) + tsk.input.drop(5)
-					Bar.copyTsk.edit(tsk) { tsk.input = fixed }
-					Vlog("AutoFix: $fixed")
-				}
+				log("input5: [$input5]")
 
 
 
