@@ -112,11 +112,18 @@ fun CopyPaste(id: Str ="") {
                 Item.TskInput(DailyMax)
             }
             LazzyRow {
-              Column {
-                Text("Text: ")
-                Item.BigTskInput(txt)
-            }}
+				Column {
+					Text("Text: ")
+					Item.BigTskInput(txt)
+				}
+			}
         }
+
+		LazyMore("Extra"){
+			Text("hello")
+		}
+
+		
     }
 }
 
