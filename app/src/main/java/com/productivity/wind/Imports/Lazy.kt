@@ -863,13 +863,13 @@ fun LazyMenu(
     // Trigger showing/hiding Popup
     RunOnce(App.menu) {
         if (App.menu) {
-            set(visible, yes)
+            visible.it = yes
             delay(16)
-            set(internalVisible, yes)
+            internalVisible.it = yes
         } else {
-            set(internalVisible, no)
-            delay(200) // Wait for animation out
-            set(visible, no)
+            internalVisible.it = no
+            delay(200)
+            visible.it = no
         }
     }
 
