@@ -198,9 +198,6 @@ fun AppContent() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI(ctx: ctx) {
-    
-    App.ctx = ctx
-	App.pkg = ctx.packageName
 	
     SettingsSaved.init()
     SettingsSaved.Bsave()
@@ -254,6 +251,7 @@ object App {
     !which used for popup etc...
     * */
     lateinit var ctx: Context
+	lateinit var activity: ComponentActivity
     lateinit var navHost: NavHostController
 	lateinit var pkg: Str
 	lateinit var run: CoroutineScope
