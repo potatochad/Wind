@@ -630,6 +630,8 @@ fun openLocationSettings() {
     App.ctx.startActivity(intent)
 }
 fun locationPermission(onGranted: Do = {}) {
+	/*
+	
     if (ContextCompat.checkSelfPermission(
             this,
             android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -643,6 +645,8 @@ fun locationPermission(onGranted: Do = {}) {
             100
         )
     }
+
+	*/
 }
 
 
