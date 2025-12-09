@@ -625,7 +625,7 @@ fun isLocationEnabled(): Bool {
 }
 
 fun openLocationSettings() {
-    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
+    val intent = Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
     App.ctx.startActivity(intent)
