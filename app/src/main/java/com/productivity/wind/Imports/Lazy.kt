@@ -923,11 +923,9 @@ fun LazyMenu(
 
 @Composable
 fun LaziestScreen(
-	show: m_<Bool> = yes,
+	visible: m_<Bool> = yes,
     ui: ui ={},
 ) {
-    val visible = r_m(show.it)
-
     if (!visible.it) return
 
 	// RunOnce()
