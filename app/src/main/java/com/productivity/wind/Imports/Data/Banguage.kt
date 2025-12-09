@@ -844,8 +844,13 @@ class MainActivity : ComponentActivity() {
             systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
         }
+		var ctx = applicationContext
+		App.ctx = ctx
+		App.activity = this
+		App.pkg = ctx.packageName
 
-        AppStart_beforeUI(applicationContext)
+		AppStart_beforeUI()
+		
         setContent {
 			AppContent()
         }
