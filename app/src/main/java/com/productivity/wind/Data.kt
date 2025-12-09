@@ -238,17 +238,8 @@ fun AppStart() {
 
 
 
-//endregion
 
-//region GLOBAL
-//* CONTEXT from anywhere!!!
 object App {
-    /* APP CONTEXT
-    Context is weirt:
-    there is application, ok for most things
-    ?and local
-    !which used for popup etc...
-    * */
     lateinit var ctx: Context
 	lateinit var activity: ComponentActivity
     lateinit var navHost: NavHostController
@@ -261,6 +252,4 @@ object App {
 	var lazyH by m(0.dp)
 	
 	var menu by m(no)
-	
-
 }
