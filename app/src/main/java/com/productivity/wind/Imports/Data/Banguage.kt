@@ -844,7 +844,7 @@ class MainActivity : ComponentActivity() {
                 WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
         }
 		var ctx = applicationContext
-		App.ctx = ctx
+		App.ctx = this
 		App.activity = this
 		App.pkg = ctx.packageName
 
