@@ -896,9 +896,7 @@ fun LazyMenu(
             App.menu = no
         }
     ) {
-        Box(
-            modifier = Mod
-                .maxS()
+        Box( Mod.maxS()
                 .background(Color.Black.copy(alpha = backgroundAlpha))
                 .clickable(
                     indication = null,
@@ -909,8 +907,7 @@ fun LazyMenu(
                 }
         )
 
-        Box( Mod
-                .offset { IntOffset(offsetX.roundToPx(), 0) }
+        Box( Mod.offset { IntOffset(offsetX.roundToPx(), 0) }
                 .w(App.w / 2 + 30.dp)
                 .maxH()
                 .background(Color.DarkGray)
@@ -919,6 +916,49 @@ fun LazyMenu(
         }
     }
 }
+
+
+
+
+
+@Composable
+fun LaziestScreen(
+	show: Bool = yes,
+    ui: ui ={},
+) {
+    val visible = r_m(show)
+
+    if (!visible.it) return
+
+	// RunOnce()
+
+    Popup(
+        alignment = Alignment.TopStart,
+    ) {
+        Box( Mod.maxS()
+                .background(Color.Black.copy(alpha = backgroundAlpha))
+                .click {
+                    visible.it = no
+                }
+        )
+
+        Box(Mod.maxS().background(Color.DarkGray)) {
+            ui()
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+          
 
 
 
