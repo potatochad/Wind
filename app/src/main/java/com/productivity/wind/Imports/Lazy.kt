@@ -935,13 +935,6 @@ fun LaziestScreen(
     Popup(
         alignment = Alignment.TopStart,
     ) {
-        Box( Mod.maxS()
-                .background(Color.Black.copy(alpha = backgroundAlpha))
-                .click {
-                    visible.it = no
-                }
-        )
-
         Box(Mod.maxS().background(Color.DarkGray)) {
             ui()
         }
