@@ -59,7 +59,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
       var show = m(no)
       UI.CheckRow("Activate at ", show) {
          UI.Ctext("location") {
-            locationPermission(this){
+            locationPermission {
                Vlog("Got permissionsss")
             }
          }
