@@ -630,24 +630,23 @@ fun openLocationSettings() {
     App.ctx.startActivity(intent)
 }
 fun locationPermission(onGranted: Do = {}) {
-	/*
-	
+    val activity = App.activity
+
     if (ContextCompat.checkSelfPermission(
-            this,
+            activity,
             android.Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     ) {
         onGranted()
     } else {
         ActivityCompat.requestPermissions(
-            this,
+            activity,
             arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
             100
         )
     }
-
-	*/
 }
+
 
 
 
