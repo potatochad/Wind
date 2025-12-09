@@ -62,17 +62,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
             locationPermission {
 
 
-             val cameraPositionState = rememberCameraPositionState {
-              position = CameraPosition.fromLatLngZoom(LatLng(37.7749, -122.4194), 10f)
-             }
-
-    GoogleMap(
-        modifier = Modifier.fillMaxSize(),
-        cameraPositionState = cameraPositionState,
-    ) {
-        
-    }
-
+            
 
     
                Vlog("Got permissionsss")
