@@ -616,23 +616,26 @@ fun isUsageP_Enabled(): Bool {
     ) == AppOpsManager.MODE_ALLOWED
 }
 
-fun locationPermission(Do: Do = {}) {
-    val ctx = App.ctx
-
-    if (ContextCompat.checkSelfPermission(ctx, android.Manifest.permission.ACCESS_FINE_LOCATION)
-        == PackageManager.PERMISSION_GRANTED
-    ) {
-        Do() 
-    } else {
-        Vlog("Can't request from App context. Ask from Activity instead!")
-        
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        intent.data = Uri.fromParts("package", ctx.packageName, null)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        ctx.startActivity(intent)
-    }
+fun isLocationEnabled(): Bool {
+    val lm = App.ctx.getSystemService(LocationManager::class.java)
+    return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+           lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 }
 
+fun openLocationSettings() {
+    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    App.ctx.startActivity(intent)
+}
+
+fun locationPermission(Do: Do ={}){
+	if(!isLocationEnabled()){
+		openLocationSettings()
+	} else {
+		Do()
+	}
+}
 
 
 
