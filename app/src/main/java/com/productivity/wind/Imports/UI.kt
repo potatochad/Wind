@@ -346,7 +346,7 @@ object UI {
 	fun CheckRow(
 		txt: Str,
 		isChecked: m_<Bool>,
-		EndUI: ui_<Bool> = {}
+		EndUI: ui_<Bool> = { _ -> }
 	) {
 		LazzyRow{
 			LazzyRow(Mod.click { isChecked.it = !isChecked.it }, 0) {
