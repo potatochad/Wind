@@ -118,17 +118,10 @@ fun CopyPaste(id: Str ="") {
 				}
 			}
         }
-
-		LazyMore("Extra"){
-			var checked = m(yes)
-			UI.CheckRow("Auto correct", checked)
-
-			var show=r_m(no)
-			Icon.Edit{
-				show.it = yes
-			}
-			LaziestScreen(show)
+		LazyRuleCard("Extra") {
+            UI.CheckRow("delete input on new day")
 		}
+		
 
 		
     }
