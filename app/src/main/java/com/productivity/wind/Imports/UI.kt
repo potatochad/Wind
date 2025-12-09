@@ -362,7 +362,9 @@ object UI {
 				move(5)
 				Text(txt)
 			}
-			EndUI(isChecked.it)
+			LazzyRow {
+				EndUI(isChecked.it)
+			}
 		}
 	}
 
