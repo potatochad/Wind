@@ -78,6 +78,7 @@ fun CopyPaste(id: Str ="") {
     var DailyMax = r_m(5)
     var Done_Worth = r_m(10)
     var Letter_Worth = r_m(1)
+	var resetInput = m(yes)
     
     if (!id.isEmpty()) {
       val tsk = Bar.copyTsk.find { it.id == id }
@@ -119,7 +120,7 @@ fun CopyPaste(id: Str ="") {
 			}
         }
 		LazyRuleCard("Extra") {
-            UI.CheckRow("delete input on new day")
+            UI.CheckRow("reset input every day", resetInput)
 		}
 		
 
@@ -163,7 +164,6 @@ fun CopyTskUI(tsk: CopyTsk) {
     LazzyRow {
         Text("Done: ${tsk.DailyDone}/${tsk.DailyMax}")
         UI.End { 
-            
 			Icon.Edit{
                 Item.enoughPoints {
 					goTo("CopyPaste/${tsk.id}")
@@ -173,7 +173,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 			Icon.Delete{ 
 				Bar.copyTsk.remove(tsk)
 			}
-			
 		}
     }
     move(8)
