@@ -27,43 +27,6 @@ android {
         }
     }
 
-    signingConfigs {
-        create("release") {
-            val props = Properties()
-            val secretPropsFile = rootProject.file("secret.properties")
-            // The template file is used for CI/CD with debug keystore signing
-            val templatePropsFile = rootProject.file("secret.template.properties")
-            when {
-                secretPropsFile.exists() -> {
-                    println("🔑 Using secret.properties for signing config ✅ ")
-                    props.load(secretPropsFile.inputStream())
-                }
-                templatePropsFile.exists() -> {
-                    println("⚠️ Using secret.template.properties for signing config ⚠️ ")
-                    props.load(templatePropsFile.inputStream())
-                }
-                else -> {
-                    println("❌ No signing properties file found")
-                }
-            }
-            val keystoreFile = props["KEYSTORE_FILE"] as String?
-            if (!keystoreFile.isNullOrBlank()) {
-                val ciKeystore =
-                    System.getenv("CI")?.let {
-                        val ciKeystorePath = rootProject.file("keystore/keep-alive.keystore")
-                        if (ciKeystorePath.exists()) ciKeystorePath else null
-                    }
-                storeFile = ciKeystore ?: file(keystoreFile)
-            }
-            val resolvedStorePassword = System.getenv("KEYSTORE_PASSWORD") ?: props["KEYSTORE_PASSWORD"] as String?
-            val resolvedKeyAlias = System.getenv("KEY_ALIAS") ?: props["KEY_ALIAS"] as String?
-            val resolvedKeyPassword = System.getenv("KEY_PASSWORD") ?: props["KEY_PASSWORD"] as String?
-            storePassword = resolvedStorePassword
-            keyAlias = resolvedKeyAlias
-            keyPassword = resolvedKeyPassword
-        }
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -72,7 +35,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -109,8 +71,8 @@ ktlint {
 
 
 dependencies {
-    implementation("com.google.maps.android:maps-compose:6.9.0")
-    implementation("com.google.android.gms:play-services-maps:18.2.0") 
+    // implementation("com.google.maps.android:maps-compose:6.9.0")
+    // implementation("com.google.android.gms:play-services-maps:18.2.0") 
 
 
     implementation("com.google.android.gms:play-services-location:21.3.0")
