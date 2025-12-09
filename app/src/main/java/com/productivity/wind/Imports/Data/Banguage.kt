@@ -616,19 +616,23 @@ fun isUsageP_Enabled(): Bool {
     ) == AppOpsManager.MODE_ALLOWED
 }
 
-fun locationPermission(activity: Activity, Do: Do = {}) {
-    if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION)
-        != PackageManager.PERMISSION_GRANTED
+fun locationPermission(Do: Do = {}) {
+    val ctx = App.ctx
+
+    if (ContextCompat.checkSelfPermission(ctx, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        == PackageManager.PERMISSION_GRANTED
     ) {
-        ActivityCompat.requestPermissions(
-            activity,
-            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-            100
-        )
+        Do() 
     } else {
-        Do()
+        Vlog("Can't request from App context. Ask from Activity instead!")
+        
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        intent.data = Uri.fromParts("package", ctx.packageName, null)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        ctx.startActivity(intent)
     }
 }
+
 
 
 
