@@ -53,6 +53,18 @@ fun SettingsScreen() {
     }
 }
 
+@Composable()
+fun PrivacyScreen() = LazyScreen("Privacy") {
+   LazyRuleCard("If") {
+      var locationActivation = m(no)
+      UI.CheckRow("Activate at ", locationActivation) {
+         CText("location")
+      }
+   }
+        
+ 
+}
+
 @Composable
 fun ExtensionsScreen() {
 
