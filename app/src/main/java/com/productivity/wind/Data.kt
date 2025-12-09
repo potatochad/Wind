@@ -197,8 +197,7 @@ fun AppContent() {
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun AppStart_beforeUI(ctx: ctx) {
-	
+fun AppStart_beforeUI() {
     SettingsSaved.init()
     SettingsSaved.Bsave()
 
