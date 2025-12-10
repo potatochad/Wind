@@ -28,10 +28,10 @@ import androidx.compose.ui.focus.*
 import android.graphics.drawable.*
 import android.content.pm.*
 import androidx.compose.foundation.lazy.*
-
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.graphics.*
+import androidx.compose.foundation.text.*
 
 
 fun NavGraphBuilder.ScreenNav() {
