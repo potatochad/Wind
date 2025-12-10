@@ -109,13 +109,16 @@ object Item {
 	@Composable
 	fun BigTskInput(txt: m_<Str>, Do: DoStr={ _ -> }){
 		val inputScroll = r_Scroll()
+		var text by r { m(TextFieldValue(txt.it)) }
         
         OutlinedTextField(
-            value = txt.it,
+            value = text,
             onValueChange = {
-                txt.it = it
-				Do(it)
-				val cursorPos = newValue.selection.start
+				text = it
+                txt.it = it.text
+				Do(it.text)
+				
+				val cursorPos = it.selection.start
 				Vlog("Cursor at index: [ $cursorPos ]")
             },
             modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { 
