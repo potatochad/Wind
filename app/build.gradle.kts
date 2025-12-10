@@ -113,8 +113,6 @@ dependencies {
 }
 
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        suppressWarnings = true
-    }
-}
+
+
+
