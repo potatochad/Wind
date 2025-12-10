@@ -216,9 +216,9 @@ fun ScrollState.scroll(it: Any) {
     }
 }
 
-fun ScrollState.goTo(it: Int) {
+fun ScrollState.goTo(it: Any) {
     wait(10) {
-        scrollTo(it)
+        scrollTo(toInt(it))
     }
 }
 
