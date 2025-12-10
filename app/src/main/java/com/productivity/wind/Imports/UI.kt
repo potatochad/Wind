@@ -361,8 +361,6 @@ object UI {
 				)
 				move(5)
 				Text(txt)
-			}
-			LazzyRow {
 				EndUI(isChecked.it)
 			}
 		}
@@ -375,7 +373,7 @@ object UI {
         selectedIndex: m_<Int>, // shared state of which is selected
 	) {
 		Box(
-			modifier = Mod.s(15) // make box exactly the size you want
+			Mod.s(15) // make box exactly the size you want
 		) {
 			RadioButton(
 				selected = selectedIndex.value == index,
@@ -483,7 +481,8 @@ object UI {
 					color = Gold,  
 					fontWeight = FontWeight.Bold,      
 					textDecoration = TextDecoration.None
-				)
+				),
+				maxLines = 1, 
 			)
 		}
 	}
