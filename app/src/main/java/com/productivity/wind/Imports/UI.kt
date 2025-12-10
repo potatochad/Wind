@@ -344,7 +344,7 @@ object UI {
 
 	@Composable
 	fun CheckRow(
-		txt: Str,
+		txt: Str="",
 		isChecked: m_<Bool>,
 		EndUI: ui_<Bool> = { _ -> }
 	) {
