@@ -110,6 +110,7 @@ object Item {
 	fun BigTskInput(txt: m_<Str>, Do: DoStr={ _ -> }){
 		val inputScroll = r_Scroll()
 		var text by r { m(TextFieldValue(txt.it)) }
+		var cursorPos by r_m(0)
         
         OutlinedTextField(
             value = text,
@@ -118,11 +119,16 @@ object Item {
                 txt.it = it.text
 				Do(it.text)
 				
-				val cursorPos = it.selection.start
+				cursorPos = it.selection.start
 				Vlog("Cursor at index: [ $cursorPos ]")
             },
             modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { 
 				// inputScroll.toBottom() 
+				if (txt.it.isNotEmpty()) {
+					val Where = toF(cursorPos) / toF(txt.it.size)
+					val whereScroll = inputScroll.maxValue * Where
+					inputScroll.goTo(whereScroll)
+				}
 			},
 		    placeholder = { Text("Start typing...") },
 			maxLines = maxInt,
