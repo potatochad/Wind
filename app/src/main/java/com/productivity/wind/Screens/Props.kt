@@ -29,6 +29,11 @@ import android.graphics.drawable.*
 import android.content.pm.*
 import androidx.compose.foundation.lazy.*
 
+import androidx.compose.ui.text.*
+import androidx.compose.ui.text.input.*
+import androidx.compose.ui.graphics.*
+
+
 fun NavGraphBuilder.ScreenNav() {
     //Main—StartDestination    
     url("Main") { Main() }
