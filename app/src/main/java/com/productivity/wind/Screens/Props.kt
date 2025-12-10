@@ -128,7 +128,7 @@ object Item {
 					cursorPosOld=cursorPos
 					Vlog("FOCUSED, SCROLLING")
 					val ratio = cursorPos.toFloat() / text.text.length.coerceAtLeast(1)
-					val targetScroll = (inputScroll.maxValue * ratio).coerceIn(0f, inputScroll.maxValue)
+					val targetScroll = (toF(inputScroll.maxValue) * ratio).coerceIn(0f, toF(inputScroll.maxValue))
 					inputScroll.goTo(targetScroll) 
 				}
 			},
