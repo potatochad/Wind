@@ -186,32 +186,19 @@ fun CopyTskUI(tsk: CopyTsk) {
 	var InputTsk by r_m(tsk.input)
 	
     OutlinedTextField(
-        value = tsk.input,
+        value = InputTsk,
         onValueChange = {
-			if (it.size - tsk.input.size < 2) {
+			if (it.size - InputTsk.size < 2) {
+				InputTsk = it
 				
 				Bar.copyTsk.edit(tsk) { tsk.input = it }
-
-				/*
-				log("2) tsk.input: [${tsk.input}], newInput: [$it]")
- 
-
-				val goodStr = CopyTskCorrectInput(tsk).size
-				val delta = goodStr - tsk.goodStr
-				if (delta > 0) {
-					Bar.funTime += delta * tsk.Letter_Worth
-					Bar.copyTsk.edit(tsk) { tsk.goodStr = goodStr }
+				
+				if (it.size > tsk.input.size) {
+					Bar.LettersTyped++
+					Bar.funTime += tsk.Letter_Worth
 				}
-
-				log("3) tsk.input: [${tsk.input}], newInput: [$it]")
- 
-
-				if (it.size > tsk.input.size) Bar.LettersTyped++
-				if (CopyTskCorrectInput(tsk) == tsk.txt) Done()
-				*/
+				if (tsk.input == tsk.txt) Done()
             }
-
-			
         },
         modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { inputScroll.toBottom() },
 		placeholder = { Text("Start typing...") }
