@@ -102,33 +102,34 @@ object Item {
     }
 
     @Composable
-	fun BigTskInput(txt: m_<Str>, Do: DoStr={ _ -> }){
-		val inputScroll = r_Scroll()
-		val boxScroll = r_Scroll()
-		
-		
-        Box(
+	fun BigTskInput(txt: m_<String>, Do: (String) -> Unit = {}) {
+    val inputScroll = rememberScrollState()
+
+    Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(150.dp)
-            .verticalScroll(boxScroll) // parent handles vertical scroll
-            .padding(4.dp)
+            .maxW()
+            .h(150)
+            .verticalScroll(inputScroll)
+            .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
+            .padding(8.dp)
     ) {
-        OutlinedTextField(
+        BasicTextField(
             value = txt.it,
             onValueChange = {
                 txt.it = it
-				Do(it)
+                Do(it)
             },
-            modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { 
-			    boxScroll.toBottom() 
-			},
-		    placeholder = { Text("Start typing...") },
-			maxLines = maxInt,
+            modifier = Modifier.fillMaxWidth(),
+            textStyle = TextStyle(color = Color.Black),
+            cursorBrush = SolidColor(Color.Black),
+            decorationBox = { innerTextField ->
+                if (txt.it.isEmpty()) Text("Start typing...", color = Color.Gray)
+                innerTextField()
+            }
         )
-		
-		}
-	}
+    }
+}
+
 
     @Composable
     fun TskInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60,) {  
