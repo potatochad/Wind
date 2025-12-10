@@ -144,6 +144,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 	}
 	
 	fun Done() {
+		Vlog("done")
 		Bar.copyTsk.edit(tsk){
 			tsk.DailyDone +=1
 			tsk.input = ""
