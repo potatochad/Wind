@@ -121,9 +121,7 @@ object Item {
 				Do(it.text)
 				
 				cursorPos = it.selection.start
-            },
-            modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { 
-				// inputScroll.toBottom() 
+
 				if (text.text.isNotEmpty() && cursorPosOld != cursorPos) {
 					cursorPosOld=cursorPos
 					Vlog("FOCUSED, SCROLLING")
@@ -131,6 +129,9 @@ object Item {
 					val targetScroll = (toF(inputScroll.maxValue) * ratio).coerceIn(0f, toF(inputScroll.maxValue))
 					inputScroll.goTo(targetScroll) 
 				}
+            },
+            modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { 
+				// inputScroll.toBottom() 
 			},
 		    placeholder = { Text("Start typing...") },
 			maxLines = maxInt,
