@@ -474,12 +474,11 @@ object UI {
         text: Str,
         onClick: Do,
 	) {
-		LazzyRow {
+		LazzyRow(Mod.click {
+			onClick()
+		}){
 			Text(
 				text = text,
-				modifier = Mod.click {
-					onClick()
-				},
 				style = TextStyle(
 					color = Gold,  
 					fontWeight = FontWeight.Bold,      
