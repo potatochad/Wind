@@ -474,21 +474,19 @@ object UI {
         text: Str,
         onClick: Do,
 	) {
-		val interactionSource = r { MutableInteractionSource() }
-
-		Text(
-			text = text,
-			modifier = Modifier.clickable(
-				interactionSource = interactionSource,
-				indication = LocalIndication.current, 
-				onClick = onClick
-			),
-			style = TextStyle(
-				color = Color(0xFFFFD700),           // gold
-				fontWeight = FontWeight.Bold,        // bold
-				textDecoration = TextDecoration.None // no underline
+		LazzyRow {
+			Text(
+				text = text,
+				modifier = Mod.click {
+					onClick()
+				},
+				style = TextStyle(
+					color = Gold,  
+					fontWeight = FontWeight.Bold,      
+					textDecoration = TextDecoration.None
+				)
 			)
-		)
+		}
 	}
 
 
