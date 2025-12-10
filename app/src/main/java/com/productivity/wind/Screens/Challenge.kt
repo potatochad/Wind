@@ -186,8 +186,24 @@ fun CopyTskUI(tsk: CopyTsk) {
         value = tsk.input,
         onValueChange = {
 			if (it.size - tsk.input.size <= 2) {
-				Vlog("Gets called")
-				CopyTskInput(tsk, it) { Done() }
+				log("1) tsk.input: [${tsk.input}], newInput: [$it]")
+				Bar.copyTsk.edit(tsk) { tsk.input = it }
+
+				log("2) tsk.input: [${tsk.input}], newInput: [$it]")
+ 
+
+				val goodStr = CopyTskCorrectInput(tsk).size
+				val delta = goodStr - tsk.goodStr
+				if (delta > 0) {
+					Bar.funTime += delta * tsk.Letter_Worth
+					Bar.copyTsk.edit(tsk) { tsk.goodStr = goodStr }
+				}
+
+				log("3) tsk.input: [${tsk.input}], newInput: [$it]")
+ 
+
+				if (it.size > tsk.input.size) Bar.LettersTyped++
+				if (CopyTskCorrectInput(tsk) == tsk.txt) Done()
             }
         },
         modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { inputScroll.toBottom() },
