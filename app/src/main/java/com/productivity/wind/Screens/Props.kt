@@ -106,7 +106,7 @@ object Item {
         }
     }
 
-	Composable
+	@Composable
 	fun BigTskInput(txt: m_<Str>, Do: DoStr={ _ -> }){
 		val inputScroll = r_Scroll()
         
