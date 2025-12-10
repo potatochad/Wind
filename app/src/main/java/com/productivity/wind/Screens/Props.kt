@@ -114,6 +114,7 @@ object Item {
             modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { 
 				// inputScroll.toBottom() 
 			},
+			onTextLayout = { Vlog("layout position: [$it]") },
             placeholder = { Text("Start typing...") },
 			maxLines = maxInt,
         )
