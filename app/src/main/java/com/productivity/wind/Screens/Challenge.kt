@@ -206,7 +206,20 @@ fun CopyTskUI(tsk: CopyTsk) {
     )
 }
 
-
+@Composable
+fun BigTskInput6(txt: m_<Str>, Do: DoStr={txt.it = it}){
+		val inputScroll = r_Scroll()
+        
+        OutlinedTextField(
+            value = txt.it,
+            onValueChange = {
+                txt.it = it
+				Do(it)
+            },
+            modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { inputScroll.toBottom() },
+            placeholder = { Text("Start typing...") }
+        )
+	}
 
 
 
