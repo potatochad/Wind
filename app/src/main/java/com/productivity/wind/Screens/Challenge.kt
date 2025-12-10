@@ -216,8 +216,11 @@ fun BigTskInput6(txt: m_<Str>, Do: DoStr={txt.it = it}){
                 txt.it = it
 				Do(it)
             },
-            modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { inputScroll.toBottom() },
-            placeholder = { Text("Start typing...") }
+            modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { 
+				inputScroll.toBottom() 
+			},
+            placeholder = { Text("Start typing...") },
+			maxLines = Int.MAX_VALUE,
         )
 	}
 
