@@ -224,6 +224,15 @@ fun toF(it: Any?): Float = when (it) {
     null -> 0f
     else -> 0f
 }
+fun toInt(it: Any?): Int = when (it) {
+    is Int -> it
+    is Float -> it.toInt()
+    is Double -> it.toInt()
+    is Dp -> it.value.toInt()  // Dp → Int
+    null -> 0
+    else -> 0
+}
+
 fun toL(it: Any?): Long = when (it) {
     is Long -> it
     is Int -> it.toLong()
