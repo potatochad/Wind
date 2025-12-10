@@ -186,7 +186,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 	var InputTsk by r_m(tsk.input)
 	
     OutlinedTextField(
-        value = InputTsk,
+        value = tsk.input,
         onValueChange = {
 			if (it.size - tsk.input.size < 2) {
 				
