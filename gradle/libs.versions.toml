@@ -1,6 +1,6 @@
 [versions]
 activityCompose = "1.9.2"
-agp = "8.6.0"
+agp = "8.9.1"
 composeBom = "2024.09.00"
 composePlugin = "1.7.0-beta01"
 coreKtx = "1.13.1"
