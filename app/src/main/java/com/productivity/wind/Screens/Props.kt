@@ -106,34 +106,26 @@ object Item {
         }
     }
 
-    @Composable
-	fun BigTskInput(txt: m_<String>, Do: (String) -> Unit = {}) {
-    val inputScroll = rememberScrollState()
-
-    Box(
-        modifier = Modifier
-            .maxW()
-            .h(150)
-            .verticalScroll(inputScroll)
-            .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
-            .padding(8.dp)
-    ) {
-        BasicTextField(
+	Composable
+	fun BigTskInput(txt: m_<Str>, Do: DoStr={ _ -> }){
+		val inputScroll = r_Scroll()
+        
+        OutlinedTextField(
             value = txt.it,
             onValueChange = {
                 txt.it = it
-                Do(it)
+				Do(it)
+				val cursorPos = newValue.selection.start
+				Vlog("Cursor at index: [ $cursorPos ]")
             },
-            modifier = Modifier.fillMaxWidth(),
-            textStyle = TextStyle(color = Color.Black),
-            cursorBrush = SolidColor(Color.Black),
-            decorationBox = { innerTextField ->
-                if (txt.it.isEmpty()) Text("Start typing...", color = Color.Gray)
-                innerTextField()
-            }
+            modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { 
+				// inputScroll.toBottom() 
+			},
+		    placeholder = { Text("Start typing...") },
+			maxLines = maxInt,
         )
-    }
-}
+	}
+
 
 
     @Composable
