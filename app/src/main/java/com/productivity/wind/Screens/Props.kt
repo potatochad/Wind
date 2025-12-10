@@ -102,23 +102,22 @@ object Item {
     }
 
     @Composable
-    fun BigTskInput(txt: Any, maxLetters: Int = 5000, modifier: Mod =Mod.maxW().h(150)){
-        val TxtState = txt as? MutableState<Any> ?: run {
-            Vlog("expected mutable")
-            return
-        }
+	fun BigTskInput(txt: m_<Str>, Do: DoStr={ _ -> }){
+		val inputScroll = r_Scroll()
         
         OutlinedTextField(
-            value = "${TxtState.it}",
+            value = txt.it,
             onValueChange = {
-                val input = it.take(maxLetters)
-                
-                TxtState.it = input
+                txt.it = it
+				Do(it)
             },
-            modifier = modifier,
-            placeholder = { Text("Start typing...") }
+            modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { 
+				// inputScroll.toBottom() 
+			},
+            placeholder = { Text("Start typing...") },
+			maxLines = maxInt,
         )
-    }
+	}
 
     @Composable
     fun TskInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60,) {  
