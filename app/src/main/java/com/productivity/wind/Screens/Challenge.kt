@@ -190,13 +190,14 @@ fun CopyTskUI(tsk: CopyTsk) {
         onValueChange = {
 			if (it.size - InputTsk.size < 2) {
 				InputTsk = it
-				
-				Bar.copyTsk.edit(tsk) { tsk.input = it }
-				
+
 				if (it.size > tsk.input.size) {
 					Bar.LettersTyped++
 					Bar.funTime += tsk.Letter_Worth
 				}
+				
+				Bar.copyTsk.edit(tsk) { tsk.input = it }
+				
 				if (tsk.input == tsk.txt) Done()
             }
         },
