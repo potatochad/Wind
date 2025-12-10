@@ -182,12 +182,13 @@ fun CopyTskUI(tsk: CopyTsk) {
     )
     move(h = 20)
 
+	var InputTsk by r_m(InputTsk)
     OutlinedTextField(
-        value = tsk.input,
+        value = InputTsk,
         onValueChange = {
 			if (it.size - tsk.input.size <= 2) {
-				log("1) tsk.input: [${tsk.input}], newInput: [$it]")
-				Bar.copyTsk.edit(tsk) { tsk.input = it }
+				InputTsk = it
+				Bar.copyTsk.edit(tsk) { tsk.input = InputTsk }
 
 				log("2) tsk.input: [${tsk.input}], newInput: [$it]")
  
