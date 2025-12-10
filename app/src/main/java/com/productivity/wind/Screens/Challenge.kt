@@ -186,6 +186,7 @@ fun CopyTskUI(tsk: CopyTsk) {
         value = tsk.input,
         onValueChange = {
 			if (it.size - tsk.input.size <= 2) {
+				Vlog("Gets called")
 				CopyTskInput(tsk, it) { Done() }
             }
         },
