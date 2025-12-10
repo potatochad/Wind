@@ -183,7 +183,11 @@ fun correctStr(target: Str, input: Str): AnnotatedString {
 }
 
 fun CopyTskInput(tsk: CopyTsk, newInput: Str, Done: Do) {
+	log("1) tsk.input: [${tsk.input}], newInput: [$newInput]")
     Bar.copyTsk.edit(tsk) { tsk.input = newInput }
+
+	log("2) tsk.input: [${tsk.input}], newInput: [$newInput]")
+ 
 
     val goodStr = CopyTskCorrectInput(tsk).size
     val delta = goodStr - tsk.goodStr
@@ -192,7 +196,10 @@ fun CopyTskInput(tsk: CopyTsk, newInput: Str, Done: Do) {
         Bar.copyTsk.edit(tsk) { tsk.goodStr = goodStr }
     }
 
-    if (newInput.length > tsk.input.length) Bar.LettersTyped++
+	log("3) tsk.input: [${tsk.input}], newInput: [$newInput]")
+ 
+
+    if (newInput.size > tsk.input.size) Bar.LettersTyped++
     if (CopyTskCorrectInput(tsk) == tsk.txt) Done()
 }
 fun CopyTskSimpleAutoCorrect(tsk: CopyTsk) {
