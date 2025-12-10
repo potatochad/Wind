@@ -111,7 +111,8 @@ object Item {
 		val inputScroll = r_Scroll()
 		var text by r { m(TextFieldValue(txt.it)) }
 		var cursorPos by r_m(0)
-        
+		var cursorPosOld by r_m(0)
+		
         OutlinedTextField(
             value = text,
             onValueChange = {
@@ -120,14 +121,15 @@ object Item {
 				Do(it.text)
 				
 				cursorPos = it.selection.start
-				Vlog("Cursor at index: [ $cursorPos ]")
             },
             modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { 
 				// inputScroll.toBottom() 
-				if (txt.it.isNotEmpty()) {
-					val Where = toF(cursorPos) / toF(txt.it.size)
-					val whereScroll = inputScroll.maxValue * Where
-					inputScroll.goTo(whereScroll)
+				if (text.text.isNotEmpty() && cursorPosOld != cursorPos) {
+					cursorPosOld=cursorPos
+					Vlog("FOCUSED, SCROLLING")
+					val ratio = cursorPos.toFloat() / text.text.length.coerceAtLeast(1)
+					val targetScroll = (inputScroll.maxValue * ratio).coerceIn(0f, inputScroll.maxValue)
+					inputScroll.goTo(targetScroll) 
 				}
 			},
 		    placeholder = { Text("Start typing...") },
