@@ -177,9 +177,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
     }
     move(8)
-	var text by r_m(correctStr(tsk.txt, tsk.input))
     Text(
-        text = text,
+        text = correctStr(tsk.txt, tsk.input),
         modifier = Mod.h(0, 100).w(0, 300).Vscroll(txtScroll)
     )
     move(h = 20)
@@ -188,8 +187,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     Item.BigTskInput(txt) {
 		if (it.size - txt.it.size < 2) {
 			txt.it=it
-			text = correctStr(tsk.txt, tsk.input)
-
+			
 			if (it.size > tsk.input.size) {
 				Bar.LettersTyped++
 				Bar.funTime += tsk.Letter_Worth
