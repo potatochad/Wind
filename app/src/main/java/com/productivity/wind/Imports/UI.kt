@@ -172,17 +172,13 @@ fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
         while (i < min && target[i] == input[i]) i++
 
         uiStr = makeUIStr {
-            add(
-                UIStr(
-                    target.fromTo(0, i),
-                    spanStyle = StrStyle(
-                        color = Color.Green,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            )
-            add(UIStr(target.fromTo(i, target.size)))
-        }
+            if (i > 0) {
+				pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
+				add(UIStr(target.fromTo(0, i)))
+				pop()
+			}
+			add(UIStr(target.fromTo(i, target.length)))
+		}
     }
 
     return uiStr
