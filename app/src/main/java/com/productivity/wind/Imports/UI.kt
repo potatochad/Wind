@@ -147,9 +147,10 @@ fun UIStrBuilder.correctStr(text: Str, correctUntil: Int) {
     for (i in text.indices) {
         if (i < correctUntil) {
             pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
-            append(text[i]); pop()
+            add(text[i])
+			pop()
         } else {
-            append(text[i])
+            add(text[i])
         }
     }
 }
@@ -161,7 +162,7 @@ fun CopyTskCorrectInput(tsk: CopyTsk): Str {
     return tsk.input.take(correctChars)
 }
 @Composable
-fun correctStr(target: Str, input: Str): AnnotatedString {
+fun correctStr(target: Str, input: Str): UIStr {
     return remember(target, input) {
         val min = minOf(target.size, input.size)
         var i = 0
@@ -177,7 +178,7 @@ fun correctStr(target: Str, input: Str): AnnotatedString {
                     )
                 )
             )
-            append(target.substring(i))
+            add(target.substring(i))
         }
     }
 }
