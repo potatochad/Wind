@@ -196,10 +196,8 @@ fun Mod.Vscroll(r_v: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_
 @Composable
 fun Mod.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
 
-fun ScrollState.toBottom() {
-    wait(10) {
-        scrollTo(maxValue)
-    }
+fun ScrollState.toBottom() = wait(10) {
+    scrollTo(maxValue)
 }
 
 fun LazyListState.toBottom() {
