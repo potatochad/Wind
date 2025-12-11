@@ -135,9 +135,9 @@ object Item {
             value = Field,
             onValueChange = {           
 				Do(it.text)
-				Field.text = txt.it
-				
+				Field = Field.copy(text = txt.it)
 
+				
 				fixedInputScroll(
 					Field,
 					it.selection.start,
