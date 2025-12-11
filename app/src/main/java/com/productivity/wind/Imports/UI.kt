@@ -164,7 +164,8 @@ fun CopyTskCorrectInput(tsk: CopyTsk): Str {
 fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
     var uiStr by r_m(UIStr(""))
 
-    LaunchedEffect(tsk.txt, tsk.input) {
+    RunOnce(tsk.txt, tsk.input) {
+		Vlog("is this running?")
         val target = tsk.txt
         val input = tsk.input
         val min = minOf(target.size, input.size)
