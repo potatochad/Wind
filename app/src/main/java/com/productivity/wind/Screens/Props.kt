@@ -126,29 +126,27 @@ object Item {
     }
 
 	@Composable
-	fun BigTskInput(txt: m_<Str>, Do: DoStr={ _ -> }){
-		val inputScroll = r_Scroll()
+	fun BigTskInput(txt: m_<Str>, Do: DoStr={ txt.it = it }){
+		val scroll = r_Scroll()
 		var Field = r { m(TextFieldValue(txt.it)) }
 		var PositionOld = r_m(0)
 		
         OutlinedTextField(
             value = Field,
-            onValueChange = {
-				Field = it
-                txt.it = it.text
+            onValueChange = {           
 				Do(it.text)
+				Field.text = txt.it
 				
 
 				fixedInputScroll(
-					textField,
+					Field,
 					it.selection.start,
 					PositionOld,
-					inputScroll
+					scroll
 				)
             },
-            modifier = Mod.maxW().h(150).Vscroll(inputScroll),
+            modifier = Mod.maxW().h(150).Vscroll(scroll),
 		    placeholder = { Text("Start typing...") },
-			maxLines = maxInt,
         )
 	}
 
