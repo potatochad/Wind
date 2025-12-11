@@ -171,6 +171,7 @@ typealias DoInt = (Int) -> Unit
 typealias m_<T> = MutableState<T>
 typealias Str = String
 typealias Bool = Boolean
+typealias UIStr = AnnotatedString
 
 
 
@@ -242,7 +243,7 @@ val Str.size get() = length
 fun Str.last(n: Int): Str = this.takeLast(n)
 fun Str.fromTo(start: Int, end: Int): Str = this.substring(start, end)
 
-fun makeUIStr(block: AnnotatedString.Builder.() -> Unit): AnnotatedString {
+fun makeUIStr(block: UIStr.Builder.() -> Unit): UIStr {
     return buildAnnotatedString(block)
 }
 
