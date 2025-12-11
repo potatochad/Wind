@@ -135,7 +135,10 @@ object Item {
             value = Field,
             onValueChange = {           
 				Do(it.text)
-				Field = Field.copy(text = txt.it)
+				Field = TextFieldValue(
+					text = txt.it,
+					selection = it.selection
+				)
 
 				
 				fixedInputScroll(
