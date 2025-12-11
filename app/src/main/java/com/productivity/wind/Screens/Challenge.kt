@@ -183,27 +183,21 @@ fun CopyTskUI(tsk: CopyTsk) {
     )
     move(h = 20)
 
-	var InputTsk by r_m(tsk.input)
-	
-    OutlinedTextField(
-        value = InputTsk,
-        onValueChange = {
-			if (it.size - InputTsk.size < 2) {
-				InputTsk = it
+	var txt = r_m(tsk.input)
+    Item.BigTskInput(txt) {
+		if (it.size - txt.it.size < 2) {
+			txt.it=it
 
-				if (it.size > tsk.input.size) {
-					Bar.LettersTyped++
-					Bar.funTime += tsk.Letter_Worth
-				}
+			if (it.size > tsk.input.size) {
+				Bar.LettersTyped++
+				Bar.funTime += tsk.Letter_Worth
+			}
 				
-				Bar.copyTsk.edit(tsk) { tsk.input = it }
+			Bar.copyTsk.edit(tsk) { tsk.input = it }
 				
-				if (tsk.input == tsk.txt) Done()
-            }
-        },
-        modifier = Mod.maxW().h(150).Vscroll(inputScroll).onFocusChanged { inputScroll.toBottom() },
-		placeholder = { Text("Start typing...") }
-    )
+			if (tsk.input == tsk.txt) Done()
+        }
+    }
 }
 
 
