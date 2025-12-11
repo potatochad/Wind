@@ -196,31 +196,19 @@ fun Mod.Vscroll(r_v: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_
 @Composable
 fun Mod.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
 
-fun ScrollState.toBottom() = wait(10) {
-    scrollTo(maxValue)
-}
+fun ScrollState.toBottom() = wait{ scrollTo(maxValue) }
 
-fun LazyListState.toBottom() {
-    wait(10) {
-        if (layoutInfo.totalItemsCount > 0) {
-            scrollToItem(layoutInfo.totalItemsCount - 1)
-        }
+fun LazyListState.toBottom() = wait{
+    if (layoutInfo.totalItemsCount > 0) {
+        scrollToItem(layoutInfo.totalItemsCount - 1)
     }
 }
 
-fun ScrollState.scroll(it: Any) {
-    wait(10) {
-        animateScrollBy(toF(it))
-    }
-}
+fun ScrollState.scroll(it: Any) = wait{ animateScrollBy(toF(it)) }
 
-fun ScrollState.goTo(it: Any) {
-    wait(10) {
-        scrollTo(toInt(it))
-    }
-}
+fun ScrollState.goTo(it: Any) = wait{ scrollTo(toInt(it)) }
 
-fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Modifier =
+fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Mod =
     this.then(
         Modifier.offset(
             x = toDp(w), 
@@ -237,7 +225,7 @@ fun File.file(name: Str): File {
 
 val Str.size get() = length
 fun Str.last(n: Int): Str = this.takeLast(n)
-fun Str.fromTo(start: Int, end: Int): Str = this.substring(start, end)
+fun Str.fromTo(start: Int, end: Int = maxInt): Str = this.substring(start, end)
 
 fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
     return buildAnnotatedString(Do)
