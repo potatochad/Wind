@@ -92,6 +92,25 @@ fun Menu() {
 }
 
 
+fun fixedInputScroll(
+    text: TextFieldValue,
+    cursorPos: Int,
+    cursorPosOld: m_<Int>,
+    scroll: ScrollState
+) {
+    if (text.text.isNotEmpty() && cursorPosOld.it != cursorPos) {
+        cursorPosOld.it = cursorPos
+
+        val ratio = cursorPos.toFloat() / text.text.length.coerceAtLeast(1)
+        val max = toF(scroll.maxValue)
+        val target = (max * ratio).coerceIn(0f, max)
+
+        scroll.goTo(target)
+    }
+}
+
+
+
 object Item {
 
     fun UpdateAppTsk(){
@@ -111,7 +130,7 @@ object Item {
 		val inputScroll = r_Scroll()
 		var textField = r { m(TextFieldValue(txt.it)) }
 		var cursorPos by r_m(0)
-		var cursorPosOld by r_m(0)
+		var cursorPosOld = r_m(0)
 		
         OutlinedTextField(
             value = textField.it,
@@ -122,13 +141,12 @@ object Item {
 				
 				cursorPos = it.selection.start
 
-				if (text.text.isNotEmpty() && cursorPosOld != cursorPos) {
-					cursorPosOld=cursorPos
-					Vlog("FOCUSED, SCROLLING")
-					val ratio = cursorPos.toFloat() / text.text.length.coerceAtLeast(1)
-					val targetScroll = (toF(inputScroll.maxValue) * ratio).coerceIn(0f, toF(inputScroll.maxValue))
-					inputScroll.goTo(targetScroll) 
-				}
+				fixedInputScroll(
+					textField,
+					cursorPos,
+					cursorPosOld,
+					inputScroll
+				)
             },
             modifier = Mod.maxW().h(150).Vscroll(inputScroll),
 		    placeholder = { Text("Start typing...") },
