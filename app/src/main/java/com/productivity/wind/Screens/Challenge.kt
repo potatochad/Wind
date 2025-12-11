@@ -158,7 +158,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		if (tsk.goodStr > 20) {
 			txtScroll.scroll(2)
 		}
-		inputScroll.toBottom()
 	}
 
     
@@ -178,7 +177,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     }
     move(8)
     Text(
-        text = correctStr(tsk.txt, tsk.input),
+        text = goodStrCopyTsk(tsk),
         modifier = Mod.h(0, 100).w(0, 300).Vscroll(txtScroll)
     )
     move(h = 20)
