@@ -168,17 +168,17 @@ fun correctStr(target: Str, input: Str): UIStr {
         var i = 0
         while (i < min && target[i] == input[i]) i++
 		
-        buildAnnotatedString {
-            append(
+        makeUIStr {
+            add(
                 AnnotatedString(
-                    target.substring(0, i),
+                    target.fromTo(0, i),
                     spanStyle = SpanStyle(
                         color = Color.Green,
                         fontWeight = FontWeight.Bold
                     )
                 )
             )
-            add(target.substring(i))
+            add(target.fromTo(i))
         }
     }
 }
