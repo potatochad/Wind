@@ -128,7 +128,7 @@ object Item {
 	@Composable
 	fun BigTskInput(txt: m_<Str>, Do: DoStr={ txt.it = it }){
 		val scroll = r_Scroll()
-		var Field = r { m(TextFieldValue(txt.it)) }
+		var Field by r_m(TextFieldValue(txt.it))
 		var PositionOld = r_m(0)
 		
         OutlinedTextField(
