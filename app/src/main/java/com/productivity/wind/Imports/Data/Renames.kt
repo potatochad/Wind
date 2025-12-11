@@ -241,6 +241,9 @@ val Str.size get() = length
 fun Str.last(n: Int): Str = this.takeLast(n)
 fun Str.fromTo(start: Int, end: Int): Str = this.substring(start, end)
 
+fun makeUIStr(block: AnnotatedString.Builder.() -> Unit): AnnotatedString {
+    return buildAnnotatedString(block)
+}
 
 
 
