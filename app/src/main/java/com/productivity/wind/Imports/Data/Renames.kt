@@ -173,10 +173,6 @@ typealias Str = String
 typealias Bool = Boolean
 typealias UIStr = AnnotatedString
 typealias UIStrBuilder = AnnotatedString.Builder
-
-
-
-
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
 typealias ClassVal<T, R> = KProperty1<T, R>
     
