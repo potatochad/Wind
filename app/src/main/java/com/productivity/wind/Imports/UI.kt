@@ -143,7 +143,7 @@ object DayChecker {
     }
 }
 
-fun AnnotatedString.Builder.correctStr(text: Str, correctUntil: Int) {
+fun UIStr.Builder.correctStr(text: Str, correctUntil: Int) {
         for (i in text.indices) {
             if (i < correctUntil) {
                 pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
