@@ -128,23 +128,21 @@ object Item {
 	@Composable
 	fun BigTskInput(txt: m_<Str>, Do: DoStr={ _ -> }){
 		val inputScroll = r_Scroll()
-		var textField = r { m(TextFieldValue(txt.it)) }
-		var cursorPos by r_m(0)
-		var cursorPosOld = r_m(0)
+		var Field = r { m(TextFieldValue(txt.it)) }
+		var PositionOld = r_m(0)
 		
         OutlinedTextField(
-            value = textField.it,
+            value = Field,
             onValueChange = {
-				textField.it = it
+				Field = it
                 txt.it = it.text
 				Do(it.text)
 				
-				cursorPos = it.selection.start
 
 				fixedInputScroll(
 					textField,
-					cursorPos,
-					cursorPosOld,
+					it.selection.start,
+					PositionOld,
 					inputScroll
 				)
             },
