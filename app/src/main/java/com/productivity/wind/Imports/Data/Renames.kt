@@ -248,6 +248,8 @@ fun Str.fromTo(start: Int, end: Int): Str = this.substring(start, end)
 fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
     return buildAnnotatedString(Do)
 }
+fun UIStrBuilder.add(text: Char) = append(text)
+fun UIStrBuilder.add(text: Str) = append(text)
 
 
 
