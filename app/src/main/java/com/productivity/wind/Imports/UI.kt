@@ -125,7 +125,6 @@ fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
 object DayChecker {
     private var job: Job? = null
 
-
     fun start() {
         if (job?.isActive == yes) return  // Already running
         if (Bar.lastDate == "") { Bar.lastDate = LocalDate.now().toString() }
@@ -170,9 +169,9 @@ fun correctStr(target: Str, input: Str): UIStr {
 		
         makeUIStr {
             add(
-                AnnotatedString(
+                UIStr(
                     target.fromTo(0, i),
-                    spanStyle = SpanStyle(
+                    spanStyle = StrStyle(
                         color = Color.Green,
                         fontWeight = FontWeight.Bold
                     )
@@ -182,29 +181,6 @@ fun correctStr(target: Str, input: Str): UIStr {
         }
     }
 }
-
-
-fun CopyTskSimpleAutoCorrect(tsk: CopyTsk) {
-    val input5 = tsk.input.takeLast(5)
-    val good5 = tsk.txt.fromTo(tsk.goodStr, tsk.goodStr + 5)
-
-    if (good5.length < 5 || input5.length < 5) return
-
-    val g = good5.take(4)
-    val i = input5.take(4)
-
-    val diff = g.zip(i).count { it.first != it.second }
-
-    if (diff == 1) {
-        val diffIndex = g.indices.first { g[it] != i[it] }
-        val fixed = tsk.input.toCharArray()
-        fixed[tsk.input.length - 5 + diffIndex] = good5[diffIndex]
-        tsk.input = String(fixed)
-    }
-}
-
-
-
 
 
 
@@ -267,7 +243,7 @@ object UI {
 
 				// Overlay circle on top
 				Canvas(
-					modifier = Modifier
+					modifier = Mod
 						.matchParentSize()
 						.space(4)
 				) {
@@ -295,7 +271,7 @@ object UI {
 		Box(
 			contentAlignment = Alignment.Center,
 		) {
-			Canvas(modifier = Modifier.matchParentSize()) {
+			Canvas(modifier = Mod.matchParentSize()) {
 				val stroke = Stroke(width = strokeWidth.dp.toPx(), cap = strokeCap)
 				val radius = size.minDimension / 2
 				val topLeft = Offset(center.x - radius, center.y - radius)
