@@ -144,14 +144,14 @@ object DayChecker {
 }
 
 fun UIStrBuilder.correctStr(text: Str, correctUntil: Int) {
-        for (i in text.indices) {
-            if (i < correctUntil) {
-                pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
-                append(text[i]); pop()
-            } else {
-                append(text[i])
-            }
+    for (i in text.indices) {
+        if (i < correctUntil) {
+            pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
+            append(text[i]); pop()
+        } else {
+            append(text[i])
         }
+    }
 }
 
 fun CopyTskCorrectInput(tsk: CopyTsk): Str {
