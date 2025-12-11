@@ -233,6 +233,7 @@ fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
 }
 fun UIStrBuilder.add(text: Char) = append(text)
 fun UIStrBuilder.add(text: Str) = append(text)
+fun UIStrBuilder.add(text: UIStr) = append(text)
 
 
 
