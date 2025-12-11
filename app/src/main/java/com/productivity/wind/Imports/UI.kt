@@ -146,7 +146,7 @@ object DayChecker {
 fun UIStrBuilder.correctStr(text: Str, correctUntil: Int) {
     for (i in text.indices) {
         if (i < correctUntil) {
-            pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
+            pushStyle(StrStyle(color = Color.Green, fontWeight = FontWeight.Bold))
             add(text[i])
 			pop()
         } else {
