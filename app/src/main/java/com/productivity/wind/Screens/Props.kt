@@ -150,7 +150,9 @@ object Item {
 					scroll
 				)
             },
-            modifier = Mod.maxW().h(150).Vscroll(scroll),
+            modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
+				if (!it.isFocused) done.it = no
+			},
 		    placeholder = { Text("Start typing...") },
         )
 	}
