@@ -165,11 +165,13 @@ fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
 
 	var recompose by r_m("")
 	Each(30){
-		//recompose=
+		recompose=tsk.input
 	}
 
-    RunOnce("${tsk.input}") {
+    RunOnce(tsk.input) {
+		tsk.input="${tsk.input}"
 		Vlog("is this running?")
+		
         val target = tsk.txt
         val input = tsk.input
         val min = minOf(target.size, input.size)
