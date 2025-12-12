@@ -113,7 +113,6 @@ import android.webkit.*
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
 import com.productivity.wind.Imports.Data.*
-
 import android.location.*
 import androidx.core.content.*
 
@@ -415,10 +414,15 @@ inline fun <reified T> SharedPreferences.Editor.putAny(name: Str, value: T?) {
 
 @Composable
 fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
-    LaunchedEffect(key1, key2) {
+    val actualKey1 = if (key1 is Str) key1.hashCode() else key1
+	val actualKey2 = if (key1 is Str) key1.hashCode() else key1
+
+	
+    LaunchedEffect(actualKey1, actualKey2) {
         Do()
     }
 }
+
 
 val MakeTxtFile = ActivityResultContracts.CreateDocument("text/plain")
 
