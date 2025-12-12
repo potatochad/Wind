@@ -452,24 +452,21 @@ object UI {
         App.ctx.startActivity(chooser)
     }
 
-    @Composable
+
+	@Composable
 	fun Ctext(
         text: Str,
         onClick: Do,
 	) {
-		LazzyRow(Mod.click {
-			onClick()
-		}){
-			Text(
-				text = text,
-				style = TextStyle(
-					color = Gold,  
-					fontWeight = FontWeight.Bold,      
-					textDecoration = TextDecoration.None
-				),
-				maxLines = 1, 
-			)
-		}
+		Text(
+			text = buildAnnotatedString {
+				withStyle(SpanStyle(color = Gold, fontWeight = FontWeight.Bold)) {
+					append(text)
+				}
+			},
+			modifier = Mod.click{ onClick() },
+			maxLines = 1, 
+		)
 	}
 
 
