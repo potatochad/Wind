@@ -835,7 +835,7 @@ fun folder(folderName: Str): File {
 }
 fun UIText(text: Str, style: StrStyle): UIStr {
     return makeUIStr {
-        withStyle(style) {
+        withStyle(style=style) {
             add(text)
         }
     }
