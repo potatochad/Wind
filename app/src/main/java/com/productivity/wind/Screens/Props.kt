@@ -130,7 +130,6 @@ object Item {
 		val scroll = r_Scroll()
 		var Field by r_m(TextFieldValue(txt.it))
 		var Old = r_m(0)
-		var Check by r_m(0)
 		
         OutlinedTextField(
             value = Field,
@@ -149,7 +148,6 @@ object Item {
 						scroll
 					)
 				}
-				Check = 1
             },
             modifier = Mod.maxW().h(150).Vscroll(scroll),
 		    placeholder = { Text("Start typing...") },
