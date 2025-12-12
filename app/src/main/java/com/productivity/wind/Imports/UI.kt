@@ -163,7 +163,12 @@ fun CopyTskCorrectInput(tsk: CopyTsk): Str {
 fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
     var uiStr by r_m(UIStr(""))
 
-    RunOnce(tsk.input.hashCode()) {
+	var recompose by r_m("")
+	each(30){
+		recompose=tsk.input
+	}
+
+    RunOnce(recompose) {
 		Vlog("is this running?")
         val target = tsk.txt
         val input = tsk.input
