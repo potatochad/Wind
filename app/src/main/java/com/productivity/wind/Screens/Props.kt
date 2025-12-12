@@ -95,11 +95,11 @@ fun Menu() {
 fun fixedInputScroll(
     text: TextFieldValue,
     cursorPos: Int,
-    doOnce: m_<Int>,
+    done: m_<Bool>,
     scroll: ScrollState
 ) {
-    if (text.text.isNotEmpty() && doOnce.it !=0) {
-		doOnce.it = 1
+    if (text.text.isNotEmpty() && !done.it) {
+		done.it = yes
 
         val ratio = toF(cursorPos) / toF(text.text.size)
         val max = toF(scroll.maxValue)
@@ -131,7 +131,7 @@ object Item {
 	fun BigTskInput(txt: m_<Str>, Do: DoStr={ txt.it = it }){
 		val scroll = r_Scroll()
 		var Field by r_m(TextFieldValue(txt.it))
-		var doOnce = r_m(0)
+		var done = r_m(no)
 		
         OutlinedTextField(
             value = Field,
@@ -142,14 +142,13 @@ object Item {
 					selection = it.selection
 				)
 
-				if (Check == 0) { 
-					fixedInputScroll(
-						Field,
-						it.selection.start,
-						doOnce,
-						scroll
-					)
-				}
+				
+				fixedInputScroll(
+					Field,
+					it.selection.start,
+					done,
+					scroll
+				)
             },
             modifier = Mod.maxW().h(150).Vscroll(scroll),
 		    placeholder = { Text("Start typing...") },
