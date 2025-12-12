@@ -164,7 +164,7 @@ fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
     var uiStr by r_m(UIStr(""))
 
 	var recompose by r_m("")
-	each(30){
+	Each(30){
 		recompose=tsk.input
 	}
 
