@@ -459,9 +459,9 @@ object UI {
         onClick: Do,
 	) {
 		Text(
-			text = buildAnnotatedString {
-				withStyle(SpanStyle(color = Gold, fontWeight = FontWeight.Bold)) {
-					append(text)
+			text = makeUIStr {
+				withStyle(StrStyle(color = Gold, fontWeight = FontWeight.Bold)) {
+					add(text)
 				}
 			},
 			modifier = Mod.click{ onClick() },
