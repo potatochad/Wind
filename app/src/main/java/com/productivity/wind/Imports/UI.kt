@@ -163,15 +163,10 @@ fun CopyTskCorrectInput(tsk: CopyTsk): Str {
 fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
     var uiStr by r_m(UIStr(""))
 
-	var recompose by r_m("")
-	Each(30){
-		recompose=tsk.input
-	}
+	var new by r_m("")
+	Each(30){ new = tsk.input }
 
-    RunOnce(tsk.input) {
-		tsk.input="${tsk.input}"
-		Vlog("is this running?")
-		
+    RunOnce(new) {
         val target = tsk.txt
         val input = tsk.input
         val min = minOf(target.size, input.size)
