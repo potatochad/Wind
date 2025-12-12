@@ -187,7 +187,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		if (it.size - txt.it.size < 2) {
 			txt.it=it
 			
-			if (it.size > tsk.input.size && tsk.goodStr < ) {
+			if (it.size > tsk.input.size && tsk.goodStr < CopyTskCorrectInput(tsk).size) {
 				Bar.LettersTyped++
 				Bar.funTime += tsk.Letter_Worth
 				Bar.copyTsk.edit(tsk) { tsk.goodStr++ }
