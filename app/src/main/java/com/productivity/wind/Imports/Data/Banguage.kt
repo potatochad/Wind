@@ -414,9 +414,9 @@ inline fun <reified T> SharedPreferences.Editor.putAny(name: Str, value: T?) {
 
 
 @Composable
-fun RunOnce(key1: Any? = Unit, block: suspend () -> Unit) {
-    LaunchedEffect(key1) {
-        block()
+fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
+    LaunchedEffect(key1, key2) {
+        Do()
     }
 }
 
