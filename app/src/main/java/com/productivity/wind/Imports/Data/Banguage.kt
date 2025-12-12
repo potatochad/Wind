@@ -414,11 +414,7 @@ inline fun <reified T> SharedPreferences.Editor.putAny(name: Str, value: T?) {
 
 @Composable
 fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
-    val actualKey1 = if (key1 is Str) key1.hashCode() else key1
-	val actualKey2 = if (key1 is Str) key1.hashCode() else key1
-
-	
-    LaunchedEffect(actualKey1, actualKey2) {
+    LaunchedEffect(key1, key2) {
         Do()
     }
 }
