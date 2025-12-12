@@ -840,6 +840,28 @@ fun UIText(text: Str, style: StrStyle): UIStr {
         pop()
     }
 }
+class UITextModifier(private val text: Str) {
+    private var spanStyle = SpanStyle() // default
+
+    fun size(value: TextUnit) = apply { spanStyle = spanStyle.copy(fontSize = value) }
+    fun bold() = apply { spanStyle = spanStyle.copy(fontWeight = FontWeight.Bold) }
+    fun color(value: Color) = apply { spanStyle = spanStyle.copy(color = value) }
+
+    fun build(): UIStr {
+        return makeUIStr {
+            pushStyle(spanStyle)
+            add(UIStr(text))
+            pop()
+        }
+    }
+}
+
+// Extension on String to start the chain
+fun String.size(value: TextUnit) = UITextModifier(this).size(value)
+fun String.bold() = UITextModifier(this).bold()
+fun String.color(value: Color) = UITextModifier(this).color(value)
+fun String.build() = UITextModifier(this).build()
+
 
 
 
