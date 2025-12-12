@@ -833,6 +833,14 @@ fun folder(folderName: Str): File {
     }
     return folder
 }
+fun UIText(text: Str, style: StrStyle): UIStr {
+    return makeUIStr {
+        withStyle(style) {
+            add(text)
+        }
+    }
+}
+
 
 
 
