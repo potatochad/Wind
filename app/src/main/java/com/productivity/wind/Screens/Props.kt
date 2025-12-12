@@ -83,31 +83,6 @@ fun Menu() {
             title = "Achievements",
             onClick = { goTo("Achievements"); App.menu = no }
         )
-
-
-        
-    }
-
-    
-}
-
-
-fun fixedInputScroll(
-    text: TextFieldValue,
-    cursorPos: Int,
-    done: m_<Bool>,
-    scroll: ScrollState
-) {
-    if (text.text.isNotEmpty() && !done.it) {
-		done.it = yes
-
-        val ratio = toF(cursorPos) / toF(text.text.size)
-        val max = toF(scroll.maxValue)
-        val scrollTo = (max * ratio)
-
-		Vlog("scrollTo: [ $scrollTo ]")
-
-        scroll.goTo(scrollTo)
     }
 }
 
