@@ -162,27 +162,29 @@ fun m_<Web?>.txt(done: DoStr = {}) {
 }
 
 object Popup {
-    // Store only Composable builders globally
-    private val popups = mutableListOf<@Composable (MutableState<Boolean>) -> Unit>()
 
-    // Register a popup builder (safe globally)
-    fun add(builder: @Composable (MutableState<Boolean>) -> Unit): MutableState<Bool> {
-        val visible = m(no)
-        popups.add { builder(visible) }
+    private data class Entry(
+        val visible: MutableState<Boolean>,
+        val builder: @Composable (MutableState<Boolean>) -> Unit
+    )
+
+    private val popups = mutableListOf<Entry>()
+
+    fun add(builder: @Composable (MutableState<Boolean>) -> Unit): MutableState<Boolean> {
+        val visible = mutableStateOf(false)
+        popups.add(Entry(visible, builder))
         return visible
     }
 
-
-    // Initialize all popups inside Compose
     @Composable
     fun Init() {
-		Vlog("Init popup rann, popups: [$popups]")
-        popups.forEach { builder ->
-            val visible = remember { mutableStateOf(false) } // State must be inside Compose
-            builder(visible) // Pass state to builder
+        Vlog("Init popup ran, count=${popups.size}")
+        popups.forEach { entry ->
+            entry.builder(entry.visible)
         }
     }
 }
+
 
 
 
