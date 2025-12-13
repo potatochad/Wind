@@ -174,8 +174,8 @@ object Popup {
 
     @Composable
     fun Init() {
-		Vlog("initializing popup")
         for (pair in popups) {
+			Vlog("initializing popup: pair [ $pair ], popups [ $popups ]")
             val state = pair.first
             val block = pair.second
             block(state)
@@ -210,18 +210,18 @@ fun Mod.space(
 }
 
 fun toDp(it: Any?): Dp = when (it) {
-    is Dp -> it           // already Dp
-    is Int -> it.dp       // Int → Dp
-    is Float -> it.dp     // Float → Dp
-    is Double -> it.dp    // Double → Dp
-    null -> 0.dp             // null → 0.dp
-    else -> 0.dp             // anything else → 0.dp
+    is Dp -> it           
+    is Int -> it.dp       
+    is Float -> it.dp     
+    is Double -> it.dp    
+    null -> 0.dp             
+    else -> 0.dp          
 }
 fun toF(it: Any?): Float = when (it) {
     is Float -> it
     is Int -> it.toFloat()
     is Double -> it.toFloat()
-    is Dp -> it.value      // Dp → Float
+    is Dp -> it.value      
     null -> 0f
     else -> 0f
 }
@@ -229,7 +229,7 @@ fun toInt(it: Any?): Int = when (it) {
     is Int -> it
     is Float -> it.toInt()
     is Double -> it.toInt()
-    is Dp -> it.value.toInt()  // Dp → Int
+    is Dp -> it.value.toInt() 
     null -> 0
     else -> 0
 }
