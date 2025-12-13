@@ -459,7 +459,7 @@ object UI {
         onClick: Do,
 	) {
 		Text(
-			text = UIText(UIStr(text), StrStyle(color = Gold, fontWeight = FontWeight.Bold)),
+			text = text.color(Gold),
 			modifier = Mod.click{ onClick() },
 			maxLines = 1, 
 		)
