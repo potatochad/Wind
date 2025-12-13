@@ -287,6 +287,7 @@ fun click(x: UI, Do: Do) {
 	}
 }
 
+@Composable
 fun Mod.click(
     animate: Bool = yes,
     Do: Do,
