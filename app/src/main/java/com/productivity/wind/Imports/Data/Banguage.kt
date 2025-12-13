@@ -848,16 +848,28 @@ fun UIText(text: Str, style: StrStyle = StrStyle()): UIStr {
         pop()
     }
 }
+fun UIText(text: UIStr, style: StrStyle = StrStyle()): UIStr {
+    return makeUIStr {
+        pushStyle(style)
+        add(text)
+        pop()
+    }
+}
 
 fun UIStr.size(value: TextUnit): UIStr {
     return UIText(
         this@size, 
-        StrStyle(fontSize = value) // overwrites previous styles
+        StrStyle(fontSize = value)
     )
 }
 
+
+
+
+
+
 fun UIStr.currentStyle(): StrStyle {
-    return (this as? StyledUIStr)?.style ?: StrStyle()
+    return (this as? UIStr)?.style ?: StrStyle()
 }
 
 fun UIStr.bold(): UIStr = makeUIStr {
