@@ -863,12 +863,14 @@ fun Any.size(value: TextUnit): UIStr {
     return UIText(uiStr, uiStr.getStyle().copy(fontSize = value))
 }
 
-fun UIStr.bold(): UIStr {
-	return UIText(this, this.getStyle().copy(fontWeight = FontWeight.Bold))
+fun Any.bold(): UIStr {
+	val uiStr = toUIStr(this)
+	return UIText(uiStr, uiStr.getStyle().copy(fontWeight = FontWeight.Bold))
 }
 
-fun UIStr.color(value: Color): UIStr {
-	return UIText(this, this.getStyle().copy(color = value))
+fun Any.color(value: Color): UIStr {
+	val uiStr = toUIStr(this)
+	return UIText(uiStr, uiStr.getStyle().copy(color = value))
 }
     
 
