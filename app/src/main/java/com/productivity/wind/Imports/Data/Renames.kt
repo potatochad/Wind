@@ -226,7 +226,7 @@ fun File.file(name: Str): File {
 
 val Str.size get() = length
 fun Str.last(n: Int): Str = this.takeLast(n)
-fun Str.fromTo(start: Int, end: Int = maxInt): Str = this.substring(start, end)
+fun Str.fromTo(start: Int, end: Int = this.size): Str = this.substring(start, end)
 
 fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
     return buildAnnotatedString(Do)
