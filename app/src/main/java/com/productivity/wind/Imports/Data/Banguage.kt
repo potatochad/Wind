@@ -164,14 +164,7 @@ fun m_<Web?>.txt(done: DoStr = {}) {
 object Popup {
 
 	// Global list of composable builders
-val globalPopups = 
 
-// Register a popup anywhere
-fun registerPopup(builder: @Composable () -> Unit) {
-    globalPopups.add(builder)
-}
-
-// Call them anywhere inside Compose
 @Composable
 fun ShowPopups() {
     globalPopups.forEach { popup ->
@@ -185,6 +178,7 @@ fun ShowPopups() {
 
     fun add(builder: ui_<mBool>): mBool {
         val visible = m(no)
+		popups.add(builder)
 		
         return visible
     }
