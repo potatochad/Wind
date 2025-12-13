@@ -242,6 +242,13 @@ fun toL(it: Any?): Long = when (it) {
     null -> 0L
     else -> 0L
 }
+fun toUIStr(it: Any?): UIStr = when (it) {
+    is UIStr -> it
+    is String -> UIStr(it)
+    is Str -> UIStr(it)
+    else -> UIStr(it?.toString() ?: "")
+}
+
 @Composable
 fun toUI(it: Any?): UI {
     return when (it) {
@@ -851,29 +858,10 @@ fun UIStr.getStyle(): StrStyle {
     return this.spanStyles.firstOrNull()?.item ?: StrStyle()
 }
 
-
-
-
-/*
-fun Str.size(value: TextUnit): UIStr {
-    return UIText(UIStr(this), StrStyle(fontSize = value))
-}
-
-fun UIStr.size(value: TextUnit): UIStr {
-    return UIText(this, this.getStyle().copy(fontSize = value))
-}
-*/
 fun Any.size(value: TextUnit): UIStr {
-    val uiStr = when (this) {
-        is UIStr -> this
-        is String -> UIStr(this)
-        is Str -> UIStr(this)
-        else -> UIStr(this.toString())
-    }
+    val uiStr = toUIStr(this)
     return UIText(uiStr, uiStr.getStyle().copy(fontSize = value))
 }
-
-
 
 fun UIStr.bold(): UIStr {
 	return UIText(this, this.getStyle().copy(fontWeight = FontWeight.Bold))
