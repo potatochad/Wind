@@ -521,10 +521,12 @@ object Icon {
 
 @Composable
 fun AddPopups(){
+	/*
 	var NeedMorePoints = Popup.add { NeedMorePointsPopup(it) }
 	var AskUsagePermission = Popup.add { AskUsagePermission(it) }
 	var AppSelect = Popup.add { AppSelectPopup(it) }
 	var DebugPopup = Popup.add { DebugPopup(it) }
+	*/
 }
 
 @Composable
