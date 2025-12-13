@@ -854,13 +854,23 @@ fun UIStr.getStyle(): StrStyle {
 
 
 
-
+/*
 fun Str.size(value: TextUnit): UIStr {
     return UIText(UIStr(this), StrStyle(fontSize = value))
 }
 
 fun UIStr.size(value: TextUnit): UIStr {
     return UIText(this, this.getStyle().copy(fontSize = value))
+}
+*/
+fun Any.size(value: TextUnit): UIStr {
+    val uiStr = when (this) {
+        is UIStr -> this
+        is String -> UIStr(this)
+        is Str -> UIStr(this)
+        else -> UIStr(this.toString())
+    }
+    return UIText(uiStr, uiStr.getStyle().copy(fontSize = value))
 }
 
 
