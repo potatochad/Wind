@@ -162,28 +162,21 @@ fun m_<Web?>.txt(done: DoStr = {}) {
 }
 
 object Popup {
-    private val popups = mutableListOf<Pair<m_<Bool>, ui_<m_<Bool>>>>()
+    private val creators = mutableListOf<(m_<Bool>) -> Unit>()
 
-    fun add(popup: ui_<m_<Bool>>): m_<Bool> {
-        val state = m(no)
-        popups.add(Pair(state, popup))
-        return state
+    fun add(builder: (m_<Bool>) -> Unit) {
+        creators.add(builder)
     }
 
     @Composable
     fun Init() {
-        Vlog("initializing popups: ${popups}")
-
-        for (pair in popups) {
-            val state = pair.first
-            val block = pair.second
-            Vlog("executing popup: state=$state")
-            block(state)
+		Vlog("creators: [ $creators ]")
+        for (builder in creators) {
+            val state = r_m(no)
+            builder(state)
         }
     }
 }
-
-
 
 
 fun Mod.space(
