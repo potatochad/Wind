@@ -157,6 +157,7 @@ fun CopyTskCorrectInput(tsk: CopyTsk): Str {
         .size
     return tsk.input.take(correctChars)
 }
+
 @Composable
 fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
     var uiStr by r_m(UIStr(""))
@@ -171,19 +172,10 @@ fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
         var i = 0
         while (i < min && text[i] == input[i]) i++
 
-        uiStr = if (i > 0) {
-			text.bold().color(Color.Green) + UIStr(text.fromTo(i, text.size))
-		RunOnce(new) {
-        val text = tsk.txt
-        val input = tsk.input
-        val min = minOf(text.size, input.size)
-        var i = 0
-        while (i < min && text[i] == input[i]) i++
+		var goodStr = text.fromTo(0, i).bold().color(Color.Green)
 
-		var goodStr = text.fromTo(0, i)
-
-        uiStr = goodStr.bold().color(Color.Green) + UIStr(text.fromTo(i))
-    }
+        uiStr = goodStr + UIStr(text.fromTo(i))
+	}
 
     return uiStr
 }
