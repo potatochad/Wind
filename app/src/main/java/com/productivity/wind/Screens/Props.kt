@@ -605,12 +605,15 @@ fun AppSelectPopup(show: m_<Bool>) {
         )
     }
 
+	Vlog("Called1")
+
     LazyPopup(
         show = show,
         showCancel = no,
         showConfirm = no,
         title = "Select App"
     ){
+		Vlog("Called 2")
             if (loading) {
                 Text("Loading...")
             } else {
