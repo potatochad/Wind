@@ -176,6 +176,7 @@ object Popup {
     // Initialize all popups inside Compose
     @Composable
     fun Init() {
+		Vlog("Init popup rann, popups: [$popups]")
         popups.forEach { builder ->
             val visible = remember { mutableStateOf(false) } // State must be inside Compose
             builder(visible) // Pass state to builder
