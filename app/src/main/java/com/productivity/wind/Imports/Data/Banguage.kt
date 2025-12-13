@@ -856,6 +856,10 @@ fun UIStr.size(value: TextUnit): UIStr {
     )
 }
 
+fun UIStr.currentStyle(): StrStyle {
+    return (this as? StyledUIStr)?.style ?: StrStyle()
+}
+
 fun UIStr.bold(): UIStr = makeUIStr {
     pushStyle(StrStyle(fontWeight = FontWeight.Bold))
     add(this@bold)
