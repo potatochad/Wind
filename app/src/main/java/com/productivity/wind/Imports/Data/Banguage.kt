@@ -860,33 +860,17 @@ fun UIText(text: UIStr, style: StrStyle = StrStyle()): UIStr {
 fun UIStr.getStyle(): StrStyle {
     return this.spanStyles.firstOrNull()?.item ?: StrStyle()
 }
-fun StrStyle.add(): StrStyle {
-    return this.currentStyle().copy(fontSize = value)
-}
-fun UIStr.add(): StrStyle {
-    return this.currentStyle().copy(fontSize = value)
-}
-
 
 fun UIStr.size(value: TextUnit): UIStr {
-    return UIText(
-        this, 
-        StrStyle(fontSize = value)
-    )
+    return UIText(this, this.getStyle().copy(fontSize = value))
 }
 
 fun UIStr.bold(): UIStr {
-	return UIText(
-        this, 
-        StrStyle(fontWeight = FontWeight.Bold)
-    )
+	return UIText(this, this.getStyle().copy(fontWeight = FontWeight.Bold))
 }
 
 fun UIStr.color(value: Color): UIStr {
-	return UIText(
-        this, 
-        StrStyle(color = value)
-    )
+	return UIText(this, this.getStyle().copy(color = value))
 }
     
 
