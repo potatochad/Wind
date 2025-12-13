@@ -841,13 +841,6 @@ fun folder(folderName: Str): File {
 
 
 
-fun UIText(text: Str, style: StrStyle): UIStr {
-    return makeUIStr {
-        pushStyle(style)
-        add(UIStr(text))
-        pop()
-    }
-}
 fun UIText(text: Str, style: StrStyle = StrStyle()): UIStr {
     return makeUIStr {
         pushStyle(style)
