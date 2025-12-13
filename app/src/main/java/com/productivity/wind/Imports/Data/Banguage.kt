@@ -288,7 +288,7 @@ fun click(x: UI, Do: Do) {
 }
 
 @SuppressLint("SuspiciousModifierThen")
-fun Modifier.click(
+fun Mod.click(
 	animate: Bool = yes,
     Do: Do,
 ): Mod {
