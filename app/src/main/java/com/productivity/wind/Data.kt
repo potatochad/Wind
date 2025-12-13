@@ -229,7 +229,8 @@ fun AppStart() {
 	App.lazyH = App.h - 100.dp - bottomSystemHeight()
 	
     LazyMenu { Menu() }
-    
+
+	AddPopups()
     Popup.Init()
 	
     App.navHost = rememberNavController()
