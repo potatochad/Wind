@@ -848,28 +848,32 @@ fun UIText(text: Str, style: StrStyle): UIStr {
         pop()
     }
 }
-class UITextModifier(private val text: Str) {
-    private var spanStyle = StrStyle() // default
+class UITextModifier internal constructor (
+	private val text: Str
+) {
+    private var strStyle = StrStyle()
 
-    fun size(value: TextUnit) = apply { spanStyle = spanStyle.copy(fontSize = value) }
-    fun bold() = apply { spanStyle = spanStyle.copy(fontWeight = FontWeight.Bold) }
-    fun color(value: Color) = apply { spanStyle = spanStyle.copy(color = value) }
+	private inline fun style(
+		update: (StrStyle) -> StrStyle
+	): UITextModifier = apply {
+		spanStyle = update(spanStyle)
+	}
 
-    fun build(): UIStr {
-        return makeUIStr {
+
+    fun size(value: TextUnit) = style { it.copy(fontSize = value) }
+
+	fun bold() = style { it.copy(fontWeight = FontWeight.Bold) }
+
+	fun color(value: Color) = style { it.copy(color = value) }
+
+
+    fun build(): UIStr =
+        makeUIStr {
             pushStyle(spanStyle)
-            add(UIStr(text))
+            add(text)
             pop()
-        }
-    }
+		}
 }
-
-fun Str.size(value: TextUnit) = UITextModifier(this).size(value)
-fun Str.bold() = UITextModifier(this).bold()
-fun Str.color(value: Color) = UITextModifier(this).color(value)
-fun Str.build() = UITextModifier(this).build()
-
-
 
 
 
