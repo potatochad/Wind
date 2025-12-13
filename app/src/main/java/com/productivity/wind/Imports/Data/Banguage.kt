@@ -174,6 +174,7 @@ object Popup {
 
     @Composable
     fun Init() {
+		Vlog("initializing popup")
         for (pair in popups) {
             val state = pair.first
             val block = pair.second
