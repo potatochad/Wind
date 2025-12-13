@@ -863,13 +863,8 @@ fun UIStr.size(value: TextUnit): UIStr {
     )
 }
 
-
-
-
-
-
 fun UIStr.currentStyle(): StrStyle {
-    return (this as? UIStr)?.style ?: StrStyle()
+    return this.spanStyles.firstOrNull()?.item ?: StrStyle()
 }
 
 fun UIStr.bold(): UIStr = makeUIStr {
