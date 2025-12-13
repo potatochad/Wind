@@ -161,7 +161,7 @@ fun m_<Web?>.txt(done: DoStr = {}) {
     }
 }
 
-object Popup2 {
+object Popup {
 
     private data class Entry(
         val visible: MutableState<Boolean>,
@@ -182,47 +182,6 @@ object Popup2 {
         popups.forEach { entry ->
             entry.builder(entry.visible)
         }
-    }
-}
-
-
-
-object Popup {
-
-    private val builders = mutableListOf<@Composable (MutableState<Boolean>) -> Unit>()
-    private val states = mutableListOf<MutableState<Boolean>>() // store states safely
-
-    // Register builder globally (safe at top level)
-    fun add(builder: @Composable (MutableState<Boolean>) -> Unit) {
-        builders.add(builder)
-    }
-
-    // Call inside root Composable
-    @Composable
-    fun Init() {
-        if (states.isEmpty()) {
-            // Initialize state only once, inside Compose
-            builders.forEach { builder ->
-                val visible = remember { mutableStateOf(false) }
-                states.add(visible)
-                builder(visible)
-            }
-        } else {
-            // Already initialized, just draw
-            states.forEachIndexed { index, visible ->
-                builders[index](visible)
-            }
-        }
-        Vlog("Init popup ran, count=${builders.size}")
-    }
-
-    // Optional helper to toggle popups
-    fun show(index: Int) {
-        states.getOrNull(index)?.value = true
-    }
-
-    fun hide(index: Int) {
-        states.getOrNull(index)?.value = false
     }
 }
 
