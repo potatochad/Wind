@@ -230,14 +230,7 @@ fun AppStart() {
 	
     LazyMenu { Menu() }
 
-
 	
-
-	NeedMorePoints = Popup.add { NeedMorePointsPopup(it) }
-	AskUsagePermission = Popup.add { AskUsagePermission(it) }
-	AppSelect = Popup.add { AppSelectPopup(it) }
-	DebugPopup = Popup.add { DebugPopup(it) }
-
     Popup.Init()
 	
     App.navHost = rememberNavController()
