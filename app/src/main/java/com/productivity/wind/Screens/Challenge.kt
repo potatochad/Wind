@@ -236,7 +236,6 @@ fun AppUsage(id: Str = "") {
           UI.Ctext(if (selectedApp.it.isEmpty()) "app" else selectedApp.it) {
 			AppSelect.it = yes
 			NeedMorePoints.it = yes
-			Vlog("CLICKRD")
           }
         }
       }
