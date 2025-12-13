@@ -519,10 +519,16 @@ object Icon {
 
 
 
-var NeedMorePoints = Popup.add { NeedMorePointsPopup(it) }
-var AskUsagePermission = Popup.add { AskUsagePermission(it) }
-var AppSelect = Popup.add { AppSelectPopup(it) }
-var DebugPopup = Popup.add { DebugPopup(it) }
+NeedMorePoints = Popup.add { NeedMorePointsPopup(it) }
+AskUsagePermission = Popup.add { AskUsagePermission(it) }
+AppSelect = Popup.add { AppSelectPopup(it) }
+DebugPopup = Popup.add { DebugPopup(it) }
+
+var NeedMorePoints = m(no)
+var AskUsagePermission = m(no)
+var AppSelect = m(no)
+var DebugPopup = m(no)
+
 
 
 @Composable
