@@ -287,22 +287,15 @@ fun click(x: UI, Do: Do) {
 	}
 }
 
-@SuppressLint("SuspiciousModifierThen")
 fun Mod.click(
-	animate: Bool = yes,
+    animate: Bool = yes,
     Do: Do,
 ): Mod {
-    return if (animate) {
-        this.pointerInput(Unit) {
-            detectTapGestures { Do() }
-        }
-    } else {
-        this.clickable(
-            indication = null,
-            interactionSource = MutableInteractionSource()
-        ) {
-            Do()
-        }
+    return this.clickable(
+        indication = if (animate) LocalIndication.current else null,
+        interactionSource = MutableInteractionSource()
+    ) {
+        Do()
     }
 }
 
