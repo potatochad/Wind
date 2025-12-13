@@ -848,6 +848,7 @@ fun UIText(text: Str, style: StrStyle = StrStyle()): UIStr {
         pop()
     }
 }
+
 fun UIText(text: UIStr, style: StrStyle = StrStyle()): UIStr {
     return makeUIStr {
         pushStyle(style)
@@ -856,34 +857,37 @@ fun UIText(text: UIStr, style: StrStyle = StrStyle()): UIStr {
     }
 }
 
+fun UIStr.getStyle(): StrStyle {
+    return this.spanStyles.firstOrNull()?.item ?: StrStyle()
+}
+fun StrStyle.add(): StrStyle {
+    return this.currentStyle().copy(fontSize = value)
+}
+fun UIStr.add(): StrStyle {
+    return this.currentStyle().copy(fontSize = value)
+}
+
+
 fun UIStr.size(value: TextUnit): UIStr {
     return UIText(
-        this@size, 
+        this, 
         StrStyle(fontSize = value)
     )
 }
 
-fun UIStr.currentStyle(): StrStyle {
-    return this.spanStyles.firstOrNull()?.item ?: StrStyle()
+fun UIStr.bold(): UIStr {
+	return UIText(
+        this, 
+        StrStyle(fontWeight = FontWeight.Bold)
+    )
 }
 
-fun UIStr.bold(): UIStr = makeUIStr {
-    pushStyle(StrStyle(fontWeight = FontWeight.Bold))
-    add(this@bold)
-    pop()
+fun UIStr.color(value: Color): UIStr {
+	return UIText(
+        this, 
+        StrStyle(color = value)
+    )
 }
-
-fun UIStr.color(value: Color): UIStr = makeUIStr {
-    pushStyle(StrStyle(color = value))
-    add(this@color)
-    pop()
-}
-
-
-fun StrStyle.size(value: TextUnit) = copy(fontSize = value)
-fun StrStyle.bold() = copy(fontWeight = FontWeight.Bold)
-fun StrStyle.color(value: Color) = copy(color = value)
-
     
 
 
