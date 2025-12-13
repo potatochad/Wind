@@ -166,7 +166,8 @@ object Popup {
 
     fun add(x: ui_<mBool>): mBool {
         val visible = m(no)
-		popups.add(x)
+		var y = { x(visible) }
+		popups.add(y)
 		
         return visible
     }
