@@ -71,7 +71,7 @@ fun Plog(msg: Str = "test", s: Int = 0) {
     CoroutineScope(Dispatchers.Main).launch {
         delay(delayMillis.toLong())
         DebugPopupInfo = msg
-        show(DebugPopup)
+        DebugPopup.it = yes
     }
 }
 
