@@ -165,15 +165,24 @@ fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
 	Each(30){ new = tsk.input }
 
     RunOnce(new) {
-        val target = tsk.txt
+        val text = tsk.txt
         val input = tsk.input
-        val min = minOf(target.size, input.size)
+        val min = minOf(text.size, input.size)
         var i = 0
-        while (i < min && target[i] == input[i]) i++
+        while (i < min && text[i] == input[i]) i++
 
         uiStr = if (i > 0) {
-			text.bold().color(Color.Green) + UIStr(target.fromTo(i, target.size)))
-		}
+			text.bold().color(Color.Green) + UIStr(text.fromTo(i, text.size))
+		RunOnce(new) {
+        val text = tsk.txt
+        val input = tsk.input
+        val min = minOf(text.size, input.size)
+        var i = 0
+        while (i < min && text[i] == input[i]) i++
+
+		var goodStr = text.fromTo(0, i)
+
+        uiStr = goodStr.bold().color(Color.Green) + UIStr(text.fromTo(i))
     }
 
     return uiStr
