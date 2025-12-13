@@ -161,7 +161,7 @@ fun m_<Web?>.txt(done: DoStr = {}) {
     }
 }
 
-object Popup {
+object Popup2 {
 
     private data class Entry(
         val visible: MutableState<Boolean>,
@@ -184,6 +184,26 @@ object Popup {
         }
     }
 }
+
+object Popup {
+    private val builders = mutableListOf<@Composable (MutableState<Boolean>) -> Unit>()
+
+    fun add(builder: @Composable (MutableState<Boolean>) -> Unit) {
+        builders.add(builder) // just store the builder
+    }
+
+    @Composable
+    fun Init(): Map<String, MutableState<Boolean>> {
+        val states = mutableMapOf<String, MutableState<Boolean>>()
+        builders.forEachIndexed { index, builder ->
+            val visible = remember { mutableStateOf(false) }
+            states["popup$index"] = visible
+            builder(visible)
+        }
+        return states
+    }
+}
+
 
 
 
