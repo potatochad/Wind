@@ -171,11 +171,8 @@ fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
         var i = 0
         while (i < min && target[i] == input[i]) i++
 
-        uiStr = makeUIStr {
-            if (i > 0) {
-				text.bold().color(Color.Green)
-			}
-			add(UIStr(target.fromTo(i, target.size)))
+        uiStr = if (i > 0) {
+			text.bold().color(Color.Green) + UIStr(target.fromTo(i, target.size)))
 		}
     }
 
