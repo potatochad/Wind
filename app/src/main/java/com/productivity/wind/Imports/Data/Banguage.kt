@@ -839,16 +839,6 @@ fun folder(folderName: Str): File {
 
 
 
-
-
-fun UIText(text: Str, style: StrStyle = StrStyle()): UIStr {
-    return makeUIStr {
-        pushStyle(style)
-        add(UIStr(text))
-        pop()
-    }
-}
-
 fun UIText(text: UIStr, style: StrStyle = StrStyle()): UIStr {
     return makeUIStr {
         pushStyle(style)
@@ -866,7 +856,7 @@ fun UIStr.getStyle(): StrStyle {
 
 
 fun Str.size(value: TextUnit): UIStr {
-    return UIText(this, StrStyle(fontSize = value))
+    return UIText(UIStr(this), StrStyle(fontSize = value))
 }
 
 fun UIStr.size(value: TextUnit): UIStr {
