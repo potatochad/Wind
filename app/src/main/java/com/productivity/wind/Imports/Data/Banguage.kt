@@ -164,14 +164,14 @@ fun m_<Web?>.txt(done: DoStr = {}) {
 object Popup {
 
     private data class Entry(
-        val visible: MutableState<Boolean>,
-        val builder: @Composable (MutableState<Boolean>) -> Unit
+        val visible: mBool,
+        val builder: @Composable (mBool) -> Unit
     )
 
     private val popups = mutableListOf<Entry>()
 
-    fun add(builder: @Composable (MutableState<Boolean>) -> Unit): MutableState<Boolean> {
-        val visible = mutableStateOf(false)
+    fun add(builder: @Composable (mBool) -> Unit): mBool {
+        val visible = m(no)
         popups.add(Entry(visible, builder))
         return visible
     }
