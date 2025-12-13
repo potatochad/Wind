@@ -162,23 +162,11 @@ fun m_<Web?>.txt(done: DoStr = {}) {
 }
 
 object Popup {
-
-	// Global list of composable builders
-
-@Composable
-fun ShowPopups() {
-    globalPopups.forEach { popup ->
-        popup() // Draw each popup
-    }
-}
-
-
-
     val popups = mutableListOf<ui>()
 
-    fun add(builder: ui_<mBool>): mBool {
+    fun add(x: ui_<mBool>): mBool {
         val visible = m(no)
-		popups.add(builder)
+		popups.add(x)
 		
         return visible
     }
@@ -186,8 +174,8 @@ fun ShowPopups() {
     @Composable
     fun Init() {
         Vlog("Init popup ran, count=${popups.size}")
-        popups.forEach { entry ->
-            entry.builder(entry.visible)
+        popups.forEach { popup ->
+            popup()
         }
     }
 }
