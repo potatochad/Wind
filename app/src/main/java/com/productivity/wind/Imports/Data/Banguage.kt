@@ -115,6 +115,7 @@ import org.jetbrains.kotlin.cli.common.ExitCode
 import com.productivity.wind.Imports.Data.*
 import android.location.*
 import androidx.core.content.*
+import androidx.compose.ui.text.*
 
 
 
@@ -833,6 +834,13 @@ fun folder(folderName: Str): File {
     }
     return folder
 }
+
+
+
+
+
+
+
 fun UIText(text: Str, style: StrStyle): UIStr {
     return makeUIStr {
         pushStyle(style)
@@ -841,7 +849,7 @@ fun UIText(text: Str, style: StrStyle): UIStr {
     }
 }
 class UITextModifier(private val text: Str) {
-    private var spanStyle = SpanStyle() // default
+    private var spanStyle = StrStyle() // default
 
     fun size(value: TextUnit) = apply { spanStyle = spanStyle.copy(fontSize = value) }
     fun bold() = apply { spanStyle = spanStyle.copy(fontWeight = FontWeight.Bold) }
@@ -856,11 +864,10 @@ class UITextModifier(private val text: Str) {
     }
 }
 
-// Extension on String to start the chain
-fun String.size(value: TextUnit) = UITextModifier(this).size(value)
-fun String.bold() = UITextModifier(this).bold()
-fun String.color(value: Color) = UITextModifier(this).color(value)
-fun String.build() = UITextModifier(this).build()
+fun Str.size(value: TextUnit) = UITextModifier(this).size(value)
+fun Str.bold() = UITextModifier(this).bold()
+fun Str.color(value: Color) = UITextModifier(this).color(value)
+fun Str.build() = UITextModifier(this).build()
 
 
 
