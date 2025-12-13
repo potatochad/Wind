@@ -848,32 +848,39 @@ fun UIText(text: Str, style: StrStyle): UIStr {
         pop()
     }
 }
-class UITextModifier internal constructor (
-	private val text: Str
-) {
-    private var strStyle = StrStyle()
-
-	private inline fun style(
-		update: (StrStyle) -> StrStyle
-	): UITextModifier = apply {
-		strStyle = update(strStyle)
-	}
-
-
-    fun size(value: TextUnit) = style { it.copy(fontSize = value) }
-
-	fun bold() = style { it.copy(fontWeight = FontWeight.Bold) }
-
-	fun color(value: Color) = style { it.copy(color = value) }
-
-
-    fun build(): UIStr =
-        makeUIStr {
-            pushStyle(strStyle)
-            add(text)
-            pop()
-		}
+fun UIText(text: Str, style: StrStyle = StrStyle()): UIStr {
+    return makeUIStr {
+        pushStyle(style)
+        add(UIStr(text))
+        pop()
+    }
 }
+
+fun UIStr.size(value: TextUnit): UIStr {
+    return UIText(
+        this@size, 
+        StrStyle(fontSize = value) // overwrites previous styles
+    )
+}
+
+fun UIStr.bold(): UIStr = makeUIStr {
+    pushStyle(StrStyle(fontWeight = FontWeight.Bold))
+    add(this@bold)
+    pop()
+}
+
+fun UIStr.color(value: Color): UIStr = makeUIStr {
+    pushStyle(StrStyle(color = value))
+    add(this@color)
+    pop()
+}
+
+
+fun StrStyle.size(value: TextUnit) = copy(fontSize = value)
+fun StrStyle.bold() = copy(fontWeight = FontWeight.Bold)
+fun StrStyle.color(value: Color) = copy(color = value)
+
+    
 
 
 
