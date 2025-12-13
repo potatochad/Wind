@@ -861,9 +861,19 @@ fun UIStr.getStyle(): StrStyle {
     return this.spanStyles.firstOrNull()?.item ?: StrStyle()
 }
 
+
+
+
+
+fun Str.size(value: TextUnit): UIStr {
+    return UIText(this, StrStyle(fontSize = value))
+}
+
 fun UIStr.size(value: TextUnit): UIStr {
     return UIText(this, this.getStyle().copy(fontSize = value))
 }
+
+
 
 fun UIStr.bold(): UIStr {
 	return UIText(this, this.getStyle().copy(fontWeight = FontWeight.Bold))
