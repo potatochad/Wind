@@ -234,7 +234,7 @@ fun AppUsage(id: Str = "") {
           
           Text(" on ")
           UI.Ctext(if (selectedApp.it.isEmpty()) "app" else selectedApp.it) {
-            show(AppSelect)
+			AppSelect.it = yes
 			Vlog("CLICKRD")
           }
         }
