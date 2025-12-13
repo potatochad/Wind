@@ -144,11 +144,6 @@ object DayChecker {
 fun UIStrBuilder.correctStr(text: Str, correctUntil: Int) {
     for (i in text.indices) {
         if (i < correctUntil) {
-			/*
-            pushStyle(StrStyle(color = Color.Green, fontWeight = FontWeight.Bold))
-            add(text[i])
-			pop()
-			*/
 			text.bold().color(Color.Green)
         } else {
             add(text[i])
@@ -178,11 +173,9 @@ fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
 
         uiStr = makeUIStr {
             if (i > 0) {
-				pushStyle(SpanStyle(color = Color.Green, fontWeight = FontWeight.Bold))
-				add(UIStr(target.fromTo(0, i)))
-				pop()
+				text.bold().color(Color.Green)
 			}
-			add(UIStr(target.fromTo(i, target.length)))
+			add(UIStr(target.fromTo(i, target.size)))
 		}
     }
 
