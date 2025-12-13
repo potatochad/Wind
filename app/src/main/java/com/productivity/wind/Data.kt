@@ -230,7 +230,6 @@ fun AppStart() {
 	
     LazyMenu { Menu() }
 
-	AddPopups()
     Popup.Init()
 	
     App.navHost = rememberNavController()
