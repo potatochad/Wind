@@ -856,7 +856,7 @@ class UITextModifier internal constructor (
 	private inline fun style(
 		update: (StrStyle) -> StrStyle
 	): UITextModifier = apply {
-		spanStyle = update(spanStyle)
+		strStyle = update(strStyle)
 	}
 
 
@@ -869,7 +869,7 @@ class UITextModifier internal constructor (
 
     fun build(): UIStr =
         makeUIStr {
-            pushStyle(spanStyle)
+            pushStyle(strStyle)
             add(text)
             pop()
 		}
