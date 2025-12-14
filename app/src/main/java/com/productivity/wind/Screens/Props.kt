@@ -118,7 +118,9 @@ object Item {
 		
         OutlinedTextField(
             value = Field,
-            onValueChange = {           
+            onValueChange = {       
+				try {
+					
 				Do(it.text)
 				Field = TextFieldValue(
 					text = txt.it,
@@ -133,7 +135,7 @@ object Item {
 					done,
 					scroll
 				)
-				try {
+				
 					Vlog("diff scroll-index: [ ${scroll.it-itIndex} ], scroll: [ ${scroll.it} ], index: [ $itIndex ]")
 				} catch (e: Exception) {
 					Vlog("$e—error")
