@@ -893,6 +893,27 @@ class MainActivity : ComponentActivity() {
 		App.pkg = ctx.packageName
 
 		AppStart_beforeUI()
+
+		
+
+		val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+
+		Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+			log(throwable)
+
+			val crashMessage: Str = """
+			   ==== CRASH ====
+    		   Message: ${throwable.message}
+			   StackTrace:
+		       ${throwable.stackTraceToString()}
+			   ================
+			""".trimIndent()
+
+			
+			defaultHandler?.uncaughtException(thread, throwable)
+		}
+
+
 		
         setContent {
 			AppContent()
