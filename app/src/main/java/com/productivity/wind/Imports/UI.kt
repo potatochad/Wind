@@ -194,6 +194,10 @@ fun fixedInputScroll(
 
         scroll.goTo(scrollTo)
     }
+
+	if (cursorPos == text.text.size) {
+		scroll.toBottom()
+	}
 }
 
 
