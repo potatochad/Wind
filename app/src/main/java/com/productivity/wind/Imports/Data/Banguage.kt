@@ -899,8 +899,6 @@ class MainActivity : ComponentActivity() {
 		val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
 
 		Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-			log(throwable)
-
 			val crashMessage: Str = """
 			   ==== CRASH ====
     		   Message: ${throwable.message}
@@ -908,6 +906,8 @@ class MainActivity : ComponentActivity() {
 		       ${throwable.stackTraceToString()}
 			   ================
 			""".trimIndent()
+			
+			log(crashMessage)
 
 			
 			defaultHandler?.uncaughtException(thread, throwable)
