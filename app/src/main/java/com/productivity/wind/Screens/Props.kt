@@ -115,6 +115,7 @@ object Item {
 		var Field by r_m(TextFieldValue(txt.it))
 		var done = r_m(no)
 		var itIndex by r_m(0)
+		val bringIntoViewRequester = r { BringIntoViewRequester() }
 		
         OutlinedTextField(
             value = Field,
@@ -132,20 +133,15 @@ object Item {
 				
 				Vlog("index: [ $itIndex ]")
 
-				val cursorPosition = it.selection.start
-				val layoutInfo = scroll.layoutInfo // info about visible area
-				val cursorOffset = scroll.getOffsetFor(cursorPosition) // compute where cursor is
-
-				if (cursorOffset < layoutInfo.visibleStart || cursorOffset > layoutInfo.visibleEnd) {
-					scroll.scrollTo(cursorOffset)
-				}
-
 			},
             modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
 				if (!it.isFocused) done.it = no
-			},
+			}.bringIntoViewRequester(bringIntoViewRequester),
 		    placeholder = { Text("Start typing...") },
         )
+		LaunchedEffect(itIndex) {
+			bringIntoViewRequester.bringIntoView()
+		}
 	}
 
 
