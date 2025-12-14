@@ -56,10 +56,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("LogsScreen") { LogsScreen() }
 
 	dialog("popup") {
-		Text("This is a popup!")
-		Button(onClick = { navController.popBackStack() }) {
-			Text("Close")
-		}
+		NeedMorePointsPopup(m(no))
 	}
 
   
