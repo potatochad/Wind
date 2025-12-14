@@ -119,7 +119,6 @@ object Item {
         OutlinedTextField(
             value = Field,
             onValueChange = {    
-				try {
 					
 				Do(it.text)
 				Field = TextFieldValue(
@@ -135,11 +134,11 @@ object Item {
 					done,
 					scroll
 				)
-				
-					Vlog("diff scroll-index: [ ${scroll.it-itIndex} ], scroll: [ ${scroll.it} ], index: [ $itIndex ]")
-				} catch (e: Exception) {
-					Vlog("$e—error")
+				if (itIndex == it.text.size) {
+					scroll.toBottom()
 				}
+				
+				Vlog("index: [ $itIndex ]")
 			},
             modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
 				if (!it.isFocused) done.it = no
