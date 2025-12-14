@@ -32,7 +32,7 @@ import androidx.compose.ui.text.*
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.foundation.text.*
-
+import androidx.compose.foundation.relocation.*
 
 fun NavGraphBuilder.ScreenNav() {
     //Main—StartDestination    
