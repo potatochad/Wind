@@ -116,6 +116,7 @@ import com.productivity.wind.Imports.Data.*
 import android.location.*
 import androidx.core.content.*
 import androidx.compose.ui.text.*
+import androidx.navigation.compose.*
 
 
 
@@ -265,11 +266,11 @@ fun goTo(route: Str){
 	App.navHost.navigate(route)
 }
 
-fun NavGraphBuilder.url( txt: Str, UI: ui_<NavBackStackEntry>) {
+fun NavGraphBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
     composable(txt) { UI(it) }
 }
 fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
-    dialog(txf){ UI(it) }
+    dialog(txt){ UI(it) }
 }
 
 fun NavBackStackEntry.url(key: Str): Str {
