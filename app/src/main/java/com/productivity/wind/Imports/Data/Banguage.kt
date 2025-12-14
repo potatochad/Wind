@@ -265,14 +265,13 @@ fun goTo(route: Str){
 	App.navHost.navigate(route)
 }
 
-fun NavGraphBuilder.url(
-    route: Str,
-    content: @Composable (NavBackStackEntry) -> Unit
-) {
-    composable(route) { backStackEntry ->
-        content(backStackEntry)
-    }
+fun NavGraphBuilder.url( txt: Str, UI: ui_<NavBackStackEntry>) {
+    composable(txt) { UI(it) }
 }
+fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
+    dialog(txf){ UI(it) }
+}
+
 fun NavBackStackEntry.url(key: Str): Str {
     val value = this.arguments?.getString(key) ?: ""
     return if (value == "_") "" else value
