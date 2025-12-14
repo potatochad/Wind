@@ -115,12 +115,11 @@ object Item {
 		var Field by r_m(TextFieldValue(txt.it))
 		var done = r_m(no)
 		var itIndex by r_m(0)
-
-		/*
 		
         OutlinedTextField(
             value = Field,
-            onValueChange = {       
+            onValueChange = {    
+				/*
 				try {
 					
 				Do(it.text)
@@ -142,14 +141,13 @@ object Item {
 				} catch (e: Exception) {
 					Vlog("$e—error")
 				}
+				*/
 			},
             modifier = Mod.maxW().Vscroll(scroll).onFocusChanged{
 				if (!it.isFocused) done.it = no
 			},
 		    placeholder = { Text("Start typing...") },
         )
-
-		*/
 	}
 
 
