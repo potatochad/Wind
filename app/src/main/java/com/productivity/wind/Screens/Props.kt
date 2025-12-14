@@ -54,6 +54,14 @@ fun NavGraphBuilder.ScreenNav() {
 	url("PrivacyScreen") { PrivacyScreen() }
     url("SettingsOtherScreen") { SettingsOtherScreen() }
     url("LogsScreen") { LogsScreen() }
+
+	dialog("popup") {
+		Text("This is a popup!")
+		Button(onClick = { navController.popBackStack() }) {
+			Text("Close")
+		}
+	}
+
   
 }
 
@@ -411,7 +419,8 @@ object Header {
         Icon.Chill()
 
         Icon.Delete{
-            RunJs()
+            // RunJs()
+			goTo("popup")
         }
         
         move(w = 12)
