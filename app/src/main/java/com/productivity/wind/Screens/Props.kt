@@ -298,7 +298,7 @@ object Item {
             if (Bar.Dpoints > 0) {
                 if (Bar.funTime < 1) {
                     goTo("main")
-                    show(NeedMorePoints)
+                    goTo("getPoints")
                 } else {
                     Bar.funTime -= 1
                 }
