@@ -190,7 +190,7 @@ object Item {
 
     fun enoughPoints(enough: Do) {
         if (Bar.funTime < Bar.Dpoints) {
-            show(NeedMorePoints)
+            goTo("getPoints")
         }
         else enough()
     }
@@ -342,7 +342,7 @@ object Header {
         
         UI.End {
             Icon.Add {
-                UI.check(!isUsageP_Enabled()) { show(AskUsagePermission); return@Add}
+                UI.check(!isUsageP_Enabled()) { goTo("usagePermission"); return@Add}
                 UI.check(Time.it < 1,"Add time") {return@Add}
                 UI.check(selectedApp.it.isEmpty(),"Select app") {return@Add}
 
