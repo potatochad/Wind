@@ -143,7 +143,7 @@ object Item {
 				}
 				*/
 			},
-            modifier = Mod.maxW().Vscroll(scroll).onFocusChanged{
+            modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
 				if (!it.isFocused) done.it = no
 			},
 		    placeholder = { Text("Start typing...") },
