@@ -527,9 +527,9 @@ object Icon {
 
 
 @Composable
-fun NeedMorePointsPopup(){
+fun getPoints(){
     LazyPopup(
-        show, 
+        m(yes), 
         "Get ${Bar.funTime- Bar.Dpoints} more points", 
         "Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime- Bar.Dpoints}",
         showCancel = no,
@@ -538,9 +538,9 @@ fun NeedMorePointsPopup(){
 
 
 @Composable
-fun usagePermission(show: m_<Bool>) {
+fun usagePermission() {
         LazyPopup(
-            show,
+            m(yes),
             "Need Usage Permission",
             "To function correctly, this app requires access to your app usage data. Granting this permission allows the app to monitor usage statistics and manage app-related tasks efficiently. Without it, this feature won't work.",
             onConfirm = {
