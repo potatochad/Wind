@@ -538,7 +538,7 @@ fun NeedMorePointsPopup(){
 
 
 @Composable
-fun AskUsagePermission(show: m_<Bool>) {
+fun usagePermission(show: m_<Bool>) {
         LazyPopup(
             show,
             "Need Usage Permission",
@@ -553,9 +553,9 @@ fun AskUsagePermission(show: m_<Bool>) {
 
 var DebugPopupInfo by m("")
 @Composable
-fun DebugPopup(show: m_<Bool>) {
+fun debug() {
         LazyPopup(
-            show,
+            m(yes),
             "Info",
             DebugPopupInfo,
             showCancel = no,
@@ -563,9 +563,9 @@ fun DebugPopup(show: m_<Bool>) {
         )
 }
 @Composable
-fun isSure(show: m_<Bool>, Do: Do) {
+fun isSure(Do: Do) {
     LazyPopup(
-        show,
+        m(yes),
         "Delete",
         "Are you certain you want to delete this item for ever?",
         onConfirm = {Do()},
@@ -585,7 +585,7 @@ fun isSure(show: m_<Bool>, Do: Do) {
 var selectedApp = m("")
 
 @Composable
-fun AppSelectPopup(show: m_<Bool>) {
+fun selectApp() {
     var appList by r_m<List<Pair<ResolveInfo, Drawable?>>>(emptyList())
     var loading by r_m(no)
 
@@ -607,7 +607,7 @@ fun AppSelectPopup(show: m_<Bool>) {
     }
 
     LazyPopup(
-        show = show,
+        show = m(yes),
         showCancel = no,
         showConfirm = no,
         title = "Select App"
