@@ -58,7 +58,7 @@ fun NavGraphBuilder.ScreenNav() {
 	popup("getPoints") { getPoints() }
 	popup("usagePermission") { usagePermission() }
 	popup("debug") { debug() }
-	popup("isSure") { isSure() }
+	popup("isSure") { isSure{} }
 	popup("selectApp") { selectApp() }
 
   
