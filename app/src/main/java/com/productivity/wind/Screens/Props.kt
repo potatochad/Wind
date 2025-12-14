@@ -496,9 +496,11 @@ object Icon {
         LazyIcon(Icons.Default.Delete){
             show.it=yes
         }
-		isSure(show){
+		/*
+		isSure {
 			Do()
 		}
+		*/
     }
 
 
@@ -588,6 +590,7 @@ var selectedApp = m("")
 fun selectApp() {
     var appList by r_m<List<Pair<ResolveInfo, Drawable?>>>(emptyList())
     var loading by r_m(no)
+	var show = m(yes)
 
     RunOnce {
         runHeavyTask(
@@ -607,7 +610,7 @@ fun selectApp() {
     }
 
     LazyPopup(
-        show = m(yes),
+        show = show,
         showCancel = no,
         showConfirm = no,
         title = "Select App"
