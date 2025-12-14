@@ -114,6 +114,7 @@ object Item {
 		val scroll = r_Scroll()
 		var Field by r_m(TextFieldValue(txt.it))
 		var done = r_m(no)
+		var itIndex by r_m(0)
 		
         OutlinedTextField(
             value = Field,
@@ -123,16 +124,18 @@ object Item {
 					text = txt.it,
 					selection = it.selection
 				)
-
+				itIndex = it.selection.start
 				
+
+				Vlog("diff scroll-index: [ ${scroll.it-itIndex} ], scroll: [ ${scroll.it} ], index: [ $itIndex ]")
 				fixedInputScroll(
 					Field,
-					it.selection.start,
+					itIndex,
 					done,
 					scroll
 				)
             },
-            modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
+            modifier = Mod.maxW().Vscroll(scroll).onFocusChanged{
 				if (!it.isFocused) done.it = no
 			},
 		    placeholder = { Text("Start typing...") },
