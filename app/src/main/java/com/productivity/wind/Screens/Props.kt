@@ -128,15 +128,7 @@ object Item {
 				itIndex = it.selection.start
 				
 
-				fixedInputScroll(
-					Field,
-					itIndex,
-					done,
-					scroll
-				)
-				if (itIndex == it.text.size) {
-					scroll.toBottom()
-				}
+				fixedInputScroll(Field, itIndex, done, scroll)
 				
 				Vlog("index: [ $itIndex ]")
 			},
