@@ -111,6 +111,9 @@ object Item {
 
 	@Composable
 	fun BigTskInput(txt: m_<Str>, Do: DoStr={ txt.it = it }){
+
+		/*
+		
 		val scroll = r_Scroll()
 		var Field by r_m(TextFieldValue(txt.it))
 		var done = r_m(no)
@@ -146,6 +149,8 @@ object Item {
 			},
 		    placeholder = { Text("Start typing...") },
         )
+
+		*/
 	}
 
 
