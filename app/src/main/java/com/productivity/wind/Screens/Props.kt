@@ -119,7 +119,6 @@ object Item {
         OutlinedTextField(
             value = Field,
             onValueChange = {    
-				/*
 				try {
 					
 				Do(it.text)
@@ -141,7 +140,6 @@ object Item {
 				} catch (e: Exception) {
 					Vlog("$e—error")
 				}
-				*/
 			},
             modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
 				if (!it.isFocused) done.it = no
