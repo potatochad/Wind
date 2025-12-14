@@ -131,6 +131,15 @@ object Item {
 				fixedInputScroll(Field, itIndex, done, scroll)
 				
 				Vlog("index: [ $itIndex ]")
+
+				val cursorPosition = it.selection.start
+				val layoutInfo = scroll.layoutInfo // info about visible area
+				val cursorOffset = scroll.getOffsetFor(cursorPosition) // compute where cursor is
+
+				if (cursorOffset < layoutInfo.visibleStart || cursorOffset > layoutInfo.visibleEnd) {
+					scroll.scrollTo(cursorOffset)
+				}
+
 			},
             modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
 				if (!it.isFocused) done.it = no
