@@ -56,7 +56,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("LogsScreen") { LogsScreen() }
 
 	popup("popup") {
-		NeedMorePointsPopup(m(no))
+		NeedMorePointsPopup(m(yes))
 	}
 
   
@@ -415,7 +415,7 @@ object Header {
         Icon.Menu()
         Icon.Chill()
 
-        Icon.Delete{
+        Icon.Reload{
             // RunJs()
 			goTo("popup")
         }
