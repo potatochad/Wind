@@ -65,13 +65,12 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.*
 //region log
 
-fun Plog(msg: Str = "test", s: Int = 0) {
+fun Plog(msg: Str = "test", s: Int = 30) {
     val delayMillis = s * 1000
 
-    CoroutineScope(Dispatchers.Main).launch {
-        delay(delayMillis.toLong())
+    wait(s) {
         DebugPopupInfo = msg
-        show(DebugPopup)
+        debug.it = yes
     }
 }
 
