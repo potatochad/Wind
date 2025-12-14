@@ -55,7 +55,11 @@ fun NavGraphBuilder.ScreenNav() {
     url("SettingsOtherScreen") { SettingsOtherScreen() }
     url("LogsScreen") { LogsScreen() }
 
-	popup("popup") { getPoints() }
+	popup("getPoints") { getPoints() }
+	popup("usagePermission") { usagePermission() }
+	popup("debug") { debug() }
+	popup("isSure") { isSure() }
+	popup("selectApp") { selectApp() }
 
   
 }
@@ -415,7 +419,6 @@ object Header {
 
         Icon.Reload{
             // RunJs()
-			goTo("popup")
         }
         
         move(w = 12)
@@ -523,14 +526,8 @@ object Icon {
 
 
 
-
-var NeedMorePoints = Popup.add { NeedMorePointsPopup(it) }
-var AskUsagePermission = Popup.add { AskUsagePermission(it) }
-var AppSelect = Popup.add { AppSelectPopup(it) }
-var DebugPopup = Popup.add { DebugPopup(it) }
-
 @Composable
-fun NeedMorePointsPopup(show: m_<Bool>){
+fun NeedMorePointsPopup(){
     LazyPopup(
         show, 
         "Get ${Bar.funTime- Bar.Dpoints} more points", 
