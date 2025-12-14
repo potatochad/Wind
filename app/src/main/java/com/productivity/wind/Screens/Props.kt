@@ -127,14 +127,18 @@ object Item {
 				itIndex = it.selection.start
 				
 
-				Vlog("diff scroll-index: [ ${scroll.it-itIndex} ], scroll: [ ${scroll.it} ], index: [ $itIndex ]")
 				fixedInputScroll(
 					Field,
 					itIndex,
 					done,
 					scroll
 				)
-            },
+				try {
+					Vlog("diff scroll-index: [ ${scroll.it-itIndex} ], scroll: [ ${scroll.it} ], index: [ $itIndex ]")
+				} catch (e: Exception) {
+					Vlog("$e—error")
+				}
+			},
             modifier = Mod.maxW().Vscroll(scroll).onFocusChanged{
 				if (!it.isFocused) done.it = no
 			},
