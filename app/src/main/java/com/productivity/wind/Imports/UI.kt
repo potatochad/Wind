@@ -70,7 +70,7 @@ fun Plog(msg: Str = "test", s: Int = 30) {
 
     wait(s) {
         DebugPopupInfo = msg
-        debug.it = yes
+        goTo("debug")
     }
 }
 
