@@ -169,6 +169,7 @@ typealias Do_<T> = (T) -> Unit
 typealias DoStr = (Str) -> Unit     
 typealias DoInt = (Int) -> Unit        
 typealias m_<T> = MutableState<T>
+typealias mBool= MutableState<Bool>
 typealias Str = String
 typealias Bool = Boolean
 typealias UIStr = AnnotatedString
