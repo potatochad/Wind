@@ -232,8 +232,8 @@ fun AppStart() {
     
     Popup.Init()
 	
-    App.navHost = rememberNavController()
-    MyNavGraph(navController = App.navHost)
+    App.nav = rememberNavController()
+    MyNavGraph(navController = App.nav)
 }
 
 
@@ -242,7 +242,7 @@ fun AppStart() {
 object App {
     lateinit var ctx: Context
 	lateinit var activity: ComponentActivity
-    lateinit var navHost: NavHostController
+    lateinit var nav: NavHostController
 	lateinit var pkg: Str
 	lateinit var run: CoroutineScope
 
