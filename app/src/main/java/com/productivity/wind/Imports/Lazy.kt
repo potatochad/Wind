@@ -718,7 +718,8 @@ fun LazyHeader(
 					if (!clickedBack) {
 							clickedBack = yes
 							onBackClick()
-							App.navHost.popBackStack()
+							
+							navBack()
 					}
 				}
             }
