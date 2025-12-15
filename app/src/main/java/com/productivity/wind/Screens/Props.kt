@@ -110,8 +110,8 @@ object Item {
     }
 
 	@Composable
-	fun BigTskInput(txt: m_<Str>, Do: DoStr={ txt.it = it }){
-		val scroll = r_Scroll()
+	fun BigTskInput(txt: m_<Str>, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = it }){
+		val scroll = scrollV
 		var Field by r_m(TextFieldValue(txt.it))
 		var done = r_m(no)
 		var itIndex by r_m(0)
