@@ -183,7 +183,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     move(h = 20)
 
 	var txt = r_m(tsk.input)
-    Item.BigTskInput(txt) {
+    OutlinedInput(txt) {
 		if (it.size - txt.it.size < 2) {
 			txt.it=it
 			
