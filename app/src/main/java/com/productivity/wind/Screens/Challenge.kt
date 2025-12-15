@@ -137,6 +137,15 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     RunOnce(tsk.goodStr) {
 		if (tsk.goodStr > 20) {
+			val done = toF(txtScroll.maxValue) / toF(tsk.txt.size)
+			Vlog("done: $done")
+
+			txtScroll.scroll(done)
+		}
+	}
+	RunOnce {
+		Vlog("Scroll to progress")
+		if (tsk.goodStr > 20) {
 			val done = toF(tsk.goodStr) / toF(tsk.txt.size)
 
 			scrollToProgress(done, txtScroll)
