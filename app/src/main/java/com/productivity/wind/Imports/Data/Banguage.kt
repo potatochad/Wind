@@ -552,57 +552,9 @@ fun BasicInput(
 			keyboardActions = KeyboardActions(
 				onDone = { focusManager.clearFocus() }
 			),
-			modifier = Modifier.focusRequester(focusRequester)
+			modifier = Mod.focusRequester(focusRequester)
 		)
 	}
-}
-@Composable
-fun OutlinedInput(
-    txt: m_<Str>,
-    Do: DoStr = { txt.it = it }
-) {
-    val scroll = r_Scroll()
-    var Field by r_m(TextFieldValue(txt.it))
-    var done = r_m(no)
-    var itIndex by r_m(0)
-    var layout by r_m<TextLayoutResult?>(null)
-
-    BasicTextField(
-        value = Field,
-        onValueChange = {
-            Do(it.text)
-            Field = it
-            itIndex = it.selection.start
-        },
-        modifier = Mod
-            .maxW()
-            .h(150)
-            .Vscroll(scroll)
-            .onFocusChanged {
-                if (!it.isFocused) done.it = no
-            },
-        onTextLayout = {
-            layout = it
-        },
-        decorationBox = { inner ->
-            // gives you OutlinedTextField look later if you want
-            inner()
-        }
-    )
-
-    // 🔑 REAL scrolling logic
-    LaunchedEffect(itIndex, layout) {
-        val l = layout ?: return@LaunchedEffect
-        val cursorRect = l.getCursorRect(itIndex)
-
-        // scroll so cursor is visible
-        val cursorBottom = cursorRect.bottom
-        val viewBottom = scroll.value + 150f
-
-        if (cursorBottom > viewBottom) {
-            scroll.scrollTo((cursorBottom - 150f).toInt())
-        }
-    }
 }
 
 
