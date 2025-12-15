@@ -57,8 +57,6 @@ fun NavGraphBuilder.ScreenNav() {
 
 	popup("getPoints") { getPoints() }
 	popup("usagePermission") { usagePermission() }
-	popup("debug") { debug() }
-	popup("isSure") { isSure{} }
 	popup("selectApp") { selectApp() }
 
   
@@ -492,13 +490,11 @@ object Icon {
         var show = r_m(no)
         
         LazyIcon(Icons.Default.Delete){
-            show.it=yes
+            show.it = yes
         }
-		/*
-		isSure {
+		isSure(show) {
 			Do()
 		}
-		*/
     }
 
 
@@ -551,21 +547,10 @@ fun usagePermission() {
         )
 }
 
-var DebugPopupInfo by m("")
 @Composable
-fun debug() {
-        LazyPopup(
-            m(yes),
-            "Info",
-            DebugPopupInfo,
-            showCancel = no,
-            showConfirm = no,         
-        )
-}
-@Composable
-fun isSure(Do: Do) {
+fun isSure(show: mBool, Do: Do) {
     LazyPopup(
-        m(yes),
+        show,
         "Delete",
         "Are you certain you want to delete this item for ever?",
         onConfirm = {Do()},
