@@ -85,16 +85,16 @@ fun CopyPaste(id: Str ="") {
       val tsk = Bar.copyTsk.find { it.id == id }
 
       if (tsk != null) {
-        txt.it = tsk.txt
-        DailyMax.it = tsk.DailyMax
-        Done_Worth.it = tsk.Done_Worth
-        Letter_Worth.it = tsk.Letter_Worth
-      }
-		wait {
-			val done = toF(tsk.goodStr * inputScroll.size) / toF(tsk.txt.size)
-			
-			inputScroll.goTo(done)
-		}
+		  txt.it = tsk.txt
+		  DailyMax.it = tsk.DailyMax
+		  Done_Worth.it = tsk.Done_Worth
+		  Letter_Worth.it = tsk.Letter_Worth
+		  
+		  wait {
+			  val done = toF(tsk.goodStr * inputScroll.size) / toF(tsk.txt.size)
+			  inputScroll.goTo(done)
+		  }
+	  }
     }
 
     LazyScreen(top = { 
