@@ -143,11 +143,14 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 	}
 	RunOnce {
-		if (tsk.goodStr > 20) {
-			val done = toF(tsk.goodStr) / toF(tsk.txt.size)
-
-			Vlog("scroll to progess, done: $done")
-			txtScroll.goTo(txtScroll.size*done)
+		wait {
+			if (tsk.goodStr > 20) {
+				val done = toF(tsk.goodStr) / toF(tsk.txt.size)
+				val goTo = txtScroll.size*done
+			
+				Vlog("scroll to progess, goTo: $goTo")
+				txtScroll.goTo(goTo)
+			}
 		}
 	}
 	
