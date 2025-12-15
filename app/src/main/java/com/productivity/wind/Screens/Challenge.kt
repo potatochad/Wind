@@ -115,7 +115,7 @@ fun CopyPaste(id: Str ="") {
             LazzyRow {
 				Column {
 					Text("Text: ")
-					OutlinedInput(txt)
+					Item.BigTskInput(txt)
 				}
 			}
         }
@@ -183,7 +183,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     move(h = 20)
 
 	var txt = r_m(tsk.input)
-    OutlinedInput(txt) {
+    Item.BigTskInput(txt) {
 		if (it.size - txt.it.size < 2) {
 			txt.it=it
 			
