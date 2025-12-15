@@ -115,7 +115,7 @@ fun CopyPaste(id: Str ="") {
             LazzyRow {
 				Column {
 					Text("Text: ")
-					Item.BigTskInput(txt)
+					OutlinedInput(txt)
 				}
 			}
         }
