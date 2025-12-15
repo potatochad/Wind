@@ -135,8 +135,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = r_Scroll()
 	val inputScroll = r_Scroll()
 
-    RunOnce {
-		Vlog("tsk.goodStr: [ ${tsk.goodStr} ]")
+    RunOnce(tsk.goodStr) {
 		if (tsk.goodStr > 20) {
 			val done = toF(tsk.goodStr) / toF(tsk.txt.size)
 
@@ -153,12 +152,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
         Bar.funTime += tsk.Done_Worth
 		txtScroll.goTo(0)
-	}
-
-	RunOnce(tsk.goodStr) {
-		if (tsk.goodStr > 20) {
-			txtScroll.scroll(2)
-		}
 	}
 
     
