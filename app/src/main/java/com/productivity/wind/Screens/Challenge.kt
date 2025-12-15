@@ -147,7 +147,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			val done = toF(tsk.goodStr) / toF(tsk.txt.size)
 
 			Vlog("scroll to progess, done: $done")
-			txtScroll.scrollTo(txtScroll.size*done)
+			txtScroll.goTo(txtScroll.size*done)
 		}
 	}
 	
