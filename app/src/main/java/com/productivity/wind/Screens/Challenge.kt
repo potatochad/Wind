@@ -151,6 +151,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 				Vlog("scroll to progess, goTo: $goTo")
 				txtScroll.goTo(goTo)
 			}
+			inputScroll.toBottom()
 		}
 	}
 	
