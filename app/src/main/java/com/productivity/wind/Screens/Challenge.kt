@@ -78,8 +78,7 @@ fun CopyPaste(id: Str ="") {
     var DailyMax = r_m(5)
     var Done_Worth = r_m(10)
     var Letter_Worth = r_m(1)
-	var resetInput = m(yes)
-	
+	var resetInput = r_m(yes)
 	val inputScroll = r_Scroll()
     
     if (!id.isEmpty()) {
@@ -122,16 +121,13 @@ fun CopyPaste(id: Str ="") {
             LazzyRow {
 				Column {
 					Text("Text: ")
-					Item.BigTskInput(txt)
+					Item.BigTskInput(txt, inputScroll)
 				}
 			}
         }
 		LazyRuleCard("Extra") {
             UI.CheckRow("reset input every day", resetInput)
 		}
-		
-
-		
     }
 }
 
