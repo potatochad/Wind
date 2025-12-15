@@ -149,10 +149,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 		wait {
 			if (tsk.goodStr > 20) {
 				val done = toF(tsk.goodStr) / toF(tsk.txt.size)
-				val goTo = txtScroll.size*done
 			
-				Vlog("scroll to progess, goTo: $goTo")
-				txtScroll.goTo(goTo)
+				txtScroll.goTo(txtScroll.size*done)
 			}
 			inputScroll.toBottom()
 		}
