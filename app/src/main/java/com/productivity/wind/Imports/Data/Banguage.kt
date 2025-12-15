@@ -263,7 +263,7 @@ fun toUI(it: Any?): UI {
 
 
 fun goTo(route: Str){
-	App.navHost.navigate(route)
+	App.nav.navigate(route)
 }
 
 fun NavGraphBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
