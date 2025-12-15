@@ -222,6 +222,9 @@ fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Mod =
 fun File.file(name: Str): File {
     return File(this, name)
 }
+val ScrollState.size: Int
+    get() = maxValue
+
 
 
 val Str.size get() = length
