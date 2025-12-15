@@ -809,6 +809,7 @@ fun LazyPopup(
     onConfirm: Do? = null,
     onCancel: Do? = null,
 	onDismiss: Do? = { show.it = no },
+	onClose: Do = {},
 	ui: ui? = null,
 ) {
     if (!show.it) return
@@ -817,6 +818,7 @@ fun LazyPopup(
     AlertDialog(
         onDismissRequest = {
             onDismiss?.invoke()
+			onClose()
         },
         title = { Text(title) },
         text = {
@@ -840,6 +842,7 @@ fun LazyPopup(
 				UI.Ctext("Cancel"){
 					wait {
 						onCancel?.invoke()
+						onClose()
 						hide(show)
 					}
                 }
