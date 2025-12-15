@@ -65,15 +65,6 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.*
 //region log
 
-fun Plog(msg: Str = "test", s: Int = 30) {
-    val delayMillis = s * 1000
-
-    wait(s) {
-        DebugPopupInfo = msg
-        goTo("debug")
-    }
-}
-
 private var lastToast: Toast? = null
 
 fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
