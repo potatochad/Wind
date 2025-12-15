@@ -55,6 +55,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("SettingsOtherScreen") { SettingsOtherScreen() }
     url("LogsScreen") { LogsScreen() }
 
+	// popups
 	popup("getPoints") { getPoints() }
 	popup("usagePermission") { usagePermission() }
 	popup("selectApp") { selectApp() }
