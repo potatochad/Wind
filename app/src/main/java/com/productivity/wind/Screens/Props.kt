@@ -597,7 +597,10 @@ fun selectApp() {
         show = show,
         showCancel = no,
         showConfirm = no,
-        title = "Select App"
+        title = "Select App",
+		onClose = {
+			
+		},
     ){
             if (loading) {
                 Text("Loading...")
