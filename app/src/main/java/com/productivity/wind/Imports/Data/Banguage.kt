@@ -474,17 +474,6 @@ fun Mod.scroll(
 
 
 
-fun scrollToProgress(progress: Float, scroll: ScrollState) {
-	val maxValue = toF(scroll.maxValue)
-	val currentValue = toF(scroll.it)
-	val target = maxValue * progress
-	val move = target - currentValue
-
-	scroll.goTo(move.toInt())
-}
-
-
-
 fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	try {
 		val index = this.indexOf(item)
