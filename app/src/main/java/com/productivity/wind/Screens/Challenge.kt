@@ -195,7 +195,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 				
 			Bar.copyTsk.edit(tsk) { tsk.input = it }
 				
-			if (tsk.input == tsk.txt) Done()
+			if (tsk.input == tsk.txt) {
+				Done()
+				txt.it=""
+			}
         }
     }
 }
