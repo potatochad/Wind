@@ -79,6 +79,8 @@ fun CopyPaste(id: Str ="") {
     var Done_Worth = r_m(10)
     var Letter_Worth = r_m(1)
 	var resetInput = m(yes)
+	
+	val inputScroll = r_Scroll()
     
     if (!id.isEmpty()) {
       val tsk = Bar.copyTsk.find { it.id == id }
@@ -89,6 +91,11 @@ fun CopyPaste(id: Str ="") {
         Done_Worth.it = tsk.Done_Worth
         Letter_Worth.it = tsk.Letter_Worth
       }
+		wait {
+			val done = toF(tsk.goodStr * inputScroll.size) / toF(tsk.txt.size)
+			
+			inputScroll.goTo(done)
+		}
     }
 
     LazyScreen(top = { 
@@ -189,7 +196,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     move(h = 20)
 
 	var txt = r_m(tsk.input)
-    Item.BigTskInput(txt) {
+    Item.BigTskInput(txt, inputScroll) {
 		if (it.size - txt.it.size < 2) {
 			txt.it=it
 			
