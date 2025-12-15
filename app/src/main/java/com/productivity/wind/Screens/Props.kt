@@ -128,8 +128,6 @@ object Item {
 				itIndex = it.selection.start
 				
 				fixedInputScroll(Field, itIndex, done, scroll)
-				
-				Vlog("index: [ $itIndex ]")
 
 			},
             modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
