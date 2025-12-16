@@ -530,6 +530,9 @@ fun getPoints(){
         "Get ${Bar.funTime- Bar.Dpoints} more points", 
         "Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime- Bar.Dpoints}",
         showCancel = no,
+		onClose = {
+			navBack()
+		},
     )
 }
 
@@ -544,7 +547,10 @@ fun usagePermission() {
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
                 App.ctx.startActivity(intent)
-            }
+            },
+			onClose = {
+				navBack()
+			}
         )
 }
 
@@ -599,7 +605,7 @@ fun selectApp() {
         showConfirm = no,
         title = "Select App",
 		onClose = {
-			
+			navBack()
 		},
     ){
             if (loading) {
