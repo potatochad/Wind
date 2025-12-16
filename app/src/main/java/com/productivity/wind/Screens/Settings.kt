@@ -21,6 +21,10 @@ import androidx.compose.ui.*
 import androidx.compose.foundation.lazy.*
 
 
+
+import com.google.android.gms.maps.model.*
+import com.google.maps.android.compose.*
+
 @Composable
 fun SettingsScreen() {
     LazyScreen("Settings") {
