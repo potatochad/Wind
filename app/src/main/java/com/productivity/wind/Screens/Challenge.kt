@@ -125,9 +125,11 @@ fun CopyPaste(id: Str ="") {
 				}
 			}
         }
+		/*
 		LazyRuleCard("Extra") {
             UI.CheckRow("reset input every day", resetInput)
 		}
+		*/
     }
 }
 
