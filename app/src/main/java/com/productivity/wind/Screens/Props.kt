@@ -58,7 +58,7 @@ fun NavGraphBuilder.ScreenNav() {
 	// popups
 	popup("getPoints") { getPoints() }
 	popup("usagePermission") { usagePermission() }
-	popup("selectApp") { selectApp() }
+	popup("selectApp/{show}") { selectApp(it.url("show")) }
 
   
 }
@@ -577,10 +577,9 @@ fun isSure(show: mBool, Do: Do) {
 var selectedApp = m("")
 
 @Composable
-fun selectApp() {
+fun selectApp(show: mBool=m(yes)) {
     var appList by r_m<List<Pair<ResolveInfo, Drawable?>>>(emptyList())
     var loading by r_m(no)
-	var show = m(yes)
 
     RunOnce {
         runHeavyTask(
