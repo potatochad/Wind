@@ -241,6 +241,11 @@ fun UIStrBuilder.add(text: UIStr) = append(text)
 
 fun navBack() { App.nav.popBackStack() }
 
+inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
+    val v = arguments?.get(key)
+    if (v == "_") return null
+    return v as? T
+}
 
 
 
