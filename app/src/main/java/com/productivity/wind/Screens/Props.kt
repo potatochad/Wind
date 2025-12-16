@@ -608,7 +608,7 @@ fun selectApp() {
 			navBack()
 		},
     ){
-		appList.each { (app, icon) ->
+		appList.forEach{ (app, icon) ->
 			LazzyRow(
 				Mod.click {
 					selectedApp.it = getAppName(app)
