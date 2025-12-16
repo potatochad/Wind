@@ -608,9 +608,6 @@ fun selectApp() {
 			navBack()
 		},
     ){
-            if (loading) {
-                Text("Loading...")
-            } else {
                 LazzyList(appList) { (app, icon), _ ->
                     LazzyRow(
                         Mod.click {
@@ -627,6 +624,5 @@ fun selectApp() {
                         }
                     }
                 }
-            }
     }
 }
