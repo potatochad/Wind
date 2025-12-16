@@ -444,7 +444,7 @@ object UI {
 	@Composable
 	fun Ctext(
         text: Str,
-        onClick: Do,
+        onClick: Do={},
 	) {
 		Text(
 			text = text.color(Gold),
