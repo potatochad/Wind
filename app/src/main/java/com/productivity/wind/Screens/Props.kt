@@ -40,9 +40,15 @@ fun NavGraphBuilder.ScreenNav() {
 
     url("Achievements") { Achievements() }
     url("Challenge") { Challenge() }
-    url("AppUsage/{appId}") { AppUsage(it.url("appId")) }
+    url("AppUsage/{appId}") {
+		var x: Str = it.url("appId") ?: ""
+		AppUsage(x) 
+	}
 
-    url("CopyPaste/{appId}") { CopyPaste(it.url("appId")) }
+    url("CopyPaste/{appId}") { 
+		var x: Str = it.url("appId") ?: ""
+		CopyPaste(x) 
+	}
 
     url("Web") { Web() }
     url("BlockKeyword") { BlockKeyword() }
@@ -58,7 +64,10 @@ fun NavGraphBuilder.ScreenNav() {
 	// popups
 	popup("getPoints") { getPoints() }
 	popup("usagePermission") { usagePermission() }
-	popup("selectApp/{show}") { selectApp(it.url("show")) }
+	popup("selectApp/{show}") { 
+		var x: mBool = it.url("show") ?: m(yes)
+		selectApp(it.url("show"))
+	}
 
   
 }
