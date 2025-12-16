@@ -273,10 +273,12 @@ fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
     dialog(txt){ UI(it) }
 }
 
-fun NavBackStackEntry.url(key: Str): Str {
-    val value = this.arguments?.getString(key) ?: ""
-    return if (value == "_") "" else value
+inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
+    val v = arguments?.get(key)
+    if (v == "_") return null
+    return v as? T
 }
+
 
 
 
