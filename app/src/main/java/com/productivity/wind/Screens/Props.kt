@@ -608,21 +608,20 @@ fun selectApp() {
 			navBack()
 		},
     ){
-                LazzyList(appList) { (app, icon), _ ->
-                    LazzyRow(
-                        Mod.click {
-                            selectedApp.it = getAppName(app)
-                            show.it = no
-                        }
-                    ) {
-                        move(10)
-                        LazyImage(icon)
-                        move(10)
-                        UI.Ctext(getAppName(app)) {
-                            selectedApp.it = getAppName(app)
-                            show.it = no
-                        }
-                    }
-                }
-    }
+		appList.each { (app, icon) ->
+			LazzyRow(
+				Mod.click {
+					selectedApp.it = getAppName(app)
+                    show.it = no
+			}) {
+				move(10)
+                LazyImage(icon)
+                move(10)
+                UI.Ctext(getAppName(app)) {
+                selectedApp.it = getAppName(app)
+                show.it = no
+				}
+			}
+		}
+	}
 }
