@@ -66,7 +66,7 @@ fun NavGraphBuilder.ScreenNav() {
 	popup("usagePermission") { usagePermission() }
 	popup("selectApp/{show}") { 
 		var x: mBool = it.url("show") ?: m(yes)
-		selectApp(it.url("show"))
+		selectApp(x)
 	}
 
   
@@ -586,7 +586,7 @@ fun isSure(show: mBool, Do: Do) {
 var selectedApp = m("")
 
 @Composable
-fun selectApp(visible: mBool =m(yes)) {
+fun selectApp(show: mBool =m(yes)) {
     var appList by r_m<List<Pair<ResolveInfo, Drawable?>>>(emptyList())
     var loading by r_m(no)
 
