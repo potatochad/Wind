@@ -339,28 +339,28 @@ object Header {
     }
     
     @Composable
-    fun AppUsage(Time: m_<Int>, Points: m_<Int>, selectedApp: m_<Str>) {
+    fun AppUsage(Time: m_<Int>, Points: m_<Int>, selectedApp: Str) {
         Text("AppUsage")
         
         UI.End {
             Icon.Add {
                 UI.check(!isUsageP_Enabled()) { goTo("usagePermission"); return@Add}
                 UI.check(Time.it < 1,"Add time") {return@Add}
-                UI.check(selectedApp.it.isEmpty(),"Select app") {return@Add}
+                UI.check(selectedApp.isEmpty(),"Select app") {return@Add}
 
 
-                var isAdded = Bar.apps.find { it.name == selectedApp.it }
+                var isAdded = Bar.apps.find { it.name == selectedApp }
 
                 if (isAdded==null){
                     Bar.apps.add {
                         pkg = getAppPkg(selectedApp.it)
-                        name = selectedApp.it
+                        name = selectedApp
                         DoneTime = Time.it
                         Worth = Points.it
                     }
                 } else {   
                     Bar.apps.edit(isAdded) {
-                        pkg = getAppPkg(selectedApp.it)
+                        pkg = getAppPkg(selectedApp)
                         name = selectedApp.it
                         DoneTime = Time.it
                         Worth = Points.it
@@ -370,7 +370,7 @@ object Header {
                 
                 
 
-                selectedApp.it= ""
+                selectedApp= ""
                 Points.it= 0
                 Time.it= 0
 
