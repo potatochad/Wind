@@ -220,9 +220,9 @@ fun AppUsage(id: Str = "") {
     var Points = r_m(10)
     var WhichIf = r_m(0)
 	var show = r_m(no)
-    var app by r_m("app")
+    var appName by r_m("app")
 	selectApp(show){
-		app=it
+		appName=it
 	}
   
     if (!id.isEmpty()) {
@@ -231,12 +231,12 @@ fun AppUsage(id: Str = "") {
       if (app != null) {
         Time.it = app.DoneTime
         Points.it = app.Worth
-        app = app.name
+        appName = app.name
       }
     }
 
     LazyScreen(top = {
-        Header.AppUsage(Time, Points, selectedApp)
+        Header.AppUsage(Time, Points, appName)
        }
     ) {
       LazyRuleCard("If"){
@@ -247,7 +247,7 @@ fun AppUsage(id: Str = "") {
           Text(" seconds")
           
           Text(" on ")
-          UI.Ctext(app) {
+          UI.Ctext(appName) {
 			 show.it = yes
           }
         }
