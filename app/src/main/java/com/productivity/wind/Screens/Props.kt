@@ -65,9 +65,9 @@ fun NavGraphBuilder.ScreenNav() {
 	popup("getPoints") { getPoints() }
 	popup("usagePermission") { usagePermission() }
 	popup("selectApp/{show}") { 
-		var x: mBool = it.url("show") ?: m(yes)
-		Vlog("show: [ ${x.it}]")
-		selectApp(x)
+		var x: Bool = it.url("show") ?: yes
+		Vlog("show: [ $x ]")
+		selectApp(m(x))
 	}
 
   
