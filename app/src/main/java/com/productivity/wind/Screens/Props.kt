@@ -353,7 +353,7 @@ object Header {
 
                 if (isAdded==null){
                     Bar.apps.add {
-                        pkg = getAppPkg(selectedApp.it)
+                        pkg = getAppPkg(selectedApp)
                         name = selectedApp
                         DoneTime = Time.it
                         Worth = Points.it
@@ -361,19 +361,11 @@ object Header {
                 } else {   
                     Bar.apps.edit(isAdded) {
                         pkg = getAppPkg(selectedApp)
-                        name = selectedApp.it
+                        name = selectedApp
                         DoneTime = Time.it
                         Worth = Points.it
                     }
                 }
-
-                
-                
-
-                selectedApp= ""
-                Points.it= 0
-                Time.it= 0
-
                 goTo("Main")
             }
         }
