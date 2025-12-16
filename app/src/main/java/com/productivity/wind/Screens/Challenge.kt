@@ -220,8 +220,10 @@ fun AppUsage(id: Str = "") {
     var Points = r_m(10)
     var WhichIf = r_m(0)
 	var show = r_m(no)
-    selectedApp.it= ""
-	selectApp(show)
+    var app by r_m("app")
+	selectApp(show){
+		app=it
+	}
   
     if (!id.isEmpty()) {
       val app = Bar.apps.find { it.id == id }
@@ -229,7 +231,7 @@ fun AppUsage(id: Str = "") {
       if (app != null) {
         Time.it = app.DoneTime
         Points.it = app.Worth
-        selectedApp.it = app.name
+        app = app.name
       }
     }
 
@@ -245,7 +247,7 @@ fun AppUsage(id: Str = "") {
           Text(" seconds")
           
           Text(" on ")
-          UI.Ctext(if (selectedApp.it.isEmpty()) "app" else selectedApp.it) {
+          UI.Ctext(app) {
 			 show.it = yes
           }
         }
@@ -257,7 +259,7 @@ fun AppUsage(id: Str = "") {
           Text(" points")
         }
       }
-
+	  
 
     }
 
