@@ -612,14 +612,14 @@ fun selectApp() {
 			LazzyRow(
 				Mod.click {
 					selectedApp.it = getAppName(app)
-                    show.it = no
+                    navBack()
 			}) {
 				move(10)
                 LazyImage(icon)
                 move(10)
                 UI.Ctext(getAppName(app)) {
-                selectedApp.it = getAppName(app)
-                show.it = no
+					selectedApp.it = getAppName(app)
+					navBack()
 				}
 			}
 		}
