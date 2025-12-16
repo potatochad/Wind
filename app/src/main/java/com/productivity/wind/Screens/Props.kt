@@ -607,24 +607,17 @@ fun selectApp(show: mBool =m(yes), Do: DoStr ={}) {
         showCancel = no,
         showConfirm = no,
         title = "Select App",
-		onClose = {
-			navBack()
-		},
     ){
 		Column(Mod.h(200).Vscroll()){
 		appList.forEach{ (app, icon) ->
 			LazzyRow(
 				Mod.click {
-					selectedApp.it = getAppName(app)
-                    navBack()
+					Do(getAppName(app))
 			}) {
 				move(10)
                 LazyImage(icon)
                 move(10)
-                UI.Ctext(getAppName(app)) {
-					selectedApp.it = getAppName(app)
-					navBack()
-				}
+                UI.Ctext(getAppName(app))
 			}
 		}
 	}
