@@ -577,9 +577,13 @@ fun isSure(show: mBool, Do: Do) {
 var selectedApp = m("")
 
 @Composable
-fun selectApp(show: mBool =m(yes)) {
+fun selectApp(visible: mBool? =m(yes)) {
     var appList by r_m<List<Pair<ResolveInfo, Drawable?>>>(emptyList())
     var loading by r_m(no)
+	var show = m(yes)
+	if (visible.it!=null){
+		show.it=visible.it
+	}
 
     RunOnce {
         runHeavyTask(
