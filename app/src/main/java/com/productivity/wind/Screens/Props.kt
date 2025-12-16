@@ -608,6 +608,7 @@ fun selectApp() {
 			navBack()
 		},
     ){
+		Column(Mod.h(200).Vscroll()){
 		appList.forEach{ (app, icon) ->
 			LazzyRow(
 				Mod.click {
@@ -624,4 +625,6 @@ fun selectApp() {
 			}
 		}
 	}
+	}
+	
 }
