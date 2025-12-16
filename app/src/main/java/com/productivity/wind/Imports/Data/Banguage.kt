@@ -273,14 +273,6 @@ fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
     dialog(txt){ UI(it) }
 }
 
-inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
-    val v = arguments?.get(key)
-    if (v == "_") return null
-    return v as? T
-}
-
-
-
 
 @Composable
 fun click(x: UI, Do: Do) {
