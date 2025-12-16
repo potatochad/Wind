@@ -219,8 +219,9 @@ fun AppUsage(id: Str = "") {
     var Time = r_m(60)
     var Points = r_m(10)
     var WhichIf = r_m(0)
+	var show = r_m(no)
     selectedApp.it= ""
-	//goTo("selectApp/no")
+	selectApp(show)
   
     if (!id.isEmpty()) {
       val app = Bar.apps.find { it.id == id }
@@ -245,7 +246,7 @@ fun AppUsage(id: Str = "") {
           
           Text(" on ")
           UI.Ctext(if (selectedApp.it.isEmpty()) "app" else selectedApp.it) {
-			//goTo("selectApp")
+			 show.it = yes
           }
         }
       }
