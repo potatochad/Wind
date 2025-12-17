@@ -247,6 +247,23 @@ inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
     return v as? T
 }
 
+fun Web?.url(url: Str) {
+    this?.loadUrl(url)
+}
+fun Web?.reload() {
+	this?.reload()
+}
+fun m_<Web?>.reload() {
+    this.it?.reload()
+}
+fun m_<Web?>.url(url: Str) {
+    this.it?.loadUrl(url)
+}
+val Web?.url: Str
+    get() = this?.url ?: ""
+
+val m_<Web?>.url: Str
+    get() = this.it?.url ?: ""
 
 
 
