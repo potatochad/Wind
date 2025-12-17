@@ -238,7 +238,7 @@ fun AppStart() {
 
 
 object App {
-    lateinit var ctx: Context
+    lateinit var ctx: ComponentActivity
 	lateinit var activity: ComponentActivity
     lateinit var nav: NavHostController
 	lateinit var pkg: Str
