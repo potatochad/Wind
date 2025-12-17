@@ -120,6 +120,8 @@ import androidx.navigation.compose.*
 import android.util.*
 import com.google.android.gms.maps.model.*
 import com.google.android.gms.location.*
+import android.content.*
+import android.net.*
 
 
 fun Web?.url(url: Str) {
