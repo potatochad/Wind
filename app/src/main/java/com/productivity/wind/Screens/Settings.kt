@@ -19,9 +19,6 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.ui.*
 import androidx.compose.foundation.lazy.*
-
-
-
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
 
@@ -71,31 +68,26 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
             }
          }
       }
-      ClassicGoogleMap()
-   }
-        
- 
-}
-
-@Composable
-fun ClassicGoogleMap() {
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(
-            LatLng(52.5200, 13.4050), // Berlin
-            12f
-        )
+     position = CameraPosition.fromLatLngZoom(
+      LatLng(52.5200, 13.4050), // Berlin
+      12f
+     )
     }
 
     GoogleMap(
-        modifier = Modifier.fillMaxSize(),
-        cameraPositionState = cameraPositionState
+     modifier = Mod.fillMaxSize(),
+     cameraPositionState = cameraPositionState
     ) {
-        Marker(
-            state = MarkerState(LatLng(52.5200, 13.4050)),
-            title = "Here",
-            snippet = "Classic Google Maps"
-        )
+     Marker(
+      state = MarkerState(LatLng(52.5200, 13.4050)),
+      title = "Here",
+      snippet = "Classic Google Maps"
+     )
     }
+   }
+        
+ 
 }
 
 
