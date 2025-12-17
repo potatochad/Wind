@@ -99,7 +99,7 @@ import kotlin.concurrent.*
 import androidx.annotation.RequiresApi
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.*
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.core.view.*
 import kotlin.reflect.*
