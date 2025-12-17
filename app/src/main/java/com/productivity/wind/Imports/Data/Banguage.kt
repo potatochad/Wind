@@ -613,7 +613,24 @@ fun isUsageP_Enabled(): Bool {
 }
 
 
+@Suppress("DEPRECATION")
+fun gotInternet(): Bool {
+    val ctx = App.ctx
+    val connectivityManager = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
+    val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val network = connectivityManager.activeNetwork
+        val activeNetwork = network?.let { connectivityManager.getNetworkCapabilities(it) }
+        activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == yes ||
+                activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == yes
+    } else {
+        val networkInfo = connectivityManager.activeNetworkInfo
+        networkInfo?.isConnected == yes
+    }
+
+    if (!isConnected) Vlog("No internet")
+    return isConnected
+}
 
 fun isLocationEnabled(): Bool {
     val lm = App.ctx.getSystemService(LocationManager::class.java)
