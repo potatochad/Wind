@@ -538,7 +538,7 @@ fun Input(
 
 
 
-fun goTo(action: Str) {
+fun Open(action: Str) {
     startActivity(
 		Intent(action).apply {
 			addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
