@@ -625,7 +625,7 @@ fun openLocationSettings() {
     App.ctx.startActivity(intent)
 }
 
-fun locationPermission(onGranted: Do = {}) {
+fun locationPermission(Do: Do = {}) {
     val activity = App.activity
 
     if (ContextCompat.checkSelfPermission(
@@ -648,8 +648,8 @@ fun location(onUpdate: Do_<LatLng>) {
 		val globalJob = LocationServices.getFusedLocationProviderClient(App.activity)
 
 		globalJob.requestLocationUpdates(
-			LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 3 000L)
-				.setMinUpdateIntervalMillis(3 000L)
+			LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 3000L)
+				.setMinUpdateIntervalMillis(3000L)
 				.build(), 
 			object : LocationCallback() {
 				override fun onLocationResult(result: LocationResult) {
