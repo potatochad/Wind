@@ -880,10 +880,5 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 
         OnResume()
     }
-	override fun onDestroy() {
-		super.onDestroy()
-		App.activity = null
-		App.ctx = null
-	}
-
+	
 }
