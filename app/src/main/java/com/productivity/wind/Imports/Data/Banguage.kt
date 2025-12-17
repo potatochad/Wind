@@ -625,11 +625,6 @@ fun openLocationSettings() {
     App.ctx.startActivity(intent)
 }
 
-
-
-
-
-
 fun locationPermission(onGranted: Do = {}) {
     val activity = App.activity
 
