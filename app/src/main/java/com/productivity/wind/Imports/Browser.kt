@@ -21,26 +21,6 @@ import android.graphics.*
 import kotlinx.coroutines.*
 import com.productivity.wind.Imports.Data.*
 
-
-@Suppress("DEPRECATION")
-fun gotInternet(): Bool {
-    val ctx = App.ctx
-    val connectivityManager = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-    val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        val network = connectivityManager.activeNetwork
-        val activeNetwork = network?.let { connectivityManager.getNetworkCapabilities(it) }
-        activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == yes ||
-                activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == yes
-    } else {
-        val networkInfo = connectivityManager.activeNetworkInfo
-        networkInfo?.isConnected == yes
-    }
-
-    if (!isConnected) Vlog("No internet")
-    return isConnected
-}
-
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebXml(
