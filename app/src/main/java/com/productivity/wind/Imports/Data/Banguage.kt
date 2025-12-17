@@ -654,26 +654,34 @@ fun locationPermission(onGranted: Do_<LatLng> = {}) {
 }
 fun location(onUpdate: (LatLng) -> Unit) {
 	locationPermission{
-    val activity = App.activity
+    
+	val activity = App.activity
 
-    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
+    val fusedClient = LocationServices.getFusedLocationProviderClient(activity)
 
     val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000L)
         .setMinUpdateIntervalMillis(1000L)
         .build()
 
-    val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(result: LocationResult) {
-            result.locations.lastOrNull()?.let {
-                onUpdate(LatLng(it.latitude, it.longitude))
-            }
-        }
-    }
+    val scope = CoroutineScope(Dispatchers.Main)
 
-    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+    App.run.launch {
+        callbackFlow<Location> {
+            val callback = object : LocationCallback() {
+                override fun onLocationResult(result: LocationResult) {
+                    result.locations.lastOrNull()?.let { trySend(it) }
+                }
+            }
+
+            fusedClient.requestLocationUpdates(locationRequest, callback, Looper.getMainLooper())
+            awaitClose { fusedClient.removeLocationUpdates(callback) } // stops automatically
+        }.collectLatest {
+            onUpdate(LatLng(it.latitude, it.longitude))
+        }
+	}
+	
 	}
 }
-
 
 
 
