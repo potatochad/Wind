@@ -612,17 +612,13 @@ fun isUsageP_Enabled(): Bool {
     ) == AppOpsManager.MODE_ALLOWED
 }
 
+
+
+
 fun isLocationEnabled(): Bool {
     val lm = App.ctx.getSystemService(LocationManager::class.java)
     return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
            lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-}
-
-fun openLocationSettings() {
-    val intent = Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
-    App.ctx.startActivity(intent)
 }
 
 fun locationPermission(Do: Do = {}) {
@@ -641,26 +637,6 @@ fun locationPermission(Do: Do = {}) {
             100
         )
     }
-}
-
-fun location(onUpdate: Do_<LatLng>) {
-	locationPermission {
-		val globalJob = LocationServices.getFusedLocationProviderClient(App.activity)
-
-		globalJob.requestLocationUpdates(
-			LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 3000L)
-				.setMinUpdateIntervalMillis(3000L)
-				.build(), 
-			object : LocationCallback() {
-				override fun onLocationResult(result: LocationResult) {
-					result.locations.lastOrNull()?.let {
-						onUpdate(LatLng(it.latitude, it.longitude))
-					}
-				}
-			}, 
-			Looper.getMainLooper()
-		)
-	}
 }
 
 
