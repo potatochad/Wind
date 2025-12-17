@@ -267,7 +267,14 @@ val m_<Web?>.url: Str
 
 
 
+fun goTo(route: Str){ App.nav.navigate(route) }
 
+fun NavGraphBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
+    composable(txt) { UI(it) }
+}
+fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
+    dialog(txt){ UI(it) }
+}
 
 
 
