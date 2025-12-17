@@ -630,7 +630,7 @@ fun openLocationSettings() {
 
 
 
-fun locationPermission(onGranted: Do_<LatLng> = {}) {
+fun locationPermission(onGranted: Do = {}) {
     val activity = App.activity
 
     if (ContextCompat.checkSelfPermission(
@@ -638,13 +638,8 @@ fun locationPermission(onGranted: Do_<LatLng> = {}) {
             android.Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     ) {
-		LocationServices
-			.getFusedLocationProviderClient(App.activity)
-			.lastLocation
-			.addOnSuccessListener {
-				if (it != null) onGranted(LatLng(it.latitude, it.longitude))
-			}
-    } else {
+		Do()
+	} else {
         ActivityCompat.requestPermissions(
             activity,
             arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
@@ -652,36 +647,28 @@ fun locationPermission(onGranted: Do_<LatLng> = {}) {
         )
     }
 }
-fun location(onUpdate: (LatLng) -> Unit) {
-	locationPermission{
-    
-	val activity = App.activity
 
-    val fusedClient = LocationServices.getFusedLocationProviderClient(activity)
+fun location(onUpdate: Do_<LatLng>) {
+	locationPermission {
+		val globalJob = LocationServices.getFusedLocationProviderClient(App.activity)
 
-    val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000L)
-        .setMinUpdateIntervalMillis(1000L)
-        .build()
-
-    val scope = CoroutineScope(Dispatchers.Main)
-
-    App.run.launch {
-        callbackFlow<Location> {
-            val callback = object : LocationCallback() {
-                override fun onLocationResult(result: LocationResult) {
-                    result.locations.lastOrNull()?.let { trySend(it) }
-                }
-            }
-
-            fusedClient.requestLocationUpdates(locationRequest, callback, Looper.getMainLooper())
-            awaitClose { fusedClient.removeLocationUpdates(callback) } // stops automatically
-        }.collectLatest {
-            onUpdate(LatLng(it.latitude, it.longitude))
-        }
-	}
-	
+		globalJob.requestLocationUpdates(
+			LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 3 000L)
+				.setMinUpdateIntervalMillis(3 000L)
+				.build(), 
+			object : LocationCallback() {
+				override fun onLocationResult(result: LocationResult) {
+					result.locations.lastOrNull()?.let {
+						onUpdate(LatLng(it.latitude, it.longitude))
+					}
+				}
+			}, 
+			Looper.getMainLooper()
+		)
 	}
 }
+
+
 
 
 
