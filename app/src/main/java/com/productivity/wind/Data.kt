@@ -229,8 +229,6 @@ fun AppStart() {
 	App.lazyH = App.h - 100.dp - bottomSystemHeight()
 	
     LazyMenu { Menu() }
-    
-    Popup.Init()
 	
     App.nav = rememberNavController()
     MyNavGraph(navController = App.nav)
