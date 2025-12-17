@@ -869,31 +869,30 @@ class MainActivity : ComponentActivity() {
             systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
         }
+
+
+
+
+		val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+
+Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+    Log.e(
+        "CRASH",
+        "==== CRASH ====\n${throwable.stackTraceToString()}"
+    )
+
+    defaultHandler?.uncaughtException(thread, throwable)
+}
+
+
+
+		
 		var ctx = applicationContext
 		App.ctx = this
 		App.activity = this
 		App.pkg = ctx.packageName
 
 		AppStart_beforeUI()
-
-		
-
-		val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
-
-		Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-			val crashMessage: Str = """
-			   ==== CRASH ====
-    		   Message: ${throwable.message}
-			   StackTrace:
-		       ${throwable.stackTraceToString()}
-			   ================
-			""".trimIndent()
-			
-			log(crashMessage)
-
-			
-			defaultHandler?.uncaughtException(thread, throwable)
-		}
 
 
 		
