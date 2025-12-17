@@ -624,6 +624,12 @@ fun openLocationSettings() {
     }
     App.ctx.startActivity(intent)
 }
+
+
+
+
+
+
 fun locationPermission(onGranted: Do_<LatLng> = {}) {
     val activity = App.activity
 
@@ -645,6 +651,27 @@ fun locationPermission(onGranted: Do_<LatLng> = {}) {
             100
         )
     }
+}
+fun location(onUpdate: (LatLng) -> Unit) {
+	locationPermission{
+    val activity = App.activity
+
+    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
+
+    val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000L)
+        .setMinUpdateIntervalMillis(1000L)
+        .build()
+
+    val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(result: LocationResult) {
+            result.locations.lastOrNull()?.let {
+                onUpdate(LatLng(it.latitude, it.longitude))
+            }
+        }
+    }
+
+    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+	}
 }
 
 
