@@ -838,7 +838,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-
+/*
 		val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
 
 Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
@@ -849,7 +849,7 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 
     defaultHandler?.uncaughtException(thread, throwable)
 }
-
+*/
 
 
 		
