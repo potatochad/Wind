@@ -538,12 +538,12 @@ fun Input(
 
 
 
-fun openPermissionSettings(action: Str, uri: Uri? = null) {
-    val intent = Intent(action).apply {
-        uri?.let { data = it }
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
-    App.ctx.startActivity(intent)
+fun goTo(action: Str) {
+    startActivity(
+		Intent(action).apply {
+			addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+		}
+	)
 }
 
 fun isNotificationEnabled(): Bool {
