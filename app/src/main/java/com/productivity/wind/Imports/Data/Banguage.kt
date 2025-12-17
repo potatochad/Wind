@@ -538,7 +538,7 @@ fun Input(
 
 
 
-fun Open(action: Str) {
+fun androidSettings(action: Str) {
     startActivity(
 		Intent(action).apply {
 			addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
