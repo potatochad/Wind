@@ -280,3 +280,11 @@ fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
 
 
 
+
+// ✴️ PERMISSION RENAMESSS
+fun startActivity(intent: Intent) {
+    App.ctx.startActivity(intent)
+}
+
+
+
