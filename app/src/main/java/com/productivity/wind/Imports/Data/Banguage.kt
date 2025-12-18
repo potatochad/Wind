@@ -844,17 +844,11 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 }
 */
 
-
-		
-		var ctx = applicationContext
-		App.ctx = this
-		App.activity = this
-		App.pkg = ctx.packageName
+		App.i = this
+		App.pkg = this.packageName
 
 		AppStart_beforeUI()
 
-
-		
         setContent {
 			AppContent()
         }
