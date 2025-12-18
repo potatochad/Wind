@@ -897,7 +897,7 @@ fun LazyMenu(
         alignment = Alignment.TopStart,
         onDismissRequest = {
             onDismiss?.invoke()
-            App.menu = no
+            menu = no
         }
     ) {
         Box( Mod.maxS()
