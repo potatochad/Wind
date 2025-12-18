@@ -203,7 +203,7 @@ object Item {
         var name = app.name
 		var progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
 
-		each(50){
+		each(100){
 			progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
 			Vlog("app progress: $progress")
 		}
