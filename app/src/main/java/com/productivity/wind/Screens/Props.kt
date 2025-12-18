@@ -201,9 +201,9 @@ object Item {
     fun AppTaskUI(app: AppTsk){
         val icon = getAppIcon(app.pkg)
         var name = app.name
-		val progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
+		var progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
 
-		each(300){
+		each(50){
 			progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
 		}
         
