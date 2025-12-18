@@ -221,7 +221,7 @@ fun AppStart() {
 	val scope = rememberCoroutineScope()
 
 	RunOnce {
-		App.run = scope
+		run = scope
         DayChecker.start()
 	}
 	
