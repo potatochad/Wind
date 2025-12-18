@@ -281,7 +281,7 @@ fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
 
 
 //✴️ Data renames
-fun Any.eachValVar(Do: (ClassValVar<Any, *>) -> Unit) {
+fun Any.eachValVar(Do: (ClassValVar<out Any, *>) -> Unit) {
     this::class.memberProperties.forEach {
         Do(it)
     }
