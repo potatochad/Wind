@@ -101,12 +101,12 @@ fun getStatusBarHeight(): Int {
 //endregion
 
 fun getApps(): List<ResolveInfo> {
-    val pm = App.ctx.packageManager
+    val pm = App.packageManager
     val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
     return pm.queryIntentActivities(launchIntent, 0).abcOrder()
 }
 fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
-    val pm = App.ctx.packageManager
+    val pm = App.packageManager
     return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
 }
 
@@ -223,9 +223,9 @@ object UI {
 	}
 
 
-	fun copyToClipboard(ctx: ctx, txt: Str) {
-		val clipboard = ctx.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-		val clip = ClipData.newPlainText("label", txt)
+	fun copyToClipboard(txt: Str) {
+		val clipboard = App.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+		val clip = App.newPlainText("label", txt)
 		clipboard.setPrimaryClip(clip)
 	}
 	
