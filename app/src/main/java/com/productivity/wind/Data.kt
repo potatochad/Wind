@@ -237,18 +237,3 @@ fun AppStart() {
 
 
 
-
-object App {
-    lateinit var ctx: ComponentActivity
-	lateinit var activity: ComponentActivity
-    lateinit var nav: NavHostController
-	lateinit var pkg: Str
-	lateinit var run: CoroutineScope
-
-	
-	var h by m(0.dp)
-	var w by m(0.dp)
-	var lazyH by m(0.dp)
-	
-	var menu by m(no)
-}
