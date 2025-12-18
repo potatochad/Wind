@@ -263,25 +263,19 @@ object Item {
     }
     @Composable
     fun Restore() {
-        var restoring by r_m(no)
         LazyItem(
             BigIcon = Icons.Filled.Restore,
             BigIconColor = DarkBlue,
             title = "Restore [not work]",
             onClick = { 
-                restoring = yes
+                
             },
             bottomPadding = 2.dp
         )
-        if (restoring) {
-            BrestoreFromFile()
-            restoring = no
-        }
     }
 
     @Composable
     fun Backup() {
-        var backup by r_m(no)
         
         LazyItem(
             topPadding = 1.dp,
@@ -289,13 +283,9 @@ object Item {
             BigIconColor = DarkBlue,
             title = "BackUp [not work]",
             onClick = { 
-                backup = yes
+                
             }
         )
-        if (backup) {
-            BsaveToFile()
-            backup = no
-        }   
     }
 
     @Composable
