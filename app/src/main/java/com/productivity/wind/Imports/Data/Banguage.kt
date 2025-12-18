@@ -853,7 +853,15 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 
 		AppStart_beforeUI()
 
-        setContent {
+        setContent { 
+			RunOnce {
+				run = rememberCoroutineScope()
+	
+				AppH = LocalConfiguration.current.screenHeightDp.dp
+				AppW = LocalConfiguration.current.screenWidthDp.dp
+				AppLazyH = AppH - 100.dp - bottomSystemHeight()
+				nav = rememberNavController()
+				
 			AppContent()
         }
     }
