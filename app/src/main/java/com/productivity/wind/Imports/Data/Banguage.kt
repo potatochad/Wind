@@ -814,12 +814,12 @@ fun Any.color(value: Color): UIStr {
 
 lateinit var App: ComponentActivity
 lateinit var nav: NavHostController
-lateinit var pkg: Str
+lateinit var AppPkg: Str
 lateinit var run: CoroutineScope
 
 var AppH by m(0.dp)
 var AppW by m(0.dp)
-var lazyH by m(0.dp)
+var AppLazyH by m(0.dp)
 	
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -852,8 +852,8 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 }
 */
 
-		App.i = this
-		App.pkg = this.packageName
+		App = this
+		AppPkg = this.packageName
 
 		AppStart_beforeUI()
 
@@ -866,7 +866,7 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
         super.onResume()
         // re-apply nav bar color to prevent flashing
         window.navigationBarColor = android.graphics.Color.BLACK
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = false
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = no
 
         OnResume()
     }
