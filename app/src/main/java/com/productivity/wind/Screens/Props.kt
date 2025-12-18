@@ -168,7 +168,7 @@ object Item {
     @Composable
     fun Logs(txt: Str, scrollV: LazyListState, scrollH: ScrollState) {
         Box(
-            Mod.w(App.w - 10.dp).move(w = 5).h(App.h - 35.dp)
+            Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp)
         ) {
             Box(
                 Mod.Hscroll(scrollH)
@@ -201,11 +201,7 @@ object Item {
     fun AppTaskUI(app: AppTsk){
         val icon = getAppIcon(app.pkg)
         var name = app.name
-		val progress by remember(app.NowTime, app.DoneTime) {
-			mutableFloatStateOf(
-				(toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
-			)
-		}
+		val progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
         
         LazyCard {
             LazzyRow {
@@ -310,7 +306,7 @@ object Header {
     @Composable
     fun Logs(LogsTag: m_<Str>, filteredLogs: Str) {
             Row(
-                Mod.scroll(h=yes),
+                Mod.Hscroll(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 LazyInput(
@@ -426,7 +422,7 @@ object Icon {
     @Composable
     fun Menu() {
         LazyIcon(Icons.Default.Menu) {
-            App.menu = yes
+            menu = yes
         }
     }
 
@@ -463,7 +459,7 @@ object Icon {
 
     @Composable
     fun Edit(
-        noPoints: Bool=no,
+        noPoints: Bool = no,
         Do: Do,
     ) {
         LazyIcon(Icons.Default.Edit) {
@@ -537,7 +533,7 @@ fun usagePermission() {
             onConfirm = {
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
-                App.ctx.startActivity(intent)
+                App.startActivity(intent)
             },
 			onClose = {
 				navBack()
@@ -575,7 +571,7 @@ fun selectApp(show: mBool =m(yes), Do: DoStr ={}) {
         runHeavyTask(
             task = {
                 getApps()
-                    .filter { getAppPkg(it) != App.pkg }
+                    .filter { getAppPkg(it) != AppPkg }
                     .map { app ->
                         val icon = getAppIcon(getAppPkg(app))
                         app to icon
@@ -595,18 +591,29 @@ fun selectApp(show: mBool =m(yes), Do: DoStr ={}) {
         title = "Select App",
     ){
 		Column(Mod.h(200).Vscroll()){
-		appList.forEach{ (app, icon) ->
-			LazzyRow(
-				Mod.click {
-					Do(getAppName(app))
-			}) {
-				move(10)
-                LazyImage(icon)
-                move(10)
-                UI.Ctext(getAppName(app))
+			appList.forEach{ (app, icon) ->
+				LazzyRow(
+					
+					Mod.click {
+						Do(getAppName(app))
+					}) {
+					
+					move(10)
+					LazyImage(icon)
+					move(10)
+					UI.Ctext(getAppName(app))
+				}
 			}
 		}
 	}
-	}
 	
 }
+
+
+
+
+
+
+
+
+
