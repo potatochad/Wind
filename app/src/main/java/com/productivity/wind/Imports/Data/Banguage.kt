@@ -354,6 +354,28 @@ fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
 }
 
 
+private val runOnceSet = mutableSetOf<Any>()
+fun RunOnce(action: Do) {
+    val key = action as Any
+    if (key !in runOnceSet) {
+        runOnceSet.add(key)
+        action()
+    }
+}
+
+
+fun runOnceEver(key: Str, action: Do) {
+    val prefs = App.getSharedPreferences("RunOnceEverPrefs", Context.MODE_PRIVATE)
+    val hasRun = prefs.getBoolean(key, no)
+    if (!hasRun) {
+        action()
+        prefs.edit().putBoolean(key, yes).apply()
+    }
+}
+
+
+
+
 val MakeTxtFile = ActivityResultContracts.CreateDocument("text/plain")
 
 
