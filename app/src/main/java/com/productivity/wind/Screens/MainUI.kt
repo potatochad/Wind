@@ -39,8 +39,7 @@ fun Main() {
 	RunOnce{
 		MAINStart()
 	}
-
-    
+	
     LazyScreen(top = { Header.Main() }, showBack = no) {
         Column(Mod.Vscroll()){
 
