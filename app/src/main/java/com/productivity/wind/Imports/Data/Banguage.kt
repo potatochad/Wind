@@ -809,7 +809,7 @@ fun Any.color(value: Color): UIStr {
 
 
 lateinit var App: ComponentActivity
-lateinit var nav: NavHostController
+lateinit var AppNav: NavHostController
 lateinit var AppPkg: Str
 lateinit var run: CoroutineScope
 
@@ -860,7 +860,7 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 				AppH = LocalConfiguration.current.screenHeightDp.dp
 				AppW = LocalConfiguration.current.screenWidthDp.dp
 				AppLazyH = AppH - 100.dp - bottomSystemHeight()
-				nav = rememberNavController()
+				AppNav = rememberNavController()
 				
 			AppContent()
         }
