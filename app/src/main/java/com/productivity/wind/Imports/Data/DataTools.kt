@@ -55,7 +55,7 @@ object SettingsSaved {
             while (isActive) {
                 val Data = getStoredData().edit()
                 
-                Bar.each {
+                Bar.eachValVar {
                     Data.putAny(it.name, it.get(Bar))
                 }
                 Data.apply()
@@ -70,7 +70,7 @@ object SettingsSaved {
         initOnce = yes
 
 
-        Bar.each {
+        Bar.eachValVar {
             val bar = it as ClassVar<Settings, Any?>
             val gotValue = Data.getAny(bar) ?: return@forEach
 
@@ -106,7 +106,7 @@ object SettingsSaved {
 
         
 
-        Bar.each {
+        Bar.eachValVar {
             val bar = it as ClassVar<Settings, Any?>
 
             if (stop) return@forEach
