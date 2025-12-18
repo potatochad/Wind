@@ -272,9 +272,9 @@ fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 
 	Spacer(
 		modifier = if (sDp > 0.dp) {
-			Modifier.s(sDp)  // uniform size
+			Mod.s(sDp)  // uniform size
 		} else {
-			Modifier.w(wDp).h(hDp)
+			Mod.w(wDp).h(hDp)
 		}
 	)
 }
