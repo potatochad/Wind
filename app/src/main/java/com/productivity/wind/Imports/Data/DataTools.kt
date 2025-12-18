@@ -55,13 +55,11 @@ object SettingsSaved {
             while (isActive) {
                 val Data = getStoredData().edit()
                 
-                Bar.forEach {
-                    val value = it.get(Bar)
-                
+                Bar.each {
                     Data.putAny(it.name, it.get(Bar))
                 }
                 Data.apply()
-                delay(1_000L)
+                wait(1000)
             }
         }
     }
@@ -72,8 +70,8 @@ object SettingsSaved {
         initOnce = yes
 
 
-        getClass(Bar).forEach { barIdk ->
-            val bar = barIdk as ClassVar<Settings, Any?>
+        Bar.each {
+            val bar = it as ClassVar<Settings, Any?>
             val gotValue = Data.getAny(bar) ?: return@forEach
 
             try {
@@ -108,8 +106,8 @@ object SettingsSaved {
 
         
 
-        getClass(Bar).forEach { barIdk ->
-            val bar = barIdk as ClassVar<Settings, Any?>
+        Bar.each {
+            val bar = it as ClassVar<Settings, Any?>
 
             if (stop) return@forEach
 
