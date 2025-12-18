@@ -355,23 +355,32 @@ fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
 
 
 private val runOnceSet = mutableSetOf<Any>()
-fun RunOnce(action: Do) {
-    val key = action as Any
-    if (key !in runOnceSet) {
-        runOnceSet.add(key)
-        action()
-    }
+fun RunOnce(Do: Wait) {
+	run.launch {
+		val key = action as Any
+		if (key !in runOnceSet) {
+			runOnceSet.add(key)
+			Do()
+		}
+	}
 }
 
+fun runOnceEver(action: Do) {
+    // Get the caller info
+    val stack = Thread.currentThread().stackTrace
+    val caller = stack.first { it.className != Thread::class.java.name && it.className != runOnceEver::class.java.name }
 
-fun runOnceEver(key: Str, action: Do) {
+    // Create a unique key: file + line + lambda hash
+    val key = "${caller.fileName}:${caller.lineNumber}:${action.hashCode()}"
+
     val prefs = App.getSharedPreferences("RunOnceEverPrefs", Context.MODE_PRIVATE)
-    val hasRun = prefs.getBoolean(key, no)
+    val hasRun = prefs.getBoolean(key, false)
     if (!hasRun) {
         action()
-        prefs.edit().putBoolean(key, yes).apply()
+        prefs.edit().putBoolean(key, true).apply()
     }
 }
+
 
 
 
