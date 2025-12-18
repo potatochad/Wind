@@ -757,11 +757,11 @@ suspend fun wait(x: Any = 20) {
 }
 
 @Composable
-fun Each(s: Any = 1000, Do: Do) {
+fun each(s: Any = 1000, Do: Do) {
     RunOnce {
         while (yes) {
             Do()
-            delay(toL(s))
+            wait(s)
         }
     }
 }
