@@ -153,7 +153,7 @@ fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
     var uiStr by r_m(UIStr(""))
 
 	var new by r_m("")
-	Each(50){ new = tsk.input }
+	each(50){ new = tsk.input }
 
     RunOnce(new) {
         val text = tsk.txt
