@@ -224,7 +224,7 @@ fun AppUsage(id: Str = "") {
 	var show = r_m(no)
     var appName by r_m("app")
 	selectApp(show){
-		appName=it
+		appName = it
 	}
   
     if (!id.isEmpty()) {
