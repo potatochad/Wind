@@ -72,7 +72,7 @@ object SettingsSaved {
 
         Bar.eachValVar {
             val bar = it as ClassVar<Settings, Any?>
-            val gotValue = Data.getAny(bar) ?: return@forEach
+            val gotValue = Data.getAny(bar) ?: return
 
             try {
                 when (gotValue) {
