@@ -283,17 +283,16 @@ fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 
 
 fun Dp.toPx(): Int {
-    var context = App.ctx
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
-        this.value,
-        context.resources.displayMetrics
+        this.it,
+        App.resources.displayMetrics
     ).toInt()
 }
 fun getStoredData(
     fileName: Str = "settings",
     mode: Int = Context.MODE_PRIVATE
-): SharedPreferences = App.ctx.getSharedPreferences(fileName, mode)
+): SharedPreferences = App.getSharedPreferences(fileName, mode)
 
 
 
@@ -316,7 +315,7 @@ fun getJavaClass(bar: ClassVar<Settings, Any?>): Class<*>? {
 fun SharedPreferences.getAny(bar: ClassVar<Settings, Any?>): Any? {
     val name = bar.name
 
-    bar.isAccessible = true
+    bar.isAccessible = yes
 
     val clazz = getJavaClass(bar)
     //! clazz ONLY GIVES TYPE that in the box box.
@@ -536,29 +535,28 @@ fun androidSettings(action: Str) {
 
 fun isNotificationEnabled(): Bool {
      return NotificationManagerCompat
-        .getEnabledListenerPackages(App.ctx)
-        .contains(App.ctx.packageName)
+        .getEnabledListenerPackages(App)
+        .contains(AppPkg)
 }
 
 fun isBatteryOptimizationDisabled(): Bool {
-    val pm = App.ctx.getSystemService(PowerManager::class.java)
-    return pm.isIgnoringBatteryOptimizations(App.ctx.packageName)
+    val pm = App.getSystemService(PowerManager::class.java)
+    return pm.isIgnoringBatteryOptimizations(AppPkg)
 }
 
 fun isUsageP_Enabled(): Bool {
-	val appOps = App.ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+	val appOps = App.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
     return appOps.checkOpNoThrow(
 		AppOpsManager.OPSTR_GET_USAGE_STATS,
         Process.myUid(),
-        App.ctx.packageName,
+        AppPkg,
     ) == AppOpsManager.MODE_ALLOWED
 }
 
 
 @Suppress("DEPRECATION")
 fun gotInternet(): Bool {
-    val ctx = App.ctx
-    val connectivityManager = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val connectivityManager = App.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         val network = connectivityManager.activeNetwork
@@ -575,23 +573,21 @@ fun gotInternet(): Bool {
 }
 
 fun isLocationEnabled(): Bool {
-    val lm = App.ctx.getSystemService(LocationManager::class.java)
+    val lm = App.getSystemService(LocationManager::class.java)
     return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
            lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 }
 
 fun locationPermission(Do: Do = {}) {
-    val activity = App.activity
-
     if (ContextCompat.checkSelfPermission(
-            activity,
+            App,
             android.Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     ) {
 		Do()
 	} else {
         ActivityCompat.requestPermissions(
-            activity,
+            App,
             arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
             100
         )
@@ -625,7 +621,7 @@ fun getTodayAppUsage(packageName: Str): Int {
     }
     val start = cal.timeInMillis
 
-    val usm = App.ctx.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+    val usm = App.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
 
     // Use INTERVAL_BEST and filter manually
     val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, start, end)
@@ -636,7 +632,7 @@ fun getTodayAppUsage(packageName: Str): Int {
     return (todayUsage / 1000L).toInt().coerceAtLeast(0)
 }
 fun getAppPkg(input: Any): Str {
-    val pm = App.ctx.packageManager
+    val pm = AppPkg
     val result: Str = when (input) {
         is ResolveInfo -> input.activityInfo.packageName
         is Str -> {
@@ -651,10 +647,10 @@ fun getAppPkg(input: Any): Str {
     return result
 }
 fun openApp(pkg: Str) {
-    val pm: PackageManager = App.ctx.packageManager
+    val pm: PackageManager = App.packageManager
     val launchIntent: Intent? = pm.getLaunchIntentForPackage(pkg)
     if (launchIntent != null) {
-        App.ctx.startActivity(launchIntent)
+        App.startActivity(launchIntent)
     } else {
         Vlog("App not installed")
     }
@@ -669,13 +665,13 @@ fun getAppIcon(packageName: Str?): Drawable? {
         return App.ctx.getDrawable(android.R.drawable.sym_def_app_icon)
     }
 
-    val pm = App.ctx.packageManager
+    val pm = AppPkg
     return try {
         val info = pm.getApplicationInfo(packageName, 0)
         info.loadIcon(pm)
     } catch (e: Exception) {
         log("Bad package: $packageName")
-        App.ctx.getDrawable(android.R.drawable.sym_def_app_icon)
+        App.getDrawable(android.R.drawable.sym_def_app_icon)
     }
 }
 
