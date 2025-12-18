@@ -225,7 +225,7 @@ object UI {
 
 	fun copyToClipboard(txt: Str) {
 		val clipboard = App.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-		val clip = App.newPlainText("label", txt)
+		val clip = ClipData.newPlainText("label", txt)
 		clipboard.setPrimaryClip(clip)
 	}
 	
