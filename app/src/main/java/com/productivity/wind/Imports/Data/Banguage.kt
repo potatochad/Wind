@@ -812,7 +812,15 @@ fun Any.color(value: Color): UIStr {
 
 
 
+lateinit var App: ComponentActivity
+lateinit var nav: NavHostController
+lateinit var pkg: Str
+lateinit var run: CoroutineScope
 
+var AppH by m(0.dp)
+var AppW by m(0.dp)
+var lazyH by m(0.dp)
+	
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
