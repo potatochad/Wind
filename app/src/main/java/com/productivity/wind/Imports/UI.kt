@@ -397,14 +397,14 @@ object UI {
                 painter = painterResource(id = iconRes),
                 contentDescription = "$title Icon",
                 tint = iconTint,
-                modifier = Modifier.size(iconSize),
+                modifier = Mod.s(iconSize),
             )
-            move(h=4)
+            move(4)
             Text(
                 text = title,
                 fontSize = titleSize,
             )
-            Spacer(Modifier.height(bottomPadding))
+            Spacer(Mod.h(bottomPadding))
         }
     }
 
@@ -437,7 +437,7 @@ object UI {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
 
-        App.ctx.startActivity(chooser)
+        startActivity(chooser)
     }
 
 
