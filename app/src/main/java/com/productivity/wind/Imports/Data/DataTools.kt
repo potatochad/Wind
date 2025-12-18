@@ -39,7 +39,7 @@ import androidx.activity.compose.*
 
 val Bar = Settings()
 
-var initOnce= false
+var initOnce= no
 
 object SettingsSaved {
     private var Dosave: Job? = null
@@ -54,17 +54,11 @@ object SettingsSaved {
         Dosave = GlobalScope.launch {
             while (isActive) {
                 val Data = getStoredData().edit()
-                var CPU = 0
                 
-                getClass(Bar).forEach { bar ->
-
-                    /*CPU usage, forget this ok*/CPU+=20; if (CPU>2000) {
-                    log("SettingsManager: Bsave is taking up to many resourcesss. Shorter delay, better synch, like skipping things, and maing sure only one runs, can greatly decrease THE CPU USAGE") }//ADD SUPER UNIVERSAL STUFFF
-                    val value = bar.get(Bar)
-
-                    // log("Bsaving ${bar.name}, $value ")
+                Bar.forEach {
+                    val value = it.get(Bar)
                 
-                    Data.putAny(bar.name, value)
+                    Data.putAny(it.name, it.get(Bar))
                 }
                 Data.apply()
                 delay(1_000L)
