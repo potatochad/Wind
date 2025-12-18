@@ -201,11 +201,10 @@ object Item {
     fun AppTaskUI(app: AppTsk){
         val icon = getAppIcon(app.pkg)
         var name = app.name
-		var progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
-
-		each(100){
-			progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
-			Vlog("app progress: $progress")
+		val progress by remember(app.NowTime, app.DoneTime) {
+			mutableFloatStateOf(
+				(toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
+			)
 		}
         
         LazyCard {
