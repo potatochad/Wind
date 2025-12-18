@@ -856,13 +856,10 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
         setContent { 
 			run = rememberCoroutineScope()
 			AppNav = rememberNavController()
-	
-			RunOnce {
-				AppH = LocalConfiguration.current.screenHeightDp.dp
-				AppW = LocalConfiguration.current.screenWidthDp.dp
-				AppLazyH = AppH - 100.dp - bottomSystemHeight()
-			}
-				
+			AppH = LocalConfiguration.current.screenHeightDp.dp
+			AppW = LocalConfiguration.current.screenWidthDp.dp
+			AppLazyH = AppH - 100.dp - bottomSystemHeight()
+		
 			AppContent()
         }
     }
