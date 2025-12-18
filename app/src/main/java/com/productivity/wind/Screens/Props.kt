@@ -82,17 +82,17 @@ fun Menu() {
         LazyItem(
             icon = Icons.Outlined.Chat,
             title = "Contact Support",
-            onClick = { UI.SendEmail(); App.menu = no }
+            onClick = { UI.SendEmail(); menu = no }
         )
         LazyItem(
             icon = Icons.Outlined.Landscape,
             title = "Settings",
-            onClick = { goTo("SettingsScreen"); App.menu = no }
+            onClick = { goTo("SettingsScreen"); menu = no }
         )
         LazyItem(
             icon = Icons.Outlined.QueryStats,
             title = "Achievements",
-            onClick = { goTo("Achievements"); App.menu = no }
+            onClick = { goTo("Achievements"); menu = no }
         )
     }
 }
@@ -488,7 +488,6 @@ object Icon {
 
     @Composable
     fun Copy(txt: Str) {
-        val ctx = LocalContext.current
         var copied by r_m(no)
 
         RunOnce(copied) {
@@ -499,7 +498,7 @@ object Icon {
         }
 
         LazyIcon(if (copied) Icons.Default.Check else Icons.Default.ContentCopy){
-            UI.copyToClipboard(ctx, txt)
+            UI.copyToClipboard(txt)
             copied = yes
         }
     }
