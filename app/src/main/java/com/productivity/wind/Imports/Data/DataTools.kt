@@ -37,66 +37,6 @@ import androidx.activity.compose.*
 
 @Suppress("UNCHECKED_CAST")
 
-
-fun writeToFile(ctx: Context, uri: Uri, text: Str) {
-    ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { writer ->
-        writer.write(text)
-    }
-}
-
-
-@Composable
-fun BsaveToFile() {
-    val ctx = LocalContext.current
-
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.CreateDocument("text/plain")
-    ) { uri ->
-        log("Launcher called")
-        if (uri != null) {
-            val Data = getStoredData()
-            log("Stored Data: $Data")
-            ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
-                Data.all.forEach { (key, value) -> out.write("$key=$value\n") }
-            }
-        }
-    }
-    RunOnce {
-        log("LAUNCHING BsaveTofile")
-        launcher.launch("WindBackUp.txt")
-    }
-}
-
-
-@Composable
-fun BrestoreFromFile() {
-    val ctx = LocalContext.current
-
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocument()
-    ) { uri ->
-            if (uri != null) {
-                try {
-                    val fileMap = mutableMapOf<Str, Str>()
-
-                    TxtFileToMap(ctx, uri, fileMap)
-
-                    SettingsSaved.initFromFile(fileMap)
-                } catch (e: Exception) {
-                    log("Restore failed: ${e.message}")
-                }
-            }
-        }
-
-    RunOnce {
-        launcher.launch(arrayOf("text/plain"))
-    }
-}
-
-
-
-val Bar = Settings(); //best variable
-
 var initOnce= false
 
 object SettingsSaved {
