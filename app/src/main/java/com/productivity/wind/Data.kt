@@ -115,6 +115,8 @@ class Settings {
     var copyTsk = mList<CopyTsk>()
 	var waits = mList<Waits>()
 	var apps = mList<AppTsk>()// mutablestatelistof
+
+	/*
 	var badWords = mList<WebWord>().apply {
 		addAll(
 			listOf(
@@ -126,7 +128,20 @@ class Settings {
 				WebWord(word = "tiktok.com"),
 			)
 		)
-	}
+	}*/
+
+	var badWords = mList<WebWord>().apply {
+    addAll(
+        listOf(
+            WebWord().apply { word = "anime" },
+            WebWord().apply { word = "youtube.com" },
+            WebWord().apply { word = "facebook.com" },
+            WebWord().apply { word = "instagram.com" },
+            WebWord().apply { word = "x.com" },
+            WebWord().apply { word = "tiktok.com" },
+        )
+    )
+}
 
 	//USED in banguage-better language
 	var logs by m("")
