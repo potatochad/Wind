@@ -78,7 +78,7 @@ fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
 
 
     Handler(Looper.getMainLooper()).postDelayed({
-        val toast = Toast.makeText(App.ctx, msg, Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(App, msg, Toast.LENGTH_SHORT)
         lastToast = toast
         toast.show()
     }, delayMs)
