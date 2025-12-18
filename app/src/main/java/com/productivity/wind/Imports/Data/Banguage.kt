@@ -285,7 +285,7 @@ fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 fun Dp.toPx(): Int {
     return TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
-        this.it,
+        this.value,
         App.resources.displayMetrics
     ).toInt()
 }
@@ -854,9 +854,9 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 		AppStart_beforeUI()
 
         setContent { 
-			RunOnce {
-				run = rememberCoroutineScope()
+			run = rememberCoroutineScope()
 	
+			RunOnce {
 				AppH = LocalConfiguration.current.screenHeightDp.dp
 				AppW = LocalConfiguration.current.screenWidthDp.dp
 				AppLazyH = AppH - 100.dp - bottomSystemHeight()
