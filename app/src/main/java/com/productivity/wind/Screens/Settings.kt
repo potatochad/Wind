@@ -120,8 +120,7 @@ fun LogsScreen() {
     var scrollH = r_Scroll()
     var LogsTag = r_m("")
     
-    RunOnce { 
-        delay(100)
+    wait(100){
         scrollV.toBottom()
         getMyAppLogs() 
     }
