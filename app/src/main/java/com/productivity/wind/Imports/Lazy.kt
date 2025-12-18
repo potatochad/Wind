@@ -855,7 +855,7 @@ fun LazyPopup(
 
 
 
-
+var menu by m(no)
 @Composable
 fun LazyMenu(
     onDismiss: Do? = null,
@@ -865,8 +865,8 @@ fun LazyMenu(
     val internalVisible = r_m(no)
 
     // Trigger showing/hiding Popup
-    RunOnce(App.menu) {
-        if (App.menu) {
+    RunOnce(menu) {
+        if (menu) {
             visible.it = yes
             delay(16)
             internalVisible.it = yes
@@ -907,12 +907,12 @@ fun LazyMenu(
                     interactionSource = r { MutableInteractionSource() }
                 ) {
                     onDismiss?.invoke()
-                    App.menu = no
+                    menu = no
                 }
         )
 
         Box( Mod.offset { IntOffset(offsetX.roundToPx(), 0) }
-                .w(App.w / 2 + 30.dp)
+                .w(AppW / 2 + 30.dp)
                 .maxH()
                 .background(Color.DarkGray)
         ) {
