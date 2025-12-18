@@ -300,7 +300,7 @@ object Item {
 
     @Composable
     fun WebPointTimer() {
-        Each(1000){
+        each(1000){
             if (Bar.Dpoints > 0) {
                 if (Bar.funTime < 1) {
                     goTo("main")
