@@ -218,21 +218,13 @@ fun OnResume(){
 
 @Composable
 fun AppStart() {
-	val scope = rememberCoroutineScope()
-
 	RunOnce {
-		run = scope
         DayChecker.start()
 	}
 	
-	App.h = LocalConfiguration.current.screenHeightDp.dp
-    App.w = LocalConfiguration.current.screenWidthDp.dp
-	App.lazyH = App.h - 100.dp - bottomSystemHeight()
-	
     LazyMenu { Menu() }
 	
-    App.nav = rememberNavController()
-    MyNavGraph(navController = App.nav)
+    MyNavGraph(navController = AppNav)
 }
 
 
