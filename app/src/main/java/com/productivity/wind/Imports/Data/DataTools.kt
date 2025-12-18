@@ -63,6 +63,7 @@ object SettingsSaved {
             }
         }
     }
+    
     fun init() {
         log("initializing data")
         val Data = getStoredData()
@@ -72,7 +73,7 @@ object SettingsSaved {
 
         Bar.eachValVar {
             val bar = it as ClassVar<Settings, Any?>
-            val gotValue = Data.getAny(bar) ?: return
+            val gotValue = Data.getAny(bar) ?: return@eachValVar
 
             try {
                 when (gotValue) {
@@ -100,6 +101,7 @@ object SettingsSaved {
         }
 
     }
+    
     fun initFromFile(map: Map<Str, Str>) {
         val Data = getStoredData()
         var stop = no
@@ -109,7 +111,7 @@ object SettingsSaved {
         Bar.eachValVar {
             val bar = it as ClassVar<Settings, Any?>
 
-            if (stop) return@forEach
+            if (stop) return@eachValVar
 
             try {
                 val type = bar.returnType.classifier
@@ -150,3 +152,11 @@ object SettingsSaved {
         }
     }
 }
+
+
+
+
+
+
+
+
