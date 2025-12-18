@@ -85,7 +85,7 @@ fun BlockKeyword() {
 
     LazyScreen(
         top = {
-            Row(Mod.scroll(h = yes).w(App.w / 2)) {
+            Row(Mod.scroll(h = yes).w(AppW / 2)) {
                 Text(Bar.Url, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
             UI.End {
