@@ -171,9 +171,10 @@ data class AppTsk(
 
 @Serializable
 data class WebWord(
-    val id: Str = Id(),
-    var word: Str by m("")
-)
+    val id: Str = Id()
+){
+	var word by m("")
+}
 
 
 
