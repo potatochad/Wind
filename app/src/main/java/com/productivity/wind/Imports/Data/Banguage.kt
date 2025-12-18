@@ -205,7 +205,7 @@ fun toL(it: Any?): Long = when (it) {
     is Int -> it.toLong()
     is Float -> it.toLong()
     is Double -> it.toLong()
-    is String -> it.toLongOrNull() ?: 0L
+    is Str -> it.toLongOrNull() ?: 0L
     null -> 0L
     else -> 0L
 }
@@ -227,7 +227,7 @@ fun toUI(it: Any?): UI {
 
 @Composable
 fun click(x: UI, Do: Do) {
-	Box(Modifier.click{Do()}){
+	Box(Mod.click{Do()}){
 		x()
 	}
 }
@@ -376,7 +376,7 @@ fun StrToValue(valueNow: Any?, outputRaw: Str?): Any? {
         is Long -> outputRaw?.toLongOrNull()
         is Float -> outputRaw?.toFloatOrNull()
         is Double -> outputRaw?.toDoubleOrNull()
-        is Boolean -> outputRaw?.toBooleanStrictOrNull()
+        is Bool -> outputRaw?.toBooleanStrictOrNull()
         is SnapshotStateList<*> -> {
             val items = outputRaw?.split(",")?.map { it.trim() } ?: emptyList()
             mutableStateListOf(*items.toTypedArray())
@@ -632,7 +632,7 @@ fun getTodayAppUsage(packageName: Str): Int {
     return (todayUsage / 1000L).toInt().coerceAtLeast(0)
 }
 fun getAppPkg(input: Any): Str {
-    val pm = AppPkg
+    val pm = App.packageManager
     val result: Str = when (input) {
         is ResolveInfo -> input.activityInfo.packageName
         is Str -> {
@@ -658,14 +658,14 @@ fun openApp(pkg: Str) {
 
 fun getAppName(info: ResolveInfo): Str {
     val pkg = info.activityInfo.packageName
-    return info.loadLabel(App.ctx.packageManager)?.toString() ?: pkg
+    return info.loadLabel(App.packageManager)?.toString() ?: pkg
 }
 fun getAppIcon(packageName: Str?): Drawable? {
     if (packageName.isNullOrBlank()) {
-        return App.ctx.getDrawable(android.R.drawable.sym_def_app_icon)
+        return App.getDrawable(android.R.drawable.sym_def_app_icon)
     }
 
-    val pm = AppPkg
+    val pm = App.packageManager
     return try {
         val info = pm.getApplicationInfo(packageName, 0)
         info.loadIcon(pm)
@@ -731,7 +731,7 @@ fun <T> runHeavyTask(
     }
 }
 fun wait(x: Any = 20, Do: Wait) {
-    App.run.launch {
+    run.launch {
         delay(toL(x))
         Do()
     }
@@ -766,7 +766,7 @@ inline fun <T> MutableList<T>.each(
 
 
 fun folder(folderName: Str): File {
-    val folder = File(App.ctx.filesDir, folderName)
+    val folder = File(App.filesDir, folderName)
     if (!folder.exists()) {
         folder.mkdirs()
     }
