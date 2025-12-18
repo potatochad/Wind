@@ -37,6 +37,8 @@ import androidx.activity.compose.*
 
 @Suppress("UNCHECKED_CAST")
 
+val Bar = Settings()
+
 var initOnce= false
 
 object SettingsSaved {
