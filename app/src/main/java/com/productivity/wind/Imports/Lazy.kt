@@ -91,7 +91,7 @@ fun LazyWindow(
             properties = PopupProperties(focusable = yes)
         ) {
             Box(
-                modifier = Modifier
+                modifier = Mod
                     .maxS()
                     .clickOrHold() { set(show, no) },
                 contentAlignment = Alignment.Center
@@ -348,7 +348,7 @@ fun LazyInput(
        
 
 	val whatState: m_<Str> = when (what) {
-        is MutableState<*> -> what as MutableState<Str>
+        is m_<*> -> what as m_<Str>
         is Int -> r { m("$what") }
         is Str-> r { m(what) }
         else -> r { m("") }
@@ -512,7 +512,7 @@ fun LazyIcon(
                     imageVector = icon,
                     contentDescription = null,
                     tint = color,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Mod.s(24)
                 )
             }
 
@@ -670,7 +670,7 @@ fun LazyItem(
 				}
 
 
-				Column(Modifier.weight(1f)) {
+				Column(Mod.weight(1f)) {
 					Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
 					subtitle?.let {
 						Text(text = it, color = Color.Gray, fontSize = 12.sp)
@@ -783,7 +783,7 @@ fun LazyScreen(
 
     Column(modifier) {
         header()
-        Column(Mod.h(App.lazyH)) {
+        Column(Mod.h(AppLazyH)) {
 			Column(modifier) {
 				content()
 			}
