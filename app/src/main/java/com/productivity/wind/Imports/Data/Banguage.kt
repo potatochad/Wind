@@ -861,7 +861,6 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 				AppH = LocalConfiguration.current.screenHeightDp.dp
 				AppW = LocalConfiguration.current.screenWidthDp.dp
 				AppLazyH = AppH - 100.dp - bottomSystemHeight()
-				
 			}
 				
 			AppContent()
