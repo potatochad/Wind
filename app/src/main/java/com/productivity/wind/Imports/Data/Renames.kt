@@ -141,7 +141,7 @@ fun Mod.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp
 fun Mod.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
 fun Mod.s(value: Any?) = this.size(toDp(value))
 
-fun Modifier.maxS(): Mod= this.fillMaxSize()
+fun Mod.maxS(): Mod= this.fillMaxSize()
 fun Mod.maxW(): Mod= this.fillMaxWidth()
 fun Mod.maxH(): Mod= this.fillMaxHeight()
 
@@ -176,7 +176,7 @@ typealias UIStr = AnnotatedString
 typealias UIStrBuilder = AnnotatedString.Builder
 typealias StrStyle = SpanStyle
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
-typealias ClassVal<T, R> = KProperty1<T, R>
+typealias ClassValVar<T, R> = KProperty1<T, R>
     
 fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
 fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {
@@ -274,6 +274,17 @@ fun NavGraphBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
 }
 fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
     dialog(txt){ UI(it) }
+}
+
+
+
+
+
+//✴️ Data renames
+fun Any.each(Do: (ClassValVar<Any, *>) -> Unit) {
+    this::class.memberProperties.forEach {
+        action(it)
+    }
 }
 
 
