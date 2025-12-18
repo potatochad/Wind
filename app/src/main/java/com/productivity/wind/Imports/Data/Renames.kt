@@ -294,7 +294,7 @@ fun Any.eachValVar(Do: (ClassValVar<Any, *>) -> Unit) {
 
 // ✴️ PERMISSION RENAMESSS
 fun startActivity(intent: Intent) {
-    App.ctx.startActivity(intent)
+    App.startActivity(intent)
 }
 
 
