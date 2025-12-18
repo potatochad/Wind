@@ -881,7 +881,7 @@ fun LazyMenu(
 
     // Slide offset
     val offsetX by animateDpAsState(
-        targetValue = if (internalVisible.it) 0.dp else -App.w/2,
+        targetValue = if (internalVisible.it) 0.dp else -AppW/2,
         animationSpec = tween(durationMillis = 200),
         label = "MenuSlide"
     )
