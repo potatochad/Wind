@@ -42,10 +42,10 @@ val Bar = Settings()
 var initOnce= no
 
 object SettingsSaved {
-    private var Dosave: Job? = null
-    private const val PREFS = "settingsLISTS"
-    private val lastJson = mutableMapOf<Str, Str>()
-    private var autoSaveJob: Job? = null
+    var Dosave: Job? = null
+    const val PREFS = "settingsLISTS"
+    val lastJson = mutableMapOf<Str, Str>()
+    var autoSaveJob: Job? = null
 
 
     fun Bsave() {
@@ -95,62 +95,13 @@ object SettingsSaved {
                     }
                 }
             } catch (e: Exception) {
-                log("init error: ${e.message}")
                 Vlog("init error: ${e.message}")
             }
         }
 
     }
     
-    fun initFromFile(map: Map<Str, Str>) {
-        val Data = getStoredData()
-        var stop = no
 
-        
-
-        Bar.eachValVar {
-            val bar = it as ClassVar<Settings, Any?>
-
-            if (stop) return@eachValVar
-
-            try {
-                val type = bar.returnType.classifier
-                
-                log("type $type")
-                
-                val outputRaw = map[bar.name]
-                
-                val valueNow = bar.get(Bar)
-                
-                val gotValue = StrToValue(valueNow, outputRaw)
-                log("gotValue $gotValue")
-                
-            
-                when (gotValue) {
-                    is SnapshotStateList<*> -> {
-                        (bar as? SnapshotStateList<Any?>)?.apply {
-                            clear()
-                            addAll(gotValue as SnapshotStateList<Any?>)
-                        } ?: bar.set(Bar, gotValue)
-                    }
-                    is List<*> -> {
-                        val snapshotValue = mutableStateListOf(*gotValue.toTypedArray())
-                        (bar as? SnapshotStateList<Any?>)?.apply {
-                            clear()
-                            addAll(snapshotValue)
-                        } ?: bar.set(Bar, snapshotValue)
-                    }
-                    else -> {
-                        bar.set(Bar, gotValue)
-                    }
-                }
-            } catch (e: Exception) {
-                log("init error: ${e.message}")
-                stop = yes
-                Vlog("ERROR")
-            }
-        }
-    }
 }
 
 
