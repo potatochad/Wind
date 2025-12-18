@@ -239,7 +239,7 @@ fun UIStrBuilder.add(text: Char) = append(text)
 fun UIStrBuilder.add(text: Str) = append(text)
 fun UIStrBuilder.add(text: UIStr) = append(text)
 
-fun navBack() { App.nav.popBackStack() }
+fun navBack() { AppNav.popBackStack() }
 
 inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
     val v = arguments?.get(key)
