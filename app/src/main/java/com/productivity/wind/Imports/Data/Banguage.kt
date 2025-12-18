@@ -295,18 +295,6 @@ fun getStoredData(
     mode: Int = Context.MODE_PRIVATE
 ): SharedPreferences = App.ctx.getSharedPreferences(fileName, mode)
 
-fun <T : Any> getClass(obj: T): List<KProperty1<T, *>> =
-    obj::class.memberProperties
-        .also { props ->
-            props.forEach { prop ->
-                if (prop.visibility != KVisibility.PUBLIC) {
-                    log("NO private stuff")
-                }
-            }
-        }
-        .filter { it.visibility == KVisibility.PUBLIC } as List<KProperty1<T, *>>
-
-
 
 
 fun getJavaClass(bar: ClassVar<Settings, Any?>): Class<*>? {
