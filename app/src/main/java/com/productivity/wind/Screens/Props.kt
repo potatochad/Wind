@@ -202,6 +202,11 @@ object Item {
         val icon = getAppIcon(app.pkg)
         var name = app.name
 		var progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
+
+		each(50){
+			progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
+			Vlog("app progress: $progress")
+		}
         
         LazyCard {
             LazzyRow {
