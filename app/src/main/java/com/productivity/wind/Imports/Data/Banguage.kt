@@ -305,14 +305,15 @@ fun <T> mSave(default: T): m_<T> {
 
 
 private val onChangeSet = mutableSetOf<Any>()
-fun <T> T.onChange(Do: Wait_<T>){
-	Do{
-		if (!onChangeSet.contains(this)) {
-			Do(this)
-			onChangeSet.add(this)
-		}
-	}
+fun <T : Any> T.onChange(Do: Wait_<T>) {
+    if (onChangeSet.add(this)) {
+        Do {
+            Do(this@onChange)
+        }
+    }
 }
+
+
 
 
 
