@@ -893,6 +893,12 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 			AppH = LocalConfiguration.current.screenHeightDp.dp
 			AppW = LocalConfiguration.current.screenWidthDp.dp
 			AppLazyH = AppH - 100.dp - bottomSystemHeight()
+
+			Do {
+				each(1000){
+					Vlog("activity still alive")
+				}
+			}
 		
 			AppContent()
         }
