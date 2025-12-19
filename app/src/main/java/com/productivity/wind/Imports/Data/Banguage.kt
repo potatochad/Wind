@@ -349,7 +349,7 @@ fun RunOnce(Do: Wait) {
 
 fun runOnceEver(action: Wait) {
     val stack = Thread.currentThread().stackTrace
-    val caller = stack.first { it.className != Thread::class.java.name && it.className != runOnceEver::class.java.name }
+    val caller = stack.first { it.className != Thread::class.java.name && it.className != ::runOnceEver::class.java.name }
 	
     val key = "${caller.fileName}:${caller.lineNumber}:${action.hashCode()}"
 
