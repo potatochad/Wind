@@ -895,8 +895,9 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 			AppLazyH = AppH - 100.dp - bottomSystemHeight()
 
 			Do {
-				each(1000){
+				while(yes){
 					Vlog("activity still alive")
+					wait(1000)
 				}
 			}
 		
