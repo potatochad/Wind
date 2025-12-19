@@ -346,6 +346,15 @@ fun <T> mSave(): m_<T> {
     return state
 }
 
+private val onChangeSet = mutableSetOf<Any>()
+fun <T> T.onChange(Do: Wait){
+    if (!onChangeSet.contains(this)) {
+        Do(this)
+        onChangeSet.add(this)
+    }
+}
+
+
 
 
 
