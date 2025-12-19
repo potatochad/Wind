@@ -339,6 +339,29 @@ fun SharedPreferences.getAny(bar: ClassVar<Settings, Any?>): Any? {
 
 
 
+
+fun <T> mSave(): m_<T> {
+    val state = m("")
+
+    return state
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 inline fun <reified T> SharedPreferences.Editor.putAny(name: Str, value: T?) {
     val json = Gson().toJson(value)
     putString(name, json)
