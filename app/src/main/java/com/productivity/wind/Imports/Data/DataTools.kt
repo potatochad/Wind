@@ -42,25 +42,19 @@ val Bar = Settings()
 var initOnce= no
 
 object SettingsSaved {
-    var Dosave: Job? = null
     const val PREFS = "settingsLISTS"
     val lastJson = mutableMapOf<Str, Str>()
     var autoSaveJob: Job? = null
 
 
     fun Bsave() {
-        if (Dosave?.isActive == yes) return
-        
-        Dosave = GlobalScope.launch {
-            while (isActive) {
-                val Data = getStoredData().edit()
-                
-                Bar.eachValVar {
-                    Data.putAny(it.name, it.get(Bar))
-                }
-                Data.apply()
-                wait(1000)
+        each(200){
+            val Data = getStoredData().edit()
+            
+            Bar.eachValVar {
+                Data.putAny(it.name, it.get(Bar))
             }
+            Data.apply()
         }
     }
     
