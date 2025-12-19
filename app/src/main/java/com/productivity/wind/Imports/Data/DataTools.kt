@@ -35,68 +35,8 @@ import android.net.*
 import androidx.activity.compose.*
 
 
-@Suppress("UNCHECKED_CAST")
-
-val Bar = Settings()
-
-var initOnce= no
-
-object SettingsSaved {
-    const val PREFS = "settingsLISTS"
-    val lastJson = mutableMapOf<Str, Str>()
-    var autoSaveJob: Job? = null
 
 
-    fun Bsave() {
-        each(200){
-            val Data = getStoredData().edit()
-            
-            Bar.eachValVar {
-                Data.putAny(it.name, it.get(Bar))
-            }
-            Data.apply()
-        }
-    }
-    
-    fun init() {
-        log("initializing data")
-        val Data = getStoredData()
-        if (Data.all.isEmpty() || initOnce) return
-        initOnce = yes
-
-
-        Bar.eachValVar {
-            val bar = it as ClassVar<Settings, Any?>
-            val gotValue = Data.getAny(bar) ?: return@eachValVar
-
-            try {
-                when (gotValue) {
-                    is SnapshotStateList<*> -> {
-                        (bar as? SnapshotStateList<Any?>)?.apply {
-                            clear()
-                            addAll(gotValue as SnapshotStateList<Any?>)
-                        } ?: bar.set(Bar, gotValue)
-                    }
-                    is List<*> -> {
-                        val snapshotValue = mutableStateListOf(*gotValue.toTypedArray())
-                        (bar as? SnapshotStateList<Any?>)?.apply {
-                            clear()
-                            addAll(snapshotValue)
-                        } ?: bar.set(Bar, snapshotValue)
-                    }
-                    else -> {
-                        bar.set(Bar, gotValue)
-                    }
-                }
-            } catch (e: Exception) {
-                Vlog("init error: ${e.message}")
-            }
-        }
-
-    }
-    
-
-}
 
 
 
