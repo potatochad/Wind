@@ -875,6 +875,8 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 }
 */
 
+
+		Vlog("HELLO")
 		App = this
 		AppPkg = this.packageName
 
