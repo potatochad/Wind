@@ -100,7 +100,7 @@ same thing...very important!!!!
 
 */
 
-class Settings {
+object Bar {
     var funTime by m(0)
     var Dpoints by m(0)
 	var lastDate by m("") 
