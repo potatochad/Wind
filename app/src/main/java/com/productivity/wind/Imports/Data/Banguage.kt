@@ -838,12 +838,15 @@ fun Any.color(value: Color): UIStr {
 
 
 
+
+
+
+
 lateinit var App: ComponentActivity
 lateinit var AppNav: NavHostController
 lateinit var AppPkg: Str
 val run: CoroutineScope
     get() = App.lifecycleScope  // dies with activity
-
 
 var AppH by m(0.dp)
 var AppW by m(0.dp)
