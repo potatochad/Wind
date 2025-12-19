@@ -834,6 +834,15 @@ fun Any.color(value: Color): UIStr {
 	val uiStr = toUIStr(this)
 	return UIText(uiStr, uiStr.getStyle().copy(color = value))
 }
+
+
+fun onActivityDead(Do: Do) {
+    App.lifecycle.addObserver(object : DefaultLifecycleObserver {
+        override fun onDestroy(owner: LifecycleOwner) {
+            Do() // called exactly when activity dies
+        }
+    })
+}
     
 
 
@@ -842,7 +851,9 @@ fun Any.color(value: Color): UIStr {
 lateinit var App: ComponentActivity
 lateinit var AppNav: NavHostController
 lateinit var AppPkg: Str
-lateinit var run: CoroutineScope
+val run: CoroutineScope
+    get() = App.lifecycleScope  // dies with activity
+
 
 var AppH by m(0.dp)
 var AppW by m(0.dp)
@@ -882,10 +893,13 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 		App = this
 		AppPkg = this.packageName
 
+		onActivityDead {
+			Vlog("ACTIVITY DIED")
+		}
+
 		AppStart_beforeUI()
 
         setContent { 
-			run = rememberCoroutineScope()
 			AppNav = rememberNavController()
 			AppH = LocalConfiguration.current.screenHeightDp.dp
 			AppW = LocalConfiguration.current.screenWidthDp.dp
