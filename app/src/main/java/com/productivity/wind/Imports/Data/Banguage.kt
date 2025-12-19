@@ -353,7 +353,7 @@ fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
     }
 }
 
-
+/*
 private val runOnceSet = mutableSetOf<Any>()
 fun RunOnce(Do: Wait) {
 	run.launch {
@@ -380,7 +380,7 @@ fun runOnceEver(action: Do) {
         prefs.edit().putBoolean(key, true).apply()
     }
 }
-
+*/
 
 
 
