@@ -305,7 +305,7 @@ fun <T> mSave(default: T): m_<T> {
 	val stack = Thread.currentThread().stackTrace
     val caller = stack.first { it.className != Thread::class.java.name && it.className != ::runOnceEver::class.java.name }
 	
-    val key = "${caller.fileName}:${caller.lineNumber}:${action.hashCode()}"
+    val key = "${caller.fileName}:${caller.lineNumber}:${default.hashCode()}"
 
 	Vlog("key: $key")
 	
