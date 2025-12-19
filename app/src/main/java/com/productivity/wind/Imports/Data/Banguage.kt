@@ -770,12 +770,9 @@ fun wait(x: Any = 20, Do: Wait) {
         Do()
     }
 }
-suspend fun wait(x: Any = 20) {
-    delay(toL(x))
-}
+suspend fun wait(x: Any = 20) { delay(toL(x)) }
 
-@Composable
-fun each(s: Any = 1000, Do: Do) {
+fun each(s: Any = 1000, Do: Wait) {
     RunOnce {
         while (yes) {
             Do()
@@ -848,7 +845,7 @@ lateinit var App: ComponentActivity
 lateinit var AppNav: NavHostController
 lateinit var AppPkg: Str
 val run: CoroutineScope
-    get() = App.lifecycleScope  // only runs when app is main screen, reruns, so ok.
+    get() = App.lifecycleScope 
 
 var AppH by m(0.dp)
 var AppW by m(0.dp)
@@ -895,13 +892,6 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 			AppH = LocalConfiguration.current.screenHeightDp.dp
 			AppW = LocalConfiguration.current.screenWidthDp.dp
 			AppLazyH = AppH - 100.dp - bottomSystemHeight()
-
-			Do {
-				while(yes){
-					Vlog("activity still alive")
-					wait(1000)
-				}
-			}
 		
 			AppContent()
         }
