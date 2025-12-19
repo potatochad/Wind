@@ -846,7 +846,7 @@ lateinit var App: ComponentActivity
 lateinit var AppNav: NavHostController
 lateinit var AppPkg: Str
 val run: CoroutineScope
-    get() = App.lifecycleScope  // dies with activity
+    get() = App.lifecycleScope  // only runs when app is main screen, reruns, so ok.
 
 var AppH by m(0.dp)
 var AppW by m(0.dp)
@@ -916,7 +916,7 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 	
 	override fun onDestroy() {
 		super.onDestroy()
-		Vlog("Activity died, run, lyfecycle stopped")
+		
 	}
 	
 }
