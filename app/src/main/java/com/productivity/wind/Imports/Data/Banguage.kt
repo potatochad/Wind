@@ -358,7 +358,7 @@ fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
 private val runOnceSet = mutableSetOf<Any>()
 fun RunOnce(Do: Wait) {
 	Do {
-		val key = action as Any
+		val key = Do as Any
 		if (key !in runOnceSet) {
 			runOnceSet.add(key)
 			Do()
