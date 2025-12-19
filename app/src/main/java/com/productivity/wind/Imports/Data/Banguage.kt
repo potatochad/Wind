@@ -298,18 +298,20 @@ fun getStoredData(
 
 
 
-fun <T> mSave(): m_<T> {
-    val state = m("")
-
+fun <T> mSave(default: T): m_<T> {
+    val state = m(default)
     return state
 }
 
+
 private val onChangeSet = mutableSetOf<Any>()
 fun <T> T.onChange(Do: Wait_<T>){
-    if (!onChangeSet.contains(this)) {
-        Do(this)
-        onChangeSet.add(this)
-    }
+	Do{
+		if (!onChangeSet.contains(this)) {
+			Do(this)
+			onChangeSet.add(this)
+		}
+	}
 }
 
 
