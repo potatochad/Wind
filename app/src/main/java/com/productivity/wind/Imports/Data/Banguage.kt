@@ -354,10 +354,10 @@ fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
     }
 }
 
-/*
+
 private val runOnceSet = mutableSetOf<Any>()
 fun RunOnce(Do: Wait) {
-	run.launch {
+	Do {
 		val key = action as Any
 		if (key !in runOnceSet) {
 			runOnceSet.add(key)
@@ -365,6 +365,8 @@ fun RunOnce(Do: Wait) {
 		}
 	}
 }
+
+/*
 
 fun runOnceEver(action: Do) {
     // Get the caller info
