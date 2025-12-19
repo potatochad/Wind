@@ -286,6 +286,7 @@ fun Any.eachValVar(Do: (ClassValVar<Any, *>) -> Unit) {
         Do(it as ClassValVar<Any, *>)  // cast to safe type
     }
 }
+fun Do(Do: Wait) { run.launch { Do() } }
 
 
 
