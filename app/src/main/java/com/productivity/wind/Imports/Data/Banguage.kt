@@ -270,7 +270,6 @@ fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 	val wDp = toDp(w)
 	val hDp = toDp(h)
 
-
 	Spacer(
 		modifier = if (sDp > 0.dp) {
 			Mod.s(sDp)  // uniform size
@@ -347,7 +346,7 @@ fun <T> mSave(): m_<T> {
 }
 
 private val onChangeSet = mutableSetOf<Any>()
-fun <T> T.onChange(Do: Wait){
+fun <T> T.onChange(Do: Wait_<T>){
     if (!onChangeSet.contains(this)) {
         Do(this)
         onChangeSet.add(this)
