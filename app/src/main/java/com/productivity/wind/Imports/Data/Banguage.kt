@@ -290,51 +290,10 @@ fun Dp.toPx(): Int {
     ).toInt()
 }
 fun getStoredData(
-    fileName: Str = "settings",
-    mode: Int = Context.MODE_PRIVATE
-): SharedPreferences = App.getSharedPreferences(fileName, mode)
-
-
-
-fun getJavaClass(bar: ClassVar<Settings, Any?>): Class<*>? {
-    var name = bar.name
-    val kProperty = bar as? KProperty1<*, *> ?: return null  // ensure it’s a property
-    val classifier = kProperty.returnType.arguments.firstOrNull()?.type?.classifier as? KClass<*>
-
-    return when {
-        classifier != null -> classifier.java                        // generic type
-        kProperty.returnType.classifier is KClass<*> ->
-            (kProperty.returnType.classifier as KClass<*>).java     // plain type
-        else -> {
-            log("No type info for $name, skipping")
-            null
-        }
-    }
+    File: Str = "settings",
+): SharedPreferences {
+	return App.getSharedPreferences(File, Context.MODE_PRIVATE)
 }
-
-fun SharedPreferences.getAny(bar: ClassVar<Settings, Any?>): Any? {
-    val name = bar.name
-
-    bar.isAccessible = yes
-
-    val clazz = getJavaClass(bar)
-    //! clazz ONLY GIVES TYPE that in the box box.
-
-    val storedValue = getString(name, null)
-
-    return try {
-        gson.fromJson(storedValue, clazz)
-    } catch (e: Exception) {
-        try {
-            val type = TypeToken.getParameterized(List::class.java, clazz).type
-            gson.fromJson(storedValue, type)
-
-        } catch (e: Exception) {
-            null
-        }
-    }
-}
-
 
 
 
