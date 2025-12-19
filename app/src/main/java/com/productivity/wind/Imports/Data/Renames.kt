@@ -288,6 +288,11 @@ fun Any.eachValVar(Do: (ClassValVar<Any, *>) -> Unit) {
     }
 }
 fun Do(Do: Wait) { run.launch { Do() } }
+fun NoLag(Do: Wait) {
+    run.launch(Dispatchers.Default) {
+        Do()
+    }
+}
 
 
 
