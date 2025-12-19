@@ -837,17 +837,6 @@ fun Any.color(value: Color): UIStr {
 }
 
 
-fun onActivityDead(Do: Do) {
-    App.lifecycle.addObserver(object : DefaultLifecycleObserver {
-        override fun onDestroy(owner: LifecycleOwner) {
-            Do() // called exactly when activity dies
-        }
-    })
-}
-    
-
-
-
 
 lateinit var App: ComponentActivity
 lateinit var AppNav: NavHostController
@@ -894,10 +883,6 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 		App = this
 		AppPkg = this.packageName
 
-		onActivityDead {
-			Vlog("ACTIVITY DIED")
-		}
-
 		AppStart_beforeUI()
 
         setContent { 
@@ -919,4 +904,23 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
         OnResume()
     }
 	
+	override fun onDestroy() {
+		super.onDestroy()
+		Vlog("Activity died, run, lyfecycle stopped")
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
