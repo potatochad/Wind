@@ -289,22 +289,28 @@ fun Dp.toPx(): Int {
         App.resources.displayMetrics
     ).toInt()
 }
-fun getStoredData(
-    File: Str = "settings",
-): SharedPreferences {
+fun getData(File: Str = "settings"): SharedPreferences {
 	return App.getSharedPreferences(File, Context.MODE_PRIVATE)
 }
+fun saveData(key: Str, value: Str, File: Str = "settings") {
+    getData(File).edit().putString(key, value).apply()
+}
+
+
 
 
 
 
 fun <T> mSave(default: T): m_<T> {
     val state = m(default)
+	state.onChange {
+		//saveData("", "")
+	}
     return state
 }
 
 
-private val onChangeSet = mutableSetOf<Any>()
+val onChangeSet = mutableSetOf<Any>()
 fun <T : Any> T.onChange(Do: Wait_<T>) {
     if (onChangeSet.add(this)) {
         Do {
@@ -322,24 +328,6 @@ fun <T : Any> T.onChange(Do: Wait_<T>) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-inline fun <reified T> SharedPreferences.Editor.putAny(name: Str, value: T?) {
-    val json = Gson().toJson(value)
-    putString(name, json)
-}
-
-
-
-
 @Composable
 fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
     LaunchedEffect(key1, key2) {
@@ -348,7 +336,7 @@ fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
 }
 
 
-private val runOnceSet = mutableSetOf<Any>()
+val runOnceSet = mutableSetOf<Any>()
 fun RunOnce(Do: Wait) {
 	Do {
 		val key = Do as Any
@@ -359,24 +347,19 @@ fun RunOnce(Do: Wait) {
 	}
 }
 
-/*
-
-fun runOnceEver(action: Do) {
-    // Get the caller info
+fun runOnceEver(action: Wait) {
     val stack = Thread.currentThread().stackTrace
     val caller = stack.first { it.className != Thread::class.java.name && it.className != runOnceEver::class.java.name }
-
-    // Create a unique key: file + line + lambda hash
+	
     val key = "${caller.fileName}:${caller.lineNumber}:${action.hashCode()}"
 
-    val prefs = App.getSharedPreferences("RunOnceEverPrefs", Context.MODE_PRIVATE)
-    val hasRun = prefs.getBoolean(key, false)
-    if (!hasRun) {
-        action()
-        prefs.edit().putBoolean(key, true).apply()
+    if (!getData("RunOnceEver").getBoolean(key, no)) {
+        Do{
+			action()
+		}
+        getData("RunOnceEver").edit().putBoolean(key, yes).apply()
     }
 }
-*/
 
 
 
