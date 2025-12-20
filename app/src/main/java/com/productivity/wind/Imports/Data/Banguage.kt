@@ -327,9 +327,6 @@ fun autoId(input: Any? = null): Str {
     return "${e.fileName}:${e.lineNumber}:$h"
 }
 
-
-
-
 fun <T> s(default: T, key: Str=""): m_<T> {
 	var id = autoId(key)
     val x = m(
