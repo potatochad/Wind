@@ -101,10 +101,14 @@ same thing...very important!!!!
 */
 
 object Bar {
+	try {
     var funTime by s(0)
     var Dpoints by s(0)
 	var lastDate by s("") 
 	var Url by s("")
+	} catch (e: Exception) {
+		log("error: ${e.message}")
+	}
     
 
     //ACHIEVEMENTS
