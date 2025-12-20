@@ -329,6 +329,7 @@ fun autoId(input: Any? = null): Str {
 
 fun <T> s(default: T, key: Str=""): m_<T> {
 	var id = autoId(key)
+	Vlog("$id")
     val x = m(
 		getData().basicValue(id, default)
 	)
