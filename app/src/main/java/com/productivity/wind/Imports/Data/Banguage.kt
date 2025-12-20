@@ -321,10 +321,16 @@ fun <T> saveBasic(key: Str, x: T, File: Str = "data") {
     Data.apply()
 }
 
+fun autoId(): Str {
+    val e = Throwable().stackTrace[2]
+    return "${e.fileName}:${e.lineNumber}"
+}
+
 fun <T> save(id: Str, default: T): m_<T> {
     val x = m(
 		getData().basicValue(id, default)
 	)
+	Vlog("autoId: [ $autoId ]")
 
     x.onChange {
         saveBasic(id, x.it)
