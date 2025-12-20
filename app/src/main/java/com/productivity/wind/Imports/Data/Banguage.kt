@@ -322,7 +322,9 @@ fun <T> saveBasic(key: Str, x: T, File: Str = "data") {
 }
 
 fun autoId(input: Any? = null): Str {
-    val e = Throwable().stackTrace[2]
+    val stack = Throwable().stackTrace
+    val e = stack.getOrNull(2) ?: stack.last()
+
     val h = (input ?: e).hashCode()
     return "${e.fileName}:${e.lineNumber}:$h"
 }
@@ -332,6 +334,7 @@ fun <T> s(default: T, key: Str=""): m_<T> {
     val x = m(
 		getData().basicValue(id, default)
 	)
+	Vlog("id: [ $id ]")
 
     x.onChange {
         saveBasic(id, x.it)
