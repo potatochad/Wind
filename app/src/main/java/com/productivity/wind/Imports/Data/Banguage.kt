@@ -306,8 +306,6 @@ fun <T> mSave(default: T): m_<T> {
     val caller = stack.first { it.className != Thread::class.java.name && it.className != ::runOnceEver::class.java.name }
 	
     val key = "${caller.fileName}:${caller.lineNumber}:${default.hashCode()}"
-
-	Vlog("key: $key")
 	
     val state = m(default)
 	state.onChange {
@@ -864,9 +862,6 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
     defaultHandler?.uncaughtException(thread, throwable)
 }
 */
-
-
-		Vlog("HELLO")
 		App = this
 		AppPkg = this.packageName
 
@@ -877,8 +872,6 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 			AppH = LocalConfiguration.current.screenHeightDp.dp
 			AppW = LocalConfiguration.current.screenWidthDp.dp
 			AppLazyH = AppH - 100.dp - bottomSystemHeight()
-
-			mSave("someValue")
 		
 			AppContent()
         }
