@@ -334,9 +334,6 @@ fun <T> save(id: Str, default: T): m_<T> {
     val x = m(
 		getData().basicValue(id, default)
 	)
-	Vlog("autoId: [ ${autoId("string")} ]")
-	Vlog("autoId: [ ${autoId("string")} ]"); Vlog("autoId: [ ${autoId("string")} ]")
-
 
     x.onChange {
         saveBasic(id, x.it)
