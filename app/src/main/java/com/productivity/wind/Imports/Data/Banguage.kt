@@ -321,27 +321,22 @@ fun <T> saveBasic(key: Str, x: T, File: Str = "data") {
     Data.apply()
 }
 
-fun autoId(input: Any? = null): String {
+fun autoId(input: Any? = null): Str {
     val e = Throwable().stackTrace[2]
     val h = (input ?: e).hashCode()
     return "${e.fileName}:${e.lineNumber}:$h"
 }
 
 fun <T> s(default: T, key: Str=""): m_<T> {
-	var id = key 
-    val x = m( getData().basicValue(id, default) )
-	try {
-		id = autoId(key)
-	
-		Vlog("id: [ $id ]")
+	var id = autoId(key)
+    val x = m(
+		getData().basicValue(id, default)
+	)
 
-		x.onChange {
-			saveBasic(id, x.it)
-			log("saving in msave value: [ ${x.it} ]")
-		}
-	} catch (e: Exception) {
-		log("error: ${e.message}")
-	}
+    x.onChange {
+        saveBasic(id, x.it)
+        log("saving in msave value: [ ${x.it} ]")
+    }
 
     return x
 }
