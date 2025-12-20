@@ -123,6 +123,7 @@ import com.google.android.gms.location.*
 import android.content.*
 import android.net.*
 import androidx.lifecycle.*
+import kotlinx.coroutines.flow.*
 
 
 
@@ -337,7 +338,9 @@ fun <T> m_<T>.onChange(callback: Wait_<T>) {
     Do {
         snapshotFlow { this@onChange.it }
             .collectLatest {
-                callback(it)
+                Do {
+					callback(it)
+				}
             }
     }
 }
