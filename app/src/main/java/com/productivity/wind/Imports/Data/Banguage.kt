@@ -334,12 +334,18 @@ fun <T> s(default: T, key: Str=""): m_<T> {
     val x = m(
 		getData().basicValue(id, default)
 	)
+	try {
+    
+	
 	Vlog("id: [ $id ]")
 
-    x.onChange {
+		x.onChange {
         saveBasic(id, x.it)
         log("saving in msave value: [ ${x.it} ]")
     }
+	} catch (e: Exception) {
+		log("error: ${e.message}")
+	}
 
     return x
 }
