@@ -307,7 +307,7 @@ fun <T> SharedPreferences.basicValue(key: Str, default: T): T {
     }
 }
 
-fun saveBasic(key: Str, x: Any, File: Str = "data") {
+fun saveBasic(key: Str, x: T, File: Str = "data") {
     val Data = getData(File).edit()
     when (x) {
         is Int -> Data.putInt(key, x)
