@@ -323,8 +323,9 @@ fun <T> saveBasic(key: Str, x: T, File: Str = "data") {
 
 fun autoId(): Str {
     val e = Throwable().stackTrace[2]
-    return "${e.fileName}:${e.lineNumber}"
+    return "${e.fileName}:${e.lineNumber}:${e.methodName}"
 }
+
 
 fun <T> save(id: Str, default: T): m_<T> {
     val x = m(
