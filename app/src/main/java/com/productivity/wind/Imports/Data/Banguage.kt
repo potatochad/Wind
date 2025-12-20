@@ -333,13 +333,12 @@ fun <T> save(id: Str, default: T): m_<T> {
     return x
 }
 
-
-val onChangeSet = mutableSetOf<Any>()
-fun <T : Any> T.onChange(Do: Wait_<T>) {
-    if (onChangeSet.add(this)) {
-        Do {
-            Do(this@onChange)
-        }
+fun <T> m_<T>.onChange(callback: Wait_<T>) {
+    Do {
+        snapshotFlow { this@onChange.it }
+            .collectLatest {
+                callback(it)
+            }
     }
 }
 
