@@ -330,19 +330,17 @@ fun autoId(input: Any? = null): Str {
 }
 
 fun <T> s(default: T, key: Str=""): m_<T> {
-	var id = autoId(key)
-    val x = m(
-		getData().basicValue(id, default)
-	)
+	var id = key 
+    val x = m( getData().basicValue(id, default) )
 	try {
-    
+		id = autoId(key)
 	
-	Vlog("id: [ $id ]")
+		Vlog("id: [ $id ]")
 
 		x.onChange {
-        saveBasic(id, x.it)
-        log("saving in msave value: [ ${x.it} ]")
-    }
+			saveBasic(id, x.it)
+			log("saving in msave value: [ ${x.it} ]")
+		}
 	} catch (e: Exception) {
 		log("error: ${e.message}")
 	}
