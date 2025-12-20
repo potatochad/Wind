@@ -326,23 +326,15 @@ fun autoId(): Str {
     return "${e.fileName}:${e.lineNumber}"
 }
 
-fun <T> s(default: T, key: Str = ""): m_<T> {
-	/*
-	var id = autoId()
-    val x = m(
-		getData().basicValue(id, default)
-	)
-	Vlog("autoId: [ ${autoId()} ]")
+fun <T> s(default: T, id: Str = "idddd"): m_<T> {
+    val x = m(getData().basicValue(id, default))
 
     x.onChange {
         saveBasic(id, x.it)
-        log("saving in msave value: [ ${x.it} ]")
+		Vlog("autoId, value: [ ${autoId()}, ${x.it} ]")
     }
 	
-
     return x
-	*/
-	return m(default)
 }
 
 fun <T> m_<T>.onChange(callback: Wait_<T>) {
