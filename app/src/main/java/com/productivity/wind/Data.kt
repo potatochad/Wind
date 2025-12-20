@@ -101,10 +101,10 @@ same thing...very important!!!!
 */
 
 object Bar {
-    var funTime by save("funTime", 0)
-    var Dpoints by save("Dpoints", 0)
-	var lastDate by save("lastDate", "") 
-	var Url by save("Url", "")
+    var funTime by s(0)
+    var Dpoints by s(0)
+	var lastDate by s("") 
+	var Url by s("")
     
 
     //ACHIEVEMENTS
