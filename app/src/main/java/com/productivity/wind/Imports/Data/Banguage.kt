@@ -289,29 +289,48 @@ fun Dp.toPx(): Int {
         App.resources.displayMetrics
     ).toInt()
 }
-fun getData(File: Str = "settings"): SharedPreferences {
+
+
+
+fun getData(File: Str = "data"): SharedPreferences {
 	return App.getSharedPreferences(File, Context.MODE_PRIVATE)
 }
-fun saveData(key: Str, value: Str, File: Str = "settings") {
-    getData(File).edit().putString(key, value).apply()
+@Suppress("UNCHECKED_CAST")
+fun <T> SharedPreferences.basicValue(key: Str, default: T): T {
+    return when (default) {
+        is Int -> getInt(key, default) as T
+        is Bool -> getBoolean(key, default) as T
+        is Float -> getFloat(key, default) as T
+        is Long -> getLong(key, default) as T
+        is Str -> getString(key, default) as T
+        else -> default
+    }
 }
 
+fun saveBasic(key: Str, x: Any, File: Str = "data") {
+    val Data = getData(File).edit()
+    when (x) {
+        is Int -> Data.putInt(key, x)
+        is Bool -> Data.putBoolean(key, x)
+        is Float -> Data.putFloat(key, x)
+        is Long -> Data.putLong(key, x)
+        is Str -> Data.putString(key, x)
+        else -> return
+    }
+    Data.apply()
+}
 
+fun <T> save(id: Str, default: T): m_<T> {
+    val x = m(
+		getData().basicValue(id, default)
+	)
 
+    x.it.onChange {
+        saveBasic(id, it)
+        log("saving in msave value: [ $newValue ]")
+    }
 
-
-
-fun <T> mSave(default: T): m_<T> {
-	val stack = Thread.currentThread().stackTrace
-    val caller = stack.first { it.className != Thread::class.java.name && it.className != ::runOnceEver::class.java.name }
-	
-    val key = "${caller.fileName}:${caller.lineNumber}:${default.hashCode()}"
-	
-    val state = m(default)
-	state.onChange {
-		//saveData("", "")
-	}
-    return state
+    return x
 }
 
 
@@ -323,15 +342,6 @@ fun <T : Any> T.onChange(Do: Wait_<T>) {
         }
     }
 }
-
-
-
-
-
-
-
-
-
 
 @Composable
 fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
@@ -382,21 +392,6 @@ fun TxtFileToMap(ctx: ctx, uri: Uri, fileMap: MutableMap<Str, Str>) {
             val (key, value) = line.split("=", limit = 2)
             fileMap[key] = value
         }
-    }
-}
-
-fun StrToValue(valueNow: Any?, outputRaw: Str?): Any? {
-    return when (valueNow) {
-        is Int -> outputRaw?.toIntOrNull()
-        is Long -> outputRaw?.toLongOrNull()
-        is Float -> outputRaw?.toFloatOrNull()
-        is Double -> outputRaw?.toDoubleOrNull()
-        is Bool -> outputRaw?.toBooleanStrictOrNull()
-        is SnapshotStateList<*> -> {
-            val items = outputRaw?.split(",")?.map { it.trim() } ?: emptyList()
-            mutableStateListOf(*items.toTypedArray())
-        }
-        else -> outputRaw
     }
 }
 
