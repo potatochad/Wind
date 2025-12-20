@@ -321,10 +321,10 @@ fun <T> saveBasic(key: Str, x: T, File: Str = "data") {
     Data.apply()
 }
 
-fun autoId(input: Any? = null): Str {
-    val e = Throwable().stackTrace[2]
-    val h = (input ?: e).hashCode()
-    return "${e.fileName}:${e.lineNumber}:$h"
+fun autoId(input: Any? = null): String {
+    val e = Throwable().stackTrace[2]
+    val h = (input ?: e).hashCode()
+    return "${e.fileName}:${e.lineNumber}:$h"
 }
 
 fun <T> s(default: T, key: Str=""): m_<T> {
