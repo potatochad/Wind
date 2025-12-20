@@ -325,9 +325,9 @@ fun <T> save(id: Str, default: T): m_<T> {
 		getData().basicValue(id, default)
 	)
 
-    x.it.onChange {
-        saveBasic(id, it)
-        log("saving in msave value: [ $newValue ]")
+    x.onChange {
+        saveBasic(id, x.it)
+        log("saving in msave value: [ ${x.it} ]")
     }
 
     return x
