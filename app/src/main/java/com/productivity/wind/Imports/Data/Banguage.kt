@@ -324,7 +324,7 @@ fun <T> saveBasic(key: Str, x: T, File: Str = "data") {
 fun autoId(input: Any? = null): Str {
     val e = Throwable().stackTrace[2]
     val h = (input ?: e).hashCode()
-    return "${e.lineNumber}:${h}"
+    return "${e.fileName}:${e.lineNumber}:$h"
 }
 
 
