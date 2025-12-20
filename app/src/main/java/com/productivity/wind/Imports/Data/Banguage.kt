@@ -330,7 +330,7 @@ fun autoId(input: Any? = null): Str {
 
 
 
-fun <T> save(key: Str="", default: T): m_<T> {
+fun <T> s(default: T, key: Str=""): m_<T> {
 	var id = autoId(key)
     val x = m(
 		getData().basicValue(id, default)
