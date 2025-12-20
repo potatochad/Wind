@@ -327,6 +327,7 @@ fun autoId(): Str {
 }
 
 fun <T> s(default: T, key: Str = ""): m_<T> {
+	/*
 	var id = autoId()
     val x = m(
 		getData().basicValue(id, default)
@@ -337,8 +338,11 @@ fun <T> s(default: T, key: Str = ""): m_<T> {
         saveBasic(id, x.it)
         log("saving in msave value: [ ${x.it} ]")
     }
+	
 
     return x
+	*/
+	return m(default)
 }
 
 fun <T> m_<T>.onChange(callback: Wait_<T>) {
