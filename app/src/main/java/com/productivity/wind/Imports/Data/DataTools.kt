@@ -167,6 +167,8 @@ fun autoId(): Str {
 fun <T> sList(default: List<T> = emptyList(), id: Str = autoId()): SnapshotStateList<T> {
     val list = mList<T>()
 
+	/*
+
     try {
         val json = getData().basicValue(id, null)
         if (json != null) {
@@ -182,6 +184,7 @@ fun <T> sList(default: List<T> = emptyList(), id: Str = autoId()): SnapshotState
 		Vlog("error, deleting data for basic values: ${e.message}")
 		getData().edit().clear().apply()
 	}
+	*/
 
     return list
 }
