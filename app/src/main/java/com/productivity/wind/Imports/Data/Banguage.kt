@@ -327,12 +327,19 @@ fun autoId(): Str {
 }
 
 fun <T> s(default: T, id: Str = "idddd"): m_<T> {
-    val x = m(getData().basicValue(id, default))
+    var x = m(default) 
+
+	try {
+	x = m(getData().basicValue(id, default))
 
     x.onChange {
         saveBasic(id, x.it)
 		Vlog("autoId, value: [ ${autoId()}, ${x.it} ]")
     }
+	} catch (e: Exception) {
+		Vlog("error: ${e.message}")
+	}
+
 	
     return x
 }
