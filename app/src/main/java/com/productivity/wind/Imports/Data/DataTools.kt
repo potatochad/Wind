@@ -206,6 +206,25 @@ fun <T> s(default: T, id: Str = autoId()): m_<T> {
     return x
 }
 
+
+
+fun <T> Any.onChange(callback: Wait_<Any>) {
+    val target = this
+    Do {
+        when (target) {
+            is m_<*> -> snapshotFlow { target.it }
+            is SnapshotStateList<*> -> snapshotFlow { target.toList() }
+            else -> return@Do
+        }.collectLatest {
+            Do { callback(target) }
+        }
+    }
+}
+
+
+
+
+/*
 fun <T> SnapshotStateList<T>.onChange(callback: Wait_<SnapshotStateList<T>>) {
     Do {
         snapshotFlow { this@onChange.toList() } // track changes
@@ -228,6 +247,7 @@ fun <T> m_<T>.onChange(callback: Wait_<T>) {
             }
     }
 }
+*/
 
 
 
