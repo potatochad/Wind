@@ -80,6 +80,7 @@ fun onNewDay() {
 */
 
 object Bar {
+	//BASIC
     var funTime by s(0)
     var Dpoints by s(0)
 	var lastDate by s("") 
@@ -90,10 +91,9 @@ object Bar {
     var LettersTyped by s(0)
 	
 
-	// LISTS DONT BACKUP OR RESTORE!!!!!
+	// LISTS
     var copyTsk = sList<CopyTsk>("copyTsk")
 	var waits = sList<Waits>("waits")
-	var apps = mList<AppTsk>()
 
 	var badWords = sList<WebWord>("badWords").apply {
 		addAll(
@@ -107,6 +107,10 @@ object Bar {
 			)
 		)
 	}
+
+
+	//NOT SAVED
+	var apps = mList<AppTsk>()
 
 
 }
