@@ -110,20 +110,7 @@ object Bar {
 
 }
 
-/*
-@Serializable
-data class CopyTsk(
-    val id: Str = Id(),
-    var txt: Str = "",
-	var input: Str = "",
-    var done: Bool = no,
-    var DailyMax: Int = 5,
-	var DailyDone: Int = 0,
-    var Done_Worth: Int = 10,
-    var Letter_Worth: Int = 1,
-	var goodStr: Int = 0,
-) 
-*/
+
 
 class CopyTsk {
     val id = Id()
@@ -137,31 +124,26 @@ class CopyTsk {
     var goodStr by m(0)
 }
 
+class Waits {
+    val id = Id()
+    var whenStart by m(no)
+    var whenDo by m(no)
+    var DoStr by m("")
+}
 
-
-@Serializable
-data class Waits(
-    val id: Str = Id(),
-    var whenStart: Bool = no,
-    var whenDo: Bool = no,
-    var DoStr: Str = "",
+class AppTsk(
+    val id = Id()
+    var name by m("")
+    var done by m(no)
+    var pkg by m("")
+    var NowTime by m(0)
+    var DoneTime by m(0)
+    var Worth by m(0)
 )
 
-@Serializable
-data class AppTsk(
-    val id: Str = Id(),
-    var name: Str = "",
-    var done: Bool = no,
-    var pkg: Str = "",
-    var NowTime: Int = 0,
-    var DoneTime: Int = 0,
-    var Worth: Int = 0
-)
-
-@Serializable
-data class WebWord(
-    val id: Str = Id(),
-	var word: Str = "",
+class WebWord(
+    val id = Id()
+	var word by m("")
 )
 
 
@@ -180,9 +162,6 @@ fun AppContent() {
 		}
 	}
 }
-
-
-
 
 
 @RequiresApi(Build.VERSION_CODES.O)
