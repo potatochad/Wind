@@ -292,69 +292,6 @@ fun Dp.toPx(): Int {
 }
 
 
-
-fun getData(File: Str = "Data"): SharedPreferences {
-	return App.getSharedPreferences(File, Context.MODE_PRIVATE)
-}
-@Suppress("UNCHECKED_CAST")
-fun <T> SharedPreferences.basicValue(key: Str, default: T): T {
-    return when (default) {
-        is Int -> getInt(key, default) as T
-        is Bool -> getBoolean(key, default) as T
-        is Float -> getFloat(key, default) as T
-        is Long -> getLong(key, default) as T
-        is Str -> (getString(key, default) ?: default) as T
-        else -> default
-    }
-}
-
-fun <T> saveBasic(key: Str, x: T, File: Str = "Data") {
-    val Data = getData(File).edit()
-    when (x) {
-        is Int -> Data.putInt(key, x)
-        is Bool -> Data.putBoolean(key, x)
-        is Float -> Data.putFloat(key, x)
-        is Long -> Data.putLong(key, x)
-        is Str -> Data.putString(key, x)
-        else -> return
-    }
-    Data.apply()
-}
-
-fun autoId(): Str {
-    val e = Throwable().stackTrace[2]
-    return "${e.fileName}:${e.lineNumber}"
-}
-
-fun <T> s(default: T, id: Str = autoId()): m_<T> {
-    var x = m(default) 
-
-	try {
-		x = m(getData().basicValue(id, default))
-
-		x.onChange {
-			saveBasic(id, x.it)
-		}
-	} catch (e: Exception) {
-		Vlog("error, deleting data for basic values: ${e.message}")
-		getData().edit().clear().apply()
-	}
-
-	
-    return x
-}
-
-fun <T> m_<T>.onChange(callback: Wait_<T>) {
-    Do {
-        snapshotFlow { this@onChange.it }
-            .collectLatest {
-                Do {
-					callback(it)
-				}
-            }
-    }
-}
-
 @Composable
 fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
     LaunchedEffect(key1, key2) {
