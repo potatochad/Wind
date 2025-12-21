@@ -337,7 +337,8 @@ fun <T> s(default: T, id: Str = "idddd"): m_<T> {
 		Vlog("autoId, value: [ ${autoId()}, ${x.it} ]")
     }
 	} catch (e: Exception) {
-		Vlog("error: ${e.message}")
+		Vlog("error, deleting data for basic values: ${e.message}")
+		getData().edit().clear().apply()
 	}
 
 	
