@@ -162,6 +162,24 @@ fun autoId(): Str {
     return "${e.fileName}:${e.lineNumber}"
 }
 
+
+
+fun sList() {
+    /*
+	val json = Json.encodeToString(Bar.copyTsk)
+    saveBasic("copyTsk", json)
+
+
+	fun loadCopyTsk() {
+    val json = getData().getString("copyTsk", null) ?: return
+    Bar.copyTsk.clear()
+    Bar.copyTsk.addAll(Json.decodeFromString(json))
+}
+
+	*/
+}
+
+
 fun <T> s(default: T, id: Str = autoId()): m_<T> {
     var x = m(default) 
 
