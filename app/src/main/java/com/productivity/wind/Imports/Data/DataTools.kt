@@ -206,6 +206,18 @@ fun <T> s(default: T, id: Str = autoId()): m_<T> {
     return x
 }
 
+fun <T> SnapshotStateList<T>.onChange(callback: Wait_<SnapshotStateList<T>>) {
+    Do {
+        snapshotFlow { this@onChange.toList() } // track changes
+            .collectLatest {
+                Do {
+                    callback(this@onChange)
+                }
+            }
+    }
+}
+
+
 fun <T> m_<T>.onChange(callback: Wait_<T>) {
     Do {
         snapshotFlow { this@onChange.it }
