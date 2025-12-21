@@ -193,7 +193,33 @@ fun <T> m_<T>.onChange(callback: Wait_<T>) {
 
 
 
+fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
+	try {
+		val index = this.indexOf(item)
+		val itemCopy = this[index] // get the item
+        this.removeAt(index)       // remove old item
 
+        itemCopy.block()           // apply the changes directly
+
+        this.add(index, itemCopy) 
+	} catch (e: Exception) {
+		Vlog("Edit crashed for item $item: ${e.message}")
+	}
+}
+
+
+@RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
+inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
+    try {
+        val newItem = T::class.java.getDeclaredConstructor().newInstance()
+        newItem.block()
+
+        this += newItem
+
+    } catch (e: Exception) {
+        Vlog("Add failed: ${e.message}")
+    }
+}
 
 
 
