@@ -303,7 +303,7 @@ fun <T> SharedPreferences.basicValue(key: Str, default: T): T {
         is Bool -> getBoolean(key, default) as T
         is Float -> getFloat(key, default) as T
         is Long -> getLong(key, default) as T
-        is Str -> getString(key, default) as T
+        is Str -> (getString(key, default) ?: default) as T
         else -> default
     }
 }
