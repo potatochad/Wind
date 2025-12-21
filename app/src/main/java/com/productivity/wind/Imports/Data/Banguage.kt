@@ -326,7 +326,7 @@ fun autoId(): Str {
     return "${e.fileName}:${e.lineNumber}"
 }
 
-fun <T> s(default: T, id: Str = "idddd"): m_<T> {
+fun <T> s(default: T, id: Str = id()): m_<T> {
     var x = m(default) 
 
 	try {
