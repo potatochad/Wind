@@ -143,10 +143,10 @@ data class AppTsk(
 )
 
 
-class WebWord(
+class WebWord{
     val id = Id()
 	var word by m("")
-)
+}
 
 
 
