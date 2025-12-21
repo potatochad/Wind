@@ -171,13 +171,14 @@ inline fun <reified T> sList(
     val list = mList<T>()
 
     try {
-        val json = getData().basicValue(id, null)
-        if (json != null) {
-            val loaded = Json.decodeFromString<List<T>>(json)
-            list.addAll(loaded)
-        } else {
-			Vlog("json is null: $id")
+        val json = getData().basicValue(id, "")
+        if (json.isNotEmpty()) {
+			val loaded = Json.decodeFromString<List<T>>(json)
+			list.addAll(loaded)
+		} else {
+			Vlog("json is empty: $id")
 		}
+
 
         list.onChange {
             val jsonOut = Json.encodeToString(list.toList())
