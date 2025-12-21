@@ -91,11 +91,11 @@ object Bar {
 	
 
 	// LISTS DONT BACKUP OR RESTORE!!!!!
-    var copyTsk = mList<CopyTsk>()
-	var waits = mList<Waits>()
-	var apps = mList<AppTsk>()// mutablestatelistof
+    var copyTsk = sList<CopyTsk>()
+	var waits = sList<Waits>()
+	var apps = mList<AppTsk>()
 
-	var badWords = mList<WebWord>().apply {
+	var badWords = sList<WebWord>().apply {
 		addAll(
 			listOf(
 				WebWord().apply { word = "anime" },
