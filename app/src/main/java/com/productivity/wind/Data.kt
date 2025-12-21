@@ -131,15 +131,17 @@ class Waits {
     var DoStr by m("")
 }
 
-class AppTsk(
-    val id = Id()
-    var name by m("")
-    var done by m(no)
-    var pkg by m("")
-    var NowTime by m(0)
-    var DoneTime by m(0)
-    var Worth by m(0)
+@Serializable
+data class AppTsk(
+    val id: Str = Id(),
+    var name: Str = "",
+    var done: Bool = no,
+    var pkg: Str = "",
+    var NowTime: Int = 0,
+    var DoneTime: Int = 0,
+    var Worth: Int = 0
 )
+
 
 class WebWord(
     val id = Id()
