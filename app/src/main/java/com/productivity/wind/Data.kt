@@ -110,7 +110,7 @@ object Bar {
 
 }
 
-
+/*
 @Serializable
 data class CopyTsk(
     val id: Str = Id(),
@@ -123,8 +123,19 @@ data class CopyTsk(
     var Letter_Worth: Int = 1,
 	var goodStr: Int = 0,
 ) 
+*/
 
-
+data class CopyTsk {
+    val id by Id(),
+    var txt by m(""),
+	var input by m(""),
+    var done by m(no),
+    var DailyMax by m(5),
+	var DailyDone by m(0),
+    var Done_Worth by m(10),
+    var Letter_Worth by m(1),
+	var goodStr by m(0),
+}
 
 
 
