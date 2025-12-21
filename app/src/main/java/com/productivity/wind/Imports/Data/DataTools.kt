@@ -165,8 +165,8 @@ fun autoId(): Str {
 
 
 inline fun <reified T> sList(
+	key: Str = "",
     default: List<T> = emptyList(),
-    key: Str = "",
 ): SnapshotStateList<T> {
 	var id = autoId()+key
     val list = mList<T>()
