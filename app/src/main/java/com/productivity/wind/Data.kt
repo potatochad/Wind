@@ -125,8 +125,8 @@ data class CopyTsk(
 ) 
 */
 
-class CopyTsk {
-    val id by Id()
+data class CopyTsk2 {
+    val id = Id()
     var txt by m("")
     var input by m("")
     var done by m(no)
@@ -137,6 +137,17 @@ class CopyTsk {
     var goodStr by m(0)
 }
 
+class CopyTsk {
+    val id = Id()
+    var txt by m("")
+    var input by m("")
+    var done by m(no)
+    var DailyMax by m(5)
+    var DailyDone by m(0)
+    var Done_Worth by m(10)
+    var Letter_Worth by m(1)
+    var goodStr by m(0)
+}
 
 
 
