@@ -312,11 +312,7 @@ fun RunOnce(Do: Wait) {
 }
 
 fun runOnceEver(action: Wait) {
-    val stack = Thread.currentThread().stackTrace
-    val caller = stack.first { it.className != Thread::class.java.name && it.className != ::runOnceEver::class.java.name }
-	
-    val key = "${caller.fileName}:${caller.lineNumber}:${action.hashCode()}"
-
+    val key = autoId()
     if (!getData("RunOnceEver").getBoolean(key, no)) {
         Do{
 			action()
@@ -324,6 +320,20 @@ fun runOnceEver(action: Wait) {
         getData("RunOnceEver").edit().putBoolean(key, yes).apply()
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
