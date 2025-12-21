@@ -31,8 +31,8 @@ fun Web(){
     val web = r { mutableStateOf<Web?>(null) }
 
     RunOnce {
-        Bar.Url = "${web.url}"
         web.url("https://player.fm/series/my-first-million")
+        Bar.Url = "${web.url}"
     }
 
 
