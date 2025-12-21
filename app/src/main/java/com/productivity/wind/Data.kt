@@ -98,15 +98,16 @@ object Bar {
 	var badWords = mList<WebWord>().apply {
 		addAll(
 			listOf(
-				WebWord(word = "anime"),
-				WebWord(word = "youtube.com"),
-				WebWord(word = "facebook.com"),
-				WebWord(word = "instagram.com"),
-				WebWord(word = "x.com"),
-				WebWord(word = "tiktok.com"),
+				WebWord().apply { word = "anime" },
+				WebWord().apply { word = "youtube.com" },
+				WebWord().apply { word = "facebook.com" },
+				WebWord().apply { word = "instagram.com" },
+				WebWord().apply { word = "x.com" },
+				WebWord().apply { word = "tiktok.com" },
 			)
 		)
 	}
+
 
 }
 
