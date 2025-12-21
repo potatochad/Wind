@@ -176,12 +176,15 @@ inline fun <reified T> sList(
         if (json != null) {
             val loaded = Json.decodeFromString<List<T>>(json)
             list.addAll(loaded)
-        }
+        } else {
+			Vlog("json is null: $id")
+			Vlog("getData: ${getData()}")
+		}
 
         list.onChange {
             val jsonOut = Json.encodeToString(list.toList())
             saveBasic(id, jsonOut)
-			Vlog("sList change: $id, $jsonOut")
+			Vlog("$id: [ $jsonOut ]")
         }
     } catch (e: Exception) {
         Vlog("error, deleting data: ${e.message}")
