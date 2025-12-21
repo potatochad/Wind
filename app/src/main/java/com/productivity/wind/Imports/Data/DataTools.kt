@@ -180,7 +180,7 @@ inline fun <reified T> sList(
 		}
 
 
-        list.onChange {
+        list.onDeepChange {
             val jsonOut = Json.encodeToString(list.toList())
             saveBasic(id, jsonOut)
 			Vlog("$id: [ $jsonOut ]")
@@ -216,13 +216,11 @@ fun <T> s(default: T, id: Str = autoId()): m_<T> {
 
 
 
-fun <T> SnapshotStateList<T>.onChange(callback: Wait_<SnapshotStateList<T>>) {
+fun <T> SnapshotStateList<T>.onDeepChange(callback: Wait_<SnapshotStateList<T>>) {
     Do {
-        snapshotFlow { this@onChange.toList() } // track changes
+        snapshotFlow { this@onDeepChange.map { it.hashCode() } } // crude but works
             .collectLatest {
-                Do {
-                    callback(this@onChange)
-                }
+                Do { callback(this@onDeepChange) }
             }
     }
 }
