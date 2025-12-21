@@ -112,7 +112,7 @@ object Bar {
 }
 
 
-
+@Serializable
 class CopyTsk {
     val id = Id()
     var txt by m("")
@@ -125,6 +125,7 @@ class CopyTsk {
     var goodStr by m(0)
 }
 
+@Serializable
 class Waits {
     val id = Id()
     var whenStart by m(no)
@@ -143,7 +144,7 @@ data class AppTsk(
     var Worth: Int = 0
 )
 
-
+@Serializable
 class WebWord{
     val id = Id()
 	var word by m("")
