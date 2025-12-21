@@ -165,10 +165,9 @@ fun autoId(): Str {
 
 
 inline fun <reified T> sList(
-	key: Str = "",
+	id: Str = "",
     default: List<T> = emptyList(),
 ): SnapshotStateList<T> {
-	var id = autoId()+key
     val list = mList<T>()
 
     try {
@@ -178,7 +177,6 @@ inline fun <reified T> sList(
             list.addAll(loaded)
         } else {
 			Vlog("json is null: $id")
-			Vlog("getData: ${getData()}")
 		}
 
         list.onChange {
