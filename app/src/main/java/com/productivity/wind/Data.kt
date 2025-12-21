@@ -76,28 +76,7 @@ fun onNewDay() {
 
 
 /*
-This is a special class
-*more info in dataTools.kt
-
-it looks for all vars.
-ONLY stores their data:
-IF (mutable state)
-IF (mutable list)
-
-SKIPS: any private info
-
-also...forgot how works.
-
-
-it only work with the defaults data....
-
-and yes MUST USE THE 
-var NAME by m(x)
-FORMAT!!!!!!!!
-
-for lists
-same thing...very important!!!!
-
+‼️ NEVER PUT IT ONE LINEEE, s—save, it gets its id by getting line and file of S()
 */
 
 object Bar {
@@ -105,10 +84,10 @@ object Bar {
     var Dpoints by s(0)
 	var lastDate by s("") 
 	var Url by s("")
+	var logs by s("")
     
-
     //ACHIEVEMENTS
-    var LettersTyped by m(0)
+    var LettersTyped by s(0)
 	
 
 	// LISTS DONT BACKUP OR RESTORE!!!!!
@@ -129,8 +108,6 @@ object Bar {
 		)
 	}
 
-	//USED in banguage-better language
-	var logs by m("")
 }
 
 
