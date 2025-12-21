@@ -293,7 +293,7 @@ fun Dp.toPx(): Int {
 
 
 
-fun getData(File: Str = "data"): SharedPreferences {
+fun getData(File: Str = "Data"): SharedPreferences {
 	return App.getSharedPreferences(File, Context.MODE_PRIVATE)
 }
 @Suppress("UNCHECKED_CAST")
@@ -308,7 +308,7 @@ fun <T> SharedPreferences.basicValue(key: Str, default: T): T {
     }
 }
 
-fun <T> saveBasic(key: Str, x: T, File: Str = "data") {
+fun <T> saveBasic(key: Str, x: T, File: Str = "Data") {
     val Data = getData(File).edit()
     when (x) {
         is Int -> Data.putInt(key, x)
