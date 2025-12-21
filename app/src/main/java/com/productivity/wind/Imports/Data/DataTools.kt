@@ -180,6 +180,7 @@ inline fun <reified T> sList(
         list.onChange {
             val jsonOut = Json.encodeToString(list.toList())
             saveBasic(id, jsonOut)
+			Vlog("sList change: $id, $jsonOut")
         }
     } catch (e: Exception) {
         Vlog("error, deleting data: ${e.message}")
