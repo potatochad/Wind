@@ -165,24 +165,23 @@ fun autoId(): Str {
 
 
 fun <T> sList(default: List<T> = emptyList(), id: Str = autoId()): SnapshotStateList<T> {
-    val list = mList<T>()   // your mutable-state list
+    val list = mList<T>()
 
-    // Load saved JSON
     try {
-        val json = getData().getString(id, null)
+        val json = getData().basicValue(id, null)
         if (json != null) {
             val loaded = Json.decodeFromString<List<T>>(json)
             list.addAll(loaded)
         }
-    } catch (_: Exception) { }
-
-    // Auto-save on change
-    list.onChange {
-        try {
-            val json = Json.encodeToString(list)
-            saveBasic(id, json)
-        } catch (_: Exception) { }
-    }
+		
+		list.onChange {
+			val json = Json.encodeToString(list)
+			saveBasic(id, json)
+		}
+	} catch (e: Exception) { 
+		Vlog("error, deleting data for basic values: ${e.message}")
+		getData().edit().clear().apply()
+	}
 
     return list
 }
@@ -208,23 +207,8 @@ fun <T> s(default: T, id: Str = autoId()): m_<T> {
 
 
 
-fun <T> Any.onChange(callback: Wait_<Any>) {
-    val target = this
-    Do {
-        when (target) {
-            is m_<*> -> snapshotFlow { target.it }
-            is SnapshotStateList<*> -> snapshotFlow { target.toList() }
-            else -> return@Do
-        }.collectLatest {
-            Do { callback(target) }
-        }
-    }
-}
 
 
-
-
-/*
 fun <T> SnapshotStateList<T>.onChange(callback: Wait_<SnapshotStateList<T>>) {
     Do {
         snapshotFlow { this@onChange.toList() } // track changes
@@ -247,7 +231,6 @@ fun <T> m_<T>.onChange(callback: Wait_<T>) {
             }
     }
 }
-*/
 
 
 
