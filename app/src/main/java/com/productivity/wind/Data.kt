@@ -125,7 +125,7 @@ data class CopyTsk(
 ) 
 */
 
-data class CopyTsk {
+class CopyTsk {
     val id by Id(),
     var txt by m(""),
 	var input by m(""),
