@@ -32,12 +32,11 @@ fun Web(){
 
     RunOnce {
         Bar.Url = "${web.url}"
-        web.url("https://google.com")
-        //web.url("https://player.fm/series/my-first-million")
+        web.url("https://player.fm/series/my-first-million")
     }
 
 
-    //Item.WebPointTimer()
+    Item.WebPointTimer()
 
     LazyScreen(
         top = {
