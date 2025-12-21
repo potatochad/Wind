@@ -330,12 +330,11 @@ fun <T> s(default: T, id: Str = autoId()): m_<T> {
     var x = m(default) 
 
 	try {
-	x = m(getData().basicValue(id, default))
+		x = m(getData().basicValue(id, default))
 
-    x.onChange {
-        saveBasic(id, x.it)
-		Vlog("autoId, value: [ ${id}, ${x.it} ]")
-    }
+		x.onChange {
+			saveBasic(id, x.it)
+		}
 	} catch (e: Exception) {
 		Vlog("error, deleting data for basic values: ${e.message}")
 		getData().edit().clear().apply()
