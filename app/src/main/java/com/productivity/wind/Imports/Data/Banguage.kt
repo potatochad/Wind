@@ -326,7 +326,7 @@ fun autoId(): Str {
     return "${e.fileName}:${e.lineNumber}"
 }
 
-fun <T> s(default: T, id: Str = id()): m_<T> {
+fun <T> s(default: T, id: Str = autoId()): m_<T> {
     var x = m(default) 
 
 	try {
@@ -334,7 +334,7 @@ fun <T> s(default: T, id: Str = id()): m_<T> {
 
     x.onChange {
         saveBasic(id, x.it)
-		Vlog("autoId, value: [ ${autoId()}, ${x.it} ]")
+		Vlog("autoId, value: [ ${id}, ${x.it} ]")
     }
 	} catch (e: Exception) {
 		Vlog("error, deleting data for basic values: ${e.message}")
