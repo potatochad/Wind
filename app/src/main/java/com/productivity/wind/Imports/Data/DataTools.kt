@@ -164,19 +164,27 @@ fun autoId(): Str {
 
 
 
-fun sList() {
-    /*
-	val json = Json.encodeToString(Bar.copyTsk)
-    saveBasic("copyTsk", json)
+fun <T> sList(default: List<T> = emptyList(), id: Str = autoId()): SnapshotStateList<T> {
+    val list = mList<T>()   // your mutable-state list
 
+    // Load saved JSON
+    try {
+        val json = getData().getString(id, null)
+        if (json != null) {
+            val loaded = Json.decodeFromString<List<T>>(json)
+            list.addAll(loaded)
+        }
+    } catch (_: Exception) { }
 
-	fun loadCopyTsk() {
-    val json = getData().getString("copyTsk", null) ?: return
-    Bar.copyTsk.clear()
-    Bar.copyTsk.addAll(Json.decodeFromString(json))
-}
+    // Auto-save on change
+    list.onChange {
+        try {
+            val json = Json.encodeToString(list)
+            saveBasic(id, json)
+        } catch (_: Exception) { }
+    }
 
-	*/
+    return list
 }
 
 
