@@ -285,7 +285,7 @@ class synch<T>(initial: T, var onChange: (T) -> Unit) : ReadWriteProperty<Any?, 
 fun backupPrefs(fileName: Str = "backup.txt") {
     val allData = getData().all
 
-    App.openFileOutput(fileName, MODE_PRIVATE).use { file ->
+    App.openFileOutput(fileName, Context.MODE_PRIVATE).use { file ->
         allData.forEach { (key, value) ->
             file.write("$key=$value\n".toByteArray())
         }
@@ -307,3 +307,9 @@ fun restorePrefs(fileName: String = "backup.txt") {
     }
     editor.apply()
 }
+
+
+
+
+
+
