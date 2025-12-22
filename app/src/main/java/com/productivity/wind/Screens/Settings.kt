@@ -147,10 +147,10 @@ fun LogsScreen() {
     var LogsTag = r_m("")
 
 	RunOnce {
-		getMyAppLogs() 
-		wait(100){
-			scrollV.toBottom()
+		each(1000){
+			getMyAppLogs() 
 		}
+		scrollV.toBottom()
 	}
 	RunOnce(scrollV) {
 		if (scrollV.isMaxValue) scrollV.toBottom()
