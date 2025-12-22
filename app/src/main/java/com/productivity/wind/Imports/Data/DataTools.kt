@@ -480,14 +480,13 @@ fun restorePrefs(fileName: String = "backup.txt") {
 
 @Composable
 fun Backup() {
-    val ctx = LocalContext.current
-    var launchBackup by remember { mutableStateOf(false) }
+    var launchBackup by r { m(no) }
 
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("text/plain")
     ) { uri ->
         uri ?: return@rememberLauncherForActivityResult
-        ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
+        App.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
             getData().all.forEach { (key, value) ->
                 out.write("$key=$value\n")
             }
@@ -509,8 +508,7 @@ fun Backup() {
 
 @Composable
 fun Restore() {
-    val ctx = LocalContext.current
-    var launchRestore by remember { mutableStateOf(false) }
+    var launchRestore by r { m(no) }
 
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
@@ -519,7 +517,7 @@ fun Restore() {
 
         try {
             val editor = getData().edit()
-            ctx.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
+            App.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
                 lines.forEach { line ->
                     val parts = line.split("=", limit = 2)
                     if (parts.size == 2) editor.putString(parts[0], parts[1])
