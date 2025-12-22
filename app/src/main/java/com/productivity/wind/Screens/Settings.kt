@@ -26,8 +26,33 @@ import com.google.maps.android.compose.*
 fun SettingsScreen() {
     LazyScreen("Settings") {
         Item.UnlockThreshold()
-        Item.Restore()
-        Item.Backup()
+        
+        var restore by r_m(no)
+        LazyItem(
+            BigIcon = Icons.Filled.Restore,
+            BigIconColor = DarkBlue,
+            title = "Restore",
+            onClick = { 
+                restore = yes
+            },
+            bottomPadding = 2.dp
+        )
+	       if (restore) Restore()
+
+        var backup by r_m(no)
+        LazyItem(
+            topPadding = 1.dp,
+            BigIcon = Icons.Filled.Backup,
+            BigIconColor = DarkBlue,
+            title = "BackUp",
+            onClick = { 
+                backup = yes
+            }
+        )
+        if (backup) Backup()
+
+
+    
 
         LazyItem(
                 BigIcon = Icons.Filled.Extension,
