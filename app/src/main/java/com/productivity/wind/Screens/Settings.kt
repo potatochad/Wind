@@ -151,9 +151,10 @@ fun LogsScreen() {
 			getMyAppLogs() 
 		}
 		scrollV.toBottom()
-	}
-	RunOnce(scrollV) {
-		if (scrollV.isMaxValue) scrollV.toBottom()
+		
+		each(300){
+			if (scrollV.isMax) scrollV.toBottom()
+		}
 	}
     
     
