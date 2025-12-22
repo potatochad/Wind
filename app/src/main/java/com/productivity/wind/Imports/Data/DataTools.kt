@@ -186,7 +186,6 @@ inline fun <reified T> sList(
 			NoLag {
 				val jsonOut = Json.encodeToString(list.toList())
 				saveBasic(id, jsonOut)
-				Vlog("$id: [ $jsonOut ]")
 			}
         }
     } catch (e: Exception) {
