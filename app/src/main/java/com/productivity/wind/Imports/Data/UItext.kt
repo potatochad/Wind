@@ -127,29 +127,6 @@ import kotlinx.coroutines.flow.*
 
 
 
-
-/*
-
-fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
-    return makeUIStr {
-        pushStyle(style)
-        add(toUIStr(text))
-        pop()
-    }
-}
-
-fun Any.getStyle(): StrStyle { return toUIStr(this).spanStyles.firstOrNull()?.item ?: StrStyle() }
-
-fun Any.size(x: TextUnit): UIStr { return UIText(this, this.getStyle().copy(fontSize = x)) }
-
-fun Any.bold(): UIStr { return UIText(this, this.getStyle().copy(fontWeight = FontWeight.Bold)) }
-
-fun Any.color(x: Color): UIStr { return UIText(this, this.getStyle().copy(color = x)) }
-
-fun Any.gold(): UIStr { return UIText(this, this.getStyle().copy(color = Gold)) }
-
-*/
-
 fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
     return makeUIStr {
         pushStyle(style)
