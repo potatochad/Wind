@@ -172,6 +172,8 @@ inline fun <reified T> sList(
     default: List<T> = emptyList(),
 ): SnapshotStateList<T> {
     val list = mList<T>()
+	val Oldlist = mList<T>()
+
 
     try {
         val json = getData().basicValue(id, "")
@@ -185,6 +187,12 @@ inline fun <reified T> sList(
 
         each(300){
 			NoLag {
+				if (Oldlist != list){
+					Oldlist.clear()
+					Oldlist.addAll(list) 
+					Vlog("LIST CHANGED")
+				}
+				
 				val jsonOut = Json.encodeToString(list.toList())
 				saveBasic(id, jsonOut)
 			}
