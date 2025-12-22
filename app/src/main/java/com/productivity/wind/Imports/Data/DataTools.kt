@@ -131,6 +131,7 @@ import kotlin.properties.*
 
 
 
+
 fun getData(File: Str = "Data"): SharedPreferences {
 	return App.getSharedPreferences(File, Context.MODE_PRIVATE)
 }
@@ -284,7 +285,7 @@ class synch<T>(initial: T, var onChange: (T) -> Unit) : ReadWriteProperty<Any?, 
 fun backupPrefs(fileName: Str = "backup.txt") {
     val allData = getData().all
 
-    openFileOutput(fileName, MODE_PRIVATE).use { file ->
+    App.openFileOutput(fileName, MODE_PRIVATE).use { file ->
         allData.forEach { (key, value) ->
             file.write("$key=$value\n".toByteArray())
         }
@@ -292,9 +293,9 @@ fun backupPrefs(fileName: Str = "backup.txt") {
 }
 
 fun restorePrefs(fileName: String = "backup.txt") {
-    val editor = getData().edit() // fixed variable name
+    val editor = getData().edit()
 
-    openFileInput(fileName).bufferedReader().useLines { lines ->
+    App.openFileInput(fileName).bufferedReader().useLines { lines ->
         lines.forEach { line ->
             val parts = line.split("=", limit = 2)
             if (parts.size == 2) {
