@@ -501,6 +501,7 @@ fun Backup(show: mBool) {
 
 @Composable
 fun Restore(show: mBool) {
+	log("BEFORE data restore: ${getData().all}")
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
     ) { uri ->
@@ -515,7 +516,7 @@ fun Restore(show: mBool) {
                 }
             }
             editor.apply()
-			log("data restore: ${getData().all}")
+			log("AFTER data restore: ${getData().all}")
         } catch (e: Exception) {
             Vlog("Restore failed: ${e.message}")
         }
