@@ -128,7 +128,7 @@ import kotlinx.coroutines.flow.*
 
 
 
-
+/*
 
 fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
     return makeUIStr {
@@ -148,8 +148,21 @@ fun Any.color(x: Color): UIStr { return UIText(this, this.getStyle().copy(color 
 
 fun Any.gold(): UIStr { return UIText(this, this.getStyle().copy(color = Gold)) }
 
+*/
 
+fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
+    return makeUIStr {
+        pushStyle(style)
+        add(toUIStr(text))
+        pop()
+    }
+}
+fun Any.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (this.getStyle().update()))
 
+fun Any.size(x: TextUnit) = txt { copy(fontSize = x) }
+fun Any.bold() = txt { copy(fontWeight = FontWeight.Bold) }
+fun Any.color(x: Color) = txt { copy(color = x) }
+fun Any.gold() = txt { copy(color = Gold) }
 
 
 
