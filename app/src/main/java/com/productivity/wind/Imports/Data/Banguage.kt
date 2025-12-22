@@ -642,7 +642,7 @@ fun getMyAppLogs() {
 			if ("WindowOnBackDispatcher" in s) return@forEachLine
 		
 		
-			logs.add(if (s.length > 300) s.take(300) + "..." else s)
+			logs.add(s)
 
 			var cutLines = logs.takeLast(2000)
 
