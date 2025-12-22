@@ -124,6 +124,8 @@ import android.content.*
 import android.net.*
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
+import kotlin.properties.*
+
 
 
 
@@ -259,4 +261,11 @@ inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
 
 
 
-
+class synch<T>(initial: T, var onChange: (T) -> Unit) : ReadWriteProperty<Any?, T> {
+    private var state = mutableStateOf(initial)
+    override fun getValue(thisRef: Any?, property: KProperty<*>): T = state.value
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+        state.value = value
+        onChange(value)
+    }
+}
