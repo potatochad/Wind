@@ -180,7 +180,7 @@ inline fun <reified T> sList(
 		}
 
 
-        list.onDeepChange {
+        each(300){
             val jsonOut = Json.encodeToString(list.toList())
             saveBasic(id, jsonOut)
 			Vlog("$id: [ $jsonOut ]")
@@ -213,26 +213,6 @@ fun <T> s(default: T, id: Str = autoId()): m_<T> {
 }
 
 
-
-
-
-fun <T : Any> SnapshotStateList<T>.onDeepChange(callback: suspend (SnapshotStateList<T>) -> Unit) {
-    Do {
-        snapshotFlow {
-            // For each item, collect all mutable state values via reflection
-            this@onDeepChange.map { item ->
-                item::class.memberProperties.map { prop ->
-                    prop.isAccessible = true
-                    val value = prop.get(item)
-                    // If it's a mutableStateOf, extract its value
-                    if (value is State<*>) value.value else value
-                }
-            }
-        }.collectLatest {
-            callback(this@onDeepChange)
-        }
-    }
-}
 
 fun <T> m_<T>.onChange(callback: Wait_<T>) {
     Do {
