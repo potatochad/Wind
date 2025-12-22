@@ -479,9 +479,7 @@ fun restorePrefs(fileName: String = "backup.txt") {
 
 
 @Composable
-fun Backup() {
-    var launchBackup by r { m(no) }
-
+fun Backup(show: mBool) {
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("text/plain")
     ) { uri ->
@@ -493,23 +491,16 @@ fun Backup() {
         }
     }
 
-    LaunchedEffect(launchBackup) {
-        if (launchBackup) {
+    LaunchedEffect(show) {
+        if (show) {
             launcher.launch("backup.txt")
-            launchBackup = false
+            show = no
         }
-    }
-
-    // Call this when you actually want to start backup, e.g., on button click
-    Button(onClick = { launchBackup = true }) {
-        Text("Backup")
     }
 }
 
 @Composable
-fun Restore() {
-    var launchRestore by r { m(no) }
-
+fun Restore(show: mBool) {
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
     ) { uri ->
@@ -529,15 +520,11 @@ fun Restore() {
         }
     }
 
-    LaunchedEffect(launchRestore) {
-        if (launchRestore) {
+    LaunchedEffect(show) {
+        if (show) {
             launcher.launch(arrayOf("text/plain"))
-            launchRestore = false
+            show = no
         }
-    }
-
-    Button(onClick = { launchRestore = true }) {
-        Text("Restore")
     }
 }
 
