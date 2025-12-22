@@ -185,9 +185,9 @@ inline fun <reified T> sList(
 		}
 
 
-        each(300){
+        each(500){
 			NoLag {
-				if (Oldlist != list){
+				if (!Oldlist.contentEquals(list)) { 
 					Oldlist.clear()
 					Oldlist.addAll(list) 
 					Vlog("LIST CHANGED")
