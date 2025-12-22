@@ -281,7 +281,14 @@ class synch<T>(initial: T, var onChange: (T) -> Unit) : ReadWriteProperty<Any?, 
 
 
 
+
+
+
+
+
+
 /*
+
 fun backupPrefs(fileName: Str = "backup.txt") {
     val allData = getData().all
 
@@ -308,105 +315,6 @@ fun restorePrefs(fileName: String = "backup.txt") {
     editor.apply()
 }
 
-
-
-
-
-
-
-
-@Composable
-fun BsaveToFile() {
-    val ctx = LocalContext.current
-
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.CreateDocument("text/plain")
-    ) { uri ->
-        log("Launcher called")
-        if (uri != null) {
-            val Data = getStoredData()
-            log("Stored Data: $Data")
-            ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
-                Data.all.forEach { (key, value) -> out.write("$key=$value\n") }
-            }
-        }
-    }
-    RunOnce {
-        log("LAUNCHING BsaveTofile")
-        launcher.launch("WindBackUp.txt")
-    }
-}
-
-
-@Composable
-fun BrestoreFromFile() {
-    val ctx = LocalContext.current
-
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocument()
-    ) { uri ->
-            if (uri != null) {
-                try {
-                    val fileMap = mutableMapOf<Str, Str>()
-
-                    TxtFileToMap(ctx, uri, fileMap)
-
-                    SettingsSaved.initFromFile(fileMap)
-                } catch (e: Exception) {
-                    log("Restore failed: ${e.message}")
-                }
-            }
-        }
-
-    RunOnce {
-        launcher.launch(arrayOf("text/plain"))
-    }
-}
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ------------------ Backup Composable ------------------
-// do it like this!!! ...but compise, user inputt
-fun backupPrefs(fileName: Str = "backup.txt") {
-    val allData = getData().all
-
-    App.openFileOutput(fileName, Context.MODE_PRIVATE).use { file ->
-        allData.forEach { (key, value) ->
-            file.write("$key=$value\n".toByteArray())
-        }
-    }
-}
-
-fun restorePrefs(fileName: String = "backup.txt") {
-    val editor = getData().edit()
-
-    App.openFileInput(fileName).bufferedReader().useLines { lines ->
-        lines.forEach { line ->
-            val parts = line.split("=", limit = 2)
-            if (parts.size == 2) {
-                val key = parts[0]
-                val value = parts[1]
-                editor.putString(key, value)
-            }
-        }
-    }
-    editor.apply()
-}
-
-
-// ------------------ Backup ------------------
 @Composable
 fun Backup() {
     val ctx = LocalContext.current
@@ -428,8 +336,99 @@ fun Backup() {
     RunOnce { launcher.launch("backup.txt") }
 }
 
-// ------------------ Restore Composable ------------------
-// ------------------ Restore ------------------
+
+@Composable
+fun Restore() {
+    val ctx = LocalContext.current
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri ?: return@rememberLauncherForActivityResult
+
+        try {
+            val editor = getData().edit()
+
+            ctx.contentResolver.openInputStream(uri)
+                ?.bufferedReader()
+                ?.useLines { lines ->
+                    lines.forEach { line ->
+                        val parts = line.split("=", limit = 2)
+                        if (parts.size == 2) {
+                            editor.putString(parts[0], parts[1])
+                        }
+                    }
+                }
+
+            editor.apply()
+        } catch (e: Exception) {
+            log("Restore failed: ${e.message}")
+        }
+    }
+
+    RunOnce { launcher.launch(arrayOf("text/plain")) }
+}
+
+*/
+
+
+
+
+
+fun backupPrefs(fileName: Str = "backup.txt") {
+    val allData = getData().all
+
+    App.openFileOutput(fileName, Context.MODE_PRIVATE).use { file ->
+        allData.forEach { (key, value) ->
+            file.write("$key=$value\n".toByteArray())
+        }
+    }
+}
+
+fun restorePrefs(fileName: String = "backup.txt") {
+    val editor = getData().edit()
+
+    App.openFileInput(fileName).bufferedReader().useLines { lines ->
+        lines.forEach { line ->
+            val parts = line.split("=", limit = 2)
+            if (parts.size == 2) {
+                val key = parts[0]
+                val value = parts[1]
+                editor.putString(key, value)
+            }
+        }
+    }
+    editor.apply()
+}
+
+
+
+
+
+
+
+@Composable
+fun Backup() {
+    val ctx = LocalContext.current
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("text/plain")
+    ) { uri ->
+        uri ?: return@rememberLauncherForActivityResult
+
+        ctx.contentResolver.openOutputStream(uri)
+            ?.bufferedWriter()
+            ?.use { out ->
+                getData().all.forEach { (key, value) ->
+                    out.write("$key=$value\n")
+                }
+            }
+    }
+
+    RunOnce { launcher.launch("backup.txt") }
+}
+
+
 @Composable
 fun Restore() {
     val ctx = LocalContext.current
