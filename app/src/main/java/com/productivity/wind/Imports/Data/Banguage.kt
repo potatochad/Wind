@@ -739,6 +739,10 @@ fun Any.color(value: Color): UIStr {
 	val uiStr = toUIStr(this)
 	return UIText(uiStr, uiStr.getStyle().copy(color = value))
 }
+fun Any.gold(): UIStr {
+	val uiStr = toUIStr(this)
+	return UIText(uiStr, uiStr.getStyle().copy(color = value))
+}
 
 
 
