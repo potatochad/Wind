@@ -181,9 +181,11 @@ inline fun <reified T> sList(
 
 
         each(300){
-            val jsonOut = Json.encodeToString(list.toList())
-            saveBasic(id, jsonOut)
-			Vlog("$id: [ $jsonOut ]")
+			NoLag {
+				val jsonOut = Json.encodeToString(list.toList())
+				saveBasic(id, jsonOut)
+				Vlog("$id: [ $jsonOut ]")
+			}
         }
     } catch (e: Exception) {
         Vlog("error, deleting data: ${e.message}")
