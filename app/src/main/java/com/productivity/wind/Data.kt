@@ -98,7 +98,7 @@ object Bar {
 	var waits = sList<Waits>("waits")
 	var apps = sList<AppTsk>("apps")
 
-	var badWords = sList(listOf("anime", "youtube.com", "facebook.com", "instagram.com", "x.com", "tiktok.com").map { WebWord(word = it) })
+	var badWords = sList<WebWord>("badWords", listOf("anime", "youtube.com", "facebook.com", "instagram.com", "x.com", "tiktok.com").map { WebWord(word = it) })
 
 
 
