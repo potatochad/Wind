@@ -187,6 +187,7 @@ inline fun <reified T> sList(
 
         each(500){
 			NoLag {
+				try {
 				val oldJson = Json.encodeToString(Oldlist)
 				val currentJson = Json.encodeToString(list)
 
@@ -198,6 +199,11 @@ inline fun <reified T> sList(
 				
 				val jsonOut = Json.encodeToString(list.toList())
 				saveBasic(id, jsonOut)
+				} catch (e: Exception) {
+
+					Vlog("error, deleting data: ${e.message}")
+					getData().edit().clear().apply()
+				}
 			}
         }
     } catch (e: Exception) {
