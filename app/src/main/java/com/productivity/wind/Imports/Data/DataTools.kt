@@ -315,93 +315,10 @@ fun restorePrefs(fileName: String = "backup.txt") {
     editor.apply()
 }
 
-@Composable
-fun Backup() {
-    val ctx = LocalContext.current
-
-    val launcher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("text/plain")
-    ) { uri ->
-        uri ?: return@rememberLauncherForActivityResult
-
-        ctx.contentResolver.openOutputStream(uri)
-            ?.bufferedWriter()
-            ?.use { out ->
-                getData().all.forEach { (key, value) ->
-                    out.write("$key=$value\n")
-                }
-            }
-    }
-
-    RunOnce { launcher.launch("backup.txt") }
-}
-
-
-@Composable
-fun Restore() {
-    val ctx = LocalContext.current
-
-    val launcher = rememberLauncherForActivityResult(
-        ActivityResultContracts.OpenDocument()
-    ) { uri ->
-        uri ?: return@rememberLauncherForActivityResult
-
-        try {
-            val editor = getData().edit()
-
-            ctx.contentResolver.openInputStream(uri)
-                ?.bufferedReader()
-                ?.useLines { lines ->
-                    lines.forEach { line ->
-                        val parts = line.split("=", limit = 2)
-                        if (parts.size == 2) {
-                            editor.putString(parts[0], parts[1])
-                        }
-                    }
-                }
-
-            editor.apply()
-        } catch (e: Exception) {
-            log("Restore failed: ${e.message}")
-        }
-    }
-
-    RunOnce { launcher.launch(arrayOf("text/plain")) }
-}
 
 
 
 
-
-
-@Composable
-fun Backup() {
-    val ctx = LocalContext.current
-    var launchBackup by remember { mutableStateOf(false) }
-
-    val launcher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("text/plain")
-    ) { uri ->
-        uri ?: return@rememberLauncherForActivityResult
-        ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
-            getData().all.forEach { (key, value) ->
-                out.write("$key=$value\n")
-            }
-        }
-    }
-
-    LaunchedEffect(launchBackup) {
-        if (launchBackup) {
-            launcher.launch("backup.txt")
-            launchBackup = false
-        }
-    }
-
-    // Call this when you actually want to start backup, e.g., on button click
-    Button(onClick = { launchBackup = true }) {
-        Text("Backup")
-    }
-}
 
 @Composable
 fun Restore() {
@@ -439,37 +356,10 @@ fun Restore() {
     }
 }
 
-*/
 
 
 
 
-
-fun backupPrefs(fileName: Str = "backup.txt") {
-    val allData = getData().all
-
-    App.openFileOutput(fileName, Context.MODE_PRIVATE).use { file ->
-        allData.forEach { (key, value) ->
-            file.write("$key=$value\n".toByteArray())
-        }
-    }
-}
-
-fun restorePrefs(fileName: String = "backup.txt") {
-    val editor = getData().edit()
-
-    App.openFileInput(fileName).bufferedReader().useLines { lines ->
-        lines.forEach { line ->
-            val parts = line.split("=", limit = 2)
-            if (parts.size == 2) {
-                val key = parts[0]
-                val value = parts[1]
-                editor.putString(key, value)
-            }
-        }
-    }
-    editor.apply()
-}
 
 
 
@@ -543,8 +433,126 @@ fun Restore(show: mBool) {
 }
 
 
+*/
 
 
+
+
+
+fun backupPrefs(fileName: Str = "backup.txt") {
+    val allData = getData().all
+
+    App.openFileOutput(fileName, Context.MODE_PRIVATE).use { file ->
+        allData.forEach { (key, value) ->
+            file.write("$key=$value\n".toByteArray())
+        }
+    }
+}
+
+fun restorePrefs(fileName: String = "backup.txt") {
+    val editor = getData().edit()
+
+    App.openFileInput(fileName).bufferedReader().useLines { lines ->
+        lines.forEach { line ->
+            val parts = line.split("=", limit = 2)
+            if (parts.size == 2) {
+                val key = parts[0]
+                val value = parts[1]
+                editor.putString(key, value)
+            }
+        }
+    }
+    editor.apply()
+}
+
+
+
+
+
+
+
+
+@Composable
+fun Backup(show: mBool) {
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("text/plain")
+    ) { uri ->
+        uri ?: return@rememberLauncherForActivityResult
+
+        App.contentResolver.openOutputStream(uri)
+            ?.bufferedWriter()
+            ?.use { out ->
+                getData().all.forEach { (key, value) ->
+                    val type = when (value) {
+                        is Int -> "Int"
+                        is Bool -> "Boolean"
+                        is Float -> "Float"
+                        is Long -> "Long"
+                        else -> "String"
+                    }
+                    out.write("$key|$type|$value\n")
+                }
+            }
+    }
+
+    RunOnce(show.it) {
+        if (show.it) {
+            launcher.launch("backup.txt")
+            show.it = no
+        }
+    }
+}
+
+
+@Composable
+fun Restore(show: mBool) {
+
+    log("BEFORE restore: ${getData().all}")
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri ?: return@rememberLauncherForActivityResult
+
+        try {
+            val editor = getData().edit()
+
+            App.contentResolver.openInputStream(uri)
+                ?.bufferedReader()
+                ?.useLines { lines ->
+                    lines.forEach { line ->
+                        val parts = line.split("|", limit = 3)
+                        if (parts.size != 3) return@forEach
+
+                        val key = parts[0]
+                        val type = parts[1]
+                        val value = parts[2]
+
+                        when (type) {
+                            "Int" -> editor.putInt(key, value.toInt())
+                            "Boolean" -> editor.putBoolean(key, value.toBoolean())
+                            "Float" -> editor.putFloat(key, value.toFloat())
+                            "Long" -> editor.putLong(key, value.toLong())
+                            else -> editor.putString(key, value)
+                        }
+                    }
+                }
+
+            editor.commit() 
+            log("AFTER restore: ${getData().all}")
+
+        } catch (e: Exception) {
+            Vlog("Restore failed: ${e.message}")
+        }
+    }
+
+    RunOnce(show.it) {
+        if (show.it) {
+            launcher.launch(arrayOf("text/plain"))
+            show.it = no
+        }
+    }
+}
 
 
 
