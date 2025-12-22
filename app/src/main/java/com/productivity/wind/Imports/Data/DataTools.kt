@@ -187,7 +187,10 @@ inline fun <reified T> sList(
 
         each(500){
 			NoLag {
-				if (!Oldlist.contentEquals(list)) { 
+				val oldJson = Json.encodeToString(oldList)
+				val currentJson = Json.encodeToString(list)
+
+				if (oldJson != currentJson) { 
 					Oldlist.clear()
 					Oldlist.addAll(list) 
 					Vlog("LIST CHANGED")
