@@ -27,29 +27,30 @@ fun SettingsScreen() {
     LazyScreen("Settings") {
         Item.UnlockThreshold()
         
-        var restore by r_m(no)
+        var restore = r_m(no)
         LazyItem(
             BigIcon = Icons.Filled.Restore,
             BigIconColor = DarkBlue,
             title = "Restore",
             onClick = { 
-                restore = yes
+                restore.it = yes
             },
             bottomPadding = 2.dp
         )
-	       if (restore) Restore()
+	    Restore(restore)
+		
 
-        var backup by r_m(no)
+        var backup = r_m(no)
         LazyItem(
             topPadding = 1.dp,
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "BackUp",
             onClick = { 
-                backup = yes
+                backup.it = yes
             }
         )
-        if (backup) Backup()
+        Backup(backup)
 
 
     
