@@ -369,6 +369,76 @@ fun Restore() {
     RunOnce { launcher.launch(arrayOf("text/plain")) }
 }
 
+
+
+
+
+
+@Composable
+fun Backup() {
+    val ctx = LocalContext.current
+    var launchBackup by remember { mutableStateOf(false) }
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("text/plain")
+    ) { uri ->
+        uri ?: return@rememberLauncherForActivityResult
+        ctx.contentResolver.openOutputStream(uri)?.bufferedWriter()?.use { out ->
+            getData().all.forEach { (key, value) ->
+                out.write("$key=$value\n")
+            }
+        }
+    }
+
+    LaunchedEffect(launchBackup) {
+        if (launchBackup) {
+            launcher.launch("backup.txt")
+            launchBackup = false
+        }
+    }
+
+    // Call this when you actually want to start backup, e.g., on button click
+    Button(onClick = { launchBackup = true }) {
+        Text("Backup")
+    }
+}
+
+@Composable
+fun Restore() {
+    val ctx = LocalContext.current
+    var launchRestore by remember { mutableStateOf(false) }
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri ?: return@rememberLauncherForActivityResult
+
+        try {
+            val editor = getData().edit()
+            ctx.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
+                lines.forEach { line ->
+                    val parts = line.split("=", limit = 2)
+                    if (parts.size == 2) editor.putString(parts[0], parts[1])
+                }
+            }
+            editor.apply()
+        } catch (e: Exception) {
+            log("Restore failed: ${e.message}")
+        }
+    }
+
+    LaunchedEffect(launchRestore) {
+        if (launchRestore) {
+            launcher.launch(arrayOf("text/plain"))
+            launchRestore = false
+        }
+    }
+
+    Button(onClick = { launchRestore = true }) {
+        Text("Restore")
+    }
+}
+
 */
 
 
