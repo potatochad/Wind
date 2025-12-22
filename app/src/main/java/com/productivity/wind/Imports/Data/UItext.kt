@@ -134,6 +134,10 @@ fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
         pop()
     }
 }
+fun Any.getStyle(): StrStyle {
+    return toUIStr(this).spanStyles.firstOrNull()?.item ?: StrStyle()
+}
+
 fun Any.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (this.getStyle().update()))
 
 fun Any.size(x: TextUnit) = txt { copy(fontSize = x) }
