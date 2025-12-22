@@ -187,6 +187,7 @@ inline fun <reified T> sList(
 
         each(500){
 			NoLag {
+				log("logging")
 				try {
 				val oldJson = Json.encodeToString(Oldlist.toList())
 				val jsonOut = Json.encodeToString(list.toList())
