@@ -145,11 +145,18 @@ fun LogsScreen() {
     var scrollV = rememberLazyListState()
     var scrollH = r_Scroll()
     var LogsTag = r_m("")
+
+	RunOnce {
+		getMyAppLogs() 
+		wait(100){
+			scrollV.toBottom()
+		}
+	}
+	RunOnce(scrollV) {
+		if (scrollV.isMaxValue) scrollV.toBottom()
+	}
     
-    wait(100){
-        scrollV.toBottom()
-        getMyAppLogs() 
-    }
+    
 
 
     val filteredLogs = Bar.logs.lines()
