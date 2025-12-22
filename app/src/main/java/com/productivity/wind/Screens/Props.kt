@@ -600,7 +600,7 @@ fun selectApp(show: mBool =m(yes), Do: DoStr ={}) {
 					move(10)
 					LazyImage(icon)
 					move(10)
-					UI.Ctext(getAppName(app))
+					Text(getAppName(app).gold())
 				}
 			}
 		}
