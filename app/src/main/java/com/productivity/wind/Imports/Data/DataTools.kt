@@ -268,3 +268,41 @@ class synch<T>(initial: T, var onChange: (T) -> Unit) : ReadWriteProperty<Any?, 
         onChange(value)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+fun backupPrefs(fileName: Str = "backup.txt") {
+    val allData = getData().all
+
+    openFileOutput(fileName, MODE_PRIVATE).use { file ->
+        allData.forEach { (key, value) ->
+            file.write("$key=$value\n".toByteArray())
+        }
+    }
+}
+
+fun restorePrefs(fileName: String = "backup.txt") {
+    val editor = getData().edit() // fixed variable name
+
+    openFileInput(fileName).bufferedReader().useLines { lines ->
+        lines.forEach { line ->
+            val parts = line.split("=", limit = 2)
+            if (parts.size == 2) {
+                val key = parts[0]
+                val value = parts[1]
+                editor.putString(key, value)
+            }
+        }
+    }
+    editor.apply()
+}
