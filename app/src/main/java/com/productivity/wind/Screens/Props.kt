@@ -595,12 +595,13 @@ fun selectApp(show: mBool =m(yes), Do: DoStr ={}) {
 					
 					Mod.click {
 						Do(getAppName(app))
+						show.it = no
 					}) {
 					
 					move(10)
 					LazyImage(icon)
 					move(10)
-					Text(getAppName(app).gold())
+					Text(getAppName(app))
 				}
 			}
 		}
