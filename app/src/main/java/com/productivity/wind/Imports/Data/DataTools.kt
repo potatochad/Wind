@@ -491,10 +491,10 @@ fun Backup(show: mBool) {
         }
     }
 
-    RunOnce(show) {
-        if (show) {
+    RunOnce(show.it) {
+        if (show.it) {
             launcher.launch("backup.txt")
-            show = no
+            show.it = no
         }
     }
 }
@@ -521,10 +521,10 @@ fun Restore(show: mBool) {
         }
     }
 
-    RunOnce(show) {
-        if (show) {
+    RunOnce(show.it) {
+        if (show.it) {
             launcher.launch(arrayOf("text/plain"))
-            show = no
+            show.it = no
         }
     }
 }
