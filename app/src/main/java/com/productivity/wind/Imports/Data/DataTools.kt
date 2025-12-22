@@ -491,7 +491,7 @@ fun Backup(show: mBool) {
         }
     }
 
-    LaunchedEffect(show) {
+    RunOnce(show) {
         if (show) {
             launcher.launch("backup.txt")
             show = no
@@ -515,12 +515,13 @@ fun Restore(show: mBool) {
                 }
             }
             editor.apply()
+			log("data restore: ${getData().all}")
         } catch (e: Exception) {
-            log("Restore failed: ${e.message}")
+            Vlog("Restore failed: ${e.message}")
         }
     }
 
-    LaunchedEffect(show) {
+    RunOnce(show) {
         if (show) {
             launcher.launch(arrayOf("text/plain"))
             show = no
