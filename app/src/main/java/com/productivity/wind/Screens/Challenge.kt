@@ -221,8 +221,10 @@ fun AppUsage(id: Str = "") {
     var Time = r_m(60)
     var Points = r_m(10)
     var WhichIf = r_m(0)
+	
 	var show = r_m(no)
     var appName by r_m("app")
+	
 	selectApp(show){
 		appName = it
 	}
