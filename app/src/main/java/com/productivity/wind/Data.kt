@@ -96,6 +96,7 @@ object Bar {
 	// LISTS
     var copyTsk = sList<CopyTsk>("copyTsk")
 	var waits = sList<Waits>("waits")
+	var apps = sList<AppTsk>("apps")
 
 	var badWords = sList<WebWord>("badWords").apply {
 		addAll(
@@ -111,19 +112,6 @@ object Bar {
 	}
 
 
-	//NOT SAVED
-	var apps = mList<AppTsk>()
-
-
-}
-
-class synch<T>(initial: T, var onChange: (T) -> Unit) : ReadWriteProperty<Any?, T> {
-    private var state = mutableStateOf(initial)
-    override fun getValue(thisRef: Any?, property: KProperty<*>): T = state.value
-    override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
-        state.value = value
-        onChange(value)
-    }
 }
 
 
@@ -139,6 +127,7 @@ data class CopyTsk(
     var Letter_Worth: Int = 1,
     var goodStr: Int = 0,
 ) {
+	//For recompose
     var txtState by synch(txt){ txt = it }
 	var inputState by synch(input){ input = it }
 	var doneState by synch(done){ done = it }
@@ -146,12 +135,12 @@ data class CopyTsk(
 
 
 @Serializable
-class Waits {
-    val id = Id()
-    var whenStart by m(no)
-    var whenDo by m(no)
-    var DoStr by m("")
-}
+data class Waits (
+    val id: Str = Id(),
+    var whenStart: Bool = no,
+    var whenDo: Bool = no,
+    var DoStr: Str = "",
+)
 
 @Serializable
 data class AppTsk(
@@ -165,10 +154,10 @@ data class AppTsk(
 )
 
 @Serializable
-class WebWord{
-    val id = Id()
-	var word by m("")
-}
+data class WebWord(
+    val id: Str = Id(),
+	var word: Str = ""
+)
 
 
 
