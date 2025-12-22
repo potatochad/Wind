@@ -502,6 +502,7 @@ fun Backup(show: mBool) {
 @Composable
 fun Restore(show: mBool) {
 	log("BEFORE data restore: ${getData().all}")
+	
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
     ) { uri ->
@@ -512,18 +513,18 @@ fun Restore(show: mBool) {
             App.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
                 lines.forEach { line ->
                     val parts = line.split("=", limit = 2)
-                if (parts.size != 2) return@forEach
+					if (parts.size != 2) return@forEach
 
-                val key = parts[0]
-                val value = parts[1]
+					val key = parts[0]
+					val value = parts[1]
 
-                when (getData().all[key]) {
-                    is Int -> editor.putInt(key, value.toInt())
-                    is Boolean -> editor.putBoolean(key, value.toBoolean())
-                    is Float -> editor.putFloat(key, value.toFloat())
-                    is Long -> editor.putLong(key, value.toLong())
-                    else -> editor.putString(key, value)
-				}
+					when (getData().all[key]) {
+						is Int -> editor.putInt(key, value.toInt())
+						is Boolean -> editor.putBoolean(key, value.toBoolean())
+						is Float -> editor.putFloat(key, value.toFloat())
+						is Long -> editor.putLong(key, value.toLong())
+						else -> editor.putString(key, value)
+					}
 				}
             }
             editor.apply()
