@@ -117,17 +117,36 @@ object Bar {
 
 
 @Serializable
-class CopyTsk {
-    val id = Id()
-    var txt by m("")
-    var input by m("")
-    var done by m(no)
-    var DailyMax by m(5)
-    var DailyDone by m(0)
-    var Done_Worth by m(10)
-    var Letter_Worth by m(1)
-    var goodStr by m(0)
+data class CopyTsk(
+    val id: Str = Id(),
+    var txt: Str = "Be always kind",
+    var input: Str = "",
+    var done: Bool = no,
+    var DailyMax: Int = 5,
+    var DailyDone: Int = 0,
+    var Done_Worth: Int = 10,
+    var Letter_Worth: Int = 1,
+    var goodStr: Int = 0,
+) {
+    var txtState by m(txt)
+        set(value) {
+            field = value
+            txt = value
+        }
+
+    var inputState by m(input)
+        set(value) {
+            field = value
+            input = value
+        }
+
+    var doneState by m(done)
+        set(value) {
+            field = value
+            done = value
+        }
 }
+
 
 @Serializable
 class Waits {
