@@ -227,6 +227,10 @@ fun File.file(name: Str): File {
 val ScrollState.size: Int
     get() = maxValue
 
+val ScrollState.isMax: Bool
+    get() = value >= maxValue
+
+
 
 
 val Str.size get() = length
