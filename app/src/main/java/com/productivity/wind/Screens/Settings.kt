@@ -144,17 +144,19 @@ fun LogsScreen() {
     var Reload = r_m(no)
     var scrollV = r_Scroll()
     var scrollH = r_Scroll()
-    var LogsTag = r_m("")
+    var Tag = r_m("")
 
 	RunOnce {
 		scrollV.toBottom()
 		getMyAppLogs() 
 	}
     
-    val txt = Bar.logs.lines().filter { it.contains(LogsTag.it) }.joinToString("\n")
+    val txt = remember(Bar.logs, Tag.it) {
+		Bar.logs.filter { it.contains(Tag.it) }
+	}
 
     LazyScreen(top = {
-        Header.Logs(LogsTag, txt)
+        Header.Logs(Tag, txt)
     }) {
         if (Bar.logs.isEmpty()){
               UI.EmptyBox("No logs")
@@ -162,9 +164,13 @@ fun LogsScreen() {
 			Box(
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp)
 			) {
-				Column(Mod.Vscroll(scrollV).maxW().Hscroll(scrollH)) {
-					txt.lineSequence().forEach { line ->
-						Text(text = line, fontSize = 14.sp, softWrap = no)
+				LazyColumn(Mod.Vscroll(scrollV).maxW().Hscroll(scrollH)) {
+					items(txt) { line ->
+						Text(
+							text = line,
+							fontSize = 14.sp,
+							softWrap = no
+						)
 					}
 				}
 			}
