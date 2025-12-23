@@ -254,7 +254,7 @@ object Item {
 object Header {
 
     @Composable
-    fun Logs(Tag: m_<Str>, filteredLogs: Str) {
+    fun Logs(Tag: m_<Str>, filteredLogs: Str="") {
             Row(
                 Mod.Hscroll(),
                 verticalAlignment = Alignment.CenterVertically
