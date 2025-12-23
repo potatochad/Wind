@@ -161,9 +161,7 @@ fun LogsScreen() {
     
 
 
-    val filteredLogs = Bar.logs.lines()
-        .filter { it.contains(LogsTag.it) }
-        .joinToString("\n")
+    val txt = Bar.logs.lines().filter { it.contains(LogsTag.it) }.joinToString("\n")
 
     LazyScreen(top = {
         Header.Logs(LogsTag, filteredLogs)
