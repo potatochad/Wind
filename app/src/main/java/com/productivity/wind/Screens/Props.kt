@@ -164,29 +164,6 @@ object Item {
             }
         }
     }
-    
-    @Composable
-    fun Logs(txt: Str, scrollV: ScrollState, scrollH: ScrollState) {
-        Box(
-            Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp)
-        ) {
-            Box(
-                Mod.Hscroll(scrollH)
-            ) {
-                Column(
-                    Mod.Vscroll(scrollV).maxW()
-                ) {
-                    txt.lineSequence().forEach { line ->
-                        Text(
-                            text = line,
-                            fontSize = 14.sp,
-                            softWrap = no
-                        )
-                    }
-                }
-            }
-        }
-    }
 
 
     fun enoughPoints(enough: Do) {
