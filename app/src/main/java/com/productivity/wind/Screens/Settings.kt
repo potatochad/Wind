@@ -164,7 +164,7 @@ fun LogsScreen() {
     val txt = Bar.logs.lines().filter { it.contains(LogsTag.it) }.joinToString("\n")
 
     LazyScreen(top = {
-        Header.Logs(LogsTag, filteredLogs)
+        Header.Logs(LogsTag, txt)
     }) {
         if (Bar.logs.isEmpty()){
               UI.EmptyBox("No logs")
@@ -172,15 +172,9 @@ fun LogsScreen() {
 			Box(
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp)
 			) {
-				Column(
-					Mod.Vscroll(scrollV).maxW().Hscroll(scrollH)
-				) {
+				Column(Mod.Vscroll(scrollV).maxW().Hscroll(scrollH)) {
 					txt.lineSequence().forEach { line ->
-						Text(
-							text = line,
-							fontSize = 14.sp,
-							softWrap = no
-						)
+						Text(text = line, fontSize = 14.sp, softWrap = no)
 					}
 				}
 			}
