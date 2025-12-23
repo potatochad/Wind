@@ -152,6 +152,8 @@ fun LogsScreen() {
 		getMyAppLogs() 
 		}
 	}
+
+	/*
     
     val txt = remember(Bar.logs, Tag.it) {
 		Bar.logs.filter { it.contains(Tag.it) }
@@ -178,6 +180,8 @@ fun LogsScreen() {
 			}
         }
     }
+
+	*/
 }
 
 
