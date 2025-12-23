@@ -127,11 +127,6 @@ import kotlinx.coroutines.flow.*
 import kotlin.properties.*
 
 
-
-
-
-
-
 fun getData(File: Str = "Data"): SharedPreferences {
 	return App.getSharedPreferences(File, Context.MODE_PRIVATE)
 }
@@ -175,7 +170,7 @@ inline fun <reified T> sList(
 	val Oldlist = mList<T>()
 
 
-    try {
+    Do {
         val json = getData().basicValue(id, "")
         if (json.isNotEmpty()) {
 			val loaded = Json.decodeFromString<List<T>>(json)
@@ -187,27 +182,18 @@ inline fun <reified T> sList(
 
         each(500){
 			NoLag {
-				try {
-					val oldJson = Json.encodeToString(Oldlist.toList())
-					val jsonOut = Json.encodeToString(list.toList())
+				val oldJson = Json.encodeToString(Oldlist.toList())
+				val jsonOut = Json.encodeToString(list.toList())
 
-					if (oldJson != jsonOut) { 
-						Oldlist.clear()
-						Oldlist.addAll(list) 
-						Vlog("LIST CHANGED")
-					}
-				
-					saveBasic(id, jsonOut)
-				} catch (e: Exception) {
-
-					Vlog("deleting data: ${e.message}")
-					//getData().edit().clear().apply()
+				if (oldJson != jsonOut) { 
+					Oldlist.clear()
+					Oldlist.addAll(list) 
+					Vlog("LIST CHANGED")
 				}
+				
+				saveBasic(id, jsonOut)
 			}
         }
-    } catch (e: Exception) {
-        Vlog("error: ${e.message}")
-        //getData().edit().clear().apply()
     }
 
     return list
@@ -217,17 +203,13 @@ inline fun <reified T> sList(
 fun <T> s(default: T, id: Str = autoId()): m_<T> {
     var x = m(default) 
 
-	try {
+	Do {
 		x = m(getData().basicValue(id, default))
 
 		x.onChange {
 			saveBasic(id, x.it)
 		}
-	} catch (e: Exception) {
-		Vlog("error: ${e.message}")
-		//getData().edit().clear().apply()
 	}
-
 	
     return x
 }
@@ -248,7 +230,7 @@ fun <T> m_<T>.onChange(callback: Wait_<T>) {
 
 
 fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
-	try {
+	Do {
 		val index = this.indexOf(item)
 		val itemCopy = this[index] // get the item
         this.removeAt(index)       // remove old item
@@ -256,22 +238,18 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
         itemCopy.block()           // apply the changes directly
 
         this.add(index, itemCopy) 
-	} catch (e: Exception) {
-		Vlog("Edit crashed for item $item: ${e.message}")
 	}
 }
 
 
 @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 inline fun <reified T : Any> SnapshotStateList<T>.add(block: T.() -> Unit) {
-    try {
+    Do {
         val newItem = T::class.java.getDeclaredConstructor().newInstance()
         newItem.block()
 
         this += newItem
 
-    } catch (e: Exception) {
-        Vlog("Add failed: ${e.message}")
     }
 }
 
@@ -530,7 +508,7 @@ fun Restore(show: mBool) {
     ) { uri ->
         uri ?: return@rememberLauncherForActivityResult
 
-        try {
+        Do {
             val editor = getData().edit()
 
             App.contentResolver.openInputStream(uri)
@@ -557,8 +535,6 @@ fun Restore(show: mBool) {
             editor.commit() 
             log("AFTER restore: ${getData().all}")
 
-        } catch (e: Exception) {
-            Vlog("Restore failed: ${e.message}")
         }
     }
 
