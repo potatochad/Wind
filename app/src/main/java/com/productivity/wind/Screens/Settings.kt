@@ -147,13 +147,14 @@ fun LogsScreen() {
     var LogsTag = r_m("")
 
 	RunOnce {
-		each(1000){
-			getMyAppLogs() 
-		}
 		scrollV.toBottom()
 		
 		each(300){
-			if (scrollV.isMax) scrollV.toBottom()
+			getMyAppLogs() 
+			if (scrollV.isMax) {
+				scrollV.toBottom()
+				Vlog("scrollSize ${scrollV.size}")
+			}	
 		}
 	}
     
@@ -170,7 +171,21 @@ fun LogsScreen() {
         if (Bar.logs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
-           Item.Logs(filteredLogs, scrollV, scrollH) 
+			Box(
+				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp)
+			) {
+				Column(
+					Mod.Vscroll(scrollV).maxW().Hscroll(scrollH)
+				) {
+					txt.lineSequence().forEach { line ->
+						Text(
+							text = line,
+							fontSize = 14.sp,
+							softWrap = no
+						)
+					}
+				}
+			}
         }
     }
 }
