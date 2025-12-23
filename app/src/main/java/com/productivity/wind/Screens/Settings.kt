@@ -149,13 +149,6 @@ fun LogsScreen() {
 	RunOnce {
 		scrollV.toBottom()
 		getMyAppLogs() 
-		
-		each(300){
-			if (scrollV.isMax) {
-				scrollV.toBottom()
-				Vlog("scrollSize ${scrollV.size}")
-			}	
-		}
 	}
     
     
