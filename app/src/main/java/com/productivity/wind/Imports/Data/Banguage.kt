@@ -709,6 +709,30 @@ fun folder(folderName: Str): File {
     return folder
 }
 
+fun Do(onError: Wait ={}, Do: Wait) {
+	run.launch { 
+		try {
+			Do()
+		} catch (e: Exception) {
+			Vlog("deleting data: ${e.message}")
+			onError()
+		}
+	} 
+}
+fun NoLag(onError: Wait ={}, Do: Wait) {
+    run.launch(Dispatchers.Default) {
+		try {
+			Do()
+		} catch (e: Exception) {
+			Vlog("error: ${e.message}")
+			onError()
+		}
+    }
+}
+
+
+
+
 
 
 
