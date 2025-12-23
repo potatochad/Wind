@@ -156,7 +156,7 @@ fun LogsScreen() {
 	}
 
     LazyScreen(top = {
-        Header.Logs(Tag, txt)
+        Header.Logs(Tag)
     }) {
         if (Bar.logs.isEmpty()){
               UI.EmptyBox("No logs")
