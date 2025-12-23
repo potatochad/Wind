@@ -187,28 +187,27 @@ inline fun <reified T> sList(
 
         each(500){
 			NoLag {
-				log("logging")
 				try {
-				val oldJson = Json.encodeToString(Oldlist.toList())
-				val jsonOut = Json.encodeToString(list.toList())
+					val oldJson = Json.encodeToString(Oldlist.toList())
+					val jsonOut = Json.encodeToString(list.toList())
 
-				if (oldJson != jsonOut) { 
-					Oldlist.clear()
-					Oldlist.addAll(list) 
-					Vlog("LIST CHANGED")
-				}
+					if (oldJson != jsonOut) { 
+						Oldlist.clear()
+						Oldlist.addAll(list) 
+						Vlog("LIST CHANGED")
+					}
 				
-				saveBasic(id, jsonOut)
+					saveBasic(id, jsonOut)
 				} catch (e: Exception) {
 
-					Vlog("error, deleting data: ${e.message}")
-					getData().edit().clear().apply()
+					Vlog("deleting data: ${e.message}")
+					//getData().edit().clear().apply()
 				}
 			}
         }
     } catch (e: Exception) {
-        Vlog("error, deleting data: ${e.message}")
-        getData().edit().clear().apply()
+        Vlog("error: ${e.message}")
+        //getData().edit().clear().apply()
     }
 
     return list
@@ -225,8 +224,8 @@ fun <T> s(default: T, id: Str = autoId()): m_<T> {
 			saveBasic(id, x.it)
 		}
 	} catch (e: Exception) {
-		Vlog("error, deleting data for basic values: ${e.message}")
-		getData().edit().clear().apply()
+		Vlog("error: ${e.message}")
+		//getData().edit().clear().apply()
 	}
 
 	
