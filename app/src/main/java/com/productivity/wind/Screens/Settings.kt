@@ -145,6 +145,7 @@ fun LogsScreen() {
     var scrollV = r_Scroll()
     var scrollH = r_Scroll()
     var Tag = r_m("")
+	Do {
 
 	RunOnce {
 		scrollV.toBottom()
@@ -153,6 +154,7 @@ fun LogsScreen() {
     
     val txt = remember(Bar.logs, Tag.it) {
 		Bar.logs.filter { it.contains(Tag.it) }
+	}
 	}
 
     LazyScreen(top = {
