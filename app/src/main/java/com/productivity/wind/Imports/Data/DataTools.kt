@@ -180,10 +180,14 @@ inline fun <reified T> sList(
 		}
 
 
-        each(500){
+        each(5000){
 			NoLag {
 				val oldJson = Json.encodeToString(Oldlist.toList())
 				val jsonOut = Json.encodeToString(list.toList())
+
+				Vlog("LIST: oldJson $oldJson")
+				Vlog("LIST: jsonOut $jsonOut")
+			
 
 				if (oldJson != jsonOut) { 
 					Oldlist.clear()
