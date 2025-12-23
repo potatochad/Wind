@@ -148,19 +148,20 @@ fun LogsScreen() {
 
 	RunOnce {
 		Do {
-		scrollV.toBottom()
-		getMyAppLogs() 
+			scrollV.toBottom()
+			getMyAppLogs() 
 		}
 	}
     
     val txt = remember(Bar.logs, Tag.it) {
 		Bar.logs.filter { it.contains(Tag.it) }
 	}
-	/*
+	
 
     LazyScreen(top = {
         Header.Logs(Tag)
     }) {
+		/*
         if (Bar.logs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
@@ -178,9 +179,10 @@ fun LogsScreen() {
 				}
 			}
         }
+		*/
     }
 
-	*/
+	
 }
 
 
