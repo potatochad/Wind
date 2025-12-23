@@ -174,7 +174,7 @@ object Item {
                 Mod.Hscroll(scrollH)
             ) {
                 Column(
-                    modifier = Mod.scroll(scrollV).maxW()
+                    Mod.Vscroll(scrollV).maxW()
                 ) {
                     items(txt.lineSequence().toList()) { line ->
                         Text(
