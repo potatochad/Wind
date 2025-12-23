@@ -634,7 +634,6 @@ fun getMyAppLogs() {
 		val pid = android.os.Process.myPid()
 		val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W")
 		val reader = BufferedReader(InputStreamReader(process.inputStream))
-		val logs = mutableListOf<Str>()
 
 		reader.forEachLine { line ->
 			val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), " ")
@@ -642,16 +641,7 @@ fun getMyAppLogs() {
 			if ("WindowOnBackDispatcher" in s) return@forEachLine
 		
 		
-			logs.add(s)
-
-			var cutLines = logs.takeLast(2000)
-
-			cutLines.forEach { line ->
-				if (line !in Bar.logs) {
-					Bar.logs += "\n$line" // add only new lines to Bar.logs
-				}
-			}
-			Bar.logs = Bar.logs.lines().takeLast(2000).joinToString("\n")
+			Bar.logs.add(s.takeLast(2000))
 		}
 	}.start()
 }
