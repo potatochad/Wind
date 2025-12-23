@@ -166,16 +166,15 @@ object Item {
     }
     
     @Composable
-    fun Logs(txt: Str, scrollV: LazyListState, scrollH: ScrollState) {
+    fun Logs(txt: Str, scrollV: ScrollState, scrollH: ScrollState) {
         Box(
             Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp)
         ) {
             Box(
                 Mod.Hscroll(scrollH)
             ) {
-                LazyColumn(
-                    state = scrollV,
-                    modifier = Mod.maxW()
+                Column(
+                    modifier = Mod.scroll(scrollV).maxW()
                 ) {
                     items(txt.lineSequence().toList()) { line ->
                         Text(
