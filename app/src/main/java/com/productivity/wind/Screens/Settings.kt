@@ -151,9 +151,6 @@ fun LogsScreen() {
 		getMyAppLogs() 
 	}
     
-    
-
-
     val txt = Bar.logs.lines().filter { it.contains(LogsTag.it) }.joinToString("\n")
 
     LazyScreen(top = {
