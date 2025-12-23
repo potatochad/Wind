@@ -254,13 +254,13 @@ object Item {
 object Header {
 
     @Composable
-    fun Logs(LogsTag: m_<Str>, filteredLogs: Str) {
+    fun Logs(Tag: m_<Str>, filteredLogs: Str) {
             Row(
                 Mod.Hscroll(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 LazyInput(
-                    LogsTag,
+                    Tag,
                     modifier = Mod.h(34).w(120)
                 )
             }
@@ -268,7 +268,7 @@ object Header {
             UI.End {
                 Row {
                     Icon.Delete {
-                        Bar.logs = ""
+                        Bar.logs.clear()
                     }
                     Icon.Copy(filteredLogs)
                     Icon.Reload { 
