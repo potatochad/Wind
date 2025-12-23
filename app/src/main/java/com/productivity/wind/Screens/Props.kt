@@ -176,7 +176,7 @@ object Item {
                 Column(
                     Mod.Vscroll(scrollV).maxW()
                 ) {
-                    items(txt.lineSequence().toList()) { line ->
+                    txt.lineSequence().forEach { line ->
                         Text(
                             text = line,
                             fontSize = 14.sp,
