@@ -188,7 +188,8 @@ inline fun <reified T> sList(
 				if (oldJson != jsonOut) { 
 					Oldlist.clear()
 					Oldlist.addAll(list) 
-					Vlog("LIST CHANGED")
+					Vlog("LIST CHANGED: oldJson $oldJson")
+					Vlog("LIST CHANGED: jsonOut $jsonOut")
 				}
 				
 				saveBasic(id, jsonOut)
