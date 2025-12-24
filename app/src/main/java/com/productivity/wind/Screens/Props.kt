@@ -255,10 +255,9 @@ object Header {
 
     @Composable
     fun Logs(Tag: m_<Str>, filteredLogs: Str="") {
-            Row(
-                Mod.Hscroll(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            LazzyRow(
+                Mod.Hscroll()
+			) {
                 LazyInput(
                     Tag,
                     modifier = Mod.h(34).w(120)
@@ -272,6 +271,9 @@ object Header {
                     }
                     Icon.Copy(filteredLogs)
                     Icon.Reload { 
+						var Old = Bar.logs
+						Bar.logs.clear()
+						Bar.logs.addAll(Old)
                         Vlog("refreshed")
                     }
                 }
