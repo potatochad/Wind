@@ -147,9 +147,11 @@ fun LogsScreen() {
     var Tag = r_m("")
 
 	RunOnce {
-		Do {
-			scrollV.toBottom()
-			getMyAppLogs() 
+		scrollV.toBottom()
+		getMyAppLogs() 
+
+		each(300){
+			
 		}
 	}
     
