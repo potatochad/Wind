@@ -642,7 +642,7 @@ fun getMyAppLogs() {
 		
 		
 			NoLag{
-				Bar.logs.add(0, s.takeLast(2000))
+				Bar.logs.add(s.takeLast(2000))
 			}
 		}
 	}.start()
