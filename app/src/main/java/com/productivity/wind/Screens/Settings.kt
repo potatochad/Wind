@@ -154,8 +154,9 @@ fun LogsScreen() {
 	}
     
     val txt = remember(Bar.logs, Tag.it) {
-		Bar.logs.filter { it.contains(Tag.it) }
+		Bar.logs.filter { it.contains(Tag.it) }.reversed()
 	}
+
 	
 
     LazyScreen(top = {
