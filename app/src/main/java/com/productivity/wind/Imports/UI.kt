@@ -211,14 +211,12 @@ object UI {
 	
 	@Composable
 	fun End(ui: ui) {
-		Box(
+		Row(
 			Mod.maxW(),
-			contentAlignment = Alignment.CenterEnd
-		) {
-			Row {
-				ui()
-				move(w = 10)
-			}
+			horizontalArrangement = Arrangement.End
+		){
+			ui()
+			move(10)
 		}
 	}
 
