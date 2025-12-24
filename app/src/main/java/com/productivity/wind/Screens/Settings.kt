@@ -144,15 +144,19 @@ fun LogsScreen() {
     var Reload = r_m(no)
     var scrollV = r_Scroll()
     var Tag = r_m("")
-	var txt = mList<Str>()
+	var txt = mList<Str>("")
 
 	RunOnce {
 		scrollV.toBottom()
 		getMyAppLogs() 
-
+		
 		each(300){
 			NoLag {
-				txt = Bar.logs.filter { it.contains(Tag.it) }.reversed()
+				if (Tag.it != "") {
+					txt = Bar.logs.filter { it.contains(Tag.it) }.reversed()   
+				} else {
+					txt.addAll(Bar.logs)
+				}
 			}
 		}
 	}
