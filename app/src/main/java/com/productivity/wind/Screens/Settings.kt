@@ -144,15 +144,11 @@ fun LogsScreen() {
     var Reload = r_m(no)
     var scrollV = r_Scroll()
     var Tag = r_m("")
-	var txt = Bar.logs.filter { it.contains(Tag.it) }.reversed()   
-			
 
 	RunOnce {
 		scrollV.toBottom()
 		getMyAppLogs() 
 	}
-
-	
 
     LazyScreen(top = {
         Header.Logs(Tag)
@@ -163,10 +159,8 @@ fun LogsScreen() {
 			Box(
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Hscroll()
 			) {
-				LazyColumn(
-				// Mod.maxW()
-				) {
-					items(txt) { line ->
+				LazyColumn {
+					items(Bar.logs) { line ->
 						Text(
 							text = line,
 							fontSize = 14.sp,
