@@ -143,9 +143,8 @@ fun SettingsOtherScreen() {
 fun LogsScreen() {
     var Reload = r_m(no)
     var scrollV = r_Scroll()
-    var scrollH = r_Scroll()
     var Tag = r_m("")
-	var txt5 = mList<Str>()
+	var txt = mList<Str>()
 
 	RunOnce {
 		scrollV.toBottom()
@@ -153,13 +152,9 @@ fun LogsScreen() {
 
 		each(300){
 			NoLag {
-				
+				txt = Bar.logs.filter { it.contains(Tag.it) }.reversed()
 			}
 		}
-	}
-    
-    val txt = remember(Bar.logs, Tag.it) {
-		Bar.logs.filter { it.contains(Tag.it) }.reversed()
 	}
 
 	
@@ -167,11 +162,9 @@ fun LogsScreen() {
     LazyScreen(top = {
         Header.Logs(Tag)
     }) {
-		
         if (Bar.logs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
-			
 			Box(
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Hscroll()
 			) {
