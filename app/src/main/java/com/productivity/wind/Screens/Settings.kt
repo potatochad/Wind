@@ -168,10 +168,10 @@ fun LogsScreen() {
         } else {
 			
 			Box(
-				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp)
+				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Hscroll()
 			) {
 				LazyColumn(
-				// Mod.Vscroll(scrollV).maxW().Hscroll(scrollH)
+				// Mod.maxW()
 				) {
 					items(txt) { line ->
 						Text(
