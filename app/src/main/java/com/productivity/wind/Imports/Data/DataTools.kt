@@ -161,7 +161,7 @@ fun autoId(): Str {
 }
 
 
-
+var restoring by m(no)
 inline fun <reified T> sList(
 	id: Str,
     default: List<T> = emptyList(),
@@ -180,23 +180,13 @@ inline fun <reified T> sList(
 		}
 
 
-        each(5000){
+        each(300){
 			NoLag {
-				val oldJson = Json.encodeToString(Oldlist.toList())
-				val jsonOut = Json.encodeToString(list.toList())
-
-				Vlog("LIST: oldJson $oldJson")
-				Vlog("LIST: jsonOut $jsonOut")
-			
-
-				if (oldJson != jsonOut) { 
-					Oldlist.clear()
-					Oldlist.addAll(list) 
-					Vlog("LIST CHANGED: oldJson $oldJson")
-					Vlog("LIST CHANGED: jsonOut $jsonOut")
-				}
+				if (!restoring) {
+					val jsonOut = Json.encodeToString(list.toList())
 				
-				saveBasic(id, jsonOut)
+					saveBasic(id, jsonOut)
+				}
 			}
         }
     }
@@ -507,9 +497,6 @@ fun Backup(show: mBool) {
 
 @Composable
 fun Restore(show: mBool) {
-
-    log("BEFORE restore: ${getData().all}")
-
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
     ) { uri ->
@@ -538,10 +525,10 @@ fun Restore(show: mBool) {
                         }
                     }
                 }
+			restoring = yes
+			log("restoring: $restoring")
 
             editor.commit() 
-            log("AFTER restore: ${getData().all}")
-
         }
     }
 
