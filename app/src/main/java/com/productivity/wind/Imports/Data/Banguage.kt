@@ -641,7 +641,9 @@ fun getMyAppLogs() {
 			if ("WindowOnBackDispatcher" in s) return@forEachLine
 		
 		
-			Bar.logs.add(s.takeLast(2000))
+			NoLag{
+				Bar.logs.add(0, s.takeLast(2000))
+			}
 		}
 	}.start()
 }
