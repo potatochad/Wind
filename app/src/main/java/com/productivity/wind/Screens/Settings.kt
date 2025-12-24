@@ -144,7 +144,8 @@ fun LogsScreen() {
     var Reload = r_m(no)
     var scrollV = r_Scroll()
     var Tag = r_m("")
-	var txt = mList<Str>("")
+	var txt = Bar.logs.filter { it.contains(Tag.it) }.reversed()   
+			
 
 	RunOnce {
 		scrollV.toBottom()
@@ -152,11 +153,7 @@ fun LogsScreen() {
 		
 		each(300){
 			NoLag {
-				if (Tag.it != "") {
-					txt = Bar.logs.filter { it.contains(Tag.it) }.reversed()   
-				} else {
-					txt.addAll(Bar.logs)
-				}
+				txt = Bar.logs.filter { it.contains(Tag.it) }.reversed()   
 			}
 		}
 	}
