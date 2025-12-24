@@ -161,10 +161,11 @@ fun LogsScreen() {
     LazyScreen(top = {
         Header.Logs(Tag)
     }) {
-		/*
+		
         if (Bar.logs.isEmpty()){
               UI.EmptyBox("No logs")
         } else {
+			
 			Box(
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp)
 			) {
@@ -181,7 +182,6 @@ fun LogsScreen() {
 				}
 			}
         }
-		*/
     }
 
 	
