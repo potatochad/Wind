@@ -145,13 +145,16 @@ fun LogsScreen() {
     var scrollV = r_Scroll()
     var scrollH = r_Scroll()
     var Tag = r_m("")
+	var txt5 = mList<Str>()
 
 	RunOnce {
 		scrollV.toBottom()
 		getMyAppLogs() 
 
 		each(300){
-			
+			NoLag {
+				
+			}
 		}
 	}
     
