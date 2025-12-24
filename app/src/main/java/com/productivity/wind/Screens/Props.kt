@@ -144,7 +144,7 @@ object Item {
 
 
     @Composable
-    fun TskInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60,) {  
+    fun TskInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60) {  
         val TxtState = txt as? MutableState<Any> ?: run {
             Vlog("expected mutable")
             return
@@ -254,30 +254,15 @@ object Item {
 object Header {
 
     @Composable
-    fun Logs(Tag: m_<Str>, filteredLogs: Str="") {
-            LazzyRow(
-                Mod.Hscroll()
-			) {
-                LazyInput(
-                    Tag,
-                    modifier = Mod.h(34).w(120)
-                )
-            }
+    fun Logs(Tag: m_<Str>) {
+        LazyInput(Tag, modifier = Mod.h(36).w(120).Hscroll())
             
-            UI.End {
-                Row {
-                    Icon.Delete {
-                        Bar.logs.clear()
-                    }
-                    Icon.Copy(filteredLogs)
-                    Icon.Reload { 
-						var Old = Bar.logs
-						Bar.logs.clear()
-						Bar.logs.addAll(Old)
-                        Vlog("refreshed")
-                    }
-                }
+        UI.End {
+            Icon.Delete {
+                Bar.logs.clear()
             }
+            Icon.Copy(Bar.logs.joinToString("\n"))
+        }
     }
     
     @Composable
