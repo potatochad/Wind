@@ -150,12 +150,6 @@ fun LogsScreen() {
 	RunOnce {
 		scrollV.toBottom()
 		getMyAppLogs() 
-		
-		each(300){
-			NoLag {
-				txt = Bar.logs.filter { it.contains(Tag.it) }.reversed()   
-			}
-		}
 	}
 
 	
