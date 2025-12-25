@@ -145,8 +145,18 @@ fun LogsScreen() {
     var Tag = r_m("")
 	var scroll = LazyList()
 
+	val Logs by remember(Tag.it, Bar.logs) {
+		derivedStateOf {
+			Bar.logs.filter { it.contains(Tag.it) }
+		}
+	}
+
+
 	RunOnce {
 		scroll.toBottom()
+		each(2000){
+			Vlog("logging")
+		}
 	}
 
     LazyScreen(top = {
@@ -162,7 +172,7 @@ fun LogsScreen() {
 					state = scroll
 				) {
 					items(
-						Bar.logs
+						Logs
 					) { line ->
 						Text(
 							text = line,
