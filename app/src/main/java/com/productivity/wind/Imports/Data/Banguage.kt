@@ -619,11 +619,11 @@ fun getAppIcon(packageName: Str?): Drawable? {
 
 
 
-fun log(message: Str, int: Int = 200, tag: Str = "bad") {
+fun log(message: Str, int: Int = 200) {
     var msg = message.take(int)
     if (msg.length >= int) {msg += " ..."}
 
-    Log.w(tag, msg)
+    Log.w("[bad]", msg)
 }
 
 
