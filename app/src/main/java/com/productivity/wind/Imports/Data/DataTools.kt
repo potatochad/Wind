@@ -329,7 +329,6 @@ fun Restore(show: mBool) {
                 ?.useLines { lines ->
                     lines.forEach { lineEncrypted ->
 						var line = decrypt(lineEncrypted, 132)
-						log("line: $line")
 
 						
                         val parts = line.split("|", limit = 3)
