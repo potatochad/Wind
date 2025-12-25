@@ -634,14 +634,23 @@ fun getMyAppLogs() {
 		val reader = BufferedReader(InputStreamReader(process.inputStream))
 
 		reader.forEachLine { line ->
-			val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), " ")
+			val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), " ").takeLast(3000)
 			if ("ApkAssets: Deleting" in s) return@forEachLine
 			if ("WindowOnBackDispatcher" in s) return@forEachLine
 
 
 			val last = Bar.logs.lastOrNull()
-			
-			Bar.logs.add(s.takeLast(2000))
+
+			if (last != s){
+				Bar.logs.add(s)
+			} else {
+				if ("" in s) {
+					
+				}
+				if ("" in s) {
+					
+				}
+			}
 
 			
 		}
