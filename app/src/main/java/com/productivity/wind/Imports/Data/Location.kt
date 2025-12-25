@@ -124,6 +124,8 @@ import android.content.*
 import android.net.*
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
+import android.*
+import androidx.activity.compose.*
 
 
 
@@ -138,7 +140,7 @@ fun isLocationEnabled(): Bool {
            lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 }
 
-fun locationPermission77(Do: Do = {}) {
+fun locationPermission(Do: Do = {}) {
     if (ContextCompat.checkSelfPermission(
             App,
             android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -156,7 +158,7 @@ fun locationPermission77(Do: Do = {}) {
 
 
 
-fun locationPermission(Do: Do={}) {
+fun locationPermission77(Do: Do={}) {
     locationPermissionLauncher.launch(
         arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
