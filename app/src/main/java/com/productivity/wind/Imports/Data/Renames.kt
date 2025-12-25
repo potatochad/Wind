@@ -178,6 +178,8 @@ typealias UIStrBuilder = AnnotatedString.Builder
 typealias StrStyle = SpanStyle
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
 typealias ClassValVar<T, R> = KProperty1<T, R>
+typealias scroll = ScrollState
+
     
 fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
 fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {
