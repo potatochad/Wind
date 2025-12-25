@@ -160,7 +160,7 @@ fun LogsScreen() {
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Hscroll()
 			) {
 				LazyColumn(
-					state = LazyList
+					state = LazyList()
 				) {
 					items(
 						Bar.logs
