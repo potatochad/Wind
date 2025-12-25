@@ -644,11 +644,8 @@ fun getMyAppLogs() {
 			if (last != s){
 				Bar.logs.add(s)
 			} else {
-				if ("" in s) {
-					
-				}
-				if ("" in s) {
-					
+				if ("[bad]" in s) {
+					Bar.logs.add(s)
 				}
 			}
 
