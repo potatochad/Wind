@@ -142,11 +142,11 @@ fun SettingsOtherScreen() {
 @Composable
 fun LogsScreen() {
     var Reload = r_m(no)
-    var scrollV = r_Scroll()
     var Tag = r_m("")
+	var scroll = LazyList()
 
 	RunOnce {
-		scrollV.toBottom()
+		scroll.toBottom()
 		getMyAppLogs() 
 	}
 
@@ -160,7 +160,7 @@ fun LogsScreen() {
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Hscroll()
 			) {
 				LazyColumn(
-					state = LazyList()
+					state = scroll
 				) {
 					items(
 						Bar.logs
