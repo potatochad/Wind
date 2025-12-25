@@ -640,11 +640,9 @@ fun getMyAppLogs() {
 
 
 			val last = Bar.logs.lastOrNull()
-			log("basic log: last line of logs  $last")
-		
+			
 			Bar.logs.add(s.takeLast(2000))
 
-			Vlog("basic log: last line of logs  $last")
 			
 		}
 	}.start()
