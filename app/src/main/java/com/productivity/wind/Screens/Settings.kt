@@ -146,8 +146,8 @@ fun LogsScreen() {
 	var scroll = LazyList()
 
 	RunOnce {
-		scroll.toBottom()
 		getMyAppLogs() 
+		scroll.toBottom()
 	}
 
     LazyScreen(top = {
