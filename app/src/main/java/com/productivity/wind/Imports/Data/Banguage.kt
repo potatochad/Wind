@@ -706,7 +706,7 @@ fun Do(onError: Wait ={}, Do: Wait) {
 		try {
 			Do()
 		} catch (e: Exception) {
-			Vlog("deleting data: ${e.message}")
+			Vlog("error: ${e.message}")
 			onError()
 		}
 	} 
