@@ -161,8 +161,7 @@ fun LogsScreen() {
 			) {
 				LazyColumn {
 					items(
-						 Bar.logs.reversed(),
-						 key = { it }
+						 Bar.logs.reversed()
 					) { line ->
 						Text(
 							text = line,
