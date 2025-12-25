@@ -161,8 +161,7 @@ fun LogsScreen() {
 			) {
 				LazyColumn {
 					items(
-						Bar.logs, 
-						key = { it },
+						Bar.logs
 					) { line ->
 						Text(
 							text = line,
