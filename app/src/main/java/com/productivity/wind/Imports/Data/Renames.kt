@@ -237,6 +237,9 @@ val Scroll.isMax: Bool
 fun Scroll() = rememberScrollState()
 @Composable
 fun r_Scroll() = rememberScrollState()
+@Composable
+fun LazyList() = rememberLazyListState()
+
 
 
 
