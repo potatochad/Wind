@@ -179,6 +179,7 @@ typealias StrStyle = SpanStyle
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
 typealias ClassValVar<T, R> = KProperty1<T, R>
 typealias Scroll = ScrollState
+typealias LazyList = LazyListState
 
     
 fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
@@ -203,7 +204,7 @@ fun Mod.Hscroll(r_h: Scroll =r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_
 
 fun Scroll.toBottom() = wait{ scrollTo(maxValue) }
 
-fun LazyListState.toBottom() = wait{
+fun LazyList.toBottom() = wait{
     if (layoutInfo.totalItemsCount > 0) {
         scrollToItem(layoutInfo.totalItemsCount - 1)
     }
