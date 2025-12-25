@@ -526,9 +526,9 @@ fun Restore(show: mBool) {
                     }
                 }
 			restoring = yes
-			log("restoring: $restoring")
 
             editor.commit() 
+			Vlog("Reload app to take effect")
         }
     }
 
