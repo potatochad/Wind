@@ -509,27 +509,7 @@ fun gotInternet(): Bool {
     return isConnected
 }
 
-fun isLocationEnabled(): Bool {
-    val lm = App.getSystemService(LocationManager::class.java)
-    return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-           lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-}
 
-fun locationPermission(Do: Do = {}) {
-    if (ContextCompat.checkSelfPermission(
-            App,
-            android.Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-    ) {
-		Do()
-	} else {
-        ActivityCompat.requestPermissions(
-            App,
-            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-            100
-        )
-    }
-}
 
 
 
