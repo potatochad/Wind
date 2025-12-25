@@ -127,6 +127,14 @@ import kotlinx.coroutines.flow.*
 import kotlin.properties.*
 
 
+fun encrypt(text: Str, key: Str) =
+    text.mapIndexed { i, c -> (c.code xor key[i % key.length].code).toChar() }.joinToString("")
+
+fun decrypt(text: Str, key: Str) =
+    text.mapIndexed { i, c -> (c.code xor key[i % key.length].code).toChar() }.joinToString("")
+
+
+
 fun getData(File: Str = "Data"): SharedPreferences {
 	return App.getSharedPreferences(File, Context.MODE_PRIVATE)
 }
