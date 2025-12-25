@@ -138,7 +138,7 @@ fun isLocationEnabled(): Bool {
            lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 }
 
-fun locationPermission(Do: Do = {}) {
+fun locationPermission77(Do: Do = {}) {
     if (ContextCompat.checkSelfPermission(
             App,
             android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -164,6 +164,11 @@ fun locationPermission(Do: Do={}) {
         )
     )
 }
+fun gotLocationPermission(context: Context) =
+    ContextCompat.checkSelfPermission(
+        context, Manifest.permission.ACCESS_FINE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED
+
 
 
 
