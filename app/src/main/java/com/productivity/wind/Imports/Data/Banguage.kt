@@ -638,10 +638,8 @@ fun getMyAppLogs() {
 			if ("ApkAssets: Deleting" in s) return@forEachLine
 			if ("WindowOnBackDispatcher" in s) return@forEachLine
 		
-		
-			NoLag{
-				Bar.logs.add(s.takeLast(2000))
-			}
+			Bar.logs.add(s.takeLast(2000))
+			
 		}
 	}.start()
 }
