@@ -262,9 +262,6 @@ object Header {
                 Bar.logs.clear()
             }
             Icon.Copy(Bar.logs.joinToString("\n"))
-			Icon.Reload {
-				Vlog("reload")
-			}
 			
         }
     }
