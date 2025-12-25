@@ -176,6 +176,7 @@ fun AppStart_beforeUI() {
 
 fun MAINStart() {
     Item.UpdateAppTsk()
+
 }
 
 fun OnResume(){
@@ -188,6 +189,7 @@ fun OnResume(){
 fun AppStart() {
 	RunOnce {
         DayChecker.start()
+		getMyAppLogs() 
 	}
 	
     LazyMenu { Menu() }
