@@ -26,8 +26,8 @@ jobs:
           restore-keys: |
             gradle-
 
-      - name: Wait 4 minutes
-        run: sleep 240
+      - name: Wait 3 minutes
+        run: sleep 180
 
 
       - name: Build APK
