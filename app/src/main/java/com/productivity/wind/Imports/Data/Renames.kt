@@ -129,7 +129,7 @@ val no = false
 var <T> m_<T>.it: T
     get() = this.value
     set(value) { this.value = value }
-var ScrollState.it: Int
+var Scroll.it: Int
     get() = this.value
     set(value) {
         CoroutineScope(Dispatchers.Main).launch {
@@ -178,7 +178,7 @@ typealias UIStrBuilder = AnnotatedString.Builder
 typealias StrStyle = SpanStyle
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
 typealias ClassValVar<T, R> = KProperty1<T, R>
-typealias scroll = ScrollState
+typealias Scroll = ScrollState
 
     
 fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
@@ -197,11 +197,11 @@ fun <T> mList() = mutableStateListOf<T>()
 
 
 @Composable
-fun Mod.Vscroll(r_v: ScrollState=r_Scroll()): Mod{return this.scroll(yes, no, r_v)}
+fun Mod.Vscroll(r_v: Scroll =r_Scroll()): Mod{return this.scroll(yes, no, r_v)}
 @Composable
-fun Mod.Hscroll(r_h: ScrollState=r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
+fun Mod.Hscroll(r_h: Scroll =r_Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
 
-fun ScrollState.toBottom() = wait{ scrollTo(maxValue) }
+fun Scroll.toBottom() = wait{ scrollTo(maxValue) }
 
 fun LazyListState.toBottom() = wait{
     if (layoutInfo.totalItemsCount > 0) {
@@ -209,9 +209,9 @@ fun LazyListState.toBottom() = wait{
     }
 }
 
-fun ScrollState.scroll(it: Any) = wait{ animateScrollBy(toF(it)) }
+fun Scroll.scroll(it: Any) = wait{ animateScrollBy(toF(it)) }
 
-fun ScrollState.goTo(it: Any) = wait{ scrollTo(toInt(it)) }
+fun Scroll.goTo(it: Any) = wait{ scrollTo(toInt(it)) }
 
 fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Mod =
     this.then(
@@ -226,10 +226,10 @@ fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Mod =
 fun File.file(name: Str): File {
     return File(this, name)
 }
-val ScrollState.size: Int
+val Scroll.size: Int
     get() = maxValue
 
-val ScrollState.isMax: Bool
+val Scroll.isMax: Bool
     get() = value >= maxValue
 
 
