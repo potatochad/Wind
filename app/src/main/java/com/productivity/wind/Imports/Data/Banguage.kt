@@ -637,8 +637,14 @@ fun getMyAppLogs() {
 			val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), " ")
 			if ("ApkAssets: Deleting" in s) return@forEachLine
 			if ("WindowOnBackDispatcher" in s) return@forEachLine
+
+
+			val last = Bar.logs.last()
+			log("basic log: last line of logs  $last")
 		
 			Bar.logs.add(s.takeLast(2000))
+
+			Vlog("basic log: last line of logs  $last")
 			
 		}
 	}.start()
