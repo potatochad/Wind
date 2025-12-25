@@ -127,22 +127,13 @@ import kotlinx.coroutines.flow.*
 import kotlin.properties.*
 
 
-fun encrypt(text: String, key: Int): String {
-    val rng = java.util.Random(key.toLong())
-    return text.map {
-        val k = rng.nextInt(256)
-        (it.code xor k).toChar()
-    }.joinToString("")
+fun encrypt(text: Str, key: Int): Str {
+    return text.map { (it.code + key).toChar() }.joinToString("")
 }
 
-fun decrypt(text: String, key: Int): String {
-    val rng = java.util.Random(key.toLong())
-    return text.map {
-        val k = rng.nextInt(256)
-        (it.code xor k).toChar()
-    }.joinToString("")
+fun decrypt(text: Str, key: Int): Str {
+    return text.map { (it.code - key).toChar() }.joinToString("")
 }
-
 
 
 
