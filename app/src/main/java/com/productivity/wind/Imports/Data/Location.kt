@@ -156,6 +156,14 @@ fun locationPermission(Do: Do = {}) {
 
 
 
+fun locationPermission(Do: Do={}) {
+    locationPermissionLauncher.launch(
+        arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    )
+}
 
 
 
