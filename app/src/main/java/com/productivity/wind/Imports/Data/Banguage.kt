@@ -364,8 +364,8 @@ fun r_Scroll() = rememberScrollState()
 fun Mod.scroll(
     v: Bool = yes,
     h: Bool = yes,
-    r_v: ScrollState = r_Scroll(),
-    r_h: ScrollState = r_Scroll(),
+    r_v: Scroll = r_Scroll(),
+    r_h: Scroll = r_Scroll(),
 ): Mod {
     var m = this
     if (v) m = m.verticalScroll(r_v)
