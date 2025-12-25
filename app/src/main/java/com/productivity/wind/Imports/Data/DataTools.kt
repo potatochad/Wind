@@ -127,11 +127,13 @@ import kotlinx.coroutines.flow.*
 import kotlin.properties.*
 
 
-fun encrypt(text: Str, key: Str) =
-    text.mapIndexed { i, c -> (c.code xor key[i % key.length].code).toChar() }.joinToString("")
+fun encrypt(text: Str, key: Int): Str {
+    return text.map { (it.code + key).toChar() }.joinToString("")
+}
 
-fun decrypt(text: Str, key: Str) =
-    text.mapIndexed { i, c -> (c.code xor key[i % key.length].code).toChar() }.joinToString("")
+fun decrypt(text: Str, key: Int): Str {
+    return text.map { (it.code - key).toChar() }.joinToString("")
+}
 
 
 
@@ -480,7 +482,7 @@ fun Backup(show: mBool) {
 
         App.contentResolver.openOutputStream(uri)
             ?.bufferedWriter()
-            ?.use { out ->
+            ?.use { File ->
                 getData().all.forEach { (key, value) ->
                     val type = when (value) {
                         is Int -> "Int"
@@ -489,7 +491,8 @@ fun Backup(show: mBool) {
                         is Long -> "Long"
                         else -> "String"
                     }
-                    out.write("$key|$type|$value\n")
+					val line = "$key|$type|$value"
+					File.write(encrypt(line, 132) + "\n")
                 }
             }
     }
@@ -516,7 +519,11 @@ fun Restore(show: mBool) {
             App.contentResolver.openInputStream(uri)
                 ?.bufferedReader()
                 ?.useLines { lines ->
-                    lines.forEach { line ->
+                    lines.forEach { lineEncrypted ->
+						var line = decrypt(lineEncrypted, 132)
+						log("line: $line")
+
+						
                         val parts = line.split("|", limit = 3)
                         if (parts.size != 3) return@forEach
 
