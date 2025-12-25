@@ -357,8 +357,6 @@ fun TxtFileToMap(ctx: ctx, uri: Uri, fileMap: MutableMap<Str, Str>) {
 
 
 
-@Composable
-fun r_Scroll() = rememberScrollState()
 
 @Composable
 fun Mod.scroll(
