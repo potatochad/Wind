@@ -147,6 +147,7 @@ fun LogsScreen() {
 
 	RunOnce {
 		getMyAppLogs() 
+		wait(200)
 		scroll.toBottom()
 	}
 
