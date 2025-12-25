@@ -160,10 +160,7 @@ fun LogsScreen() {
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Hscroll()
 			) {
 				LazyColumn {
-					items(
-						items = Bar.logs,
-						key = { it.hashCode() }
-					) { line ->
+					items(Bar.logs) { line ->
 						Text(
 							text = line,
 							fontSize = 14.sp,
