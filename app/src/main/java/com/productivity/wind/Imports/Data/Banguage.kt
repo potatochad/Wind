@@ -639,7 +639,7 @@ fun getMyAppLogs() {
 			if ("WindowOnBackDispatcher" in s) return@forEachLine
 
 
-			val last = Bar.logs.last()
+			val last = Bar.logs.lastOrNull()
 			log("basic log: last line of logs  $last")
 		
 			Bar.logs.add(s.takeLast(2000))
