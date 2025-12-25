@@ -362,8 +362,8 @@ fun TxtFileToMap(ctx: ctx, uri: Uri, fileMap: MutableMap<Str, Str>) {
 fun Mod.scroll(
     v: Bool = yes,
     h: Bool = yes,
-    r_v: Scroll = r_Scroll(),
-    r_h: Scroll = r_Scroll(),
+    r_v: Scroll = Scroll(),
+    r_h: Scroll = Scroll(),
 ): Mod {
     var m = this
     if (v) m = m.verticalScroll(r_v)
