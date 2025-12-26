@@ -84,12 +84,12 @@ fun SettingsScreen() {
 fun PrivacyScreen() = LazyScreen("Privacy") {
    LazyRuleCard("If") {
       var show = m(no)
-	  var gotLocation by m(no)
+	  var gotLocation by r_m(no)
       UI.CheckRow("Activate at ", show) {
          UI.Ctext("location") {
             location {
 				gotLocation = yes
-				Vlog("Clicked")
+				Vlog("Clicked: $gotLocation")
 
 				
             }
