@@ -573,7 +573,7 @@ fun LazyScreen(
 @Composable
 fun LazyPopup455(
     show: mBool,
-	mod: Mod = Mod.w(300),
+	mod: Mod = Mod.w(350),
     ui: ui,
 ) {
     var visible by r_m(no)
@@ -588,11 +588,7 @@ fun LazyPopup455(
 	
     Popup(properties = PopupProperties(focusable = yes)) {
         Box(Mod.maxS().background(Color.Black.copy(alpha = 0.4f)).wrapContentSize(Alignment.Center)) {
-			Column(
-				mod.background(Color.DarkGray),
-				// verticalArrangement = Arrangement.Center,
-				// horizontalAlignment = Alignment.CenterHorizontally
-			) {
+			Column(mod.background(Color.DarkGray)) {
 				LazzyRow(
 					space = 6
 				) {
