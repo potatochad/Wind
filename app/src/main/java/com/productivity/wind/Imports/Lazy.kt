@@ -572,10 +572,10 @@ fun LazyScreen(
 
 @Composable
 fun LazyPopup455(
-    show: m_<Bool>,
+    show: mBool,
     ui: ui,
 ) {
-	var width = AppW*0.5 + 30
+	var width = AppW*0.5f + 30
     var visible by r_m(no)
 
     if (show.it) {
