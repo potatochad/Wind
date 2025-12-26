@@ -575,7 +575,7 @@ fun LazyPopup455(
     show: mBool,
     ui: ui,
 ) {
-	var width = AppW*0.5f + 30
+	var width = AppW*0.5f + 30.dp
     var visible by r_m(no)
 
     if (show.it) {
