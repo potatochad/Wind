@@ -504,7 +504,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         show = show,
         title = "Choose Locations",
     ){
-		Column(Mod.h(400).Vscroll()){
+		Column(Mod.h(400).w(300).Vscroll()){
 
 
 
