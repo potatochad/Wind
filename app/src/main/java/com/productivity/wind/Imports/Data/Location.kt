@@ -159,7 +159,6 @@ fun locationPermission(Do: Do = {}) {
 
 
 @Composable
-@Composable
 fun LocationPermissionHost() {
 
     val locationPermissionLauncher =
