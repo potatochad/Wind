@@ -446,10 +446,8 @@ object UI {
 	) {
 		Text(
 			text = text.color(Gold),
-			modifier = Mod.pointerInput(Unit) {
-				detectTapGestures {
-					Do()
-				}
+			modifier = Mod.click(no) {
+				Do()
 			},
 			maxLines = 1, 
 		)
