@@ -805,6 +805,7 @@ fun LazyPopup(
     show: m_<Bool>,
     title: Str = "Info",
 	msg: Str = "",
+	mod: Mod = Mod,
     showCancel: Bool = yes,
     showConfirm: Bool = yes,
     onConfirm: Do? = null,
@@ -827,6 +828,7 @@ fun LazyPopup(
 				ui?.invoke() ?: Text(msg)
 			}
         },
+		modifier = mod,
         confirmButton = {
             if (showConfirm) {
 				move(15)
