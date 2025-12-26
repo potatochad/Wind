@@ -96,25 +96,6 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
          }
       }
 
-	  if (gotLocation) {
-		  val cameraPositionState = rememberCameraPositionState {
-			  position = CameraPosition.fromLatLngZoom(
-				  LatLng(52.5200, 13.4050), // Berlin
-				  12f
-			  )
-		  }
-
-		  GoogleMap(
-			  modifier = Mod.fillMaxSize(),
-			  cameraPositionState = cameraPositionState
-		  ) {
-			  Marker(
-				  state = MarkerState(LatLng(52.5200, 13.4050)),
-				  title = "Here",
-				  snippet = "Classic Google Maps"
-			  )
-		  }
-	  }
         
    }
 
