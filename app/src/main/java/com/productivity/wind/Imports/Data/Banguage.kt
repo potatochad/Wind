@@ -235,7 +235,7 @@ fun click(x: UI, Do: Do) {
 }
 
 @Composable
-fun Mod.click(
+fun Mod.click66(
     animate: Bool = yes,
     Do: Do,
 ): Mod {
@@ -246,6 +246,33 @@ fun Mod.click(
         Do()
     }
 }
+@Composable
+fun Modifier.click(
+    animate: Boolean = true,
+    Do: () -> Unit
+): Modifier {
+    val interactionSource = remember { MutableInteractionSource() }
+
+    return this
+        .pointerInput(Unit) {
+            detectTapGestures {
+                Do()
+            }
+        }
+        .then(
+            if (animate) {
+                // Add ripple effect manually
+                Modifier.indication(
+                    interactionSource = interactionSource,
+                    indication = LocalIndication.current
+                )
+            } else {
+                Modifier
+            }
+        )
+}
+
+
 
 fun Mod.clickOrHold(
     hold: Bool = yes,
