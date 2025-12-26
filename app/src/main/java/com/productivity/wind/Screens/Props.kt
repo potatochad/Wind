@@ -500,6 +500,33 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         title = "Choose Locations",
     ){
 		Column(Mod.h(400).Vscroll()){
+
+
+
+
+
+			val cameraPositionState = rememberCameraPositionState {
+			  position = CameraPosition.fromLatLngZoom(
+				  LatLng(52.5200, 13.4050), // Berlin
+				  12f
+			  )
+		  }
+
+		  GoogleMap(
+			  modifier = Mod.fillMaxSize(),
+			  cameraPositionState = cameraPositionState
+		  ) {
+			  Marker(
+				  state = MarkerState(LatLng(52.5200, 13.4050)),
+				  title = "Here",
+				  snippet = "Classic Google Maps"
+			  )
+		  }
+
+
+
+
+
 			
 		}	
 	}
