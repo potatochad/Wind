@@ -86,14 +86,14 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
       var show = m(no)
       UI.CheckRow("Activate at ", show) {
          UI.Ctext("location") {
-            locationPermission {
-               
+            location {
 
-    
-               Vlog("Got permissionsss")
+				
             }
          }
       }
+
+	  
     val cameraPositionState = rememberCameraPositionState {
      position = CameraPosition.fromLatLngZoom(
       LatLng(52.5200, 13.4050), // Berlin
@@ -154,9 +154,6 @@ fun LogsScreen() {
 
 	RunOnce {
 		scroll.toBottom()
-		each(2000){
-			Vlog("logging")
-		}
 	}
 
     LazyScreen(top = {
