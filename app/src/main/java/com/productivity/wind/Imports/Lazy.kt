@@ -587,7 +587,7 @@ fun LazyPopup455(
     if (!visible) return
 	
     Popup(properties = PopupProperties(focusable = yes)) {
-        Box(Mod.maxS().background(Color.Black.copy(alpha = 0.4f)).wrapContentSize(Alignment.Center)) {
+        Box(Mod.maxS().background(faded(Color.Black).wrapContentSize(Alignment.Center)) {
 			Column(mod.background(Color.DarkGray)) {
 				LazzyRow(
 					space = 6
@@ -709,7 +709,7 @@ fun LazyMenu(
         }
     ) {
         Box( Mod.maxS()
-                .background(Color.Black.copy(alpha = backgroundAlpha))
+                .background(faded(Color.Black, backgroundAlpha))
                 .clickable(
                     indication = null,
                     interactionSource = r { MutableInteractionSource() }
