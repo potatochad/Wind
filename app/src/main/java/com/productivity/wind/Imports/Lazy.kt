@@ -49,185 +49,6 @@ import androidx.compose.ui.focus.*
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.*
 
-@Composable
-fun LazyMove(
-    x: Dp = 0.dp,
-    y: Dp = 0.dp,
-    ui: ui,
-) {
-    Box(
-		Mod.maxS()
-    ) {
-        Box(Mod
-            .offset(x = x, y = y)
-            .wrapContentSize()
-        ){
-			ui()
-		}
-    }
-}
-
-
-
-@Composable
-fun LazyWindow(
-    show: m_<Bool>,
-    ui: ui,
-) {
-    var visible by r_m(no)
-
-    if (show.it) {
-		wait(300) {
-			visible = yes
-		}
-	}
-            
-    if (!visible) return
-	
-    Popup(properties = PopupProperties(focusable = yes)) {
-        Box(Mod.maxS().background(Color.Black.copy(alpha = 0.3f)).wrapContentSize(Alignment.Center)) {
-            ui()
-        }
-    }
-}
-
-
-@Composable
-fun LazyMeasure(
-    x: m_<Dp>? = null,
-    y: m_<Dp>? = null,
-    w: m_<Dp>? = null,
-    h: m_<Dp>? = null,
-    modifier: Mod = Mod,
-    ui: ui
-) {
-    val density = LocalDensity.current
-
-    Box(
-        modifier = modifier.onGloballyPositioned { layoutCoordinates ->
-            val position = layoutCoordinates.positionInRoot()
-            val size = layoutCoordinates.size
-
-            set(x, with(density) { position.x.toDp() })
-            set(y, with(density) { position.y.toDp() })
-            set(w, with(density) { size.width.toDp() })
-            set(h, with(density) { size.height.toDp() })
-        }
-    ) {
-        ui()
-    }
-}
-
-
-
-
-@SuppressLint("UnusedBoxWithConstraintsScope", "UnrememberedMutableState")
-@Composable
-fun LazyInfo(
-    infoContent: ui,
-    hold: Bool = no,
-    ChangeY: Dp = 80.dp,
-    popupWidth: Dp = 0.dp,
-    popupHeight: Dp = 0.dp,
-    ui: ui,
-) {
-    var show = r_m(no)
-    var x = r_m(0.dp)
-    var y = r_m(0.dp)
-    var w = r_m(0.dp)
-    var h = r_m(0.dp)
-
-    LazyMeasure(
-        x, y, w, h,
-        modifier = Mod.clickOrHold(hold) { show(show) }
-    ) {
-        ui()
-    }
-
-    // Calculate popup position
-    val popupW = r_m(0.dp)
-    val popupH = r_m(0.dp)
-
-	val top by r_m(y.it - h.it)
-	val bottom by r_m(y.it)
-	val start by r_m(x.it)
-	val end by r_m(x.it + w.it)
-
-    // Compute popup position dynamically
-    val popupX = remember(x.it, w.it, popupW.it) {
-        if (top > popupH.it + 20.dp) "top" else "bottom"
-    }
-    val popupY = remember(y.it, h.it, popupH.it) {
-        if (end < popupW.it+ 20.dp) "end" else "start"
-	}
-
-
-
-	
-
-	// Actual position calculations
-	val bopupX = remember(popupX, popupH.it) {
-		if (popupH.it == 0.dp) {
-			0.dp
-		} else {
-			when (popupX) {
-				"top" -> x.it - popupW.it / 2   // Example placement
-				"bottom" -> x.it + popupW.it / 2
-				else -> 0.dp
-			}
-		}
-	}
-
-	val bopupY = remember(popupY, popupW.it) {
-		if (popupW.it == 0.dp) {
-			0.dp
-		} else {
-			when (popupY) {
-				"start" -> y.it - popupH.it / 2
-				"end" -> y.it + popupH.it / 2
-				else -> 0.dp
-			}
-		}
-	}
-
-
-
-	
-	LazyWindow(show) {
-		LazyMove(bopupX, bopupY) {
-			// Red dot marking the click point
-			BoxWithConstraints {
-				set(popupW, maxWidth)
-                set(popupH, maxHeight)
-                // Red dot marking click point
-                Box(Mod.s(20).background(Color.Yellow))
-			}
-		}
-	}
-	LazyWindow(show) {
-		LazyMove(x.it, y.it) {
-			// Red dot marking the click point
-			BoxWithConstraints {
-
-                // Red dot marking click point
-                Box(Mod.s(6).background(Color.Red, CircleShape))
-			}
-		}
-	}
-	
-	LazyWindow(show) {
-		LazyMove(end, top) {
-			// Red dot marking the click point
-			BoxWithConstraints {
-                // Red dot marking click point
-                Box(Mod.s(6).background(Color.Magenta, CircleShape))
-			}
-		}
-	}
-	
-}
-
-
 
 @Composable
 fun LazyTheme(content: ui) {
@@ -784,6 +605,28 @@ fun LazyScreen(
 
 
 //region LAZY POPUP
+
+@Composable
+fun LazyPopup455(
+    show: m_<Bool>,
+    ui: ui,
+) {
+    var visible by r_m(no)
+
+    if (show.it) {
+		wait(300) {
+			visible = yes
+		}
+	}
+            
+    if (!visible) return
+	
+    Popup(properties = PopupProperties(focusable = yes)) {
+        Box(Mod.maxS().background(Color.Black.copy(alpha = 0.3f)).wrapContentSize(Alignment.Center)) {
+            ui()
+        }
+    }
+}
 
 @Composable
 fun LazyPopup(
