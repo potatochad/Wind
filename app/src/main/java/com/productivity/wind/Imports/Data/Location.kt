@@ -126,7 +126,6 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import android.*
 import androidx.activity.compose.*
-
 import android.Manifest.permission.*
 
 
@@ -136,15 +135,16 @@ import android.Manifest.permission.*
 
 
 
-fun isLocationEnabled(): Bool {
+fun locationOn(): Bool {
     val lm = App.getSystemService(LocationManager::class.java)
     return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
            lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 }
 
-fun locationPermission(Do: Do = {}) {
+fun location(Do: Do = {}) {
     if (ContextCompat.checkSelfPermission( App, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-		Do()
+		if (locationOn) Do()
+		else Vlog("turn on location")
 	} else {
         ActivityCompat.requestPermissions(App, arrayOf(ACCESS_FINE_LOCATION), 100)
     }
