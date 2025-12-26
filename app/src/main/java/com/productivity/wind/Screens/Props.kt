@@ -503,13 +503,8 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
     LazyPopup455(
         show = show,
     ){
-		Column(Mod.h(450).w(300)) {
-
-
-
-
-
-			val cameraPositionState = rememberCameraPositionState {
+		
+		val cameraPositionState = rememberCameraPositionState {
 			  position = CameraPosition.fromLatLngZoom(
 				  LatLng(52.5200, 13.4050), // Berlin
 				  12f
@@ -528,11 +523,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		  }
 
 
-
-
-
-			
-		}	
 	}
 	
 }
