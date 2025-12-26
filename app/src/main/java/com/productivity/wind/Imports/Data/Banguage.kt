@@ -732,6 +732,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+		setupCrashHandler()
+
         // Set navigation bar black with white icons
         WindowCompat.setDecorFitsSystemWindows(window, yes)
 
@@ -745,19 +747,6 @@ class MainActivity : ComponentActivity() {
         }
 
 
-
-/*
-		val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
-
-Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-    Log.e(
-        "CRASH",
-        "==== CRASH ====\n${throwable.stackTraceToString()}"
-    )
-
-    defaultHandler?.uncaughtException(thread, throwable)
-}
-*/
 		App = this
 		AppPkg = this.packageName
 
@@ -772,6 +761,21 @@ Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
 			AppContent()
         }
     }
+
+	fun setupCrashHandler() {
+        val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            // Log crash
+            Log.e("CRASH", "==== CRASH ====\n${throwable.stackTraceToString()}")
+			Vlog("CRASHED")
+
+            // Optional: show a toast or do cleanup
+            Handler(Looper.getMainLooper()).post { Toast.makeText(this, "Oops! Crash logged.", Toast.LENGTH_SHORT).show() }
+
+            // Pass to default handler (important!)
+            defaultHandler?.uncaughtException(thread, throwable)
+        }
+	}
 
     override fun onResume() {
         super.onResume()
