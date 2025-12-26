@@ -575,6 +575,7 @@ fun LazyPopup455(
     show: m_<Bool>,
     ui: ui,
 ) {
+	var width = toInt(AppW * 0.5 + 30)
     var visible by r_m(no)
 
     if (show.it) {
@@ -586,16 +587,16 @@ fun LazyPopup455(
     if (!visible) return
 	
     Popup(properties = PopupProperties(focusable = yes)) {
-        Box(Mod.maxS().background(Color.Black.copy(alpha = 0.4f))) {
+        Box(Mod.maxS().background(Color.Black.copy(alpha = 0.4f)).wrapContentSize(Alignment.Center)) {
 			//Box() {}
 			Column(
-				Mod.background(Color.DarkGray),
+				Mod.background(Color.DarkGray).w(width),
 				verticalArrangement = Arrangement.Center,
 				horizontalAlignment = Alignment.CenterHorizontally
 			) {
 				ui()
 				LazzyRow(
-					space = 5
+					space = 6
 				) {
 					UI.Ctext("cancel")
 					UI.Ctext("ok")
