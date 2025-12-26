@@ -600,11 +600,9 @@ fun LazyPopup455(
 				LazzyRow(
 					space = 6
 				) {
-					UI.End {
 						UI.Ctext("cancel")
 						move(10)
 						UI.Ctext("ok")
-					}
 				}
 			}
         }
