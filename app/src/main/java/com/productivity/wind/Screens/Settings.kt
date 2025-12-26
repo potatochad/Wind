@@ -83,15 +83,15 @@ fun SettingsScreen() {
 @Composable()
 fun PrivacyScreen() = LazyScreen("Privacy") {
    LazyRuleCard("If") {
-      var show = m(no)
-	  var gotLocation by r_m(no)
-      UI.CheckRow("Activate at ", show) {
+      var check = m(no)
+	  var show = m(no)
+	  
+	  selectLocation(show)
+	  
+      UI.CheckRow("Activate at ", check) {
          UI.Ctext("location") {
             location {
-				gotLocation = yes
-				Vlog("Clicked: $gotLocation")
-
-				
+				show.it = yes
             }
          }
       }
