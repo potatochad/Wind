@@ -69,38 +69,6 @@ fun LazyTheme(content: ui) {
 
 
 
-
-//NormalVisual(show, popupX, popupY){}
-    
-@Composable
-fun NormalVisual(
-    show: m_<Bool>,
-    popupX: Dp,
-    popupY: Dp,
-    ui: ui,
-){
-	LazyWindow(show) {
-        LazyMove(popupX, popupY) {
-            Card(
-                modifier = Mod.wrapContentSize()
-                    .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
-                shape = RoundedCornerShape(8.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
-            ) {
-                Box(Mod.space(8)) {
-                    ui()
-                }
-            }
-        }
-	}
-}
-
-
-
-
-
-
 @Composable
 fun LazyImage(
     source: Any?,
@@ -532,14 +500,10 @@ fun LazyHeader(
 
 			// Title content
 			Box(
-                Modifier
-                    .weight(1f)
-                    .space(start = if (showBack) 8 else 0),
+                Mod.weight(1f).space(start = if (showBack) 8 else 0),
                 contentAlignment = Alignment.CenterStart
             ) {
-                Box(Mod
-                    .maxW()
-                ) {
+                Box(Mod.maxW()) {
                     LazzyRow {
                         titleContent()
                     }
