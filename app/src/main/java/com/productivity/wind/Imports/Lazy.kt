@@ -586,8 +586,21 @@ fun LazyPopup455(
     if (!visible) return
 	
     Popup(properties = PopupProperties(focusable = yes)) {
-        Box(Mod.maxS().background(Color.Black.copy(alpha = 0.3f)).wrapContentSize(Alignment.Center)) {
-            ui()
+        Box(Mod.maxS().background(Color.Black.copy(alpha = 0.4f)).wrapContentSize(Alignment.Center)) {
+            LazzyRow {
+				ui()
+				LazzyRow {
+					Box(
+						Mod.background(Color.DarkGray)
+							.border(BorderStroke(2.dp, Color.Black))
+					) {
+						Text("cancel")
+						Text("ok")
+					}
+				}
+
+				
+			}
         }
     }
 }
