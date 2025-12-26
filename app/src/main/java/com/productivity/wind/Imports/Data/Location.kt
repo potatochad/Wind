@@ -143,7 +143,7 @@ fun locationOn(): Bool {
 
 fun location(Do: Do = {}) {
     if (ContextCompat.checkSelfPermission( App, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-		if (locationOn) Do()
+		if (locationOn()) Do()
 		else Vlog("turn on location")
 	} else {
         ActivityCompat.requestPermissions(App, arrayOf(ACCESS_FINE_LOCATION), 100)
