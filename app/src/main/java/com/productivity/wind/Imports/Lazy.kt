@@ -573,7 +573,7 @@ fun LazyScreen(
 @Composable
 fun LazyPopup455(
     show: mBool,
-	mod: Mod = Mod.w(350).h(0, 500),
+	mod: Mod = Mod.w(350).h(100, 560),
     ui: ui,
 ) {
     var visible by r_m(no)
@@ -600,8 +600,11 @@ fun LazyPopup455(
 				LazzyRow(
 					space = 6
 				) {
-					UI.Ctext("cancel")
-					UI.Ctext("ok")
+					UI.End {
+						UI.Ctext("cancel")
+						move(10)
+						UI.Ctext("ok")
+					}
 				}
 			}
         }
