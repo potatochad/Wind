@@ -160,7 +160,7 @@ fun locationPermission(Do: Do = {}) {
 
 @Composable
 fun LocationPermissionHost(Do: Do={}) {
-	val fineGranted = no
+	val fineGranted by m(no)
 
     val locationPermissionLauncher =
         rememberLauncherForActivityResult(
