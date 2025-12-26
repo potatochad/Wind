@@ -190,6 +190,7 @@ fun AppStart() {
 	RunOnce {
         DayChecker.start()
 		getMyAppLogs() 
+		captureAppCrashes()
 	}
 	
     LazyMenu { Menu() }
