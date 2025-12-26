@@ -84,35 +84,41 @@ fun SettingsScreen() {
 fun PrivacyScreen() = LazyScreen("Privacy") {
    LazyRuleCard("If") {
       var show = m(no)
+	  var gotLocation by m(no)
       UI.CheckRow("Activate at ", show) {
          UI.Ctext("location") {
             location {
+				gotLocation = yes
 
 				
             }
          }
       }
 
-	  
-    val cameraPositionState = rememberCameraPositionState {
-     position = CameraPosition.fromLatLngZoom(
-      LatLng(52.5200, 13.4050), // Berlin
-      12f
-     )
-    }
+	  if (gotLocation) {
+		  val cameraPositionState = rememberCameraPositionState {
+			  position = CameraPosition.fromLatLngZoom(
+				  LatLng(52.5200, 13.4050), // Berlin
+				  12f
+			  )
+		  }
 
-    GoogleMap(
-     modifier = Mod.fillMaxSize(),
-     cameraPositionState = cameraPositionState
-    ) {
-     Marker(
-      state = MarkerState(LatLng(52.5200, 13.4050)),
-      title = "Here",
-      snippet = "Classic Google Maps"
-     )
-    }
-   }
+		  GoogleMap(
+			  modifier = Mod.fillMaxSize(),
+			  cameraPositionState = cameraPositionState
+		  ) {
+			  Marker(
+				  state = MarkerState(LatLng(52.5200, 13.4050)),
+				  title = "Here",
+				  snippet = "Classic Google Maps"
+			  )
+		  }
+	  }
         
+   }
+
+	  
+    
  
 }
 
