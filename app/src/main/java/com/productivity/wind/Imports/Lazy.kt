@@ -586,7 +586,7 @@ fun LazyPopup455(
     if (!visible) return
 	
     Popup(properties = PopupProperties(focusable = yes)) {
-        Box(Mod.maxS().background(Color.Black.copy(alpha = 0.4f)).wrapContentSize(Alignment.Center)) {
+        Column(Mod.maxS().background(Color.Black.copy(alpha = 0.4f)).wrapContentSize(Alignment.Center)) {
             LazzyRow {
 				ui()
 				LazzyRow {
