@@ -493,17 +493,13 @@ fun isSure(show: mBool, Do: Do) {
 
 
 @Composable
-fun locationPopup(show: mBool = m(yes), Do: DoStr ={}) {
-    var appList by r_m<List<Pair<ResolveInfo, Drawable?>>>(emptyList())
-    var loading by r_m(no)
-
+fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
+	
     LazyPopup(
         show = show,
-        showCancel = no,
-        showConfirm = no,
-        title = "Select App",
+        title = "Choose Locations",
     ){
-		Column(Mod.h(200).Vscroll()){
+		Column(Mod.h(400).Vscroll()){
 			
 		}	
 	}
