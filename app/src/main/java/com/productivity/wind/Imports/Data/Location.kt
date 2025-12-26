@@ -159,14 +159,17 @@ fun locationPermission(Do: Do = {}) {
 
 
 @Composable
-fun LocationPermissionHost() {
+fun LocationPermissionHost(Do: Do={}) {
+	val fineGranted = no
 
     val locationPermissionLauncher =
         rememberLauncherForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { result ->
-            // handle result here if needed
+            val fineGranted = result[android.Manifest.permission.ACCESS_FINE_LOCATION] == true
         }
+
+	if (fineGranted) Do()
 
     LaunchedEffect(Unit) {
         locationPermissionLauncher.launch(
