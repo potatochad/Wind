@@ -503,8 +503,9 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
     LazyPopup(
         show = show,
         title = "Choose Locations",
+		mod = Mod.maxS(),
     ){
-		Column(Mod.h(400).w(300).Vscroll()){
+		Column {
 
 
 
@@ -518,7 +519,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		  }
 
 		  GoogleMap(
-			  modifier = Mod.maxW().h(400),
+			  modifier = Mod.maxS(),
 			  cameraPositionState = cameraPositionState
 		  ) {
 			  Marker(
