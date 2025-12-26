@@ -158,14 +158,28 @@ fun locationPermission(Do: Do = {}) {
 
 
 
-fun locationPermission77(Do: Do={}) {
-    locationPermissionLauncher.launch(
-        arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+@Composable
+@Composable
+fun LocationPermissionHost() {
+
+    val locationPermissionLauncher =
+        rememberLauncherForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { result ->
+            // handle result here if needed
+        }
+
+    LaunchedEffect(Unit) {
+        locationPermissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
         )
-    )
+    }
 }
+
+
 fun gotLocationPermission(context: Context) =
     ContextCompat.checkSelfPermission(
         context, Manifest.permission.ACCESS_FINE_LOCATION
