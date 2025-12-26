@@ -74,8 +74,6 @@ fun LazyWindow(
     show: m_<Bool>,
     ui: ui,
 ) {
-	var popupW by r_m(20)
-	var popupH by r_m(30)
     var visible by r_m(no)
 
     if (show.it) {
@@ -86,8 +84,8 @@ fun LazyWindow(
             
     if (!visible) return
 	
-    Popup( properties = PopupProperties(focusable = yes)) {
-        Box(Mod.maxS().align(Alignment.Center)) {
+    Popup(properties = PopupProperties(focusable = yes)) {
+        Box(Mod.maxS().background(Color.Black.copy(alpha = 0.3f)).wrapContentSize(Alignment.Center)) {
             ui()
         }
     }
@@ -908,27 +906,6 @@ fun LazyMenu(
     }
 }
 
-
-
-
-
-@Composable
-fun LaziestScreen(
-	visible: m_<Bool>,
-    ui: ui ={},
-) {
-    if (!visible.it) return
-
-	// RunOnce()
-
-    Popup(
-        alignment = Alignment.TopStart,
-    ) {
-        Box(Mod.maxS().background(Color.DarkGray)) {
-            ui()
-        }
-    }
-}
 
 
 
