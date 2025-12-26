@@ -587,14 +587,15 @@ fun LazyPopup455(
 	
     Popup(properties = PopupProperties(focusable = yes)) {
         Box(Mod.maxS().background(Color.Black.copy(alpha = 0.4f))) {
+			//Box() {}
 			Column(
+				Mod.background(Color.DarkGray),
 				verticalArrangement = Arrangement.Center,
 				horizontalAlignment = Alignment.CenterHorizontally
 			) {
 				ui()
 				LazzyRow(
-					Mod.background(Color.DarkGray)
-						.border(BorderStroke(2.dp, Color.Black))
+					space = 5
 				) {
 					UI.Ctext("cancel")
 					UI.Ctext("ok")
