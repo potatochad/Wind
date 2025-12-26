@@ -442,11 +442,12 @@ object UI {
 	@Composable
 	fun Ctext(
         text: Str,
-        onClick: Do={},
+		mod: Mod = Mod.click{ Do() }
+        Do: Do={},
 	) {
 		Text(
 			text = text.color(Gold),
-			modifier = Mod.click{ onClick() },
+			modifier = mod,
 			maxLines = 1, 
 		)
 	}
