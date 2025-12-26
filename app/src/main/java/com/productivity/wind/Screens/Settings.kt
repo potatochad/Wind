@@ -89,6 +89,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
          UI.Ctext("location") {
             location {
 				gotLocation = yes
+				Vlog("Clicked")
 
 				
             }
