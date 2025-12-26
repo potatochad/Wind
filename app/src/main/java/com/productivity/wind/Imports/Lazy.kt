@@ -573,7 +573,7 @@ fun LazyScreen(
 @Composable
 fun LazyPopup455(
     show: mBool,
-	mod: Mod = Mod.w(350),
+	mod: Mod = Mod.w(350).h(0, 500),
     ui: ui,
 ) {
     var visible by r_m(no)
