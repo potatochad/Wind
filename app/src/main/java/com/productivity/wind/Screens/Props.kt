@@ -503,7 +503,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
     LazyWindow(
         show = show,
     ){
-		Column {
+		Column(Mod.h(450).w(300)) {
 
 
 
