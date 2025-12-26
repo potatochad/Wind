@@ -87,7 +87,7 @@ object Bar {
     var Dpoints by s(0)
 	var lastDate by s("") 
 	var Url by s("")
-	var logs = mList<Str>()
+	var logs = sList<Str>()
     
     //ACHIEVEMENTS
     var LettersTyped by s(0)
