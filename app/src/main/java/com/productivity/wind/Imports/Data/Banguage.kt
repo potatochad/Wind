@@ -635,6 +635,29 @@ fun getMyAppLogs() {
 		}
 	}.start()
 }
+fun captureAppCrashes() {
+    Thread {
+        try {
+            val process = Runtime.getRuntime().exec("logcat *:E") // Only errors
+            val reader = BufferedReader(InputStreamReader(process.inputStream))
+
+            reader.forEachLine { line ->
+                // Only keep lines from your app package or fatal exceptions
+                if (line.contains("FATAL EXCEPTION") || line.contains(BuildConfig.APPLICATION_ID)) {
+                    val last = Bar.logs.lastOrNull()
+                    val s = line.takeLast(3000) // Keep it short
+
+                    if (last != s) {
+                        Bar.logs.add(s)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.start()
+}
+
 
 
 
@@ -732,8 +755,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-		setupCrashHandler()
-
         // Set navigation bar black with white icons
         WindowCompat.setDecorFitsSystemWindows(window, yes)
 
@@ -761,21 +782,6 @@ class MainActivity : ComponentActivity() {
 			AppContent()
         }
     }
-
-	fun setupCrashHandler() {
-        val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
-        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            // Log crash
-            Log.e("CRASH", "==== CRASH ====\n${throwable.stackTraceToString()}")
-			Vlog("CRASHED")
-
-            // Optional: show a toast or do cleanup
-            Handler(Looper.getMainLooper()).post { Toast.makeText(this, "Oops! Crash logged.", Toast.LENGTH_SHORT).show() }
-
-            // Pass to default handler (important!)
-            defaultHandler?.uncaughtException(thread, throwable)
-        }
-	}
 
     override fun onResume() {
         super.onResume()
