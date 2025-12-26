@@ -296,6 +296,12 @@ fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
 
 
 
+fun faded(color: Color, alpha: Float = 0.4f) = color.copy(alpha = alpha)
+
+
+
+
+
 
 //✴️ Data renames
 fun Any.eachValVar(Do: (ClassValVar<Any, *>) -> Unit) {
