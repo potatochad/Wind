@@ -500,7 +500,7 @@ fun isSure(show: mBool, Do: Do) {
 @Composable
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 	
-    LazyWindow(
+    LazyPopup455(
         show = show,
     ){
 		Column(Mod.h(450).w(300)) {
