@@ -127,6 +127,8 @@ import kotlinx.coroutines.flow.*
 import android.*
 import androidx.activity.compose.*
 
+import android.Manifest.permission.*
+
 
 
 
@@ -141,52 +143,12 @@ fun isLocationEnabled(): Bool {
 }
 
 fun locationPermission(Do: Do = {}) {
-    if (ContextCompat.checkSelfPermission(
-            App,
-            android.Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-    ) {
+    if (ContextCompat.checkSelfPermission( App, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 		Do()
 	} else {
-        ActivityCompat.requestPermissions(
-            App,
-            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-            100
-        )
+        ActivityCompat.requestPermissions(App, arrayOf(ACCESS_FINE_LOCATION), 100)
     }
 }
-
-
-
-@Composable
-fun LocationPermissionHost(Do: Do={}) {
-	val fineGranted by m(no)
-
-    val locationPermissionLauncher =
-        rememberLauncherForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { result ->
-            val fineGranted = result[android.Manifest.permission.ACCESS_FINE_LOCATION] == true
-        }
-
-	if (fineGranted) Do()
-
-    LaunchedEffect(Unit) {
-        locationPermissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
-    }
-}
-
-
-fun gotLocationPermission(context: Context) =
-    ContextCompat.checkSelfPermission(
-        context, Manifest.permission.ACCESS_FINE_LOCATION
-    ) == PackageManager.PERMISSION_GRANTED
-
 
 
 
