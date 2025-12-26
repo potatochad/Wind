@@ -74,39 +74,26 @@ fun LazyWindow(
     show: m_<Bool>,
     ui: ui,
 ) {
-    // Local state to control if Popup is alive
-    var popupVisible by r_m(no)
+	var popupW by r_m(20)
+	var popupH by r_m(30)
+    var visible by r_m(no)
 
-    RunOnce(show.it) {
-        if (show.it) {
-            popupVisible = yes  // Show immediately
-        } else {
-            delay(200)           // Wait for fade-out duration
-            popupVisible = no // Then remove Popup
-        }
-    }
-
-    if (popupVisible) {
-        Popup(
-            properties = PopupProperties(focusable = yes)
-        ) {
-            Box(
-                modifier = Mod
-                    .maxS()
-                    .clickOrHold() { set(show, no) },
-                contentAlignment = Alignment.Center
-            ) {
-                AnimatedVisibility(
-                    visible = show.it,
-                    enter = fadeIn(animationSpec = tween(200)),
-                    exit = fadeOut(animationSpec = tween(200))
-                ) {
-                    ui()
-                }
-            }
+    if (show.it) {
+		wait(300) {
+			visible = yes
+		}
+	}
+            
+    if (!visible) return
+	
+    Popup( properties = PopupProperties(focusable = yes)) {
+        Box(Mod.maxS().align(Alignment.Center)) {
+            ui()
         }
     }
 }
+
+
 @Composable
 fun LazyMeasure(
     x: m_<Dp>? = null,
