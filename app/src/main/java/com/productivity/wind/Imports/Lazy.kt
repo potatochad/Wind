@@ -575,7 +575,7 @@ fun LazyPopup455(
     show: m_<Bool>,
     ui: ui,
 ) {
-	var width = toInt(AppW * 0.5 + 30)
+	var width = AppW*0.5 + 30
     var visible by r_m(no)
 
     if (show.it) {
