@@ -518,7 +518,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		  }
 
 		  GoogleMap(
-			  modifier = Mod.fillMaxSize(),
+			  modifier = Mod.maxW().h(400),
 			  cameraPositionState = cameraPositionState
 		  ) {
 			  Marker(
