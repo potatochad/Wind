@@ -596,8 +596,8 @@ fun LazyPopup455(
 					Mod.background(Color.DarkGray)
 						.border(BorderStroke(2.dp, Color.Black))
 				) {
-					Text("cancel")
-					Text("ok")
+					UI.Ctext("cancel")
+					UI.Ctext("ok")
 				}
 			}
         }
