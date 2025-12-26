@@ -503,7 +503,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
     LazyPopup(
         show = show,
         title = "Choose Locations",
-		mod = Mod.maxS(),
     ){
 		Column {
 
