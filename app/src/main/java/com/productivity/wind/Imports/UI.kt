@@ -442,12 +442,15 @@ object UI {
 	@Composable
 	fun Ctext(
         text: Str,
-		mod: Mod = Mod.click{ Do() }
         Do: Do={},
 	) {
 		Text(
 			text = text.color(Gold),
-			modifier = mod,
+			modifier = Mod.pointerInput(Unit) {
+				detectTapGestures {
+					Do()
+				}
+			},
 			maxLines = 1, 
 		)
 	}
