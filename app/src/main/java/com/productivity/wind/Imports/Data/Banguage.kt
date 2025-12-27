@@ -678,10 +678,12 @@ fun <T> runHeavyTask(
 fun wait(x: Any = 20, Do: Wait) {
     scope.launch {
 		try {
-			wait(x)
-			Do()
+			withContext(Dispatchers.Default) { 
+				wait(x)
+				Do()
+			}
 		} catch (e: Exception) {
-			log("<fun wait>: ${e.message}")
+			Vlog("<fun wait>: ${e.message}")
 		}
     }
 }
