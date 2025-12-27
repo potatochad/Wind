@@ -638,14 +638,19 @@ fun getMyAppLogs() {
 fun captureAppCrashes() {
     Thread {
         try {
-            val process = Runtime.getRuntime().exec("logcat *:E") // Only errors
+            val process = Runtime.getRuntime().exec("logcat *:E") 
             val reader = BufferedReader(InputStreamReader(process.inputStream))
+
+			val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+
 
             reader.forEachLine { line ->
 				val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), " ").takeLast(3000)
-		
-                // Only keep lines from your app package or fatal exceptions
-                if (s.contains("FATAL EXCEPTION") || s.contains(BuildConfig.APPLICATION_ID)) {
+
+				var logTime = s.takeLast(5) //09:25
+				
+                
+                if (s.contains("FATAL EXCEPTION") && s.contains(BuildConfig.APPLICATION_ID) && logTime == currentTime) {
                     Bar.logs.add(s)
                 }
             }
