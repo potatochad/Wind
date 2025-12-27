@@ -248,15 +248,6 @@ fun r_Scroll() = rememberScrollState()
 fun LazyList() = rememberLazyListState()
 
 
-
-
-
-
-val Str.size get() = length
-fun Str.last(n: Int): Str = this.takeLast(n)
-fun Str.fromTo(start: Int, end: Int = this.size): Str = this.substring(start, end)
-
-
 fun navBack() { AppNav.popBackStack() }
 
 inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
