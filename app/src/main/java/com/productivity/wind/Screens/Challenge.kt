@@ -91,15 +91,11 @@ fun CopyPaste(id: Str ="") {
 		  Letter_Worth.it = tsk.Letter_Worth
 		  
 		  wait {
-			  val TextThing = makeUIStr {
-				  add(txt.it.fromTo(0, tsk.goodStr))
-
-				  withStyle(SpanStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp)) {
-					  add(txt.it[tsk.goodStr])
-				  }
-
-				  add(txt.it.fromTo(tsk.goodStr + 1))
-			  }
+			  val TextThing = UIStr(
+				  txt.it.fromTo(0, tsk.goodStr),
+			      txt.it[tsk.goodStr].bold().size(16),
+			      txt.it.fromTo(tsk.goodStr + 1),
+			  )
 
 			  
 			  inputScroll.goTo(tsk.goodStr * 2)
