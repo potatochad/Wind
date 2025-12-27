@@ -91,7 +91,8 @@ fun CopyPaste(id: Str ="") {
 		  Letter_Worth.it = tsk.Letter_Worth
 		  
 		  wait {
-			  val done = toF(tsk.goodStr * inputScroll.size) / toF(tsk.txt.size)
+			  val done = tsk.goodStr * 2.2
+			  Vlog("text letter: ${txt.it[tsk.goodStr]}")
 			  inputScroll.goTo(done)
 		  }
 	  }
