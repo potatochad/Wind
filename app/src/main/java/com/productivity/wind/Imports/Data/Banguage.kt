@@ -676,7 +676,7 @@ fun <T> runHeavyTask(
     }
 }
 fun wait(x: Any = 20, Do: Wait) {
-    run.launch {
+    run.launch(Dispatchers.Main) {
 		try {
 			delay(toL(x))
 			Do()
@@ -720,7 +720,7 @@ fun folder(folderName: Str): File {
 }
 
 fun Do(onError: Wait ={}, Do: Wait) {
-	run.launch { 
+	run.launch(Dispatchers.Main) {
 		try {
 			Do()
 		} catch (e: Exception) {
