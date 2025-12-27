@@ -677,8 +677,12 @@ fun <T> runHeavyTask(
 }
 fun wait(x: Any = 20, Do: Wait) {
     run.launch {
-        delay(toL(x))
-        Do()
+		try {
+			delay(toL(x))
+			Do()
+		} catch (e: Exception) {
+			Vlog("error: ${e.message}")
+		}
     }
 }
 suspend fun wait(x: Any = 20) { delay(toL(x)) }
