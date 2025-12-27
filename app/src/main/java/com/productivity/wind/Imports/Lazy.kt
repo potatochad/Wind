@@ -595,10 +595,12 @@ fun LazyPopup455(
 				) {
 					Text(title)
 				}
-				ui()
+				Box(Mod.weight(1f)) { 
+					ui()
+				}
 				
 				LazzyRow(
-					Mod.w(30),
+					Mod.h(30),
 					space = 6
 				) {
 					UI.End {
