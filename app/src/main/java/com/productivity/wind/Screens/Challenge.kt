@@ -92,13 +92,13 @@ fun CopyPaste(id: Str ="") {
 		  
 		  wait {
 			  val TextThing = makeUIStr {
-				  add(txt.it.substring(0, tsk.goodStr))
+				  add(txt.it.fromTo(0, tsk.goodStr))
 
 				  withStyle(SpanStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp)) {
 					  add(txt.it[tsk.goodStr])
 				  }
 
-				  add(txt.it.substring(tsk.goodStr + 1))
+				  add(txt.it.fromTo(tsk.goodStr + 1))
 			  }
 
 			  
