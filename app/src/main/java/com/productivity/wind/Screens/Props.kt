@@ -261,12 +261,20 @@ object Header {
     @Composable
     fun Logs(Tag: m_<Str>) {
         LazyInput(Tag, modifier = Mod.h(36).w(120).Hscroll())
+
+
+		val Logs by remember(Tag.it, Bar.logs) {
+			derivedStateOf {
+				Bar.logs.filter { it.contains(Tag.it) }
+			}
+		}
+
             
         UI.End {
             Icon.Delete {
                 Bar.logs.clear()
             }
-            Icon.Copy(Bar.logs.joinToString("\n"))
+            Icon.Copy(Logs.joinToString("\n"))
 			
         }
     }
