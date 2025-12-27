@@ -676,7 +676,7 @@ fun <T> runHeavyTask(
     }
 }
 fun wait(x: Any = 20, Do: Wait) {
-    run.launch(Dispatchers.Main) {
+    App.lifecycleScope.launch(Dispatchers.Main) {
 		try {
 			delay(toL(x))
 			Do()
@@ -720,7 +720,7 @@ fun folder(folderName: Str): File {
 }
 
 fun Do(onError: Wait ={}, Do: Wait) {
-	run.launch {
+	App.lifecycleScope.launch {
 		try {
 			Do()
 		} catch (e: Exception) {
@@ -730,7 +730,7 @@ fun Do(onError: Wait ={}, Do: Wait) {
 	} 
 }
 fun NoLag(onError: Wait ={}, Do: Wait) {
-    run.launch(Dispatchers.Default) {
+    App.lifecycleScope.launch(Dispatchers.Default) {
 		try {
 			Do()
 		} catch (e: Exception) {
@@ -751,8 +751,6 @@ fun NoLag(onError: Wait ={}, Do: Wait) {
 lateinit var App: ComponentActivity
 lateinit var AppNav: NavHostController
 lateinit var AppPkg: Str
-val run: CoroutineScope
-    get() = App.lifecycleScope 
 
 var AppH by m(0.dp)
 var AppW by m(0.dp)
