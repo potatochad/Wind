@@ -91,7 +91,7 @@ fun CopyPaste(id: Str ="") {
 		  Letter_Worth.it = tsk.Letter_Worth
 		  
 		  wait {
-			  txt.it = buildAnnotatedString {
+			  val TextThing = buildAnnotatedString {
 				  add(txt.it.substring(0, tsk.goodStr))
 
 				  withStyle(SpanStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp)) {
