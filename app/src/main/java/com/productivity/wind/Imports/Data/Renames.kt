@@ -259,12 +259,6 @@ val Str.size get() = length
 fun Str.last(n: Int): Str = this.takeLast(n)
 fun Str.fromTo(start: Int, end: Int = this.size): Str = this.substring(start, end)
 
-fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
-    return buildAnnotatedString(Do)
-}
-fun UIStrBuilder.add(text: Char) = append(text)
-fun UIStrBuilder.add(text: Str) = append(text)
-fun UIStrBuilder.add(text: UIStr) = append(text)
 
 fun navBack() { AppNav.popBackStack() }
 
