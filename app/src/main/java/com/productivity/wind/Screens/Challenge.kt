@@ -91,9 +91,18 @@ fun CopyPaste(id: Str ="") {
 		  Letter_Worth.it = tsk.Letter_Worth
 		  
 		  wait {
-			  val done = tsk.goodStr * 2.2
-			  Vlog("text letter: ${txt.it[tsk.goodStr]}")
-			  inputScroll.goTo(done)
+			  txt.it = buildAnnotatedString {
+				  add(txt.it.substring(0, tsk.goodStr))
+
+				  withStyle(SpanStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp)) {
+					  add(txt.it[tsk.goodStr])
+				  }
+
+				  add(txt.it.substring(tsk.goodStr + 1))
+			  }
+
+			  
+			  inputScroll.goTo(tsk.goodStr * 2)
 		  }
 	  }
     }
