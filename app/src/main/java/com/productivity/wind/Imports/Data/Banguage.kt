@@ -211,12 +211,6 @@ fun toL(it: Any?): Long = when (it) {
     null -> 0L
     else -> 0L
 }
-fun toUIStr(it: Any?): UIStr = when (it) {
-    is UIStr -> it
-    is String -> UIStr(it)
-    is Str -> UIStr(it)
-    else -> UIStr(it?.toString() ?: "")
-}
 
 @Composable
 fun toUI(it: Any?): UI {
