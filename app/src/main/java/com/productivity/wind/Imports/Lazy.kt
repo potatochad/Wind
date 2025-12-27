@@ -605,9 +605,9 @@ fun LazyPopup455(
 					space = 6
 				) {
 					UI.End {
-						UI.Ctext("cancel")
+						UI.Ctext("cancel".red())
 						move(20)
-						UI.Ctext("ok")
+						UI.Ctext("ok".green())
 					}
 				}
 			}
