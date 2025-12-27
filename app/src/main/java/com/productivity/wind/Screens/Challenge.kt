@@ -143,6 +143,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     RunOnce(tsk.goodStr) {
 		if (tsk.goodStr > 20) {
 			val done = toF(txtScroll.size) / toF(tsk.txt.size)
+			Vlog("math: [ ${done*tsk.txt.size}==${txtScroll.size}  ]")
 
 			txtScroll.scroll(done)
 		}
