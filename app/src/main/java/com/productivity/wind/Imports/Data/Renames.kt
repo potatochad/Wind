@@ -215,9 +215,7 @@ fun LazyList.toBottom() = wait{
 
 
 
-fun Scroll.scroll(it: Any) = wait{ 
-	animateScrollBy(toF(it))
-}
+suspend fun Scroll.scroll(it: Any) = animateScrollBy(toF(it))
 
 
 
