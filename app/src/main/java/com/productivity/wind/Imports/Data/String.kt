@@ -141,6 +141,17 @@ fun UIStrBuilder.add(text: UIStr) = append(text)
 fun UIStr(vararg parts: Any): UIStr = makeUIStr {
     parts.forEach { add(toUIStr(it)) }
 }
+fun combineUIStr(vararg parts: Any): UIStr = makeUIStr {
+    parts.forEach { part ->
+        when (part) {
+            is UIStr -> add(part)
+            is String -> add(makeUIStr { add(part) })
+            is Char -> add(makeUIStr { add(part.toString()) })
+            else -> add(makeUIStr { add(part.toString()) })
+        }
+    }
+}
+
 
 
 
