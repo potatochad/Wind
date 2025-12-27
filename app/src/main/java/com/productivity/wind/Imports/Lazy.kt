@@ -595,7 +595,9 @@ fun LazyPopup455(
 				) {
 					Text(title)
 				}
-				ui()
+				Box(Mod.weight(1f)) { 
+					ui()
+				}
 				
 				LazzyRow(
 					Mod.h(50),
