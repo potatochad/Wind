@@ -74,7 +74,7 @@ fun Challenge() {
 
 @Composable
 fun CopyPaste(id: Str ="") {
-    var txt = r_m("Be always kind")
+    var txt = r_m(AnnotatedString("Be always kind"))
     var DailyMax = r_m(5)
     var Done_Worth = r_m(10)
     var Letter_Worth = r_m(1)
