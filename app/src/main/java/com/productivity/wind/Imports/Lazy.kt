@@ -595,17 +595,15 @@ fun LazyPopup455(
 				) {
 					Text(title)
 				}
-				Box(Mod.weight(1f)) { 
-					ui()
-				}
+				ui()
 				
 				LazzyRow(
-					Mod.h(30),
+					Mod.h(50),
 					space = 6
 				) {
 					UI.End {
 						UI.Ctext("cancel")
-						move(10)
+						move(20)
 						UI.Ctext("ok")
 					}
 				}
