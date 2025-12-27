@@ -591,9 +591,10 @@ fun LazyPopup455(
         Box(Mod.maxS().background(faded(Color.Black)).center()) {
 			Column(mod.background(Color.DarkGray)) {
 				LazzyRow(
+					Mod.center(),
 					space = 6
 				) {
-					Text(title)
+					Text(title.size(18))
 				}
 				Box(Mod.weight(1f)) { 
 					ui()
