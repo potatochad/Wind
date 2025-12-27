@@ -648,7 +648,6 @@ fun captureAppCrashes() {
                     val s = line.takeLast(3000) // Keep it short
 
                     if (last != s) {
-						Vlog("$s")
                         Bar.logs.add(s)
                     }
                 }
