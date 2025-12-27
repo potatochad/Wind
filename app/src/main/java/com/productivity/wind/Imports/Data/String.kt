@@ -152,6 +152,14 @@ fun combineUIStr(vararg parts: Any): UIStr = makeUIStr {
     }
 }
 
+fun toUIStr(it: Any?): UIStr = when (it) {
+    is UIStr -> it
+    is Str -> UIStr(it)
+    is Str -> UIStr(it)
+    else -> UIStr(it?.toString() ?: "")
+}
+
+
 
 
 
