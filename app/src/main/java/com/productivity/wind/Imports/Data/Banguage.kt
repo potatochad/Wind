@@ -676,7 +676,7 @@ fun <T> runHeavyTask(
     }
 }
 fun wait(x: Any = 20, Do: Wait) {
-    App.lifecycleScope.launch {
+    scope.launch {
 		try {
 			wait(x)
 			Do()
@@ -755,6 +755,10 @@ lateinit var AppPkg: Str
 var AppH by m(0.dp)
 var AppW by m(0.dp)
 var AppLazyH by m(0.dp)
+
+lateinit var scope: CoroutineScope
+
+  
 	
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -779,6 +783,8 @@ class MainActivity : ComponentActivity() {
 		AppStart_beforeUI()
 
         setContent { 
+			scope = rememberCoroutineScope()
+
 			AppNav = rememberNavController()
 			AppH = LocalConfiguration.current.screenHeightDp.dp
 			AppW = LocalConfiguration.current.screenWidthDp.dp
