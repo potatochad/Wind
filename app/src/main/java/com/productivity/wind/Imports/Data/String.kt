@@ -169,9 +169,11 @@ fun Any.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (t
 
 fun Any.size(x: Int) = txt { copy(fontSize = x.sp) }
 fun Any.bold() = txt { copy(fontWeight = FontWeight.Bold) }
+
 fun Any.color(x: Color) = txt { copy(color = x) }
 fun Any.gold() = txt { copy(color = Gold) }
-
+fun Any.green() = txt { copy(color = Color.Green) }
+fun Any.red() = txt { copy(color = Color.Red) }
 
 
 
