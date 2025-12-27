@@ -574,6 +574,8 @@ fun LazyScreen(
 fun LazyPopup455(
     show: mBool,
 	title: Str = "Title",
+	onOk: Do = {},
+	onCancel: Do = {},
 	mod: Mod = Mod.w(350).h(560),
     ui: ui,
 ) {
@@ -605,9 +607,13 @@ fun LazyPopup455(
 					space = 6
 				) {
 					UI.End {
-						UI.Ctext("cancel".red())
+						UI.Ctext("cancel".red()){
+							onCancel()
+						}
 						move(20)
-						UI.Ctext("ok".green())
+						UI.Ctext("ok".green()){
+							onOk()
+						}
 					}
 				}
 			}
