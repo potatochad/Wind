@@ -169,6 +169,14 @@ fun Any.gold() = txt { copy(color = Gold) }
 
 
 
+val Str.size get() = length
+fun Str.last(n: Int): Str = this.takeLast(n)
+fun Str.fromTo(start: Int, end: Int = this.size): Str = this.substring(start, end)
+
+
+
+
+
 
 
 
