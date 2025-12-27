@@ -189,8 +189,8 @@ fun OnResume(){
 fun AppStart() {
 	RunOnce {
         DayChecker.start()
-		getMyAppLogs() 
 		captureAppCrashes()
+		getMyAppLogs() 
 	}
 	
     LazyMenu { Menu() }
