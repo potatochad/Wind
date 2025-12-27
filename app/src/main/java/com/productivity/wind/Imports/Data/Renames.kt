@@ -215,31 +215,7 @@ fun LazyList.toBottom() = wait{
 
 
 
-// fun Scroll.scroll(it: Any) = wait{ animateScrollBy(toF(it)) }
-
-
-fun Scroll.scroll666(it: Any) {
-    val amount = try { toF(it) } catch (e: Exception) { 0f } // convert safely
-    if (amount.isNaN() || amount.isInfinite()) return         // ignore bad numbers
-
-    wait {
-        try {
-            animateScrollBy(amount)
-        } catch (e: Exception) {
-            e.printStackTrace() // log, but don’t crash
-        }
-    }
-}
-
-fun Scroll.scroll(amount: Any) {
-    val v = runCatching { toF(amount) }.getOrNull() ?: return
-    if (v == 0f || v.isNaN() || v.isInfinite()) return
-
-    run.launch {
-		wait(50)
-        animateScrollBy(v)
-    }
-}
+fun Scroll.scroll(it: Any) = wait{ animateScrollBy(toF(it)) }
 
 
 
