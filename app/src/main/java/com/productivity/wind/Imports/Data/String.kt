@@ -138,6 +138,10 @@ fun UIStrBuilder.add(text: Char) = append(text)
 fun UIStrBuilder.add(text: Str) = append(text)
 fun UIStrBuilder.add(text: UIStr) = append(text)
 
+fun UIStr(vararg parts: Any): UIStr = makeUIStr {
+    parts.forEach { add(toUIStr(it)) }
+}
+
 
 
 
