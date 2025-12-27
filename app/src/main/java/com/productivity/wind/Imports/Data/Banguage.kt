@@ -676,12 +676,12 @@ fun <T> runHeavyTask(
     }
 }
 fun wait(x: Any = 20, Do: Wait) {
-    App.lifecycleScope.launch(Dispatchers.Main) {
+    App.lifecycleScope.launch {
 		try {
-			delay(toL(x))
+			wait(x)
 			Do()
 		} catch (e: Exception) {
-			Vlog("error: ${e.message}")
+			Vlog("<fun wait>: ${e.message}")
 		}
     }
 }
