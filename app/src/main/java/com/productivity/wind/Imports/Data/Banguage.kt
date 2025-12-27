@@ -681,7 +681,7 @@ fun wait(x: Any = 20, Do: Wait) {
 			wait(x)
 			Do()
 		} catch (e: Exception) {
-			Vlog("<fun wait>: ${e.message}")
+			log("<fun wait>: ${e.message}")
 		}
     }
 }
