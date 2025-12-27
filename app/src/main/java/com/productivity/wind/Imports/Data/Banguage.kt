@@ -642,17 +642,15 @@ fun captureAppCrashes() {
             val reader = BufferedReader(InputStreamReader(process.inputStream))
 
             reader.forEachLine { line ->
+				val s = line.replace(Regex("""^\d{2}-\d{2}\s+|\s+\d+\s+\d+\s+"""), " ").takeLast(3000)
+		
                 // Only keep lines from your app package or fatal exceptions
-                if (line.contains("FATAL EXCEPTION") || line.contains(BuildConfig.APPLICATION_ID)) {
-                    val last = Bar.logs.lastOrNull()
-                    val s = line.takeLast(3000) // Keep it short
-
-                    if (last != s) {
-                        Bar.logs.add(s)
-                    }
+                if (s.contains("FATAL EXCEPTION") || s.contains(BuildConfig.APPLICATION_ID)) {
+                    Bar.logs.add(s)
                 }
             }
         } catch (e: Exception) {
+			Vlog("exception trigerred")
             e.printStackTrace()
         }
     }.start()
