@@ -126,6 +126,11 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 
 
+typealias UIStr = AnnotatedString
+typealias UIStrBuilder = AnnotatedString.Builder
+typealias StrStyle = SpanStyle
+
+
 fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
     return buildAnnotatedString(Do)
 }
