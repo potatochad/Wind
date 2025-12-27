@@ -146,7 +146,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 	}
 	RunOnce {
-		wait(300) {
+		wait {
 			if (tsk.goodStr > 20) {
 				val done = toF(tsk.goodStr) / toF(tsk.txt.size)
 			
