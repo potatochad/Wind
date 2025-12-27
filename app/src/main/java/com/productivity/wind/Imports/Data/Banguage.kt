@@ -720,7 +720,7 @@ fun folder(folderName: Str): File {
 }
 
 fun Do(onError: Wait ={}, Do: Wait) {
-	run.launch(Dispatchers.Main) {
+	run.launch {
 		try {
 			Do()
 		} catch (e: Exception) {
