@@ -126,6 +126,15 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 
 
+fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
+    return buildAnnotatedString(Do)
+}
+fun UIStrBuilder.add(text: Char) = append(text)
+fun UIStrBuilder.add(text: Str) = append(text)
+fun UIStrBuilder.add(text: UIStr) = append(text)
+
+
+
 
 fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
     return makeUIStr {
