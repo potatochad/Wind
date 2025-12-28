@@ -593,7 +593,7 @@ fun LazyPopup455(
         Box(Mod.maxS().background(faded(Color.Black)).center()) {
 			Column(mod.background(Color.DarkGray)) {
 				LazzyRow(
-					Mod.center(),
+					center = yes,
 					space = 6
 				) {
 					Text(title.size(18))
@@ -614,6 +614,7 @@ fun LazyPopup455(
 						UI.Ctext("ok".green()){
 							onOk()
 						}
+						move(10)
 					}
 				}
 			}
