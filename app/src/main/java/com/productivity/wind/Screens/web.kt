@@ -32,8 +32,9 @@ fun Web(){
 
     RunOnce {
         // web.url("https://player.fm/series/my-first-million")
-        web.url("https://google.com")
+        
         Bar.Url = "${web.url}"
+        web.url("https://google.com")
     }
 
 
