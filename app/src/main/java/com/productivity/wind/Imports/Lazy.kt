@@ -589,7 +589,7 @@ fun LazyPopup455(
 
 	DarkBackground()
 
-	var spacerSize by remember { mutableStateOf(IntSize.Zero) }
+	var size by r_m(IntSize.Zero)
 	
     Popup(
 		onDismissRequest = { onDismiss() },
@@ -607,7 +607,7 @@ fun LazyPopup455(
 		) {
 		
 			Column(
-				mod.background(Color.DarkGray).onSizeChanged { spacerSize = it },
+				mod.background(Color.DarkGray).s { size = it },
 			) {
 				Vlog("spacer size: $spacerSize")
 				LazzyRow(
