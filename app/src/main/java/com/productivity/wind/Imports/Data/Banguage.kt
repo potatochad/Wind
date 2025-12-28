@@ -277,6 +277,13 @@ fun runOnceEver(action: Wait) {
 
 
 
+fun Try(log: Str="", Do: Do) {
+    try {
+        Do()
+    } catch (e: Throwable) {
+        Vlog("$log ${e.message}")
+    }
+}
 
 
 
