@@ -120,6 +120,7 @@ fun CopyPaste(id: Str ="") {
             LazzyRow {
 				Column {
 					Text("Text: ")
+					move(20)
 					Item.BigTskInput(txt, inputScroll)
 				}
 			}
