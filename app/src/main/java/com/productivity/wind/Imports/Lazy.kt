@@ -590,11 +590,17 @@ fun LazyPopup455(
     Popup(
 		onDismissRequest = { onDismiss() },
 		properties = PopupProperties(focusable = yes),
-		modifier = Mod.maxS().background(faded(Color.Black)).center().click(no){ 
-			onDismiss()
-			Vlog("black click")
-		},
 	) {
+		Box(
+			Mod.maxS().background(faded(Color.Black)).center().pointerInput(Unit) {
+				detectTapGestures(
+					onTap = {
+						onDismiss()
+						Vlog("black click")
+					}
+				)
+			}
+		)
 			Column(mod.background(Color.DarkGray)) {
 				LazzyRow(
 					center = yes,
