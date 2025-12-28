@@ -619,7 +619,8 @@ fun LazyPopup455(
 				
 				LazzyRow(
 					Mod.h(50),
-					space = 6
+					space = 6,
+					center = yes,
 				) {
 					UI.End {
 						UI.Ctext("cancel".red()){
