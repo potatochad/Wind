@@ -607,7 +607,6 @@ fun LazyPopup455(
 			Column(
 				mod.background(Color.DarkGray),
 			) {
-				Vlog("spacer size: $spacerSize")
 				LazzyRow(
 					center = yes,
 					space = 6
