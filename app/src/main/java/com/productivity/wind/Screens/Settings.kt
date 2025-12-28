@@ -115,23 +115,30 @@ fun ExtensionsScreen() {
 }
 
 @Composable
-fun SettingsOtherScreen() {
-    LazyScreen("Settings") {
+fun SettingsOtherScreen() = LazyScreen("Settings") {
 		
         LazyItem(
             BigIcon = Icons.Filled.ListAlt,
             BigIconColor = Color(0xFF90A4AE),
             title = "Logs",
             onClick = { goTo("LogsScreen") }
-        ) 
+        )
+
+		
+
+		var show = r_m(no)
+
+		isSure(show, "delete all data") {
+			getData().edit().clear().apply()
+		}
+		
         LazyItem(
             BigIcon = Icons.Filled.Delete,
             BigIconColor = Color(0xFF90A4AE),
             title = "Delete ALL data",
-            onClick = { getData().edit().clear().apply() }
+            onClick = { show.it = yes }
         ) 
 		
-	}
 }
 
 
