@@ -213,7 +213,7 @@ inline fun <reified T> sList(
 fun <T> s(default: T, id: Str = autoId()): m_<T> {
     var x = m(default) 
 
-	Try("<fun s >, default: $default") {
+	Try("<fun s >, id: $id") {
 		x = m(getData().basicValue(id, default))
 
 		x.onChange {
