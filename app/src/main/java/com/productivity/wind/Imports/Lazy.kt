@@ -587,12 +587,14 @@ fun LazyPopup455(
             
     if (!show.it) return
 	
-    Popup(onDismissRequest = { onDismiss() },
+    Popup(
+		onDismissRequest = { onDismiss() },
 		properties = PopupProperties(focusable = yes)
-		 ) {
-        Box(Mod.maxS().background(faded(Color.Black)).center().click(no){ 
+		modifier = Mod.maxS().background(faded(Color.Black)).center().click(no){ 
 			onDismiss()
-		}) {
+			Vlog("black click")
+		}
+	) {
 			Column(mod.background(Color.DarkGray)) {
 				LazzyRow(
 					center = yes,
@@ -620,7 +622,6 @@ fun LazyPopup455(
 					}
 				}
 			}
-        }
     }
 }
 
