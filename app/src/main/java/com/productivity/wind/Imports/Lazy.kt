@@ -586,6 +586,8 @@ fun LazyPopup455(
 	}
             
     if (!show.it) return
+
+	DarkBackground()
 	
     Popup(
 		onDismissRequest = { onDismiss() },
