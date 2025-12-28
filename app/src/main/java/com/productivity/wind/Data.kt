@@ -86,7 +86,7 @@ object Bar {
     var funTime by s(0)
     var Dpoints by s(0)
 	var lastDate by s("") 
-	var Url by s("")
+	var Url by s("https://player.fm/series/my-first-million")
 	var logs = sList<Str>("logs")
 
 	//LOCATION
