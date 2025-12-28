@@ -531,7 +531,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         fusedLocationClient.requestLocationUpdates(locationRequest, callback, Looper.getMainLooper())
 	}
 	
-    LazyPopup455(
+    LazyBigPopup(
         show = show,
 		mod = Mod.w(360).h(600)
     ){
