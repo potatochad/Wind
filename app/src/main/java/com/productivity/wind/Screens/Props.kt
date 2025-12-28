@@ -141,7 +141,7 @@ object Item {
 				fixedInputScroll(Field, itIndex, done, scroll)
 
 			},
-            modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
+            modifier = Mod.maxW().h(150).Vscroll(scroll)imePadding().onFocusChanged{
 				if (!it.isFocused) done.it = no
 			},
 		    placeholder = { Text("Start typing...") },
