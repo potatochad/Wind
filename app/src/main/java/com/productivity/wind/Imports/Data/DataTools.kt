@@ -140,6 +140,11 @@ fun decrypt(text: Str, key: Int): Str {
 fun getData(File: Str = "Data"): SharedPreferences {
 	return App.getSharedPreferences(File, Context.MODE_PRIVATE)
 }
+fun clearAllData(File: String = "Data") {
+    val prefs = App.getSharedPreferences(File, Context.MODE_PRIVATE)
+    prefs.edit().clear().apply()  // deletes everything
+}
+
 @Suppress("UNCHECKED_CAST")
 fun <T> SharedPreferences.basicValue(key: Str, default: T): T {
     return when (default) {
