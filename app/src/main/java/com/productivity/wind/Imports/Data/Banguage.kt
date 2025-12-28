@@ -755,6 +755,8 @@ class MainActivity : ComponentActivity() {
 			AppH = LocalConfiguration.current.screenHeightDp.dp
 			AppW = LocalConfiguration.current.screenWidthDp.dp
 			AppLazyH = AppH - 100.dp - bottomSystemHeight()
+
+			Bar.userLocation = Bar.toLatLng(userLatLng)
 		
 			AppContent()
         }
