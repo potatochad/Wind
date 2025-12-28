@@ -494,11 +494,11 @@ fun usagePermission() {
 }
 
 @Composable
-fun isSure(show: mBool, Do: Do) {
+fun isSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
     LazyPopup(
         show,
         "Delete",
-        "Are you certain you want to delete this item for ever?",
+        "Are you certain you want to $msg?",
         onConfirm = {Do()},
     )
 }
