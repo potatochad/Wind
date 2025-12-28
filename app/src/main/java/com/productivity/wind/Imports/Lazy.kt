@@ -588,8 +588,6 @@ fun LazyPopup455(
 	}
 
 	DarkBackground()
-
-	var size by r_m(IntSize.Zero)
 	
     Popup(
 		onDismissRequest = { onDismiss() },
@@ -601,13 +599,13 @@ fun LazyPopup455(
                     indication = null,
                     interactionSource = r { MutableInteractionSource() }
                 ) {
-				Vlog("CLICKED COLUMN")
+				onDismiss() 
 			},
 			verticalArrangement = Arrangement.Center,
 		) {
 		
 			Column(
-				mod.background(Color.DarkGray).s { size = it },
+				mod.background(Color.DarkGray),
 			) {
 				Vlog("spacer size: $spacerSize")
 				LazzyRow(
