@@ -88,6 +88,8 @@ object Bar {
 	var lastDate by s("") 
 	var Url by s("")
 	var logs = sList<Str>("logs")
+	val userLocation by m(LatLng(51.5074, -0.1278))
+
     
     //ACHIEVEMENTS
     var LettersTyped by s(0)
