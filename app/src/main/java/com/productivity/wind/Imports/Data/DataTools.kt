@@ -356,6 +356,8 @@ fun Restore(show: mBool) {
 
             editor.commit() 
 			Vlog("Reload app to take effect")
+
+			closeApp() 
         }
     }
 
