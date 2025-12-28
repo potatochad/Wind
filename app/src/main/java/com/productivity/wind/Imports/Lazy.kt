@@ -580,12 +580,12 @@ fun LazyPopup455(
 	backhandler: Do = { show.it = no }, 
 	mod: Mod = Mod.w(350).h(560),
     ui: ui,
-) {
+) {   
+    if (!show.it) return
+
 	BackHandler {
         backhandler()
 	}
-            
-    if (!show.it) return
 
 	DarkBackground()
 	
