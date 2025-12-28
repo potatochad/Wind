@@ -192,17 +192,15 @@ fun CopyTskUI(tsk: CopyTsk) {
     Item.BigTskInput(txt, inputScroll) {
 		if (it.size - txt.it.size < 2) {
 			txt.it=it
-
-			Vlog("tsk.goodStr: ${tsk.goodStr}, CopyTskCorrectInput(tsk).size: ${CopyTskCorrectInput(tsk).size}")
 			
+			Bar.copyTsk.edit(tsk) { tsk.input = it }
+
 			if (it.size > tsk.input.size && tsk.goodStr < CopyTskCorrectInput(tsk).size) {
 				Bar.LettersTyped++
 				Bar.funTime += tsk.Letter_Worth
 				Bar.copyTsk.edit(tsk) { tsk.goodStr = CopyTskCorrectInput(tsk).size }
 			}
-				
-			Bar.copyTsk.edit(tsk) { tsk.input = it }
-				
+			
 			if (tsk.input == tsk.txt) {
 				Done()
 				txt.it=""
