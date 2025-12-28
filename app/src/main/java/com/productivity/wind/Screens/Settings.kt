@@ -117,13 +117,21 @@ fun ExtensionsScreen() {
 @Composable
 fun SettingsOtherScreen() {
     LazyScreen("Settings") {
+		
         LazyItem(
             BigIcon = Icons.Filled.ListAlt,
             BigIconColor = Color(0xFF90A4AE),
             title = "Logs",
             onClick = { goTo("LogsScreen") }
         ) 
-    }
+        LazyItem(
+            BigIcon = Icons.Filled.Delete,
+            BigIconColor = Color(0xFF90A4AE),
+            title = "Delete ALL data",
+            onClick = { getData().edit().clear().apply() }
+        ) 
+		
+	}
 }
 
 
