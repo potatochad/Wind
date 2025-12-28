@@ -131,6 +131,7 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
 		isSure(show, "delete all data") {
 			getData().edit().clear().apply()
 			Vlog("data: ${getData().all}")
+			closeApp() 
 		}
 		
         LazyItem(
