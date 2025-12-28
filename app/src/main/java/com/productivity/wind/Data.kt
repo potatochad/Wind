@@ -90,8 +90,7 @@ object Bar {
 	var logs = sList<Str>("logs")
 
 	//LOCATION
-	var userLat by s(51.5074)
-	var userLng by s(-0.1278)
+	var userLatLng by s("51.5074,-0.1278")
 
 
     
