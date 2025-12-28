@@ -588,16 +588,28 @@ fun LazyPopup455(
 	}
 
 	DarkBackground()
+
+	var spacerSize by remember { mutableStateOf(IntSize.Zero) }
 	
     Popup(
 		onDismissRequest = { onDismiss() },
 		alignment = Alignment.Center,
 		properties = PopupProperties(focusable = yes),
 	) {
-		move(300)
+		Column(
+			Mod.clickable(
+                    indication = null,
+                    interactionSource = r { MutableInteractionSource() }
+                ) {
+				Vlog("CLICKED COLUMN")
+			},
+			verticalArrangement = Arrangement.Center.,
+		) {
+		
 			Column(
-				mod.background(Color.DarkGray),
+				mod.background(Color.DarkGray).onSizeChanged { spacerSize = it },
 			) {
+				Vlog("spacer size: $spacerSize")
 				LazzyRow(
 					center = yes,
 					space = 6
@@ -624,6 +636,7 @@ fun LazyPopup455(
 					}
 				}
 			}
+		}
     }
 }
 
