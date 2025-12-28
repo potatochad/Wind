@@ -576,7 +576,7 @@ fun LazyPopup455(
 	title: Str = "Title",
 	onOk: Do = { show.it = no },
 	onCancel: Do = { show.it = no },
-	omDismiss: Do = {}, 
+	onDismiss: Do = {}, 
 	mod: Mod = Mod.w(350).h(560),
     ui: ui,
 ) {
@@ -587,8 +587,8 @@ fun LazyPopup455(
     if (!show.it) return
 	
     Popup(properties = PopupProperties(focusable = yes)) {
-        Box(Mod.maxS().background(faded(Color.Black)).center().click{ 
-			omDismiss()
+        Box(Mod.maxS().background(faded(Color.Black)).center().click(no){ 
+			onDismiss()
 			show.it = no
 		}) {
 			Column(mod.background(Color.DarkGray)) {
