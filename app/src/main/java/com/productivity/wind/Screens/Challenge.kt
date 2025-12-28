@@ -117,13 +117,7 @@ fun CopyPaste(id: Str ="") {
                 Text("DailyMax: ")
                 Item.TskInput(DailyMax)
             }
-            LazzyRow {
-				Column {
-					Text("Text: ")
-					move(20)
-					Item.BigTskInput(txt, inputScroll)
-				}
-			}
+			Item.BigTskInput(txt, inputScroll)
         }
 		/*
 		LazyRuleCard("Extra") {
