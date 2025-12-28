@@ -83,14 +83,14 @@ fun onNewDay() {
 
 object Bar {
 	//BASIC
-    var funTime by s(0, "funTime")
-    var Dpoints by s(0, "Dpoints")
-	var lastDate by s("", "lastDate") 
+    var funTime by s(0)
+    var Dpoints by s(0)
+	var lastDate by s("") 
 	var Url by s("https://player.fm/series/my-first-million")
 	var logs = sList<Str>("logs")
 
 	//LOCATION
-	var userLatLng by s("51.5074,-0.1278", "userLatLng")
+	var userLatLng by s("51.5074,-0.1278")
 	var userLocation by synch(toLatLng(userLatLng)) {
 		userLatLng = toStr(it)
 	}
@@ -98,7 +98,7 @@ object Bar {
 
     
     //ACHIEVEMENTS
-    var LettersTyped by s(0, "LettersTyped")
+    var LettersTyped by s(0)
 	
 
 	// LISTS
