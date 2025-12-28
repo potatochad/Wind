@@ -574,20 +574,16 @@ fun LazyScreen(
 fun LazyPopup455(
     show: mBool,
 	title: Str = "Title",
-	onOk: Do = {},
-	onCancel: Do = {},
+	onOk: Do = { show.it = no },
+	onCancel: Do = { show.it = no },
 	mod: Mod = Mod.w(350).h(560),
     ui: ui,
 ) {
-    var visible by r_m(no)
-
-    if (show.it) {
-		wait(300) {
-			visible = yes
-		}
+	BackHandler {
+        show.it = no
 	}
             
-    if (!visible) return
+    if (!show.it) return
 	
     Popup(properties = PopupProperties(focusable = yes)) {
         Box(Mod.maxS().background(faded(Color.Black)).center()) {
