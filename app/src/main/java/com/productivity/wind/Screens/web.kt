@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.*
 fun Web(){
     val web = r { mutableStateOf<Web?>(null) }
     
-    Vlog("Bar.Url: ${Bar.Url}")
     web.url(Bar.Url)
         
 
@@ -57,7 +56,6 @@ fun Web(){
             webViewState = web,
             onUrlChanged={
                 Bar.Url = it
-                Vlog("Bar.Url: [${Bar.Url}]")
 
                 web.txt{x->
                     //Vlog("htnl: [$x]")
