@@ -441,11 +441,16 @@ object UI {
 
 	@Composable
 	fun Ctext(
-        text: Str,
+        text: Any,
         Do: Do={},
 	) {
+		val displayText = when (text) {
+			is Str -> UIStr(text)
+			is UIStr -> text
+			else -> UIStr("$text")
+		}
 		Text(
-			text = text.color(Gold),
+			text = displayText.gold(),
 			modifier = Mod.click(no) {
 				Do()
 			},
