@@ -150,6 +150,16 @@ fun m_<Web?>.txt(done: DoStr = {}) {
     }
 }
 
+fun closeApp() {
+    // Finish all activities
+    (App.getCurrentActivity() as? Activity)?.finishAffinity()
+    
+    // Kill the process
+    android.os.Process.killProcess(android.os.Process.myPid())
+    
+    // Exit the JVM
+    System.exit(0)
+}
 
 
 fun Mod.space(
