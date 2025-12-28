@@ -124,8 +124,7 @@ import android.content.*
 import android.net.*
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
-
-
+import androidx.compose.ui.window.*
 
 fun goBackWeb(web: Web?) {
     web?.post {
