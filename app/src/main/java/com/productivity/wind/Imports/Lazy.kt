@@ -597,7 +597,7 @@ fun LazyPopup455(
 		properties = PopupProperties(focusable = yes),
 	) {
 		Column(
-			Mod.clickable(
+			Mod.maxH().clickable(
                     indication = null,
                     interactionSource = r { MutableInteractionSource() }
                 ) {
