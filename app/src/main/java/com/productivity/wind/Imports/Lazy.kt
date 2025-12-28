@@ -571,7 +571,7 @@ fun LazyScreen(
 //region LAZY POPUP
 
 @Composable
-fun LazyPopup455(
+fun LazyBigPopup(
     show: mBool,
 	title: Str = "Title",
 	onOk: Do = { show.it = no },
