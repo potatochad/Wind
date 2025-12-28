@@ -510,6 +510,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 	
     LazyPopup455(
         show = show,
+		mod = Mod.w(360).h(600)
     ){
 		
 		val cameraPositionState = rememberCameraPositionState {
