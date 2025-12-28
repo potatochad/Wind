@@ -603,7 +603,7 @@ fun LazyPopup455(
                 ) {
 				Vlog("CLICKED COLUMN")
 			},
-			verticalArrangement = Arrangement.Center.,
+			verticalArrangement = Arrangement.Center,
 		) {
 		
 			Column(
