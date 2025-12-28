@@ -594,7 +594,10 @@ fun LazyPopup455(
 		alignment = Alignment.Center,
 		properties = PopupProperties(focusable = yes),
 	) {
-			Column(mod.background(Color.DarkGray)) {
+			Column(
+				mod.background(Color.DarkGray),
+				verticalArrangement = Arrangement.Center,
+			) {
 				LazzyRow(
 					center = yes,
 					space = 6
@@ -613,11 +616,11 @@ fun LazyPopup455(
 						UI.Ctext("cancel".red()){
 							onCancel()
 						}
-						move(20)
+						move(30)
 						UI.Ctext("ok".green()){
 							onOk()
 						}
-						move(10)
+						move(20)
 					}
 				}
 			}
