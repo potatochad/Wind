@@ -29,12 +29,10 @@ import androidx.compose.ui.text.style.*
 @Composable
 fun Web(){
     val web = r { mutableStateOf<Web?>(null) }
-
-    RunOnce {
-        web.url(Bar.Url)
-        Bar.Url = "${web.url}"
-    }
-
+    
+    Vlog("Bar.Url: ${Bar.Url}")
+    web.url(Bar.Url)
+        
 
     Item.WebPointTimer()
 
@@ -59,7 +57,7 @@ fun Web(){
             webViewState = web,
             onUrlChanged={
                 Bar.Url = it
-                //Vlog("url: [$it]")
+                Vlog("Bar.Url: [${Bar.Url}]")
 
                 web.txt{x->
                     //Vlog("htnl: [$x]")
