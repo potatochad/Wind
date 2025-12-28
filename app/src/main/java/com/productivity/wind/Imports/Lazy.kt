@@ -576,12 +576,13 @@ fun LazyPopup455(
 	title: Str = "Title",
 	onOk: Do = { show.it = no },
 	onCancel: Do = { show.it = no },
-	onDismiss: Do = {}, 
+	onDismiss: Do = { show.it = no },
+	backhandler: Do = { show.it = no }, 
 	mod: Mod = Mod.w(350).h(560),
     ui: ui,
 ) {
 	BackHandler {
-        show.it = no
+        backhandler()
 	}
             
     if (!show.it) return
@@ -589,7 +590,6 @@ fun LazyPopup455(
     Popup(properties = PopupProperties(focusable = yes)) {
         Box(Mod.maxS().background(faded(Color.Black)).center().click(no){ 
 			onDismiss()
-			show.it = no
 		}) {
 			Column(mod.background(Color.DarkGray)) {
 				LazzyRow(
