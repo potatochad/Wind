@@ -594,10 +594,7 @@ fun LazyPopup455(
 		alignment = Alignment.Center,
 		properties = PopupProperties(focusable = yes),
 	) {
-		Column(
-			Mod.maxW(),
-			verticalArrangement = Arrangement.Center,
-		) {
+		move(300)
 			Column(
 				mod.background(Color.DarkGray),
 			) {
@@ -627,7 +624,6 @@ fun LazyPopup455(
 					}
 				}
 			}
-		}
     }
 }
 
