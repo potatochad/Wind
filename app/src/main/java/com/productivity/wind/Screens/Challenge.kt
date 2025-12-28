@@ -134,8 +134,6 @@ fun CopyPaste(id: Str ="") {
 
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
-	if (tsk.DailyDone == tsk.DailyMax) return
-
     val txtScroll = r_Scroll()
 	val inputScroll = r_Scroll()
 
