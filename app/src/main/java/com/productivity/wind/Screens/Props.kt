@@ -509,15 +509,7 @@ fun isSure(show: mBool, Do: Do) {
 
 @Composable
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
-	
-    LazyPopup455(
-        show = show,
-		mod = Mod.w(360).h(600)
-    ){
-
-
-
-    val context = LocalContext.current
+	val context = LocalContext.current
     val fusedLocationClient = r { LocationServices.getFusedLocationProviderClient(context) }
     val currentLocation = r { m(LatLng(52.5200, 13.4050)) } // fallback
 
@@ -537,7 +529,16 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         }
 
         fusedLocationClient.requestLocationUpdates(locationRequest, callback, Looper.getMainLooper())
-    }
+	}
+	
+    LazyPopup455(
+        show = show,
+		mod = Mod.w(360).h(600)
+    ){
+
+
+
+    
 
     // Camera state follows current location
     val cameraPositionState = rememberCameraPositionState {
