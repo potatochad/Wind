@@ -128,5 +128,75 @@ import androidx.compose.ui.window.*
 
 
 
+fun toDp(it: Any?): Dp = when (it) {
+    is Dp -> it           // already Dp
+    is Int -> it.dp       // Int → Dp
+    is Float -> it.dp     // Float → Dp
+    is Double -> it.dp    // Double → Dp
+    null -> 0.dp             // null → 0.dp
+    else -> 0.dp             // anything else → 0.dp
+}
+fun toF(it: Any?): Float = when (it) {
+    is Float -> it
+    is Int -> it.toFloat()
+    is Double -> it.toFloat()
+    is Dp -> it.value      // Dp → Float
+    null -> 0f
+    else -> 0f
+}
+fun toInt(it: Any?): Int = when (it) {
+    is Int -> it
+    is Float -> it.toInt()
+    is Double -> it.toInt()
+    is Dp -> it.value.toInt()  // Dp → Int
+    null -> 0
+    else -> 0
+}
+
+fun toL(it: Any?): Long = when (it) {
+    is Long -> it
+    is Int -> it.toLong()
+    is Float -> it.toLong()
+    is Double -> it.toLong()
+    is Str -> it.toLongOrNull() ?: 0L
+    null -> 0L
+    else -> 0L
+}
+
+fun toLatLng(it: Any?): LatLng = when (it) {
+    is LatLng -> it
+    is Pair<*, *> -> LatLng(it.first.toString().toDouble(), it.second.toString().toDouble())
+    is String -> {
+        val parts = it.split(",")
+        LatLng(parts.getOrNull(0)?.toDoubleOrNull() ?: 0.0,
+               parts.getOrNull(1)?.toDoubleOrNull() ?: 0.0)
+    }
+    null -> LatLng(0.0, 0.0)
+    else -> LatLng(0.0, 0.0)
+}
+
+fun toStr(it: Any?): String = when (it) {
+    is String -> it
+    is LatLng -> "${it.latitude},${it.longitude}"
+    is Pair<*, *> -> "${it.first},${it.second}"
+    is Double, is Float, is Int, is Long -> it.toString()
+    null -> ""
+    else -> it.toString()
+}
+
+@Composable
+fun toUI(it: Any?): UI {
+    return when (it) {
+        is Str -> { { Text(it) } }
+        is Function0<*> -> it as UI   // unsafe cast but works at runtime
+        else -> { { Text("Unsupported type (toUI) $it") } }
+    }
+}
+
+
+
+
+
+
 
 
