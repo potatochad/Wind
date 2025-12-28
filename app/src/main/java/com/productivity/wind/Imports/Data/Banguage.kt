@@ -126,6 +126,8 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import androidx.compose.ui.window.*
 
+import android.os.Process.*
+
 fun goBackWeb(web: Web?) {
     web?.post {
         if (web?.canGoBack()==yes) {
@@ -151,13 +153,8 @@ fun m_<Web?>.txt(done: DoStr = {}) {
 }
 
 fun closeApp() {
-    // Finish all activities
-    (App.getCurrentActivity() as? Activity)?.finishAffinity()
-    
-    // Kill the process
-    android.os.Process.killProcess(android.os.Process.myPid())
-    
-    // Exit the JVM
+    App.finishAffinity()
+    killProcess(myPid())
     System.exit(0)
 }
 
