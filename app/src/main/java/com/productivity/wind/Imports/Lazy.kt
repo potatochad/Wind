@@ -589,11 +589,11 @@ fun LazyPopup455(
 	
     Popup(
 		onDismissRequest = { onDismiss() },
-		properties = PopupProperties(focusable = yes)
+		properties = PopupProperties(focusable = yes),
 		modifier = Mod.maxS().background(faded(Color.Black)).center().click(no){ 
 			onDismiss()
 			Vlog("black click")
-		}
+		},
 	) {
 			Column(mod.background(Color.DarkGray)) {
 				LazzyRow(
