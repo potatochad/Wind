@@ -515,46 +515,41 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		mod = Mod.w(360).h(600)
     ){
 
-		
-		
-		val context = LocalContext.current
-val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
-val currentLocation = remember { mutableStateOf(LatLng(52.5200, 13.4050)) } // default fallback
 
-// Request location updates
-LaunchedEffect(Unit) {
-    val locationRequest = LocationRequest.Builder(
-        Priority.PRIORITY_HIGH_ACCURACY,
-        1000L // update every 1 second
-    ).build()
 
-    val callback = object : LocationCallback() {
-        override fun onLocationResult(result: LocationResult) {
-            result.lastLocation?.let { loc ->
-                currentLocation.value = LatLng(loc.latitude, loc.longitude)
+    val context = LocalContext.current
+    val fusedLocationClient = r { LocationServices.getFusedLocationProviderClient(context) }
+    val currentLocation = r { m(LatLng(52.5200, 13.4050)) } // fallback
+
+    // Request location updates
+    RunOnce {
+        val locationRequest = LocationRequest.Builder(
+            Priority.PRIORITY_HIGH_ACCURACY,
+            1000L // update every second
+        ).build()
+
+        val callback = object : LocationCallback() {
+            override fun onLocationResult(result: LocationResult) {
+                result.lastLocation?.let { loc ->
+                    currentLocation.value = LatLng(loc.latitude, loc.longitude)
+                }
             }
         }
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, callback, Looper.getMainLooper())
     }
 
-    fusedLocationClient.requestLocationUpdates(locationRequest, callback, Looper.getMainLooper())
-}
+    // Camera state follows current location
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(currentLocation.it, 15f)
+    }
 
-// Camera state linked to current location
-val cameraPositionState = rememberCameraPositionState {
-    position = CameraPosition.fromLatLngZoom(currentLocation.value, 15f)
-}
-
-// Map
-GoogleMap(
-    modifier = Modifier.fillMaxSize(),
-    cameraPositionState = cameraPositionState,
-    properties = MapProperties(isMyLocationEnabled = true) // shows the blue dot
-) {
-    Marker(
-        state = MarkerState(position = currentLocation.value),
-        title = "You are here"
+    // Map with only blue dot
+    GoogleMap(
+        modifier = Mod.maxS(),
+        cameraPositionState = cameraPositionState,
+        properties = MapProperties(isMyLocationEnabled = yes)
     )
-}
 
 
 
