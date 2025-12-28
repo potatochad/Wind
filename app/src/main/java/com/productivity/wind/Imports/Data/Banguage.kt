@@ -454,7 +454,24 @@ fun Input(
 
 
 
-
+@Composable
+fun DarkBackground(onDismiss: Do = {}){
+	Popup(
+		onDismissRequest = { onDismiss() },
+		alignment = Alignment.Center,
+	) {
+		Box(
+			Mod.maxS().background(faded(Color.Black)).pointerInput(Unit) {
+				detectTapGestures(
+					onTap = {
+						onDismiss()
+						Vlog("black click")
+					}
+				)
+			}
+		)
+	}
+}
 
 
 
