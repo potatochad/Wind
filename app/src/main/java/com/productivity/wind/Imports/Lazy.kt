@@ -625,11 +625,11 @@ fun LazyPopup455(
 						UI.Ctext("cancel".red()){
 							onCancel()
 						}
-						move(30)
+						move(50)
 						UI.Ctext("ok".green()){
 							onOk()
 						}
-						move(20)
+						move(10)
 					}
 				}
 			}
