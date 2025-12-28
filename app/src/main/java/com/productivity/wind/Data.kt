@@ -91,6 +91,9 @@ object Bar {
 
 	//LOCATION
 	var userLatLng by s("51.5074,-0.1278")
+	var userLocation by synch(toLatLng(userLatLng)) {
+		userLatLng = toStr(it)
+	}
 
 
     
