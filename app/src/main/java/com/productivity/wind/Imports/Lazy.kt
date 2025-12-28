@@ -618,7 +618,7 @@ fun LazyBigPopup(
 				}
 				
 				LazzyRow(
-					Mod.h(50),
+					Mod.h(40),
 					space = 6,
 					center = yes,
 				) {
