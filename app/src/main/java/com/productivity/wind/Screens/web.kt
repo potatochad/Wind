@@ -31,12 +31,13 @@ fun Web(){
     val web = r { mutableStateOf<Web?>(null) }
 
     RunOnce {
-        web.url("https://player.fm/series/my-first-million")
+        // web.url("https://player.fm/series/my-first-million")
+        web.url("https://google.com")
         Bar.Url = "${web.url}"
     }
 
 
-    Item.WebPointTimer()
+    // Item.WebPointTimer()
 
     LazyScreen(
         top = {
