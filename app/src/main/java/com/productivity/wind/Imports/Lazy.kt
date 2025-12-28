@@ -623,11 +623,11 @@ fun LazyBigPopup(
 					center = yes,
 				) {
 					UI.End {
-						UI.Ctext("cancel".red()){
+						UI.Ctext("cancel"){
 							onCancel()
 						}
 						move(50)
-						UI.Ctext("ok".green()){
+						UI.Ctext("ok"){
 							onOk()
 						}
 						move(10)
