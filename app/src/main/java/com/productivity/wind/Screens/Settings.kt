@@ -123,23 +123,6 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
             title = "Logs",
             onClick = { goTo("LogsScreen") }
         )
-
-		
-
-		var show = r_m(no)
-
-		isSure(show, "delete all data") {
-			getData().edit().clear().apply()
-			Vlog("data: ${getData().all}")
-			closeApp() 
-		}
-		
-        LazyItem(
-            BigIcon = Icons.Filled.Delete,
-            BigIconColor = Color(0xFF90A4AE),
-            title = "Delete ALL data",
-            onClick = { show.it = yes }
-        ) 
 		
 }
 
