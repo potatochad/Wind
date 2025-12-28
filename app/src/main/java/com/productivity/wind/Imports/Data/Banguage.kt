@@ -721,9 +721,6 @@ lateinit var AppPkg: Str
 var AppH by m(0.dp)
 var AppW by m(0.dp)
 var AppLazyH by m(0.dp)
-var userLocation by synch(toLatLng(userLatLng)) {
-	userLatLng = toStr(it)
-}
 
 lateinit var scope: CoroutineScope
 
