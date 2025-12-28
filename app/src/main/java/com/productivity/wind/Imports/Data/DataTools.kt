@@ -208,7 +208,7 @@ inline fun <reified T> sList(
 fun <T> s(default: T, id: Str = autoId()): m_<T> {
     var x = m(default) 
 
-	Do {
+	Try("<fun s (basic save)>") {
 		x = m(getData().basicValue(id, default))
 
 		x.onChange {
