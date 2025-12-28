@@ -211,6 +211,27 @@ fun toL(it: Any?): Long = when (it) {
     else -> 0L
 }
 
+fun toLatLng(it: Any?): LatLng = when (it) {
+    is LatLng -> it
+    is Pair<*, *> -> LatLng(it.first.toString().toDouble(), it.second.toString().toDouble())
+    is String -> {
+        val parts = it.split(",")
+        LatLng(parts.getOrNull(0)?.toDoubleOrNull() ?: 0.0,
+               parts.getOrNull(1)?.toDoubleOrNull() ?: 0.0)
+    }
+    null -> LatLng(0.0, 0.0)
+    else -> LatLng(0.0, 0.0)
+}
+
+fun toStr(it: Any?): String = when (it) {
+    is String -> it
+    is LatLng -> "${it.latitude},${it.longitude}"
+    is Pair<*, *> -> "${it.first},${it.second}"
+    is Double, is Float, is Int, is Long -> it.toString()
+    null -> ""
+    else -> it.toString()
+}
+
 @Composable
 fun toUI(it: Any?): UI {
     return when (it) {
