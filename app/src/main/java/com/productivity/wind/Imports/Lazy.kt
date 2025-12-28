@@ -587,7 +587,9 @@ fun LazyPopup455(
             
     if (!show.it) return
 	
-    Popup(properties = PopupProperties(focusable = yes)) {
+    Popup(onDismissRequest = { onDismiss() },
+		properties = PopupProperties(focusable = yes)
+		 ) {
         Box(Mod.maxS().background(faded(Color.Black)).center().click(no){ 
 			onDismiss()
 		}) {
