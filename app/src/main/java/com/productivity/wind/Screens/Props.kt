@@ -509,21 +509,19 @@ fun isSure(show: mBool, Do: Do) {
 
 @Composable
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
-	val context = LocalContext.current
-    val fusedLocationClient = r { LocationServices.getFusedLocationProviderClient(context) }
-    val currentLocation = r { m(LatLng(52.5200, 13.4050)) } // fallback
-
+	
+    val fusedLocationClient = r { LocationServices.getFusedLocationProviderClient(App) }
+    
     // Request location updates
     RunOnce {
         val locationRequest = LocationRequest.Builder(
-            Priority.PRIORITY_HIGH_ACCURACY,
-            1000L // update every second
+			Priority.PRIORITY_HIGH_ACCURACY, 1000L // update every second
         ).build()
 
         val callback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {
                 result.lastLocation?.let { loc ->
-                    currentLocation.value = LatLng(loc.latitude, loc.longitude)
+                    Bar.userLocation = LatLng(loc.latitude, loc.longitude)
                 }
             }
         }
@@ -542,7 +540,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 
     // Camera state follows current location
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(currentLocation.it, 15f)
+        position = CameraPosition.fromLatLngZoom(Bar.userLocation, 14f)
     }
 
     // Map with only blue dot
