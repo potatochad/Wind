@@ -201,9 +201,7 @@ fun LazzyRow(
     ui: ui,
 ) {
     Row(
-        modifier = modifier
-            .maxW()
-            .space(space),
+        modifier.maxW().space(space),
         horizontalArrangement = if (center) Arrangement.Center else Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
