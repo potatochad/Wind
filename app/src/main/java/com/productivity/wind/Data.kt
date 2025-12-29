@@ -94,6 +94,7 @@ object Bar {
 	var userLocation by synch(toLatLng(userLatLng)) {
 		userLatLng = toStr(it)
 	}
+	var privacyLocation by s(on)
 
 
     
