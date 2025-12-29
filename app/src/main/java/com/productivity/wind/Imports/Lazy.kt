@@ -763,6 +763,44 @@ fun LazyMenu(
 
 
 
+@Composable
+fun LazyMaps(
+    startZoom: Float = 14f
+) {
+    var mapType by r_m(MapType.NORMAL)
+
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(Bar.userLocation, startZoom)
+    }
+
+    Box(modifier.maxS()) {
+
+        GoogleMap(
+            modifier = Mod.maxS(),
+            cameraPositionState = cameraPositionState,
+            properties = MapProperties(
+                isMyLocationEnabled = yes,
+                mapType = mapType
+            )
+        )
+
+        Text(
+            text = "map type".bold().color(Color.DarkGray),
+            modifier = Mod
+                .align(Alignment.TopStart)
+                .space(10)
+                .background(faded(Color.White, 0.5f))
+                .clickable {
+                    mapType =
+                        if (mapType == MapType.NORMAL)
+                            MapType.SATELLITE
+                        else
+                            MapType.NORMAL
+                }
+                .space(h = 10, w = 4)
+        )
+    }
+}
 
 
 
