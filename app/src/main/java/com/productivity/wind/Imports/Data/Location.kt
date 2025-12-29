@@ -160,16 +160,16 @@ fun location(Do: Do = {}) {
 
 
 fun getUserLocation(
-	fusedLocationClient: FusedLocationProviderClient, // type is required
-  	each: Any = 1000L,
+    fusedLocationClient: FusedLocationProviderClient,
+    each: Any = 1000L,
     onLocation: Do_<LatLng>,
 ) {
-    val locationRequest = LocationRequest.Builder(
-		Priority.PRIORITY_HIGH_ACCURACY, toL(each)
+    val locationRequest = com.google.android.gms.location.LocationRequest.Builder(
+        Priority.PRIORITY_HIGH_ACCURACY, toL(each)
     ).build()
 
-	val callback = object : LocationCallback() {
-        override fun onLocationResult(result: LocationResult) {
+    val callback = object : com.google.android.gms.location.LocationCallback() {
+        override fun onLocationResult(result: com.google.android.gms.location.LocationResult) {
             result.lastLocation?.let { loc ->
                 onLocation(LatLng(loc.latitude, loc.longitude))
             }
@@ -178,6 +178,7 @@ fun getUserLocation(
 
     fusedLocationClient.requestLocationUpdates(locationRequest, callback, Looper.getMainLooper())
 }
+
 
 
 
