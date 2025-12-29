@@ -169,6 +169,56 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 
 
 
+@Composable
+fun LazySlider(
+    modifier: Mod = Mod.maxW().h(20).space(w = 8),
+    min: Float = 1f,
+    max: Float = 200_000f,
+    linear: Bool = no,
+	circeS: Any = 15,
+    initialPos: Float = 0f,
+    onValueChange: Do_<Float>={},
+) {
+    var sliderPos by r_m(initialPos.coerceIn(0f, 1f))
+
+    Box(
+        modifier = modifier.pointerInput(Unit) {
+            detectDragGestures { change, _ ->
+                val newPos = (change.position.x / size.width).coerceIn(0f, 1f)
+                sliderPos = newPos
+                val value = if (linear) {
+                    min + (max - min) * sliderPos
+                } else {
+                    min * (max / min).pow(sliderPos)
+                }
+                onValueChange(value)
+            }
+        }
+    ) {
+        Canvas(Mod.maxS()) {
+            // Track
+            drawLine(
+                color = Color.Gray,
+                start = Offset(0f, size.height / 2),
+                end = Offset(size.width, size.height / 2),
+                strokeWidth = 4f
+            )
+            // Filled portion
+            drawLine(
+                color = Gold,
+                start = Offset(0f, size.height / 2),
+                end = Offset(size.width * sliderPos, size.height / 2),
+                strokeWidth = 4f
+            )
+            // Thumb
+            drawCircle(
+                color = Gold,
+                radius = toF(circeS),
+                center = Offset(size.width * sliderPos, size.height / 2)
+            )
+        }
+    }
+}
 
   
   
