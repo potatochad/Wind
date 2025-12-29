@@ -794,7 +794,10 @@ fun LazyMaps(
             properties = MapProperties(
                 isMyLocationEnabled = yes,
                 mapType = mapType
-            )
+            ),
+			uiSettings = MapUiSettings(
+				zoomControlsEnabled = no
+			),
         )
 
         Text(
