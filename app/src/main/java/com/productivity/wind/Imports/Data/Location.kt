@@ -156,6 +156,34 @@ fun location(Do: Do = {}) {
 
 
 
+fun getUserLocation(
+	each: Any = 1000L,
+    onLocation: Do_<LatLng>,
+) {
+    val fusedLocationClient =
+        LocationServices.getFusedLocationProviderClient(App)
+
+    val locationRequest = LocationRequest.Builder(
+        Priority.PRIORITY_HIGH_ACCURACY,
+        toL(each)
+    ).build()
+
+    val callback = object : LocationCallback() {
+        override fun onLocationResult(result: LocationResult) {
+            result.lastLocation?.let { loc ->
+                onLocation(
+                    LatLng(loc.latitude, loc.longitude)
+                )
+            }
+        }
+    }
+
+    fusedLocationClient.requestLocationUpdates(
+        locationRequest,
+        callback,
+        Looper.getMainLooper()
+    )
+}
 
 
 
