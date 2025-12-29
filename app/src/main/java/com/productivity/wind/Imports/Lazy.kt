@@ -605,7 +605,7 @@ fun LazyBigPopup(
 		) {
 		
 			Column(
-				mod..round(12).background(Color.DarkGray),
+				mod.round(12).background(Color.DarkGray),
 			) {
 				LazzyRow(
 					center = yes,
