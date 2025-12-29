@@ -589,12 +589,12 @@ fun LazyBigPopup(
         backhandler()
 		onDismiss()
 	}
-
-	DarkBackground()
 	
     Popup {
-		Box(Mod.maxS().center().background(faded(Color.Black)).click {
-			onDismiss()
+		Box(Mod.maxS().center().background(faded(Color.Black)).pointerInput(Unit) {
+            detectTapGestures {
+                onDismiss()
+			}
 		}){
 			Column(
 				mod.round(12).background(Color.DarkGray).click(no){},
