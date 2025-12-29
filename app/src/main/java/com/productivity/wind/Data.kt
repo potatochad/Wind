@@ -196,6 +196,8 @@ fun OnResume(){
 
 @Composable
 fun AppStart() {
+	val LocationClient = r { LocationServices.getFusedLocationProviderClient(App) }
+    
 	RunOnce {
         DayChecker.start()
 		captureAppCrashes()
@@ -203,7 +205,7 @@ fun AppStart() {
 
 		if (Bar.privacyLocation) {
 			location {
-				getUserLocation(3000L){
+				getUserLocation(LocationClient, 3000L){
 					Bar.userLocation = it
 				}
 			}
