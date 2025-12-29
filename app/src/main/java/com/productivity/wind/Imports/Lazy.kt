@@ -596,9 +596,8 @@ fun LazyBigPopup(
 		Box(Mod.maxS().center().background(faded(Color.Black)).click {
 			onDismiss()
 		}){
-		
 			Column(
-				mod.round(12).background(Color.DarkGray),
+				mod.round(12).background(Color.DarkGray).click(no){},
 			) {
 				LazzyRow(
 					center = yes,
