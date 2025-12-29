@@ -558,15 +558,15 @@ Column(Modifier.padding(16.dp)) {
             )
             // Filled portion
             drawLine(
-                color = Color.LightGray,
+                color = Gold,
                 start = Offset(0f, size.height / 2),
                 end = Offset(size.width * sliderPos, size.height / 2),
                 strokeWidth = 4f
             )
             // Thumb
             drawCircle(
-                color = Color.DarkGray,
-                radius = 10f,
+                color = Gold,
+                radius = 12f,
                 center = Offset(size.width * sliderPos, size.height / 2)
             )
         }
