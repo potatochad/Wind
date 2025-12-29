@@ -201,9 +201,11 @@ fun AppStart() {
 		captureAppCrashes()
 		getMyAppLogs() 
 
-		location {
-			getUserLocation(3000L){
-				Bar.userLocation = it
+		if (Bar.privacyLocation) {
+			location {
+				getUserLocation(3000L){
+					Bar.userLocation = it
+				}
 			}
 		}
 		
