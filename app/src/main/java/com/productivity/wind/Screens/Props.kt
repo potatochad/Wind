@@ -532,7 +532,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 
     // Floating toggle
     Text(
-        text = "map type".bold().black(),
+        text = "map type".bold().color(Color.DarkGray),
         modifier = Mod.align(Alignment.TopStart)
 			.space(10)
             .background(faded(Color.White, 0.5f))
