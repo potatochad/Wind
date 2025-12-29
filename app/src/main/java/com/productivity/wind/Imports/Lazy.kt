@@ -49,6 +49,10 @@ import androidx.compose.ui.focus.*
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.*
 import androidx.activity.compose.*
+import com.google.android.gms.maps.model.*
+import com.google.maps.android.compose.*
+import com.google.android.gms.location.*
+import android.os.*
 
 @Composable
 fun LazyTheme(content: ui) {
