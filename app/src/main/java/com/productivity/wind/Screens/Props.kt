@@ -574,20 +574,6 @@ Column(Modifier.padding(16.dp)) {
 
 
 
-var range by remember { mutableStateOf(0f..1f) }
-
-RangeSlider(
-    values = range,                       // use 'values'
-    onValueChange = { newRange ->         // type is ClosedFloatingPointRange<Float>
-        range = newRange
-    },
-    valueRange = 0f..1f,                  // make sure this is Float
-    steps = 0
-)
-
-
-
-
 
 				
 			}
