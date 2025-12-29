@@ -769,9 +769,18 @@ fun LazyMenu(
 
 @Composable
 fun LazyMaps(
-    startZoom: Float = 14f
+    startZoom: Float = 14f,
+	id: Int = 1,
 ) {
-    var mapType by r_m(MapType.NORMAL)
+	var savedMapType by s(MapType.NORMAL.name, "savedMapType, $id")
+
+	var mapType by synch(
+		MapType.valueOf(savedMapType)
+	) {
+		savedMapType = it.name
+	}
+
+	
 
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(Bar.userLocation, startZoom)
