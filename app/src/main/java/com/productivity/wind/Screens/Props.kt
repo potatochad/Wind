@@ -514,20 +514,16 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         show = show,
 		mod = Mod.w(360).h(600)
     ){
-
-
-
-    
-
-    var mapType by remember { mutableStateOf(MapType.NORMAL) }
-val cameraPositionState = rememberCameraPositionState {
-    position = CameraPosition.fromLatLngZoom(Bar.userLocation, 14f)
-}
-
-Box(modifier = Mod.maxS()) {
-    GoogleMap(
-        modifier = Modifier.fillMaxSize(),
-        cameraPositionState = cameraPositionState,
+		
+		var mapType by r_m(MapType.NORMAL)
+		val cameraPositionState = rememberCameraPositionState {
+			position = CameraPosition.fromLatLngZoom(Bar.userLocation, 14f)
+		}
+		
+		Box(Mod.maxS()) {
+			GoogleMap(
+				modifier = Modifier.fillMaxSize(),
+				cameraPositionState = cameraPositionState,
         properties = MapProperties(
             isMyLocationEnabled = yes,
             mapType = mapType
@@ -538,12 +534,12 @@ Box(modifier = Mod.maxS()) {
     Text(
         text = "map type".bold().white(),
         modifier = Mod.align(Alignment.TopStart)
-			.space(14.dp)
+			.space(14)
             .background(Color(0x80000000), shape = RoundedCornerShape(12.dp))
             .clickable {
                 mapType = if (mapType == MapType.NORMAL) MapType.SATELLITE else MapType.NORMAL
             }
-            .space(horizontal = 16.dp, vertical = 8.dp)
+            .space(h = 16, w = 8)
     )
 
 	
