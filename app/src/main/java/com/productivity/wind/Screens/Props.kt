@@ -524,7 +524,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		Column {
 			LazyMaps()
 			
-			LazzyRow(center = yes, modifier = Mod.h(60)) {
+			LazzyRow(center = yes, modifier = Mod.h(120)) {
 				
 				var sliderPos by remember { mutableStateOf(0f) } // 0..1 linear
 val min = 1f
@@ -577,11 +577,14 @@ Column(Modifier.padding(16.dp)) {
 var range by remember { mutableStateOf(0f..1f) }
 
 RangeSlider(
-    values = range,
-    onValueChange = { range = it },
-    valueRange = 0f..1f,
+    values = range,                       // use 'values'
+    onValueChange = { newRange ->         // type is ClosedFloatingPointRange<Float>
+        range = newRange
+    },
+    valueRange = 0f..1f,                  // make sure this is Float
     steps = 0
 )
+
 
 
 
