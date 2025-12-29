@@ -520,16 +520,31 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
     
 
     // Camera state follows current location
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(Bar.userLocation, 14f)
+    var mapType by remember { mutableStateOf(MapType.NORMAL) } // default map type
+
+val cameraPositionState = rememberCameraPositionState {
+    position = CameraPosition.fromLatLngZoom(Bar.userLocation, 14f)
+}
+
+Column {
+    // Button to toggle map type
+    Button(onClick = {
+        mapType = if (mapType == MapType.NORMAL) MapType.SATELLITE else MapType.NORMAL
+    }) {
+        Text("Toggle Map Type")
     }
 
-    // Map with only blue dot
+    // Google Map
     GoogleMap(
         modifier = Mod.maxS(),
         cameraPositionState = cameraPositionState,
-        properties = MapProperties(isMyLocationEnabled = yes)
+        properties = MapProperties(
+            isMyLocationEnabled = yes,
+            mapType = mapType
+        )
     )
+}
+
 
 
 
