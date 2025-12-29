@@ -519,31 +519,37 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 
     
 
-    // Camera state follows current location
-    var mapType by remember { mutableStateOf(MapType.NORMAL) } // default map type
-
+    var mapType by remember { mutableStateOf(MapType.NORMAL) }
 val cameraPositionState = rememberCameraPositionState {
     position = CameraPosition.fromLatLngZoom(Bar.userLocation, 14f)
 }
 
-Column {
-    // Button to toggle map type
-    Button(onClick = {
-        mapType = if (mapType == MapType.NORMAL) MapType.SATELLITE else MapType.NORMAL
-    }) {
-        Text("Toggle Map Type")
-    }
-
-    // Google Map
+Box(modifier = Mod.maxS()) {
     GoogleMap(
-        modifier = Mod.maxS(),
+        modifier = Modifier.fillMaxSize(),
         cameraPositionState = cameraPositionState,
         properties = MapProperties(
             isMyLocationEnabled = yes,
             mapType = mapType
         )
     )
+
+    // Floating toggle
+    Text(
+        text = if (mapType == MapType.NORMAL) "Satellite" else "Normal",
+        color = Color.White,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier
+            .align(Alignment.TopEnd)
+            .padding(16.dp)
+            .background(Color(0x80000000), shape = RoundedCornerShape(12.dp))
+            .clickable {
+                mapType = if (mapType == MapType.NORMAL) MapType.SATELLITE else MapType.NORMAL
+            }
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+    )
 }
+
 
 
 
