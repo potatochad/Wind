@@ -811,8 +811,7 @@ fun LazyMaps(
                             MapType.SATELLITE
                         else
                             MapType.NORMAL
-                }
-                .space(h = 8, w = 6)
+                }.space(h = 8, w = 6)
         )
     }
 }
