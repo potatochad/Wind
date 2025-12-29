@@ -512,8 +512,8 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 	
     LazyBigPopup(
         show,
-		"Choose Locations"
-		mod = Mod.w(360).h(600)
+		"Choose Locations",
+		mod = Mod.w(360).h(600),
     ){
 		
 		LazyMaps()
