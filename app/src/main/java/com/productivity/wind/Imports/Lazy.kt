@@ -777,7 +777,7 @@ fun LazyMaps(
         position = CameraPosition.fromLatLngZoom(Bar.userLocation, startZoom)
     }
 
-    Box(modifier.maxS()) {
+    Box(Mod.maxS()) {
 
         GoogleMap(
             modifier = Mod.maxS(),
