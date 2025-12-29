@@ -522,7 +522,9 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		mod = Mod.w(360).h(600),
     ){
 		Column {
-			LazyMaps()
+			Box(Mod.weight(1f)) {
+				LazyMaps()
+			}
 			
 			LazzyRow(center = yes, modifier = Mod.weight(0.3f)) {
 				
