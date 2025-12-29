@@ -605,7 +605,7 @@ fun LazyBigPopup(
 		) {
 		
 			Column(
-				mod.background(Color.DarkGray),
+				mod..round(12).background(Color.DarkGray),
 			) {
 				LazzyRow(
 					center = yes,
@@ -623,11 +623,11 @@ fun LazyBigPopup(
 					center = yes,
 				) {
 					UI.End {
-						UI.Ctext("cancel"){
+						UI.Ctext("CANCEL"){
 							onCancel()
 						}
 						move(50)
-						UI.Ctext("ok"){
+						UI.Ctext("OK"){
 							onOk()
 						}
 						move(10)
