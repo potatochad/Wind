@@ -801,8 +801,8 @@ fun LazyMaps(
         )
 
         Text(
-            text = "map type".bold().color(Color.DarkGray),
-            modifier = Mod
+            "map".bold().darkGray(),
+            Mod
                 .align(Alignment.TopEnd)
                 .space(top = 12, end = 35)
                 .background(faded(Color.White, 0.5f))
