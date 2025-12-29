@@ -511,11 +511,18 @@ fun isSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 	
     LazyBigPopup(
-        show = show,
+        show,
+		"Choose Locations"
 		mod = Mod.w(360).h(600)
     ){
 		
 		LazyMaps()
+
+		LazzyRow {
+			
+		}
+
+		
 		
 	}
 	
