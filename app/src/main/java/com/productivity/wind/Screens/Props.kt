@@ -526,7 +526,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 				LazyMaps()
 			}
 			
-			LazzyRow(center = yes, modifier = Mod.weight(0.3f)) {
+			LazzyRow(center = yes) {
 				
 				var sliderPos by remember { mutableStateOf(0f) } // 0..1 linear
 val min = 1f
