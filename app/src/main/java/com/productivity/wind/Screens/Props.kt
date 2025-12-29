@@ -536,11 +536,11 @@ Box(modifier = Mod.maxS()) {
 
     // Floating toggle
     Text(
-        text = if (mapType == MapType.NORMAL) "Satellite".bold() else "Normal".bold(),
+        text = "map type".bold(),
         color = Color.White,
-        modifier = Modifier
-            .align(Alignment.TopEnd)
-            .padding(16.dp)
+        modifier = Mod
+            .align(Alignment.TopStart)
+			.padding(14.dp)
             .background(Color(0x80000000), shape = RoundedCornerShape(12.dp))
             .clickable {
                 mapType = if (mapType == MapType.NORMAL) MapType.SATELLITE else MapType.NORMAL
