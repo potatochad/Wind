@@ -536,9 +536,8 @@ Box(modifier = Mod.maxS()) {
 
     // Floating toggle
     Text(
-        text = if (mapType == MapType.NORMAL) "Satellite" else "Normal",
+        text = if (mapType == MapType.NORMAL) "Satellite".bold() else "Normal".bold(),
         color = Color.White,
-        fontWeight = FontWeight.Bold,
         modifier = Modifier
             .align(Alignment.TopEnd)
             .padding(16.dp)
