@@ -510,25 +510,6 @@ fun isSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
 @Composable
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 	
-    val fusedLocationClient = r { LocationServices.getFusedLocationProviderClient(App) }
-    
-    // Request location updates
-    RunOnce {
-        val locationRequest = LocationRequest.Builder(
-			Priority.PRIORITY_HIGH_ACCURACY, 1000L // update every second
-        ).build()
-
-        val callback = object : LocationCallback() {
-            override fun onLocationResult(result: LocationResult) {
-                result.lastLocation?.let { loc ->
-                    Bar.userLocation = LatLng(loc.latitude, loc.longitude)
-                }
-            }
-        }
-
-        fusedLocationClient.requestLocationUpdates(locationRequest, callback, Looper.getMainLooper())
-	}
-	
     LazyBigPopup(
         show = show,
 		mod = Mod.w(360).h(600)
