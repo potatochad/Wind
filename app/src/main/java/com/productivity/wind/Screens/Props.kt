@@ -535,7 +535,8 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         text = "map type".bold().white(),
         modifier = Mod.align(Alignment.TopStart)
 			.space(12)
-            .background(faded(Color.Black), shape = RoundedCornerShape(12.dp))
+            .background(faded(Color.Black))
+			.round(12)
             .clickable {
                 mapType = if (mapType == MapType.NORMAL) MapType.SATELLITE else MapType.NORMAL
             }
