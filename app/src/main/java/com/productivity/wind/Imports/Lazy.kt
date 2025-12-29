@@ -802,9 +802,8 @@ fun LazyMaps(
 
         Text(
             "map".bold().darkGray(),
-            Mod
-                .align(Alignment.TopEnd)
-                .space(top = 12, end = 60)
+            Mod.align(Alignment.TopEnd)
+                .space(top = 12, end = 64)
                 .background(faded(Color.White, 0.5f))
                 .clickable {
                     mapType =
@@ -813,7 +812,7 @@ fun LazyMaps(
                         else
                             MapType.NORMAL
                 }
-                .space(h = 8 , w = 4)
+                .space(h = 8, w = 6)
         )
     }
 }
