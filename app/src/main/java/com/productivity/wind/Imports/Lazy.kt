@@ -651,7 +651,7 @@ fun LazyBigPopup(
 			) {
 				LazzyRow(
 					center = yes,
-					space = 6
+					space = 8
 				) {
 					Text(title.size(18))
 				}
@@ -659,10 +659,7 @@ fun LazyBigPopup(
 					ui()
 				}
 				
-				LazzyRow(
-					space = 6,
-					center = yes,
-				) {
+				LazzyRow {
 					UI.End {
 						UI.Ctext("CANCEL"){
 							onCancel()
