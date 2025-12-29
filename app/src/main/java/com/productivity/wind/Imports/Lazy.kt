@@ -804,15 +804,15 @@ fun LazyMaps(
             "map".bold().darkGray(),
             Mod.align(Alignment.TopEnd)
                 .space(top = 12, end = 64)
-                .background(faded(Color.White, 0.5f))
-                .clickable {
+                .background(faded(Color.White, 0.6f))
+                .click {
                     mapType =
                         if (mapType == MapType.NORMAL)
                             MapType.SATELLITE
                         else
                             MapType.NORMAL
                 }
-                .space(h = 8, w = 5)
+                .space(h = 8, w = 6)
         )
     }
 }
