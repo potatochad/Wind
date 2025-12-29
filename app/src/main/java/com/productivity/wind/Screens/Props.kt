@@ -526,9 +526,15 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 				LazyMaps()
 			}
 
+			var slider by r_m(1f)
 
+			Text("$slider")
 
+			LazySlider {
+				slider = it
+			}
 
+			
 
 		}
 
