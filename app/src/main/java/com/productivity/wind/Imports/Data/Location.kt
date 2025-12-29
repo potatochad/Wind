@@ -162,30 +162,21 @@ fun getUserLocation(
     each: Any = 1000L,
     onLocation: Do_<LatLng>,
 ) {
-    val fusedLocationClient =
-        LocationServices.getFusedLocationProviderClient(App)
+	val fusedLocationClient = r { LocationServices.getFusedLocationProviderClient(App) }
+    
+    val locationRequest = LocationRequest.Builder(
+		Priority.PRIORITY_HIGH_ACCURACY, toL(each)
+    ).build()
 
-    val locationRequest = LocationRequest.create().apply {
-        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        interval = toL(each)
-        fastestInterval = toL(each) / 2
-    }
-
-    val callback = object : LocationCallback() {
+	val callback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
             result.lastLocation?.let { loc ->
-                onLocation(
-                    LatLng(loc.latitude, loc.longitude)
-                )
+                onLocation(LatLng(loc.latitude, loc.longitude))
             }
         }
     }
 
-    fusedLocationClient.requestLocationUpdates(
-        locationRequest,
-        callback,
-        Looper.getMainLooper()
-    )
+    fusedLocationClient.requestLocationUpdates(locationRequest, callback, Looper.getMainLooper())
 }
 
 
