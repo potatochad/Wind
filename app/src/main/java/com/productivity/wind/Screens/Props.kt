@@ -515,33 +515,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		mod = Mod.w(360).h(600)
     ){
 		
-		var mapType by r_m(MapType.NORMAL)
-		val cameraPositionState = rememberCameraPositionState {
-			position = CameraPosition.fromLatLngZoom(Bar.userLocation, 14f)
-		}
-		
-		Box(Mod.maxS()) {
-			GoogleMap(
-				modifier = Modifier.fillMaxSize(),
-				cameraPositionState = cameraPositionState,
-        properties = MapProperties(
-            isMyLocationEnabled = yes,
-            mapType = mapType
-        )
-    )
-
-    // Floating toggle
-    Text(
-        text = "map type".bold().color(Color.DarkGray),
-        modifier = Mod.align(Alignment.TopStart)
-			.space(10)
-            .background(faded(Color.White, 0.5f))
-            .clickable {
-                mapType = if (mapType == MapType.NORMAL) MapType.SATELLITE else MapType.NORMAL
-            }
-            .space(h = 10, w = 4)
-    )
-
+		LazyMaps()
 	
 }
 
