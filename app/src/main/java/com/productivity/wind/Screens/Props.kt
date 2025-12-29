@@ -525,60 +525,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			Box(Mod.weight(1f)) {
 				LazyMaps()
 			}
-			
-			LazzyRow(center = yes) {
-				
-				var sliderPos by remember { mutableStateOf(0f) } // 0..1 linear
-val min = 1f
-val max = 200_000f
-val xSize = min * (max / min).pow(sliderPos) // exponential
-
-Column(Modifier.padding(16.dp)) {
-    Text("X Size: ${xSize.toInt()}", color = Color.DarkGray)
-
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .height(20.dp)
-            .padding(horizontal = 8.dp)
-            .pointerInput(Unit) {
-                detectDragGestures { change, _ ->
-                    val newPos = (change.position.x / size.width).coerceIn(0f, 1f)
-                    sliderPos = newPos
-                }
-            }
-    ) {
-        // Track
-        Canvas(Modifier.fillMaxSize()) {
-            drawLine(
-                color = Color.Gray,
-                start = Offset(0f, size.height / 2),
-                end = Offset(size.width, size.height / 2),
-                strokeWidth = 4f
-            )
-            // Filled portion
-            drawLine(
-                color = Gold,
-                start = Offset(0f, size.height / 2),
-                end = Offset(size.width * sliderPos, size.height / 2),
-                strokeWidth = 4f
-            )
-            // Thumb
-            drawCircle(
-                color = Gold,
-                radius = 12f,
-                center = Offset(size.width * sliderPos, size.height / 2)
-            )
-        }
-    }
-}
-
-
-
-
-
-				
-			}
 
 
 
