@@ -576,10 +576,10 @@ fun LazyScreen(
 fun LazyBigPopup(
     show: mBool,
 	title: Str = "Title",
-	onOk: Do = { show.it = no },
-	onCancel: Do = { show.it = no },
+	onOk: Do = {},
+	onCancel: Do = {},
 	onDismiss: Do = { show.it = no },
-	backhandler: Do = { show.it = no }, 
+	backhandler: Do = {}, 
 	mod: Mod = Mod.w(350).h(560),
     ui: ui,
 ) {   
@@ -587,24 +587,15 @@ fun LazyBigPopup(
 
 	BackHandler {
         backhandler()
+		onDismiss()
 	}
 
 	DarkBackground()
 	
-    Popup(
-		onDismissRequest = { onDismiss() },
-		alignment = Alignment.Center,
-		properties = PopupProperties(focusable = yes),
-	) {
-		Column(
-			Mod.maxH().clickable(
-                    indication = null,
-                    interactionSource = r { MutableInteractionSource() }
-                ) {
-				onDismiss() 
-			},
-			verticalArrangement = Arrangement.Center,
-		) {
+    Popup {
+		Box(Mod.maxS().center().background(faded(Color.Black)).click {
+			onDismiss()
+		}){
 		
 			Column(
 				mod.round(12).background(Color.DarkGray),
@@ -620,17 +611,18 @@ fun LazyBigPopup(
 				}
 				
 				LazzyRow(
-					Mod.h(40),
 					space = 6,
 					center = yes,
 				) {
 					UI.End {
 						UI.Ctext("CANCEL"){
 							onCancel()
+							onDismiss()
 						}
 						move(50)
 						UI.Ctext("OK"){
 							onOk()
+							onDismiss()
 						}
 						move(10)
 					}
