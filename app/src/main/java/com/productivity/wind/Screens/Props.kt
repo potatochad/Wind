@@ -532,10 +532,11 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 
     // Floating toggle
     Text(
-        text = "map type".bold().white(),
+        text = "map type".bold(),
         modifier = Mod.align(Alignment.TopStart)
 			.space(12)
-            .background(faded(Color.Black))
+			.round(12)
+            .background(faded(Color.White))
 			.round(12)
             .clickable {
                 mapType = if (mapType == MapType.NORMAL) MapType.SATELLITE else MapType.NORMAL
