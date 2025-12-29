@@ -518,8 +518,27 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		
 		LazyMaps()
 
-		LazzyRow {
-			
+		val scrollState = rememberScrollState()
+
+
+		LazzyRow(center = yes) {
+			var sliderPos by remember { mutableStateOf(0f) } // 0..1 linear
+val min = 1f
+val max = 200f
+
+// Transform linear slider to exponential scale
+val xSize = min * (max / min).pow(sliderPos)
+
+Column(Modifier.padding(16.dp)) {
+    Text("X Size: ${xSize.toInt()}", color = Color.DarkGray)
+
+    Slider(
+        value = sliderPos,
+        onValueChange = { sliderPos = it },
+        valueRange = 0f..1f
+    )
+}
+
 		}
 
 		
