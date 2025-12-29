@@ -199,6 +199,13 @@ fun AppStart() {
         DayChecker.start()
 		captureAppCrashes()
 		getMyAppLogs() 
+
+		location {
+			getUserLocation(3000L){
+				Bar.userLocation = it
+			}
+		}
+		
 	}
 	
     LazyMenu { Menu() }
