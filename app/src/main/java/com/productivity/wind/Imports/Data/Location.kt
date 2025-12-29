@@ -160,11 +160,10 @@ fun location(Do: Do = {}) {
 
 
 fun getUserLocation(
-    each: Any = 1000L,
+	fusedLocationClient: FusedLocationProviderClient, // type is required
+  	each: Any = 1000L,
     onLocation: Do_<LatLng>,
 ) {
-	val fusedLocationClient = r { LocationServices.getFusedLocationProviderClient(App) }
-    
     val locationRequest = LocationRequest.Builder(
 		Priority.PRIORITY_HIGH_ACCURACY, toL(each)
     ).build()
