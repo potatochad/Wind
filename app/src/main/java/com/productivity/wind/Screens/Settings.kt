@@ -92,6 +92,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
          UI.Ctext("location") {
             location {
 				show.it = yes
+				Bar.privacyLocation = yes
             }
          }
       }
