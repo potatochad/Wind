@@ -176,6 +176,7 @@ fun Any.green() = txt { copy(color = Color.Green) }
 fun Any.red() = txt { copy(color = Color.Red) }
 fun Any.white() = txt { copy(color = Color.White) }
 fun Any.black() = txt { copy(color = Color.Black) }
+fun Any.darkGray() = txt { copy(color = Color.DarkGray) }
 
 
 
