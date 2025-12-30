@@ -86,6 +86,20 @@ fun DrawScope.drawPin(
         center = Offset(size.width / 2f, circleRadius)
     )
 
+    drawArc(
+    color = color,
+    startAngle = -90f,      // top of circle
+    sweepAngle = 288f,      // 80% of 360°
+    useCenter = false,      // hollow like progress
+    topLeft = Offset(
+        size.width / 2f - circleRadius,
+        0f
+    ),
+    size = androidx.compose.ui.geometry.Size(circleRadius * 2, circleRadius * 2),
+    style = androidx.compose.ui.graphics.drawscope.Stroke(width = 4f) // optional thickness
+)
+
+
     // triangle below
     drawTriangle(
         x = (size.width - triangleWidth) / 2f,
