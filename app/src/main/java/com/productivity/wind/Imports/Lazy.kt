@@ -808,6 +808,8 @@ fun LazyMenu(
 fun LazyMaps(
     startZoom: Float = 14f,
 	id: Int = 1,
+	mapClick: Do_<LatLng> = { _ -> }
+	ui: ui ={},
 ) {
 	var savedMapType by s(MapType.NORMAL.name, "savedMapType, $id")
 
@@ -824,7 +826,6 @@ fun LazyMaps(
     }
 
     Box(Mod.maxS()) {
-
         GoogleMap(
             modifier = Mod.maxS(),
             cameraPositionState = cameraPositionState,
@@ -832,10 +833,16 @@ fun LazyMaps(
                 isMyLocationEnabled = yes,
                 mapType = mapType
             ),
+			onMapClick = { latLng ->
+				center = 
+				mapClick(latLng)
+			}
 			uiSettings = MapUiSettings(
 				zoomControlsEnabled = no
 			),
-        )
+        ) {
+			ui()
+		}
 
         Text(
             "map".bold().darkGray(),
@@ -843,7 +850,7 @@ fun LazyMaps(
                 .space(top = 12, end = 64)
                 .background(faded(Color.White, 0.7f))
                 .click {
-                    mapType =
+					mapType =
                         if (mapType == MapType.NORMAL)
                             MapType.SATELLITE
                         else
