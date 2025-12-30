@@ -565,11 +565,36 @@ val bitmap = r {
     bmp
 }
 
+/*
 Marker(
     state = rememberMarkerState(position = center),
     icon = BitmapDescriptorFactory.fromBitmap(bitmap),
     title = "Incognito Spot"
 )
+*/
+
+MarkerComposable(
+    state = rememberMarkerState(position = center),
+    title = "Incognito Spot"
+) {
+    Box(
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_map_pin),
+            contentDescription = null,
+            tint = Color.Red,
+            modifier = Modifier.size(48.dp)
+        )
+        Icon(
+            painter = painterResource(R.drawable.ic_incognito),
+            contentDescription = null,
+            tint = Color.White,
+            modifier = Modifier.size(20.dp)
+        )
+    }
+}
+
 
 
 
