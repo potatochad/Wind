@@ -534,8 +534,8 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 					Circle(
 						center = center,
 						radius = toD(slider),
-						strokeColor = Color.DarkGray,
-						fillColor = faded(Color.DarkGray)
+						strokeColor = darkGreen,
+						fillColor = faded(darkGreen)
 					)
 
 					
