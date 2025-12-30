@@ -181,7 +181,7 @@ fun getUserLocation(
 
 
 
-
+fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = SphericalUtil.computeDistanceBetween(point, center) <= radiusMeters
 
 
 
