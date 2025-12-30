@@ -174,7 +174,7 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 
 @Composable
 fun LazySlider(
-    modifier: Mod = Mod.space(w = 16, h=16),
+    modifier: Mod = Mod.space(w = 24, h=16),
     min: Float = 1f,
     max: Float = 200_000f,
     linear: Bool = no,
