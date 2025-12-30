@@ -163,6 +163,17 @@ fun toL(it: Any?): Long = when (it) {
     else -> 0L
 }
 
+fun toD(it: Any?): Double = when (it) {
+    is Double -> it
+    is Float -> it.toDouble()
+    is Long -> it.toDouble()
+    is Int -> it.toDouble()
+    is String -> it.toDoubleOrNull() ?: 0.0
+    null -> 0.0
+    else -> 0.0
+}
+
+
 fun toLatLng(it: Any?): LatLng = when (it) {
     is LatLng -> it
     is Pair<*, *> -> LatLng(it.first.toString().toDouble(), it.second.toString().toDouble())
