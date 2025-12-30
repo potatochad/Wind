@@ -538,9 +538,23 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         strokeColor = Color(0xFF0A1F0D),
         fillColor = faded(Color(0xFF0A1F0D))
     )
-	Marker(
+	val context = LocalContext.current
+val bitmap = remember {
+    val drawable = AppCompatResources.getDrawable(context, R.drawable.incognito)
+    val bitmap = Bitmap.createBitmap(
+        drawable!!.intrinsicWidth,
+        drawable.intrinsicHeight,
+        Bitmap.Config.ARGB_8888
+    )
+    val canvas = Canvas(bitmap)
+    drawable.setBounds(0, 0, canvas.width, canvas.height)
+    drawable.draw(canvas)
+    bitmap
+}
+
+Marker(
     position = center,
-    icon = BitmapDescriptorFactory.fromResource(R.drawable.incognito),
+    icon = BitmapDescriptorFactory.fromBitmap(bitmap),
     title = "Incognito Spot"
 )
 
