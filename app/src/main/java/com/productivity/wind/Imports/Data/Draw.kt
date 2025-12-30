@@ -80,11 +80,13 @@ fun DrawScope.drawPin(
     color: Color = Color.Black
 ) {
     // circle on top
+ /*
     drawCircle(
         color = color,
         radius = circleRadius,
         center = Offset(size.width / 2f, circleRadius)
     )
+    */
 
     drawArc(
     color = color,
