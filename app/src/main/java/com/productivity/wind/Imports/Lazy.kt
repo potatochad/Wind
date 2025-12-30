@@ -174,7 +174,7 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 
 @Composable
 fun LazySlider(
-    modifier: Mod = Mod.space(w = 8, h=4).maxW(),
+    modifier: Mod = Mod.space(w = 8, h=10),
     min: Float = 1f,
     max: Float = 200_000f,
     linear: Bool = no,
@@ -198,7 +198,7 @@ fun LazySlider(
             }
         }
     ) {
-        Canvas(Mod.maxS()) {
+        Canvas(Mod.maxW()) {
             // Track
             drawLine(
                 color = Color.Gray,
