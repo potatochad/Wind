@@ -8,20 +8,18 @@
     <!-- Eye outline -->
     <path
         android:fillColor="#FF000000"
-        android:pathData="M1,12C1,12 4,5 12,5s11,7 11,7 -3,7 -11,7S1,12 1,12z" />
+        android:pathData="M1,12 C1,12 4,5 12,5 s11,7 11,7 -3,7 -11,7 S1,12 1,12 z" />
 
-    <!-- Pupil -->
-    <circle
-        android:cx="12"
-        android:cy="12"
-        android:r="3"
-        android:fillColor="#FF000000" />
+    <!-- Pupil (converted to path) -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M12,9 a3,3 0 1,0 0.001,0" />
 
     <!-- Slash line -->
     <path
         android:strokeColor="#FF000000"
         android:strokeWidth="2"
         android:strokeLineCap="round"
-        android:pathData="M4,4l16,16" />
+        android:pathData="M4,4 L20,20" />
 
 </vector>
