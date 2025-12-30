@@ -46,7 +46,7 @@ import androidx.compose.ui.input.pointer.*
 import android.graphics.*
 import androidx.appcompat.content.res.*
 import androidx.compose.ui.platform.*
-import com.productivity.wind.*
+import com.productivity.wind.R
 
 
 
