@@ -158,6 +158,14 @@ data class WebWord(
 	var word: Str = ""
 )
 
+@Serializable
+data class GeoCircle(
+    val id: Str = Id(),
+    var center: LatLng,
+    var radius: Double
+)
+
+
 
 
 
