@@ -5,22 +5,22 @@
     android:viewportWidth="24"
     android:viewportHeight="24">
 
-    <!-- Eye outline only (no fill, just stroke) -->
+    <!-- Eye outline, thicker -->
     <path
         android:fillColor="@android:color/transparent"
         android:strokeColor="#FF000000"
-        android:strokeWidth="2"
+        android:strokeWidth="3"
         android:pathData="M1,12 C1,12 4,5 12,5 s11,7 11,7 -3,7 -11,7 S1,12 1,12 z" />
 
-    <!-- Pupil -->
+    <!-- Pupil, larger -->
     <path
         android:fillColor="#FF000000"
-        android:pathData="M12,12 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+        android:pathData="M12,12 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
 
-    <!-- Slash line -->
+    <!-- Slash line, same -->
     <path
         android:strokeColor="#FF000000"
-        android:strokeWidth="2"
+        android:strokeWidth="2.5"
         android:strokeLineCap="round"
         android:pathData="M4,4 L20,20" />
 
