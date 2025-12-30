@@ -543,9 +543,10 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 				}
 			}
 
-			Text("$slider")
-
-			LazySlider {
+			LazySlider(
+				min = 10,
+				max = 100_000
+			){
 				slider = it
 			}
 
