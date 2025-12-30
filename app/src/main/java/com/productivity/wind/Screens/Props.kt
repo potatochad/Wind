@@ -561,11 +561,14 @@ val bitmap = remember {
     bitmap
 }
 
+val markerState = rememberMarkerState(position = center)
+
 Marker(
-    position = center,
+    state = markerState,
     icon = BitmapDescriptorFactory.fromBitmap(bitmap),
     title = "Incognito Spot"
 )
+
 
 
 					
