@@ -131,7 +131,7 @@ fun CopyPaste(id: Str ="") {
 fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = r_Scroll()
 	val inputScroll = r_Scroll()
-	var scrollBy by r_m(toF(AppW)/201f)
+	var scrollBy by r_m(toF(AppW)/205f)
 
     RunOnce(tsk.goodStr) {
 		if (tsk.goodStr > 30) {
