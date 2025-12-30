@@ -538,6 +538,12 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         strokeColor = Color(0xFF0A1F0D),
         fillColor = faded(Color(0xFF0A1F0D))
     )
+	Marker(
+    position = center,
+    icon = BitmapDescriptorFactory.fromResource(R.drawable.incognito),
+    title = "Incognito Spot"
+)
+
 
 					
 					
