@@ -72,6 +72,28 @@ fun DrawScope.drawTriangle(
 
 
 
+fun DrawScope.drawPin(
+    circleRadius: Float = 14f,
+    triangleWidth: Float = 24f,
+    triangleHeight: Float = 16f,
+    color: Color = Color.Black
+) {
+    // circle on top
+    drawCircle(
+        color = color,
+        radius = circleRadius,
+        center = Offset(size.width / 2f, circleRadius)
+    )
+
+    // triangle below
+    drawTriangle(
+        x = (size.width - triangleWidth) / 2f,
+        y = circleRadius, // just below circle
+        width = triangleWidth,
+        height = triangleHeight,
+        color = color
+    )
+}
 
 
 
