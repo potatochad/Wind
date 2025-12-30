@@ -531,33 +531,13 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 						// LatLng
 					},
 				){
-					Box(
-    contentAlignment = Alignment.Center,
-    modifier = Modifier.size(toD(slider).dp * 2) // circle diameter
-) {
-    // Your circle
+					
     Circle(
         center = center,
         radius = toD(slider),
         strokeColor = Color(0xFF0A1F0D),
         fillColor = faded(Color(0xFF0A1F0D))
     )
-
-    // Marker in the center
-    Icon(
-        imageVector = Icons.Default.Visibility, // eye icon
-        contentDescription = "Center Eye Marker",
-        tint = Color.White,
-        modifier = Modifier
-            .size(24.dp)
-            .background(
-                color = Color(0xFF0A1F0D),
-                shape = CircleShape
-            )
-            .padding(4.dp)
-    )
-}
-
 
 					
 					
