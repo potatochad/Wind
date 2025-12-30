@@ -515,6 +515,7 @@ fun isSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
 
 @Composable
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
+	var slider by r_m(1f)
 	
     LazyBigPopup(
         show,
@@ -522,11 +523,16 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		mod = Mod.w(360).h(600),
     ){
 		Column {
+			
 			Box(Mod.weight(1f)) {
-				LazyMaps()
+				LazyMaps(
+					mapClick = { 
+						// LatLng
+					},
+				){
+					
+				}
 			}
-
-			var slider by r_m(1f)
 
 			Text("$slider")
 
@@ -537,11 +543,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			
 
 		}
-
-		
-		
 	}
-	
 }
 
 
