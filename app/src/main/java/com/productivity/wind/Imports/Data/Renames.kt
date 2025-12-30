@@ -121,6 +121,7 @@ var InputColor = Color(0xFF272727)
 val DarkBlue = Color(0xFF00008B) 
 val Gold = Color(0xFFFFD700)
 val LightBlue = Color(0xFFADD8E6)
+val darkGreen = Color(0xFF0A1F0D)
 
 
 val gson = Gson()
