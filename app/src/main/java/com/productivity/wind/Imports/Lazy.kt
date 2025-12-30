@@ -808,8 +808,8 @@ fun LazyMenu(
 fun LazyMaps(
     startZoom: Float = 14f,
 	id: Int = 1,
-	mapClick: Do_<LatLng> = { _ -> }
-	ui: ui ={},
+	mapClick: Do_<LatLng> = { _ -> },
+	ui: ui = {},
 ) {
 	var savedMapType by s(MapType.NORMAL.name, "savedMapType, $id")
 
