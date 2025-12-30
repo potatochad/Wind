@@ -516,6 +516,7 @@ fun isSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
 @Composable
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 	var slider by r_m(1f)
+	var center by remember { mutableStateOf(Bar.userLocation) }
 	
     LazyBigPopup(
         show,
@@ -530,6 +531,14 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 						// LatLng
 					},
 				){
+					Circle(
+						center = center,
+						radius = toInt(slider),
+						strokeColor = Color.DarGray,
+						fillColor = faded(Color.DarGray)
+					)
+
+					
 					
 				}
 			}
