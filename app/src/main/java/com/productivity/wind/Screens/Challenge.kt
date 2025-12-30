@@ -135,7 +135,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     RunOnce(tsk.goodStr) {
 		if (tsk.goodStr > 30) {
-			txtScroll.scroll()
+			txtScroll.scroll(scrollBy)
 			Vlog("scrollBy: $scrollBy")
 		}
 	}
