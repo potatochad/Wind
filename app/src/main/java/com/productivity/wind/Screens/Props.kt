@@ -526,6 +526,39 @@ Marker(
     title = "Incognito Spot"
 )
 */
+@Composable
+fun IncognitoMarker() {
+    Canvas(
+        modifier = Modifier.size(48.dp)
+    ) {
+        val width = size.width
+        val height = size.height
+
+        // Pin body
+        drawCircle(
+            color = Color.Red,
+            radius = width / 2,
+            center = Offset(width / 2, height / 2)
+        )
+
+        // Inner circle (background for icon)
+        drawCircle(
+            color = Color.White,
+            radius = width / 4,
+            center = Offset(width / 2, height / 2)
+        )
+
+        // "Incognito" slash
+        drawLine(
+            color = Color.Red,
+            start = Offset(width * 0.3f, height * 0.3f),
+            end = Offset(width * 0.7f, height * 0.7f),
+            strokeWidth = 4.dp.toPx(),
+            cap = StrokeCap.Round
+        )
+    }
+}
+
 
 @Composable
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
@@ -574,29 +607,13 @@ val bitmap = r {
 }
 
 
-
 MarkerComposable(
     state = rememberMarkerState(position = center),
     title = "Incognito Spot"
 ) {
-    Box(
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-    imageVector = Icons.Filled.LocationOn,
-    contentDescription = null,
-    tint = Color.Red,
-    modifier = Modifier.size(48.dp)
-)
-
-Icon(
-    imageVector = Icons.Filled.VisibilityOff, // close to “incognito”
-    contentDescription = null,
-    tint = Color.White,
-    modifier = Modifier.size(20.dp)
-)
-    }
+    IncognitoMarker()
 }
+
 
 
 
