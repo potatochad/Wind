@@ -529,41 +529,26 @@ Marker(
 @Composable
 fun IncognitoMarker() {
     Canvas(modifier = Modifier.size(48.dp)) {
-        val width = size.width
-        val height = size.height
+    val width = size.width
+    val height = size.height
 
-        val path = Path().apply {
-            // Start at top center
-            moveTo(width / 2f, 0f)
-            // Draw left curve
-            cubicTo(0f, 0f, 0f, height * 0.7f, width / 2f, height)
-            // Draw right curve
-            cubicTo(width, height * 0.7f, width, 0f, width / 2f, 0f)
-            close()
-        }
-
-        // Pin body
-        drawPath(
-            path = path,
-            color = Color.Red
-        )
-
-        // Inner circle for icon/background
-        drawCircle(
-            color = Color.White,
-            radius = width / 4,
-            center = Offset(width / 2, height * 0.4f)
-        )
-
-        // Slash line (incognito style)
-        drawLine(
-            color = Color.Red,
-            start = Offset(width * 0.3f, height * 0.3f),
-            end = Offset(width * 0.7f, height * 0.5f),
-            strokeWidth = 4.dp.toPx(),
-            cap = StrokeCap.Round
-        )
+    val path = Path().apply {
+        // Start at top-left
+        moveTo(0f, 0f)
+        // Top-right
+        lineTo(width, 0f)
+        // Bottom-center
+        lineTo(width / 2f, height)
+        // Close path back to top-left
+        close()
     }
+
+    drawPath(
+        path = path,
+        color = Color.Red
+    )
+}
+
 }
 
 
