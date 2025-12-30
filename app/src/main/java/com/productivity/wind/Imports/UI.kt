@@ -210,9 +210,9 @@ object UI {
 	}
 	
 	@Composable
-	fun End(ui: ui) {
+	fun End(mod: Mod.space(1), ui: ui) {
 		Row(
-			Mod.maxW(),
+			mod.maxW(),
 			verticalAlignment = Alignment.CenterVertically,
 			horizontalArrangement = Arrangement.End
 		){
