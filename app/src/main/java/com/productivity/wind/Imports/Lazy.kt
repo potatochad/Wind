@@ -180,12 +180,12 @@ fun LazySlider(
     linear: Bool = no,
 	circeS: Any = 15,
     initialPos: Float = 0f,
-    onValueChange: Do_<Float>={},
+    onValueChange: Do_<Float>,
 ) {
     var sliderPos by r_m(initialPos.coerceIn(0f, 1f))
 
     Box(
-        modifier = modifier.pointerInput(Unit) {
+        modifier.pointerInput(Unit) {
             detectDragGestures { change, _ ->
                 val newPos = (change.position.x / size.width).coerceIn(0f, 1f)
                 sliderPos = newPos
