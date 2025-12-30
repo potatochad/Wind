@@ -548,15 +548,16 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 
 	
 	val context = LocalContext.current
-val bitmap = remember {
-    val drawable = AppCompatResources.getDrawable(context, R.drawable.incognito)
-    val bmp = Bitmap.createBitmap(
-        drawable!!.intrinsicWidth,
-        drawable.intrinsicHeight,
-        Bitmap.Config.ARGB_8888
-    )
+val bitmap = r {
+    val drawable = AppCompatResources.getDrawable(context, R.drawable.incognito)!!
+
+    // Desired size in pixels
+    val width = 60
+    val height = 60
+
+    val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bmp)
-    drawable.setBounds(0, 0, canvas.width, canvas.height)
+    drawable.setBounds(0, 0, width, height)
     drawable.draw(canvas)
     bmp
 }
@@ -566,6 +567,7 @@ Marker(
     icon = BitmapDescriptorFactory.fromBitmap(bitmap),
     title = "Incognito Spot"
 )
+
 
 
 
