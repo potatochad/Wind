@@ -43,7 +43,7 @@ import androidx.compose.foundation.gestures.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.input.pointer.*
 
-import android.graphics.*
+import android.graphics.Canvas
 import androidx.appcompat.content.res.*
 import androidx.compose.ui.platform.*
 import com.productivity.wind.R
