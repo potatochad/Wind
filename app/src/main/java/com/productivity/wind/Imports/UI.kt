@@ -213,6 +213,7 @@ object UI {
 	fun End(ui: ui) {
 		Row(
 			Mod.maxW(),
+			verticalAlignment = Alignment.CenterVertically,
 			horizontalArrangement = Arrangement.End
 		){
 			ui()
