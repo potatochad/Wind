@@ -543,6 +543,9 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         strokeColor = Color(0xFF0A1F0D),
         fillColor = faded(Color(0xFF0A1F0D))
     )
+
+
+	
 	val context = LocalContext.current
 val bitmap = remember {
     val drawable = AppCompatResources.getDrawable(context, R.drawable.incognito)
@@ -552,7 +555,7 @@ val bitmap = remember {
         Bitmap.Config.ARGB_8888
     )
     val canvas = Canvas(bitmap)
-    drawable.setBounds(0, 0, canvas.width, canvas.height)
+    drawable.setBounds(0, 0, toInt(canvas.width), toInt(canvas.height))
     drawable.draw(canvas)
     bitmap
 }
