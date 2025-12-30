@@ -95,7 +95,7 @@ object Bar {
 		userLatLng = toStr(it)
 	}
 	var privacyLocation by s(no, "privacyLocation")
-	var privacyGeo by sList<GeoCircle>("privacyGeo")
+	var privacyGeo = sList<GeoCircle>("privacyGeo")
 
 
     
