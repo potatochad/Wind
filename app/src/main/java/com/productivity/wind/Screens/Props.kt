@@ -528,31 +528,10 @@ Marker(
 */
 @Composable
 fun IncognitoMarker() {
-    Canvas(modifier = Modifier.size(48.dp)) {
-        val width = size.width
-        val height = size.height
+    Canvas(Mod.s(48)) {
 
-        // Circle on top
-        val circleRadius = width / 2f
-        drawCircle(
-            color = Color.Red,
-            radius = circleRadius,
-            center = Offset(width / 2f, circleRadius) // center top
-        )
 
-        // Triangle (point) at bottom
-        val triangleHeight = height - circleRadius * 2
-        val path = Path().apply {
-            moveTo(width / 2f, height)            // bottom-center
-            lineTo(0f, circleRadius * 2)          // bottom-left of circle
-            lineTo(width, circleRadius * 2)       // bottom-right of circle
-            close()
-        }
-
-        drawPath(
-            path = path,
-            color = Color.Red
-        )
+		
     }
 }
 
