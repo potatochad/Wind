@@ -544,8 +544,8 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			}
 
 			LazySlider(
-				min = 10,
-				max = 100_000
+				min = 10f,
+				max = 100_000f
 			){
 				slider = it
 			}
