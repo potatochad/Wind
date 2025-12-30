@@ -134,13 +134,14 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     RunOnce(tsk.goodStr) {
 		if (tsk.goodStr > 30) {
-			txtScroll.scroll(1.93f)
+			txtScroll.scroll(1.906f)
+			Vlog("AppW: $AppW, scroll: 1.906f")
 		}
 	}
 	RunOnce {
 		wait {
 			if (tsk.goodStr > 30) {
-				val done = toF(tsk.goodStr)*1.93f
+				val done = toF(tsk.goodStr)*1.906f
 			
 				txtScroll.goTo(done)
 			}
