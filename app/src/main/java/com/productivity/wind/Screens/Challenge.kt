@@ -142,7 +142,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 	RunOnce {
 		wait {
 			if (tsk.goodStr > 30) {
-				val done = toF(tsk.goodStr)*(scrollBy+0.03f)
+				val done = toF(tsk.goodStr)*(scrollBy+0.036f)
 			
 				txtScroll.goTo(done)
 			}
