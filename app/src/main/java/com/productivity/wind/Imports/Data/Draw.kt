@@ -50,3 +50,30 @@ import com.productivity.wind.R
 import androidx.compose.ui.res.painterResource
 
 
+
+
+fun DrawScope.drawTriangle(
+    x: Float,
+    y: Float,
+    width: Float,
+    height: Float,
+    color: Color = Color.Black
+) {
+    drawPath(
+        Path().apply {
+            moveTo(x + width / 2f, y + height) // bottom center
+            lineTo(x, y)                       // top left
+            lineTo(x + width, y)               // top right
+            close()
+        },
+        color
+    )
+}
+
+
+
+
+
+
+
+
