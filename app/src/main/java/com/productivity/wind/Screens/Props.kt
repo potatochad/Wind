@@ -48,6 +48,8 @@ import android.graphics.Bitmap
 import androidx.appcompat.content.res.*
 import androidx.compose.ui.platform.*
 import com.productivity.wind.R
+import androidx.compose.ui.res.painterResource
+
 
 
 
@@ -517,7 +519,13 @@ fun isSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
 
 
 
-
+/*
+Marker(
+    state = rememberMarkerState(position = center),
+    icon = BitmapDescriptorFactory.fromBitmap(bitmap),
+    title = "Incognito Spot"
+)
+*/
 
 @Composable
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
@@ -552,7 +560,7 @@ val bitmap = r {
     val drawable = AppCompatResources.getDrawable(context, R.drawable.incognito)!!.mutate()
 
     // Tint it white
-    drawable.setTint(Color.WHITE)
+    drawable.setTint(Color.White)
 
     // Desired size in pixels
     val width = 90
@@ -565,13 +573,7 @@ val bitmap = r {
     bmp
 }
 
-/*
-Marker(
-    state = rememberMarkerState(position = center),
-    icon = BitmapDescriptorFactory.fromBitmap(bitmap),
-    title = "Incognito Spot"
-)
-*/
+
 
 MarkerComposable(
     state = rememberMarkerState(position = center),
@@ -581,17 +583,18 @@ MarkerComposable(
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_map_pin),
-            contentDescription = null,
-            tint = Color.Red,
-            modifier = Modifier.size(48.dp)
-        )
-        Icon(
-            painter = painterResource(R.drawable.ic_incognito),
-            contentDescription = null,
-            tint = Color.White,
-            modifier = Modifier.size(20.dp)
-        )
+    imageVector = Icons.Filled.LocationOn,
+    contentDescription = null,
+    tint = Color.Red,
+    modifier = Modifier.size(48.dp)
+)
+
+Icon(
+    imageVector = Icons.Filled.VisibilityOff, // close to “incognito”
+    contentDescription = null,
+    tint = Color.White,
+    modifier = Modifier.size(20.dp)
+)
     }
 }
 
