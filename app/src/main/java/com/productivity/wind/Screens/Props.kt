@@ -530,6 +530,18 @@ Marker(
 fun IncognitoMarker() {
     Canvas(Mod.s(48)) {
 
+		drawCircle(
+			color = Color.Black,
+			radius = 14f,
+			center = Offset(size.width / 2f, 14f)
+		)
+		
+		drawTriangle(
+			x = 12f,
+			y = 20f,
+			width = 24f,
+			height = 16f
+		)
 
 		
     }
