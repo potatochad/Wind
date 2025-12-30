@@ -5,15 +5,22 @@
     android:viewportWidth="24"
     android:viewportHeight="24">
 
+    <!-- Eye white -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M1,12 C1,12 4,5 12,5 s11,7 11,7 -3,7 -11,7 S1,12 1,12 z" />
+
     <!-- Eye outline -->
     <path
         android:fillColor="#FF000000"
+        android:strokeColor="#FF000000"
+        android:strokeWidth="1"
         android:pathData="M1,12 C1,12 4,5 12,5 s11,7 11,7 -3,7 -11,7 S1,12 1,12 z" />
 
-    <!-- Pupil (circle in center) -->
+    <!-- Pupil -->
     <path
         android:fillColor="#FF000000"
-        android:pathData="M12,12 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+        android:pathData="M12,12 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
 
     <!-- Slash line -->
     <path
