@@ -833,10 +833,9 @@ fun LazyMaps(
                 isMyLocationEnabled = yes,
                 mapType = mapType
             ),
-			onMapClick = { latLng ->
-				center = 
-				mapClick(latLng)
-			}
+			onMapClick = {
+				mapClick(it)
+			},
 			uiSettings = MapUiSettings(
 				zoomControlsEnabled = no
 			),
