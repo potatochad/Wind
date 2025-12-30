@@ -560,7 +560,7 @@ val bitmap = r {
     val drawable = AppCompatResources.getDrawable(context, R.drawable.incognito)!!.mutate()
 
     // Tint it white
-    drawable.setTint(Color.White)
+    drawable.setTint(Color.White.toArgb())
 
     // Desired size in pixels
     val width = 90
