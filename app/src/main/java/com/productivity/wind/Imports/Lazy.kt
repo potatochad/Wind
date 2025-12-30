@@ -662,8 +662,8 @@ fun LazyBigPopup(
 					ui()
 				}
 				
-				LazzyRow {
-					UI.End {
+					
+				UI.End(Mod.space(12)) {
 						UI.Ctext("CANCEL"){
 							onCancel()
 							onDismiss()
@@ -673,9 +673,7 @@ fun LazyBigPopup(
 							onOk()
 							onDismiss()
 						}
-						move(10)
 					}
-				}
 			}
 		}
     }
