@@ -523,7 +523,7 @@ fun isSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
 
 @Composable
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
-	var slider by r_m(1f)
+	var slider by r_m(30f)
 	var center by r { m(Bar.userLocation) }
 	
     LazyBigPopup(
@@ -551,18 +551,19 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         state = MarkerState(position = center)
     ) {
         Box(
-            modifier = Modifier
-                .size(20.dp)
-                .background(
-                    color = Color(0xFFFFD700), // gold inside
-                    shape = CircleShape
-                )
-                .border(
-                    width = 3.dp,
-                    color = Color.White, // white outside
-                    shape = CircleShape
-                )
+        modifier = Mod
+            .s(50)
+            .background(Gold, CircleShape)
+            .border(3.dp, Color.White, CircleShape),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.ChevronRight, // >
+            contentDescription = null,
+            tint = Color.White,
+            modifier = Modifier.size(24.dp)
         )
+		}
     }
 
 					
@@ -571,7 +572,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			}
 
 			LazySlider(
-				min = 10f,
+				min = 5f,
 				max = 100_000f
 			){
 				slider = it
