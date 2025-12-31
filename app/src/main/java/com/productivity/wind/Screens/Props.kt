@@ -600,23 +600,32 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 
         // Triangle (pin tip)
         Canvas(Modifier.size(36.dp, 24.dp)) {
+    // Draw gold filled triangle
     val path = Path().apply {
         moveTo(size.width / 2f, size.height) // bottom center
         lineTo(0f, 0f)                        // top left
         lineTo(size.width, 0f)                // top right
         close()
     }
+    drawPath(path, Gold)
 
-    // Fill the triangle white
-    drawPath(path, Color.White)
+    // Draw left border
+    drawLine(
+        color = Color.White,
+        start = Offset(0f, 0f),
+        end = Offset(size.width / 2f, size.height),
+        strokeWidth = 3f
+    )
 
-    // Draw the top edge gold
-    val topEdge = Path().apply {
-        moveTo(0f, 0f)              // top left
-        lineTo(size.width, 0f)      // top right
-    }
-    drawPath(topEdge, Gold, style = Stroke(width = 5f)) // thicker gold line
+    // Draw right border
+    drawLine(
+        color = Color.White,
+        start = Offset(size.width, 0f),
+        end = Offset(size.width / 2f, size.height),
+        strokeWidth = 3f
+    )
 }
+
 
     }
 }
