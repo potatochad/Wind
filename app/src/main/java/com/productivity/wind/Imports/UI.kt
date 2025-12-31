@@ -193,9 +193,9 @@ fun fixedInputScroll(
 
 @Composable
 fun Slider(
-	value: 
 	min: Float = 1,
 	max: Float = 100,
+	value: Float = min
 	
 ){
 	Box(
