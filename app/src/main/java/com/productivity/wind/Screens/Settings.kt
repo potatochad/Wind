@@ -85,9 +85,8 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
    LazyRuleCard("If") {
       var check = m(Bar.privacyLocation)
 	  var show = m(no)
-
-	  Vlog("Bar.privacyLocation: ${Bar.privacyLocation}")
 	  
+
 	  selectLocation(show)
 	  
       UI.CheckRow("Activate at ", check) {
