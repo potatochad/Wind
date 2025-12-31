@@ -852,7 +852,7 @@ fun LazyMaps(
 			},
 			onMapLongClick = {
 				mapLongClick(it)
-			}
+			},
 			uiSettings = MapUiSettings(
 				zoomControlsEnabled = no
 			),
