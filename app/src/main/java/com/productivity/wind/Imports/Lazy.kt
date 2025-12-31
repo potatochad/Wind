@@ -650,12 +650,14 @@ fun LazyBigPopup(
 	BackHandler {
         backhandler()
 		onDismiss()
+		show.it = no
 	}
 	
     Popup {
 		Box(Mod.maxS().center().background(faded(Color.Black)).pointerInput(Unit) {
             detectTapGestures {
                 onDismiss()
+				show.it = no
 			}
 		}){
 			Column(
@@ -676,11 +678,13 @@ fun LazyBigPopup(
 						UI.Ctext("CANCEL"){
 							onCancel()
 							onDismiss()
+							show.it = no
 						}
 						move(50)
 						UI.Ctext("OK"){
 							onOk()
 							onDismiss()
+							show.it = no
 						}
 					}
 			}
