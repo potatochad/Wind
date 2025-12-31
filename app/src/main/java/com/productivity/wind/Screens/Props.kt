@@ -550,7 +550,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 					},
 				){
 					Bar.privacyGeo.each {
-						Vlog("location of click USED: ${it.center}")
 						GeoArea(LatLng(it.Lat, it.Lng), it.radius)
 					}
 				}
