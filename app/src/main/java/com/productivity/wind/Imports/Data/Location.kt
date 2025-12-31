@@ -242,3 +242,18 @@ fun GeoPin(
 	}
 }
 
+
+@Composable
+fun GeoArea(center: LatLng, r: Any = 100) {
+	Circle(
+        center = center,
+        radius = toD(r),
+        strokeColor = Gold,
+        fillColor = faded(Gold, 0.6f)
+    )
+	GeoPin(center)
+}
+
+
+
+
