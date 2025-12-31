@@ -546,6 +546,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         strokeColor = Gold,
         fillColor = faded(Gold, 0.6f)
     )
+	GeoPin(center)
 
 
 
