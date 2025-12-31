@@ -217,7 +217,7 @@ fun LazySlider(
 			detectTapGestures { set((it.x / size.width).coerceIn(0f, 1f)) }
 		}
 	) {
-		drawSlider(anim.value, toF(circleS))
+		drawSlider(sliderPos, toF(circleS))
 	}
 }
 
