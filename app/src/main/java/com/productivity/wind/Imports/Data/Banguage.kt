@@ -585,7 +585,7 @@ fun log(message: Str, int: Int = 200) {
     var msg = message.take(int)
     if (msg.length >= int) {msg += " ..."}
 
-    Log.w("[bad]", msg)
+    Log.e("[bad]", msg)
 }
 
 
