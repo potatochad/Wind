@@ -530,6 +530,10 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         show,
 		"Choose Locations",
 		mod = Mod.w(360).h(600),
+		
+		onOk = {},
+		onCancel = {},
+		onDismiss = {},
     ){
 		Column {
 			Box(Mod.weight(1f)) {
