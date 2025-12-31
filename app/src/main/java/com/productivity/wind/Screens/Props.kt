@@ -49,7 +49,7 @@ import androidx.compose.ui.platform.*
 import com.productivity.wind.R
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.drawscope.*
-import com.isakaro.kwik.ui.*
+import com.isakaro.kwik.ui.KwikSlider
 
 
 
