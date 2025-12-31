@@ -524,7 +524,7 @@ fun isSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
 @Composable
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 	var slider by r_m(30f)
-	var center by r { m(Bar.userLocation) }
+	var center by r_m(Bar.userLocation)
 	
     LazyBigPopup(
         show,
@@ -532,32 +532,13 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		mod = Mod.w(360).h(600),
     ){
 		Column {
-			
 			Box(Mod.weight(1f)) {
 				LazyMaps(
 					mapClick = { 
 						// LatLng
 					},
 				){
-					
-    Circle(
-        center = center,
-        radius = toD(slider),
-        strokeColor = Gold,
-        fillColor = faded(Gold, 0.6f)
-    )
-	GeoPin(center)
-
-
-
-
-
-
-	
-
-
-					
-					
+					GeoArea(center, slider)
 				}
 			}
 
@@ -568,9 +549,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			){
 				slider = it
 			}
-
-			
-
 		}
 	}
 }
