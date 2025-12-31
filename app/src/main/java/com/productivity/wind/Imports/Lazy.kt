@@ -174,25 +174,34 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 
 @Composable
 fun LazySlider(
-    modifier: Mod = Mod.space(w = 24, h=16),
-    min: Float = 1f,
-    max: Float = 200_000f,
+    mod: Mod = Mod.space(w = 24, h = 16),
+    min: Any = 1,
+    max: Any = 200_000,
     linear: Bool = no,
-	circeS: Any = 15,
-    initialPos: Float = 0f,
+    circleS: Any = 15,
+    Init: Any = min,
     onValueChange: Do_<Float>,
 ) {
-    var sliderPos by r_m(initialPos.coerceIn(0f, 1f))
+    var minF by m(toF(min))
+    var maxF by m(toF(max))
+    var thumbSize by m(toF(circleS))
+
+	val initPos = if (linear) {
+        ((toF(Init) - minF) / (maxF - minF)).coerceIn(0f, 1f)
+    } else {
+        ((ln(toF(Init) / minF) / ln(maxF / minF))).coerceIn(0f, 1f)
+	}
+    var sliderPos by m(initPos) // current slider position (0f..1f)
 
     Box(
-        modifier.pointerInput(Unit) {
+        mod.pointerInput(Unit) {
             detectDragGestures { change, _ ->
                 val newPos = (change.position.x / size.width).coerceIn(0f, 1f)
                 sliderPos = newPos
                 val value = if (linear) {
-                    min + (max - min) * sliderPos
+                    minF + (maxF - minF) * sliderPos
                 } else {
-                    min * (max / min).pow(sliderPos)
+                    minF * (maxF / minF).pow(sliderPos)
                 }
                 onValueChange(value)
             }
@@ -216,7 +225,7 @@ fun LazySlider(
             // Thumb
             drawCircle(
                 color = Gold,
-                radius = toF(circeS),
+                radius = thumbSize,
                 center = Offset(size.width * sliderPos, size.height / 2)
             )
         }
