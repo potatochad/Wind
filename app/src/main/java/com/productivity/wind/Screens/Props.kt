@@ -542,10 +542,12 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 						// LatLng
 					},
 					mapLongClick = {
-						Bar.privacyGeo.add(center, slider)
+						Bar.privacyGeo.addGeo(center, slider)
 					},
 				){
-					GeoArea(center, slider)
+					Bar.privacyGeo.each {
+						GeoArea(it.center, it.radius)
+					}
 				}
 			}
 
