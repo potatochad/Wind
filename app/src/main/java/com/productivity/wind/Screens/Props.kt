@@ -541,7 +541,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 						// LatLng
 					},
 					mapLongClick = {
-						Vlog("location of click: $it")
+						Vlog("location of click added: $it")
 						Bar.privacyGeo.add {
 							center = it
 							radius = slider
@@ -549,6 +549,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 					},
 				){
 					Bar.privacyGeo.each {
+						Vlog("location of click USED: ${it.center}")
 						GeoArea(it.center, it.radius)
 					}
 				}
