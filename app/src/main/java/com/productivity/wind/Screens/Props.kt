@@ -530,7 +530,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         show,
 		"Choose Locations",
 		mod = Mod.w(360).h(600),
-		
 		onOk = {},
 		onCancel = {},
 		onDismiss = {},
@@ -542,6 +541,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 						// LatLng
 					},
 					mapLongClick = {
+						Vlog("location of click: $it")
 						Bar.privacyGeo.add {
 							center = it
 							radius = slider
