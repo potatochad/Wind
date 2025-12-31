@@ -806,7 +806,7 @@ fun LazyMenu(
 
 @Composable
 fun LazyMaps(
-    startZoom: Float = 14f,
+    startZoom: Float = 15f,
 	id: Int = 1,
 	mapClick: Do_<LatLng> = { _ -> },
 	ui: ui = {},
