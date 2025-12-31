@@ -186,5 +186,57 @@ fun getUserLocation(
 fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = SphericalUtil.computeDistanceBetween(point, center) <= radiusMeters
 
 
+@Composable
+fun GeoPin(
+	center: LatLng
+){
+	MarkerComposable(
+		state = MarkerState(position = center)
+	) {
+		Column(
+			horizontalAlignment = Alignment.CenterHorizontally
+		) {
+			Box(
+				Mod.s(50).move(h = 10).center()
+					.background(Gold, CircleShape)
+					.border(3.dp, Color.White, CircleShape),
+			) {
+				Icon(
+					imageVector = Icons.Default.VisibilityOff,
+					contentDescription = null,
+					tint = Color.White,
+					modifier = Mod.s(24)
+				)
+			}
 
+			// Triangle (pin tip)
+			Canvas(Mod.w(36).h(24)) {
+				// Draw gold filled triangle
+				val path = Path().apply {
+					moveTo(size.width / 2f, size.height) // bottom center
+					lineTo(0f, 0f)                        // top left
+					lineTo(size.width, 0f)                // top right
+					close()
+				}
+				drawPath(path, Gold)
+				
+				// Draw left border
+				drawLine(
+					color = Color.White,
+					start = Offset(0f, 0f),
+					end = Offset(size.width / 2f, size.height),
+					strokeWidth = 9.3f
+				)
+
+				// Draw right border
+				drawLine(
+					color = Color.White,
+					start = Offset(size.width, 0f),
+					end = Offset(size.width / 2f, size.height),
+					strokeWidth = 9.3f
+				)
+			}
+		}
+	}
+}
 
