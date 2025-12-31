@@ -543,14 +543,15 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 					mapLongClick = {
 						Vlog("location of click added: $it")
 						Bar.privacyGeo.add {
-							center = it
+							Lat = it.latitude
+							Lng = it.longitude
 							radius = slider
 						}
 					},
 				){
 					Bar.privacyGeo.each {
 						Vlog("location of click USED: ${it.center}")
-						GeoArea(it.center, it.radius)
+						GeoArea(LatLng(it.Lat, it.Lng), it.radius)
 					}
 				}
 			}
