@@ -585,7 +585,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         // Circle
         Box(
             modifier = Mod
-                .s(50).move(h = 30)
+                .s(50).move(h = 10)
                 .background(Gold, CircleShape)
                 .border(3.dp, Color.White, CircleShape),
             contentAlignment = Alignment.Center
