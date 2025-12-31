@@ -547,6 +547,9 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         fillColor = faded(Gold, 0.6f)
     )
 
+
+	/*
+
     MarkerComposable(
         state = MarkerState(position = center)
     ) {
@@ -565,6 +568,55 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         )
 		}
     }
+	*/
+
+
+
+
+
+
+	MarkerComposable(
+    state = MarkerState(position = center)
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        // Circle
+        Box(
+            modifier = Mod
+                .s(50)
+                .background(Gold, CircleShape)
+                .border(3.dp, Color.White, CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+
+        // Triangle (pin tip)
+        Canvas(modifier = Modifier.size(18.dp, 12.dp)) {
+            val path = Path().apply {
+                moveTo(size.width / 2f, size.height) // bottom center
+                lineTo(0f, 0f)                        // top left
+                lineTo(size.width, 0f)                // top right
+                close()
+            }
+
+            drawPath(path, Gold)
+            drawPath(
+                path,
+                color = Color.White,
+                style = Stroke(width = 3f)
+            )
+        }
+    }
+}
+
 
 					
 					
