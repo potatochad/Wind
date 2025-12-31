@@ -191,6 +191,37 @@ fun fixedInputScroll(
 	}
 }
 
+@Composable
+fun Slider(
+	value: 
+	min: Float = 1,
+	max: Float = 100,
+	
+){
+	Box(
+		mod.pointerInput(Unit) {
+			detectTapGestures { offset ->
+                val newPos = (offset.x / size.width).coerceIn(0f, 1f)
+                sliderPos = newPos
+                val value = if (linear) {
+                    minF + (maxF - minF) * sliderPos
+                }
+                onValueChange(value)
+			}
+			detectDragGestures { change, _ ->
+                val newPos = (change.position.x / size.width).coerceIn(0f, 1f)
+                sliderPos = newPos
+                val value = if (linear) {
+                    minF + (maxF - minF) * sliderPos
+                }
+                onValueChange(value)
+            }
+		}
+	) {
+		drawSlider(sliderPos, toF(circleS))
+	}
+}
+
 
 
 object UI {
