@@ -194,6 +194,7 @@ fun LazySlider(
     var sliderPos by m(initPos) // current slider position (0f..1f)
 
     Box(
+		/*
         mod.pointerInput(Unit) {
             detectDragGestures { change, _ ->
                 val newPos = (change.position.x / size.width).coerceIn(0f, 1f)
@@ -206,6 +207,22 @@ fun LazySlider(
                 onValueChange(value)
             }
         }
+		*/
+		mod.pointerInput(Unit) {
+    fun set(x: Float) {
+        sliderPos = x
+        onValueChange(
+            if (linear) minF + (maxF - minF) * x
+            else minF * (maxF / minF).pow(x)
+        )
+    }
+
+    detectTapGestures { set((it.x / size.width).coerceIn(0f, 1f)) }
+    detectDragGestures { c, _ ->
+        set((c.position.x / size.width).coerceIn(0f, 1f))
+    }
+}
+
     ) {
 		drawSlider(sliderPos, toF(circleS))
     }
