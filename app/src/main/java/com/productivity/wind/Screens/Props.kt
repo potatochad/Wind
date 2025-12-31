@@ -614,7 +614,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         color = Color.White,
         start = Offset(0f, 0f),
         end = Offset(size.width / 2f, size.height),
-        strokeWidth = 8f
+        strokeWidth = 9f
     )
 
     // Draw right border
@@ -622,7 +622,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         color = Color.White,
         start = Offset(size.width, 0f),
         end = Offset(size.width / 2f, size.height),
-        strokeWidth = 8f
+        strokeWidth = 9f
     )
 }
 
@@ -638,7 +638,8 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 
 			LazySlider(
 				min = 5f,
-				max = 100_000f
+				max = 100_000f,
+				initialPos = slider,
 			){
 				slider = it
 			}
