@@ -372,25 +372,3 @@ fun Restore(show: mBool) {
 
 
 
-
-
-
-
-
-fun MutableList<GeoCircle>.addGeo(center: LatLng, radius: Double) {
-    add(GeoCircle(center = center, radius = radius))
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
