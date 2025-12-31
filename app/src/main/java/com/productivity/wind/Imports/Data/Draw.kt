@@ -116,3 +116,32 @@ fun DrawScope.drawPin(
 
 
 
+
+
+
+/*
+val context = LocalContext.current
+val bitmap = r {
+    val drawable = AppCompatResources.getDrawable(context, R.drawable.incognito)!!.mutate()
+
+    // Tint it white
+    drawable.setTint(Color.White.toArgb())
+
+    // Desired size in pixels
+    val width = 90
+    val height = 90
+
+    val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bmp)
+    drawable.setBounds(0, 0, width, height)
+    drawable.draw(canvas)
+    bmp
+}
+
+Marker(
+    state = rememberMarkerState(position = center),
+    icon = BitmapDescriptorFactory.fromBitmap(bitmap),
+    title = "Incognito Spot"
+)
+*/
+
