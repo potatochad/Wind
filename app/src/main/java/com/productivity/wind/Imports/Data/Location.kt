@@ -199,9 +199,10 @@ fun GeoPin(
 			horizontalAlignment = Alignment.CenterHorizontally
 		) {
 			Box(
-				Mod.s(50).move(h = 10).center()
+				Mod.s(50).move(h = 10)
 					.background(Gold, CircleShape)
 					.border(3.dp, Color.White, CircleShape),
+				contentAlignment = Alignment.Center
 			) {
 				Icon(
 					imageVector = Icons.Default.VisibilityOff,
@@ -251,6 +252,7 @@ fun GeoArea(center: LatLng, r: Any = 100) {
         strokeColor = Gold,
         fillColor = faded(Gold, 0.6f)
     )
+	
 	GeoPin(center)
 }
 
