@@ -192,42 +192,33 @@ fun LazySlider(
         ((ln(toF(Init) / minF) / ln(maxF / minF))).coerceIn(0f, 1f)
 	}
     var sliderPos by m(initPos) // current slider position (0f..1f)
-
 	
-    val scope = rememberCoroutineScope()
-val anim = r { Animatable(sliderPos) }
-
-Box(
-    mod.pointerInput(Unit) {
-
-        fun target(x: Float) {
-            val t = x.coerceIn(0f, 1f)
-
-            scope.launch {
-                anim.animateTo(t, tween(120))
-                sliderPos = anim.value
-
-                onValueChange(
-                    if (linear)
-                        minF + (maxF - minF) * sliderPos
-                    else
-                        minF * (maxF / minF).pow(sliderPos)
-                )
+	Box(
+		mod.pointerInput(Unit) {
+			fun set(x: Float) {
+				sliderPos = x
+				onValueChange(
+					if (linear) minF + (maxF - minF) * x
+					else minF * (maxF / minF).pow(x)
+				)
+			}
+			
+			detectDragGestures { change, _ ->
+				val newPos = (change.position.x / size.width).coerceIn(0f, 1f)
+				
+				sliderPos = newPos
+				val value = if (linear) {
+					minF + (maxF - minF) * sliderPos
+				} else {
+                    minF * (maxF / minF).pow(sliderPos)
+                }
+                onValueChange(value)
             }
-        }
-
-        detectTapGestures {
-            target(it.x / size.width)
-        }
-
-        detectDragGestures { c, _ ->
-            target(c.position.x / size.width)
-        }
-    }
-) {
-    drawSlider(anim.value, toF(circleS))
-}
-
+			detectTapGestures { set((it.x / size.width).coerceIn(0f, 1f)) }
+		}
+	) {
+		drawSlider(anim.value, toF(circleS))
+	}
 }
 
   
