@@ -541,7 +541,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 						// LatLng
 					},
 					mapLongClick = {
-						Vlog("location of click added: $it")
 						Bar.privacyGeo.add {
 							Lat = it.latitude
 							Lng = it.longitude
