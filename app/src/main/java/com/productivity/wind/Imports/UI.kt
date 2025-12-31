@@ -196,10 +196,11 @@ fun Slider(
 	value: Float,
 	min: Float = 1,
 	max: Float = 100,
-	
-	
-	
+	onChange: Do_<Float> 
 ){
+	var sliderPos by synch(value){
+		onChange(sliderPos)
+	}
 	Box(
 		mod.pointerInput(Unit) {
 			detectTapGestures { offset ->
