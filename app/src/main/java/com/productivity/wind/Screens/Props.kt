@@ -639,7 +639,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			LazySlider(
 				min = 5f,
 				max = 100_000f,
-				initialPos = slider,
+				Init = slider,
 			){
 				slider = it
 			}
