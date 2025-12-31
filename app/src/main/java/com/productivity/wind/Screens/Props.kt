@@ -49,7 +49,7 @@ import androidx.compose.ui.platform.*
 import com.productivity.wind.R
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.drawscope.*
-
+import com.isakaro.kwik.ui.*
 
 
 
@@ -561,6 +561,13 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			){
 				slider = it
 			}
+			var sliderPosition by remember { mutableFloatStateOf(0f) }
+
+KwikSlider(
+    value = sliderPosition,
+    onValueChange = { sliderPosition = it }
+)
+
 		}
 	}
 }
