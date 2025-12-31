@@ -74,15 +74,12 @@ ktlint {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
-
     implementation("com.isakaro:kwik.ui:1.0.10")
 
     implementation("com.google.maps.android:android-maps-utils:3.19.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.maps.android:maps-compose:6.9.0")
     implementation("com.google.android.gms:play-services-maps:18.2.0") 
-
-
     implementation("com.google.android.gms:play-services-location:21.3.0")
     implementation("org.mozilla:rhino:1.7.15")
     compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:2.1.10")
