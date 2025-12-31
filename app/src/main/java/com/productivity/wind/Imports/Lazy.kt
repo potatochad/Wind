@@ -818,6 +818,7 @@ fun LazyMaps(
     startZoom: Float = 15f,
 	id: Int = 1,
 	mapClick: Do_<LatLng> = { _ -> },
+	mapLongClick: Do_<LatLng> = { _ -> },
 	ui: ui = {},
 ) {
 	var savedMapType by s(MapType.NORMAL.name, "savedMapType, $id")
@@ -845,6 +846,9 @@ fun LazyMaps(
 			onMapClick = {
 				mapClick(it)
 			},
+			onMapLongClick = {
+				mapLongClick(it)
+			}
 			uiSettings = MapUiSettings(
 				zoomControlsEnabled = no
 			),
