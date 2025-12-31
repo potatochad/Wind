@@ -599,7 +599,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         }
 
         // Triangle (pin tip)
-        Canvas(modifier = Modifier.size(18.dp, 12.dp)) {
+        Canvas(Modifier.size(36.dp, 24.dp)) {
             val path = Path().apply {
                 moveTo(size.width / 2f, size.height) // bottom center
                 lineTo(0f, 0f)                        // top left
