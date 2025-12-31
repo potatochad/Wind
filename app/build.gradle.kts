@@ -41,7 +41,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
 
-        isCoreLibraryDesugaringEnabled = true
     }
     kotlin {
         compilerOptions {
@@ -73,9 +72,7 @@ ktlint {
 
 
 dependencies {
-    implementation("com.isakaro:kwik.ui:1.0.10")
 
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 
     implementation("com.google.maps.android:android-maps-utils:3.19.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
