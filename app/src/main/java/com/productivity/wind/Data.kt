@@ -158,7 +158,7 @@ data class WebWord(
     val id: Str = Id(),
 	var word: Str = ""
 )
-
+//top saves, end does not
 @Serializable
 data class GeoCircle(
     val id: Str = Id(),
