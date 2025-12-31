@@ -162,8 +162,8 @@ data class WebWord(
 @Serializable
 data class GeoCircle(
     val id: Str = Id(),
-    var centerStr: Str,
-    var radiusS: Double
+    var centerStr: Str ="",
+    var radiusS: Double =0.0,
 ) {
 	var center by synch(toLatLng(centerStr)) {
 		centerStr = toStr(it)
