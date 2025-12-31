@@ -548,29 +548,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
     )
 
 
-	/*
-
-    MarkerComposable(
-        state = MarkerState(position = center)
-    ) {
-        Box(
-        modifier = Mod
-            .s(50)
-            .background(Gold, CircleShape)
-            .border(3.dp, Color.White, CircleShape),
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            imageVector = Icons.Default.ChevronRight, // >
-            contentDescription = null,
-            tint = Color.White,
-            modifier = Modifier.size(24.dp)
-        )
-		}
-    }
-	*/
-
-
 
 
 
