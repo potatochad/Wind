@@ -614,7 +614,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         color = Color.White,
         start = Offset(0f, 0f),
         end = Offset(size.width / 2f, size.height),
-        strokeWidth = 3f
+        strokeWidth = 6f
     )
 
     // Draw right border
@@ -622,7 +622,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         color = Color.White,
         start = Offset(size.width, 0f),
         end = Offset(size.width / 2f, size.height),
-        strokeWidth = 3f
+        strokeWidth = 6f
     )
 }
 
