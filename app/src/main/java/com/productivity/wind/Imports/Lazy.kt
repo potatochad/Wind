@@ -207,10 +207,7 @@ fun LazySlider(
             }
         }
     ) {
-		drawSlider(
-			sliderPos,
-			circleS
-		)
+		drawSlider(sliderPos, toF(circleS))
     }
 }
 
