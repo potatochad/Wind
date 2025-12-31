@@ -42,13 +42,13 @@ import androidx.compose.foundation.gestures.*
 import androidx.compose.foundation.gestures.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.input.pointer.*
-
 import android.graphics.Canvas
 import android.graphics.Bitmap
 import androidx.appcompat.content.res.*
 import androidx.compose.ui.platform.*
 import com.productivity.wind.R
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.drawscope.*
 
 
 
