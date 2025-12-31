@@ -377,6 +377,20 @@ fun Restore(show: mBool) {
 
 
 
+fun mList<GeoCircle>.addGeo(center: Str, radius: Double) {
+    add(GeoCircle(center = center, radius = radius))
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
