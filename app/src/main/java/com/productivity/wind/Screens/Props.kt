@@ -543,7 +543,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 					},
 					mapLongClick = {
 						Bar.privacyGeo.add {
-							center = center
+							center = it
 							radius = slider
 						}
 					},
