@@ -206,7 +206,7 @@ fun Slider(
 			detectTapGestures { offset ->
                 val newPos = (offset.x / size.width).coerceIn(0f, 1f)
                 sliderPos = newPos
-                val value = if (linear) {
+                val value =
                     minF + (maxF - minF) * sliderPos
                 }
                 onValueChange(value)
