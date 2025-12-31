@@ -145,3 +145,38 @@ Marker(
 )
 */
 
+@Composable
+fun drawSlider(
+    sliderPos: Float,
+    thumbSize: Float,
+    trackColor: Color = Color.Gray,
+    fillColor: Color = Gold,
+    modifier: Modifier = Modifier
+) {
+    Canvas(modifier = modifier.fillMaxWidth()) {
+        val centerY = size.height / 2
+
+        // Track
+        drawLine(
+            color = trackColor,
+            start = Offset(0f, centerY),
+            end = Offset(size.width, centerY),
+            strokeWidth = 4f
+        )
+
+        // Filled portion
+        drawLine(
+            color = fillColor,
+            start = Offset(0f, centerY),
+            end = Offset(size.width * sliderPos, centerY),
+            strokeWidth = 4f
+        )
+
+        // Thumb
+        drawCircle(
+            color = fillColor,
+            radius = thumbSize,
+            center = Offset(size.width * sliderPos, centerY)
+        )
+    }
+}
