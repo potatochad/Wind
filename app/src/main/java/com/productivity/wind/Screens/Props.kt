@@ -537,6 +537,9 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 					mapClick = { 
 						// LatLng
 					},
+					mapLongClick = {
+						
+					},
 				){
 					GeoArea(center, slider)
 				}
