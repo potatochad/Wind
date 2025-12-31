@@ -207,28 +207,10 @@ fun LazySlider(
             }
         }
     ) {
-        Canvas(Mod.maxW()) {
-            // Track
-            drawLine(
-                color = Color.Gray,
-                start = Offset(0f, size.height / 2),
-                end = Offset(size.width, size.height / 2),
-                strokeWidth = 4f
-            )
-            // Filled portion
-            drawLine(
-                color = Gold,
-                start = Offset(0f, size.height / 2),
-                end = Offset(size.width * sliderPos, size.height / 2),
-                strokeWidth = 4f
-            )
-            // Thumb
-            drawCircle(
-                color = Gold,
-                radius = thumbSize,
-                center = Offset(size.width * sliderPos, size.height / 2)
-            )
-        }
+		drawSlider(
+			sliderPos,
+			circleS
+		)
     }
 }
 
