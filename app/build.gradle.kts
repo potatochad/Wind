@@ -10,6 +10,8 @@ plugins {
 }
 
 android {
+
+    
     namespace = "com.productivity.wind"
 
     compileSdk = 36
@@ -46,6 +48,11 @@ android {
         compilerOptions {
            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
         }
+    }
+    kotlinOptions {
+        freeCompilerArgs += listOf(
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        )
     }
 
     buildFeatures {
