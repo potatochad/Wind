@@ -57,27 +57,23 @@ import kotlin.math.*
 import androidx.compose.ui.geometry.*
 
 
-
-
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun KwikSlider(
-    modifier: Modifier = Modifier,
+fun TestSlider(
+    mod: Mod = Mod,
     value: Float = 10f,
-    onValueChange: (Float) -> Unit,
+    onChange: Do_<Float>,
     valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
-    enabled: Boolean = true,
-    thumb: @Composable () -> Unit = {
+    enabled: Bool = yes,
+    thumb: ui = {
         SliderDefaults.Thumb(
-            interactionSource = remember { MutableInteractionSource() },
+            interactionSource = r { MutableInteractionSource() },
             thumbSize = DpSize(10.dp, 25.dp)
         )
     },
-    track: @Composable (SliderState) -> Unit = { sliderState ->
+    track: ui_<SliderState> = {
         SliderDefaults.Track(
-            sliderState = sliderState,
-            modifier = Modifier.height(6.dp),
+            sliderState = it,
+            modifier = Mod.h(6),
             thumbTrackGapSize = 0.dp,
             colors = SliderDefaults.colors(
                 activeTrackColor = MaterialTheme.colorScheme.primary,
@@ -89,15 +85,15 @@ fun KwikSlider(
     }
 ) {
 
-    var sliderPosition by remember { mutableFloatStateOf(value) }
-    val interactionSource = remember { MutableInteractionSource() }
+    var sliderPosition by r { mutableFloatStateOf(value) }
+    val interactionSource = r { MutableInteractionSource() }
 
     Slider(
-        modifier = modifier,
+        modifier = mod,
         value = sliderPosition,
         onValueChange = {
             sliderPosition = it
-            onValueChange(it)
+            onChange(it)
         },
         interactionSource = interactionSource,
         valueRange = valueRange,
