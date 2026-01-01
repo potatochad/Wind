@@ -56,7 +56,7 @@ import android.os.*
 import kotlin.math.*
 import androidx.compose.ui.geometry.*
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestSlider(
     mod: Mod = Mod,
