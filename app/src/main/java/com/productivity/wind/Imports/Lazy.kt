@@ -57,6 +57,83 @@ import kotlin.math.*
 import androidx.compose.ui.geometry.*
 
 
+
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun KwikSlider(
+    modifier: Modifier = Modifier,
+    value: Float = 10f,
+    onValueChange: (Float) -> Unit,
+    valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
+    enabled: Boolean = true,
+    thumb: @Composable () -> Unit = {
+        SliderDefaults.Thumb(
+            interactionSource = remember { MutableInteractionSource() },
+            thumbSize = DpSize(10.dp, 25.dp)
+        )
+    },
+    track: @Composable (SliderState) -> Unit = { sliderState ->
+        SliderDefaults.Track(
+            sliderState = sliderState,
+            modifier = Modifier.height(6.dp),
+            thumbTrackGapSize = 0.dp,
+            colors = SliderDefaults.colors(
+                activeTrackColor = MaterialTheme.colorScheme.primary,
+                inactiveTrackColor = Color.LightGray,
+                activeTickColor = Color.Transparent,
+                inactiveTickColor = Color.Transparent
+            )
+        )
+    }
+) {
+
+    var sliderPosition by remember { mutableFloatStateOf(value) }
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Slider(
+        modifier = modifier,
+        value = sliderPosition,
+        onValueChange = {
+            sliderPosition = it
+            onValueChange(it)
+        },
+        interactionSource = interactionSource,
+        valueRange = valueRange,
+        enabled = enabled,
+        track = {
+            track(it)
+        },
+        thumb = {
+            thumb()
+        }
+    )
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @Composable
 fun LazyTheme(content: ui) {
     val appColorScheme = darkColorScheme(
