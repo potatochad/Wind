@@ -560,6 +560,16 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 				slider = it
 			}
 
+
+			var sliderPosition by remember { mutableFloatStateOf(10f) }
+
+    KwikSlider(
+        value = sliderPosition,
+        onValueChange = { value ->
+            sliderPosition = value
+        }
+    )
+
 		}
 	}
 }
