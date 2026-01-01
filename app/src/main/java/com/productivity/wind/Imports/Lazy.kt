@@ -201,8 +201,12 @@ fun LazySlider(
 			}
 			detectDragGestures { drag, _ ->
 				updatePos(drag.position.x) 
+				Vlog("dragging")
 			}
-			detectTapGestures { updatePos(it.x) }
+			detectTapGestures { 
+				updatePos(it.x) 
+				Vlog("click")
+			}
 		}
 	) {
 		drawSlider(sliderPos, toF(circleS))
