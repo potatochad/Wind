@@ -154,14 +154,16 @@ fun CopyTskUI(tsk: CopyTsk) {
 	}
 	
 	RunOnce(done){
-		Vlog("done")
-		Bar.copyTsk.edit(tsk){
-			tsk.DailyDone +=1
-			tsk.input = ""
-			tsk.goodStr = 0
+		if (done) {
+			Vlog("done")
+			Bar.copyTsk.edit(tsk){
+				tsk.DailyDone +=1
+				tsk.input = ""
+				tsk.goodStr = 0
+			}
+			Bar.funTime += tsk.Done_Worth
+			txtScroll.scroll(-maxInt)
 		}
-        Bar.funTime += tsk.Done_Worth
-		txtScroll.scroll(-maxInt)
 	}
 
     
