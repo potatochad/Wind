@@ -97,7 +97,8 @@ fun TestSlider(
                 activeTickColor = Color.Transparent,
                 inactiveTickColor = Color.Transparent
             ),
-			drawStopIndicator = null
+			drawStopIndicator = null,
+			drawTick = { _, _ -> }
         )
     },
 	onChange: Do_<Float>,
