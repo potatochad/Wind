@@ -192,11 +192,6 @@ fun <T> track(value: () -> T): State<T> = r { derivedStateOf(value) }
 fun <T> mList() = mutableStateListOf<T>()
 
 
-@Composable
-fun Mod.Vscroll(r_v: Scroll = Scroll()): Mod{return this.scroll(yes, no, r_v)}
-@Composable
-fun Mod.Hscroll(r_h: Scroll = Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
-
 fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Mod =
     this.then(
         Modifier.offset(
