@@ -562,11 +562,12 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			){
 				slider = it
 
-				if (selectedItem != null) {
-					Bar.privacyGeo.edit(selectedItem) {
-						it.radius = slider
+				selectedItem?.let { item ->
+					Bar.privacyGeo.edit(item) {
+						radius = slider
 					}
 				}
+
 			}
 		}
 	}
