@@ -257,7 +257,7 @@ fun GeoArea(center: LatLng, r: Any = 100) {
 
 
 
-fun detectGeoClicks(clickedLatLng: LatLng, geoList: List<GeoCircle>) {
+fun detectGeoClicks(clickedLatLng: LatLng, geoList: mList<GeoCircle>) {
     geoList.each {
         val distanceMeters = distanceBetween(
             clickedLatLng.latitude, clickedLatLng.longitude,
