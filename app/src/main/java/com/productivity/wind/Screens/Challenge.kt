@@ -47,6 +47,7 @@ import com.productivity.wind.Imports.Data.*
 import androidx.compose.ui.focus.*
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.*
+import androidx.compose.foundation.lazy.*
 
 @Composable
 fun Challenge() {
