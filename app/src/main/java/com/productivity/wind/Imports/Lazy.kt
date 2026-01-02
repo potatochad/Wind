@@ -210,36 +210,12 @@ fun LazySlider(
 		}
 	) {
 		Slider(
-	value: Float = 10f,
-    mod: Mod = Mod.space(h=10),
-    valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
-    enabled: Bool = yes,
-    thumb: ui = {
-        SliderDefaults.Thumb(
-            interactionSource = r { MutableInteractionSource() },
-            thumbSize = DpSize(16.dp, 16.dp),
-			colors = SliderDefaults.colors(
-                thumbColor = Gold
-            )
-        )
-    },
-    track: ui_<SliderState> = {
-        SliderDefaults.Track(
-            sliderState = it,
-            modifier = Mod.h(3),
-            thumbTrackGapSize = 0.dp,
-            colors = SliderDefaults.colors(
-                activeTrackColor = Gold,
-                inactiveTrackColor = Color.Gray,
-                activeTickColor = Color.Transparent,
-                inactiveTickColor = Color.Transparent,
-            ),
-			drawStopIndicator = null,
-			drawTick = { _, _ -> }
-        )
-    },
-	onChange: Do_<Float>,
-			)
+			value = 10f,
+			// mod: Mod = Mod.space(h=10),
+			valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
+			enabled = yes,
+			onChange: Do_<Float>,
+		)
 	}
 }
 
