@@ -159,7 +159,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			tsk.goodStr = 0
 		}
         Bar.funTime += tsk.Done_Worth
-		txtScroll.goTo(0)
+		txtScroll.scroll(-10)
 	}
 
     
