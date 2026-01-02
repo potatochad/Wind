@@ -642,7 +642,7 @@ fun LazyBigPopup(
 				}
 				
 					
-				UI.End(Mod.space(w = 12)) {
+				UI.End(Mod.space(bottom = 10, end = 16)) {
 						UI.Ctext("CANCEL"){
 							onCancel()
 							onDismiss()
