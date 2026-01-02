@@ -189,7 +189,7 @@ fun LazySlider(
         )
     }
 
-    Slider(
+    BasicSlider(
         value = sliderPos,
         onValueChange = { pos ->
             sliderPos = pos
