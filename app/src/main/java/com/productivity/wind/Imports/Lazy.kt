@@ -60,7 +60,7 @@ import androidx.compose.ui.geometry.*
 @Composable
 fun TestSlider(
 	value: Float = 10f,
-    mod: Mod = Mod,
+    mod: Mod = Mod.space(h=10),
     valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
     enabled: Bool = yes,
     thumb: ui = {
