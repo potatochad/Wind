@@ -72,7 +72,7 @@ import androidx.compose.ui.geometry.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TestSlider(
+fun Slider(
 	value: Float = 10f,
     mod: Mod = Mod.space(h=10),
     valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
@@ -95,7 +95,7 @@ fun TestSlider(
                 activeTrackColor = Gold,
                 inactiveTrackColor = Color.Gray,
                 activeTickColor = Color.Transparent,
-                inactiveTickColor = Color.Transparent
+                inactiveTickColor = Color.Transparent,
             ),
 			drawStopIndicator = null,
 			drawTick = { _, _ -> }
