@@ -443,7 +443,7 @@ fun Input(
 @Composable
 fun BasicSlider(
 	value: Float = 10f,
-    mod: Mod = Mod.space(h=10),
+    mod: Mod = Mod.space(h=15),
     valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
     enabled: Bool = yes,
     thumb: ui = {
