@@ -151,8 +151,6 @@ suspend fun Scroll.scroll(it: Any) = animateScrollBy(toF(it))
 suspend fun LazyList.scroll(it: Any) = animateScrollBy(toF(it))
 
 fun Scroll.goTo(it: Any) = wait{ scrollTo(toInt(it)) }
-fun LazyList.goTo(it: Any) = wait{ scrollTo(toInt(it)) }
-
 
 val Scroll.size: Int
     get() = maxValue
