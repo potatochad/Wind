@@ -182,6 +182,17 @@ fun CopyTskUI(tsk: CopyTsk) {
         text = goodStrCopyTsk(tsk),
         modifier = Mod.h(0, 100).w(0, 300).Vscroll(txtScroll)
     )
+	LazyColumn(
+		modifier = Mod.space(h = 15).h(100).maxW(),
+		state = txtScroll
+	) {
+		items(tasks) { task ->
+			Text(
+				text = goodStrCopyTsk(task),
+				modifier = Mod.maxW()
+			)
+		}
+	}
     move(h = 20)
 
 	var txt = r_m(tsk.input)
