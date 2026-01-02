@@ -134,7 +134,7 @@ import android.os.*
 import com.google.maps.android.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.foundation.shape.*
-
+import kotlin.math.*
 
 
 
@@ -257,13 +257,13 @@ fun GeoArea(center: LatLng, r: Any = 100) {
 
 
 
-fun detectGeoClicks(clickedLatLng: LatLng, geoList: List<Geo>) {
-    geoList.each { geo ->
+fun detectGeoClicks(clickedLatLng: LatLng, geoList: List<GeoCircle>) {
+    geoList.each {
         val distanceMeters = distanceBetween(
             clickedLatLng.latitude, clickedLatLng.longitude,
-            geo.Lat, geo.Lng
+            it.Lat, it.Lng
         )
-        if (distanceMeters <= geo.radius) {
+        if (distanceMeters <= it.radius) {
             Vlog("Clicked near GeoCircle visually!")
         }
     }
@@ -274,11 +274,11 @@ fun distanceBetween(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Flo
     val R = 6371000.0 // meters
     val dLat = Math.toRadians(lat2 - lat1)
     val dLon = Math.toRadians(lng2 - lng1)
-    val a = kotlin.math.sin(dLat/2).pow(2.0) +
-            kotlin.math.cos(Math.toRadians(lat1)) *
-            kotlin.math.cos(Math.toRadians(lat2)) *
-            kotlin.math.sin(dLon/2).pow(2.0)
-    val c = 2 * kotlin.math.atan2(sqrt(a), sqrt(1-a))
+    val a = sin(dLat/2).pow(2.0) +
+            cos(Math.toRadians(lat1)) *
+            cos(Math.toRadians(lat2)) *
+            sin(dLon/2).pow(2.0)
+    val c = 2 * atan2(sqrt(a), sqrt(1-a))
     return (R * c).toFloat()
 }
 
