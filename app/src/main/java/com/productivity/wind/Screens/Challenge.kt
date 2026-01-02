@@ -129,7 +129,7 @@ fun CopyPaste(id: Str ="") {
 
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
-    val txtScroll = r_Scroll()
+    val txtScroll = LazyList()
 	val inputScroll = r_Scroll()
 	var scrollBy by r_m(toF(AppW)/180f)
 
