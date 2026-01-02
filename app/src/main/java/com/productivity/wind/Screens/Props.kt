@@ -563,12 +563,9 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 
 			var sliderPosition by remember { mutableFloatStateOf(10f) }
 
-    TestSlider(
-        value = sliderPosition,
-        onChange = {
-            sliderPosition = it
-        }
-    )
+    TestSlider(sliderPosition){
+		sliderPosition = it
+	}
 
 		}
 	}
