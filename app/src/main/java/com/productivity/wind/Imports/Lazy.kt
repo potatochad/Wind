@@ -174,50 +174,34 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 
 @Composable
 fun LazySlider(
-    mod: Mod = Mod.space(w = 24, h = 16),
-    min: Any = 1,
-    max: Any = 200_000,
-    linear: Bool = no,
-    circleS: Any = 15,
-    Init: Any = min,
-    onValueChange: Do_<Float>,
+    mod: Modifier = Modifier.size(width = 24.dp, height = 16.dp),
+    min: Float = 1f,
+    max: Float = 200_000f,
+    linear: Boolean = false,
+    circleS: Float = 15f,
+    init: Float = min,
+    onValueChange: (Float) -> Unit
 ) {
-    var minF by m(toF(min))
-    var maxF by m(toF(max))
-    var thumbSize by m(toF(circleS))
+    var sliderPos by remember {
+        mutableStateOf(
+            if (linear) ((init - min) / (max - min)).coerceIn(0f, 1f)
+            else (ln(init / min) / ln(max / min)).coerceIn(0f, 1f)
+        )
+    }
 
-	val initPos = if (linear) {
-        ((toF(Init) - minF) / (maxF - minF)).coerceIn(0f, 1f)
-    } else {
-        ((ln(toF(Init) / minF) / ln(maxF / minF))).coerceIn(0f, 1f)
-	}
-    var sliderPos by m(initPos) // current slider position (0f..1f)
-	
-	Box(
-		mod.pointerInput(Unit) {
-			fun updatePos(x: Float) {
-				sliderPos = (x / size.width).coerceIn(0f, 1f)
-				onValueChange(if (linear) minF + (maxF - minF) * sliderPos else minF * (maxF / minF).pow(sliderPos))
-			}
-			detectDragGestures { drag, _ ->
-				updatePos(drag.position.x) 
-				Vlog("dragging")
-			}
-			detectTapGestures { 
-				updatePos(it.x) 
-				Vlog("click")
-			}
-		}
-	) {
-		Slider(
-			value = 10f,
-			// mod: Mod = Mod.space(h=10),
-			valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
-			enabled = yes,
-			onChange: Do_<Float>,
-		)
-	}
+    Slider(
+        value = sliderPos,
+        onValueChange = { pos ->
+            sliderPos = pos
+            val value = if (linear) min + (max - min) * sliderPos
+                        else min * (max / min).pow(sliderPos)
+            onValueChange(value)
+        },
+        valueRange = 0f..1f,
+        modifier = mod
+    )
 }
+
 
   
   
