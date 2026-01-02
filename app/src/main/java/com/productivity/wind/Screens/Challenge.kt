@@ -159,7 +159,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			tsk.goodStr = 0
 		}
         Bar.funTime += tsk.Done_Worth
-		txtScroll.scroll(-10)
+		txtScroll.scroll(-maxInt)
 	}
 
     
@@ -178,17 +178,13 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
     }
     move(8)
-    Text(
-        text = goodStrCopyTsk(tsk),
-        modifier = Mod.h(0, 100).w(0, 300).Vscroll(txtScroll)
-    )
 	LazyColumn(
 		modifier = Mod.space(h = 15).h(100).maxW(),
 		state = txtScroll
 	) {
-		items(tasks) { task ->
+		item {
 			Text(
-				text = goodStrCopyTsk(task),
+				text = goodStrCopyTsk(tsk),
 				modifier = Mod.maxW()
 			)
 		}
