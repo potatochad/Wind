@@ -61,28 +61,31 @@ import androidx.compose.ui.geometry.*
 fun TestSlider(
     mod: Mod = Mod,
     value: Float = 10f,
-    onChange: Do_<Float>,
     valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
     enabled: Bool = yes,
     thumb: ui = {
         SliderDefaults.Thumb(
             interactionSource = r { MutableInteractionSource() },
-            thumbSize = DpSize(10.dp, 25.dp)
+            thumbSize = DpSize(16.dp, 16.dp),
+			colors = SliderDefaults.colors(
+                thumbColor = Gold
+            )
         )
     },
     track: ui_<SliderState> = {
         SliderDefaults.Track(
             sliderState = it,
-            modifier = Mod.h(6),
+            modifier = Mod.h(3),
             thumbTrackGapSize = 0.dp,
             colors = SliderDefaults.colors(
-                activeTrackColor = MaterialTheme.colorScheme.primary,
-                inactiveTrackColor = Color.LightGray,
+                activeTrackColor = Gold,
+                inactiveTrackColor = Color.Gray,
                 activeTickColor = Color.Transparent,
                 inactiveTickColor = Color.Transparent
             )
         )
-    }
+    },
+	onChange: Do_<Float>,
 ) {
 
     var sliderPosition by r { mutableFloatStateOf(value) }
