@@ -553,20 +553,12 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			}
 
 			LazySlider(
+				value = slider,
 				min = 5f,
 				max = 100_000f,
-				Init = slider,
 			){
 				slider = it
 			}
-
-
-			var sliderPosition by remember { mutableFloatStateOf(10f) }
-
-    Slider(sliderPosition){
-		sliderPosition = it
-	}
-
 		}
 	}
 }
