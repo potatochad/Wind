@@ -145,7 +145,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			if (tsk.goodStr > 30) {
 				val done = toF(tsk.goodStr)*(scrollBy)
 			
-				txtScroll.goTo(done)
+				txtScroll.scroll(done)
 			}
 			inputScroll.toBottom()
 		}
