@@ -135,9 +135,9 @@ typealias Scroll = ScrollState
 typealias LazyList = LazyListState
 
 @Composable
-fun Mod.Vscroll(r_v: Scroll = Scroll()): Mod{return this.scroll(yes, no, r_v)}
+fun Mod.Vscroll(r_v: Scroll = Scroll()) = scroll(yes, no, r_v)
 @Composable
-fun Mod.Hscroll(r_h: Scroll = Scroll()): Mod{return this.scroll(no, yes, r_h=r_h)}
+fun Mod.Hscroll(r_h: Scroll = Scroll()) = scroll(no, yes, r_h=r_h)
 
 fun Scroll.toBottom() = wait{ scrollTo(maxValue) }
 
