@@ -174,7 +174,6 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 
 @Composable
 fun LazySlider(
-    mod: Modifier = Modifier.size(width = 24.dp, height = 16.dp),
     min: Float = 1f,
     max: Float = 200_000f,
     linear: Boolean = false,
@@ -191,15 +190,13 @@ fun LazySlider(
 
     BasicSlider(
         value = sliderPos,
-        onValueChange = { pos ->
+        valueRange = 0f..1f,
+    ) { pos ->
             sliderPos = pos
             val newValue = if (linear) min + (max - min) * sliderPos
                            else min * (max / min).pow(sliderPos)
             onChange(newValue)
-        },
-        valueRange = 0f..1f,
-        modifier = mod
-    )
+    }
 }
 
 
