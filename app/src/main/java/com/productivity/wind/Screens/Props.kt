@@ -537,6 +537,19 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 				LazyMaps(
 					mapClick = { 
 						// LatLng
+						Bar.privacyGeo.forEach { geo ->
+							val circleScreen = map.latLngToScreen(geo.Lat, geo.Lng)
+							val clickScreen = map.latLngToScreen(clickLatLng.latitude, clickLatLng.longitude)
+
+
+							val dx = clickScreen.x - circleScreen.x
+							val dy = clickScreen.y - circleScreen.y
+							val distancePx = sqrt(dx*dx + dy*dy)
+
+							if (distancePx <= geo.radiusPx) {
+								Vlog("Clicked near GeoCircle visually!")
+							}
+						}
 					},
 					mapLongClick = {
 						Bar.privacyGeo.add {
