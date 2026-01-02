@@ -179,13 +179,13 @@ fun LazySlider(
     max: Float = 200_000f,
     linear: Boolean = false,
     circleS: Float = 15f,
-    init: Float = min,
-    onValueChange: (Float) -> Unit
+    value: Float = min,
+    onChange: (Float) -> Unit
 ) {
-    var sliderPos by remember {
+    var sliderPos by remember(value, linear, min, max) {
         mutableStateOf(
-            if (linear) ((init - min) / (max - min)).coerceIn(0f, 1f)
-            else (ln(init / min) / ln(max / min)).coerceIn(0f, 1f)
+            if (linear) ((value - min) / (max - min)).coerceIn(0f, 1f)
+            else ((ln(value / min)) / ln(max / min)).coerceIn(0f, 1f)
         )
     }
 
@@ -193,9 +193,9 @@ fun LazySlider(
         value = sliderPos,
         onValueChange = { pos ->
             sliderPos = pos
-            val value = if (linear) min + (max - min) * sliderPos
-                        else min * (max / min).pow(sliderPos)
-            onValueChange(value)
+            val newValue = if (linear) min + (max - min) * sliderPos
+                           else min * (max / min).pow(sliderPos)
+            onChange(newValue)
         },
         valueRange = 0f..1f,
         modifier = mod
