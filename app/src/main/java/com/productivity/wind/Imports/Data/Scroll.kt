@@ -123,11 +123,11 @@ var Scroll.it: Int
         }
     }
     
-var LazyList.it: Int
-    get() = this.value
+var LazyListState.it: Int
+    get() = firstVisibleItemIndex
     set(value) {
         CoroutineScope(Dispatchers.Main).launch {
-            this@it.scrollTo(value)
+            scrollToItem(value)
         }
     }
 
