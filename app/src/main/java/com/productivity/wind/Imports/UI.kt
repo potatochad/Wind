@@ -63,6 +63,19 @@ import kotlin.concurrent.schedule
 import java.io.*
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.*
+
+
+import android.text.*
+/*
+import android.text.style.ForegroundColorSpan
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+*/
+
+
+
+
 //region log
 
 private var lastToast: Toast? = null
@@ -190,6 +203,44 @@ fun fixedInputScroll(
 		scroll.toBottom()
 	}
 }
+
+
+@Composable
+fun FastTextView(
+    text: AnnotatedString, // use AnnotatedString like in Compose
+    modifier: Modifier = Modifier
+) {
+    AndroidView(
+        factory = { context ->
+            TextView(context).apply {
+                setTextIsSelectable(false)
+                isVerticalScrollBarEnabled = true
+                movementMethod = ScrollingMovementMethod()
+            }
+        },
+        update = { textView ->
+            val spannable = SpannableString(text.text)
+            
+            // Apply Compose SpanStyles to Android Spannable
+            text.spanStyles.forEach { styleRange ->
+                val color = styleRange.item.color?.toArgb()
+                if (color != null) {
+                    spannable.setSpan(
+                        ForegroundColorSpan(color),
+                        styleRange.start,
+                        styleRange.end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+                // You can add more spans: TypefaceSpan, StyleSpan, UnderlineSpan, etc.
+            }
+            
+            textView.text = spannable
+        },
+        modifier = modifier
+    )
+}
+
 
 
 
