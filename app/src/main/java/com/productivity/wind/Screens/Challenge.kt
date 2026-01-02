@@ -132,6 +132,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = LazyList()
 	val inputScroll = r_Scroll()
 	var scrollBy by r_m(toF(AppW)/180f)
+	var done by r_m(no)
 
     RunOnce(tsk.goodStr) {
 		if (tsk.goodStr > 30) {
@@ -151,7 +152,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 	}
 	
-	fun Done() {
+	RunOnce(done){
 		Vlog("done")
 		Bar.copyTsk.edit(tsk){
 			tsk.DailyDone +=1
@@ -205,7 +206,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			}
 			
 			if (tsk.input == tsk.txt) {
-				Done()
+				done = yes
 				txt.it=""
 			}
         }
