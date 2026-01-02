@@ -138,10 +138,6 @@ import androidx.compose.foundation.shape.*
 
 
 
-
-
-
-
 fun locationOn(): Bool {
     val lm = App.getSystemService(LocationManager::class.java)
     return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
@@ -262,9 +258,7 @@ fun GeoArea(center: LatLng, r: Any = 100) {
 
 
 fun detectGeoClicks(clickedLatLng: LatLng, geoList: List<Geo>) {
-    // Use camera projection or a helper to convert LatLng -> screen
-    // For simplicity, we can just use distance in meters for now
-    geoList.forEach { geo ->
+    geoList.each { geo ->
         val distanceMeters = distanceBetween(
             clickedLatLng.latitude, clickedLatLng.longitude,
             geo.Lat, geo.Lng
