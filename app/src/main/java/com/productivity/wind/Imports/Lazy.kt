@@ -56,6 +56,20 @@ import android.os.*
 import kotlin.math.*
 import androidx.compose.ui.geometry.*
 
+
+
+/*thumbColor: Color = Color.Unspecified,
+        activeTrackColor: Color = Color.Unspecified,
+        activeTickColor: Color = Color.Unspecified,
+        inactiveTrackColor: Color = Color.Unspecified,
+        inactiveTickColor: Color = Color.Unspecified,
+        disabledThumbColor: Color = Color.Unspecified,
+        disabledActiveTrackColor: Color = Color.Unspecified,
+        disabledActiveTickColor: Color = Color.Unspecified,
+        disabledInactiveTrackColor: Color = Color.Unspecified,
+        disabledInactiveTickColor: Color = Color.Unspecified,
+    ): SliderColors =*/
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestSlider(
@@ -82,7 +96,8 @@ fun TestSlider(
                 inactiveTrackColor = Color.Gray,
                 activeTickColor = Color.Transparent,
                 inactiveTickColor = Color.Transparent
-            )
+            ),
+			drawStopIndicator = null
         )
     },
 	onChange: Do_<Float>,
