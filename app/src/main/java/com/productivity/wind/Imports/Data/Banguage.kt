@@ -441,7 +441,7 @@ fun Input(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Slider(
+fun BasicSlider(
 	value: Float = 10f,
     mod: Mod = Mod.space(h=10),
     valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
