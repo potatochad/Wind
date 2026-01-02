@@ -523,7 +523,11 @@ fun isSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
 fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 	var slider by r_m(30f)
 	var center by r_m(Bar.userLocation)
-	var selectedItem by r { mutableStateOf<GeoCircle?>(null) }
+	var selectedItem by r { mutableStateOf<GeoCircle>(GeoCircle(
+    Lat = ,
+    Lng = ,
+    radius = 
+)) }
 	
     LazyBigPopup(
         show,
