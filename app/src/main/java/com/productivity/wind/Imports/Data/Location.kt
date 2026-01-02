@@ -259,3 +259,33 @@ fun GeoArea(center: LatLng, r: Any = 100) {
 
 
 
+
+
+fun detectGeoClicks(clickedLatLng: LatLng, geoList: List<Geo>) {
+    // Use camera projection or a helper to convert LatLng -> screen
+    // For simplicity, we can just use distance in meters for now
+    geoList.forEach { geo ->
+        val distanceMeters = distanceBetween(
+            clickedLatLng.latitude, clickedLatLng.longitude,
+            geo.Lat, geo.Lng
+        )
+        if (distanceMeters <= geo.radius) {
+            Vlog("Clicked near GeoCircle visually!")
+        }
+    }
+}
+
+// Haversine formula
+fun distanceBetween(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Float {
+    val R = 6371000.0 // meters
+    val dLat = Math.toRadians(lat2 - lat1)
+    val dLon = Math.toRadians(lng2 - lng1)
+    val a = kotlin.math.sin(dLat/2).pow(2.0) +
+            kotlin.math.cos(Math.toRadians(lat1)) *
+            kotlin.math.cos(Math.toRadians(lat2)) *
+            kotlin.math.sin(dLon/2).pow(2.0)
+    val c = 2 * kotlin.math.atan2(sqrt(a), sqrt(1-a))
+    return (R * c).toFloat()
+}
+
+
