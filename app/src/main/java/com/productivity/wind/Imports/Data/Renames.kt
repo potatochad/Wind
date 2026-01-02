@@ -177,6 +177,7 @@ typealias DoStr = (Str) -> Unit
 typealias DoInt = (Int) -> Unit        
 typealias m_<T> = MutableState<T>
 typealias mBool= MutableState<Bool>
+typealias mList<T> = MutableList<T>
 typealias Str = String
 typealias Bool = Boolean
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
