@@ -59,8 +59,8 @@ import androidx.compose.ui.geometry.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestSlider(
+	value: Float = 10f,
     mod: Mod = Mod,
-    value: Float = 10f,
     valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
     enabled: Bool = yes,
     thumb: ui = {
