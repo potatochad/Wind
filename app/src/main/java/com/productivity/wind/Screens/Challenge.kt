@@ -149,7 +149,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		RunOnce {
 			wait {
 				if (goodStr > 30) {
-					val done = toF(tsk.goodStr)*(scrollBy)
+					val done = toF(goodStr)*(scrollBy)
 					txtScroll.goTo(done)
 				}
 				inputScroll.toBottom()
@@ -161,7 +161,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 			Bar.copyTsk.edit(tsk){
 				tsk.DailyDone +=1
 				tsk.input = ""
-				tsk.goodStr = 0
 			}
 			Bar.funTime += tsk.Done_Worth
 			txtScroll.goTo(0)
@@ -198,13 +197,13 @@ fun CopyTskUI(tsk: CopyTsk) {
 			if (goodStr < tsk.goodStr()) {
 				Bar.LettersTyped++
 				Bar.funTime += tsk.Letter_Worth
-				goodStr = tsk.goodStr()
 			}
 			
 			if (tsk.input == tsk.txt) {
 				done = yes
 				txt.it=""
 			}
+			goodStr = tsk.goodStr()
         }
     }
 }
