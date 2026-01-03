@@ -94,7 +94,7 @@ fun CopyPaste(id: Str ="") {
 		  Letter_Worth.it = tsk.Letter_Worth
 		  
 		  wait {
-			  inputScroll.goTo(tsk.goodStr * 2)
+			  inputScroll.goTo(tsk.goodStr() * 2)
 		  }
 	  }
     }
@@ -133,20 +133,22 @@ fun CopyPaste(id: Str ="") {
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = r_Scroll()
-	var bigText by r_m(UIStr(tsk.txt))
 	val inputScroll = r_Scroll()
 	var scrollBy by r_m(toF(AppW)/180f)
+	
+	var bigText by r_m(UIStr(tsk.txt))
+	var goodStr by r_m(tsk.goodStr())
+
 	var done by r_m(no)
 
-    RunOnce(tsk.goodStr) {
-		if (tsk.goodStr > 30) {
+    RunOnce(goodStr) {
+		if (goodStr > 30) {
 			txtScroll.scroll(scrollBy)
-			log("scrollBy: $scrollBy, ${tsk.goodStr}")
+			log("scrollBy: $scrollBy")
 		}
 		RunOnce {
-			Bar.copyTsk.edit(tsk) { tsk.goodStr = tsk.goodStr() }
 			wait {
-				if (tsk.goodStr > 30) {
+				if (goodStr > 30) {
 					val done = toF(tsk.goodStr)*(scrollBy)
 					txtScroll.goTo(done)
 				}
@@ -193,10 +195,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 			
 			Bar.copyTsk.edit(tsk) { tsk.input = it }
 			
-			if (tsk.goodStr < tsk.goodStr()) {
+			if (goodStr < tsk.goodStr()) {
 				Bar.LettersTyped++
 				Bar.funTime += tsk.Letter_Worth
-				Bar.copyTsk.edit(tsk) { tsk.goodStr = tsk.goodStr() }
+				goodStr = tsk.goodStr()
 			}
 			
 			if (tsk.input == tsk.txt) {
