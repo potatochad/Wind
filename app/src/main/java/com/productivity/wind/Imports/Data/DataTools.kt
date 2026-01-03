@@ -337,10 +337,11 @@ fun Restore(show: mBool) {
                 ?.bufferedReader()
                 ?.useLines { lines ->
                     lines.forEach { lineEncrypted ->
+						var line by m("")
 						if (Bar.encryptedBackup) {
-							var line = decrypt(lineEncrypted, 132)
+							line = decrypt(lineEncrypted, 132)
 						} else {
-							var line = lineEncrypted
+							line = lineEncrypted
 						}
 
 						
