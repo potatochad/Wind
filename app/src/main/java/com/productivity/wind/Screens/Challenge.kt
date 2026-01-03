@@ -130,7 +130,7 @@ fun CopyPaste(id: Str ="") {
 
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
-    val txtScroll = LazyList()
+    val txtScroll = r_Scroll()
 	val inputScroll = r_Scroll()
 	var scrollBy by r_m(toF(AppW)/180f)
 	var done by r_m(no)
@@ -147,7 +147,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			if (tsk.goodStr > 30) {
 				val done = toF(tsk.goodStr)*(scrollBy)
 			
-				txtScroll.scroll(done)
+				txtScroll.goTo(done)
 			}
 			inputScroll.toBottom()
 		}
@@ -162,7 +162,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 				tsk.goodStr = 0
 			}
 			Bar.funTime += tsk.Done_Worth
-			txtScroll.scroll(-maxInt)
+			txtScroll.goTo(0)
 		}
 	}
 
@@ -182,17 +182,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
     }
     move(8)
-	LazyColumn(
-		modifier = Mod.space(h = 15).h(100).maxW(),
-		state = txtScroll
-	) {
-		item {
-			Text(
-				text = goodStrCopyTsk(tsk),
-				modifier = Mod.maxW()
-			)
-		}
-	}
+	FastTextView(
+		goodStrCopyTsk(tsk),
+		Mod.space(h = 15).h(100).maxW()
+	)
     move(h = 20)
 
 	var txt = r_m(tsk.input)
