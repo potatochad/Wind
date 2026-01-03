@@ -184,7 +184,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     move(8)
 	FastTextView(
 		goodStrCopyTsk(tsk),
-		Mod.space(h = 15).h(100).maxW()
+		Mod.space(h = 15).h(100).maxW().Vscroll(txtScroll)
 	)
     move(h = 20)
 
