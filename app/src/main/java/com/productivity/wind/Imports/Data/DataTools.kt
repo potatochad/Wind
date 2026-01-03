@@ -305,7 +305,11 @@ fun Backup(show: mBool) {
                         else -> "String"
                     }
 					val line = "$key|$type|$value"
-					File.write(encrypt(line, 132) + "\n")
+					if (Bar.encryptedBackup) {
+						File.write(encrypt(line, 132) + "\n")
+					} else {
+						File.write(line + "\n")
+					}
                 }
             }
     }
@@ -333,7 +337,11 @@ fun Restore(show: mBool) {
                 ?.bufferedReader()
                 ?.useLines { lines ->
                     lines.forEach { lineEncrypted ->
-						var line = decrypt(lineEncrypted, 132)
+						if (Bar.encryptedBackup) {
+							var line = decrypt(lineEncrypted, 132)
+						} else {
+							var line = lineEncrypted
+						}
 
 						
                         val parts = line.split("|", limit = 3)
