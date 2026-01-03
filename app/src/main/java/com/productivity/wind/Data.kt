@@ -86,6 +86,7 @@ object Bar {
     var funTime by s(0, "funTime")
     var Dpoints by s(0, "Dpoints")
 	var lastDate by s("", "lastDate") 
+	var encryptedBackup by s(yes, "encryptedBackup") 
 	var Url by s("https://player.fm/series/my-first-million", "Url")
 	var logs = sList<Str>("logs")
 
