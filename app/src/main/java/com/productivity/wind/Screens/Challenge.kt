@@ -154,7 +154,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		if (done) {
 			Vlog("done")
 			Bar.copyTsk.edit(tsk){
-				tsk.maxDone +=1
+				tsk.doneTimes +=1
 				tsk.input = ""
 			}
 			Bar.funTime += tsk.donePts
@@ -194,6 +194,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 				txt.it=""
 			}
 			if (goodStr < tsk.goodStr()) {
+				Vlog("goodStr: $goodStr, tsk.goodSts(): ${tsk.goodSts()}")
 				Bar.LettersTyped++
 				Bar.funTime += tsk.letterPts
 				goodStr = tsk.goodStr()
