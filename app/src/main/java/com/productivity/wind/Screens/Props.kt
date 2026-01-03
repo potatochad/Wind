@@ -338,7 +338,7 @@ object Header {
                     val tsk = Bar.copyTsk.find { it.id == id }
 
                     if (tsk!=null){
-                        Bar.copyTsk.edit(tsk) {
+                        tsk.edit {
                             txt = text.it
                             maxDone = MaxDone.it
                             donePts = DonePts.it
