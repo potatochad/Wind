@@ -150,11 +150,11 @@ fun UIStrBuilder.correctStr(text: Str, correctUntil: Int) {
     }
 }
 
-fun CopyTskgoodStr(tsk: CopyTsk): Str {
+fun CopyTskgoodStr(tsk: CopyTsk): Int {
     val correctChars = tsk.txt.zip(tsk.input)
         .takeWhile { it.first == it.second }
         .size
-    return tsk.input.take(correctChars)
+    return tsk.input.take(correctChars).size
 }
 
 fun fixedInputScroll(
