@@ -157,28 +157,6 @@ fun CopyTskCorrectInput(tsk: CopyTsk): Str {
     return tsk.input.take(correctChars)
 }
 
-@Composable
-fun goodStrCopyTsk(tsk: CopyTsk): UIStr {
-    var uiStr by r_m(UIStr(""))
-
-	var new by r_m("")
-	each(50){ new = tsk.input }
-
-    RunOnce(new) {
-        val text = tsk.txt
-        val input = tsk.input
-        val min = minOf(text.size, input.size)
-        var i = 0
-        while (i < min && text[i] == input[i]) i++
-
-		var goodStr = text.fromTo(0, i).bold().color(Color.Green)
-
-        uiStr = goodStr + UIStr(text.fromTo(i))
-	}
-
-    return uiStr
-}
-
 fun fixedInputScroll(
     text: TextFieldValue,
     cursorPos: Int,
