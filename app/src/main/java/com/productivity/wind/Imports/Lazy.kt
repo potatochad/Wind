@@ -409,7 +409,7 @@ fun LazyMore(
 fun LazyItem(
     title: Str,
     subtitle: Str? = null,
-    endContent: ui? = null,
+    endContent: ui = {},
     modifier: Mod = Mod,
 
     icon: ImageVector? = null,
@@ -441,9 +441,7 @@ fun LazyItem(
 			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 		) {
             Row(
-				Mod
-                    .maxW()
-                    .space(5.dp),
+				Mod.maxW().space(5.dp),
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				if (icon != null) {
@@ -451,9 +449,7 @@ fun LazyItem(
 						imageVector = icon,
 						contentDescription = null,
 						tint = Color.White,
-						modifier = Mod
-                            .space(end = 10)
-                            .s(24)
+						modifier = Mod.space(end = 10).s(24)
 					)
 				}	    
 
@@ -482,7 +478,12 @@ fun LazyItem(
 						Text(text = it, color = Color.Gray, fontSize = 12.sp)
 					}
 				}
-				endContent?.invoke()
+				Row(
+					Mod.space(end = 5),
+					verticalAlignment = Alignment.CenterVertically
+				) {
+					endContent()
+				}
 			}
 		}
 	}
