@@ -73,8 +73,8 @@ fun SettingsScreen() {
                 }
         ) 
         LazyItem(
-                BigIcon = Icons.Filled.Extension,
-                BigIconColor = Color(0xFF9C27B0),
+                BigIcon = Icons.Filled.VisibilityOff,
+                BigIconColor = Color(0xFF03A9F4),
                 title = "Privacy",
                 onClick = {
                     goTo("PrivacyScreen")
