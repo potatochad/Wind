@@ -46,9 +46,14 @@ fun SettingsScreen() {
             BigIcon = Icons.Filled.Backup,
             BigIconColor = DarkBlue,
             title = "BackUp",
+			endContent = {
+				LazySwitch(on){
+					
+				}
+			},
             onClick = { 
                 backup.it = yes
-            }
+            },
         )
         Backup(backup)
 
