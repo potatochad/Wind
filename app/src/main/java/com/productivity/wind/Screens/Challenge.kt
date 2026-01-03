@@ -174,7 +174,8 @@ fun CopyTskUI(tsk: CopyTsk) {
     Item.BigTskInput(txt, inputScroll) {
 		if (it.size - txt.it.size < 2) {
 			txt.it=it
-			Bar.copyTsk.edit(tsk) { tsk.input = it }
+			
+			edit(tsk) { input = it }
 
 			if (goodStr < tsk.goodStr()) {
 				Bar.LettersTyped++
@@ -184,7 +185,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			if (tsk.input == tsk.txt) {
 				Vlog("done")
 				
-				Bar.copyTsk.edit(tsk){
+				edit(tsk){
 					tsk.doneTimes +=1
 					tsk.input = ""
 				}
