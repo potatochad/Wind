@@ -69,7 +69,7 @@ fun onNewDay() {
           }
      }
 	 Bar.copyTsk.each{
-		 Bar.copyTsk.edit(it){
+		 it.edit {
 			 maxDone = 0
 		 }
 	 }
