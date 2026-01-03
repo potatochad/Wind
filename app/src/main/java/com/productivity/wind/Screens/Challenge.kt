@@ -144,7 +144,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			log("scrollBy: $scrollBy, ${tsk.goodStr}")
 		}
 		RunOnce {
-			Bar.copyTsk.edit(tsk) { tsk.goodStr = CopyTskCorrectInput(tsk).size }
+			Bar.copyTsk.edit(tsk) { tsk.goodStr = CopyTskgoodStr(tsk).size }
 			wait {
 				if (tsk.goodStr > 30) {
 					val done = toF(tsk.goodStr)*(scrollBy)
