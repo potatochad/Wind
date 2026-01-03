@@ -43,6 +43,7 @@ fun Main() {
         Column(Mod.Vscroll()){
 
             Bar.copyTsk.each {
+				Vlog("it.done: ${it.done()}")
 				if (it.done()){
 					
 					LazyCard { 
