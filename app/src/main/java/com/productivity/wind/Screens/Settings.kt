@@ -47,7 +47,7 @@ fun SettingsScreen() {
             BigIconColor = DarkBlue,
             title = "BackUp",
 			endContent = {
-				LazzyRow {
+				Row() {
 				LazySwitch(Bar.encryptedBackup){
 					Bar.encryptedBackup = it
 					Vlog("encrypt data: [Bar.encryptedBackup]")
