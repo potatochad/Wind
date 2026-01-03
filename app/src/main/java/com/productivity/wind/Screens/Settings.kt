@@ -49,6 +49,7 @@ fun SettingsScreen() {
 			endContent = {
 				LazySwitch(Bar.encryptedBackup){
 					Bar.encryptedBackup = it
+					Vlog("encrypt data: [Bar.encryptedBackup]")
 				}
 			},
             onClick = { 
