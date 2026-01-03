@@ -181,10 +181,14 @@ fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*
 fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {
     return this.getDelegate(instance)
 }
+
 @Composable
-fun <T> r(value: () -> T) = remember { value() }
+fun <T> r(x: () -> T) = remember { x() }
 @Composable
-fun <T> r_m(initial: T) = r { m(initial) }
+fun <T> r_m(x: T) = r { m(x) }
+@Composable
+fun <T> r(x: T) = r_m(x)
+
 inline fun <reified T> ml(): MutableList<T> = mutableListOf()
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
 @Composable
