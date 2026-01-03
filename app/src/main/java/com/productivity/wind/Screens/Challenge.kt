@@ -134,8 +134,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 	var bigText by r_m(UIStr(tsk.txt))
 	var goodStr by r_m(tsk.goodStr())
 
-	var done by r_m(no)
-
     RunOnce(goodStr) {
 		if (goodStr > 30) {
 			txtScroll.scroll(scrollBy)
@@ -149,16 +147,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 				}
 				inputScroll.toBottom()
 			}
-		}
-
-		if (done) {
-			Vlog("done")
-			Bar.copyTsk.edit(tsk){
-				tsk.doneTimes +=1
-				tsk.input = ""
-			}
-			Bar.funTime += tsk.donePts
-			txtScroll.goTo(0)
 		}
 	}
 
@@ -194,13 +182,17 @@ fun CopyTskUI(tsk: CopyTsk) {
 			}
 
 			if (tsk.input == tsk.txt) {
-				done = yes
+				Vlog("done")
+				
+				Bar.copyTsk.edit(tsk){
+					tsk.doneTimes +=1
+					tsk.input = ""
+				}
+				Bar.funTime += tsk.donePts
+				txtScroll.goTo(0)
 				txt.it=""
 			}
 			goodStr = tsk.goodStr()
-
-
-			
         }
     }
 }
