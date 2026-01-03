@@ -441,7 +441,7 @@ fun LazyItem(
 			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 		) {
             Row(
-				Mod.maxW().space(5.dp),
+				Mod.maxW().space(5),
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				if (icon != null) {
@@ -479,7 +479,7 @@ fun LazyItem(
 					}
 				}
 				Row(
-					Mod.space(end = 5),
+					Mod.space(end = 2),
 					verticalAlignment = Alignment.CenterVertically
 				) {
 					endContent()
