@@ -48,8 +48,8 @@ fun SettingsScreen() {
             title = "BackUp",
 			endContent = {
 				UI.Ctext(
-					if (Bar.encryptedBackup) "encrypt".gray()
-					else "txt".gray()
+					if (Bar.encryptedBackup) "encrypt".darkGray()
+					else "txt".darkGray()
 				) {
 					Bar.encryptedBackup = !Bar.encryptedBackup
 				}
