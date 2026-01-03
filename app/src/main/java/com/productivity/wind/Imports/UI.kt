@@ -150,7 +150,7 @@ fun UIStrBuilder.correctStr(text: Str, correctUntil: Int) {
     }
 }
 
-fun CopyTskCorrectInput(tsk: CopyTsk): Str {
+fun CopyTskgoodStr(tsk: CopyTsk): Str {
     val correctChars = tsk.txt.zip(tsk.input)
         .takeWhile { it.first == it.second }
         .size
