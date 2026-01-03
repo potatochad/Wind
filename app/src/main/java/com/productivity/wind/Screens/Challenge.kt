@@ -78,10 +78,10 @@ fun Challenge() {
 @Composable
 fun CopyPaste(id: Str ="") {
     var txt = r_m("Be always kind")
-    var DailyMax = r_m(5)
-    var Done_Worth = r_m(10)
-    var Letter_Worth = r_m(1)
-	var resetInput = r_m(yes)
+    var maxDone = r_m(5)
+    var donePts = r_m(10)
+    var letterPts = r_m(1)
+
 	val inputScroll = r_Scroll()
     
     if (!id.isEmpty()) {
@@ -89,9 +89,9 @@ fun CopyPaste(id: Str ="") {
 
       if (tsk != null) {
 		  txt.it = tsk.txt
-		  DailyMax.it = tsk.DailyMax
-		  Done_Worth.it = tsk.Done_Worth
-		  Letter_Worth.it = tsk.Letter_Worth
+		  maxDone.it = tsk.maxDone
+		  donePts.it = tsk.donePts
+		  letterPts.it = tsk.letterPts
 		  
 		  wait {
 			  inputScroll.goTo(tsk.goodStr() * 2)
@@ -100,17 +100,17 @@ fun CopyPaste(id: Str ="") {
     }
 
     LazyScreen(top = { 
-        Header.CopyPaste(txt, DailyMax, Done_Worth, Letter_Worth, id) 
+        Header.CopyPaste(txt, maxDone, donePts, letterPts, id) 
     }) {
         LazyRuleCard("If") {
             LazzyRow {
                 Text("Letter typed correctly: ")
-                Item.TskInput(Letter_Worth)
+                Item.TskInput(letterPts)
                 Text(" points")
             }
             LazzyRow {
                 Text("Text typed correctly: ")
-                Item.TskInput(Done_Worth)
+                Item.TskInput(donePts)
                 Text(" points")
             }
         }
@@ -118,15 +118,10 @@ fun CopyPaste(id: Str ="") {
         LazyRuleCard("Other") {
             LazzyRow {
                 Text("DailyMax: ")
-                Item.TskInput(DailyMax)
+                Item.TskInput(maxDone)
             }
 			Item.BigTskInput(txt, inputScroll)
         }
-		/*
-		LazyRuleCard("Extra") {
-            UI.CheckRow("reset input every day", resetInput)
-		}
-		*/
     }
 }
 
@@ -159,17 +154,17 @@ fun CopyTskUI(tsk: CopyTsk) {
 		if (done) {
 			Vlog("done")
 			Bar.copyTsk.edit(tsk){
-				tsk.DailyDone +=1
+				tsk.maxDone +=1
 				tsk.input = ""
 			}
-			Bar.funTime += tsk.Done_Worth
+			Bar.funTime += tsk.donePts
 			txtScroll.goTo(0)
 		}
 	}
 
     
     LazzyRow {
-        Text("Done: ${tsk.DailyDone}/${tsk.DailyMax}")
+        Text("Done: ${tsk.dailyDone}/${tsk.maxDone}")
         UI.End { 
 			Icon.Edit{
                 Item.enoughPoints {
@@ -200,7 +195,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			}
 			if (goodStr < tsk.goodStr()) {
 				Bar.LettersTyped++
-				Bar.funTime += tsk.Letter_Worth
+				Bar.funTime += tsk.letterPts
 				goodStr = tsk.goodStr()
 			}
         }
