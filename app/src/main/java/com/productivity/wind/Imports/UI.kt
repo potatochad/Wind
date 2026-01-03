@@ -220,6 +220,11 @@ fun CopyTsk.goodStr(): Int {
     return n
 }
 
+fun CopyTsk.done(): Bool {
+    return doneTimes >= maxDone
+}
+
+
 
 // ✴️ LIST SPECIFIC UI
 
