@@ -77,10 +77,10 @@ fun Challenge() {
 
 @Composable
 fun CopyPaste(id: Str ="") {
-    var txt = r_m("Be always kind")
-    var maxDone = r_m(5)
-    var donePts = r_m(10)
-    var letterPts = r_m(1)
+    var txt = r("Be always kind")
+    var maxDone = r(5)
+    var donePts = r(10)
+    var letterPts = r(1)
 
 	val inputScroll = r_Scroll()
     
@@ -129,10 +129,10 @@ fun CopyPaste(id: Str ="") {
 fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = r_Scroll()
 	val inputScroll = r_Scroll()
-	var scrollBy by r_m(toF(AppW)/180f)
+	var scrollBy by r(toF(AppW)/180f)
 	
-	var bigText by r_m(UIStr(tsk.txt))
-	var goodStr by r_m(tsk.goodStr())
+	var bigText by r(UIStr(tsk.txt))
+	var goodStr by r(tsk.goodStr())
 
     RunOnce(goodStr) {
 		if (goodStr > 30) {
@@ -170,7 +170,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)
 	)
 
-	var txt = r_m(tsk.input)
+	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
 		if (it.size - txt.it.size < 2) {
 			txt.it=it
@@ -204,12 +204,12 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 @Composable
 fun AppUsage(id: Str = "") {
-    var Time = r_m(60)
-    var Points = r_m(10)
-    var WhichIf = r_m(0)
+    var Time = r(60)
+    var Points = r(10)
+    var WhichIf = r(0)
 	
-	var show = r_m(no)
-    var appName by r_m("app")
+	var show = r(no)
+    var appName by r("app")
 	
 	selectApp(show){
 		appName = it
