@@ -213,9 +213,11 @@ fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
 
 
 fun CopyTsk.goodStr(): Int {
-    return this.txt.zip(this.input)
-        .takeWhile { it.first == it.second }
-        .size
+    val n = minOf(txt.size, input.size)
+    for (i in 0 until n) {
+        if (txt[i] != input[i]) return i
+    }
+    return n
 }
 
 
