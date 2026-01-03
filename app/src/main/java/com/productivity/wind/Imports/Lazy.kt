@@ -160,7 +160,7 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
     Switch(
       checked = isOn,
       onCheckedChange = onToggle,
-      modifier = Mod.s(34), // default ~39dp → minus 5dp
+      modifier = Mod.s(30), // default ~39dp → minus 5dp
       colors = SwitchDefaults.colors(
           checkedThumbColor = Color(0xFFFFD700),
           uncheckedThumbColor = Color.LightGray,
