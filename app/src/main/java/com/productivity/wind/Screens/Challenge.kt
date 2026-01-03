@@ -193,10 +193,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 			
 			Bar.copyTsk.edit(tsk) { tsk.input = it }
 			
-			if (tsk.goodStr < CopyTskgoodStr(tsk)) {
+			if (tsk.goodStr < tsk.goodStr()) {
 				Bar.LettersTyped++
 				Bar.funTime += tsk.Letter_Worth
-				Bar.copyTsk.edit(tsk) { tsk.goodStr = CopyTskgoodStr(tsk) }
+				Bar.copyTsk.edit(tsk) { tsk.goodStr = tsk.goodStr() }
 			}
 			
 			if (tsk.input == tsk.txt) {
