@@ -125,7 +125,6 @@ data class CopyTsk(
     var DailyDone: Int = 0,
     var Done_Worth: Int = 10,
     var Letter_Worth: Int = 1,
-    var goodStr: Int = 0,
 ) {
 	//For recompose
     var txtState by synch(txt){ txt = it }
