@@ -223,6 +223,9 @@ fun CopyTsk.goodStr(): Int {
 fun CopyTsk.done(): Bool {
     return doneTimes >= maxDone
 }
+fun CopyTsk.edit(): Bool {
+    return doneTimes >= maxDone
+}
 
 
 
