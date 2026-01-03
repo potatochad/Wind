@@ -194,7 +194,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 				txt.it=""
 			}
 			if (goodStr < tsk.goodStr()) {
-				Vlog("goodStr: $goodStr, tsk.goodSts(): ${tsk.goodSts()}")
+				Vlog("goodStr: $goodStr, tsk.goodStr(): ${tsk.goodStr()}")
 				Bar.LettersTyped++
 				Bar.funTime += tsk.letterPts
 				goodStr = tsk.goodStr()
