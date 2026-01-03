@@ -50,32 +50,6 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.foundation.lazy.*
 
 
-@Composable
-fun ShowTextStylesFromText() {
-    val text = "this is a text"
-    val style = LocalTextStyle.current
-    val color = LocalContentColor.current
-    val alpha = LocalContentAlpha.current
-    val finalColor = color.copy(alpha = alpha)
-
-    Text(
-        text = text,
-        style = style,
-        onTextLayout = { layoutResult ->
-            Log.d("TextStyleInfo", "Text layout info for: \"$text\"")
-            Log.d("TextStyleInfo", "Size: ${layoutResult.size}")
-            Log.d("TextStyleInfo", "Line count: ${layoutResult.lineCount}")
-            Log.d("TextStyleInfo", "First line baseline: ${layoutResult.getLineBaseline(0)}")
-            // The TextStyle you pass is what is applied
-            Log.d("TextStyleInfo", "Font family: ${style.fontFamily}")
-            Log.d("TextStyleInfo", "Font weight: ${style.fontWeight}")
-            Log.d("TextStyleInfo", "Font size: ${style.fontSize}")
-            Log.d("TextStyleInfo", "Color: $finalColor")
-        }
-    )
-}
-
-
 
 @Composable
 fun Challenge() {
