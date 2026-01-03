@@ -133,6 +133,7 @@ fun CopyPaste(id: Str ="") {
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = r_Scroll()
+	var bigText by r_m(UISTR)
 	val inputScroll = r_Scroll()
 	var scrollBy by r_m(toF(AppW)/180f)
 	var done by r_m(no)
@@ -185,7 +186,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     }
     move(8)
 	Text(
-		goodStrCopyTsk(tsk),
+		,
 		modifier = Mod.space(h = 15).h(100).maxW().Vscroll(txtScroll)
 	)
     move(h = 20)
