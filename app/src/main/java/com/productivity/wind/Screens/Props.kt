@@ -340,9 +340,9 @@ object Header {
                     if (tsk!=null){
                         Bar.copyTsk.edit(tsk) {
                             txt = text.it
-                            maxDone = dailyMax.it
-                            donePts = doneWorth.it
-                            letterPts = letterWorth.it
+                            maxDone = maxDone.it
+                            donePts = donePts.it
+                            letterPts = letterPts.it
                         }  
                         goTo("Main")
                     }
@@ -351,9 +351,9 @@ object Header {
 
                 Bar.copyTsk.add {
                     txt = text.it
-                    maxDone = dailyMax.it
-                    donePts = doneWorth.it
-                    letterPts = letterWorth.it     
+                    maxDone = maxDone.it
+                    donePts = donePts.it
+                    letterPts = letterPts.it     
                 }
                 goTo("Main")
             }
