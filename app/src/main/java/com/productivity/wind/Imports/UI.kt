@@ -70,8 +70,6 @@ import android.widget.*
 import android.text.method.*
 
 
-
-
 //region log
 
 private var lastToast: Toast? = null
@@ -109,16 +107,6 @@ fun getStatusBarHeight(): Int {
 
 //endregion
 
-fun getApps(): List<ResolveInfo> {
-    val pm = App.packageManager
-    val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
-    return pm.queryIntentActivities(launchIntent, 0).abcOrder()
-}
-fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
-    val pm = App.packageManager
-    return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
-}
-
 
 object DayChecker {
     private var job: Job? = null
@@ -138,23 +126,6 @@ object DayChecker {
             }
         }
     }
-}
-
-fun UIStrBuilder.correctStr(text: Str, correctUntil: Int) {
-    for (i in text.indices) {
-        if (i < correctUntil) {
-			text.bold().color(Color.Green)
-        } else {
-            add(text[i])
-        }
-    }
-}
-
-fun CopyTskgoodStr(tsk: CopyTsk): Int {
-    val correctChars = tsk.txt.zip(tsk.input)
-        .takeWhile { it.first == it.second }
-        .size
-    return tsk.input.take(correctChars).size
 }
 
 fun fixedInputScroll(
@@ -214,6 +185,41 @@ fun FastTextView(
         modifier = modifier
     )
 }
+
+
+
+
+// ✴️ LIST SPECIFIC UI
+
+fun UIStrBuilder.correctStr(text: Str, correctUntil: Int) {
+    for (i in text.indices) {
+        if (i < correctUntil) {
+			text.bold().color(Color.Green)
+        } else {
+            add(text[i])
+        }
+    }
+}
+
+fun getApps(): List<ResolveInfo> {
+    val pm = App.packageManager
+    val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+    return pm.queryIntentActivities(launchIntent, 0).abcOrder()
+}
+fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
+    val pm = App.packageManager
+    return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
+}
+
+
+fun CopyTsk.goodStr(): Int {
+    return this.txt.zip(this.input)
+        .takeWhile { it.first == it.second }
+        .size
+}
+
+
+// ✴️ LIST SPECIFIC UI
 
 
 
