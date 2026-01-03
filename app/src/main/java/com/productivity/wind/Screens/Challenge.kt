@@ -167,7 +167,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     }
 	Text(
 		text = bigText,
-		modifier = Mod.space(h = 15).space(bottom = 15).h(100).maxW().Vscroll(txtScroll)
+		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)
 	)
 
 	var txt = r_m(tsk.input)
