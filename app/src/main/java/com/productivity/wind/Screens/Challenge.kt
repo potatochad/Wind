@@ -144,7 +144,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			log("scrollBy: $scrollBy, ${tsk.goodStr}")
 		}
 		RunOnce {
-			Bar.copyTsk.edit(tsk) { tsk.goodStr = CopyTskgoodStr(tsk).size }
+			Bar.copyTsk.edit(tsk) { tsk.goodStr = CopyTskgoodStr(tsk) }
 			wait {
 				if (tsk.goodStr > 30) {
 					val done = toF(tsk.goodStr)*(scrollBy)
@@ -193,10 +193,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 			
 			Bar.copyTsk.edit(tsk) { tsk.input = it }
 			
-			if (tsk.goodStr < CopyTskCorrectInput(tsk).size) {
+			if (tsk.goodStr < CopyTskgoodStr(tsk)) {
 				Bar.LettersTyped++
 				Bar.funTime += tsk.Letter_Worth
-				Bar.copyTsk.edit(tsk) { tsk.goodStr = CopyTskCorrectInput(tsk).size }
+				Bar.copyTsk.edit(tsk) { tsk.goodStr = CopyTskgoodStr(tsk) }
 			}
 			
 			if (tsk.input == tsk.txt) {
