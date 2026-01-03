@@ -43,7 +43,7 @@ fun Main() {
         Column(Mod.Vscroll()){
 
             Bar.copyTsk.each {
-				if (it.DailyDone != it.DailyMax){
+				if (it.done()){
 					
 					LazyCard { 
 						CopyTskUI(it)
