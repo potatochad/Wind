@@ -70,8 +70,7 @@ fun onNewDay() {
      }
 	 Bar.copyTsk.each{
 		 Bar.copyTsk.edit(it){
-			 done = no
-			 DailyDone = 0
+			 maxDone = 0
 		 }
 	 }
 }
@@ -121,16 +120,14 @@ data class CopyTsk(
     val id: Str = Id(),
     var txt: Str = "Be always kind",
     var input: Str = "",
-    var done: Bool = no,
-    var DailyMax: Int = 5,
-    var DailyDone: Int = 0,
-    var Done_Worth: Int = 10,
-    var Letter_Worth: Int = 1,
+    var maxDone: Int = 5,
+    var doneTimes: Int = 0,
+    var donePts: Int = 10,
+    var letterPts: Int = 1,
 ) {
 	//For recompose
     var txtState by synch(txt){ txt = it }
 	var inputState by synch(input){ input = it }
-	var doneState by synch(done){ done = it }
 }
 
 
