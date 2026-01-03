@@ -188,7 +188,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		goodStrCopyTsk(tsk),
 		Mod.space(h = 15).h(100).maxW().Vscroll(txtScroll)
 	)
-    ShowTextStylesFromText()
     move(h = 20)
 
 	var txt = r_m(tsk.input)
