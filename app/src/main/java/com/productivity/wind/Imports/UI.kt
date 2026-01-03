@@ -211,8 +211,8 @@ fun FastTextView(
     AndroidView(
         factory = { context ->
             TextView(context).apply {
-                setTextIsSelectable(false)
-                isVerticalScrollBarEnabled = true
+                setTextIsSelectable(no)
+                isVerticalScrollBarEnabled = no
                 movementMethod = ScrollingMovementMethod()
             }
         },
