@@ -163,56 +163,10 @@ fun CopyTskUI(tsk: CopyTsk) {
     }
 
 
-
-	var layout by r { mutableStateOf<TextLayoutResult?>(null) }
-
-	Box(Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)) {
-		Text(
-			text = tsk.txt,
-			onTextLayout = { layout = it }
-		)
-
-		// goodStr —is var int...that shows how many letters should be green
-
-		Canvas(Mod.matchParentSize()) {
-			val l = layout ?: return@Canvas
-
-			for (i in 0 until goodStr) {
-				val box = l.getBoundingBox(i)
-
-				drawContext.canvas.nativeCanvas.apply {
-					drawText(
-						tsk.txt[i].toString(),
-						box.left,
-						box.bottom - 8.dp.toPx(),
-						android.graphics.Paint().apply {
-							color = android.graphics.Color.GREEN
-							textSize = 50f // match your Text size
-						}
-					)
-				}
-			}
-		}
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
+	Text(
+		text = tsk.txt,
+		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)
+	)
 
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
