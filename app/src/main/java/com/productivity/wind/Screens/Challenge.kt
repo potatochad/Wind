@@ -82,7 +82,7 @@ fun CopyPaste(id: Str ="") {
     var donePts = r(10)
     var letterPts = r(1)
 
-	val inputScroll = r_Scroll()
+	val inputScroll = Scroll()
     
     if (!id.isEmpty()) {
       val tsk = Bar.copyTsk.find { it.id == id }
@@ -127,8 +127,8 @@ fun CopyPaste(id: Str ="") {
 
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
-    val txtScroll = r_Scroll()
-	val inputScroll = r_Scroll()
+    val txtScroll = Scroll()
+	val inputScroll = Scroll()
 	var scrollBy by r(toF(AppW)/180f)
 	
 	var bigText by r(UIStr(tsk.txt))
@@ -186,8 +186,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 				Vlog("done")
 				
 				tsk.edit{
-					tsk.doneTimes +=1
-					tsk.input = ""
+					doneTimes +=1
+					input = ""
 				}
 				Bar.funTime += tsk.donePts
 				txtScroll.goTo(0)
