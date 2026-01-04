@@ -178,7 +178,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	Box(Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)) {
 		Text(
-			text = tsk.text,
+			text = tsk.txt,
 			onTextLayout = { layout = it }
 		)
 
@@ -191,11 +191,11 @@ fun CopyTskUI(tsk: CopyTsk) {
 				val box = l.getBoundingBox(i)
 
 				drawContext.canvas.nativeCanvas.drawText(
-					tsk.text[i].toString(),
+					tsk.txt[i].toString(),
 					box.left,
 					box.bottom,
 					Paint().apply {
-						color = android.graphics.Color.GREEN
+						color = Color(Green)
 					}
 				)
 			}
