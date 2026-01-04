@@ -174,7 +174,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 
 
-	var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
+	var layout by r { mutableStateOf<TextLayoutResult?>(null) }
 
 	Box(Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)) {
 		Text(
@@ -187,17 +187,19 @@ fun CopyTskUI(tsk: CopyTsk) {
 		Canvas(Mod.matchParentSize()) {
 			val l = layout ?: return@Canvas
 
-			for (i in 0 until goodStr) {
-				val box = l.getBoundingBox(i)
+			val paint = Paint().apply {
+				color = Color.Green
+			}
 
-				drawContext.canvas.nativeCanvas.drawText(
-					tsk.txt[i].toString(),
-					box.left,
-					box.bottom,
-					Paint().apply {
-						color = Color(Green)
-					}
-				)
+			drawIntoCanvas { canvas ->
+				for (i in 0 until goodStr) {
+					val box = l.getBoundingBox(i)
+					canvas.drawText(
+						tsk.txt[i].toString(),
+						Offset(box.left, box.bottom),
+						paint
+					)
+				}
 			}
 		}
 	}
