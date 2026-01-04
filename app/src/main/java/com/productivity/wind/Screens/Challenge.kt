@@ -184,7 +184,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 					drawText(
 						tsk.txt[i].toString(),
 						box.left,
-						box.bottom - 6.dp.toPx(),
+						box.bottom - 8.dp.toPx(),
 						android.graphics.Paint().apply {
 							color = android.graphics.Color.GREEN
 							textSize = 50f // match your Text size
