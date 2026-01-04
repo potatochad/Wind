@@ -188,6 +188,7 @@ fun toLatLng(it: Any?): LatLng = when (it) {
 
 fun toStr(it: Any?): String = when (it) {
     is String -> it
+    is AnnotatedString -> it.text
     is LatLng -> "${it.latitude},${it.longitude}"
     is Pair<*, *> -> "${it.first},${it.second}"
     is Double, is Float, is Int, is Long -> it.toString()
