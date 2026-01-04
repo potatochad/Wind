@@ -55,6 +55,7 @@ import com.google.android.gms.location.*
 import android.os.*
 import kotlin.math.*
 import androidx.compose.ui.geometry.*
+import androidx.compose.foundation.lazy.*
 
 
 @Composable
@@ -177,7 +178,8 @@ fun LazyText(
     txt: Str,
     mod: Mod = Mod,
 	scroll: LazyList = LazyList(),
-	maxCharsPerLine: Int = 30
+	maxCharsPerLine: Int = 30,
+	textStyle: TextStyle = LocalTextStyle.current,
 ) {
 
 
@@ -186,7 +188,7 @@ fun LazyText(
 	val textMeasurer = rememberTextMeasurer()
 
     // Get the max width available
-    var maxChars by remember { mutableStateOf(30) }
+    var maxChars by r { m(30) }
 
     BoxWithConstraints(modifier) {
         val maxWidthPx = with(LocalDensity.current) { maxWidth.toPx() }
