@@ -176,13 +176,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
-		if (it.size - txt.it.size < 2 && goodStr <= tsk.goodStr()) {
+		if (it.size - txt.it.size < 2 && goodStr <= txt.it.size) {
 			txt.it=it
 			
 			tsk.edit{ input = it }
-
-
-			
 
 			if (goodStr < tsk.goodStr()) {
 				Bar.LettersTyped++
