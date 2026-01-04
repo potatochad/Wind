@@ -190,7 +190,7 @@ fun LazyText(
     // Get the max width available
     var maxChars by r { m(30) }
 
-    BoxWithConstraints(modifier) {
+    BoxWithConstraints(mod) {
         val maxWidthPx = with(LocalDensity.current) { maxWidth.toPx() }
 
         // Invisible measurement: find avg char width
@@ -204,14 +204,6 @@ fun LazyText(
         maxChars = (maxWidthPx / avgCharWidth).toInt()
     }
 
-    val lines = remember(txt, maxChars) { txt.toLines(maxChars) }
-
-
-
-
-
-
-	
     val lines = remember(txt, maxChars) { txt.toLines(maxChars) }
 
     LazyColumn(
