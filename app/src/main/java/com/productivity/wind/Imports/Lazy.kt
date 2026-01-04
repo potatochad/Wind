@@ -172,26 +172,6 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 }
 
 
-
-@Composable
-fun LazyText(
-    txt: Str,
-    mod: Mod = Mod,
-	scroll: LazyList = LazyList(),
-) {
-	val lines = txt.toLines()
-	LazyColumn(
-		modifier = mod,
-		state = scroll
-	) {
-		items(lines) {
-			Text(it)
-		}
-	}
-}
-
-
-
 @Composable
 fun LazySlider(
     min: Float = 1f,
