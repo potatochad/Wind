@@ -182,7 +182,7 @@ fun LazyText(
 		var lineChars by r(0)
 
 		if (lineChars == 0){
-			Text(text = "W".repeat(500), maxLines = 1, softWrap = no, modifier = Mod.s(0),
+			Text(text = "W".repeat(500), maxLines = 1, softWrap = no, modifier = Mod.alpha(0f),
 				onTextLayout = {
 					lineChars = it.getLineEnd(0)
 				},
