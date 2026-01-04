@@ -176,12 +176,12 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 @Composable
 fun LazyText(
     txt: Str,
+	maxCharsPerLine: Any = 40,
     mod: Mod = Mod,
 	scroll: LazyList = LazyList(),
-	maxCharsPerLine: Int = 30,
 	textStyle: TextStyle = LocalTextStyle.current,
 ) {
-    val lines = remember(txt) { txt.toLines(maxCharsPerLine) }
+    val lines = remember(txt) { txt.toLines(toInt(maxCharsPerLine)) }
 
     LazyColumn(
 		modifier = mod,
