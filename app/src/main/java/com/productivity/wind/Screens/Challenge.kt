@@ -188,20 +188,21 @@ fun CopyTskUI(tsk: CopyTsk) {
 		Canvas(Mod.matchParentSize()) {
 			val l = layout ?: return@Canvas
 
-			val paint = Paint().apply {
-				color = Color.Green
-			}
+    for (i in 0 until goodStr) {
+        val box = l.getBoundingBox(i)
 
-			drawIntoCanvas { canvas ->
-				for (i in 0 until goodStr) {
-					val box = l.getBoundingBox(i)
-					canvas.drawText(
-						tsk.txt[i].toString(),
-						Offset(box.left, box.bottom),
-						paint
-					)
-				}
-			}
+        drawContext.canvas.nativeCanvas.apply {
+            drawText(
+                tsk.txt[i].toString(),
+                box.left,
+                box.bottom,
+                android.graphics.Paint().apply {
+                    color = android.graphics.Color.GREEN
+                    textSize = 50f // match your Text size
+                }
+            )
+        }
+	}
 		}
 	}
 
