@@ -196,6 +196,28 @@ fun Str.fromTo(start: Int, end: Int = this.size): Str = this.substring(start, en
 
 
 
+fun Str.toNiceLines(maxCharsPerLine: Int): List<Str> {
+    val words = text.split(" ")
+    val lines = mutableListOf<Str>()
+    var currentLine = ""
+
+    for (word in words) {
+        if (currentLine.isEmpty()) {
+            currentLine = word
+        } else if (currentLine.length + 1 + word.length <= maxCharsPerLine) {
+            currentLine += " $word"
+        } else {
+            lines.add(currentLine)
+            currentLine = word
+        }
+    }
+
+    if (currentLine.isNotEmpty()) {
+        lines.add(currentLine)
+    }
+
+    return lines
+}
 
 
 
