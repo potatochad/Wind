@@ -70,7 +70,7 @@ fun onNewDay() {
      }
 	 Bar.copyTsk.each{
 		 it.edit {
-			 maxDone = 0
+			 doneTimes = 0
 		 }
 	 }
 }
