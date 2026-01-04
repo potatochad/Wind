@@ -179,27 +179,15 @@ fun LazyText(
     mod: Mod = Mod,
 	scroll: LazyList = LazyList(),
 ) {
-		var lineChars by r(0)
-
-		if (lineChars == 0){
-			Text(text = "W".repeat(500), maxLines = 1, softWrap = no, modifier = Mod.alpha(0f),
-				onTextLayout = {
-					lineChars = it.getLineEnd(0)
-				},
-				
-			)
+	val lines = txt.toLines()
+	LazyColumn(
+		modifier = mod,
+		state = scroll
+	) {
+		items(lines) {
+			Text(it)
 		}
-			
-			val lines = remember(lineChars) { txt.toLines(lineChars) }
-			
-			LazyColumn(
-				modifier = mod,
-				state = scroll
-			) {
-				items(lines) {
-					Text(it)
-				}
-			}
+	}
 }
 
 
