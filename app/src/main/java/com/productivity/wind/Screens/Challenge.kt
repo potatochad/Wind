@@ -163,10 +163,14 @@ fun CopyTskUI(tsk: CopyTsk) {
     }
 
 
-	Text(
-		text = tsk.txt,
+	LazyColumn(
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)
-	)
+	){
+		items(tsk.txt.toLines(30)) { line ->
+			Text(text = line)
+		}
+	}
+
 
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
