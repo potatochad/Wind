@@ -136,18 +136,14 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     RunOnce(goodStr) {
 		if (goodStr > 30) {
-			txtScroll.scroll(scrollBy)
 			log("scrollBy: $scrollBy")
+			val done = toF(goodStr)*(scrollBy)
+			txtScroll.goTo(done)
+			log("done: $done")
 		}
-		RunOnce {
-			wait {
-				if (goodStr > 30) {
-					val done = toF(goodStr)*(scrollBy)
-					txtScroll.goTo(done)
-				}
-				inputScroll.toBottom()
-			}
-		}
+	}
+	RunOnce {
+		inputScroll.toBottom()
 	}
 
     
@@ -166,13 +162,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
     }
 
-	/*
-	Text(
-		text = bigText,
-		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)
-	)
-	*/
-
 
 
 	var layout by r { mutableStateOf<TextLayoutResult?>(null) }
@@ -188,21 +177,21 @@ fun CopyTskUI(tsk: CopyTsk) {
 		Canvas(Mod.matchParentSize()) {
 			val l = layout ?: return@Canvas
 
-    for (i in 0 until goodStr) {
-        val box = l.getBoundingBox(i)
+			for (i in 0 until goodStr) {
+				val box = l.getBoundingBox(i)
 
-        drawContext.canvas.nativeCanvas.apply {
-            drawText(
-                tsk.txt[i].toString(),
-                box.left,
-                box.bottom - 3.dp.toPx(),
-                android.graphics.Paint().apply {
-                    color = android.graphics.Color.GREEN
-                    textSize = 50f // match your Text size
-                }
-            )
-        }
-	}
+				drawContext.canvas.nativeCanvas.apply {
+					drawText(
+						tsk.txt[i].toString(),
+						box.left,
+						box.bottom - 3.dp.toPx(),
+						android.graphics.Paint().apply {
+							color = android.graphics.Color.GREEN
+							textSize = 50f // match your Text size
+						}
+					)
+				}
+			}
 		}
 	}
 
