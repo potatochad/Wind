@@ -164,7 +164,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	LazyText(
 		tsk.txt,
-		AppW/10,
 		mod = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
 		LazyList()
 	)
