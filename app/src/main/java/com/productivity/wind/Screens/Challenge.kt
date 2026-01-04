@@ -170,6 +170,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 			Text(text = line)
 		}
 	}
+	LazyText(
+		tsk.txt,
+		mod = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW()
+	)
 
 
 	var txt = r(tsk.input)
