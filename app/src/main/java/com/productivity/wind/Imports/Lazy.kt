@@ -176,40 +176,30 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 @Composable
 fun LazyText(
     txt: Str,
-	maxCharsPerLine: Any = 40,
     mod: Mod = Mod,
 	scroll: LazyList = LazyList(),
-	textStyle: TextStyle = LocalTextStyle.current,
 ) {
-
-
-	Box {
-		
-		var charsPerLine by r(0)
+		var lineChars by r(0)
 
 		if (charsPerLine==0){
-			Text(
-				text = txt,
-				maxLines = 1,
-				softWrap = no,
-				onTextLayout = { layout ->
-					charsPerLine = layout.getLineEnd(0)
+			Text(text = "W".repeat(500), maxLines = 1, softWrap = no, modifier = Mod.s(0),
+				onTextLayout = {
+					lineChars = it.getLineEnd(0)
 				},
-				modifier = Mod.alpha(0f)
+				
 			)
-		} else {
-			val lines = remember(txt) { txt.toLines(toInt(charsPerLine)) }
+		}
+			
+			val lines = remember(txt) { txt.toLines(lineChars) }
 			
 			LazyColumn(
 				modifier = mod,
 				state = scroll
 			) {
-				items(lines) { line ->
-					Text(text = line)
+				items(lines) {
+					Text(it)
 				}
 			}
-		}
-	}
 }
 
 
