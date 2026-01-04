@@ -162,11 +162,16 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
     }
 
-	LazyText(
-		tsk.txt,
-		mod = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
-		LazyList()
-	)
+	
+	val lines = tsk.txt.toLines()
+	LazyColumn(
+		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
+		state = LazyList()
+	) {
+		items(lines) {
+			Text(it)
+		}
+	}
 
 
 	var txt = r(tsk.input)
