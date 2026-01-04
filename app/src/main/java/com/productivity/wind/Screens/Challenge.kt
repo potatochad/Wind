@@ -131,7 +131,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 	val inputScroll = Scroll()
 	var scrollBy by r(toF(AppW)/180f)
 	
-	var bigText by r(UIStr(tsk.txt))
 	var goodStr by r(tsk.goodStr())
 
     RunOnce(goodStr) {
@@ -165,10 +164,62 @@ fun CopyTskUI(tsk: CopyTsk) {
 			}
 		}
     }
+
+	/*
 	Text(
 		text = bigText,
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)
 	)
+	*/
+
+
+
+	var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
+
+	Box(Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)) {
+		Text(
+			text = tsk.text,
+			onTextLayout = { layout = it }
+		)
+
+		// goodStr —is var int...that shows how many letters should be green
+
+		Canvas(Mod.matchParentSize()) {
+			val l = layout ?: return@Canvas
+
+			for (i in 0 until goodStr) {
+				val box = l.getBoundingBox(i)
+
+				drawContext.canvas.nativeCanvas.drawText(
+					tsk.text[i].toString(),
+					box.left,
+					box.bottom,
+					Paint().apply {
+						color = android.graphics.Color.GREEN
+					}
+				)
+			}
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
