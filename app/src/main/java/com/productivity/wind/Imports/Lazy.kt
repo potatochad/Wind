@@ -173,6 +173,58 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 
 
 @Composable
+fun LazyText(
+    txt: Str,
+    mod: Mod = Mod,
+	scroll: LazyList = LazyList(),
+	maxCharsPerLine: Int = 30
+) {
+
+
+
+
+	val textMeasurer = rememberTextMeasurer()
+
+    // Get the max width available
+    var maxChars by remember { mutableStateOf(30) }
+
+    BoxWithConstraints(modifier) {
+        val maxWidthPx = with(LocalDensity.current) { maxWidth.toPx() }
+
+        // Invisible measurement: find avg char width
+        val sampleText = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        val textLayoutResult = textMeasurer.measure(
+            AnnotatedString(sampleText),
+            style = textStyle
+        )
+        val avgCharWidth = textLayoutResult.size.width / sampleText.length.toFloat()
+
+        maxChars = (maxWidthPx / avgCharWidth).toInt()
+    }
+
+    val lines = remember(txt, maxChars) { txt.toLines(maxChars) }
+
+
+
+
+
+
+	
+    val lines = remember(txt, maxChars) { txt.toLines(maxChars) }
+
+    LazyColumn(
+		modifier = mod,
+		state = scroll
+	) {
+        items(lines) { line ->
+            Text(text = line)
+        }
+    }
+}
+
+
+
+@Composable
 fun LazySlider(
     min: Float = 1f,
     max: Float = 200_000f,
