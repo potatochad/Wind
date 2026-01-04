@@ -137,7 +137,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     RunOnce(goodStr) {
 		if (goodStr > 30) {
 			log("scrollBy: $scrollBy")
-			val done = toF(goodStr)*(scrollBy)
+			val done = toF(goodStr)*(scrollBy) - 15f
 			txtScroll.goTo(done)
 			log("done: $done")
 		}
@@ -184,7 +184,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 					drawText(
 						tsk.txt[i].toString(),
 						box.left,
-						box.bottom - 3.dp.toPx(),
+						box.bottom - 6.dp.toPx(),
 						android.graphics.Paint().apply {
 							color = android.graphics.Color.GREEN
 							textSize = 50f // match your Text size
