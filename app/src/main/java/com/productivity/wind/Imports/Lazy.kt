@@ -181,16 +181,35 @@ fun LazyText(
 	scroll: LazyList = LazyList(),
 	textStyle: TextStyle = LocalTextStyle.current,
 ) {
-    val lines = remember(txt) { txt.toLines(toInt(maxCharsPerLine)) }
 
-    LazyColumn(
-		modifier = mod,
-		state = scroll
-	) {
-        items(lines) { line ->
-            Text(text = line)
-        }
-    }
+
+	Box {
+		
+		var charsPerLine by r(0)
+
+		if (charsPerLine==0){
+			Text(
+				text = txt,
+				maxLines = 1,
+				softWrap = no,
+				onTextLayout = { layout ->
+					charsPerLine = layout.getLineEnd(0)
+				},
+				modifier = Mod.alpha(0f)
+			)
+		} else {
+			val lines = remember(txt) { txt.toLines(toInt(charsPerLine)) }
+			
+			LazyColumn(
+				modifier = mod,
+				state = scroll
+			) {
+				items(lines) { line ->
+					Text(text = line)
+				}
+			}
+		}
+	}
 }
 
 
