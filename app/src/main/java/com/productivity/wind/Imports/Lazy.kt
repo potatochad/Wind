@@ -190,7 +190,7 @@ fun LazyText(
 			)
 		}
 			
-			val lines = remember(txt) { txt.toLines(lineChars) }
+			val lines = remember(lineChars) { txt.toLines(lineChars) }
 			
 			LazyColumn(
 				modifier = mod,
