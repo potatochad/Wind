@@ -177,9 +177,13 @@ fun CopyTskUI(tsk: CopyTsk) {
 			
 			tsk.edit{ input = it }
 
+
+			
+
 			if (goodStr < tsk.goodStr()) {
 				Bar.LettersTyped++
 				Bar.funTime += tsk.letterPts
+				goodStr = tsk.goodStr()
 			}
 
 			if (tsk.input == tsk.txt) {
@@ -189,11 +193,12 @@ fun CopyTskUI(tsk: CopyTsk) {
 					doneTimes +=1
 					input = ""
 				}
+				
 				Bar.funTime += tsk.donePts
 				txtScroll.goTo(0)
 				txt.it=""
+				goodStr = tsk.goodStr()
 			}
-			goodStr = tsk.goodStr()
         }
     }
 }
