@@ -193,15 +193,38 @@ fun Str.fromTo(start: Int, end: Int = this.size): Str = this.substring(start, en
 
 
 
+@Composable
+fun String.toLines(): List<String> {
+    var lineChars by remember { mutableStateOf(0) }
 
-fun Str.toLines(max: Int) = buildList {
-    var line = ""
-    split(" ").forEach { w ->
-        if (line.isEmpty() || line.length + 1 + w.length <= max) line += if (line.isEmpty()) w else " $w"
-        else { add(line); line = w }
+    // Measure how many chars fit in one line
+    if (lineChars == 0) {
+        Text(
+            text = "W".repeat(500), // wide letters to estimate
+            maxLines = 1,
+            softWrap = false,
+            modifier = Modifier.alpha(0f),
+            onTextLayout = { lineChars = it.getLineEnd(0) }
+        )
     }
-    if (line.isNotEmpty()) add(line)
+
+    // Return empty if not measured yet
+    if (lineChars == 0) return emptyList()
+
+    val lines = mutableListOf<String>()
+    var line = ""
+    this.split(" ").forEach { w ->
+        if (line.isEmpty() || line.length + 1 + w.length <= lineChars) {
+            line += if (line.isEmpty()) w else " $w"
+        } else {
+            lines.add(line)
+            line = w
+        }
+    }
+    if (line.isNotEmpty()) lines.add(line)
+    return lines
 }
+
 
 
 
