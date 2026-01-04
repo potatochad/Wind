@@ -164,7 +164,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 
 	LazyColumn(
-		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)
+		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW()
 	){
 		items(tsk.txt.toLines(30)) { line ->
 			Text(text = line)
