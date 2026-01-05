@@ -128,7 +128,7 @@ fun CopyPaste(id: Str ="") {
 
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
-    val txtScroll = Scroll()
+    val txtScroll = LazyList()
 	val inputScroll = Scroll()
 	var scrollBy by r(toF(AppW)/180f)
 	
@@ -170,10 +170,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		state = LazyList()
 	) {
 		items(lines) {
-			val add = minOf(it.size, goodStr - goodStr2)
-			if (add > 0) goodStr2 += add
-
-			Vlog("add: $add, goodStr2: $goodStr2, it: $it")
 			Text(it)
 		}
 	}
