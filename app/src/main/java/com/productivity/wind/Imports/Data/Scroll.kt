@@ -128,7 +128,7 @@ val LazyList.it: Float
         val firstIndex = firstVisibleItemIndex
         val firstOffset = firstVisibleItemScrollOffset
         val itemHeight = layoutInfo.visibleItemsInfo.firstOrNull()?.size ?: 0
-        return firstIndex * itemHeight + firstOffset
+        return toF(firstIndex * itemHeight + firstOffset)
     }
     
 val LazyList.size: Float
