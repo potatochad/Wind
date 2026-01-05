@@ -170,7 +170,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		state = LazyList()
 	) {
 		items(lines) {
-			val add = minOf(line.length, goodStr - goodStr2)
+			val add = minOf(it.size, goodStr - goodStr2)
 			if (add > 0) goodStr2 += add
 
 			Vlog("add: $add, goodStr2: $goodStr2, it: $it")
