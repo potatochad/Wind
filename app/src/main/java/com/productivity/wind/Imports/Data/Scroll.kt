@@ -150,7 +150,10 @@ fun LazyList.toBottom() = wait{
 suspend fun Scroll.scroll(it: Any) = animateScrollBy(toF(it))
 suspend fun LazyList.scroll(it: Any) = animateScrollBy(toF(it))
 suspend fun LazyList.goTo(it: Any) {
-   scrollBy(toF(it))
+   wait {
+      scrollToItem(0)
+      scrollBy(toF(it))
+   }
 }
 
 
