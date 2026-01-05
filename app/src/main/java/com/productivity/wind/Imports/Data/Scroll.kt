@@ -123,12 +123,21 @@ var Scroll.it: Int
         }
     }
     
-var LazyListState.it: Int
-    get() = firstVisibleItemIndex
-    set(value) {
-        CoroutineScope(Dispatchers.Main).launch {
-            scrollToItem(value)
-        }
+val LazyList.it: Float
+    get() {
+        val firstIndex = firstVisibleItemIndex
+        val firstOffset = firstVisibleItemScrollOffset
+        val itemHeight = layoutInfo.visibleItemsInfo.firstOrNull()?.size ?: 0
+        return firstIndex * itemHeight + firstOffset
+    }
+    
+val LazyList.size: Float
+    get() {
+        val items = layoutInfo.visibleItemsInfo
+        if (items.isEmpty()) return 0f
+
+        val averageItemHeight = items.sumOf { it.size }.toFloat() / items.size
+        return layoutInfo.totalItemsCount * averageItemHeight
     }
 
 typealias Scroll = ScrollState
