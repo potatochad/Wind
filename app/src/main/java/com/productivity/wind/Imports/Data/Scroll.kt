@@ -161,11 +161,10 @@ suspend fun LazyList.scroll(it: Any) = animateScrollBy(toF(it))
 
 
 fun Scroll.goTo(it: Any) = wait{ scrollTo(toInt(it)) }
-fun LazyList.goTo(it: Any) = wait {
-   scrollBy(toF(-100000))
-   wait {
-      scrollBy(toF(it))
-   }
+fun LazyList.goTo(x: Any) = wait {
+   scrollBy(toF(
+      toF(x) - this.it
+   ))
 }
 
 val Scroll.size: Int
