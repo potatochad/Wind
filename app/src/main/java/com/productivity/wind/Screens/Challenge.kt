@@ -133,6 +133,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 	var scrollBy by r(toF(AppW)/180f)
 	
 	var goodStr by r(tsk.goodStr())
+	var goodStr2 by r(0)
 
     RunOnce(goodStr) {
 		if (goodStr > 30) {
@@ -168,8 +169,12 @@ fun CopyTskUI(tsk: CopyTsk) {
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
 		state = LazyList()
 	) {
-		itemsIndexed(lines) { index, item ->
-			Text(item)
+		items(lines) {
+			val add = minOf(line.length, goodStr - goodStr2)
+			if (add > 0) goodStr2 += add
+
+			Vlog("add: $add, goodStr2: $goodStr2, it: $it")
+			Text(it)
 		}
 	}
 
