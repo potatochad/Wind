@@ -167,7 +167,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 	val lines = tsk.txt.toLines()
 	LazyColumn(
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
-		state = LazyList()
+		state = txtScroll
 	) {
 		items(lines) {
 			Text(it)
