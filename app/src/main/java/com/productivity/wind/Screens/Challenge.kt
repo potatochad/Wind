@@ -168,8 +168,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
 		state = LazyList()
 	) {
-		items(lines) {
-			Text(it)
+		items(lines) { index, item ->
+			Text(item)
 		}
 	}
 
