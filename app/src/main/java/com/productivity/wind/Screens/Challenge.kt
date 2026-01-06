@@ -191,7 +191,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 				drawContext.canvas.nativeCanvas.apply {
 					drawText(
 						tsk.txt[i].toString(),
-						box.left + 1.dp.toPx(),
+						box.left,
 						box.bottom - 7.dp.toPx() - 0.5f,
 						android.graphics.Paint().apply {
 							color = android.graphics.Color.GREEN
