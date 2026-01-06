@@ -128,7 +128,7 @@ fun CopyPaste(id: Str ="") {
 
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
-    val txtScroll = LazyList()
+    val txtScroll = Scroll()
 	val inputScroll = Scroll()
 	var scrollBy by r(toF(AppW)/180f)
 	
@@ -138,7 +138,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     RunOnce(goodStr) {
 		if (goodStr > 30) {
 			// Vlog("txtScroll.size: ${txtScroll.size}, tsk.txt.size: ${tsk.txt.size}, scrollTo: ${ toF(goodStr)*toF(txtScroll.size) / toF(tsk.txt.size) }")
-			val done = toF(goodStr)*(scrollBy) - 100f
+			val done = toF(goodStr)*(scrollBy) - 20f
 			txtScroll.goTo(done)
 		}
 	}
@@ -162,7 +162,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
     }
 
-	
+	/*
 	val lines = tsk.txt.toLines()
 	LazyColumn(
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
@@ -170,6 +170,34 @@ fun CopyTskUI(tsk: CopyTsk) {
 	) {
 		items(lines) {
 			Text(it)
+		}
+	}
+	*/
+
+	Box(Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)) {
+		Text(
+			text = tsk.txt,
+			onTextLayout = { layout = it }
+		)
+
+		Canvas(Mod.matchParentSize()) {
+			val l = layout ?: return@Canvas
+
+			for (i in 0 until goodStr) {
+				val box = l.getBoundingBox(i)
+
+				drawContext.canvas.nativeCanvas.apply {
+					drawText(
+						tsk.txt[i].toString(),
+						box.left,
+						box.bottom - 8.dp.toPx(),
+						android.graphics.Paint().apply {
+							color = android.graphics.Color.GREEN
+							textSize = 50f // match your Text size
+						}
+					)
+				}
+			}
 		}
 	}
 
