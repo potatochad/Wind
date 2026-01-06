@@ -174,7 +174,9 @@ fun CopyTskUI(tsk: CopyTsk) {
 	}
 	*/
 
-	Box(Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll)) {
+	var layout by r { mutableStateOf<TextLayoutResult?>(null) }
+
+	Box(Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll).center()) {
 		Text(
 			text = tsk.txt,
 			onTextLayout = { layout = it }
