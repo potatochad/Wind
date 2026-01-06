@@ -192,7 +192,7 @@ fun Str.last(n: Int): Str = this.takeLast(n)
 fun Str.fromTo(start: Int, end: Int = this.size): Str = this.substring(start, end)
 
 
-
+/*
 @Composable
 fun Any.toLines(): List<String> {
     var lineChars by remember { mutableStateOf(0) }
@@ -222,6 +222,46 @@ fun Any.toLines(): List<String> {
         }
     }
     if (line.isNotEmpty()) lines.add(line)
+    return lines
+}
+*/
+
+
+
+
+
+
+
+@Composable
+fun Any.toLines(): List<UIStr> {
+    var lineChars by r(0)
+
+    // Measure how many chars fit in one line
+    if (lineChars == 0) {
+        Text(
+            text = UIStr(this),
+            maxLines = 1,
+            softWrap = no,
+            modifier = Mod.alpha(0f),
+            onTextLayout = { lineChars = it.getLineEnd(0) }
+        )
+    }
+
+    // Return empty if not measured yet
+    if (lineChars == 0) return emptyList()
+
+    val lines = mList<UIStr>()
+    var line = ""
+    toStr(this).split(" ").forEach { word ->
+        if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
+            line += if (line.isEmpty()) word else " $word"
+        } else {
+            lines.add(UIStr(line))
+            line = word
+        }
+    }
+    if (line.isNotEmpty()) lines.add(UIStr(line))
+
     return lines
 }
 
