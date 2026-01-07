@@ -257,7 +257,8 @@ fun GeoArea(center: LatLng, r: Any = 100) {
 
 
 
-fun detectGeoClicks(LatLng: LatLng, list: mList<GeoCircle>, camera: CameraPosition) {
+fun detectGeoClicks(LatLng: LatLng, list: mList<GeoCircle>, cameraState: CameraPositionState) {
+	val camera = cameraState.position 
     list.each {
         it.Lat
 		
