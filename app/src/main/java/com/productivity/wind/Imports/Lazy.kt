@@ -790,7 +790,7 @@ fun LazyMenu(
 fun LazyMaps(
     startZoom: Float = 15f,
 	id: Int = 1,
-	mapClick: Do_<LatLng, CameraPosition> = { _ -> },
+	mapClick: Do_<LatLng, CameraPosition> = { _, _ -> },
 	mapLongClick: Do_<LatLng> = { _ -> },
 	ui: ui = {},
 ) {
