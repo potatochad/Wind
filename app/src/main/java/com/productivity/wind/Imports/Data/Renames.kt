@@ -166,6 +166,7 @@ typealias mod = Modifier
 typealias Wait = suspend () -> Unit
 typealias Wait_<T> = suspend (T) -> Unit
 typealias Do_<T> = (T) -> Unit
+typealias Do2_<A, B> = (A, B) -> Unit
 typealias DoStr = (Str) -> Unit     
 typealias DoInt = (Int) -> Unit        
 typealias m_<T> = MutableState<T>
