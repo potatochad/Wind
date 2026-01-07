@@ -537,6 +537,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			Box(Mod.weight(1f)) {
 				LazyMaps(
 					mapClick = { 
+						detectGeoClicks(it, Bar.privacyGeo)
 						// LatLng
 					},
 					mapLongClick = {
