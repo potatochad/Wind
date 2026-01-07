@@ -814,7 +814,27 @@ fun LazyMaps(
             cameraPositionState = cameraPositionState,
             properties = MapProperties(
                 isMyLocationEnabled = yes,
-                mapType = mapType
+                mapType = mapType,
+				mapStyleOptions = MapStyleOptions(
+					"""
+[
+  {
+    "featureType": "poi",
+    "elementType": "all",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "all",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  }
+]
+""".trimIndent()
+				)
             ),
 			onMapClick = {
 				mapClick(it)
