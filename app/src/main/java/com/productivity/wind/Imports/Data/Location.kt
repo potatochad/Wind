@@ -257,29 +257,23 @@ fun GeoArea(center: LatLng, r: Any = 100) {
 
 
 
-fun detectGeoClicks(clickedLatLng: LatLng, geoList: mList<GeoCircle>) {
-    geoList.each {
-        val distanceMeters = distanceBetween(
-            clickedLatLng.latitude, clickedLatLng.longitude,
-            it.Lat, it.Lng
-        )
-        if (distanceMeters <= it.radius) {
-            Vlog("Clicked near GeoCircle visually!")
-        }
+fun detectGeoClicks(LatLng: LatLng, list: mList<GeoCircle>, camera: CameraPosition) {
+    list.each {
+        it.Lat
+		
+		it.Lng
+        Vlog("Clicked near GeoCircle visually!")
     }
 }
 
-// Haversine formula
-fun distanceBetween(lat1: Double, lng1: Double, lat2: Double, lng2: Double): Float {
-    val R = 6371000.0 // meters
-    val dLat = Math.toRadians(lat2 - lat1)
-    val dLon = Math.toRadians(lng2 - lng1)
-    val a = sin(dLat/2).pow(2.0) +
-            cos(Math.toRadians(lat1)) *
-            cos(Math.toRadians(lat2)) *
-            sin(dLon/2).pow(2.0)
-    val c = 2 * atan2(sqrt(a), sqrt(1-a))
-    return (R * c).toFloat()
-}
+
+
+
+
+
+
+
+
+
 
 
