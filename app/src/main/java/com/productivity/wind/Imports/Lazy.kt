@@ -815,26 +815,6 @@ fun LazyMaps(
             properties = MapProperties(
                 isMyLocationEnabled = yes,
                 mapType = mapType,
-				mapStyleOptions = MapStyleOptions(
-					"""
-[
-  {
-    "featureType": "poi",
-    "elementType": "all",
-    "stylers": [
-      { "visibility": "off" }
-    ]
-  },
-  {
-    "featureType": "transit",
-    "elementType": "all",
-    "stylers": [
-      { "visibility": "off" }
-    ]
-  }
-]
-""".trimIndent()
-				)
             ),
 			onMapClick = {
 				mapClick(it)
@@ -842,6 +822,7 @@ fun LazyMaps(
 			onMapLongClick = {
 				mapLongClick(it)
 			},
+			onPOIClick = {},
 			uiSettings = MapUiSettings(
 				zoomControlsEnabled = no
 			),
