@@ -790,7 +790,7 @@ fun LazyMenu(
 fun LazyMaps(
     startZoom: Float = 15f,
 	id: Int = 1,
-	mapClick: Do_<LatLng> = { _ -> },
+	mapClick: Do_<LatLng, CameraPosition> = { _ -> },
 	mapLongClick: Do_<LatLng> = { _ -> },
 	ui: ui = {},
 ) {
@@ -804,20 +804,20 @@ fun LazyMaps(
 
 	
 
-    val cameraPositionState = rememberCameraPositionState {
+    val camera = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(Bar.userLocation, startZoom)
     }
 
     Box(Mod.maxS()) {
         GoogleMap(
             modifier = Mod.maxS(),
-            cameraPositionState = cameraPositionState,
+            cameraPositionState = camera,
             properties = MapProperties(
                 isMyLocationEnabled = yes,
                 mapType = mapType,
             ),
 			onMapClick = {
-				mapClick(it)
+				mapClick(it, camera)
 			},
 			onMapLongClick = {
 				mapLongClick(it)
