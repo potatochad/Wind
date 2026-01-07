@@ -538,7 +538,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 				LazyMaps(
 					mapClick = { 
 						detectGeoClicks(it, Bar.privacyGeo)
-						// LatLng
 					},
 					mapLongClick = {
 						var newItem = GeoCircle(
