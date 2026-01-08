@@ -816,6 +816,7 @@ lateinit var AppPkg: Str
 var AppH by m(0.dp)
 var AppW by m(0.dp)
 var AppLazyH by m(0.dp)
+var AppDensity by m(0f)
 
 lateinit var scope: CoroutineScope
 
@@ -844,6 +845,7 @@ class MainActivity : ComponentActivity() {
 		AppStart_beforeUI()
 
         setContent { 
+			AppDensity = LocalDensity.current.density
 			scope = rememberCoroutineScope()
 
 			AppNav = rememberNavController()
