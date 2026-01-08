@@ -200,7 +200,10 @@ fun GeoPin(
 	center: LatLng
 ){
 	MarkerComposable(
-		state = MarkerState(position = center)
+		state = MarkerState(position = center),
+		onClick = {
+			Vlog("marker clicked")
+		}
 	) {
 		Column(
 			horizontalAlignment = Alignment.CenterHorizontally
