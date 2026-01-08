@@ -206,7 +206,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
-		if (it.size - txt.it.size < 2 && goodStr <= txt.it.size) {
+		if (it.size - txt.it.size < 2) {
 			txt.it=it
 			
 			tsk.edit{ input = it }
