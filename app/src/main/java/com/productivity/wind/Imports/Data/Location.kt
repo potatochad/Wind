@@ -208,7 +208,6 @@ fun GeoPin(
 			Vlog("marker clicked")
 			no
 		},
-		infoWindow = null
 	) {
 		Column(
 			horizontalAlignment = Alignment.CenterHorizontally
