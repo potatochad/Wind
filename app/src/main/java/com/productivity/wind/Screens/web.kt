@@ -81,7 +81,11 @@ fun BlockKeyword() {
 
     LazyScreen(
         top = {
-            Row(Mod.Hscroll().w(AppW / 2)) {
+            Row(
+                Mod.Hscroll()
+                    .w((AppW / 2)+30)
+                    .border(width = 1.dp, color = Color.LightGray)  
+            ) {
                 Text(url, maxLines = 1)
             }
             UI.End {
@@ -99,7 +103,7 @@ fun BlockKeyword() {
         LazyRuleCard("If") {
             LazzyRow {
                 Text("Detect ")
-                Item.TskInput(BadWord, maxLetters = 12, w=120, isInt=no)
+                Item.TskInput(BadWord, maxLetters = 100, isInt=no)
             }
         }
 
