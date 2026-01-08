@@ -203,6 +203,7 @@ fun GeoPin(
 		state = MarkerState(position = center),
 		onClick = {
 			Vlog("marker clicked")
+			yes
 		}
 	) {
 		Column(
