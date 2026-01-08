@@ -205,6 +205,17 @@ fun toUI(it: Any?): UI {
     }
 }
 
+fun Any.toMeters(
+    cameraState: CameraPositionState,
+    density: Float = AppDensity
+): Double {
+    val zoom = cameraState.position.zoom
+    val latitude = cameraState.position.target.latitude
+    val metersPerPixel = 156543.03392 * cos(Math.toRadians(latitude)) / (1 shl zoom.toInt())
+    val pixels = toF(this) * density
+    return pixels * metersPerPixel
+}
+
 
 
 
