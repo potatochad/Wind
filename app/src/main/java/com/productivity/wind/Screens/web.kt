@@ -76,13 +76,13 @@ fun Web(){
 
 @Composable
 fun BlockKeyword() {
-    var url by r(Bar.Url)
-    var BadWord = r_m("${Bar.Url.take(10)+"..."}")
+    var url by r(UrlShort(Bar.Url))
+    var BadWord = r("${url.take(10)+"..."}")
 
     LazyScreen(
         top = {
             Row(Mod.Hscroll().w(AppW / 2)) {
-                Text(Bar.Url, maxLines = 1)
+                Text(url, maxLines = 1)
             }
             UI.End {
                 Icon.MoreMenu{
