@@ -76,7 +76,8 @@ fun Web(){
 
 @Composable
 fun BlockKeyword() {
-    var BadWord = r_m("someWord")
+    var url by r(Bar.Url)
+    var BadWord = r_m("${Bar.Url.take(10)+"..."}")
 
     LazyScreen(
         top = {
