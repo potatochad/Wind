@@ -254,18 +254,35 @@ fun GeoArea(center: LatLng, r: Any = 100) {
 
 
 
+fun distance(latLng1: LatLng, latLng2: LatLng): Double {
+    val result = FloatArray(1)
+    Location.distanceBetween(
+        latLng1.latitude,
+        latLng1.longitude,
+        latLng2.latitude,
+        latLng2.longitude,
+        result
+    )
+    return result[0].toDouble()
+}
+
 fun detectGeoClicks(LatLng: LatLng, list: mList<GeoCircle>, cameraState: CameraPositionState) {
 	val camera = cameraState.position
 	var clickSize = 27.toMeters(cameraState)
 	
     list.each {
-		clickSize
+		Vlog("clickSize: $clickSize")
+
+		val dist = distance(LatLng, LatLng(it.Lat, it.Lng))
+		Vlog("Distance: $dist meters")
+
+		if (dist < clickSize) {
+			Vlog("Clicked near geo circleee")
+		}
+
 		
-        // it.Lat
-		
-		// it.Lng
-        // Vlog("Clicked near GeoCircle visually!")
-    }
+        
+	}
 }
 
 
