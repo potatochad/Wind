@@ -254,29 +254,17 @@ fun GeoArea(center: LatLng, r: Any = 100) {
 
 
 
-
-
-fun dpToMeters(
-    dp: Float,
-    latitude: Double,
-    zoom: Float,
-    density: Float
-): Double {
-    val metersPerPixel =
-        156543.03392 * kotlin.math.cos(Math.toRadians(latitude)) / (1 shl zoom.toInt())
-
-    val pixels = dp * density
-    return pixels * metersPerPixel
-}
-
 fun detectGeoClicks(LatLng: LatLng, list: mList<GeoCircle>, cameraState: CameraPositionState) {
 	val camera = cameraState.position
+	var clickSize = 27.toMeters(cameraState)
 	
     list.each {
-        it.Lat
+		clickSize
 		
-		it.Lng
-        Vlog("Clicked near GeoCircle visually!")
+        // it.Lat
+		
+		// it.Lng
+        // Vlog("Clicked near GeoCircle visually!")
     }
 }
 
