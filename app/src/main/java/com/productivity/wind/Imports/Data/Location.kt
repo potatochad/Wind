@@ -199,8 +199,11 @@ fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = Spher
 fun GeoPin(
 	center: LatLng
 ){
+	var selected by r(no)
+	
 	MarkerComposable(
 		state = MarkerState(position = center),
+		zIndex = if (selected) 1f else 0f,
 		onClick = {
 			Vlog("marker clicked")
 			yes
