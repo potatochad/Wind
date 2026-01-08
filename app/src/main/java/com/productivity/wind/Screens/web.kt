@@ -32,7 +32,6 @@ fun Web(){
     
     web.url(Bar.Url)
         
-
     Item.WebPointTimer()
 
     LazyScreen(
@@ -81,8 +80,8 @@ fun BlockKeyword() {
 
     LazyScreen(
         top = {
-            Row(Mod.scroll(h = yes).w(AppW / 2)) {
-                Text(Bar.Url, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Row(Mod.Hscroll().w(AppW / 2)) {
+                Text(Bar.Url, maxLines = 1)
             }
             UI.End {
                 Icon.MoreMenu{
