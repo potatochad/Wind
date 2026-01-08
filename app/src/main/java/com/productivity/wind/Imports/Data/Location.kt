@@ -195,6 +195,30 @@ fun getUserLocation(
 fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = SphericalUtil.computeDistanceBetween(point, center) <= radiusMeters
 
 
+
+/*
+vararg keys: Any,
+    state: MarkerState = rememberUpdatedMarkerState(),
+    contentDescription: String? = "",
+    alpha: Float = 1.0f,
+    anchor: Offset = Offset(0.5f, 1.0f),
+    draggable: Boolean = false,
+    flat: Boolean = false,
+    infoWindowAnchor: Offset = Offset(0.5f, 0.0f),
+    rotation: Float = 0.0f,
+    snippet: String? = null,
+    tag: Any? = null,
+    title: String? = null,
+    visible: Boolean = true,
+    zIndex: Float = 0.0f,
+    onClick: (Marker) -> Boolean = { false },
+    onInfoWindowClick: (Marker) -> Unit = {},
+    onInfoWindowClose: (Marker) -> Unit = {},
+    onInfoWindowLongClick: (Marker) -> Unit = {},
+    content: @UiComposable @Composable () -> Unit,
+) {
+*/
+
 @Composable
 fun GeoPin(
 	center: LatLng
@@ -208,6 +232,7 @@ fun GeoPin(
 			Vlog("marker clicked")
 			no
 		},
+		draggable = yes,
 	) {
 		Column(
 			horizontalAlignment = Alignment.CenterHorizontally
