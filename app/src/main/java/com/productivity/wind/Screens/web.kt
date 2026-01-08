@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.unit.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.ui.text.style.*
+import androidx.compose.ui.graphics.*
 
 
 @Composable
@@ -83,7 +84,7 @@ fun BlockKeyword() {
         top = {
             Row(
                 Mod.Hscroll()
-                    .w((AppW / 2)+30)
+                    .w((AppW / 2)+30.dp)
                     .border(width = 1.dp, color = Color.LightGray)  
             ) {
                 Text(url, maxLines = 1)
