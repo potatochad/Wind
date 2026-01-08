@@ -224,13 +224,21 @@ fun GeoPin(
 	center: LatLng
 ){
 	var selected by r(no)
+
+	LaunchedEffect(markerState) {
+		snapshotFlow { markerState.position }
+			.collect { newLatLng ->
+				Vlog("Dragging: $newLatLng")
+				// UPDATE your state / ViewModel here
+        }
+	}
 	
 	MarkerComposable(
 		state = MarkerState(position = center),
 		zIndex = if (selected) 1f else 0f,
 		onClick = {
 			Vlog("marker clicked")
-			no
+			yes
 		},
 		draggable = yes,
 	) {
