@@ -107,7 +107,7 @@ fun getStatusBarHeight(): Int {
 
 //endregion
 
-
+/*
 object DayChecker {
     private var job: Job? = null
 
@@ -127,6 +127,8 @@ object DayChecker {
         }
     }
 }
+*/
+
 
 fun fixedInputScroll(
     text: TextFieldValue,
