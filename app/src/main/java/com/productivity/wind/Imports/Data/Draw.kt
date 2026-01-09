@@ -73,77 +73,12 @@ fun DrawScope.drawTriangle(
 
 
 
-fun DrawScope.drawPin(
-    circleRadius: Float = 14f,
-    triangleWidth: Float = 24f,
-    triangleHeight: Float = 16f,
-    color: Color = Color.Black
-) {
-    // circle on top
- /*
-    drawCircle(
-        color = color,
-        radius = circleRadius,
-        center = Offset(size.width / 2f, circleRadius)
-    )
-    */
-
-    drawArc(
-    color = color,
-    startAngle = -90f,      // top of circle
-    sweepAngle = 288f,      // 80% of 360°
-    useCenter = false,      // hollow like progress
-    topLeft = Offset(
-        size.width / 2f - circleRadius,
-        0f
-    ),
-    size = androidx.compose.ui.geometry.Size(circleRadius * 2, circleRadius * 2),
-    style = androidx.compose.ui.graphics.drawscope.Stroke(width = 4f) // optional thickness
-)
-
-
-    // triangle below
-    drawTriangle(
-        x = (size.width - triangleWidth) / 2f,
-        y = circleRadius, // just below circle
-        width = triangleWidth,
-        height = triangleHeight,
-        color = color
-    )
-}
 
 
 
 
 
 
-
-
-/*
-val context = LocalContext.current
-val bitmap = r {
-    val drawable = AppCompatResources.getDrawable(context, R.drawable.incognito)!!.mutate()
-
-    // Tint it white
-    drawable.setTint(Color.White.toArgb())
-
-    // Desired size in pixels
-    val width = 90
-    val height = 90
-
-    val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(bmp)
-    drawable.setBounds(0, 0, width, height)
-    drawable.draw(canvas)
-    bmp
-}
-
-Marker(
-    state = rememberMarkerState(position = center),
-    icon = BitmapDescriptorFactory.fromBitmap(bitmap),
-    title = "Incognito Spot"
-)
-*/
 
 @Composable
 fun drawSlider(
