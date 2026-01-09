@@ -225,6 +225,8 @@ fun GeoPin(
 ){
 	var selected by r(no)
 
+	val markerState = rememberMarkerState(position = center)
+
 	LaunchedEffect(markerState) {
 		snapshotFlow { markerState.position }
 			.collect { newLatLng ->
@@ -234,7 +236,7 @@ fun GeoPin(
 	}
 	
 	MarkerComposable(
-		state = MarkerState(position = center),
+		state = markerState,
 		zIndex = if (selected) 1f else 0f,
 		onClick = {
 			Vlog("marker clicked")
