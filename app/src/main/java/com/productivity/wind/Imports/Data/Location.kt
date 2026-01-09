@@ -221,10 +221,11 @@ vararg keys: Any,
 
 @Composable
 fun GeoPin(
-	centerInit: LatLng
+	Init: LatLng,
+	onMove: Do_<LatLng> ={ _ -> }
 ){
 	var selected by r(no)
-	var center by r(centerInit)
+	var center by r(Init)
 
 	val markerState = rememberMarkerState(position = center)
 
@@ -232,6 +233,7 @@ fun GeoPin(
 		snapshotFlow { markerState.position }
 			.collect {
 				center = it
+				onMove(it)
 			}
 	}
 	
@@ -293,7 +295,8 @@ fun GeoPin(
 
 
 @Composable
-fun GeoArea(center: LatLng, r: Any = 100) {
+fun GeoArea(Init: LatLng, r: Any = 100) {
+	var center by r(Init)
 	Circle(
         center = center,
         radius = toD(r),
@@ -301,7 +304,9 @@ fun GeoArea(center: LatLng, r: Any = 100) {
         fillColor = faded(Gold, 0.6f)
     )
 	
-	GeoPin(center)
+	GeoPin(center){
+		center = it
+	}
 }
 
 fun detectGeoClicks(LatLng: LatLng, list: mList<GeoCircle>, cameraState: CameraPositionState) {
