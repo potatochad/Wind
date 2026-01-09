@@ -87,12 +87,16 @@ fun drawPin(
 				.border(3.dp, Color.White, CircleShape),
 			contentAlignment = Alignment.Center
 		) {
+			LazyIcon(Icons.Default.VisibilityOff)
+
+			/*
 			Icon(
 				imageVector = Icons.Default.VisibilityOff,
 				contentDescription = null,
 				tint = Color.White,
 				modifier = Mod.s(24)
 			)
+			*/
 		}
 
 		// Triangle (pin tip)
