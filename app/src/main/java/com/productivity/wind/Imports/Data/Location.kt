@@ -243,6 +243,7 @@ fun GeoPin(
 		onClick = { yes },
 		draggable = yes,
 	) {
+		drawPin()
 
 
 		
