@@ -280,6 +280,18 @@ fun runOnceEver(action: Wait) {
 }
 
 
+fun isNewDay(): Bool {
+	if (Bar.lastDate == "") { Bar.lastDate = "${LocalDate.now()}"}
+	
+	val today = "${LocalDate.now()}"
+	if (today != Bar.lastDate) {
+		Bar.lastDate = today
+		return yes
+	}
+	return no
+}
+
+
 
 
 
