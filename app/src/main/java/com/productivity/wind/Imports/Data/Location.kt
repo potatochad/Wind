@@ -244,9 +244,6 @@ fun GeoPin(
 		draggable = yes,
 	) {
 		drawPin()
-
-
-		
 	}
 }
 
