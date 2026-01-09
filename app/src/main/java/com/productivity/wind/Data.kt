@@ -62,7 +62,7 @@ aka....got some functions in datatools, that though a bit tantrum...
 yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long ago dont remember what did)
 */
 
-fun onNewDay() {  
+fun newDay() {  
      Bar.apps.each{
           Bar.apps.edit(it){
 				done = no
@@ -198,6 +198,8 @@ fun MAINStart() {
 fun OnResume(){
 	Item.UpdateAppTsk()
 
+	if (isNewDay()) newDay()
+
 	
 }
 
@@ -206,7 +208,6 @@ fun AppStart() {
 	val LocationClient = r { LocationServices.getFusedLocationProviderClient(App) }
     
 	RunOnce {
-        DayChecker.start()
 		captureAppCrashes()
 		getMyAppLogs() 
 
