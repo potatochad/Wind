@@ -290,7 +290,7 @@ fun LazyCard(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LazyIcon(
-    icon: ImageVector? = null,
+    icon: ImageVector,
     BigIcon: ImageVector? = null,
     BigIconColor: Color? = null,
     SquareIcon: Bool = no,
