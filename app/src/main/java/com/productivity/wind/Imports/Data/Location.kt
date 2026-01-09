@@ -221,25 +221,24 @@ vararg keys: Any,
 
 @Composable
 fun GeoPin(
-	center: LatLng
+	centerInit: LatLng
 ){
 	var selected by r(no)
+	var center by r(centerInit)
 
 	val markerState = rememberMarkerState(position = center)
 
 	LaunchedEffect(markerState) {
 		snapshotFlow { markerState.position }
-			.collect { newLatLng ->
-				Vlog("Dragging: $newLatLng")
-				// UPDATE your state / ViewModel here
-        }
+			.collect {
+				center = it
+			}
 	}
 	
 	MarkerComposable(
 		state = markerState,
-		zIndex = if (selected) 1f else 0f,
+		// zIndex = if (selected) 1f else 0f,
 		onClick = {
-			Vlog("marker clicked")
 			yes
 		},
 		draggable = yes,
