@@ -237,17 +237,19 @@ fun BigIcon(
     icon: ImageVector,
 	color: Color = Color.White,
     mod: Mod = Mod,
+	size: Any = 20,
 	onClick: Do = {},
 ) {
 	Box(
 		modifier = Mod
 			.space(5)
-			.round(100)
+			.round(20)
 			.background(color),
 		contentAlignment = Alignment.Center
 	) {
 		LazyIcon(
-			icon 
+			icon,
+			size = size,
 		)
 	}
 }
