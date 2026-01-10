@@ -291,8 +291,8 @@ fun LazyCard(
 @Composable
 fun LazyIcon(
     icon: ImageVector,
-    ButtonSize: Int = 40,           // actual button box (default M3 ~48)
-    modifier: Mod = Mod,
+    size: Any = 40,        
+    mod: Mod = Mod,
     color: Color = Color.White,
 	onClick: Do = {},
 ) {
@@ -303,14 +303,13 @@ fun LazyIcon(
 					onClick()
 				}
 			},
-            modifier = modifier
-                .space(5).s(ButtonSize)
+            modifier = mod.space(5).s(toF(size)*1.7)
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = color,
-                modifier = Mod.s(24)
+                modifier = Mod.s(size)
             )
         }
     }
