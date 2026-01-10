@@ -291,17 +291,11 @@ fun LazyCard(
 @Composable
 fun LazyIcon(
     icon: ImageVector,
-    BigIcon: ImageVector? = null,
-    BigIconColor: Color? = null,
-    SquareIcon: Bool = no,
-    BigIconSize: Int = 30,
-    OuterPadding: Int = 5,          // outside space
     ButtonSize: Int = 40,           // actual button box (default M3 ~48)
     modifier: Mod = Mod,
     color: Color = Color.White,
 	onClick: Do = {},
 ) {
-	
 	UI.ComposeCanBeTiny() {
         IconButton(
             onClick = {
@@ -310,33 +304,14 @@ fun LazyIcon(
 				}
 			},
             modifier = modifier
-                .space(OuterPadding) // OUTER padding
-                .s(ButtonSize)      // controls inner room around icon
+                .space(5).s(ButtonSize)
         ) {
-            if (icon != null) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = color,
-                    modifier = Mod.s(24)
-                )
-            }
-
-            if (BigIcon != null && BigIconColor != null) {
-                val shape = if (SquareIcon) RoundedCornerShape(6.dp) else CircleShape
-                val innerSize = if (SquareIcon) 24.dp else 20.dp
-                Box(
-                    Mod.s(BigIconSize).clip(shape).background(BigIconColor),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = BigIcon,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Mod.s(innerSize)
-                    )
-                }
-            }
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = color,
+                modifier = Mod.s(24)
+            )
         }
     }
 }
