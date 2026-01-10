@@ -291,7 +291,7 @@ fun LazyCard(
 @Composable
 fun LazyIcon(
     icon: ImageVector,
-    size: Any = 40,        
+    size: Any = 20,        
     mod: Mod = Mod,
     color: Color = Color.White,
 	onClick: Do = {},
