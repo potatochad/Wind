@@ -388,6 +388,7 @@ fun LazyItem(
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color = Color.Green,
+	cardSize: Any = 3,
 
 	topPadding: Dp = 7.dp,
 	bottomPadding: Dp = 7.dp,
@@ -411,7 +412,7 @@ fun LazyItem(
 			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 		) {
             Row(
-				Mod.maxW().space(3),
+				Mod.maxW().space(cardSize),
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				if (icon != null) {
