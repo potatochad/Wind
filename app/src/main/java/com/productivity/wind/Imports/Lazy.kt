@@ -417,12 +417,7 @@ fun LazyItem(
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				if (icon != null) {
-					LazyIcon(
-						imageVector = icon,
-						contentDescription = null,
-						tint = Color.White,
-						modifier = Mod.s(24)
-					)
+					LazyIcon(icon)
 				}	    
 
 				if (BigIcon != null && BigIconColor != null) {
