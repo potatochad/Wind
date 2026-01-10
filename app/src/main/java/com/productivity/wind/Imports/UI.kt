@@ -243,7 +243,7 @@ fun BigIcon(
 	LazyIcon(
 		icon,
 		size = size,
-		mod = mod.space(5).round(toF(size)*5).background(color),
+		mod = mod.round(toF(size)*5).background(color).space(5),
 	)
 }
 
