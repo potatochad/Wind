@@ -233,6 +233,23 @@ fun CopyTsk.edit(block: CopyTsk.() -> Unit) {
 
 
 
+LazyIcon(
+    icon: ImageVector,
+    size: Any = 40,        
+    mod: Mod = Mod,
+    color: Color = Color.White,
+	onClick: Do = {},
+) {Box(
+                        modifier = Mod
+                            .space(end = 10)
+                            .s(30)
+                            .clip(CircleShape)
+                            .background(BigIconColor),
+                        contentAlignment = Alignment.Center
+                    ) {
+
+
+
 
 object UI {
     //No synched with actual settingsItem function YET
