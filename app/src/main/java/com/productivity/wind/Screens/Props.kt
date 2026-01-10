@@ -101,17 +101,20 @@ fun Menu() {
         LazyItem(
             icon = Icons.Outlined.Chat,
             title = "Support",
-            onClick = { UI.SendEmail(); menu = no }
+            onClick = { UI.SendEmail(); menu = no },
+			cardSize = 2,
         )
         LazyItem(
             icon = Icons.Outlined.Landscape,
             title = "Settings",
-            onClick = { goTo("SettingsScreen"); menu = no }
+            onClick = { goTo("SettingsScreen"); menu = no },
+			cardSize = 2,
         )
         LazyItem(
             icon = Icons.Outlined.QueryStats,
             title = "Achievements",
-            onClick = { goTo("Achievements"); menu = no }
+            onClick = { goTo("Achievements"); menu = no },
+			cardSize = 2
         )
     }
 }
