@@ -405,15 +405,14 @@ fun LazyItem(
 		verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
-			modifier
-                .maxW()
+			modifier.maxW()
                 .clickable(enabled = onClick != null) { onClick?.invoke() },
 			shape = RoundedCornerShape(12.dp),
 			colors = CardDefaults.cardColors(containerColor = CardColor),
 			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 		) {
             Row(
-				Mod.maxW().space(3),
+				Mod.maxW().space(3).weight(1f),
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				if (icon != null) {
