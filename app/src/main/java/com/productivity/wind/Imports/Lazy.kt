@@ -382,13 +382,12 @@ fun LazyMore(
 @Composable
 fun LazyItem(
     title: Str,
-    subtitle: Str? = null,
     endContent: ui = {},
     modifier: Mod = Mod,
 
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
-    BigIconColor: Color? = null,
+    BigIconColor: Color = Color.Green,
 
 	topPadding: Dp = 7.dp,
 	bottomPadding: Dp = 7.dp,
@@ -417,9 +416,8 @@ fun LazyItem(
 			) {
 				if (icon != null) {
 					LazyIcon(icon)
-				}	    
-
-				if (BigIcon != null && BigIconColor != null) {
+				} 
+				if (BigIcon != null) {
 					BigIcon(
 						BigIcon,
 						BigIconColor
