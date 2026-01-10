@@ -428,9 +428,6 @@ fun LazyItem(
 
 				Column(Mod.weight(1f)) {
 					Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
-					subtitle?.let {
-						Text(text = it, color = Color.Gray, fontSize = 12.sp)
-					}
 				}
 				endContent()
 			}
