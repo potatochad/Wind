@@ -396,14 +396,12 @@ fun LazyItem(
 	onClick: Do? = null,
 ) {
 	Row(
-        Mod
-            .maxW()
-            .space(
-                top = topPadding,
-                bottom = bottomPadding,
-                start = 7.dp,
-                end = 7.dp
-            ),
+        Mod.maxW().space(
+			top = topPadding,
+			bottom = bottomPadding,
+			start = 7.dp,
+			end = 7.dp
+		),
 		verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
@@ -419,31 +417,21 @@ fun LazyItem(
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				if (icon != null) {
-					Icon(
+					LazyIcon(
 						imageVector = icon,
 						contentDescription = null,
 						tint = Color.White,
-						modifier = Mod.space(end = 10).s(24)
+						modifier = Mod.s(24)
 					)
 				}	    
 
 				if (BigIcon != null && BigIconColor != null) {
-					Box(
-                        modifier = Mod
-                            .space(end = 10)
-                            .s(30)
-                            .clip(CircleShape)
-                            .background(BigIconColor),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = BigIcon,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Mod.s(20)
-                        )
-                    }
+					BigIcon(
+						BigIcon,
+						BigIconColor
+					)
 				}
+				move(10)
 
 
 				Column(Mod.weight(1f)) {
