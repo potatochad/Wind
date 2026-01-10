@@ -72,14 +72,6 @@ fun SettingsScreen() {
                     goTo("ExtensionsScreen")
                 }
         ) 
-
-		LazzyRow{
-			BigIcon(
-				Icons.Filled.Extension,
-				Color(0xFF9C27B0)
-			)
-		}
-
 		
 
 		
