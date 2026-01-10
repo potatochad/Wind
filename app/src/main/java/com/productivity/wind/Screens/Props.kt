@@ -100,7 +100,7 @@ fun Menu() {
     ) {
         LazyItem(
             icon = Icons.Outlined.Chat,
-            title = "Contact Support",
+            title = "Support",
             onClick = { UI.SendEmail(); menu = no }
         )
         LazyItem(
