@@ -413,7 +413,7 @@ fun LazyItem(
 			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 		) {
             Row(
-				Mod.maxW().space(4),
+				Mod.maxW().space(3),
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				if (icon != null) {
@@ -426,7 +426,7 @@ fun LazyItem(
 						BigIconColor
 					)
 				}
-				move(10)
+				move(7)
 
 
 				Column(Mod.weight(1f)) {
@@ -435,10 +435,7 @@ fun LazyItem(
 						Text(text = it, color = Color.Gray, fontSize = 12.sp)
 					}
 				}
-				Row(
-					Mod.space(end = 2),
-					verticalAlignment = Alignment.CenterVertically
-				) {
+				UI.End {
 					endContent()
 				}
 			}
