@@ -72,6 +72,17 @@ fun SettingsScreen() {
                     goTo("ExtensionsScreen")
                 }
         ) 
+
+		LazzyRow{
+			BigIcon(
+				Icons.Filled.Extension,
+				Color(0xFF9C27B0)
+			)
+		}
+
+		
+
+		
         LazyItem(
                 BigIcon = Icons.Filled.VisibilityOff,
                 BigIconColor = Color(0xFF03A9F4),
