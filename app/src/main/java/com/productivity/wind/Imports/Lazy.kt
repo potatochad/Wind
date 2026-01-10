@@ -303,13 +303,13 @@ fun LazyIcon(
 					onClick()
 				}
 			},
-            modifier = mod.space(5).s(toF(size)*1.7)
+            modifier = Mod.space(5).s(toF(size)*1.7)
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = color,
-                modifier = Mod.s(size)
+                modifier = mod.s(size)
             )
         }
     }
