@@ -240,18 +240,11 @@ fun BigIcon(
 	size: Any = 20,
 	onClick: Do = {},
 ) {
-	Box(
-		modifier = Mod
-			.space(5)
-			.round(20)
-			.background(color),
-		contentAlignment = Alignment.Center
-	) {
-		LazyIcon(
-			icon,
-			size = size,
-		)
-	}
+	LazyIcon(
+		icon,
+		size = size,
+		mod = Mod..background(color),
+	)
 }
 
 
