@@ -102,7 +102,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 	  selectLocation(show)
 	  
       UI.CheckRow("Activate at ", check) {
-         UI.Ctext("location") {
+         UI.Ctext("${Bar.privacyGeo.size} locations") {
 			check.it = yes
 			location {
 				show.it = yes
