@@ -103,19 +103,19 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 	  
       UI.CheckRow("Activate at ", check) {
          UI.Ctext("location") {
-            location {
-				show.it = yes
-				Bar.privacyLocation = yes
-            }
+			if (check.it){
+				location {
+				   show.it = yes
+				   Bar.privacyLocation = yes
+		       }
+			}
          }
-      }
+      } 
 
-        
-   }
+
 
 	  
-    
- 
+   }
 }
 
 
