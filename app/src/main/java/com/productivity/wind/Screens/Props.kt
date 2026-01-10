@@ -96,7 +96,7 @@ fun Menu() {
         top = { UI.MenuHeader() },
         showBack = no,
         showDivider = no,
-        headerHeight = 190,
+        headerHeight = 170,
     ) {
         LazyItem(
             icon = Icons.Outlined.Chat,
