@@ -242,7 +242,7 @@ fun BigIcon(
 	Box(
 		modifier = Mod
 			.space(5)
-			.clip(CircleShape)
+			.round(100)
 			.background(color),
 		contentAlignment = Alignment.Center
 	) {
