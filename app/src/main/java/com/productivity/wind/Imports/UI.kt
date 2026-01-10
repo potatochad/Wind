@@ -235,7 +235,7 @@ fun CopyTsk.edit(block: CopyTsk.() -> Unit) {
 @Composable
 fun BigIcon(
     icon: ImageVector,
-	color: Color = Color.White,
+	color: Color,
     mod: Mod = Mod,
 	size: Any = 20,
 	onClick: Do = {},
@@ -243,7 +243,7 @@ fun BigIcon(
 	LazyIcon(
 		icon,
 		size = size,
-		mod = Mod..background(color),
+		mod = mod.background(color),
 	)
 }
 
