@@ -232,21 +232,25 @@ fun CopyTsk.edit(block: CopyTsk.() -> Unit) {
 // ✴️ LIST SPECIFIC UI
 
 
-
-LazyIcon(
+@Composable
+fun BigIcon(
     icon: ImageVector,
-    size: Any = 40,        
     mod: Mod = Mod,
     color: Color = Color.White,
 	onClick: Do = {},
-) {Box(
-                        modifier = Mod
-                            .space(end = 10)
-                            .s(30)
-                            .clip(CircleShape)
-                            .background(BigIconColor),
-                        contentAlignment = Alignment.Center
-                    ) {
+) {
+	Box(
+		modifier = Mod
+			.space(5)
+			.clip(CircleShape)
+			.background(color),
+		contentAlignment = Alignment.Center
+	) {
+		LazyIcon(
+			icon 
+		)
+	}
+}
 
 
 
