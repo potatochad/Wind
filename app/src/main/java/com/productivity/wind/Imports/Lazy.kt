@@ -426,10 +426,8 @@ fun LazyItem(
 				}
 				move(7)
 
-
-				Column(Mod.weight(1f)) {
-					Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
-				}
+				Text(title.bold())
+				
 				endContent()
 			}
 		}
