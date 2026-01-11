@@ -247,7 +247,7 @@ fun BigIcon(
 	)
 }
 @Composable 
-fun LazyRuleCard(
+fun RuleCard(
     txt: Str,
     ui: ui,
 ){
