@@ -526,13 +526,10 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
         show,
 		"Choose Locations",
 		mod = Mod.w(360).h(600),
-		onOk = {},
-		onCancel = {},
-		onDismiss = {},
     ){
 		var slider by r(30f)
-		var center by r(Bar.userLocation)
-		var selectedItem by r { m<GeoCircle?>(null) }
+		// var center by r(Bar.userLocation)
+		var selectedItem by r<GeoCircle?>(null)
 	
 		Column {
 			Box(Mod.weight(1f)) {
