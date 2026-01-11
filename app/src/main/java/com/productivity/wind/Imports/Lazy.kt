@@ -274,7 +274,6 @@ fun LazyCard(
 ) {
     Card(
         modifier = modCard.shadow(2.dp).round(corners),
-        //shape = RoundedCornerShape(corners.dp),
         colors = CardDefaults.cardColors(CardColor),
     ) {
         Column(modUI) {
@@ -385,47 +384,39 @@ fun LazyItem(
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color = Color.Green,
-	cardSize: Any = 3,
 
 	topPadding: Dp = 7.dp,
 	bottomPadding: Dp = 7.dp,
 	
 	onClick: Do? = null,
 ) {
-	Row(
-        Mod.maxW().space(
+	LazyCard(
+		corners = 12,
+		modCard = Mod.space(
 			top = topPadding,
 			bottom = bottomPadding,
-			start = 7.dp,
-			end = 7.dp
-		),
-		verticalAlignment = Alignment.CenterVertically
-    ) {
-        Card(
-			modifier.maxW()
-                .clickable(enabled = onClick != null) { onClick?.invoke() },
-			shape = RoundedCornerShape(12.dp),
-			colors = CardDefaults.cardColors(containerColor = CardColor),
-			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-		) {
-            LazzyRow(space = cardSize){
-				if (icon != null) {
-					LazyIcon(icon)
-				} 
-				if (BigIcon != null) {
-					BigIcon(
-						BigIcon,
-						BigIconColor
-					)
-				}
-				move(7)
-
-				Row(Mod.weight(1f)){
-					Text(title.bold())
-				}
-				
-				endContent()
+			start = 7,
+			end = 7,
+		).maxW().clickable(enabled = onClick != null) { onClick?.invoke() },
+		modUI = Mod.space(3)
+	){
+		LazzyRow {
+			if (icon != null) {
+				LazyIcon(icon)
+			} 
+			if (BigIcon != null) {
+				BigIcon(
+					BigIcon,
+					BigIconColor
+				)
 			}
+			move(7)
+
+			Row(Mod.weight(1f)){
+				Text(title.bold())
+			}
+				
+			endContent()
 		}
 	}
 }
