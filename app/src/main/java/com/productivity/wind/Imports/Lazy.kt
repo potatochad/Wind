@@ -273,9 +273,8 @@ fun LazyCard(
     ui: ui,
 ) {
     Card(
-        modifier = modCard,
-        shape = RoundedCornerShape(corners.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        modifier = modCard.shadow(2.dp).round(corners),
+        //shape = RoundedCornerShape(corners.dp),
         colors = CardDefaults.cardColors(CardColor),
     ) {
         Column(modUI) {
