@@ -228,6 +228,9 @@ fun CopyTsk.done(): Bool {
 fun CopyTsk.edit(block: CopyTsk.() -> Unit) {
     Bar.copyTsk.edit(this, block)
 }
+fun GeoCircle.edit(block: GeoCircle.() -> Unit) {
+	Bar.privacyGeo.edit(this, block)
+}
 
 // ✴️ LIST SPECIFIC UI
 
