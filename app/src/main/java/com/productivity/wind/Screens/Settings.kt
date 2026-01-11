@@ -129,7 +129,6 @@ fun ExtensionsScreen() {
 
 @Composable
 fun SettingsOtherScreen() = LazyScreen("Settings") {
-		
         LazyItem(
             BigIcon = Icons.Filled.ListAlt,
             BigIconColor = Color(0xFF90A4AE),
