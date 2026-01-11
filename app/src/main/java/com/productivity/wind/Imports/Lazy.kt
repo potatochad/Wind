@@ -389,13 +389,13 @@ fun LazyItem(
 					BigIconColor
 				)
 			}
-			move(4)
 
 			Row(Mod.weight(1f)){
 				Text(title.bold())
 			}
 				
 			endContent()
+			move(12)
 		}
 	}
 }
