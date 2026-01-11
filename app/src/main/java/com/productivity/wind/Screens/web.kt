@@ -101,14 +101,14 @@ fun BlockKeyword() {
             }
         },
     ) {
-        LazyRuleCard("If") {
+        RuleCard("If") {
             LazzyRow {
                 Text("Detect ")
                 Item.TskInput(BadWord, maxLetters = 100, isInt=no)
             }
         }
 
-        LazyRuleCard("Do") {
+        RuleCard("Do") {
             LazzyRow {
                 Text("Go back")
             }
