@@ -378,8 +378,6 @@ fun LazyMore(
 @Composable
 fun LazyItem(
     title: Str,
-    endContent: ui = {},
-    modifier: Mod = Mod,
 
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
@@ -389,6 +387,7 @@ fun LazyItem(
 	bottomPadding: Dp = 7.dp,
 	
 	onClick: Do? = null,
+	endContent: ui = {},
 ) {
 	LazyCard(
 		corners = 12,
