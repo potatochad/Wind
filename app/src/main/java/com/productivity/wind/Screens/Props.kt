@@ -233,6 +233,7 @@ object Item {
             BigIcon = Icons.Filled.LockOpen,
             BigIconColor = Gold,
             title = "Unlock Threshold",
+			modUI = Mod.space(h=2.5.dp),
             endContent = {             
                 BasicInput(
                     "${Bar.Dpoints}", 
