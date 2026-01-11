@@ -377,7 +377,7 @@ fun LazyItem(
 			start = 6,
 			end = 6,
 		).maxW().clickable(enabled = onClick != null) { onClick?.invoke() },
-		modUI = Mod.space(2.5.dp)
+		modUI = Mod.space(h=2.5.dp).space(end=12)
 	){
 		LazzyRow {
 			if (icon != null) {
@@ -395,7 +395,6 @@ fun LazyItem(
 			}
 				
 			endContent()
-			move(12)
 		}
 	}
 }
