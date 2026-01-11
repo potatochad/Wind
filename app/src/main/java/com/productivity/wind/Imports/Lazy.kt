@@ -367,7 +367,7 @@ fun LazyItem(
 	bottomPadding: Dp = 7.dp,
 	
 	onClick: Do? = null,
-	endContent: ui = {},
+	endContent: uiRow = {},
 ) {
 	LazyCard(
 		corners = 12,
