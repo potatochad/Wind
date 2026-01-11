@@ -157,6 +157,7 @@ typealias UI = Content
 typealias Content = @Composable () -> Unit
 typealias Content_<T> = @Composable (T) -> Unit
 typealias ui = @Composable () -> Unit
+typealias uiRow = @Composable RowScope.() -> Unit
 typealias ctx = Context
 typealias ui_<T> = @Composable (T) -> Unit
 typealias Do = () -> Unit
