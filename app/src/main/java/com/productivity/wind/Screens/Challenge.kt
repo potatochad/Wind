@@ -265,30 +265,29 @@ fun AppUsage(id: Str = "") {
         Header.AppUsage(Time, Points, appName)
        }
     ) {
-      LazyRuleCard("If"){
-        LazzyRow{
-          UI.CheckCircle(1, WhichIf)
-          Text("Spend ")
-          Item.TskInput(Time)
-          Text(" seconds")
+		RuleCard("If"){
+		  LazzyRow{
+			  UI.CheckCircle(1, WhichIf)
+			  Text("Spend ")
+			  Item.TskInput(Time)
+			  Text(" seconds")
           
-          Text(" on ")
-          UI.Ctext(appName) {
-			 show.it = yes
-          }
-        }
+			  Text(" on ")
+			  UI.Ctext(appName) {
+				  show.it = yes
+			  }
+		  }
       }
-      LazyRuleCard("Do"){
-        LazzyRow{
-          Text("Add ")
-          Item.TskInput(Points)
-          Text(" points")
-        }
+      RuleCard("Do"){
+		  LazzyRow{
+			  Text("Add ")
+			  Item.TskInput(Points)
+			  Text(" points")
+		  }
       }
 	  
 
     }
-
 }
 
 
