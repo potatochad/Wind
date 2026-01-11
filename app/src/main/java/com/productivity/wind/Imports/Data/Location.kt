@@ -136,8 +136,8 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.foundation.shape.*
 import kotlin.math.*
 
-
-val MarkerState.it: LatLng
+typealias Marker = MarkerState
+val Marker.it: LatLng
     get() = this.position
 
 @Composable
