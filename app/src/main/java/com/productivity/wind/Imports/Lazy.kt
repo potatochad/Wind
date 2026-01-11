@@ -412,7 +412,7 @@ fun LazyItem(
 			}
 			move(7)
 
-			Row(Mod.weight(1f)){
+			Row(Mod.maxW()){
 				Text(title.bold())
 			}
 				
