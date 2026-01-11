@@ -227,13 +227,16 @@ fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = Spher
 @Composable
 fun GeoCircle(
 	Init: LatLng, 
-	r: Any = 100
+	r: Any = 100,
+	onDrag: Do_<LatLng> = {
+		Vlog("dragging")
+	},
 ){
 	var selected by r(no)
 	var center by r(Init)
 	val pin = marker(center)
 	pin.onChange {
-		Vlog("dragging")
+		onDrag(it)
 	}
 	
 	
