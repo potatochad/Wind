@@ -94,7 +94,7 @@ fun SettingsScreen() {
 
 @Composable()
 fun PrivacyScreen() = LazyScreen("Privacy") {
-   LazyRuleCard("If") {
+   RuleCard("If") {
       var check = m(Bar.privacyLocation)
 	  var show = m(no)
 	  
