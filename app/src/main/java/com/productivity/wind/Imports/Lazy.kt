@@ -246,7 +246,7 @@ fun LazyRuleCard(
     ui: ui,
 ){
 	LazyCard(corners = 8){
-		LazzyRow { Text(txt.size(17.sp).bold()) }
+		LazzyRow { Text(txt.size(17).bold()) }
 		ui()
 	}
 }
