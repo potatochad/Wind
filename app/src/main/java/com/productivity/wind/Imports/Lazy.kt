@@ -263,7 +263,7 @@ fun LazyRuleCard(
 @Composable
 fun LazyCard(
     corners: Int = 16,
-    mod: Mod = Mod.space(h = 8).maxW().space(16),
+    mod: Mod = Mod.space(8).maxW().space(12),
     ui: ui,
 ) {
     Card(
