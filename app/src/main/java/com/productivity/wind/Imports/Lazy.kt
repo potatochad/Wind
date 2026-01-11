@@ -358,7 +358,7 @@ fun LazyMore(
 @Composable
 fun LazyItem(
     title: Str,
-
+	
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
     BigIconColor: Color = Color.Green,
@@ -374,10 +374,10 @@ fun LazyItem(
 		modCard = Mod.space(
 			top = topPadding,
 			bottom = bottomPadding,
-			start = 7,
-			end = 7,
+			start = 6,
+			end = 6,
 		).maxW().clickable(enabled = onClick != null) { onClick?.invoke() },
-		modUI = Mod.space(3)
+		modUI = Mod.space(2.5.dp)
 	){
 		LazzyRow {
 			if (icon != null) {
@@ -389,7 +389,7 @@ fun LazyItem(
 					BigIconColor
 				)
 			}
-			move(7)
+			move(4)
 
 			Row(Mod.weight(1f)){
 				Text(title.bold())
