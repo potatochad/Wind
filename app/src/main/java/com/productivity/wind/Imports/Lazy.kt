@@ -242,21 +242,13 @@ fun LazzyRow(
       
 @Composable 
 fun LazyRuleCard(
-    Header: Str,
+    txt: Str,
     ui: ui,
 ){
 	LazyCard(corners = 8){
-		LazzyRow {
-			Text(
-				text = Header,
-				fontSize = 17.sp,        
-				color = Color.White,        
-				fontWeight = FontWeight.Bold,
-			)
-		}
+		LazzyRow { Text(txt.size(17.sp).bold()) }
 		ui()
 	}
-
 }
 
 
