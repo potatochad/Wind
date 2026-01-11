@@ -358,6 +358,7 @@ fun LazyMore(
 @Composable
 fun LazyItem(
     title: Str,
+	modUI: Mod = Mod.space(h=2.5.dp).space(end=12),
 	
     icon: ImageVector? = null,
     BigIcon: ImageVector? = null,
@@ -377,7 +378,7 @@ fun LazyItem(
 			start = 6,
 			end = 6,
 		).maxW().clickable(enabled = onClick != null) { onClick?.invoke() },
-		modUI = Mod.space(h=2.5.dp).space(end=12)
+		modUI = modUI,
 	){
 		LazzyRow {
 			if (icon != null) {
