@@ -549,7 +549,10 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 				){
 					Bar.privacyGeo.each {
 						GeoCircle(it){
-							
+							val item = list.firstOrNull { it.id == targetId }
+							selectedItem = item
+
+							Vlog("item selected")
 						}
 					}
 					
@@ -564,7 +567,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 				slider = it
 
 				selectedItem?.let { item ->
-					Bar.privacyGeo.edit(item) {
+					item.edit {
 						radius = slider
 					}
 				}
