@@ -549,7 +549,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 				){
 					Bar.privacyGeo.each { item ->
 						GeoCircle(item){ itemId ->
-							val item2 = list.firstOrNull { it.id == itemId }
+							val item2 = Bar.privacyGeo.firstOrNull { it.id == itemId }
 							selectedItem = item2
 
 							Vlog("item selected")
