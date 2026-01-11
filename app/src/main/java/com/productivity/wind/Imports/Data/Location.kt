@@ -136,6 +136,9 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.foundation.shape.*
 import kotlin.math.*
 
+fun marker(x: LatLng) = rememberMarkerState(position = center)
+fun MarkerState.it get() = this.position
+
 
 fun distance(latLng1: LatLng, latLng2: LatLng): Double {
     val result = FloatArray(1)
@@ -209,10 +212,10 @@ fun GeoCircle(
 ){
 	var selected by r(no)
 	var center by r(Init)
-	val markerState = rememberMarkerState(position = center)
+	val pin = marker(center)
 
 	Circle(
-        center = markerState.position,
+        center = pin.it,
         radius = toD(r),
         strokeColor = Gold,
         fillColor = faded(Gold, 0.6f)
@@ -220,7 +223,7 @@ fun GeoCircle(
 	
 	
 	MarkerComposable(
-		state = markerState,
+		state = pin,
 		onClick = { yes },
 		draggable = yes,
 	) {
