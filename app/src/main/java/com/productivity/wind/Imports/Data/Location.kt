@@ -229,6 +229,7 @@ fun GeoCircle(
 	geo: GeoCircle,
 	onDrag: Do_<LatLng> = {},
 	onClick: Do = {},
+	onSelect: Do = {},
 ){
 	var center = LatLng(geo.Lat, geo.Lng)
 	
@@ -236,6 +237,7 @@ fun GeoCircle(
 	val pin = marker(center)
 	pin.onChange { drag ->
 		onDrag(drag)
+		onSelect()
 		geo.edit{
 			geo.Lat = drag.latitude
 			geo.Lng = drag.longitude
@@ -245,7 +247,11 @@ fun GeoCircle(
 	
 	MarkerComposable(
 		state = pin,
-		onClick = { yes },
+		onClick = { 
+			onClick()
+			onSelect()
+			yes
+		},
 		draggable = yes,
 	) {
 		drawPin()
