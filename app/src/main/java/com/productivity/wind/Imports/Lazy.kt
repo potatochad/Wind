@@ -426,7 +426,9 @@ fun LazyItem(
 				}
 				move(7)
 
-				Text(title.bold())
+				Row(Mod.weight(1f)){
+					Text(title.bold())
+				}
 				
 				endContent()
 			}
