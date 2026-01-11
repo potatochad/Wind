@@ -228,15 +228,19 @@ fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = Spher
 fun GeoCircle(
 	geo: GeoCircle,
 	onDrag: Do_<LatLng> = {
-		Vlog("dragging")
+		
 	},
 ){
 	var center = LatLng(geo.Lat, geo.Lng)
 	
 	var selected by r(no)
 	val pin = marker(center)
-	pin.onChange {
-		onDrag(it)
+	pin.onChange { drag ->
+		onDrag(drag)
+		geo.edit{
+			geo.Lat = drag.latitude
+			geo.Lng = drag.longitude
+		}
 	}
 	
 	
