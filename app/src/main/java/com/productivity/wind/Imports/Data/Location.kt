@@ -196,46 +196,28 @@ fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = Spher
 
 
 
-/*
-vararg keys: Any,
-    state: MarkerState = rememberUpdatedMarkerState(),
-    contentDescription: String? = "",
-    alpha: Float = 1.0f,
-    anchor: Offset = Offset(0.5f, 1.0f),
-    draggable: Boolean = false,
-    flat: Boolean = false,
-    infoWindowAnchor: Offset = Offset(0.5f, 0.0f),
-    rotation: Float = 0.0f,
-    snippet: String? = null,
-    tag: Any? = null,
-    title: String? = null,
-    visible: Boolean = true,
-    zIndex: Float = 0.0f,
-    onClick: (Marker) -> Boolean = { false },
-    onInfoWindowClick: (Marker) -> Unit = {},
-    onInfoWindowClose: (Marker) -> Unit = {},
-    onInfoWindowLongClick: (Marker) -> Unit = {},
-    content: @UiComposable @Composable () -> Unit,
-) {
-*/
+
+
+
+
+
 
 @Composable
-fun GeoPin(
-	Init: LatLng,
-	onMove: Do_<LatLng> ={ _ -> }
+fun GeoCircle(
+	Init: LatLng, 
+	r: Any = 100
 ){
 	var selected by r(no)
 	var center by r(Init)
-
 	val markerState = rememberMarkerState(position = center)
 
-	RunOnce(markerState) {
-		snapshotFlow { markerState.position }
-			.collect {
-				center = it
-				onMove(it)
-			}
-	}
+	Circle(
+        center = markerState.position,
+        radius = toD(r),
+        strokeColor = Gold,
+        fillColor = faded(Gold, 0.6f)
+    )
+	
 	
 	MarkerComposable(
 		state = markerState,
@@ -243,35 +225,6 @@ fun GeoPin(
 		draggable = yes,
 	) {
 		drawPin()
-	}
-}
-
-
-@Composable
-fun GeoArea(Init: LatLng, r: Any = 100) {
-	var center by r(Init)
-	Circle(
-        center = center,
-        radius = toD(r),
-        strokeColor = Gold,
-        fillColor = faded(Gold, 0.6f)
-    )
-	
-	GeoPin(center){
-		center = it
-	}
-}
-
-fun detectGeoClicks(LatLng: LatLng, list: mList<GeoCircle>, cameraState: CameraPositionState) {
-	val camera = cameraState.position
-	var clickSize = 27.toMeters(cameraState)
-	
-    list.each {
-		val dist = distance(LatLng, LatLng(it.Lat, it.Lng))
-		
-		if (dist < clickSize) {
-			Vlog("Clicked near geo circleee")
-		}
 	}
 }
 
