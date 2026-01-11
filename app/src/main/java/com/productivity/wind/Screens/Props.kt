@@ -532,7 +532,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
     ){
 		var slider by r(30f)
 		var center by r(Bar.userLocation)
-		var selectedItem by r { mutableStateOf<GeoCircle?>(null) }
+		var selectedItem by r { m<GeoCircle?>(null) }
 	
 		Column {
 			Box(Mod.weight(1f)) {
