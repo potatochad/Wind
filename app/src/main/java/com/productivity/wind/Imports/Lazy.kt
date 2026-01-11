@@ -262,25 +262,17 @@ fun LazyRuleCard(
 
 @Composable
 fun LazyCard(
-    innerPadding: Int = 16,
     corners: Int = 16,
-    modifier: Mod = Mod.space(h= 8, w = 10).maxW(),
+    mod: Mod = Mod.space(h = 8).maxW().space(16),
     ui: ui,
 ) {
     Card(
-        modifier = modifier,
+        modifier = mod,
         shape = RoundedCornerShape(corners.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(CardColor),
     ) {
-        Column(
-            modifier = Modifier.space(
-                start = innerPadding.dp,
-                end = innerPadding.dp,
-                bottom = innerPadding.dp,
-                top = (innerPadding - 3).dp // slight top adjustment
-            )
-        ) {
+        Column {
             ui()
         }
     }
