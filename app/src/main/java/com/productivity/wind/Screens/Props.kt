@@ -548,7 +548,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 					},
 				){
 					Bar.privacyGeo.each {
-						GeoCircle(LatLng(it.Lat, it.Lng), it.radius)
+						GeoCircle(it)
 					}
 				}
 			}
