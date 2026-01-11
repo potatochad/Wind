@@ -537,9 +537,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		Column {
 			Box(Mod.weight(1f)) {
 				LazyMaps(
-					mapClick = { latLng, camera ->
-						detectGeoClicks(latLng, Bar.privacyGeo, camera)
-					},
 					mapLongClick = {
 						var newItem = GeoCircle(
 							Lat = it.latitude,
@@ -551,7 +548,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 					},
 				){
 					Bar.privacyGeo.each {
-						GeoArea(LatLng(it.Lat, it.Lng), it.radius)
+						GeoCircle(LatLng(it.Lat, it.Lng), it.radius)
 					}
 				}
 			}
@@ -568,7 +565,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 						radius = slider
 					}
 				}
-
 			}
 		}
 	}
