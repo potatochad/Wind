@@ -239,18 +239,6 @@ fun LazzyRow(
     }
 }
 
-      
-@Composable 
-fun LazyRuleCard(
-    txt: Str,
-    ui: ui,
-){
-	LazyCard(corners = 8){
-		LazzyRow { Text(txt.size(17).bold()) }
-		ui()
-	}
-}
-
 
 @Composable
 fun LazyCard(
