@@ -143,6 +143,13 @@ val Marker.it: LatLng
 @Composable
 fun marker(x: LatLng) = rememberMarkerState(position = x)
 
+@Composable
+fun Marker.onChange(Do: Do_<LatLng>) {
+    RunOnce(this) {
+        snapshotFlow { this.it }.collect { Do(it) }
+    }
+}
+
 
 fun distance(latLng1: LatLng, latLng2: LatLng): Double {
     val result = FloatArray(1)
@@ -216,7 +223,9 @@ fun GeoCircle(
 ){
 	var selected by r(no)
 	var center by r(Init)
-	val pin = marker(center)
+	val pin = marker(center).onChange {
+		Vlog("dragging")
+	}
 	
 	
 	MarkerComposable(
