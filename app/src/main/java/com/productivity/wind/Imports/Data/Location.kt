@@ -217,6 +217,18 @@ fun GeoCircle(
 	var selected by r(no)
 	var center by r(Init)
 	val pin = marker(center)
+	
+	
+	MarkerComposable(
+		state = pin,
+		onClick = { 
+			yes
+			Vlog("clicked or dragging")
+		},
+		draggable = yes,
+	) {
+		drawPin()
+	}
 
 	Circle(
         center = pin.it,
@@ -224,15 +236,6 @@ fun GeoCircle(
         strokeColor = Gold,
         fillColor = faded(Gold, 0.6f)
     )
-	
-	
-	MarkerComposable(
-		state = pin,
-		onClick = { yes },
-		draggable = yes,
-	) {
-		drawPin()
-	}
 }
 
 
