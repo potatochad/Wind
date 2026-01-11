@@ -226,7 +226,7 @@ fun LazyLine(
 @Composable
 fun LazzyRow(
     modifier: Mod = Mod,
-    space: Int = 0,
+    space: Any = 0,
     center: Bool = no,
     ui: ui,
 ) {
