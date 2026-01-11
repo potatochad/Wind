@@ -136,8 +136,12 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.foundation.shape.*
 import kotlin.math.*
 
-fun marker(x: LatLng) = rememberMarkerState(position = center)
-fun MarkerState.it get() = this.position
+
+val MarkerState.it: LatLng
+    get() = this.position
+
+@Composable
+fun marker(x: LatLng) = rememberMarkerState(position = x)
 
 
 fun distance(latLng1: LatLng, latLng2: LatLng): Double {
