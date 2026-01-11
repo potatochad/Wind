@@ -548,8 +548,11 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 					},
 				){
 					Bar.privacyGeo.each {
-						GeoCircle(it)
+						GeoCircle(it){
+							
+						}
 					}
+					
 				}
 			}
 
