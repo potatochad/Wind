@@ -103,7 +103,7 @@ fun CopyPaste(id: Str ="") {
     LazyScreen(top = { 
         Header.CopyPaste(txt, maxDone, donePts, letterPts, id) 
     }) {
-        LazyRuleCard("If") {
+        RuleCard("If") {
             LazzyRow {
                 Text("Letter typed correctly: ")
                 Item.TskInput(letterPts)
@@ -116,7 +116,7 @@ fun CopyPaste(id: Str ="") {
             }
         }
 
-        LazyRuleCard("Other") {
+        RuleCard("Other") {
             LazzyRow {
                 Text("DailyMax: ")
                 Item.TskInput(maxDone)
