@@ -246,6 +246,16 @@ fun BigIcon(
 		mod = mod.round(toF(size)*5).background(color).space(5),
 	)
 }
+@Composable 
+fun LazyRuleCard(
+    txt: Str,
+    ui: ui,
+){
+	LazyCard(corners = 8){
+		Text(txt.size(17).bold())
+		ui()
+	}
+}
 
 
 
