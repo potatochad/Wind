@@ -411,10 +411,7 @@ fun LazyItem(
 			colors = CardDefaults.cardColors(containerColor = CardColor),
 			elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
 		) {
-            Row(
-				Mod.maxW().space(cardSize),
-				verticalAlignment = Alignment.CenterVertically
-			) {
+            LazzyRow(space = cardSize){
 				if (icon != null) {
 					LazyIcon(icon)
 				} 
