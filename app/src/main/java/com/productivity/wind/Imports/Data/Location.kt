@@ -223,7 +223,8 @@ fun GeoCircle(
 ){
 	var selected by r(no)
 	var center by r(Init)
-	val pin = marker(center).onChange {
+	val pin = marker(center)
+	pin.onChange {
 		Vlog("dragging")
 	}
 	
