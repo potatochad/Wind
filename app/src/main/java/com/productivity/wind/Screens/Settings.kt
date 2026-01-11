@@ -53,7 +53,6 @@ fun SettingsScreen() {
 				) {
 					Bar.encryptedBackup = !Bar.encryptedBackup
 				}
-				move(12)
 			},
             onClick = { 
                 backup.it = yes
