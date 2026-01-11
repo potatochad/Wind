@@ -17,7 +17,6 @@ fun Achievements() {
             title = "Typed letters",
             endContent = {
                 Text("${Bar.LettersTyped}")
-                move(10)
             }
         )
     }
