@@ -227,9 +227,8 @@ fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = Spher
 @Composable
 fun GeoCircle(
 	geo: GeoCircle,
-	onDrag: Do_<LatLng> = {
-		
-	},
+	onDrag: Do_<LatLng> = {},
+	onClick: Do = {},
 ){
 	var center = LatLng(geo.Lat, geo.Lng)
 	
