@@ -176,26 +176,31 @@ fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
 fun LazySlider(
     min: Float = 1f,
     max: Float = 200_000f,
-    linear: Boolean = false,
+    linear: Bool = no,
     circleS: Float = 15f,
     value: Float = min,
-    onChange: (Float) -> Unit
+    onChange: Do_<Float>,
 ) {
-    var sliderPos by remember(value, linear, min, max) {
-        mutableStateOf(
-            if (linear) ((value - min) / (max - min)).coerceIn(0f, 1f)
-            else ((ln(value / min)) / ln(max / min)).coerceIn(0f, 1f)
+    var sliderPos by remember(value, linear, min, max) { m(
+            if (linear) {
+				((value - min) / (max - min)).coerceIn(0f, 1f)
+			} else {
+				((ln(value / min)) / ln(max / min)).coerceIn(0f, 1f)
+			}
         )
     }
 
     BasicSlider(
         value = sliderPos,
         valueRange = 0f..1f,
-    ) { pos ->
-            sliderPos = pos
-            val newValue = if (linear) min + (max - min) * sliderPos
-                           else min * (max / min).pow(sliderPos)
-            onChange(newValue)
+    ) {
+		sliderPos = it
+		val newValue = if (linear) {
+			min + (max - min) * sliderPos
+		} else {
+			min * (max / min).pow(sliderPos)
+		}
+        onChange(newValue)
     }
 }
 
