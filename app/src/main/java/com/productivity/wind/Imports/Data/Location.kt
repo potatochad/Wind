@@ -144,15 +144,15 @@ val Marker.it: LatLng
 fun marker(x: LatLng) = rememberMarkerState(position = x)
 
 @Composable
-fun Marker.onChange(Do: (LatLng) -> Unit) {
-    LaunchedEffect(this) {
-        var first = true
+fun Marker.onChange(Do: Do_<LatLng>) {
+    RunOnce(this) {
+        var first = yes
         snapshotFlow { this@onChange.it }
-            .collect { value ->
+            .collect {
                 if (first) {
-                    first = false // ignore first emission
+                    first = no // ignore first emission
                 } else {
-                    Do(value)
+                    Do(it)
                 }
             }
     }
