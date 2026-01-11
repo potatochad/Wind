@@ -228,7 +228,7 @@ fun LazzyRow(
     modifier: Mod = Mod,
     space: Any = 0,
     center: Bool = no,
-    ui: ui,
+    ui: uiRow,
 ) {
     Row(
         modifier.maxW().space(space),
@@ -412,7 +412,7 @@ fun LazyItem(
 			}
 			move(7)
 
-			Row(Mod.maxW()){
+			Row(Mod.weight(1f)){
 				Text(title.bold())
 			}
 				
