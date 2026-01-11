@@ -221,10 +221,7 @@ fun GeoCircle(
 	
 	MarkerComposable(
 		state = pin,
-		onClick = { 
-			Vlog("clicked or dragging")
-			yes
-		},
+		onClick = { yes },
 		draggable = yes,
 	) {
 		drawPin()
