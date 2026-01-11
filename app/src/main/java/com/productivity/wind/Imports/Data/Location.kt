@@ -229,7 +229,7 @@ fun GeoPin(
 
 	val markerState = rememberMarkerState(position = center)
 
-	LaunchedEffect(markerState) {
+	RunOnce(markerState) {
 		snapshotFlow { markerState.position }
 			.collect {
 				center = it
@@ -239,7 +239,6 @@ fun GeoPin(
 	
 	MarkerComposable(
 		state = markerState,
-		// zIndex = if (selected) 1f else 0f,
 		onClick = { yes },
 		draggable = yes,
 	) {
