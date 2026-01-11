@@ -530,8 +530,8 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		onCancel = {},
 		onDismiss = {},
     ){
-		var slider by r_m(30f)
-		var center by r_m(Bar.userLocation)
+		var slider by r(30f)
+		var center by r(Bar.userLocation)
 		var selectedItem by r { mutableStateOf<GeoCircle?>(null) }
 	
 		Column {
@@ -551,8 +551,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 						GeoCircle(item){ itemId ->
 							val item2 = Bar.privacyGeo.firstOrNull { it.id == itemId }
 							selectedItem = item2
-
-							Vlog("item selected")
 						}
 					}
 					
