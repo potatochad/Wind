@@ -16,10 +16,10 @@ fun Achievements() {
             icon = Icons.Outlined.AdminPanelSettings,
             title = "Typed letters",
             endContent = {
-                    Text("${Bar.LettersTyped}")
-               }
-            )
-            
+                Text("${Bar.LettersTyped}")
+                move(6)
+            }
+        )
     }
 }
 
