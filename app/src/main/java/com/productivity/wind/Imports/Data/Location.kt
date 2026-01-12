@@ -227,17 +227,20 @@ fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = Spher
 @Composable
 fun GeoCircle(
 	geo: GeoCircle,
-	onDrag: Do_<LatLng> = {},
-	onClick: Do = {},
 	onSelect: DoStr = {},
 ){
 	var center = LatLng(geo.Lat, geo.Lng)
+	var borderColor by r(Gold)
+	var circleColor by r(
+		faded(Gold, 0.4f)
+	)
 	
 	var selected by r(no)
+	
 	val pin = marker(center)
 	pin.onChange { drag ->
-		onDrag(drag)
 		onSelect(geo.id)
+		selected = yes
 		geo.edit{
 			geo.Lat = drag.latitude
 			geo.Lng = drag.longitude
@@ -248,8 +251,8 @@ fun GeoCircle(
 	MarkerComposable(
 		state = pin,
 		onClick = { 
-			onClick()
 			onSelect(geo.id)
+			selected = yes
 			yes
 		},
 		draggable = yes,
@@ -257,11 +260,15 @@ fun GeoCircle(
 		drawPin()
 	}
 
+	if (selected) {
+		circleColor = faded(Gold, 0.6f)
+	}
+
 	Circle(
         center = pin.it,
         radius = toD(geo.radius),
-        strokeColor = Gold,
-        fillColor = faded(Gold, 0.6f)
+        strokeColor = borderColor,
+        fillColor = circleColor
     )
 }
 
