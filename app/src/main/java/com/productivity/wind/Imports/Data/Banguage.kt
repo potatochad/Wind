@@ -296,12 +296,12 @@ fun isNewDay(): Bool {
 
 
 
-fun Try(log: Str="", Do: Do): T? {
+fun Try(log: Str="", onFail: Do={}, Do: Do){
     try {
         Do()
     } catch (e: Throwable) {
+		onFail()
         Vlog("$log ${e.message}")
-		null
     }
 }
 
