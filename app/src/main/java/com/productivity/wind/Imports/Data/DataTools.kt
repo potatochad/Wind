@@ -380,13 +380,14 @@ fun Restore(show: mBool) {
 
 
 
-fun <T> find(list: List<T>, id: Str ="", match: (T) -> Boolean ={}): T? {
-	if (id.isEmpty()){
-		return list.firstOrNull(match)
-	} else {
-		return list.firstOrNull { it.id = id }
-	}
+fun <T> find(list: List<T>, id: Str = "", match: (T) -> Bool= { yes }): T? {
+    return if (id.isEmpty()) {
+        list.firstOrNull(match)
+    } else {
+        list.firstOrNull { it.id == id }
+    }
 }
+
 
 
 
