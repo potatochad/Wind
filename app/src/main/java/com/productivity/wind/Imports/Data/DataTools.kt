@@ -383,8 +383,8 @@ fun <T> List<T>.find(id: Str = "", match: (T) -> Bool = { yes }): T? {
     return if (id.isEmpty()) firstOrNull(match)
     else firstOrNull { item ->
         item::class.members
-            .firstOrNull { it.name == "id" } // find id property
-            ?.let { (it as? kotlin.reflect.KProperty1<T, *>)?.get(item) } == id
+            .firstOrNull { it.name == "id" }
+            ?.let { (it as? KProperty1<T, *>)?.get(item) } == id
     }
 }
 
