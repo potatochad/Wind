@@ -528,7 +528,6 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		mod = Mod.w(360).h(600),
     ){
 		var slider by r(30f)
-		// var center by r(Bar.userLocation)
 		var selectedItem by r<GeoCircle?>(null)
 	
 		Column {
@@ -545,7 +544,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 					},
 				){
 					Bar.privacyGeo.each { item ->
-						GeoCircle(item, selected = m(no)){ itemId ->
+						GeoCircle(item, m(no)){ itemId ->
 							val item2 = Bar.privacyGeo.firstOrNull { it.id == itemId }
 							selectedItem = item2
 						}
