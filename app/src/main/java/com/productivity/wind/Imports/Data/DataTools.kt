@@ -384,9 +384,7 @@ fun <T> List<T>.find(id: Str = "", match: (T) -> Bool= { yes }): T? {
     return if (id.isEmpty()) {
         firstOrNull(match)
     } else {
-		Try("fun <find>, id") {
-			firstOrNull { it.id == id }
-		}
+		firstOrNull { it.id == id }
     }
 }
 
