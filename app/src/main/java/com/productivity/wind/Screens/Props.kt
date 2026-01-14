@@ -528,25 +528,26 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 		mod = Mod.w(360).h(600),
     ){
 		var slider by r(30f)
-		var selectedItem by r<GeoCircle?>(null)
+		var selected by r<GeoCircle?>(null)
 	
 		Column {
 			Box(Mod.weight(1f)) {
 				LazyMaps(
 					mapLongClick = {
-						var newItem = GeoCircle(
+						var new = GeoCircle(
 							Lat = it.latitude,
 							Lng = it.longitude,
 							radius = slider
 						) 
-						selectedItem = newItem
-						Bar.privacyGeo.add(newItem)
+						selected = new
+						Bar.privacyGeo.add(new)
 					},
 				){
-					Bar.privacyGeo.each { item ->
-						GeoCircle(item, m(no)){ itemId ->
-							val item2 = Bar.privacyGeo.find(itemId)
-							selectedItem = item2
+					Bar.privacyGeo.each {
+						GeoCircle(it, m(no)){ Id ->
+							
+							selected = Bar.privacyGeo.find(Id)
+							slider = selectedItem.radius
 						}
 					}
 					
@@ -560,7 +561,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			){
 				slider = it
 
-				selectedItem?.let { item ->
+				selected?.let { item ->
 					item.edit {
 						radius = slider
 					}
