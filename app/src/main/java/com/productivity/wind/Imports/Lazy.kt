@@ -178,14 +178,14 @@ fun LazySlider(
     max: Float = 200_000f,
     linear: Bool = no,
     circleS: Float = 15f,
-    value: Float = min,
+    value: m_<Float> = m(min),
     onChange: Do_<Float>,
 ) {
-    var sliderPos by remember(value, linear, min, max) { m(
+    var sliderPos by remember(value.it, linear, min, max) { m(
             if (linear) {
-				((value - min) / (max - min)).coerceIn(0f, 1f)
+				((value.it - min) / (max - min)).coerceIn(0f, 1f)
 			} else {
-				((ln(value / min)) / ln(max / min)).coerceIn(0f, 1f)
+				((ln(value.it / min)) / ln(max / min)).coerceIn(0f, 1f)
 			}
         )
     }
@@ -200,6 +200,7 @@ fun LazySlider(
 		} else {
 			min * (max / min).pow(sliderPos)
 		}
+		value.it = it
         onChange(newValue)
     }
 }
