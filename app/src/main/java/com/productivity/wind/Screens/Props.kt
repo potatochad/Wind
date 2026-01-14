@@ -547,7 +547,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 						GeoCircle(it, m(no)){ Id ->
 							
 							selected = Bar.privacyGeo.find(Id)
-							slider = selected.radius
+							slider = selected?.radius ?: slider
 						}
 					}
 					
