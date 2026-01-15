@@ -167,17 +167,17 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
     }
 
-	/*
 	val lines = tsk.txt.toLines()
+	val lineSize = mList<Int>()
 	LazyColumn(
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
 		state = txtScroll
 	) {
-		items(lines) {
-			Text(it)
+		itemsIndexed(lines) { index, line ->
+			line.size
+			Text(line)
 		}
 	}
-	*/
 
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
