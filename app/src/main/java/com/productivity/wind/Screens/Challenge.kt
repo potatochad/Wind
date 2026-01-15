@@ -127,6 +127,60 @@ fun CopyPaste(id: Str ="") {
 }
 
 @Composable
+fun OptimizedDynamicTextWithColoring(tsk: CopyTsk, txtScroll: Scroll) {
+    // Store the lines and their associated colors/styles in a list
+    var lines = tsk.txt.toLines()
+    
+    // A mutable list to track the colors for each line, which we can change dynamically
+    val lineColors = remember { mutableStateOf(Array(lines.size) { Color.Transparent }) }
+
+    // Function to update the color for specific line ranges
+    fun changeTextColor(from: Int, to: Int, newColor: Color) {
+        val updatedColors = lineColors.value.copyOf()
+        for (i in from until to) {
+            updatedColors[i] = newColor
+        }
+        lineColors.value = updatedColors  // Only update the colors, not the text
+    }
+
+    // Function to reset the colors to default (Transparent)
+    fun resetTextColor() {
+        lineColors.value = Array(lines.size) { Color.Transparent }
+    }
+
+    // Displaying the colored text inside LazyColumn
+    LazyColumn(
+        modifier = Modifier
+            .padding(horizontal = 15.dp)
+            .padding(bottom = 15.dp)
+            .fillMaxWidth(),
+        state = txtScroll
+    ) {
+        items(lines.size) { index ->
+            Text(
+                text = lines[index],
+                style = TextStyle(color = lineColors.value[index]),  // Dynamically apply the color
+                modifier = Modifier.padding(vertical = 5.dp)
+            )
+        }
+    }
+
+    // Example of dynamic controls to change colors
+    Column {
+        Button(onClick = { changeTextColor(0, 3, Color.Red) }) {
+            Text("Change color of lines 0 to 3 to Red")
+        }
+        Button(onClick = { changeTextColor(3, 6, Color.Green) }) {
+            Text("Change color of lines 3 to 6 to Green")
+        }
+        Button(onClick = { resetTextColor() }) {
+            Text("Reset Text Color")
+        }
+    }
+}
+
+
+@Composable
 fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = Scroll()
 	val inputScroll = Scroll()
