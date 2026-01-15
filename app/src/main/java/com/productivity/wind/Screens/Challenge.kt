@@ -135,7 +135,6 @@ fun CopyPaste(id: Str ="") {
 fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = LazyList() 
 	val inputScroll = Scroll()
-	var scrollBy by r(toF(AppW)/185f)
 	
 	var goodStr by r(tsk.goodStr())
 	var goodStr2 by r(0)
