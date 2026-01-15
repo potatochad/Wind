@@ -205,11 +205,14 @@ fun Any.toLines(): List<UIStr> {
     // Measure how many chars fit in one line
     if (lineChars == 0) {
         Text(
-            text = "k".repeat(200),
+            text = "k".repeat(600),
             maxLines = 1,
             softWrap = no,
+            overflow = TextOverflow.Clip,
             modifier = Mod.alpha(0f),
-            onTextLayout = { lineChars = it.getLineEnd(0) }
+            onTextLayout = {
+                lineChars = it.getLineEnd(0, visibleEnd = yes)
+            }
         )
     }
 
