@@ -174,7 +174,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		state = txtScroll
 	) {
 		itemsIndexed(lines) { index, txt ->
-			val found = lineSize.find{ it.line = index }
+			val found = lineSize.find{ it.line == index }
 			if (found == null) {
 				lineSize.add {
 					line = index
