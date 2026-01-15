@@ -258,6 +258,9 @@ fun CopyTskUI(tsk: CopyTsk) {
 	}
 
 
+	OptimizedDynamicTextWithColoring(tsk, txtScroll)
+
+
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
 		if (it.size - txt.it.size < 2) {
