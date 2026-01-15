@@ -168,16 +168,18 @@ fun CopyTskUI(tsk: CopyTsk) {
     }
 
 	val lines = tsk.txt.toLines()
-	val lineSize = mList<Int, Int>()
+	val lineSize = mList<txtLine>()
 	LazyColumn(
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
 		state = txtScroll
 	) {
 		itemsIndexed(lines) { index, line ->
-			if ()
-			lineSize.find{
-				
-			}.add(line.size)
+			if (lineSize.find{line = index}) {
+				lineSize.add {
+					line = index
+					size = line.size
+				}
+			}
 			
 			Text(line)
 		}
