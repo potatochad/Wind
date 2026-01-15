@@ -228,6 +228,8 @@ fun Any.toLines(): List<UIStr> {
     }
     if (line.isNotEmpty()) lines.add(UIStr(line))
 
+    Vlog("sizeeee ${lines.size}")
+    
     return lines
 }
 
