@@ -547,7 +547,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 						GeoCircle(it, m(no)){ Id ->
 							
 							selected = Bar.privacyGeo.find(Id)
-							slider.it = selected?.radius ?: slider
+							slider.it = selected?.radius ?: slider.it
 						}
 					}
 					
@@ -555,7 +555,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 			}
 
 			LazySlider(
-				value = slider.it,
+				value = slider,
 				min = 5f,
 				max = 100_000f,
 			){
