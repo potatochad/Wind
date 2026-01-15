@@ -559,6 +559,7 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 				min = 5f,
 				max = 100_000f,
 			){
+				slider.it = it
 				selected?.let { item ->
 					item.edit {
 						radius = slider.it
