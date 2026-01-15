@@ -131,7 +131,7 @@ fun CopyPaste(id: Str ="") {
 @Composable
 fun OptimizedDynamicTextWithColoring(tsk: CopyTsk, txtScroll: LazyListState) {
 
-    val lines = remember(tsk.txt) { tsk.txt.toLines() }
+    val lines = tsk.txt.toLines()
 
     var lineColors by remember(tsk.txt) {
         mutableStateOf(List(lines.size) { Color.Transparent })
