@@ -141,7 +141,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     RunOnce(goodStr) {
 		if (goodStr > 30) {
-			val done = toF(goodStr)*(scrollBy) - 120f
+			var scrollBy = toF(txtScroll.size)/toF(tsk.txt.size)
+			val done = toF(goodStr)*scrollBy - scrollBy*50
 			txtScroll.goTo(done) 
 			// Vlog("txtScroll.size: ${txtScroll.size}, tsk.txt.size: ${tsk.txt.size}, scrollTo: ${ toF(goodStr)*toF(txtScroll.size) / toF(tsk.txt.size) }, done: $done")
 		}
