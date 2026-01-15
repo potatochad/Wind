@@ -182,7 +182,7 @@ fun OptimizedDynamicTextWithColoring(tsk: CopyTsk, txtScroll: LazyList) {
 
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
-    val txtScroll = LazyList()
+    val txtScroll = LazyList() 
 	val inputScroll = Scroll()
 	var scrollBy by r(toF(AppW)/185f)
 	
