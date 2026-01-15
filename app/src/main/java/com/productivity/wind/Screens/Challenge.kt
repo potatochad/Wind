@@ -128,57 +128,6 @@ fun CopyPaste(id: Str ="") {
 
 
 
-@Composable
-fun OptimizedDynamicTextWithColoring(tsk: CopyTsk, txtScroll: LazyListState) {
-
-    val lines = tsk.txt.toLines()
-
-    var lineColors by remember(tsk.txt) {
-        mutableStateOf(List(lines.size) { Color.Transparent })
-    }
-
-    fun changeTextColor(from: Int, to: Int, color: Color) {
-        lineColors = lineColors.mapIndexed { index, old ->
-            if (index in from until to) color else old
-        }
-    }
-
-    fun resetTextColor() {
-        lineColors = List(lines.size) { Color.Transparent }
-    }
-
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f) // takes remaining space
-                .padding(horizontal = 15.dp, vertical = 5.dp),
-            state = txtScroll
-        ) {
-            items(lines.size) { index ->
-                Text(
-                    text = lines[index],
-                    color = lineColors[index],
-                    modifier = Modifier.padding(vertical = 5.dp)
-                )
-            }
-        }
-
-        // Testing Buttons
-        Column(modifier = Modifier.padding(15.dp)) {
-            Button(onClick = { changeTextColor(0, 3, Color.Red) }, modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)) {
-                Text("Lines 0–3 Red")
-            }
-            Button(onClick = { changeTextColor(3, 6, Color.Green) }, modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)) {
-                Text("Lines 3–6 Green")
-            }
-            Button(onClick = { resetTextColor() }, modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)) {
-                Text("Reset Colors")
-            }
-        }
-    }
-}
 
 
 
@@ -229,8 +178,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 	}
 	*/
-
-	OptimizedDynamicTextWithColoring(tsk, txtScroll)
 
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
