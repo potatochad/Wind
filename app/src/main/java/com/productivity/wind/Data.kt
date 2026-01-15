@@ -163,6 +163,12 @@ data class GeoCircle(
     var Lng: Double = 0.0,
     var radius: Float =0f,
 )
+@Serializable
+data class txtLine(
+    val id: Str = Id(),
+    var line: Int = 0,
+	var size: Int = 0,
+)
 
 
 
