@@ -228,38 +228,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 	}
 	*/
 
-	var layout by r { mutableStateOf<TextLayoutResult?>(null) }
-
-	Box(Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW().Vscroll(txtScroll).center()) {
-		Text(
-			text = tsk.txt,
-			onTextLayout = { layout = it }
-		)
-
-		Canvas(Mod.matchParentSize()) {
-			val l = layout ?: return@Canvas
-
-			for (i in 0 until goodStr) {
-				val box = l.getBoundingBox(i)
-
-				drawContext.canvas.nativeCanvas.apply {
-					drawText(
-						tsk.txt[i].toString(),
-						box.left,
-						box.bottom - 7.dp.toPx() - 0.5f,
-						android.graphics.Paint().apply {
-							color = android.graphics.Color.GREEN
-							textSize = 50f // match your Text size
-						}
-					)
-				}
-			}
-		}
-	}
-
-
 	OptimizedDynamicTextWithColoring(tsk, txtScroll)
-
 
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
