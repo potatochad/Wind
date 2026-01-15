@@ -173,16 +173,16 @@ fun CopyTskUI(tsk: CopyTsk) {
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
 		state = txtScroll
 	) {
-		itemsIndexed(lines) { index, line ->
-			val found = lineSize.find{ it.line = index }
+		itemsIndexed(lines) { index, txt ->
+			val found = lineSize.find{ line = index }
 			if (found == null) {
 				lineSize.add {
-					it.line = index
-					it.size = line.size
+					line = index
+					size = txt.size
 				}
 			}
 			
-			Text(line)
+			Text(txt)
 		}
 	}
 
