@@ -188,43 +188,9 @@ fun Any.darkGray() = txt { copy(color = Color.DarkGray) }
 
 
 val Str.size get() = length
+val UIStr.size get() = this.text.size
 fun Str.last(n: Int): Str = this.takeLast(n)
 fun Str.fromTo(start: Int, end: Int = this.size): Str = this.substring(start, end)
-
-
-/*
-@Composable
-fun Any.toLines(): List<String> {
-    var lineChars by remember { mutableStateOf(0) }
-
-    // Measure how many chars fit in one line
-    if (lineChars == 0) {
-        Text(
-            text = UIStr(this), // wide letters to estimate
-            maxLines = 1,
-            softWrap = false,
-            modifier = Modifier.alpha(0f),
-            onTextLayout = { lineChars = it.getLineEnd(0) }
-        )
-    }
-
-    // Return empty if not measured yet
-    if (lineChars == 0) return emptyList()
-
-    val lines = mutableListOf<String>()
-    var line = ""
-    toStr(this).split(" ").forEach { w ->
-        if (line.isEmpty() || line.length + 1 + w.length <= lineChars) {
-            line += if (line.isEmpty()) w else " $w"
-        } else {
-            lines.add(line)
-            line = w
-        }
-    }
-    if (line.isNotEmpty()) lines.add(line)
-    return lines
-}
-*/
 
 
 
