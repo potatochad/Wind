@@ -181,12 +181,12 @@ fun CopyTskUI(tsk: CopyTsk) {
 					size = txt.size
 				}
 			}
+			Vlog("lines size, real ${lines.size},GOT: ${lineSize.size} ")
 			
 			Text(txt)
 		}
 	}
-	Text("lines size, real ${lines.size},GOT: ${lineSize.size} ")
-
+	
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
 		if (it.size - txt.it.size < 2) {
