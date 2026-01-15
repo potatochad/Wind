@@ -127,7 +127,7 @@ fun CopyPaste(id: Str ="") {
 }
 
 @Composable
-fun OptimizedDynamicTextWithColoring(tsk: CopyTsk, txtScroll: Scroll) {
+fun OptimizedDynamicTextWithColoring(tsk: CopyTsk, txtScroll: LazyList) {
     // Store the lines and their associated colors/styles in a list
     var lines = tsk.txt.toLines()
     
