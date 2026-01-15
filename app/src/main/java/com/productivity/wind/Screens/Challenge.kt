@@ -185,6 +185,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			Text(txt)
 		}
 	}
+	Text("lines size, real ${lines.size},GOT: ${lineSize.size} ")
 
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
