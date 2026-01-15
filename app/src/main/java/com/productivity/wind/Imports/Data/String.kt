@@ -205,7 +205,7 @@ fun Any.toLines(): List<UIStr> {
     // Measure how many chars fit in one line
     if (lineChars == 0) {
         Text(
-            text = UIStr(this),
+            text = "k".repeat(200),
             maxLines = 1,
             softWrap = no,
             modifier = Mod.alpha(0f),
