@@ -194,32 +194,24 @@ fun CopyTskUI(tsk: CopyTsk) {
 			val styledText = buildAnnotatedString {
 				when {
 					goodStr <= lineStart -> {
-						// all normal
 						add(txt)
 					}
-
-            goodStr >= lineEnd -> {
-                // all green
-                withStyle(SpanStyle(color = Color.Green)) {
-                    append(txt)
-                }
-            }
-
-            else -> {
-                // split line
-                val greenCount = goodStr - lineStart
-                withStyle(SpanStyle(color = Color.Green)) {
-                    append(txt.substring(0, greenCount))
-                }
-                append(txt.substring(greenCount))
-            }
-        }
-    }
-
-    Text(styledText)
-}
-
-}
+					goodStr >= lineEnd -> {
+						withStyle(SpanStyle(color = Color.Green)) {
+							add(txt)
+						}
+					} else -> {
+						val greenCount = goodStr - lineStart
+						withStyle(SpanStyle(color = Color.Green)) {
+							add(txt.substring(0, greenCount))
+						}
+						add(txt.substring(greenCount))
+					}
+				}
+			}
+			Text(styledText)
+		}
+	}
 
 	/*
 	Text(
