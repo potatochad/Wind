@@ -219,7 +219,6 @@ fun Any.toLines(): List<UIStr> {
 
     // Return empty if not measured yet
     if (lineChars == 0) return emptyList()
-    Vlog("lineChars: ${lineChars}")
 
     val lines = mList<UIStr>()
     var line = ""
@@ -232,6 +231,8 @@ fun Any.toLines(): List<UIStr> {
         }
     }
     if (line.isNotEmpty()) lines.add(UIStr(line))
+
+    Vlog("lines: ${lines.size}")
     
     return lines
 }
