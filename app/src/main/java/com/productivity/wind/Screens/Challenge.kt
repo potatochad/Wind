@@ -181,22 +181,22 @@ fun CopyTskUI(tsk: CopyTsk) {
 			sum
 		}
 	}
+	
+	LazyColumn(
+		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
+		state = txtScroll
+	) {
+		itemsIndexed(lines) { index, txt ->
 
-LazyColumn(
-    modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
-    state = txtScroll
-) {
-    itemsIndexed(lines) { index, txt ->
+			val lineStart = cumulativeSizes[index] - txt.length
+			val lineEnd = cumulativeSizes[index]
 
-    val lineStart = cumulativeSizes[index] - txt.length
-    val lineEnd = cumulativeSizes[index]
-
-    val styledText = buildAnnotatedString {
-        when {
-            goodStr <= lineStart -> {
-                // all normal
-                append(txt)
-            }
+			val styledText = buildAnnotatedString {
+				when {
+					goodStr <= lineStart -> {
+						// all normal
+						add(txt)
+					}
 
             goodStr >= lineEnd -> {
                 // all green
