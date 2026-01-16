@@ -173,39 +173,30 @@ fun CopyTskUI(tsk: CopyTsk) {
 	
 
 	val lines = tsk.txt.toLines()
-	val lineSize = mList<txtLine>()
-	var index2 by r(0)
-	
-	RunOnce{
-		lines.forEach {
-			lineSize.add {
-				line = index2
-				size = it.text.size
-			}
-			index2++
-		}
-	}
-	
-	var greenLines by r(0)
-	LazyColumn(
-		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
-		state = txtScroll
-	) {
-		itemsIndexed(lines) { index, txt ->
-			greenLines += txt.size
-			if (greenLines > goodStr){
-				Text(txt)
-				Vlog("basic, $txt")
-			} else {
-				if (greenLines <= goodStr) {
-					Text(txt.green())
-					Vlog("green, $txt")
-				} else {
-					Vlog("else, $txt")
-				}
-			}
-		}
-	}
+
+// Precompute cumulative character counts ONCE
+val cumulativeSizes = remember(lines) {
+    var sum = 0
+    lines.map { line ->
+        sum += line.size
+        sum
+    }
+}
+
+LazyColumn(
+    modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
+    state = txtScroll
+) {
+    itemsIndexed(lines) { index, txt ->
+        val isGreen = cumulativeSizes[index] <= goodStr
+
+        Text(
+            text = txt,
+            color = if (isGreen) Color.Green else Color.Black
+        )
+    }
+}
+
 	/*
 	Text(
 		 UIStr(
