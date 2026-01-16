@@ -207,13 +207,14 @@ fun Any.toLines(): List<UIStr> {
         Text(
             text = "k".repeat(600),
             maxLines = 1,
-            softWrap = no,
-            overflow = TextOverflow.Clip,
-            modifier = Mod.alpha(0f),
+            softWrap = true, // MUST be true
+            overflow = TextOverflow.Ellipsis, // MUST overflow
+            modifier = Modifier.alpha(0f),
             onTextLayout = {
-                lineChars = it.getLineEnd(0, visibleEnd = yes)
+                lineChars = it.getLineEnd(0, visibleEnd = true)
             }
         )
+
     }
 
     // Return empty if not measured yet
