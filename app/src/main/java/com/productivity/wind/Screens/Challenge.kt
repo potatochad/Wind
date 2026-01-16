@@ -188,11 +188,16 @@ fun CopyTskUI(tsk: CopyTsk) {
 		state = txtScroll
 	) {
 		itemsIndexed(lines) { index, txt ->
-			greenLines += txt.size
-			if (greenLines> goodStr) {
-				//green
+			if (greenLines > goodStr){
+				Text(txt)
+			} else {
+				greenLines += txt.size
+				if (greenLines <= goodStr) {
+					Text(txt.green())
+				} else {
+					
+				}
 			}
-			Text(txt)
 		}
 	}
 	/*
