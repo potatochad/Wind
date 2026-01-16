@@ -170,27 +170,24 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	val lines = tsk.txt.toLines()
 	val lineSize = mList<txtLine>()
+	var index2 by r(0)
+	
+	RunOnce{
+		lines.forEach {
+			lineSize.add {
+				line = index2
+				size = it.text.size
+			}
+			index2++
+		}
+	}
+	
 	var toColor by r(goodStr)
 	LazyColumn(
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
 		state = txtScroll
 	) {
 		itemsIndexed(lines) { index, txt ->
-			toColor = goodStr
-			val found = lineSize.find{ it.line == index }
-			if (found == null) {
-				lineSize.add {
-					line = index
-					size = txt.size
-				}
-			}
-			lineSize.each {
-				if (it.index >= index){
-					
-				}
-			}
-			
-			
 			Text(txt)
 		}
 	}
