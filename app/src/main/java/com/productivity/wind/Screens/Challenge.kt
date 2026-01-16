@@ -153,7 +153,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		each(900) {
 			txtScroll.goTo(done)
 			timer++
-			Vlog("${timer}")
+			Vlog("${timer}, $done—done, $goodStr—goodStr")
 		}
 		inputScroll.toBottom()
 	}
@@ -188,7 +188,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 					size = txt.size
 				}
 			}
-			Vlog("lineSize: $lineSize")
 			
 			Text(txt)
 		}
