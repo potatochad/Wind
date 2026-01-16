@@ -188,13 +188,38 @@ LazyColumn(
     state = txtScroll
 ) {
     itemsIndexed(lines) { index, txt ->
-        val isGreen = cumulativeSizes[index] <= goodStr
 
-        Text(
-            text = txt,
-            color = if (isGreen) Color.Green else Color.Black
-        )
+    val lineStart = cumulativeSizes[index] - txt.length
+    val lineEnd = cumulativeSizes[index]
+
+    val styledText = buildAnnotatedString {
+        when {
+            goodStr <= lineStart -> {
+                // all normal
+                append(txt)
+            }
+
+            goodStr >= lineEnd -> {
+                // all green
+                withStyle(SpanStyle(color = Color.Green)) {
+                    append(txt)
+                }
+            }
+
+            else -> {
+                // split line
+                val greenCount = goodStr - lineStart
+                withStyle(SpanStyle(color = Color.Green)) {
+                    append(txt.substring(0, greenCount))
+                }
+                append(txt.substring(greenCount))
+            }
+        }
     }
+
+    Text(styledText)
+}
+
 }
 
 	/*
