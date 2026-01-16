@@ -174,14 +174,13 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	val lines = tsk.txt.toLines()
 
-// Precompute cumulative character counts ONCE
-val cumulativeSizes = remember(lines) {
-    var sum = 0
-    lines.map { line ->
-        sum += line.size
-        sum
-    }
-}
+	val cumulativeSizes = remember(lines) {
+		var sum = 0
+		lines.map {
+			sum += it.size
+			sum
+		}
+	}
 
 LazyColumn(
     modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
