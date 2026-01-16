@@ -231,8 +231,6 @@ fun Any.toLines(): List<UIStr> {
         }
     }
     if (line.isNotEmpty()) lines.add(UIStr(line))
-
-    Vlog("lines: ${lines.size}")
     
     return lines
 }
