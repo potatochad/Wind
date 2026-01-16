@@ -168,6 +168,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
     }
 
+
+
+	
+
 	val lines = tsk.txt.toLines()
 	val lineSize = mList<txtLine>()
 	var index2 by r(0)
@@ -188,14 +192,16 @@ fun CopyTskUI(tsk: CopyTsk) {
 		state = txtScroll
 	) {
 		itemsIndexed(lines) { index, txt ->
+			greenLines += txt.size
 			if (greenLines > goodStr){
 				Text(txt)
+				Vlog("basic, $txt")
 			} else {
-				greenLines += txt.size
 				if (greenLines <= goodStr) {
 					Text(txt.green())
+					Vlog("green, $txt")
 				} else {
-					
+					Vlog("else, $txt")
 				}
 			}
 		}
