@@ -193,7 +193,14 @@ fun CopyTskUI(tsk: CopyTsk) {
 			Text(txt)
 		}
 	}
-	Text(tsk.txt)
+	/*
+	Text(
+		 UIStr(
+			 s.fromTo(0, s.size / 2).green(),
+			 s.fromTo(s.size / 2)
+		 )
+	)
+	*/
 	
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
