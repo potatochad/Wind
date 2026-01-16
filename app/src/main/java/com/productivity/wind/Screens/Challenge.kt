@@ -180,6 +180,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 					size = txt.size
 				}
 			}
+			Vlog("lineSize: $lineSize")
 			
 			Text(txt)
 		}
