@@ -182,12 +182,16 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 	}
 	
-	var toColor by r(goodStr)
+	var greenLines by r(0)
 	LazyColumn(
 		modifier = Mod.space(h = 15).space(bottom = 15).h(0, 100).maxW(),
 		state = txtScroll
 	) {
 		itemsIndexed(lines) { index, txt ->
+			greenLines += txt.size
+			if (greenLines> goodStr) {
+				//green
+			}
 			Text(txt)
 		}
 	}
