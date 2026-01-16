@@ -147,6 +147,11 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 	}
 	RunOnce {
+		var scrollBy = toF(txtScroll.size)/toF(tsk.txt.size)
+		val done = toF(goodStr)*scrollBy - scrollBy*50
+		wait(1200) {
+			txtScroll.goTo(done)
+		}
 		inputScroll.toBottom()
 	}
 
