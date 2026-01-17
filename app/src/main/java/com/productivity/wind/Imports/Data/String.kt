@@ -240,22 +240,10 @@ fun Any.toLines(): List<UIStr> {
     var str by r(toStr(this))
 
     // Measure how many chars fit in one line
-    if (lineChars == 0) {
-        Text(
-            text = "k".repeat(600),
-            maxLines = 1,
-            softWrap = yes,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.alpha(0f),
-            onTextLayout = {
-                lineChars = it.getLineEnd(0, visibleEnd = yes)
-            }
-        )
-    }
+    lineChars = charsW(str)
 
     // Return empty if not measured yet
     if (lineChars == 0) return emptyList()
-
 
     
     val lines = mList<UIStr>()
