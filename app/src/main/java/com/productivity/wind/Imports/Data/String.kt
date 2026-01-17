@@ -202,6 +202,7 @@ fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, 
 @Composable
 fun Any.toLines(): List<UIStr> {
     var lineChars by r(0)
+    var text by r(toStr(this))
 
     // Measure how many chars fit in one line
     if (lineChars == 0) {
@@ -245,9 +246,9 @@ fun Any.toLines(): List<UIStr> {
 
 
     var cursor = 0
-while (cursor < this.length) {
-    val end = (cursor + lineChars).coerceAtMost(this.length)
-    lines.add(UIStr(this.substring(cursor, end)))
+while (cursor < text.size) {
+    val end = (cursor + lineChars).coerceAtMost(text.size)
+    lines.add(UIStr(text.substring(cursor, end)))
     cursor = end
 }
     
