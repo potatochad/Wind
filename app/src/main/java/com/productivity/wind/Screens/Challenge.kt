@@ -190,34 +190,24 @@ fun CopyTskUI(tsk: CopyTsk) {
 			val lineStart = linesSize[index] - txt.size
 			val lineEnd = linesSize[index]
 
-			val styledText = UIStr(
+			val txtUI = UIStr(
 				when {
 					goodStr <= lineStart -> txt
-					goodStr >= lineEnd -> {
-						txt.green()
-					} else -> {
-						val greenCount = goodStr - lineStart
+					goodStr >= lineEnd -> txt.green()
+					goodStr < lineEnd -> {
+						val greenChar = goodStr - lineStart
 
 						UIStr(
-							txt.fromTo(0, greenCount).green(),
-							txt.fromTo(greenCount)
+							txt.fromTo(0, greenChar).green(),
+							txt.fromTo(greenChar, txt.size)
 						)
 					}
 				}
 			)
 			
-			Text(styledText)
+			Text(txtUI)
 		}
 	}
-
-	/*
-	Text(
-		 UIStr(
-			 s.fromTo(0, s.size / 2).green(),
-			 s.fromTo(s.size / 2)
-		 )
-	)
-	*/
 	
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
