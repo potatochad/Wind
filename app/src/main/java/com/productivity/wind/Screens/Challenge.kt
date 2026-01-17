@@ -172,14 +172,12 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	
 
-	val lines = tsk.txt.toLines()
-
-	val linesSize = remember(lines) {
-		var sum = 0
-		lines.map {
-			sum += it.size
-			sum
-		}
+	LazyText(
+		bigText: Any, 
+		mod = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
+		scroll = txtScroll
+	) {
+	onShow: (Int, UIStr) -> UIStr = { _, txt
 	}
 	
 	LazyColumn(
