@@ -238,19 +238,30 @@ fun Any.toLines(): List<UIStr> {
     }
     if (line.isNotEmpty()) lines.add(UIStr(line))
     */
-
-
-
-
-
-
-
+/*
     var cursor = 0
-while (cursor < text.size) {
+    while (cursor < text.size) {
     val end = (cursor + lineChars).coerceAtMost(text.size)
     lines.add(UIStr(text.substring(cursor, end)))
     cursor = end
 }
+*/
+val str = toStr(this)
+    var cursor = 0
+
+    while (cursor < str.length) {
+        // Tentative end
+        var end = (cursor + lineChars).coerceAtMost(str.length)
+
+        // Look backwards for last space in original text
+        val lastSpace = str.lastIndexOf(' ', end - 1)
+        if (lastSpace in (cursor + 1) until end) {
+            end = lastSpace + 1 // include space
+        }
+
+        lines.add(UIStr(str.substring(cursor, end)))
+        cursor = end
+    }
     
     return lines
 }
