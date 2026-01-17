@@ -245,9 +245,9 @@ fun Any.toLines(): List<UIStr> {
 
 
     var cursor = 0
-while (cursor < originalText.length) {
-    val end = (cursor + lineChars).coerceAtMost(originalText.length)
-    lines.add(UIStr(originalText.substring(cursor, end)))
+while (cursor < this.length) {
+    val end = (cursor + lineChars).coerceAtMost(this.length)
+    lines.add(UIStr(this.substring(cursor, end)))
     cursor = end
 }
     
