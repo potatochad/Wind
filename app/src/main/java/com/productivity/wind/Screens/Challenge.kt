@@ -174,7 +174,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	val lines = tsk.txt.toLines()
 
-	val cumulativeSizes = remember(lines) {
+	val linesSize = remember(lines) {
 		var sum = 0
 		lines.map {
 			sum += it.size
@@ -187,9 +187,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 		state = txtScroll
 	) {
 		itemsIndexed(lines) { index, txt ->
-
-			val lineStart = cumulativeSizes[index] - txt.size
-			val lineEnd = cumulativeSizes[index]
+			val lineStart = linesSize[index] - txt.size
+			val lineEnd = linesSize[index]
 
 			val styledText = UIStr(
 				when {
