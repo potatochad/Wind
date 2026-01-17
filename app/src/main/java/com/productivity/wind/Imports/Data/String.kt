@@ -263,7 +263,7 @@ fun Any.toLines(): List<UIStr> {
     var line = ""
     str.safeSplit(" "){ word ->
         if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
-            line += if (line.isEmpty()) word else " $word"
+            line += word
         } else {
             lines.add(UIStr(line))
             line = word
