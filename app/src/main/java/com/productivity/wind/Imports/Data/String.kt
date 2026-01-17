@@ -195,16 +195,11 @@ fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, 
 
 
 
-
-
-
-
 @Composable
-fun Any.toLines(): List<UIStr> {
+fun charsW(text: Any): Int {
     var lineChars by r(0)
-    var str by r(toStr(this))
+    val str = toStr(text)
 
-    // Measure how many chars fit in one line
     if (lineChars == 0) {
         Text(
             text = str,
@@ -217,6 +212,19 @@ fun Any.toLines(): List<UIStr> {
             }
         )
     }
+
+    return lineChars
+}
+
+
+
+
+@Composable
+fun Any.toLines(): List<UIStr> {
+    var str by r(toStr(this))
+    var lineChars by r(0)
+
+    lineChars = charsW(this)
 
     // Return empty if not measured yet
     if (lineChars == 0) return emptyList()
