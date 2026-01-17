@@ -202,7 +202,7 @@ fun charsW(text: Any): Int {
 
     if (lineChars == 0) {
         Text(
-            text = str,
+            text = "k".repeat(600),
             maxLines = 1,
             softWrap = yes,
             overflow = TextOverflow.Ellipsis,
