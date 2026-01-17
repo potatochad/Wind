@@ -160,24 +160,38 @@ fun LazyText(
 	bigText: Any, 
 	mod: Mod = Mod.h(0, 100).maxW(),
 	scroll: LazyList = LazyList(),
-	onShow: (Int, UIStr) -> UIStr = { _, txt -> txt }
+	onChar: (Int, Str) -> UIStr = { _, char -> UIStr(char) }
 ){
 	val lines = bigText.toLines()
 
-	val linesSize = remember(lines) {
+	val linesStartSize = remember(lines) {
 		var sum = 0
 		lines.map {
+			val start = sum
 			sum += it.size
-			sum
+			start
 		}
 	}
+
 	
 	LazyColumn(
 		modifier = mod,
 		state = scroll
 	) {
 		itemsIndexed(lines) { index, txt ->
-			var txtUI = onShow(index, txt)
+			val lineStart = linesStartIndex[index]
+			var txtUI by m(UIStr("error"))
+			var listChar = mList<UIStr>()
+
+			txt.forEachIndexed { charIndex, char ->
+				val globalIndex = lineStart + charIndex
+				listChar.add(onChar(charIndex, "$char"))
+			}
+			UIStr(
+				listChar.forEach {
+					
+				}
+			)
 			
 			Text(txtUI)
 		}
