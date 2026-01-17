@@ -188,7 +188,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 	) {
 		itemsIndexed(lines) { index, txt ->
 
-			val lineStart = cumulativeSizes[index] - txt.length
+			val lineStart = cumulativeSizes[index] - txt.size
 			val lineEnd = cumulativeSizes[index]
 
 			val styledText = buildAnnotatedString {
