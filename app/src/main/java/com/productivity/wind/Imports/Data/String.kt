@@ -216,6 +216,21 @@ fun charsW(text: Any): Int {
     return lineChars
 }
 
+fun String.safeCut(delim: String, action: (String) -> Unit) {
+    var i = 0
+    while (i < this.length) {
+        val next = this.indexOf(delim, i)
+        if (next == -1) {
+            action(this.substring(i))
+            break
+        } else {
+            action(this.substring(i, next + delim.length)) // include the delimiter
+            i = next + delim.length
+        }
+    }
+}
+
+
 
 
 
@@ -227,7 +242,7 @@ fun Any.toLines(): List<UIStr> {
     // Measure how many chars fit in one line
     if (lineChars == 0) {
         Text(
-            text = str,
+            text = "k".repeat(600),
             maxLines = 1,
             softWrap = yes,
             overflow = TextOverflow.Ellipsis,
@@ -244,32 +259,20 @@ fun Any.toLines(): List<UIStr> {
 
     
     val lines = mList<UIStr>()
-    var cursor = 0
 
-    while (cursor < str.size) {
-        var end = (cursor + lineChars).coerceAtMost(str.size)
-
-        // Look backwards for last space in original text
-        val lastSpace = str.lastIndexOf(' ', end - 1)
-        if (lastSpace in (cursor + 1) until end) {
-            end = lastSpace + 1 // include space
+    var line = ""
+    str.split(" ").forEach { word ->
+        if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
+            line += if (line.isEmpty()) word else " $word"
+        } else {
+            lines.add(UIStr(line))
+            line = word
         }
-
-        lines.add(UIStr(str.fromTo(cursor, end)))
-        cursor = end
     }
+    if (line.isNotEmpty()) lines.add(UIStr(line))
     
     return lines
 }
-
-
-
-
-
-
-
-
-
 
 
 
