@@ -190,7 +190,8 @@ fun Any.darkGray() = txt { copy(color = Color.DarkGray) }
 val Str.size get() = length
 val UIStr.size get() = this.text.size
 fun Str.last(n: Int): Str = this.takeLast(n)
-fun Str.fromTo(start: Int, end: Int = this.size): Str = this.substring(start, end)
+fun Str.fromTo(start: Int, end: Int = this.size) = this.substring(start, end)
+fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, end)
 
 
 
