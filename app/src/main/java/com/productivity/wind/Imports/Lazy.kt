@@ -187,11 +187,7 @@ fun LazyText(
 				val globalIndex = lineStart + charIndex
 				listChar.add(onChar(charIndex, "$char"))
 			}
-			UIStr(
-				listChar.forEach {
-					
-				}
-			)
+			val txtUI = UIStr(*listChar.toTypedArray())
 			
 			Text(txtUI)
 		}
