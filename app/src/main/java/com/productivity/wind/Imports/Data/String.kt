@@ -221,10 +221,22 @@ fun charsW(text: Any): Int {
 
 @Composable
 fun Any.toLines(): List<UIStr> {
-    var str by r(toStr(this))
     var lineChars by r(0)
+    var str by r(toStr(this))
 
-    lineChars = charsW(this)
+    // Measure how many chars fit in one line
+    if (lineChars == 0) {
+        Text(
+            text = str,
+            maxLines = 1,
+            softWrap = yes,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.alpha(0f),
+            onTextLayout = {
+                lineChars = it.getLineEnd(0, visibleEnd = yes)
+            }
+        )
+    }
 
     // Return empty if not measured yet
     if (lineChars == 0) return emptyList()
@@ -249,7 +261,6 @@ fun Any.toLines(): List<UIStr> {
     
     return lines
 }
-
 
 
 
