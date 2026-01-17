@@ -192,9 +192,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 			val styledText = UIStr(
 				when {
-					goodStr <= lineStart -> {
-						txt
-					}
+					goodStr <= lineStart -> txt
 					goodStr >= lineEnd -> {
 						txt.green()
 					} else -> {
