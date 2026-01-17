@@ -260,16 +260,19 @@ fun Any.toLines(): List<UIStr> {
     
     val lines = mList<UIStr>()
 
-    var line = ""
-    str.safeSplit(" "){ word ->
-        if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
-            line += word
-        } else {
-            lines.add(UIStr(line))
-            line = word
+    RunOnce {
+        var line = ""
+        
+        str.safeSplit(" "){ word ->
+            if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
+                line += word
+            } else {
+                lines.add(UIStr(line))
+                line = word
+            }
         }
+        if (line.isNotEmpty()) lines.add(UIStr(line))
     }
-    if (line.isNotEmpty()) lines.add(UIStr(line))
     
     return lines
 }
