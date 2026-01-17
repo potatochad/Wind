@@ -202,12 +202,12 @@ fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, 
 @Composable
 fun Any.toLines(): List<UIStr> {
     var lineChars by r(0)
-    var text by r(toStr(this))
+    var str by r(toStr(this))
 
     // Measure how many chars fit in one line
     if (lineChars == 0) {
         Text(
-            text = "k".repeat(600),
+            text = str,
             maxLines = 1,
             softWrap = yes,
             overflow = TextOverflow.Ellipsis,
@@ -224,34 +224,10 @@ fun Any.toLines(): List<UIStr> {
 
     
     val lines = mList<UIStr>()
-
-
-    /*
-    var line = ""
-    toStr(this).split(" ").forEach { word ->
-        if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
-            line += if (line.isEmpty()) word else " $word"
-        } else {
-            lines.add(UIStr(line))
-            line = word
-        }
-    }
-    if (line.isNotEmpty()) lines.add(UIStr(line))
-    */
-/*
-    var cursor = 0
-    while (cursor < text.size) {
-    val end = (cursor + lineChars).coerceAtMost(text.size)
-    lines.add(UIStr(text.substring(cursor, end)))
-    cursor = end
-}
-*/
-val str = toStr(this)
     var cursor = 0
 
-    while (cursor < str.length) {
-        // Tentative end
-        var end = (cursor + lineChars).coerceAtMost(str.length)
+    while (cursor < str.size) {
+        var end = (cursor + lineChars).coerceAtMost(str.size)
 
         // Look backwards for last space in original text
         val lastSpace = str.lastIndexOf(' ', end - 1)
@@ -259,7 +235,7 @@ val str = toStr(this)
             end = lastSpace + 1 // include space
         }
 
-        lines.add(UIStr(str.substring(cursor, end)))
+        lines.add(UIStr(str.fromTo(cursor, end)))
         cursor = end
     }
     
