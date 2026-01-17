@@ -177,7 +177,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 	val linesSize = remember(lines) {
 		var sum = 0
 		lines.map {
-			sum += it.size
+			sum += it.size +1
 			sum
 		}
 	}
