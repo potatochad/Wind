@@ -171,7 +171,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 
 	
-
+/*
 	LazyText(
 		bigText: Any, 
 		mod = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
@@ -204,6 +204,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			Text(txtUI)
 		}
 	}
+	*/
 	
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
