@@ -191,21 +191,24 @@ fun CopyTskUI(tsk: CopyTsk) {
 			val lineStart = cumulativeSizes[index] - txt.size
 			val lineEnd = cumulativeSizes[index]
 
-			val styledText = buildAnnotatedString {
+			val styledText = UIStr(
 				when {
 					goodStr <= lineStart -> {
-						add(txt)
+						txt
 					}
 					goodStr >= lineEnd -> {
-						add(txt.green())
+						txt.green()
 					} else -> {
 						val greenCount = goodStr - lineStart
-						
-						add(txt.fromTo(0, greenCount).green())
-						add(txt.fromTo(greenCount))
+
+						UIStr(
+							txt.fromTo(0, greenCount).green(),
+							txt.fromTo(greenCount)
+						)
 					}
 				}
-			}
+			)
+			
 			Text(styledText)
 		}
 	}
