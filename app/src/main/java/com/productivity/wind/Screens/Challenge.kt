@@ -191,10 +191,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 			val lineEnd = linesSize[index]
 
 			val txtUI = when {
-					tsk.goodStr() <= lineStart -> txt
-					tsk.goodStr() >= lineEnd -> txt.green()
+					goodStr <= lineStart -> txt
+					goodStr >= lineEnd -> txt.green()
 					else -> {
-						val greenChar = tsk.goodStr() - lineStart
+						val greenChar = goodStr - lineStart
 
 						UIStr(
 							txt.fromTo(0, greenChar).green(),
