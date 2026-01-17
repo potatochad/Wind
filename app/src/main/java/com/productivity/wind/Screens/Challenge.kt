@@ -197,15 +197,12 @@ fun CopyTskUI(tsk: CopyTsk) {
 						add(txt)
 					}
 					goodStr >= lineEnd -> {
-						withStyle(SpanStyle(color = Color.Green)) {
-							add(txt)
-						}
+						add(txt.green())
 					} else -> {
 						val greenCount = goodStr - lineStart
-						withStyle(SpanStyle(color = Color.Green)) {
-							add(txt.substring(0, greenCount))
-						}
-						add(txt.substring(greenCount))
+						
+						add(txt.fromTo(0, greenCount).green())
+						add(txt.fromTo(greenCount))
 					}
 				}
 			}
