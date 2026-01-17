@@ -155,6 +155,52 @@ fun LazyInput(
 
 
 
+@Composable
+fun LazyText(
+	bigText: Any, 
+	mod: Mod = Mod.h(0, 100).maxW(),
+	scroll: LazyList = LazyList(),
+){
+	val lines = bigText.toLines()
+
+	val linesSize = remember(lines) {
+		var sum = 0
+		lines.map {
+			sum += it.size
+			sum
+		}
+	}
+	
+	LazyColumn(
+		modifier = mod,
+		state = scroll
+	) {
+		itemsIndexed(lines) { index, txt ->
+			val lineStart = linesSize[index] - txt.size
+			val lineEnd = linesSize[index]
+
+			val txtUI = when {
+					goodStr <= lineStart -> txt
+					goodStr >= lineEnd -> txt.green()
+					else -> {
+						val greenChar = goodStr - lineStart
+
+						UIStr(
+							txt.fromTo(0, greenChar).green(),
+							txt.fromTo(greenChar, txt.size)
+						)
+					}
+				}
+			
+			Text(txtUI)
+		}
+	}
+}
+
+
+
+
+
 
 @Composable
 fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
