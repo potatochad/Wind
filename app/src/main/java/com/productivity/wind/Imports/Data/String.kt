@@ -208,20 +208,24 @@ fun Any.toLines(): List<UIStr> {
         Text(
             text = "k".repeat(600),
             maxLines = 1,
-            softWrap = true, // MUST be true
-            overflow = TextOverflow.Ellipsis, // MUST overflow
+            softWrap = yes,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier.alpha(0f),
             onTextLayout = {
-                lineChars = it.getLineEnd(0, visibleEnd = true)
+                lineChars = it.getLineEnd(0, visibleEnd = yes)
             }
         )
-
     }
 
     // Return empty if not measured yet
     if (lineChars == 0) return emptyList()
 
+
+    
     val lines = mList<UIStr>()
+
+
+    /*
     var line = ""
     toStr(this).split(" ").forEach { word ->
         if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
@@ -232,9 +236,31 @@ fun Any.toLines(): List<UIStr> {
         }
     }
     if (line.isNotEmpty()) lines.add(UIStr(line))
+    */
+
+
+
+
+
+
+
+    var cursor = 0
+while (cursor < originalText.length) {
+    val end = (cursor + lineChars).coerceAtMost(originalText.length)
+    lines.add(UIStr(originalText.substring(cursor, end)))
+    cursor = end
+}
     
     return lines
 }
+
+
+
+
+
+
+
+
 
 
 
