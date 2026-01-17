@@ -216,7 +216,7 @@ fun charsW(text: Any): Int {
     return lineChars
 }
 
-fun String.safeCut(delim: String, action: (String) -> Unit) {
+fun String.safeSplit(delim: String, action: (String) -> Unit) {
     var i = 0
     while (i < this.length) {
         val next = this.indexOf(delim, i)
@@ -261,7 +261,7 @@ fun Any.toLines(): List<UIStr> {
     val lines = mList<UIStr>()
 
     var line = ""
-    str.split(" ").forEach { word ->
+    str.safeSplit(" "){ word ->
         if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
             line += if (line.isEmpty()) word else " $word"
         } else {
