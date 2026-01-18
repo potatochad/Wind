@@ -259,6 +259,18 @@ fun RuleCard(
 		ui()
 	}
 }
+@Composable
+fun getW(onW: Do_<Int>) {
+	Box(Mod.maxW().getW{
+		onW(it)
+	})
+}
+@Composable
+fun getH(onH: Do_<Int>){
+	Box(Mod.maxH().getH{
+		onH(it)
+	})
+}
 
 
 
