@@ -198,21 +198,19 @@ fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, 
 fun getW(
     text: Str,
     style: TextStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
-    onW: Do_<Float>
-) {
+): Float {
     val textMeasurer = rememberTextMeasurer()
     val layoutResult = textMeasurer.measure(text, style = style)
-    onW(toF(layoutResult.size.width))
+    return toF(layoutResult.size.width)
 }
 @Composable
 fun getH(
     text: Str,
     style: TextStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
-    onH: Do_<Float>
-) {
+): Float {
     val textMeasurer = rememberTextMeasurer()
     val layoutResult = textMeasurer.measure(text, style = style)
-    onH(toF(layoutResult.size.height))
+    return toF(layoutResult.size.height)
 }
 
 // 100ms once
