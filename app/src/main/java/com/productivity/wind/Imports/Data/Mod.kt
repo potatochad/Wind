@@ -168,3 +168,60 @@ fun Mod.maxS(): Mod= this.fillMaxSize()
 fun Mod.maxW(): Mod= this.fillMaxWidth()
 fun Mod.maxH(): Mod= this.fillMaxHeight()
 
+@Composable
+fun Mod.scroll(
+    v: Bool = yes,
+    h: Bool = yes,
+    r_v: Scroll = Scroll(),
+    r_h: Scroll = Scroll(),
+): Mod {
+    var m = this
+    if (v) m = m.verticalScroll(r_v)
+    if (h) m = m.horizontalScroll(r_h)
+    return m
+}
+
+
+
+@Composable
+fun Mod.click(
+    animate: Bool = yes,
+    Do: Do,
+): Mod {
+    return this.clickable(
+        indication = if (animate) LocalIndication.current else null,
+        interactionSource = MutableInteractionSource()
+    ) {
+        Do()
+    }
+}
+
+
+
+fun Mod.clickOrHold(
+    hold: Bool = yes,
+    action: Do,
+): Mod {
+   return if (hold) {
+      pointerInput(Unit) {
+          detectTapGestures(onLongPress = { action() })
+      }
+   } else {
+      clickable(
+         indication = null,
+         interactionSource = MutableInteractionSource()
+      ) {
+         action()
+      }
+  	}
+}
+
+
+
+
+
+
+
+
+
+
