@@ -203,7 +203,7 @@ object Item {
                 move(10)
 
                 click({
-                    UI.ProgressIcon(icon, progress)
+                    ProgressIcon(icon, progress)
                 }){
                     openApp(app.pkg)
                 }
@@ -212,7 +212,7 @@ object Item {
                 move(12)
                 Text("Points ${app.Worth}")
 
-                UI.End {
+                End {
                     Icon.Edit{
                         enoughPoints {
                             goTo("AppUsage/${app.id}")
@@ -298,11 +298,11 @@ object Header {
     fun AppUsage(Time: m_<Int>, Points: m_<Int>, selectedApp: Str) {
         Text("AppUsage")
         
-        UI.End {
+        End {
             Icon.Add {
-                UI.check(!isUsageP_Enabled()) { goTo("usagePermission"); return@Add}
-                UI.check(Time.it < 1,"Add time") {return@Add}
-                UI.check(selectedApp.isEmpty(),"Select app") {return@Add}
+                check(!isUsageP_Enabled()) { goTo("usagePermission"); return@Add}
+                check(Time.it < 1,"Add time") {return@Add}
+                check(selectedApp.isEmpty(),"Select app") {return@Add}
 
 
                 var isAdded = Bar.apps.find { it.name == selectedApp }
@@ -331,9 +331,9 @@ object Header {
     fun CopyPaste(text: m_<Str>, MaxDone: m_<Int>, DonePts: m_<Int>, LetterPts: m_<Int>, id: Str){
         Text("Copy Paste")
         
-        UI.End {
+        End {
             Icon.Add {
-                UI.check(text.it.isEmpty(),"Add text") {return@Add}
+                check(text.it.isEmpty(),"Add text") {return@Add}
 
                 if (!id.isEmpty()) {
                     val tsk = Bar.copyTsk.find { it.id == id }
@@ -375,7 +375,7 @@ object Header {
         
         Text("Points ${Bar.funTime}")
         
-        UI.End {
+        End {
             Icon.Add()
         }
     }
@@ -464,7 +464,7 @@ object Icon {
         }
 
         LazyIcon(if (copied) Icons.Default.Check else Icons.Default.ContentCopy){
-            UI.copyToClipboard(txt)
+            copyToClipboard(txt)
             copied = yes
         }
     }
