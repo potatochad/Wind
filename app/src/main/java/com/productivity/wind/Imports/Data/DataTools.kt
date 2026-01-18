@@ -125,6 +125,8 @@ import android.net.*
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import kotlin.properties.*
+import com.productivity.wind.Imports.UI_visible.*
+
 
 
 fun encrypt(text: Str, key: Int): Str {
