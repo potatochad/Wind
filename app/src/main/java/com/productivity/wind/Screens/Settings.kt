@@ -21,6 +21,8 @@ import androidx.compose.ui.*
 import androidx.compose.foundation.lazy.*
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
+import com.productivity.wind.Imports.UI_visible.*
+
 
 @Composable
 fun SettingsScreen() {
