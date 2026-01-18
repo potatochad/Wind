@@ -78,9 +78,9 @@ object Icon {
     }
 
     @Composable
-    fun Chill() {
+    fun Chill(Do: Do) {
         LazyIcon(Icons.Default.SportsEsports) {
-            goTo("Web")
+            Do()
         }
     }
 
