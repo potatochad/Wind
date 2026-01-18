@@ -340,7 +340,7 @@ object Header {
         Text("Copy Paste")
         
         End {
-            Icon.Add {
+            Item.Add {
                 check(text.it.isEmpty(),"Add text") {return@Add}
 
                 if (!id.isEmpty()) {
