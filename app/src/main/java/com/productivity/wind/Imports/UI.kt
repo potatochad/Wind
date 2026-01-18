@@ -263,14 +263,14 @@ fun RuleCard(
 @Composable
 fun getW(): Float {
     return toF(BoxWithConstraints {
-        maxWidth.roundToPx()
+        toInt(maxWidth)
     })
 }
 
 @Composable
 fun getH(): Float {
     return toF(BoxWithConstraints {
-        maxHeight.roundToPx()
+        toInt(maxHeight)
     })
 }
 
