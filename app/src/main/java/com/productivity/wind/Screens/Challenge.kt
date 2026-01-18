@@ -169,48 +169,18 @@ fun CopyTskUI(tsk: CopyTsk) {
     }
 
 
-
-	
-/*
-LazyText(
-	bigText: tsk.txt, 
-	mod: Mod = Mod.h(0, 100).maxW(),
-	scroll: LazyList = LazyList(),
-	onChar: (Int, Str) -> UIStr = { _, char -> UIStr(char) }
-){
 	LazyText(
-		bigText: Any, 
+		bigText = tsk.txt, 
 		mod = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
-		scroll = txtScroll
-	) {
-	onShow: (Int, UIStr) -> UIStr = { _, txt
-	}
-	
-	LazyColumn(
-		modifier = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
-		state = txtScroll
-	) {
-		itemsIndexed(lines) { index, txt ->
-			val lineStart = linesSize[index] - txt.size
-			val lineEnd = linesSize[index]
-
-			val txtUI = when {
-					goodStr <= lineStart -> txt
-					goodStr >= lineEnd -> txt.green()
-					else -> {
-						val greenChar = goodStr - lineStart
-
-						UIStr(
-							txt.fromTo(0, greenChar).green(),
-							txt.fromTo(greenChar, txt.size)
-						)
-					}
-				}
-			
-			Text(txtUI)
+		scroll = txtScroll,
+	) { index, char ->
+		if (index <= goodStr) {
+			char.green()
+		} else {
+			char
 		}
 	}
-	*/
+			
 	
 	var txt = r(tsk.input)
     Item.BigTskInput(txt, inputScroll) {
