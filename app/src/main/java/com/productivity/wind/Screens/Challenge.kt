@@ -173,15 +173,13 @@ fun CopyTskUI(tsk: CopyTsk) {
 		bigText = tsk.txt, 
 		mod = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
 		scroll = txtScroll,
-	) { index, char ->
-		/*
+	)/* { index, char ->
 		if (index <= goodStr) {
 			char.green()
 		} else {
 			char
 		}
-		*/
-	}
+	}*/
 			
 	
 	var txt = r(tsk.input)
