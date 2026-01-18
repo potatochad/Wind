@@ -131,18 +131,6 @@ var <T> m_<T>.it: T
     get() = this.value
     set(value) { this.value = value }
 
-fun Mod.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
-fun Mod.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
-fun Mod.s(value: Any?) = this.size(toDp(value))
-fun Mod.s(Do: Do_<IntSize>): Mod = this.onSizeChanged { Do(it) }
-
-fun Mod.center() = this.wrapContentSize(align = Alignment.Center)
-fun Mod.round(x: Any): Mod = this.clip(RoundedCornerShape(toDp(x)))
-
-
-fun Mod.maxS(): Mod= this.fillMaxSize()
-fun Mod.maxW(): Mod= this.fillMaxWidth()
-fun Mod.maxH(): Mod= this.fillMaxHeight()
 
 fun <T> m(value: T) = mutableStateOf(value)
 fun <T> set(state: m_<T>?, value: T) { state?.value = value }
@@ -162,8 +150,6 @@ typealias ctx = Context
 typealias ui_<T> = @Composable (T) -> Unit
 typealias Do = () -> Unit
 typealias UI_<T> = @Composable (T) -> Unit
-typealias Mod = Modifier
-typealias mod = Modifier
 typealias Wait = suspend () -> Unit
 typealias Wait_<T> = suspend (T) -> Unit
 typealias Do_<T> = (T) -> Unit
