@@ -153,43 +153,6 @@ fun fixedInputScroll(
 }
 
 
-@Composable
-fun FastTextView(
-    text: AnnotatedString, // use AnnotatedString like in Compose
-    modifier: Modifier = Modifier
-) {
-    AndroidView(
-        factory = { context ->
-            TextView(context).apply {
-                setTextIsSelectable(no)
-                isVerticalScrollBarEnabled = no
-                movementMethod = ScrollingMovementMethod()
-            }
-        },
-        update = { textView ->
-            val spannable = SpannableString(text.text)
-            
-            // Apply Compose SpanStyles to Android Spannable
-            text.spanStyles.forEach { styleRange ->
-                val color = styleRange.item.color?.toArgb()
-                if (color != null) {
-                    spannable.setSpan(
-                        ForegroundColorSpan(color),
-                        styleRange.start,
-                        styleRange.end,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-                // You can add more spans: TypefaceSpan, StyleSpan, UnderlineSpan, etc.
-            }
-            
-            textView.text = spannable
-        },
-        modifier = modifier
-    )
-}
-
-
 
 
 // ✴️ LIST SPECIFIC UI
