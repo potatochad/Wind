@@ -194,11 +194,10 @@ fun Str.fromTo(start: Int, end: Int = this.size) = this.substring(start, end)
 fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, end)
 
 
-
+// 100ms once
 @Composable
-fun charsW(text: Any): Int {
+fun charsW(): Int {
     var lineChars by r(0)
-    val str = toStr(text)
 
     if (lineChars == 0) {
         Text(
@@ -233,14 +232,14 @@ fun String.safeSplit(delim: String, action: (String) -> Unit) {
 
 
 
-
+// 7s once
 @Composable
 fun Any.toLines(): List<UIStr> {
     var lineChars by r(0)
     var str by r(toStr(this))
 
     // Measure how many chars fit in one line
-    lineChars = charsW(str)
+    lineChars = charsW()
 
     // Return empty if not measured yet
     if (lineChars == 0) return emptyList()
@@ -266,6 +265,52 @@ fun Any.toLines(): List<UIStr> {
     
     return lines
 }
+
+
+/*
+@Composable
+fun Any.toLinesUltraFast(): List<UIStr> {
+    val str = toStr(this)
+    var lineChars by r(0)
+    lineChars = charsW(str)
+    if (lineChars == 0) return emptyList()
+
+    val lines = mList<String>()
+    val sb = StringBuilder()
+    var charCount = 0
+
+    RunOnce {
+        NoLag {
+            var wordStart = 0
+            val length = str.length
+
+            for (i in 0..length) {
+                val c = if (i < length) str[i] else ' ' // handle last word
+                if (c == ' ' || i == length) {
+                    val wordLength = i - wordStart
+                    if (charCount + if (charCount > 0) 1 else 0 + wordLength <= lineChars) {
+                        if (charCount > 0) {
+                            sb.append(' ')
+                            charCount++
+                        }
+                        sb.append(str, wordStart, i)
+                        charCount += wordLength
+                    } else {
+                        lines.add(sb.toString())
+                        sb.clear()
+                        sb.append(str, wordStart, i)
+                        charCount = wordLength
+                    }
+                    wordStart = i + 1
+                }
+            }
+            if (sb.isNotEmpty()) lines.add(sb.toString())
+        }
+    }
+
+    return lines.map { UIStr(it) }
+}
+*/
 
 
 
