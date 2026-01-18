@@ -47,7 +47,7 @@ fun SettingsScreen() {
             BigIconColor = DarkBlue,
             title = "BackUp",
 			endContent = {
-				UI.Ctext(
+				Ctext(
 					if (Bar.encryptedBackup) "encrypt".darkGray()
 					else "txt".darkGray()
 				) {
@@ -100,8 +100,8 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 	  selectLocation(show)
 	  
-      UI.CheckRow("Activate at ", check) {
-         UI.Ctext("${Bar.privacyGeo.size} locations") {
+      CheckRow("Activate at ", check) {
+         Ctext("${Bar.privacyGeo.size} locations") {
 			check.it = yes
 			location {
 				show.it = yes
@@ -159,7 +159,7 @@ fun LogsScreen() {
         Header.Logs(Tag)
     }) {
         if (Bar.logs.isEmpty()){
-              UI.EmptyBox("No logs")
+              EmptyBox("No logs")
         } else {
 			Box(
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Hscroll()
