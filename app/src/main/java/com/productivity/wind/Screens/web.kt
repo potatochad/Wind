@@ -45,7 +45,7 @@ fun Web(){
                     Icon.Reload{ 
                         web.it?.reload()
                     } 
-                    Icon.Add {
+                    Item.Add {
                         goTo("BlockKeyword")
                     }
                 }
@@ -94,7 +94,7 @@ fun BlockKeyword() {
                 Icon.MoreMenu{
                     goTo("filterExtraWeb")
                 }
-                Icon.Add {
+                Item.Add {
                     Bar.badWords.add {
                         word = BadWord.it
                     }
