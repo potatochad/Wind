@@ -84,11 +84,9 @@ object Icon {
         }
     }
     @Composable
-    fun Add(Do: Do = { goTo("Challenge") }) {
+    fun Add(Do: Do ) {
         LazyIcon(Icons.Default.Add) {     
-            Item.enoughPoints{
-                Do()
-            }
+            Do()
         }
     }
 
