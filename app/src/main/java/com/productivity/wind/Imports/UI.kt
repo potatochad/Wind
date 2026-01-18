@@ -234,9 +234,9 @@ fun ProgressIcon(
 	icon: Drawable?,              // whatever LazyImage accepts (Drawable, URL, etc.)
 	progress: Float,
 ) {
-	val ringColor = UI.ProgressColor(progress)
+	val ringColor = ProgressColor(progress)
 
-	UI.Ring(
+	Ring(
 		color = ringColor,
 		progress = progress,
 		ContentPadding = -3,
