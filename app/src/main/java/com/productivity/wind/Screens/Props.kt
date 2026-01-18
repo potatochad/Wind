@@ -93,7 +93,7 @@ fun NavGraphBuilder.ScreenNav() {
 @Composable
 fun Menu() {
     LazyScreen(
-        top = { UI.MenuHeader() },
+        top = { MenuHeader() },
         showBack = no,
         showDivider = no,
         headerHeight = 170,
@@ -101,7 +101,7 @@ fun Menu() {
         LazyItem(
             icon = Icons.Outlined.Chat,
             title = "Support",
-            onClick = { UI.SendEmail(); menu = no },
+            onClick = { SendEmail(); menu = no },
         )
         LazyItem(
             icon = Icons.Outlined.Landscape,
@@ -285,7 +285,7 @@ object Header {
 		}
 
             
-        UI.End {
+        End {
             Icon.Delete {
                 Bar.logs.clear()
             }
