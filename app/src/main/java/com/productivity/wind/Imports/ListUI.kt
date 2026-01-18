@@ -70,3 +70,44 @@ import android.widget.*
 import android.text.method.*
 import androidx.compose.ui.unit.*
 
+
+fun UIStrBuilder.correctStr(text: Str, correctUntil: Int) {
+    for (i in text.indices) {
+        if (i < correctUntil) {
+			text.bold().color(Color.Green)
+        } else {
+            add(text[i])
+        }
+    }
+}
+
+fun getApps(): List<ResolveInfo> {
+    val pm = App.packageManager
+    val launchIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+    return pm.queryIntentActivities(launchIntent, 0).abcOrder()
+}
+fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
+    val pm = App.packageManager
+    return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
+}
+
+
+fun CopyTsk.goodStr(): Int {
+    val n = minOf(txt.size, input.size)
+    for (i in 0 until n) {
+        if (txt[i] != input[i]) return i
+    }
+    return n
+}
+
+fun CopyTsk.done(): Bool {
+    return doneTimes >= maxDone
+}
+fun CopyTsk.edit(block: CopyTsk.() -> Unit) {
+    Bar.copyTsk.edit(this, block)
+}
+fun GeoCircle.edit(block: GeoCircle.() -> Unit) {
+	Bar.privacyGeo.edit(this, block)
+}
+
+
