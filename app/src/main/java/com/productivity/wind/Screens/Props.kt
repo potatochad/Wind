@@ -364,7 +364,9 @@ object Header {
 
     @Composable
     fun Main(){
-        Icon.Menu()
+        Icon.Menu {
+			menu = yes
+		}
         // Icon.Chill()
 
         Icon.Reload{
