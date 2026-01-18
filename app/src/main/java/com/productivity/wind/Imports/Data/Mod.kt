@@ -151,3 +151,20 @@ fun Mod.space(
         )
     }
 }
+
+typealias Mod = Modifier
+typealias mod = Modifier
+
+fun Mod.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
+fun Mod.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
+fun Mod.s(value: Any?) = this.size(toDp(value))
+fun Mod.s(Do: Do_<IntSize>): Mod = this.onSizeChanged { Do(it) }
+
+fun Mod.center() = this.wrapContentSize(align = Alignment.Center)
+fun Mod.round(x: Any): Mod = this.clip(RoundedCornerShape(toDp(x)))
+
+
+fun Mod.maxS(): Mod= this.fillMaxSize()
+fun Mod.maxW(): Mod= this.fillMaxWidth()
+fun Mod.maxH(): Mod= this.fillMaxHeight()
+
