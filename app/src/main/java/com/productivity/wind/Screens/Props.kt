@@ -119,6 +119,14 @@ fun Menu() {
 
 
 object Item {
+	@Composable
+    fun Add(Do: Do = { goTo("Challenge") }) {
+        Icon.Add {     
+            Item.enoughPoints{
+                Do()
+            }
+        }
+    }
 
     fun UpdateAppTsk(){
         Bar.apps.each {
@@ -299,7 +307,7 @@ object Header {
         Text("AppUsage")
         
         End {
-            Icon.Add {
+            Item.Add {
                 check(!isUsageP_Enabled()) { goTo("usagePermission"); return@Add}
                 check(Time.it < 1,"Add time") {return@Add}
                 check(selectedApp.isEmpty(),"Select app") {return@Add}
