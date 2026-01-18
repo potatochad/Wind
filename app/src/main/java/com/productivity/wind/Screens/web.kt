@@ -39,7 +39,7 @@ fun Web(){
         top = {
             Text(" Points ${Bar.funTime}")
     
-            UI.End {
+            End {
                 Row{
                     Icon.Reload{ 
                         web.it?.reload()
@@ -89,7 +89,7 @@ fun BlockKeyword() {
             ) {
                 Text(url, maxLines = 1)
             }
-            UI.End {
+            End {
                 Icon.MoreMenu{
                     goTo("filterExtraWeb")
                 }
