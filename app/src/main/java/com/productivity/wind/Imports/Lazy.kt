@@ -324,7 +324,7 @@ fun LazyIcon(
     color: Color = Color.White,
 	onClick: Do = {},
 ) {
-	UI.ComposeCanBeTiny() {
+	ComposeCanBeTiny() {
         IconButton(
             onClick = {
 				wait(100) {
@@ -606,14 +606,14 @@ fun LazyBigPopup(
 				}
 				
 					
-				UI.End(Mod.space(bottom = 10, end = 16)) {
-						UI.Ctext("CANCEL"){
+				End(Mod.space(bottom = 10, end = 16)) {
+						Ctext("CANCEL"){
 							onCancel()
 							onDismiss()
 							show.it = no
 						}
 						move(50)
-						UI.Ctext("OK"){
+						Ctext("OK"){
 							onOk()
 							onDismiss()
 							show.it = no
