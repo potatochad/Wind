@@ -260,17 +260,19 @@ fun RuleCard(
 	}
 }
 @Composable
-fun getW(onW: Do_<Int>) {
-	Box(Mod.maxW().getW{
-		onW(it)
-	})
+fun getW(): Float {
+    return toF(BoxWithConstraints {
+        maxWidth.roundToPx()
+    })
 }
+
 @Composable
-fun getH(onH: Do_<Int>){
-	Box(Mod.maxH().getH{
-		onH(it)
-	})
+fun getH(): Float {
+    return toF(BoxWithConstraints {
+        maxHeight.roundToPx()
+    })
 }
+
 
 
 
