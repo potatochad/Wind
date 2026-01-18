@@ -194,22 +194,35 @@ fun Str.fromTo(start: Int, end: Int = this.size) = this.substring(start, end)
 fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, end)
 
 
+@Composable
+fun getW(
+    text: Str,
+    style: TextStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
+    onW: Do_<Int>
+) {
+    val textMeasurer = rememberTextMeasurer()
+    val layoutResult = textMeasurer.measure(text, style = style)
+    onWidth(layoutResult.size.width)
+}
+@Composable
+fun getH(
+    text: Str,
+    style: TextStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
+    onH: Do_<Int>
+) {
+    val textMeasurer = rememberTextMeasurer()
+    val layoutResult = textMeasurer.measure(text, style = style)
+    onH(layoutResult.size.height)
+}
+
 // 100ms once
 @Composable
-fun charsW(): Int {
+fun charsInLine(): Int {
     var lineChars by r(0)
-
-    if (lineChars == 0) {
-        Text(
-            text = "k".repeat(600),
-            maxLines = 1,
-            softWrap = yes,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.alpha(0f),
-            onTextLayout = {
-                lineChars = it.getLineEnd(0, visibleEnd = yes)
-            }
-        )
+    
+    getW {
+       lineChars = toF(it)/toF(getW("k"))
+       Vlog("width: $it, charW: ${getW("k")}, chars: $lineChars") 
     }
 
     return lineChars
@@ -239,7 +252,7 @@ fun Any.toLines(): List<UIStr> {
     var str by r(toStr(this))
 
     // Measure how many chars fit in one line
-    lineChars = charsW()
+    lineChars = charsInLine()
 
     // Return empty if not measured yet
     if (lineChars == 0) return emptyList()
