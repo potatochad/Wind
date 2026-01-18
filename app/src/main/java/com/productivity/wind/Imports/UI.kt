@@ -192,310 +192,288 @@ fun getH(): Float {
 }
 
 
+var SettingsItemCardColor = Color(0xFF121212)
 
 
-
-object UI {
-    //No synched with actual settingsItem function YET
-    var SettingsItemCardColor = Color(0xFF121212)
-
-
-	inline fun check(
-        condition: Bool,
-        msg: Str = "",
-        Do: Do = {},
-	) {
-		if (condition) {
-			if (msg.isNotEmpty()) Vlog(msg)
-			Do()        // safe
-		}
+inline fun check(
+    condition: Bool,
+    msg: Str = "",
+    Do: Do = {},
+) {
+	if (condition) {
+		if (msg.isNotEmpty()) Vlog(msg)
+		Do()        // safe
 	}
+}
 	
-	@Composable
-	fun End(mod: Mod = Mod, ui: ui) {
-		Row(
-			mod.maxW(),
-			verticalAlignment = Alignment.CenterVertically,
-			horizontalArrangement = Arrangement.End
-		){
-			ui()
-			move(10)
-		}
+@Composable
+fun End(mod: Mod = Mod, ui: ui) {
+	Row(
+		mod.maxW(),
+		verticalAlignment = Alignment.CenterVertically,
+		horizontalArrangement = Arrangement.End
+	){
+		ui()
+		move(10)
 	}
+}
 
-
-	fun copyToClipboard(txt: Str) {
-		val clipboard = App.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-		val clip = ClipData.newPlainText("label", txt)
-		clipboard.setPrimaryClip(clip)
-	}
+fun copyToClipboard(txt: Str) {
+	val clipboard = App.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+	val clip = ClipData.newPlainText("label", txt)
+	clipboard.setPrimaryClip(clip)
+}
 	
 
 
 
 
 
-	@Composable
-	fun ProgressIcon(
-		icon: Drawable?,              // whatever LazyImage accepts (Drawable, URL, etc.)
-		progress: Float,
+@Composable
+fun ProgressIcon(
+	icon: Drawable?,              // whatever LazyImage accepts (Drawable, URL, etc.)
+	progress: Float,
+) {
+	val ringColor = UI.ProgressColor(progress)
+
+	UI.Ring(
+		color = ringColor,
+		progress = progress,
+		ContentPadding = -3,
 	) {
-		val ringColor = UI.ProgressColor(progress)
+		Box(contentAlignment = Alignment.Center) {
+			LazyImage(icon)
 
-		UI.Ring(
-			color = ringColor,
-			progress = progress,
-			ContentPadding = -3,
-		) {
-			Box(contentAlignment = Alignment.Center) {
-				LazyImage(icon)
-
-				// Overlay circle on top
-				Canvas(
-					modifier = Mod
-						.matchParentSize()
-						.space(4)
-				) {
-					drawArc(
-						color = Color(0xFF171717),   // ~10% darker overlay
-						startAngle = 0f,
-						sweepAngle = 360f,
-						useCenter = false,
-						style = Stroke(width = 2.dp.toPx())
-					)
-				}
-			}
-		}
-	}
-
-	@Composable
-	fun Ring(
-		color: Color,
-		strokeWidth: Int = 3,
-		progress: Float = 1f,
-		ContentPadding: Int = 1,
-		strokeCap: StrokeCap = StrokeCap.Butt,
-		content: @Composable BoxScope.() -> Unit
-	) {
-		Box(
-			contentAlignment = Alignment.Center,
-		) {
-			Canvas(modifier = Mod.matchParentSize()) {
-				val stroke = Stroke(width = strokeWidth.dp.toPx(), cap = strokeCap)
-				val radius = size.minDimension / 2
-				val topLeft = Offset(center.x - radius, center.y - radius)
-
-				drawCircle(             
-					color = Color.Black.copy(alpha = 0.1f), // faint dark circle
-					radius = radius,                         // radius of the circle
-				)
+			// Overlay circle on top
+			Canvas(
+				modifier = Mod
+					.matchParentSize()
+					.space(4)
+			) {
 				drawArc(
-					color = color,
-					startAngle = -90f,
-					sweepAngle = -360f * progress,
+					color = Color(0xFF171717),   // ~10% darker overlay
+					startAngle = 0f,
+					sweepAngle = 360f,
 					useCenter = false,
-					topLeft = topLeft,
-					size = Size(radius * 2, radius * 2),
-					style = stroke,
+					style = Stroke(width = 2.dp.toPx())
 				)
 			}
-			Box(Mod.space(strokeWidth+ContentPadding)) {
-				content()
-			}
 		}
 	}
-	fun ProgressColor(progress: Float): Color {
-		return when {
-			progress < 0.33f -> Color.Red
-			progress < 0.66f -> Color.Yellow
-			else -> Color.Green
-		}
-	}
+}
 
-
-
-
-
-	@Composable
-	fun CheckRow(
-		txt: Str="",
-		isChecked: m_<Bool>,
-		EndUI: ui_<Bool> = { _ -> }
+@Composable
+fun Ring(
+	color: Color,
+	strokeWidth: Int = 3,
+	progress: Float = 1f,
+	ContentPadding: Int = 1,
+	strokeCap: StrokeCap = StrokeCap.Butt,
+	content: @Composable BoxScope.() -> Unit
+) {
+	Box(
+		contentAlignment = Alignment.Center,
 	) {
-		LazzyRow{
-			LazzyRow(Mod.click { isChecked.it = !isChecked.it }, 0) {
-				Checkbox(
-					checked = isChecked.it,
-					onCheckedChange = { isChecked.it = it },
-					colors = CheckboxDefaults.colors(
-						checkedColor = Gold,
-						uncheckedColor = Color.Gray,
-						checkmarkColor = Color.White
-					)
-				)
-				move(5)
-				Text(txt)
-				EndUI(isChecked.it)
-			}
-		}
-	}
+		Canvas(modifier = Mod.matchParentSize()) {
+			val stroke = Stroke(width = strokeWidth.dp.toPx(), cap = strokeCap)
+			val radius = size.minDimension / 2
+			val topLeft = Offset(center.x - radius, center.y - radius)
 
-
-	@Composable
-	fun CheckCircle(
-        index: Int,                  // unique index of this circle
-        selectedIndex: m_<Int>, // shared state of which is selected
-	) {
-		Box(
-			Mod.s(15) // make box exactly the size you want
-		) {
-			RadioButton(
-				selected = selectedIndex.value == index,
-				onClick = { set(selectedIndex, index) },
-				colors = RadioButtonDefaults.colors(
-					selectedColor = LightBlue,
-					unselectedColor = Color.Gray
-				),
-				modifier = Mod.scale(0.85f)
+			drawCircle(             
+				color = Color.Black.copy(alpha = 0.1f), // faint dark circle
+				radius = radius,                         // radius of the circle
+			)
+			drawArc(
+				color = color,
+				startAngle = -90f,
+				sweepAngle = -360f * progress,
+				useCenter = no,
+				topLeft = topLeft,
+				size = Size(radius * 2, radius * 2),
+				style = stroke,
 			)
 		}
-		move(w=8)
-	}
-	@OptIn(ExperimentalMaterial3Api::class)
-	@Composable
-	fun ComposeCanBeTiny(ui: ui) {
-		CompositionLocalProvider(
-			LocalMinimumInteractiveComponentEnforcement provides false
-		) {
-			ui()
+		Box(Mod.space(strokeWidth+ContentPadding)) {
+			content()
 		}
 	}
-
-
-
-
-
-
-    @Composable
-    fun MenuHeader(
-        title: Str = "Wind",
-        iconRes: Int = R.drawable.baseline_radar_24,
-        iconSize: Dp = 60.dp,
-        iconTint: Color = Color(0xFFFFD700),
-        titleSize: TextUnit = 28.sp,
-        topPadding: Dp = 8.dp,
-        bottomPadding: Dp = 20.dp,
-        StartPaddingRemove: Int = 40,
-    ) {
-        val safeStartPadding = max(0.dp, (AppW+60.dp) / 4 - StartPaddingRemove.dp)
-
-        Column(
-            Modifier.space(start = safeStartPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Spacer(Mod.h(topPadding))
-            Icon(
-                painter = painterResource(id = iconRes),
-                contentDescription = "$title Icon",
-                tint = iconTint,
-                modifier = Mod.s(iconSize),
-            )
-            move(4)
-            Text(
-                text = title,
-                fontSize = titleSize,
-            )
-            Spacer(Mod.h(bottomPadding))
-        }
-    }
-
-    fun SendEmail(
-        recipient: Str = "productivity.shield@gmail.com",
-        subject: Str = "Support Request – App Issue",
-        includePhoneInfo: Bool = yes,
-        prefillMessage: Str = "I'm experiencing the following issue with the app:\n\n",
-    ) {
-        val body = buildString {
-            appendLine()
-            if (includePhoneInfo) {
-                appendLine("Phone Info:")
-                appendLine("• Manufacturer: ${Build.MANUFACTURER}")
-                appendLine("• Model: ${Build.MODEL}")
-                appendLine("• Android Version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})")
-                appendLine()
-            }
-            append(prefillMessage)
-        }
-
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "message/rfc822"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-            putExtra(Intent.EXTRA_TEXT, body)
-        }
-
-        val chooser = Intent.createChooser(intent, "Send Email").apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
-
-        startActivity(chooser)
-    }
-
-
-	@Composable
-	fun Ctext(
-        text: Any,
-        Do: Do={},
-	) {
-		val displayText = when (text) {
-			is Str -> UIStr(text)
-			is UIStr -> text
-			else -> UIStr("$text")
-		}
-		Text(
-			text = displayText.gold(),
-			modifier = Mod.click(no) {
-				Do()
-			},
-			maxLines = 1, 
-		)
+}
+fun ProgressColor(progress: Float): Color {
+	return when {
+		progress < 0.33f -> Color.Red
+		progress < 0.66f -> Color.Yellow
+		else -> Color.Green
 	}
-
-
-    @Composable
-    fun EmptyBox(
-        text: Str = "No Items",
-        icon: ImageVector = Icons.Default.Block,
-        iconSize: Dp = 70.dp,
-        textSize: TextUnit = 18.sp,
-        color: Color = Color.Gray,
-    ) {
-			Column(
-				Mod.maxS(),
-				verticalArrangement = Arrangement.Center,
-				horizontalAlignment = Alignment.CenterHorizontally,
-			) {
-				Icon(
-					imageVector = icon,
-					contentDescription = null,
-					tint = color,
-					modifier = Mod.s(iconSize),
-				)
-				move(h=8)
-				Text(text, fontSize = textSize, color = color)
-			}
-    }
-
-
-    //INSIDE UI OBJECTTTTTT----------------------------------------//
 }
 
 
 
 
-//endregion
+
+@Composable
+fun CheckRow(
+	txt: Str="",
+	isChecked: m_<Bool>,
+	EndUI: ui_<Bool> = { _ -> }
+) {
+	LazzyRow{
+		LazzyRow(Mod.click { isChecked.it = !isChecked.it }, 0) {
+			Checkbox(
+				checked = isChecked.it,
+				onCheckedChange = { isChecked.it = it },
+				colors = CheckboxDefaults.colors(
+					checkedColor = Gold,
+					uncheckedColor = Color.Gray,
+					checkmarkColor = Color.White
+				)
+			)
+			move(5)
+			Text(txt)
+			EndUI(isChecked.it)
+		}
+	}
+}
 
 
+@Composable
+fun CheckCircle(
+    index: Int,                  // unique index of this circle
+    selectedIndex: m_<Int>, // shared state of which is selected
+) {
+	Box(
+		Mod.s(15) // make box exactly the size you want
+	) {
+		RadioButton(
+			selected = selectedIndex.value == index,
+			onClick = { set(selectedIndex, index) },
+			colors = RadioButtonDefaults.colors(
+				selectedColor = LightBlue,
+				unselectedColor = Color.Gray
+			),
+			modifier = Mod.scale(0.85f)
+		)
+	}
+	move(w=8)
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ComposeCanBeTiny(ui: ui) {
+	CompositionLocalProvider(
+		LocalMinimumInteractiveComponentEnforcement provides false
+	) {
+		ui()
+	}
+}
+
+
+
+
+
+
+@Composable
+fun MenuHeader(
+	title: Str = "Wind",
+	iconRes: Int = R.drawable.baseline_radar_24,
+	iconSize: Dp = 60.dp,
+	iconTint: Color = Color(0xFFFFD700),
+	titleSize: TextUnit = 28.sp,
+	topPadding: Dp = 8.dp,
+	bottomPadding: Dp = 20.dp,
+	StartPaddingRemove: Int = 40,
+) {
+	val safeStartPadding = max(0.dp, (AppW+60.dp) / 4 - StartPaddingRemove.dp)
+
+	Column(
+		Modifier.space(start = safeStartPadding),
+		horizontalAlignment = Alignment.CenterHorizontally,
+	) {
+		move(h = topPadding)
+		Icon(
+			painter = painterResource(id = iconRes),
+			contentDescription = "$title Icon",
+			tint = iconTint,
+			modifier = Mod.s(iconSize),
+		)
+		move(4)
+		Text(
+			text = title,
+			fontSize = titleSize,
+		)
+            move(h = bottomPadding)
+	}
+}
+
+fun SendEmail(
+	recipient: Str = "productivity.shield@gmail.com",
+	subject: Str = "Support Request – App Issue",
+	includePhoneInfo: Bool = yes,
+	prefillMessage: Str = "I'm experiencing the following issue with the app:\n\n",
+) {
+	val body = buildString {
+		appendLine()
+		if (includePhoneInfo) {
+			appendLine("Phone Info:")
+			appendLine("• Manufacturer: ${Build.MANUFACTURER}")
+			appendLine("• Model: ${Build.MODEL}")
+			appendLine("• Android Version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})")
+			appendLine()
+		}
+		append(prefillMessage)
+	}
+
+	val intent = Intent(Intent.ACTION_SEND).apply {
+		type = "message/rfc822"
+		putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
+		putExtra(Intent.EXTRA_SUBJECT, subject)
+		putExtra(Intent.EXTRA_TEXT, body)
+	}
+
+	val chooser = Intent.createChooser(intent, "Send Email").apply {
+		flags = Intent.FLAG_ACTIVITY_NEW_TASK
+	}
+
+	startActivity(chooser)
+}
+
+
+@Composable
+fun Ctext(
+	text: Any,
+	Do: Do={},
+) {
+	Text(
+		text = UIStr(text).gold(),
+		modifier = Mod.click(no) {
+			Do()
+		},
+		maxLines = 1, 
+	)
+}
+
+
+@Composable
+fun EmptyBox(
+	text: Str = "No Items",
+	icon: ImageVector = Icons.Default.Block,
+	iconSize: Dp = 70.dp,
+	textSize: TextUnit = 18.sp,
+	color: Color = Color.Gray,
+) {
+	Column(
+		Mod.maxS(),
+		verticalArrangement = Arrangement.Center,
+		horizontalAlignment = Alignment.CenterHorizontally,
+	) {
+		Icon(
+			imageVector = icon,
+			contentDescription = null,
+			tint = color,
+			modifier = Mod.s(iconSize),
+		)
+		move(h=8)
+		Text(text, fontSize = textSize, color = color)
+	}
+}
 
 
 
