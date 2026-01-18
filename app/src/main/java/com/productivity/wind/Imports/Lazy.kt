@@ -179,7 +179,7 @@ fun LazyText(
 		state = scroll
 	) {
 		itemsIndexed(lines) { index, txt ->
-			val lineStart = linesStartIndex[index]
+			val lineStart = linesStartSize[index]
 			var txtUI by m(UIStr("error"))
 			var listChar = mList<UIStr>()
 
@@ -187,7 +187,7 @@ fun LazyText(
 				val globalIndex = lineStart + charIndex
 				listChar.add(onChar(charIndex, "$char"))
 			}
-			val txtUI = UIStr(*listChar.toTypedArray())
+			txtUI = UIStr(*listChar.toTypedArray())
 			
 			Text(txtUI)
 		}
