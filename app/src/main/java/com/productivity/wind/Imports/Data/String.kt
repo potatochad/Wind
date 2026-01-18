@@ -219,7 +219,7 @@ fun charsInLine(): Int {
     var lineChars by r(0)
     
     var width = getW()
-    lineChars = width/getW("k")
+    lineChars = toInt(width/getW("k"))
     Vlog("width: $width, charW: ${getW("k")}, chars: $lineChars") 
 
     return lineChars
