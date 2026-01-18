@@ -160,7 +160,7 @@ fun LazyText(
 	bigText: Any, 
 	mod: Mod = Mod.h(0, 100).maxW(),
 	scroll: LazyList = LazyList(),
-	onChar: (Int, Str) -> UIStr = { _, char -> UIStr(char) }
+	onChar: (Int, UIStr) -> UIStr = { _, char -> char }
 ){
 	val lines = bigText.toLines()
 
@@ -185,7 +185,8 @@ fun LazyText(
 
 			txt.forEachIndexed { charIndex, char ->
 				val globalIndex = lineStart + charIndex
-				listChar.add(onChar(charIndex, "$char"))
+				listChar.add(onChar(charIndex, UIStr("$char")))
+				Vlog("$charIndex, $char")
 			}
 			txtUI = UIStr(*listChar.toTypedArray())
 			
