@@ -155,7 +155,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     
     LazzyRow {
         Text("Done: ${tsk.doneTimes}/${tsk.maxDone}")
-        UI.End { 
+        End { 
 			Icon.Edit{
                 Item.enoughPoints {
 					goTo("CopyPaste/${tsk.id}")
@@ -244,13 +244,13 @@ fun AppUsage(id: Str = "") {
     ) {
 		RuleCard("If"){
 		  LazzyRow{
-			  UI.CheckCircle(1, WhichIf)
+			  CheckCircle(1, WhichIf)
 			  Text("Spend ")
 			  Item.TskInput(Time)
 			  Text(" seconds")
           
 			  Text(" on ")
-			  UI.Ctext(appName) {
+			  Ctext(appName) {
 				  show.it = yes
 			  }
 		  }
