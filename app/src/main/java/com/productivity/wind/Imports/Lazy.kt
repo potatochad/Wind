@@ -183,12 +183,15 @@ fun LazyText(
 			var txtUI by m(UIStr("error"))
 			var listChar = mList<UIStr>()
 
+			NoLag {
+
 			txt.forEachIndexed { charIndex, char ->
 				val globalIndex = lineStart + charIndex
 				listChar.add(onChar(charIndex, UIStr("$char")))
 				Vlog("$charIndex, $char")
 			}
 			txtUI = UIStr(*listChar.toTypedArray())
+			}
 			
 			Text(txtUI)
 		}
