@@ -172,6 +172,12 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	
 /*
+LazyText(
+	bigText: tsk.txt, 
+	mod: Mod = Mod.h(0, 100).maxW(),
+	scroll: LazyList = LazyList(),
+	onChar: (Int, Str) -> UIStr = { _, char -> UIStr(char) }
+){
 	LazyText(
 		bigText: Any, 
 		mod = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
