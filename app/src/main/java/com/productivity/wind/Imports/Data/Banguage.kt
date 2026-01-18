@@ -159,30 +159,6 @@ fun closeApp() {
 }
 
 
-fun Mod.space(
-    s: Any? = null,
-    h: Any? = null,
-    w: Any? = null,
-    start: Any? = null,
-    top: Any? = null,
-    end: Any? = null,
-    bottom: Any? = null
-): Mod {
-    return when {
-        s != null -> this.padding(toDp(s))
-        h != null || w != null -> this.padding(
-            horizontal = toDp(h),
-            vertical = toDp(w)
-        )
-        else -> this.padding(
-            start = toDp(start),
-            top = toDp(top),
-            end = toDp(end),
-            bottom = toDp(bottom)
-        )
-    }
-}
-
 @Composable
 fun click(x: UI, Do: Do) {
 	Box(Mod.click{Do()}){
