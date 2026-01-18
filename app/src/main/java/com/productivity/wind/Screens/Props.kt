@@ -367,7 +367,7 @@ object Header {
         Icon.Menu {
 			menu = yes
 		}
-        // Icon.Chill()
+        // Icon.Chill { goTo("Web") }
 
         Icon.Reload{
             // RunJs()
