@@ -217,7 +217,16 @@ fun Mod.clickOrHold(
 }
 
 
-
+fun Mod.getW(onWidth: Do_<Int>): Mod = this.then(
+    Mod.onGloballyPositioned {
+        onWidth(it.size.width)
+    }
+)
+fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
+    Mod.onGloballyPositioned {
+        onWidth(it.size.height)
+    }
+)
 
 
 
