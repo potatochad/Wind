@@ -249,17 +249,19 @@ fun Any.toLines(): List<UIStr> {
     val lines = mList<UIStr>()
 
     RunOnce {
-        var line = ""
+        NoLag {
+            var line = ""
         
-        str.safeSplit(" "){ word ->
-            if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
-                line += word
-            } else {
-                lines.add(UIStr(line))
-                line = word
+            str.safeSplit(" "){ word ->
+                if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
+                    line += word
+                } else {
+                    lines.add(UIStr(line))
+                    line = word
+                }
             }
+            if (line.isNotEmpty()) lines.add(UIStr(line))
         }
-        if (line.isNotEmpty()) lines.add(UIStr(line))
     }
     
     return lines
