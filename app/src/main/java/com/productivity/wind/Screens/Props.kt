@@ -127,6 +127,21 @@ object Item {
             }
         }
     }
+	@Composable
+    fun Edit(
+        noPoints: Bool = no,
+        Do: Do,
+    ) {
+        Icon.Edit {
+            if (!noPoints){
+                Item.enoughPoints{
+                    Do()
+                }
+            } else {
+                Do()
+            }
+        }
+	}
 
     fun UpdateAppTsk(){
         Bar.apps.each {
