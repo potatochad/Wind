@@ -424,24 +424,6 @@ fun getPoints(){
 }
 
 
-@Composable
-fun usagePermission() {
-        LazyPopup(
-            m(yes),
-            "Need Usage Permission",
-            "To function correctly, this app requires access to your app usage data. Granting this permission allows the app to monitor usage statistics and manage app-related tasks efficiently. Without it, this feature won't work.",
-            onConfirm = {
-                val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
-                    .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
-                App.startActivity(intent)
-            },
-			onClose = {
-				navBack()
-			}
-        )
-}
-
-
 
 
 
