@@ -123,7 +123,7 @@ fun BlockKeyword() {
                 LazzyRow {
                     Text(text = it.word)
 
-                    Icon.Edit {
+                    Item.Edit {
                         Item.enoughPoints{
                             Bar.badWords.edit(it) {
                                 word = BadWord.it
