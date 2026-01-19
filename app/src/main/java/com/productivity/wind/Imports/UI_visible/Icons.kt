@@ -100,17 +100,10 @@ object Icon {
 
     @Composable
     fun Edit(
-        noPoints: Bool = no,
         Do: Do,
     ) {
         LazyIcon(Icons.Default.Edit) {
-            if (!noPoints){
-                Item.enoughPoints{
-                    Do()
-                }
-            } else {
-                Do()
-            }
+            Do()
         }
     }
 
