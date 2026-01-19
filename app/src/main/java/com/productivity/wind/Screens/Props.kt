@@ -82,7 +82,7 @@ fun NavGraphBuilder.ScreenNav() {
 
 	// popups
 	popup("getPoints") { getPoints() }
-	popup("usagePermission") { usagePermission() }
+	popup("AllowAppUsage") { AllowAppUsage() }
 
   
 }
@@ -323,7 +323,7 @@ object Header {
         
         End {
             Item.Add {
-                check(!isUsageP_Enabled()) { goTo("usagePermission"); return@Add}
+                check(!isUsageP_Enabled()) { goTo("AllowAppUsage"); return@Add}
                 check(Time.it < 1,"Add time") {return@Add}
                 check(selectedApp.isEmpty(),"Select app") {return@Add}
 
