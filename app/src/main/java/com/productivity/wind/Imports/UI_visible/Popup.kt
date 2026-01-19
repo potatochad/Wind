@@ -58,3 +58,18 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.*
 
+@Composable
+fun isSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
+    LazyPopup(
+        show,
+        "Delete",
+        "Are you certain you want to $msg?",
+        onConfirm = {Do()},
+    )
+}
+
+
+
+
+
+
