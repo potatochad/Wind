@@ -114,7 +114,7 @@ object Icon {
         LazyIcon(Icons.Default.Delete){
             show.it = yes
         }
-        isSure(show) {
+        IsSure(show) {
           Do()
         }
     }
