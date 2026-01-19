@@ -236,7 +236,7 @@ object Item {
                 Text("Points ${app.Worth}")
 
                 End {
-                    Icon.Edit{
+                    Item.Edit{
                         enoughPoints {
                             goTo("AppUsage/${app.id}")
                         }
