@@ -104,15 +104,19 @@ fun BigIcon(
 }
 
 object Icon {
-	fun add(icon: icon): ui_<Do> = {
+	fun Add(icon: icon): ui_<Do> = {
 		Icon(icon) { it() }
 	}
+	val Menu = Add(Icons.Default.Menu)
+	
+	/*
     @Composable
     fun Menu(Do: Do) {
         Icon(Icons.Default.Menu) {
             Do()
         }
     }
+	*/
 
     @Composable
     fun Reload(Do: Do) {
