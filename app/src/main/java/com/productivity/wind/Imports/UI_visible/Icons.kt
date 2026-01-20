@@ -130,7 +130,7 @@ object Icon {
 
     @Composable
     fun Copy(txt: Str) {
-        var copied by r_m(no)
+        var copied by r(no)
 
         RunOnce(copied) {
             if (copied) {
