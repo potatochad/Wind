@@ -82,3 +82,31 @@ fun RuleCard(
       ui()
    }
 }
+
+@Composable
+fun Ctext(
+	text: Any,
+	Do: Do={},
+) {
+	Text(
+		text = UIStr(text).gold(),
+		modifier = Mod.click(no) {
+			Do()
+		},
+		maxLines = 1, 
+	)
+}
+
+@Composable
+fun End(mod: Mod = Mod, ui: ui) {
+	Row(
+		mod.maxW(),
+		verticalAlignment = Alignment.CenterVertically,
+		horizontalArrangement = Arrangement.End
+	){
+		ui()
+		move(10)
+	}
+}
+
+
