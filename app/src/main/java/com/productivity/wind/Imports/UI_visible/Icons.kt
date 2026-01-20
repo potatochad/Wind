@@ -59,6 +59,8 @@ import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.*
 
 
+typealias Icon = ImageVector
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Icon(
@@ -102,6 +104,9 @@ fun BigIcon(
 }
 
 object Icon {
+	fun add(icon: Icon): ui_<Do> = {
+		Icon(icon) { it() }
+	}
     @Composable
     fun Menu(Do: Do) {
         Icon(Icons.Default.Menu) {
