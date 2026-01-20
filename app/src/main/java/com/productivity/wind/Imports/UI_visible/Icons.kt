@@ -59,35 +59,6 @@ import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.*
 
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun LazyIcon(
-    icon: ImageVector,
-    size: Any = 25,        
-    mod: Mod = Mod,
-    color: Color = Color.White,
-	onClick: Do = {},
-) {
-	ComposeCanBeTiny() {
-        IconButton(
-            onClick = {
-				wait(100) {
-					onClick()
-				}
-			},
-            modifier = Mod.space(5).s(toF(size)*1.7)
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = color,
-                modifier = mod.s(size)
-            )
-        }
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Icon(
@@ -123,7 +94,7 @@ fun BigIcon(
 	size: Any = 20,
 	onClick: Do = {},
 ) {
-	LazyIcon(
+	Icon(
 		icon,
 		size = size,
 		mod = mod.round(toF(size)*5).background(color).space(5),
@@ -140,27 +111,27 @@ object Icon {
 
     @Composable
     fun Reload(Do: Do) {
-        LazyIcon(Icons.Default.Refresh) { 
+        Icon(Icons.Default.Refresh) { 
             Do() 
         }
     }
 
     @Composable
     fun Chill(Do: Do) {
-        LazyIcon(Icons.Default.SportsEsports) {
+        Icon(Icons.Default.SportsEsports) {
             Do()
         }
     }
     @Composable
     fun Add(Do: Do ) {
-        LazyIcon(Icons.Default.Add) {     
+        Icon(Icons.Default.Add) {     
             Do()
         }
     }
 
     @Composable
     fun MoreMenu(Do: Do) {
-        LazyIcon(Icons.Default.MoreVert) {
+        Icon(Icons.Default.MoreVert) {
             Do()
         }
     }
@@ -170,7 +141,7 @@ object Icon {
     fun Edit(
         Do: Do,
     ) {
-        LazyIcon(Icons.Default.Edit) {
+        Icon(Icons.Default.Edit) {
             Do()
         }
     }
@@ -179,7 +150,7 @@ object Icon {
     fun Delete(Do: Do = {}) {
         var show = r_m(no)
         
-        LazyIcon(Icons.Default.Delete){
+        Icon(Icons.Default.Delete){
             show.it = yes
         }
         IsSure(show) {
@@ -199,7 +170,7 @@ object Icon {
             }
         }
 
-        LazyIcon(if (copied) Icons.Default.Check else Icons.Default.ContentCopy){
+        Icon(if (copied) Icons.Default.Check else Icons.Default.ContentCopy){
             copyToClipboard(txt)
             copied = yes
         }
