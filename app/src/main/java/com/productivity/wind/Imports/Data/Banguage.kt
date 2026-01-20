@@ -825,7 +825,7 @@ inline fun check(
 	}
 }
 
-fun copyToClipboard(txt: Str) {
+fun CopyToClipboard(txt: Str) {
 	val clipboard = App.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 	val clip = ClipData.newPlainText("label", txt)
 	clipboard.setPrimaryClip(clip)
