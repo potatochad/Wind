@@ -325,7 +325,7 @@ fun LazyMore(
     
     ui: ui
 ) {
-    var expanded by r_m(initiallyExpanded)
+    var expanded by r(initiallyExpanded)
     val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
 
     Column(modifier = modifier) {
@@ -342,7 +342,7 @@ fun LazyMore(
                 modifier = Mod.rotate(rotation),
                 tint = Color(0xFFFFD700) // GOLD icon
             )
-            Spacer(modifier = Mod.w(8))
+            move(w = 8)
             Text(
                 text = title,
                 modifier = Mod.weight(1f),
@@ -362,8 +362,7 @@ fun LazyMore(
             )
         ) {
             Column(
-                Mod
-                    .maxW()
+                Mod.maxW()
                     .space(start = 32, top = 4)
             ) {
                 ui()
@@ -405,7 +404,7 @@ fun LazyItem(
 	){
 		LazzyRow {
 			if (icon != null) {
-				LazyIcon(icon)
+				Icon(icon)
 			} 
 			if (BigIcon != null) {
 				BigIcon(
@@ -455,7 +454,7 @@ fun LazyHeader(
         ) {
             if (showBack) {
 				move(5)
-                LazyIcon(Icons.Default.ArrowBack) {
+                Icon(Icons.Default.ArrowBack) {
 					if (!clickedBack) {
 							clickedBack = yes
 							onBackClick()
