@@ -109,4 +109,31 @@ fun End(mod: Mod = Mod, ui: ui) {
 	}
 }
 
+@Composable
+fun EmptyBox(
+	text: Str = "No Items",
+	icon: icon = Icons.Default.Block,
+	iconSize: Dp = 70.dp,
+	textSize: TextUnit = 18.sp,
+	color: Color = Color.Gray,
+) {
+	Column(
+		Mod.maxS(),
+		verticalArrangement = Arrangement.Center,
+		horizontalAlignment = Alignment.CenterHorizontally,
+	) {
+		Icon(
+			imageVector = icon,
+			contentDescription = null,
+			tint = color,
+			modifier = Mod.s(iconSize),
+		)
+		move(h=8)
+		Text(text, fontSize = textSize, color = color)
+	}
+}
+
+
+
+
 
