@@ -166,6 +166,48 @@ fun MenuHeader(
 	}
 }
 
+@Composable
+fun CheckRow(
+	txt: Str="",
+	isChecked: m_<Bool>,
+	EndUI: ui_<Bool> = { _ -> }
+) {
+	LazzyRow{
+		LazzyRow(Mod.click { isChecked.it = !isChecked.it }, 0) {
+			Checkbox(
+				checked = isChecked.it,
+				onCheckedChange = { isChecked.it = it },
+				colors = CheckboxDefaults.colors(
+					checkedColor = Gold,
+					uncheckedColor = Color.Gray,
+					checkmarkColor = Color.White
+				)
+			)
+			move(5)
+			Text(txt)
+			EndUI(isChecked.it)
+		}
+	}
+}
 
-
+@Composable
+fun CheckCircle(
+    index: Int,
+    selectedIndex: m_<Int>,
+) {
+	Box(
+		Mod.s(15)
+	) {
+		RadioButton(
+			selected = selectedIndex.value == index,
+			onClick = { set(selectedIndex, index) },
+			colors = RadioButtonDefaults.colors(
+				selectedColor = LightBlue,
+				unselectedColor = Color.Gray
+			),
+			modifier = Mod.scale(0.85f)
+		)
+	}
+	move(w=8)
+}
 
