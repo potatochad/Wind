@@ -88,6 +88,25 @@ fun Icon(
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Icon(
+    icon: icon,
+    size: Any = 25,        
+    mod: Mod = Mod,
+    color: Color = Color.White,
+) {
+	ComposeCanBeTiny() {
+		Icon(
+			imageVector = icon,
+			contentDescription = null,
+			tint = color,
+			modifier = mod.s(size)
+		)
+	}
+}
+
 @Composable
 fun BigIcon(
     icon: icon,
