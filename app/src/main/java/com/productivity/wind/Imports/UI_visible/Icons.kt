@@ -117,7 +117,7 @@ object Icon {
 
     @Composable
     fun Delete(Do: Do = {}) {
-        var show = r_m(no)
+        var show = r(no)
         
         Icon(Icons.Default.Delete){
             show.it = yes
@@ -140,7 +140,7 @@ object Icon {
         }
 
         Icon(if (copied) Icons.Default.Check else Icons.Default.ContentCopy){
-            copyToClipboard(txt)
+            CopyToClipboard(txt)
             copied = yes
         }
     }
