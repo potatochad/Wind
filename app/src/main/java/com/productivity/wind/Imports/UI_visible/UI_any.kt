@@ -116,7 +116,7 @@ fun EmptyBox(
 	text: Str = "No Items",
 	icon: icon = Icons.Default.Block,
 	iconSize: Dp = 70.dp,
-	textSize: TextUnit = 18.sp,
+	textSize: Int = 18,
 	color: Color = Color.Gray,
 ) {
 	Column(
@@ -124,14 +124,10 @@ fun EmptyBox(
 		verticalArrangement = Arrangement.Center,
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
-		Icon(
-			imageVector = icon,
-			contentDescription = null,
-			tint = color,
-			modifier = Mod.s(iconSize),
-		)
-		move(h=8)
-		Text(text, fontSize = textSize, color = color)
+		Icon(icon, iconSize, color = color)
+	
+		move(8)
+		Text(text.size(textSize).color(color))
 	}
 }
 
@@ -141,7 +137,7 @@ fun MenuHeader(
 	iconRes: Int = R.drawable.baseline_radar_24,
 	iconSize: Dp = 60.dp,
 	iconTint: Color = Color(0xFFFFD700),
-	titleSize: TextUnit = 28.sp,
+	titleSize: Int = 28,
 	topPadding: Dp = 8.dp,
 	bottomPadding: Dp = 20.dp,
 	StartPaddingRemove: Int = 40,
@@ -153,6 +149,7 @@ fun MenuHeader(
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
 		move(h = topPadding)
+
 		Icon(
 			painter = painterResource(id = iconRes),
 			contentDescription = "$title Icon",
@@ -160,10 +157,7 @@ fun MenuHeader(
 			modifier = Mod.s(iconSize),
 		)
 		move(4)
-		Text(
-			text = title,
-			fontSize = titleSize,
-		)
+		Text(title.size(titleSize))
         move(h = bottomPadding)
 	}
 }
@@ -171,7 +165,7 @@ fun MenuHeader(
 @Composable
 fun CheckRow(
 	txt: Str="",
-	isChecked: m_<Bool>,
+	isChecked: mBool,
 	EndUI: ui_<Bool> = { _ -> }
 ) {
 	LazzyRow{
@@ -215,7 +209,7 @@ fun CheckCircle(
 
 @Composable
 fun ProgressIcon(
-	icon: Drawable?,              // whatever LazyImage accepts (Drawable, URL, etc.)
+	icon: Drawable?,              
 	progress: Float,
 ) {
 	val ringColor = ProgressColor(progress)
@@ -228,7 +222,6 @@ fun ProgressIcon(
 		Box(contentAlignment = Alignment.Center) {
 			LazyImage(icon)
 
-			// Overlay circle on top
 			Canvas(
 				modifier = Mod
 					.matchParentSize()
