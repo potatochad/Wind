@@ -151,10 +151,9 @@ fun MenuHeader(
 		move(h = topPadding)
 
 		Icon(
-			painter = painterResource(id = iconRes),
-			contentDescription = "$title Icon",
-			tint = iconTint,
-			modifier = Mod.s(iconSize),
+			iconRes,
+			color = iconTint,
+			size = iconSize,
 		)
 		move(4)
 		Text(title.size(titleSize))
