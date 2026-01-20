@@ -745,7 +745,145 @@ fun NoLag(onError: Wait ={}, Do: Wait) {
 
 
 
+private var lastToast: Toast? = null
 
+fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
+    val delayMs = (delayLevel.coerceIn(0, 100)) * 30L // Example: Level 2 = 60ms
+
+    if (special.equals("one", true)) {
+        lastToast?.cancel()
+    }
+
+	log(msg)
+
+
+    Handler(Looper.getMainLooper()).postDelayed({
+        val toast = Toast.makeText(App, msg, Toast.LENGTH_SHORT)
+        lastToast = toast
+        toast.show()
+    }, delayMs)
+}
+
+@Composable
+fun getStatusBarHeight(): Int {
+    val insets = WindowInsets.statusBars.asPaddingValues()
+    val density = LocalDensity.current
+    return with(density) { insets.calculateTopPadding().toPx().toInt() }
+}
+
+fun fixedInputScroll(
+    text: TextFieldValue,
+    cursorPos: Int,
+    done: m_<Bool>,
+    scroll: ScrollState
+) {
+    if (text.text.isNotEmpty() && !done.it) {
+		done.it = yes
+
+        val ratio = toF(cursorPos) / toF(text.text.size)
+        val max = toF(scroll.maxValue)
+        val scrollTo = (max * ratio)
+
+        scroll.goTo(scrollTo)
+    }
+
+	if (cursorPos == text.text.size) {
+		scroll.toBottom()
+	}
+}
+
+@Composable
+fun getW(): Float {
+    return toF(BoxWithConstraints {
+        toInt(maxWidth)
+    })
+}
+
+@Composable
+fun getH(): Float {
+    return toF(BoxWithConstraints {
+        toInt(maxHeight)
+    })
+}
+
+
+var SettingsItemCardColor = Color(0xFF121212)
+
+
+inline fun check(
+    condition: Bool,
+    msg: Str = "",
+    Do: Do = {},
+) {
+	if (condition) {
+		if (msg.isNotEmpty()) Vlog(msg)
+		Do()        // safe
+	}
+}
+
+fun copyToClipboard(txt: Str) {
+	val clipboard = App.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+	val clip = ClipData.newPlainText("label", txt)
+	clipboard.setPrimaryClip(clip)
+}
+
+fun ProgressColor(progress: Float): Color {
+	return when {
+		progress < 0.33f -> Color.Red
+		progress < 0.66f -> Color.Yellow
+		else -> Color.Green
+	}
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ComposeCanBeTiny(ui: ui) {
+	CompositionLocalProvider(
+		LocalMinimumInteractiveComponentEnforcement provides false
+	) {
+		ui()
+	}
+}
+
+fun SendEmail(
+	recipient: Str = "productivity.shield@gmail.com",
+	subject: Str = "Support Request – App Issue",
+	includePhoneInfo: Bool = yes,
+	prefillMessage: Str = "I'm experiencing the following issue with the app:\n\n",
+) {
+	val body = buildString {
+		appendLine()
+		if (includePhoneInfo) {
+			appendLine("Phone Info:")
+			appendLine("• Manufacturer: ${Build.MANUFACTURER}")
+			appendLine("• Model: ${Build.MODEL}")
+			appendLine("• Android Version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})")
+			appendLine()
+		}
+		append(prefillMessage)
+	}
+
+	val intent = Intent(Intent.ACTION_SEND).apply {
+		type = "message/rfc822"
+		putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
+		putExtra(Intent.EXTRA_SUBJECT, subject)
+		putExtra(Intent.EXTRA_TEXT, body)
+	}
+
+	val chooser = Intent.createChooser(intent, "Send Email").apply {
+		flags = Intent.FLAG_ACTIVITY_NEW_TASK
+	}
+
+	startActivity(chooser)
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun MyNavGraph(navController: NavHostController) {
+        NavHost(navController = navController, startDestination = "Main") {
+            ScreenNav()
+        }
+}
 
 
 
