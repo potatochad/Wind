@@ -68,7 +68,7 @@ fun Icon(
     size: Any = 25,        
     mod: Mod = Mod,
     color: Color = Color.White,
-	onClick: Do = {},
+	onClick: Do,
 ) {
 	ComposeCanBeTiny() {
         IconButton(
