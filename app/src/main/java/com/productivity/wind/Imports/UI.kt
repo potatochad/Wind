@@ -154,20 +154,6 @@ fun fixedInputScroll(
 }
 
 
-@Composable
-fun BigIcon(
-    icon: ImageVector,
-	color: Color,
-    mod: Mod = Mod,
-	size: Any = 20,
-	onClick: Do = {},
-) {
-	LazyIcon(
-		icon,
-		size = size,
-		mod = mod.round(toF(size)*5).background(color).space(5),
-	)
-}
 @Composable 
 fun RuleCard(
     txt: Str,
