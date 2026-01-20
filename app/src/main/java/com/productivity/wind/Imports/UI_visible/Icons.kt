@@ -107,6 +107,50 @@ fun Icon(
 	}
 }
 
+
+@Composable
+fun Icon(
+    iconRes: Int,
+    color: Color = Color.White,
+    size: Dp = 24.dp,
+    mod: Mod = Mod,
+	Do: Do,
+) {
+	ComposeCanBeTiny() {
+        IconButton(
+            onClick = {
+				wait(100) {
+					Do()
+				}
+			},
+            modifier = Mod.space(5).s(toF(size)*1.7)
+        ) {
+            Icon(
+				painter = painterResource(id = iconRes),
+				contentDescription = "$title Icon",
+				tint = color,
+				modifier = mod.size(size)
+			)
+        }
+	}
+}
+
+@Composable
+fun Icon(
+    iconRes: Int,
+    color: Color = Color.White,
+    size: Dp = 24.dp,
+    mod: Mod = Mod,
+) {
+    Icon(
+        painter = painterResource(id = iconRes),
+        contentDescription = "$title Icon",
+        tint = color,
+        modifier = mod.size(size)
+    )
+}
+
+
 @Composable
 fun BigIcon(
     icon: icon,
