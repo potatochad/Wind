@@ -160,18 +160,6 @@ inline fun check(
 		Do()        // safe
 	}
 }
-	
-@Composable
-fun End(mod: Mod = Mod, ui: ui) {
-	Row(
-		mod.maxW(),
-		verticalAlignment = Alignment.CenterVertically,
-		horizontalArrangement = Arrangement.End
-	){
-		ui()
-		move(10)
-	}
-}
 
 fun copyToClipboard(txt: Str) {
 	val clipboard = App.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -388,21 +376,6 @@ fun SendEmail(
 	}
 
 	startActivity(chooser)
-}
-
-
-@Composable
-fun Ctext(
-	text: Any,
-	Do: Do={},
-) {
-	Text(
-		text = UIStr(text).gold(),
-		modifier = Mod.click(no) {
-			Do()
-		},
-		maxLines = 1, 
-	)
 }
 
 
