@@ -59,12 +59,12 @@ import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.*
 
 
-typealias Icon = ImageVector
+typealias icon = ImageVector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Icon(
-    icon: ImageVector,
+    icon: icon,
     size: Any = 25,        
     mod: Mod = Mod,
     color: Color = Color.White,
@@ -90,7 +90,7 @@ fun Icon(
 }
 @Composable
 fun BigIcon(
-    icon: ImageVector,
+    icon: icon,
 	color: Color,
     mod: Mod = Mod,
 	size: Any = 20,
@@ -104,7 +104,7 @@ fun BigIcon(
 }
 
 object Icon {
-	fun add(icon: Icon): ui_<Do> = {
+	fun add(icon: icon): ui_<Do> = {
 		Icon(icon) { it() }
 	}
     @Composable
