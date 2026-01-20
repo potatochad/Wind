@@ -107,53 +107,13 @@ object Icon {
 	fun Add(icon: icon): ui_<Do> = {
 		Icon(icon) { it() }
 	}
-	val Menu = Add(Icons.Default.Menu)
 	
-	/*
-    @Composable
-    fun Menu(Do: Do) {
-        Icon(Icons.Default.Menu) {
-            Do()
-        }
-    }
-	*/
-
-    @Composable
-    fun Reload(Do: Do) {
-        Icon(Icons.Default.Refresh) { 
-            Do() 
-        }
-    }
-
-    @Composable
-    fun Chill(Do: Do) {
-        Icon(Icons.Default.SportsEsports) {
-            Do()
-        }
-    }
-    @Composable
-    fun Add(Do: Do ) {
-        Icon(Icons.Default.Add) {     
-            Do()
-        }
-    }
-
-    @Composable
-    fun MoreMenu(Do: Do) {
-        Icon(Icons.Default.MoreVert) {
-            Do()
-        }
-    }
-
-
-    @Composable
-    fun Edit(
-        Do: Do,
-    ) {
-        Icon(Icons.Default.Edit) {
-            Do()
-        }
-    }
+	val Menu = Add(Icons.Default.Menu)
+	val Reload = Add(Icons.Default.Refresh)
+	val Chill = Add(Icons.Default.SportsEsports)
+	val Add = Add(Icons.Default.Add)
+	val MoreMenu = Add(Icons.Default.MoreVert)
+	val Edit = Add(Icons.Default.Edit)
 
     @Composable
     fun Delete(Do: Do = {}) {
