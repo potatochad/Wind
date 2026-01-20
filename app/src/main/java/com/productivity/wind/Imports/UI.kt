@@ -280,11 +280,11 @@ fun CheckRow(
 
 @Composable
 fun CheckCircle(
-    index: Int,                  // unique index of this circle
-    selectedIndex: m_<Int>, // shared state of which is selected
+    index: Int,
+    selectedIndex: m_<Int>,
 ) {
 	Box(
-		Mod.s(15) // make box exactly the size you want
+		Mod.s(15)
 	) {
 		RadioButton(
 			selected = selectedIndex.value == index,
@@ -305,44 +305,6 @@ fun ComposeCanBeTiny(ui: ui) {
 		LocalMinimumInteractiveComponentEnforcement provides false
 	) {
 		ui()
-	}
-}
-
-
-
-
-
-
-@Composable
-fun MenuHeader(
-	title: Str = "Wind",
-	iconRes: Int = R.drawable.baseline_radar_24,
-	iconSize: Dp = 60.dp,
-	iconTint: Color = Color(0xFFFFD700),
-	titleSize: TextUnit = 28.sp,
-	topPadding: Dp = 8.dp,
-	bottomPadding: Dp = 20.dp,
-	StartPaddingRemove: Int = 40,
-) {
-	val safeStartPadding = max(0.dp, (AppW+60.dp) / 4 - StartPaddingRemove.dp)
-
-	Column(
-		Modifier.space(start = safeStartPadding),
-		horizontalAlignment = Alignment.CenterHorizontally,
-	) {
-		move(h = topPadding)
-		Icon(
-			painter = painterResource(id = iconRes),
-			contentDescription = "$title Icon",
-			tint = iconTint,
-			modifier = Mod.s(iconSize),
-		)
-		move(4)
-		Text(
-			text = title,
-			fontSize = titleSize,
-		)
-            move(h = bottomPadding)
 	}
 }
 
@@ -377,9 +339,6 @@ fun SendEmail(
 
 	startActivity(chooser)
 }
-
-
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
