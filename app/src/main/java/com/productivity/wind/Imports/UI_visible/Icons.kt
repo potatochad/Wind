@@ -57,6 +57,7 @@ import kotlin.math.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.*
+import androidx.compose.ui.res.*
 
 
 typealias icon = ImageVector
@@ -127,7 +128,6 @@ fun Icon(
         ) {
             Icon(
 				painter = painterResource(id = iconRes),
-				contentDescription = "$title Icon",
 				tint = color,
 				modifier = mod.size(size)
 			)
@@ -144,7 +144,6 @@ fun Icon(
 ) {
     Icon(
         painter = painterResource(id = iconRes),
-        contentDescription = "$title Icon",
         tint = color,
         modifier = mod.size(size)
     )
