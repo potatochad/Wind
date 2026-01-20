@@ -127,7 +127,8 @@ import kotlinx.coroutines.flow.*
 import androidx.compose.ui.window.*
 import com.productivity.wind.Imports.UI_visible.*
 import android.os.Process.*
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
 
 
 
