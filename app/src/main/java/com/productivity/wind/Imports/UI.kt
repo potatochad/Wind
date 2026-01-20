@@ -131,16 +131,7 @@ fun fixedInputScroll(
 }
 
 
-@Composable 
-fun RuleCard(
-    txt: Str,
-    ui: ui,
-){
-	LazyCard(corners = 8){
-		Text(txt.size(17).bold())
-		ui()
-	}
-}
+
 @Composable
 fun getW(): Float {
     return toF(BoxWithConstraints {
