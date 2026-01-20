@@ -316,36 +316,6 @@ fun LazyCard(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun LazyIcon(
-    icon: ImageVector,
-    size: Any = 25,        
-    mod: Mod = Mod,
-    color: Color = Color.White,
-	onClick: Do = {},
-) {
-	ComposeCanBeTiny() {
-        IconButton(
-            onClick = {
-				wait(100) {
-					onClick()
-				}
-			},
-            modifier = Mod.space(5).s(toF(size)*1.7)
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = color,
-                modifier = mod.s(size)
-            )
-        }
-    }
-}
-
-
-
 @Stable
 @Composable
 fun LazyMore(
