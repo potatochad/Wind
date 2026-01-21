@@ -1,4 +1,4 @@
-package com.isakaro.kwik.ui.inputfields
+package com.productivity.wind.Imports.UI_visible
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -69,6 +69,9 @@ import androidx.compose.ui.window.PopupProperties
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.productivity.wind.Imports.*
+import com.productivity.wind.Imports.Data.*
+
 
 /**
  * A versatile filled text field component that can be used to take user input.
