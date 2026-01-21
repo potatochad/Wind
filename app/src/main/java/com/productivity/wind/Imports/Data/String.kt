@@ -170,6 +170,9 @@ fun Any.getStyle(): StrStyle {
 fun Any.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (this.getStyle().update()))
 
 fun Any.size(x: Int) = txt { copy(fontSize = x.sp) }
+fun Any.size(x: Float) = txt { copy(fontSize = x.sp) }
+fun Any.size(x: TextUnit) = txt { copy(fontSize = x) }
+
 fun Any.bold() = txt { copy(fontWeight = FontWeight.Bold) }
 
 fun Any.color(x: Color) = txt { copy(color = x) }
