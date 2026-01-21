@@ -108,12 +108,27 @@ fun Icon(
 	}
 }
 
+@Composable
+fun Icon(
+    iconRes: Int,
+    color: Color = Color.White,
+    size: Any = 24,
+    mod: Mod = Mod,
+) {
+    Icon(
+        painter = painterResource(id = iconRes),
+        tint = color,
+		contentDescription = null,
+        modifier = mod.size(size)
+    )
+}
+
 
 @Composable
 fun Icon(
     iconRes: Int,
     color: Color = Color.White,
-    size: Dp = 24.dp,
+    size: Any = 24,
     mod: Mod = Mod,
 	Do: Do,
 ) {
@@ -126,28 +141,12 @@ fun Icon(
 			},
             modifier = Mod.space(5).s(toF(size)*1.7)
         ) {
-            Icon(
-				painter = painterResource(id = iconRes),
-				tint = color,
-				modifier = mod.size(size)
-			)
+			Icon(iconRes, color, size, mod)
         }
 	}
 }
 
-@Composable
-fun Icon(
-    iconRes: Int,
-    color: Color = Color.White,
-    size: Dp = 24.dp,
-    mod: Mod = Mod,
-) {
-    Icon(
-        painter = painterResource(id = iconRes),
-        tint = color,
-        modifier = mod.size(size)
-    )
-}
+
 
 
 @Composable
