@@ -119,7 +119,7 @@ fun Icon(
         painter = painterResource(id = iconRes),
         tint = color,
 		contentDescription = null,
-        modifier = mod.size(size)
+        modifier = mod.s(size)
     )
 }
 
