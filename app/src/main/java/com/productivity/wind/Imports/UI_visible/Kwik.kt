@@ -79,6 +79,11 @@ object AllowedChars {
     val ALL = null
 }
 
+internal enum class LastInputType {
+    SUGGESTION,
+    TYPING
+}
+
 @Composable
 fun KwikLoadingView(
     text: String
