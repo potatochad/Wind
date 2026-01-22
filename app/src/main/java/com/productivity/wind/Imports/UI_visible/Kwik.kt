@@ -44,6 +44,7 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.*
+import androidx.compose.ui.semantics.*
 
 // Compose Material & Icons
 import androidx.compose.material3.*
@@ -71,6 +72,12 @@ import com.productivity.wind.Imports.Data.*
 
 
 
+object AllowedChars {
+    val NUMBERS = Regex("[^0-9]")
+    val ALPHABETS = Regex("[^a-zA-Z]")
+    val ALPHANUMERIC = Regex("[^a-zA-Z0-9]")
+    val ALL = null
+}
 
 @Composable
 fun KwikLoadingView(
