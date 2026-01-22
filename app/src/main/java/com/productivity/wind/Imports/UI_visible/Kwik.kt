@@ -84,7 +84,7 @@ fun KwikLoadingView(
             color = MaterialTheme.colorScheme.primary
         )
 
-        KwikVSpacer(8)
+        move(h=8)
 
         KwikText.TitleSmall(
             text = text,
