@@ -1,91 +1,74 @@
 package com.productivity.wind.Imports.UI_visible
 
-import androidx.compose.animation.*
+// Android & Kotlin
+import android.os.*
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import androidx.activity.compose.*
+import kotlinx.coroutines.*
+import kotlin.math.*
+import kotlin.collections.*
+
+// Jetpack Compose Core
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.foundation.text.*
-import androidx.compose.material.icons.*
-import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.autofill.ContentType
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Shape
+import androidx.compose.foundation.text.selection.*
+import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.lazy.*
+
+// Compose UI
+import androidx.compose.ui.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.focus.*
+import androidx.compose.ui.geometry.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.*
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.*
+import androidx.compose.ui.platform.*
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.*
 import androidx.compose.ui.text.*
-import androidx.compose.ui.text.input.*
-import androidx.compose.ui.window.*
-import kotlinx.coroutines.*
-import com.productivity.wind.Imports.*
-import com.productivity.wind.Imports.Data.*
 import androidx.compose.ui.text.font.*
-import androidx.compose.ui.text.*
+import androidx.compose.ui.text.input.*
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.saveable.*
-import androidx.compose.ui.tooling.preview.*
-import androidx.compose.ui.graphics.*
-import androidx.compose.foundation.*
+import androidx.compose.ui.window.*
 
-import android.annotation.SuppressLint
-import androidx.compose.ui.draw.*
-import androidx.compose.foundation.shape.*
+// Compose Material & Icons
 import androidx.compose.material3.*
-import androidx.compose.ui.graphics.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+
+// Compose Animation
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.*
-import androidx.compose.ui.text.font.*
-import kotlinx.coroutines.*
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.window.Popup
+
+// Accompanist & Maps
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import kotlin.collections.*
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.background
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.*
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import androidx.compose.foundation.Image
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.graphics.painter.Painter
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import com.productivity.wind.*
-import androidx.compose.foundation.gestures.*
-import androidx.compose.ui.input.pointer.*
-import androidx.compose.ui.layout.*
-import androidx.compose.ui.window.*
-import androidx.compose.foundation.text.selection.*
-import com.productivity.wind.Imports.Data.*
-import androidx.compose.ui.focus.*
-import androidx.compose.ui.text.*
-import androidx.compose.ui.text.style.*
-import androidx.activity.compose.*
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
-import com.google.android.gms.location.*
-import android.os.*
-import kotlin.math.*
-import androidx.compose.ui.geometry.*
-import androidx.compose.foundation.lazy.*
+
+// Your project imports
+import com.productivity.wind.*
 import com.productivity.wind.Imports.*
+import com.productivity.wind.Imports.Data.*
+
+
+
+
 
 
 
