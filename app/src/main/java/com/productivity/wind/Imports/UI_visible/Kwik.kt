@@ -1088,11 +1088,13 @@ fun KwikTextField(
                         )
                     }
 
+                    /*
                     if(visualTransformation is PasswordVisualTransformation) {
                         PasswordToggle(passwordVisible) {
                             passwordVisible = !passwordVisible
                         }
                     }
+                    */
                     if(showClearTextButton && value.value.text.isNotEmpty()){
                         Icon(
                             imageVector = Icons.Filled.Clear,
