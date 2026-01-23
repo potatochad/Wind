@@ -108,6 +108,7 @@ object Bar {
     var copyTsk = sList<CopyTsk>("copyTsk")
 	var waits = sList<Waits>("waits")
 	var apps = sList<AppTsk>("apps")
+	var doTsk = sList<DoTsk>("doTsk")
 
 	var badWords = sList<WebWord>("badWords", listOf("anime", "youtube.com", "facebook.com", "instagram.com", "x.com", "tiktok.com").map { WebWord(word = it) })
 
@@ -146,6 +147,16 @@ data class AppTsk(
     var name: Str = "",
     var done: Bool = no,
     var pkg: Str = "",
+    var NowTime: Int = 0,
+    var DoneTime: Int = 0,
+    var Worth: Int = 0
+)
+
+@Serializable
+data class DoTsk(
+    val id: Str = Id(),
+    var name: Str = "",
+    var done: Bool = no,
     var NowTime: Int = 0,
     var DoneTime: Int = 0,
     var Worth: Int = 0
