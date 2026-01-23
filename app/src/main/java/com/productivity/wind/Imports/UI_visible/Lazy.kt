@@ -386,8 +386,8 @@ fun LazyItem(
     BigIcon: ImageVector? = null,
     BigIconColor: Color = Color.Green,
 
-	topPadding: Dp = 7.dp,
-	bottomPadding: Dp = 7.dp,
+	topPadding: Any = 7,
+	bottomPadding: Any = 8,
 	
 	onClick: Do? = null,
 	endContent: uiRow = {},
@@ -402,7 +402,7 @@ fun LazyItem(
 		).maxW().clickable(enabled = onClick != null) { onClick?.invoke() },
 		modUI = modUI,
 	){
-		LazzyRow(space=2){
+		LazzyRow(space=4){
 			if (icon != null) {
 				Icon(icon)
 			} 
@@ -412,7 +412,7 @@ fun LazyItem(
 					BigIconColor
 				)
 			}
-			move(4)
+			move(6)
 
 			Row(Mod.weight(1f)){
 				Text(title.bold())
