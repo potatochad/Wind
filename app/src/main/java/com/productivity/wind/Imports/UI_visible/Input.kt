@@ -56,3 +56,112 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.*
 
+
+@Composable
+fun BigInput(txt: m_<Str>, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = it }){
+	val scroll = scrollV
+	var Field by r_m(TextFieldValue(txt.it))
+	var done = r_m(no)
+	var itIndex by r_m(0)
+		
+      OutlinedTextField(
+          value = Field,
+          onValueChange = {    
+					
+			Do(it.text)
+			Field = TextFieldValue(
+				text = txt.it,
+				selection = it.selection
+			)
+			itIndex = it.selection.start
+				
+            fixedInputScroll(Field, itIndex, done, scroll)
+
+          },
+        modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
+          if (!it.isFocused) done.it = no
+        },
+        placeholder = { Text("Start typing...") },
+      )
+}
+
+
+
+@Composable
+fun TinyInput(txt: m_<Int>, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60) {  
+  BasicInput(
+    "${txt.it}",
+    isInt = isInt, 
+    w=w,
+  ) {
+    val input = it.take(maxLetters)
+            
+    txt.it = if (isInt){ if (input.isEmpty()) 0 else input.toInt()}
+  }
+}
+
+@Composable
+fun TinyInput(txt: m_<Str>, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60) {  
+  BasicInput(
+    "${txt.it}",
+    isInt = isInt, 
+    w=w,
+  ) {
+    val input = it.take(maxLetters)
+            
+    txt.it = input
+  }
+}
+
+//-------
+
+@Composable
+fun TinyInput(txt: Int, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60) {  
+  BasicInput(
+    "${txt.it}",
+    isInt = isInt, 
+    w=w,
+  ) {
+    val input = it.take(maxLetters)
+    onChange( if (isInt){ if (input.isEmpty()) 0 else input.toInt()} else input)
+
+  }
+}
+
+@Composable
+fun TinyInput(txt: Str, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60) {  
+  BasicInput(
+    "${txt.it}",
+    isInt = isInt, 
+    w=w,
+  ) {
+    val input = it.take(maxLetters)
+    onChange(input)
+  }
+}
+
+@Composable
+fun TinyInput(value: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, onChange: DoStr) {  
+
+  BasicInput(
+    "${value}",
+    isInt = isInt, 
+    w=w,
+  ) {
+    val input = it.take(maxLetters)
+
+    onChange(input)
+            
+    TxtState.it = if (TxtState is Int) {
+      if (input.isEmpty()) 0 else input.toInt()
+    } else {
+      input
+    }
+  }
+}
+
+
+
+
+
+
