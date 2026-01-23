@@ -68,6 +68,10 @@ fun NavGraphBuilder.ScreenNav() {
 		var x: Str = it.url("appId") ?: ""
 		CopyPaste(x) 
 	}
+	url("ToDo/{toDoId}") { 
+		var x: Str = it.url("toDoId") ?: ""
+		ToDo(x) 
+	}
 
     url("Web") { Web() }
     url("BlockKeyword") { BlockKeyword() }
