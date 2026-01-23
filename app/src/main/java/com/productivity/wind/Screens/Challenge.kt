@@ -116,12 +116,12 @@ fun CopyPaste(id: Str ="") {
         RuleCard("If") {
             LazzyRow {
                 Text("Letter typed correctly: ")
-                Item.TskInput(letterPts)
+                TinyInput(letterPts)
                 Text(" points")
             }
             LazzyRow {
                 Text("Text typed correctly: ")
-                Item.TskInput(donePts)
+                TinyInput(donePts)
                 Text(" points")
             }
         }
@@ -129,9 +129,9 @@ fun CopyPaste(id: Str ="") {
         RuleCard("Other") {
             LazzyRow {
                 Text("DailyMax: ")
-                Item.TskInput(maxDone)
+                TinyInput(maxDone)
             }
-			Item.BigTskInput(txt, inputScroll)
+			BigInput(txt, inputScroll)
         }
     }
 }
@@ -293,7 +293,7 @@ fun AppUsage(id: Str = "") {
 		  LazzyRow{
 			  CheckCircle(1, WhichIf)
 			  Text("Spend ")
-			  Item.TskInput(Time)
+			  TinyInput(Time)
 			  Text(" seconds")
           
 			  Text(" on ")
@@ -305,7 +305,7 @@ fun AppUsage(id: Str = "") {
       RuleCard("Do"){
 		  LazzyRow{
 			  Text("Add ")
-			  Item.TskInput(Points)
+			  TinyInput(Points)
 			  Text(" points")
 		  }
       }
@@ -336,15 +336,17 @@ fun ToDo(id: Str = "") {
 	}) {
 		RuleCard("Info"){
 			LazzyRow{
-				Item.TskInput(name)
+				TinyInput(name, w=180, isInt = no)
+			}
+			LazzyRow{
 				Text(", time")
 				
-				Item.TskInput(time)
+				TinyInput(time)
 				Text(" seconds")
 			}
 			LazzyRow(Mod.space(w=5)){
-			    Text("On done give ")
-			    Item.TskInput(points)
+			    Text("On done")
+			    TinyInput(points)
 			    Text(" points")
 			}
 		}
