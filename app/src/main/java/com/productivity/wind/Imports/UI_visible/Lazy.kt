@@ -402,7 +402,7 @@ fun LazyItem(
 		).maxW().clickable(enabled = onClick != null) { onClick?.invoke() },
 		modUI = modUI,
 	){
-		LazzyRow {
+		LazzyRow(space=2){
 			if (icon != null) {
 				Icon(icon)
 			} 
@@ -412,6 +412,7 @@ fun LazyItem(
 					BigIconColor
 				)
 			}
+			move(4)
 
 			Row(Mod.weight(1f)){
 				Text(title.bold())
