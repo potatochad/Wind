@@ -159,58 +159,6 @@ object Item {
         }
     }
 
-	@Composable
-	fun BigTskInput(txt: m_<Str>, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = it }){
-		val scroll = scrollV
-		var Field by r_m(TextFieldValue(txt.it))
-		var done = r_m(no)
-		var itIndex by r_m(0)
-		
-        OutlinedTextField(
-            value = Field,
-            onValueChange = {    
-					
-				Do(it.text)
-				Field = TextFieldValue(
-					text = txt.it,
-					selection = it.selection
-				)
-				itIndex = it.selection.start
-				
-				fixedInputScroll(Field, itIndex, done, scroll)
-
-			},
-            modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
-				if (!it.isFocused) done.it = no
-			},
-		    placeholder = { Text("Start typing...") },
-        )
-	}
-
-
-
-    @Composable
-    fun TskInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60) {  
-        val TxtState = txt as? MutableState<Any> ?: run {
-            Vlog("expected mutable")
-            return
-        }
-
-        BasicInput(
-            "${TxtState.it}",
-            isInt = isInt, 
-            w=w,
-        ) {
-            val input = it.take(maxLetters)
-            
-            TxtState.it = if (TxtState.it is Int) {
-                 if (input.isEmpty()) 0 else input.toInt()
-            } else {
-                input
-            }
-        }
-    }
-
 
     fun enoughPoints(enough: Do) {
         if (Bar.funTime < Bar.Dpoints) {
