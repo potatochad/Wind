@@ -105,7 +105,7 @@ fun BlockKeyword() {
         RuleCard("If") {
             LazzyRow {
                 Text("Detect ")
-                Item.TskInput(BadWord, maxLetters = 100, isInt=no)
+                TinyInput(BadWord, maxLetters = 100, isInt=no)
             }
         }
 
