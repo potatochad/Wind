@@ -219,7 +219,7 @@ fun Any.toMeters(
     val pixels = toF(this) * density
     return pixels * metersPerPixel
 }
-
+@Composable
 fun toMStr(what: Any?): m_<Str> = when (what) {
     is m_<*> -> what as m_<Str>
     is Int -> r { m(what.toString()) }
