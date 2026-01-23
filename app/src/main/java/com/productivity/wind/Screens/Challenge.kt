@@ -336,7 +336,7 @@ fun ToDo(id: Str = "") {
 	}) {
 		RuleCard("Info"){
 			LazzyRow{
-				TinyInput(name, w=180, isInt = no)
+				TinyInput(name, w=180, isInt = no, maxLetters = 135)
 			}
 			LazzyRow{
 				Text(", time")
