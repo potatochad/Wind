@@ -277,5 +277,51 @@ fun AppUsage(id: Str = "") {
     }
 }
 
+@Composable
+fun ToDo(id: Str = "") {
+    var time = r(60)
+    var points = r(10)
+    var name = r("work")
+	
+  
+    if (!id.isEmpty()) {
+      val todo = Bar.doTsk.find { it.id == id }
+
+      if (todo != null) {
+        time.it = todo.doneTime
+        points.it = todo.worth
+        name.it = todo.name
+      }
+    }
+
+    LazyScreen(top = {
+        
+	}) {
+		RuleCard("Time"){
+			LazzyRow{
+				Item.TskInput(time)
+				Text(" seconds")
+			}
+		}
+		RuleCard("Name"){
+			LazzyRow{
+				Item.TskInput(name)
+				Text(" seconds")
+			}
+		}
+        RuleCard("on Complete"){
+		    LazzyRow{
+			    Text("Add ")
+			    Item.TskInput(points)
+			    Text(" points")
+		    }
+        }
+	  
+
+    }
+}
+
+
+
 
 
