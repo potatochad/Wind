@@ -157,9 +157,9 @@ data class DoTsk(
     val id: Str = Id(),
     var name: Str = "",
     var done: Bool = no,
-    var NowTime: Int = 0,
-    var DoneTime: Int = 0,
-    var Worth: Int = 0
+    var nowTime: Int = 0,
+    var doneTime: Int = 0,
+    var worth: Int = 0
 )
 
 @Serializable
