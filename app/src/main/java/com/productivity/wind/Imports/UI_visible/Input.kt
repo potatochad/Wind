@@ -231,12 +231,7 @@ fun LazyInput(
     val finalMod = modifier.space(h = 8, w = 4).background(CardColor, shape = RoundedCornerShape(4.dp))
        
 
-	val whatState: m_<Str> = when (what) {
-        is m_<*> -> what as m_<Str>
-        is Int -> r { m("$what") }
-        is Str-> r { m(what) }
-        else -> r { m("") }
-	}
+	val whatState = toMStr(what)
 	
     Input(
         what = whatState,
@@ -255,56 +250,54 @@ fun LazyInput(
 
 
 @Composable
-	fun BigInput(txt: m_<Str>, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = it }){
-		val scroll = scrollV
-		var Field by r_m(TextFieldValue(txt.it))
-		var done = r_m(no)
-		var itIndex by r_m(0)
+fun BigInput(txt: m_<Str>, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = it }){
+	val scroll = scrollV
+	var Field by r(TextFieldValue(txt.it))
+	var done = r(no)
+	var itIndex by r(0)
 		
-        OutlinedTextField(
-            value = Field,
-            onValueChange = {    
+    OutlinedTextField(
+        value = Field,
+        onValueChange = {    
 					
-				Do(it.text)
-				Field = TextFieldValue(
-					text = txt.it,
-					selection = it.selection
-				)
-				itIndex = it.selection.start
+			Do(it.text)
+			Field = TextFieldValue(
+				text = txt.it,
+				selection = it.selection
+			)
+			itIndex = it.selection.start
 				
-				fixedInputScroll(Field, itIndex, done, scroll)
+			fixedInputScroll(Field, itIndex, done, scroll)
 
-			},
-            modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
-				if (!it.isFocused) done.it = no
-			},
-		    placeholder = { Text("Start typing...") },
-        )
-	}
+		},
+        modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
+			if (!it.isFocused) done.it = no
+		},
+		placeholder = { Text("Start typing...") },
+    )
+}
 
 
 
-    @Composable
-    fun TinyInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60) {  
-        val TxtState = txt as? MutableState<Any> ?: run {
-            Vlog("expected mutable")
-            return
-        }
+@Composable
+fun TinyInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: DoStr={_->}) {  
+    val TxtState = toMStr(txt)
 
-        BasicInput(
-            "${TxtState.it}",
-            isInt = isInt, 
-            w=w,
-        ) {
-            val input = it.take(maxLetters)
+    BasicInput(
+        "${TxtState.it}",
+        isInt = isInt, 
+        w=w,
+    ) {
+        val input = it.take(maxLetters)
             
-            TxtState.it = if (TxtState.it is Int) {
-                 if (input.isEmpty()) 0 else input.toInt()
-            } else {
-                input
-            }
+        TxtState.it = if (isInt) {
+            if (input.isEmpty()) 0 else input.toInt()
+        } else {
+            input
         }
-	}
+		Do(TxtState.it)
+    }
+}
 
 
 
