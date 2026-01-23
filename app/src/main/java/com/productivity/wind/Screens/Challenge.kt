@@ -73,6 +73,14 @@ fun Challenge() {
               goTo("CopyPaste/_")
             },
         )
+	LazyItem(
+            BigIcon = Icons.Filled.ContentPaste,
+            BigIconColor = Gold, 
+            title = "To do",
+            onClick = { 
+              goTo("ToDo/_")
+            },
+        )
     
    }
 }
