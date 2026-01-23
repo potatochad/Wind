@@ -318,7 +318,7 @@ fun AppUsage(id: Str = "") {
 fun ToDo(id: Str = "") {
     var time = r(60)
     var points = r(10)
-    var name = r("work")
+    var name = r("TaskName")
 	
   
     if (!id.isEmpty()) {
@@ -334,25 +334,23 @@ fun ToDo(id: Str = "") {
     LazyScreen(top = {
         
 	}) {
-		RuleCard("Time"){
+		RuleCard("Info"){
 			LazzyRow{
+				Item.TskInput(name)
+				Text(", time")
+				
 				Item.TskInput(time)
 				Text(" seconds")
 			}
-		}
-		RuleCard("Name"){
-			LazzyRow{
-				Item.TskInput(name)
-				Text(" seconds")
-			}
-		}
-        RuleCard("on Complete"){
-		    LazzyRow{
-			    Text("Add ")
+			LazzyRow(Mod.space(w=5)){
+			    Text("On done give ")
 			    Item.TskInput(points)
 			    Text(" points")
-		    }
-        }
+			}
+		}
+		RuleCard("Schedule"){
+			
+		}
 	  
 
     }
