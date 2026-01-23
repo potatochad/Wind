@@ -198,6 +198,7 @@ fun Str.last(n: Int): Str = this.takeLast(n)
 fun Str.fromTo(start: Int, end: Int = this.size) = this.substring(start, end)
 fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, end)
 
+/* 
 
 @Composable
 fun getW(
@@ -282,7 +283,6 @@ fun Any.toLines(): List<UIStr> {
 }
 
 
-/*
 @Composable
 fun Any.toLinesUltraFast(): List<UIStr> {
     val str = toStr(this)
@@ -329,5 +329,73 @@ fun Any.toLinesUltraFast(): List<UIStr> {
 
 
 
+@Composable
+fun charsW(text: Any): Int {
+    var lineChars by r(0)
+    val str = toStr(text)
 
+    if (lineChars == 0) {
+        Text(
+            text = "k".repeat(600),
+            maxLines = 1,
+            softWrap = yes,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.alpha(0f),
+            onTextLayout = {
+                lineChars = it.getLineEnd(0, visibleEnd = yes)
+            }
+        )
+    }
+
+    return lineChars
+}
+
+fun String.safeSplit(delim: String, action: (String) -> Unit) {
+    var i = 0
+    while (i < this.length) {
+        val next = this.indexOf(delim, i)
+        if (next == -1) {
+            action(this.substring(i))
+            break
+        } else {
+            action(this.substring(i, next + delim.length)) // include the delimiter
+            i = next + delim.length
+        }
+    }
+}
+
+
+
+
+
+@Composable
+fun Any.toLines(): List<UIStr> {
+    var lineChars by r(0)
+    var str by r(toStr(this))
+
+    // Measure how many chars fit in one line
+    lineChars = charsW(str)
+
+    // Return empty if not measured yet
+    if (lineChars == 0) return emptyList()
+
+    
+    val lines = mList<UIStr>()
+
+    RunOnce {
+        var line = ""
+        
+        str.safeSplit(" "){ word ->
+            if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
+                line += word
+            } else {
+                lines.add(UIStr(line))
+                line = word
+            }
+        }
+        if (line.isNotEmpty()) lines.add(UIStr(line))
+    }
+    
+    return lines
+}
 
