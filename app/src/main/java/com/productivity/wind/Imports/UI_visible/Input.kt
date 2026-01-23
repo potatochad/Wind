@@ -174,6 +174,46 @@ fun BasicInput(
 	}
 }
 
+@Composable
+fun Input(
+    what: m_<Str>,
+    isInt: Bool = no,
+	modifier: Mod = Mod, 
+	textStyle: TextStyle = TextStyle(),
+    onChange: DoStr = {},
+) {
+	val focusManager = LocalFocusManager.current
+
+	Row(
+		modifier = modifier,
+		verticalAlignment = Alignment.CenterVertically,
+		horizontalArrangement = Arrangement.Start       
+	) {
+		move(w=5)
+		BasicTextField(
+			value = what.it,
+			onValueChange = {
+				val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
+
+				what.it = filtered
+		
+				onChange(filtered)
+			},
+			textStyle = textStyle, 
+			singleLine = yes,
+			// modifier = modifier, 
+			keyboardOptions = KeyboardOptions(
+				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
+				imeAction = ImeAction.Done
+			),
+			keyboardActions = KeyboardActions(
+				onDone = { focusManager.clearFocus() }
+			)
+		)
+	}
+	
+}
+
 
 @Composable
 	fun BigInput(txt: m_<Str>, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = it }){
