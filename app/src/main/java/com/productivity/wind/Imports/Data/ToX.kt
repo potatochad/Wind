@@ -220,6 +220,14 @@ fun Any.toMeters(
     return pixels * metersPerPixel
 }
 
+fun toMStr(what: Any?): m_<Str> = when (what) {
+    is m_<*> -> what as m_<Str>
+    is Int -> r { m(what.toString()) }
+    is Str -> r { m(what) }
+    else -> r { m("") }
+}
+
+
 
 
 
