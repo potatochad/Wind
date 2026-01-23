@@ -282,48 +282,6 @@ fun TxtFileToMap(ctx: ctx, uri: Uri, fileMap: MutableMap<Str, Str>) {
 }
 
 
-@Composable
-fun BasicInput(
-    value: Str,
-    isInt: Bool = no,
-	w: Int=60,
-	modifier: Mod = Mod
-		.h(34).space(h = 8, w = 4).w(w)
-		.background(InputColor, shape = RoundedCornerShape(4.dp))
-		.wrapContentHeight(Alignment.CenterVertically),            
-	textStyle: TextStyle = TextStyle(
-		color = Gold,
-		fontSize = 14.sp,
-		textAlign = TextAlign.Start
-	),
-	oneLine: Bool= yes,
-    Do: DoStr = {},
-) {
-	val focusManager = LocalFocusManager.current
-	val focusRequester = r { FocusRequester() }
-
-	Row(
-		modifier = modifier.click { focusRequester.requestFocus() },
-		verticalAlignment = Alignment.CenterVertically,
-		horizontalArrangement = Arrangement.Start       
-	) {
-		move(w=3)
-		BasicTextField(
-			value = value,
-			onValueChange = { Do(it) },
-			textStyle = textStyle, 
-			singleLine = oneLine, 
-			keyboardOptions = KeyboardOptions(
-				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
-				imeAction = ImeAction.Done
-			),
-			keyboardActions = KeyboardActions(
-				onDone = { focusManager.clearFocus() }
-			),
-			modifier = Mod.focusRequester(focusRequester)
-		)
-	}
-}
 
 
 @Composable
