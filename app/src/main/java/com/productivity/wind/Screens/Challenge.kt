@@ -338,8 +338,8 @@ fun ToDo(id: Str = "") {
         End {
             Item.Add {
 				log("clicked icon ")
-                check(time1.it==0,"Add time") {return@Add}
-				check(name1.it=="","Add name") {return@Add}
+                // check(time1.it==0,"Add time") {return@Add}
+				// check(name1.it=="","Add name") {return@Add}
 				log("passed the check")
 
 
