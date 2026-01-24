@@ -152,6 +152,7 @@ fun toInt(it: Any?): Int = when (it) {
     is Int -> it
     is Float -> it.toInt()
     is Double -> it.toInt()
+    is String -> it.toIntOrNull() ?: 0
     is Dp -> it.value.toInt()  // Dp → Int
     null -> 0
     else -> 0
