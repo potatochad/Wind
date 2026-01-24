@@ -393,27 +393,7 @@ fun ToDo(id: Str = "") {
 
 
 @Composable
-fun CopyTskUI(tsk: CopyTsk) {
-    val txtScroll = LazyList() 
-	val inputScroll = Scroll()
-	
-	var goodStr by r(tsk.goodStr())
-	var goodStr2 by r(0)
-
-    RunOnce(goodStr) {
-		if (goodStr > 30) {
-			wait {
-				var scrollBy = toF(txtScroll.size)/toF(tsk.txt.size)
-				val done = toF(goodStr)*scrollBy - scrollBy*50
-				txtScroll.goTo(done) 
-			}
-		}
-	}
-	RunOnce {
-		inputScroll.toBottom()
-	}
-
-    
+fun DoTskUI(tsk: CopyTsk) {
     LazzyRow {
         Text("Done: ${tsk.doneTimes}/${tsk.maxDone}")
         End { 
@@ -428,39 +408,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 			}
 		}
     }
-
-
-	/*
-	LazyText(
-		bigText = tsk.txt, 
-		mod = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
-		scroll = txtScroll,
-	) { index, char ->
-		if (index <= goodStr) {
-			char.green()
-		} else {
-			char
-		}
-	}*/
-
-
-	val lines = tsk.txt.toLines()
-
-	val linesSize = remember(lines) {
-		var sum = 0
-		lines.map {
-			sum += it.size
-			sum
-		}
-	}
-	
-	LazyColumn(
-		modifier = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
-		state = txtScroll
-	) {
-		itemsIndexed(lines) { index, txt ->
-			val lineStart = linesSize[index] - txt.size
-
 }
 
 
