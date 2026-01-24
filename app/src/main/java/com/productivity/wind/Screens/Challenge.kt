@@ -403,6 +403,9 @@ fun ToDo(id: Str = "") {
 
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
+	Icon.Timer(no) { on ->
+		
+	}
     Text("${tsk.name}: ${tsk.doneTime - tsk.didTime}")
     End { 
 		Item.Edit{
