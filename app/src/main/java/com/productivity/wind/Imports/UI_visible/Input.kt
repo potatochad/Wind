@@ -298,6 +298,19 @@ fun TinyInput(value: Any?, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, D
 		}
     }
 }
+@Composable
+fun TinyInput(value: mInt, maxLetters: Int = 4, w: Int = 60, Do: DoInt={_->}) {  
+    BasicInput(
+        "${value.it}",
+        isInt = yes, 
+        w=w,
+    ) {
+        val str = it.take(maxLetters)
+        val num = toInt(str)
+		value.it = num
+		Do(num)
+    }
+}
 
 
 
