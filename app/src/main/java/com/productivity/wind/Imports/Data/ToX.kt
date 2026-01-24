@@ -221,24 +221,6 @@ fun Any.toMeters(
     return pixels * metersPerPixel
 }
 
-@Composable
-fun toM(what: Any?): m_<Any?> = when (what) {
-    is m_<*> -> what as m_<Any?>
-    else -> r { m(what) }
-}
-
-@Composable
-fun toMStr(what: Any?): mStr = when (what) {
-    is m_<*> -> {
-        if (isMStr(what)){
-            what as mStr
-        } else {
-            m("${what.it}") as mStr
-        }
-    }
-    else -> r("$what")
-}
-
 
 
 
