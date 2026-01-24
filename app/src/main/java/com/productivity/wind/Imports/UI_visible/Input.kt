@@ -282,6 +282,7 @@ fun BigInput(txt: m_<Str>, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it
 @Composable
 fun TinyInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: DoStr={_->}) {  
     val TxtState = toMStr(txt)
+	val mInt = if (txt is mInt) yes else no
 
     BasicInput(
         "${TxtState.it}",
@@ -293,9 +294,14 @@ fun TinyInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: 
 		if (isInt) {
             // Convert to Int immediately, fallback to 0
             val num = toInt(str)
-            TxtState.it = "$num" // keep state as string for display
-            Do("$num") // pass actual Int to caller
-        } else {
+			
+			if (mInt) { txt.it = num } else {
+				TxtState.it = "$num"
+				Do("$num")
+			}
+         } else {
+			if (mInt) Vlog("error: got mInt, expected mStr")
+			
             TxtState.it = str
             Do(str)
 		}
