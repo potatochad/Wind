@@ -332,7 +332,38 @@ fun ToDo(id: Str = "") {
     }
 
     LazyScreen(top = {
+        Text("ToDo")
         
+        End {
+            Item.Add {
+                check(time.it==0,"Add time") {return@Add}
+				check(name.it=="","Add name") {return@Add}
+
+
+                if (!id.isEmpty()) {
+                    val tsk = Bar.copyTsk.find { it.id == id }
+
+                    if (tsk!=null){
+                        tsk.edit {
+                            txt = text.it
+                            maxDone = MaxDone.it
+                            donePts = DonePts.it
+                            letterPts = LetterPts.it
+                        }  
+                        goTo("Main")
+                    }
+                    return@Add
+                }
+
+                Bar.copyTsk.add {
+                    txt = text.it
+                    maxDone = MaxDone.it
+                    donePts = DonePts.it
+                    letterPts = LetterPts.it     
+                }
+                goTo("Main")
+            }
+		}
 	}) {
 		RuleCard("Info"){
 			LazzyRow{
@@ -351,7 +382,7 @@ fun ToDo(id: Str = "") {
 			}
 		}
 		RuleCard("Schedule"){
-			
+			Text("Daily")
 		}
 	  
 
