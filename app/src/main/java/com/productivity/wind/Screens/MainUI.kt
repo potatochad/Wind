@@ -53,6 +53,15 @@ fun Main() {
 				}
             }
 
+			Bar.doTsk.each {
+				if (!it.done()){
+					
+					LazyCard { 
+						DoTskUI(it)
+					}
+				}
+			}
+
 
             Bar.apps.each {
                 if (!it.done) {
