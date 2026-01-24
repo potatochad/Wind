@@ -210,7 +210,7 @@ object Icon {
 		on: Bool,
 		Do: DoBool
 	) {
-		Icon( if (on) Icons.Default.Pause else Icons.Default.PlayArrow) {
+		BigIcon( if (on) Icons.Default.Pause else Icons.Default.PlayArrow, if (on) Gold else Color.Gray) {
 			Do(on)
 		}
 	}
