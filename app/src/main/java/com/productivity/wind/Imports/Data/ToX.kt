@@ -222,7 +222,8 @@ fun Any.toMeters(
 }
 @Composable
 fun toMStr(what: Any?): m_<Str> = when (what) {
-    is m_<*> -> what as m_<Str>
+    is mStr -> what
+    is mInt -> m("${what.it}")
     is Int -> r { m(what.toString()) }
     is Str -> r { m(what) }
     else -> r { m("") }
