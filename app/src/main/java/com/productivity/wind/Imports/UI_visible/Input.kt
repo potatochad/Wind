@@ -282,7 +282,10 @@ fun BigInput(txt: m_<Str>, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it
 @Composable
 fun TinyInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: DoStr={_->}) {  
     val TxtState = toMStr(txt)
-	val mInt = if (txt is mInt) yes else no
+	val mInt = if (isMInt(txt)) {
+		txt as mInt
+		yes 
+	} else { no }
 
     BasicInput(
         "${TxtState.it}",
