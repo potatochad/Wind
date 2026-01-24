@@ -319,6 +319,7 @@ fun ToDo(id: Str = "") {
     var time = r(60)
     var points = r(10)
     var name = r("TaskName")
+	var schedule = r("daily")
 	
   
     if (!id.isEmpty()) {
@@ -345,11 +346,10 @@ fun ToDo(id: Str = "") {
 
                     if (tsk!=null){
                         tsk.edit {
-							time.it = todo.
-							
-        points.it = todo.worth
-        name.it = todo.name
-							doneTime
+							name = name.it
+							doneTime = time.it,
+							worth = points.it,
+							due = schedule.it
                         }  
                         goTo("Main")
                     }
@@ -357,10 +357,10 @@ fun ToDo(id: Str = "") {
                 }
 
                 Bar.copyTsk.add {
-                    txt = text.it
-                    maxDone = MaxDone.it
-                    donePts = DonePts.it
-                    letterPts = LetterPts.it     
+                    name = name.it
+					doneTime = time.it,
+					worth = points.it,
+					due = schedule.it
                 }
                 goTo("Main")
             }
@@ -383,7 +383,7 @@ fun ToDo(id: Str = "") {
 			}
 		}
 		RuleCard("Schedule"){
-			Text("Daily")
+			Text("$schedule")
 		}
 	  
 
