@@ -164,6 +164,7 @@ data class DoTsk(
     var didTime: Int = 0,
     var doneTime: Int = 0,
     var worth: Int = 0,
+	var on: Bool = no,
 	var due: Str = ""
 )
 
