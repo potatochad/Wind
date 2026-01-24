@@ -230,10 +230,10 @@ fun toMStr(what: Any?): mStr = when {
 
 
 
-
+fun isM(x: Any?): Bool = x is m_<*>
 fun isMBool(x: Any?): Bool = x is m_<*> && x.it is Bool
-fun isMStr(x: Any?):  Bool = x is m_<*> && x.it is Str
-fun isMInt(x: Any?):  Bool = x is m_<*> && x.it is Int
+fun isMStr(x: Any?): Bool = x is m_<*> && x.it is Str
+fun isMInt(x: Any?): Bool = x is m_<*> && x.it is Int
 
 
 
