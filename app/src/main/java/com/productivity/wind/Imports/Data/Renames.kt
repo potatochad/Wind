@@ -161,8 +161,8 @@ typealias Wait_<T> = suspend (T) -> Unit
 
 typealias m_<T> = MutableState<T>
 typealias mBool= m_<Bool>
-typealias mInt= m_<Str>
-typealias mStr= m_<Int>
+typealias mInt= m_<Int>
+typealias mStr= m_<Str>
 	
 typealias mList<T> = MutableList<T>
 
