@@ -403,8 +403,16 @@ fun ToDo(id: Str = "") {
 
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
-	Icon.Timer(no) { on ->
-		
+	var ticking by r(no)
+	Icon.Timer(ticking) {
+		var found = Bar.doTsk.find { toDo.on == yes }
+		if (found != null) {
+			Vlog("stopped previous timer")
+			found.edit { on = no }
+		}
+		tsk.edit {
+			on = it
+		}
 	}
     Text("${tsk.name}: ${tsk.doneTime - tsk.didTime}")
     End { 
