@@ -221,19 +221,17 @@ fun Any.toMeters(
     return pixels * metersPerPixel
 }
 @Composable
-fun toMStr(what: Any?): mStr {
-    when {
-        isMStr(what) -> what as mStr
-        isMInt(what) -> {
-           Vlog("error, wanted mStr, got mInt")
-           m("$what")        
-        }
-        what is Int  -> m("$what")
-        what is Str  -> m(what)
-        else -> {
-           Vlog("error, wanted mStr, got Unknown")
-           m("")
-        }
+fun toMStr(what: Any?): mStr = when {
+    isMStr(what) -> what as mStr
+    isMInt(what) -> {
+       Vlog("error, wanted mStr, got mInt")
+       m("$what")        
+    }
+    what is Int  -> m("$what")
+    what is Str  -> m(what)
+    else -> {
+       Vlog("error, wanted mStr, got Unknown")
+       m("")
     }
 }
 
