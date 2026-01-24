@@ -393,21 +393,19 @@ fun ToDo(id: Str = "") {
 
 
 @Composable
-fun DoTskUI(tsk: CopyTsk) {
-    LazzyRow {
-        Text("Done: ${tsk.doneTimes}/${tsk.maxDone}")
-        End { 
-			Item.Edit{
-                Item.enoughPoints {
-					goTo("CopyPaste/${tsk.id}")
-                }
+fun DoTskUI(tsk: DoTsk) = LazzyRow {
+    Text("tsk.name: tsk.time")
+    End { 
+		Item.Edit{
+            Item.enoughPoints {
+				goTo("ToDo/${tsk.id}")
             }
+        }
 
-			Icon.Delete{ 
-				Bar.copyTsk.remove(tsk)
-			}
+		Icon.Delete{ 
+			Bar.doTsk.remove(tsk)
 		}
-    }
+	}
 }
 
 
