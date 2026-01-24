@@ -156,7 +156,7 @@ data class AppTsk(
 data class DoTsk(
     val id: Str = Id(),
     var name: Str = "",
-    var leftTime: Int = 0,
+    var didTime: Int = 0,
     var doneTime: Int = 0,
     var worth: Int = 0,
 	var due: Str = ""
