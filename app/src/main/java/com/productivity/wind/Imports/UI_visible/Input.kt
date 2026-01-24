@@ -289,13 +289,9 @@ fun TinyInput(txt: m_<Str>, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, 
 		if (isInt) {
             // Convert to Int immediately, fallback to 0
             val num = toInt(str)
-			
-			if (mInt) { txt.it = num } else {
-				txt.it = "$num"
-				Do("$num")
-			}
+			txt.it = "$num"
+			Do("$num")
          } else {
-			if (mInt) Vlog("error: got mInt, expected mStr")
 			
             txt.it = str
             Do(str)
