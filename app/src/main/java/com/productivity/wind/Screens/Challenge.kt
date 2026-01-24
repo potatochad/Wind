@@ -341,14 +341,15 @@ fun ToDo(id: Str = "") {
 
 
                 if (!id.isEmpty()) {
-                    val tsk = Bar.copyTsk.find { it.id == id }
+                    val tsk = Bar.doTsk.find { it.id == id }
 
                     if (tsk!=null){
                         tsk.edit {
-                            txt = text.it
-                            maxDone = MaxDone.it
-                            donePts = DonePts.it
-                            letterPts = LetterPts.it
+							time.it = todo.
+							
+        points.it = todo.worth
+        name.it = todo.name
+							doneTime
                         }  
                         goTo("Main")
                     }
