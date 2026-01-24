@@ -278,7 +278,8 @@ fun BigInput(txt: mStr, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = 
 
 
 @Composable
-fun TinyInput(txt: m_<Str>, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: DoStr={_->}) {  
+fun TinyInput(str: Any?, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: DoStr={_->}) {  
+	var txt = toMStr(str)
     BasicInput(
         "${txt.it}",
         isInt = isInt, 
