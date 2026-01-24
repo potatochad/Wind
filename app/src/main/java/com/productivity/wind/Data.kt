@@ -159,7 +159,8 @@ data class DoTsk(
     var done: Bool = no,
     var nowTime: Int = 0,
     var doneTime: Int = 0,
-    var worth: Int = 0
+    var worth: Int = 0,
+	var due: Str = ""
 )
 
 @Serializable
