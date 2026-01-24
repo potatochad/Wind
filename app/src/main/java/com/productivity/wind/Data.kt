@@ -74,6 +74,11 @@ fun newDay() {
 			 doneTimes = 0
 		 }
 	 }
+	 Bar.doTsk.each{
+		 it.edit {
+			 didTime = 0
+		 }
+	 }
 }
 
 
