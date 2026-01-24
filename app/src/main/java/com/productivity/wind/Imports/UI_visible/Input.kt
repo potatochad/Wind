@@ -177,7 +177,7 @@ fun BasicInput(
 
 @Composable
 fun Input(
-    what: m_<Str>,
+    what: mStr,
     isInt: Bool = no,
 	modifier: Mod = Mod, 
 	textStyle: TextStyle = TextStyle(),
@@ -218,7 +218,7 @@ fun Input(
 
 @Composable
 fun LazyInput(
-    str: mStr,
+    txt: Any?,
     isInt: Bool = no,
 	modifier: Mod = Mod,
     maxLetters: Int = 20,
@@ -229,6 +229,7 @@ fun LazyInput(
 	),
     onChange: DoStr = {},
 ) {
+	var str = toMStr(txt)
     val finalMod = modifier.space(h = 8, w = 4).background(CardColor, shape = RoundedCornerShape(4.dp))
 	
     Input(
@@ -278,8 +279,8 @@ fun BigInput(txt: mStr, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = 
 
 
 @Composable
-fun TinyInput(str: Any?, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: DoStr={_->}) {  
-	var txt = toMStr(str)
+fun TinyInput(value: Any?, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: DoStr={_->}) {  
+	var txt = toMStr(value)
     BasicInput(
         "${txt.it}",
         isInt = isInt, 
@@ -288,12 +289,10 @@ fun TinyInput(str: Any?, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do:
         val str = it.take(maxLetters)
 		
 		if (isInt) {
-            // Convert to Int immediately, fallback to 0
             val num = toInt(str)
 			txt.it = "$num"
 			Do("$num")
          } else {
-			
             txt.it = str
             Do(str)
 		}
