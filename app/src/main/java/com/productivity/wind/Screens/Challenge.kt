@@ -394,7 +394,7 @@ fun ToDo(id: Str = "") {
 
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
-    Text("${tsk.name}: ${tsk.time}")
+    Text("${tsk.name}: ${tsk.leftTime}")
     End { 
 		Item.Edit{
             Item.enoughPoints {
