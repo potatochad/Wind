@@ -228,11 +228,15 @@ fun toM(what: Any?): m_<Any?> = when (what) {
 }
 
 @Composable
-fun toMStr(what: Any?): mStr = when {
-    isMStr(what) -> what as mStr
-    else -> {
-        m("$what") as mStr
+fun toMStr(what: Any?): mStr = when (what) {
+    is m_<*> -> {
+        if (isMStr(what)){
+            what as mStr
+        } else {
+            m("${what.it}") as mStr
+        }
     }
+    else -> r("$what")
 }
 
 
