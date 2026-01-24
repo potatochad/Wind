@@ -231,13 +231,9 @@ fun toM(what: Any?): m_<Any?> = when (what) {
 fun toMStr(what: Any?): mStr = when {
     isMStr(what) -> what as mStr
     else -> {
-        Vlog("error, wanted mStr, got Unknown")
         m("$what") as mStr
     }
 }
-
-
-
 
 
 
