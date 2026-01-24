@@ -220,12 +220,19 @@ fun Any.toMeters(
     val pixels = toF(this) * density
     return pixels * metersPerPixel
 }
+
+@Composable
+fun toM(what: Any?): m_<Any?> = when (what) {
+    is m_<*> -> what as m_<Any?>
+    else -> r { m(what) }
+}
+
 @Composable
 fun toMStr(what: Any?): mStr = when {
     isMStr(what) -> what as mStr
     isMInt(what) -> {
         Vlog("error, wanted mStr, got mInt")
-        m("$what") as mStr
+        m("") as mStr
     }
     what is Int -> m("$what") as mStr
     what is Str -> m(what) as mStr
