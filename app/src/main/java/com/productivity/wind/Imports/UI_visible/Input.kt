@@ -288,15 +288,17 @@ fun TinyInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: 
         isInt = isInt, 
         w=w,
     ) {
-        val chars = it.take(maxLetters)
-		val input: Str = if (isInt) {
-            if (chars.isEmpty()) "0" else chars
+        val str = it.take(maxLetters)
+		
+		if (isInt) {
+            // Convert to Int immediately, fallback to 0
+            val num = toInt(str)
+            TxtState.it = "$num" // keep state as string for display
+            Do(num) // pass actual Int to caller
         } else {
-            chars
+            TxtState.it = str
+            Do(chars)
 		}
-            
-        TxtState.it = input
-		Do(TxtState.it)
     }
 }
 
