@@ -347,8 +347,8 @@ fun ToDo(id: Str = "") {
                     if (tsk!=null){
                         tsk.edit {
 							name = name.it
-							doneTime = time.it,
-							worth = points.it,
+							doneTime = time.it
+							worth = points.it
 							due = schedule.it
                         }  
                         goTo("Main")
@@ -358,8 +358,8 @@ fun ToDo(id: Str = "") {
 
                 Bar.copyTsk.add {
                     name = name.it
-					doneTime = time.it,
-					worth = points.it,
+					doneTime = time.it
+					worth = points.it
 					due = schedule.it
                 }
                 goTo("Main")
