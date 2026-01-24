@@ -221,12 +221,20 @@ fun Any.toMeters(
     return pixels * metersPerPixel
 }
 @Composable
-fun toMStr(what: Any?): m_<Str> = when (what) {
-    is mStr -> what
-    is mInt -> m("${what.it}")
-    is Int -> r { m(what.toString()) }
-    is Str -> r { m(what) }
-    else -> r { m("") }
+fun toMStr(what: Any?): m_<Str> {
+    var value by m(null)
+    if (what is m_<*>){
+       value = what.it
+    }
+    when (what) {
+       is value != null -> {
+          if (value is Int) m("${what.it}")
+          else what // str then
+       }
+       is Int -> r { m(what.toString()) }
+       is Str -> r { m(what) }
+       else -> r { m("") }
+    }
 }
 
 
