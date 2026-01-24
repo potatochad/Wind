@@ -142,29 +142,39 @@ fun Id(): Str { return UUID.randomUUID().toString() }
 
 val maxInt = Int.MAX_VALUE
 
+
 typealias Web = WebView
-typealias UI = Content
-typealias Content = @Composable () -> Unit
-typealias Content_<T> = @Composable (T) -> Unit
-typealias ui = @Composable () -> Unit
-typealias uiRow = @Composable RowScope.() -> Unit
 typealias ctx = Context
-typealias ui_<T> = @Composable (T) -> Unit
-typealias Do = () -> Unit
-typealias UI_<T> = @Composable (T) -> Unit
-typealias Wait = suspend () -> Unit
-typealias Wait_<T> = suspend (T) -> Unit
-typealias Do_<T> = (T) -> Unit
-typealias Do2_<A, B> = (A, B) -> Unit
-typealias DoStr = (Str) -> Unit     
-typealias DoInt = (Int) -> Unit        
-typealias m_<T> = MutableState<T>
-typealias mBool= MutableState<Bool>
-typealias mList<T> = MutableList<T>
+
 typealias Str = String
 typealias Bool = Boolean
+
+typealias Do = () -> Unit
+typealias DoStr = (Str) -> Unit     
+typealias DoInt = (Int) -> Unit 
+typealias DoBool = (Bool) -> Unit 
+typealias Do_<T> = (T) -> Unit
+typealias Do2_<A, B> = (A, B) -> Unit
+
+typealias Wait = suspend () -> Unit
+typealias Wait_<T> = suspend (T) -> Unit
+
+typealias m_<T> = MutableState<T>
+typealias mBool= MutableState<Bool>
+	
+typealias mList<T> = MutableList<T>
+
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
 typealias ClassValVar<T, R> = KProperty1<T, R>
+
+typealias Content = @Composable () -> Unit
+typealias Content_<T> = @Composable (T) -> Unit
+typealias UI = @Composable () -> Unit
+typealias UI_<T> = @Composable (T) -> Unit
+typealias ui = @Composable () -> Unit
+typealias ui_<T> = @Composable (T) -> Unit
+typealias uiRow = @Composable RowScope.() -> Unit
+
 
 	
 fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
