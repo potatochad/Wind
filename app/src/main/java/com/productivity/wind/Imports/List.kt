@@ -103,11 +103,18 @@ fun CopyTsk.goodStr(): Int {
 fun CopyTsk.done(): Bool {
     return doneTimes >= maxDone
 }
+
+
+
 fun CopyTsk.edit(block: CopyTsk.() -> Unit) {
     Bar.copyTsk.edit(this, block)
 }
 fun GeoCircle.edit(block: GeoCircle.() -> Unit) {
 	Bar.privacyGeo.edit(this, block)
 }
+fun DoTsk.edit(block: DoTsk.() -> Unit) {
+	Bar.doTsk.edit(this, block)
+}
+
 
 
