@@ -218,7 +218,7 @@ fun Input(
 
 @Composable
 fun LazyInput(
-    what: Any,
+    txt: mStr,
     isInt: Bool = no,
 	modifier: Mod = Mod,
     maxLetters: Int = 20,
@@ -230,28 +230,25 @@ fun LazyInput(
     onChange: DoStr = {},
 ) {
     val finalMod = modifier.space(h = 8, w = 4).background(CardColor, shape = RoundedCornerShape(4.dp))
-       
-
-	val whatState = toMStr(what)
 	
     Input(
-        what = whatState,
+        what = txt,
         isInt = isInt,
         modifier = finalMod,
         textStyle = textStyle,
     ) { input ->
 		if (isInt && input.isEmpty()) {
-			whatState.it = "0"
+			txt.it = "0"
 		} else {
-			whatState.it = input.take(maxLetters)
+			txt.it = input.take(maxLetters)
 		}
-		onChange(whatState.it)
+		onChange(txt.it)
     }
 }
 
 
 @Composable
-fun BigInput(txt: m_<Str>, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = it }){
+fun BigInput(txt: mStr, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = it }){
 	val scroll = scrollV
 	var Field by r(TextFieldValue(txt.it))
 	var done = r(no)
@@ -281,15 +278,9 @@ fun BigInput(txt: m_<Str>, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it
 
 
 @Composable
-fun TinyInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: DoStr={_->}) {  
-    val TxtState = toMStr(txt)
-	val mInt = if (isMInt(txt)) {
-		txt as mInt
-		yes 
-	} else { no }
-
+fun TinyInput(txt: mStr, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: DoStr={_->}) {  
     BasicInput(
-        "${TxtState.it}",
+        "${txt.it}",
         isInt = isInt, 
         w=w,
     ) {
@@ -300,13 +291,13 @@ fun TinyInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: 
             val num = toInt(str)
 			
 			if (mInt) { txt.it = num } else {
-				TxtState.it = "$num"
+				txt.it = "$num"
 				Do("$num")
 			}
          } else {
 			if (mInt) Vlog("error: got mInt, expected mStr")
 			
-            TxtState.it = str
+            txt.it = str
             Do(str)
 		}
     }
