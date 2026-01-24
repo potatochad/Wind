@@ -356,7 +356,7 @@ fun ToDo(id: Str = "") {
                     return@Add
                 }
 
-                Bar.copyTsk.add {
+                Bar.doTsk.add {
                     name = name1.it
 					doneTime = time1.it
 					worth = points1.it
