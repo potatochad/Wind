@@ -294,10 +294,10 @@ fun TinyInput(txt: Any, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: 
             // Convert to Int immediately, fallback to 0
             val num = toInt(str)
             TxtState.it = "$num" // keep state as string for display
-            Do(num) // pass actual Int to caller
+            Do("$num") // pass actual Int to caller
         } else {
             TxtState.it = str
-            Do(chars)
+            Do(str)
 		}
     }
 }
