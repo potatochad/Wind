@@ -383,7 +383,7 @@ fun ToDo(id: Str = "") {
 			}
 		}
 		RuleCard("Schedule"){
-			Text("$schedule1")
+			Text("${schedule1.it}")
 		}
 	  
 
@@ -394,7 +394,7 @@ fun ToDo(id: Str = "") {
 
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
-    Text("tsk.name: tsk.time")
+    Text("${tsk.name}: ${tsk.time}")
     End { 
 		Item.Edit{
             Item.enoughPoints {
