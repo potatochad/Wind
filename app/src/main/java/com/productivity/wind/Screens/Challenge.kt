@@ -316,19 +316,19 @@ fun AppUsage(id: Str = "") {
 
 @Composable
 fun ToDo(id: Str = "") {
-    var time = r(60)
-    var points = r(10)
-    var name = r("TaskName")
-	var schedule = r("daily")
+    var time1 = r(60)
+    var points1 = r(10)
+    var name1 = r("TaskName")
+	var schedule1 = r("daily")
 	
   
     if (!id.isEmpty()) {
       val todo = Bar.doTsk.find { it.id == id }
 
       if (todo != null) {
-        time.it = todo.doneTime
-        points.it = todo.worth
-        name.it = todo.name
+        time1.it = todo.doneTime
+        points1.it = todo.worth
+        name1.it = todo.name
       }
     }
 
@@ -337,8 +337,8 @@ fun ToDo(id: Str = "") {
         
         End {
             Item.Add {
-                check(time.it==0,"Add time") {return@Add}
-				check(name.it=="","Add name") {return@Add}
+                check(time1.it==0,"Add time") {return@Add}
+				check(name1.it=="","Add name") {return@Add}
 
 
                 if (!id.isEmpty()) {
@@ -346,10 +346,10 @@ fun ToDo(id: Str = "") {
 
                     if (tsk!=null){
                         tsk.edit {
-							name = name.it
-							doneTime = time.it
-							worth = points.it
-							due = schedule.it
+							name = name1.it
+							doneTime = time1.it
+							worth = points1.it
+							due = schedule1.it
                         }  
                         goTo("Main")
                     }
@@ -357,10 +357,10 @@ fun ToDo(id: Str = "") {
                 }
 
                 Bar.copyTsk.add {
-                    name = name.it
-					doneTime = time.it
-					worth = points.it
-					due = schedule.it
+                    name = name1.it
+					doneTime = time1.it
+					worth = points1.it
+					due = schedule1.it
                 }
                 goTo("Main")
             }
@@ -368,22 +368,22 @@ fun ToDo(id: Str = "") {
 	}) {
 		RuleCard("Info"){
 			LazzyRow{
-				TinyInput(name, w=180, isInt = no, maxLetters = 135)
+				TinyInput(name1, w=180, isInt = no, maxLetters = 135)
 			}
 			LazzyRow{
 				Text(", time")
 				
-				TinyInput(time)
+				TinyInput(time1)
 				Text(" seconds")
 			}
 			LazzyRow(Mod.space(w=5)){
 			    Text("On done")
-			    TinyInput(points)
+			    TinyInput(points1)
 			    Text(" points")
 			}
 		}
 		RuleCard("Schedule"){
-			Text("$schedule")
+			Text("$schedule1")
 		}
 	  
 
