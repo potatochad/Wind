@@ -232,14 +232,12 @@ fun toMStr(what: Any?): m_<Str> {
     // Step 2: decide what to return
     return when {
         value != null -> {
-            if (value is Int) m(value.toString())
-            else if (value is Str) m(value)
+            if (value is Int) m("$value")
+            else if (value is Str) what as mStr
             else m("")
         }
         what is Int  -> m(what.toString())
-        what is mInt -> m(what.it.toString())
         what is Str  -> m(what)
-        what is mStr -> what
         else -> m("")
     }
 }
