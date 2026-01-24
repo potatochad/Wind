@@ -231,7 +231,7 @@ fun LazyInput(
     val finalMod = modifier.space(h = 8, w = 4).background(CardColor, shape = RoundedCornerShape(4.dp))
        
 
-	val whatState: mStr = toMStr(what) as mStr
+	val whatState = toMStr(what)
 	
     Input(
         what = whatState,
