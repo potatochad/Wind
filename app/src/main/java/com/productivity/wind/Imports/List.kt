@@ -104,7 +104,7 @@ fun CopyTsk.done(): Bool {
     return doneTimes >= maxDone
 }
 fun DoTsk.done(): Bool {
-    return doneTimes >= maxDone
+    return nowTime >= doneTime
 }
 
 
