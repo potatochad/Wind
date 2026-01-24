@@ -337,18 +337,18 @@ fun ToDo(id: Str = "") {
         
         End {
             Item.Add {
-				Vlog("icon clicked")
+				log("clicked icon ")
                 check(time1.it==0,"Add time") {return@Add}
 				check(name1.it=="","Add name") {return@Add}
-				Vlog("passed the check")
+				log("passed the check")
 
 
                 if (!id.isEmpty()) {
                     val tsk = Bar.doTsk.find { it.id == id }
-					Vlog("found something")
+					log("found something")
 					
                     if (tsk!=null){
-						Vlog("tsk not null found")
+						log("tsk not null found")
 						
                         tsk.edit {
 							name = name1.it
@@ -356,7 +356,7 @@ fun ToDo(id: Str = "") {
 							worth = points1.it
 							due = schedule1.it
                         }  
-						Vlog("going to main")
+						log("going to main")
                         goTo("Main")
                     }
                     return@Add
