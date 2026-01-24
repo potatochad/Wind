@@ -130,6 +130,7 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
+@Suppress("UNCHECKED_CAST")
 
 @Composable
 fun BasicInput(
