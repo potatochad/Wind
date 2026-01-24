@@ -230,15 +230,9 @@ fun toM(what: Any?): m_<Any?> = when (what) {
 @Composable
 fun toMStr(what: Any?): mStr = when {
     isMStr(what) -> what as mStr
-    isMInt(what) -> {
-        Vlog("error, wanted mStr, got mInt")
-        m("") as mStr
-    }
-    what is Int -> m("$what") as mStr
-    what is Str -> m(what) as mStr
     else -> {
         Vlog("error, wanted mStr, got Unknown")
-        m("") as mStr
+        m("$what") as mStr
     }
 }
 
