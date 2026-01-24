@@ -222,26 +222,30 @@ fun Any.toMeters(
 }
 @Composable
 fun toMStr(what: Any?): m_<Str> {
-    var value by m<Any?>(null)
-
-    // Step 1: extract value if what is m_<*>
-    if (what is m_<*>) {
-        value = what.it
-    }
-
-    // Step 2: decide what to return
     return when {
-        value != null -> {
-            if (value is Int) m("$value")
-            else if (value is Str) what as mStr
-            else m("")
+        isMStr(what) -> what
+        isMInt(what) -> {
+           Vlog("error, wanted mStr, got mInt")
+           m("$what")        
         }
-        what is Int  -> m(what.toString())
+        what is Int  -> m("$what")
         what is Str  -> m(what)
-        else -> m("")
+        else -> {
+           Vlog("error, wanted mStr, got Unknown")
+           m("")
+        }
     }
 }
 
+
+
+
+
+
+
+fun isMBool(x: Any?): Bool = x is m_<*> && x.it is Bool
+fun isMStr(x: Any?):  Bool = x is m_<*> && x.it is Str
+fun isMInt(x: Any?):  Bool = x is m_<*> && x.it is Int
 
 
 
