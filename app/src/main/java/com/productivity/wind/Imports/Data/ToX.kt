@@ -224,16 +224,17 @@ fun Any.toMeters(
 fun toMStr(what: Any?): mStr = when {
     isMStr(what) -> what as mStr
     isMInt(what) -> {
-       Vlog("error, wanted mStr, got mInt")
-       m("$what")        
+        Vlog("error, wanted mStr, got mInt")
+        m("$what") as mStr
     }
-    what is Int  -> m("$what")
-    what is Str  -> m(what)
+    what is Int -> m("$what") as mStr
+    what is Str -> m(what) as mStr
     else -> {
-       Vlog("error, wanted mStr, got Unknown")
-       m("")
+        Vlog("error, wanted mStr, got Unknown")
+        m("") as mStr
     }
 }
+
 
 
 
