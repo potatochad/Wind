@@ -342,11 +342,9 @@ object Header {
         Icon.Menu {
 			menu = yes
 		}
-        // Icon.Chill { goTo("Web") }
+        Icon.Chill { goTo("Web") }
 
-        Icon.Reload{
-            // RunJs()
-        }
+        // Icon.Reload{}
         
         move(w = 12)
         
