@@ -59,6 +59,7 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import com.productivity.wind.R
+import android.view.*
 
 fun composeToBitmap(
     width: Int = 500,
@@ -66,7 +67,7 @@ fun composeToBitmap(
     content: @Composable () -> Unit
 ): Bitmap {
     val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(bitmap)
+    val canvas = android.graphics.Canvas(bitmap)
 
     val composeView = ComposeView(AppCtx).apply {
         setContent {
@@ -106,7 +107,7 @@ fun Notification(
             .setStyle(
                 NotificationCompat.BigPictureStyle()
                     .bigPicture(bitmap)
-                    .bigLargeIcon(null)
+                    .bigLargeIcon(null as Bitmap?)
             )
             .setAutoCancel(true)
             .build()
