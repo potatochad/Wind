@@ -138,6 +138,8 @@ fun isNotificationEnabled(): Bool {
 }
 
 fun ComponentActivity.checkNotificationAndRun(onEnabled: Do) {
+	log("checking noyigication permissions")
+	
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         // Launcher for asking permission
         val launcher = registerForActivityResult(
@@ -146,6 +148,7 @@ fun ComponentActivity.checkNotificationAndRun(onEnabled: Do) {
             if (granted) {
                 onEnabled()
             }
+			log("permission granted?: $granted")
         }
 
         if (ContextCompat.checkSelfPermission(
@@ -156,6 +159,7 @@ fun ComponentActivity.checkNotificationAndRun(onEnabled: Do) {
             // Already granted
             onEnabled()
         } else {
+			log("asking prrmission notification")
             // Ask permission
             launcher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
         }
