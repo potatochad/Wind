@@ -79,7 +79,10 @@ fun Notification(
 }
 
 fun funNotification(title: Str, text: String) {
+    log("function called")
+    
     Notification{
+        log("showing notification")
 
     val bitmap =
         android.graphics.Bitmap.createBitmap(
