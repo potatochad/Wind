@@ -58,6 +58,7 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.*
 import androidx.compose.ui.res.*
+import com.productivity.wind.R
 
 
 typealias icon = ImageVector
