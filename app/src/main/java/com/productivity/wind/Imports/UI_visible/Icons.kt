@@ -155,7 +155,22 @@ fun BigIcon(
 	color: Color,
     mod: Mod = Mod,
 	size: Any = 20,
-	onClick: Do = {},
+	Do: Do,
+) {
+	Icon(
+		icon,
+		size = size,
+		mod = mod.round(toF(size)*5).background(color).space(5),
+	){
+		Do()
+	}
+}
+@Composable
+fun BigIcon(
+    icon: icon,
+	color: Color,
+    mod: Mod = Mod,
+	size: Any = 20,
 ) {
 	Icon(
 		icon,
@@ -163,7 +178,6 @@ fun BigIcon(
 		mod = mod.round(toF(size)*5).background(color).space(5),
 	)
 }
-
 object Icon {
 	fun Add(icon: icon): ui_<Do> = {
 		Icon(icon) { it() }
