@@ -793,6 +793,7 @@ lateinit var App: ComponentActivity
 lateinit var AppCtx: Context
 lateinit var AppNav: NavHostController
 lateinit var AppPkg: Str
+lateinit var permission: ActivityResultLauncher<Str>
 
 var AppH by m(0.dp)
 var AppW by m(0.dp)
@@ -823,6 +824,12 @@ class MainActivity : ComponentActivity() {
 		App = this
 		AppCtx = this.applicationContext
 		AppPkg = this.packageName
+
+		permission = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { granted ->
+            log("permission granted?: $granted")
+		}
 
 		AppStart_beforeUI()
 
