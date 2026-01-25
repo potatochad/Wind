@@ -178,6 +178,9 @@ fun BigIcon(
 		mod = mod.round(toF(size)*5).background(color).space(5),
 	)
 }
+
+val myAppRes: Int = R.drawable.baseline_radar_24,
+
 object Icon {
 	fun Add(icon: icon): ui_<Do> = {
 		Icon(icon) { it() }
