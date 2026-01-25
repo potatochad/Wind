@@ -46,7 +46,7 @@ fun Web(){
                         web.it?.reload()
                     } 
                     Icon.Delete {
-                        Bar.Url = "google.com"
+                        Bar.Url = "https://google.com"
                     }
                     Item.Add {
                         goTo("BlockKeyword")
