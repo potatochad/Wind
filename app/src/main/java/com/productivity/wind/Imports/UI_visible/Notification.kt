@@ -61,18 +61,24 @@ import android.content.Context
 import androidx.core.app.NotificationCompat
 
 fun Notification(
-    context: Context,
     title: Str,
     text: Str,
     iconRes: Int
 ) {
-    val notification = NotificationCompat.Builder(context, "default")
+    val notification = NotificationCompat.Builder(AppCtx, "default")
         .setContentTitle(title)
         .setContentText(text)
         .setSmallIcon(iconRes)
         .setAutoCancel(yes) // disappears when swiped
         .build()
 
-    val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     manager.notify(1, notification)
 }
+
+
+
+
+
+
+
