@@ -60,6 +60,7 @@ import android.content.Context
 import androidx.core.app.NotificationCompat
 import com.productivity.wind.R
 import android.view.*
+import android.widget.*
 
 fun composeToBitmap(
     width: Int = 500,
