@@ -62,74 +62,24 @@ import com.productivity.wind.R
 import android.view.*
 import android.widget.*
 
-fun composeToBitmap(
-    width: Int = 500,
-    height: Int = 150,
-    content: @Composable () -> Unit
-): Bitmap {
-    val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val canvas = android.graphics.Canvas(bitmap)
-
-    val container = FrameLayout(App)
-    App.addContentView(container, ViewGroup.LayoutParams(width, height))
-
-    val composeView = ComposeView(App).apply {
-        setContent { content() }
-        // Make it invisible but still attachable
-        alpha = 0f
-    }
-    container.addView(composeView)
-
-    // Measure & layout
-    composeView.measure(
-        View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
-        View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY)
-    )
-    composeView.layout(0, 0, composeView.measuredWidth, composeView.measuredHeight)
-
-    // Draw to bitmap
-    composeView.draw(canvas)
-
-    // Cleanup
-    container.removeView(composeView)
-
-    return bitmap
-}
-
-
-
 fun Notification(
-    id: Int = 1,
-    smallIcon: Int = myAppRes,
-    width: Int = 500,
-    height: Int = 150,
-    content: @Composable () -> Unit
+    title: Str,
+    text: Str,
 ) {
-    log("called notification function")
     Permission.notification {
-        log("got permission")
-        val bitmap = composeToBitmap(width, height) { content() }
-
-        log("content converted to bitmap")
-
         val notification = NotificationCompat.Builder(AppCtx, "default")
-            .setSmallIcon(smallIcon)
-            .setStyle(
-                NotificationCompat.BigPictureStyle()
-                    .bigPicture(bitmap)
-                    .bigLargeIcon(null as Bitmap?)
-            )
-            .setAutoCancel(true)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setSmallIcon(myAppRes)
+            .setAutoCancel(yes) // disappears when swiped
             .build()
 
-        log("building the popup...")
-
         val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(id, notification)
-        log("showing IT")
+        manager.notify(1, notification)
     }
 }
 
 
 
 
+    
