@@ -63,12 +63,11 @@ import androidx.core.app.NotificationCompat
 fun Notification(
     title: Str,
     text: Str,
-    iconRes: Int
 ) {
     val notification = NotificationCompat.Builder(AppCtx, "default")
         .setContentTitle(title)
         .setContentText(text)
-        .setSmallIcon(iconRes)
+        .setSmallIcon(myAppRes)
         .setAutoCancel(yes) // disappears when swiped
         .build()
 
