@@ -68,7 +68,7 @@ fun composeToBitmap(
     content: @Composable () -> Unit
 ): Bitmap {
     val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(bitmap)
+    val canvas = android.graphics.Canvas(bitmap)
 
     val container = FrameLayout(App)
     App.addContentView(container, ViewGroup.LayoutParams(width, height))
