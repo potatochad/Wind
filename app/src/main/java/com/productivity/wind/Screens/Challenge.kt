@@ -405,7 +405,7 @@ fun ToDo(id: Str = "") {
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	var ticking by r(no)
 	Icon.Timer(ticking) {
-		var found = Bar.doTsk.find { toDo.on == yes }
+		var found = Bar.doTsk.find { it.on == yes }
 		if (found != null) {
 			Vlog("stopped previous timer")
 			found.edit { on = no }
