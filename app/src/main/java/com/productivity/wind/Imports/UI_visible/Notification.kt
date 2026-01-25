@@ -55,7 +55,6 @@ import kotlin.math.*
 import androidx.compose.ui.geometry.*
 import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.*
-
 import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationCompat
@@ -76,6 +75,52 @@ fun Notification(
         manager.notify(1, notification)
     }
 }
+
+fun funNotification(title: Str, text: Str) {
+    // Create a bitmap from Compose UI
+    val bitmap = Bitmap.createBitmap(400, 100, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+
+    ComposeView(AppCtx).apply {
+        setContent {
+            Column(
+                modifier = Modifier
+                    .background(Color(0xFF1A1A1A))
+                    .padding(12.dp)
+            ) {
+                Text(
+                    text = title,
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = text,
+                    color = Color.LightGray,
+                    fontSize = 14.sp
+                )
+            }
+        }
+        draw(canvas)
+    }
+
+    // Build the notification
+    val notification = NotificationCompat.Builder(AppCtx, "default")
+        .setSmallIcon(R.drawable.baseline_radar_24)
+        .setStyle(
+            NotificationCompat.BigPictureStyle()
+                .bigPicture(bitmap)
+                .bigLargeIcon(null) // remove default large icon
+        )
+        .setAutoCancel(true)
+        .build()
+
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    manager.notify(1, notification)
+}
+
+
 
 
 
