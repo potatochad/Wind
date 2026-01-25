@@ -134,7 +134,7 @@ fun EmptyBox(
 @Composable
 fun MenuHeader(
 	title: Str = "Wind",
-	iconRes: Int = R.drawable.baseline_radar_24,
+	iconRes: Int = myAppRes,
 	iconSize: Dp = 60.dp,
 	iconTint: Color = Color(0xFFFFD700),
 	titleSize: Int = 28,
