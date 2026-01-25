@@ -344,7 +344,12 @@ object Header {
 		}
         Icon.Chill { goTo("Web") }
 
-        // Icon.Reload{}
+        Icon.Reload{
+			popUpTest {
+				Text("Hello World")
+			}
+
+		}
         
         move(w = 12)
         
