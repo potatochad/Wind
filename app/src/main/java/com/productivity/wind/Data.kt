@@ -164,9 +164,12 @@ data class DoTsk(
     var didTime: Int = 0,
     var doneTime: Int = 0,
     var worth: Int = 0,
-	var on: Bool = no,
+	var timerOn: Bool = no,
 	var due: Str = ""
-)
+) {
+	var on by synch(timerOn){ timerOn = it }
+
+}
 
 @Serializable
 data class WebWord(
