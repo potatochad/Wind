@@ -344,15 +344,7 @@ object Header {
 		}
         Icon.Chill { goTo("Web") }
 
-        Icon.Reload{
-			App.runOnUiThread {
-    popUpTest(App) {
-        Text("Hello World")
-    }
-}
-
-
-		}
+        // Icon.Reload{}
         
         move(w = 12)
         
