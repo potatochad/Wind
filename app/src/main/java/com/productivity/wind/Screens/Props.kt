@@ -344,10 +344,15 @@ object Header {
 		}
         Icon.Chill { goTo("Web") }
 
+		var test by r(0)
+
+		each(1000){
+			test++
+		}
+
         Icon.Reload{
-			Notification {
-				Text("heloooo")
-			}
+			
+			Notification("title: $test", "descriptionn")
 		}
         
         move(w = 12)
