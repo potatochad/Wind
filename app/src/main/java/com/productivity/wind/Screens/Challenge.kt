@@ -404,7 +404,8 @@ fun ToDo(id: Str = "") {
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	var ticking by r(tsk.on)
-	each(100){
+	var updateTick by r(0)
+	RunOnce(updateTick){
 		ticking = tsk.on
 	}
 	Icon.Timer(ticking) {
@@ -418,6 +419,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		tsk.edit {
 			on = !it
 		}
+		updateTick++
 		log("name ${tsk.name}, tskOn ${tsk.on}, !it ${!it}")
 	}
 	move(5)
