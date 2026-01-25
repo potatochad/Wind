@@ -94,8 +94,12 @@ fun Notification(
     height: Int = 150,
     content: @Composable () -> Unit
 ) {
+    log("called notification function")
     Permission.notification {
+        log("got permission")
         val bitmap = composeToBitmap(width, height) { content() }
+
+        log("content converted to bitmap")
 
         val notification = NotificationCompat.Builder(AppCtx, "default")
             .setSmallIcon(smallIcon)
@@ -107,8 +111,11 @@ fun Notification(
             .setAutoCancel(true)
             .build()
 
+        log("building the popup...")
+
         val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(id, notification)
+        log("showing IT")
     }
 }
 
