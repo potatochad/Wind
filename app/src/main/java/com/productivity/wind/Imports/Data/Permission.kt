@@ -152,7 +152,7 @@ val P_SYSTEM_ALERT_WINDOW = "android.permission.SYSTEM_ALERT_WINDOW"
 
 
 fun Permission(permissionStr: Str, onGranted: Do) {
-    if (ContextCompat.checkSelfPermission(this, permissionStr) == PackageManager.PERMISSION_GRANTED) {
+    if (ContextCompat.checkSelfPermission(App, permissionStr) == PackageManager.PERMISSION_GRANTED) {
         onGranted()
     } else {
         permission.launch(permissionStr)
