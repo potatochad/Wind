@@ -808,6 +808,7 @@ fun MyNavGraph(navController: NavHostController) {
 
 
 lateinit var App: ComponentActivity
+lateinit var AppCtx: Context
 lateinit var AppNav: NavHostController
 lateinit var AppPkg: Str
 
@@ -838,6 +839,7 @@ class MainActivity : ComponentActivity() {
 
 
 		App = this
+		AppCtx = this.applicationContext
 		AppPkg = this.packageName
 
 		AppStart_beforeUI()
