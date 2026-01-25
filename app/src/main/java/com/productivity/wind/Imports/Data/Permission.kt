@@ -130,48 +130,36 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
-// ✴️NOT WHAT YOU THINK FUNCTION, IGNORE
-fun isNotificationEnabled(): Bool {
-     return NotificationManagerCompat
-        .getEnabledListenerPackages(App)
-        .contains(AppPkg)
-}
+val P_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
+val P_CAMERA = Manifest.permission.CAMERA
+val P_LOCATION_FINE = Manifest.permission.ACCESS_FINE_LOCATION
+val P_LOCATION_COARSE = Manifest.permission.ACCESS_COARSE_LOCATION
+val P_READ_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
+val P_WRITE_TO_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
+val P_RECORD_AUDIO = Manifest.permission.RECORD_AUDIO
+val P_READ_CONTACTS = Manifest.permission.READ_CONTACTS
+val P_SEND_SMS = Manifest.permission.SEND_SMS
+val P_CALL_PHONE = Manifest.permission.CALL_PHONE
+val P_READ_PHONE_STATE = Manifest.permission.READ_PHONE_STATE
+val P_BACKGROUND_LOCATION = Manifest.permission.ACCESS_BACKGROUND_LOCATION
+val P_BODY_SENSORS = Manifest.permission.BODY_SENSORS
+val P_IGNORE_BATTERY_OPT = "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+val P_SYSTEM_ALERT_WINDOW = "android.permission.SYSTEM_ALERT_WINDOW"
 
-fun ComponentActivity.checkNotificationAndRun(onEnabled: Do) {
-	log("checking noyigication permissions")
-	
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        // Launcher for asking permission
-        val launcher = registerForActivityResult(
-            androidx.activity.result.contract.ActivityResultContracts.RequestPermission()
-        ) { granted ->
-            if (granted) {
-                onEnabled()
-            }
-			log("permission granted?: $granted")
-        }
 
-        if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            // Already granted
-            onEnabled()
-        } else {
-			log("asking prrmission notification")
-            // Ask permission
-            launcher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-        }
+fun Permission(permissionStr: Str, onGranted: Do) {
+    if (ContextCompat.checkSelfPermission(this, permissionStr) == PackageManager.PERMISSION_GRANTED) {
+        onGranted()
     } else {
-        // Pre-Android 13, notifications always allowed
-        onEnabled()
+        permission.launch(permissionStr)
     }
 }
 
-fun Notification(Do: Do){
-	App.checkNotificationAndRun(Do)
-}
+
+
+
+
+
 
 
 fun isBatteryOptimizationDisabled(): Bool {
@@ -188,7 +176,12 @@ fun isUsageP_Enabled(): Bool {
     ) == AppOpsManager.MODE_ALLOWED
 }
 
-
+// ✴️NOT WHAT YOU THINK FUNCTION, IGNORE
+fun isNotificationEnabled(): Bool {
+     return NotificationManagerCompat
+        .getEnabledListenerPackages(App)
+        .contains(AppPkg)
+}
 
 
 
