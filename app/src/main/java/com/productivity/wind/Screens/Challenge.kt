@@ -409,9 +409,9 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 			Vlog("stopping timer for; ${found.name}")
 			found.edit { on = no }
 		}
-		Vlog("STARTING timer for; ${tsk.name}")
+		Vlog("STARTING timer for; ${tsk.name}, before: ${tsk.on}, after ${!it}")
 		tsk.edit {
-			on = it
+			on = !it
 		}
 	}
 	move(5)
