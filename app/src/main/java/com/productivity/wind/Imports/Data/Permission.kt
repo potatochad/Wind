@@ -129,6 +129,8 @@ import com.productivity.wind.Imports.UI_visible.*
 import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.*
+
 
 val P_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
 val P_CAMERA = Manifest.permission.CAMERA
