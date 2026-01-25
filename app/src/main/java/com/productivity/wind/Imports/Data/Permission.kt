@@ -130,12 +130,45 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
-
+// ✴️NOT WHAT YOU THINK FUNCTION, IGNORE
 fun isNotificationEnabled(): Bool {
      return NotificationManagerCompat
         .getEnabledListenerPackages(App)
         .contains(AppPkg)
 }
+
+fun ComponentActivity.checkNotificationAndRun(onEnabled: Do) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        // Launcher for asking permission
+        val launcher = registerForActivityResult(
+            androidx.activity.result.contract.ActivityResultContracts.RequestPermission()
+        ) { granted ->
+            if (granted) {
+                onEnabled()
+            }
+        }
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Already granted
+            onEnabled()
+        } else {
+            // Ask permission
+            launcher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
+    } else {
+        // Pre-Android 13, notifications always allowed
+        onEnabled()
+    }
+}
+
+fun Notification(Do: Do){
+	App.checkNotificationAndRun(Do)
+}
+
 
 fun isBatteryOptimizationDisabled(): Bool {
     val pm = App.getSystemService(PowerManager::class.java)
