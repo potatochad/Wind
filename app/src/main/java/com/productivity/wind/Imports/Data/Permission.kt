@@ -143,6 +143,8 @@ val P_CALL_PHONE = Manifest.permission.CALL_PHONE
 val P_READ_PHONE_STATE = Manifest.permission.READ_PHONE_STATE
 val P_BACKGROUND_LOCATION = Manifest.permission.ACCESS_BACKGROUND_LOCATION
 val P_BODY_SENSORS = Manifest.permission.BODY_SENSORS
+
+//special, require different approach
 val P_IGNORE_BATTERY_OPT = "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
 val P_SYSTEM_ALERT_WINDOW = "android.permission.SYSTEM_ALERT_WINDOW"
 
