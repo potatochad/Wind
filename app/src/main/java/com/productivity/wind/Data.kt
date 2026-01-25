@@ -212,10 +212,6 @@ fun AppContent() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI() {
-	runOnceEver{
-		log("asking for location once")
-		Notification{}
-	}
 
     //Background thing! Disabled
     //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }
