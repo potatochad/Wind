@@ -79,6 +79,7 @@ fun Notification(
 }
 
 fun funNotification(title: Str, text: String) {
+    Notification{
 
     val bitmap =
         android.graphics.Bitmap.createBitmap(
@@ -141,6 +142,6 @@ fun funNotification(title: Str, text: String) {
         ) as android.app.NotificationManager
 
     manager.notify(1, notification)
-}
+}}
 
 
