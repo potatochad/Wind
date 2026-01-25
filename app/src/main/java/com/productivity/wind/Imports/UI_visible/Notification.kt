@@ -78,7 +78,7 @@ fun Notification(
     }
 }
 
-fun funNotification(title: String, text: String) {
+fun funNotification(title: Str, text: String) {
 
     val bitmap =
         android.graphics.Bitmap.createBitmap(
@@ -93,24 +93,24 @@ fun funNotification(title: String, text: String) {
 
         setContent {
 
-            androidx.compose.foundation.layout.Column(
+            Column(
                 modifier =
-                    androidx.compose.ui.Modifier
+                    Modifier
                         .background(
                             androidx.compose.ui.graphics.Color(0xFF1A1A1A)
                         )
                         .padding(16.dp)
             ) {
 
-                androidx.compose.material3.Text(
+                Text(
                     text = title,
-                    color = androidx.compose.ui.graphics.Color.White,
+                    color = Color.White,
                     fontSize = 16.sp
                 )
 
-                androidx.compose.material3.Text(
+                Text(
                     text = text,
-                    color = androidx.compose.ui.graphics.Color.LightGray,
+                    color = Color.LightGray,
                     fontSize = 14.sp
                 )
             }
@@ -142,3 +142,5 @@ fun funNotification(title: String, text: String) {
 
     manager.notify(1, notification)
 }
+
+
