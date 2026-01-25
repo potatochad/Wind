@@ -393,25 +393,7 @@ fun androidSettings(action: Str) {
 	)
 }
 
-fun isNotificationEnabled(): Bool {
-     return NotificationManagerCompat
-        .getEnabledListenerPackages(App)
-        .contains(AppPkg)
-}
 
-fun isBatteryOptimizationDisabled(): Bool {
-    val pm = App.getSystemService(PowerManager::class.java)
-    return pm.isIgnoringBatteryOptimizations(AppPkg)
-}
-
-fun isUsageP_Enabled(): Bool {
-	val appOps = App.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-    return appOps.checkOpNoThrow(
-		AppOpsManager.OPSTR_GET_USAGE_STATS,
-        Process.myUid(),
-        AppPkg,
-    ) == AppOpsManager.MODE_ALLOWED
-}
 
 
 @Suppress("DEPRECATION")
