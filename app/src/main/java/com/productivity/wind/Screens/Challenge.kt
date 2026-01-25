@@ -407,9 +407,10 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	Icon.Timer(ticking) {
 		var found = Bar.doTsk.find { it.on == yes }
 		if (found != null) {
-			Vlog("stopped previous timer")
+			Vlog("stopping timer for; ${found.name}")
 			found.edit { on = no }
 		}
+		Vlog("STARTING timer for; ${tsk.name}")
 		tsk.edit {
 			on = it
 		}
