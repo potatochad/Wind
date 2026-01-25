@@ -65,7 +65,7 @@ fun Notification(
     title: Str,
     text: Str,
 ) {
-    Notification{
+    Permission(P_NOTIFICATIONS){
         val notification = NotificationCompat.Builder(AppCtx, "default")
             .setContentTitle(title)
             .setContentText(text)
@@ -81,7 +81,7 @@ fun Notification(
 fun funNotification(title: Str, text: String) {
     log("function called")
     
-    Notification{
+    Permission(P_NOTIFICATIONS){
         log("showing notification")
 
     val bitmap =
