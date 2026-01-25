@@ -64,15 +64,17 @@ fun Notification(
     title: Str,
     text: Str,
 ) {
-    val notification = NotificationCompat.Builder(AppCtx, "default")
-        .setContentTitle(title)
-        .setContentText(text)
-        .setSmallIcon(myAppRes)
-        .setAutoCancel(yes) // disappears when swiped
-        .build()
+    Notification{
+        val notification = NotificationCompat.Builder(AppCtx, "default")
+            .setContentTitle(title)
+            .setContentText(text)
+            .setSmallIcon(myAppRes)
+            .setAutoCancel(yes) // disappears when swiped
+            .build()
 
-    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    manager.notify(1, notification)
+        val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.notify(1, notification)
+    }
 }
 
 
