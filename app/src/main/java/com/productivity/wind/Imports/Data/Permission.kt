@@ -131,32 +131,33 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.*
 
+object Permission { 
+	private fun getAndDo(permissionStr: Str, onGranted: Do) {
+		if (ContextCompat.checkSelfPermission(App, permissionStr) == PackageManager.PERMISSION_GRANTED) {
+			onGranted()
+		} else {
+			permission.launch(permissionStr)
+		}
+	}
+	
+	val notification: Do_<Do> = { getAndDo(Manifest.permission.POST_NOTIFICATIONS, it) }
+    val camera: Do_<Do> = { getAndDo(Manifest.permission.CAMERA, it) }
+    val locationFine: Do_<Do> = { getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, it) }
+    val locationCoarse: Do_<Do> = { getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, it) }
+    val readStorage: Do_<Do> = { getAndDo(Manifest.permission.READ_EXTERNAL_STORAGE, it) }
+    val writeStorage: Do_<Do> = { getAndDo(Manifest.permission.WRITE_EXTERNAL_STORAGE, it) }
+    val recordAudio: Do_<Do> = { getAndDo(Manifest.permission.RECORD_AUDIO, it) }
+    val readContacts: Do_<Do> = { getAndDo(Manifest.permission.READ_CONTACTS, it) }
+    val sendSMS: Do_<Do> = { getAndDo(Manifest.permission.SEND_SMS, it) }
+    val callPhone: Do_<Do> = { getAndDo(Manifest.permission.CALL_PHONE, it) }
+    val readPhoneState: Do_<Do> = { getAndDo(Manifest.permission.READ_PHONE_STATE, it) }
+    val backgroundLocation: Do_<Do> = { getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, it) }
+    val bodySensors: Do_<Do> = { getAndDo(Manifest.permission.BODY_SENSORS, it) }
 
-val P_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
-val P_CAMERA = Manifest.permission.CAMERA
-val P_LOCATION_FINE = Manifest.permission.ACCESS_FINE_LOCATION
-val P_LOCATION_COARSE = Manifest.permission.ACCESS_COARSE_LOCATION
-val P_READ_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
-val P_WRITE_TO_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
-val P_RECORD_AUDIO = Manifest.permission.RECORD_AUDIO
-val P_READ_CONTACTS = Manifest.permission.READ_CONTACTS
-val P_SEND_SMS = Manifest.permission.SEND_SMS
-val P_CALL_PHONE = Manifest.permission.CALL_PHONE
-val P_READ_PHONE_STATE = Manifest.permission.READ_PHONE_STATE
-val P_BACKGROUND_LOCATION = Manifest.permission.ACCESS_BACKGROUND_LOCATION
-val P_BODY_SENSORS = Manifest.permission.BODY_SENSORS
-
-//special, require different approach
-val P_IGNORE_BATTERY_OPT = "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
-val P_SYSTEM_ALERT_WINDOW = "android.permission.SYSTEM_ALERT_WINDOW"
-
-
-fun Permission(permissionStr: Str, onGranted: Do) {
-    if (ContextCompat.checkSelfPermission(App, permissionStr) == PackageManager.PERMISSION_GRANTED) {
-        onGranted()
-    } else {
-        permission.launch(permissionStr)
-    }
+	//special, require different approach
+	val ignoreOptimizations = "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+	val systemAlertWindow = "android.permission.SYSTEM_ALERT_WINDOW"
+	
 }
 
 
