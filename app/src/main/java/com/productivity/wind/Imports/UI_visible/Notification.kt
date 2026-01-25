@@ -60,91 +60,58 @@ import android.content.Context
 import androidx.core.app.NotificationCompat
 import com.productivity.wind.R
 
+fun composeToBitmap(
+    width: Int = 500,
+    height: Int = 150,
+    content: @Composable () -> Unit
+): Bitmap {
+    val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
 
-fun Notification(
-    title: Str,
-    text: Str,
-) {
-    Permission.notification {
-        val notification = NotificationCompat.Builder(AppCtx, "default")
-            .setContentTitle(title)
-            .setContentText(text)
-            .setSmallIcon(myAppRes)
-            .setAutoCancel(yes) // disappears when swiped
-            .build()
-
-        val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(1, notification)
+    val composeView = ComposeView(AppCtx).apply {
+        setContent {
+            content()
+        }
     }
+
+    // Measure & layout
+    composeView.measure(
+        View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+        View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY)
+    )
+    composeView.layout(0, 0, composeView.measuredWidth, composeView.measuredHeight)
+
+    // Draw to bitmap
+    composeView.draw(canvas)
+    return bitmap
 }
 
-fun funNotification(title: Str, text: String) {
-    log("function called")
-    
+
+fun Notification(
+    id: Int = 1,
+    smallIcon: Int = myAppRes,
+    width: Int = 500,
+    height: Int = 150,
+    content: @Composable () -> Unit
+) {
     Permission.notification {
-        log("showing notification")
+        val bitmap = composeToBitmap(width, height) { content() }
 
-    val bitmap =
-        android.graphics.Bitmap.createBitmap(
-            500,
-            200,
-            android.graphics.Bitmap.Config.ARGB_8888
-        )
-
-    val canvas = android.graphics.Canvas(bitmap)
-
-    androidx.compose.ui.platform.ComposeView(AppCtx).apply {
-
-        setContent {
-
-            Column(
-                modifier =
-                    Modifier
-                        .background(
-                            androidx.compose.ui.graphics.Color(0xFF1A1A1A)
-                        )
-                        .padding(16.dp)
-            ) {
-
-                Text(
-                    text = title,
-                    color = Color.White,
-                    fontSize = 16.sp
-                )
-
-                Text(
-                    text = text,
-                    color = Color.LightGray,
-                    fontSize = 14.sp
-                )
-            }
-        }
-
-        draw(canvas)
-    }
-
-    val notification =
-        androidx.core.app.NotificationCompat.Builder(
-            AppCtx,
-            "default"
-        )
-            .setSmallIcon(
-                com.productivity.wind.R.drawable.baseline_radar_24
-            )
+        val notification = NotificationCompat.Builder(AppCtx, "default")
+            .setSmallIcon(smallIcon)
             .setStyle(
-                androidx.core.app.NotificationCompat.BigPictureStyle()
+                NotificationCompat.BigPictureStyle()
                     .bigPicture(bitmap)
-                    .bigLargeIcon(null as android.graphics.Bitmap?)
+                    .bigLargeIcon(null)
             )
             .setAutoCancel(true)
             .build()
 
-    val manager =
-        AppCtx.getSystemService(
-            android.content.Context.NOTIFICATION_SERVICE
-        ) as android.app.NotificationManager
+        val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.notify(id, notification)
+    }
+}
 
-    manager.notify(1, notification)
-}}
+
 
 
