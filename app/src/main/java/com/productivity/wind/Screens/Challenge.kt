@@ -404,18 +404,21 @@ fun ToDo(id: Str = "") {
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	var ticking by r(tsk.on)
+	each(100){
+		ticking = tsk.on
+	}
 	Icon.Timer(ticking) {
-		var found = Bar.doTsk.find { it.on == yes }
-		if (found != null) {
-			Vlog("stopping timer for; ${found.name}")
-			found.edit { on = no }
-			ticking = found.on
+		if (!it == yes) {
+			var found = Bar.doTsk.find { it.on == yes }
+			if (found != null) {
+				found.edit { on = no }
+				log("Disabling , found ${found.name}, foundOn ${found.on}, !it ${!it}")
+			}
 		}
-		Vlog("STARTING timer for; ${tsk.name}, before: ${tsk.on}, after ${!it}")
 		tsk.edit {
 			on = !it
 		}
-		ticking = tsk.on
+		log("name ${tsk.name}, tskOn ${tsk.on}, !it ${!it}")
 	}
 	move(5)
     Text("${tsk.name}: ${tsk.doneTime - tsk.didTime}")
