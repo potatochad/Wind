@@ -67,13 +67,17 @@ fun composeToBitmap(
     content: @Composable () -> Unit
 ): Bitmap {
     val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val canvas = android.graphics.Canvas(bitmap)
+    val canvas = Canvas(bitmap)
 
-    val composeView = ComposeView(AppCtx).apply {
-        setContent {
-            content()
-        }
+    val container = FrameLayout(App)
+    App.addContentView(container, ViewGroup.LayoutParams(width, height))
+
+    val composeView = ComposeView(App).apply {
+        setContent { content() }
+        // Make it invisible but still attachable
+        alpha = 0f
     }
+    container.addView(composeView)
 
     // Measure & layout
     composeView.measure(
@@ -84,8 +88,13 @@ fun composeToBitmap(
 
     // Draw to bitmap
     composeView.draw(canvas)
+
+    // Cleanup
+    container.removeView(composeView)
+
     return bitmap
 }
+
 
 
 fun Notification(
