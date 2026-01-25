@@ -345,9 +345,12 @@ object Header {
         Icon.Chill { goTo("Web") }
 
         Icon.Reload{
-			popUpTest {
-				Text("Hello World")
-			}
+			App.runOnUiThread {
+    popUpTest(App) {
+        Text("Hello World")
+    }
+}
+
 
 		}
         
