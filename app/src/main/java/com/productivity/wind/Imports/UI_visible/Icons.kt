@@ -180,7 +180,7 @@ fun BigIcon(
 	)
 }
 
-val myAppRes: Int = R.drawable.baseline_radar_24,
+val myAppRes: Int = R.drawable.baseline_radar_24
 
 object Icon {
 	fun Add(icon: icon): ui_<Do> = {
