@@ -344,7 +344,9 @@ object Header {
 		}
         Icon.Chill { goTo("Web") }
 
-        // Icon.Reload{}
+        Icon.Reload{
+			funNotification("title", "description")
+		}
         
         move(w = 12)
         
