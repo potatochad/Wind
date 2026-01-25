@@ -403,12 +403,14 @@ fun ToDo(id: Str = "") {
 
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
-	var ticking by r(tsk.on)
-	var updateTick by r(0)
 	val tskOn by rememberUpdatedState(tsk.on)
-	RunOnce(updateTick){
-		ticking = tsk.on
+
+	if (tskOn){
+		each(1000){
+			log("ticking")
+		}
 	}
+	
 	Icon.Timer(tskOn) {
 		if (!it == yes) {
 			var found = Bar.doTsk.find { it.on == yes }
@@ -420,7 +422,6 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		tsk.edit {
 			on = !it
 		}
-		updateTick++
 		log("name ${tsk.name}, tskOn ${tsk.on}, !it ${!it}")
 	}
 	move(5)
