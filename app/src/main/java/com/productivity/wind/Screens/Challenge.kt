@@ -405,10 +405,11 @@ fun ToDo(id: Str = "") {
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	var ticking by r(tsk.on)
 	var updateTick by r(0)
+	val tskOn by rememberUpdatedState(tsk.on)
 	RunOnce(updateTick){
 		ticking = tsk.on
 	}
-	Icon.Timer(ticking) {
+	Icon.Timer(tskOn) {
 		if (!it == yes) {
 			var found = Bar.doTsk.find { it.on == yes }
 			if (found != null) {
