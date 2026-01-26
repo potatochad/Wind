@@ -344,12 +344,6 @@ object Header {
 		}
         Icon.Chill { goTo("Web") }
 
-		var test by r(0)
-
-		each(200){
-			test++
-		}
-
         //Icon.Reload{}
         
         move(w = 12)
