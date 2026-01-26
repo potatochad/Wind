@@ -150,4 +150,25 @@ fun Try(log: Str="", onFail: Do={}, Do: Do){
     }
 }
 
+fun each(s: Any = 1000, If: Bool = yes, Do: Wait) {
+    RunOnce {
+        while (If) {
+            Do()
+            wait(s)
+        }
+    }
+}
+
+val runOnceSet = mutableSetOf<Any>()
+fun RunOnce(Do: Wait) {
+    Do {
+        val key = Do as Any
+        if (key !in runOnceSet) {
+	        		runOnceSet.add(key)
+		        	Do()
+       		}
+   	}
+}
+
+
 
