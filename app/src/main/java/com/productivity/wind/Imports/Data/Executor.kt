@@ -156,24 +156,10 @@ fun Each(
     condition: () -> Bool = { yes },
     action: Wait
 ) {
-    LaunchedEffect(Unit) {
-        while (condition()) {
-            action()
-            delay(toL(s))
-        }
+    while (condition()) {
+        action()
+        delay(toL(s))
     }
-}
-
-
-val runOnceSet = mutableSetOf<Any>()
-fun RunOnce(Do: Wait) {
-    Do {
-        val key = Do as Any
-        if (key !in runOnceSet) {
-	        		runOnceSet.add(key)
-		        	Do()
-       		}
-   	}
 }
 
 
