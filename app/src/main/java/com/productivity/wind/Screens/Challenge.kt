@@ -405,6 +405,7 @@ fun ToDo(id: Str = "") {
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	val tskOn by rememberUpdatedState(tsk.on)
 
+	RunOnce(tskOn){
 	if (tskOn){
 		each(1000){
 			if (tskOn && !tsk.done()){
@@ -421,7 +422,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 					}
 				}
 			}
-		}
+		}}
 	}
 	
 	Icon.Timer(tskOn) {
