@@ -493,6 +493,7 @@ fun getMyAppLogs() {
 		}
 	}.start()
 }
+
 fun captureAppCrashes() {
     Thread {
         try {
@@ -533,18 +534,6 @@ fun <T> runHeavyTask(
         }
     }
 }
-fun wait(x: Any = 20, Do: Wait) {
-    scope.launch {
-		try {
-			wait(x)
-			Do()
-		} catch (e: Exception) {
-			log("<fun wait>: ${e.message}")
-		}
-    }
-}
-suspend fun wait(x: Any = 20) { delay(toL(x)) }
-
 
 
 
