@@ -206,6 +206,15 @@ fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
     }
 }
 
+fun each(s: Any = 1000, If: Bool = yes, Do: Wait) {
+    RunOnce {
+        while (If) {
+            Do()
+            wait(s)
+        }
+    }
+}
+
 
 val runOnceSet = mutableSetOf<Any>()
 fun RunOnce(Do: Wait) {
@@ -590,14 +599,7 @@ fun wait(x: Any = 20, Do: Wait) {
 }
 suspend fun wait(x: Any = 20) { delay(toL(x)) }
 
-fun each(s: Any = 1000, Do: Wait) {
-    RunOnce {
-        while (yes) {
-            Do()
-            wait(s)
-        }
-    }
-}
+
 
 
 
