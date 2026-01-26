@@ -154,7 +154,7 @@ fun each(s: Any = 1000, If: Bool = yes, Do: Wait) {
     RunOnce {
         while (If) {
             Do()
-            wait(s)
+            delay(toL(s))
         }
     }
 }
