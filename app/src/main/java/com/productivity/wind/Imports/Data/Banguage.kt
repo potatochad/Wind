@@ -199,14 +199,6 @@ fun Dp.toPx(): Int {
 }
 
 
-@Composable
-fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
-    LaunchedEffect(key1, key2) {
-        Do()
-    }
-}
-
-
 
 
 
@@ -220,11 +212,6 @@ fun isNewDay(): Bool {
 	}
 	return no
 }
-
-
-
-
-
 
 
 
