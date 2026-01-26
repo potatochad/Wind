@@ -191,3 +191,23 @@ fun isNotificationEnabled(): Bool {
 
 
 
+
+
+fun Android8OrAbove(Do: Do) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        Do()
+    }
+}
+
+fun CreateNotificationChannel(context: Context) {
+    Android8OrAbove {
+        val channel = NotificationChannel("WindApp_id", "WindChannel_name", NotificationManager.IMPORTANCE_DEFAULT).apply { description = "Channel description" }
+
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager.createNotificationChannel(channel)
+    }
+}
+
+
+
+
+
