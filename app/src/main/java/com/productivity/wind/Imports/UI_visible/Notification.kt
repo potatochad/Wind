@@ -67,7 +67,7 @@ fun Notification(
     text: Str,
 ) {
     Permission.notification {
-        val notification = NotificationCompat.Builder(AppCtx, "default")
+        val notification = NotificationCompat.Builder(AppCtx, "WindApp_id")
             .setContentTitle(title)
             .setContentText(text)
             .setSmallIcon(myAppRes)
