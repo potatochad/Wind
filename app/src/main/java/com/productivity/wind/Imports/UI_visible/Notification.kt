@@ -68,7 +68,10 @@ typealias NotificationBuilder = NotificationCompat.Builder
 val notifMap = mutableMapOf<Int, NotificationBuilder>()
 var notifyID by m(0)
 
-fun Show(notifi: Notification, id: Int = 1) { val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager manager.notify(id, notifi) }
+fun Show(notifi: Notification, id: Int = 1) { 
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    manager.notify(id, notifi) 
+}
 
 
 
