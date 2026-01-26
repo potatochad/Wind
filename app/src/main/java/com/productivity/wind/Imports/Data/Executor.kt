@@ -150,14 +150,20 @@ fun Try(log: Str="", onFail: Do={}, Do: Do){
     }
 }
 
-fun each(s: Any = 1000, If: Bool = yes, Do: Wait) {
-    RunOnce {
-        while (If) {
-            Do()
-            delay(toL(s))
+@Composable
+fun Each(
+    s: Long = 1000L,
+    condition: () -> Bool = { yes },
+    action: Wait
+) {
+    LaunchedEffect(Unit) {
+        while (condition()) {
+            action()
+            delay(s)
         }
     }
 }
+
 
 val runOnceSet = mutableSetOf<Any>()
 fun RunOnce(Do: Wait) {
