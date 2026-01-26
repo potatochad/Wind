@@ -129,3 +129,25 @@ import com.productivity.wind.Imports.UI_visible.*
 import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
+
+
+fun runOnceEver(action: Wait) {
+    val key = autoId()
+    if (!getData("RunOnceEver").getBoolean(key, no)) {
+        Do{
+          action()
+        }
+        getData("RunOnceEver").edit().putBoolean(key, yes).apply()
+    }
+}
+
+fun Try(log: Str="", onFail: Do={}, Do: Do){
+    try {
+        Do()
+    } catch (e: Throwable) {
+        onFail()
+        Vlog("$log ${e.message}")
+    }
+}
+
+
