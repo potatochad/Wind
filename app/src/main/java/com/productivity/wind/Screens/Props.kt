@@ -350,9 +350,7 @@ object Header {
 			test++
 		}
 
-        Icon.Reload{
-			Notification("title $test", "descriptionn")
-		}
+        //Icon.Reload{}
         
         move(w = 12)
         
