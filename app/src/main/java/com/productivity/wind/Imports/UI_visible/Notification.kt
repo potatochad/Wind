@@ -62,10 +62,16 @@ import com.productivity.wind.R
 import android.view.*
 import android.widget.*
 
+val notifMap = mutableMapOf<Str, NotificationCompat.Builder>()
+
 fun Notification(
     title: Str,
     text: Str,
+    id: Str = id()
 ) {
+
+
+    //notification UI
     Permission.notification {
         val notification = NotificationCompat.Builder(AppCtx, "WindApp_id")
             .setContentTitle(title)
