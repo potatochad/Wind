@@ -825,11 +825,20 @@ class MainActivity : ComponentActivity() {
 		AppCtx = this.applicationContext
 		AppPkg = this.packageName
 
+
+
+		
+
 		permission = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { granted ->
             log("permission granted?: $granted")
 		}
+
+
+		CreateNotificationChannel(this)
+		
+		
 
 		AppStart_beforeUI()
 
