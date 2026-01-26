@@ -231,16 +231,18 @@ object Item {
 
     @Composable
     fun WebPointTimer() {
-        Each(1000){
-            if (Bar.Dpoints > 0) {
-                if (Bar.funTime < 1) {
-                    goTo("main")
-                    goTo("getPoints")
-                } else {
-                    Bar.funTime -= 1
-                }
-            }
-        }
+		RunOnce{
+			Each(1000){
+				if (Bar.Dpoints > 0) {
+					if (Bar.funTime < 1) {
+						goTo("main")
+						goTo("getPoints")
+					} else {
+						Bar.funTime -= 1
+					}
+				}
+			}
+		}
     }
 
     
