@@ -178,6 +178,19 @@ fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
     }
 }
 
+fun wait(x: Any = 20, Do: Wait) {
+    scope.launch {
+		try {
+			wait(x)
+			Do()
+		} catch (e: Exception) {
+			log("<fun wait>: ${e.message}")
+		}
+    }
+}
+suspend fun wait(x: Any = 20) { delay(toL(x)) }
+
+
 
 
 
