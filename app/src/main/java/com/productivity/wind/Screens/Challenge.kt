@@ -406,7 +406,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	val tskOn by rememberUpdatedState(tsk.on)
 
 	
-	each(1000, tskOn){
+	Each(1000, { tskOn }){
 		log("task is: $tskOn, taskName: ${tsk.name}")
 		if (tskOn && !tsk.done()){
 			tsk.edit {
