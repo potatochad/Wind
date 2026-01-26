@@ -411,11 +411,11 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				tsk.edit {
 					didTime = tsk.didTime++
 				}
-				log("$didTime, ${tsk.name}, showing notification")
+				log("${tsk.didTime}, ${tsk.name}, showing notification")
 				Notification("${tsk.name}", "time: ${tsk.doneTime - tsk.didTime}")
 			} else {
 				if (tsk.done()){
-					log("$didTime, ${tsk.name}, DONE,  timeleft: ${tsk.doneTime - tsk.didTime}")
+					log("${tsk.didTime}, ${tsk.name}, DONE,  timeleft: ${tsk.doneTime - tsk.didTime}")
 					tsk.edit {
 						tsk.on = no
 					}
