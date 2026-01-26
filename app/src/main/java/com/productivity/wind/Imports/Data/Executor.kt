@@ -191,6 +191,53 @@ fun wait(x: Any = 20, Do: Wait) {
 suspend fun wait(x: Any = 20) { delay(toL(x)) }
 
 
+fun Do(onError: Wait ={}, Do: Wait) {
+	App.lifecycleScope.launch {
+		try {
+			Do()
+		} catch (e: Exception) {
+			Vlog("error: ${e.message}")
+			onError()
+		}
+	} 
+}
+fun NoLag(onError: Wait ={}, Do: Wait) {
+    App.lifecycleScope.launch(Dispatchers.Default) {
+		try {
+			Do()
+		} catch (e: Exception) {
+			Vlog("error: ${e.message}")
+			onError()
+		}
+    }
+}
+
+
+inline fun check(
+    condition: Bool,
+    msg: Str = "",
+    Do: Do = {},
+) {
+	if (condition) {
+		if (msg.isNotEmpty()) Vlog(msg)
+		Do()        // safe
+	}
+}
+
+
+fun <T> runHeavyTask(
+    task: () -> T,         
+    onResult: Do_<T>  
+) {
+    CoroutineScope(Dispatchers.Default).launch { // off UI
+        val result = task()                       // run heavy work
+        withContext(Dispatchers.Main) {           // back to UI
+            onResult(result)                      // update Compose with result
+        }
+    }
+}
+
+
 
 
 
