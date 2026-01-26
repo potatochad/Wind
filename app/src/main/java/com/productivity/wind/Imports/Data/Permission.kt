@@ -201,11 +201,26 @@ fun Android8OrAbove(Do: Do) {
 
 fun CreateNotificationChannel(context: Context) {
     Android8OrAbove {
-        val channel = NotificationChannel("WindApp_id", "WindChannel_name", NotificationManager.IMPORTANCE_DEFAULT).apply { description = "Channel description" }
+        val channel = NotificationChannel(
+            "WindApp_id",
+            "WindChannel_name",
+            NotificationManager.IMPORTANCE_DEFAULT
+        ).apply {
+            description = "Channel description"
+        }
 
-        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager.createNotificationChannel(channel)
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
     }
 }
+
+
+
+
+
+
+
+
 
 
 
