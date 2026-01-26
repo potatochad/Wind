@@ -152,14 +152,14 @@ fun Try(log: Str="", onFail: Do={}, Do: Do){
 
 @Composable
 fun Each(
-    s: Long = 1000L,
+    s: Any = 1000,
     condition: () -> Bool = { yes },
     action: Wait
 ) {
     LaunchedEffect(Unit) {
         while (condition()) {
             action()
-            delay(s)
+            delay(toL(s))
         }
     }
 }
