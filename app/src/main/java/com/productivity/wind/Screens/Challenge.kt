@@ -405,24 +405,23 @@ fun ToDo(id: Str = "") {
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	val tskOn by rememberUpdatedState(tsk.on)
 
-	RunOnce(tskOn){
-	if (tskOn){
-		each(1000){
-			if (tskOn && !tsk.done()){
+	
+	each(1000, tskOn){
+		log("task is: $tskOn, taskName: ${tsk.name}")
+		if (tskOn && !tsk.done()){
+			tsk.edit {
+				didTime = tsk.didTime++
+			}
+			log("${tsk.didTime}, ${tsk.name}, showing notification")
+			// Notification("${tsk.name}", "time: ${tsk.doneTime - tsk.didTime}")
+		} else {
+			if (tsk.done()){
+				log("${tsk.didTime}, ${tsk.name}, DONE,  timeleft: ${tsk.doneTime - tsk.didTime}")
 				tsk.edit {
-					didTime = tsk.didTime++
-				}
-				log("${tsk.didTime}, ${tsk.name}, showing notification")
-				// Notification("${tsk.name}", "time: ${tsk.doneTime - tsk.didTime}")
-			} else {
-				if (tsk.done()){
-					log("${tsk.didTime}, ${tsk.name}, DONE,  timeleft: ${tsk.doneTime - tsk.didTime}")
-					tsk.edit {
-						tsk.on = no
-					}
+					tsk.on = no
 				}
 			}
-		}}
+		}
 	}
 	
 	Icon.Timer(tskOn) {
