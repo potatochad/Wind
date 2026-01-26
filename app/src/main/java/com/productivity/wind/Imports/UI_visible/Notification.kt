@@ -62,28 +62,43 @@ import com.productivity.wind.R
 import android.view.*
 import android.widget.*
 
-val notifMap = mutableMapOf<Str, NotificationCompat.Builder>()
+
+typealias NotificationBuilder = NotificationCompat.Builder
+
+val notifMap = mutableMapOf<Int, NotificationBuilder>()
+
+
+fun Show(notifi: Notification, id: Int = 1) {
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    manager.notify(id, notifi)
+}
+
 
 fun Notification(
     title: Str,
     text: Str,
-    id: Str = id()
 ) {
-
-
-    //notification UI
+    var id by m(notifMap.size+1)
     Permission.notification {
-        val notification = NotificationCompat.Builder(AppCtx, "WindApp_id")
+        val notifi = NotificationBuilder(AppCtx, "WindApp_id")
             .setContentTitle(title)
             .setContentText(text)
             .setSmallIcon(myAppRes)
             .setAutoCancel(yes) // disappears when swiped
             .build()
+            
+        notifMap[id] = notifi
 
-        val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(1, notification)
+        Show(notifi, id)
     }
 }
+
+
+
+
+
+
+
 
 
 
