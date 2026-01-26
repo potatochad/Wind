@@ -206,26 +206,6 @@ fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
     }
 }
 
-fun each(s: Any = 1000, If: Bool = yes, Do: Wait) {
-    RunOnce {
-        while (If) {
-            Do()
-            wait(s)
-        }
-    }
-}
-
-
-val runOnceSet = mutableSetOf<Any>()
-fun RunOnce(Do: Wait) {
-	Do {
-		val key = Do as Any
-		if (key !in runOnceSet) {
-			runOnceSet.add(key)
-			Do()
-		}
-	}
-}
 
 
 
