@@ -407,8 +407,12 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 
 	if (tskOn){
 		each(1000){
-			log("ticking")
-		}
+			if (tskOn){
+			tsk.edit {
+				didTime = tsk.didTime++
+			}
+			Notification("${tsk.name}", "time: ${tsk.doneTime - tsk.didTime}")
+		}}
 	}
 	
 	Icon.Timer(tskOn) {
