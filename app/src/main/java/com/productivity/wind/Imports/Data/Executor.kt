@@ -150,16 +150,27 @@ fun Try(log: Str="", onFail: Do={}, Do: Do){
     }
 }
 
-fun Each(
+@Composable
+fun OnceEach(
     s: Any = 1000,
     condition: () -> Bool = { yes },
     action: Wait
 ) {
-	Do {
+	RunOnce {
 		while (condition()) {
 			action()
 			delay(toL(s))
 		}
+	}
+}
+fun Each(
+	s: Any = 1000,
+    condition: () -> Bool = { yes },
+    action: Do
+) {
+	while (condition()) {
+		action()
+		delay(toL(s))
 	}
 }
 
