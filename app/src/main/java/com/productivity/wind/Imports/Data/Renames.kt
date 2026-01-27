@@ -191,6 +191,11 @@ fun <T> r_m(x: T) = r { m(x) }
 @Composable
 fun <T> r(x: T) = r_m(x)
 
+@Composable
+fun <T> onChange(vararg keys: Any?, block: () -> T): T {
+    return remember(*keys) { block() }
+}
+
 inline fun <reified T> ml(): MutableList<T> = mutableListOf()
 inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
 @Composable
