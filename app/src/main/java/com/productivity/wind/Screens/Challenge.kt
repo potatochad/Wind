@@ -404,7 +404,7 @@ fun ToDo(id: Str = "") {
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	val tskOn by rememberUpdatedState(tsk.on)
-	var timeWorked by rememberUpdatedState(tsk.didTime)
+	var timeWorked by r(tsk.didTime)
 
 	fun StopTimer(){
 		tsk.edit {
@@ -424,6 +424,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				tsk.edit {
 					didTime +=1
 				}
+				timeWorked = tsk.didTime
 			
 				// Notification("${tsk.name}", "time: ${tsk.doneTime - tsk.didTime}")
 			}
@@ -450,7 +451,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		log("name ${tsk.name}, tskOn ${tsk.on}, !it ${!it}")
 	}
 	move(5)
-    Text("${tsk.name}: ${tsk.doneTime - tsk.didTime}")
+    Text("${tsk.name}: ${tsk.doneTime - timeWorked}")
     End { 
 		Item.Edit{
             Item.enoughPoints {
