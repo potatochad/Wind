@@ -150,7 +150,6 @@ fun Try(log: Str="", onFail: Do={}, Do: Do){
     }
 }
 
-@Composable
 fun Each(
     s: Any = 1000,
     condition: () -> Bool = { yes },
