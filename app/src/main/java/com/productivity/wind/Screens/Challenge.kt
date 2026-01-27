@@ -424,6 +424,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				tsk.edit {
 					didTime +=1
 				}
+				Bar.funTime += 1
 				timeWorked = tsk.didTime
 			
 				// Notification("${tsk.name}", "time: ${tsk.doneTime - tsk.didTime}")
