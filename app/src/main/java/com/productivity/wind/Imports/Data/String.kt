@@ -401,6 +401,33 @@ fun Any.toLines(): List<UIStr> {
 
 */
 
+@Composable
+fun Any.toLines(): List<UIStr> {
+    val str = toStr(this)
+    
+    // Measure how many chars fit in one line
+    val lineChars = charsW(str)
+    if (lineChars == 0) return emptyList()
+
+    // Remember lines so it only recalculates when str or lineChars changes
+    val lines = remember(str, lineChars) {
+        val result = mutableListOf<UIStr>()
+        var line = ""
+        str.safeSplit(" ") { word ->
+            if (line.isEmpty() || line.length + 1 + word.length <= lineChars) {
+                if (line.isNotEmpty()) line += " "
+                line += word
+            } else {
+                result.add(UIStr(line))
+                line = word
+            }
+        }
+        if (line.isNotEmpty()) result.add(UIStr(line))
+        result
+    }
+
+    return lines
+}
 
 
 
