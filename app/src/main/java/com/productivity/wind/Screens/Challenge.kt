@@ -406,8 +406,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	val tskOn by rememberUpdatedState(tsk.on)
 
 	
-	RunOnce {
-		Each(1000, { tskOn }){
+	OnceEach(1000, { tskOn }){
 			log("task is: $tskOn, taskName: ${tsk.name}")
 			
 			if (tskOn && !tsk.done()){
@@ -423,7 +422,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 					tsk.on = no
 				}
 			}
-		}}
+		}
 	}
 	
 	Icon.Timer(tskOn) {
