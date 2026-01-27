@@ -414,8 +414,8 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 
 	
 	RunOnce {
+		StopTimer()
         while (yes) {
-			StopTimer()
 			wait(1000)
 			if (tskOn){
 				log("task is ON")
