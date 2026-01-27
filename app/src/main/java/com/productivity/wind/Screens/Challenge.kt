@@ -404,20 +404,26 @@ fun ToDo(id: Str = "") {
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	val tskOn by rememberUpdatedState(tsk.on)
+	var timeWorked by synch(tsk.didTime){
+		tsk.edit {
+			didTime = it
+		}
+	}
 
 	
 	OnceEach(1000, { tskOn }){
-			log("task is: $tskOn, taskName: ${tsk.name}")
+			log("task is ON")
 			
 			if (tskOn && !tsk.done()){
-			tsk.edit {
-				didTime = tsk.didTime++
-			}
-			log("${tsk.didTime}, ${tsk.name}, showing notification")
+				log("[TaskActive] Tsk_DIDTIME: ${tsk.didTime}, timeWorked: $timeWorked , name: ${tsk.name}")
+			
+
+				timeWorked +=1
+			
 			// Notification("${tsk.name}", "time: ${tsk.doneTime - tsk.didTime}")
 		} else {
 			if (tsk.done()){
-				log("${tsk.didTime}, ${tsk.name}, DONE,  timeleft: ${tsk.doneTime - tsk.didTime}")
+				log("task is done")
 				tsk.edit {
 					tsk.on = no
 				}
