@@ -367,55 +367,23 @@ fun String.safeSplit(delim: String, action: (String) -> Unit) {
 
 
 
-/*
 @Composable
 fun Any.toLines(): List<UIStr> {
     var lineChars by r(0)
     var str by r(toStr(this))
 
-    // Measure how many chars fit in one line
     lineChars = charsW(str)
 
-    // Return empty if not measured yet
     if (lineChars == 0) return emptyList()
 
     
-    val lines = mList<UIStr>()
 
-    RunOnce {
+    val lines = remember(str, lineChars) {
+        val result = mList<UIStr>()
         var line = ""
         
         str.safeSplit(" "){ word ->
             if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
-                line += word
-            } else {
-                lines.add(UIStr(line))
-                line = word
-            }
-        }
-        if (line.isNotEmpty()) lines.add(UIStr(line))
-    }
-    
-    return lines
-}
-
-*/
-
-@Composable
-fun Any.toLines(): List<UIStr> {
-    val str = toStr(this)
-    
-    // Measure how many chars fit in one line
-    val lineChars = charsW(str)
-    if (lineChars == 0) return emptyList()
-
-    // Remember lines so it only recalculates when str or lineChars changes
-    val lines = remember(str, lineChars) {
-        val result = mutableListOf<UIStr>()
-        var line = ""
-        str.safeSplit(" ") { word ->
-            if (line.isEmpty() || line.length + 1 + word.length <= lineChars) {
-                if (line.isNotEmpty()) line += " "
                 line += word
             } else {
                 result.add(UIStr(line))
@@ -425,9 +393,8 @@ fun Any.toLines(): List<UIStr> {
         if (line.isNotEmpty()) result.add(UIStr(line))
         result
     }
-
+    
     return lines
 }
-
 
 
