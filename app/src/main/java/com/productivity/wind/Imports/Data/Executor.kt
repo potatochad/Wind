@@ -155,10 +155,12 @@ fun Each(
     condition: () -> Bool = { yes },
     action: Wait
 ) {
-    while (condition()) {
-        action()
-        delay(toL(s))
-    }
+	Do {
+		while (condition()) {
+			action()
+			delay(toL(s))
+		}
+	}
 }
 
 
