@@ -141,12 +141,90 @@ fun isNewDay(): Bool {
 	return no
 }
 
+@Serializable
 data class Schedule(
     var type: Str = "",
     var every: Int = 1, // every 1 day, every 2 weeks, etc
     var daysOfWeek: Str = "", // only for weekly
     var startDate: Str = ""
 )
+
+@Composable
+fun ScheduleBlock(
+    schedule: Schedule,
+    onChange: (Schedule) -> Unit
+) {
+    var type by remember { mutableStateOf(schedule.type.ifEmpty { "DAILY" }) }
+    var every by remember { mutableStateOf(schedule.every.toString()) }
+    var days by remember { mutableStateOf(schedule.daysOfWeek) }
+
+    Column(
+        modifier = Modifier.padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+
+        // TYPE
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf("DAILY", "WEEKLY", "MONTHLY", "YEARLY").forEach { t ->
+                Button(
+                    onClick = {
+                        type = t
+                        onChange(
+                            schedule.copy(
+                                type = t,
+                                daysOfWeek = if (t == "WEEKLY") days else ""
+                            )
+                        )
+                    }
+                ) {
+                    Text(t)
+                }
+            }
+        }
+
+        // EVERY
+        OutlinedTextField(
+            value = every,
+            onValueChange = {
+                every = it
+                onChange(
+                    schedule.copy(
+                        type = type,
+                        every = it.toIntOrNull() ?: 1
+                    )
+                )
+            },
+            label = { Text("Every") },
+            singleLine = true
+        )
+
+        // WEEKLY DAYS
+        if (type == "WEEKLY") {
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                listOf("MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN").forEach { d ->
+                    Button(
+                        onClick = {
+                            val set = days.split(",").filter { it.isNotBlank() }.toMutableSet()
+                            if (set.contains(d)) set.remove(d) else set.add(d)
+
+                            days = set.joinToString(",")
+
+                            onChange(
+                                schedule.copy(
+                                    type = type,
+                                    daysOfWeek = days
+                                )
+                            )
+                        }
+                    ) {
+                        Text(d)
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 
 
