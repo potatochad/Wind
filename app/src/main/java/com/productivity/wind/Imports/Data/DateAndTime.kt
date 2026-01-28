@@ -141,7 +141,7 @@ fun isNewDay(): Bool {
 	return no
 }
 
-@Serializable
+@kotlinx.serialization.Serializable
 data class Schedule(
     var type: Str = "",
     var every: Int = 1, // every 1 day, every 2 weeks, etc
