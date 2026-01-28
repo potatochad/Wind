@@ -434,11 +434,12 @@ fun ScheduleUI(
        Column {
           LazzyRow {
               listOf("DAILY","WEEKLY","MONTHLY","YEARLY","ONCE").forEach {
+                  
                   Ctext(
                         it,
                         mod = Mod.space(5),
                         animate = yes,
-                        selected = if (weekDays == it) yes else no,
+                        selected = if (type == it) yes else no,
                   ) {
                      if (it == "ONCE"){
                         Vlog("DOESNT WORK")
