@@ -137,7 +137,7 @@ fun ScheduleUI(
     onChange: Do_<Schedule>
 ){
    var type by r("")
-   var repeatEvery = r(0)
+   var repeatEvery by r(0)
    var weekDays by r("")
    var startDate by r("")
 
@@ -148,7 +148,7 @@ fun ScheduleUI(
        startDate = schedule.startDate
    }
 
-   LaunchedEffect(type, repeatEvery.it, weekDays) {
+   LaunchedEffect(type, repeatEvery, weekDays) {
        onChange(
            Schedule(
               type = type,
@@ -183,7 +183,9 @@ fun ScheduleUI(
           if (type != "ONCE"){
               LazzyRow {
                  Text("Repeat every")
-                 TinyInput(repeatEvery, maxLetters = 5, isInt =yes, w = 80) 
+                 TinyInput(repeatEvery, maxLetters = 5, isInt =yes, w = 80){
+                    repeatEvery = toInt(it)
+                 }
               }
           }
           
