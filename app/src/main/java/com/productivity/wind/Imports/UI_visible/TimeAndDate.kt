@@ -141,7 +141,7 @@ fun ScheduleUI(
    var weekDays by r("")
    var startDate by r("")
 
-   LaunchedEffect {
+   RunOnce {
        type = schedule.type
        repeatEvery = schedule.every
        weekDays = schedule.daysOfWeek
