@@ -165,7 +165,8 @@ data class DoTsk(
     var doneTime: Int = 0,
     var worth: Int = 0,
 	var timerOn: Bool = no,
-	var due: Str = ""
+	var schedule: Schedule = Schedule(),
+	var showToday: Bool = no,
 ) {
 	var on by synch(timerOn){ timerOn = it }
 
