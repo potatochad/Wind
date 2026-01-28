@@ -138,23 +138,29 @@ fun ScheduleUI(
    var type by r("")
    var repeatEvery = r(0)
    var weekDays by r("")
+   var startDate by r("")
 
    LaunchedEffect {
-
-       schedule.type
-       schedule.every
-       schedule.daysOfWeek
-       schedule.startDate
-       
+       type = schedule.type
+       repeatEvery = schedule.every
+       weekDays = schedule.daysOfWeek
+       startDate = schedule.startDate
    }
 
    LaunchedEffect(type, repeatEvery.it, weekDays) {
-    
+       onChange(
+           Schedule(
+              type = type,
+              every = repeatEvery,
+              daysOfWeek = weekDays,
+              startDate = startDate
+           )
+       )
    }
   
    LazyCard {
        Column {
-          Text("$type, repeats every $repeatEvery")
+          Text("type: $type, repeats: $repeatEvery, weekDays: $weekDays, start day: $startDate") 
           LazzyRow {
               Ctext("weekly") {
                  type = "WEEKLY"
@@ -167,7 +173,7 @@ fun ScheduleUI(
               Ctext("monthly") {
                  type = "MONTHLY"
               }
-              Ctext("once") {
+              Ctext("once, NEED FIXING") {
                  type = "ONCE"
               }
               Ctext("yearly") {
@@ -180,6 +186,7 @@ fun ScheduleUI(
                  TinyInput(repeatEvery, maxLetters = 5, isInt =yes, w = 80) 
               }
           }
+          
           if (type == "WEEKLY"){
               LazzyRow {
                   Ctext("MO") {
