@@ -191,27 +191,13 @@ fun ScheduleUI(
           
           if (type == "WEEKLY"){
               LazzyRow {
-                  Ctext("MO") {
-                      weekDays = "MO"
+                  listOf("MO","TU","WE","TH","FR","SA","SU").forEach { str ->
+                      Ctext(str) {
+                         weekDays = it
+                      }
                   }
-                  Ctext("TU") {
-                      weekDays = "TU"
-                  }
-                  Ctext("WE") {
-                      weekDays = "WE"
-                  }
-                  Ctext("TH") {
-                      weekDays = "TH"
-                  }
-                  Ctext("FR") {
-                      weekDays = "FR"
-                  }
-                  Ctext("SA") {
-                      weekDays = "SA"
-                  }
-                  Ctext("SU") {
-                      weekDays = "SU"
-                  }
+                  
+                  
               }
           }
        }
