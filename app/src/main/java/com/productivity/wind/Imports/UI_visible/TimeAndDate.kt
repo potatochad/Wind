@@ -160,35 +160,21 @@ fun ScheduleUI(
    }
    
        Column {
-          Text("type: $type, repeats: $repeatEvery, weekDays: $weekDays, start day: $startDate") 
           LazzyRow {
-              Ctext("weekly") {
-                 type = "WEEKLY"
-              }
-              Ctext("daily") {
-                 type = "DAILY"
-              }
-          }
-          LazzyRow {
-              Ctext("monthly") {
-                 type = "MONTHLY"
-              }
-              Ctext("once, NEED FIXING") {
-                 type = "ONCE"
-              }
-              Ctext("yearly") {
-                 type = "YEARLY"
+              listOf("DAILY","WEEKLY","MONTHLY","YEARLY","ONCE").forEach {
+                  Ctext(
+                        it,
+                        mod = Mod.space(5),
+                        animate = yes,
+                        selected = if (weekDays == it) yes else no,
+                  ) {
+                     if (it == "ONCE"){
+                        
+                     }
+                     type = it
+                  }
               }
           }
-          if (type != "ONCE"){
-              LazzyRow {
-                 Text("Repeat every")
-                 TinyInput(repeatEvery, maxLetters = 5, isInt =yes, w = 80){
-                    repeatEvery = toInt(it)
-                 }
-              }
-          }
-          
           if (type == "WEEKLY"){
               LazzyRow {
                   listOf("MO","TU","WE","TH","FR","SA","SU").forEach {
@@ -201,13 +187,20 @@ fun ScheduleUI(
                          weekDays = it
                       }
                   }
-                  
-                  
               }
           }
-       }
-   
-    
+          
+          if (type != "ONCE"){
+              LazzyRow {
+                 Text("Repeat every")
+                 TinyInput(repeatEvery, maxLetters = 5, isInt =yes, w = 80){
+                    repeatEvery = toInt(it)
+                 }
+              }
+          }
+          
+          
+       } 
 }
 
 
