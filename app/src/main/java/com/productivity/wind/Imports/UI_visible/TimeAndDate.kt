@@ -136,32 +136,77 @@ fun ScheduleUI(
     onChange: Do_<Schedule>
 ){
    var type by r("")
-  
-   LazyCard {
-       Text("$type")
-       Ctext("weekly") {
-           type = "WEEKLY"
-       }
-       Ctext("daily") {
-           type = "DAILY"
-       }
-       Ctext("monthly") {
-           type = "MONTHLY"
-       }
-       Ctext("once") {
-           type = "ONCE"
-       }
-       Ctext("yearly") {
-           type = "YEARLY"
-       }
+   var repeatEvery = r(0)
+   var weekDays by r("")
+
+   LaunchedEffect {
+
+       schedule.type
+       schedule.every
+       schedule.daysOfWeek
+       schedule.startDate
        
    }
-     Schedule(
-    var type: Str = "", // DAILY WEEKLY MONTHLY YEARLY ONCE
-    var every: Int = 1, // every 1 day, every 2 weeks
-    var daysOfWeek: Str = "", // only for weekly: MO TU WE TH FR SA SU
-    var startDate: Str = "" // 2020-11-29
-)
+
+   LaunchedEffect(type, repeatEvery.it, weekDays) {
+    
+   }
+  
+   LazyCard {
+       Column {
+          Text("$type, repeats every $repeatEvery")
+          LazzyRow {
+              Ctext("weekly") {
+                 type = "WEEKLY"
+              }
+              Ctext("daily") {
+                 type = "DAILY"
+              }
+          }
+          LazzyRow {
+              Ctext("monthly") {
+                 type = "MONTHLY"
+              }
+              Ctext("once") {
+                 type = "ONCE"
+              }
+              Ctext("yearly") {
+                 type = "YEARLY"
+              }
+          }
+          if (type != "ONCE"){
+              LazzyRow {
+                 Text("Repeat every")
+                 TinyInput(repeatEvery, maxLetters = 5, isInt =yes, w = 80) 
+              }
+          }
+          if (type == "WEEKLY"){
+              LazzyRow {
+                  Ctext("MO") {
+                      weekDays = "MO"
+                  }
+                  Ctext("TU") {
+                      weekDays = "TU"
+                  }
+                  Ctext("WE") {
+                      weekDays = "WE"
+                  }
+                  Ctext("TH") {
+                      weekDays = "TH"
+                  }
+                  Ctext("FR") {
+                      weekDays = "FR"
+                  }
+                  Ctext("SA") {
+                      weekDays = "SA"
+                  }
+                  Ctext("SU") {
+                      weekDays = "SU"
+                  }
+              }
+          }
+       }
+   }
     
 }
 
