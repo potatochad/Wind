@@ -319,7 +319,6 @@ fun ToDo(id: Str = "") {
     var time1 = r(60)
     var points1 = r(10)
     var name1 = r("TaskName")
-	var schedule1 = r("daily")
 	var scheduleTest by r(Schedule(
 	    	type = "DAILY",
 	    	every = 1,
@@ -360,7 +359,6 @@ fun ToDo(id: Str = "") {
 							name = name1.it
 							doneTime = time1.it
 							worth = points1.it
-							due = schedule1.it
                         }  
 						log("going to main")
                         goTo("Main")
@@ -374,7 +372,6 @@ fun ToDo(id: Str = "") {
                     name = name1.it
 					doneTime = time1.it
 					worth = points1.it
-					due = schedule1.it
                 }
 				Vlog("going to main")
                 goTo("Main")
@@ -399,11 +396,6 @@ fun ToDo(id: Str = "") {
 		}
 		RuleCard("Schedule"){
 			Text("${schedule1.it}")
-			ScheduleBlock(
-				scheduleTest
-			) {
-				scheduleTest = it
-			}
 		}
 	  
 
