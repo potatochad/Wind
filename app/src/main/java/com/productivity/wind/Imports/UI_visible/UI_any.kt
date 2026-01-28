@@ -94,7 +94,7 @@ fun Ctext(
 	Do: Do={},
 ) {
 	Text(
-		text = if (selected) { UIStr(text).gold() } else { UIStr(text).lightGray() },
+		text = if (selected) { UIStr(text).gold() } else { UIStr(text).gray() },
 		modifier = mod.click(animate) {
 			Do()
 		},
