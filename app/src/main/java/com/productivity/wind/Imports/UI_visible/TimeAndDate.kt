@@ -196,7 +196,7 @@ fun ScheduleUI(
                             it,
                             mod = Mod.space(5),
                             animate = yes,
-                            selected = if (weekDays == str) yes else no,
+                            selected = if (weekDays == it) yes else no,
                       ) {
                          weekDays = it
                       }
