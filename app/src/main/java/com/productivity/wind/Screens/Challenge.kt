@@ -395,8 +395,8 @@ fun ToDo(id: Str = "") {
 			}
 		}
 		RuleCard("Schedule"){
-			Icon.Edit {
-				Vlog("does nothing")
+			ScheduleUI(scheduleTest) {
+				scheduleTest = it
 			}
 		}
 	  
