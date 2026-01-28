@@ -195,8 +195,8 @@ fun ScheduleUI(
                       Ctext(
                             str,
                             mod = Mod.space(5),
-                            animate: Bool = no,
-                            selected: Bool = yes
+                            animate = yes,
+                            selected = if (weekDays == str) yes else no,
                       ) {
                          weekDays = it
                       }
