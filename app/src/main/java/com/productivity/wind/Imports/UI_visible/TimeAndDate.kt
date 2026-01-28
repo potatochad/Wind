@@ -129,3 +129,50 @@ import com.productivity.wind.Imports.UI_visible.*
 import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
+
+@Composable
+fun ScheduleUI(
+    schedule: Schedule,
+    onChange: Do_<Schedule>
+){
+   var type by r("")
+  
+   LazyCard {
+       Text("$type")
+       Ctext("weekly") {
+           type = "WEEKLY"
+       }
+       Ctext("daily") {
+           type = "DAILY"
+       }
+       Ctext("monthly") {
+           type = "MONTHLY"
+       }
+       Ctext("once") {
+           type = "ONCE"
+       }
+       Ctext("yearly") {
+           type = "YEARLY"
+       }
+       
+   }
+     Schedule(
+    var type: Str = "", // DAILY WEEKLY MONTHLY YEARLY ONCE
+    var every: Int = 1, // every 1 day, every 2 weeks
+    var daysOfWeek: Str = "", // only for weekly: MO TU WE TH FR SA SU
+    var startDate: Str = "" // 2020-11-29
+)
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
