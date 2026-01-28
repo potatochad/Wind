@@ -130,6 +130,7 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
+
 @Composable
 fun ScheduleUI(
     schedule: Schedule,
@@ -157,8 +158,7 @@ fun ScheduleUI(
            )
        )
    }
-  
-   LazyCard {
+   
        Column {
           Text("type: $type, repeats: $repeatEvery, weekDays: $weekDays, start day: $startDate") 
           LazzyRow {
@@ -213,7 +213,7 @@ fun ScheduleUI(
               }
           }
        }
-   }
+   
     
 }
 
