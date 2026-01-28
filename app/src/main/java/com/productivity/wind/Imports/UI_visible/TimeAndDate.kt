@@ -191,9 +191,9 @@ fun ScheduleUI(
           
           if (type == "WEEKLY"){
               LazzyRow {
-                  listOf("MO","TU","WE","TH","FR","SA","SU").forEach { str ->
+                  listOf("MO","TU","WE","TH","FR","SA","SU").forEach {
                       Ctext(
-                            str,
+                            it,
                             mod = Mod.space(5),
                             animate = yes,
                             selected = if (weekDays == str) yes else no,
