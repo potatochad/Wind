@@ -410,13 +410,13 @@ fun ScheduleUI(
 ){
    var type by r("")
    var repeatEvery by r(0)
-   var weekDays by r("")
+   var weekDays by r(setOf<Str>())
    var startDate by r("")
 
    RunOnce {
        type = schedule.type
        repeatEvery = schedule.every
-       weekDays = schedule.daysOfWeek
+       weekDays = schedule.daysOfWeek.split(" ").filter { it.isNotBlank() }.toSet()
        startDate = schedule.startDate
    }
 
@@ -425,7 +425,7 @@ fun ScheduleUI(
            Schedule(
               type = type,
               every = repeatEvery,
-              daysOfWeek = weekDays,
+              daysOfWeek = weekDays.joinToString(" "),
               startDate = startDate
            )
        )
@@ -450,16 +450,23 @@ fun ScheduleUI(
           if (type == "WEEKLY"){
               LazzyRow {
                   listOf("MO","TU","WE","TH","FR","SA","SU").forEach {
+                      var select by r(no)
                       Ctext(
                             it,
                             mod = Mod.space(5),
                             animate = yes,
-                            selected = if (weekDays == it) yes else no,
+                            selected = select,
                       ) {
-                         weekDays = it
+                         select = !select
+                         if (select) {
+                            weekDays = weekDays + "$it"
+                         } else {
+                            weekDays = weekDays - "$it"
+                         }
+                         
                       }
                   }
-              }
+              } 
           }
           
           if (type != "ONCE"){
