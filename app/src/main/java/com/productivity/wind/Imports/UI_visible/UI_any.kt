@@ -88,11 +88,14 @@ fun RuleCard(
 @Composable
 fun Ctext(
 	text: Any,
+	mod: Mod = Mod,
+	animate: Bool = no,
+	selected: Bool = yes,
 	Do: Do={},
 ) {
 	Text(
-		text = UIStr(text).gold(),
-		modifier = Mod.click(no) {
+		text = if (selected) { UIStr(text).gold() } else { UIStr(text).lightGray() },
+		modifier = mod.click(animate) {
 			Do()
 		},
 		maxLines = 1, 
