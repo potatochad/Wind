@@ -395,7 +395,9 @@ fun ToDo(id: Str = "") {
 			}
 		}
 		RuleCard("Schedule"){
-			Text("${schedule1.it}")
+			Icon.Edit {
+				Vlog("does nothing")
+			}
 		}
 	  
 
