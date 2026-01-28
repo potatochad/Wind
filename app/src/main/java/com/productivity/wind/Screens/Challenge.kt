@@ -320,6 +320,12 @@ fun ToDo(id: Str = "") {
     var points1 = r(10)
     var name1 = r("TaskName")
 	var schedule1 = r("daily")
+	var scheduleTest by r(Schedule(
+	    	type = "DAILY",
+	    	every = 1,
+	    )
+	)
+	
 	
   
     if (!id.isEmpty()) {
@@ -393,6 +399,11 @@ fun ToDo(id: Str = "") {
 		}
 		RuleCard("Schedule"){
 			Text("${schedule1.it}")
+			ScheduleBlock(
+				scheduleTest
+			) {
+				scheduleTest = it
+			}
 		}
 	  
 
