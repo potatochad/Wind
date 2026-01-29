@@ -132,9 +132,7 @@ import android.content.ClipboardManager
 import androidx.compose.ui.graphics.*
 
 
-fun LocalDate.toMillis(): Long {
-    return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
-}
+
 // Fake KwikButton
 @Composable
 fun KwikButton(text: Str, onClick: () -> Unit, modifier: Modifier = Modifier) {
