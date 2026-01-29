@@ -416,7 +416,7 @@ fun ScheduleUI(
    RunOnce {
        type = schedule.type
        repeatEvery = schedule.every
-       weekDays = schedule.daysOfWeek.split(" ").filter { it.isNotBlank() }.toSet()
+       weekDays = schedule.daysOfWeek.split(" ").filter { it.isNotBlank() }.toSet()   
        startDate = schedule.startDate
    }
 
@@ -433,7 +433,7 @@ fun ScheduleUI(
    
        Column {
           LazzyRow {
-              listOf("DAILY","WEEKLY","MONTHLY","YEARLY","ONCE").forEach {
+              listOf("WEEKLY","MONTHLY","YEARLY","CUSTOM").forEach {
                   
                   Ctext(
                         it,
@@ -441,7 +441,7 @@ fun ScheduleUI(
                         animate = yes,
                         selected = if (type == it) yes else no,
                   ) {
-                     if (it == "ONCE"){
+                     if (it == "CUSTOM"){
                         Vlog("DOESNT WORK")
                      }
                      type = it
@@ -470,14 +470,13 @@ fun ScheduleUI(
               } 
           }
           
-          if (type != "ONCE"){
-              LazzyRow {
-                 Text("Repeat every")
-                 TinyInput(repeatEvery, maxLetters = 5, isInt =yes, w = 80){
-                    repeatEvery = toInt(it)
-                 }
+          LazzyRow {
+              Text("Repeat every")
+              TinyInput(repeatEvery, maxLetters = 5, isInt =yes, w = 80){  
+                  repeatEvery = toInt(it)
               }
           }
+          
           
           
        } 
