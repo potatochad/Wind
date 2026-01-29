@@ -196,10 +196,12 @@ fun KwikDatePickerDialog(
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
     colors: DatePickerColors = DatePickerDefaults.colors(
-       selectedDayContainerColor = Gold,
+       selectedDayContainerColor = Color.Transparent,
+       selectedDayBorderColor = Gold,
        selectedDayContentColor = Color.White,
-       todayDateBorderColor = MaterialTheme.colorScheme.primary,
-       containerColor = MaterialTheme.colorScheme.surface
+       todayDateBorderColor = Color.Transparent,
+       todayDateContentColor = Color.Gray,
+       containerColor = MaterialTheme.colorScheme.surface,
     ),
     shape: Shape = MaterialTheme.shapes.medium,
     onDismiss: Do
