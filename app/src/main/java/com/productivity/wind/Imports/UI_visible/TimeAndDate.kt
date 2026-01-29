@@ -451,15 +451,15 @@ fun ScheduleUI(
           if (type == "WEEKLY"){
               LazzyRow {
                   listOf("MO","TU","WE","TH","FR","SA","SU").forEach {
-                      var select by r(no)
+                      var Ifselect by r(it in weekDays)
                       Ctext(
                             it,
                             mod = Mod.space(5),
                             animate = yes,
-                            selected = select,
+                            selected = Ifselect,
                       ) {
-                         select = !select
-                         if (select) {
+                         Ifselect = !Ifselect
+                         if (Ifselect) {
                             weekDays = weekDays + "$it"
                          } else {
                             weekDays = weekDays - "$it"
