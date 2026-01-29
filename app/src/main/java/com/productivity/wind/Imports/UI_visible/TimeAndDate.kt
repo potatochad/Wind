@@ -132,42 +132,6 @@ import android.content.ClipboardManager
 import androidx.compose.ui.graphics.*
 
 
-@Composable
-fun Btn(
-    text: ui,
-    mod: Mod = Mod,
-    onClick: Do = {},
-) {
-    Button(
-        onClick = onClick, 
-        modifier = mod,
-        colors = ButtonDefaults.buttonColors(
-             containerColor = faded(Color.Gray, 0.2f)
-        ),
-        border = BorderStroke(1.dp, Color.Gray),
-    ) {
-        text()
-    }
-}
-
-@Composable
-fun Btn(
-    text: Str,
-    mod: Mod = Mod,
-    onClick: Do = {},
-) {
-   Button(
-        onClick = onClick, 
-        modifier = mod,
-        colors = ButtonDefaults.buttonColors(
-             containerColor = faded(Color.Gray, 0.2f)
-        ),
-        border = BorderStroke(1.dp, Color.Gray),
-    ) {
-        Text(text)
-   }
-}
-
 
 /**
  * A date picker dialog that allows the user to select a date range.
