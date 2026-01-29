@@ -319,7 +319,7 @@ fun ToDo(id: Str = "") {
     var time1 = r(60)
     var points1 = r(10)
     var name1 = r("TaskName")
-	var scheduleTest by r(Schedule(
+	var schedule1 by r(Schedule(
 	    	type = "DAILY",
 	    	every = 1,
 	    )
@@ -395,8 +395,8 @@ fun ToDo(id: Str = "") {
 			}
 		}
 		RuleCard("Schedule"){
-			ScheduleUI(scheduleTest) {
-				scheduleTest = it
+			ScheduleUI(schedule1) {
+				schedule1 = it
 			}
 		}
 	  
