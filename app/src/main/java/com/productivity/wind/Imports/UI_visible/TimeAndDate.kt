@@ -148,9 +148,17 @@ fun KwikTextButton(
     text: @Composable () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Button(onClick = onClick, modifier = modifier) {
+    Button(
+        onClick = onClick, 
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Gray.copy(alpha = 0.2f) // 20% faded
+        ),
+        border = BorderStroke(1.dp, Color.Gray),
+    ) {
         text()
     }
+
 }
 
 
