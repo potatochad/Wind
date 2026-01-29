@@ -216,3 +216,43 @@ fun Ctext(
 }
 
 
+
+@Composable
+fun Btn(
+    text: ui,
+    mod: Mod = Mod,
+    onClick: Do = {},
+) {
+    Button(
+        onClick = onClick, 
+        modifier = mod,
+        colors = ButtonDefaults.buttonColors(
+             containerColor = faded(Color.Gray, 0.2f)
+        ),
+        border = BorderStroke(1.dp, Color.Gray),
+    ) {
+        text()
+    }
+}
+
+@Composable
+fun Btn(
+    text: Str,
+    mod: Mod = Mod,
+    onClick: Do = {},
+) {
+   Button(
+        onClick = onClick, 
+        modifier = mod,
+        colors = ButtonDefaults.buttonColors(
+             containerColor = faded(Color.Gray, 0.2f)
+        ),
+        border = BorderStroke(1.dp, Color.Gray),
+    ) {
+        Text(text)
+   }
+}
+
+
+
+
