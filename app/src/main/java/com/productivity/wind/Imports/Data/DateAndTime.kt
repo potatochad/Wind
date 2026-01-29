@@ -145,15 +145,18 @@ fun isNewDay(): Bool {
 @Composable
 fun taskDueToday(x: Schedule): Bool {
 	var date = Bar.lastDate //"${LocalDate.now()}"
- 	var weekDays by r(
-        setOf("MO","TU","WE","TH","FR","SA","SU")
-    )
-	var show by r(no)
+	val todayWeekDay = toWeekDay(date) // "MO", "TU", etc.
 	
-	if (x.type == "WEEKLY" && x.daysOfWeek == "MO TU WE TH FR SA SU"){
-		show = yes
+	return when (x.type) {
+        "WEEKLY" -> {
+            val scheduledDays = x.daysOfWeek.split(" ")
+            todayWeekDay in scheduledDays// if in
+        }
+		"MONTHLY" -> no
+		"YEARLY" -> no
+		"CUSTOM" -> no
+        else -> no
 	}
-	return show
 }
 
 @kotlinx.serialization.Serializable
