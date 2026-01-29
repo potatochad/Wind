@@ -130,6 +130,7 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
+
 fun isNewDay(): Bool {
 	if (Bar.lastDate == "") { Bar.lastDate = "${LocalDate.now()}"}
 	
@@ -145,7 +146,7 @@ fun isNewDay(): Bool {
 data class Schedule(
     var type: Str = "", // WEEKLY MONTHLY YEARLY CUSTOM
     var every: Int = 1, // every 1 day, every 2 weeks
-    var daysOfWeek: Str = "MO TU WE TH FR SA SU", // only for weekly: MO TU WE TH FR SA SU
+    var daysOfWeek: Str = "MO TU WE TH FR SA SU", // only for weekly: MO TU WE TH FR SA SU   
     var startDate: Str = "" // 2020-11-29
 )
 
