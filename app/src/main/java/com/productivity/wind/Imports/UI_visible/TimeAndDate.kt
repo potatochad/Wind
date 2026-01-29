@@ -143,10 +143,10 @@ fun KwikButton(text: Str, onClick: () -> Unit, modifier: Modifier = Modifier) {
 
 // Fake KwikTextButton
 @Composable
-fun KwikTextButton(
-    onClick: Do,
+fun Btn(
     text: ui,
     mod: Mod = Mod,
+    onClick: Do = {},
 ) {
     Button(
         onClick = onClick, 
@@ -158,7 +158,24 @@ fun KwikTextButton(
     ) {
         text()
     }
+}
 
+@Composable
+fun Btn(
+    text: Str,
+    mod: Mod = Mod,
+    onClick: Do = {},
+) {
+   Button(
+        onClick = onClick, 
+        modifier = mod,
+        colors = ButtonDefaults.buttonColors(
+             containerColor = faded(Color.Gray, 0.2f)
+        ),
+        border = BorderStroke(1.dp, Color.Gray),
+    ) {
+        Text(text)
+   }
 }
 
 
@@ -234,20 +251,14 @@ fun KwikDatePickerDialog(
         ),
         shape = shape,
         confirmButton = {
-            KwikButton(
-                text = confirmText,
-                onClick = {
-                    dateSelected()
-                }
-            )
+            Btn(confirmText) {
+                dateSelected()
+            }
         },
         dismissButton = {
-            KwikTextButton(
-                onClick = onDismiss,
-                text = {
-                    Text(cancelText)
-                }
-            )
+            Btn(cancelText){
+               onDismiss()
+            }
         }
     ) {
         DatePicker(
@@ -257,7 +268,7 @@ fun KwikDatePickerDialog(
             },
             colors = colors,
             showModeToggle = showModeToggle,
-            modifier = Mod.maxW().h(500).space(12)
+            modifier = Mod.maxW().h(500)
         )
     }
 }
