@@ -493,17 +493,18 @@ fun ScheduleUI(
               }
           }
           LazzyRow {
-              var selectedDateRange by r { mutableStateOf<Pair<LocalDate, LocalDate>?>(null) }
+              var selectedDate by r { mutableStateOf<LocalDate?>(null) }
               var showDatePicker by r(no)
 
-              CText("Start date") {
+              Ctext("Start date") {
                   if(showDatePicker){
-                   KwikDateRangePickerDialog(
+                   
+                   KwikDatePickerDialog(
                     // colors = colors,
                     // minSelectableDate = minSelectableDate,
                     // maxSelectableDate = maxSelectableDate,
-                    onDateRangeSelected = { selectedDates ->
-                     selectedDateRange = it
+                    onDateSelected = { 
+                     selectedDate = it
                     },
                     onDismiss = {
                      showDatePicker = no
