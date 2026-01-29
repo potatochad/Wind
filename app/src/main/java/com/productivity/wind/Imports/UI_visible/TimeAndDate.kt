@@ -258,9 +258,7 @@ fun KwikDatePickerDialog(
     ) {
         DatePicker(
             state = datePickerState,
-            title = {
-                Text(title)
-            },
+            // title = { Text(title) },
             colors = colors,
             showModeToggle = showModeToggle,
             modifier = Mod.maxW().h(500)
