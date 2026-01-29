@@ -69,7 +69,7 @@ import androidx.compose.ui.unit.*
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 import android.content.Intent
-import java.time.LocalDate
+import java.time.*
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.NavHostController
@@ -130,35 +130,11 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
-
-
-/*
-
-package com.isakaro.kwik.ui.date
-
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerColors
-import androidx.compose.material3.DatePickerDefaults
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SelectableDates
-import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.dp
 import com.isakaro.kwik.ui.button.KwikButton
 import com.isakaro.kwik.ui.button.KwikTextButton
 import com.isakaro.kwik.ui.text.KwikText
 import com.isakaro.kwik.ui.utils.toMillis
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneOffset
+
 
 /**
  * A date picker dialog that allows the user to select a date range.
@@ -178,17 +154,17 @@ import java.time.ZoneOffset
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KwikDatePickerDialog(
-    title: String = "Select date",
-    confirmText: String = "Confirm",
-    cancelText: String = "Cancel",
+    title: Str = "Select date",
+    confirmText: Str = "Confirm",
+    cancelText: Str = "Cancel",
     minSelectableDate: Long? = null,
     maxSelectableDate: Long? = null,
-    onDateSelected: (LocalDate) -> Unit,
-    showModeToggle: Boolean = false,
-    confirmOnSelection: Boolean = true,
+    onDateSelected: Do_<LocalDate>
+    showModeToggle: Bool = false,
+    confirmOnSelection: Bool = true,
     colors: DatePickerColors = kwikDatePickerColors(),
     shape: Shape = MaterialTheme.shapes.medium,
-    onDismiss: () -> Unit
+    onDismiss: Do
 ) {
     val today = LocalDate.now()
 
@@ -219,7 +195,7 @@ fun KwikDatePickerDialog(
         }
     }
 
-    LaunchedEffect(datePickerState) {
+    RunOnce(datePickerState) {
         if(confirmOnSelection){
             dateSelected()
         }
@@ -259,13 +235,12 @@ fun KwikDatePickerDialog(
             },
             colors = colors,
             showModeToggle = showModeToggle,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp)
-                .padding(12.dp)
+            modifier = Mod.maxW().h(500).space(12)
         )
     }
 }
+
+/*
 
 package com.isakaro.kwik.ui.date
 
