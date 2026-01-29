@@ -493,10 +493,25 @@ fun ScheduleUI(
               }
           }
           LazzyRow {
-              Text("Start date")
-              TinyInput(repeatEvery, maxLetters = 50, isInt =no, w = 150){  
-                  repeatEvery = toInt(it)
+              var selectedDateRange by r { mutableStateOf<Pair<LocalDate, LocalDate>?>(null) }
+              var showDatePicker by r(no)
+
+              CText("Start date") {
+                  if(showDatePicker){
+                   KwikDateRangePickerDialog(
+                    // colors = colors,
+                    // minSelectableDate = minSelectableDate,
+                    // maxSelectableDate = maxSelectableDate,
+                    onDateRangeSelected = { selectedDates ->
+                     selectedDateRange = it
+                    },
+                    onDismiss = {
+                     showDatePicker = no
+                    }
+                   )
+                  }
               }
+              
           }
           
           
