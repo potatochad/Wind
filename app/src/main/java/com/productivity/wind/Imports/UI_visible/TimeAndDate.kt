@@ -132,16 +132,6 @@ import android.content.ClipboardManager
 import androidx.compose.ui.graphics.*
 
 
-
-// Fake KwikButton
-@Composable
-fun KwikButton(text: Str, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Button(onClick = onClick, modifier = modifier) {
-        Text(text)
-    }
-}
-
-// Fake KwikTextButton
 @Composable
 fun Btn(
     text: ui,
@@ -205,7 +195,12 @@ fun KwikDatePickerDialog(
     onDateSelected: Do_<LocalDate>,
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
-    colors: DatePickerColors = DatePickerDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
+    colors: DatePickerColors = DatePickerDefaults.colors(
+       selectedDayContainerColor = Gold,
+       selectedDayContentColor = Color.White,
+       todayDateBorderColor = MaterialTheme.colorScheme.primary,
+       containerColor = MaterialTheme.colorScheme.surface
+    ),
     shape: Shape = MaterialTheme.shapes.medium,
     onDismiss: Do
 ) {
