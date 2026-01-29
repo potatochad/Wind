@@ -133,7 +133,14 @@ import android.content.ClipboardManager
 import com.isakaro.kwik.ui.utils.toMillis
 
 
-
+fun kwikDatePickerColors(): DatePickerColors {
+    return DatePickerDefaults.colors(
+        containerColor = MaterialTheme.colorScheme.surface
+    )
+}
+fun LocalDate.toMillis(): Long {
+    return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+}
 // Fake KwikButton
 @Composable
 fun KwikButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
