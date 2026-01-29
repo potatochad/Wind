@@ -414,7 +414,7 @@ fun ScheduleUI(
        setOf("MO","TU","WE","TH","FR","SA","SU")
    )
 
-   var startDate by r("")
+   var startDate by r(Bar.lastDate) //LocalDate.now().toStr()
 
    RunOnce {
        type = schedule.type
@@ -476,6 +476,12 @@ fun ScheduleUI(
           LazzyRow {
               Text("Repeat every")
               TinyInput(repeatEvery, maxLetters = 5, isInt =yes, w = 80){  
+                  repeatEvery = toInt(it)
+              }
+          }
+          LazzyRow {
+              Text("Start date")
+              TinyInput(repeatEvery, maxLetters = 50, isInt =no, w = 150){  
                   repeatEvery = toInt(it)
               }
           }
