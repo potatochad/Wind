@@ -134,16 +134,14 @@ import androidx.compose.ui.graphics.*
 
 @Composable
 fun kwikDatePickerColors(): DatePickerColors {
-    return DatePickerDefaults.colors(
-        containerColor = MaterialTheme.colorScheme.surface
-    )
+    return 
 }
 fun LocalDate.toMillis(): Long {
     return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
 }
 // Fake KwikButton
 @Composable
-fun KwikButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun KwikButton(text: Str, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Button(onClick = onClick, modifier = modifier) {
         Text(text)
     }
@@ -161,18 +159,6 @@ fun KwikTextButton(
     }
 }
 
-// Fake KwikText object with same nested calls
-object KwikText {
-    @Composable
-    fun LabelMedium(text: String, modifier: Modifier = Modifier) {
-        Text(text = text, modifier = modifier)
-    }
-
-    @Composable
-    fun TitleMedium(text: String, modifier: Modifier = Modifier) {
-        Text(text = text, modifier = modifier)
-    }
-}
 
 /**
  * A date picker dialog that allows the user to select a date range.
@@ -198,9 +184,9 @@ fun KwikDatePickerDialog(
     minSelectableDate: Long? = null,
     maxSelectableDate: Long? = null,
     onDateSelected: Do_<LocalDate>,
-    showModeToggle: Bool = false,
-    confirmOnSelection: Bool = true,
-    colors: DatePickerColors = kwikDatePickerColors(),
+    showModeToggle: Bool = no,
+    confirmOnSelection: Bool = yes,
+    colors: DatePickerColors = DatePickerDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
     shape: Shape = MaterialTheme.shapes.medium,
     onDismiss: Do
 ) {
@@ -257,9 +243,7 @@ fun KwikDatePickerDialog(
             KwikTextButton(
                 onClick = onDismiss,
                 text = {
-                    KwikText.LabelMedium(
-                        text = cancelText
-                    )
+                    Text(cancelText)
                 }
             )
         }
@@ -267,9 +251,7 @@ fun KwikDatePickerDialog(
         DatePicker(
             state = datePickerState,
             title = {
-                KwikText.TitleMedium(
-                    text = title
-                )
+                Text(title)
             },
             colors = colors,
             showModeToggle = showModeToggle,
