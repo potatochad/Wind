@@ -54,7 +54,8 @@ fun Main() {
             }
 
 			Bar.doTsk.each {
-				if (!it.done()){
+				if (!it.done() && taskDueToday(it.schedule)){
+					
 					
 					LazyCard { 
 						DoTskUI(it)
