@@ -186,7 +186,7 @@ fun Btn(
  * */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun KwikDatePickerDialog(
+fun PickDate(
     confirmText: Str = "Confirm",
     cancelText: Str = "Cancel",
     minSelectableDate: Long? = null,
@@ -260,6 +260,7 @@ fun KwikDatePickerDialog(
         DatePicker(
             state = datePickerState,
             colors = colors,
+            headline = null,
             showModeToggle = showModeToggle,
             modifier = Mod.maxW().h(500)
         )
@@ -490,18 +491,14 @@ fun ScheduleUI(
                   showDatePicker = yes
               }
               
-              if(showDatePicker){
-                   
-                   KwikDatePickerDialog(
-                    // colors = colors,
-                    // minSelectableDate = minSelectableDate,
-                    // maxSelectableDate = maxSelectableDate,
-                    onDateSelected = { 
-                     selectedDate = it
-                    },
-                    onDismiss = {
-                     showDatePicker = no
-                    }
+              if (showDatePicker){
+                   PickDate(
+                       onDateSelected = { 
+                           selectedDate = it
+                       },
+                       onDismiss = {
+                           showDatePicker = no
+                       }
                    )
               }
               
