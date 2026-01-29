@@ -182,24 +182,6 @@ fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 
 
 
-fun Dp.toPx(): Int {
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        this.value,
-        App.resources.displayMetrics
-    ).toInt()
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 val MakeTxtFile = ActivityResultContracts.CreateDocument("text/plain")
