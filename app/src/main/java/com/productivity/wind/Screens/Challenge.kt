@@ -334,6 +334,7 @@ fun ToDo(id: Str = "") {
         time1.it = todo.doneTime
         points1.it = todo.worth
         name1.it = todo.name
+		schedule1 = todo.schedule
       }
     }
 
@@ -359,6 +360,7 @@ fun ToDo(id: Str = "") {
 							name = name1.it
 							doneTime = time1.it
 							worth = points1.it
+							schedule = schedule1
                         }  
 						log("going to main")
                         goTo("Main")
@@ -372,6 +374,7 @@ fun ToDo(id: Str = "") {
                     name = name1.it
 					doneTime = time1.it
 					worth = points1.it
+					schedule = schedule1
                 }
 				Vlog("going to main")
                 goTo("Main")
