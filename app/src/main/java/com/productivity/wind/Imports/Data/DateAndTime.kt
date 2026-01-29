@@ -142,6 +142,14 @@ fun isNewDay(): Bool {
 	return no
 }
 
+fun taskDueToday(schedule1: Schedule){
+	var date = Bar.lastDate //LocalDate.now()
+	var weekDays = "MO TU WE TH FR SA SU"
+
+	if (schedule1.type == "WEEKLY" && daysOfWeek == weekDays)
+	
+}
+
 @kotlinx.serialization.Serializable
 data class Schedule(
     var type: Str = "", // WEEKLY MONTHLY YEARLY CUSTOM
