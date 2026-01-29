@@ -320,7 +320,7 @@ fun ToDo(id: Str = "") {
     var points1 = r(10)
     var name1 = r("TaskName")
 	var schedule1 by r(Schedule(
-	    	type = "DAILY",
+	    	type = "WEEKLY",
 	    	every = 1,
 	    )
 	)
