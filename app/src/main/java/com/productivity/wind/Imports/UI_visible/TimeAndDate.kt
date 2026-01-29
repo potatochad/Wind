@@ -497,7 +497,9 @@ fun ScheduleUI(
               var showDatePicker by r(no)
 
               Ctext("Start date") {
-                  if(showDatePicker){
+                  showDatePicker = yes
+              }
+              if(showDatePicker){
                    
                    KwikDatePickerDialog(
                     // colors = colors,
@@ -510,8 +512,8 @@ fun ScheduleUI(
                      showDatePicker = no
                     }
                    )
-                  }
               }
+              
               
           }
           
