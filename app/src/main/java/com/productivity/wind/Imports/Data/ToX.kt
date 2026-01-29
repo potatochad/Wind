@@ -201,6 +201,24 @@ fun toStr(it: Any?): String = when (it) {
     else -> it.toString()
 }
 
+fun toWeekDay(dateInput: Any): Str {
+    val date = when (dateInput) {
+        is LocalDate -> dateInput
+        is String -> LocalDate.parse(dateInput)
+        else -> throw IllegalArgumentException("Must be LocalDate or String")
+    }
+
+    return when (date.dayOfWeek) {
+        DayOfWeek.MONDAY -> "MO"
+        DayOfWeek.TUESDAY -> "TU"
+        DayOfWeek.WEDNESDAY -> "WE"
+        DayOfWeek.THURSDAY -> "TH"
+        DayOfWeek.FRIDAY -> "FR"
+        DayOfWeek.SATURDAY -> "SA"
+        DayOfWeek.SUNDAY -> "SU"
+    }
+}
+
 @Composable
 fun toUI(it: Any?): UI {
     return when (it) {
