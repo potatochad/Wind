@@ -144,15 +144,15 @@ fun KwikButton(text: Str, onClick: () -> Unit, modifier: Modifier = Modifier) {
 // Fake KwikTextButton
 @Composable
 fun KwikTextButton(
-    onClick: () -> Unit,
-    text: @Composable () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: Do,
+    text: ui,
+    mod: Mod = Mod,
 ) {
     Button(
         onClick = onClick, 
-        modifier = modifier,
+        modifier = mod,
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Gray.copy(alpha = 0.2f) // 20% faded
+             containerColor = faded(Color.Gray, 0.2f)
         ),
         border = BorderStroke(1.dp, Color.Gray),
     ) {
