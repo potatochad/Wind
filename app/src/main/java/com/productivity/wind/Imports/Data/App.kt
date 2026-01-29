@@ -163,14 +163,6 @@ fun closeApp() {
 }
 
 
-@Composable
-fun click(x: UI, Do: Do) {
-	Box(Mod.click{Do()}){
-		x()
-	}
-}
-
-
 
 @Composable
 fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
@@ -225,82 +217,6 @@ fun TxtFileToMap(ctx: ctx, uri: Uri, fileMap: MutableMap<Str, Str>) {
         }
     }
 }
-
-
-
-
-
-
-
-/*thumbColor: Color = Color.Unspecified,
-        activeTrackColor: Color = Color.Unspecified,
-        activeTickColor: Color = Color.Unspecified,
-        inactiveTrackColor: Color = Color.Unspecified,
-        inactiveTickColor: Color = Color.Unspecified,
-        disabledThumbColor: Color = Color.Unspecified,
-        disabledActiveTrackColor: Color = Color.Unspecified,
-        disabledActiveTickColor: Color = Color.Unspecified,
-        disabledInactiveTrackColor: Color = Color.Unspecified,
-        disabledInactiveTickColor: Color = Color.Unspecified,
-    ): SliderColors =*/
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BasicSlider(
-	value: Float = 10f,
-    mod: Mod = Mod.space(h=15),
-    valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
-    enabled: Bool = yes,
-    thumb: ui = {
-        SliderDefaults.Thumb(
-            interactionSource = r { MutableInteractionSource() },
-            thumbSize = DpSize(16.dp, 16.dp),
-			colors = SliderDefaults.colors(
-                thumbColor = Gold
-            )
-        )
-    },
-    track: ui_<SliderState> = {
-        SliderDefaults.Track(
-            sliderState = it,
-            modifier = Mod.h(3),
-            thumbTrackGapSize = 0.dp,
-            colors = SliderDefaults.colors(
-                activeTrackColor = Gold,
-                inactiveTrackColor = Color.Gray,
-                activeTickColor = Color.Transparent,
-                inactiveTickColor = Color.Transparent,
-            ),
-			drawStopIndicator = null,
-			drawTick = { _, _ -> }
-        )
-    },
-	onChange: Do_<Float>,
-) {
-
-    var sliderPosition by r { mutableFloatStateOf(value) }
-    val interactionSource = r { MutableInteractionSource() }
-
-    Slider(
-        modifier = mod,
-        value = sliderPosition,
-        onValueChange = {
-            sliderPosition = it
-            onChange(it)
-        },
-        interactionSource = interactionSource,
-        valueRange = valueRange,
-        enabled = enabled,
-        track = {
-            track(it)
-        },
-        thumb = {
-            thumb()
-        }
-    )
-
-}
-
 
 
 
