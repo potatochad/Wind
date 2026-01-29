@@ -178,6 +178,14 @@ fun toD(it: Any?): Double = when (it) {
     else -> 0.0
 }
 
+fun Dp.toPx(): Int {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.value,
+        App.resources.displayMetrics
+    ).toInt()
+}
+
 
 fun toLatLng(it: Any?): LatLng = when (it) {
     is LatLng -> it
