@@ -143,7 +143,7 @@ fun isNewDay(): Bool {
 
 @kotlinx.serialization.Serializable
 data class Schedule(
-    var type: Str = "", // DAILY WEEKLY MONTHLY YEARLY ONCE
+    var type: Str = "", // WEEKLY MONTHLY YEARLY CUSTOM
     var every: Int = 1, // every 1 day, every 2 weeks
     var daysOfWeek: Str = "", // only for weekly: MO TU WE TH FR SA SU
     var startDate: Str = "" // 2020-11-29
