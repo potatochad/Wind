@@ -227,6 +227,9 @@ fun toUI(it: Any?): UI {
         else -> { { Text("Unsupported type (toUI) $it") } }
     }
 }
+fun LocalDate.toMillis(): Long {
+    return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+}
 
 fun Any.toMeters(
     cameraState: CameraPositionState,
