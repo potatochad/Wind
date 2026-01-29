@@ -410,7 +410,10 @@ fun ScheduleUI(
 ){
    var type by r("")
    var repeatEvery by r(0)
-   var weekDays by r(setOf<Str>())
+   var weekDays by r(
+       setOf("MO","TU","WE","TH","FR","SA","SU")
+   )
+
    var startDate by r("")
 
    RunOnce {
