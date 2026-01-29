@@ -132,10 +132,6 @@ import android.content.ClipboardManager
 import androidx.compose.ui.graphics.*
 
 
-@Composable
-fun kwikDatePickerColors(): DatePickerColors {
-    return 
-}
 fun LocalDate.toMillis(): Long {
     return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
 }
@@ -203,7 +199,7 @@ fun KwikDatePickerDialog(
 
     val datePickerState = rememberDatePickerState(
         selectableDates = object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+            override fun isSelectableDate(utcTimeMillis: Long): Bool {
                 return utcTimeMillis in minSelectableMillis..maxSelectableMillis
             }
         }
@@ -478,9 +474,12 @@ fun ScheduleUI(
               var selectedDate by r { mutableStateOf<LocalDate?>(null) }
               var showDatePicker by r(no)
 
-              Ctext("Start date") {
+              Text("Start date: ")
+
+              Ctext("$selectedDate") {
                   showDatePicker = yes
               }
+              
               if(showDatePicker){
                    
                    KwikDatePickerDialog(
