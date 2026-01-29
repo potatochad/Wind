@@ -130,9 +130,8 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
-import com.isakaro.kwik.ui.utils.toMillis
 
-
+@Composable
 fun kwikDatePickerColors(): DatePickerColors {
     return DatePickerDefaults.colors(
         containerColor = MaterialTheme.colorScheme.surface
