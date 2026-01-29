@@ -130,11 +130,42 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
-import com.isakaro.kwik.ui.button.KwikButton
-import com.isakaro.kwik.ui.button.KwikTextButton
-import com.isakaro.kwik.ui.text.KwikText
 import com.isakaro.kwik.ui.utils.toMillis
 
+
+
+// Fake KwikButton
+@Composable
+fun KwikButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Button(onClick = onClick, modifier = modifier) {
+        Text(text)
+    }
+}
+
+// Fake KwikTextButton
+@Composable
+fun KwikTextButton(
+    onClick: () -> Unit,
+    text: @Composable () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(onClick = onClick, modifier = modifier) {
+        text()
+    }
+}
+
+// Fake KwikText object with same nested calls
+object KwikText {
+    @Composable
+    fun LabelMedium(text: String, modifier: Modifier = Modifier) {
+        Text(text = text, modifier = modifier)
+    }
+
+    @Composable
+    fun TitleMedium(text: String, modifier: Modifier = Modifier) {
+        Text(text = text, modifier = modifier)
+    }
+}
 
 /**
  * A date picker dialog that allows the user to select a date range.
