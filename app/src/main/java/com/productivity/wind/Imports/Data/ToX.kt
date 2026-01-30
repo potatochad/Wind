@@ -223,14 +223,17 @@ fun toWeekDay(dateInput: Any): Str {
     }
 }
 
-fun toRead(date: LocalDate = LocalDate.now()): Str {
-    val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+fun toRead(date: LocalDate = LocalDate.now()): String {
+    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
     return date.format(formatter)
 }
 
-fun toRead(str: String): Str {
-    return LocalDate.parse(str).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+fun toRead(str: String): String {
+    val date = LocalDate.parse(str)
+    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
+    return date.format(formatter)
 }
+
 fun LocalDate.toMillis(): Long {
     return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
 }
