@@ -151,7 +151,6 @@ import androidx.compose.ui.graphics.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PickDate(
-    initialSelectedDate: LocalDate = LocalDate.now(),
     confirmText: Str = "Confirm",
     cancelText: Str = "Cancel",
     minSelectableDate: Long? = null,
@@ -173,8 +172,6 @@ fun PickDate(
     onDismiss: Do
 ) {
     val today = LocalDate.now()
-    val initialSelectedDateMillis = initialSelectedDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
-
 
     val ninetyNineYearsBefore = today.minusYears(99)
     val ninetyNineYearsLater = today.plusYears(99)
@@ -186,7 +183,6 @@ fun PickDate(
     val maxSelectableMillis = maxSelectableDate ?: defaultMax
 
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = initialSelectedDateMillis,
         selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long): Bool {
                 return utcTimeMillis in minSelectableMillis..maxSelectableMillis
@@ -452,8 +448,11 @@ fun ScheduleUI(
               var showDatePicker by r(no)
 
               Text("Start date: ")
-
-              Ctext("${toRead(beginDate)}") {
+              Ctext(
+                  toRead(beginDate),
+                  mod = Mod.space(5),
+                  animate = yes,
+              ) {
                   showDatePicker = yes
               }
               
