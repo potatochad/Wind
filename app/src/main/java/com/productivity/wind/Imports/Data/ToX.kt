@@ -210,6 +210,14 @@ fun toLocalDate(x: Any?) : LocalDate = when (x) {
     else -> LocalDate.now()
 }
 
+fun LocalDate.toMillis(): Long {
+    return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+}
+
+fun Str.isBefore(x: Str): Bool = toLocalDate(this).isBefore(toLocalDate(x))
+fun Str.isAfter(x: Str): Bool = toLocalDate(this).isAfter(toLocalDate(x))
+fun Str.isEqual(x: Str): Bool = toLocalDate(this).isEqual(toLocalDate(x))
+
 fun toWeekDay(dateInput: Any): Str {
     val date = when (dateInput) {
         is LocalDate -> dateInput
@@ -228,6 +236,13 @@ fun toWeekDay(dateInput: Any): Str {
     }
 }
 
+fun DatePickerState.date(
+    date: LocalDate,
+) {
+    this.selectedDateMillis = toMillis(date)
+}
+
+
 fun toRead(date: LocalDate = LocalDate.now()): String {
     val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
     return date.format(formatter)
@@ -238,14 +253,6 @@ fun toRead(str: String): String {
     val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
     return date.format(formatter)
 }
-
-fun LocalDate.toMillis(): Long {
-    return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
-}
-
-fun Str.isBefore(x: Str): Bool = toLocalDate(this).isBefore(toLocalDate(x))
-fun Str.isAfter(x: Str): Bool = toLocalDate(this).isAfter(toLocalDate(x))
-fun Str.isEqual(x: Str): Bool = toLocalDate(this).isEqual(toLocalDate(x))
 
 
 @Composable
