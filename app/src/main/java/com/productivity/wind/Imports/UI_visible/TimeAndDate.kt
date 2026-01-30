@@ -159,7 +159,10 @@ fun PickDate(
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
     colors: DatePickerColors = DatePickerDefaults.colors(
-       titleContentColor = Color.White,
+       selectedDayContainerColor = Color(0xFFFFA500),
+       selectedDayContentColor = Color.White,
+       todayDateBorderColor = Color.Transparent,
+       todayDateContentColor = Color.Gray,
        containerColor = MaterialTheme.colorScheme.surface,
     ),
     shape: Shape = MaterialTheme.shapes.medium,
