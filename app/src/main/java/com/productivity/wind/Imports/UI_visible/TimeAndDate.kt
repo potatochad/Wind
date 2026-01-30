@@ -158,13 +158,13 @@ fun PickDate(
     confirmOnSelection: Bool = yes,
     colors: DatePickerColors = DatePickerDefaults.colors(
        containerColor = MaterialTheme.colorScheme.surface,
-       selectedDayContainerColor = Color(0xFFFFA500), // orange circle
-       selectedDayContentColor = Color.White,         // white text on selected
-       todayDateBorderColor = Color.Transparent,      // no border for today
-       todayContentColor = Color(0xFFFFA500),                // today’s number gray
-       titleContentColor = Color.White,         // title orange
-       headlineContentColor = Color.White,      // headline orange
-       weekdayContentColor = Color.White        // weekdays orange
+       selectedDayContainerColor = orange,
+       selectedDayContentColor = Color.White,
+       todayDateBorderColor = Color.Transparent,
+       todayContentColor = orange,              
+       titleContentColor = Color.White,         
+       headlineContentColor = Color.White,      
+       weekdayContentColor = Color.White        
     ),
     shape: Shape = MaterialTheme.shapes.medium,
     onDismiss: Do
