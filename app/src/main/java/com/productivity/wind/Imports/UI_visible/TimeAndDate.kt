@@ -155,7 +155,7 @@ fun PickDate(
     cancelText: Str = "Cancel",
     minSelectableDate: Long? = null,
     maxSelectableDate: Long? = null,
-    onDateSelected: Do_<LocalDate>,
+    onDateSelected: DoStr,
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
     colors: DatePickerColors = DatePickerDefaults.colors(
@@ -188,7 +188,7 @@ fun PickDate(
             val date = Instant.ofEpochMilli(it)
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDate()
-            onDateSelected(date)
+            onDateSelected("$date")
             onDismiss()
         }
     }
@@ -375,13 +375,13 @@ fun ScheduleUI(
        setOf("MO","TU","WE","TH","FR","SA","SU")
    )
 
-   var beginDate by r(LocalDate.now())
+   var beginDate by r(Bar.)
 
    RunOnce {
        type = schedule.type
        repeatEvery = schedule.every
        weekDays = schedule.daysOfWeek.split(" ").filter { it.isNotBlank() }.toSet()   
-       "$beginDate" = schedule.startDate
+       beginDate = schedule.startDate
    }
 
    LaunchedEffect(type, repeatEvery, weekDays) {
