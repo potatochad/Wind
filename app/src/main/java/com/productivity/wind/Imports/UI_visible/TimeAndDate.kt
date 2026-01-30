@@ -184,11 +184,7 @@ fun PickDate(
 
     fun dateSelected(){
         datePickerState.selectedDateMillis?.let {
-         
-            val date = Instant.ofEpochMilli(it)
-                .atOffset(ZoneOffset.UTC)
-                .toLocalDate()
-                
+            val date = toLocalDate(it)
             onDateSelected("$date")
             onDismiss()
         }
