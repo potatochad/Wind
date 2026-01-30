@@ -221,7 +221,7 @@ fun PickDate(
             colors = colors,
             headline = null,
             showModeToggle = showModeToggle,
-            modifier = Mod.maxW().h(500).space(15)
+            modifier = Mod.maxW().h(500)
         )
     }
 }
@@ -369,22 +369,19 @@ fun ScheduleUI(
     schedule: Schedule,
     onChange: Do_<Schedule>
 ){
-   var type by r("")
-   var repeatEvery by r(0)
+   var type by r(schedule.type)
+   var repeatEvery by r(schedule.every)
    var weekDays by r(
        setOf("MO","TU","WE","TH","FR","SA","SU")
    )
 
-   var beginDate by r(Bar.lastDate)
+   var beginDate by r(schedule.startDate)
 
    RunOnce {
-       type = schedule.type
-       repeatEvery = schedule.every
        weekDays = schedule.daysOfWeek.split(" ").filter { it.isNotBlank() }.toSet()   
-       beginDate = if (schedule.startDate.isEmpty()) Bar.lastDate else schedule.startDate  
    }
 
-   LaunchedEffect(type, repeatEvery, weekDays) {
+   LaunchedEffect(type, repeatEvery, weekDays, beginDate) {
        onChange(
            Schedule(
               type = type,
