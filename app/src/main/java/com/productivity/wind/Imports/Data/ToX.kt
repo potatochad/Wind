@@ -202,6 +202,9 @@ fun toStr(it: Any?): String = when (it) {
     else -> it.toString()
 }
 
+
+fun toLocalDate(x: Str): LocalDate = LocalDate.parse(x)
+
 fun toWeekDay(dateInput: Any): Str {
     val date = when (dateInput) {
         is LocalDate -> dateInput
@@ -231,6 +234,11 @@ fun toRead(str: String): Str {
 fun LocalDate.toMillis(): Long {
     return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
 }
+
+fun Str.isBefore(x: Str): Bool = toLocalDate(this).isBefore(toLocalDate(x))
+fun Str.isAfter(x: Str): Bool = toLocalDate(this).isAfter(toLocalDate(x))
+fun Str.isEqual(x: Str): Bool = toLocalDate(this).isEqual(toLocalDate(x))
+
 
 @Composable
 fun toUI(it: Any?): UI {
