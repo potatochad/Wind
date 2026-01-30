@@ -219,6 +219,18 @@ fun toWeekDay(dateInput: Any): Str {
     }
 }
 
+fun toRead(date: LocalDate = LocalDate.now()): Str {
+    val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+    return date.format(formatter)
+}
+
+fun toRead(str: String): Str {
+    return LocalDate.parse(str).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+}
+fun LocalDate.toMillis(): Long {
+    return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+}
+
 @Composable
 fun toUI(it: Any?): UI {
     return when (it) {
@@ -226,9 +238,6 @@ fun toUI(it: Any?): UI {
         is Function0<*> -> it as UI   // unsafe cast but works at runtime
         else -> { { Text("Unsupported type (toUI) $it") } }
     }
-}
-fun LocalDate.toMillis(): Long {
-    return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
 }
 
 fun Any.toMeters(
@@ -247,9 +256,6 @@ fun toMStr(what: Any?): mStr = when {
     isMStr(what) -> what as mStr
     else -> m("$what") as mStr
 }
-
-
-
 
 fun isM(x: Any?): Bool = x is m_<*>
 fun isMBool(x: Any?): Bool = x is m_<*> && x.it is Bool
