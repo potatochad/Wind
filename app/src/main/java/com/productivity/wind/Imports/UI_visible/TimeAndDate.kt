@@ -381,7 +381,7 @@ fun ScheduleUI(
        type = schedule.type
        repeatEvery = schedule.every
        weekDays = schedule.daysOfWeek.split(" ").filter { it.isNotBlank() }.toSet()   
-       beginDate = schedule.startDate
+       beginDate = if (schedule.startDate.isEmpty()) Bar.lastDate else schedule.startDate  
    }
 
    LaunchedEffect(type, repeatEvery, weekDays) {
