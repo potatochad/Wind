@@ -159,10 +159,6 @@ fun PickDate(
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
     colors: DatePickerColors = DatePickerDefaults.colors(
-       selectedDayContainerColor = Color.Gray.copy(alpha = 0.2f),
-       selectedDayContentColor = Color.White,
-       todayDateBorderColor = Color.Transparent,
-       todayDateContentColor = Color.Gray,
        containerColor = MaterialTheme.colorScheme.surface,
     ),
     shape: Shape = MaterialTheme.shapes.medium,
@@ -225,7 +221,7 @@ fun PickDate(
             colors = colors,
             headline = null,
             showModeToggle = showModeToggle,
-            modifier = Mod.maxW().h(500)
+            modifier = Mod.maxW().h(500).space(15)
         )
     }
 }
