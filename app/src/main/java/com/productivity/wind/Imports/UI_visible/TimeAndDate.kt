@@ -151,6 +151,7 @@ import androidx.compose.ui.graphics.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PickDate(
+    initialSelectedDate: LocalDate = LocalDate.now(),
     confirmText: Str = "Confirm",
     cancelText: Str = "Cancel",
     minSelectableDate: Long? = null,
@@ -158,17 +159,22 @@ fun PickDate(
     onDateSelected: DoStr,
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
-    colors: DatePickerColors = DatePickerDefaults.colors(
-       selectedDayContainerColor = Color(0xFFFFA500),
-       selectedDayContentColor = Color.White,
-       todayDateBorderColor = Color.Transparent,
-       todayDateContentColor = Color.Gray,
+    colors = DatePickerDefaults.colors(
        containerColor = MaterialTheme.colorScheme.surface,
+       selectedDayContainerColor = Color(0xFFFFA500), // orange circle
+       selectedDayContentColor = Color.White,         // white text on selected
+       todayDateBorderColor = Color.Transparent,      // no border for today
+       todayContentColor = Color.Gray,                // today’s number gray
+       titleContentColor = Color.White,         // title orange
+       headlineContentColor = Color.White,      // headline orange
+       weekdayContentColor = Color.White        // weekdays orange
     ),
     shape: Shape = MaterialTheme.shapes.medium,
     onDismiss: Do
 ) {
     val today = LocalDate.now()
+    val initialSelectedDateMillis = initialDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+
 
     val ninetyNineYearsBefore = today.minusYears(99)
     val ninetyNineYearsLater = today.plusYears(99)
@@ -180,6 +186,7 @@ fun PickDate(
     val maxSelectableMillis = maxSelectableDate ?: defaultMax
 
     val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = initialSelectedDateMillis,
         selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long): Bool {
                 return utcTimeMillis in minSelectableMillis..maxSelectableMillis
