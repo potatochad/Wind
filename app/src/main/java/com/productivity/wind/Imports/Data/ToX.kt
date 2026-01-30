@@ -203,10 +203,12 @@ fun toStr(it: Any?): String = when (it) {
 }
 
 
-fun toLocalDate(x: Any?) : LocalDate = when (x) { 
-    is Str -> LocalDate.parse(x)
-    is Long -> Instant.ofEpochMilli(x).atOffset(ZoneOffset.UTC).toLocalDate()
-    is null -> LocalDate.now()
+fun toLocalDate(x: Any?): LocalDate = when (x) { 
+    is String -> LocalDate.parse(x)
+    is Long -> Instant.ofEpochMilli(x)
+        .atOffset(ZoneOffset.UTC)
+        .toLocalDate()
+    null -> LocalDate.now()
     else -> LocalDate.now()
 }
 
@@ -236,10 +238,8 @@ fun toWeekDay(dateInput: Any): Str {
     }
 }
 
-fun DatePickerState.date(
-    date: LocalDate,
-) {
-    this.selectedDateMillis = toMillis(date)
+fun DatePickerState.date(date: LocalDate) {
+    this.selectedDateMillis = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 }
 
 
