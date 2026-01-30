@@ -159,7 +159,7 @@ fun PickDate(
     onDateSelected: DoStr,
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
-    colors = DatePickerDefaults.colors(
+    colors: DatePickerColors = DatePickerDefaults.colors(
        containerColor = MaterialTheme.colorScheme.surface,
        selectedDayContainerColor = Color(0xFFFFA500), // orange circle
        selectedDayContentColor = Color.White,         // white text on selected
@@ -173,7 +173,7 @@ fun PickDate(
     onDismiss: Do
 ) {
     val today = LocalDate.now()
-    val initialSelectedDateMillis = initialDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+    val initialSelectedDateMillis = initialSelectedDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
 
 
     val ninetyNineYearsBefore = today.minusYears(99)
