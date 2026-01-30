@@ -445,7 +445,7 @@ fun ScheduleUI(
 
               Text("Start date: ")
 
-              Ctext("$beginDate") {
+              Ctext("${toRead(beginDate)}") {
                   showDatePicker = yes
               }
               
