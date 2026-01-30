@@ -375,13 +375,13 @@ fun ScheduleUI(
        setOf("MO","TU","WE","TH","FR","SA","SU")
    )
 
-   var startDate by r(Bar.lastDate) //LocalDate.now().toStr()
+   var beginDate by r(LocalDate.now())
 
    RunOnce {
        type = schedule.type
        repeatEvery = schedule.every
        weekDays = schedule.daysOfWeek.split(" ").filter { it.isNotBlank() }.toSet()   
-       startDate = schedule.startDate
+       beginDate = schedule.startDate
    }
 
    LaunchedEffect(type, repeatEvery, weekDays) {
@@ -390,7 +390,7 @@ fun ScheduleUI(
               type = type,
               every = repeatEvery,
               daysOfWeek = weekDays.joinToString(" "),
-              startDate = startDate
+              startDate = beginDate
            )
        )
    }
@@ -441,19 +441,18 @@ fun ScheduleUI(
               }
           }
           LazzyRow {
-              var selectedDate by r { mutableStateOf<LocalDate?>(null) }
               var showDatePicker by r(no)
 
               Text("Start date: ")
 
-              Ctext("$selectedDate") {
+              Ctext("$beginDate") {
                   showDatePicker = yes
               }
               
               if (showDatePicker){
                    PickDate(
                        onDateSelected = { 
-                           selectedDate = it
+                           beginDate = it
                        },
                        onDismiss = {
                            showDatePicker = no
