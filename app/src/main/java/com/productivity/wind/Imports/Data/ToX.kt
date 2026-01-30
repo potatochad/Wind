@@ -203,7 +203,12 @@ fun toStr(it: Any?): String = when (it) {
 }
 
 
-fun toLocalDate(x: Str): LocalDate = LocalDate.parse(x)
+fun toLocalDate(x: Any?) : LocalDate = when (x) { 
+    is Str -> LocalDate.parse(x)
+    is Long -> Instant.ofEpochMilli(x).atOffset(ZoneOffset.UTC).toLocalDate()
+    is null -> LocalDate.now()
+    else -> LocalDate.now()
+}
 
 fun toWeekDay(dateInput: Any): Str {
     val date = when (dateInput) {
