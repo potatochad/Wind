@@ -153,8 +153,6 @@ fun taskDueToday(x: Schedule): Bool {
 	log("... today: $date,  startDate: ${x.startDate}")
 
 	if (date.isBefore(x.startDate)) return no 
-
-	log("")
 	
 	show = when (x.type) {
         "WEEKLY" -> {
@@ -166,6 +164,10 @@ fun taskDueToday(x: Schedule): Bool {
 		"CUSTOM" -> no
         else -> no
 	}
+
+	log("show: $show")
+
+	return show
 	
 }
 
