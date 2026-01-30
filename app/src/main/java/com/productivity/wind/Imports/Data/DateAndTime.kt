@@ -147,7 +147,16 @@ fun taskDueToday(x: Schedule): Bool {
 	var date = Bar.lastDate //"${LocalDate.now()}"
 	val todayWeekDay = toWeekDay(date) // "MO", "TU", etc.
 	
-	return when (x.type) {
+	var show by r(no)
+
+	log("running task due today checker")
+	log("... today: $date,  startDate: ${x.startDate}")
+
+	if (date.isBefore(x.startDate)) return no 
+
+	log("")
+	
+	show = when (x.type) {
         "WEEKLY" -> {
             val scheduledDays = x.daysOfWeek.split(" ")
             todayWeekDay in scheduledDays// if in
@@ -157,6 +166,7 @@ fun taskDueToday(x: Schedule): Bool {
 		"CUSTOM" -> no
         else -> no
 	}
+	
 }
 
 @kotlinx.serialization.Serializable
