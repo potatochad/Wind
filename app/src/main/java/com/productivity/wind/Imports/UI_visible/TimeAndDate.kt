@@ -159,6 +159,7 @@ fun PickDate(
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
     colors: DatePickerColors = DatePickerDefaults.colors(
+       titleContentColor = Color.White,
        containerColor = MaterialTheme.colorScheme.surface,
     ),
     shape: Shape = MaterialTheme.shapes.medium,
