@@ -153,8 +153,6 @@ import androidx.compose.ui.graphics.*
 fun PickDate(
     confirmText: Str = "Confirm",
     cancelText: Str = "Cancel",
-    minSelectableDate: Long? = null,
-    maxSelectableDate: Long? = null,
     onDateSelected: DoStr,
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
@@ -173,14 +171,8 @@ fun PickDate(
 ) {
     val today = LocalDate.now()
 
-    val ninetyNineYearsBefore = today.minusYears(99)
-    val ninetyNineYearsLater = today.plusYears(99)
-
-    val defaultMin = ninetyNineYearsBefore.toMillis()
-    val defaultMax = ninetyNineYearsLater.toMillis()
-
-    val minSelectableMillis = minSelectableDate ?: defaultMin
-    val maxSelectableMillis = maxSelectableDate ?: defaultMax
+    val minSelectableMillis = today.minusYears(99).toMillis()
+    val maxSelectableMillis = today.plusYears(99).toMillis()
 
     val datePickerState = rememberDatePickerState(
         selectableDates = object : SelectableDates {
@@ -192,9 +184,11 @@ fun PickDate(
 
     fun dateSelected(){
         datePickerState.selectedDateMillis?.let {
+         
             val date = Instant.ofEpochMilli(it)
                 .atOffset(ZoneOffset.UTC)
                 .toLocalDate()
+                
             onDateSelected("$date")
             onDismiss()
         }
@@ -226,7 +220,6 @@ fun PickDate(
         DatePicker(
             state = datePickerState,
             colors = colors,
-            headline = null,
             showModeToggle = showModeToggle,
             modifier = Mod.maxW().h(500)
         )
