@@ -381,7 +381,7 @@ fun ScheduleUI(
        type = schedule.type
        repeatEvery = schedule.every
        weekDays = schedule.daysOfWeek.split(" ").filter { it.isNotBlank() }.toSet()   
-       beginDate = schedule.startDate
+       "$beginDate" = schedule.startDate
    }
 
    LaunchedEffect(type, repeatEvery, weekDays) {
@@ -390,7 +390,7 @@ fun ScheduleUI(
               type = type,
               every = repeatEvery,
               daysOfWeek = weekDays.joinToString(" "),
-              startDate = beginDate
+              startDate = "$beginDate"
            )
        )
    }
