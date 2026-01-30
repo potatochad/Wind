@@ -375,7 +375,7 @@ fun ScheduleUI(
        setOf("MO","TU","WE","TH","FR","SA","SU")
    )
 
-   var beginDate by r(Bar.)
+   var beginDate by r(Bar.lastDate)
 
    RunOnce {
        type = schedule.type
@@ -390,7 +390,7 @@ fun ScheduleUI(
               type = type,
               every = repeatEvery,
               daysOfWeek = weekDays.joinToString(" "),
-              startDate = "$beginDate"
+              startDate = beginDate
            )
        )
    }
