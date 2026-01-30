@@ -161,7 +161,7 @@ fun PickDate(
        selectedDayContainerColor = Color(0xFFFFA500), // orange circle
        selectedDayContentColor = Color.White,         // white text on selected
        todayDateBorderColor = Color.Transparent,      // no border for today
-       todayContentColor = Color.Gray,                // today’s number gray
+       todayContentColor = Color(0xFFFFA500),                // today’s number gray
        titleContentColor = Color.White,         // title orange
        headlineContentColor = Color.White,      // headline orange
        weekdayContentColor = Color.White        // weekdays orange
