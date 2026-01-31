@@ -262,7 +262,7 @@ fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
 
 
 fun DatePickerState.date(date: Any?) {
-    this.selectedDateMillis = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    this.selectedDateMillis = toLocalDate(date).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 }
 
 fun DatePickerState.goTo(date: Any?) {
