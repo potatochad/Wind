@@ -50,7 +50,8 @@ import com.productivity.wind.R
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.drawscope.*
 import com.productivity.wind.Imports.UI_visible.*
-
+import android.app.*
+import android.widget.*
 
 
 fun NavGraphBuilder.ScreenNav() {
