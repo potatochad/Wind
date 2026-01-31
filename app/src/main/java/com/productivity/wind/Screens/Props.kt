@@ -350,29 +350,24 @@ object Header {
 
 			
             Notification(
-    title = "Timer",
-    text = "Starting...",
     xml = R.layout.notification_timer,
     id = 2
 ) { builder, remoteView ->
-    if (remoteView == null) return@Notification  // safety check
-
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     CoroutineScope(Dispatchers.Default).launch {
         for (i in 10 downTo 0) {
             val timeText = String.format("%02d:%02d", i / 60, i % 60)
 
-            // update your XML TextView safely
+            // update the XML TextView directly
             remoteView.setTextViewText(R.id.tvText, timeText)
 
             // redraw notification
             manager.notify(2, builder.build())
-
             delay(1000)
         }
 
-        // optional: final message
+        // final message
         remoteView.setTextViewText(R.id.tvText, "Done!")
         manager.notify(2, builder.build())
     }
