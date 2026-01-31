@@ -259,6 +259,25 @@ fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
 
 
 
+fun DatePickerState.date(date: Any?) {
+    this.selectedDateMillis = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+}
+
+fun DatePickerState.goTo(date: Any?) {
+    var date2 = toLocalDate(date)
+    val millis = YearMonth.of(date2.year, date2.monthValue)
+        .atDay(1)
+        .atStartOfDay()
+        .toInstant(ZoneOffset.UTC)
+        .toEpochMilli()
+
+    // Apply it
+    this.displayedMonthMillis = millis
+}
+
+
+
+
 
 fun faded(color: Color, alpha: Float = 0.4f) = color.copy(alpha = alpha)
 
