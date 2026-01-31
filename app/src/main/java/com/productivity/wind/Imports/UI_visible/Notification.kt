@@ -79,17 +79,9 @@ fun Show(notifi: Notification, id: Int = 1) {
 fun Notification(
     title: Str,
     text: Str,
+    xml: Int? = null,                     // optional XML layout resource ID
+    Do: (builder: NotificationBuilder) -> Unit = {} // optional custom logic
 ) {
-    var oldTitle by m("")
-    var oldText by m("")
-    var id = notifyID++
-
-    if (title == oldTitle && text == oldText) return
-
-    oldTitle = title
-    oldText = text
-
-    
     Permission.notification {
         val builder = NotificationBuilder(AppCtx, "WindApp_id")
             .setContentTitle(title)
