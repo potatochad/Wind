@@ -174,7 +174,7 @@ fun toD(it: Any?): Double = when (it) {
     is Float -> it.toDouble()
     is Long -> it.toDouble()
     is Int -> it.toDouble()
-    is String -> it.toDoubleOrNull() ?: 0.0
+    is Str -> it.toDoubleOrNull() ?: 0.0
     null -> 0.0
     else -> 0.0
 }
@@ -183,7 +183,7 @@ fun toD(it: Any?): Double = when (it) {
 fun toLatLng(it: Any?): LatLng = when (it) {
     is LatLng -> it
     is Pair<*, *> -> LatLng(it.first.toString().toDouble(), it.second.toString().toDouble())
-    is String -> {
+    is Str -> {
         val parts = it.split(",")
         LatLng(parts.getOrNull(0)?.toDoubleOrNull() ?: 0.0,
                parts.getOrNull(1)?.toDoubleOrNull() ?: 0.0)
@@ -193,7 +193,7 @@ fun toLatLng(it: Any?): LatLng = when (it) {
 }
 
 fun toStr(it: Any?): String = when (it) {
-    is String -> it
+    is Str -> it
     is AnnotatedString -> it.text
     is LatLng -> "${it.latitude},${it.longitude}"
     is Pair<*, *> -> "${it.first},${it.second}"
@@ -202,9 +202,8 @@ fun toStr(it: Any?): String = when (it) {
     else -> it.toString()
 }
 
-
 fun toLocalDate(x: Any?): LocalDate = when (x) { 
-    is String -> LocalDate.parse(x)
+    is Str -> LocalDate.parse(x)
     is Long -> Instant.ofEpochMilli(x)
         .atOffset(ZoneOffset.UTC)
         .toLocalDate()
@@ -238,32 +237,9 @@ fun toWeekDay(dateInput: Any): Str {
     }
 }
 
-fun DatePickerState.date(date: LocalDate) {
-    this.selectedDateMillis = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-}
-
-fun DatePickerState.goTo(year: Int, month: Int) {
-    val millis = YearMonth.of(year, month)
-        .atDay(1)
-        .atStartOfDay()
-        .toInstant(ZoneOffset.UTC)
-        .toEpochMilli()
-
-    // Apply it
-    state.displayedMonthMillis = millis
-}
 
 
-fun toRead(date: LocalDate = LocalDate.now()): String {
-    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
-    return date.format(formatter)
-}
 
-fun toRead(str: String): String {
-    val date = LocalDate.parse(str)
-    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
-    return date.format(formatter)
-}
 
 
 @Composable
@@ -275,16 +251,7 @@ fun toUI(it: Any?): UI {
     }
 }
 
-fun Any.toMeters(
-    cameraState: CameraPositionState,
-    density: Float = AppDensity
-): Double {
-    val zoom = cameraState.position.zoom
-    val latitude = cameraState.position.target.latitude
-    val metersPerPixel = 156543.03392 * cos(Math.toRadians(latitude)) / (1 shl zoom.toInt())
-    val pixels = toF(this) * density
-    return pixels * metersPerPixel
-}
+
 
 @Composable
 fun toMStr(what: Any?): mStr = when {
@@ -301,6 +268,33 @@ fun isMInt(x: Any?): Bool = x is m_<*> && x.it is Int
 
 
 
+
+
+fun toRead(date: LocalDate = LocalDate.now()): String {
+    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
+    return date.format(formatter)
+}
+
+fun toRead(str: String): String {
+    val date = LocalDate.parse(str)
+    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
+    return date.format(formatter)
+}
+
+
+
+
+
+fun Any.toMeters(
+    cameraState: CameraPositionState,
+    density: Float = AppDensity
+): Double {
+    val zoom = cameraState.position.zoom
+    val latitude = cameraState.position.target.latitude
+    val metersPerPixel = 156543.03392 * cos(Math.toRadians(latitude)) / (1 shl zoom.toInt())
+    val pixels = toF(this) * density
+    return pixels * metersPerPixel
+}
 
 
 
