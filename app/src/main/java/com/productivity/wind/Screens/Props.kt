@@ -350,7 +350,8 @@ object Header {
 			Notification(
     title = "Timer",
     text = "Starting...",
-    xml = R.layout.notification_timer
+    xml = R.layout.notification_timer,
+				id = 2,
 ) { builder ->
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
