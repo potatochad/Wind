@@ -282,6 +282,32 @@ fun Str.isAfter(x: Str): Bool = toLocalDate(this).isAfter(toLocalDate(x))
 fun Str.isEqual(x: Str): Bool = toLocalDate(this).isEqual(toLocalDate(x))
 
 
+val LocalDate.words: Str
+    get() {
+        val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
+        return this.format(formatter)
+    }
+
+// Overload for String input (assume ISO date like "2026-01-31")
+val String.words: Str
+    get() {
+        return try {
+            val date = LocalDate.parse(this)
+            date.words
+        } catch (e: Exception) {
+            LocalDate.now().words // fallback to today if parsing fails
+        }
+	}
+
+
+
+
+fun isM(x: Any?): Bool = x is m_<*>
+fun isMBool(x: Any?): Bool = x is m_<*> && x.it is Bool
+fun isMStr(x: Any?): Bool = x is m_<*> && x.it is Str
+fun isMInt(x: Any?): Bool = x is m_<*> && x.it is Int
+
+
 
 
 
