@@ -81,11 +81,12 @@ fun Notification(
     text: String,
     xml: Int? = null,
     id: Int = 1,                         // add explicit id
-    Do: (builder: NotificationBuilder) -> Unit = {}
+    Do: (builder: NotificationCompat.Builder, remoteView: RemoteViews?) -> Unit = { _, _ -> }
 ) {
     Permission.notification {
         val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        val remoteView = xml?.let { RemoteViews(AppCtx.packageName, it) }
         // check if a builder for this id already exists
         val builder = notifMap[id] ?: NotificationBuilder(AppCtx, "WindApp_id")
             .setSmallIcon(myAppRes)
@@ -104,7 +105,7 @@ fun Notification(
         manager.notify(id, notifi)
 
         // optional dynamic updates
-        Do(builder)
+        Do(builder, remoteView)
     }
 }
 
