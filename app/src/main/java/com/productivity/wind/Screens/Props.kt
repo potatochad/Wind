@@ -348,32 +348,36 @@ object Header {
 
         Icon.Reload{
 
-			Notification(
+			
+            Notification(
     title = "Timer",
     text = "Starting...",
     xml = R.layout.notification_timer,
-				id = 2,
-) { builder ->
+    id = 2
+) { builder, remoteView ->
+    if (remoteView == null) return@Notification  // safety check
+
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     CoroutineScope(Dispatchers.Default).launch {
-        for (i in 10 downTo 0) { // countdown from 10 seconds
+        for (i in 10 downTo 0) {
             val timeText = String.format("%02d:%02d", i / 60, i % 60)
 
-            // update your XML TextView
-            builder.mContentView?.setTextViewText(R.id.tvText, timeText)
+            // update your XML TextView safely
+            remoteView.setTextViewText(R.id.tvText, timeText)
 
             // redraw notification
-            manager.notify(1, builder.build())
+            manager.notify(2, builder.build())
 
             delay(1000)
         }
 
         // optional: final message
-        builder.mContentView?.setTextViewText(R.id.tvText, "Done!")
-        manager.notify(1, builder.build())
+        remoteView.setTextViewText(R.id.tvText, "Done!")
+        manager.notify(2, builder.build())
     }
 }
+
 
 		}
         
