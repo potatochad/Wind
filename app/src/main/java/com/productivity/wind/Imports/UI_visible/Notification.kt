@@ -94,7 +94,7 @@ fun Notification(
             .apply {
                 setContentTitle(title)
                 setContentText(text)
-                if (xml != null) setCustomContentView(xml)
+                remoteView?.let { setCustomContentView(it) } // ✅ fixed
             }
 
         // store/update builder in map
