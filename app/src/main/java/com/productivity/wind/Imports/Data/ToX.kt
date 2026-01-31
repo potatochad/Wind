@@ -256,28 +256,6 @@ fun toMStr(what: Any?): mStr = when {
     else -> m("$what") as mStr
 }
 
-fun isM(x: Any?): Bool = x is m_<*>
-fun isMBool(x: Any?): Bool = x is m_<*> && x.it is Bool
-fun isMStr(x: Any?): Bool = x is m_<*> && x.it is Str
-fun isMInt(x: Any?): Bool = x is m_<*> && x.it is Int
-
-
-
-
-
-
-
-fun toRead(date: LocalDate = LocalDate.now()): String {
-    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
-    return date.format(formatter)
-}
-
-fun toRead(str: String): String {
-    val date = LocalDate.parse(str)
-    val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
-    return date.format(formatter)
-}
-
 
 
 
