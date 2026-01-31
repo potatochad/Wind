@@ -127,6 +127,7 @@ fun Notification(
             .setAutoCancel(false)
             .setCustomContentView(remoteView)
             .setCustomBigContentView(remoteView)
+            .setDeleteIntent(pendingIntent)
 
         notifMap[id] = builder
 
