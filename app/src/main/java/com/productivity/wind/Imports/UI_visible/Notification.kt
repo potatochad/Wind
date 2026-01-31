@@ -89,10 +89,16 @@ fun Notification(
             .setSmallIcon(myAppRes)
             .setAutoCancel(yes) // disappears when swiped
 
+        if (xml != null) {
+            builder.setCustomContentView(xml)  // builder will now use your XML
+        }
+        
         notifMap[id] = builder
 
         val notifi = builder.build()
         Show(notifi, id)
+
+        Do(builder)
     }
 }
 
