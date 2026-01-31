@@ -442,7 +442,7 @@ fun ScheduleUI(
               
               if (showDatePicker){
                    PickDate(
-                       // toLocalDate(beginDate),
+                       beginDate,
                        onDateSelected = { 
                            beginDate = it
                        },
