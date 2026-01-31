@@ -345,7 +345,35 @@ object Header {
 		}
         Icon.Chill { goTo("Web") }
 
-        //Icon.Reload{}
+        Icon.Reload{
+
+			Notification(
+    title = "Timer",
+    text = "Starting...",
+    xml = R.layout.notification_timer
+) { builder ->
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    CoroutineScope(Dispatchers.Default).launch {
+        for (i in 10 downTo 0) { // countdown from 10 seconds
+            val timeText = String.format("%02d:%02d", i / 60, i % 60)
+
+            // update your XML TextView
+            builder.mContentView?.setTextViewText(R.id.tvText, timeText)
+
+            // redraw notification
+            manager.notify(1, builder.build())
+
+            delay(1000)
+        }
+
+        // optional: final message
+        builder.mContentView?.setTextViewText(R.id.tvText, "Done!")
+        manager.notify(1, builder.build())
+    }
+}
+
+		}
         
         move(w = 12)
         
