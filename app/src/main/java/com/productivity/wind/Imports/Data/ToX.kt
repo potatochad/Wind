@@ -242,6 +242,17 @@ fun DatePickerState.date(date: LocalDate) {
     this.selectedDateMillis = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
 }
 
+fun DatePickerState.goTo(year: Int, month: Int) {
+    val millis = YearMonth.of(year, month)
+        .atDay(1)
+        .atStartOfDay()
+        .toInstant(ZoneOffset.UTC)
+        .toEpochMilli()
+
+    // Apply it
+    state.displayedMonthMillis = millis
+}
+
 
 fun toRead(date: LocalDate = LocalDate.now()): String {
     val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
