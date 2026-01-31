@@ -356,23 +356,28 @@ object Header {
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     CoroutineScope(Dispatchers.Default).launch {
-        for (i in 10 downTo 0) {
-            val timeText = String.format("%02d:%02d", i / 60, i % 60)
+        var seconds = 0
 
-            // update the XML TextView directly
+        while (true) { // forever loop
+            seconds++
+
+            // format as MM:SS
+            val timeText = String.format("%02d:%02d", seconds / 60, seconds % 60)
+
+            // update XML TextView
             remoteView.setTextViewText(R.id.tvText, timeText)
+
+            // IMPORTANT: reapply RemoteViews to builder
+            builder.setCustomContentView(remoteView)
+            builder.setCustomBigContentView(remoteView)
 
             // redraw notification
             manager.notify(2, builder.build())
-            delay(1000)
-        }
 
-        // final message
-        remoteView.setTextViewText(R.id.tvText, "Done!")
-        manager.notify(2, builder.build())
+            delay(1000) // 1 second tick
+        }
     }
 }
-
 
 		}
         
