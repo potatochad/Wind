@@ -434,7 +434,7 @@ fun ScheduleUI(
 
               Text("Start date: ")
               Ctext(
-                  toRead(beginDate),
+                  beginDate.words,
                   mod = Mod.space(5),
                   animate = yes,
               ) {
