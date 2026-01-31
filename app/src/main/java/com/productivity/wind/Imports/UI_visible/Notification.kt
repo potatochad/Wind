@@ -77,27 +77,33 @@ fun Show(notifi: Notification, id: Int = 1) {
 
 
 fun Notification(
-    title: Str,
-    text: Str,
-    xml: Int? = null,                     // optional XML layout resource ID
-    Do: (builder: NotificationBuilder) -> Unit = {} // optional custom logic
+    title: String,
+    text: String,
+    xml: Int? = null,
+    id: Int = 1,                         // add explicit id
+    Do: (builder: NotificationBuilder) -> Unit = {}
 ) {
     Permission.notification {
-        val builder = NotificationBuilder(AppCtx, "WindApp_id")
-            .setContentTitle(title)
-            .setContentText(text)
-            .setSmallIcon(myAppRes)
-            .setAutoCancel(yes) // disappears when swiped
+        val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        if (xml != null) {
-            builder.setCustomContentView(xml)  // builder will now use your XML
-        }
-        
+        // check if a builder for this id already exists
+        val builder = notifMap[id] ?: NotificationBuilder(AppCtx, "WindApp_id")
+            .setSmallIcon(myAppRes)
+            .setAutoCancel(true)
+            .apply {
+                setContentTitle(title)
+                setContentText(text)
+                if (xml != null) setCustomContentView(xml)
+            }
+
+        // store/update builder in map
         notifMap[id] = builder
 
+        // build and show notification
         val notifi = builder.build()
-        Show(notifi, id)
+        manager.notify(id, notifi)
 
+        // optional dynamic updates
         Do(builder)
     }
 }
