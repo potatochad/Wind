@@ -154,7 +154,6 @@ fun PickDate(
     value: Any? = null,
     onDateSelected: DoStr,
     showModeToggle: Bool = no,
-    confirmOnSelection: Bool = yes,
     colors: DatePickerColors = DatePickerDefaults.colors(
        containerColor = MaterialTheme.colorScheme.surface,
        selectedDayContainerColor = orange,
@@ -190,12 +189,6 @@ fun PickDate(
     }
     RunOnce { 
         datePickerState.date(toLocalDate(value))        
-    }
-
-    RunOnce(datePickerState) {
-        if(confirmOnSelection){
-            dateSelected()
-        }
     }
 
     DatePickerDialog(
