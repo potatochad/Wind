@@ -151,6 +151,7 @@ import androidx.compose.ui.graphics.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PickDate(
+    value: Any? = null,
     onDateSelected: DoStr,
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
@@ -187,8 +188,8 @@ fun PickDate(
             onDismiss()
         }
     }
-    RunOnce {
-     
+    RunOnce { 
+        datePickerState.date(toLocalDate(value))        
     }
 
     RunOnce(datePickerState) {
