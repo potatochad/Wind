@@ -110,6 +110,34 @@ fun Notification(
 }
 
 
+fun Notification(
+    xml: Int,
+    id: Int = 1,
+    Do: (builder: NotificationCompat.Builder, remoteView: RemoteViews) -> Unit = { _, _ -> }
+) {
+    Permission.notification {
+        val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // create RemoteViews from your XML layout
+        val remoteView = RemoteViews(AppCtx.packageName, xml)
+
+        // create or reuse builder
+        val builder = notifMap[id] ?: NotificationCompat.Builder(AppCtx, "WindApp_id")
+            .setSmallIcon(myAppRes)         // required by Android, but UI will ignore it
+            .setAutoCancel(false)
+            .setCustomContentView(remoteView)
+            .setCustomBigContentView(remoteView)
+
+        notifMap[id] = builder
+
+        // show notification
+        manager.notify(id, builder.build())
+
+        // pass builder + remoteView to your dynamic logic
+        Do(builder, remoteView)
+    }
+}
+
 
 
 
