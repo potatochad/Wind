@@ -188,7 +188,8 @@ fun PickDate(
         }
     }
     RunOnce { 
-        datePickerState.date(toLocalDate(value))        
+        datePickerState.date(toLocalDate(value))
+        Vlog("${toLocalDate(value)}")
     }
 
     DatePickerDialog(
