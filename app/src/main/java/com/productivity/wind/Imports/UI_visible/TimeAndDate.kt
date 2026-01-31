@@ -151,8 +151,6 @@ import androidx.compose.ui.graphics.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PickDate(
-    confirmText: Str = "Confirm",
-    cancelText: Str = "Cancel",
     onDateSelected: DoStr,
     showModeToggle: Bool = no,
     confirmOnSelection: Bool = yes,
@@ -171,13 +169,13 @@ fun PickDate(
 ) {
     val today = LocalDate.now()
 
-    val minSelectableMillis = today.minusYears(99).toMillis()
-    val maxSelectableMillis = today.plusYears(99).toMillis()
+    val minYear = today.minusYears(99).toMillis()
+    val maxYear = today.plusYears(99).toMillis()
 
     val datePickerState = rememberDatePickerState(
         selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long): Bool {
-                return utcTimeMillis in minSelectableMillis..maxSelectableMillis
+                return utcTimeMillis in minYear..maxYear  
             }
         }
     )
@@ -188,6 +186,9 @@ fun PickDate(
             onDateSelected("$date")
             onDismiss()
         }
+    }
+    RunOnce {
+     
     }
 
     RunOnce(datePickerState) {
@@ -203,12 +204,12 @@ fun PickDate(
         ),
         shape = shape,
         confirmButton = {
-            Btn(confirmText) {
+            Btn("Confirm") {
                 dateSelected()
             }
         },
         dismissButton = {
-            Btn(cancelText){
+            Btn("Cancel"){
                onDismiss()
             }
         }
