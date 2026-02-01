@@ -76,8 +76,8 @@ fun Show(notifi: Notification, id: Int = 1) {
 
 class NotificationSwipeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val notifId = intent.getIntExtra("WindApp_id", -1)
-        
+        val notifId = intent.getIntExtra("notif_id", -1)
+
         Handler(Looper.getMainLooper()).post {
             Toast.makeText(
                 context,
