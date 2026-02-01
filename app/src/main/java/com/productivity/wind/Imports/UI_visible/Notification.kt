@@ -131,7 +131,7 @@ fun Notification(
 fun Notification(
     xml: Int,
     id: Int = 1,
-    Do: (builder: NotificationCompat.Builder, remoteView: RemoteViews) -> Unit = { _, _ -> }
+    Do: (builder: NotificationCompat.Builder, remoteView: RemoteViews, manager: NotificationManager) -> Unit = { _, _, _ -> }
 ) {
     val deleteIntent = Intent(AppCtx, NotificationSwipeReceiver::class.java).apply {
         putExtra("notif_id", id)
@@ -152,7 +152,7 @@ fun Notification(
 
         // create or reuse builder
         val builder = notifMap[id] ?: NotificationCompat.Builder(AppCtx, "WindApp_id")
-            .setSmallIcon(myAppRes)         // required by Android, but UI will ignore it
+            .setSmallIcon(myAppRes)         
             .setAutoCancel(false)
             .setCustomContentView(remoteView)
             .setCustomBigContentView(remoteView)
@@ -163,8 +163,10 @@ fun Notification(
         // show notification
         manager.notify(id, builder.build())
 
-        // pass builder + remoteView to your dynamic logic
-        Do(builder, remoteView)
+        
+        CoroutineScope(Dispatchers.Default).launch {
+            Do(builder, remoteView, manager)
+        }
     }
 }
 
