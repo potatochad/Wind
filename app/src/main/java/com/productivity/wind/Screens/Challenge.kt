@@ -432,8 +432,17 @@ fun TimerNotification(
 }
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
+
+	//compose friendly
 	val tskOn by rememberUpdatedState(tsk.on)
 	var timeWorked by r(tsk.didTime)
+	var timeLeft by r(tsk.doneTime - timeWorked)
+
+	LaunchedEffect(tskOn, timeWorked, timeLeft){
+		tsk.edit {
+			tsk.on = no
+		}
+	}
 
 	fun StopTimer(){
 		tsk.edit {
