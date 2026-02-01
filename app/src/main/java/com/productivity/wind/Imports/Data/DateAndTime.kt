@@ -171,6 +171,21 @@ fun taskDueToday(x: Schedule): Bool {
 	
 }
 
+fun time(s: Int, pattern: Str = "HH:MM:SS"): Str {
+    val h = s / 3600
+    val m = (s % 3600) / 60
+    val sec = s % 60
+
+    return pattern
+        .replace("HH", "%02d".format(h))
+        .replace("H", h.toString())
+        .replace("MM", "%02d".format(m))
+        .replace("M", m.toString())
+        .replace("SS", "%02d".format(sec))
+        .replace("S", sec.toString())
+}
+
+
 @kotlinx.serialization.Serializable
 data class Schedule(
     var type: Str = "", // WEEKLY MONTHLY YEARLY CUSTOM
