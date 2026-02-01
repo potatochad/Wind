@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.productivity.wind.*
+import com.productivity.wind.R
 import com.productivity.wind.Imports.*
 import androidx.compose.foundation.gestures.*
 import androidx.compose.ui.input.pointer.*
@@ -436,8 +437,6 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	//compose friendly
 	val tskOn by r(tsk.on)
 	var timeWorked by r(tsk.didTime)
-	val timeLeft: Int
-        get() = tsk.doneTime - timeWorked
 
 	LaunchedEffect(tskOn, timeWorked){
 		tsk.edit {
