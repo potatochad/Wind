@@ -64,6 +64,29 @@ import android.app.*
 import android.content.*
 
 
+
+
+typealias NotificationBuilder = NotificationCompat.Builder
+
+val notifMap = mutableMapOf<Int, NotificationBuilder>()
+var notifyID by m(0)
+
+fun Show(notifi: Notification, id: Int = 1) { 
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    manager.notify(id, notifi) 
+}
+
+class NotificationSwipeReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        val notifId = intent.getIntExtra("notif_id", -1)
+
+        
+        log("DOESNT WORK CURRENTLY")
+        
+    }
+}
+
+
 // 1. Set text (any type, auto toString)
 fun RemoteViews.text(id: Int, value: Any) = setTextViewText(id, value.toString())
 
