@@ -491,7 +491,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
         }
 
 		Icon.Delete{ 
-			Bar.doTsk.remove(tsk)
+			tsk.remove()
 		}
 	}
 }
