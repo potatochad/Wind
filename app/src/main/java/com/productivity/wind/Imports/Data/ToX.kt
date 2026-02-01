@@ -238,9 +238,9 @@ fun toWeekDay(dateInput: Any): Str {
 
 
 
-fun toH(x: Int): Int = this / 3600
-fun toMin(x: Int): Int = (this % 3600) / 60
-fun toS(x: Int): Int = this % 60
+fun toH(x: Int): Int = x / 3600
+fun toMin(x: Int): Int = (x % 3600) / 60
+fun toS(x: Int): Int = x % 60
 
 
 
