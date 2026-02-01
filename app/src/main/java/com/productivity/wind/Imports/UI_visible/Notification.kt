@@ -74,6 +74,15 @@ fun Show(notifi: Notification, id: Int = 1) {
     manager.notify(id, notifi) 
 }
 
+class NotificationSwipeReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        val notifId = intent.getIntExtra("WindApp_id", -1)
+        Vlog("Notification $notifId was swiped away")
+        // do your background task here if needed
+    }
+}
+
+
 
 
 fun Notification(
@@ -115,6 +124,17 @@ fun Notification(
     id: Int = 1,
     Do: (builder: NotificationCompat.Builder, remoteView: RemoteViews) -> Unit = { _, _ -> }
 ) {
+    val deleteIntent = Intent(AppCtx, NotificationSwipeReceiver::class.java).apply {
+        putExtra("notif_id", id)
+    }
+    
+    val pendingIntent = PendingIntent.getBroadcast(
+        AppCtx,
+        id,
+        deleteIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
     Permission.notification {
         val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
