@@ -171,7 +171,7 @@ fun taskDueToday(x: Schedule): Bool {
 	
 }
 
-fun time(s: Int, pattern: Str = "HH:MM:SS"): Str {
+fun Time(s: Int, pattern: Str = "HH:MM:SS"): Str {
     val h = s / 3600
     val m = (s % 3600) / 60
     val sec = s % 60
