@@ -103,7 +103,7 @@ fun Notification(
 fun Notification(
     xml: Int,
     id: Int = 1,
-    Do: (builder: NotificationCompat.Builder, remoteView: RemoteViews, manager: NotificationManager) -> Unit = { _, _, _ -> }
+    Do: suspend (builder: NotificationCompat.Builder, remoteView: RemoteViews, manager: NotificationManager) -> Unit = { _, _, _ -> }
 ) {
     val deleteIntent = Intent(AppCtx, NotificationSwipeReceiver::class.java).apply {
         putExtra("notif_id", id)
