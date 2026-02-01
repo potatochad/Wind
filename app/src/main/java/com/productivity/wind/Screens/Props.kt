@@ -349,24 +349,7 @@ object Header {
         Icon.Reload{
 
 			
-            Notification(
-				xml = R.layout.notification_timer,
-				id = 2
-			) { builder, remoteView, manager ->
-				var s = 0
-
-				while (yes) {
-					s++
-
-					remoteView.text(
-						R.id.tvText, 
-						Time(s)
-					)
-					manager.notify(2, builder.build())
-
-					delay(1000)
-				}
-			}
+            
 		}
         
         move(w = 12)
