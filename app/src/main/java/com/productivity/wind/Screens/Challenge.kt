@@ -481,10 +481,11 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		log("name ${tsk.name}, tskOn $tskOn, !it ${!it}")
 	}
 	move(5)
-	Row(Mod.weight(1f)) {
+	Row {
 		Text(
 			"${tsk.name}: ${Time(tsk.timeLeft)}",
 		)
+		Spacer(Mod.weight(1f))
 	}
     End { 
 		Item.Edit{
