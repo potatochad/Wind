@@ -118,6 +118,14 @@ fun GeoCircle.edit(block: GeoCircle.() -> Unit) {
 fun DoTsk.edit(block: DoTsk.() -> Unit) {
 	Bar.doTsk.edit(this, block)
 }
+fun DoTsk.remove() {
+	Bar.doTsk.remove(this)
+}
+
+
+
+
+
 
 
 
