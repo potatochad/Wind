@@ -85,6 +85,8 @@ class NotificationSwipeReceiver : BroadcastReceiver() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+        Bar.funTime +=1
+        log("swiped awayyyy...")
         
     }
 }
