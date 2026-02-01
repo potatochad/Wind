@@ -357,10 +357,11 @@ object Header {
 
 				while (yes) {
 					s++
-					
-					val txt = "${toH(s)}:${toMin(s)}:${toS(s)}"
 
-					remoteView.text(R.id.tvText, txt)
+					remoteView.text(
+						R.id.tvText, 
+						Time(s)
+					)
 					manager.notify(2, builder.build())
 
 					delay(1000)
