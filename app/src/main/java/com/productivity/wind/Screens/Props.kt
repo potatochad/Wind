@@ -353,15 +353,15 @@ object Header {
 				xml = R.layout.notification_timer,
 				id = 2
 			) { builder, remoteView, manager ->
-				var seconds = 0
+				var s = 0
 
-				while (true) {
-					seconds++
+				while (yes) {
+					s++
 					
-					val txt = "${toH()}:${toMin()}:${toS()}"
+					val txt = "${toH(s)}:${toMin(s)}:${toS(s)}"
 
-					remoteView.setTextViewText(R.id.tvText, txt)
-					manager.notify(2, builder.build()) // only notify, builder already has the RemoteViews
+					remoteView.text(R.id.tvText, txt)
+					manager.notify(2, builder.build())
 
 					delay(1000)
 				}
