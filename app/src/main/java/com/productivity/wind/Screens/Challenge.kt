@@ -435,7 +435,7 @@ fun TimerNotification(
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 
 	//compose friendly
-	val tskOn by r(tsk.on)
+	var tskOn by r(tsk.on)
 	var timeWorked by r(tsk.didTime)
 
 	LaunchedEffect(tskOn, timeWorked){
@@ -481,7 +481,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		log("name ${tsk.name}, tskOn $tskOn, !it ${!it}")
 	}
 	move(5)
-    Text("${tsk.name}: ${Time(timeLeft)}")
+    Text("${tsk.name}: ${Time(tsk.timeLeft)}")
     End { 
 		Item.Edit{
             Item.enoughPoints {
