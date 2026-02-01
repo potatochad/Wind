@@ -355,8 +355,7 @@ object Header {
 ) { builder, remoteView ->
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    CoroutineScope(Dispatchers.Default).launch {
-        var seconds = 0
+     var seconds = 0
 
         while (true) { // forever loop
             seconds++
@@ -376,7 +375,7 @@ object Header {
 
             delay(1000) // 1 second tick
         }
-    }
+    
 }
 
 		}
