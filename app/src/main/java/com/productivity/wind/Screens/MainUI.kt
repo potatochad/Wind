@@ -57,7 +57,11 @@ fun Main() {
 				if (!it.done() && taskDueToday(it.schedule)){
 					
 					
-					LazyCard { 
+					LazyCard(
+						modUI = Mod.space(
+							start = 8,
+						)
+					) { 
 						DoTskUI(it)
 					}
 				}
