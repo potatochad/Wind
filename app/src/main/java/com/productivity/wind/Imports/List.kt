@@ -122,6 +122,9 @@ fun DoTsk.remove() {
 	Bar.doTsk.remove(this)
 }
 
+val DoTsk.timeLeft: Int
+    get() = this.doneTime - this.didTime
+
 
 
 
