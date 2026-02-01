@@ -410,7 +410,7 @@ fun ToDo(id: Str = "") {
 
 fun TimerNotification(
 	value: Int,
-	Do: DoInt,
+	Do: DoStr,
 ){
 	Notification(
 		xml = R.layout.notification_timer,
@@ -434,42 +434,35 @@ fun TimerNotification(
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 
 	//compose friendly
-	val tskOn by rememberUpdatedState(tsk.on)
+	val tskOn by r(tsk.on)
 	var timeWorked by r(tsk.didTime)
-	var timeLeft by r(tsk.doneTime - timeWorked)
+	val timeLeft: Int
+        get() = tsk.doneTime - timeWorked
 
-	LaunchedEffect(tskOn, timeWorked, timeLeft){
+	LaunchedEffect(tskOn, timeWorked){
 		tsk.edit {
-			tsk.on = no
-		}
-	}
-
-	fun StopTimer(){
-		tsk.edit {
-			tsk.on = no
+			on = tskOn
+			didTime = timeWorked
 		}
 	}
 
 	
 	RunOnce {
-		StopTimer()
+		tskOn = no
         while (yes) {
 			wait(1000)
 			if (tskOn){
 				log("task is ON")
 				log("[TaskActive] Tsk_DIDTIME: ${tsk.didTime}, timeWorked: $timeWorked , name: ${tsk.name}")
 			
-				tsk.edit {
-					didTime +=1
-				}
-				Bar.funTime += 1
-				timeWorked = tsk.didTime
+				timeWorked++
+				
+				Bar.funTime++
 			
-				// Notification("${tsk.name}", "time: ${tsk.doneTime - tsk.didTime}")
 			}
 			if (tsk.done()){
 				log("task is done")
-				StopTimer()
+				tskOn = no
 			}
 		}
 	}
@@ -484,13 +477,12 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				log("Disabling , found ${found.name}, foundOn ${found.on}, !it ${!it}")
 			}
 		}
-		tsk.edit {
-			on = !it
-		}
-		log("name ${tsk.name}, tskOn ${tsk.on}, !it ${!it}")
+		tskOn = !it
+		
+		log("name ${tsk.name}, tskOn $tskOn, !it ${!it}")
 	}
 	move(5)
-    Text("${tsk.name}: ${tsk.doneTime - timeWorked}")
+    Text("${tsk.name}: ${Time(timeLeft)}")
     End { 
 		Item.Edit{
             Item.enoughPoints {
