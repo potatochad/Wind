@@ -77,8 +77,15 @@ fun Show(notifi: Notification, id: Int = 1) {
 class NotificationSwipeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val notifId = intent.getIntExtra("WindApp_id", -1)
-        Vlog("Notification $notifId was swiped away")
-        // do your background task here if needed
+        
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(
+                context,
+                "Notification $notifId swiped",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        
     }
 }
 
