@@ -111,14 +111,7 @@ class ForEverService : Service() {
         val notif = Notification(
 			title = "Timer Running",
 			text = "00:00",
-		) { builder, manager ->
-			while (yes) {
-				delay(1000L)
-				val elapsed = (System.currentTimeMillis() - startTime) / 1000
-				builder.text(Time(elapsed))
-				manager.notify(1, builder.build())
-			}
-		}
+		)
 
 		startForeground(1, notif)
 
