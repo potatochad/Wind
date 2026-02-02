@@ -483,7 +483,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	move(5)
 	Text(
 		"${tsk.name}: ${Time(tsk.timeLeft)}",
-		modifier = Mod.w(toF(AppW)*0.60)
+		modifier = Mod.w(toF(AppW)*0.57)
 	)
 	
     End { 
