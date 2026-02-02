@@ -72,7 +72,8 @@ fun Notification(
     id: Int = 1,                         
     Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _ -> }     
 ): Notification {
-    Permission.notification {
+    Permission.notification()
+    
         val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val builder = notifMap[id] ?: NotificationBuilder(AppCtx, "WindApp_id")
@@ -93,8 +94,8 @@ fun Notification(
             Do(builder, manager)
         }
         
-        return@notification notifi
-    }
+        return notifi
+    
 }
 
 
@@ -114,7 +115,7 @@ fun Notification(
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
-    Permission.notification {
+    Permission.notification()
         val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // create RemoteViews from your XML layout
@@ -137,7 +138,7 @@ fun Notification(
         CoroutineScope(Dispatchers.Default).launch {
             Do(builder, remoteView, manager)
         }
-    }
+    
 }
 
 
