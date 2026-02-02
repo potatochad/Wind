@@ -92,6 +92,21 @@ import com.productivity.wind.Imports.UI_visible.*
 
 //region LATER USE
 
+// Start the service
+fun startForeverService() {
+    val intent = Intent(AppCtx, ForEverService::class.java)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        startForegroundService(intent)
+    } else {
+        startService(intent)
+    }
+}
+
+// Stop the service
+fun stopForeverService() {
+    val intent = Intent(AppCtx, ForEverService::class.java)
+    stopService(intent)
+}
 
 class ForEverService : Service() {
     private val serviceJob = SupervisorJob()
@@ -112,7 +127,7 @@ class ForEverService : Service() {
 			title = "Timer Running",
 			text = "00:00",
 		)
-
+		
 		startForeground(1, notif)
 
         if (OneJob == null || OneJob?.isActive == false) {
