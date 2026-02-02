@@ -106,16 +106,27 @@ class ForEverService : Service() {
         flags: Int,
         startId: Int,
     ): Int {
-        NotificationHelper(this).createNotificationChannel()
-        startForeground(1, NotificationHelper(this).buildNotification(),)
-		
-            if (OneJob == null || OneJob?.isActive == false) {
-                OneJob = serviceScope.launch {
-                    while (true) {
-						delay(1000L)
+        val notif = Notification(
+			title = "Timer Running",
+			text = "00:00",
+		) { builder, manager ->
+			while (yes) {
+				delay(1000L)
+				val elapsed = (System.currentTimeMillis() - startTime) / 1000
+				builder.text(Time(elapsed))
+				manager.notify(1, builder.build())
+			}
+		}
 
+		startForeground(1, notif)
 
-					}
+        if (OneJob == null || OneJob?.isActive == false) {
+            OneJob = serviceScope.launch {
+                while (true) {
+					delay(1000L)
+					Vlog("testingg")
+					log("hi")
+	
 				}
             }
         }
