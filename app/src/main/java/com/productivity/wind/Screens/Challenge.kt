@@ -426,7 +426,6 @@ fun TimerNotification(
 		)
 		manager.notify(2, builder.build())
 			
-		}
 	}
 }
 @Composable
