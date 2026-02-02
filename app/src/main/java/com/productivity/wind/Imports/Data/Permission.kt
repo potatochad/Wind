@@ -133,7 +133,7 @@ import android.*
 
 
 object Permission {
-    private fun getAndDo(permissionStr: String, onGranted: Do): Boolean {
+    private fun getAndDo(permissionStr: Str, onGranted: Do): Bool {
         return if (ContextCompat.checkSelfPermission(App, permissionStr) == PackageManager.PERMISSION_GRANTED) {
             onGranted()
             true // permission already granted
@@ -143,60 +143,60 @@ object Permission {
         }
     }
 
-    fun notification(onGranted: Do): Boolean {
+    fun notification(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.POST_NOTIFICATIONS, onGranted)
     }
 
-    fun camera(onGranted: Do): Boolean {
+    fun camera(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.CAMERA, onGranted)
     }
 
-    fun locationFine(onGranted: Do): Boolean {
+    fun locationFine(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, onGranted)
     }
 
-    fun locationCoarse(onGranted: Do): Boolean {
+    fun locationCoarse(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, onGranted)
     }
 
-    fun readStorage(onGranted: Do): Boolean {
+    fun readStorage(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.READ_EXTERNAL_STORAGE, onGranted)
     }
 
-    fun writeStorage(onGranted: Do): Boolean {
+    fun writeStorage(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.WRITE_EXTERNAL_STORAGE, onGranted)
     }
 
-    fun recordAudio(onGranted: Do): Boolean {
+    fun recordAudio(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.RECORD_AUDIO, onGranted)
     }
 
-    fun readContacts(onGranted: Do): Boolean {
+    fun readContacts(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.READ_CONTACTS, onGranted)
     }
 
-    fun sendSMS(onGranted: Do): Boolean {
+    fun sendSMS(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.SEND_SMS, onGranted)
     }
 
-    fun callPhone(onGranted: Do): Boolean {
+    fun callPhone(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.CALL_PHONE, onGranted)
     }
 
-    fun readPhoneState(onGranted: Do): Boolean {
+    fun readPhoneState(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.READ_PHONE_STATE, onGranted)
     }
 
-    fun backgroundLocation(onGranted: Do): Boolean {
+    fun backgroundLocation(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)
     }
 
-    fun bodySensors(onGranted: Do): Boolean {
+    fun bodySensors(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
     }
 
 
-	fun ignoreOptimizations(onGranted: Do): Bool {
+	fun ignoreOptimizations(onGranted: Do = {}): Bool {
 		val pm = App.getSystemService(Context.POWER_SERVICE) as PowerManager
 
 		// Already ignoring? Run callback and return true
