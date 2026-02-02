@@ -135,9 +135,10 @@ object Item {
 	@Composable
     fun Edit(
         noPoints: Bool = no,
+		mod: Mod = Mod.space(10),
         Do: Do,
     ) {
-        Icon.Edit {
+        Icon.Edit(mod) {
             if (!noPoints){
                 Item.enoughPoints{
                     Do()
