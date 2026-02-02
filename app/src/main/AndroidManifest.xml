@@ -55,6 +55,11 @@
         </activity>
 
         <receiver android:name=".NotificationSwipeReceiver" />
+          <service
+              android:name=".ForEverService"
+              android:enabled="true"
+              android:exported="false"
+            />
 
 
 
