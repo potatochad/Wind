@@ -418,18 +418,14 @@ fun TimerNotification(
 	) { builder, remoteView, manager ->
 		var oldValue = 0
 		
-		while (yes) {
-			if (oldValue == value){
-				oldValue = value
+		
 				
-				remoteView.text(
-					R.id.tvText, 
-					Time(value)
-				)
-				manager.notify(2, builder.build())
-			}
-									
-			delay(100)
+		remoteView.text(
+			R.id.tvText, 
+			Time(value)
+		)
+		manager.notify(2, builder.build())
+			
 		}
 	}
 }
@@ -445,7 +441,6 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 			on = tskOn
 			didTime = timeWorked
 		}
-		if (tskOn) TimerNotification(tsk.timeLeft)
 	}
 
 	
@@ -458,7 +453,8 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 			
 				timeWorked++
 				
-				Bar.funTime++		
+				Bar.funTime++	
+				TimerNotification(tsk.timeLeft)
 			}
 			if (tsk.done()){
 				log("task is done")
