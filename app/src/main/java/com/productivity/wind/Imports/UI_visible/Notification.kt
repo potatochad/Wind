@@ -70,7 +70,7 @@ fun Notification(
     title: Str,
     text: Str,
     id: Int = 1,                         
-    Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _, _ -> }     
+    Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _ -> }     
 ): Notification {
     Permission.notification {
         val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -92,7 +92,8 @@ fun Notification(
         CoroutineScope(Dispatchers.Default).launch {
             Do(builder, manager)
         }
-        return notifi
+        
+        return@notification notifi
     }
 }
 
