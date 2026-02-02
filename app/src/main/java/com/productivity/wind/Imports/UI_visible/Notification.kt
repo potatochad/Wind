@@ -74,28 +74,24 @@ fun Notification(
 ): Notification {
     Permission.notification()
     
-        val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val builder = notifMap[id] ?: NotificationBuilder(AppCtx, "WindApp_id")
-            .setSmallIcon(myAppRes)
-            .setAutoCancel(true)
-            .setContentTitle(title)
-            .setContentText(text)
+    val builder = getNotifBuilder(id)
+        .setContentTitle(title)
+        .text(text)
 
-        // store/update builder in map
-        notifMap[id] = builder
 
-        // build and show notification
-        val notifi = builder.build()
-        manager.notify(id, notifi)
+    notifMap[id] = builder
 
-        // optional dynamic updates
-        CoroutineScope(Dispatchers.Default).launch {
-            Do(builder, manager)
-        }
+    val notifi = builder.build()
+    manager.notify(id, notifi)
+
+    // optional dynamic updates
+    CoroutineScope(Dispatchers.Default).launch {
+        Do(builder, manager)
+    }
         
-        return notifi
-    
+    return notifi
 }
 
 
