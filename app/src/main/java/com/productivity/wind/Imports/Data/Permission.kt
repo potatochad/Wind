@@ -130,6 +130,7 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.*
+import android.provider.*
 
 
 object Permission {
