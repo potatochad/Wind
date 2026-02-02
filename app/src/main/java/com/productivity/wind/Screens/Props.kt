@@ -125,6 +125,21 @@ fun Menu() {
 
 object Item {
 	@Composable
+    fun Delete(
+		mod: Mod = Mod.space(5),
+		Do: Do = {}
+	) {
+        var show = r(no)
+        
+        Icon(Icons.Default.Delete, mod = mod){
+            show.it = yes
+        }
+        IsSure(show) {
+          Do()
+        }
+	}
+	
+	@Composable
     fun Add(Do: Do = { goTo("Challenge") }) {
         Icon.Add {     
             Item.enoughPoints{
