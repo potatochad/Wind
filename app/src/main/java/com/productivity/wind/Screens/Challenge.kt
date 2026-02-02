@@ -410,24 +410,26 @@ fun ToDo(id: Str = "") {
 
 
 fun TimerNotification(
-	value: Int,
-	Do: DoStr,
+	value: Int
 ){
 	Notification(
 		xml = R.layout.notification_timer,
 		id = 2
 	) { builder, remoteView, manager ->
-		var s = 0
-		while (yes) {
-			s++
+		var oldValue = 0
 		
-			remoteView.text(
-				R.id.tvText, 
-				Time(s)
-			)
-			manager.notify(2, builder.build())
-
-			delay(1000)
+		while (yes) {
+			if (oldValue == value){
+				oldValue = value
+				
+				remoteView.text(
+					R.id.tvText, 
+					Time(value)
+				)
+				manager.notify(2, builder.build())
+			}
+									
+			delay(100)
 		}
 	}
 }
@@ -443,6 +445,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 			on = tskOn
 			didTime = timeWorked
 		}
+		if (tskOn) TimerNotification(tsk.timeLeft)
 	}
 
 	
@@ -451,13 +454,11 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
         while (yes) {
 			wait(1000)
 			if (tskOn){
-				log("task is ON")
 				log("[TaskActive] Tsk_DIDTIME: ${tsk.didTime}, timeWorked: $timeWorked , name: ${tsk.name}")
 			
 				timeWorked++
 				
-				Bar.funTime++
-			
+				Bar.funTime++		
 			}
 			if (tsk.done()){
 				log("task is done")
