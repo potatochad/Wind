@@ -487,7 +487,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	)
 	
     End { 
-		Item.Edit(Mod.space(0)){
+		Item.Edit(mod = Mod.space(0)){
             Item.enoughPoints {
 				goTo("ToDo/${tsk.id}")
             }
