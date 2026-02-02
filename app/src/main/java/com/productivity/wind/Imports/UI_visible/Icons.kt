@@ -79,7 +79,7 @@ fun Icon(
 					onClick()
 				}
 			},
-            modifier = Mod.space(5).s(toF(size)*1.7)
+            modifier = Mod.space(5).s(size)
         ) {
             Icon(
                 imageVector = icon,
