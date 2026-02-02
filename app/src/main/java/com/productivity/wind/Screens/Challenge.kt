@@ -493,7 +493,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
             }
         }
 
-		Icon.Delete(Mod.space(0)){ 
+		Item.Delete(Mod.space(0)){ 
 			tsk.remove()
 		}
 	}
