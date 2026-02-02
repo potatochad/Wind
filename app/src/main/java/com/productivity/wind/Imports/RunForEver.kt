@@ -91,6 +91,45 @@ import com.productivity.wind.*
 //region LATER USE
 
 
+class ForEverService : Service() {
+    private val serviceJob = SupervisorJob()
+    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
+    private var OneJob: Job? = null
+
+    override fun onBind(intent: Intent?): IBinder? {
+        Timber.d("onBind: $intent")
+        return null
+    }
+
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
+        NotificationHelper(this).createNotificationChannel()
+        startForeground(1, NotificationHelper(this).buildNotification(),)
+		
+            if (OneJob == null || OneJob?.isActive == false) {
+                OneJob = serviceScope.launch {
+                    while (true) {
+						delay(1000L)
+
+
+					}
+				}
+            }
+        }
+
+        return START_STICKY
+    }
+
+    override fun onDestroy() { super.onDestroy(); serviceScope.cancel() }
+}
+
+
+
+
+
 /*
 class WatchdogService : Service() {
     private val serviceJob = SupervisorJob()
@@ -172,4 +211,10 @@ class WatchdogService : Service() {
 }
 
 */
+
+
+
+
+
+
 
