@@ -131,29 +131,71 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.*
 
-object Permission { 
-	private fun getAndDo(permissionStr: Str, onGranted: Do) {
-		if (ContextCompat.checkSelfPermission(App, permissionStr) == PackageManager.PERMISSION_GRANTED) {
-			onGranted()
-		} else {
-			permission.launch(permissionStr)
-		}
-	}
-	
-	val notification: Do_<Do> = { getAndDo(Manifest.permission.POST_NOTIFICATIONS, it) }
-    val camera: Do_<Do> = { getAndDo(Manifest.permission.CAMERA, it) }
-    val locationFine: Do_<Do> = { getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, it) }
-    val locationCoarse: Do_<Do> = { getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, it) }
-    val readStorage: Do_<Do> = { getAndDo(Manifest.permission.READ_EXTERNAL_STORAGE, it) }
-    val writeStorage: Do_<Do> = { getAndDo(Manifest.permission.WRITE_EXTERNAL_STORAGE, it) }
-    val recordAudio: Do_<Do> = { getAndDo(Manifest.permission.RECORD_AUDIO, it) }
-    val readContacts: Do_<Do> = { getAndDo(Manifest.permission.READ_CONTACTS, it) }
-    val sendSMS: Do_<Do> = { getAndDo(Manifest.permission.SEND_SMS, it) }
-    val callPhone: Do_<Do> = { getAndDo(Manifest.permission.CALL_PHONE, it) }
-    val readPhoneState: Do_<Do> = { getAndDo(Manifest.permission.READ_PHONE_STATE, it) }
-    val backgroundLocation: Do_<Do> = { getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, it) }
-    val bodySensors: Do_<Do> = { getAndDo(Manifest.permission.BODY_SENSORS, it) }
 
+object Permission {
+    private fun getAndDo(permissionStr: String, onGranted: Do): Boolean {
+        return if (ContextCompat.checkSelfPermission(App, permissionStr) == PackageManager.PERMISSION_GRANTED) {
+            onGranted()
+            true // permission already granted
+        } else {
+            permission.launch(permissionStr) // request permission
+            false // permission not granted yet
+        }
+    }
+
+    fun notification(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.POST_NOTIFICATIONS, onGranted)
+    }
+
+    fun camera(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.CAMERA, onGranted)
+    }
+
+    fun locationFine(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, onGranted)
+    }
+
+    fun locationCoarse(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, onGranted)
+    }
+
+    fun readStorage(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.READ_EXTERNAL_STORAGE, onGranted)
+    }
+
+    fun writeStorage(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.WRITE_EXTERNAL_STORAGE, onGranted)
+    }
+
+    fun recordAudio(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.RECORD_AUDIO, onGranted)
+    }
+
+    fun readContacts(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.READ_CONTACTS, onGranted)
+    }
+
+    fun sendSMS(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.SEND_SMS, onGranted)
+    }
+
+    fun callPhone(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.CALL_PHONE, onGranted)
+    }
+
+    fun readPhoneState(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.READ_PHONE_STATE, onGranted)
+    }
+
+    fun backgroundLocation(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)
+    }
+
+    fun bodySensors(onGranted: Do): Boolean {
+        return getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
+    }
+
+	
 	//special, require different approach
 	val ignoreOptimizations = "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
 	val systemAlertWindow = "android.permission.SYSTEM_ALERT_WINDOW"
