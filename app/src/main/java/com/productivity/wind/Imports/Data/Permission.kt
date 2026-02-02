@@ -195,9 +195,39 @@ object Permission {
         return getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
     }
 
+
+	fun ignoreOptimizations(onGranted: Do): Bool {
+		val pm = App.getSystemService(Context.POWER_SERVICE) as PowerManager
+
+		// Already ignoring? Run callback and return true
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && pm.isIgnoringBatteryOptimizations(App.packageName)) {
+			onGranted()
+			return true
+		}
+
+		// Not ignoring yet? Launch system dialog
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			val intent = Intent().apply {
+				action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+				data = Uri.parse("package:${App.packageName}")
+				flags = Intent.FLAG_ACTIVITY_NEW_TASK
+			}
+
+			return try {
+				App.startActivity(intent)
+				false
+			} catch (e: Exception) {
+				false
+			}
+		}
+
+		// Older Android versions don't have battery optimizations
+		onGranted()
+		return true
+	}
+
+
 	
-	//special, require different approach
-	val ignoreOptimizations = "android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
 	val systemAlertWindow = "android.permission.SYSTEM_ALERT_WINDOW"
 	
 }
