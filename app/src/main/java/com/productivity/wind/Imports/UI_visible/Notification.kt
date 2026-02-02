@@ -67,25 +67,19 @@ import android.content.*
 
 
 fun Notification(
-    title: String,
-    text: String,
-    xml: Int? = null,
-    id: Int = 1,                         // add explicit id
-    Do: (builder: NotificationCompat.Builder, remoteView: RemoteViews?) -> Unit = { _, _ -> }
-) {
+    title: Str,
+    text: Str,
+    id: Int = 1,                         
+    Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _, _ -> }     
+): Notification {
     Permission.notification {
         val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val remoteView = xml?.let { RemoteViews(AppCtx.packageName, it) }
-        // check if a builder for this id already exists
         val builder = notifMap[id] ?: NotificationBuilder(AppCtx, "WindApp_id")
             .setSmallIcon(myAppRes)
             .setAutoCancel(true)
-            .apply {
-                setContentTitle(title)
-                setContentText(text)
-                remoteView?.let { setCustomContentView(it) } // ✅ fixed
-            }
+            .setContentTitle(title)
+            .setContentText(text)
 
         // store/update builder in map
         notifMap[id] = builder
@@ -95,7 +89,10 @@ fun Notification(
         manager.notify(id, notifi)
 
         // optional dynamic updates
-        Do(builder, remoteView)
+        CoroutineScope(Dispatchers.Default).launch {
+            Do(builder, manager)
+        }
+        return notifi
     }
 }
 
