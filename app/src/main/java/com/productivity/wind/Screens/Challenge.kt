@@ -487,13 +487,13 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	)
 	
     End { 
-		Item.Edit(mod = Mod.space(-10)){
+		Item.Edit(mod = Mod.space(0)){
             Item.enoughPoints {
 				goTo("ToDo/${tsk.id}")
             }
         }
 
-		Item.Delete(Mod.space(-10)){ 
+		Item.Delete(Mod.space(0)){ 
 			tsk.remove()
 		}
 	}
