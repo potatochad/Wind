@@ -218,21 +218,6 @@ object Icon {
 
 
 
-	
-
-    @Composable
-    fun Delete(Do: Do = {}) {
-        var show = r(no)
-        
-        Icon(Icons.Default.Delete){
-            show.it = yes
-        }
-        IsSure(show) {
-          Do()
-        }
-    }
-
-
     @Composable
     fun Copy(txt: Str) {
         var copied by r(no)
