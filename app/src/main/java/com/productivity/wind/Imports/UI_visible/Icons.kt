@@ -182,17 +182,43 @@ fun BigIcon(
 
 val myAppRes: Int = R.drawable.baseline_radar_24
 
+
+
 object Icon {
-	fun Add(icon: icon): ui_<Do> = {
-		Icon(icon) { it() }
+	@Composable
+	fun IconShortcut(icon: icon, mod: Mod = Mod.space(34), Do: Do? = null) {
+		if (Do != null) {
+			Icon(icon, mod = mod) { Do() }
+		} else {
+			Icon(icon, mod = mod)
+		}
 	}
+
 	
-	val Menu = Add(Icons.Default.Menu)
-	val Reload = Add(Icons.Default.Refresh)
-	val Chill = Add(Icons.Default.SportsEsports)
-	val Add = Add(Icons.Default.Add)
-	val MoreMenu = Add(Icons.Default.MoreVert)
-	val Edit = Add(Icons.Default.Edit)
+	@Composable
+	fun Menu(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.Menu, mod, Do)
+	
+	@Composable
+	fun Reload(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.Refresh, mod, Do)
+	
+	@Composable
+	fun Chill(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.SportsEsports, mod, Do)
+	
+	@Composable
+	fun Add(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.Add, mod, Do)
+	
+	@Composable
+	fun MoreMenu(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.MoreVert, mod, Do)
+	
+	@Composable
+	fun Edit(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.Edit, mod, Do)
+	
+	@Composable
+	fun Delete(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.Delete, mod, Do)        
+
+
+
+	
 
     @Composable
     fun Delete(Do: Do = {}) {
