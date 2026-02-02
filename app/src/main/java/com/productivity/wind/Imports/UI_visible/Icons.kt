@@ -70,22 +70,22 @@ fun Icon(
     size: Any = 25,        
     mod: Mod = Mod,
     color: Color = Color.White,
-	Do: Do,
+	onClick: Do,
 ) {
 	ComposeCanBeTiny() {
         IconButton(
             onClick = {
 				wait(100) {
-					Do()
+					onClick()
 				}
 			},
-            modifier = mod.space(5).s(toF(size)*1.7)
+            modifier = Mod.space(5).s(toF(size)*1.7)
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = color,
-                modifier = Mod.s(size)
+                modifier = mod.s(size)
             )
         }
     }
@@ -140,9 +140,9 @@ fun Icon(
 					Do()
 				}
 			},
-            modifier = mod.space(5).s(toF(size)*1.7)
+            modifier = Mod.space(5).s(toF(size)*1.7)
         ) {
-			Icon(iconRes, color, size)
+			Icon(iconRes, color, size, mod)
         }
 	}
 }
@@ -246,13 +246,3 @@ object Icon {
 
 	
 }
-
-
-
-
-
-
-
-
-
-
