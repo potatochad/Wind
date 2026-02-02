@@ -196,25 +196,25 @@ object Icon {
 
 	
 	@Composable
-	fun Menu(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.Menu, mod, Do)
+	fun Menu(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Menu, mod, Do)
 	
 	@Composable
-	fun Reload(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.Refresh, mod, Do)
+	fun Reload(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Refresh, mod, Do)
 	
 	@Composable
-	fun Chill(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.SportsEsports, mod, Do)
+	fun Chill(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.SportsEsports, mod, Do)
 	
 	@Composable
-	fun Add(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.Add, mod, Do)
+	fun Add(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Add, mod, Do)
 	
 	@Composable
-	fun MoreMenu(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.MoreVert, mod, Do)
+	fun MoreMenu(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.MoreVert, mod, Do)
 	
 	@Composable
-	fun Edit(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.Edit, mod, Do)
+	fun Edit(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Edit, mod, Do)
 	
 	@Composable
-	fun Delete(mod: Mod = Mod.space(34), Do: Do? = null) = IconShortcut(Icons.Default.Delete, mod, Do)        
+	fun Delete(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Delete, mod, Do)        
 
 
 
