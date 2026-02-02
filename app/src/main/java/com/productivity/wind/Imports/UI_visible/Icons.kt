@@ -72,14 +72,14 @@ fun Icon(
     color: Color = Color.White,
 	onClick: Do,
 ) {
-	// ComposeCanBeTiny() {
+	ComposeCanBeTiny() {
         IconButton(
             onClick = {
 				wait(100) {
 					onClick()
 				}
 			},
-            modifier = Mod.space(5).s(size)
+            modifier = Mod.space(5).s(toF(size)*1.7)
         ) {
             Icon(
                 imageVector = icon,
@@ -88,7 +88,7 @@ fun Icon(
                 modifier = mod.s(size)
             )
         }
-   //  }
+	}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
