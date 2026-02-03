@@ -67,11 +67,8 @@ fun getNotifBuilder(id: Int): NotificationBuilder {
     val builder = notifMap[id] ?: NotificationBuilder(AppCtx, "WindApp_id")
         .setSmallIcon(myAppRes)
         .setAutoCancel(true)
-        .setContentTitle(title)
-        .setContentText(text)
 
-        // store/update builder in map
-        notifMap[id] = builder
+    notifMap[id] = builder
     return builder
 }
 
