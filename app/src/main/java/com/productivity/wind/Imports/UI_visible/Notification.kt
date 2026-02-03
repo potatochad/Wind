@@ -63,8 +63,17 @@ import android.widget.*
 import android.app.*
 import android.content.*
 
+fun getNotifBuilder(id: Int): NotificationBuilder {
+    val builder = notifMap[id] ?: NotificationBuilder(AppCtx, "WindApp_id")
+        .setSmallIcon(myAppRes)
+        .setAutoCancel(true)
+        .setContentTitle(title)
+        .setContentText(text)
 
-
+        // store/update builder in map
+        notifMap[id] = builder
+    return builder
+}
 
 fun Notification(
     title: Str,
@@ -78,8 +87,6 @@ fun Notification(
 
     val builder = getNotifBuilder(id).setContentTitle(title).text(text)
 
-
-    notifMap[id] = builder
 
     val notifi = builder.build()
     manager.notify(id, notifi)
