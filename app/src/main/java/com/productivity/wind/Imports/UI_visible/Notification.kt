@@ -76,9 +76,7 @@ fun Notification(
     
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    val builder = getNotifBuilder(id)
-        .setContentTitle(title)
-        .text(text)
+    val builder = getNotifBuilder(id).setContentTitle(title).text(text)
 
 
     notifMap[id] = builder
