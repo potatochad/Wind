@@ -96,16 +96,16 @@ import com.productivity.wind.Imports.UI_visible.*
 fun startForeverService() {
     val intent = Intent(AppCtx, ForEverService::class.java)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        startForegroundService(intent)
+        AppCtx.startForegroundService(intent)
     } else {
-        startService(intent)
+        AppCtx.startService(intent)
     }
 }
 
 // Stop the service
 fun stopForeverService() {
     val intent = Intent(AppCtx, ForEverService::class.java)
-    stopService(intent)
+    AppCtx.stopService(intent)
 }
 
 class ForEverService : Service() {
