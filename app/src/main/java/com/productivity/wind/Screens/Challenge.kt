@@ -409,25 +409,7 @@ fun ToDo(id: Str = "") {
 }
 
 
-fun TimerNotification(
-	value: Int
-){
-	Notification(
-		xml = R.layout.notification_timer,
-		id = 2
-	) { builder, remoteView, manager ->
-		var oldValue = 0
-		
-		
-				
-		remoteView.text(
-			R.id.tvText, 
-			Time(value)
-		)
-		manager.notify(2, builder.build())
-			
-	}
-}
+
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 
@@ -453,7 +435,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				timeWorked++
 				
 				Bar.funTime++	
-				TimerNotification(tsk.timeLeft)
+				Notification("Timer", Time(tsk.timeLeft), id = 2) 
 			}
 			if (tsk.done()){
 				log("task is done")
