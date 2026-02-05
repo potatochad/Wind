@@ -72,6 +72,7 @@ fun Notification(
     Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _ -> }     
 ): Notification {
     Permission.notification()
+    var firstTime = if (notifMap[id]== null) yes else no
     
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -84,8 +85,10 @@ fun Notification(
     manager.notify(id, notifi)
 
     // optional dynamic updates
-    CoroutineScope(Dispatchers.Default).launch {
-        Do(builder, manager)
+    if (firstTimel){
+        CoroutineScope(Dispatchers.Default).launch {
+           Do(builder, manager)
+        }
     }
         
     return notifi
