@@ -82,6 +82,7 @@ fun Notification(
     val builder = getNotifBuilder(id)
             .setContentTitle(title)
             .setContentText(text)
+            .setLargeIcon(bitmap) 
 
 
     val notifi = builder.build()
