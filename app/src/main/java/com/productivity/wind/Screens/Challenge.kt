@@ -448,7 +448,21 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				timeWorked++
 				
 				Bar.funTime++	
-				Notification("Timer", Time(tsk.timeLeft), id = 2)
+				Notification("Timer", Time(tsk.timeLeft), id = 2){ builder, manager ->  
+					while (Bar.leftApp){
+						wait(1000)
+						timeWorked++
+
+						tsk.edit{
+							didTime = timeWorked
+						}
+				
+						Bar.funTime++	
+						val notifi = builder.title("Timer").text(Time(tsk.timeLeft)).build()
+						manager.notify(2, notifi)
+					}
+					
+				}
 			}
 			if (tsk.done()){
 				log("task is done")
