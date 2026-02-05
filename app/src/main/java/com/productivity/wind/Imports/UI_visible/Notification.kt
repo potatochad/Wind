@@ -72,7 +72,7 @@ fun Notification(
     id: Int = 1,                         
     Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _ -> }     
 ): Notification {
-    val bitmap = BitmapFactory.decodeResource(AppCtx.resources, myAppRes)
+    val myMediaSession = MediaSessionCompat(AppCtx, "MyMedia")
 
     Permission.notification()
     var firstTime = if (notifMap[id]== null) yes else no
@@ -82,7 +82,12 @@ fun Notification(
     val builder = getNotifBuilder(id)
             .setContentTitle(title)
             .setContentText(text)
-            .setLargeIcon(bitmap) 
+            .setStyle(
+                NotificationCompat.MediaStyle()
+                   .setShowActionsInCompactView(0, 1)
+                   .setMediaSession(myMediaSession.sessionToken)
+            )
+            
 
 
     val notifi = builder.build()
@@ -102,10 +107,6 @@ fun Notification(
 val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.large_icon)
 
 val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-    .setSmallIcon(R.drawable.notification_icon)
-    .setContentTitle("Timer Running")
-    .setContentText("Time left: 05:32")
-    .setLargeIcon(timerBitmap) // big graphic
     .addAction(R.drawable.ic_pause, "Pause", pauseIntent)
     .addAction(R.drawable.ic_stop, "Stop", stopIntent)
     .setStyle(
