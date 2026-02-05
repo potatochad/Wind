@@ -90,7 +90,8 @@ object Bar {
 	//BASIC
     var funTime by s(0, "funTime")
     var Dpoints by s(0, "Dpoints")
-	var lastDate by s("", "lastDate") 
+	var lastDate by s("", "lastDate")
+	var leftApp by s(no, "leftApp")
 	var encryptedBackup by s(yes, "encryptedBackup") 
 	var Url by s("https://google.com", "Url")
 	var logs = sList<Str>("logs")
@@ -223,7 +224,13 @@ fun MAINStart() {
 
 }
 
+fun OnLeaveApp(){
+	Bar.leftApp = yes
+	
+}
+
 fun OnResume(){
+	Bar.leftApp = no
 	Item.UpdateAppTsk()
 
 	if (isNewDay()) newDay()
