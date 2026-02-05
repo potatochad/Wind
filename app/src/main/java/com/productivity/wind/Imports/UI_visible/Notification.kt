@@ -104,6 +104,20 @@ fun Notification(
 }
 
 /*
+
+control the level of detail visible in the notification from the lock screen, call setVisibility() and specify one of the following values:
+
+VISIBILITY_PUBLIC: the notification's full content shows on the lock screen.
+
+VISIBILITY_SECRET: no part of the notification shows on the lock screen.
+
+VISIBILITY_PRIVATE: only basic information, such as the notification's icon and the content title, shows on the lock screen. The notification's full content doesn't show.
+
+When you set VISIBILITY_PRIVATE
+
+
+
+
 val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.large_icon)
 
 val builder = NotificationCompat.Builder(context, CHANNEL_ID)
