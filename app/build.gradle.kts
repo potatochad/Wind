@@ -79,6 +79,7 @@ ktlint {
 
 
 dependencies {
+    implementation("androidx.media:media:1.7.1")
 
 
     implementation("com.google.maps.android:android-maps-utils:3.19.0")
