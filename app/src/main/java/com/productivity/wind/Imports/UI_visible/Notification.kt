@@ -85,7 +85,7 @@ fun Notification(
     manager.notify(id, notifi)
 
     // optional dynamic updates
-    if (firstTimel){
+    if (firstTime){
         CoroutineScope(Dispatchers.Default).launch {
            Do(builder, manager)
         }
