@@ -441,7 +441,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 
         while (yes) {
 			wait(1000)
-			if (!Bar.leftApp){
+			//if (!Bar.leftApp){
 			if (tskOn){
 				log("[TaskActive] Tsk_DIDTIME: ${tsk.didTime}, timeWorked: $timeWorked , name: ${tsk.name}")
 			
@@ -454,9 +454,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				log("task is done")
 				tskOn = no
 			}
-			} else {
-				log("left app")
-			}
+			// } else { log("left app") }
 		}
 		
 	}
