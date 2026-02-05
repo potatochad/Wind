@@ -453,10 +453,8 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 					
 					while (yes){
 						wait(1000)
-						log("just in while loop")
 						
 						if (tskOn && Bar.leftApp){
-						Vlog("NOTIFICATION TICKING")
 						
 						timeWorked++
 
