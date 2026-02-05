@@ -427,6 +427,8 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	
 	RunOnce {
 		tskOn = no
+
+		if (!Bar.leftApp){
         while (yes) {
 			wait(1000)
 			if (tskOn){
@@ -442,6 +444,10 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				tskOn = no
 			}
 		}
+		} else {
+			log("left appp")
+		}
+		
 	}
 
 
