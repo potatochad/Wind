@@ -87,6 +87,28 @@ class NotificationSwipeReceiver : BroadcastReceiver() {
 }
 
 
+
+fun getNotifBuilder(id: Int): NotificationBuilder {
+    val builder = notifMap[id] ?: NotificationBuilder(AppCtx, "WindApp_id")
+        .setSmallIcon(myAppRes)
+        .setAutoCancel(true)
+
+    notifMap[id] = builder
+    return builder
+}
+
+
+
+
+fun NotificationBuilder.title(x: Str) = apply { setContentTitle(x) }
+fun NotificationBuilder.text(x: Str)  = apply { setContentText(x) }
+
+
+
+
+
+
+
 // 1. Set text (any type, auto toString)
 fun RemoteViews.text(id: Int, value: Any) = setTextViewText(id, value.toString())
 
