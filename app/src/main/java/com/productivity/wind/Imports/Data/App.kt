@@ -648,6 +648,11 @@ class MainActivity : ComponentActivity() {
 		super.onDestroy()
 		
 	}
+	override fun onPause() {
+		super.onPause()
+		//OnLeaveApp()
+	}
+
 	
 }
 
