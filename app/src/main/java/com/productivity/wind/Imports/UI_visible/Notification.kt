@@ -70,6 +70,35 @@ import androidx.media.session.*
 
 
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+
+fun startSystemTimer(context: Context, minutes: Int) {
+    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+    // Time from now in milliseconds
+    val triggerAtMillis = System.currentTimeMillis() + minutes * 60 * 1000
+
+    // This PendingIntent opens your app when the timer is tapped
+    val intent = Intent(context, MainActivity::class.java)
+    val pendingIntent = PendingIntent.getActivity(
+        context,
+        0,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
+    // Build AlarmClockInfo
+    val alarmClockInfo = AlarmManager.AlarmClockInfo(triggerAtMillis, pendingIntent)
+
+    // Register it
+    alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
+}
+
+
+
 
 fun Notification(
     title: Str,
