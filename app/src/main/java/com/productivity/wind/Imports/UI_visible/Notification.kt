@@ -56,15 +56,17 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.*
 import android.app.NotificationManager
-import androidx.core.app.NotificationCompat
 import com.productivity.wind.R
 import android.view.*
 import android.widget.*
 import android.app.*
 import android.content.*
 import android.graphics.*
+
+
+import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
-import androidx.media.session.MediaSessionCompat
+import androidx.media.session.*
 
 
 
@@ -86,7 +88,7 @@ fun Notification(
             .setContentTitle(title)
             .setContentText(text)
             .setStyle(
-                MediaStyle()
+                androidx.media.app.NotificationCompat.MediaStyle()
                   .setShowActionsInCompactView(0, 1)
                   .setMediaSession(myMediaSession.sessionToken)
             )
