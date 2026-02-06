@@ -79,6 +79,7 @@ ktlint {
 
 
 dependencies {
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.media:media:1.7.1")
 
 
