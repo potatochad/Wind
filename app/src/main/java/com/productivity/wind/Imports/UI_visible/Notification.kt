@@ -85,9 +85,9 @@ fun Notification(
             .setContentTitle(title)
             .setContentText(text)
             .setStyle(
-               MediaStyle()
-                 .setShowActionsInCompactView(0, 1)
-                 .setMediaSession(myMediaSession.sessionToken)
+                MediaStyle()
+                  .setShowActionsInCompactView(0, 1)
+                  .setMediaSession(myMediaSession.sessionToken)
             )
 
             
