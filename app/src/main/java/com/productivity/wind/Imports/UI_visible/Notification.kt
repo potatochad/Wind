@@ -75,8 +75,29 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 
+
+/*
+Before you schedule the alarm, check:
+
+val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+if (!am.canScheduleExactAlarms()) {
+    // Not allowed → system will ignore your alarm
+}
+
+
+If this returns false, Android will drop your alarm.
+
+*/
+import android.provider.Settings
+
 fun startSystemTimer(context: Context, minutes: Int) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+
+    if (!alarmManager.canScheduleExactAlarms()) {
+        startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
+        return
+    }
 
     // Time from now in milliseconds
     val triggerAtMillis = System.currentTimeMillis() + minutes * 60 * 1000
