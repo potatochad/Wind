@@ -19,7 +19,7 @@ import com.productivity.wind.Imports.*
 import android.webkit.*
 import android.graphics.*
 import kotlinx.coroutines.*
-import com.productivity.wind.Imports.Data.*
+import com.productivity.wind.Imports.Utils.*
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable

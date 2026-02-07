@@ -1,5 +1,5 @@
-package com.productivity.wind.Imports.Data
- 
+package com.productivity.wind.Imports.Utils
+
 import android.annotation.SuppressLint
 import timber.log.Timber
 import java.text.*
@@ -69,7 +69,7 @@ import androidx.compose.ui.unit.*
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 import android.content.Intent
-import java.time.LocalDate
+import java.time.*
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.NavHostController
@@ -112,7 +112,7 @@ import androidx.navigation.*
 import android.webkit.*
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
-import com.productivity.wind.Imports.Data.*
+import com.productivity.wind.Imports.Utils.*
 import android.location.*
 import androidx.core.content.*
 import androidx.compose.ui.text.*
@@ -125,113 +125,156 @@ import android.net.*
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import androidx.compose.ui.window.*
-import android.os.Process.*
+import com.google.maps.android.compose.*
+import kotlin.math.*     
 import com.productivity.wind.Imports.UI_visible.*
+import java.time.format.*
+
+@Suppress("UNCHECKED_CAST")
 
 
+fun toDp(it: Any?): Dp = when (it) {
+    is Dp -> it           // already Dp
+    is Int -> it.dp       // Int → Dp
+    is Float -> it.dp     // Float → Dp
+    is Double -> it.dp    // Double → Dp
+    null -> 0.dp             // null → 0.dp
+    else -> 0.dp             // anything else → 0.dp
+}
+fun toF(it: Any?): Float = when (it) {
+    is Float -> it
+    is Int -> it.toFloat()
+    is Double -> it.toFloat()
+    is Dp -> it.value      // Dp → Float
+    null -> 0f
+    else -> 0f
+}
+fun toInt(it: Any?): Int = when (it) {
+    is Int -> it
+    is Float -> it.toInt()
+    is Double -> it.toInt()
+    is String -> it.toIntOrNull() ?: 0
+    is Dp -> it.value.toInt()  // Dp → Int
+    null -> 0
+    else -> 0
+}
 
-fun Mod.space(
-    s: Any? = null,
-    h: Any? = null,
-    w: Any? = null,
-    start: Any? = null,
-    top: Any? = null,
-    end: Any? = null,
-    bottom: Any? = null
-): Mod {
-    return when {
-        s != null -> this.padding(toDp(s))
-        h != null || w != null -> this.padding(
-            horizontal = toDp(h),
-            vertical = toDp(w)
-        )
-        else -> this.padding(
-            start = toDp(start),
-            top = toDp(top),
-            end = toDp(end),
-            bottom = toDp(bottom)
-        )
+fun toL(it: Any?): Long = when (it) {
+    is Long -> it
+    is Int -> it.toLong()
+    is Float -> it.toLong()
+    is Double -> it.toLong()
+    is Str -> it.toLongOrNull() ?: 0L
+    null -> 0L
+    else -> 0L
+}
+
+fun toD(it: Any?): Double = when (it) {
+    is Double -> it
+    is Float -> it.toDouble()
+    is Long -> it.toDouble()
+    is Int -> it.toDouble()
+    is Str -> it.toDoubleOrNull() ?: 0.0
+    null -> 0.0
+    else -> 0.0
+}
+
+
+fun toLatLng(it: Any?): LatLng = when (it) {
+    is LatLng -> it
+    is Pair<*, *> -> LatLng(it.first.toString().toDouble(), it.second.toString().toDouble())
+    is Str -> {
+        val parts = it.split(",")
+        LatLng(parts.getOrNull(0)?.toDoubleOrNull() ?: 0.0,
+               parts.getOrNull(1)?.toDoubleOrNull() ?: 0.0)
+    }
+    null -> LatLng(0.0, 0.0)
+    else -> LatLng(0.0, 0.0)
+}
+
+fun toStr(it: Any?): String = when (it) {
+    is Str -> it
+    is AnnotatedString -> it.text
+    is LatLng -> "${it.latitude},${it.longitude}"
+    is Pair<*, *> -> "${it.first},${it.second}"
+    is Double, is Float, is Int, is Long -> it.toString()
+    null -> ""
+    else -> it.toString()
+}
+
+fun toLocalDate(x: Any?): LocalDate = when (x) { 
+    is Str -> LocalDate.parse(x)
+    is Long -> Instant.ofEpochMilli(x)
+        .atOffset(ZoneOffset.UTC)
+        .toLocalDate()
+    null -> LocalDate.now()
+    else -> LocalDate.now()
+}
+
+fun LocalDate.toMillis(): Long {
+    return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+}
+
+
+fun toWeekDay(dateInput: Any): Str {
+    val date = when (dateInput) {
+        is LocalDate -> dateInput
+        is String -> LocalDate.parse(dateInput)
+        else -> throw IllegalArgumentException("Must be LocalDate or String")
+    }
+
+    return when (date.dayOfWeek) {
+        DayOfWeek.MONDAY -> "MO"
+        DayOfWeek.TUESDAY -> "TU"
+        DayOfWeek.WEDNESDAY -> "WE"
+        DayOfWeek.THURSDAY -> "TH"
+        DayOfWeek.FRIDAY -> "FR"
+        DayOfWeek.SATURDAY -> "SA"
+        DayOfWeek.SUNDAY -> "SU"
     }
 }
 
-typealias Mod = Modifier
-typealias mod = Modifier
-
-fun Mod.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
-fun Mod.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
-fun Mod.s(value: Any?) = this.size(toDp(value))
-fun Mod.s(Do: Do_<IntSize>): Mod = this.onSizeChanged { Do(it) }
-
-fun Mod.center() = this.wrapContentSize(align = Alignment.Center)
-fun Mod.round(x: Any): Mod = this.clip(RoundedCornerShape(toDp(x)))
 
 
-fun Mod.maxS(): Mod= this.fillMaxSize()
-fun Mod.maxW(): Mod= this.fillMaxWidth()
-fun Mod.maxH(): Mod= this.fillMaxHeight()
+
+
+fun toH(x: Int): Int = x / 3600
+fun toMin(x: Int): Int = (x % 3600) / 60
+fun toS(x: Int): Int = x % 60
+
+
 
 @Composable
-fun Mod.scroll(
-    v: Bool = yes,
-    h: Bool = yes,
-    r_v: Scroll = Scroll(),
-    r_h: Scroll = Scroll(),
-): Mod {
-    var m = this
-    if (v) m = m.verticalScroll(r_v)
-    if (h) m = m.horizontalScroll(r_h)
-    return m
+fun toUI(it: Any?): UI {
+    return when (it) {
+        is Str -> { { Text(it) } }
+        is Function0<*> -> it as UI   // unsafe cast but works at runtime
+        else -> { { Text("Unsupported type (toUI) $it") } }
+    }
 }
 
 
 
 @Composable
-fun Mod.click(
-    animate: Bool = yes,
-    Do: Do,
-): Mod {
-    return this.clickable(
-        indication = if (animate) LocalIndication.current else null,
-        interactionSource = MutableInteractionSource()
-    ) {
-        Do()
-    }
+fun toMStr(what: Any?): mStr = when {
+    isMStr(what) -> what as mStr
+    else -> m("$what") as mStr
 }
 
 
 
-fun Mod.clickOrHold(
-    hold: Bool = yes,
-    action: Do,
-): Mod {
-   return if (hold) {
-      pointerInput(Unit) {
-          detectTapGestures(onLongPress = { action() })
-      }
-   } else {
-      clickable(
-         indication = null,
-         interactionSource = MutableInteractionSource()
-      ) {
-         action()
-      }
-  	}
+
+
+fun Any.toMeters(
+    cameraState: CameraPositionState,
+    density: Float = AppDensity
+): Double {
+    val zoom = cameraState.position.zoom
+    val latitude = cameraState.position.target.latitude
+    val metersPerPixel = 156543.03392 * cos(Math.toRadians(latitude)) / (1 shl zoom.toInt())
+    val pixels = toF(this) * density
+    return pixels * metersPerPixel
 }
-
-
-fun Mod.getW(onWidth: Do_<Int>): Mod = this.then(
-    Mod.onGloballyPositioned {
-        onWidth(it.size.width)
-    }
-)
-fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
-    Mod.onGloballyPositioned {
-        onWidth(it.size.height)
-    }
-)
-
-
-
 
 
 

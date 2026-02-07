@@ -1,4 +1,4 @@
-package com.productivity.wind.Imports.Data
+package com.productivity.wind.Imports.Utils
  
 import android.annotation.SuppressLint
 import timber.log.Timber
@@ -99,7 +99,7 @@ import kotlin.concurrent.*
 import androidx.annotation.RequiresApi
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.compose.*
+import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.core.view.*
 import kotlin.reflect.*
@@ -112,75 +112,166 @@ import androidx.navigation.*
 import android.webkit.*
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
-import com.productivity.wind.Imports.Data.*
+import com.productivity.wind.Imports.Utils.*
+import android.location.*
+import androidx.core.content.*
 import androidx.compose.ui.text.*
+import androidx.navigation.compose.*
+import android.util.*
+import com.google.android.gms.maps.model.*
+import com.google.android.gms.location.*
+import android.content.*
+import android.net.*
+import androidx.lifecycle.*
+import kotlinx.coroutines.flow.*
+import android.*
+import androidx.activity.compose.*
+import android.Manifest.permission.*
+import com.google.android.gms.maps.model.*
+import com.google.maps.android.compose.*
+import com.google.android.gms.location.*
+import android.os.*
+import com.google.maps.android.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.foundation.shape.*
+import kotlin.math.*
 import com.productivity.wind.Imports.UI_visible.*
 
+typealias Marker = MarkerState
+val Marker.it: LatLng
+    get() = this.position
 
-var Scroll.it: Int
-    get() = this.value
-    set(value) {
-        CoroutineScope(Dispatchers.Main).launch {
-            this@it.scrollTo(value)
+@Composable
+fun marker(x: LatLng) = rememberMarkerState(position = x)
+
+@Composable
+fun Marker.onChange(Do: Do_<LatLng>) {
+    RunOnce(this) {
+        var first = yes
+        snapshotFlow { this@onChange.it }
+            .collect {
+                if (first) {
+                    first = no // ignore first emission
+                } else {
+                    Do(it)
+                }
+            }
+    }
+}
+
+
+fun distance(latLng1: LatLng, latLng2: LatLng): Double {
+    val result = FloatArray(1)
+    Location.distanceBetween(
+        latLng1.latitude,
+        latLng1.longitude,
+        latLng2.latitude,
+        latLng2.longitude,
+        result
+    )
+    return result[0].toDouble()
+}
+
+fun locationOn(): Bool {
+    val lm = App.getSystemService(LocationManager::class.java)
+    return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+           lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+}
+
+fun location(Do: Do = {}) {
+    if (ContextCompat.checkSelfPermission( App, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+		if (locationOn()) Do()
+		else Vlog("turn on location")
+	} else {
+        ActivityCompat.requestPermissions(App, arrayOf(ACCESS_FINE_LOCATION), 100)
+    }
+}
+
+
+
+
+
+
+
+fun getUserLocation(
+    fusedLocationClient: FusedLocationProviderClient,
+    each: Any = 1000L,
+    onLocation: Do_<LatLng>,
+) {
+    val locationRequest = com.google.android.gms.location.LocationRequest.Builder(
+        Priority.PRIORITY_HIGH_ACCURACY, toL(each)
+    ).build()
+
+    val callback = object : com.google.android.gms.location.LocationCallback() {
+        override fun onLocationResult(result: com.google.android.gms.location.LocationResult) {
+            result.lastLocation?.let { loc ->
+                onLocation(LatLng(loc.latitude, loc.longitude))
+            }
         }
     }
-    
-val LazyList.it: Float
-    get() {
-        val firstIndex = firstVisibleItemIndex
-        val firstOffset = firstVisibleItemScrollOffset
-        val itemHeight = layoutInfo.visibleItemsInfo.firstOrNull()?.size ?: 0
-        return toF(firstIndex * itemHeight + firstOffset)
-    }
-    
-val LazyList.size: Float
-    get() {
-        val items = layoutInfo.visibleItemsInfo
-        if (items.isEmpty()) return 0f
 
-        val averageItemHeight = items.sumOf { it.size }.toFloat() / items.size
-        return layoutInfo.totalItemsCount * averageItemHeight
-    }
-
-typealias Scroll = ScrollState
-typealias LazyList = LazyListState
-
-@Composable
-fun Mod.Vscroll(r_v: Scroll = Scroll()) = scroll(yes, no, r_v)
-@Composable
-fun Mod.Hscroll(r_h: Scroll = Scroll()) = scroll(no, yes, r_h=r_h)
-
-fun Scroll.toBottom() = wait{ scrollTo(maxValue) }
-
-fun LazyList.toBottom() = wait{
-    if (layoutInfo.totalItemsCount > 0) {
-        scrollToItem(layoutInfo.totalItemsCount - 1)
-    }
+    fusedLocationClient.requestLocationUpdates(locationRequest, callback, Looper.getMainLooper())
 }
 
-suspend fun Scroll.scroll(it: Any) = animateScrollBy(toF(it))
-suspend fun LazyList.scroll(it: Any) = animateScrollBy(toF(it))
 
 
-fun Scroll.goTo(it: Any) = wait{ scrollTo(toInt(it)) }
-fun LazyList.goTo(x: Any) = wait {
-   scrollBy(toF(
-      toF(x) - this.it
-   ))
+fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = SphericalUtil.computeDistanceBetween(point, center) <= radiusMeters
+
+
+
+
+
+
+
+
+
+@Composable
+fun GeoCircle(
+	geo: GeoCircle,
+	selected: mBool = m(no),
+	onSelect: DoStr = {},
+){
+	var center = LatLng(geo.Lat, geo.Lng)
+	var borderColor by r(Color.White)
+	var borderW by r(2f)
+	
+	val pin = marker(center)
+	pin.onChange { drag ->
+		onSelect(geo.id)
+		selected.it = yes
+		geo.edit{
+			geo.Lat = drag.latitude
+			geo.Lng = drag.longitude
+		}
+	}
+	
+	
+	MarkerComposable(
+		state = pin,
+		onClick = { 
+			onSelect(geo.id)
+			selected.it = yes
+			yes
+		},
+		draggable = yes,
+	) {
+		drawPin()
+	}
+
+	if (selected.it) {
+		borderColor = Gold
+		borderW = 3f
+	}
+
+	Circle(
+        center = pin.it,
+        radius = toD(geo.radius),
+        strokeColor = borderColor,
+		strokeWidth = borderW,
+        fillColor = faded(Gold, 0.4f),
+    )
 }
 
-val Scroll.size: Int
-    get() = maxValue
-
-val Scroll.isMax: Bool
-    get() = value >= maxValue
-
-@Composable
-fun Scroll() = rememberScrollState()
-@Composable
-fun r_Scroll() = rememberScrollState()
-@Composable
-fun LazyList() = rememberLazyListState()
 
 
 

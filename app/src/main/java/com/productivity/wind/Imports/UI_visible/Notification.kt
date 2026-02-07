@@ -42,7 +42,7 @@ import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.window.*
 import androidx.compose.foundation.text.selection.*
-import com.productivity.wind.Imports.Data.*
+import com.productivity.wind.Imports.Utils.*
 import androidx.compose.ui.focus.*
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.*
@@ -89,7 +89,9 @@ If this returns false, Android will drop your alarm.
 
 */
 import android.provider.Settings
+import androidx.annotation.RequiresApi
 
+@RequiresApi(Build.VERSION_CODES.S)
 fun startSystemTimer(context: Context, minutes: Int) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

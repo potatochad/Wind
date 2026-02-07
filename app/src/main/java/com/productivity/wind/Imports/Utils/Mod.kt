@@ -1,4 +1,4 @@
-package com.productivity.wind.Imports.Data
+package com.productivity.wind.Imports.Utils
  
 import android.annotation.SuppressLint
 import timber.log.Timber
@@ -112,7 +112,7 @@ import androidx.navigation.*
 import android.webkit.*
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
-import com.productivity.wind.Imports.Data.*
+import com.productivity.wind.Imports.Utils.*
 import android.location.*
 import androidx.core.content.*
 import androidx.compose.ui.text.*
@@ -125,173 +125,110 @@ import android.net.*
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import androidx.compose.ui.window.*
-import com.productivity.wind.Imports.UI_visible.*
 import android.os.Process.*
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.*
-import android.provider.*
+import com.productivity.wind.Imports.UI_visible.*
 
 
-object Permission {
-    private fun getAndDo(permissionStr: Str, onGranted: Do): Bool {
-        return if (ContextCompat.checkSelfPermission(App, permissionStr) == PackageManager.PERMISSION_GRANTED) {
-            onGranted()
-            true // permission already granted
-        } else {
-            permission.launch(permissionStr) // request permission
-            false // permission not granted yet
-        }
+
+fun Mod.space(
+    s: Any? = null,
+    h: Any? = null,
+    w: Any? = null,
+    start: Any? = null,
+    top: Any? = null,
+    end: Any? = null,
+    bottom: Any? = null
+): Mod {
+    return when {
+        s != null -> this.padding(toDp(s))
+        h != null || w != null -> this.padding(
+            horizontal = toDp(h),
+            vertical = toDp(w)
+        )
+        else -> this.padding(
+            start = toDp(start),
+            top = toDp(top),
+            end = toDp(end),
+            bottom = toDp(bottom)
+        )
     }
+}
 
-    fun notification(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.POST_NOTIFICATIONS, onGranted)
-    }
+typealias Mod = Modifier
+typealias mod = Modifier
 
-    fun camera(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.CAMERA, onGranted)
-    }
+fun Mod.w(min: Any?, max: Any? = min) = this.widthIn(max = toDp(max), min = toDp(min))
+fun Mod.h(min: Any?, max: Any? = min) = this.heightIn(max = toDp(max), min = toDp(min))
+fun Mod.s(value: Any?) = this.size(toDp(value))
+fun Mod.s(Do: Do_<IntSize>): Mod = this.onSizeChanged { Do(it) }
 
-    fun locationFine(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, onGranted)
-    }
-
-    fun locationCoarse(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, onGranted)
-    }
-
-    fun readStorage(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.READ_EXTERNAL_STORAGE, onGranted)
-    }
-
-    fun writeStorage(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.WRITE_EXTERNAL_STORAGE, onGranted)
-    }
-
-    fun recordAudio(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.RECORD_AUDIO, onGranted)
-    }
-
-    fun readContacts(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.READ_CONTACTS, onGranted)
-    }
-
-    fun sendSMS(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.SEND_SMS, onGranted)
-    }
-
-    fun callPhone(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.CALL_PHONE, onGranted)
-    }
-
-    fun readPhoneState(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.READ_PHONE_STATE, onGranted)
-    }
-
-    fun backgroundLocation(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)
-    }
-
-    fun bodySensors(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
-    }
+fun Mod.center() = this.wrapContentSize(align = Alignment.Center)
+fun Mod.round(x: Any): Mod = this.clip(RoundedCornerShape(toDp(x)))
 
 
-	fun ignoreOptimizations(onGranted: Do = {}): Bool {
-		val pm = App.getSystemService(Context.POWER_SERVICE) as PowerManager
+fun Mod.maxS(): Mod= this.fillMaxSize()
+fun Mod.maxW(): Mod= this.fillMaxWidth()
+fun Mod.maxH(): Mod= this.fillMaxHeight()
 
-		// Already ignoring? Run callback and return true
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && pm.isIgnoringBatteryOptimizations(App.packageName)) {
-			onGranted()
-			return true
-		}
-
-		// Not ignoring yet? Launch system dialog
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			val intent = Intent().apply {
-				action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-				data = Uri.parse("package:${App.packageName}")
-				flags = Intent.FLAG_ACTIVITY_NEW_TASK
-			}
-
-			return try {
-				App.startActivity(intent)
-				false
-			} catch (e: Exception) {
-				false
-			}
-		}
-
-		// Older Android versions don't have battery optimizations
-		onGranted()
-		return true
-	}
-
-
-	
-	val systemAlertWindow = "android.permission.SYSTEM_ALERT_WINDOW"
-	
+@Composable
+fun Mod.scroll(
+    v: Bool = yes,
+    h: Bool = yes,
+    r_v: Scroll = Scroll(),
+    r_h: Scroll = Scroll(),
+): Mod {
+    var m = this
+    if (v) m = m.verticalScroll(r_v)
+    if (h) m = m.horizontalScroll(r_h)
+    return m
 }
 
 
 
-
-
-
-
-
-fun isBatteryOptimizationDisabled(): Bool {
-    val pm = App.getSystemService(PowerManager::class.java)
-    return pm.isIgnoringBatteryOptimizations(AppPkg)
-}
-
-fun isUsageP_Enabled(): Bool {
-	val appOps = App.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-    return appOps.checkOpNoThrow(
-		AppOpsManager.OPSTR_GET_USAGE_STATS,
-        Process.myUid(),
-        AppPkg,
-    ) == AppOpsManager.MODE_ALLOWED
-}
-
-// ✴️NOT WHAT YOU THINK FUNCTION, IGNORE
-fun isNotificationEnabled(): Bool {
-     return NotificationManagerCompat
-        .getEnabledListenerPackages(App)
-        .contains(AppPkg)
-}
-
-
-
-
-
-
-fun Android8OrAbove(Do: Do) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+@Composable
+fun Mod.click(
+    animate: Bool = yes,
+    Do: Do,
+): Mod {
+    return this.clickable(
+        indication = if (animate) LocalIndication.current else null,
+        interactionSource = MutableInteractionSource()
+    ) {
         Do()
     }
 }
 
-fun CreateNotificationChannel(context: Context) {
-    Android8OrAbove {
-        val channel = NotificationChannel(
-            "WindApp_id",
-            "WindChannel_name",
-            NotificationManager.IMPORTANCE_DEFAULT
-        ).apply {
-            description = "Channel description"
-        }
 
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.createNotificationChannel(channel)
-    }
+
+fun Mod.clickOrHold(
+    hold: Bool = yes,
+    action: Do,
+): Mod {
+   return if (hold) {
+      pointerInput(Unit) {
+          detectTapGestures(onLongPress = { action() })
+      }
+   } else {
+      clickable(
+         indication = null,
+         interactionSource = MutableInteractionSource()
+      ) {
+         action()
+      }
+  	}
 }
 
 
-
-
-
-
+fun Mod.getW(onWidth: Do_<Int>): Mod = this.then(
+    Mod.onGloballyPositioned {
+        onWidth(it.size.width)
+    }
+)
+fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
+    Mod.onGloballyPositioned {
+        onWidth(it.size.height)
+    }
+)
 
 
 

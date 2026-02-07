@@ -1,4 +1,4 @@
-package com.productivity.wind.Imports.Data
+package com.productivity.wind.Imports.Utils
  
 import android.annotation.SuppressLint
 import timber.log.Timber
@@ -112,7 +112,7 @@ import androidx.navigation.*
 import android.webkit.*
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
-import com.productivity.wind.Imports.Data.*
+import com.productivity.wind.Imports.Utils.*
 import android.location.*
 import androidx.core.content.*
 import androidx.compose.ui.text.*
@@ -129,119 +129,168 @@ import com.productivity.wind.Imports.UI_visible.*
 import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.*
+import android.provider.*
 
 
-fun runOnceEver(action: Wait) {
-    val key = autoId()
-    if (!getData("RunOnceEver").getBoolean(key, no)) {
-        Do{
-          action()
-        }
-        getData("RunOnceEver").edit().putBoolean(key, yes).apply()
-    }
-}
-
-fun Try(log: Str="", onFail: Do={}, Do: Do){
-    try {
-        Do()
-    } catch (e: Throwable) {
-        onFail()
-        Vlog("$log ${e.message}")
-    }
-}
-
-@Composable
-fun OnceEach(
-    s: Any = 1000,
-    condition: () -> Bool = { yes },
-    action: Wait
-) {
-	RunOnce {
-		while (condition()) {
-			action()
-			delay(toL(s))
-		}
-	}
-}
-fun Each(
-	s: Any = 1000,
-    condition: () -> Bool = { yes },
-    action: Do
-) {
-	Do {
-		while (condition()) {
-			action()
-			delay(toL(s))
-		}
-	}
-}
-
-
-@Composable
-fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
-    LaunchedEffect(key1, key2) {
-        Do()
-    }
-}
-
-fun wait(x: Any = 20, Do: Wait) {
-    scope.launch {
-		try {
-			wait(x)
-			Do()
-		} catch (e: Exception) {
-			log("<fun wait>: ${e.message}")
-		}
-    }
-}
-suspend fun wait(x: Any = 20) { delay(toL(x)) }
-
-
-fun Do(onError: Wait ={}, Do: Wait) {
-	App.lifecycleScope.launch {
-		try {
-			Do()
-		} catch (e: Exception) {
-			Vlog("error: ${e.message}")
-			onError()
-		}
-	} 
-}
-fun NoLag(onError: Wait ={}, Do: Wait) {
-    App.lifecycleScope.launch(Dispatchers.Default) {
-		try {
-			Do()
-		} catch (e: Exception) {
-			Vlog("error: ${e.message}")
-			onError()
-		}
-    }
-}
-
-
-inline fun check(
-    condition: Bool,
-    msg: Str = "",
-    Do: Do = {},
-) {
-	if (condition) {
-		if (msg.isNotEmpty()) Vlog(msg)
-		Do()        // safe
-	}
-}
-
-
-fun <T> runHeavyTask(
-    task: () -> T,         
-    onResult: Do_<T>  
-) {
-    CoroutineScope(Dispatchers.Default).launch { // off UI
-        val result = task()                       // run heavy work
-        withContext(Dispatchers.Main) {           // back to UI
-            onResult(result)                      // update Compose with result
+object Permission {
+    private fun getAndDo(permissionStr: Str, onGranted: Do): Bool {
+        return if (ContextCompat.checkSelfPermission(App, permissionStr) == PackageManager.PERMISSION_GRANTED) {
+            onGranted()
+            true // permission already granted
+        } else {
+            permission.launch(permissionStr) // request permission
+            false // permission not granted yet
         }
     }
+
+    fun notification(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.POST_NOTIFICATIONS, onGranted)
+    }
+
+    fun camera(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.CAMERA, onGranted)
+    }
+
+    fun locationFine(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, onGranted)
+    }
+
+    fun locationCoarse(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, onGranted)
+    }
+
+    fun readStorage(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.READ_EXTERNAL_STORAGE, onGranted)
+    }
+
+    fun writeStorage(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.WRITE_EXTERNAL_STORAGE, onGranted)
+    }
+
+    fun recordAudio(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.RECORD_AUDIO, onGranted)
+    }
+
+    fun readContacts(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.READ_CONTACTS, onGranted)
+    }
+
+    fun sendSMS(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.SEND_SMS, onGranted)
+    }
+
+    fun callPhone(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.CALL_PHONE, onGranted)
+    }
+
+    fun readPhoneState(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.READ_PHONE_STATE, onGranted)
+    }
+
+    fun backgroundLocation(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)
+    }
+
+    fun bodySensors(onGranted: Do= {}): Bool {
+        return getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
+    }
+
+
+	fun ignoreOptimizations(onGranted: Do = {}): Bool {
+		val pm = App.getSystemService(Context.POWER_SERVICE) as PowerManager
+
+		// Already ignoring? Run callback and return true
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && pm.isIgnoringBatteryOptimizations(App.packageName)) {
+			onGranted()
+			return true
+		}
+
+		// Not ignoring yet? Launch system dialog
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			val intent = Intent().apply {
+				action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+				data = Uri.parse("package:${App.packageName}")
+				flags = Intent.FLAG_ACTIVITY_NEW_TASK
+			}
+
+			return try {
+				App.startActivity(intent)
+				false
+			} catch (e: Exception) {
+				false
+			}
+		}
+
+		// Older Android versions don't have battery optimizations
+		onGranted()
+		return true
+	}
+
+
+	
+	val systemAlertWindow = "android.permission.SYSTEM_ALERT_WINDOW"
+	
 }
+
+
+
+
+
+
+
+
+fun isBatteryOptimizationDisabled(): Bool {
+    val pm = App.getSystemService(PowerManager::class.java)
+    return pm.isIgnoringBatteryOptimizations(AppPkg)
+}
+
+fun isUsageP_Enabled(): Bool {
+	val appOps = App.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+    return appOps.checkOpNoThrow(
+		AppOpsManager.OPSTR_GET_USAGE_STATS,
+        Process.myUid(),
+        AppPkg,
+    ) == AppOpsManager.MODE_ALLOWED
+}
+
+// ✴️NOT WHAT YOU THINK FUNCTION, IGNORE
+fun isNotificationEnabled(): Bool {
+     return NotificationManagerCompat
+        .getEnabledListenerPackages(App)
+        .contains(AppPkg)
+}
+
+
+
+
+
+
+fun Android8OrAbove(Do: Do) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        Do()
+    }
+}
+
+fun CreateNotificationChannel(context: Context) {
+    Android8OrAbove {
+        val channel = NotificationChannel(
+            "WindApp_id",
+            "WindChannel_name",
+            NotificationManager.IMPORTANCE_DEFAULT
+        ).apply {
+            description = "Channel description"
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
+    }
+}
+
+
+
+
+
 
 
 

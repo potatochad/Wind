@@ -1,5 +1,5 @@
-package com.productivity.wind.Imports.Data
-
+package com.productivity.wind.Imports.Utils
+ 
 import android.annotation.SuppressLint
 import timber.log.Timber
 import java.text.*
@@ -69,7 +69,7 @@ import androidx.compose.ui.unit.*
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 import android.content.Intent
-import java.time.*
+import java.time.LocalDate
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.NavHostController
@@ -112,7 +112,7 @@ import androidx.navigation.*
 import android.webkit.*
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
-import com.productivity.wind.Imports.Data.*
+import com.productivity.wind.Imports.Utils.*
 import android.location.*
 import androidx.core.content.*
 import androidx.compose.ui.text.*
@@ -125,156 +125,127 @@ import android.net.*
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import androidx.compose.ui.window.*
-import com.google.maps.android.compose.*
-import kotlin.math.*     
 import com.productivity.wind.Imports.UI_visible.*
-import java.time.format.*
-
-@Suppress("UNCHECKED_CAST")
-
-
-fun toDp(it: Any?): Dp = when (it) {
-    is Dp -> it           // already Dp
-    is Int -> it.dp       // Int → Dp
-    is Float -> it.dp     // Float → Dp
-    is Double -> it.dp    // Double → Dp
-    null -> 0.dp             // null → 0.dp
-    else -> 0.dp             // anything else → 0.dp
-}
-fun toF(it: Any?): Float = when (it) {
-    is Float -> it
-    is Int -> it.toFloat()
-    is Double -> it.toFloat()
-    is Dp -> it.value      // Dp → Float
-    null -> 0f
-    else -> 0f
-}
-fun toInt(it: Any?): Int = when (it) {
-    is Int -> it
-    is Float -> it.toInt()
-    is Double -> it.toInt()
-    is String -> it.toIntOrNull() ?: 0
-    is Dp -> it.value.toInt()  // Dp → Int
-    null -> 0
-    else -> 0
-}
-
-fun toL(it: Any?): Long = when (it) {
-    is Long -> it
-    is Int -> it.toLong()
-    is Float -> it.toLong()
-    is Double -> it.toLong()
-    is Str -> it.toLongOrNull() ?: 0L
-    null -> 0L
-    else -> 0L
-}
-
-fun toD(it: Any?): Double = when (it) {
-    is Double -> it
-    is Float -> it.toDouble()
-    is Long -> it.toDouble()
-    is Int -> it.toDouble()
-    is Str -> it.toDoubleOrNull() ?: 0.0
-    null -> 0.0
-    else -> 0.0
-}
+import android.os.Process.*
+import android.content.ClipData
+import android.content.ClipboardManager
 
 
-fun toLatLng(it: Any?): LatLng = when (it) {
-    is LatLng -> it
-    is Pair<*, *> -> LatLng(it.first.toString().toDouble(), it.second.toString().toDouble())
-    is Str -> {
-        val parts = it.split(",")
-        LatLng(parts.getOrNull(0)?.toDoubleOrNull() ?: 0.0,
-               parts.getOrNull(1)?.toDoubleOrNull() ?: 0.0)
-    }
-    null -> LatLng(0.0, 0.0)
-    else -> LatLng(0.0, 0.0)
-}
-
-fun toStr(it: Any?): String = when (it) {
-    is Str -> it
-    is AnnotatedString -> it.text
-    is LatLng -> "${it.latitude},${it.longitude}"
-    is Pair<*, *> -> "${it.first},${it.second}"
-    is Double, is Float, is Int, is Long -> it.toString()
-    null -> ""
-    else -> it.toString()
-}
-
-fun toLocalDate(x: Any?): LocalDate = when (x) { 
-    is Str -> LocalDate.parse(x)
-    is Long -> Instant.ofEpochMilli(x)
-        .atOffset(ZoneOffset.UTC)
-        .toLocalDate()
-    null -> LocalDate.now()
-    else -> LocalDate.now()
-}
-
-fun LocalDate.toMillis(): Long {
-    return this.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
-}
-
-
-fun toWeekDay(dateInput: Any): Str {
-    val date = when (dateInput) {
-        is LocalDate -> dateInput
-        is String -> LocalDate.parse(dateInput)
-        else -> throw IllegalArgumentException("Must be LocalDate or String")
-    }
-
-    return when (date.dayOfWeek) {
-        DayOfWeek.MONDAY -> "MO"
-        DayOfWeek.TUESDAY -> "TU"
-        DayOfWeek.WEDNESDAY -> "WE"
-        DayOfWeek.THURSDAY -> "TH"
-        DayOfWeek.FRIDAY -> "FR"
-        DayOfWeek.SATURDAY -> "SA"
-        DayOfWeek.SUNDAY -> "SU"
+fun runOnceEver(action: Wait) {
+    val key = autoId()
+    if (!getData("RunOnceEver").getBoolean(key, no)) {
+        Do{
+          action()
+        }
+        getData("RunOnceEver").edit().putBoolean(key, yes).apply()
     }
 }
 
+fun Try(log: Str="", onFail: Do={}, Do: Do){
+    try {
+        Do()
+    } catch (e: Throwable) {
+        onFail()
+        Vlog("$log ${e.message}")
+    }
+}
 
-
-
-
-fun toH(x: Int): Int = x / 3600
-fun toMin(x: Int): Int = (x % 3600) / 60
-fun toS(x: Int): Int = x % 60
-
+@Composable
+fun OnceEach(
+    s: Any = 1000,
+    condition: () -> Bool = { yes },
+    action: Wait
+) {
+	RunOnce {
+		while (condition()) {
+			action()
+			delay(toL(s))
+		}
+	}
+}
+fun Each(
+	s: Any = 1000,
+    condition: () -> Bool = { yes },
+    action: Do
+) {
+	Do {
+		while (condition()) {
+			action()
+			delay(toL(s))
+		}
+	}
+}
 
 
 @Composable
-fun toUI(it: Any?): UI {
-    return when (it) {
-        is Str -> { { Text(it) } }
-        is Function0<*> -> it as UI   // unsafe cast but works at runtime
-        else -> { { Text("Unsupported type (toUI) $it") } }
+fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
+    LaunchedEffect(key1, key2) {
+        Do()
+    }
+}
+
+fun wait(x: Any = 20, Do: Wait) {
+    scope.launch {
+		try {
+			wait(x)
+			Do()
+		} catch (e: Exception) {
+			log("<fun wait>: ${e.message}")
+		}
+    }
+}
+suspend fun wait(x: Any = 20) { delay(toL(x)) }
+
+
+fun Do(onError: Wait ={}, Do: Wait) {
+	App.lifecycleScope.launch {
+		try {
+			Do()
+		} catch (e: Exception) {
+			Vlog("error: ${e.message}")
+			onError()
+		}
+	} 
+}
+fun NoLag(onError: Wait ={}, Do: Wait) {
+    App.lifecycleScope.launch(Dispatchers.Default) {
+		try {
+			Do()
+		} catch (e: Exception) {
+			Vlog("error: ${e.message}")
+			onError()
+		}
+    }
+}
+
+
+inline fun check(
+    condition: Bool,
+    msg: Str = "",
+    Do: Do = {},
+) {
+	if (condition) {
+		if (msg.isNotEmpty()) Vlog(msg)
+		Do()        // safe
+	}
+}
+
+
+fun <T> runHeavyTask(
+    task: () -> T,         
+    onResult: Do_<T>  
+) {
+    CoroutineScope(Dispatchers.Default).launch { // off UI
+        val result = task()                       // run heavy work
+        withContext(Dispatchers.Main) {           // back to UI
+            onResult(result)                      // update Compose with result
+        }
     }
 }
 
 
 
-@Composable
-fun toMStr(what: Any?): mStr = when {
-    isMStr(what) -> what as mStr
-    else -> m("$what") as mStr
-}
 
-
-
-
-
-fun Any.toMeters(
-    cameraState: CameraPositionState,
-    density: Float = AppDensity
-): Double {
-    val zoom = cameraState.position.zoom
-    val latitude = cameraState.position.target.latitude
-    val metersPerPixel = 156543.03392 * cos(Math.toRadians(latitude)) / (1 shl zoom.toInt())
-    val pixels = toF(this) * density
-    return pixels * metersPerPixel
-}
 
 
 
