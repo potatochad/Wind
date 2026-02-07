@@ -95,11 +95,13 @@ import com.productivity.wind.Imports.UI_visible.*
 // Start the service
 fun start(service: Class<out Service>) {
     val intent = Intent(AppCtx, service)
+	log("starting service with intent: $intent")
+       
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         AppCtx.startForegroundService(intent)
 		log("start: startForegroundService")
     } else {
-        AppCtx.startService(intent)
+		AppCtx.startService(intent)
 		log("start: startService")
     }
 }
