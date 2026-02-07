@@ -363,8 +363,7 @@ object Header {
         Icon.Chill { goTo("Web") }
 
         Icon.Reload{
-            startSystemTimer(App, 3)  // 3-minute timer
-
+            start(ForEverService::class.java)
 
         }
         
