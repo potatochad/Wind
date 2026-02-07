@@ -32,7 +32,7 @@ jobs:
 
       - name: Build APK
         run: |
-          source ./app/src/main/java/com/productivity/wind/Imports/Data/Ignore_Imports.sh
+          source ./app/src/main/java/com/productivity/wind/Imports/Utils/Ignore_Imports.sh
           give_gradle_permission
 
           Build_APK
