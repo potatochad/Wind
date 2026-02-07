@@ -97,8 +97,10 @@ fun start(service: Class<out Service>) {
     val intent = Intent(AppCtx, service)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         AppCtx.startForegroundService(intent)
+		log("start: startForegroundService")
     } else {
         AppCtx.startService(intent)
+		log("start: startService")
     }
 }
 
@@ -111,8 +113,12 @@ class ForEverService : Service() {
     private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
     private var OneJob: Job? = null
 
+	log("service: top layer")
+
     override fun onBind(intent: Intent?): IBinder? {
         Timber.d("onBind: $intent")
+		log("service: onBind")
+
         return null
     }
 
@@ -121,19 +127,28 @@ class ForEverService : Service() {
         flags: Int,
         startId: Int,
     ): Int {
+		log("service: onStart command")
+
         val notif = Notification(
 			title = "Timer Running",
 			text = "00:00",
 		)
+
+		log("service: notifi: $notif")
+
 		
 		startForeground(1, notif)
+		log("service: actually startForeground")
+
 
         if (OneJob == null || OneJob?.isActive == false) {
+			log("service: making job")
+
             OneJob = serviceScope.launch {
+				log("service: inside job")
                 while (true) {
+					log("service: inside whileee")
 					delay(1000L)
-					Vlog("testingg")
-					log("hi")
 	
 				}
             }
