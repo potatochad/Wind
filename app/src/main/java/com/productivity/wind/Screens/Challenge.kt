@@ -448,7 +448,10 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				timeWorked++
 				
 				Bar.funTime++	
-				
+
+				startForeverService()
+
+				/*
 				Notification("Timer", Time(tsk.timeLeft), id = 2){ builder, manager ->  
 					
 					while (yes){
@@ -465,9 +468,11 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 						Bar.funTime++	
 						val notifi = builder.title("Timer").text(Time(tsk.timeLeft)).build()
 						manager.notify(2, notifi)
-					}}
+					}
+					}
 					
 				}
+				*/
 			}
 			if (tsk.done()){
 				log("task is done")
