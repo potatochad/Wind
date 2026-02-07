@@ -113,8 +113,11 @@ class ForEverService : Service() {
     private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
     private var OneJob: Job? = null
 
-	log("service: top layer")
-
+	override fun onCreate() {
+        super.onCreate()
+        log("service: top layer")
+	}
+	
     override fun onBind(intent: Intent?): IBinder? {
         Timber.d("onBind: $intent")
 		log("service: onBind")
