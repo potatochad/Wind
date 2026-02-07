@@ -449,7 +449,12 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				
 				Bar.funTime++	
 
-				startForeverService()
+				// Start the service
+				start(ForEverService::class.java)
+
+				// Stop the service
+				// stop(ForEverService::class.java)
+
 
 				/*
 				Notification("Timer", Time(tsk.timeLeft), id = 2){ builder, manager ->  
