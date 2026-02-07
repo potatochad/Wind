@@ -93,8 +93,8 @@ import com.productivity.wind.Imports.UI_visible.*
 //region LATER USE
 
 // Start the service
-fun startForeverService() {
-    val intent = Intent(AppCtx, ForEverService::class.java)
+fun start(service: Class<out Service>) {
+    val intent = Intent(AppCtx, service)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         AppCtx.startForegroundService(intent)
     } else {
@@ -102,10 +102,8 @@ fun startForeverService() {
     }
 }
 
-// Stop the service
-fun stopForeverService() {
-    val intent = Intent(AppCtx, ForEverService::class.java)
-    AppCtx.stopService(intent)
+fun stop(service: Class<out Service>) {
+    AppCtx.stopService(Intent(AppCtx, service))
 }
 
 class ForEverService : Service() {
