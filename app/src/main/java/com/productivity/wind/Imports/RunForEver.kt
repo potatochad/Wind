@@ -137,7 +137,7 @@ class ForEverService : Service() {
 		lateinit var notifManager: NotificationManager
 		lateinit var notifBuilder: NotificationBuilder
 		
-        val notif = Notification("Timer", Time(tsk2.timeLeft), id = 1){ builder, manager ->
+        val notif = Notification(tsk2.name, Time(tsk2.timeLeft), id = 1){ builder, manager ->
 			notifManager = manager
 			notifBuilder = builder
 		}    
