@@ -134,7 +134,7 @@ class ForEverService : Service() {
     ): Int {
 		log("service: onStart command")
 
-        val notif = Notification("Timer", "__:__:__", id = 3){ builder, manager ->  				
+        val notif = Notification("Timer", "__:__:__", id = 2){ builder, manager ->  				
 					while (yes){
 						var tsk = Bar.doTsk.find { it.on == yes }
 
@@ -154,10 +154,10 @@ class ForEverService : Service() {
 				
 						Bar.funTime++	
 						val notifi = builder.title("Timer").text(Time(tsk.timeLeft)).build()
-						manager.notify(3, notifi)
+						manager.notify(2, notifi)
 							} else {
 								val notifi = builder.title("Done").text("Done").build()
-						manager.notify(3, notifi)
+						manager.notify(2, notifi)
 							}
 					}}
 			}					
@@ -174,9 +174,7 @@ class ForEverService : Service() {
 			log("service: making job")
 
             OneJob = serviceScope.launch {
-				log("service: inside job")
                 while (true) {
-					log("service: inside whileee")
 					delay(1000L)
 	
 				}
