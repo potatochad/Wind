@@ -139,7 +139,7 @@ class ForEverService : Service() {
 						var timeWorked2 = tsk.didTime
 						wait(1000)
 						
-						if (tskOn && Bar.leftApp){
+						if (tsk.on && Bar.leftApp){
 						
 						timeWorked2++
 
