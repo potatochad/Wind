@@ -100,6 +100,23 @@ fun getNotifBuilder(id: Int): NotificationBuilder {
 }
 
 
+fun CreateNotificationChannel(context: Context) {
+    Android8OrAbove {
+        val channel = NotificationChannel(
+            "WindApp_id",
+            "WindChannel_name",
+            NotificationManager.IMPORTANCE_DEFAULT
+        ).apply {
+            description = "Channel description"
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
+    }
+}
+
+
+
 
 
 fun NotificationBuilder.title(x: Str) = apply { setContentTitle(x) }
