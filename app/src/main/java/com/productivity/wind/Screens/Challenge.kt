@@ -447,17 +447,16 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 			
 				timeWorked++
 
+				if (tsk.didTime > timeWorked) timeWorked = tsk.didTime
+
 				tsk.edit {
 					didTime = timeWorked
 				}
 				
 				Bar.funTime++	
 
-				// Start the service
 				start(ForEverService::class.java)
 
-				// Stop the service
-				// stop(ForEverService::class.java)
 			}
 			if (tsk.done()){
 				log("task is done")
@@ -473,13 +472,10 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		if (!it == yes) {
 			var found = Bar.doTsk.find { it.on == yes }
 			if (found != null) {
-				found.edit { on = no }
-				log("Disabling , found ${found.name}, foundOn ${found.on}, !it ${!it}")
+				found.edit { on = false }
 			}
 		}
 		tskOn = !it
-		
-		log("name ${tsk.name}, tskOn $tskOn, !it ${!it}")
 	}
 	move(5)
 	Text(
