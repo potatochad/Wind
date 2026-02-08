@@ -95,15 +95,12 @@ import com.productivity.wind.Imports.UI_visible.*
 // Start the service
 fun start(service: Class<out Service>) {
     val intent = Intent(AppCtx, service)
-	log("starting service with intent: $intent")
-       
+	
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        AppCtx.startForegroundService(intent)
-		log("start: startForegroundService")
-    } else {
-		AppCtx.startService(intent)
-		log("start: startService")
-    }
+        AppCtx.startForegroundService(intent)		
+	} else {
+		AppCtx.startService(intent)		
+	}
 }
 
 fun stop(service: Class<out Service>) {
@@ -149,7 +146,6 @@ class ForEverService : Service() {
 		startForeground(1, notif)
 
         if (OneJob == null || OneJob?.isActive == no) {
-			log("service: making job")
 
             OneJob = serviceScope.launch {
                 while (yes) {
