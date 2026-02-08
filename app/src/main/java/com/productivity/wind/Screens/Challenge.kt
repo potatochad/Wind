@@ -428,11 +428,14 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	var tskOn by r(tsk.on)
 	var timeWorked by r(tsk.didTime)
 
-	LaunchedEffect(tskOn, timeWorked){
+	RunOnce(tskOn, timeWorked){
 		tsk.edit {
 			on = tskOn
 			didTime = timeWorked
 		}
+	}
+	RunOnce(tsk.didTime){
+		timeWorked = tsk.didTime
 	}
 
 	
@@ -454,30 +457,6 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 
 				// Stop the service
 				// stop(ForEverService::class.java)
-
-
-				/*
-				Notification("Timer", Time(tsk.timeLeft), id = 2){ builder, manager ->  
-					
-					while (yes){
-						wait(1000)
-						
-						if (tskOn && Bar.leftApp){
-						
-						timeWorked++
-
-						tsk.edit{
-							didTime = timeWorked
-						}
-				
-						Bar.funTime++	
-						val notifi = builder.title("Timer").text(Time(tsk.timeLeft)).build()
-						manager.notify(2, notifi)
-					}
-					}
-					
-				}
-				*/
 			}
 			if (tsk.done()){
 				log("task is done")
