@@ -363,7 +363,7 @@ object Header {
         Icon.Chill { goTo("Web") }
 
         Icon.Reload{
-            start(ForEverService::class.java)
+            //start(ForEverService::class.java)
 
         }
         
