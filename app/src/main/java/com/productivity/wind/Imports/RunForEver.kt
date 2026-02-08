@@ -134,10 +134,25 @@ class ForEverService : Service() {
     ): Int {
 		log("service: onStart command")
 
-        val notif = Notification(
-			title = "Timer Running",
-			text = "00:00",
-		)
+        val notif = Notification("Timer", Time(tsk.timeLeft), id = 2){ builder, manager ->  				
+					while (yes){
+						var timeWorked2 = tsk.didTime
+						wait(1000)
+						
+						if (tskOn && Bar.leftApp){
+						
+						timeWorked2++
+
+						tsk.edit{
+							didTime = timeWorked2
+						}
+				
+						Bar.funTime++	
+						val notifi = builder.title("Timer").text(Time(tsk.timeLeft)).build()
+						manager.notify(2, notifi)
+					}
+			}					
+		}
 
 		log("service: notifi: $notif")
 
