@@ -443,7 +443,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 			wait(1000)
 			
 			if (tskOn && !Bar.leftApp){
-				log("[TaskActive] Tsk_DIDTIME: ${tsk.didTime}, timeWorked: $timeWorked , name: ${tsk.name}")
+				log("didTime: ${tsk.didTime}, timeWorked: $timeWorked , name: ${tsk.name}, timeleft: ${tsk.timeLeft}")
 			
 				timeWorked++
 
