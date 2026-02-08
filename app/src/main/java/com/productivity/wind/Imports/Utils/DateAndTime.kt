@@ -149,9 +149,6 @@ fun taskDueToday(x: Schedule): Bool {
 	
 	var show by r(no)
 
-	log("running task due today checker")
-	log("... today: $date,  startDate: ${x.startDate}")
-
 	if (date.isBefore(x.startDate)) return no 
 	
 	show = when (x.type) {
@@ -164,8 +161,6 @@ fun taskDueToday(x: Schedule): Bool {
 		"CUSTOM" -> no
         else -> no
 	}
-
-	log("show: $show")
 
 	return show
 	
