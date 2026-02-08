@@ -134,34 +134,7 @@ class ForEverService : Service() {
     ): Int {
 		log("service: onStart command")
 
-        val notif = Notification("Timer", "__:__:__", id = 2){ builder, manager ->  				
-					while (yes){
-						var tsk = Bar.doTsk.find { it.on == yes }
-
-						if (tsk != null){
-			
-						var timeWorked2 = tsk.didTime
-						wait(1000)
-						
-						if (tsk.on && Bar.leftApp){
-							if (tsk.timeLeft != 0){
-						
-						timeWorked2++
-
-						tsk.edit{
-							didTime = timeWorked2
-						}
-				
-						Bar.funTime++	
-						val notifi = builder.title("Timer").text(Time(tsk.timeLeft)).build()
-						manager.notify(2, notifi)
-							} else {
-								val notifi = builder.title("Done").text("Done").build()
-						manager.notify(2, notifi)
-							}
-					}}
-			}					
-		}
+        val notif = Notification("Timer", "__:__:__", id = 2)                            
 
 		log("service: notifi: $notif")
 
@@ -176,7 +149,33 @@ class ForEverService : Service() {
             OneJob = serviceScope.launch {
                 while (true) {
 					delay(1000L)
-	
+					var tsk = Bar.doTsk.find { it.on == yes }
+					if (tsk != null){
+			
+						var timeWorked2 = tsk.didTime
+						
+						
+						if (tsk.on && Bar.leftApp){
+							if (tsk.timeLeft != 0){
+						
+								timeWorked2++
+
+								tsk.edit{
+									didTime = timeWorked2
+								}
+				
+								Bar.funTime++	
+								val notifi = builder.title("Timer").text(Time(tsk.timeLeft)).build()
+
+								manager.notify(2, notifi)
+							} else {
+								val notifi = builder.title("Done").text("Done").build()
+								manager.notify(2, notifi)
+							}
+						}
+					}					
+
+
 				}
             }
         }
