@@ -357,14 +357,19 @@ object Header {
 
     @Composable
     fun Main(){
+        val context = LocalContext.current
         Icon.Menu {
 			menu = yes
 		}
         Icon.Chill { goTo("Web") }
 
         Icon.Reload{
-            //start(ForEverService::class.java)
-
+            LiveUpdateNotification(
+                title = "Test Live Update",
+                text = "Points: ${Bar.funTime}",
+                shortCriticalText = "${Bar.funTime} pts",
+                whenTime = System.currentTimeMillis()
+            )
         }
         
         move(w = 12)
@@ -509,3 +514,4 @@ fun selectApp(show: mBool =m(yes), Do: DoStr ={}) {
 
 
 
+    

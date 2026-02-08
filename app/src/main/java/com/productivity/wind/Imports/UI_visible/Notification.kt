@@ -74,20 +74,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-
-
-/*
-Before you schedule the alarm, check:
-
-val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-if (!am.canScheduleExactAlarms()) {
-    // Not allowed → system will ignore your alarm
-}
-
-
-If this returns false, Android will drop your alarm.
-
-*/
 import android.provider.Settings
 import androidx.annotation.RequiresApi
 
@@ -137,16 +123,13 @@ fun Notification(
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     val builder = getNotifBuilder(id)
-            .title(title)
-            .text(text)
-
-            /*
+            .setContentTitle(title)
+            .setContentText(text)
             .setStyle(
                 androidx.media.app.NotificationCompat.MediaStyle()
                   .setShowActionsInCompactView(0, 1)
                   .setMediaSession(myMediaSession.sessionToken)
             )
-            */
 
             
 
@@ -166,35 +149,6 @@ fun Notification(
 
 
 
-/*
-
-control the level of detail visible in the notification from the lock screen, call setVisibility() and specify one of the following values:
-
-VISIBILITY_PUBLIC: the notification's full content shows on the lock screen.
-
-VISIBILITY_SECRET: no part of the notification shows on the lock screen.
-
-VISIBILITY_PRIVATE: only basic information, such as the notification's icon and the content title, shows on the lock screen. The notification's full content doesn't show.
-
-When you set VISIBILITY_PRIVATE
-
-
-
-
-val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.large_icon)
-
-val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-    .addAction(R.drawable.ic_pause, "Pause", pauseIntent)
-    .addAction(R.drawable.ic_stop, "Stop", stopIntent)
-    .setStyle(
-        NotificationCompat.MediaStyle()
-            .setShowActionsInCompactView(0, 1) // show buttons even when collapsed
-            .setMediaSession(myMediaSession.sessionToken) // live session
-    )
-    .setPriority(NotificationCompat.PRIORITY_HIGH)
-
-notificationManager.notify(NOTIF_ID, builder.build())
-*/
 fun Notification(
     xml: Int,
     id: Int = 1,
@@ -239,11 +193,79 @@ fun Notification(
 
 
 
-
-
-
-
-
-
-
+/**
+ * Creates a Live Update (Promoted) notification.
+ */
+fun LiveUpdateNotification(
+    title: Str,
+    text: Str,
+    id: Int = 2,
+    shortCriticalText: Str? = null,
+    whenTime: Long? = null,
+    Do: suspend (builder: NotificationCompat.Builder, manager: NotificationManager) -> Unit = { _, _ -> }
+): Notification {
+    Permission.notification()
     
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    // Check if app can post promoted notifications (Android 15+)
+    if (Build.VERSION.SDK_INT >= 35) {
+        try {
+            // Using reflection/string keys for safety against unresolved symbols
+            val canPost = manager.javaClass.getMethod("canPostPromotedNotifications").invoke(manager) as Boolean
+            if (!canPost) {
+                val intent = Intent("android.settings.MANAGE_APP_PROMOTED_NOTIFICATIONS").apply {
+                    putExtra("android.provider.extra.APP_PACKAGE", AppCtx.packageName)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                AppCtx.startActivity(intent)
+            }
+        } catch (e: Exception) {
+             // Fallback or ignore if SDK doesn't support the call yet
+        }
+    }
+
+    val builder = notifMap[id] ?: NotificationCompat.Builder(AppCtx, "WindApp_id")
+        .setSmallIcon(myAppRes)
+        .setOngoing(true)
+        .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+    
+    builder.setContentTitle(title)
+           .setContentText(text)
+           .setOnlyAlertOnce(true)
+
+    // Live Update requirement: Promotion request (using string key "android.request_promoted_ongoing")
+    builder.extras.putBoolean("android.request_promoted_ongoing", true)
+    
+    // Status chip text (Android 15+)
+    if (shortCriticalText != null && Build.VERSION.SDK_INT >= 35) {
+        builder.extras.putCharSequence("android.shortCriticalText", shortCriticalText)
+    }
+
+    if (whenTime != null) {
+        builder.setWhen(whenTime)
+        builder.setShowWhen(true)
+        builder.setUsesChronometer(true)
+    }
+
+    val notification = builder.build()
+    
+    // Check promotable characteristics (optional debug check)
+    if (Build.VERSION.SDK_INT >= 35) {
+        try {
+            val hasPromotable = notification.javaClass.getMethod("hasPromotableCharacteristics").invoke(notification) as Boolean
+            if (!hasPromotable) {
+                log("Notification does not meet Live Update requirements")
+            }
+        } catch (e: Exception) {}
+    }
+
+    manager.notify(id, notification)
+    notifMap[id] = builder
+
+    CoroutineScope(Dispatchers.Default).launch {
+        Do(builder, manager)
+    }
+
+    return notification
+}
