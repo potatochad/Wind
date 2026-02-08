@@ -434,9 +434,6 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 			didTime = timeWorked
 		}
 	}
-	RunOnce(tsk.didTime){
-		timeWorked = tsk.didTime
-	}
 
 	
 	RunOnce {
@@ -449,6 +446,10 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				log("[TaskActive] Tsk_DIDTIME: ${tsk.didTime}, timeWorked: $timeWorked , name: ${tsk.name}")
 			
 				timeWorked++
+
+				tsk.edit {
+					didTime = timeWorked
+				}
 				
 				Bar.funTime++	
 
