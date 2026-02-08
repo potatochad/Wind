@@ -133,8 +133,10 @@ class ForEverService : Service() {
         startId: Int,
     ): Int {
 		var tsk2 = Bar.doTsk.find { it.on == yes }
-		if (tsk2 == null) return
-						
+		if (tsk2 == null) {
+			stopSelf()              // ⚡ kills the service immediately
+			return START_NOT_STICKY // don’t restart it
+		}			
 		lateinit var notifManager: NotificationManager
 		lateinit var notifBuilder: NotificationBuilder
 		
