@@ -137,13 +137,16 @@ fun Notification(
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     val builder = getNotifBuilder(id)
-            .setContentTitle(title)
-            .setContentText(text)
+            .title(title)
+            .text(text)
+
+            /*
             .setStyle(
                 androidx.media.app.NotificationCompat.MediaStyle()
                   .setShowActionsInCompactView(0, 1)
                   .setMediaSession(myMediaSession.sessionToken)
             )
+            */
 
             
 
