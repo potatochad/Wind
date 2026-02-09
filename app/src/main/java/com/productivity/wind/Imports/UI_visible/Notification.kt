@@ -460,11 +460,7 @@ object SnackbarNotificationManager {
                     .setContentTitle("Your order is being prepared")
                     .setContentText("Next step will be delivery")
                     .setShortCriticalText("Prepping")
-                    .setLargeIcon(
-                        IconCompat.createWithResource(
-                            appContext, R.drawable.cupcake
-                        ).toIcon(appContext)
-                    )
+                    .setLargeIcon(myAppRes)
                     .setStyle(buildBaseProgressStyle(FOOD_PREPARATION).setProgress(25))
             }
         },
@@ -484,9 +480,7 @@ object SnackbarNotificationManager {
                             .setProgress(50)
                     )
                     .setLargeIcon(
-                        IconCompat.createWithResource(
-                            appContext, R.drawable.cupcake
-                        ).toIcon(appContext)
+                        myAppRes
                     )
                     .setWhen(System.currentTimeMillis().plus(11 * 60 * 1000 /* 10 min */))
                     .setUsesChronometer(true)
@@ -509,9 +503,7 @@ object SnackbarNotificationManager {
                             .setProgress(75)
                     )
                     .setLargeIcon(
-                        IconCompat.createWithResource(
-                            appContext, R.drawable.cupcake
-                        ).toIcon(appContext)
+                        myAppRes
                     )
                     .setWhen(System.currentTimeMillis().plus(11 * 60 * 500 /* 5 min */))
                     .setUsesChronometer(true)
@@ -527,17 +519,13 @@ object SnackbarNotificationManager {
                     .setStyle(
                         buildBaseProgressStyle(ORDER_COMPLETE)
                             .setProgressTrackerIcon(
-                                IconCompat.createWithResource(
-                                    appContext, R.drawable.check_circle
-                                )
+                                myAppRes
                             )
                             .setProgress(100)
                     )
                     .setShortCriticalText("Arrived")
                     .setLargeIcon(
-                        IconCompat.createWithResource(
-                            appContext, R.drawable.cupcake
-                        ).toIcon(appContext)
+                        myAppRes
                     )
             }
         };
@@ -545,13 +533,13 @@ object SnackbarNotificationManager {
 
         @RequiresApi(Build.VERSION_CODES.BAKLAVA)
         fun buildBaseProgressStyle(orderState: OrderState): ProgressStyle {
-            val pointColor = Color.valueOf(
+            val pointColor = android.graphics.Color.valueOf(
                 236f / 255f, // Normalize red value to be between 0.0 and 1.0
                 183f / 255f, // Normalize green value to be between 0.0 and 1.0
                 255f / 255f, // Normalize blue value to be between 0.0 and 1.0
                 1f,
             ).toArgb()
-            val segmentColor = Color.valueOf(
+            val segmentColor = android.graphics.Color.valueOf(
                 134f / 255f, // Normalize red value to be between 0.0 and 1.0
                 247f / 255f, // Normalize green value to be between 0.0 and 1.0
                 250f / 255f, // Normalize blue value to be between 0.0 and 1.0
