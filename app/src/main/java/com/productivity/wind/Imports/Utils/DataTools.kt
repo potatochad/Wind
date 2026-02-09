@@ -198,7 +198,8 @@ inline fun <reified T> sList(
 
 
         Each(1000){
-			NoLag {
+			//DONT use noLag, DONT tie to lifecycle
+			CoroutineScope(Dispatchers.Default).launch {
 				if (!restoring) {
 					val jsonOut = Json.encodeToString(list.toList())
 				
