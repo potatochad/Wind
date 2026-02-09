@@ -361,15 +361,9 @@ object Header {
         Icon.Menu {
 			menu = yes
 		}
-        Icon.Chill { goTo("Web") }
+        // Icon.Chill { goTo("Web") }
 
         Icon.Reload{
-            LiveUpdateNotification(
-                title = "Test Live Update",
-                text = "Points: ${Bar.funTime}",
-                shortCriticalText = "${Bar.funTime} pts",
-                whenTime = System.currentTimeMillis()
-            )
         }
         
         move(w = 12)
