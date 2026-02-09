@@ -11,7 +11,7 @@ import android.os.Handler
 import android.provider.*
 import android.view.*
 import android.widget.*
-import android.support.v4.media.session.* //MediaSessionCompat
+import android.support.v4.media.session.*
 import androidx.activity.compose.*
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -327,7 +327,7 @@ fun LiveUpdateSample() {
             NotificationPermission()
             Spacer(modifier = Modifier.height(4.dp))
             NotificationPostPromotedPermission()
-            Text(stringResource( R.string.live_update_summary_text))
+            Text("liveUodateSummaryText")
             Spacer(modifier = Modifier.height(4.dp))
             Button(
                 onClick = {
@@ -363,8 +363,6 @@ fun NotificationPermission() {
             },
             modifier = Modifier
                 .fillMaxWidth(),
-            permissionStringResourceId = R.string.permission_message,
-            permissionRationalStringResourceId = R.string.permission_rationale,
         )
     }
 }
@@ -379,7 +377,7 @@ fun NotificationPostPromotedPermission() {
     }
     if (!isPostPromotionsEnabled) {
         Text(
-            text = stringResource(R.string.post_promoted_permission_message),
+            text = "string.post_promoted_permission_message",
             modifier = Modifier.padding(horizontal = 10.dp),
         )
         Button(
@@ -390,7 +388,7 @@ fun NotificationPostPromotedPermission() {
                 context.startActivity(intent)
             },
         ) {
-            Text(text = stringResource(R.string.to_settings))
+            Text("string.to_settings")
         }
     }
 }
@@ -400,19 +398,19 @@ private fun NotificationPermissionCard(
     shouldShowRationale: Boolean,
     onGrantClick: () -> Unit,
     modifier: Modifier = Modifier,
-    permissionStringResourceId: Int,
-    permissionRationalStringResourceId: Int,
+    permissionStr: Str,
+    permissionRationalStr: Str,
 ) {
     Card(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(permissionStringResourceId),
+            text = "string.permission_message",
             modifier = Modifier.padding(16.dp),
         )
         if (shouldShowRationale) {
             Text(
-                text = stringResource(permissionRationalStringResourceId),
+                text = "string.permission_rationale",
                 modifier = Modifier.padding(horizontal = 10.dp),
             )
         }
@@ -423,7 +421,7 @@ private fun NotificationPermissionCard(
             contentAlignment = Alignment.BottomEnd,
         ) {
            Button(onClick = onGrantClick) {
-                Text(text = stringResource(R.string.permission_grant))
+                Text("SomeBtn text")
             }
         }
     }
