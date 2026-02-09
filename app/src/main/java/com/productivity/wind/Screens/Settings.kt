@@ -120,12 +120,8 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 
 @Composable
-fun ExtensionsScreen() {
-
-    LazyScreen("Extensions") {
-
-        
-    }
+fun ExtensionsScreen() = LazyScreen("Extensions") {
+	LiveUpdateSample()
 }
 
 @Composable
