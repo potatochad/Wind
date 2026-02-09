@@ -314,31 +314,25 @@ fun LiveUpdateSample() {
         LocalContext.current.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     SnackbarNotificationManager.initialize(LocalContext.current.applicationContext, notificationManager)
     val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackbarHostState = r { SnackbarHostState() }
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },
     ) { contentPadding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding),
+            modifier = Mod.padding(contentPadding),
         ) {
             NotificationPermission()
-            Spacer(modifier = Modifier.height(4.dp))
+            move(4)
             NotificationPostPromotedPermission()
             Text("liveUodateSummaryText")
-            Spacer(modifier = Modifier.height(4.dp))
-            Button(
-                onClick = {
-                    onCheckout()
-                    scope.launch {
-                        snackbarHostState.showSnackbar("Order placed")
-                    }
-                },
-            ) {
-                Text("Checkout")
+            move(4)
+            Btn("Checkout"){
+                onCheckout()
+                scope.launch {
+                   snackbarHostState.showSnackbar("Order placed")
+                }
             }
         }
     }
