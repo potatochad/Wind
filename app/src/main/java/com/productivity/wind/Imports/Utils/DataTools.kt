@@ -187,7 +187,7 @@ inline fun <reified T> sList(
 	val Oldlist = mList<T>()
 
 
-    Do {
+    Try("error with list saving") {
         val json = getData().basicValue(id, "")
         if (json.isNotEmpty()) {
 			val loaded = Json.decodeFromString<List<T>>(json)
@@ -197,7 +197,7 @@ inline fun <reified T> sList(
 		}
 
 
-        Each(300){
+        Each(1000){
 			NoLag {
 				if (!restoring) {
 					val jsonOut = Json.encodeToString(list.toList())
@@ -209,6 +209,18 @@ inline fun <reified T> sList(
     }
 
     return list
+}
+
+fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
+	Do {
+		val index = this.indexOf(item)
+		val itemCopy = this[index] // get the item
+        this.removeAt(index)       // remove old item
+
+        itemCopy.block()           // apply the changes directly
+
+        this.add(index, itemCopy) 
+	}
 }
 
 
@@ -241,17 +253,7 @@ fun <T> m_<T>.onChange(callback: Wait_<T>) {
 
 
 
-fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
-	Do {
-		val index = this.indexOf(item)
-		val itemCopy = this[index] // get the item
-        this.removeAt(index)       // remove old item
 
-        itemCopy.block()           // apply the changes directly
-
-        this.add(index, itemCopy) 
-	}
-}
 
 
 @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
