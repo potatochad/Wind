@@ -119,8 +119,6 @@ fun Notification(
             .setContentText(text)
 
             
-
-
     val notifi = builder.build()
     manager.notify(id, notifi)
 
@@ -180,86 +178,6 @@ fun Notification(
 
 
 
-/**
- * Creates a Live Update (Promoted) notification.
- */
-fun LiveUpdateNotification(
-    title: Str,
-    text: Str,
-    id: Int = 2,
-    shortCriticalText: Str? = null,
-    whenTime: Long? = null,
-    Do: suspend (builder: NotificationCompat.Builder, manager: NotificationManager) -> Unit = { _, _ -> }
-): Notification {
-    Permission.notification()
-    
-    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    // Check if app can post promoted notifications (Android 15+)
-    if (Build.VERSION.SDK_INT >= 35) {
-        try {
-            // Using reflection/string keys for safety against unresolved symbols
-            val canPost = manager.javaClass.getMethod("canPostPromotedNotifications").invoke(manager) as Boolean
-            if (!canPost) {
-                val intent = Intent("android.settings.MANAGE_APP_PROMOTED_NOTIFICATIONS").apply {
-                    putExtra("android.provider.extra.APP_PACKAGE", AppCtx.packageName)
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                AppCtx.startActivity(intent)
-            }
-        } catch (e: Exception) {
-             // Fallback or ignore if SDK doesn't support the call yet
-        }
-    }
-
-    val builder = notifMap[id] ?: NotificationCompat.Builder(AppCtx, "WindApp_id")
-        .setSmallIcon(myAppRes)
-        .setOngoing(true)
-        .setCategory(NotificationCompat.CATEGORY_PROGRESS)
-    
-    builder.setContentTitle(title)
-           .setContentText(text)
-           .setOnlyAlertOnce(true)
-
-    // Live Update requirement: Promotion request (using string key "android.request_promoted_ongoing")
-    builder.extras.putBoolean("android.request_promoted_ongoing", true)
-    
-    // Status chip text (Android 15+)
-    if (shortCriticalText != null && Build.VERSION.SDK_INT >= 35) {
-        builder.extras.putCharSequence("android.shortCriticalText", shortCriticalText)
-    }
-
-    if (whenTime != null) {
-        builder.setWhen(whenTime)
-        builder.setShowWhen(true)
-        builder.setUsesChronometer(true)
-    }
-
-    val notification = builder.build()
-    
-    // Check promotable characteristics (optional debug check)
-    if (Build.VERSION.SDK_INT >= 35) {
-        try {
-            val hasPromotable = notification.javaClass.getMethod("hasPromotableCharacteristics").invoke(notification) as Boolean
-            if (!hasPromotable) {
-                log("Notification does not meet Live Update requirements")
-            }
-        } catch (e: Exception) {}
-    }
-
-    manager.notify(id, notification)
-    notifMap[id] = builder
-
-    CoroutineScope(Dispatchers.Default).launch {
-        Do(builder, manager)
-    }
-
-    return notification
-}
-
-
-
-
 
 
 
@@ -307,9 +225,8 @@ fun LiveUpdateNotification(
 fun LiveUpdateSample() {
     val notifiManager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     Notifi2.Init(notifiManager)
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = r { SnackbarHostState() }
-    
+
+    /*
     Column(Mod.space(10)) {
             NotificationPermission()
             move(4)
@@ -320,7 +237,8 @@ fun LiveUpdateSample() {
                 Notifi2.start()
                 Vlog("orderdd")
             }
-        }
+     }
+     */
     
 }
 
