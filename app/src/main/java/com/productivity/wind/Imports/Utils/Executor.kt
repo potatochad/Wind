@@ -141,14 +141,7 @@ fun runOnceEver(action: Wait) {
     }
 }
 
-fun Try(log: Str="", onFail: Do={}, Do: Do){
-    try {
-        Do()
-    } catch (e: Throwable) {
-        onFail()
-        Vlog("$log ${e.message}")
-    }
-}
+
 
 @Composable
 fun OnceEach(
@@ -196,7 +189,16 @@ fun wait(x: Any = 20, Do: Wait) {
 }
 suspend fun wait(x: Any = 20) { delay(toL(x)) }
 
-
+fun Try(log: Str="", onError: Wait = {}, Do: Wait){
+    App.lifecycleScope.launch {
+		try {
+			Do()
+		} catch (e: Exception) {
+			Vlog("$log: ${e.message}")
+			onError()
+		}
+	} 
+}
 fun Do(onError: Wait ={}, Do: Wait) {
 	App.lifecycleScope.launch {
 		try {
