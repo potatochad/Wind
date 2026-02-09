@@ -3,6 +3,7 @@ package com.productivity.wind.Imports.UI_visible
 import android.annotation.*
 import androidx.annotation.RequiresApi
 import android.app.*
+import android.app.NotificationManager.*
 import android.content.*
 import android.graphics.*
 import android.graphics.drawable.Drawable
@@ -436,7 +437,7 @@ object SnackbarNotificationManager {
     @RequiresApi(Build.VERSION_CODES.O)
     fun initialize(context: Context, notifManager: NotificationManager) {
         notificationManager = notifManager
-        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, IMPORTANCE_DEFAULT)
+        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
         appContext = context
         notificationManager.createNotificationChannel(channel)
     }
@@ -474,7 +475,7 @@ object SnackbarNotificationManager {
                         buildBaseProgressStyle(FOOD_ENROUTE)
                             .setProgressTrackerIcon(
                                 IconCompat.createWithResource(
-                                    appContext, R.drawable.shopping_bag
+                                    appContext, myAppRes
                                 )
                             )
                             .setProgress(50)
@@ -495,7 +496,7 @@ object SnackbarNotificationManager {
                         buildBaseProgressStyle(FOOD_ARRIVING)
                             .setProgressTrackerIcon(
                                 IconCompat.createWithResource(
-                                    appContext, R.drawable.delivery_truck
+                                    appContext, myAppRes
                                 )
                             )
                             .setProgress(75)
@@ -515,7 +516,9 @@ object SnackbarNotificationManager {
                     .setStyle(
                         buildBaseProgressStyle(ORDER_COMPLETE)
                             .setProgressTrackerIcon(
-                                myAppRes
+                                IconCompat.createWithResource(
+                                    appContext, myAppRes
+                                )
                             )
                             .setProgress(100)
                     )
