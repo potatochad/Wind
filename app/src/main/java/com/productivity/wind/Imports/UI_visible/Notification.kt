@@ -361,8 +361,7 @@ fun NotificationPermission() {
             onGrantClick = {
                 notificationPermissionState.launchPermissionRequest()
             },
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -398,8 +397,6 @@ private fun NotificationPermissionCard(
     shouldShowRationale: Boolean,
     onGrantClick: () -> Unit,
     modifier: Modifier = Modifier,
-    permissionStr: Str,
-    permissionRationalStr: Str,
 ) {
     Card(
         modifier = modifier,
