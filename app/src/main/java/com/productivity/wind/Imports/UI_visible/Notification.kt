@@ -311,34 +311,22 @@ fun LiveUpdateNotification(
 @Composable
 fun LiveUpdateSample() {
     val notifiManager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    SnackbarNotificationManager.Init(notifiManager)
+    Notifi2.Init(notifiManager)
     val scope = rememberCoroutineScope()
     val snackbarHostState = r { SnackbarHostState() }
     
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        },
-    ) { contentPadding ->
-        Column(Mod.space(10)) {
+    Column(Mod.space(10)) {
             NotificationPermission()
             move(4)
             NotificationPostPromotedPermission()
             Text("liveUodateSummaryText")
             move(4)
             Btn("Checkout"){
-                onCheckout()
-                scope.launch {
-                   snackbarHostState.showSnackbar("Order placed")
-                }
+                Notifi2.start()
+                Vlog("orderdd")
             }
         }
     }
-}
-
-@RequiresApi(Build.VERSION_CODES.BAKLAVA)
-fun onCheckout() {
-    SnackbarNotificationManager.start()
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -354,7 +342,7 @@ fun NotificationPermission() {
             onGrantClick = {
                 notificationPermissionState.launchPermissionRequest()
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Mod.maxW(),
         )
     }
 }
@@ -363,14 +351,14 @@ fun NotificationPermission() {
 @Composable
 fun NotificationPostPromotedPermission() {
     val context = AppCtx
-    var isPostPromotionsEnabled by remember { mutableStateOf(SnackbarNotificationManager.isPostPromotionsEnabled()) }
+    var isPostPromotionsEnabled by r(Notifi2.isPostPromotionsEnabled())
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
-        isPostPromotionsEnabled = SnackbarNotificationManager.isPostPromotionsEnabled()
+        isPostPromotionsEnabled = Notifi2.isPostPromotionsEnabled()
     }
     if (!isPostPromotionsEnabled) {
         Text(
             text = "string.post_promoted_permission_message",
-            modifier = Modifier.padding(horizontal = 10.dp),
+            modifier = Mod.space(h = 10),
         )
         Button(
             onClick = {
@@ -388,37 +376,35 @@ fun NotificationPostPromotedPermission() {
 @Composable
 private fun NotificationPermissionCard(
     shouldShowRationale: Bool,
-    onGrantClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    onGrantClick: Do,
+    modifier: Mod = Mod,
 ) {
     Card(
         modifier = modifier,
     ) {
         Text(
             text = "string.permission_message",
-            modifier = Modifier.padding(16.dp),
+            modifier = Mod.space(16),
         )
         if (shouldShowRationale) {
             Text(
                 text = "string.permission_rationale",
-                modifier = Modifier.padding(horizontal = 10.dp),
+                modifier = Mod.padding(horizontal = 10.dp),
             )
         }
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
+            modifier = Mod.maxW().space(10),
             contentAlignment = Alignment.BottomEnd,
         ) {
-           Button(onClick = onGrantClick) {
-                Text("SomeBtn text")
+           Btn("SomeBtn text") {
+                onGrantClick()
             }
         }
     }
 }
 
 
-object SnackbarNotificationManager {
+object Notifi2 {
     private lateinit var notificationManager: NotificationManager
     const val CHANNEL_ID = "live_updates_channel_id"
     private const val CHANNEL_NAME = "live_updates_channel_name"
