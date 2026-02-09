@@ -121,7 +121,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions") {
-	LiveUpdateSample()
+	if (Build.VERSION.SDK_INT >= 35) LiveUpdateSample()
 }
 
 @Composable
