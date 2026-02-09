@@ -460,7 +460,7 @@ object SnackbarNotificationManager {
                     .setContentTitle("Your order is being prepared")
                     .setContentText("Next step will be delivery")
                     .setShortCriticalText("Prepping")
-                    .setLargeIcon(myAppRes)
+                    .setLargeIcon(toBitmap(myAppRes))
                     .setStyle(buildBaseProgressStyle(FOOD_PREPARATION).setProgress(25))
             }
         },
@@ -479,9 +479,7 @@ object SnackbarNotificationManager {
                             )
                             .setProgress(50)
                     )
-                    .setLargeIcon(
-                        myAppRes
-                    )
+                    .setLargeIcon(toBitmap(myAppRes))
                     .setWhen(System.currentTimeMillis().plus(11 * 60 * 1000 /* 10 min */))
                     .setUsesChronometer(true)
                     .setChronometerCountDown(true)
@@ -502,9 +500,7 @@ object SnackbarNotificationManager {
                             )
                             .setProgress(75)
                     )
-                    .setLargeIcon(
-                        myAppRes
-                    )
+                    .setLargeIcon(toBitmap(myAppRes))
                     .setWhen(System.currentTimeMillis().plus(11 * 60 * 500 /* 5 min */))
                     .setUsesChronometer(true)
                     .setChronometerCountDown(true)
@@ -524,9 +520,7 @@ object SnackbarNotificationManager {
                             .setProgress(100)
                     )
                     .setShortCriticalText("Arrived")
-                    .setLargeIcon(
-                        myAppRes
-                    )
+                    .setLargeIcon(toBitmap(myAppRes))
             }
         };
 
@@ -642,7 +636,7 @@ object SnackbarNotificationManager {
     }
 
     @RequiresApi(Build.VERSION_CODES.BAKLAVA)
-    fun isPostPromotionsEnabled(): Boolean {
+    fun isPostPromotionsEnabled(): Bool {
         return notificationManager.canPostPromotedNotifications()
     }
 }
