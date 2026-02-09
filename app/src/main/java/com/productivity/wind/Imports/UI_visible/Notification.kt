@@ -311,7 +311,7 @@ fun LiveUpdateNotification(
 @Composable
 fun LiveUpdateSample() {
     val notifiManager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    SnackbarNotificationManager.Init(AppCtx, notifiManager)
+    SnackbarNotificationManager.Init(notifiManager)
     val scope = rememberCoroutineScope()
     val snackbarHostState = r { SnackbarHostState() }
     
@@ -436,7 +436,7 @@ object SnackbarNotificationManager {
         INITIALIZING(5000) {
             @RequiresApi(Build.VERSION_CODES.BAKLAVA)
             override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(AppCtx, INITIALIZING)
+                return buildBaseNotification(INITIALIZING)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
                     .setContentTitle("You order is being placed")
                     .setContentText("Confirming with bakery...")
@@ -447,7 +447,7 @@ object SnackbarNotificationManager {
         FOOD_PREPARATION(9000) {
             @RequiresApi(Build.VERSION_CODES.BAKLAVA)
             override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(AppCtx, FOOD_PREPARATION)
+                return buildBaseNotification(FOOD_PREPARATION)
                     .setContentTitle("Your order is being prepared")
                     .setContentText("Next step will be delivery")
                     .setShortCriticalText("Prepping")
@@ -458,7 +458,7 @@ object SnackbarNotificationManager {
         FOOD_ENROUTE(13000) {
             @RequiresApi(Build.VERSION_CODES.BAKLAVA)
             override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(AppCtx, FOOD_ENROUTE)
+                return buildBaseNotification(FOOD_ENROUTE)
                     .setContentTitle("Your order is on its way")
                     .setContentText("Enroute to destination")
                     .setStyle(
@@ -479,7 +479,7 @@ object SnackbarNotificationManager {
         FOOD_ARRIVING(18000) {
             @RequiresApi(Build.VERSION_CODES.BAKLAVA)
             override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(AppCtx, FOOD_ARRIVING)
+                return buildBaseNotification(FOOD_ARRIVING)
                     .setContentTitle("Your order is arriving and has been dropped off")
                     .setContentText("Enjoy & don't forget to refrigerate any perishable items.")
                     .setStyle(
@@ -500,7 +500,7 @@ object SnackbarNotificationManager {
         ORDER_COMPLETE(21000) {
             @RequiresApi(Build.VERSION_CODES.BAKLAVA)
             override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(AppCtx, ORDER_COMPLETE)
+                return buildBaseNotification(ORDER_COMPLETE)
                     .setContentTitle("Your order is complete.")
                     .setContentText("Thank you for using JetSnack for your snacking needs.")
                     .setStyle(
