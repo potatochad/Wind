@@ -326,7 +326,7 @@ fun LiveUpdateSample() {
                 Vlog("orderdd")
             }
         }
-    }
+    
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
