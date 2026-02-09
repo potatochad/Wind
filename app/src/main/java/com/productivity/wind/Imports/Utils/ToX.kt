@@ -129,6 +129,7 @@ import com.google.maps.android.compose.*
 import kotlin.math.*     
 import com.productivity.wind.Imports.UI_visible.*
 import java.time.format.*
+import android.graphics.*
 
 @Suppress("UNCHECKED_CAST")
 
@@ -253,8 +254,9 @@ fun toUI(it: Any?): UI {
     }
 }
 
-fun toBitmap(it: Any?, context: Context): Bitmap {
+fun toBitmap(it: Any?): Bitmap {
     var default = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+    val context = AppCtx
 
     return try {
         when (it) {
