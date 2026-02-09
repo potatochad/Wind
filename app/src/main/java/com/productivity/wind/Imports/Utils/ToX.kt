@@ -253,6 +253,34 @@ fun toUI(it: Any?): UI {
     }
 }
 
+fun toBitmap(it: Any?, context: Context): Bitmap {
+    var default = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+
+    return try {
+        when (it) {
+            is Int -> BitmapFactory.decodeResource(context.resources, it)
+            is Bitmap -> it
+            is Drawable -> {
+                val bitmap = Bitmap.createBitmap(
+                    it.intrinsicWidth,
+                    it.intrinsicHeight,
+                    Bitmap.Config.ARGB_8888
+                )
+                val canvas = Canvas(bitmap)
+                it.setBounds(0, 0, canvas.width, canvas.height)
+                it.draw(canvas)
+                bitmap
+            }
+            else -> default
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        log("Failed to do to Bitmap")
+        default
+    }
+}
+
+
 
 
 @Composable
