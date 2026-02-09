@@ -75,6 +75,8 @@ ktlint {
 
 
 dependencies {
+    implementation("com.google.accompanist:accompanist-permissions:0.37.3")
+
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.media:media:1.7.1")
 
