@@ -215,7 +215,6 @@ fun NoLag(onError: Str = "noLag error", Do: Wait) {
 			Do()
 		} catch (e: Exception) {
 			Vlog("$onError: ${e.message}")
-			onError()
 		}
     }
 }
