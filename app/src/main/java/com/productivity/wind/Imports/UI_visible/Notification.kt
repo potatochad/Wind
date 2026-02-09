@@ -117,11 +117,6 @@ fun Notification(
     val builder = getNotifBuilder(id)
             .setContentTitle(title)
             .setContentText(text)
-            .setStyle(
-                androidx.media.app.NotificationCompat.MediaStyle()
-                  .setShowActionsInCompactView(0, 1)
-                  .setMediaSession(myMediaSession.sessionToken)
-            )
 
             
 
