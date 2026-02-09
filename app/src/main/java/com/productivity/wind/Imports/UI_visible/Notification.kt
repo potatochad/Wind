@@ -310,19 +310,17 @@ fun LiveUpdateNotification(
 @RequiresApi(Build.VERSION_CODES.BAKLAVA)
 @Composable
 fun LiveUpdateSample() {
-    val notificationManager =
-        LocalContext.current.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    SnackbarNotificationManager.initialize(LocalContext.current.applicationContext, notificationManager)
+    val notifiManager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    SnackbarNotificationManager.Init(AppCtx, notifiManager)
     val scope = rememberCoroutineScope()
     val snackbarHostState = r { SnackbarHostState() }
+    
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },
     ) { contentPadding ->
-        Column(
-            modifier = Mod.padding(contentPadding),
-        ) {
+        Column(Mod.space(10)) {
             NotificationPermission()
             move(4)
             NotificationPostPromotedPermission()
@@ -364,7 +362,7 @@ fun NotificationPermission() {
 @RequiresApi(Build.VERSION_CODES.BAKLAVA)
 @Composable
 fun NotificationPostPromotedPermission() {
-    val context = LocalContext.current
+    val context = AppCtx
     var isPostPromotionsEnabled by remember { mutableStateOf(SnackbarNotificationManager.isPostPromotionsEnabled()) }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
         isPostPromotionsEnabled = SnackbarNotificationManager.isPostPromotionsEnabled()
@@ -389,7 +387,7 @@ fun NotificationPostPromotedPermission() {
 
 @Composable
 private fun NotificationPermissionCard(
-    shouldShowRationale: Boolean,
+    shouldShowRationale: Bool,
     onGrantClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -422,17 +420,15 @@ private fun NotificationPermissionCard(
 
 object SnackbarNotificationManager {
     private lateinit var notificationManager: NotificationManager
-    private lateinit var appContext: Context
     const val CHANNEL_ID = "live_updates_channel_id"
     private const val CHANNEL_NAME = "live_updates_channel_name"
     private const val NOTIFICATION_ID = 1234
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun initialize(context: Context, notifManager: NotificationManager) {
+    fun Init(notifManager: NotificationManager) {
         notificationManager = notifManager
         val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-        appContext = context
         notificationManager.createNotificationChannel(channel)
     }
 
@@ -440,7 +436,7 @@ object SnackbarNotificationManager {
         INITIALIZING(5000) {
             @RequiresApi(Build.VERSION_CODES.BAKLAVA)
             override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(appContext, INITIALIZING)
+                return buildBaseNotification(AppCtx, INITIALIZING)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
                     .setContentTitle("You order is being placed")
                     .setContentText("Confirming with bakery...")
@@ -451,7 +447,7 @@ object SnackbarNotificationManager {
         FOOD_PREPARATION(9000) {
             @RequiresApi(Build.VERSION_CODES.BAKLAVA)
             override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(appContext, FOOD_PREPARATION)
+                return buildBaseNotification(AppCtx, FOOD_PREPARATION)
                     .setContentTitle("Your order is being prepared")
                     .setContentText("Next step will be delivery")
                     .setShortCriticalText("Prepping")
@@ -462,14 +458,14 @@ object SnackbarNotificationManager {
         FOOD_ENROUTE(13000) {
             @RequiresApi(Build.VERSION_CODES.BAKLAVA)
             override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(appContext, FOOD_ENROUTE)
+                return buildBaseNotification(AppCtx, FOOD_ENROUTE)
                     .setContentTitle("Your order is on its way")
                     .setContentText("Enroute to destination")
                     .setStyle(
                         buildBaseProgressStyle(FOOD_ENROUTE)
                             .setProgressTrackerIcon(
                                 IconCompat.createWithResource(
-                                    appContext, myAppRes
+                                    AppCtx, myAppRes
                                 )
                             )
                             .setProgress(50)
@@ -483,14 +479,14 @@ object SnackbarNotificationManager {
         FOOD_ARRIVING(18000) {
             @RequiresApi(Build.VERSION_CODES.BAKLAVA)
             override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(appContext, FOOD_ARRIVING)
+                return buildBaseNotification(AppCtx, FOOD_ARRIVING)
                     .setContentTitle("Your order is arriving and has been dropped off")
                     .setContentText("Enjoy & don't forget to refrigerate any perishable items.")
                     .setStyle(
                         buildBaseProgressStyle(FOOD_ARRIVING)
                             .setProgressTrackerIcon(
                                 IconCompat.createWithResource(
-                                    appContext, myAppRes
+                                    AppCtx, myAppRes
                                 )
                             )
                             .setProgress(75)
@@ -504,14 +500,14 @@ object SnackbarNotificationManager {
         ORDER_COMPLETE(21000) {
             @RequiresApi(Build.VERSION_CODES.BAKLAVA)
             override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(appContext, ORDER_COMPLETE)
+                return buildBaseNotification(AppCtx, ORDER_COMPLETE)
                     .setContentTitle("Your order is complete.")
                     .setContentText("Thank you for using JetSnack for your snacking needs.")
                     .setStyle(
                         buildBaseProgressStyle(ORDER_COMPLETE)
                             .setProgressTrackerIcon(
                                 IconCompat.createWithResource(
-                                    appContext, myAppRes
+                                    AppCtx, myAppRes
                                 )
                             )
                             .setProgress(100)
@@ -581,8 +577,8 @@ object SnackbarNotificationManager {
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
-        fun buildBaseNotification(appContext: Context, orderState: OrderState): NotificationCompat.Builder {
-            val notificationBuilder = NotificationCompat.Builder(appContext, CHANNEL_ID)
+        fun buildBaseNotification(orderState: OrderState): NotificationCompat.Builder {
+            val notificationBuilder = NotificationCompat.Builder(AppCtx, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setOngoing(true)
                 .setRequestPromotedOngoing(true)
