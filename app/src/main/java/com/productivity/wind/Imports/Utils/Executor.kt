@@ -209,12 +209,12 @@ fun Do(onError: Wait ={}, Do: Wait) {
 		}
 	} 
 }
-fun NoLag(onError: Wait ={}, Do: Wait) {
+fun NoLag(onError: Str = "noLag error", Do: Wait) {
     App.lifecycleScope.launch(Dispatchers.Default) {
 		try {
 			Do()
 		} catch (e: Exception) {
-			Vlog("error: ${e.message}")
+			Vlog("$onError: ${e.message}")
 			onError()
 		}
     }
