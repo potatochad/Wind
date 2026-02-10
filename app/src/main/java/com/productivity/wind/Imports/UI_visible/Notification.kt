@@ -476,6 +476,7 @@ object Notifi2 {
         }
     }
 
+    /*
     @RequiresApi(Build.VERSION_CODES.BAKLAVA)
     fun isPostPromotionsEnabled(): Boolean {
         return if (::notificationManager.isInitialized) {
@@ -484,6 +485,7 @@ object Notifi2 {
            false // or true if you prefer default
         }
     }
+    */
 
 
     @RequiresApi(Build.VERSION_CODES.BAKLAVA)
