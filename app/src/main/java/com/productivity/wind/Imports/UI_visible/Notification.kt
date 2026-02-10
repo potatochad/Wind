@@ -258,6 +258,7 @@ fun NotificationPostPromotedPermission() {
             onClick = {
                 val intent = Intent(Settings.ACTION_APP_NOTIFICATION_PROMOTION_SETTINGS).apply {
                     putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // newly addedd
                 }
                 context.startActivity(intent)
             },
