@@ -443,8 +443,8 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 			wait(1000)
 			
 			if (tskOn && !Bar.leftApp){
-				log("didTime: ${tsk.didTime}, timeWorked: $timeWorked , name: ${tsk.name}, timeleft: ${tsk.timeLeft}")
-			
+				log("${tsk.name}: ${Time(tsk.timeLeft)}")
+		
 				timeWorked++
 
 				if (tsk.didTime > timeWorked) timeWorked = tsk.didTime
@@ -482,6 +482,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		"${tsk.name}: ${Time(tsk.timeLeft)}",
 		modifier = Mod.w(toF(AppW)*0.57)
 	)
+	log("WHAT USER SEES| ${tsk.name}: ${Time(tsk.timeLeft)}")
 	
     End { 
 		Item.Edit(mod = Mod.space(0)){
