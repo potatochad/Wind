@@ -344,20 +344,16 @@ fun ToDo(id: Str = "") {
         Text("ToDo")
         
         End {
-			
-			Item.Edit(mod = Mod.space(0)){
-				
-			}
 			if (todo != null) {
 				Item.Delete { 
 					tsk.remove()
 				}
 			}
 
-			if (todo != null) {
-				Item.Edit
-			} else 
-			Item.Add {
+			Icon(
+				if (todo != null) Icons.Default.Edit
+				else Icons.Default.Add
+			) {
 				log("clicked icon ")
                 if (time1.it==0) {
 					Vlog("Add time")
