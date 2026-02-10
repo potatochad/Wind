@@ -325,11 +325,12 @@ fun ToDo(id: Str = "") {
 	    	every = 1,
 	    )
 	)
+	var todo by r(null)
 	
 	
   
     if (!id.isEmpty()) {
-      val todo = Bar.doTsk.find { it.id == id }
+      todo = Bar.doTsk.find { it.id == id }
 
       if (todo != null) {
         time1.it = todo.doneTime
@@ -343,7 +344,20 @@ fun ToDo(id: Str = "") {
         Text("ToDo")
         
         End {
-            Item.Add {
+			
+			Item.Edit(mod = Mod.space(0)){
+				
+			}
+			if (todo != null) {
+				Item.Delete { 
+					tsk.remove()
+				}
+			}
+
+			if (todo != null) {
+				Item.Edit
+			} else 
+			Item.Add {
 				log("clicked icon ")
                 if (time1.it==0) {
 					Vlog("Add time")
