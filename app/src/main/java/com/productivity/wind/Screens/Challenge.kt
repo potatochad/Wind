@@ -333,10 +333,11 @@ fun ToDo(id: Str = "") {
       todo = Bar.doTsk.find { it.id == id }
 
       if (todo != null) {
-        time1.it = todo.doneTime
-        points1.it = todo.worth
-        name1.it = todo.name
-		schedule1 = todo.schedule
+		val t = todo
+        time1.it = t.doneTime
+        points1.it = t.worth
+        name1.it = t.name
+		schedule1 = t.schedule
       }
     }
 
@@ -357,11 +358,11 @@ fun ToDo(id: Str = "") {
 				log("clicked icon ")
                 if (time1.it==0) {
 					Vlog("Add time")
-					return@Add
+					return@Icon
 				}
 				if (name1.it=="") {
 					Vlog("Add name")
-					return@Add
+					return@Icon
 				}
 				log("passed the check")
 
@@ -387,7 +388,7 @@ fun ToDo(id: Str = "") {
 						log("going to main")
                         goTo("Main")
                     }
-                    return@Add
+                    return@Icon
                 }
 
 				Vlog("adding task")
