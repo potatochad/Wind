@@ -325,7 +325,7 @@ fun ToDo(id: Str = "") {
 	    	every = 1,
 	    )
 	)
-	var todo by r(null)
+	var todo by r<DoTsk?>(null)
 	
 	
   
