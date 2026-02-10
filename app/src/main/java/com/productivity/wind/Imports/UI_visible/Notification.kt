@@ -229,7 +229,7 @@ fun LiveUpdateSample() {
     Try("postNotification ERROR"){
     var isPostPromotionsEnabled by m(Notifi2.isPostPromotionsEnabled())
     }
-    // something below crashess
+    
     
     /*
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
@@ -244,7 +244,6 @@ fun LiveUpdateSample() {
             onClick = {
                 val intent = Intent(Settings.ACTION_APP_NOTIFICATION_PROMOTION_SETTINGS).apply {
                     putExtra(Settings.EXTRA_APP_PACKAGE, AppCtx.packageName)
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // newly addedd
                 }
                 AppCtx.startActivity(intent)
             },
@@ -476,6 +475,16 @@ object Notifi2 {
             }, state.delay)
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.BAKLAVA)
+    fun isPostPromotionsEnabled(): Boolean {
+        return if (::notificationManager.isInitialized) {
+           notificationManager.canPostPromotedNotifications()
+        } else {
+           false // or true if you prefer default
+        }
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.BAKLAVA)
     fun isPostPromotionsEnabled(): Bool {
