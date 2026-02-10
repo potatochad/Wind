@@ -58,9 +58,8 @@ fun Main() {
 					
 					
 					LazyCard(
-						modUI = Mod.space(
-							start = 8,
-						)
+						modUI = Mod.space(start = 8),
+						modCard = Mod.
 					) { 
 						DoTskUI(it)
 					}
