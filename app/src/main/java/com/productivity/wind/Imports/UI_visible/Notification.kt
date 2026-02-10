@@ -225,39 +225,20 @@ fun Notification(
 fun LiveUpdateSample() {
     val notifiManager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     Notifi2.Init(notifiManager)
-
-    /*
-    Column(Mod.space(10)) {
-            NotificationPermission()
-            move(4)
+    // something below crashess
+    
+    
+            
             NotificationPostPromotedPermission()
+     /*
             Text("liveUodateSummaryText")
             move(4)
             Btn("Checkout"){
                 Notifi2.start()
                 Vlog("orderdd")
             }
-     }
      */
     
-}
-
-@OptIn(ExperimentalPermissionsApi::class)
-@Composable
-fun NotificationPermission() {
-    @SuppressLint("InlinedApi") // Granted at install time on API <33.
-    val notificationPermissionState = rememberPermissionState(
-        android.Manifest.permission.POST_NOTIFICATIONS,
-    )
-    if (!notificationPermissionState.status.isGranted) {
-        NotificationPermissionCard(
-            shouldShowRationale = notificationPermissionState.status.shouldShowRationale,
-            onGrantClick = {
-                notificationPermissionState.launchPermissionRequest()
-            },
-            modifier = Mod.maxW(),
-        )
-    }
 }
 
 @RequiresApi(Build.VERSION_CODES.BAKLAVA)
@@ -286,35 +267,7 @@ fun NotificationPostPromotedPermission() {
     }
 }
 
-@Composable
-private fun NotificationPermissionCard(
-    shouldShowRationale: Bool,
-    onGrantClick: Do,
-    modifier: Mod = Mod,
-) {
-    Card(
-        modifier = modifier,
-    ) {
-        Text(
-            text = "string.permission_message",
-            modifier = Mod.space(16),
-        )
-        if (shouldShowRationale) {
-            Text(
-                text = "string.permission_rationale",
-                modifier = Mod.padding(horizontal = 10.dp),
-            )
-        }
-        Box(
-            modifier = Mod.maxW().space(10),
-            contentAlignment = Alignment.BottomEnd,
-        ) {
-           Btn("SomeBtn text") {
-                onGrantClick()
-            }
-        }
-    }
-}
+
 
 
 object Notifi2 {
