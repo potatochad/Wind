@@ -333,7 +333,7 @@ fun ToDo(id: Str = "") {
       todo = Bar.doTsk.find { it.id == id }
 
       if (todo != null) {
-		val t = todo
+		val t = todo!!
         time1.it = t.doneTime
         points1.it = t.worth
         name1.it = t.name
