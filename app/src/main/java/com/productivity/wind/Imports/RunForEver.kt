@@ -170,6 +170,9 @@ class ForEverService : Service() {
 
 								notifManager.notify(1, notifi)
 							} else {
+								tsk.edit {
+									on = false
+								} 
 								val notifi = notifBuilder.title("Done").text("Done").build()
 								notifManager.notify(1, notifi)
 							}
