@@ -225,27 +225,12 @@ fun Notification(
 fun LiveUpdateSample() {
     val notifiManager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     Notifi2.Init(notifiManager)
+    
+    var isPostPromotionsEnabled by r(Notifi2.isPostPromotionsEnabled())
+
     // something below crashess
     
-    
-            
-            NotificationPostPromotedPermission()
-     /*
-            Text("liveUodateSummaryText")
-            move(4)
-            Btn("Checkout"){
-                Notifi2.start()
-                Vlog("orderdd")
-            }
-     */
-    
-}
-
-@RequiresApi(Build.VERSION_CODES.BAKLAVA)
-@Composable
-fun NotificationPostPromotedPermission() {
-    val context = AppCtx
-    var isPostPromotionsEnabled by r(Notifi2.isPostPromotionsEnabled())
+    /*
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
         isPostPromotionsEnabled = Notifi2.isPostPromotionsEnabled()
     }
@@ -257,15 +242,25 @@ fun NotificationPostPromotedPermission() {
         Button(
             onClick = {
                 val intent = Intent(Settings.ACTION_APP_NOTIFICATION_PROMOTION_SETTINGS).apply {
-                    putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                    putExtra(Settings.EXTRA_APP_PACKAGE, AppCtx.packageName)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // newly addedd
                 }
-                context.startActivity(intent)
+                AppCtx.startActivity(intent)
             },
         ) {
             Text("string.to_settings")
         }
     }
+            
+    
+            Text("liveUodateSummaryText")
+            move(4)
+            Btn("Checkout"){
+                Notifi2.start()
+                Vlog("orderdd")
+            }
+     */
+    
 }
 
 
