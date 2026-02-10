@@ -478,23 +478,10 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		tskOn = !it
 	}
 	move(5)
-	Text(
-		"${tsk.name}: ${Time(tsk.timeLeft)}",
-		modifier = Mod.w(toF(AppW)*0.57)
-	)
+	Text("${tsk.name}: ${Time(tsk.timeLeft)}")
+	
 	log("WHAT USER SEES| ${tsk.name}: ${Time(tsk.timeLeft)}")
 	
-    End { 
-		Item.Edit(mod = Mod.space(0)){
-            Item.enoughPoints {
-				goTo("ToDo/${tsk.id}")
-            }
-        }
-
-		Item.Delete(Mod.space(0)){ 
-			tsk.remove()
-		}
-	}
 }
 
 
