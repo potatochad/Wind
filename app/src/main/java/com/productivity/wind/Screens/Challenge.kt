@@ -347,7 +347,7 @@ fun ToDo(id: Str = "") {
         End {
 			if (todo != null) {
 				Item.Delete { 
-					todo.remove()
+					todo!!.remove()
 				}
 			}
 
