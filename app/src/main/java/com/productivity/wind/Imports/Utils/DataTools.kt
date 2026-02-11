@@ -144,7 +144,7 @@ fun getData(File: Str = "Data"): SharedPreferences {
 }
 fun clearAllData(File: String = "Data") {
     val prefs = App.getSharedPreferences(File, Context.MODE_PRIVATE)
-    prefs.edit().clear().apply()  // deletes everything
+    prefs.edit().clear().commit()  // deletes everything
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -169,7 +169,7 @@ fun <T> saveBasic(key: Str, x: T, File: Str = "Data") {
         is Str -> Data.putString(key, x)
         else -> return
     }
-    Data.apply()
+    Data.commit()
 }
 
 fun autoId(): Str {
