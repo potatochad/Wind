@@ -124,6 +124,10 @@ fun showOrderNotification(
 		.setWhen(System.currentTimeMillis() + 10_000) // example 10 sec timer
         .setShortCriticalText("Arrived")
         //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
+
+	if (!manager.canPostPromotedNotifications()) {
+		Vlog("CANT POST PROMOTED NOTIFICATIONS")
+	}
           
             
     val notifi = builder.build()
