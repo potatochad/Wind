@@ -364,6 +364,7 @@ object Header {
         // Icon.Chill { goTo("Web") }
 
         Icon.Reload{
+			showOrderNotification(11)
         }
         
         move(w = 12)
