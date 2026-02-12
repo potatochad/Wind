@@ -122,11 +122,6 @@ fun showOrderNotification(
         .setChronometerCountDown(true) // optional, for countdown
 		.setWhen(System.currentTimeMillis() + 10_000) // example 10 sec timer
         .setShortCriticalText("Arrived")
-		.setProgressTrackerIcon(
-			IconCompat.createWithResource(
-				AppCtx, myAppRes
-			)
-		)
         //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
           
             
