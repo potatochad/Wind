@@ -118,6 +118,7 @@ fun showOrderNotification(
         .setStyle(NotificationCompat.ProgressStyle()
                 .setProgress(75)  // max=100, current=0, determinate
         )
+		.setLargeIcon(toBitmap(myAppRes))
         .setUsesChronometer(true)
         .setChronometerCountDown(true) // optional, for countdown
 		.setWhen(System.currentTimeMillis() + 10_000) // example 10 sec timer
