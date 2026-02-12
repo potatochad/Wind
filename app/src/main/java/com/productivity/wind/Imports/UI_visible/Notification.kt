@@ -226,12 +226,14 @@ fun LiveUpdateSample() {
     val notifiManager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     Notifi2.Init(notifiManager)
 
+    /*
+
     Try("postNotification ERROR"){
-    var isPostPromotionsEnabled by m(Notifi2.isPostPromotionsEnabled())
+       var isPostPromotionsEnabled by m(Notifi2.isPostPromotionsEnabled())
     }
     
     
-    /*
+    
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
         isPostPromotionsEnabled = Notifi2.isPostPromotionsEnabled()
     }
