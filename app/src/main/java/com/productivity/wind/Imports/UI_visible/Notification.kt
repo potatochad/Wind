@@ -99,34 +99,17 @@ fun startSystemTimer(context: Context, minutes: Int) {
 }
 
 
-fun showOrderNotification(
-    id: Int = 1,
-    Do: suspend (builder: NotificationCompat.Builder, manager: NotificationManager) -> Unit = { _, _ -> }
-): Notification {
-    // Make sure app has notification permission
+@RequiresApi(Build.VERSION_CODES.BAKLAVA)
+fun showOrderNotification(id: Int = 1): Notification {
+
     Permission.notification()
 
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    // Build the notification
-    val builder = buildBaseNotification(INITIALIZING)
-        .setSmallIcon(R.drawable.ic_launcher_foreground)
-        .setContentTitle("Your order is being placed")
-        .setContentText("Confirming with bakery...")
-        .setShortCriticalText("Placing")
-        .setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
+    val builder = Notifi2.OrderState.INITIALIZING.buildNotification()
 
-    // Show the notification
     val notification = builder.build()
     manager.notify(id, notification)
-
-    // Optional dynamic updates
-    val firstTime = notifMap[id] == null
-    if (firstTime) {
-        CoroutineScope(Dispatchers.Default).launch {
-            Do(builder, manager)
-        }
-    }
 
     return notification
 }
