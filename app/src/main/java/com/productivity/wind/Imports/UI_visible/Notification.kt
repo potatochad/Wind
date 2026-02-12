@@ -125,13 +125,15 @@ fun showOrderNotification(
         .setShortCriticalText("Arrived")
         //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
 
-	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) { // API 34
-		if (!manager.canPostPromotedNotifications()) {
-			Vlog("CANT POST PROMOTED NOTIFICATIONS")
-		}
-	} else {
-		Vlog("Promoted notifications not supported on this Android version")
-	}
+	if (Build.VERSION.SDK_INT >= 36) {
+    // safe call here
+    if (!manager.canPostPromotedNotifications()) {
+        Vlog("CANNOT POST PROMOTED")
+    }
+} else {
+    Vlog("Device too old for promoted notifications")
+}
+
 
           
             
