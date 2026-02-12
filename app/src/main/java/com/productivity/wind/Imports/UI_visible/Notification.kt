@@ -116,6 +116,9 @@ fun showOrderNotification(
         .setOngoing(true)
         .setProgress(100, 0, false)
         .setRequestPromotedOngoing(true)
+        .setStyle(NotificationCompat.ProgressStyle()
+          .setProgress(100, 0, false)  // max=100, current=0, determinate
+        )
         //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
           
             
@@ -125,6 +128,20 @@ fun showOrderNotification(
     return notifi
 }
 
+/*
+.setStyle(
+                        buildBaseProgressStyle(ORDER_COMPLETE)
+                            .setProgressTrackerIcon(
+                                IconCompat.createWithResource(
+                                    AppCtx, myAppRes
+                                )
+                            )
+                            .setProgress(100)
+                    )
+                    .setShortCriticalText("Arrived")
+
+
+*/
 
 
 fun Notification(
