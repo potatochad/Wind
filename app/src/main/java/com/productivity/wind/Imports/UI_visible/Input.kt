@@ -249,7 +249,7 @@ fun LazyInput(
 
 
 @Composable
-fun BigInput(txt: mStr, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = it }){
+fun BigInput(txt: mStr, scrollV: ScrollState = r_Scroll(), h: Int = 150, Do: DoStr={ txt.it = it }){
 	val scroll = scrollV
 	var Field by r(TextFieldValue(txt.it))
 	var done = r(no)
@@ -269,7 +269,7 @@ fun BigInput(txt: mStr, scrollV: ScrollState = r_Scroll(), Do: DoStr={ txt.it = 
 			fixedInputScroll(Field, itIndex, done, scroll)
 
 		},
-        modifier = Mod.maxW().h(150).Vscroll(scroll).onFocusChanged{
+        modifier = Mod.maxW().h(h).Vscroll(scroll).onFocusChanged{
 			if (!it.isFocused) done.it = no
 		},
 		placeholder = { Text("Start typing...") },
