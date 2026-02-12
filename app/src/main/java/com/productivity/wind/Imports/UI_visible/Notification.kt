@@ -98,21 +98,32 @@ fun startSystemTimer(context: Context, minutes: Int) {
     alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
 }
 
-
-@RequiresApi(Build.VERSION_CODES.BAKLAVA)
-fun showOrderNotification(id: Int = 1): Notification {
-
+fun showOrderNotification(
+    id: Int = 2,
+    title: Str = "hi",
+    text: Str = "test",                        
+    Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _ -> }     
+): Notification {
     Permission.notification()
-
+    
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    val builder = Notifi2.OrderState.INITIALIZING.buildNotification()
-
-    val notification = builder.build()
-    manager.notify(id, notification)
-
-    return notification
+    val builder = NotificationCompat.Builder(AppCtx, "WindApp_id")
+        .setSmallIcon(R.drawable.ic_launcher_foreground)
+        .setContentTitle("You order is being placed")
+        .setContentText("Confirming with bakery...")
+        .setShortCriticalText("Placing")
+        .setOngoing(true)
+        .setRequestPromotedOngoing(true)
+        //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
+          
+            
+    val notifi = builder.build()
+    manager.notify(id, notifi)
+        
+    return notifi
 }
+
 
 
 fun Notification(
