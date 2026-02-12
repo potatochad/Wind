@@ -114,6 +114,7 @@ fun showOrderNotification(
         .setContentText("Confirming with bakery...")
         .setShortCriticalText("Placing")
         .setOngoing(true)
+        .setProgress(100, 0, false)
         .setRequestPromotedOngoing(true)
         //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
           
