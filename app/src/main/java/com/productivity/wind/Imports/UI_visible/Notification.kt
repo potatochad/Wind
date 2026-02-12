@@ -118,7 +118,15 @@ fun showOrderNotification(
         .setStyle(NotificationCompat.ProgressStyle()
                 .setProgress(75)  // max=100, current=0, determinate
         )
+        .setUsesChronometer(true)
+        .setChronometerCountDown(true) // optional, for countdown
+		.setWhen(System.currentTimeMillis() + 10_000) // example 10 sec timer
         .setShortCriticalText("Arrived")
+		.setProgressTrackerIcon(
+			IconCompat.createWithResource(
+				AppCtx, myAppRes
+			)
+		)
         //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
           
             
@@ -127,6 +135,9 @@ fun showOrderNotification(
         
     return notifi
 }
+
+
+//setDeleteIntent() when user dismisses what doo
 
 /*
 .setStyle(
