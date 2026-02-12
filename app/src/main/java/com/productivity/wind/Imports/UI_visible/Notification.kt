@@ -125,9 +125,14 @@ fun showOrderNotification(
         .setShortCriticalText("Arrived")
         //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
 
-	if (!manager.canPostPromotedNotifications()) {
-		Vlog("CANT POST PROMOTED NOTIFICATIONS")
+	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) { // API 34
+		if (!manager.canPostPromotedNotifications()) {
+			Vlog("CANT POST PROMOTED NOTIFICATIONS")
+		}
+	} else {
+		Vlog("Promoted notifications not supported on this Android version")
 	}
+
           
             
     val notifi = builder.build()
