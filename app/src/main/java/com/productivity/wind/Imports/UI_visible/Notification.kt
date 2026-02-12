@@ -117,8 +117,9 @@ fun showOrderNotification(
         .setProgress(100, 0, false)
         .setRequestPromotedOngoing(true)
         .setStyle(NotificationCompat.ProgressStyle()
-          .setProgress(100, 0, false)  // max=100, current=0, determinate
+                .setProgress(100, 0, false)  // max=100, current=0, determinate
         )
+        .setShortCriticalText("Arrived")
         //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
           
             
