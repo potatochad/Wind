@@ -40,6 +40,7 @@ fun Main() {
 	RunOnce{
 		MAINStart()
 	}
+	BtnFloating()
 	
     LazyScreen(top = { Header.Main() }, showBack = no) {
         Column(Mod.Vscroll()){
