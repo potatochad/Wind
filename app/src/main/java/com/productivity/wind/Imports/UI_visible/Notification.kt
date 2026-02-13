@@ -133,6 +133,7 @@ fun showOrderNotification(
 } else {
     Vlog("Device too old for promoted notifications")
 }
+	Vlog("Build.VERSION.SDK_INT: ${Build.VERSION.SDK_INT}")
 
 
           
