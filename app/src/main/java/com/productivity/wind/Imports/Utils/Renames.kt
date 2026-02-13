@@ -240,6 +240,9 @@ val m_<Web?>.url: Str
     get() = this.it?.url ?: ""
 
 
+
+
+
 typealias Nav = NavHostController
 typealias NavBuilder = NavHostController
 
@@ -264,16 +267,6 @@ fun NavBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
 fun NavBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
     dialog(txt){ UI(it) }
 }
-@Composable
-fun Nav.urlState(): State<Str?> {
-    val navEntry by this.currentBackStackEntryAsState()
-    val route = remember(navEntry) { navEntry?.destination?.route }
-    return r(route)
-}
-
-// shortcut property to get current route easily
-val Nav.url: Str?
-    get() = this.currentBackStackEntry?.destination?.route
 
 fun navBack() { AppNav.popBackStack() }
 
