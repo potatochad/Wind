@@ -381,7 +381,10 @@ object Header {
 			}
         }}
 		else {
-			TinyInput(searchedTerm, w = 220)
+			Icon.Back {
+				searching = no
+			}
+			TinyInput(searchedTerm, w = 300)
 			
 			BackHandler {
 				searching = no
