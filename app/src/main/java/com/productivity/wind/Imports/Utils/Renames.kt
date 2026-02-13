@@ -221,15 +221,6 @@ fun File.file(name: Str): File {
     return File(this, name)
 }
 
-
-fun navBack() { AppNav.popBackStack() }
-
-inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
-    val v = arguments?.get(key)
-    if (v == "_") return null
-    return v as? T
-}
-
 fun Web?.url(url: Str) {
     this?.loadUrl(url)
 }
@@ -249,15 +240,49 @@ val m_<Web?>.url: Str
     get() = this.it?.url ?: ""
 
 
+typealias AppNav = NavHostController
+typealias NavBuilder = NavHostController
 
-fun goTo(route: Str){ AppNav.navigate(route) }
+var AppNavUrlChanged by m(no)
+fun goTo(route: Str){ 
+	Do {
+		AppNavUrlChanged = yes
 
-fun NavGraphBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
+		wait(50)
+
+		AppNav.navigate(route) 
+
+		wait(1000)
+		AppNavUrlChanged = no
+	}
+}
+
+
+fun NavBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
     composable(txt) { UI(it) }
 }
-fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
+fun NavBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
     dialog(txt){ UI(it) }
 }
+@Composable
+fun AppNav.urlState(): State<Str?> {
+    val navEntry by this.currentBackStackEntryAsState()
+    val route = remember(navEntry) { navEntry?.destination?.route }
+    return r(route)
+}
+
+// shortcut property to get current route easily
+val AppNav.url: Str?
+    get() = this.currentBackStackEntry?.destination?.route
+
+fun navBack() { AppNav.popBackStack() }
+
+inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
+    val v = arguments?.get(key)
+    if (v == "_") return null
+    return v as? T
+}
+
 
 
 
