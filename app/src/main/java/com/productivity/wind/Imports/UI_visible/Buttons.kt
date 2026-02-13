@@ -257,7 +257,11 @@ fun Btn(
 fun BtnFloating(
 	Do: Do = { Vlog("clicked btn") },
 ) {
-	if (!AppNavUrlChanged){
+	var show by r(yes)
+	RunOnce(AppNavUrlChanged) {
+		if (AppNavUrlChanged) show = no
+	}
+	if (show){
     Popup(
         alignment = Alignment.BottomEnd,
     ) {
