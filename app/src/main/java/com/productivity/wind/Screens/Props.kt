@@ -358,6 +358,7 @@ object Header {
     @Composable
     fun Main(){
 		var searching by r(no)
+		var searchedTerm = r("")
 
 		if (!searching) {
         Icon.Menu {
@@ -379,6 +380,8 @@ object Header {
 			}
         }}
 		else {
+			TinyInput(searchedTerm, w = 220)
+			
 			BackHandler {
 				searching = no
 			}
