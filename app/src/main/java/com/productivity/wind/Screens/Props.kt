@@ -52,6 +52,7 @@ import androidx.compose.ui.graphics.drawscope.*
 import com.productivity.wind.Imports.UI_visible.*
 import android.app.*
 import android.widget.*
+import androidx.activity.compose.*
 
 
 fun NavGraphBuilder.ScreenNav() {
