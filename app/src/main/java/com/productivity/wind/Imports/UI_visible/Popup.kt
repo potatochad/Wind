@@ -88,28 +88,7 @@ fun AllowAppUsage() {
 		}
     )
 }
-fun popUpTest(activity: Activity=App, content: @Composable () -> Unit) {
-    // Create a ComposeView tied to the Activity
-    val composeView = androidx.compose.ui.platform.ComposeView(activity).apply {
-        setContent {
-            content() // <- Your custom Compose UI here
-        }
-    }
 
-    // Wrap it in a PopupWindow
-    val popup = android.widget.PopupWindow(
-        composeView,
-        android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-        android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-        true
-    )
-
-    // Show in the center of the screen
-    popup.showAtLocation(activity.window.decorView, android.view.Gravity.CENTER, 0, 0)
-
-    // Optional: auto-dismiss after 3 seconds
-    composeView.postDelayed({ popup.dismiss() }, 3000)
-}
 
 
 
