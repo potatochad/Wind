@@ -267,9 +267,9 @@ fun BtnFloating(
         ) {
 			Box(
 				Mod.space(5)
-				.round(12)
 				.background(faded(Color.Gray, 0.2f))
 				.border(width = 1.dp, color = Color.Gray)
+				.round(12)
 				.click {
 					Do()
 				}
@@ -278,9 +278,7 @@ fun BtnFloating(
 					icon = Icons.Default.Add,
 					size = 30,
 					color = Gold
-				){
-					Do()
-				}
+				)
 			}
         }
     }
