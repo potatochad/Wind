@@ -350,6 +350,7 @@ fun ToDo(id: Str = "") {
 			if (todo != null) {
 				Item.Delete { 
 					todo!!.remove()
+					goTo("Main")
 				}
 			}
 
