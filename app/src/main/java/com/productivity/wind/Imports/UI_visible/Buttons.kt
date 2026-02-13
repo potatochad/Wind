@@ -261,13 +261,18 @@ fun BtnFloating(
         alignment = Alignment.BottomEnd,
     ) {
         Box(
-            modifier = Mod
-				.background(faded(Color.Gray, 0.2f))
-				.border(width = 1.dp, color = Color.Gray)
-				.space(32),
+            modifier = Mod.space(32),
             contentAlignment = Alignment.BottomEnd
         ) {
-			Box(Mod.space(5)){
+			Box(
+				Mod.space(5)
+				.round(12)
+				.background(faded(Color.Gray, 0.2f))
+				.border(width = 1.dp, color = Color.Gray)
+				.click {
+					Do()
+				}
+			){
 				Icon(
 					icon = Icons.Default.Add,
 					size = 30,
