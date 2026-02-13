@@ -494,7 +494,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		tskOn = !it
 	}
 	move(5)
-	Column {
+	Column(Mod.space(top = 5, bottom = 2)) {
 		Text("${tsk.name}: ${Time(tsk.timeLeft)}")
 		
 		if (tsk.description != ""){
