@@ -40,7 +40,9 @@ fun Main() {
 	RunOnce{
 		MAINStart()
 	}
-	BtnFloating()
+	BtnFloating {
+		goTo("Challenge")
+	}
 	
     LazyScreen(top = { Header.Main() }, showBack = no) {
         Column(Mod.Vscroll()){
