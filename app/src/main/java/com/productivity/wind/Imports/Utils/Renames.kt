@@ -221,6 +221,15 @@ fun File.file(name: Str): File {
     return File(this, name)
 }
 
+
+fun navBack() { AppNav.popBackStack() }
+
+inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
+    val v = arguments?.get(key)
+    if (v == "_") return null
+    return v as? T
+}
+
 fun Web?.url(url: Str) {
     this?.loadUrl(url)
 }
@@ -240,9 +249,6 @@ val m_<Web?>.url: Str
     get() = this.it?.url ?: ""
 
 
-
-
-
 typealias Nav = NavHostController
 typealias NavBuilder = NavHostController
 
@@ -260,22 +266,12 @@ fun goTo(route: Str){
 	}
 }
 
-
-fun NavBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
+fun NavGraphBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
     composable(txt) { UI(it) }
 }
-fun NavBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
+fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
     dialog(txt){ UI(it) }
 }
-
-fun navBack() { AppNav.popBackStack() }
-
-inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
-    val v = arguments?.get(key)
-    if (v == "_") return null
-    return v as? T
-}
-
 
 
 
@@ -355,6 +351,3 @@ fun Any.eachValVar(Do: (ClassValVar<Any, *>) -> Unit) {
 fun startActivity(intent: Intent) {
     App.startActivity(intent)
 }
-
-
-
