@@ -128,11 +128,13 @@ fun showOrderNotification(
 	if (Build.VERSION.SDK_INT >= 36) {
 		if (!manager.canPostPromotedNotifications()) {
 			Vlog("CANNOT POST PROMOTED")
+			/*
 			// real way: Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS
 			val intent = Intent(Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS).apply {
 				putExtra(Settings.EXTRA_APP_PACKAGE, AppCtx.packageName)
 			}
 			startActivity(intent)
+			*/
 		}
 	} else {
 		Vlog("Device too old for promoted notifications")
