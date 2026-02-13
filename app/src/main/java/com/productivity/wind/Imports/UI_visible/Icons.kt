@@ -214,7 +214,11 @@ object Icon {
 	fun Edit(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Edit, mod, Do)
 	
 	@Composable
-	fun Delete(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Delete, mod, Do)        
+	fun Delete(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Delete, mod, Do)    
+
+	@Composable
+	fun Search(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Search, mod, Do)
+
 
 
 
