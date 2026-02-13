@@ -268,7 +268,11 @@ fun BtnFloating(
             contentAlignment = Alignment.BottomEnd
         ) {
 			Box(Mod.space(5)){
-				Icon.Add {
+				Icon(
+					icon = Icons.Default.Add,
+					size = 30,
+					color = Gold
+				){
 					Do()
 				}
 			}
