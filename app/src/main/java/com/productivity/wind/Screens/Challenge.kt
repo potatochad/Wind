@@ -484,8 +484,6 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		
 	}
 
-	Column {
-	LazzyRow {
 	Icon.Timer(tskOn) {
 		if (!it == yes) {
 			var found = Bar.doTsk.find { it.on == yes }
@@ -496,11 +494,14 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		tskOn = !it
 	}
 	move(5)
-	Text("${tsk.name}: ${Time(tsk.timeLeft)}")
-	}
-	LazzyRow {
-		Text(tsk.description.size(10).gray())
-	}
+	Column {
+		Text("${tsk.name}: ${Time(tsk.timeLeft)}")
+		
+		if (tsk.description != ""){
+			LazzyRow {
+				Text(tsk.description.size(11).gray())
+			}
+		}
 	}
 	
 	log("WHAT USER SEES| ${tsk.name}: ${Time(tsk.timeLeft)}")
