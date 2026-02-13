@@ -499,7 +499,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		
 		if (tsk.description != ""){
 			LazzyRow {
-				Text(tsk.description.size(11).gray())
+				Text(tsk.description.take(100).size(11).gray())
 			}
 		}
 	}
