@@ -255,7 +255,7 @@ fun Btn(
 
 @Composable
 fun BtnFloating(
-	Do: Do = Vlog("clicked btn"),
+	Do: Do = { Vlog("clicked btn") },
 ) {
     Popup(
         alignment = Alignment.BottomEnd,
