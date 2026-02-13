@@ -129,7 +129,7 @@ fun showOrderNotification(
 		if (!manager.canPostPromotedNotifications()) {
 			Vlog("CANNOT POST PROMOTED")
 			// real way: Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS
-			val intent = Intent(Settings.ACTION_APP_NOTIFICATION_PROMOTION_SETTINGS).apply {
+			val intent = Intent(Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS).apply {
 				putExtra(Settings.EXTRA_APP_PACKAGE, AppCtx.packageName)
 			}
 			startActivity(intent)
