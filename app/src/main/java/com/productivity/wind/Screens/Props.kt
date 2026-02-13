@@ -379,7 +379,9 @@ object Header {
 			}
         }}
 		else {
-			
+			BackHandler {
+				searching = no
+			}
 		}
 		
     }
