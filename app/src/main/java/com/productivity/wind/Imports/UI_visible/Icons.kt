@@ -219,6 +219,9 @@ object Icon {
 	@Composable
 	fun Search(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Search, mod, Do)
 
+	@Composable
+	fun Back(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.ArrowBack, mod, Do)
+
 
 
 
