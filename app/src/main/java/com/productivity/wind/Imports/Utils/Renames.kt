@@ -256,9 +256,6 @@ var AppNavUrlChanged by m(no)
 fun goTo(route: Str){ 
 	Do {
 		AppNavUrlChanged = yes
-
-		wait(50)
-
 		AppNav.navigate(route) 
 
 		wait(1000)
