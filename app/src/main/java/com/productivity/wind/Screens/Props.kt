@@ -372,10 +372,11 @@ object Header {
         Text("Points ${Bar.funTime}")
         
         End {
-            Icon.Add {
-				goTo("Challenge")
+            Icon.Search {
+				
 			}
         }
+		
     }
 }
 
