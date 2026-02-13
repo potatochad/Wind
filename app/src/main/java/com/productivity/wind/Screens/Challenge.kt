@@ -484,7 +484,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		
 	}
 
-	Colum {
+	Column {
 	LazzyRow {
 	Icon.Timer(tskOn) {
 		if (!it == yes) {
