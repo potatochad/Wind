@@ -357,7 +357,9 @@ object Header {
 
     @Composable
     fun Main(){
-        val context = LocalContext.current
+		var searching by r(no)
+
+		if (!searching) {
         Icon.Menu {
 			menu = yes
 		}
@@ -373,9 +375,12 @@ object Header {
         
         End {
             Icon.Search {
-				
+				searching = yes
 			}
-        }
+        }}
+		else {
+			
+		}
 		
     }
 }
