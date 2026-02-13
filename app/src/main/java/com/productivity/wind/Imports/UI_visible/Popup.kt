@@ -93,3 +93,37 @@ fun AllowAppUsage() {
 
 
 
+@Composable
+fun BtnFloating(
+	Do: Do,
+) {
+    Popup(
+        alignment = Alignment.BottomEnd,
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            contentAlignment = Alignment.BottomEnd
+        ) {
+            Icon.Add {
+				Vlog("clicked btn")
+			}
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
