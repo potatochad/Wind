@@ -361,7 +361,7 @@ object Header {
         Icon.Menu {
 			menu = yes
 		}
-        // Icon.Chill { goTo("Web") }
+        Icon.Chill { goTo("Web") }
 
         Icon.Reload{
 			showOrderNotification(11)
