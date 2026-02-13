@@ -255,19 +255,22 @@ fun Btn(
 
 @Composable
 fun BtnFloating(
-	//Do: Do,
+	Do: Do = Vlog("clicked btn"),
 ) {
     Popup(
         alignment = Alignment.BottomEnd,
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+            modifier = Mod
+				.background(faded(Color.Gray, 0.2f))
+				.border(width = 1.dp, color = Color.Gray)
+				.space(32),
             contentAlignment = Alignment.BottomEnd
         ) {
-            Icon.Add {
-				Vlog("clicked btn")
+			Box(Mod.space(5)){
+				Icon.Add {
+					Do()
+				}
 			}
         }
     }
