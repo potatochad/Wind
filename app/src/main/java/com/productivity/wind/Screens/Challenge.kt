@@ -320,6 +320,7 @@ fun ToDo(id: Str = "") {
     var time1 = r(60)
     var points1 = r(10)
     var name1 = r("TaskName")
+	var description1 = r("")
 	var schedule1 by r(Schedule(
 	    	type = "WEEKLY",
 	    	every = 1,
@@ -334,6 +335,7 @@ fun ToDo(id: Str = "") {
 
       if (todo != null) {
 		val t = todo!!
+		description1.it = t.description
         time1.it = t.doneTime
         points1.it = t.worth
         name1.it = t.name
@@ -384,6 +386,7 @@ fun ToDo(id: Str = "") {
 							doneTime = time1.it
 							worth = points1.it
 							schedule = schedule1
+							description = description1.it
                         }  
 						log("going to main")
                         goTo("Main")
@@ -398,6 +401,7 @@ fun ToDo(id: Str = "") {
 					doneTime = time1.it
 					worth = points1.it
 					schedule = schedule1
+					description = description1.it
                 }
 				Vlog("going to main")
                 goTo("Main")
@@ -406,10 +410,13 @@ fun ToDo(id: Str = "") {
 	}) {
 		RuleCard("Info"){
 			LazzyRow{
-				TinyInput(name1, w=180, isInt = no, maxLetters = 135)
+				TinyInput(name1, w=200, isInt = no, maxLetters = 135)
+			}
+			BigInput(description1, h = 120) {
+				description1.it = it
 			}
 			LazzyRow{
-				Text(", time")
+				Text("Time")
 				
 				TinyInput(time1)
 				Text(" seconds")
@@ -477,8 +484,8 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		
 	}
 
-
-	
+	Colum {
+	LazzyRow {
 	Icon.Timer(tskOn) {
 		if (!it == yes) {
 			var found = Bar.doTsk.find { it.on == yes }
@@ -490,6 +497,11 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	}
 	move(5)
 	Text("${tsk.name}: ${Time(tsk.timeLeft)}")
+	}
+	LazzyRow {
+		Text(tsk.description.size(10).gray())
+	}
+	}
 	
 	log("WHAT USER SEES| ${tsk.name}: ${Time(tsk.timeLeft)}")
 	
