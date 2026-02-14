@@ -122,28 +122,30 @@ fun Main() {
 			}
 		}
 		} else {
-			Bar.copyTsk.find { 
+			Bar.copyTsk.findUI({ 
 				it.input.contains(Tag.it) 
-			}.each { 
-        LazyCard { CopyTskUI(it) } 
-    }
+			}) { 
+				LazyCard { CopyTskUI(it) } 
+			}
 
-Bar.doTsk.find { 
-	it.name.contains(Tag.it) || it.description.contains(Tag.it) 
-}.each { 
-        LazyCard(
-            modUI = Mod.space(start = 8),
-            modCard = Mod.space(h=8, w=10).maxW().click {    
-                goTo("ToDo/${it.id}")
-            },
-        ) { 
-            DoTskUI(it)
-        }
-    }
+			Bar.doTsk.findUI({ 
+				it.name.contains(Tag.it) || it.description.contains(Tag.it)       
+			}) { 
+				LazyCard(
+					modUI = Mod.space(start = 8),
+					modCard = Mod.space(h=8, w=10).maxW().click {    
+						goTo("ToDo/${it.id}")
+					},
+				) { 
+					DoTskUI(it)
+				}
+			}
 
-Bar.apps.find { 
-	it.name.contains(Tag.it) 
-}.each { Item.AppTaskUI(it) }
+			Bar.apps.findUI({ 
+				it.name.contains(Tag.it) 
+			}) { 
+				Item.AppTaskUI(it) 
+			}
 
 			
 			
