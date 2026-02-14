@@ -355,43 +355,7 @@ object Header {
         }
     }
 
-
-    @Composable
-    fun Main(){
-		var searching by r(no)
-		var searchedTerm = r("")
-
-		if (!searching) {
-        Icon.Menu {
-			menu = yes
-		}
-        Icon.Chill { goTo("Web") }
-
-        Icon.Reload{
-			showOrderNotification(11)
-        }
-        
-        move(w = 12)
-        
-        Text("Points ${Bar.funTime}")
-        
-        End {
-            Icon.Search {
-				searching = yes
-			}
-        }}
-		else {
-			Icon.Back {
-				searching = no
-			}
-			TinyInput(searchedTerm, w = 300)
-			
-			BackHandler {
-				searching = no
-			}
-		}
-		
-    }
+	
 }
 
 
