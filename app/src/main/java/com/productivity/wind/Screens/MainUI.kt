@@ -36,64 +36,89 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 @Composable
-fun Main() {
-	RunOnce{
-		MAINStart()
-	}
-	BtnFloating {
-		goTo("Challenge")
-	}
-	
-    LazyScreen(
-		top = { Header.Main() }, 
-		showBack = no
-	) {
-        Column(Mod.Vscroll()){
+fun Main() = LazyScreen(
+	top = { 
+		RunOnce{
+			MAINStart()
+		}
+			
+		var searching by r(no)
+		var searchedTerm = r("")
 
-            Bar.copyTsk.each {
-				if (!it.done()){
-					
-					LazyCard { 
-						CopyTskUI(it)
-					}
-				}
-            }
-
-			Bar.doTsk.each {
-				if (!it.done() && taskDueToday(it.schedule)){
-					
-					
-					LazyCard(
-						modUI = Mod.space(start = 8),
-						modCard = Mod.space(h=8, w=10).maxW().click {    
-							goTo("ToDo/${it.id}")
-						},
-					) { 
-						DoTskUI(it)
-					}
-				}
+		if (!searching) {
+			Icon.Menu {
+				menu = yes
 			}
 
+			// Icon.Chill { goTo("Web") }
 
-            Bar.apps.each {
-                if (!it.done) {
-                    if (it.NowTime > it.DoneTime - 1 && !it.done) {
-                        Bar.funTime += it.Worth
-                        Bar.apps.edit(it) { done = yes }
-                        Vlog("${it.name} completed")
-                    }
-                    
-                    Item.AppTaskUI(it)
-                }
-            }
-
-
+			Icon.Reload{
+				showOrderNotification(11)
+			}
+        
+			move(w = 12)
+        
+			Text("Points ${Bar.funTime}")
+        
+			End {
+				Icon.Search {
+					searching = yes
+				}
+			}
+		} else {
+			Icon.Back {
+				searching = no
+			}
+			TinyInput(searchedTerm, w = 300)
 			
+			BackHandler {
+				searching = no
+			}
+		}
+	}, 
+	showBack = no
+) {
+	Column(Mod.Vscroll()){
 
-        }
+		BtnFloating {
+			goTo("Challenge")
+		}
+			
+		Bar.copyTsk.each {
+			if (!it.done()){
+				LazyCard { 
+					CopyTskUI(it)
+				}
+			}
+		}
+
+		Bar.doTsk.each {
+			if (!it.done() && taskDueToday(it.schedule)){
+					
+				LazyCard(
+					modUI = Mod.space(start = 8),
+					modCard = Mod.space(h=8, w=10).maxW().click {    
+						goTo("ToDo/${it.id}")
+					},
+				) { 
+					DoTskUI(it)
+				}
+			}
+		}
 
 
-    }
+		Bar.apps.each {
+			if (!it.done) {
+				if (it.NowTime > it.DoneTime - 1 && !it.done) {
+					Bar.funTime += it.Worth
+					Bar.apps.edit(it) { done = yes }
+					Vlog("${it.name} completed")
+				}
+                    
+				Item.AppTaskUI(it)
+			}
+		}
+	}
 }
 
 		
