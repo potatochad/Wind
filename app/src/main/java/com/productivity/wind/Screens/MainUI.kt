@@ -88,8 +88,7 @@ fun Main() {
             }
 
 
-			SearchExampleScreen()
-
+			
 
         }
 
