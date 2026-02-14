@@ -36,14 +36,17 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 @Composable
-fun Main() = LazyScreen(
+fun Main() {
+	var searching by r(no)
+	var searchedTerm = r("")
+	
+	LazyScreen(
 	top = { 
 		RunOnce{
 			MAINStart()
 		}
 			
-		var searching by r(no)
-		var searchedTerm = r("")
+		
 
 		if (!searching) {
 			Icon.Menu {
@@ -119,7 +122,7 @@ fun Main() = LazyScreen(
 			}
 		}
 	}
-}
+}}
 
 		
 
