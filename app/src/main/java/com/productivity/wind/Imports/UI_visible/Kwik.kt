@@ -99,32 +99,30 @@ fun KwikCircularLoading(
     )
 }
 
-/*
-
-
-
 
 @Composable
 fun KwikLoadingView(
     text: Str
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Mod.maxW(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         KwikCircularLoading(
             color = MaterialTheme.colorScheme.primary
         )
 
-        move(h=8)
+        move(8)
 
-        KwikText.TitleSmall(
+        Text(
             text = text,
             textAlign = TextAlign.Center
         )
     }
 }
 
+
+/*
 
 
 @Composable
