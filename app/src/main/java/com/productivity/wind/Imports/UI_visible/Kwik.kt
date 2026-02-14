@@ -959,8 +959,9 @@ fun KwikTextField(
         suggestionsVisible = filteredSuggestions.isNotEmpty()
     }
     */
+    
     fun updateSuggestions(suggestion: String? = null) {
-        val currentText = (suggestion ?: value.text.text) // <-- use .text from AnnotatedString
+        val currentText = (suggestion ?: value.value.text) // <-- use .text from AnnotatedString
         filteredSuggestions = filteredSuggestions.filter { 
             it.lowercase() != currentText.lowercase()
         }
