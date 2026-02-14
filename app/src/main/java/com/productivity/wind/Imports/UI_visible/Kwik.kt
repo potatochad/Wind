@@ -952,11 +952,22 @@ fun KwikTextField(
     var textFieldSize by remember { mutableStateOf<IntSize?>(null) }
     var lastInputType by remember { mutableStateOf(LastInputType.TYPING) }
 
+    /*
     fun updateSuggestions(suggestion: String? = null){
         filteredSuggestions = filteredSuggestions.filter { it.lowercase() != (suggestion ?: value.text).lowercase() }
         lastInputType = LastInputType.SUGGESTION
         suggestionsVisible = filteredSuggestions.isNotEmpty()
     }
+    */
+    fun updateSuggestions(suggestion: String? = null) {
+        val currentText = (suggestion ?: value.text.text) // <-- use .text from AnnotatedString
+        filteredSuggestions = filteredSuggestions.filter { 
+            it.lowercase() != currentText.lowercase()
+        }
+        lastInputType = LastInputType.SUGGESTION
+        suggestionsVisible = filteredSuggestions.isNotEmpty()
+    }
+
 
     var passwordVisible by remember { mutableStateOf(false) }
 
