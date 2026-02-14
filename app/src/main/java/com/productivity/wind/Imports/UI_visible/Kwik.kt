@@ -57,6 +57,36 @@ import com.productivity.wind.Imports.Utils.*
 
 
 
+@Composable
+fun KwikSearchInput(
+    modifier: Modifier = Modifier,
+    hint: String = "Search",
+    data: List<String>,
+    onSearch: (String) -> Unit
+) {
+    val query = rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(TextFieldValue(""))
+    }
+
+    KwikTextField(
+        modifier = modifier,
+        value = query,
+        onValueChange = { query.value = it },
+        placeholder = hint,
+        leadingIcon = Icons.Filled.Search,
+        showClearTextButton = true,
+        imeAction = ImeAction.Search,
+        keyboardActions = KeyboardActions(
+            onSearch = {
+                onSearch(query.value.text)
+            }
+        ),
+        suggestions = data,
+        onSuggestionSelected = { selected ->
+            onSearch(selected)
+        }
+    )
+}
 
 
 
