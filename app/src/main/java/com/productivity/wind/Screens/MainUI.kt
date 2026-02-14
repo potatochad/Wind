@@ -122,15 +122,15 @@ fun Main() {
 			}
 		}
 		} else {
-			Bar.copyTsk.find { it.input.contains(Tag.it) }
-    ?.let { listOf(it) } // wrap single element in a list
-    ?.each { 
+			Bar.copyTsk.find { 
+				it.input.contains(Tag.it) 
+			}.each { 
         LazyCard { CopyTskUI(it) } 
     }
 
-Bar.doTsk.find { it.name.contains(Tag.it) || it.description.contains(Tag.it) }
-    ?.let { listOf(it) }
-    ?.each { 
+Bar.doTsk.find { 
+	it.name.contains(Tag.it) || it.description.contains(Tag.it) 
+}.each { 
         LazyCard(
             modUI = Mod.space(start = 8),
             modCard = Mod.space(h=8, w=10).maxW().click {    
@@ -141,9 +141,9 @@ Bar.doTsk.find { it.name.contains(Tag.it) || it.description.contains(Tag.it) }
         }
     }
 
-Bar.apps.find { it.name.contains(Tag.it) }
-    ?.let { listOf(it) }
-    ?.each { Item.AppTaskUI(it) }
+Bar.apps.find { 
+	it.name.contains(Tag.it) 
+}.each { Item.AppTaskUI(it) }
 
 			
 			
