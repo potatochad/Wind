@@ -839,7 +839,7 @@ fun kwikTextFieldColors(
     )
 }
 
-/*
+
 /**
  * A versatile filled text field component that can be used to take user input.
  * @param modifier: The modifier for the text field.
@@ -1250,7 +1250,7 @@ fun KwikTextField(
     }
 }
 
-
+/*
 
 @Composable
 @Preview(showBackground = true)
