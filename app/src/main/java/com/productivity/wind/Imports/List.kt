@@ -101,19 +101,31 @@ inline fun <T> MutableList<T>.each(
         i++
     }
 }
-inline fun <T> T?.each(block: MutableList<T>.(T) -> Unit) {
-    this?.let { 
-        mutableListOf(it).block(it) 
-    }
-}
+
+
 inline fun <T> List<T>.findUI(
-    match: (T) -> Boolean,
+    match: (T) -> Bool,
     crossinline uiBlock: MutableList<T>.(T) -> Unit
 ) {
     this.filter(match) // get all matching items
         .toMutableList()
         .each { uiBlock(it) } // call your existing 'each'
 }
+fun <T : Any> List<T>.find(id: Str = "", match: (T) -> Bool = { yes }): T? {
+    return if (id.isEmpty()) firstOrNull(match)
+    else firstOrNull { item ->
+        item::class.members.firstOrNull { it.name == "id" }
+            ?.let { (it as? KProperty1<T, *>)?.get(item) } == id
+    }
+}
+
+
+
+
+
+
+
+
 
 
 
