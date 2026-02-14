@@ -73,6 +73,34 @@ internal enum class LastInputType {
 }
 
 /*
+@Composable
+fun KwikLinearLoading(
+    mod: Mod = Mod,
+    color: Color = MaterialTheme.colorScheme.primary,
+    trackColor: Color = Color.Transparent
+) {
+    LinearProgressIndicator(
+        mod = modifier,
+        color = color,
+        trackColor = trackColor
+    )
+}
+
+@Composable
+fun KwikCircularLoading(
+    mod: Mod = Mod,
+    color: Color = MaterialTheme.colorScheme.primary,
+    trackColor: Color = Color.Transparent
+) {
+    CircularProgressIndicator(
+        mod = modifier,
+        color = color,
+        trackColor = trackColor
+    )
+}
+
+
+
 
 @Composable
 fun KwikLoadingView(
@@ -95,31 +123,7 @@ fun KwikLoadingView(
     }
 }
 
-@Composable
-fun KwikLinearLoading(
-    modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primary,
-    trackColor: Color = Color.Transparent
-) {
-    LinearProgressIndicator(
-        modifier = modifier,
-        color = color,
-        trackColor = trackColor
-    )
-}
 
-@Composable
-fun KwikCircularLoading(
-    modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primary,
-    trackColor: Color = Color.Transparent
-) {
-    CircularProgressIndicator(
-        modifier = modifier,
-        color = color,
-        trackColor = trackColor
-    )
-}
 
 @Composable
 @Preview(showBackground = true)
