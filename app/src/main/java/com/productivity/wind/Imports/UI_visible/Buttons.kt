@@ -254,7 +254,7 @@ fun Btn(
 }
 
 @Composable
-fun BtnFloating(
+fun BtnFloating55555(
 	Do: Do = { Vlog("clicked btn") },
 ) {
 	if (!AppNavUrlChanged){
@@ -285,6 +285,39 @@ fun BtnFloating(
 	}
 }
 
+@Composable
+fun BtnFloating(
+    Do: Do = { Vlog("clicked btn") },
+) {
+    val imeVisible = WindowInsets.ime.getBottom(LocalDensity.current) > 0
+
+    Popup(alignment = Alignment.BottomEnd) {
+        AnimatedVisibility(
+            visible = !imeVisible && !AppNavUrlChanged,
+            enter = fadeIn() + scaleIn(),
+            exit = fadeOut() + scaleOut()
+        ) {
+            Box(
+                modifier = Mod.space(32),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                Box(
+                    Mod.space(5)
+                        .background(faded(Color.Gray, 0.2f))
+                        .border(width = 1.dp, color = Color.Gray)
+                        .round(12)
+                        .click { Do() }
+                ) {
+                    Icon(
+                        icon = Icons.Default.Add,
+                        size = 30,
+                        color = Gold
+                    )
+                }
+            }
+        }
+    }
+}
 
 
 
