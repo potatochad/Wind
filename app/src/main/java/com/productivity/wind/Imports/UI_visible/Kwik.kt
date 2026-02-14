@@ -810,6 +810,35 @@ val KwikColorFilledTextFieldFocusedDarkMode = Color(0xFF424242)
 val KwikColorFilledTextFieldUnfocusedDarkMode = Color(0x19ECEBEB)
 val KwikColorFilledTextFieldError = Color(0x34F44336)
 
+
+
+@Composable
+fun kwikTextFieldColors(
+    isEditable: Boolean = true
+): TextFieldColors {
+    return OutlinedTextFieldDefaults.colors(
+        focusedTextColor = if(isSystemInDarkTheme()) Color.White else Color.Black,
+        cursorColor = MaterialTheme.colorScheme.primary,
+        focusedContainerColor = kwikFilledColorResolver(),
+        focusedLabelColor = Color.Gray,
+        focusedBorderColor = Color.Transparent,
+        unfocusedBorderColor = Color.Transparent,
+        unfocusedContainerColor = if(isSystemInDarkTheme()) KwikColorFilledTextFieldUnfocusedDarkMode else KwikColorFilledTextFieldUnfocused,
+        unfocusedLabelColor = Color.Gray,
+        unfocusedPlaceholderColor = Color.Gray,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+        disabledBorderColor = Color.Transparent,
+        disabledContainerColor = Color.LightGray,
+        disabledTextColor = if(isEditable) Color.Unspecified else Color.Gray,
+        errorContainerColor = KwikColorFilledTextFieldError,
+        errorBorderColor = Color.Transparent,
+        errorLabelColor = MaterialTheme.colorScheme.error,
+        errorPlaceholderColor = MaterialTheme.colorScheme.error,
+        errorTextColor = MaterialTheme.colorScheme.onSurface,
+        errorCursorColor = MaterialTheme.colorScheme.error
+    )
+}
+
 /*
 /**
  * A versatile filled text field component that can be used to take user input.
@@ -1221,32 +1250,7 @@ fun KwikTextField(
     }
 }
 
-@Composable
-fun kwikTextFieldColors(
-    isEditable: Boolean = true
-): TextFieldColors {
-    return OutlinedTextFieldDefaults.colors(
-        focusedTextColor = if(isSystemInDarkTheme()) Color.White else Color.Black,
-        cursorColor = MaterialTheme.colorScheme.primary,
-        focusedContainerColor = kwikFilledColorResolver(),
-        focusedLabelColor = Color.Gray,
-        focusedBorderColor = Color.Transparent,
-        unfocusedBorderColor = Color.Transparent,
-        unfocusedContainerColor = if(isSystemInDarkTheme()) KwikColorFilledTextFieldUnfocusedDarkMode else KwikColorFilledTextFieldUnfocused,
-        unfocusedLabelColor = Color.Gray,
-        unfocusedPlaceholderColor = Color.Gray,
-        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-        disabledBorderColor = Color.Transparent,
-        disabledContainerColor = Color.LightGray,
-        disabledTextColor = if(isEditable) Color.Unspecified else Color.Gray,
-        errorContainerColor = KwikColorFilledTextFieldError,
-        errorBorderColor = Color.Transparent,
-        errorLabelColor = MaterialTheme.colorScheme.error,
-        errorPlaceholderColor = MaterialTheme.colorScheme.error,
-        errorTextColor = MaterialTheme.colorScheme.onSurface,
-        errorCursorColor = MaterialTheme.colorScheme.error
-    )
-}
+
 
 @Composable
 @Preview(showBackground = true)
