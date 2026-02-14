@@ -88,23 +88,7 @@ fun Main() {
             }
 
 
-			val items = listOf(
-    "Apple",
-    "Banana",
-    "Orange",
-    "Grapes",
-    "Mango",
-    "Pineapple"
-)
-
-KwikSearchInput(
-    modifier = Modifier.fillMaxWidth(),
-    data = items,
-    onSearch = { query ->
-        // THIS is your function hook
-        println("Search for: $query")
-    }
-)
+			SearchExampleScreen()
 
 
         }
