@@ -58,10 +58,9 @@ import com.productivity.wind.Imports.Utils.*
 
 
 @Composable
-fun KwikSearchInput(
+fun KwikSearchInputNoDropdown(
     modifier: Modifier = Modifier,
     hint: String = "Search",
-    data: List<String>,
     onSearch: (String) -> Unit
 ) {
     val query = rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -76,17 +75,15 @@ fun KwikSearchInput(
         leadingIcon = Icons.Filled.Search,
         showClearTextButton = true,
         imeAction = ImeAction.Search,
+        suggestions = emptyList(), // disables dropdown
         keyboardActions = KeyboardActions(
             onSearch = {
                 onSearch(query.value.text)
             }
-        ),
-        suggestions = data,
-        onSuggestionSelected = { selected ->
-            onSearch(selected)
-        }
+        )
     )
 }
+
 
 
 
