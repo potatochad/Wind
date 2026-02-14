@@ -122,26 +122,11 @@ fun KwikLoadingView(
 }
 
 
-/*
 
 
-@Composable
-@Preview(showBackground = true)
-private fun KwikLoadingViewPreview() {
-    KwikLoadingView(
-        text = "Loading... Please Wait..."
-    )
-}
 
-@Composable
-@Preview(showBackground = true)
-private fun KwikLoadingPreview() {
-    KwikCircularLoading()
-}
 
-/**
- * `Text` component that uses the Material3 typography system.
- * */
+
 object KwikText {
 
     /**
@@ -820,7 +805,7 @@ val KwikColorFilledTextFieldFocusedDarkMode = Color(0xFF424242)
 val KwikColorFilledTextFieldUnfocusedDarkMode = Color(0x19ECEBEB)
 val KwikColorFilledTextFieldError = Color(0x34F44336)
 
-
+/*
 /**
  * A versatile filled text field component that can be used to take user input.
  * @param modifier: The modifier for the text field.
