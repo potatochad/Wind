@@ -56,6 +56,46 @@ import com.productivity.wind.Imports.*
 import com.productivity.wind.Imports.Utils.*
 
 
+@Composable
+fun SearchExampleScreen() {
+    val allItems = listOf(
+        "Apple",
+        "Banana",
+        "Orange",
+        "Grapes",
+        "Mango",
+        "Pineapple"
+    )
+
+    var filtered by remember { mutableStateOf(allItems) }
+
+    Column(modifier = Modifier.padding(16.dp)) {
+
+        KwikSearchInputNoDropdown(
+            modifier = Modifier.fillMaxWidth(),
+            onSearch = { query ->
+                filtered = if (query.isBlank()) {
+                    allItems
+                } else {
+                    allItems.filter {
+                        it.contains(query, ignoreCase = true)
+                    }
+                }
+            }
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        LazyColumn {
+            items(filtered) { item ->
+                Text(
+                    text = item,
+                    modifier = Modifier.padding(12.dp)
+                )
+            }
+        }
+    }
+}
 
 @Composable
 fun KwikSearchInputNoDropdown(
