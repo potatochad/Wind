@@ -42,7 +42,7 @@ fun Main() {
 		MAINStart()
 	}
 	var searching by r(no)
-	var searchedTerm = r("")
+	var Tag = r("")
 
 	BtnFloating {
 		goTo("Challenge")
@@ -74,7 +74,7 @@ fun Main() {
 			Icon.Back {
 				searching = no
 			}
-			TinyInput(searchedTerm, w = 300)
+			LazyInput(Tag, modifier = Mod.h(40).w(250).Hscroll())
 			
 			BackHandler {
 				searching = no
