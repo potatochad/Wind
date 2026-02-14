@@ -302,10 +302,11 @@ fun BtnFloating(
                 contentAlignment = Alignment.BottomEnd
             ) {
                 Box(
-                    Mod.space(10)
-						.clip(RoundedCornerShape(12.dp))
+                    Mod
                         .background(CardColor)
                         .border(width = 1.dp, color = Color.Gray)
+						.clip(RoundedCornerShape(12.dp))
+						.space(10)
                         .click { Do() }
                 ) {
                     Icon(
