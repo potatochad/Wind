@@ -1124,7 +1124,7 @@ fun KwikTextField(
                     }
                     if(isLoading){
                         KwikCircularLoading(
-                            modifier = Modifier.size(30.dp),
+                            mod = Mod.size(30.dp),
                             color = if(isSystemInDarkTheme()) Color.White else Color.Black
                         )
                     }
