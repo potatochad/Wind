@@ -106,6 +106,15 @@ inline fun <T> T?.each(block: MutableList<T>.(T) -> Unit) {
         mutableListOf(it).block(it) 
     }
 }
+inline fun <T> List<T>.findUI(
+    match: (T) -> Boolean,
+    crossinline uiBlock: MutableList<T>.(T) -> Unit
+) {
+    this.filter(match) // get all matching items
+        .toMutableList()
+        .each { uiBlock(it) } // call your existing 'each'
+}
+
 
 
 
