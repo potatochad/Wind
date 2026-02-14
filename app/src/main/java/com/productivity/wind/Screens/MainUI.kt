@@ -37,17 +37,19 @@ import androidx.activity.compose.*
 
 @Composable
 fun Main() {
+
+	RunOnce{
+		MAINStart()
+	}
 	var searching by r(no)
 	var searchedTerm = r("")
+
+	BtnFloating {
+		goTo("Challenge")
+	}
 	
 	LazyScreen(
 	top = { 
-		RunOnce{
-			MAINStart()
-		}
-			
-		
-
 		if (!searching) {
 			Icon.Menu {
 				menu = yes
@@ -82,10 +84,6 @@ fun Main() {
 	showBack = no
 ) {
 	Column(Mod.Vscroll()){
-
-		BtnFloating {
-			goTo("Challenge")
-		}
 			
 		Bar.copyTsk.each {
 			if (!it.done()){
