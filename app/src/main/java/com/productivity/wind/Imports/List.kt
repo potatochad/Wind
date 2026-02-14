@@ -69,7 +69,7 @@ import androidx.compose.ui.viewinterop.*
 import android.widget.*
 import android.text.method.*
 import androidx.compose.ui.unit.*
-
+import kotlin.reflect.*
 
 fun UIStrBuilder.correctStr(text: Str, correctUntil: Int) {
     for (i in text.indices) {
