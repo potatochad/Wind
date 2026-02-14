@@ -790,6 +790,11 @@ object KwikText {
 
 }
 
+@Composable
+fun kwikFilledColorResolver(): Color {
+    return if(isSystemInDarkTheme()) KwikColorFilledTextFieldFocusedDarkMode else KwikColorFilledTextFieldFocused
+}
+
 
 val KwikColorPrimary = Color(0xFF2196F3)
 val KwikColorSecondary = Color(0x9A2196F3)
@@ -1214,11 +1219,6 @@ fun KwikTextField(
             }
         }
     }
-}
-
-@Composable
-fun kwikFilledColorResolver(): Color {
-    return if(isSystemInDarkTheme()) KwikColorFilledTextFieldFocusedDarkMode else KwikColorFilledTextFieldFocused
 }
 
 @Composable
