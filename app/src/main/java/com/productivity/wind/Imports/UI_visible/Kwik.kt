@@ -86,13 +86,14 @@ fun SearchExampleScreen() {
 
         Spacer(Modifier.height(16.dp))
 
-        LazyColumn {
-            items(filtered) { item ->
-                Text(
-                    text = item,
-                    modifier = Modifier.padding(12.dp)
-                )
-            }
+        filtered.forEach { item ->
+            Text(
+                text = item,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
+            )
+            Divider()
         }
     }
 }
