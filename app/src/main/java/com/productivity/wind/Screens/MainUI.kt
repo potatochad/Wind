@@ -124,7 +124,7 @@ fun Main() {
 		} else {
 			Bar.copyTsk.find {
 				it.input.contains(Tag.it)
-			}.forEach {
+			}.each {
 				LazyCard { 
 					CopyTskUI(it)
 				}
@@ -132,7 +132,7 @@ fun Main() {
 			
 			Bar.doTsk.find {
 				it.name.contains(Tag.it) || it.description.contains(Tag.it)
-			}.forEach {
+			}.each {
 				LazyCard(
 					modUI = Mod.space(start = 8),
 					modCard = Mod.space(h=8, w=10).maxW().click {    
@@ -145,7 +145,7 @@ fun Main() {
 			
 			Bar.apps.find {
 				it.name.contains(Tag.it)
-			}.forEach {
+			}.each {
 				Item.AppTaskUI(it)
 			}
 			
