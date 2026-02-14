@@ -1,6 +1,5 @@
 package com.productivity.wind.Imports.UI_visible
 
-// Android & Kotlin
 import android.os.*
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -8,8 +7,6 @@ import androidx.activity.compose.*
 import kotlinx.coroutines.*
 import kotlin.math.*
 import kotlin.collections.*
-
-// Jetpack Compose Core
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.foundation.*
@@ -20,8 +17,6 @@ import androidx.compose.foundation.text.selection.*
 import androidx.compose.foundation.gestures.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.lazy.*
-
-// Compose UI
 import androidx.compose.ui.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,32 +41,23 @@ import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.*
 import androidx.compose.ui.semantics.*
 import androidx.compose.ui.autofill.*
-
-
-// Compose Material & Icons
 import androidx.compose.material3.*
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.filled.*
-
-// Compose Animation
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
-
-// Accompanist & Maps
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
-
-// Your project imports
 import com.productivity.wind.*
 import com.productivity.wind.Imports.*
 import com.productivity.wind.Imports.Utils.*
 
 
 
-/*
+
 
 
 object AllowedChars {
@@ -86,9 +72,11 @@ internal enum class LastInputType {
     TYPING
 }
 
+/*
+
 @Composable
 fun KwikLoadingView(
-    text: String
+    text: Str
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
