@@ -102,15 +102,16 @@ inline fun <T> MutableList<T>.each(
     }
 }
 
-
+@Composable
 inline fun <T> List<T>.findUI(
-    match: (T) -> Bool,
-    crossinline uiBlock: MutableList<T>.(T) -> Unit
+    match: (T) -> Boolean,
+    crossinline uiBlock: @Composable MutableList<T>.(T) -> Unit
 ) {
-    this.filter(match) // get all matching items
+    this.filter(match)
         .toMutableList()
-        .each { uiBlock(it) } // call your existing 'each'
+        .each { uiBlock(it) }
 }
+
 fun <T : Any> List<T>.find(id: Str = "", match: (T) -> Bool = { yes }): T? {
     return if (id.isEmpty()) firstOrNull(match)
     else firstOrNull { item ->
