@@ -303,10 +303,9 @@ fun BtnFloating(
             ) {
                 Box(
                     Mod
-                        .background(CardColor)
-                        .border(width = 1.dp, color = Color.Gray)
 						.clip(RoundedCornerShape(12.dp))
-						.space(10)
+                        .background(CardColor)
+						.space(12)
                         .click { Do() }
                 ) {
                     Icon(
