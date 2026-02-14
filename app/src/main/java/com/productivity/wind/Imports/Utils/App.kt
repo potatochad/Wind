@@ -409,21 +409,6 @@ fun captureAppCrashes() {
 }
 
 
-
-
-
-inline fun <T> MutableList<T>.each(
-    block: MutableList<T>.(T) -> Unit
-) {
-    var i = 0
-    while (i < this.size) {
-        val item = this[i]
-        this.block(item)
-        i++
-    }
-}
-
-
 fun folder(folderName: Str): File {
     val folder = File(App.filesDir, folderName)
     if (!folder.exists()) {
