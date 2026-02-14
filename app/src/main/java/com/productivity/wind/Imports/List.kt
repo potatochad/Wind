@@ -91,6 +91,23 @@ fun List<ResolveInfo>.abcOrder(): List<ResolveInfo> {
     return this.sortedWith(compareBy { it.loadLabel(pm).toString().lowercase() })
 }
 
+inline fun <T> MutableList<T>.each(
+    block: MutableList<T>.(T) -> Unit
+) {
+    var i = 0
+    while (i < this.size) {
+        val item = this[i]
+        this.block(item)
+        i++
+    }
+}
+inline fun <T> T?.each(block: MutableList<T>.(T) -> Unit) {
+    this?.let { 
+        mutableListOf(it).block(it) 
+    }
+}
+
+
 
 fun CopyTsk.goodStr(): Int {
     val n = minOf(txt.size, input.size)
