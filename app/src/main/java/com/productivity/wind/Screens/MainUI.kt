@@ -122,12 +122,18 @@ fun Main() {
 			}
 		}
 		} else {
-			input
-			name
-			description
+			Bar.copyTsk.find {
+				it.input.contains(Tag.it)
+			}
 			
-
-
+			Bar.doTsk.find {
+				it.name.contains(Tag.it) || it.description.contains(Tag.it)
+			}
+			
+			Bar.apps.find {
+				it.name.contains(Tag.it)
+			}
+			
 			
 		}
 
