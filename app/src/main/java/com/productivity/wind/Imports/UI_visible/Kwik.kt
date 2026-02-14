@@ -72,7 +72,7 @@ internal enum class LastInputType {
     TYPING
 }
 
-/*
+
 @Composable
 fun KwikLinearLoading(
     mod: Mod = Mod,
@@ -80,7 +80,7 @@ fun KwikLinearLoading(
     trackColor: Color = Color.Transparent
 ) {
     LinearProgressIndicator(
-        mod = modifier,
+        modifier = mod,
         color = color,
         trackColor = trackColor
     )
@@ -93,11 +93,13 @@ fun KwikCircularLoading(
     trackColor: Color = Color.Transparent
 ) {
     CircularProgressIndicator(
-        mod = modifier,
+        modifier = mod,
         color = color,
         trackColor = trackColor
     )
 }
+
+/*
 
 
 
