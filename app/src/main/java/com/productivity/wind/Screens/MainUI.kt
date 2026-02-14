@@ -122,7 +122,9 @@ fun Main() {
 			}
 		}
 		} else {
-
+			name
+			input
+			
 
 
 			
