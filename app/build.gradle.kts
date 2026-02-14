@@ -75,8 +75,6 @@ ktlint {
 
 
 dependencies {
-    implementation("androidx.compose.animation:animation:1.7.0")
-
     implementation("com.google.accompanist:accompanist-permissions:0.37.3")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
