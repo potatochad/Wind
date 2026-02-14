@@ -85,7 +85,7 @@ fun Main() {
 ) {
 	Column(Mod.Vscroll()){
 
-		if (Tag == "") {
+		if (Tag.it == "") {
 			
 		Bar.copyTsk.each {
 			if (!it.done()){
