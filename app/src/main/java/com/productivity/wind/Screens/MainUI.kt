@@ -84,6 +84,8 @@ fun Main() {
 	showBack = no
 ) {
 	Column(Mod.Vscroll()){
+
+		if (Tag == "") {
 			
 		Bar.copyTsk.each {
 			if (!it.done()){
@@ -119,6 +121,15 @@ fun Main() {
 				Item.AppTaskUI(it)
 			}
 		}
+		} else {
+
+
+
+			
+		}
+
+
+		
 	}
 }}
 
