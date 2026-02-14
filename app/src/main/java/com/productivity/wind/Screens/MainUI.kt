@@ -122,8 +122,9 @@ fun Main() {
 			}
 		}
 		} else {
-			name
 			input
+			name
+			description
 			
 
 
