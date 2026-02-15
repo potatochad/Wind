@@ -173,7 +173,7 @@ fun CopyTskUI(tsk: CopyTsk) {
                 }
             }
 
-			Icon.Delete{ 
+			Item.Delete{ 
 				Bar.copyTsk.remove(tsk)
 			}
 		}
