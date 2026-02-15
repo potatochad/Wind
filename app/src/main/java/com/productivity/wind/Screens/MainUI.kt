@@ -37,16 +37,13 @@ import androidx.activity.compose.*
 
 @Composable
 fun Main() {
-	RunOnce{
-		MAINStart()
-	}
+	RunOnce { MAINStart() }
+	
 	var searching by r(no)
 	var Tag = r("")
 	var showAll by r(no)
 
-	BtnFloating {
-		goTo("Challenge")
-	}
+	BtnFloating { goTo("Challenge") }
 	
 	LazyScreen(
 		top = { 
