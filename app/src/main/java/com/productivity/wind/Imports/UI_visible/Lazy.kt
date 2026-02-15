@@ -471,9 +471,6 @@ fun LazyScreen(
 			h = headerHeight
 		)
 	}
-	val bottom: ui = {
-		LazzyRow {move(bottomSystemHeight())}
-	}
 
     Column(modifier) {
         header()
@@ -481,7 +478,7 @@ fun LazyScreen(
 			Column(modifier) {
 				content()
 			}
-            bottom()
+            move(200)
         }
     }
 
