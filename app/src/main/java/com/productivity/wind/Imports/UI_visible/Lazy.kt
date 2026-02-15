@@ -477,8 +477,8 @@ fun LazyScreen(
         Column(Mod.h(AppLazyH)) {
 			Column(modifier) {
 				content()
+				Box(Mod.s(200).transparent)
 			}
-            Box(Mod.s(200).transparent)
         }
     }
 
