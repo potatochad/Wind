@@ -43,6 +43,7 @@ fun Main() {
 	}
 	var searching by r(no)
 	var Tag = r("")
+	var showAll by r(no)
 
 	BtnFloating {
 		goTo("Challenge")
@@ -75,6 +76,10 @@ fun Main() {
 				searching = no
 			}
 			LazyInput(Tag, modifier = Mod.h(40).w(250).Hscroll())
+
+			Ctext("all".gray()){
+				showAll = yes
+			}
 			
 			BackHandler {
 				searching = no
@@ -85,7 +90,7 @@ fun Main() {
 ) {
 	Column(Mod.Vscroll()){
 
-		if (Tag.it == "") {
+		if (!searching) {
 			
 		Bar.copyTsk.each {
 			if (!it.done()){
@@ -122,6 +127,7 @@ fun Main() {
 			}
 		}
 		} else {
+			if (!showAll){
 			Bar.copyTsk.findUI({ 
 				it.input.contains(Tag.it) 
 			}) { 
@@ -144,6 +150,24 @@ fun Main() {
 			Bar.apps.findUI({ 
 				it.name.contains(Tag.it) 
 			}) { 
+				Item.AppTaskUI(it) 
+			}
+			} else {
+				Bar.copyTsk.each { 
+				LazyCard { CopyTskUI(it) } 
+			}
+
+			Bar.doTsk.each { 
+				LazyCard(
+					modUI = Mod.space(start = 8),
+					modCard = Mod.space(h=8, w=10).maxW().click {    
+						goTo("ToDo/${it.id}")
+					},
+				) { 
+					DoTskUI(it)
+			}
+
+			Bar.apps.each { 
 				Item.AppTaskUI(it) 
 			}
 
