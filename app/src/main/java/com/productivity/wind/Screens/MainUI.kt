@@ -165,6 +165,7 @@ fun Main() {
 					},
 				) { 
 					DoTskUI(it)
+				}
 			}
 
 			Bar.apps.each { 
