@@ -238,7 +238,21 @@ fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
 
 
 
+/* FUN IDEA
+fun Modifier.mergeWith(update: Modifier): Modifier = composed {
+    var result: Modifier = this
 
+    // fold through all elements in update
+    update.foldIn(result) { acc, element ->
+        // remove old element of same type from acc
+        val filtered = acc.foldIn(Modifier) { m, e ->
+            if (e::class != element::class) m.then(e) else m
+        }
+        filtered.then(element) // add new element
+    }
+}
+
+*/
 
 
 
