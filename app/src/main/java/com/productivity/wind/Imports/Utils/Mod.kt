@@ -219,6 +219,12 @@ fun Mod.clickOrHold(
 }
 
 
+
+val Mod.transparent: Mod
+    get() = this
+        .background(Color.Transparent)
+
+
 fun Mod.getW(onWidth: Do_<Int>): Mod = this.then(
     Mod.onGloballyPositioned {
         onWidth(it.size.width)
