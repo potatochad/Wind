@@ -478,7 +478,7 @@ fun LazyScreen(
 			Column(modifier) {
 				content()
 			}
-            move(200)
+            Box(Mod.s(200).transparent)
         }
     }
 
