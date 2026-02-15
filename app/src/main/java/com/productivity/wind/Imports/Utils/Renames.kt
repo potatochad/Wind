@@ -119,7 +119,7 @@ import java.time.*
 import java.time.format.*
 
 
-
+//colors
 var CardColor = Color(0xFF1A1A1A)
 var InputColor = Color(0xFF272727)
 val DarkBlue = Color(0xFF00008B) 
@@ -128,25 +128,26 @@ val LightBlue = Color(0xFFADD8E6)
 val darkGreen = Color(0xFF0A1F0D)
 val orange = Color(0xFFFFA500)
 val white = Color.White
+val Transparent = Color.Transparent
 
-
+//tiny renames
 val gson = Gson()
 val yes = true
 val no = false
+val maxInt = Int.MAX_VALUE
 var <T> m_<T>.it: T
     get() = this.value
     set(value) { this.value = value }
 
-
+//tiny more complex renames
 fun <T> m(value: T) = mutableStateOf(value)
 fun <T> set(state: m_<T>?, value: T) { state?.value = value }
 fun show(state: m_<Bool>?) = set(state, yes)
 fun hide(state: m_<Bool>?) = set(state, no)
 fun Id(): Str { return UUID.randomUUID().toString() }
 
-val maxInt = Int.MAX_VALUE
 
-
+// <<<---Type aliases--->>>
 typealias Web = WebView
 typealias ctx = Context
 
