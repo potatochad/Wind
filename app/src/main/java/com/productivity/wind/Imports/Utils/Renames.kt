@@ -327,6 +327,15 @@ fun isMInt(x: Any?): Bool = x is m_<*> && x.it is Int
 
 fun faded(color: Color, alpha: Float = 0.4f) = color.copy(alpha = alpha)
 
+fun Color.darker(percent: Float): Color {
+    val f = (1f - percent).coerceIn(0f, 1f)
+    return Color(
+        red = (red * f).coerceIn(0f, 1f),
+        green = (green * f).coerceIn(0f, 1f),
+        blue = (blue * f).coerceIn(0f, 1f),
+        alpha = alpha
+    )
+}
 
 
 
