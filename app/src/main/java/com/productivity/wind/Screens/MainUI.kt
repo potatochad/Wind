@@ -37,7 +37,6 @@ import androidx.activity.compose.*
 
 @Composable
 fun Main() {
-
 	RunOnce{
 		MAINStart()
 	}
@@ -50,133 +49,132 @@ fun Main() {
 	}
 	
 	LazyScreen(
-	top = { 
-		if (!searching) {
-			Icon.Menu {
-				menu = yes
-			}
+		top = { 
+			if (!searching) {
+				Icon.Menu {
+					menu = yes
+				}
+				
+				// Icon.Chill { goTo("Web") }
 
-			// Icon.Chill { goTo("Web") }
-
-			Icon.Reload{
-				showOrderNotification(11)
-			}
+				Icon.Reload{
+					showOrderNotification(11)
+				}
         
-			move(w = 12)
+				move(w = 12)
         
-			Text("Points ${Bar.funTime}")
+				Text("Points ${Bar.funTime}")
         
-			End {
-				Icon.Search {
-					searching = yes
+				End {
+					Icon.Search {
+						searching = yes
+					}
 				}
-			}
-		} else {
-			Icon.Back {
-				searching = no
-			}
-			LazyInput(Tag, modifier = Mod.h(40).w(250).Hscroll())
-
-			Ctext("all".gray()){
-				showAll = yes
-			}
-			
-			BackHandler {
-				searching = no
-			}
-		}
-	}, 
-	showBack = no
-) {
-	Column(Mod.Vscroll()){
-
-		if (!searching) {
-			
-		Bar.copyTsk.each {
-			if (!it.done()){
-				LazyCard { 
-					CopyTskUI(it)
-				}
-			}
-		}
-
-		Bar.doTsk.each {
-			if (!it.done() && taskDueToday(it.schedule)){
-					
-				LazyCard(
-					modUI = Mod.space(start = 8),
-					modCard = Mod.space(h=8, w=10).maxW().click {    
-						goTo("ToDo/${it.id}")
-					},
-				) { 
-					DoTskUI(it)
-				}
-			}
-		}
-
-
-		Bar.apps.each {
-			if (!it.done) {
-				if (it.NowTime > it.DoneTime - 1 && !it.done) {
-					Bar.funTime += it.Worth
-					Bar.apps.edit(it) { done = yes }
-					Vlog("${it.name} completed")
-				}
-                    
-				Item.AppTaskUI(it)
-			}
-		}
-		} else {
-			if (!showAll){
-			Bar.copyTsk.findUI({ 
-				it.input.contains(Tag.it) 
-			}) { 
-				LazyCard { CopyTskUI(it) } 
-			}
-
-			Bar.doTsk.findUI({ 
-				it.name.contains(Tag.it) || it.description.contains(Tag.it)       
-			}) { 
-				LazyCard(
-					modUI = Mod.space(start = 8),
-					modCard = Mod.space(h=8, w=10).maxW().click {    
-						goTo("ToDo/${it.id}")
-					},
-				) { 
-					DoTskUI(it)
-				}
-			}
-
-			Bar.apps.findUI({ 
-				it.name.contains(Tag.it) 
-			}) { 
-				Item.AppTaskUI(it) 
-			}
 			} else {
-				Bar.copyTsk.each { 
-				LazyCard { CopyTskUI(it) } 
-			}
+				Icon.Back {
+					searching = no
+				}
+				LazyInput(Tag, modifier = Mod.h(40).w(250).Hscroll())
 
-			Bar.doTsk.each { 
-				LazyCard(
-					modUI = Mod.space(start = 8),
-					modCard = Mod.space(h=8, w=10).maxW().click {    
-						goTo("ToDo/${it.id}")
-					},
-				) { 
-					DoTskUI(it)
+				Ctext("all".gray()){
+					showAll = yes
+				}
+				
+				BackHandler {
+					searching = no				
 				}
 			}
+		}, 
+		showBack = no
+	) {
+		Column(Mod.Vscroll()){
 
-			Bar.apps.each { 
-				Item.AppTaskUI(it) 
+			if (!searching) {
+			
+				Bar.copyTsk.each {
+					if (!it.done()){
+						LazyCard { 
+							CopyTskUI(it)
+						}
+					}
+				}
+				
+				Bar.doTsk.each {
+					if (!it.done() && taskDueToday(it.schedule)){
+					
+						LazyCard(
+							modUI = Mod.space(start = 8),
+							modCard = Mod.space(h=8, w=10).maxW().click {    
+								goTo("ToDo/${it.id}")
+							},
+						) { 
+							DoTskUI(it)
+						}
+					}
+				}
+
+
+				Bar.apps.each {
+					if (!it.done) {
+						if (it.NowTime > it.DoneTime - 1 && !it.done) {
+							Bar.funTime += it.Worth
+							Bar.apps.edit(it) { done = yes }
+							Vlog("${it.name} completed")						
+						}
+
+						Item.AppTaskUI(it)
+					}
+				}
+			} else {				
+				if (!showAll){
+					Bar.copyTsk.findUI({ 
+						it.input.contains(Tag.it) 
+					}) { 
+						LazyCard { CopyTskUI(it) } 
+					}
+
+					Bar.doTsk.findUI({ 
+						it.name.contains(Tag.it) || it.description.contains(Tag.it)       					
+					}) { 						
+						LazyCard(
+							modUI = Mod.space(start = 8),
+							modCard = Mod.space(h=8, w=10).maxW().click {    
+								goTo("ToDo/${it.id}")
+							},
+						) { 
+							DoTskUI(it)
+						}
+					}
+
+					Bar.apps.findUI({ 
+						it.name.contains(Tag.it) 
+					}) { 
+						Item.AppTaskUI(it) 
+					}
+				} else {
+					Bar.copyTsk.each { 
+						LazyCard { CopyTskUI(it) } 
+					}
+
+					Bar.doTsk.each { 
+						LazyCard(
+							modUI = Mod.space(start = 8),
+							modCard = Mod.space(h=8, w=10).maxW().click {    
+								goTo("ToDo/${it.id}")
+							},
+						) { 
+							DoTskUI(it)
+						}
+					}
+
+					Bar.apps.each { 
+						Item.AppTaskUI(it) 
+					}
+				}
 			}
-
-			
-			
 		}
 	}
-}}
+}
 
 		
 
