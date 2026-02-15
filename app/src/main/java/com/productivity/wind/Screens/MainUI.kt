@@ -42,6 +42,7 @@ fun Main() {
 	}
 	var searching by r(no)
 	var Tag = r("")
+	var showAll by r(no)
 
 	BtnFloating {
 		goTo("Challenge")
