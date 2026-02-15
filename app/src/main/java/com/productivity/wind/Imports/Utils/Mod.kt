@@ -222,7 +222,7 @@ fun Mod.clickOrHold(
 
 val Mod.transparent: Mod
     get() = this
-        .background(Color.Transparent)
+        .background(Transparent)
 
 
 fun Mod.getW(onWidth: Do_<Int>): Mod = this.then(
