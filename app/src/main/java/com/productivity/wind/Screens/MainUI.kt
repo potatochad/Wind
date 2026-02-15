@@ -42,7 +42,6 @@ fun Main() {
 	}
 	var searching by r(no)
 	var Tag = r("")
-	var showAll by r(no)
 
 	BtnFloating {
 		goTo("Challenge")
@@ -75,10 +74,6 @@ fun Main() {
 					searching = no
 				}
 				LazyInput(Tag, modifier = Mod.h(40).w(250).Hscroll())
-
-				Ctext("all".gray()){
-					showAll = yes
-				}
 				
 				BackHandler {
 					searching = no				
@@ -88,7 +83,6 @@ fun Main() {
 		showBack = no
 	) {
 		Column(Mod.Vscroll()){
-
 			if (!searching) {
 			
 				Bar.copyTsk.each {
