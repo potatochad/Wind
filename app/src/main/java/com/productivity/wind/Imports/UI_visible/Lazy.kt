@@ -478,8 +478,13 @@ fun LazyScreen(
 			Column(modifier) {
 				content()
 				Box(Mod.s(200).transparent)
+				Box(
+					Mod.s(200).background(Color.Red)
+				)
+
 			}
         }
+		
     }
 
 }
