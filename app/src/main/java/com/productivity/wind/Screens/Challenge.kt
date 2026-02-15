@@ -486,12 +486,6 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	}
 
 	Icon.Timer(tskOn) {
-		if (!it == yes) {
-			var found = Bar.doTsk.find { it.on == yes }
-			if (found != null) {
-				found.edit { on = false }
-			}
-		}
 		tskOn = !it
 	}
 	move(5)
