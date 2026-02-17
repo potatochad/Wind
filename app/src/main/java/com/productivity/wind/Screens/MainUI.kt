@@ -80,7 +80,9 @@ fun Main() {
 		}, 
 		showBack = no
 	) {
-		Column(Mod.Vscroll()){
+		Column(
+				// Mod.Vscroll()
+			  ){
 			if (!searching) {
 			
 				Bar.copyTsk.each {
