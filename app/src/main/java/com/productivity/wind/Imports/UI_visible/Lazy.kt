@@ -481,7 +481,7 @@ fun LazyScreen(
 				content()
 			}
 			Box(
-				Mod.s(200).red
+				Mod.s(200).transparent
 			)
         }
     }
