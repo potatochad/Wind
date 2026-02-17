@@ -474,7 +474,7 @@ fun LazyScreen(
     Column(modifier) {
         header()
         Column(Mod.h(AppLazyH)) {
-			Column(modifier) {
+			Column(modifier.Vscroll()) {
 				content()
 			}
         }
