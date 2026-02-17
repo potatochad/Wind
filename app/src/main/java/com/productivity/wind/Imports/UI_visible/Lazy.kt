@@ -473,14 +473,18 @@ fun LazyScreen(
 
     Column(modifier) {
         header()
-        Column(Mod.h(AppLazyH)) {
-			Column(modifier.Vscroll()) {
+        Column(modifier.h(AppLazyH).Vscroll()) {
+			/*
+			Column madness helps avoid scroll crash
+			*/
+			Column {
 				content()
 			}
+			Box(
+				Mod.s(200).red
+			)
         }
-		
     }
-
 }
 
 
