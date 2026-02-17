@@ -319,8 +319,7 @@ fun LazyMore(
             )
         ) {
             Column(
-                Mod.maxW()
-                    .space(start = 32, top = 4)
+                Mod.maxW().space(start = 32, top = 4)
             ) {
                 ui()
             }
@@ -393,7 +392,7 @@ fun LazyHeader(
     h: Int = 100,
 ) {
     val ui = rememberSystemUiController()
-    var clickedBack by r_m(no)
+    var clickedBack by r(no)
     RunOnce(Unit) {
         ui.setStatusBarColor(Color.Black, darkIcons = no)
     }
@@ -475,14 +474,11 @@ fun LazyScreen(
     Column(modifier) {
         header()
         Column(Mod.h(AppLazyH)) {
+			
+			Column(Mod.Hscroll()){
 			Column(modifier) {
 				content()
-				Box(Mod.s(200).transparent)
-				Box(
-					Mod.s(200).background(Color.Red)
-				)
-
-			}
+			}}
         }
 		
     }
