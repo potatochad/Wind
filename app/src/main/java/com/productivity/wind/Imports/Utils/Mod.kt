@@ -221,8 +221,22 @@ fun Mod.clickOrHold(
 
 
 val Mod.transparent: Mod
-    get() = this
-        .background(Transparent)
+    get() = this.background(Transparent)
+        
+val Mod.black: Mod
+    get() = this.background(Color.Black)
+    
+val Mod.red: Mod
+    get() = this.background(Color.Red)
+
+val Mod.green: Mod
+    get() = this.background(Color.Green)
+
+val Mod.blue: Mod
+    get() = this.background(Color.Blue)
+
+
+    
 
 
 fun Mod.getW(onWidth: Do_<Int>): Mod = this.then(
