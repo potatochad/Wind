@@ -58,6 +58,52 @@ import com.productivity.wind.Imports.Utils.*
 
 
 
+@Composable
+fun KwikOutlinedTextField(
+    value: MutableState<TextFieldValue>,
+    onValueChange: (TextFieldValue) -> Unit,
+    placeholder: String = "",
+    minWidth: Dp = 100.dp,
+    maxWidth: Dp = 300.dp,
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
+    colors: TextFieldColors = kwikTextFieldColors(true),
+) {
+    // Track the width of the text
+    var textWidth by remember { mutableStateOf(0.dp) }
+
+    // Measure text width
+    val density = LocalDensity.current
+    LaunchedEffect(value.value.text) {
+        val paint = android.text.TextPaint().apply {
+            textSize = with(density) { textStyle.fontSize.toPx() }
+            typeface = Typeface.DEFAULT
+        }
+        val measuredWidth = paint.measureText(value.value.text.ifEmpty { placeholder })
+        textWidth = with(density) { measuredWidth.toDp() } + 24.dp // add padding
+    }
+
+    Box(
+        modifier = Modifier
+            .widthIn(min = minWidth, max = maxWidth)
+            .width(textWidth.coerceIn(minWidth, maxWidth))
+            .border(1.dp, Color.Gray, shape = RoundedCornerShape(8.dp))
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+    ) {
+        TextField(
+            value = value.value,
+            onValueChange = onValueChange,
+            placeholder = { Text(placeholder, style = textStyle, color = Color.Gray) },
+            colors = colors,
+            textStyle = textStyle,
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+    }
+}
+
+
+
+
 
 object AllowedChars {
     val NUMBERS = Regex("[^0-9]")
