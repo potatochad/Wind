@@ -480,7 +480,7 @@ fun LazyScreen(
 			Column {
 				content()
 			}
-			move(200)
+			move(350)
         }
     }
 }
