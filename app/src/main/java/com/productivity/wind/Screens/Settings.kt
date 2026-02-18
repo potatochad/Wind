@@ -91,21 +91,6 @@ fun SettingsScreen() {
                 title = "Other",
                 onClick = { goTo("SettingsOtherScreen") }
         ) 
-
-		val baseModifier = Modifier
-        .padding(8.dp)
-        .background(Color.Gray)
-
-    val newModifier = Modifier
-        .padding(16.dp)            // overrides old padding
-        .border(2.dp, Color.Red)   // adds new border
-
-    Button(
-        onClick = { /* handle click */ },
-        modifier = baseModifier.mergeWith(newModifier)
-    ) {
-        Text("Click Me", color = Color.White)
-	}
 	
     }
 }
