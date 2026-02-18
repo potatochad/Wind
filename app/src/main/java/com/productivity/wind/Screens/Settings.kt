@@ -91,18 +91,6 @@ fun SettingsScreen() {
                 title = "Other",
                 onClick = { goTo("SettingsOtherScreen") }
         ) 
-
-		val textState = remember { mutableStateOf(TextFieldValue("")) }
-		KwikOutlinedGrowingTextField(
-    value = textState,
-    onValueChange = { newValue ->
-        textState.value = newValue
-    },
-    placeholder = "Type here",
-    minWidth = 120.dp,
-    maxWidth = 280.dp
-)
-
     }
 }
 
