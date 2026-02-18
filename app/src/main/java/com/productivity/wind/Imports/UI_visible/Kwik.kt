@@ -59,7 +59,7 @@ import com.productivity.wind.Imports.Utils.*
 
 
 @Composable
-fun KwikOutlinedTextField(
+fun KwikOutlinedGrowingTextField(
     value: MutableState<TextFieldValue>,
     onValueChange: (TextFieldValue) -> Unit,
     placeholder: String = "",
@@ -68,38 +68,47 @@ fun KwikOutlinedTextField(
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     colors: TextFieldColors = kwikTextFieldColors(true),
 ) {
-    // Track the width of the text
-    var textWidth by remember { mutableStateOf(0.dp) }
-
-    // Measure text width
+    val textMeasurer = rememberTextMeasurer()
     val density = LocalDensity.current
+
+    var fieldWidth by remember { mutableStateOf(minWidth) }
+
     LaunchedEffect(value.value.text) {
-        val paint = android.text.TextPaint().apply {
-            textSize = with(density) { textStyle.fontSize.toPx() }
-            typeface = Typeface.DEFAULT
-        }
-        val measuredWidth = paint.measureText(value.value.text.ifEmpty { placeholder })
-        textWidth = with(density) { measuredWidth.toDp() } + 24.dp // add padding
+        val layout = textMeasurer.measure(
+            text = value.value.text.ifEmpty { placeholder },
+            style = textStyle
+        )
+
+        val measuredWidthDp = with(density) { layout.size.width.toDp() }
+
+        fieldWidth = (measuredWidthDp + 24.dp)
+            .coerceIn(minWidth, maxWidth)
     }
 
     Box(
         modifier = Modifier
-            .widthIn(min = minWidth, max = maxWidth)
-            .width(textWidth.coerceIn(minWidth, maxWidth))
-            .border(1.dp, Color.Gray, shape = RoundedCornerShape(8.dp))
+            .width(fieldWidth)
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
             .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
         TextField(
             value = value.value,
             onValueChange = onValueChange,
-            placeholder = { Text(placeholder, style = textStyle, color = Color.Gray) },
-            colors = colors,
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    style = textStyle,
+                    color = Color.Gray
+                )
+            },
+            singleLine = true,
             textStyle = textStyle,
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            colors = colors,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
+
 
 
 
