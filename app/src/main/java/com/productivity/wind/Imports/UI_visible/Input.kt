@@ -136,11 +136,7 @@ import android.content.ClipboardManager
 fun BasicInput(
     value: Str,
     isInt: Bool = no,
-	w: Int=60,
-	modifier: Mod = Mod
-		.h(34).space(h = 8, w = 4).w(w)
-		.background(InputColor, shape = RoundedCornerShape(4.dp))
-		.wrapContentHeight(Alignment.CenterVertically),            
+	mod: Mod = Mod,            
 	textStyle: TextStyle = TextStyle(
 		color = Gold,
 		fontSize = 14.sp,
@@ -152,12 +148,16 @@ fun BasicInput(
 	val focusManager = LocalFocusManager.current
 	val focusRequester = r { FocusRequester() }
 
+	val baseMod = Mod.h(34).space(h = 8, w = 4).w(60)
+		.background(InputColor, shape = RoundedCornerShape(4.dp))
+		.wrapContentHeight(Alignment.CenterVertically)
+
 	Row(
-		modifier = modifier.click { focusRequester.requestFocus() },
+		modifier = baseMod.mergeWith(mod).click { focusRequester.requestFocus() },
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
-		move(w=3)
+		move(3)
 		BasicTextField(
 			value = value,
 			onValueChange = { Do(it) },
@@ -284,7 +284,7 @@ fun TinyInput(value: Any?, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, D
     BasicInput(
         "${txt.it}",
         isInt = isInt, 
-        w=w,
+        mod = Mod.w(w),
     ) {
         val str = it.take(maxLetters)
 		
@@ -303,7 +303,7 @@ fun TinyInput(value: mInt, maxLetters: Int = 4, w: Int = 60, Do: DoInt={_->}) {
     BasicInput(
         "${value.it}",
         isInt = yes, 
-        w=w,
+        mod = Mod.w(w),
     ) {
         val str = it.take(maxLetters)
         val num = toInt(str)
