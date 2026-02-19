@@ -276,12 +276,12 @@ fun BigInput(txt: mStr, scrollV: ScrollState = r_Scroll(), h: Int = 150, Do: DoS
 
 
 @Composable
-fun TinyInput(value: Any?, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, Do: DoStr={_->}) {  
+fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = yes, Do: DoStr = { _ -> }) {  
 	var txt = toMStr(value)
     BasicInput(
         "${txt.it}",
         isInt = isInt, 
-        mod = Mod.w(w),
+        mod = mod,
     ) {
         val str = it.take(maxLetters)
 		
@@ -296,11 +296,11 @@ fun TinyInput(value: Any?, maxLetters: Int = 4, isInt: Bool =yes, w: Int = 60, D
     }
 }
 @Composable
-fun TinyInput(value: mInt, maxLetters: Int = 4, w: Int = 60, Do: DoInt={_->}) {  
+fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, Do: DoInt = { _ -> }) {  
     BasicInput(
         "${value.it}",
         isInt = yes, 
-        mod = Mod.w(w),
+        mod = mod,
     ) {
         val str = it.take(maxLetters)
         val num = toInt(str)
