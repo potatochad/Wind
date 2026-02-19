@@ -147,11 +147,9 @@ fun BasicInput(
 ) {
 	val focusManager = LocalFocusManager.current
 	val focusRequester = r { FocusRequester() }
-
-	// 34
 	val baseMod = Mod.space(h = 8, w = 4).w(60).h(26).background(InputColor, shape = RoundedCornerShape(4.dp))          
 
-		move(3)
+	move(3)
 	Row(
 		modifier = baseMod.mix(new = mod).click { focusRequester.requestFocus() },
 		verticalAlignment = Alignment.CenterVertically,
@@ -172,7 +170,6 @@ fun BasicInput(
 			modifier = Mod.focusRequester(focusRequester)
 		)
 	}
-	
 }
 
 @Composable
