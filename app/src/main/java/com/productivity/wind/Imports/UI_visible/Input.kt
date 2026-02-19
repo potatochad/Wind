@@ -151,11 +151,6 @@ fun BasicInput(
 	// 34
 	val baseMod = Mod.space(h = 8, w = 4).w(60).h(26).background(InputColor, shape = RoundedCornerShape(4.dp))          
 
-	Row(
-		modifier = baseMod.mix(new = mod).click { focusRequester.requestFocus() },
-		verticalAlignment = Alignment.CenterVertically,
-		horizontalArrangement = Arrangement.Start       
-	) {
 		move(3)
 		BasicTextField(
 			value = value,
@@ -169,9 +164,9 @@ fun BasicInput(
 			keyboardActions = KeyboardActions(
 				onDone = { focusManager.clearFocus() }
 			),
-			modifier = Mod.focusRequester(focusRequester)
+			modifier = baseMod.mix(new = mod).focusRequester(focusRequester)
 		)
-	}
+	
 }
 
 @Composable
