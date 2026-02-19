@@ -152,7 +152,7 @@ fun BasicInput(
 	val baseMod = Mod.space(h = 8, w = 4).w(60).h(26).background(InputColor, shape = RoundedCornerShape(4.dp))          
 
 	Row(
-		modifier = mod.then(baseMod).click { focusRequester.requestFocus() },
+		modifier = baseMod.mix(new = mod).click { focusRequester.requestFocus() },
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
