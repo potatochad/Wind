@@ -230,9 +230,9 @@ object Item {
             endContent = {             
                 TinyInput(
                     "${Bar.Dpoints}", 
+					Mod.w(70),
                     isInt = yes, 
 					maxLetters = 5,
-					w = 70,
                 ) {
 					var input = toInt(it)
                     if (Bar.funTime > Bar.Dpoints) {
