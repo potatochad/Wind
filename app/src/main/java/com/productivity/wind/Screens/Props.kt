@@ -232,6 +232,7 @@ object Item {
                     "${Bar.Dpoints}", 
                     isInt = yes, 
 					maxLetters = 5,
+					w = 70,
                 ) {
 					var input = toInt(it)
                     if (Bar.funTime > Bar.Dpoints) {
