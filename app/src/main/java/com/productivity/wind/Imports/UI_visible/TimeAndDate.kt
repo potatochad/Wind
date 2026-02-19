@@ -425,7 +425,7 @@ fun ScheduleUI(
           
           LazzyRow {
               Text("Repeat every")
-              TinyInput(repeatEvery, maxLetters = 5, isInt =yes, w = 80){  
+              TinyInput(repeatEvery, Mod.w(80), maxLetters = 5, isInt = yes){  
                   repeatEvery = toInt(it)
               }
           }
