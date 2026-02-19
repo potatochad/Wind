@@ -233,14 +233,15 @@ object Item {
                     isInt = yes, 
 					maxLetters = 5,
                 ) {
+					var input = toInt(it)
                     if (Bar.funTime > Bar.Dpoints) {
-                        if (it < Bar.funTime) {
-                            Bar.Dpoints = it
+                        if (input < Bar.funTime) {
+                            Bar.Dpoints = input
                         } else {
-                            Vlog("More points: ${Bar.funTime} < $it ")
+                            Vlog("More points: ${Bar.funTime} < $input")
                         }
                     } else {
-                        Vlog("More points: ${Bar.funTime} < ${Bar.Dpoints} ")
+                        Vlog("More points: ${Bar.funTime} < ${Bar.Dpoints}")        
                     }
 					
                 }
