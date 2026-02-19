@@ -228,20 +228,21 @@ object Item {
             title = "Unlock Threshold",
 			modUI = Mod.space(h=2.5.dp),
             endContent = {             
-                BasicInput(
+                TinyInput(
                     "${Bar.Dpoints}", 
                     isInt = yes, 
+					maxLetters = 5,
                 ) {
-                    val input = it.take(5).toIntOrNull() ?: 0
-                    if (Bar.funTime>Bar.Dpoints) {
-                        if (input<Bar.funTime) {
-                            Bar.Dpoints = input
+                    if (Bar.funTime > Bar.Dpoints) {
+                        if (it < Bar.funTime) {
+                            Bar.Dpoints = it
                         } else {
-                            Vlog("More points: ${Bar.funTime} < $input ")
+                            Vlog("More points: ${Bar.funTime} < $it ")
                         }
                     } else {
                         Vlog("More points: ${Bar.funTime} < ${Bar.Dpoints} ")
                     }
+					
                 }
             }
         )
