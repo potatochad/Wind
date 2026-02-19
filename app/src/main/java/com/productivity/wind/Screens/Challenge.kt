@@ -411,7 +411,7 @@ fun ToDo(id: Str = "") {
 	}) {
 		RuleCard("Info"){
 			LazzyRow{
-				TinyInput(name1, w=200, isInt = no, maxLetters = 135)
+				TinyInput(name1, Mod.w(200), isInt = no, maxLetters = 135)
 			}
 			BigInput(description1, h = 120) {
 				description1.it = it
