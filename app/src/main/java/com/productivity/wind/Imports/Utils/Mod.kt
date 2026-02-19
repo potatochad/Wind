@@ -218,6 +218,10 @@ fun Mod.clickOrHold(
   	}
 }
 
+fun Mod.mix(new: Mod): Mod{
+    return new.then(this)
+}
+
 
 
 val Mod.transparent: Mod
