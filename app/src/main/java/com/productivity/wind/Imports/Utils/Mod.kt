@@ -252,30 +252,6 @@ fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
 
 
 
-fun Modifier.mergeWith(update: Modifier): Modifier {
-    val elements = mutableListOf<Any>()
-
-    this.foldIn(elements) { acc, element ->
-        acc.add(element)
-        acc
-    }
-
-    update.foldIn(elements) { acc, element ->
-        acc.remove(element) // remove exact same instance only
-        acc.add(element)
-        acc
-    }
-
-    var result: Modifier = Modifier
-    elements.forEach { element ->
-        if (element is Modifier.Element) {
-            result = result.then(element)
-        }
-    }
-    return result
-}
-
-
 
 
 
