@@ -54,6 +54,7 @@ fun Web(){
                 }
             }
         },
+        scroll = no,
         DividerPadding = no,
     ) {
         WebXml(
