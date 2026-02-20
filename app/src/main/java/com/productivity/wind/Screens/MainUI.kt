@@ -71,7 +71,7 @@ fun Main() {
 				Icon.Back {
 					searching = no
 				}
-				LazyInput(Tag, modifier = Mod.h(40).w(250).Hscroll())
+				TinyInput(Tag, Mod.h(40).w(250).Hscroll())
 				
 				BackHandler {
 					searching = no				
