@@ -155,6 +155,7 @@ fun BasicInput(
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
+		move(3)
 		BasicTextField(
 			value = value,
 			onValueChange = { Do(it) },
