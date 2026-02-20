@@ -451,6 +451,7 @@ fun LazyScreen(
     top: ui = { Text("$txt") },
     onBackClick: Do = {},
     showBack: Bool = yes,
+	scroll: Bool = yes,
     modifier: Mod = Mod.background(Color.Black),
 	
     showDivider: Bool = yes,
@@ -473,7 +474,13 @@ fun LazyScreen(
 
     Column(modifier) {
         header()
-        Column(modifier.h(AppLazyH).Vscroll()) {
+        Column(modifier.h(AppLazyH).then(
+			if (scroll){
+				Vscroll()
+			} else {
+				Mod
+			}
+		)) {
 			/*
 			Column madness helps avoid scroll crash
 			*/
