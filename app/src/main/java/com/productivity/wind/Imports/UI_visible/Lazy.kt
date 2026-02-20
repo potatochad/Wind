@@ -476,7 +476,7 @@ fun LazyScreen(
         header()
         Column(modifier.h(AppLazyH).then(
 			if (scroll){
-				Vscroll()
+				Mod.Vscroll()
 			} else {
 				Mod
 			}
