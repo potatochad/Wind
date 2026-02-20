@@ -215,38 +215,6 @@ fun Input(
 
 
 @Composable
-fun LazyInput(
-    txt: Any?,
-    isInt: Bool = no,
-	modifier: Mod = Mod,
-    maxLetters: Int = 20,
-    textStyle: TextStyle = TextStyle(
-		color = Color.White,
-		fontSize = 14.sp,
-		textAlign = TextAlign.Start
-	),
-    onChange: DoStr = {},
-) {
-	var str = toMStr(txt)
-    val finalMod = modifier.space(h = 8, w = 4).background(CardColor, shape = RoundedCornerShape(4.dp))
-	
-    Input(
-        what = str,
-        isInt = isInt,
-        modifier = finalMod,
-        textStyle = textStyle,
-    ) { input ->
-		if (isInt && input.isEmpty()) {
-			str.it = "0"
-		} else {
-			str.it = input.take(maxLetters)
-		}
-		onChange(str.it)
-    }
-}
-
-
-@Composable
 fun BigInput(txt: mStr, scrollV: ScrollState = r_Scroll(), h: Int = 150, Do: DoStr={ txt.it = it }){
 	val scroll = scrollV
 	var Field by r(TextFieldValue(txt.it))
