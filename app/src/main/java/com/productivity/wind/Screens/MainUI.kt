@@ -52,7 +52,7 @@ fun Main() {
 					menu = yes
 				}
 				
-				// Icon.Chill { goTo("Web") }
+				Icon.Chill { goTo("Web") }
 
 				Icon.Reload{
 					showOrderNotification(11)
