@@ -71,7 +71,7 @@ fun Main() {
 				Icon.Back {
 					searching = no
 				}
-				TinyInput(Tag, Mod.h(40).w(150, 12000).Hscroll(), isInt = no)
+				TinyInput(Tag, Mod.h(40).w(300).Hscroll(), isInt = no)
 				
 				BackHandler {
 					searching = no				
@@ -80,11 +80,7 @@ fun Main() {
 		}, 
 		showBack = no
 	) {
-		Column(
-				// Mod.Vscroll()
-			  ){
 			if (!searching) {
-			
 				Bar.copyTsk.each {
 					if (!it.done()){
 						LazyCard { 
@@ -166,7 +162,7 @@ fun Main() {
 					}
 				}
 			}
-		}
+		
 	}
 }
 
