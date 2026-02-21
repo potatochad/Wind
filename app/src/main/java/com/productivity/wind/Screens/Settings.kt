@@ -156,7 +156,23 @@ fun LogsScreen() {
 	}
 
     LazyScreen(top = {
-        Header.Logs(Tag)
+        TinyInput(Tag, Mod.h(36).weight(1f).Hscroll(), isInt = no, maxLetters = 100)
+
+
+		val Logs by remember(Tag.it, Bar.logs) {
+			derivedStateOf {
+				Bar.logs.filter { it.contains(Tag.it) }
+			}
+		}
+
+            
+        End {
+            Icon.Delete {
+                Bar.logs.clear()
+            }
+            Icon.Copy(Logs.joinToString("\n"))
+			
+		}
     }) {
         if (Bar.logs.isEmpty()){
               EmptyBox("No logs")
