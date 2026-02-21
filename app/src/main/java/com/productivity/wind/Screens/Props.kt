@@ -269,28 +269,6 @@ object Item {
 }
 
 object Header {
-
-    @Composable
-    fun Logs(Tag: m_<Str>) {
-        TinyInput(Tag, Mod.h(36).weight(1f).Hscroll(), isInt = no, maxLetters = 100)
-
-
-		val Logs by remember(Tag.it, Bar.logs) {
-			derivedStateOf {
-				Bar.logs.filter { it.contains(Tag.it) }
-			}
-		}
-
-            
-        End {
-            Icon.Delete {
-                Bar.logs.clear()
-            }
-            Icon.Copy(Logs.joinToString("\n"))
-			
-        }
-    }
-    
     @Composable
     fun AppUsage(Time: m_<Int>, Points: m_<Int>, selectedApp: Str) {
         Text("AppUsage")
