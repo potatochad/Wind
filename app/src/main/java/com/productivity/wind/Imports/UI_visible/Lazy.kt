@@ -381,7 +381,7 @@ fun LazyItem(
 
 @Composable
 fun LazyHeader(
-    titleContent: ui,
+    ui: uiRow,
     onBackClick: Do = {},
     showBack: Bool = yes,
     modifier: Mod = Mod,
@@ -428,7 +428,7 @@ fun LazyHeader(
             ) {
                 Box(Mod.maxW()) {
                     LazzyRow {
-                        titleContent()
+                        ui()
                     }
 				}
 				
@@ -463,7 +463,7 @@ fun LazyScreen(
 
 	val header: ui = {
 		LazyHeader(
-			titleContent = top,
+			ui = top,
 			onBackClick = onBackClick,
 			showBack = showBack,
 			showDivider = showDivider,
