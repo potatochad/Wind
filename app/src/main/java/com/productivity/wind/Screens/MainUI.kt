@@ -37,102 +37,135 @@ import androidx.activity.compose.*
 
 @Composable
 fun Main() {
-    RunOnce { MAINStart() }
+	RunOnce { MAINStart() }
+	
+	var searching by r(no)
+	var Tag = r("")
+	var showAll by r(no)
 
-    var searching by r(no)
-    var tag = r("")
-    var showAll by r(no)
+	BtnFloating { goTo("Challenge") }
+	
+	LazyScreen(
+		top = { 
+			if (!searching) {
+				Icon.Menu {
+					menu = yes
+				}
+				
+				// Icon.Chill { goTo("Web") }
 
-    BtnFloating { goTo("Challenge") }
+				Icon.Reload{
+					showOrderNotification(11)
+				}
+        
+				move(w = 12)
+        
+				Text("Points ${Bar.funTime}")
+        
+				End {
+					Icon.Search {
+						searching = yes
+					}
+				}
+			} else {
+				Icon.Back {
+					searching = no
+				}
+				TinyInput(Tag, Mod.h(40).weight(1f).Hscroll(), isInt = no, maxLetters = 400)
+				move(30)
+				
+				BackHandler {
+					searching = no				
+				}
+			}
+		}, 
+		showBack = no
+	) {
+			if (!searching) {
+				Bar.copyTsk.each {
+					if (!it.done()){
+						LazyCard { 
+							CopyTskUI(it)
+						}
+					}
+				}
+				
+				Bar.doTsk.each {
+					if (!it.done() && taskDueToday(it.schedule)){
+					
+						LazyCard(
+							modUI = Mod.space(start = 8),
+							modCard = Mod.space(h=8, w=10).maxW().click {    
+								goTo("ToDo/${it.id}")
+							},
+						) { 
+							DoTskUI(it)
+						}
+					}
+				}
 
-    LazyScreen(
-        top = { TopBar(searching, tag) { searching = it } },
-        showBack = no
-    ) {
-        if (!searching) {
-            renderTasks(
-                copyTsk = Bar.copyTsk,
-                doTsk = Bar.doTsk,
-                apps = Bar.apps,
-                filter = null
-            )
-        } else {
-            val filter: (Any) -> Boolean = { task ->
-                when (task) {
-                    is CopyTsk -> task.input.contains(tag.it)
-                    is DoTsk -> task.name.contains(tag.it) || task.description.contains(tag.it)
-                    is AppTask -> task.name.contains(tag.it)
-                    else -> false
-                }
-            }
 
-            renderTasks(
-                copyTsk = Bar.copyTsk,
-                doTsk = Bar.doTsk,
-                apps = Bar.apps,
-                filter = if (showAll) null else filter
-            )
-        }
-    }
-}
+				Bar.apps.each {
+					if (!it.done) {
+						if (it.NowTime > it.DoneTime - 1 && !it.done) {
+							Bar.funTime += it.Worth
+							Bar.apps.edit(it) { done = yes }
+							Vlog("${it.name} completed")						
+						}
 
-@Composable
-fun TopBar(searching: Boolean, tag: MutableState<String>, onSearchToggle: (Boolean) -> Unit) {
-    if (!searching) {
-        Icon.Menu { menu = yes }
-        Icon.Reload { showOrderNotification(11) }
-        move(w = 12)
-        Text("Points ${Bar.funTime}")
-        End { Icon.Search { onSearchToggle(true) } }
-    } else {
-        Icon.Back { onSearchToggle(false) }
-        TinyInput(tag, Mod.h(40).weight(1f).Hscroll(), isInt = no, maxLetters = 400)
-        move(30)
-        BackHandler { onSearchToggle(false) }
-    }
-}
+						Item.AppTaskUI(it)
+					}
+				}
+			} else {				
+				if (!showAll){
+					Bar.copyTsk.findUI({ 
+						it.input.contains(Tag.it) 
+					}) { 
+						LazyCard { CopyTskUI(it) } 
+					}
 
-@Composable
-fun renderTasks(
-    copyTsk: List<CopyTsk>,
-    doTsk: List<DoTsk>,
-    apps: List<AppTask>,
-    filter: ((Any) -> Boolean)? = null
-) {
-    copyTsk.forEach { if (filter == null || filter(it)) LazyCard { CopyTskUI(it) } }
-    doTsk.forEach { 
-        if (!it.done() && (filter == null || filter(it)) && taskDueToday(it.schedule)) {
-            LazyCard(
-                modUI = Mod.space(start = 8),
-                modCard = Mod.space(h=8, w=10).maxW().click { goTo("ToDo/${it.id}") }
-            ) { DoTskUI(it) }
-        }
-    }
+					Bar.doTsk.findUI({ 
+						it.name.contains(Tag.it) || it.description.contains(Tag.it)       					
+					}) { 						
+						LazyCard(
+							modUI = Mod.space(start = 8),
+							modCard = Mod.space(h=8, w=10).maxW().click {    
+								goTo("ToDo/${it.id}")
+							},
+						) { 
+							DoTskUI(it)
+						}
+					}
 
-    apps.forEach { 
-        if (!it.done) {
-            if (it.NowTime > it.DoneTime - 1 && !it.done) {
-                Bar.funTime += it.Worth
-                Bar.apps.edit(it) { done = yes }
-                Vlog("${it.name} completed")
-            }
-            if (filter == null || filter(it)) Item.AppTaskUI(it)
-        }
-    }
-}
+					Bar.apps.findUI({ 
+						it.name.contains(Tag.it) 
+					}) { 
+						Item.AppTaskUI(it) 
+					}
+				} else {
+					Bar.copyTsk.each { 
+						LazyCard { CopyTskUI(it) } 
+					}
+
+					Bar.doTsk.each { 
+						LazyCard(
+							modUI = Mod.space(start = 8),
+							modCard = Mod.space(h=8, w=10).maxW().click {    
+								goTo("ToDo/${it.id}")
+							},
+						) { 
+							DoTskUI(it)
+						}
+					}
+
+					Bar.apps.each { 
+						Item.AppTaskUI(it) 
+					}
+				}
+			}
 		
-
-
-
-
-
-
-
-
-
-
-
-
+	}
+}
 
 
 
