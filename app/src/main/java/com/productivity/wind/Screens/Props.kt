@@ -272,7 +272,7 @@ object Header {
 
     @Composable
     fun Logs(Tag: m_<Str>) {
-        TinyInput(Tag, Mod.h(36).w(120).Hscroll(), isInt = no, maxLetters = 70)
+        TinyInput(Tag, Mod.h(36).weight(1f).Hscroll(), isInt = no, maxLetters = 100)
 
 
 		val Logs by remember(Tag.it, Bar.logs) {
