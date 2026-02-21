@@ -41,7 +41,6 @@ fun Main() {
 	
 	var searching by r(no)
 	var Tag = r("")
-	var showAll by r(no)
 
 	BtnFloating { goTo("Challenge") }
 	
@@ -81,89 +80,65 @@ fun Main() {
 		}, 
 		showBack = no
 	) {
-			if (!searching) {
-				Bar.copyTsk.each {
-					if (!it.done()){
-						LazyCard { 
-							CopyTskUI(it)
-						}
-					}
-				}
-				
-				Bar.doTsk.each {
-					if (!it.done() && taskDueToday(it.schedule)){
-					
-						LazyCard(
-							modUI = Mod.space(start = 8),
-							modCard = Mod.space(h=8, w=10).maxW().click {    
-								goTo("ToDo/${it.id}")
-							},
-						) { 
-							DoTskUI(it)
-						}
-					}
-				}
-
-
-				Bar.apps.each {
-					if (!it.done) {
-						if (it.NowTime > it.DoneTime - 1 && !it.done) {
-							Bar.funTime += it.Worth
-							Bar.apps.edit(it) { done = yes }
-							Vlog("${it.name} completed")						
-						}
-
-						Item.AppTaskUI(it)
-					}
-				}
-			} else {				
-				if (!showAll){
-					Bar.copyTsk.findUI({ 
-						it.input.contains(Tag.it) 
-					}) { 
-						LazyCard { CopyTskUI(it) } 
-					}
-
-					Bar.doTsk.findUI({ 
-						it.name.contains(Tag.it) || it.description.contains(Tag.it)       					
-					}) { 						
-						LazyCard(
-							modUI = Mod.space(start = 8),
-							modCard = Mod.space(h=8, w=10).maxW().click {    
-								goTo("ToDo/${it.id}")
-							},
-						) { 
-							DoTskUI(it)
-						}
-					}
-
-					Bar.apps.findUI({ 
-						it.name.contains(Tag.it) 
-					}) { 
-						Item.AppTaskUI(it) 
-					}
-				} else {
-					Bar.copyTsk.each { 
-						LazyCard { CopyTskUI(it) } 
-					}
-
-					Bar.doTsk.each { 
-						LazyCard(
-							modUI = Mod.space(start = 8),
-							modCard = Mod.space(h=8, w=10).maxW().click {    
-								goTo("ToDo/${it.id}")
-							},
-						) { 
-							DoTskUI(it)
-						}
-					}
-
-					Bar.apps.each { 
-						Item.AppTaskUI(it) 
+		if (!searching) {
+			Bar.copyTsk.each {
+				if (!it.done()){
+					LazyCard { 
+						CopyTskUI(it)
 					}
 				}
 			}
-		
+				
+			Bar.doTsk.each {
+				if (!it.done() && taskDueToday(it.schedule)){
+					
+					LazyCard(
+						modUI = Mod.space(start = 8),
+						modCard = Mod.space(h=8, w=10).maxW().click {    
+							goTo("ToDo/${it.id}")
+						},
+					) { 
+						DoTskUI(it)
+					}
+				}
+			}
+
+			Bar.apps.each {
+				if (!it.done) {
+					if (it.NowTime > it.DoneTime - 1 && !it.done) {
+						Bar.funTime += it.Worth
+						Bar.apps.edit(it) { done = yes }
+						Vlog("${it.name} completed")						
+					}
+					Item.AppTaskUI(it)
+				}
+			}
+		} else {
+			Bar.copyTsk.findUI({ 
+				it.input.contains(Tag.it) 
+			}) { 
+				LazyCard { CopyTskUI(it) } 
+			}
+
+			Bar.doTsk.findUI({ 
+				it.name.contains(Tag.it) || it.description.contains(Tag.it)       					
+			}) { 						
+				LazyCard(
+					modUI = Mod.space(start = 8),
+					modCard = Mod.space(h=8, w=10).maxW().click {    
+						goTo("ToDo/${it.id}")
+					},
+				) { 
+					DoTskUI(it)
+				}
+			}
+
+			Bar.apps.findUI({ 
+				it.name.contains(Tag.it) 
+			}) { 
+				Item.AppTaskUI(it) 
+			}
+		}
 	}
 }
 
