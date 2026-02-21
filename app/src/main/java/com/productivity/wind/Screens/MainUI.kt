@@ -71,7 +71,7 @@ fun Main() {
 				Icon.Back {
 					searching = no
 				}
-				TinyInput(Tag, Mod.h(40).maxW().Hscroll(), isInt = no, maxLetters = 400)
+				TinyInput(Tag, Mod.h(40).weight(1f).Hscroll(), isInt = no, maxLetters = 400)
 				move(30)
 				
 				BackHandler {
