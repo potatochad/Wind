@@ -342,6 +342,20 @@ fun Color.darker(percent: Any): Color {
 
 
 
+import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+
+fun isKeyboardOpen(activity: Activity): Boolean {
+    val rootView = activity.window.decorView.rootView
+    val insets = ViewCompat.getRootWindowInsets(rootView) ?: return false
+    return insets.isVisible(WindowInsetsCompat.Type.ime())
+}
+
+
+
+
+
 //✴️ Data renames
 fun Any.eachValVar(Do: (ClassValVar<Any, *>) -> Unit) {
     this::class.memberProperties.forEach {
