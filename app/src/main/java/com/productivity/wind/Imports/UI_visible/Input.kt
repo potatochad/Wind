@@ -153,6 +153,7 @@ fun BasicInput(
 	if (!keyboard.open){
 		focusManager.clearFocus()
 	}
+	Vlog("keyboard: $keyboard")
 
 	move(3)
 	Row(
