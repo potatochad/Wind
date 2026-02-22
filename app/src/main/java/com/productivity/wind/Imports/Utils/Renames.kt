@@ -340,39 +340,6 @@ fun Color.darker(percent: Any): Color {
     )
 }
 
-fun isKeyboardOpen(): Bool {
-    val rootView = App.window.decorView.rootView
-    val insets = ViewCompat.getRootWindowInsets(rootView) ?: return no
-    return insets.isVisible(WindowInsetsCompat.Type.ime())
-}
-
-data class KeyboardData(
-    val isOpen: Boolean,
-    val height: Int,
-    val inputType: Int? = null
-)
-
-@Composable
-fun keyboardOpen(): State<Bool> {
-    val context = LocalContext.current
-    val keyboardState = r(no)
-
-    DisposableEffect(context) {
-        val rootView = (context as Activity).window.decorView.rootView
-        val listener = ViewTreeObserver.OnGlobalLayoutListener {
-            val insets = ViewCompat.getRootWindowInsets(rootView)
-            keyboardState.value = insets?.isVisible(WindowInsetsCompat.Type.ime()) == true
-        }
-
-        rootView.viewTreeObserver.addOnGlobalLayoutListener(listener)
-
-        onDispose {
-            rootView.viewTreeObserver.removeOnGlobalLayoutListener(listener)
-        }
-    }
-
-    return keyboardState
-}
 
 
 
