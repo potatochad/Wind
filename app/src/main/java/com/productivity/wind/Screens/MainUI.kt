@@ -43,6 +43,11 @@ fun Main() {
 	var Tag = r("")
 
 	BtnFloating { goTo("Challenge") }
+
+	fun stopSearch(){
+		Tag.it = ""
+		searching = no
+	}
 	
 	LazyScreen(
 		top = { 
@@ -52,21 +57,21 @@ fun Main() {
 				// Icon.Chill { goTo("Web") }
 
 				Icon.Reload{
-					showOrderNotification(11)
+					// showOrderNotification(11)
 				}
 				move(12)
 				Text("Points ${Bar.funTime}")
         
-				End {
+				End { 
 					Icon.Search {
 						searching = yes
 					}
 				}
 			} else {
-				Icon.Back { searching = no }
+				Icon.Back { stopSearch() }
 				TinyInput(Tag, Mod.h(40).weight(1f).Hscroll(), isInt = no, maxLetters = 400)
 				move(30)
-				BackHandler { searching = no }
+				BackHandler { stopSearch() }
 			}
 		}, 
 		showBack = no
