@@ -47,18 +47,14 @@ fun Main() {
 	LazyScreen(
 		top = { 
 			if (!searching) {
-				Icon.Menu {
-					menu = yes
-				}
+				Icon.Menu { menu = yes }
 				
 				// Icon.Chill { goTo("Web") }
 
 				Icon.Reload{
 					showOrderNotification(11)
 				}
-        
-				move(w = 12)
-        
+				move(12)
 				Text("Points ${Bar.funTime}")
         
 				End {
