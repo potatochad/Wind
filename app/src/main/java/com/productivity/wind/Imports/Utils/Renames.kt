@@ -346,6 +346,12 @@ fun isKeyboardOpen(): Bool {
     return insets.isVisible(WindowInsetsCompat.Type.ime())
 }
 
+data class KeyboardData(
+    val isOpen: Boolean,
+    val height: Int,
+    val inputType: Int? = null
+)
+
 @Composable
 fun keyboardOpen(): State<Bool> {
     val context = LocalContext.current
