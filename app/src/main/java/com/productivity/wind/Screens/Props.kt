@@ -126,6 +126,10 @@ fun Menu() {
 
 object Item {
 	@Composable
+	fun Menu(){
+		Icon.Menu { menu = yes }
+	}
+	@Composable
     fun Delete(
 		mod: Mod = Mod.space(5),
 		Do: Do = {}
