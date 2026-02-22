@@ -128,9 +128,14 @@ data class KeyboardData(
 
 @Composable
 fun Keyboard(): KeyboardData {
-    val imeBottom = WindowInsets.ime.getBottom(LocalDensity.current)  // keyboard height
-    val isOpen = imeBottom > 0
-    return KeyboardData(isOpen, imeBottom)
+    val h = WindowInsets.ime.getBottom(LocalDensity.current)
+    var oldH = h
+    val open = h > 0
+    
+    if (oldH > h){
+        open = no
+    }
+    return KeyboardData(open, h)
 }
 
 
