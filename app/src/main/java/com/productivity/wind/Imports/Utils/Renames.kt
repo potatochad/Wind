@@ -348,6 +348,28 @@ fun isKeyboardOpen(): Bool {
     return insets.isVisible(WindowInsetsCompat.Type.ime())
 }
 
+@Composable
+fun keyboardOpen(): State<Bool> {
+    val context = LocalContext.current
+    val keyboardState = r(no)
+
+    DisposableEffect(context) {
+        val rootView = (context as Activity).window.decorView.rootView
+        val listener = ViewTreeObserver.OnGlobalLayoutListener {
+            val insets = ViewCompat.getRootWindowInsets(rootView)
+            keyboardState.value = insets?.isVisible(WindowInsetsCompat.Type.ime()) == true
+        }
+
+        rootView.viewTreeObserver.addOnGlobalLayoutListener(listener)
+
+        onDispose {
+            rootView.viewTreeObserver.removeOnGlobalLayoutListener(listener)
+        }
+    }
+
+    return keyboardState
+}
+
 
 
 
