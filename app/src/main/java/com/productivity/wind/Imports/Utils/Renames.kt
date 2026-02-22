@@ -118,6 +118,10 @@ import com.productivity.wind.Imports.UI_visible.*
 import java.time.*
 import java.time.format.*
 
+import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+
 
 //colors
 var CardColor = Color(0xFF1A1A1A)
@@ -338,17 +342,9 @@ fun Color.darker(percent: Any): Color {
     )
 }
 
-
-
-
-
-import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-
-fun isKeyboardOpen(activity: Activity): Boolean {
-    val rootView = activity.window.decorView.rootView
-    val insets = ViewCompat.getRootWindowInsets(rootView) ?: return false
+fun isKeyboardOpen(): Bool {
+    val rootView = App.window.decorView.rootView
+    val insets = ViewCompat.getRootWindowInsets(rootView) ?: return no
     return insets.isVisible(WindowInsetsCompat.Type.ime())
 }
 
