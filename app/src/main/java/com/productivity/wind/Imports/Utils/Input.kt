@@ -130,7 +130,7 @@ data class KeyboardData(
 fun Keyboard(): KeyboardData {
     val h = WindowInsets.ime.getBottom(LocalDensity.current)
     var oldH = h
-    val open = h > 0
+    var open = h > 0
     
     if (oldH > h){
         open = no
