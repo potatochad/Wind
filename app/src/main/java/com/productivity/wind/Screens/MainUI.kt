@@ -47,7 +47,7 @@ fun Main() {
 	LazyScreen(
 		top = { 
 			if (!searching) {
-				Icon.Menu { menu = yes }
+				Item.Menu()
 				
 				// Icon.Chill { goTo("Web") }
 
@@ -63,15 +63,10 @@ fun Main() {
 					}
 				}
 			} else {
-				Icon.Back {
-					searching = no
-				}
+				Icon.Back { searching = no }
 				TinyInput(Tag, Mod.h(40).weight(1f).Hscroll(), isInt = no, maxLetters = 400)
 				move(30)
-				
-				BackHandler {
-					searching = no				
-				}
+				BackHandler { searching = no }
 			}
 		}, 
 		showBack = no
