@@ -121,10 +121,17 @@ import android.view.*
 import androidx.core.view.*
 
 
+data class KeyboardData(
+    val open: Bool,
+    val h: Int
+)
 
-
-
-
+@Composable
+fun Keyboard(): KeyboardData {
+    val imeBottom = WindowInsets.ime.getBottom(LocalDensity.current)  // keyboard height
+    val isOpen = imeBottom > 0
+    return KeyboardData(isOpen, imeBottom)
+}
 
 
 
