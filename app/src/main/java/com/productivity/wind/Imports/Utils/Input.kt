@@ -129,12 +129,17 @@ data class KeyboardData(
 @Composable
 fun Keyboard(): KeyboardData {
     val h = WindowInsets.ime.getBottom(LocalDensity.current)
-    var oldH = h
-    var open = h > 0
-    
-    if (oldH > h){
-        open = no
+    var oldH by remember { mutableStateOf(0) }
+    var open by remember { mutableStateOf(false) }
+
+    if (h > 0) {
+        open = true // keyboard is visible
     }
+    if (h < oldH) {
+        open = false // keyboard is closing
+    }
+
+    oldH = h
     return KeyboardData(open, h)
 }
 
