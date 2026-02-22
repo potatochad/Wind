@@ -117,10 +117,8 @@ import androidx.compose.ui.text.*
 import com.productivity.wind.Imports.UI_visible.*
 import java.time.*
 import java.time.format.*
-
-import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.view.*
+import androidx.core.view.*
 
 
 //colors
