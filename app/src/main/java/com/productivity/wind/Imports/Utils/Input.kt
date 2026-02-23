@@ -144,6 +144,17 @@ fun Keyboard(): KeyboardData {
 }
 
 
+@Composable
+fun UIFocus(): FocusManager = LocalFocusManager.current
+
+
+
+
+
+
+
+
+
 
 
 
