@@ -157,7 +157,7 @@ fun LogsScreen() {
 
     LazyScreen(
 		top = {
-			TinyInput(Tag, Mod.h(36).weight(1f), isInt = no, maxLetters = 100)
+			TinyInput(Tag, Mod.h(36).w(AppW - 180.dp), isInt = no, maxLetters = 100)
 
 			val Logs by remember(Tag.it, Bar.logs) {
 				derivedStateOf {
