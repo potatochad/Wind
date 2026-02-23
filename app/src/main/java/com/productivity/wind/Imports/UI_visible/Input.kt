@@ -151,13 +151,13 @@ fun BasicInput(
 
 	val keyboard = Keyboard()
 	if (!keyboard.open){
-		focus.clearFocus()
+		focus.clear()
 	}
 	Vlog("keyboard: $keyboard")
 
 	move(3)
 	Row(
-		modifier = baseMod.mix(new = mod).click { focusAsker.requestFocus() },
+		modifier = baseMod.mix(new = mod).click { focusAsker.ask() },
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
@@ -172,7 +172,7 @@ fun BasicInput(
 				imeAction = ImeAction.Done
 			),
 			keyboardActions = KeyboardActions(
-				onDone = { focus.clearFocus() }
+				onDone = { focus.clear() }
 			),
 			modifier = Mod.focusRequester(focusAsker)
 		)
