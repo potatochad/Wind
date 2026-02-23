@@ -414,7 +414,7 @@ fun ToDo(id: Str = "") {
 			LazzyRow(Mod.space(bottom = 5)){
 				TinyInput(name1, Mod.weight(1f), isInt = no, maxLetters = 800)           
 			}
-			BigInput(description1, h = 120) {
+			BigInput(description1, Mod.wrapContentHeight()) {
 				description1.it = it
 			}
 			}
