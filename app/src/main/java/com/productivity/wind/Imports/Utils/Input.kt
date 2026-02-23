@@ -147,7 +147,8 @@ fun Keyboard(): KeyboardData {
 typealias FocusAsker = FocusRequester
 fun FocusAsker.ask() = this.requestFocus()
 
-
+fun Mod.focusAsker(x: FocusAsker) = this.focusRequester(x)
+    
 
 typealias UIFocus = FocusManager
 
