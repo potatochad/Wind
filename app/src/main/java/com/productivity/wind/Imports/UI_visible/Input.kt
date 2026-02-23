@@ -156,7 +156,7 @@ fun BasicInput(
 
 	move(3)
 	Row(
-		// modifier = baseMod.mix(new = mod).click { focusAsker.ask() },
+		modifier = baseMod.mix(new = mod),
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
@@ -173,7 +173,7 @@ fun BasicInput(
 			keyboardActions = KeyboardActions(
 				onDone = { focus.clear() }
 			),
-			modifier = baseMod.mix(new = mod).focusAsker(focusAsker).click { focusAsker.ask() }
+			modifier = Mod.focusAsker(focusAsker).click { focusAsker.ask() }
 		)
 	}
 }
