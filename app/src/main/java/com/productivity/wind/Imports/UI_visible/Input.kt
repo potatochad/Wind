@@ -145,19 +145,19 @@ fun BasicInput(
 	oneLine: Bool= yes,
     Do: DoStr = {},
 ) {
-	val focusManager = LocalFocusManager.current
-	val focusRequester = r { FocusRequester() }
+	val focus = UIFocus()
+	val focusAsker = r { FocusRequester() }
 	val baseMod = Mod.space(h = 8, w = 4).w(60).h(26).background(InputColor, shape = RoundedCornerShape(4.dp))     
 
 	val keyboard = Keyboard()
 	if (!keyboard.open){
-		focusManager.clearFocus()
+		focus.clearFocus()
 	}
 	Vlog("keyboard: $keyboard")
 
 	move(3)
 	Row(
-		modifier = baseMod.mix(new = mod).click { focusRequester.requestFocus() },
+		modifier = baseMod.mix(new = mod).click { focusAsker.requestFocus() },
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
@@ -172,9 +172,9 @@ fun BasicInput(
 				imeAction = ImeAction.Done
 			),
 			keyboardActions = KeyboardActions(
-				onDone = { focusManager.clearFocus() }
+				onDone = { focus.clearFocus() }
 			),
-			modifier = Mod.focusRequester(focusRequester)
+			modifier = Mod.focusRequester(focusAsker)
 		)
 	}
 }
