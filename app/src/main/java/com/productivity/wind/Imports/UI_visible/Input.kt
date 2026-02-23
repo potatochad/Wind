@@ -173,7 +173,7 @@ fun BasicInput(
 			keyboardActions = KeyboardActions(
 				onDone = { focus.clear() }
 			),
-			modifier = Mod.baseMod.mix(new = mod).focusAsker(focusAsker).click { focusAsker.ask() }
+			modifier = baseMod.mix(new = mod).focusAsker(focusAsker).click { focusAsker.ask() }
 		)
 	}
 }
