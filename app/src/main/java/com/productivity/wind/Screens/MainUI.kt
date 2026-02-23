@@ -69,7 +69,7 @@ fun Main() {
 				}
 			} else {
 				Icon.Back { stopSearch() }
-				TinyInput(Tag, Mod.h(40).weight(1f).Hscroll(), isInt = no, maxLetters = 400)
+				TinyInput(Tag, Mod.h(40).weight(1f), isInt = no, maxLetters = 400)
 				move(30)
 				BackHandler { stopSearch() }
 			}
