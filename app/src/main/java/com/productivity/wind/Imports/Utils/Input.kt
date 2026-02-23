@@ -143,6 +143,12 @@ fun Keyboard(): KeyboardData {
     return KeyboardData(open, h)
 }
 
+
+typealias FocusAsker = FocusRequester
+fun FocusAsker.ask() = this.requestFocus()
+
+
+
 typealias UIFocus = FocusManager
 
 @Composable
