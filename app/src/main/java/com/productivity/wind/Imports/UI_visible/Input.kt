@@ -150,10 +150,9 @@ fun BasicInput(
 	val baseMod = Mod.space(h = 8, w = 4).w(60).h(26).background(InputColor, shape = RoundedCornerShape(4.dp))     
 
 	val keyboard = Keyboard()
-	if (!keyboard.open){
-		focus.clear()
-	}
-	Vlog("keyboard: $keyboard")
+	if (!keyboard.open) focus.clear()
+	
+	
 
 	move(3)
 	Row(
@@ -174,7 +173,7 @@ fun BasicInput(
 			keyboardActions = KeyboardActions(
 				onDone = { focus.clear() }
 			),
-			modifier = Mod.focusRequester(focusAsker)
+			modifier = Mod.focusAsker(focusAsker)
 		)
 	}
 }
