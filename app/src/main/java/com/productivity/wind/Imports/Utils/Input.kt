@@ -143,10 +143,11 @@ fun Keyboard(): KeyboardData {
     return KeyboardData(open, h)
 }
 
+typealias UIFocus = FocusManager
 
 @Composable
-fun UIFocus(): FocusManager = LocalFocusManager.current
-
+fun UIFocus(): UIFocus = LocalFocusManager.current
+fun UIFocus.clear() = this.clearFocus()
 
 
 
