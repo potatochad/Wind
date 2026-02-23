@@ -140,7 +140,7 @@ fun BasicInput(
 	textStyle: TextStyle = TextStyle(
 		color = Gold,
 		fontSize = 14.sp,
-		textAlign = TextAlign.Start
+		textAlign = TextAlign.Start,
 	),
 	oneLine: Bool= yes,
     Do: DoStr = {},
@@ -152,9 +152,8 @@ fun BasicInput(
 
 	val keyboard = Keyboard()
 	if (!keyboard.open) focus.clear()
-	
-	
 
+	
 	move(3)
 	Row(
 		modifier = baseMod.mix(new = mod).getW{
@@ -181,53 +180,14 @@ fun BasicInput(
 	}
 }
 
-@Composable
-fun Input(
-    what: mStr,
-    isInt: Bool = no,
-	modifier: Mod = Mod, 
-	textStyle: TextStyle = TextStyle(),
-    onChange: DoStr = {},
-) {
-	val focusManager = LocalFocusManager.current
-
-	Row(
-		modifier = modifier,
-		verticalAlignment = Alignment.CenterVertically,
-		horizontalArrangement = Arrangement.Start       
-	) {
-		move(w=5)
-		BasicTextField(
-			value = what.it,
-			onValueChange = {
-				val filtered = if (isInt) it.filter { c -> c.isDigit() } else it
-
-				what.it = filtered
-		
-				onChange(filtered)
-			},
-			textStyle = textStyle, 
-			singleLine = yes,
-			// modifier = modifier, 
-			keyboardOptions = KeyboardOptions(
-				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
-				imeAction = ImeAction.Done
-			),
-			keyboardActions = KeyboardActions(
-				onDone = { focusManager.clearFocus() }
-			)
-		)
-	}
-	
-}
-
 
 @Composable
-fun BigInput(txt: mStr, scrollV: ScrollState = r_Scroll(), h: Int = 150, Do: DoStr={ txt.it = it }){
-	val scroll = scrollV
+fun BigInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: Int = 150, Do: DoStr = { txt.it = it }){    
 	var Field by r(TextFieldValue(txt.it))
 	var done = r(no)
 	var itIndex by r(0)
+
+	var baseMod = Mod.maxW().h(h).Vscroll(scroll)
 		
     OutlinedTextField(
         value = Field,
@@ -243,7 +203,7 @@ fun BigInput(txt: mStr, scrollV: ScrollState = r_Scroll(), h: Int = 150, Do: DoS
 			fixedInputScroll(Field, itIndex, done, scroll)
 
 		},
-        modifier = Mod.maxW().h(h).Vscroll(scroll).onFocusChanged{
+        modifier = baseMod.mix(new = mod).onFocusChanged{
 			if (!it.isFocused) done.it = no
 		},
 		placeholder = { Text("Start typing...") },
