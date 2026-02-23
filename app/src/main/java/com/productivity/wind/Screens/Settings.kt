@@ -155,25 +155,25 @@ fun LogsScreen() {
 		scroll.toBottom()
 	}
 
-    LazyScreen(top = {
-        TinyInput(Tag, Mod.h(36).weight(1f).Hscroll(), isInt = no, maxLetters = 100)
+    LazyScreen(
+		top = {
+			TinyInput(Tag, Mod.h(36).weight(1f), isInt = no, maxLetters = 100)
 
-
-		val Logs by remember(Tag.it, Bar.logs) {
-			derivedStateOf {
-				Bar.logs.filter { it.contains(Tag.it) }
+			val Logs by remember(Tag.it, Bar.logs) {
+				derivedStateOf {
+					Bar.logs.filter { it.contains(Tag.it) }
+				}
 			}
-		}
-
-            
-        End {
-            Icon.Delete {
-                Bar.logs.clear()
-            }
-            Icon.Copy(Logs.joinToString("\n"))
-			
-		}
-    }) {
+		
+			End {
+				Icon.Delete {
+					Bar.logs.clear()
+				}
+				Icon.Copy(Logs.joinToString("\n"))
+			}
+		},
+		scroll = no,
+	) {
         if (Bar.logs.isEmpty()){
               EmptyBox("No logs")
         } else {
