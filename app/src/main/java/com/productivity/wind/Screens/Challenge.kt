@@ -410,13 +410,11 @@ fun ToDo(id: Str = "") {
 		}
 	}) {
 		RuleCard("Info"){
-			Column {
 			LazzyRow(Mod.space(bottom = 5)){
 				TinyInput(name1, Mod.weight(1f), isInt = no, maxLetters = 800)           
 			}
 			BigInput(description1, Mod.wrapContentHeight()) {
 				description1.it = it
-			}
 			}
 			LazzyRow{
 				Text("Time")
