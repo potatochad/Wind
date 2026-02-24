@@ -132,7 +132,7 @@ fun CopyPaste(id: Str ="") {
                 Text("DailyMax: ")
                 TinyInput(maxDone)
             }
-			BigInput(txt, scroll = inputScroll)
+			ScrollInput(txt, scroll = inputScroll)
         }
     }
 }
@@ -231,7 +231,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			
 	
 	var txt = r(tsk.input)
-    BigInput(txt, scroll = inputScroll) {
+    ScrollInput(txt, scroll = inputScroll) {
 		if (it.size - txt.it.size < 2) {
 			txt.it=it
 			
