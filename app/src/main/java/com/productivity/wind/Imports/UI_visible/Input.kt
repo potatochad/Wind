@@ -182,7 +182,7 @@ fun BasicInput(
 
 
 @Composable
-fun BigInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: Int = 150, Do: DoStr = { txt.it = it }){    
+fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: Int = 150, Do: DoStr = { txt.it = it }){    
 	var Field by r(TextFieldValue(txt.it))
 	var done = r(no)
 	var itIndex by r(0)
@@ -209,6 +209,35 @@ fun BigInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: Int
 		placeholder = { Text("Start typing...") },
     )
 }
+
+
+@Composable
+fun BigInput(txt: mStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){    
+	var Field by r(TextFieldValue(txt.it))
+	var done = r(no)
+	var itIndex by r(0)
+
+	var baseMod = Mod.maxW().wrapContentHeight()
+		
+    OutlinedTextField(
+        value = Field,
+        onValueChange = {    		
+			Do(it.text)
+			Field = TextFieldValue(
+				text = txt.it,
+				selection = it.selection
+			)
+			itIndex = it.selection.start
+		},
+        modifier = baseMod.mix(new = mod).onFocusChanged{
+			if (!it.isFocused) done.it = no
+		},
+		placeholder = { Text("Start typing...") },
+    )
+}
+
+
+
 
 
 
