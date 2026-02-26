@@ -101,10 +101,21 @@ import androidx.core.net.toUri
 
 
 @Composable
-fun KwikCircularLoading() {
-    CircularProgressIndicator()
+fun KwikCircularLoading(
+    modifier: Modifier = Modifier,
+    sizeFraction: Float = 0.2f // 20% of parent width by default
+) {
+    Box(
+        modifier = modifier.fillMaxSize(), // parent fills available space
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .fillMaxWidth(sizeFraction) // scales with parent
+                .aspectRatio(1f) // keep it circular
+        )
+    }
 }
-
 /**
  * Settings for the KwikWebView.
  *
