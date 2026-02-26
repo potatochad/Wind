@@ -47,6 +47,7 @@ import android.content.Intent
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.annotation.RequiresApi
+import android.annotation.SuppressLint
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.productivity.wind.Screens.*
