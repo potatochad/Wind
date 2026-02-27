@@ -122,7 +122,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 
 @Composable
-fun ExtensionsScreen() = LazyScreen("Extensions") {
+fun ExtensionsScreen() = LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
 	KwikWebview(
 		url = "https://app.domain.com",
 		webViewSettings = {
