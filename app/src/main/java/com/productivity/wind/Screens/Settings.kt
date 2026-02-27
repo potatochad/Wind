@@ -123,7 +123,16 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions") {
-	if (Build.VERSION.SDK_INT >= 35) LiveUpdateSample()
+	KwikWebview(
+		url = "https://app.domain.com",
+		webViewSettings = {
+			cookies = mapOf(
+				"cookieName" to "cookieValue",
+				"anotherCookie" to "anotherValue"
+			),
+			userAgent = "Running on Kwik Android WebView"
+		}
+	)
 }
 
 @Composable
