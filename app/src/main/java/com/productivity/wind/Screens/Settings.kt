@@ -124,15 +124,15 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
 	KwikWebView(
-		url = "https://app.domain.com",
-		webViewSettings = {
-			cookies = mapOf(
-				"cookieName" to "cookieValue",
-				"anotherCookie" to "anotherValue"
-			),
-			userAgent = "Running on Kwik Android WebView"
-		}
-	)
+        url = "https://app.domain.com",
+        webViewSettings = {
+            cookies = listOf(
+                KwikCookie(name = "cookieName", value = "cookieValue"),
+                KwikCookie(name = "anotherCookie", value = "anotherValue")
+            )
+            userAgent = "Running on Kwik Android WebView"
+        }
+    )
 }
 
 @Composable
