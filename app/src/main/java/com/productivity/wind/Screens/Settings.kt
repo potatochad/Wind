@@ -125,7 +125,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 fun ExtensionsScreen() = LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
 	KwikWebView(
         modifier = Modifier.fillMaxSize(),
-        url = "https://app.domain.com",
+        url = "https://google.com",
         pageLoaded = {
             // page finished loading
         },
