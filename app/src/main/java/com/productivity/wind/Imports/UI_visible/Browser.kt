@@ -307,7 +307,7 @@ fun WebView.safeCopyBackForwardList(): WebBackForwardList? {
     return try {
         copyBackForwardList()
     } catch (e: NullPointerException) {
-        log("Failed to extract WebView back forward list: ${e.asLog()}")
+        log("Failed to extract WebView back forward list: ${e.message}")
         null
     }
 }
