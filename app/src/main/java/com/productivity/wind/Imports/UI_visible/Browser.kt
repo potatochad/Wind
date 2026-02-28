@@ -119,14 +119,14 @@ import com.duckduckgo.site.permissions.api.SitePermissionsManager
 import com.duckduckgo.site.permissions.api.SitePermissionsManager.LocationPermissionRequest
 */
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+
 import javax.inject.Inject
 import android.graphics.Bitmap
 import android.graphics.Bitmap.Config.ARGB_8888
 import android.graphics.Color
-import android.net.Uri
 import android.os.Message
+
+/*
 import android.view.View
 import android.webkit.GeolocationPermissions
 import android.webkit.JsPromptResult
@@ -135,6 +135,7 @@ import android.webkit.PermissionRequest
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+*/
 
 
 
