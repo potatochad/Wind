@@ -138,6 +138,52 @@ import android.webkit.WebView
 */
 
 
+interface AppBuildConfig {
+    val isTest: Boolean
+    val isPerformanceTest: Boolean
+    val isDebug: Boolean
+    val applicationId: String
+    val buildType: String
+    val versionCode: Int
+    val versionName: String
+    val flavor: BuildFlavor
+    val sdkInt: Int
+    val manufacturer: String
+    val model: String
+    val deviceLocale: Locale
+    val isDefaultVariantForced: Boolean
+    val buildDateTimeMillis: Long
+    val canSkipOnboarding: Boolean
+
+    /**
+     * You should call [variantName] in a background thread
+     */
+    val variantName: String?
+
+    /**
+     * @return `true` if the user re-installed the app, `false` otherwise
+     */
+    suspend fun isAppReinstall(): Boolean
+
+    /**
+     * Detects if this is a fresh installation of the app (first time install).
+     *
+     * @return true if this is a new installation (not an update), false otherwise
+     */
+    fun isNewInstall(): Boolean
+}
+
+enum class BuildFlavor {
+    INTERNAL,
+    FDROID,
+    PLAY,
+}
+
+/**
+ * Convenience extension function
+ * @return `true` when the current build flavor is INTERNAL, `false` otherwise
+ */
+fun AppBuildConfig.isInternalBuild(): Boolean = flavor == BuildFlavor.INTERNAL
 
 
 class BrowserChromeClient @Inject constructor(
