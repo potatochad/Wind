@@ -83,7 +83,7 @@ fun Web(){
 @Composable
 fun BlockKeyword() {
     var url by r(UrlShort(Bar.Url))
-    var BadWord = r("${url.take(10)+"..."}")
+    var BadWord = r(url)
 
     LazyScreen(
         top = {
@@ -109,7 +109,7 @@ fun BlockKeyword() {
         RuleCard("If") {
             LazzyRow {
                 Text("Detect ")
-                TinyInput(BadWord, maxLetters = 100, isInt=no)
+                TinyInput(BadWord, Mod.weight(1f), isInt = no, maxLetters = 800)           
             }
         }
 
