@@ -124,13 +124,27 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
 	KwikWebView(
+        modifier = Modifier.fillMaxSize(),
         url = "https://app.domain.com",
+        pageLoaded = {
+            // page finished loading
+        },
+        failedToOpenLink = {
+            // handle deep link fail
+        },
         webViewSettings = {
+            userAgent = "Kwik Android"
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            debug = true
+
             cookies = listOf(
-                KwikCookie(name = "cookieName", value = "cookieValue"),
-                KwikCookie(name = "anotherCookie", value = "anotherValue")
+                KwikCookie(
+                    name = "token",
+                    value = "abc123",
+                    domain = ".domain.com"
+                )
             )
-            userAgent = "Running on Kwik Android WebView"
         }
     )
 }
