@@ -133,9 +133,6 @@ import com.duckduckgo.site.permissions.api.SitePermissionsManager.LocationPermis
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import logcat.LogPriority.INFO
-import logcat.LogPriority.VERBOSE
-import logcat.logcat
 import javax.inject.Inject
 
 
@@ -157,7 +154,7 @@ class BrowserChromeClient @Inject constructor(
         view: View,
         callback: CustomViewCallback?,
     ) {
-        logcat { "on show custom view" }
+        log("on show custom view")
         if (customView != null) {
             callback?.onCustomViewHidden()
             return
@@ -168,7 +165,7 @@ class BrowserChromeClient @Inject constructor(
     }
 
     override fun onHideCustomView() {
-        logcat { "on hide custom view" }
+        logcat("on hide custom view")
         webViewClientListener?.exitFullScreen()
         customView = null
     }
@@ -179,7 +176,7 @@ class BrowserChromeClient @Inject constructor(
     ) {
         // We want to use webView.progress rather than newProgress because the former gives you the overall progress of the new site
         // and the latter gives you the progress of the current main request being loaded and one site could have several redirects.
-        logcat { "onProgressChanged ${webView.url}, ${webView.progress}" }
+        logcat("onProgressChanged ${webView.url}, ${webView.progress}")
         if (webView.progress == 0) return
         val navigationList = webView.safeCopyBackForwardList() ?: return
         webViewClientListener?.progressChanged(webView.progress, WebViewNavigationState(navigationList, webView.progress))
@@ -191,7 +188,7 @@ class BrowserChromeClient @Inject constructor(
         icon: Bitmap,
     ) {
         webView.url?.let {
-            logcat(INFO) { "Favicon bitmap received: ${webView.url}" }
+            log("Favicon bitmap received: ${webView.url}")
             webViewClientListener?.iconReceived(it, icon)
         }
     }
@@ -201,7 +198,7 @@ class BrowserChromeClient @Inject constructor(
         url: String?,
         precomposed: Boolean,
     ) {
-        logcat(INFO) { "Favicon touch received: ${view?.url}, $url" }
+        log("Favicon touch received: ${view?.url}, $url")
         val visitedUrl = view?.url ?: return
         val iconUrl = url ?: return
         webViewClientListener?.iconReceived(visitedUrl, iconUrl)
@@ -210,7 +207,7 @@ class BrowserChromeClient @Inject constructor(
 
     override fun onReceivedTitle(
         view: WebView,
-        title: String,
+        title: Str,
     ) {
         webViewClientListener?.titleReceived(title)
     }
@@ -245,7 +242,7 @@ class BrowserChromeClient @Inject constructor(
     }
 
     override fun onPermissionRequest(request: PermissionRequest) {
-        logcat { "Permissions: permission requested ${request.resources.asList()}" }
+        log("Permissions: permission requested ${request.resources.asList()}")
         webViewClientListener?.getCurrentTabId()?.let { tabId ->
             appCoroutineScope.launch(coroutineDispatcher.io()) {
                 val permissionsAllowedToAsk = sitePermissionsManager.getSitePermissions(tabId, request)
@@ -314,7 +311,7 @@ class BrowserChromeClient @Inject constructor(
             return false
         }
 
-        logcat(VERBOSE) { "javascript dialog attempting to show but is not the active tab; suppressing dialog" }
+        log("javascript dialog attempting to show but is not the active tab; suppressing dialog")
         result.cancel()
         return true
     }
