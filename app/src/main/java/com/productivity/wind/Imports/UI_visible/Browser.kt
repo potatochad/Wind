@@ -142,7 +142,7 @@ import android.webkit.WebView
 
 class BrowserChromeClient @Inject constructor(
     private val appBuildConfig: AppBuildConfig,
-    val appCoroutineScope: CoroutineScope = App,
+    val appCoroutineScope: CoroutineScope = scope,
     private val coroutineDispatcher: DispatcherProvider = DefaultDispatcherProvider(),
     private val sitePermissionsManager: SitePermissionsManager,
 ) : WebChromeClient() {
