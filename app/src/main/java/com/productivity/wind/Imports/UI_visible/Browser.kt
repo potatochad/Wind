@@ -104,8 +104,24 @@ import androidx.core.net.toUri
 
 
 
-package com.duckduckgo.app.browser
 
+
+
+
+
+/*
+import com.duckduckgo.app.browser.navigation.safeCopyBackForwardList
+import com.duckduckgo.app.di.AppCoroutineScope
+import com.duckduckgo.appbuildconfig.api.AppBuildConfig
+import com.duckduckgo.common.utils.DefaultDispatcherProvider
+import com.duckduckgo.common.utils.DispatcherProvider
+import com.duckduckgo.site.permissions.api.SitePermissionsManager
+import com.duckduckgo.site.permissions.api.SitePermissionsManager.LocationPermissionRequest
+*/
+
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 import android.graphics.Bitmap
 import android.graphics.Bitmap.Config.ARGB_8888
 import android.graphics.Color
@@ -119,22 +135,6 @@ import android.webkit.PermissionRequest
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-
-
-import com.duckduckgo.app.browser.navigation.safeCopyBackForwardList
-import com.duckduckgo.app.di.AppCoroutineScope
-import com.duckduckgo.appbuildconfig.api.AppBuildConfig
-import com.duckduckgo.common.utils.DefaultDispatcherProvider
-import com.duckduckgo.common.utils.DispatcherProvider
-import com.duckduckgo.site.permissions.api.SitePermissionsManager
-import com.duckduckgo.site.permissions.api.SitePermissionsManager.LocationPermissionRequest
-
-
-
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import javax.inject.Inject
-
 
 
 
