@@ -186,6 +186,18 @@ enum class BuildFlavor {
 fun AppBuildConfig.isInternalBuild(): Boolean = flavor == BuildFlavor.INTERNAL
 
 
+interface DispatcherProvider {
+
+    fun main(): CoroutineDispatcher = Dispatchers.Main
+    fun computation(): CoroutineDispatcher = Dispatchers.Default
+    fun io(): CoroutineDispatcher = Dispatchers.IO
+    fun unconfined(): CoroutineDispatcher = Dispatchers.Unconfined
+}
+
+class DefaultDispatcherProvider : DispatcherProvider
+
+
+
 class BrowserChromeClient @Inject constructor(
     private val appBuildConfig: AppBuildConfig,
     val appCoroutineScope: CoroutineScope = scope,
