@@ -283,6 +283,33 @@ interface SitePermissionsManager {
 }
 
 
+
+import android.webkit.WebBackForwardList
+import android.webkit.WebView
+import logcat.LogPriority.ERROR
+import logcat.asLog
+import logcat.logcat
+
+/**
+ * There is a bug in WebView whereby `webView.copyBackForwardList()` can internally throw a NPE
+ *
+ * This extension function can be used as a direct replacement of `copyBackForwardList()`
+ * It will catch the NullPointerException and return `null` when it happens.
+ *
+ * https://bugs.chromium.org/p/chromium/issues/detail?id=498796
+ */
+fun WebView.safeCopyBackForwardList(): WebBackForwardList? {
+    return try {
+        copyBackForwardList()
+    } catch (e: NullPointerException) {
+        log("Failed to extract WebView back forward list: ${e.asLog()}")
+        null
+    }
+}
+
+
+
+
 class BrowserChromeClient @Inject constructor(
     private val appBuildConfig: AppBuildConfig,
     val appCoroutineScope: CoroutineScope = scope,
