@@ -112,7 +112,7 @@ import android.net.http.SslCertificate
 import android.webkit.PermissionRequest
 import android.webkit.SslErrorHandler
 
-import android.webkit.JsResult
+import android.webkit.*
 
 
 
@@ -132,10 +132,7 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import kotlin.random.Random
 
-import android.webkit.WebBackForwardList
 import androidx.core.net.toUri
-import com.duckduckgo.app.browser.history.NavigationHistoryEntry
-import com.duckduckgo.common.utils.isHttpsVersionOfUri
 
 
 
@@ -146,6 +143,10 @@ import com.duckduckgo.common.utils.isHttpsVersionOfUri
 
 
 /*
+import com.duckduckgo.app.browser.history.NavigationHistoryEntry
+import com.duckduckgo.common.utils.isHttpsVersionOfUri
+
+
 import com.duckduckgo.feature.toggles.api.Toggle.FeatureName
 import com.duckduckgo.feature.toggles.api.Toggle.State
 import com.duckduckgo.feature.toggles.api.Toggle.State.Cohort
