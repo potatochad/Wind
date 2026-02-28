@@ -75,6 +75,9 @@ ktlint {
 
 
 dependencies {
+    implementation("org.apache.commons:commons-math3:3.6.1")
+
+
     implementation("javax.inject:javax.inject:1")
 
     implementation("com.google.accompanist:accompanist-permissions:0.37.3")
