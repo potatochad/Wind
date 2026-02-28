@@ -126,9 +126,9 @@ import android.graphics.Bitmap.Config.ARGB_8888
 import android.graphics.Color
 import android.os.Message
 import android.view.View
+import android.webkit.GeolocationPermissions
 
 /*
-import android.webkit.GeolocationPermissions
 import android.webkit.JsPromptResult
 import android.webkit.JsResult
 import android.webkit.PermissionRequest
@@ -491,16 +491,9 @@ class BrowserChromeClient @Inject constructor(
 
 
 
-import android.graphics.Bitmap
-import android.net.Uri
 import android.net.http.SslCertificate
-import android.os.Message
-import android.view.View
 import android.webkit.PermissionRequest
 import android.webkit.SslErrorHandler
-import android.webkit.ValueCallback
-import android.webkit.WebChromeClient
-import android.webkit.WebView
 import com.duckduckgo.app.browser.model.BasicAuthenticationRequest
 import com.duckduckgo.app.global.model.Site
 import com.duckduckgo.app.surrogates.SurrogateResponse
