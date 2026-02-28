@@ -47,7 +47,6 @@ import android.content.Intent
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.annotation.RequiresApi
-import android.annotation.SuppressLint
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.productivity.wind.Screens.*
@@ -74,8 +73,6 @@ import androidx.compose.ui.unit.*
 import com.productivity.wind.Imports.*
 import androidx.compose.ui.window.*
 import androidx.compose.animation.*
-import android.view.ViewGroup
-import android.webkit.CookieManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
@@ -98,7 +95,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
-
 import javax.inject.Inject
 import android.graphics.Bitmap
 import android.graphics.Bitmap.Config.ARGB_8888
@@ -107,15 +103,10 @@ import android.os.Message
 import android.view.View
 import android.webkit.GeolocationPermissions
 import android.webkit.WebBackForwardList
-
 import android.net.http.SslCertificate
 import android.webkit.PermissionRequest
 import android.webkit.SslErrorHandler
-
 import android.webkit.*
-
-
-
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -131,25 +122,17 @@ import java.lang.reflect.Proxy
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import kotlin.random.Random
-
 import androidx.core.net.toUri
-
-
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import com.duckduckgo.app.browser.favicon.FaviconManager
-import com.duckduckgo.common.ui.view.listitem.OneLineListItem
-import com.duckduckgo.mobile.android.databinding.RowOneLineListItemBinding
 import kotlinx.coroutines.launch
-
 import android.net.Uri.parse
 import android.os.Build
 import androidx.core.net.toUri
-import com.duckduckgo.common.utils.UrlScheme.Companion.http
 import java.io.UnsupportedEncodingException
 import java.net.InetAddress
 import java.net.URLEncoder
@@ -157,9 +140,12 @@ import java.util.*
 
 
 
-
-
 /*
+import com.duckduckgo.app.browser.favicon.FaviconManager
+import com.duckduckgo.common.ui.view.listitem.OneLineListItem
+import com.duckduckgo.mobile.android.databinding.RowOneLineListItemBinding
+import com.duckduckgo.common.utils.UrlScheme.Companion.http
+
 import com.duckduckgo.app.browser.history.NavigationHistoryEntry
 import com.duckduckgo.common.utils.isHttpsVersionOfUri
 
