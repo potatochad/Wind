@@ -99,27 +99,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
 
-
-
-
-
-
-
-
-
-
-
-/*
-import com.duckduckgo.app.browser.navigation.safeCopyBackForwardList
-import com.duckduckgo.app.di.AppCoroutineScope
-import com.duckduckgo.appbuildconfig.api.AppBuildConfig
-import com.duckduckgo.common.utils.DefaultDispatcherProvider
-import com.duckduckgo.common.utils.DispatcherProvider
-import com.duckduckgo.site.permissions.api.SitePermissionsManager
-import com.duckduckgo.site.permissions.api.SitePermissionsManager.LocationPermissionRequest
-*/
-
-
 import javax.inject.Inject
 import android.graphics.Bitmap
 import android.graphics.Bitmap.Config.ARGB_8888
@@ -127,8 +106,38 @@ import android.graphics.Color
 import android.os.Message
 import android.view.View
 import android.webkit.GeolocationPermissions
+import android.webkit.WebBackForwardList
+
+import android.net.http.SslCertificate
+import android.webkit.PermissionRequest
+import android.webkit.SslErrorHandler
+
+
+
+
+
+
+
+
+
 
 /*
+import com.duckduckgo.app.browser.model.BasicAuthenticationRequest
+import com.duckduckgo.app.global.model.Site
+import com.duckduckgo.app.surrogates.SurrogateResponse
+import com.duckduckgo.app.trackerdetection.model.TrackingEvent
+import com.duckduckgo.feature.toggles.api.Toggle
+import com.duckduckgo.malicioussiteprotection.api.MaliciousSiteProtection.Feed
+import com.duckduckgo.site.permissions.api.SitePermissionsManager.SitePermissions
+
+import com.duckduckgo.app.browser.navigation.safeCopyBackForwardList
+import com.duckduckgo.app.di.AppCoroutineScope
+import com.duckduckgo.appbuildconfig.api.AppBuildConfig
+import com.duckduckgo.common.utils.DefaultDispatcherProvider
+import com.duckduckgo.common.utils.DispatcherProvider
+import com.duckduckgo.site.permissions.api.SitePermissionsManager
+import com.duckduckgo.site.permissions.api.SitePermissionsManager.LocationPermissionRequest
+
 import android.webkit.JsPromptResult
 import android.webkit.JsResult
 import android.webkit.PermissionRequest
@@ -284,11 +293,7 @@ interface SitePermissionsManager {
 
 
 
-import android.webkit.WebBackForwardList
-import android.webkit.WebView
-import logcat.LogPriority.ERROR
-import logcat.asLog
-import logcat.logcat
+
 
 /**
  * There is a bug in WebView whereby `webView.copyBackForwardList()` can internally throw a NPE
@@ -518,16 +523,6 @@ class BrowserChromeClient @Inject constructor(
 
 
 
-import android.net.http.SslCertificate
-import android.webkit.PermissionRequest
-import android.webkit.SslErrorHandler
-import com.duckduckgo.app.browser.model.BasicAuthenticationRequest
-import com.duckduckgo.app.global.model.Site
-import com.duckduckgo.app.surrogates.SurrogateResponse
-import com.duckduckgo.app.trackerdetection.model.TrackingEvent
-import com.duckduckgo.feature.toggles.api.Toggle
-import com.duckduckgo.malicioussiteprotection.api.MaliciousSiteProtection.Feed
-import com.duckduckgo.site.permissions.api.SitePermissionsManager.SitePermissions
 
 interface WebViewClientListener {
     fun onPageContentStart(url: String)
