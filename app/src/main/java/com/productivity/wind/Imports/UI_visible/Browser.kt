@@ -166,7 +166,7 @@ class BrowserChromeClient @Inject constructor(
     }
 
     override fun onHideCustomView() {
-        logcat("on hide custom view")
+        log("on hide custom view")
         webViewClientListener?.exitFullScreen()
         customView = null
     }
@@ -177,7 +177,7 @@ class BrowserChromeClient @Inject constructor(
     ) {
         // We want to use webView.progress rather than newProgress because the former gives you the overall progress of the new site
         // and the latter gives you the progress of the current main request being loaded and one site could have several redirects.
-        logcat("onProgressChanged ${webView.url}, ${webView.progress}")
+        log("onProgressChanged ${webView.url}, ${webView.progress}")
         if (webView.progress == 0) return
         val navigationList = webView.safeCopyBackForwardList() ?: return
         webViewClientListener?.progressChanged(webView.progress, WebViewNavigationState(navigationList, webView.progress))
@@ -248,7 +248,7 @@ class BrowserChromeClient @Inject constructor(
             appCoroutineScope.launch(coroutineDispatcher.io()) {
                 val permissionsAllowedToAsk = sitePermissionsManager.getSitePermissions(tabId, request)
                 if (permissionsAllowedToAsk.userHandled.isNotEmpty()) {
-                    logcat { "Permissions: permission requested not user handled" }
+                    log("Permissions: permission requested not user handled")
                     webViewClientListener?.onSitePermissionRequested(request, permissionsAllowedToAsk)
                 }
             }
@@ -259,7 +259,7 @@ class BrowserChromeClient @Inject constructor(
         origin: String,
         callback: GeolocationPermissions.Callback,
     ) {
-        logcat { "Permissions: location permission requested $origin" }
+        log("Permissions: location permission requested $origin")
         onPermissionRequest(LocationPermissionRequest(origin, callback))
     }
 
