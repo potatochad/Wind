@@ -27,22 +27,25 @@ class Web(val webView: WebView) {
     private var urlHandlers = mutableListOf<(String?) -> Boolean>()
     private var pageFinishedHandlers = mutableListOf<(String?) -> Unit>()
 
+    private var progressHandlers = mutableListOf<(Int) -> Unit>()
+    private var titleHandlers = mutableListOf<(String?) -> Unit>()
+
     init {
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 return urlHandlers.any { it(url) } // return true if any handler wants to override
             }
-
             override fun onPageFinished(view: WebView?, url: String?) {
                 pageFinishedHandlers.forEach { it(url) }
             }
         }
+        
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                println("Loading progress: $newProgress%")
+                progressHandlers.forEach { it(newProgress) }
             }
             override fun onReceivedTitle(view: WebView?, title: String?) {
-                println("Page title: $title")
+                titleHandlers.forEach { it(title) }
             }
         }
     }
@@ -50,10 +53,16 @@ class Web(val webView: WebView) {
     fun overrideUrl(Do: (String?) -> Boolean) {
         urlHandlers.add(Do)
     }
-
     fun onPageFinished(Do: (String?) -> Unit) {
         pageFinishedHandlers.add(Do)
     }
+
+    fun onProgressChanged(handler: (Int) -> Unit) {
+        progressHandlers.add(handler)
+    }
+    fun onReceivedTitle(handler: (String?) -> Unit) {
+        titleHandlers.add(handler)
+    }    
 }
 
 
