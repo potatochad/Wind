@@ -152,7 +152,9 @@ fun toUIStr(it: Any?): UIStr = when (it) {
 }
 
 
-
+fun Str.remove(str: String): String {
+    return this.replace(str, "")
+}
 
 
 
