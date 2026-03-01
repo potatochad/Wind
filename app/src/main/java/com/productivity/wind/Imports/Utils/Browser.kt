@@ -38,6 +38,16 @@ class WebController(val webView: WebView) {
             override fun onPageFinished(view: WebView?, url: String?) {
                 pageFinishedHandlers.forEach { it(url) }
             }
+            override fun onLoadResource(view: WebView?, url: Str?) {
+                super.onLoadResource(view, url)
+                if (isDesktopSite) {
+                    view?.evaluateJavascript(
+                        "document.querySelector('meta[name=\"viewport\"]').setAttribute('content'," +
+                            "'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024));",
+                        null
+                    )
+                }
+            }
         }
         
         webView.webChromeClient = object : WebChromeClient() {
