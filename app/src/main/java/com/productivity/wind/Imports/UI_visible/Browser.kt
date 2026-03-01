@@ -272,8 +272,23 @@ import android.webkit.PermissionRequest
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.webkit.HttpAuthHandler
+import android.webkit.HttpAuthHandler
+
 */
 
+
+data class BasicAuthenticationRequest(
+    val handler: HttpAuthHandler,
+    val host: String,
+    val realm: String,
+    val site: String,
+)
+
+data class BasicAuthenticationCredentials(
+    val username: String,
+    val password: String,
+)
 
 
 interface AppBuildConfig {
