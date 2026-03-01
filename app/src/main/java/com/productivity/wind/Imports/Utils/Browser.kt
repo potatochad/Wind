@@ -37,6 +37,14 @@ class Web(val webView: WebView) {
                 pageFinishedHandlers.forEach { it(url) }
             }
         }
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                println("Loading progress: $newProgress%")
+            }
+            override fun onReceivedTitle(view: WebView?, title: String?) {
+                println("Page title: $title")
+            }
+        }
     }
 
     fun overrideUrl(Do: (String?) -> Boolean) {
