@@ -27,6 +27,8 @@ class WebController(val webView: WebView) {
     private var onPageFinished = mutableListOf<(String?) -> Unit>()
     private var onLoadResource = mutableListOf<(String?) -> Unit>()
     private val doUpdateVisitedHistory = mutableListOf<(String?, Boolean) -> Unit>()
+    private val onPageStarted = mutableListOf<(String?) -> Unit>()
+    private val shouldInterceptRequest = mutableListOf<(WebResourceRequest) -> WebResourceResponse?>()
 
     private var onProgressChanged = mutableListOf<(Int) -> Unit>()
     private var onReceivedTitle = mutableListOf<(String?) -> Unit>()
@@ -48,27 +50,19 @@ class WebController(val webView: WebView) {
                 super.doUpdateVisitedHistory(view, url, isReload)
                 doUpdateVisitedHistory.forEach { it(url, isReload) } // call your handlers
             }
-
-
-            
-
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                onPageStarted.forEach { it(url) }
+            }
             override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
-                val raw = "${request.url}"
-                val stop = loadPage(raw)
-
-                    if (!stop) {
-                        goBackWeb(view)
-                        return WebResourceResponse("text/plain", "utf-8", null)
-                    }
-                    return super.shouldInterceptRequest(view, request)
+                shouldInterceptRequest.forEach { 
+                    val result = it(request)
+                    if (result != null) return result
                 }
-
-
-                override fun onPageStarted(view: WebView?, url: Str?, favicon: Bitmap?) {
-                    super.onPageStarted(view, url, favicon)
-                    
-                }
+                return super.shouldInterceptRequest(view, request)
+            }
         }
+        
         
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
@@ -92,6 +86,13 @@ class WebController(val webView: WebView) {
     fun doUpdateVisitedHistory(handler: (String?, Boolean) -> Unit) {
         doUpdateVisitedHistory.add(handler)
     }
+    fun onPageStarted(handler: (String?) -> Unit) {
+        onPageStarted.add(handler)
+    }
+    fun shouldInterceptRequest(handler: (WebResourceRequest) -> WebResourceResponse?) {
+        shouldInterceptRequest.add(handler)
+    }
+    
 
     fun onProgressChanged(handler: (Int) -> Unit) {
         onProgressChanged.add(handler)
