@@ -37,6 +37,7 @@ class WebController(val webView: WebView) {
                 return shouldOverrideUrlLoading.any { it(url) } // return true if any handler wants to override
             }
             override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
                 onPageFinished.forEach { it(url) }
             }
             override fun onLoadResource(view: WebView?, url: Str?) {
@@ -47,6 +48,26 @@ class WebController(val webView: WebView) {
                 super.doUpdateVisitedHistory(view, url, isReload)
                 doUpdateVisitedHistory.forEach { it(url, isReload) } // call your handlers
             }
+
+
+            
+
+            override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
+                val raw = "${request.url}"
+                val stop = loadPage(raw)
+
+                    if (!stop) {
+                        goBackWeb(view)
+                        return WebResourceResponse("text/plain", "utf-8", null)
+                    }
+                    return super.shouldInterceptRequest(view, request)
+                }
+
+
+                override fun onPageStarted(view: WebView?, url: Str?, favicon: Bitmap?) {
+                    super.onPageStarted(view, url, favicon)
+                    
+                }
         }
         
         webView.webChromeClient = object : WebChromeClient() {
