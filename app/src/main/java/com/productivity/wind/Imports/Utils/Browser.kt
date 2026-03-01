@@ -22,7 +22,7 @@ import kotlinx.coroutines.*
 import com.productivity.wind.Imports.Utils.*
 
 
-class Web(val webView: WebView) {
+class WebController(val webView: WebView) {
 
     private var urlHandlers = mutableListOf<(String?) -> Boolean>()
     private var pageFinishedHandlers = mutableListOf<(String?) -> Unit>()
