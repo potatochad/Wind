@@ -22,7 +22,7 @@ import kotlinx.coroutines.*
 import com.productivity.wind.Imports.Utils.*
 
 
-class WebController(val webView: WebView = WebView(App)) {
+class WebController(val webView: WebView = WebView(AppCtx)) {
     private var shouldOverrideUrlLoading = mutableListOf<(String?) -> Boolean>()
     private var onPageFinished = mutableListOf<(String?) -> Unit>()
     private var onLoadResource = mutableListOf<(String?) -> Unit>()
