@@ -186,31 +186,6 @@ class BrowserWebViewClient @Inject constructor(
     private var currentLoadOperationId: String? = null
     private var parallelRequestsOnStart = 0
 
-    init {
-        appCoroutineScope.launch {
-            duckPlayer.observeShouldOpenInNewTab().collect {
-                shouldOpenDuckPlayerInNewTab = it is On
-            }
-        }
-    }
-
-    private fun incrementAndTrackLoad() {
-        // a new load operation is starting for this WebView instance.
-        val loadId = UUID.randomUUID().toString()
-        this.currentLoadOperationId = loadId
-
-        parallelRequestsOnStart = parallelRequestCounter.incrementAndGet() - 1
-
-        val job = timeoutScope.launch {
-            delay(REQUEST_TIMEOUT_MS)
-            // attempt to remove the job - if successful, it means it hasn't been finished/errored/cancelled yet
-            if (activeRequestTimeoutJobs.remove(loadId) != null) {
-                parallelRequestCounter.decrementAndGet()
-            }
-        }
-        activeRequestTimeoutJobs[loadId] = job
-    }
-
     private fun decrementLoadCountAndGet(): Int {
         this.currentLoadOperationId?.let { loadId ->
             val job = activeRequestTimeoutJobs.remove(loadId)
@@ -224,6 +199,8 @@ class BrowserWebViewClient @Inject constructor(
         this.currentLoadOperationId = null
         return parallelRequestCounter.get()
     }
+
+    // ✴️ some init for music player
 
     /**
      * This is the method of url overriding available from API 24 onwards
@@ -265,106 +242,8 @@ class BrowserWebViewClient @Inject constructor(
                     true
                 }
 
-                is SpecialUrlDetector.UrlType.Email -> {
-                    webViewClientListener?.sendEmailRequested(urlType.emailAddress)
-                    true
-                }
-
-                is SpecialUrlDetector.UrlType.Telephone -> {
-                    webViewClientListener?.dialTelephoneNumberRequested(urlType.telephoneNumber)
-                    true
-                }
-
-                is SpecialUrlDetector.UrlType.Sms -> {
-                    webViewClientListener?.sendSmsRequested(urlType.telephoneNumber)
-                    true
-                }
-
-                is SpecialUrlDetector.UrlType.AppLink -> {
-                    logcat(INFO) { "Found app link for ${urlType.uriString}" }
-                    webViewClientListener?.let { listener ->
-                        return listener.handleAppLink(urlType, isForMainFrame)
-                    }
-                    false
-                }
-
-                is SpecialUrlDetector.UrlType.ShouldLaunchDuckChatLink -> {
-                    runCatching {
-                        val query = url.getQueryParameter(QUERY)
-                        if (query != null) {
-                            duckChat.openDuckChatWithPrefill(query)
-                        } else {
-                            duckChat.openDuckChat()
-                        }
-                    }.isSuccess
-                }
-
-                is SpecialUrlDetector.UrlType.ShouldLaunchDuckPlayerLink -> {
-                    if (isRedirect && isForMainFrame) {
-                        /*
-                        This forces shouldInterceptRequest to be called with the YouTube URL, otherwise that method is never executed and
-                        therefore the Duck Player page is never launched if YouTube comes from a redirect.
-                         */
-                        webViewClientListener?.let {
-                            loadUrl(it, webView, url.toString())
-                        }
-                        return true
-                    } else {
-                        shouldOverrideWebRequest(
-                            url,
-                            webView,
-                            isForMainFrame,
-                            openInNewTab = shouldOpenDuckPlayerInNewTab && isForMainFrame && webView.url != url.toString(),
-                            willOpenDuckPlayer = isForMainFrame,
-                        )
-                    }
-                }
-
-                is SpecialUrlDetector.UrlType.NonHttpAppLink -> {
-                    logcat(INFO) { "Found non-http app link for ${urlType.uriString}" }
-                    if (isForMainFrame) {
-                        webViewClientListener?.let { listener ->
-                            return listener.handleNonHttpAppLink(urlType)
-                        }
-                    }
-                    true
-                }
-
-                is SpecialUrlDetector.UrlType.Unknown -> {
-                    logcat(WARN) { "Unable to process link type for ${urlType.uriString}" }
-                    webView.originalUrl?.let {
-                        webView.loadUrl(it)
-                    }
-                    false
-                }
-
-                is SpecialUrlDetector.UrlType.SearchQuery -> false
-                is SpecialUrlDetector.UrlType.Web -> {
-                    shouldOverrideWebRequest(url, webView, isForMainFrame)
-                }
-
-                is SpecialUrlDetector.UrlType.ExtractedAmpLink -> {
-                    if (isForMainFrame) {
-                        webViewClientListener?.let { listener ->
-                            listener.startProcessingTrackingLink()
-                            logcat { "AMP link detection: Loading extracted URL: ${urlType.extractedUrl}" }
-                            loadUrl(listener, webView, urlType.extractedUrl)
-                            return true
-                        }
-                    }
-                    false
-                }
-
-                is SpecialUrlDetector.UrlType.CloakedAmpLink -> {
-                    val lastAmpLinkInfo = ampLinks.lastAmpLinkInfo
-                    if (isForMainFrame && (lastAmpLinkInfo == null || lastPageStarted != lastAmpLinkInfo.destinationUrl)) {
-                        webViewClientListener?.let { listener ->
-                            listener.handleCloakedAmpLink(urlType.ampUrl)
-                            return true
-                        }
-                    }
-                    false
-                }
+                // ✴️ bunch of: SpecialUrlDetector.UrlType.AppLink -> 
+                
 
                 is SpecialUrlDetector.UrlType.TrackingParameterLink -> {
                     if (isForMainFrame) {
