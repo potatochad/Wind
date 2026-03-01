@@ -239,7 +239,7 @@ fun WebXml(
 
 
 
-
+/*
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebViewFullExample(
@@ -399,7 +399,7 @@ fun WebViewFullExample(
         }
     )
 }
-
+*/
 
 
 
