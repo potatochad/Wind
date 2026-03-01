@@ -22,28 +22,29 @@ import kotlinx.coroutines.*
 import com.productivity.wind.Imports.Utils.*
 
 
-class Web(
-    val webView: WebView,
-    val isDesktopSite: Bool = false
-) {
-    fun overrideUrl(Do: (url: Str?) -> Bool) {      
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, url: Str?): Bool {
-                return Do(url)
-            }
-        }
-    } 
+class Web(val webView: WebView) {
 
-
-    
+    private var urlHandlers = mutableListOf<(String?) -> Boolean>()
     private var pageFinishedHandlers = mutableListOf<(String?) -> Unit>()
-    fun onPageFinished(Do: (url: String?) -> Unit) {
-        pageFinishedHandlers.add(Do)
+
+    init {
         webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                return urlHandlers.any { it(url) } // return true if any handler wants to override
+            }
+
             override fun onPageFinished(view: WebView?, url: String?) {
                 pageFinishedHandlers.forEach { it(url) }
             }
         }
+    }
+
+    fun overrideUrl(Do: (String?) -> Boolean) {
+        urlHandlers.add(Do)
+    }
+
+    fun onPageFinished(Do: (String?) -> Unit) {
+        pageFinishedHandlers.add(Do)
     }
 }
 
