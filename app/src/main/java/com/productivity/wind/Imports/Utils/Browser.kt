@@ -27,6 +27,7 @@ class WebController(val webView: WebView) {
     private var shouldOverrideUrlLoading = mutableListOf<(String?) -> Boolean>()
     private var onPageFinished = mutableListOf<(String?) -> Unit>()
     private var onLoadResource = mutableListOf<(String?) -> Unit>()
+    private val doUpdateVisitedHistory = mutableListOf<(String?, Boolean) -> Unit>()
 
     private var onProgressChanged = mutableListOf<(Int) -> Unit>()
     private var onReceivedTitle = mutableListOf<(String?) -> Unit>()
@@ -42,6 +43,10 @@ class WebController(val webView: WebView) {
             override fun onLoadResource(view: WebView?, url: Str?) {
                 super.onLoadResource(view, url)
                 onLoadResource.forEach { it(url) }
+            }
+            override fun doUpdateVisitedHistory(view: WebView?, url: Str?, isReload: Bool) {
+                super.doUpdateVisitedHistory(view, url, isReload)
+                doUpdateVisitedHistory.forEach { it(url, isReload) } // call your handlers
             }
         }
         
@@ -63,6 +68,9 @@ class WebController(val webView: WebView) {
     }
     fun onLoadResource(Do: (String?) -> Unit) {
         onLoadResource.add(Do)
+    }
+    fun doUpdateVisitedHistory(handler: (String?, Boolean) -> Unit) {
+        doUpdateVisitedHistory.add(handler)
     }
 
     fun onProgressChanged(handler: (Int) -> Unit) {
