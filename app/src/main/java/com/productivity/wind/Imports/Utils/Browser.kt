@@ -107,6 +107,11 @@ class WebController(val webView: WebView) {
             configure()
         }
     }
+    fun back() {
+        if (webView.canGoBack()) {
+            webView.goBack()
+        }
+    }
 }
 
 
