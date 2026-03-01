@@ -144,11 +144,9 @@ fun UrlLong(input: Str): Str {
     }
 }
 @Composable
-fun UrlShort(input: Str): Str {
+fun UrlShort(x: Str): Str {
     return remember(input) {
-        input.removePrefix("https://")
-            .removePrefix("http://")
-            .removePrefix("www.")
+        x.remove("https://").remove("http://").remove("www.")
     }
 }
 
