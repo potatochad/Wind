@@ -141,6 +141,99 @@ import java.util.*
 
 
 /*
+package com.duckduckgo.app.browser.di
+
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.pm.PackageManager
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.work.WorkManager
+import com.duckduckgo.adclick.api.AdClickManager
+import com.duckduckgo.anvil.annotations.ContributesPluginPoint
+import com.duckduckgo.app.bookmarks.BookmarkAddedDialogPlugin
+import com.duckduckgo.app.browser.*
+import com.duckduckgo.app.browser.addtohome.AddToHomeCapabilityDetector
+import com.duckduckgo.app.browser.addtohome.AddToHomeSystemCapabilityDetector
+import com.duckduckgo.app.browser.api.DuckAiChatDeletionListener
+import com.duckduckgo.app.browser.applinks.ExternalAppIntentFlagsFeature
+import com.duckduckgo.app.browser.certificates.rootstore.TrustedCertificateStore
+import com.duckduckgo.app.browser.cookies.AppThirdPartyCookieManager
+import com.duckduckgo.app.browser.cookies.ThirdPartyCookieManager
+import com.duckduckgo.app.browser.cookies.db.AuthCookiesAllowedDomainsRepository
+import com.duckduckgo.app.browser.defaultbrowsing.DefaultBrowserDetector
+import com.duckduckgo.app.browser.defaultbrowsing.DefaultBrowserObserver
+import com.duckduckgo.app.browser.downloader.*
+import com.duckduckgo.app.browser.duckchat.AIChatQueryDetectionFeature
+import com.duckduckgo.app.browser.favicon.FaviconPersister
+import com.duckduckgo.app.browser.favicon.FileBasedFaviconPersister
+import com.duckduckgo.app.browser.httpauth.WebViewHttpAuthStore
+import com.duckduckgo.app.browser.httperrors.HttpCodeSiteErrorHandler
+import com.duckduckgo.app.browser.httperrors.HttpCodeSiteErrorHandlerImpl
+import com.duckduckgo.app.browser.httperrors.StringSiteErrorHandler
+import com.duckduckgo.app.browser.httperrors.StringSiteErrorHandlerImpl
+import com.duckduckgo.app.browser.logindetection.*
+import com.duckduckgo.app.browser.pageloadpixel.PageLoadedPixelDao
+import com.duckduckgo.app.browser.pageloadpixel.firstpaint.PagePaintedPixelDao
+import com.duckduckgo.app.browser.session.WebViewSessionInMemoryStorage
+import com.duckduckgo.app.browser.session.WebViewSessionStorage
+import com.duckduckgo.app.browser.tabpreview.FileBasedWebViewPreviewGenerator
+import com.duckduckgo.app.browser.tabpreview.FileBasedWebViewPreviewPersister
+import com.duckduckgo.app.browser.tabpreview.WebViewPreviewGenerator
+import com.duckduckgo.app.browser.tabpreview.WebViewPreviewPersister
+import com.duckduckgo.app.browser.urlextraction.DOMUrlExtractor
+import com.duckduckgo.app.browser.urlextraction.JsUrlExtractor
+import com.duckduckgo.app.browser.urlextraction.UrlExtractingWebViewClient
+import com.duckduckgo.app.browser.webview.MaliciousSiteBlockerWebViewIntegration
+import com.duckduckgo.app.di.AppCoroutineScope
+import com.duckduckgo.app.di.IsMainProcess
+import com.duckduckgo.app.fire.*
+import com.duckduckgo.app.fire.fireproofwebsite.data.FireproofWebsiteRepository
+import com.duckduckgo.app.global.db.AppDatabase
+import com.duckduckgo.app.global.events.db.UserEventsStore
+import com.duckduckgo.app.global.file.FileDeleter
+import com.duckduckgo.app.global.install.AppInstallStore
+import com.duckduckgo.app.lifecycle.MainProcessLifecycleObserver
+import com.duckduckgo.app.pixels.remoteconfig.AndroidBrowserConfigFeature
+import com.duckduckgo.app.privacy.db.PrivacyProtectionCountDao
+import com.duckduckgo.app.referral.AppReferrerDataStore
+import com.duckduckgo.app.settings.db.SettingsDataStore
+import com.duckduckgo.app.statistics.pixels.Pixel
+import com.duckduckgo.app.statistics.store.StatisticsDataStore
+import com.duckduckgo.app.surrogates.ResourceSurrogates
+import com.duckduckgo.app.tabs.ui.GridViewColumnCalculator
+import com.duckduckgo.app.trackerdetection.CloakedCnameDetector
+import com.duckduckgo.app.trackerdetection.TrackerDetector
+import com.duckduckgo.common.utils.DispatcherProvider
+import com.duckduckgo.cookies.api.CookieManagerProvider
+import com.duckduckgo.cookies.api.ThirdPartyCookieNames
+import com.duckduckgo.customtabs.api.CustomTabDetector
+import com.duckduckgo.di.scopes.AppScope
+import com.duckduckgo.downloads.api.FileDownloader
+import com.duckduckgo.downloads.impl.AndroidFileDownloader
+import com.duckduckgo.downloads.impl.DataUriDownloader
+import com.duckduckgo.downloads.impl.FileDownloadCallback
+import com.duckduckgo.duckchat.api.DuckAiFeatureState
+import com.duckduckgo.duckchat.api.DuckChat
+import com.duckduckgo.duckplayer.api.DuckPlayer
+import com.duckduckgo.experiments.api.VariantManager
+import com.duckduckgo.httpsupgrade.api.HttpsUpgrader
+import com.duckduckgo.privacy.config.api.AmpLinks
+import com.duckduckgo.privacy.config.api.Gpc
+import com.duckduckgo.privacy.config.api.TrackingParameters
+import com.duckduckgo.request.filterer.api.RequestFilterer
+import com.duckduckgo.settings.api.SerpSettingsFeature
+import com.duckduckgo.subscriptions.api.Subscriptions
+import com.duckduckgo.user.agent.api.UserAgentProvider
+import dagger.Module
+import dagger.Provides
+import dagger.SingleInstanceIn
+import dagger.multibindings.IntoSet
+import kotlinx.coroutines.CoroutineScope
+import javax.inject.Named
+import javax.inject.Qualifier
+
 import com.duckduckgo.app.browser.favicon.FaviconManager
 import com.duckduckgo.common.ui.view.listitem.OneLineListItem
 import com.duckduckgo.mobile.android.databinding.RowOneLineListItemBinding
@@ -1930,119 +2023,6 @@ fun String.normalizeScheme(): String {
 
 
 
-
-
-
-
-
-/*
- * Copyright (c) 2018 DuckDuckGo
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package com.duckduckgo.app.browser.di
-
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.pm.PackageManager
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.work.WorkManager
-import com.duckduckgo.adclick.api.AdClickManager
-import com.duckduckgo.anvil.annotations.ContributesPluginPoint
-import com.duckduckgo.app.bookmarks.BookmarkAddedDialogPlugin
-import com.duckduckgo.app.browser.*
-import com.duckduckgo.app.browser.addtohome.AddToHomeCapabilityDetector
-import com.duckduckgo.app.browser.addtohome.AddToHomeSystemCapabilityDetector
-import com.duckduckgo.app.browser.api.DuckAiChatDeletionListener
-import com.duckduckgo.app.browser.applinks.ExternalAppIntentFlagsFeature
-import com.duckduckgo.app.browser.certificates.rootstore.TrustedCertificateStore
-import com.duckduckgo.app.browser.cookies.AppThirdPartyCookieManager
-import com.duckduckgo.app.browser.cookies.ThirdPartyCookieManager
-import com.duckduckgo.app.browser.cookies.db.AuthCookiesAllowedDomainsRepository
-import com.duckduckgo.app.browser.defaultbrowsing.DefaultBrowserDetector
-import com.duckduckgo.app.browser.defaultbrowsing.DefaultBrowserObserver
-import com.duckduckgo.app.browser.downloader.*
-import com.duckduckgo.app.browser.duckchat.AIChatQueryDetectionFeature
-import com.duckduckgo.app.browser.favicon.FaviconPersister
-import com.duckduckgo.app.browser.favicon.FileBasedFaviconPersister
-import com.duckduckgo.app.browser.httpauth.WebViewHttpAuthStore
-import com.duckduckgo.app.browser.httperrors.HttpCodeSiteErrorHandler
-import com.duckduckgo.app.browser.httperrors.HttpCodeSiteErrorHandlerImpl
-import com.duckduckgo.app.browser.httperrors.StringSiteErrorHandler
-import com.duckduckgo.app.browser.httperrors.StringSiteErrorHandlerImpl
-import com.duckduckgo.app.browser.logindetection.*
-import com.duckduckgo.app.browser.pageloadpixel.PageLoadedPixelDao
-import com.duckduckgo.app.browser.pageloadpixel.firstpaint.PagePaintedPixelDao
-import com.duckduckgo.app.browser.session.WebViewSessionInMemoryStorage
-import com.duckduckgo.app.browser.session.WebViewSessionStorage
-import com.duckduckgo.app.browser.tabpreview.FileBasedWebViewPreviewGenerator
-import com.duckduckgo.app.browser.tabpreview.FileBasedWebViewPreviewPersister
-import com.duckduckgo.app.browser.tabpreview.WebViewPreviewGenerator
-import com.duckduckgo.app.browser.tabpreview.WebViewPreviewPersister
-import com.duckduckgo.app.browser.urlextraction.DOMUrlExtractor
-import com.duckduckgo.app.browser.urlextraction.JsUrlExtractor
-import com.duckduckgo.app.browser.urlextraction.UrlExtractingWebViewClient
-import com.duckduckgo.app.browser.webview.MaliciousSiteBlockerWebViewIntegration
-import com.duckduckgo.app.di.AppCoroutineScope
-import com.duckduckgo.app.di.IsMainProcess
-import com.duckduckgo.app.fire.*
-import com.duckduckgo.app.fire.fireproofwebsite.data.FireproofWebsiteRepository
-import com.duckduckgo.app.global.db.AppDatabase
-import com.duckduckgo.app.global.events.db.UserEventsStore
-import com.duckduckgo.app.global.file.FileDeleter
-import com.duckduckgo.app.global.install.AppInstallStore
-import com.duckduckgo.app.lifecycle.MainProcessLifecycleObserver
-import com.duckduckgo.app.pixels.remoteconfig.AndroidBrowserConfigFeature
-import com.duckduckgo.app.privacy.db.PrivacyProtectionCountDao
-import com.duckduckgo.app.referral.AppReferrerDataStore
-import com.duckduckgo.app.settings.db.SettingsDataStore
-import com.duckduckgo.app.statistics.pixels.Pixel
-import com.duckduckgo.app.statistics.store.StatisticsDataStore
-import com.duckduckgo.app.surrogates.ResourceSurrogates
-import com.duckduckgo.app.tabs.ui.GridViewColumnCalculator
-import com.duckduckgo.app.trackerdetection.CloakedCnameDetector
-import com.duckduckgo.app.trackerdetection.TrackerDetector
-import com.duckduckgo.common.utils.DispatcherProvider
-import com.duckduckgo.cookies.api.CookieManagerProvider
-import com.duckduckgo.cookies.api.ThirdPartyCookieNames
-import com.duckduckgo.customtabs.api.CustomTabDetector
-import com.duckduckgo.di.scopes.AppScope
-import com.duckduckgo.downloads.api.FileDownloader
-import com.duckduckgo.downloads.impl.AndroidFileDownloader
-import com.duckduckgo.downloads.impl.DataUriDownloader
-import com.duckduckgo.downloads.impl.FileDownloadCallback
-import com.duckduckgo.duckchat.api.DuckAiFeatureState
-import com.duckduckgo.duckchat.api.DuckChat
-import com.duckduckgo.duckplayer.api.DuckPlayer
-import com.duckduckgo.experiments.api.VariantManager
-import com.duckduckgo.httpsupgrade.api.HttpsUpgrader
-import com.duckduckgo.privacy.config.api.AmpLinks
-import com.duckduckgo.privacy.config.api.Gpc
-import com.duckduckgo.privacy.config.api.TrackingParameters
-import com.duckduckgo.request.filterer.api.RequestFilterer
-import com.duckduckgo.settings.api.SerpSettingsFeature
-import com.duckduckgo.subscriptions.api.Subscriptions
-import com.duckduckgo.user.agent.api.UserAgentProvider
-import dagger.Module
-import dagger.Provides
-import dagger.SingleInstanceIn
-import dagger.multibindings.IntoSet
-import kotlinx.coroutines.CoroutineScope
-import javax.inject.Named
-import javax.inject.Qualifier
 
 @Module
 class BrowserModule {
