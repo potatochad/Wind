@@ -26,7 +26,25 @@ class Web(
     val webView: WebView,
     val isDesktopSite: Bool = false
 ) {
- 
+    fun overrideUrl(Do: (url: Str?) -> Bool) {      
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, url: Str?): Bool {
+                return Do(url)
+            }
+        }
+    } 
+
+
+    
+    private var pageFinishedHandlers = mutableListOf<(String?) -> Unit>()
+    fun onPageFinished(Do: (url: String?) -> Unit) {
+        pageFinishedHandlers.add(Do)
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                pageFinishedHandlers.forEach { it(url) }
+            }
+        }
+    }
 }
 
 
