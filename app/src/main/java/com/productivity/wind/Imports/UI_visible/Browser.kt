@@ -140,5 +140,104 @@ import java.util.*
 
 
 
+@SuppressLint("SetJavaScriptEnabled")
+@Composable
+fun WebXml(
+    webViewState: m_<WebView?>,
+    url: Str = "",
+    isDesktopSite: Bool = no,
+    onUrlChanged: DoStr = {},
+    onProgressChanged: DoInt = {},
+    onPageStarted: DoStr = {},
+    onPageFinished: DoStr = {},
+    loadPage: (url: Str) -> Bool = { yes },
+) {
+    BackHandler {
+        webViewState.it?.goBack()
+    }
+
+    AndroidView(
+        factory = { ctx ->
+            val rootView = LayoutInflater.from(ctx).inflate(R.layout.web, null, no)
+            val myWebView = rootView.findViewById<WebView>(R.id.myWebView)
+
+            myWebView.settings.apply {
+                javaScriptEnabled = yes
+                domStorageEnabled = yes
+                useWideViewPort = yes
+                loadWithOverviewMode = yes
+            }
+
+            myWebView.webViewClient = object : WebViewClient() {
+                override fun onLoadResource(view: WebView?, url: Str?) {
+                    super.onLoadResource(view, url)
+                    if (isDesktopSite) {
+                        view?.evaluateJavascript(
+                            "document.querySelector('meta[name=\"viewport\"]').setAttribute('content'," +
+                                    "'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024));",
+                            null
+                        )
+                    }
+                }
+
+                override fun doUpdateVisitedHistory(view: WebView?, url: Str?, isReload: Bool) {
+                    super.doUpdateVisitedHistory(view, url, isReload)
+                    url?.let { 
+                        onUrlChanged(it) 
+                    }
+                }
+
+                override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
+                    val raw = "${request.url}"
+
+                    val stop = loadPage(raw)
+
+                    if (!stop) {
+                        goBackWeb(view)
+                        return WebResourceResponse("text/plain", "utf-8", null)
+                    }
+                    return super.shouldInterceptRequest(view, request)
+                }
+
+
+
+                override fun onPageStarted(view: WebView?, url: Str?, favicon: Bitmap?) {
+                    super.onPageStarted(view, url, favicon)
+                    url?.let { onPageStarted(it) }
+                }
+
+                override fun onPageFinished(view: WebView?, url: Str?) {
+                    super.onPageFinished(view, url)
+                    url?.let { onPageFinished(it) }
+                    view?.zoomOut()
+                }
+            }
+
+            myWebView.webChromeClient = object : WebChromeClient() {
+                override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                    super.onProgressChanged(view, newProgress)
+                    onProgressChanged(newProgress)
+                }
+            }
+
+            myWebView.url("https://www.google.com/search?q=$url")
+            webViewState.it = myWebView
+
+            rootView
+        },
+        modifier = Mod.maxS(),
+        update = { view ->
+            val myWebView = view.findViewById<WebView>(R.id.myWebView)
+        }
+    )
+}
+
+
+
+
+
+
+
+
 
  
