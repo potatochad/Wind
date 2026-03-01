@@ -22,6 +22,13 @@ import kotlinx.coroutines.*
 import com.productivity.wind.Imports.Utils.*
 
 
+class Web(
+    val webView: WebView,
+    val isDesktopSite: Bool = false
+) {
+ 
+}
+
 
 @SuppressLint("SetJavaScriptEnabled")
 fun WebView.clearWebData() {
