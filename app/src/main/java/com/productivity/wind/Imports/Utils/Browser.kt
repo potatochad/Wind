@@ -100,6 +100,16 @@ class WebController(val webView: WebView) {
     fun onReceivedTitle(handler: (String?) -> Unit) {
         onReceivedTitle.add(handler)
     }    
+
+
+    fun configureSettings() {
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            useWideViewPort = true
+            loadWithOverviewMode = true
+        }
+    }
 }
 
 
