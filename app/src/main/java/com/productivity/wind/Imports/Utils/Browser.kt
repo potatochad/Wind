@@ -23,7 +23,6 @@ import com.productivity.wind.Imports.Utils.*
 
 
 class WebController(val webView: WebView) {
-
     private var shouldOverrideUrlLoading = mutableListOf<(String?) -> Boolean>()
     private var onPageFinished = mutableListOf<(String?) -> Unit>()
     private var onLoadResource = mutableListOf<(String?) -> Unit>()
@@ -61,7 +60,7 @@ class WebController(val webView: WebView) {
     }
 
     fun shouldOverrideUrlLoading(Do: (String?) -> Boolean) {
-        urlHandlers.add(Do)
+        shouldOverrideUrlLoading.add(Do)
     }
     fun onPageFinished(Do: (String?) -> Unit) {
         onPageFinished.add(Do)
