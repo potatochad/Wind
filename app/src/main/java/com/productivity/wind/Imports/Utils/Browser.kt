@@ -24,54 +24,52 @@ import com.productivity.wind.Imports.Utils.*
 
 class WebController(val webView: WebView) {
 
-    private var urlHandlers = mutableListOf<(String?) -> Boolean>()
-    private var pageFinishedHandlers = mutableListOf<(String?) -> Unit>()
+    private var shouldOverrideUrlLoading = mutableListOf<(String?) -> Boolean>()
+    private var onPageFinished = mutableListOf<(String?) -> Unit>()
+    private var onLoadResource = mutableListOf<(String?) -> Unit>()
 
-    private var progressHandlers = mutableListOf<(Int) -> Unit>()
-    private var titleHandlers = mutableListOf<(String?) -> Unit>()
+    private var onProgressChanged = mutableListOf<(Int) -> Unit>()
+    private var onReceivedTitle = mutableListOf<(String?) -> Unit>()
 
     init {
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                return urlHandlers.any { it(url) } // return true if any handler wants to override
+                return shouldOverrideUrlLoading.any { it(url) } // return true if any handler wants to override
             }
             override fun onPageFinished(view: WebView?, url: String?) {
-                pageFinishedHandlers.forEach { it(url) }
+                onPageFinished.forEach { it(url) }
             }
             override fun onLoadResource(view: WebView?, url: Str?) {
                 super.onLoadResource(view, url)
-                if (isDesktopSite) {
-                    view?.evaluateJavascript(
-                        "document.querySelector('meta[name=\"viewport\"]').setAttribute('content'," +
-                            "'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024));",
-                        null
-                    )
-                }
+                onLoadResource.forEach { it(url) }
             }
         }
         
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                progressHandlers.forEach { it(newProgress) }
+                onProgressChanged.forEach { it(newProgress) }
             }
             override fun onReceivedTitle(view: WebView?, title: String?) {
-                titleHandlers.forEach { it(title) }
+                onReceivedTitle.forEach { it(title) }
             }
         }
     }
 
-    fun overrideUrl(Do: (String?) -> Boolean) {
+    fun shouldOverrideUrlLoading(Do: (String?) -> Boolean) {
         urlHandlers.add(Do)
     }
     fun onPageFinished(Do: (String?) -> Unit) {
-        pageFinishedHandlers.add(Do)
+        onPageFinished.add(Do)
+    }
+    fun onLoadResource(Do: (String?) -> Unit) {
+        onLoadResource.add(Do)
     }
 
     fun onProgressChanged(handler: (Int) -> Unit) {
-        progressHandlers.add(handler)
+        onProgressChanged.add(handler)
     }
     fun onReceivedTitle(handler: (String?) -> Unit) {
-        titleHandlers.add(handler)
+        onReceivedTitle.add(handler)
     }    
 }
 
