@@ -102,12 +102,9 @@ class WebController(val webView: WebView) {
     }    
 
 
-    fun configureSettings() {
+    fun settings(configure: WebSettings.() -> Unit) {
         webView.settings.apply {
-            javaScriptEnabled = true
-            domStorageEnabled = true
-            useWideViewPort = true
-            loadWithOverviewMode = true
+            configure()
         }
     }
 }
