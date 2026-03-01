@@ -1,5 +1,5 @@
-package com.productivity.wind.Imports
-
+package com.productivity.wind.Imports.Utils
+ 
 import android.annotation.SuppressLint
 import android.content.*
 import androidx.compose.runtime.*
