@@ -112,6 +112,11 @@ class WebController(val webView: WebView) {
             webView.goBack()
         }
     }
+    val url: Str?
+        get() = webView.url
+    fun url(url: Str) {
+        webView.loadUrl(url)
+    }
 }
 
 
