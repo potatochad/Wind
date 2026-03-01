@@ -117,6 +117,8 @@ class WebController(val webView: WebView) {
     fun url(url: Str) {
         webView.loadUrl(url)
     }
+    val web: WebView?
+        get() = webView
 }
 
 
