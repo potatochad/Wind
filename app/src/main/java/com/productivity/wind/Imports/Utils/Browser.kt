@@ -55,7 +55,7 @@ fun UrlLong(input: Str): Str {
 }
 @Composable
 fun UrlShort(x: Str): Str {
-    return remember(input) {
+    return remember(x) {
         x.remove("https://").remove("http://").remove("www.")
     }
 }
