@@ -243,52 +243,6 @@ class BrowserWebViewClient @Inject constructor(
                 }
 
                 // ✴️ bunch of: SpecialUrlDetector.UrlType.AppLink -> 
-                
-
-                is SpecialUrlDetector.UrlType.TrackingParameterLink -> {
-                    if (isForMainFrame) {
-                        webViewClientListener?.let { listener ->
-                            listener.startProcessingTrackingLink()
-                            logcat { "Loading parameter cleaned URL: ${urlType.cleanedUrl}" }
-
-                            return when (
-                                val parameterStrippedType =
-                                    specialUrlDetector.processUrl(initiatingUrl = webView.originalUrl, uriString = urlType.cleanedUrl)
-                            ) {
-                                is SpecialUrlDetector.UrlType.AppLink -> {
-                                    loadUrl(listener, webView, urlType.cleanedUrl)
-                                    listener.handleAppLink(parameterStrippedType, isForMainFrame)
-                                }
-
-                                is SpecialUrlDetector.UrlType.ExtractedAmpLink -> {
-                                    logcat { "AMP link detection: Loading extracted URL: ${parameterStrippedType.extractedUrl}" }
-                                    loadUrl(listener, webView, parameterStrippedType.extractedUrl)
-                                    true
-                                }
-
-                                else -> {
-                                    loadUrl(listener, webView, urlType.cleanedUrl)
-                                    true
-                                }
-                            }
-                        }
-                    }
-                    false
-                }
-
-                is SpecialUrlDetector.UrlType.DuckScheme -> {
-                    webViewClientListener?.let { listener ->
-                        if (
-                            url.pathSegments?.firstOrNull()?.equals(DUCK_PLAYER_OPEN_IN_YOUTUBE_PATH, ignoreCase = true) == true ||
-                            !shouldOpenDuckPlayerInNewTab
-                        ) {
-                            loadUrl(listener, webView, url.toString())
-                        } else {
-                            listener.openLinkInNewTab(url)
-                        }
-                        true
-                    } ?: false
-                }
             }
         } catch (e: Throwable) {
             appCoroutineScope.launch(dispatcherProvider.io()) {
@@ -569,58 +523,9 @@ class BrowserWebViewClient @Inject constructor(
         return true
     }
 
-    @UiThread
-    override fun onReceivedHttpAuthRequest(
-        view: WebView?,
-        handler: HttpAuthHandler?,
-        host: String?,
-        realm: String?,
-    ) {
-        logcat(VERBOSE) { "onReceivedHttpAuthRequest ${view?.url} $realm, $host" }
-        if (handler != null) {
-            logcat(VERBOSE) { "onReceivedHttpAuthRequest - useHttpAuthUsernamePassword [${handler.useHttpAuthUsernamePassword()}]" }
-            if (handler.useHttpAuthUsernamePassword()) {
-                val credentials =
-                    view?.let {
-                        webViewHttpAuthStore.getHttpAuthUsernamePassword(it, host.orEmpty(), realm.orEmpty())
-                    }
-
-                if (credentials != null) {
-                    handler.proceed(credentials.username, credentials.password)
-                } else {
-                    requestAuthentication(view, handler, host, realm)
-                }
-            } else {
-                requestAuthentication(view, handler, host, realm)
-            }
-        } else {
-            super.onReceivedHttpAuthRequest(view, handler, host, realm)
-        }
-    }
-
-    override fun onReceivedSslError(
-        view: WebView?,
-        handler: SslErrorHandler,
-        error: SslError,
-    ) {
-        var trusted: CertificateValidationState = CertificateValidationState.UntrustedChain
-
-        when (error.primaryError) {
-            SSL_UNTRUSTED -> {
-                logcat { "The certificate authority ${error.certificate.issuedBy.dName} is not trusted" }
-                trusted = trustedCertificateStore.validateSslCertificateChain(error.certificate)
-            }
-
-            else -> logcat { "SSL error ${error.primaryError}" }
-        }
-
-        logcat { "The certificate authority validation result is $trusted" }
-        if (trusted is CertificateValidationState.TrustedChain) {
-            handler.proceed()
-        } else {
-            webViewClientListener?.onReceivedSslError(handler, parseSSlErrorResponse(error))
-        }
-    }
+    // ✴️ override fun onReceivedHttpAuthRequest
+    // ✴️ override fun onReceivedSslError
+    
 
     private fun parseSSlErrorResponse(sslError: SslError): SslErrorResponse {
         logcat { "SSL Certificate: parseSSlErrorResponse ${sslError.primaryError}" }
