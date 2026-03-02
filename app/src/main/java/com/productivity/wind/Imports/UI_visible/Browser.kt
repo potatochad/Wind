@@ -150,18 +150,14 @@ fun WebXml(web: WebController) {
     AndroidView(
         factory = { ctx ->
             val rootView = LayoutInflater.from(ctx).inflate(R.layout.web, null, no)
-            val myWebView = WebController(
-                rootView.findViewById<WebView>(R.id.myWebView)
-            )
             
-
-            myWebView.settings {
+            web.settings {
                 javaScriptEnabled = yes
                 domStorageEnabled = yes
                 useWideViewPort = yes
                 loadWithOverviewMode = yes
             }
-            myWebView.onLoadResource { _ ->
+            web.onLoadResource { _ ->
                 if (isDesktopSite) {
                     myWebView.web?.evaluateJavascript(
                         """
@@ -179,7 +175,7 @@ fun WebXml(web: WebController) {
                     )
                 }
             }
-            myWebView.shouldInterceptRequest { request ->
+            web.shouldInterceptRequest { request ->
                 val raw = request.url.toString()
 
                 val allow = loadPage(raw)
@@ -191,7 +187,7 @@ fun WebXml(web: WebController) {
                     null
                 }
             }
-            myWebView.onPageFinished { url ->
+            web.onPageFinished { url ->
                 url?.let { onPageFinished(it) }
                 myWebView.web?.zoomOut()
             }
