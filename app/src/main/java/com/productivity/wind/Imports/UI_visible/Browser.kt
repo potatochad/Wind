@@ -206,26 +206,17 @@ fun WebXml(
                     null
                 }
             }
-
-
-
-                override fun onPageStarted(view: WebView?, url: Str?, favicon: Bitmap?) {
-                    super.onPageStarted(view, url, favicon)
-                    url?.let { onPageStarted(it) }
-                }
-
-                override fun onPageFinished(view: WebView?, url: Str?) {
-                    super.onPageFinished(view, url)
-                    url?.let { onPageFinished(it) }
-                    view?.zoomOut()
-                }
+            myWebView.onPageStarted { request ->
+                url?.let { onPageStarted(it) }
+            }
+            myWebView.onPageFinished { request ->
+                url?.let { onPageFinished(it) }
+                view?.zoomOut()
             }
 
-            myWebView.webChromeClient = object : WebChromeClient() {
-                override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                    super.onProgressChanged(view, newProgress)
-                    onProgressChanged(newProgress)
-                }
+            
+            myWebView.onProgressChanged {
+                onProgressChanged(newProgress)
             }
 
             myWebView.url("https://www.google.com/search?q=$url")
