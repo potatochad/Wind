@@ -149,11 +149,9 @@ fun WebXml(web: WebController) {
 
     AndroidView(
         factory = { ctx ->
-         val myWebController = WebController(
-             LayoutInflater.from(ctx)
-                 .inflate(R.layout.web, null, false)
-                 .findViewById(R.id.myWebView)
-         )
+            val rootView = LayoutInflater.from(ctx).inflate(R.layout.web, null, false)
+            val myWebController = WebController(rootView.findViewById(R.id.myWebView))
+
             
             web.settings {
                 javaScriptEnabled = yes
