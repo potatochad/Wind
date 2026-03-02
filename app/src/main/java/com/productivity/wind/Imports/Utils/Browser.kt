@@ -119,6 +119,9 @@ class WebController(val webView: WebView = WebView(AppCtx)) {
     }
     val web: WebView?
         get() = webView
+    fun zoomOut(){
+        web.zoomOut()
+    }
 }
 
 
