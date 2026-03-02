@@ -142,7 +142,7 @@ import androidx.activity.compose.BackHandler
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebXml(): WebController {
+fun WebXml(web: WebController) {
     BackHandler {
         web.back()
     }
@@ -161,7 +161,6 @@ fun WebXml(): WebController {
                 useWideViewPort = yes
                 loadWithOverviewMode = yes
             }
-
             myWebView.onLoadResource { _ ->
                 if (isDesktopSite) {
                     myWebView.web?.evaluateJavascript(
@@ -180,11 +179,6 @@ fun WebXml(): WebController {
                     )
                 }
             }
-            myWebView.doUpdateVisitedHistory { url, _ ->
-                url?.let { 
-                    onUrlChanged(it) 
-                }
-            }
             myWebView.shouldInterceptRequest { request ->
                 val raw = request.url.toString()
 
@@ -197,21 +191,11 @@ fun WebXml(): WebController {
                     null
                 }
             }
-            myWebView.onPageStarted { url ->
-                url?.let { onPageStarted(it) }
-            }
             myWebView.onPageFinished { url ->
                 url?.let { onPageFinished(it) }
                 myWebView.web?.zoomOut()
             }
             
-
-            myWebView.onProgressChanged { progress ->
-                onProgressChanged(progress)
-            }
-
-            myWebView.url("https://www.google.com/search?q=$url")
-
             rootView
         },
         modifier = Mod.maxS(),
