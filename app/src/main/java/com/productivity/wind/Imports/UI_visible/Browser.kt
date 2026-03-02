@@ -142,18 +142,9 @@ import androidx.activity.compose.BackHandler
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebXml(
-    web: WebController,
-    url: Str = "",
-    isDesktopSite: Bool = no,
-    onUrlChanged: DoStr = {},
-    onProgressChanged: DoInt = {},
-    onPageStarted: DoStr = {},
-    onPageFinished: DoStr = {},
-    loadPage: (url: Str) -> Bool = { yes },
-) {
+fun WebXml(): WebController {
     BackHandler {
-        web?.goBack()
+        web.back()
     }
 
     AndroidView(
@@ -220,7 +211,6 @@ fun WebXml(
             }
 
             myWebView.url("https://www.google.com/search?q=$url")
-            webViewState.it = myWebView.web
 
             rootView
         },
