@@ -164,16 +164,14 @@ fun WebXml(
             )
             
 
-            myWebView.settings.apply {
+            myWebView.settings {
                 javaScriptEnabled = yes
                 domStorageEnabled = yes
                 useWideViewPort = yes
                 loadWithOverviewMode = yes
             }
 
-            myWebView.webViewClient = object : WebViewClient() {
-                override fun onLoadResource(view: WebView?, url: Str?) {
-                    super.onLoadResource(view, url)
+            myWebView.onLoadResource { urlRecourse ->
                     if (isDesktopSite) {
                         view?.evaluateJavascript(
                             "document.querySelector('meta[name=\"viewport\"]').setAttribute('content'," +
