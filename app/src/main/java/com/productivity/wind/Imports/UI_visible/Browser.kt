@@ -189,13 +189,11 @@ fun WebXml(
                     )
                 }
             }
-
-                override fun doUpdateVisitedHistory(view: WebView?, url: Str?, isReload: Bool) {
-                    super.doUpdateVisitedHistory(view, url, isReload)
-                    url?.let { 
-                        onUrlChanged(it) 
-                    }
+            myWebView.doUpdateVisitedHistory { url, _ ->
+                url?.let { 
+                    onUrlChanged(it) 
                 }
+            }
 
                 override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
                     val raw = "${request.url}"
