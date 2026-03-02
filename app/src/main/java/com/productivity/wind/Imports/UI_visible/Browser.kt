@@ -206,21 +206,21 @@ fun WebXml(
                     null
                 }
             }
-            myWebView.onPageStarted { request ->
+            myWebView.onPageStarted { url ->
                 url?.let { onPageStarted(it) }
             }
-            myWebView.onPageFinished { request ->
+            myWebView.onPageFinished { url ->
                 url?.let { onPageFinished(it) }
-                view?.zoomOut()
+                myWebView.web?.zoomOut()
             }
-
             
-            myWebView.onProgressChanged {
-                onProgressChanged(newProgress)
+
+            myWebView.onProgressChanged { progress ->
+                onProgressChanged(progress)
             }
 
             myWebView.url("https://www.google.com/search?q=$url")
-            webViewState.it = myWebView
+            webViewState.it = myWebView.web
 
             rootView
         },
