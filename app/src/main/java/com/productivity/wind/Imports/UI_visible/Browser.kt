@@ -171,15 +171,24 @@ fun WebXml(
                 loadWithOverviewMode = yes
             }
 
-            myWebView.onLoadResource { urlRecourse ->
-                    if (isDesktopSite) {
-                        view?.evaluateJavascript(
-                            "document.querySelector('meta[name=\"viewport\"]').setAttribute('content'," +
-                                    "'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024));",
-                            null
-                        )
-                    }
+            myWebView.onLoadResource { _ ->
+                if (isDesktopSite) {
+                    myWebView.web?.evaluateJavascript(
+                        """
+                        (function() {
+                        var meta = document.querySelector('meta[name="viewport"]');
+                        if (meta) {
+                        meta.setAttribute(
+                        'content',
+                        'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024)
+                        );
+                        }
+                        })();
+                        """.trimIndent(),
+                        null
+                    )
                 }
+            }
 
                 override fun doUpdateVisitedHistory(view: WebView?, url: Str?, isReload: Bool) {
                     super.doUpdateVisitedHistory(view, url, isReload)
