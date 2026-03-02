@@ -143,7 +143,7 @@ import androidx.activity.compose.BackHandler
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebXml(
-    webViewState: m_<WebView?>,
+    web: WebController,
     url: Str = "",
     isDesktopSite: Bool = no,
     onUrlChanged: DoStr = {},
@@ -153,7 +153,7 @@ fun WebXml(
     loadPage: (url: Str) -> Bool = { yes },
 ) {
     BackHandler {
-        webViewState.it?.goBack()
+        web?.goBack()
     }
 
     AndroidView(
