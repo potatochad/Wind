@@ -188,16 +188,12 @@ fun WebXml(web: WebController) {
                 }
             }
             web.onPageFinished { url ->
-                url?.let { onPageFinished(it) }
-                myWebView.web?.zoomOut()
+                web.zoomOut()
             }
             
             rootView
         },
         modifier = Mod.maxS(),
-        update = { view ->
-            val myWebView = view.findViewById<WebView>(R.id.myWebView)
-        }
     )
 }
 
