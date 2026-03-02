@@ -194,18 +194,18 @@ fun WebXml(
                     onUrlChanged(it) 
                 }
             }
+            myWebView.shouldInterceptRequest { request ->
+                val raw = request.url.toString()
 
-                override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
-                    val raw = "${request.url}"
+                val allow = loadPage(raw)
 
-                    val stop = loadPage(raw)
-
-                    if (!stop) {
-                        goBackWeb(view)
-                        return WebResourceResponse("text/plain", "utf-8", null)
-                    }
-                    return super.shouldInterceptRequest(view, request)
+                if (!allow) {
+                    myWebView.back()
+                    WebResourceResponse("text/plain", "utf-8", null)
+                } else {
+                    null
                 }
+            }
 
 
 
