@@ -159,7 +159,7 @@ fun WebXml(web: WebController) {
             }
             web.onLoadResource { _ ->
                 if (isDesktopSite) {
-                    myWebView.web?.evaluateJavascript(
+                    web.evaluateJavascript(
                         """
                         (function() {
                         var meta = document.querySelector('meta[name="viewport"]');
