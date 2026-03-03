@@ -30,7 +30,10 @@ import com.productivity.wind.Imports.UI_visible.*
 
 @Composable
 fun Web(){
+    //returns class: WebController
     val web = r { WebController(LocalContext.current) }
+    
+    web.applyFancySettings()
     
     web.url(Bar.Url)
         
