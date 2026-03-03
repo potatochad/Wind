@@ -41,7 +41,7 @@ fun Web(){
     Item.WebPointTimer()
 
     web.doUpdateVisitedHistory { url, isReload ->
-        Bar.Url = url
+        Bar.Url = url ?: "https://www.google.com"
 
         web.html { x ->
             log("full html: [$x]")
