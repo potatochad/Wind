@@ -42,8 +42,8 @@ fun Web(){
     web.doUpdateVisitedHistory { url, isReload ->
         Bar.Url = url
 
-        web.web?.txt{x->
-            Vlog("full html: [$x]")
+        web.html { x ->
+            log("full html: [$x]")
         }
 
         Bar.badWords.each { y->
