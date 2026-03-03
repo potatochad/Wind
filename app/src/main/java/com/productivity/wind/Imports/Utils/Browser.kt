@@ -140,35 +140,6 @@ fun WebController.applyFancySettings(){
         useWideViewPort = yes
         loadWithOverviewMode = yes
     }
-    this.onLoadResource { _ ->
-        if (isDesktopSite) {
-            this.web?.evaluateJavascript(
-                """
-                (function() {
-                var meta = document.querySelector('meta[name="viewport"]');
-                if (meta) {
-                meta.setAttribute(
-                'content',
-                'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024)
-                );
-                }
-                })();
-                """.trimIndent(),
-                null
-            )
-        }
-    }
-    this.shouldInterceptRequest { request ->
-        val raw = request.url.toString()
-        val allow = loadPage(raw)
-
-        if (!allow) {
-            this.back()
-            WebResourceResponse("text/plain", "utf-8", null)
-        } else {
-            null
-        }
-    }
     this.onPageFinished { url ->
         this.zoomOut()
     }
