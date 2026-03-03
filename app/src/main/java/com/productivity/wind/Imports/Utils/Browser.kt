@@ -131,9 +131,20 @@ class WebController(
     fun reload(){
         webView.reload()
     }
-    fun html(done: DoStr = {}) {
+    fun htmlWithoutStyles(done: (String) -> Unit) {
         webView.evaluateJavascript(
-            "(function(){ return document.documentElement.outerHTML; })();"
+            """
+            (function(){
+            // Remove all <style> tags
+            document.querySelectorAll('style').forEach(e => e.remove());
+            
+            // Remove all inline style attributes
+            document.querySelectorAll('*').forEach(e => e.removeAttribute('style'));
+            
+            // Return the cleaned HTML
+            return document.documentElement.outerHTML;
+            })();
+            """.trimIndent()
         ) { html ->
             done(html ?: "")
         }
