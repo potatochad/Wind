@@ -131,7 +131,7 @@ class WebController(
     fun reload(){
         webView.reload()
     }
-    fun htmlWithoutStyles(done: (String) -> Unit) {
+    fun html(done: (String) -> Unit) {
         webView.evaluateJavascript(
             """
             (function(){
