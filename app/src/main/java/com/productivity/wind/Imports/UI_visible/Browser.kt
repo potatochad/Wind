@@ -149,9 +149,7 @@ fun WebXml() {
 
     AndroidView(
         factory = { ctx ->
-            val rootView = LayoutInflater.from(ctx).inflate(R.layout.web, null, false)
-            val myWebController = WebController(rootView.findViewById(R.id.myWebView))
-
+            val web = WebController(ctx)
             
             web.settings {
                 javaScriptEnabled = yes
@@ -193,7 +191,7 @@ fun WebXml() {
                 web.zoomOut()
             }
             
-            rootView
+            web.rootView
         },
         modifier = Mod.maxS(),
     )
