@@ -31,7 +31,8 @@ import androidx.compose.ui.platform.*
 @Composable
 fun Web(){
     //returns class: WebController
-    val web = r { WebController(LocalContext.current) }
+    var ctx = LocalContext.current
+    val web = r { WebController(ctx) }
     
     web.applyFancySettings()
     
@@ -61,7 +62,7 @@ fun Web(){
             End {
                 Row{
                     Icon.Reload{ 
-                        web.it?.reload()
+                        web.reload()
                     } 
                     Icon.Delete {
                         Bar.Url = "https://google.com"
