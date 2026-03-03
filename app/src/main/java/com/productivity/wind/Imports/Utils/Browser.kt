@@ -135,16 +135,19 @@ class WebController(
         webView.evaluateJavascript(
             """
             (function(){
-            // Remove all <style> tags
-            document.querySelectorAll('style').forEach(e => e.remove());
-            
-            // Remove all inline style attributes
-            document.querySelectorAll('*').forEach(e => e.removeAttribute('style'));
-            
-            // Return the cleaned HTML
-            return document.documentElement.outerHTML;
-            })();
-            """.trimIndent()
+            // Clone the body so we don't break the live page
+            var clone = document.body.cloneNode(true);
+
+            // Remove unwanted tags inside body
+            clone.querySelectorAll('style, script, link').forEach(e => e.remove());
+
+            // Remove inline style attributes
+            clone.querySelectorAll('*').forEach(e => e.removeAttribute('style'));
+
+            // Return only cleaned body HTML
+            return clone.outerHTML;
+        })();
+        """.trimIndent()
         ) { html ->
             done(html ?: "")
         }
