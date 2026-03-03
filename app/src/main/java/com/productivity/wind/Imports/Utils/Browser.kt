@@ -198,14 +198,14 @@ fun BlockKeywords(
     Do: Do = {},
 ) {
     web.html {
-        if (html != null) {
-            val lowerHtml = html.lowercase()
+        if (it != null) {
+            val lowerHtml = it.lowercase()
             for (word in keywords) {
                 if (lowerHtml.contains(word.lowercase())) {
                     web.back()
                     Do()
                     Vlog("Blocked $word") 
-                    return@evaluateJavascript
+                    return@html
                 }
             }
         }
