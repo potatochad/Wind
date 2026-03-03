@@ -146,11 +146,6 @@ fun WebXml() {
     BackHandler {
         web.back()
     }
-    val context = LocalContext.current
-
-    val web = remember {
-        WebController(context)
-    }
 
     AndroidView(
         factory = { ctx ->
