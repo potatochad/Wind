@@ -130,32 +130,6 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
-
-
-fun goBackWeb(web: Web?) {
-    web?.post {
-        if (web?.canGoBack()==yes) {
-            web.goBack()
-        }
-    }
-}
-fun goBackWeb(web: m_<Web?>) {
-    val w = web.it
-    w?.post {
-        if (w.canGoBack()) {
-            w.goBack()
-        }
-    }
-}
-
-fun m_<Web?>.txt(done: DoStr = {}) {
-    this.it?.evaluateJavascript(
-        "(function(){ return document.body.innerText; })();"
-    ) { text ->
-        done(text ?: "")
-    }
-}
-
 fun closeApp() {
     App.finishAffinity()
     killProcess(myPid())
