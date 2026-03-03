@@ -142,54 +142,13 @@ import androidx.activity.compose.BackHandler
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebXml() {
+fun WebXml(web: WebController) {
     BackHandler {
         web.back()
     }
 
     AndroidView(
-        factory = { ctx ->
-            
-            web.settings {
-                javaScriptEnabled = yes
-                domStorageEnabled = yes
-                useWideViewPort = yes
-                loadWithOverviewMode = yes
-            }
-            web.onLoadResource { _ ->
-                if (isDesktopSite) {
-                    web?.evaluateJavascript(
-                        """
-                        (function() {
-                        var meta = document.querySelector('meta[name="viewport"]');
-                        if (meta) {
-                        meta.setAttribute(
-                        'content',
-                        'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024)
-                        );
-                        }
-                        })();
-                        """.trimIndent(),
-                        null
-                    )
-                }
-            }
-            web.shouldInterceptRequest { request ->
-                val raw = request.url.toString()
-
-                val allow = loadPage(raw)
-
-                if (!allow) {
-                    myWebView.back()
-                    WebResourceResponse("text/plain", "utf-8", null)
-                } else {
-                    null
-                }
-            }
-            web.onPageFinished { url ->
-                web.zoomOut()
-            }
-            
+        factory = { ctx ->            
             web.rootView
         },
         modifier = Mod.maxS(),
