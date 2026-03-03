@@ -193,18 +193,16 @@ fun UrlShort(x: Str): Str {
 }
 
 fun BlockKeywords(
-    webView: m_<Web?>,
+    web: WebController,
     keywords: List<Str>,
     Do: Do = {},
 ) {
-    webView.it?.evaluateJavascript(
-        "(function() { return document.body.innerText.toLowerCase(); })();"
-    ) { html ->
+    web.html {
         if (html != null) {
             val lowerHtml = html.lowercase()
             for (word in keywords) {
                 if (lowerHtml.contains(word.lowercase())) {
-                    goBackWeb(webView.it)
+                    web.back()
                     Do()
                     Vlog("Blocked $word") 
                     return@evaluateJavascript
@@ -213,3 +211,8 @@ fun BlockKeywords(
         }
     }
 }
+
+
+
+
+
