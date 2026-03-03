@@ -23,6 +23,8 @@ import com.productivity.wind.Imports.Utils.*
 
 
 class WebController(val webView: WebView = WebView(AppCtx)) {
+    val rootView: View = LayoutInflater.from(AppCtx).inflate(R.layout.web, null, false)
+
     private var shouldOverrideUrlLoading = mutableListOf<(String?) -> Boolean>()
     private var onPageFinished = mutableListOf<(String?) -> Unit>()
     private var onLoadResource = mutableListOf<(String?) -> Unit>()
