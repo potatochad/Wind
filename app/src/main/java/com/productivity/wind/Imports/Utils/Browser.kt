@@ -130,6 +130,9 @@ class WebController(
     fun zoomOut(){
         webView.zoomOut()
     }
+    fun reload(){
+        webView.reload()
+    }
     fun html(done: DoStr = {}) {
         webView.evaluateJavascript(
             "(function(){ return document.documentElement.outerHTML; })();"
