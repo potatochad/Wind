@@ -146,10 +146,14 @@ fun WebXml() {
     BackHandler {
         web.back()
     }
+    val context = LocalContext.current
+
+    val web = remember {
+        WebController(context)
+    }
 
     AndroidView(
         factory = { ctx ->
-            val web = WebController(ctx)
             
             web.settings {
                 javaScriptEnabled = yes
