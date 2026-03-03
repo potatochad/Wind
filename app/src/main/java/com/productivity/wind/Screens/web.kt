@@ -44,7 +44,7 @@ fun Web(){
         Bar.Url = url ?: "https://www.google.com"
 
         web.html { x ->
-            log("full html: [$x]", 5000)
+            log("full html: [$x]", 3000)
         }
 
         Bar.badWords.each { y->
