@@ -146,6 +146,8 @@ fun WebController.applyFancySettings(){
 }
 
 
+
+
 @SuppressLint("SetJavaScriptEnabled")
 fun WebView.clearWebData() {
     clearMatches()
