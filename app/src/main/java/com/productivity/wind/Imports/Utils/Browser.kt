@@ -22,8 +22,14 @@ import kotlinx.coroutines.*
 import com.productivity.wind.Imports.Utils.*
 
 
-class WebController(val webView: WebView = WebView(AppCtx)) {
-    val rootView: View = LayoutInflater.from(AppCtx).inflate(R.layout.web, null, false)
+class WebController(
+    ctx: Context //!special context needed
+) {
+    val rootView: View =
+        LayoutInflater.from(ctx).inflate(R.layout.web, null, false)
+
+    val webView: WebView =
+        rootView.findViewById(R.id.myWebView)
 
     private var shouldOverrideUrlLoading = mutableListOf<(String?) -> Boolean>()
     private var onPageFinished = mutableListOf<(String?) -> Unit>()
@@ -122,7 +128,7 @@ class WebController(val webView: WebView = WebView(AppCtx)) {
     val web: WebView?
         get() = webView
     fun zoomOut(){
-        web.zoomOut()
+        webView.zoomOut()
     }
 }
 
