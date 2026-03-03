@@ -142,7 +142,7 @@ import androidx.activity.compose.BackHandler
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebXml(web: WebController) {
+fun WebXml() {
     BackHandler {
         web.back()
     }
