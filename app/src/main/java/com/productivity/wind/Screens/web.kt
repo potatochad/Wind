@@ -39,6 +39,21 @@ fun Web(){
         
     Item.WebPointTimer()
 
+    web.doUpdateVisitedHistory { url, isReload ->
+        Bar.Url = it
+
+        web.web.txt{x->
+            Vlog("full html: [$x]")
+        }
+
+        Bar.badWords.each { y->
+            if (Bar.Url.contains(y.word, ignoreCase = yes)) {
+                web.back()
+                return@each
+            }
+        }
+    }
+
     LazyScreen(
         top = {
             Text(" Points ${Bar.funTime}")
@@ -61,23 +76,6 @@ fun Web(){
         DividerPadding = no,
     ) {
         WebXml(web)
-
-        /*
-            onUrlChanged={
-                Bar.Url = it
-
-                web.txt{x->
-                    //Vlog("htnl: [$x]")
-                }
-
-                Bar.badWords.each { y->
-                    if (Bar.Url.contains(y.word, ignoreCase = yes)) {
-                        goBackWeb(web)
-                        return@each
-                    }
-                }
-            },
-            */
     }
 }
 
