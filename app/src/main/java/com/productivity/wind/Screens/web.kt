@@ -30,7 +30,7 @@ import com.productivity.wind.Imports.UI_visible.*
 
 @Composable
 fun Web(){
-    val web = r { mutableStateOf<Web?>(null) }
+    val web = r { WebController(LocalContext.current) }
     
     web.url(Bar.Url)
         
@@ -57,8 +57,9 @@ fun Web(){
         scroll = no,
         DividerPadding = no,
     ) {
-        WebXml(
-            webViewState = web,
+        WebXml(web)
+
+        /*
             onUrlChanged={
                 Bar.Url = it
 
@@ -73,7 +74,7 @@ fun Web(){
                     }
                 }
             },
-        )
+            */
     }
 }
 
