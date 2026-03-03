@@ -40,9 +40,9 @@ fun Web(){
     Item.WebPointTimer()
 
     web.doUpdateVisitedHistory { url, isReload ->
-        Bar.Url = it
+        Bar.Url = url
 
-        web.web.txt{x->
+        web.web?.txt{x->
             Vlog("full html: [$x]")
         }
 
