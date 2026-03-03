@@ -130,6 +130,13 @@ class WebController(
     fun zoomOut(){
         webView.zoomOut()
     }
+    fun html(done: DoStr = {}) {
+        webView.evaluateJavascript(
+            "(function(){ return document.documentElement.outerHTML; })();"
+        ) { html ->
+            done(html ?: "")
+        }
+    }
 }
 
 @SuppressLint("SetJavaScriptEnabled")
