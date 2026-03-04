@@ -149,7 +149,15 @@ class WebController(
         })();
         """.trimIndent()
         ) { html ->
-            done(html ?: "")
+         val cleaned = html
+            ?.removePrefix("\"")
+            ?.removeSuffix("\"")
+            ?.replace("\\u003C", "<")
+            ?.replace("\\u003E", ">")
+            ?.replace("\\\"", "\"")
+            ?.replace("\\n", "\n")
+        
+            done(cleaned ?: "")
         }
     }
 }
