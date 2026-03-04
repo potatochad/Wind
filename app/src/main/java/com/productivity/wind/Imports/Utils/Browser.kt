@@ -141,6 +141,9 @@ class WebController(
             // Remove unwanted tags inside body
             clone.querySelectorAll('style, script, link').forEach(e => e.remove());
 
+            // Remove all images
+            clone.querySelectorAll('img').forEach(e => e.remove());
+
             // Remove inline style attributes
             clone.querySelectorAll('*').forEach(e => e.removeAttribute('style'));
 
