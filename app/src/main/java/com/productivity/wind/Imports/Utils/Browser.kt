@@ -166,33 +166,57 @@ class WebController(
     }
 
     fun allVisibleText(done: (String) -> Unit) {
-        webView.evaluateJavascript(
-            """
-            (function(){
+    webView.evaluateJavascript(
+        """
+        (function(){
+
+            // Remove nodes that contain non‑content text
+            document.querySelectorAll('style, script, link, noscript').forEach(e => e.remove());
+
             function getText(node){
-            let text = "";
-            node.childNodes.forEach(n => {
-            if(n.nodeType === Node.TEXT_NODE){
-            text += n.textContent.trim() + "\n";
-            } else {
-            text += getText(n);
+                let text = "";
+
+                node.childNodes.forEach(n => {
+
+                    // Ignore comments
+                    if(n.nodeType === Node.COMMENT_NODE) return;
+
+                    // Collect real text
+                    if(n.nodeType === Node.TEXT_NODE){
+                        let t = n.textContent.trim();
+                        if(t.length > 0){
+                            text += t + "\n";
+                        }
+                    }
+
+                    // Continue recursion
+                    else if(n.nodeType === Node.ELEMENT_NODE){
+                        text += getText(n);
+                    }
+
+                });
+
+                return text;
             }
-            });
-            return text;
-            }
+
             return getText(document.body);
-            })();
-            """.trimIndent()
-        ) { result ->
-            val cleaned = result
+
+        })();
+        """.trimIndent()
+    ) { result ->
+
+        val cleaned = result
             ?.removePrefix("\"")
             ?.removeSuffix("\"")
             ?.replace("\\n", "\n")
             ?.replace("\\\"", "\"")
-            
-            done(cleaned ?: "")
-        }
+
+        done(cleaned ?: "")
     }
+    }
+
+
+    
 }
 
 @SuppressLint("SetJavaScriptEnabled")
