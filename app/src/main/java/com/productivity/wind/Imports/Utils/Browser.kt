@@ -164,6 +164,35 @@ class WebController(
             done(cleaned ?: "")
         }
     }
+
+    fun allVisibleText(done: (String) -> Unit) {
+        webView.evaluateJavascript(
+            """
+            (function(){
+            function getText(node){
+            let text = "";
+            node.childNodes.forEach(n => {
+            if(n.nodeType === Node.TEXT_NODE){
+            text += n.textContent.trim() + "\n";
+            } else {
+            text += getText(n);
+            }
+            });
+            return text;
+            }
+            return getText(document.body);
+            })();
+            """.trimIndent()
+        ) { result ->
+            val cleaned = result
+            ?.removePrefix("\"")
+            ?.removeSuffix("\"")
+            ?.replace("\\n", "\n")
+            ?.replace("\\\"", "\"")
+            
+            done(cleaned ?: "")
+        }
+    }
 }
 
 @SuppressLint("SetJavaScriptEnabled")
