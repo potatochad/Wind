@@ -143,6 +143,7 @@ class WebController(
 
             // Remove all images
             clone.querySelectorAll('img').forEach(e => e.remove());
+            clone.querySelectorAll('svg').forEach(e => e.remove());
 
             // Remove inline style attributes
             clone.querySelectorAll('*').forEach(e => e.removeAttribute('style'));
