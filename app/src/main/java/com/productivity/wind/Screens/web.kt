@@ -43,7 +43,7 @@ fun Web(){
     web.doUpdateVisitedHistory { url, isReload ->
         Bar.Url = url ?: "https://www.google.com"
 
-        web.html { x ->
+        web.allVisibleText { x ->
             log("full html: [$x]", 3000)
         }
 
