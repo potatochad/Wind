@@ -170,26 +170,25 @@ class WebController(
         """
         (function(){
 
-            // Remove nodes that contain non‑content text
-            document.querySelectorAll('style, script, link, noscript').forEach(e => e.remove());
+            // Create a full copy of the page
+            const bodyCopy = document.body.cloneNode(true);
+
+            // Clean the copy only (not the real page)
+            bodyCopy.querySelectorAll('style, script, link, noscript').forEach(e => e.remove());
 
             function getText(node){
                 let text = "";
 
                 node.childNodes.forEach(n => {
 
-                    // Ignore comments
                     if(n.nodeType === Node.COMMENT_NODE) return;
 
-                    // Collect real text
                     if(n.nodeType === Node.TEXT_NODE){
                         let t = n.textContent.trim();
                         if(t.length > 0){
                             text += t + "\n";
                         }
                     }
-
-                    // Continue recursion
                     else if(n.nodeType === Node.ELEMENT_NODE){
                         text += getText(n);
                     }
@@ -199,7 +198,7 @@ class WebController(
                 return text;
             }
 
-            return getText(document.body);
+            return getText(bodyCopy);
 
         })();
         """.trimIndent()
