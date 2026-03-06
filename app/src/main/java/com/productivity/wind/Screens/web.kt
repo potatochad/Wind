@@ -104,9 +104,9 @@ fun BlockKeyword() {
                 }
                 Item.Add {
                     Try("error with adding bad words") {
-                    Bar.badWords.add {
-                        word = BadWord.it
-                    }
+                    Bar.badWords.add(
+    WebWord(word = BadWord.it)
+)
                     }
                 }
             }
