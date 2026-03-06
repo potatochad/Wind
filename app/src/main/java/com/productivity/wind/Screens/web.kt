@@ -104,9 +104,8 @@ fun BlockKeyword() {
                 }
                 Item.Add {
                     Bar.badWords.add(
-    WebWord(word = BadWord.it)
-)
-                    
+                        WebWord(word = BadWord.it)
+                    )
                 }
             }
         },
@@ -124,29 +123,27 @@ fun BlockKeyword() {
             }
         }
 
-        LazyCard {
-            Bar.badWords.each {
+        Bar.badWords.findUI({yes}) { 
+			LazyCard {
                 Column(Mod.Vscroll()){
+                    LazzyRow {
+                        Text(text = it.word)
 
-
-                LazzyRow {
-                    Text(text = it.word)
-
-                    Item.Edit {
-                        Item.enoughPoints{
-                            Bar.badWords.edit(it) {
-                                word = BadWord.it
+                        Item.Edit {
+                            Item.enoughPoints{
+                                Bar.badWords.edit(it) {
+                                    word = BadWord.it
+                                }
                             }
                         }
 
-                    }
-
-                    Icon.Delete {
-                        Item.enoughPoints {
-                            Bar.badWords.remove(it)
+                        Icon.Delete {
+                            Item.enoughPoints {
+                                Bar.badWords.remove(it)
+                            }
                         }
                     }
-                }}
+                }
             }
         }
     }
