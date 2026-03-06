@@ -92,8 +92,9 @@ fun BlockKeyword() {
     LazyScreen(
         top = {
             Row(
-                Mod.Hscroll()
-                    .w((AppW / 2)+30.dp)
+                Mod
+                    .Hscroll()
+                    .w((AppW / 2) + 30.dp)
                     .border(width = 1.dp, color = Color.LightGray)  
             ) {
                 Text(url, maxLines = 1)
@@ -123,24 +124,22 @@ fun BlockKeyword() {
             }
         }
 
-        Bar.badWords.findUI({yes}) { 
-			LazyCard {
-                Column(Mod.Vscroll()){
-                    LazzyRow {
-                        Text(text = it.word)
+        Bar.badWords.findUI({yes}) {
+            LazyCard {
+                LazzyRow {
+                    Text(text = it.word)
 
-                        Item.Edit {
-                            Item.enoughPoints{
-                                Bar.badWords.edit(it) {
-                                    word = BadWord.it
-                                }
+                    Item.Edit {
+                        Item.enoughPoints {
+                            Bar.badWords.edit(it) {
+                                word = BadWord.it
                             }
                         }
+                    }
 
-                        Icon.Delete {
-                            Item.enoughPoints {
-                                Bar.badWords.remove(it)
-                            }
+                    Icon.Delete {
+                        Item.enoughPoints {
+                            Bar.badWords.remove(it)
                         }
                     }
                 }
