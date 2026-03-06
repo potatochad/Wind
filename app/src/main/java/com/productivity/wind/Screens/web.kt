@@ -103,8 +103,10 @@ fun BlockKeyword() {
                     goTo("filterExtraWeb")
                 }
                 Item.Add {
+                    Try("error with adding bad words") {
                     Bar.badWords.add {
                         word = BadWord.it
+                    }
                     }
                 }
             }
