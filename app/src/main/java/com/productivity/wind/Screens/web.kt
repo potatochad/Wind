@@ -43,15 +43,16 @@ fun Web(){
     web.doUpdateVisitedHistory { url, isReload ->
         Bar.Url = url ?: "https://www.google.com"
 
-        web.allVisibleText { x ->
-            log("full html: [$x]", 3000)
-        }
-
-        Bar.badWords.each { y->
-            if (Bar.Url.contains(y.word, ignoreCase = yes)) {
-                web.back()
-                return@each
+        web.allVisibleText { txt ->
+            log("full html: [$txt]", 3000)
+            
+            Bar.badWords.each { y->
+                if (txt.contains(y.word, ignoreCase = yes)) {
+                    web.back()
+                    return@each
+                }
             }
+            
         }
     }
 
