@@ -124,7 +124,7 @@ fun BlockKeyword() {
         }
 
         LazyCard {
-            Bar.badWords.forEach {
+            Bar.badWords.each {
                 Column(Mod.Vscroll()){
 
 
