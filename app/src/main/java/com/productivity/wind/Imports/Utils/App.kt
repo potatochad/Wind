@@ -322,7 +322,7 @@ fun getAppIcon(packageName: Str?): Drawable? {
 
 
 fun log(message: Str, int: Int = 200) {
-    var msg = message.take(int)
+    var msg = message.replace("\n", " | ").take(int)
     if (msg.length >= int) {msg += " ..."}
 
     Log.e("[bad]", msg)
