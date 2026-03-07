@@ -41,8 +41,7 @@ fun Web(){
     Item.WebPointTimer()
 
     web.doUpdateVisitedHistory { url, isReload ->
-        Bar.Url = url ?: "https://www.google.com"
-
+        
         web.allVisibleText { txt ->
             Vlog("history updated")
             log("full html: [$txt]", 2000)
@@ -54,6 +53,8 @@ fun Web(){
                     return@each
                 }
             }
+            Bar.Url = url ?: "https://www.google.com"
+
             
         }
     }
