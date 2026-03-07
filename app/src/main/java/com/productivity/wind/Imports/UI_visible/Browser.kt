@@ -151,7 +151,7 @@ fun WebXml(web: WebController) {
 
     PullToRefreshBox(
         isRefreshing = isRefreshing,
-        onRefresh = onRefresh,
+        onRefresh = { web.reload() },
         modifier = modifier,
         state = state,
         indicator = {
