@@ -141,7 +141,6 @@ import androidx.activity.compose.BackHandler
 
 import androidx.compose.material3.pulltorefresh.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
-import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.*
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
