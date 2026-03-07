@@ -45,17 +45,21 @@ fun Web(){
         web.allVisibleText { txt ->
             Vlog("history updated")
             log("full html: [$txt]", 2000)
-            
-            Bar.badWords.each { y->
-                if (txt.contains(y.word, ignoreCase = yes)) {
+
+            var blocked = false
+
+            for (y in Bar.badWords) {
+                if (txt.contains(y.word, ignoreCase = true)) {
+                    blocked = true
                     web.back()
                     Vlog("blocking, bad word detected: $y")
-                    return@each
+                    break
                 }
             }
-            Bar.Url = url ?: "https://www.google.com"
 
-            
+            if (!blocked) {
+                Bar.Url = url ?: "https://www.google.com"
+            }
         }
     }
 
