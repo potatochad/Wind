@@ -237,7 +237,6 @@ fun LazyLine(
 fun LazzyRow(
     mod: Mod = Mod,
     space: Any = 0,
-    center: Bool = no,
 	ui: uiRow,
 ) {
 	val isEnd = mod.hasTag<EndTag>()
