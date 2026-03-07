@@ -27,8 +27,6 @@ class WebController(
 ) {
     val rootView: View = LayoutInflater.from(ctx).inflate(R.layout.web, null, false)
     val webView: WebView = rootView.findViewById(R.id.myWebView)
-    val swipeRefresh: SwipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshContainer)
-
     
     private var shouldOverrideUrlLoading = mutableListOf<(String?) -> Boolean>()
     private var onPageFinished = mutableListOf<(String?) -> Unit>()
@@ -42,12 +40,6 @@ class WebController(
 
     
     init {
-        swipeRefresh.setOnRefreshListener {
-            webView.reload()                 // reload the page
-            swipeRefresh.isRefreshing = false // stop spinner
-        }
-        
-     
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 return shouldOverrideUrlLoading.any { it(url) } // return true if any handler wants to override
