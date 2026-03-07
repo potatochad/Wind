@@ -238,6 +238,8 @@ fun LazzyRow(
     modifier: Mod = Mod,
     space: Any = 0,
     center: Bool = no,
+	horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     ui: uiRow,
 ) {
     Row(
