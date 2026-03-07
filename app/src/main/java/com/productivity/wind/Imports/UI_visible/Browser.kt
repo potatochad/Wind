@@ -148,10 +148,18 @@ fun WebXml(web: WebController) {
         web.back()
     }
     val state = rememberPullToRefreshState()
+    var isRefreshing by r(no)
+    
+    web.onPageFinished{
+        isRefreshing = no
+    }
 
     PullToRefreshBox(
-        isRefreshing = web.web ??,
-        onRefresh = { web.reload() },
+        isRefreshing = isRefreshing,
+        onRefresh = { 
+            isRefreshing = yes
+            web.reload() 
+        },
         state = state,
         indicator = {
             Indicator(
