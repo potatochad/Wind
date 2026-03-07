@@ -20,7 +20,7 @@ import android.webkit.*
 import android.graphics.*
 import kotlinx.coroutines.*
 import com.productivity.wind.Imports.Utils.*
-
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
