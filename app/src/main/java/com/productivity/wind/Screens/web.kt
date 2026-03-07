@@ -44,11 +44,13 @@ fun Web(){
         Bar.Url = url ?: "https://www.google.com"
 
         web.allVisibleText { txt ->
-            log("full html: [$txt]", 3000)
+            Vlog("history updated")
+            log("full html: [$txt]", 2000)
             
             Bar.badWords.each { y->
                 if (txt.contains(y.word, ignoreCase = yes)) {
                     web.back()
+                    Vlog("blocking, bad word detected: $y")
                     return@each
                 }
             }
