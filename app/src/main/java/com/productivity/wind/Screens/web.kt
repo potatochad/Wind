@@ -41,7 +41,6 @@ fun Web(){
     Item.WebPointTimer()
 
     web.doUpdateVisitedHistory { url, isReload ->
-        
         web.allVisibleText { txt ->
             Vlog("history updated")
             log("full html: [$txt]", 2000)
