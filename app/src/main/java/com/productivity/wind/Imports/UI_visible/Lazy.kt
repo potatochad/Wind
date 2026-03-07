@@ -384,7 +384,7 @@ fun LazyHeader(
     ui: uiRow,
     onBackClick: Do = {},
     showBack: Bool = yes,
-    modifier: Mod = Mod,
+    mod: Mod = Mod,
 
     showDivider: Bool = yes,
     DividerPadding: Bool = yes,
@@ -393,19 +393,15 @@ fun LazyHeader(
 ) {
     val ui = rememberSystemUiController()
     var clickedBack by r(no)
-    RunOnce(Unit) {
+    RunOnce {
         ui.setStatusBarColor(Color.Black, darkIcons = no)
     }
 
     Column {
-        move(h=getStatusBarHeight()/3)
+        move(h = getStatusBarHeight()/3)
 
         Row(
-            modifier
-                .maxW()
-                .background(Color.Black)
-                .space(w = 12)
-                .h(h),
+            mod.maxW().background(Color.Black).space(w = 12).h(h),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
