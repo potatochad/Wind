@@ -264,7 +264,7 @@ fun LazzyRow(
 	}
 	
     Row(
-        mod.maxW().space(space),
+        Mod.mix(new = mod).maxW().space(space),
         horizontalArrangement = hArr,
         verticalAlignment = vAlign,
 	) {
