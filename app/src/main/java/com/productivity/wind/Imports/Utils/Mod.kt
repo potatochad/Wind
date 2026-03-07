@@ -259,8 +259,34 @@ fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
 
 
 
+// Marker types for alignment
+class CenterHTag : Mod.Element
+class CenterVTag : Mod.Element
+class TopTag : Mod.Element
+class BottomTag : Mod.Element
+class StartTag : Mod.Element
+class EndTag : Mod.Element
 
+inline fun <reified T : Mod.Element> Mod.hasTag(): Bool =
+    this.any { it is T }
 
+val Mod.centerH: Mod
+    get() = this.then(CenterHTag())
+
+val Mod.centerV: Mod
+    get() = this.then(CenterVTag())
+
+val Mod.top: Mod
+    get() = this.then(TopTag())
+
+val Mod.bottom: Mod
+    get() = this.then(BottomTag())
+
+val Mod.start: Mod
+    get() = this.then(StartTag())
+
+val Mod.end: Mod
+    get() = this.then(EndTag())
 
 
 
