@@ -263,8 +263,10 @@ fun LazzyRow(
         else -> Alignment.CenterVertically
 	}
 	
+	var baseMod = Mod.maxW().space(space)
+	
     Row(
-        Mod.mix(new = mod).maxW().space(space),
+        baseMod.mix(new = mod),
         horizontalArrangement = hArr,
         verticalAlignment = vAlign,
 	) {
