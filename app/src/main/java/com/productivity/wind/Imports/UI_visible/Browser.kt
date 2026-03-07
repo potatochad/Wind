@@ -139,6 +139,7 @@ import java.net.URLEncoder
 import java.util.*
 import androidx.activity.compose.BackHandler
 
+import androidx.compose.material3.pulltorefresh.*
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -146,6 +147,24 @@ fun WebXml(web: WebController) {
     BackHandler {
         web.back()
     }
+    val state = rememberPullToRefreshState()
+
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = onRefresh,
+        modifier = modifier,
+        state = state,
+        indicator = {
+            Indicator(
+                modifier = Modifier.align(Alignment.TopCenter),
+                isRefreshing = isRefreshing,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                state = state
+            )
+        },
+    ) {
+    
 
     AndroidView(
         factory = { ctx ->            
@@ -153,6 +172,7 @@ fun WebXml(web: WebController) {
         },
         modifier = Mod.maxS(),
     )
+    }
 }
 
 
