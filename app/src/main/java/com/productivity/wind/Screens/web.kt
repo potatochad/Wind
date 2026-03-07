@@ -94,18 +94,9 @@ fun Web(){
 fun BlockKeyword() {
     var url by r(UrlShort(Bar.Url))
     var BadWord = r(url)
-    //
 
     LazyScreen(
         top = {
-            Row(
-                Mod
-                    .Hscroll()
-                    .w((AppW / 2) + 30.dp)
-                    .border(width = 1.dp, color = Color.LightGray)  
-            ) {
-                Text(url, maxLines = 1)
-            }
             End {
                 Icon.MoreMenu{
                     goTo("filterExtraWeb")
@@ -125,14 +116,11 @@ fun BlockKeyword() {
             }
         }
 
-        RuleCard("Do") {
-            LazzyRow {
-                Text("Go back")
-            }
-        }
-
         Bar.badWords.findUI({yes}) {
-            LazyCard {
+            LazyCard(
+				modUI = Mod.space(start = 8),
+				modCard = Mod.space(h=8, w=10).maxW()
+			) { 
                 LazzyRow {
                     Text(text = it.word)
 
@@ -156,79 +144,8 @@ fun BlockKeyword() {
 }
 
 
-/*
-LazyCard(
-					modUI = Mod.space(start = 8),
-					modCard = Mod.space(h=8, w=10).maxW().click {    
-						goTo("ToDo/${it.id}")
-					},
-				) { 
-					DoTskUI(it)
-				}
-				
-@Composable
-fun DoTskUI(tsk: DoTsk) = LazzyRow {
 
-	//compose friendly
-	var tskOn by r(tsk.on)
-	var timeWorked by r(tsk.didTime)
 
-	RunOnce(tskOn, timeWorked){
-		tsk.edit {
-			on = tskOn
-			didTime = timeWorked
-		}
-	}
-
-	
-	RunOnce {
-		tskOn = no
-
-        while (yes) {
-			wait(1000)
-			
-			if (tskOn && !Bar.leftApp){
-				log("${tsk.name}: ${Time(tsk.timeLeft)}")
-		
-				timeWorked++
-
-				if (tsk.didTime > timeWorked) timeWorked = tsk.didTime
-
-				tsk.edit {
-					didTime = timeWorked
-				}
-				
-				Bar.funTime++	
-
-				start(ForEverService::class.java)
-
-			}
-			if (tsk.done()){
-				log("task is done")
-				tskOn = no
-			}
-		}
-		
-	}
-
-	Icon.Timer(tskOn) {
-		tskOn = !it
-	}
-	move(5)
-	Column(Mod.space(top = 5, bottom = 2)) {
-		Text("${tsk.name}: ${Time(tsk.timeLeft)}")
-		
-		if (tsk.description != ""){
-			LazzyRow {
-				Text(tsk.description.take(100).size(11).gray())
-			}
-		}
-	}
-	
-	log("WHAT USER SEES| ${tsk.name}: ${Time(tsk.timeLeft)}")
-	
-}
-*/
 
 
 @Composable
