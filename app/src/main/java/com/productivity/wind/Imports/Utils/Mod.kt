@@ -259,35 +259,24 @@ fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
 
 
 
-// Marker types for alignment
-class CenterHTag : Mod.Element
-class CenterVTag : Mod.Element
-class TopTag : Mod.Element
-class BottomTag : Mod.Element
-class StartTag : Mod.Element
-class EndTag : Mod.Element
+object CenterHTag : Modifier.Element
+object CenterVTag : Modifier.Element
+object TopTag : Modifier.Element
+object BottomTag : Modifier.Element
+object StartTag : Modifier.Element
+object EndTag : Modifier.Element
 
-inline fun <reified T : Mod.Element> Mod.hasTag(): Bool =
+inline fun <reified T : Modifier.Element> Mod.hasTag(): Bool =
     this.any { it is T }
 
-val Mod.centerH: Mod
-    get() = this.then(CenterHTag())
 
-val Mod.centerV: Mod
-    get() = this.then(CenterVTag())
 
-val Mod.top: Mod
-    get() = this.then(TopTag())
-
-val Mod.bottom: Mod
-    get() = this.then(BottomTag())
-
-val Mod.start: Mod
-    get() = this.then(StartTag())
-
-val Mod.end: Mod
-    get() = this.then(EndTag())
-
+val Modifier.centerH: Modifier get() = this.then(CenterHTag)
+val Modifier.centerV: Modifier get() = this.then(CenterVTag)
+val Modifier.top: Modifier get() = this.then(TopTag)
+val Modifier.bottom: Modifier get() = this.then(BottomTag)
+val Modifier.start: Modifier get() = this.then(StartTag)
+val Modifier.end: Modifier get() = this.then(EndTag)
 
 
 

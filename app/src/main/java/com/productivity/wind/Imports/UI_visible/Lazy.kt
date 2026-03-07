@@ -549,7 +549,7 @@ fun LazyBigPopup(
 				mod.round(12).background(Color.DarkGray).click(no){},
 			) {
 				LazzyRow(
-					center = yes,
+					Mod.centerH,
 					space = 8
 				) {
 					Text(title.size(18))
