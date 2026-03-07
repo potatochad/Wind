@@ -156,6 +156,71 @@ fun BlockKeyword() {
 }
 
 
+/*
+@Composable
+fun DoTskUI(tsk: DoTsk) = LazzyRow {
+
+	//compose friendly
+	var tskOn by r(tsk.on)
+	var timeWorked by r(tsk.didTime)
+
+	RunOnce(tskOn, timeWorked){
+		tsk.edit {
+			on = tskOn
+			didTime = timeWorked
+		}
+	}
+
+	
+	RunOnce {
+		tskOn = no
+
+        while (yes) {
+			wait(1000)
+			
+			if (tskOn && !Bar.leftApp){
+				log("${tsk.name}: ${Time(tsk.timeLeft)}")
+		
+				timeWorked++
+
+				if (tsk.didTime > timeWorked) timeWorked = tsk.didTime
+
+				tsk.edit {
+					didTime = timeWorked
+				}
+				
+				Bar.funTime++	
+
+				start(ForEverService::class.java)
+
+			}
+			if (tsk.done()){
+				log("task is done")
+				tskOn = no
+			}
+		}
+		
+	}
+
+	Icon.Timer(tskOn) {
+		tskOn = !it
+	}
+	move(5)
+	Column(Mod.space(top = 5, bottom = 2)) {
+		Text("${tsk.name}: ${Time(tsk.timeLeft)}")
+		
+		if (tsk.description != ""){
+			LazzyRow {
+				Text(tsk.description.take(100).size(11).gray())
+			}
+		}
+	}
+	
+	log("WHAT USER SEES| ${tsk.name}: ${Time(tsk.timeLeft)}")
+	
+}
+*/
+
 
 @Composable
 fun filterExtraWeb() {
