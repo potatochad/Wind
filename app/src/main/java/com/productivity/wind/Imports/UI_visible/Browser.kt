@@ -140,6 +140,7 @@ import java.util.*
 import androidx.activity.compose.BackHandler
 
 import androidx.compose.material3.pulltorefresh.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.*
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -163,7 +164,7 @@ fun WebXml(web: WebController) {
         },
         state = state,
         indicator = {
-            PullToRefreshDefaults.Indicator(
+            Indicator(
                 modifier = Modifier.align(Alignment.TopCenter),
                 isRefreshing = isRefreshing,
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
