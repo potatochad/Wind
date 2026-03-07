@@ -242,6 +242,7 @@ fun LazzyRow(
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     ui: uiRow,
 ) {
+	modifier.hasTag<>()
     Row(
         modifier.maxW().space(space),
         horizontalArrangement = if (center) Arrangement.Center else Arrangement.Start,
