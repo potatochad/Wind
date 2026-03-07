@@ -235,19 +235,39 @@ fun LazyLine(
   
 @Composable
 fun LazzyRow(
-    modifier: Mod = Mod,
+    mod: Mod = Mod,
     space: Any = 0,
     center: Bool = no,
-	horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
-    ui: uiRow,
+	ui: uiRow,
 ) {
-	modifier.hasTag<>()
+	val isEnd = mod.hasTag<EndTag>()
+    val isStart = mod.hasTag<StartTag>()
+    val isBottom = mod.hasTag<BottomTag>()
+    val isTop = mod.hasTag<TopTag>()
+    val isCenterH = mod.hasTag<CenterHTag>()
+    val isCenterV = mod.hasTag<CenterVTag>()
+
+    // Decide horizontal arrangement
+    val hArr = when {
+        isCenterH -> Arrangement.Center
+        isStart -> Arrangement.Start
+        isEnd -> Arrangement.End
+        else -> Arrangement.Start
+    }
+
+    // Decide vertical alignment
+    val vAlign = when {
+        isCenterV -> Alignment.CenterVertically
+        isTop -> Alignment.Top
+        isBottom -> Alignment.Bottom
+        else -> Alignment.CenterVertically
+	}
+	
     Row(
-        modifier.maxW().space(space),
-        horizontalArrangement = if (center) Arrangement.Center else Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+        mod.maxW().space(space),
+        horizontalArrangement = hArr,
+        verticalAlignment = vAlign,
+	) {
         ui()
     }
 }
