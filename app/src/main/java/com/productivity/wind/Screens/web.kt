@@ -99,6 +99,8 @@ fun Web(){
 
 @Composable
 fun WebKeywords() {
+	var filterAction by r(WebAction.Block)
+	
     LazyScreen(
 		top = {
 			Text("List")
@@ -110,7 +112,17 @@ fun WebKeywords() {
 		},
 		onBackClick = { goTo("Web") }
 	) {
-        Bar.webWord.findUI({yes}) {
+		BtnAllow(filterAction) {
+			filterAction = WebAction.Allow
+		}
+		BtnBlock(filterAction) {
+			filterAction = WebAction.Block					
+		}
+		
+	
+        Bar.webWord.findUI({
+			it.actiom == filterAction
+		}) {
             LazyCard(
 				modUI = Mod.space(10),
 				modCard = Mod.space(10).maxW().click {    
@@ -125,6 +137,35 @@ fun WebKeywords() {
 
 		
     }
+}
+
+
+@Composable
+fun private BtnAllow(
+	action1: WebAction,
+	Do: Do = {}
+){
+	Ctext(
+		"Allow",
+		mod = Mod.space(5),
+		selected = action1 == WebAction.Allow,
+	) {
+		Do()
+	}
+}
+
+@Composable
+fun private BtnBlock(
+	action1: WebAction,
+	Do: Do = {}
+){
+	Ctext(
+		"Block",
+		mod = Mod.space(5),
+		selected = action1 == WebAction.Block,
+	) {
+		Do()				
+	}
 }
 
 
@@ -215,18 +256,10 @@ fun WebWordConfigure(id: Str = "") {
 		LazyCard {
 			Column{
 				LazzyRow {
-					Ctext(
-						"Allow",
-						mod = Mod.space(5),
-						selected = action1 == WebAction.Allow,
-					) {
+					BtnAllow(action1) {
 						action1 = WebAction.Allow
 					}
-					Ctext(
-						"Block",
-						mod = Mod.space(5),
-						selected = action1 == WebAction.Block,
-					) {
+					BtnBlock(action1) {
 						action1 = WebAction.Block					
 					}
 				}
