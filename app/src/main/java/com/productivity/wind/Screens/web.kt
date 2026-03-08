@@ -140,18 +140,7 @@ fun WebWordConfigure() {
 	
     LazyScreen(
 		top = {
-			Text("Configure")
-            End {
-                Icon.MoreMenu{
-                    goTo("filterExtraWeb")
-                }
-				Item.Add {
-                    Bar.webWord.add {
-                        word = word1.it
-						action = action1
-					}
-				}
-			}
+			
 		}
 	) {
         Card {
@@ -177,6 +166,138 @@ fun WebWordConfigure() {
 				TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)   
 			}
 		}
+    }
+}
+
+
+@Composable
+fun WebWordConfigure(id: Str = "") {
+    var word1 = r(UrlShort(Bar.Url))
+	var action1 by r(WebAction.Block)
+	var schedule1 by r(Schedule(
+	    	type = "WEEKLY",
+	    	every = 1,
+	    )
+	)
+	
+    if (!id.isEmpty()) {
+      todo = Bar.doTsk.find { it.id == id }
+
+      if (todo != null) {
+		val t = todo!!
+		description1.it = t.description
+        time1.it = t.doneTime
+        points1.it = t.worth
+        name1.it = t.name
+		schedule1 = t.schedule
+      }
+    }
+
+    LazyScreen(top = {
+        Text("Configure")
+            End {
+                Icon.MoreMenu{
+                    goTo("filterExtraWeb")
+                }
+				Item.Add {
+                    Bar.webWord.add {
+                        word = word1.it
+						action = action1
+					}
+				}
+			}
+
+			
+        
+        End {
+			if (todo != null) {
+				Item.Delete { 
+					todo!!.remove()
+					goTo("Main")
+				}
+			}
+
+			Icon(
+				if (todo != null) Icons.Default.Edit
+				else Icons.Default.Add
+			) {
+				log("clicked icon ")
+                if (time1.it==0) {
+					Vlog("Add time")
+					return@Icon
+				}
+				if (name1.it=="") {
+					Vlog("Add name")
+					return@Icon
+				}
+				log("passed the check")
+
+				
+
+				var gotPerm = Permission.ignoreOptimizations()
+				if (!gotPerm) Vlog("recommended permission")
+
+
+                if (!id.isEmpty()) {
+                    val tsk = Bar.doTsk.find { it.id == id }
+					log("found something")
+					
+                    if (tsk!=null){
+						log("tsk not null found")
+						
+                        tsk.edit {
+							name = name1.it
+							doneTime = time1.it
+							worth = points1.it
+							schedule = schedule1
+							description = description1.it
+                        }  
+						log("going to main")
+                        goTo("Main")
+                    }
+                    return@Icon
+                }
+
+				Vlog("adding task")
+
+                Bar.doTsk.add {
+                    name = name1.it
+					doneTime = time1.it
+					worth = points1.it
+					schedule = schedule1
+					description = description1.it
+                }
+				Vlog("going to main")
+                goTo("Main")
+            }
+		}
+	}) {
+		RuleCard("Info"){
+			LazzyRow(Mod.space(bottom = 5)){
+				TinyInput(name1, Mod.weight(1f), isInt = no, maxLetters = 800)           
+			}
+			BigInput(description1, Mod.wrapContentHeight()) {
+				description1.it = it
+			}
+			LazzyRow{
+				Text("Time")
+				
+				TinyInput(time1)
+				Text(" seconds")
+			}
+			LazzyRow(Mod.space(w=5)){
+			    Text("On done")
+			    TinyInput(points1)
+			    Text(" points")
+			}
+		}
+		RuleCard("Schedule"){
+			ScheduleUI(schedule1) {
+				schedule1 = it
+			}
+		}
+	  
+
     }
 }
 
