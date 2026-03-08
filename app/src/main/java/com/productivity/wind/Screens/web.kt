@@ -100,6 +100,24 @@ fun Web(){
 @Composable
 fun WebKeywords() {
 	var filterAction by r(WebAction.Block)
+	var Tag = r("")
+
+	
+	/*
+	TinyInput(Tag, Mod.h(40).weight(1f), isInt = no, maxLetters = 400)
+				
+				move(30)
+				BackHandler { stopSearch() }
+			}
+		}, 
+		showBack = no
+	) {
+
+
+	it.name.contains(Tag.it)
+	
+	
+	*/
 	
     LazyScreen(
 		top = {
