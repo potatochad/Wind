@@ -160,7 +160,7 @@ fun WebXml(web: WebController) {
         isRefreshing = isRefreshing,
         onRefresh = { 
             isRefreshing = yes
-            web.reload() 
+            web.reload()
             isRefreshing = no
         },
         state = state,
