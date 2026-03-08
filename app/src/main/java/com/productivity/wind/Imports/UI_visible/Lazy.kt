@@ -260,8 +260,6 @@ fun LazzyRow(
     space: Any = 0,
 	ui: uiRow,
 ) {
-	
-	
 	var baseMod = Mod.maxW().space(space)
 	
     Row(
@@ -402,7 +400,14 @@ fun LazyItem(
 		}
 	}
 }
+@Composable
+fun BlackStatusBar() {
+    val ui = rememberSystemUiController()
 
+    RunOnce {
+        ui.setStatusBarColor(Color.Black, darkIcons = no)
+    }
+}
 @Composable
 fun LazyHeader(
     ui: uiRow,
@@ -415,11 +420,7 @@ fun LazyHeader(
 
     h: Int = 100,
 ) {
-    val ui = rememberSystemUiController()
-    var clickedBack by r(no)
-    RunOnce {
-        ui.setStatusBarColor(Color.Black, darkIcons = no)
-    }
+	var clickedBack by r(no)
 
     Column(mod) {
         move(h = getStatusBarHeight()/3)
@@ -438,7 +439,6 @@ fun LazyHeader(
 				move(8)
             }
 
-			// Title content
 			LazzyRow(Mod.weight(1f)) { ui() }
 		}
 
