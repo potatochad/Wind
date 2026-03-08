@@ -424,33 +424,26 @@ fun LazyHeader(
     Column {
         move(h = getStatusBarHeight()/3)
 
-        Row(
+        LazzyRow(
             mod.maxW().background(Color.Black).space(w = 12).h(h),
         ) {
             if (showBack) {
 				move(5)
                 Icon(Icons.Default.ArrowBack) {
 					if (!clickedBack) {
-							clickedBack = yes
-							onBackClick()
-							
-							navBack()
+						clickedBack = yes
+						onBackClick()
+						navBack()
 					}
 				}
 				move(8)
             }
 
 			// Title content
-			Box(
-                Mod.weight(1f),
-                contentAlignment = Alignment.CenterStart
+			LazzyRow(
+                Mod.weight(1f)
             ) {
-                Box(Mod.maxW()) {
-                    LazzyRow {
-                        ui()
-                    }
-				}
-				
+				ui()
 			}
 		}
 
