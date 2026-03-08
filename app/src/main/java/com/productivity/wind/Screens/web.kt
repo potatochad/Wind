@@ -237,7 +237,10 @@ fun WebWordConfigure(id: Str = "") {
 					
 					}
 				}
-				TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)   
+				LazzyRow {
+					TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)
+				}
+				
 			}
 		}
 		RuleCard("Schedule"){
