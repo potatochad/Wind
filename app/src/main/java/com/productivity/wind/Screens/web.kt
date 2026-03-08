@@ -141,7 +141,7 @@ fun WebKeywords() {
 
 
 @Composable
-fun private BtnAllow(
+private fun BtnAllow(
 	action1: WebAction,
 	Do: Do = {}
 ){
@@ -155,7 +155,7 @@ fun private BtnAllow(
 }
 
 @Composable
-fun private BtnBlock(
+private fun BtnBlock(
 	action1: WebAction,
 	Do: Do = {}
 ){
