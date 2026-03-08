@@ -162,12 +162,9 @@ fun WebXml(web: WebController) {
             Vlog("refreshing")
          
             isRefreshing = yes
-            wait(200) {
-                web.reload()
-                isRefreshing = no
-            }
+            web.reload()
+            isRefreshing = no
         },
-        // state = state,
         indicator = {
             Indicator(
                 modifier = Modifier.align(Alignment.TopCenter),
