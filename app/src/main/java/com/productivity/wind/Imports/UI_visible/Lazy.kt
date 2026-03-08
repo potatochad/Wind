@@ -421,7 +421,7 @@ fun LazyHeader(
         ui.setStatusBarColor(Color.Black, darkIcons = no)
     }
 
-    Column {
+    Column(Mod.zIndex(1f)) {
         move(h = getStatusBarHeight()/3)
 
         LazzyRow(
