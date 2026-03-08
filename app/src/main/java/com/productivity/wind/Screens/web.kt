@@ -112,11 +112,15 @@ fun WebKeywords() {
 		},
 		onBackClick = { goTo("Web") }
 	) {
-		BtnAllow(filterAction) {
-			filterAction = WebAction.Allow
-		}
-		BtnBlock(filterAction) {
-			filterAction = WebAction.Block					
+		LazzyCard {
+			LazzyRow(Mod.centerH) {
+				BtnAllow(filterAction) {
+					filterAction = WebAction.Allow
+				}
+				BtnBlock(filterAction) {
+					filterAction = WebAction.Block					
+				}
+			}
 		}
 		
 	
