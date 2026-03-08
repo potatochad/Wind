@@ -116,7 +116,7 @@ object Bar {
 	var apps = sList<AppTsk>("apps")
 	var doTsk = sList<DoTsk>("doTsk")
 
-	var badWords = sList<WebWord>("badWords", listOf("anime", "youtube.com", "facebook.com", "instagram.com", "x.com", "tiktok.com").map { WebWord(word = it) })
+	var webWord = sList<WebWord>("WebWord", listOf("anime", "youtube.com", "facebook.com", "instagram.com", "x.com", "tiktok.com").map { WebWord(word = it) })
 
 
 
@@ -177,7 +177,8 @@ data class DoTsk(
 @Serializable
 data class WebWord(
     val id: Str = Id(),
-	var word: Str = ""
+	var word: Str = "",
+	var action: Str = "Block",
 )
 //top saves, end does not
 @Serializable
