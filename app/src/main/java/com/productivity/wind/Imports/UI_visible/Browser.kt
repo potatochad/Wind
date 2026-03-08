@@ -172,8 +172,6 @@ fun WebXml(web: WebController) {
             )
         },
     ) {
-    
-
     AndroidView(
         factory = { ctx ->            
             web.rootView
