@@ -229,6 +229,9 @@ val Mod.transparent: Mod
         
 val Mod.black: Mod
     get() = this.background(Color.Black)
+
+val Mod.white: Mod
+    get() = this.background(Color.White)
     
 val Mod.red: Mod
     get() = this.background(Color.Red)
