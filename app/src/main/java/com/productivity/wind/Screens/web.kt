@@ -188,7 +188,7 @@ fun WebWordConfigure(id: Str = "") {
 						log("tsk not null found")
 						
                         wordFound.edit {
-							action = action1.it
+							action = action1
 							word = word1.it
 							schedule = schedule1
                         }  
@@ -201,7 +201,7 @@ fun WebWordConfigure(id: Str = "") {
 				Vlog("adding task")
 
                 Bar.webWord.add {
-                    action = action1.it
+                    action = action1
 					word = word1.it
 					schedule = schedule1
                 }
@@ -210,7 +210,7 @@ fun WebWordConfigure(id: Str = "") {
             }
 		}
 	}) {
-		Card {
+		LazyCard {
 			Column{
 				LazzyRow {
 					Ctext(
