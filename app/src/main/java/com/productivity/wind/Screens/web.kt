@@ -95,12 +95,7 @@ fun Web(){
 
 @Composable
 fun WebKeywords() {
-    LazyScreen(
-        top = {
-			
-            }
-        },
-    ) {
+    LazyScreen("List") {
         Bar.webWord.findUI({yes}) {
             LazyCard(
 				modUI = Mod.space(start = 8),
@@ -125,47 +120,6 @@ fun WebKeywords() {
                 }
             }
         }
-
-
-		
-    }
-}
-
-
-@Composable
-fun WebWordConfigure() {
-	var url by r(UrlShort(Bar.Url))
-    var word1 = r(url)
-	var action1 by r(WebAction.Block)
-	
-    LazyScreen(
-		top = {
-			
-		}
-	) {
-        Card {
-			Column{
-				LazzyRow {
-					Ctext(
-						"Allow",
-						mod = Mod.space(5),
-						animate = yes,
-						selected = action1 == WebAction.Allow,
-					) {
-					
-					}
-					Ctext(
-						"Block",
-						mod = Mod.space(5),
-						animate = yes,
-						selected = action1 == WebAction.Block,
-					) {
-					
-					}
-				}
-				TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)   
-			}
-		}
     }
 }
 
@@ -232,49 +186,49 @@ fun WebWordConfigure(id: Str = "") {
 						log("tsk not null found")
 						
                         wordFound.edit {
-							name = name1.it
-							doneTime = time1.it
-							worth = points1.it
+							action = action1.it
+							word = word1.it
 							schedule = schedule1
-							description = description1.it
                         }  
-						log("going to main")
-                        goTo("Main")
+						log("going to WebKeywords")
+                        goTo("WebKeywords")
                     }
                     return@Icon
                 }
 
 				Vlog("adding task")
 
-                Bar.doTsk.add {
-                    name = name1.it
-					doneTime = time1.it
-					worth = points1.it
+                Bar.webWord.add {
+                    action = action1.it
+					word = word1.it
 					schedule = schedule1
-					description = description1.it
                 }
-				Vlog("going to main")
-                goTo("Main")
+				Vlog("going to WebKeywords")
+                goTo("WebKeywords")
             }
 		}
 	}) {
-		RuleCard("Info"){
-			LazzyRow(Mod.space(bottom = 5)){
-				TinyInput(name1, Mod.weight(1f), isInt = no, maxLetters = 800)           
-			}
-			BigInput(description1, Mod.wrapContentHeight()) {
-				description1.it = it
-			}
-			LazzyRow{
-				Text("Time")
-				
-				TinyInput(time1)
-				Text(" seconds")
-			}
-			LazzyRow(Mod.space(w=5)){
-			    Text("On done")
-			    TinyInput(points1)
-			    Text(" points")
+		Card {
+			Column{
+				LazzyRow {
+					Ctext(
+						"Allow",
+						mod = Mod.space(5),
+						animate = yes,
+						selected = action1 == WebAction.Allow,
+					) {
+					
+					}
+					Ctext(
+						"Block",
+						mod = Mod.space(5),
+						animate = yes,
+						selected = action1 == WebAction.Block,
+					) {
+					
+					}
+				}
+				TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)   
 			}
 		}
 		RuleCard("Schedule"){
