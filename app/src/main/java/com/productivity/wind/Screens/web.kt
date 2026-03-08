@@ -179,6 +179,7 @@ fun WebWordConfigure(id: Str = "") {
 	    	every = 1,
 	    )
 	)
+	var webWord by r<WebWord?>(null)
 
 	/*
 	WebWord(
@@ -190,71 +191,47 @@ fun WebWordConfigure(id: Str = "") {
 	*/
 	
     if (!id.isEmpty()) {
-      todo = Bar.doTsk.find { it.id == id }
+      webWord = Bar.webWord.find { it.id == id }
 
-      if (todo != null) {
-		val t = todo!!
-		description1.it = t.description
-        time1.it = t.doneTime
-        points1.it = t.worth
-        name1.it = t.name
-		schedule1 = t.schedule
-      }
+      if (webWord != null) {
+		  val t = webWord!!
+		  word1 = t.word
+		  action1 = t.action
+		  schedule1 = t.schedule
+	   }
     }
 
     LazyScreen(top = {
         Text("Configure")
-            End {
-                Icon.MoreMenu{
-                    goTo("filterExtraWeb")
-                }
-				Item.Add {
-                    Bar.webWord.add {
-                        word = word1.it
-						action = action1
-					}
-				}
-			}
 
-			
-        
         End {
-			if (todo != null) {
+			if (webWord != null) {
 				Item.Delete { 
-					todo!!.remove()
+					webWord!!.remove()
 					goTo("Main")
 				}
 			}
 
 			Icon(
-				if (todo != null) Icons.Default.Edit
+				if (webWord != null) Icons.Default.Edit
 				else Icons.Default.Add
 			) {
 				log("clicked icon ")
-                if (time1.it==0) {
+                if (word1.it== "") {
 					Vlog("Add time")
-					return@Icon
-				}
-				if (name1.it=="") {
-					Vlog("Add name")
 					return@Icon
 				}
 				log("passed the check")
 
-				
-
-				var gotPerm = Permission.ignoreOptimizations()
-				if (!gotPerm) Vlog("recommended permission")
-
 
                 if (!id.isEmpty()) {
-                    val tsk = Bar.doTsk.find { it.id == id }
+                    val wordFound = Bar.webWord.find { it.id == id }
 					log("found something")
 					
-                    if (tsk!=null){
+                    if (wordFound!=null){
 						log("tsk not null found")
 						
-                        tsk.edit {
+                        wordFound.edit {
 							name = name1.it
 							doneTime = time1.it
 							worth = points1.it
