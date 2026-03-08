@@ -172,12 +172,10 @@ fun WebXml(web: WebController) {
             )
         },
     ) {
-    AndroidView(
-        factory = { ctx ->            
-            web.rootView
-        },
-        modifier = Mod.maxS(),
-    )
+        AndroidView(
+            factory = { web.webView },
+            modifier = Mod.maxS(),
+        )
     }
 }
 
