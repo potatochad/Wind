@@ -409,6 +409,8 @@ fun LazyHeader(
     onBackClick: Do = {},
     showBack: Bool = yes,
     mod: Mod = Mod,
+	columnMod: Mod = Mod,
+	
 
     showDivider: Bool = yes,
     DividerPadding: Bool = yes,
@@ -421,7 +423,7 @@ fun LazyHeader(
         ui.setStatusBarColor(Color.Black, darkIcons = no)
     }
 
-    Column(Mod.zIndex(1f)) {
+    Column(columnMod) {
         move(h = getStatusBarHeight()/3)
 
         LazzyRow(
