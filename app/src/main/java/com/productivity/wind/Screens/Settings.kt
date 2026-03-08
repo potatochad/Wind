@@ -24,8 +24,6 @@ import com.google.maps.android.compose.*
 import com.productivity.wind.Imports.UI_visible.*
 import android.os.*
 import androidx.compose.ui.text.input.*
-import androidx.compose.material3.pulltorefresh.*
-import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 
 @Composable
 fun SettingsScreen() {
@@ -124,29 +122,8 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 
 @Composable
-fun ExtensionsScreen() {
-//= LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
-	PullToRefreshBox(
-        isRefreshing = isRefreshing,
-        onRefresh = { 
-            Vlog("refreshing")
-         
-            isRefreshing = yes
-            web.reload()
-            isRefreshing = no
-        },
-        indicator = {
-            Indicator(
-                modifier = Modifier.align(Alignment.TopCenter),
-                isRefreshing = isRefreshing,
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                state = state
-            )
-        },
-    ) {
-		Box(Mod.white.s(200))
-	}
+fun ExtensionsScreen() = LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
+	
 }
 
 @Composable
