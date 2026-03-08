@@ -117,10 +117,20 @@ fun BlockKeyword() {
         Card {
 			Column{
 				LazzyRow {
-					Btn("Allow"){
+					Ctext(
+						"Allow",
+						mod = Mod.space(5),
+						animate = yes,
+						//selected = Ifselect,
+					) {
 					
 					}
-					Btn("Block"){
+					Ctext(
+						"Block",
+						mod = Mod.space(5),
+						animate = yes,
+						//selected = Ifselect,
+					) {
 					
 					}
 				}
