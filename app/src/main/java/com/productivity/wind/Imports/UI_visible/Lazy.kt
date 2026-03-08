@@ -232,6 +232,27 @@ fun LazyLine(
             .then(if (width != Dp.Unspecified) Modifier.width(width) else Modifier)
     )
 }
+
+
+
+fun AutoRowHorizontalArrangement(mod: Mod): Arrangement.Horizontal {
+    return when {
+        mod.hasTag<CenterHTag>() -> Arrangement.Center
+        mod.hasTag<StartTag>() -> Arrangement.Start
+        mod.hasTag<EndTag>() -> Arrangement.End
+        else -> Arrangement.Start
+    }
+}
+
+fun AutoRowVerticalAlignment(mod: Mod): Alignment.Vertical {
+    return when {
+        mod.hasTag<CenterVTag>() -> Alignment.CenterVertically
+        mod.hasTag<TopTag>() -> Alignment.Top
+        mod.hasTag<BottomTag>() -> Alignment.Bottom
+        else -> Alignment.CenterVertically
+    }
+}
+
   
 @Composable
 fun LazzyRow(
@@ -239,35 +260,14 @@ fun LazzyRow(
     space: Any = 0,
 	ui: uiRow,
 ) {
-	val isEnd = mod.hasTag<EndTag>()
-    val isStart = mod.hasTag<StartTag>()
-    val isBottom = mod.hasTag<BottomTag>()
-    val isTop = mod.hasTag<TopTag>()
-    val isCenterH = mod.hasTag<CenterHTag>()
-    val isCenterV = mod.hasTag<CenterVTag>()
-
-    // Decide horizontal arrangement
-    val hArr = when {
-        isCenterH -> Arrangement.Center
-        isStart -> Arrangement.Start
-        isEnd -> Arrangement.End
-        else -> Arrangement.Start
-    }
-
-    // Decide vertical alignment
-    val vAlign = when {
-        isCenterV -> Alignment.CenterVertically
-        isTop -> Alignment.Top
-        isBottom -> Alignment.Bottom
-        else -> Alignment.CenterVertically
-	}
+	
 	
 	var baseMod = Mod.maxW().space(space)
 	
     Row(
         baseMod.mix(new = mod),
-        horizontalArrangement = hArr,
-        verticalAlignment = vAlign,
+        horizontalArrangement = AutoRowHorizontalArrangement(mod),
+        verticalAlignment = AutoRowVerticalAlignment(mod),
 	) {
         ui()
     }
