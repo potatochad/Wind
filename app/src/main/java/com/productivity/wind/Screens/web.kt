@@ -50,7 +50,7 @@ fun Web(){
 
             var blocked = false
 
-            for (y in Bar.badWords) {
+            for (y in Bar.webWord) {
                 if (txt.contains(y.word, ignoreCase = true)) {
                     blocked = true
                     web.back()
@@ -96,7 +96,8 @@ fun Web(){
 @Composable
 fun BlockKeyword() {
     var url by r(UrlShort(Bar.Url))
-    var BadWord = r(url)
+    var word1 = r(url)
+	var action1 by r("Block")
 
     LazyScreen(
         top = {
@@ -106,14 +107,14 @@ fun BlockKeyword() {
                     goTo("filterExtraWeb")
                 }
                 Item.Add {
-                    Bar.badWords.add(
-                        WebWord(word = BadWord.it)
-                    )
+                    Bar.webWord.add {
+                        word = word1.it
+						action = action1
+					}
                 }
             }
         },
     ) {
-		var action by r("Block")
         Card {
 			Column{
 				LazzyRow {
@@ -121,7 +122,7 @@ fun BlockKeyword() {
 						"Allow",
 						mod = Mod.space(5),
 						animate = yes,
-						//selected = Ifselect,
+						selected = action1 == "Allow",
 					) {
 					
 					}
@@ -129,12 +130,12 @@ fun BlockKeyword() {
 						"Block",
 						mod = Mod.space(5),
 						animate = yes,
-						//selected = Ifselect,
+						selected = action1 == "Block",
 					) {
 					
 					}
 				}
-				TinyInput(BadWord, Mod.weight(1f), isInt = no, maxLetters = 800)   
+				TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)   
 			}
         }
 
@@ -148,15 +149,15 @@ fun BlockKeyword() {
 
                     Item.Edit {
                         Item.enoughPoints {
-                            Bar.badWords.edit(it) {
-                                word = BadWord.it
+                            Bar.webWord.edit(it) {
+                                word = word1.it
                             }
                         }
                     }
 
                     Icon.Delete {
                         Item.enoughPoints {
-                            Bar.badWords.remove(it)
+                            Bar.webWord.remove(it)
                         }
                     }
                 }
