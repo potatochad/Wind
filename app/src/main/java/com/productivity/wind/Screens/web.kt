@@ -100,6 +100,7 @@ fun BlockKeyword() {
 
     LazyScreen(
         top = {
+			Text("Configure")
             End {
                 Icon.MoreMenu{
                     goTo("filterExtraWeb")
@@ -112,11 +113,19 @@ fun BlockKeyword() {
             }
         },
     ) {
-        RuleCard("If") {
-            LazzyRow {
-                Text("Detect ")
-                TinyInput(BadWord, Mod.weight(1f), isInt = no, maxLetters = 800)           
-            }
+		var action by r("Block")
+        Card {
+			Column{
+				LazzyRow {
+					Btn("Allow"){
+					
+					}
+					Btn("Block"){
+					
+					}
+				}
+				TinyInput(BadWord, Mod.weight(1f), isInt = no, maxLetters = 800)   
+			}
         }
 
         Bar.badWords.findUI({yes}) {
@@ -143,6 +152,9 @@ fun BlockKeyword() {
                 }
             }
         }
+
+
+		
     }
 }
 
