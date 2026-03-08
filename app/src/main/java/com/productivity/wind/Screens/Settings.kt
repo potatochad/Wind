@@ -124,7 +124,27 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 @Composable
 fun ExtensionsScreen() {
 //= LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
-	
+	PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = { 
+            Vlog("refreshing")
+         
+            isRefreshing = yes
+            web.reload()
+            isRefreshing = no
+        },
+        indicator = {
+            Indicator(
+                modifier = Modifier.align(Alignment.TopCenter),
+                isRefreshing = isRefreshing,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                state = state
+            )
+        },
+    ) {
+		Box(Mod.white.s(200))
+	}
 }
 
 @Composable
