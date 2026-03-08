@@ -474,20 +474,16 @@ fun LazyScreen(
     headerHeight: Int = 44,
     content: ui,
 ) {
-
-	val header: ui = {
-		LazyHeader(
+    Column(modifier) {
+        LazyHeader(
 			ui = top,
 			onBackClick = onBackClick,
 			showBack = showBack,
 			showDivider = showDivider,
+			columnMod = Mod.zIndex(1f),
 			DividerPadding = DividerPadding,
 			h = headerHeight
 		)
-	}
-
-    Column(modifier) {
-        header()
         Column(modifier.h(AppLazyH).then(
 			if (scroll){
 				Mod.Vscroll()
