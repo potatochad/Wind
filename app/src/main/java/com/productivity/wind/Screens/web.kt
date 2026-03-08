@@ -27,13 +27,12 @@ import androidx.compose.ui.text.style.*
 import androidx.compose.ui.graphics.*
 import com.productivity.wind.Imports.UI_visible.*
 import androidx.compose.ui.platform.*
-
 import androidx.compose.material3.pulltorefresh.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*  // if you want filled icons
-// or
-import androidx.compose.material.icons.outlined.* // if you want outlined icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+
 
 @Composable
 fun Web(){
