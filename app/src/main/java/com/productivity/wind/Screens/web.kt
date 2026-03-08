@@ -179,6 +179,15 @@ fun WebWordConfigure(id: Str = "") {
 	    	every = 1,
 	    )
 	)
+
+	/*
+	WebWord(
+    val id: Str = Id(),
+	var word: Str = "",
+	var schedule: Schedule = Schedule(),
+	var action: WebAction = WebAction.Block,
+)
+	*/
 	
     if (!id.isEmpty()) {
       todo = Bar.doTsk.find { it.id == id }
