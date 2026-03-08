@@ -88,6 +88,7 @@ fun Web(){
         },
         scroll = no,
         DividerPadding = no,
+		onBackClick = { goTo("Web") }
     ) {
         WebXml(web)
     }
