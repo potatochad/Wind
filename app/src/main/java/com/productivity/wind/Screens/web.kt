@@ -147,7 +147,7 @@ fun WebWordConfigure(id: Str = "") {
 
       if (webWord != null) {
 		  val t = webWord!!
-		  word1 = t.word
+		  word1.it = t.word
 		  action1 = t.action
 		  schedule1 = t.schedule
 	   }
