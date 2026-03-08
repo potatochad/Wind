@@ -162,8 +162,10 @@ fun WebXml(web: WebController) {
             Vlog("refreshing")
          
             isRefreshing = yes
-            web.reload()
-            isRefreshing = no
+            wait(200) {
+                web.reload()
+                isRefreshing = no
+            }
         },
         state = state,
         indicator = {
