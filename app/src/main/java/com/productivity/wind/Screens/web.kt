@@ -101,8 +101,10 @@ fun Web(){
 fun WebKeywords() {
     LazyScreen(top = {
 		Text("List")
-		Item.Add {
-			goTo("WebWordConfigure/_")
+		End {
+			Item.Add {
+				goTo("WebWordConfigure/_")
+			}
 		}
 	}) {
         Bar.webWord.findUI({yes}) {
