@@ -152,6 +152,7 @@ fun WebXml(web: WebController) {
     var isRefreshing by r(no)
     
     web.onPageFinished{
+        Vlog("PAGE FINISHED")
         isRefreshing = no
     }
 
@@ -160,6 +161,7 @@ fun WebXml(web: WebController) {
         onRefresh = { 
             isRefreshing = yes
             web.reload() 
+            isRefreshing = no
         },
         state = state,
         indicator = {
@@ -173,7 +175,7 @@ fun WebXml(web: WebController) {
         },
     ) {
         AndroidView(
-            factory = { web.webView },
+            factory = { web.rootView },
             modifier = Mod.maxS(),
         )
     }
