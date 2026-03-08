@@ -425,7 +425,7 @@ fun LazyHeader(
         move(h = getStatusBarHeight()/3)
 
         LazzyRow(
-            mod.maxW().background(Color.Black).space(w = 12).h(h),
+            mod.maxW().black.space(w = 12).h(h),
         ) {
             if (showBack) {
 				move(5)
