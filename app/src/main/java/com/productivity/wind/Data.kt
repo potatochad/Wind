@@ -185,6 +185,7 @@ enum class WebAction {
 data class WebWord(
     val id: Str = Id(),
 	var word: Str = "",
+	var schedule: Schedule = Schedule(),
 	var action: WebAction = WebAction.Block,
 )
 //top saves, end does not
