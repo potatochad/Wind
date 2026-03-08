@@ -110,25 +110,17 @@ fun WebKeywords() {
         Bar.webWord.findUI({yes}) {
             LazyCard(
 				modUI = Mod.space(start = 8),
-				modCard = Mod.space(h=8, w=10).maxW()
+				modCard = Mod.space(h=8, w=10).maxW().click {    
+					goTo("ToDo/${it.id}")
+				},
 			) { 
                 LazzyRow {
                     Text(text = it.word)
-
-                    Item.Edit {
-                        Item.enoughPoints {
-                            goTo("WebWordConfigure/${it.id}")
-                        }
-                    }
-
-                    Icon.Delete {
-                        Item.enoughPoints {
-                            Bar.webWord.remove(it)
-                        }
-                    }
                 }
             }
         }
+
+		
     }
 }
 
@@ -238,7 +230,7 @@ fun WebWordConfigure(id: Str = "") {
 					}
 				}
 				LazzyRow {
-					TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)
+					TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)      
 				}
 				
 			}
