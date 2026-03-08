@@ -400,14 +400,7 @@ fun LazyItem(
 		}
 	}
 }
-@Composable
-fun BlackStatusBar() {
-    val ui = rememberSystemUiController()
 
-    RunOnce {
-        ui.setStatusBarColor(Color.Black, darkIcons = no)
-    }
-}
 @Composable
 fun LazyHeader(
     ui: uiRow,
