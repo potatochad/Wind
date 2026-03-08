@@ -426,8 +426,6 @@ fun LazyHeader(
 
         Row(
             mod.maxW().background(Color.Black).space(w = 12).h(h),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             if (showBack) {
 				move(5)
@@ -439,11 +437,12 @@ fun LazyHeader(
 							navBack()
 					}
 				}
+				move(8)
             }
 
 			// Title content
 			Box(
-                Mod.weight(1f).space(start = if (showBack) 8 else 0),
+                Mod.weight(1f),
                 contentAlignment = Alignment.CenterStart
             ) {
                 Box(Mod.maxW()) {
