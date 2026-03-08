@@ -28,6 +28,9 @@ import androidx.compose.ui.graphics.*
 import com.productivity.wind.Imports.UI_visible.*
 import androidx.compose.ui.platform.*
 
+import androidx.compose.material3.pulltorefresh.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
+
 @Composable
 fun Web(){
     //returns class: WebController
