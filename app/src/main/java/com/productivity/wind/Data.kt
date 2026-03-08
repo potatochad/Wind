@@ -174,11 +174,18 @@ data class DoTsk(
 
 }
 
+
+@Serializable
+enum class WebAction {
+    Allow,
+    Block
+}
+
 @Serializable
 data class WebWord(
     val id: Str = Id(),
 	var word: Str = "",
-	var action: Str = "Block",
+	var action: WebAction = WebAction.Block,
 )
 //top saves, end does not
 @Serializable
