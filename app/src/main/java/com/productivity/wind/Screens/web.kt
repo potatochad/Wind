@@ -99,7 +99,12 @@ fun Web(){
 
 @Composable
 fun WebKeywords() {
-    LazyScreen("List") {
+    LazyScreen(top = {
+		Text("List")
+		Item.Add {
+			goTo("WebWordConfigure/_")
+		}
+	}) {
         Bar.webWord.findUI({yes}) {
             LazyCard(
 				modUI = Mod.space(start = 8),
