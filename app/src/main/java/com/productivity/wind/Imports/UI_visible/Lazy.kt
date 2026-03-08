@@ -423,7 +423,7 @@ fun LazyHeader(
         ) {
             if (showBack) {
 				move(5)
-                Icon(Icons.Default.ArrowBack) {
+                Icon.Back {
 					if (!clickedBack) {
 						clickedBack = yes
 						onBackClick()
