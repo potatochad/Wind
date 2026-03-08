@@ -30,6 +30,10 @@ import androidx.compose.ui.platform.*
 
 import androidx.compose.material3.pulltorefresh.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*  // if you want filled icons
+// or
+import androidx.compose.material.icons.outlined.* // if you want outlined icons
 
 @Composable
 fun Web(){
