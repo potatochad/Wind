@@ -409,8 +409,6 @@ fun LazyHeader(
     onBackClick: Do = {},
     showBack: Bool = yes,
     mod: Mod = Mod,
-	columnMod: Mod = Mod,
-	
 
     showDivider: Bool = yes,
     DividerPadding: Bool = yes,
@@ -423,11 +421,11 @@ fun LazyHeader(
         ui.setStatusBarColor(Color.Black, darkIcons = no)
     }
 
-    Column(columnMod) {
+    Column(mod) {
         move(h = getStatusBarHeight()/3)
 
         LazzyRow(
-            mod.maxW().black.space(w = 12).h(h),
+            Mod.maxW().black.space(w = 12).h(h),
         ) {
             if (showBack) {
 				move(5)
@@ -442,18 +440,12 @@ fun LazyHeader(
             }
 
 			// Title content
-			LazzyRow(
-                Mod.weight(1f)
-            ) {
-				ui()
-			}
+			LazzyRow(Mod.weight(1f)) { ui() }
 		}
 
 		if (showDivider){
 			LazyLine(color = Color.Gray)		
-			if (DividerPadding){
-				move(10)
-			}
+			if (DividerPadding) move(10)
 		}
     }
 }
@@ -480,7 +472,7 @@ fun LazyScreen(
 			onBackClick = onBackClick,
 			showBack = showBack,
 			showDivider = showDivider,
-			columnMod = Mod.zIndex(1f),
+			mod = Mod.zIndex(1f),
 			DividerPadding = DividerPadding,
 			h = headerHeight
 		)
