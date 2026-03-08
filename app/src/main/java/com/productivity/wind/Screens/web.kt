@@ -109,8 +109,8 @@ fun WebKeywords() {
 	}) {
         Bar.webWord.findUI({yes}) {
             LazyCard(
-				modUI = Mod.space(start = 8),
-				modCard = Mod.space(h=8, w=10).maxW().click {    
+				modUI = Mod.space(10),
+				modCard = Mod.space(10).maxW().click {    
 					goTo("WebWordConfigure/${it.id}")
 				},
 			) { 
@@ -215,18 +215,16 @@ fun WebWordConfigure(id: Str = "") {
 					Ctext(
 						"Allow",
 						mod = Mod.space(5),
-						animate = yes,
 						selected = action1 == WebAction.Allow,
 					) {
-					
+						action1 = WebAction.Allow
 					}
 					Ctext(
 						"Block",
 						mod = Mod.space(5),
-						animate = yes,
 						selected = action1 == WebAction.Block,
 					) {
-					
+						action1 = WebAction.Block					
 					}
 				}
 				LazzyRow {
