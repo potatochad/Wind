@@ -406,7 +406,7 @@ fun LazyItem(
 @Composable
 fun LazyHeader(
     ui: uiRow,
-    onBackClick: Do = {},
+    onBackClick: Do = { navBack() },
     showBack: Bool = yes,
     mod: Mod = Mod,
 
@@ -433,7 +433,6 @@ fun LazyHeader(
 					if (!clickedBack) {
 						clickedBack = yes
 						onBackClick()
-						navBack()
 					}
 				}
 				move(8)
@@ -455,7 +454,7 @@ fun LazyHeader(
 fun LazyScreen(
 	txt: Str = "Hi",
     top: uiRow = { Text("$txt") },
-    onBackClick: Do = {},
+    onBackClick: Do = { navBack() },
     showBack: Bool = yes,
 	scroll: Bool = yes,
     modifier: Mod = Mod.background(Color.Black),
