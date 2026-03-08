@@ -122,7 +122,8 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 
 @Composable
-fun ExtensionsScreen() = LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
+fun ExtensionsScreen() {
+//= LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
 	
 }
 
