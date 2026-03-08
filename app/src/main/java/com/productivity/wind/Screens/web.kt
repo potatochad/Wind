@@ -78,7 +78,7 @@ fun Web(){
                         Bar.Url = "https://google.com"
                     }
                     Item.Add {
-                        goTo("BlockKeyword")
+                        goTo("WebKeywords")
                     }
                 }
             }
@@ -94,52 +94,14 @@ fun Web(){
 
 
 @Composable
-fun BlockKeyword() {
-    var url by r(UrlShort(Bar.Url))
-    var word1 = r(url)
-	var action1 by r("Block")
-
+fun WebKeywords() {
     LazyScreen(
         top = {
-			Text("Configure")
-            End {
-                Icon.MoreMenu{
-                    goTo("filterExtraWeb")
-                }
-                Item.Add {
-                    Bar.webWord.add {
-                        word = word1.it
-						action = action1
-					}
-                }
+			
             }
         },
     ) {
-        Card {
-			Column{
-				LazzyRow {
-					Ctext(
-						"Allow",
-						mod = Mod.space(5),
-						animate = yes,
-						selected = action1 == "Allow",
-					) {
-					
-					}
-					Ctext(
-						"Block",
-						mod = Mod.space(5),
-						animate = yes,
-						selected = action1 == "Block",
-					) {
-					
-					}
-				}
-				TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)   
-			}
-        }
-
-        Bar.badWords.findUI({yes}) {
+        Bar.webWord.findUI({yes}) {
             LazyCard(
 				modUI = Mod.space(start = 8),
 				modCard = Mod.space(h=8, w=10).maxW()
@@ -170,7 +132,53 @@ fun BlockKeyword() {
 }
 
 
-
+@Composable
+fun WebWordConfigure() {
+	var url by r(UrlShort(Bar.Url))
+    var word1 = r(url)
+	var action1 by r(WebAction.Block)
+	
+    LazyScreen(
+		top = {
+			Text("Configure")
+            End {
+                Icon.MoreMenu{
+                    goTo("filterExtraWeb")
+                }
+				Item.Add {
+                    Bar.webWord.add {
+                        word = word1.it
+						action = action1
+					}
+				}
+			}
+		}
+	) {
+        Card {
+			Column{
+				LazzyRow {
+					Ctext(
+						"Allow",
+						mod = Mod.space(5),
+						animate = yes,
+						selected = action1 == WebAction.Allow,
+					) {
+					
+					}
+					Ctext(
+						"Block",
+						mod = Mod.space(5),
+						animate = yes,
+						selected = action1 == WebAction.Block,
+					) {
+					
+					}
+				}
+				TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)   
+			}
+		}
+    }
+}
 
 
 
