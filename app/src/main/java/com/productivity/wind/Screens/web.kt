@@ -121,7 +121,7 @@ fun WebKeywords() {
 		
 	
         Bar.webWord.findUI({
-			it.actiom == filterAction
+			it.action == filterAction
 		}) {
             LazyCard(
 				modUI = Mod.space(10),
