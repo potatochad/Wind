@@ -106,9 +106,7 @@ fun WebKeywords() {
 
                     Item.Edit {
                         Item.enoughPoints {
-                            Bar.webWord.edit(it) {
-                                word = word1.it
-                            }
+                            goTo("WebWordConfigure/${it.id}")
                         }
                     }
 
