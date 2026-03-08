@@ -147,7 +147,12 @@ fun DoTsk.done(): Bool {
 }
 
 
-
+fun DoTsk.edit(block: DoTsk.() -> Unit) {
+	Bar.doTsk.edit(this, block)
+}
+fun DoTsk.remove() {
+	Bar.doTsk.remove(this)
+}
 fun CopyTsk.edit(block: CopyTsk.() -> Unit) {
     Bar.copyTsk.edit(this, block)
 }
