@@ -36,7 +36,6 @@ import androidx.compose.material.icons.outlined.*
 fun BlockingLogic(web: WebController){
     web.doUpdateVisitedHistory { url, isReload ->
         web.allVisibleText { txt ->
-            Vlog("history updated")
             log("full html: [$txt]", 2000)
 
             var blocked = false
