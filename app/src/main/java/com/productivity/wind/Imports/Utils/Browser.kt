@@ -118,6 +118,9 @@ class WebController(
             webView.goBack()
         }
     }
+    fun canGoBack(): Bool {
+        return webView.canGoBack()
+    }
     val url: Str?
         get() = webView.url
     fun url(url: Str) {
