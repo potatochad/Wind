@@ -47,31 +47,6 @@ fun Web(){
         
     Item.WebPointTimer()
 
-    web.doUpdateVisitedHistory { url, isReload ->
-        web.allVisibleText { txt ->
-            Vlog("history updated")
-            log("full html: [$txt]", 2000)
-
-            var blocked = false
-
-            for (y in Bar.webWord) {
-                if (
-					txt.contains(y.word, ignoreCase = true) &&
-					y.action == WebAction.Block
-				) {
-                    blocked = true
-                    web.back()
-                    Vlog("blocking, bad word detected: ${y.word}")
-                    break
-                }
-            }
-
-            if (!blocked) {
-                Bar.Url = url ?: "https://www.google.com"
-            }
-        }
-    }
-
     LazyScreen(
         top = {
             Text(" Points ${Bar.funTime}")
