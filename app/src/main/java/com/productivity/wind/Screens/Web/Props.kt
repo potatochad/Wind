@@ -33,3 +33,31 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 
+
+@Composable
+fun BtnAllow(
+	action1: WebAction,
+	Do: Do = {}
+){
+	Ctext(
+		"Allow",
+		mod = Mod.space(5),
+		selected = action1 == WebAction.Allow,
+	) {
+		Do()
+	}
+}
+
+@Composable
+fun BtnBlock(
+	action1: WebAction,
+	Do: Do = {}
+){
+	Ctext(
+		"Block",
+		mod = Mod.space(5),
+		selected = action1 == WebAction.Block,
+	) {
+		Do()				
+	}
+}
