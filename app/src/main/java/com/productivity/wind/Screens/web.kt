@@ -54,10 +54,13 @@ fun Web(){
             var blocked = false
 
             for (y in Bar.webWord) {
-                if (txt.contains(y.word, ignoreCase = true)) {
+                if (
+					txt.contains(y.word, ignoreCase = true) &&
+					y.action == WebAction.Block
+				) {
                     blocked = true
                     web.back()
-                    Vlog("blocking, bad word detected: $y")
+                    Vlog("blocking, bad word detected: ${y.word}")
                     break
                 }
             }
