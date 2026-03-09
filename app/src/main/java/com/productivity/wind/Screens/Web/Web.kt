@@ -36,6 +36,26 @@ import com.productivity.wind.Screens.*
 
 
 @Composable
+fun WebHome(){
+    LazyScreen(
+        top = {
+            Text("Home")
+    
+            End {
+                Item.Add {
+                    goTo("WebKeywords")
+                }
+            }
+        },
+        scroll = no,
+        DividerPadding = no,
+		onBackClick = { goTo("Main") }
+    ) {
+        
+    }
+}
+
+@Composable
 fun Web(){
     //returns class: WebController
     var ctx = LocalContext.current
