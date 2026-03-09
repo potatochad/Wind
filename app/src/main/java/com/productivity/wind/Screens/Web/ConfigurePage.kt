@@ -120,7 +120,7 @@ fun WebWordConfigure(id: Str = "") {
 			if (webWord != null) {
 				Item.Delete { 
 					webWord!!.remove()
-					goTo("Main")
+					goTo("WebKeywords")
 				}
 			}
 
