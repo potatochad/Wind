@@ -47,6 +47,8 @@ fun Web(){
         
     Item.WebPointTimer()
 
+	BlockingLogic(web)
+
     LazyScreen(
         top = {
             Text(" Points ${Bar.funTime}")
