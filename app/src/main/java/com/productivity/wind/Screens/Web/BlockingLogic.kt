@@ -38,7 +38,7 @@ fun BlockingLogic(web: WebController){
         web.allVisibleText { txt ->
             if (containsBadWord(txt)){
 				if (!containsGoodWord(txt)){
-                    Bar.Url = url ?: "https://www.google.com"
+                    Bar.Url = "https://www.google.com"
                     Vlog("bad word: ${foundBadWord(txt)}")
                     return@allVisibleText
                 }
