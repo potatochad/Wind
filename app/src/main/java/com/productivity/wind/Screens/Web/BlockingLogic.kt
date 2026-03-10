@@ -47,7 +47,7 @@ fun BlockingLogic(web: WebController){
 				) {
                     blocked = true
                     web.back()
-					if (!web.canGoBack){
+					if (!web.canGoBack()){
 						
 					}
                     Vlog("blocking, bad word detected: ${y.word}")
