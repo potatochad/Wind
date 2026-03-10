@@ -61,3 +61,29 @@ fun BtnBlock(
 		Do()				
 	}
 }
+
+
+
+fun containsBadWord(txt: Str): Bool {
+    for (y in Bar.webWord) {
+        if (
+            txt.contains(y.word, ignoreCase = true) &&
+            y.action == WebAction.Block
+        ) {
+            return true
+        }
+    }
+    return false
+}
+
+fun containsGoodWord(txt: Str): Bool {
+    for (y in Bar.webWord) {
+        if (
+            txt.contains(y.word, ignoreCase = true) &&
+            y.action == WebAction.Allow
+        ) {
+            return true
+        }
+    }
+    return false
+}
