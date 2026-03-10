@@ -38,26 +38,26 @@ fun BlockingLogic(web: WebController){
         web.allVisibleText { txt ->
             log("full html: [$txt]", 2000)
 
-            var blocked = false
-
             for (y in Bar.webWord) {
                 if (
 					txt.contains(y.word, ignoreCase = true) &&
 					y.action == WebAction.Block
 				) {
-                    blocked = true
-                    web.back()
-					if (!web.canGoBack()){
-						
+					for (y in Bar.webWord) {
+						if (
+							txt.contains(y.word, ignoreCase = true) &&
+							y.action == WebAction.Allow
+						) {
+							
+						}
 					}
-                    Vlog("blocking, bad word detected: ${y.word}")
+					
+                    Bar.Url = url ?: "https://www.google.com"
+                    Vlog("bad word: ${y.word}")
                     break
                 }
             }
 
-            if (!blocked) {
-                Bar.Url = url ?: "https://www.google.com"
-            }
         }
     }
 }
