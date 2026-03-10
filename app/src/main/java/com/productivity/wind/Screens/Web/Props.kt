@@ -87,3 +87,17 @@ fun containsGoodWord(txt: Str): Bool {
     }
     return false
 }
+
+fun foundBadWord(txt: Str): Str {
+    for (y in Bar.webWord) {
+        if (
+            txt.contains(y.word, ignoreCase = true) &&
+            y.action == WebAction.Block
+        ) {
+            return y.word
+        }
+    }
+    return ""
+}
+
+
