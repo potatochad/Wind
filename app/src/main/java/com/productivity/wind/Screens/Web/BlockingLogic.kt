@@ -35,15 +35,32 @@ import androidx.compose.material.icons.outlined.*
 
 fun BlockingLogic(web: WebController){
     web.doUpdateVisitedHistory { url, isReload ->
+		var blocked by m(no)
         web.allVisibleText { txt ->
             if (containsBadWord(txt)){
 				if (!containsGoodWord(txt)){
-                    Bar.Url = "https://www.google.com"
+					blocked = yes
+					Bar.Url = "https://www.google.com"
                     Vlog("bad word: ${foundBadWord(txt)}")
                     return@allVisibleText
                 }
             }
-
         }
+		if (!blocked) {
+            Bar.Url = url ?: "https://www.google.com"
+		}
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
