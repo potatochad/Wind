@@ -68,7 +68,7 @@ fun WebKeywords() {
             LazyCard(
 				modUI = Mod.space(10),
 				modCard = Mod.space(10).maxW().click {    
-					goTo("WebWordConfigure/${it.id}")
+					// goTo("WebWordConfigure/${it.id}")
 				},
 			) { 
                 LazzyRow {
@@ -117,12 +117,14 @@ fun WebWordConfigure(id: Str = "") {
         Text("Configure")
 
         End {
+			
 			if (webWord != null) {
 				Item.Delete { 
 					webWord!!.remove()
 					goTo("WebKeywords")
 				}
 			}
+			
 
 			Icon(
 				if (webWord != null) Icons.Default.Edit
