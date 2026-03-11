@@ -183,49 +183,47 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	BoxWithConstraints {
 		val maxWidthPx = constraints.maxWidth.toFloat() // pixels
-		val lines = remember(tsk.txt) { tsk.txt.toLines(maxWidthPx) }
+		val lines = tsk.txt.toLines(maxWidthPx)
 
-		LazyColumn {
-			items(lines) { txtUI ->
+		val processedLines = remember(tsk.txt, goodStr) {
+			var sum = 0
+		
+			lines.map { txt ->
+				val lineStart = sum
+				sum += txt.size
+				val lineEnd = sum
+
+				when {
+					goodStr <= lineStart -> UIStr(txt)
+					goodStr >= lineEnd -> txt.green()
+					else -> {
+						val greenChar = goodStr - lineStart
+						UIStr(
+							txt.fromTo(0, greenChar).green(),
+							txt.fromTo(greenChar, txt.size)
+						)
+					}
+				}
+			}
+		}
+		
+		LazyColumn(
+			modifier = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
+			state = txtScroll
+		) {
+			items(
+				items = processedLines,
+				key = { it.hashCode() }
+			) { txtUI ->
 				Text(txtUI)
 			}
 		}
 	}
 
-	val processedLines = remember(tsk.txt, goodStr) {
-		var sum = 0
-		
-		lines.map { txt ->
-			val lineStart = sum
-			sum += txt.size
-			val lineEnd = sum
-
-			when {
-				goodStr <= lineStart -> UIStr(txt)
-				goodStr >= lineEnd -> txt.green()
-				else -> {
-					val greenChar = goodStr - lineStart
-					UIStr(
-						txt.fromTo(0, greenChar).green(),
-						txt.fromTo(greenChar, txt.size)
-					)
-				}
-			}
-		}
-	}
 	
 	
-	LazyColumn(
-		modifier = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
-		state = txtScroll
-	) {
-		items(
-			items = processedLines,
-			key = { it.hashCode() }
-		) { txtUI ->
-			Text(txtUI)
-		}
-	}
+	
+	
 			
 	
 	var txt = r(tsk.input)
