@@ -196,35 +196,34 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	val lines = tsk.txt.toLines()
 
-	val linesSize = remember(lines) {
+	val processedLines = remember(tsk.txt, goodStr) {
 		var sum = 0
-		lines.map {
-			sum += it.size
-			sum
+		
+		lines.map { txt ->
+			val lineStart = sum
+			sum += txt.size
+			val lineEnd = sum
+
+			when {
+				goodStr <= lineStart -> txt
+				goodStr >= lineEnd -> txt.green()
+				else -> {
+					val greenChar = goodStr - lineStart
+					UIStr(
+						txt.fromTo(0, greenChar).green(),
+						txt.fromTo(greenChar, txt.size)
+					)
+				}
+			}
 		}
 	}
+	
 	
 	LazyColumn(
 		modifier = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
 		state = txtScroll
 	) {
-		itemsIndexed(lines) { index, txt ->
-			val lineStart = linesSize[index] - txt.size
-			val lineEnd = linesSize[index]
-
-			val txtUI = when {
-					goodStr <= lineStart -> txt
-					goodStr >= lineEnd -> txt.green()
-					else -> {
-						val greenChar = goodStr - lineStart
-
-						UIStr(
-							txt.fromTo(0, greenChar).green(),
-							txt.fromTo(greenChar, txt.size)
-						)
-					}
-				}
-			
+		items(processedLines) { txtUI ->
 			Text(txtUI)
 		}
 	}
