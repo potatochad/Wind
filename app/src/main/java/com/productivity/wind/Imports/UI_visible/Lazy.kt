@@ -113,50 +113,6 @@ fun <T> LazzyList(
 
 
 
-@Composable
-fun LazyText(
-	bigText: Any, 
-	mod: Mod = Mod.h(0, 100).maxW(),
-	scroll: LazyList = LazyList(),
-	// onChar: (Int, UIStr) -> UIStr = { _, char -> char }
-){
-	val lines = bigText.toLines()
-
-	val linesStartSize = remember(lines) {
-		var sum = 0
-		lines.map {
-			val start = sum
-			sum += it.size
-			start
-		}
-	}
-
-	
-	LazyColumn(
-		modifier = mod,
-		state = scroll
-	) {
-		itemsIndexed(lines) { index, txt ->
-			/*
-			val lineStart = linesStartSize[index]
-			var txtUI by m(UIStr("error"))
-			var listChar = mList<UIStr>()
-
-			txt.forEachIndexed { charIndex, char ->
-				val globalIndex = lineStart + charIndex
-				listChar.add(onChar(charIndex, UIStr("$char")))
-				Vlog("$charIndex, $char")
-			}
-			txtUI = UIStr(*listChar.toTypedArray())
-			*/
-			
-			Text(txt)
-		}
-	}
-}
-
-
-
 
 
 
