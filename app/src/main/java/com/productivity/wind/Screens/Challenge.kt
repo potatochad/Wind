@@ -181,7 +181,16 @@ fun CopyTskUI(tsk: CopyTsk) {
 	
 
 
-	val lines = tsk.txt.toLines()
+	BoxWithConstraints {
+		val maxWidthPx = constraints.maxWidth.toFloat() // pixels
+		val lines = remember(tsk.txt) { tsk.txt.toLines(maxWidthPx) }
+
+		LazyColumn {
+			items(lines) { txtUI ->
+				Text(txtUI)
+			}
+		}
+	}
 
 	val processedLines = remember(tsk.txt, goodStr) {
 		var sum = 0
