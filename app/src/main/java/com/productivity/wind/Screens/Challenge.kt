@@ -178,20 +178,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			}
 		}
     }
-
-
-	/*
-	LazyText(
-		bigText = tsk.txt, 
-		mod = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
-		scroll = txtScroll,
-	) { index, char ->
-		if (index <= goodStr) {
-			char.green()
-		} else {
-			char
-		}
-	}*/
+	
 
 
 	val lines = tsk.txt.toLines()
@@ -223,7 +210,10 @@ fun CopyTskUI(tsk: CopyTsk) {
 		modifier = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),
 		state = txtScroll
 	) {
-		items(processedLines) { txtUI ->
+		items(
+			items = processedLines,
+			key = { it.hashCode() }
+		) { txtUI ->
 			Text(txtUI)
 		}
 	}
