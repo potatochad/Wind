@@ -203,24 +203,17 @@ fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, 
 
 
 @Composable
-fun charsW(text: Any): Int {
-    var lineChars by r(0)
+fun charsW(text: Any, textStyle: TextStyle = LocalTextStyle.current, maxWidthPx: Float = 1000f): Int {
     val str = toStr(text)
+    
+    val textMeasurer = rememberTextMeasurer()
 
-    if (lineChars == 0) {
-        Text(
-            text = "k".repeat(600),
-            maxLines = 1,
-            softWrap = yes,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.alpha(0f),
-            onTextLayout = {
-                lineChars = it.getLineEnd(0, visibleEnd = yes)
-            }
-        )
-    }
+    val charWidth = textMeasurer.measure(
+        text = AnnotatedString("k"),
+        style = textStyle
+    ).size.width
 
-    return lineChars
+    return (maxWidthPx / charWidth).toInt()
 }
 
 fun String.safeSplit(delim: String, action: (String) -> Unit) {
@@ -241,15 +234,9 @@ fun String.safeSplit(delim: String, action: (String) -> Unit) {
 
 
 @Composable
-fun Any.toLines(): List<UIStr> {
-    var lineChars by r(0)
+fun Any.toLines(maxWidthPx: Float): List<UIStr> {
+    val lineChars = charsW(this, maxWidthPx = maxWidthPx)
     var str by r(toStr(this))
-
-    lineChars = charsW(str)
-
-    if (lineChars == 0) return emptyList()
-
-    
 
     val lines = remember(str, lineChars) {
         val result = mList<UIStr>()
