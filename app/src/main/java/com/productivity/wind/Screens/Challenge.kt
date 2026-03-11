@@ -145,6 +145,7 @@ fun CopyPaste(id: Str ="") {
 @Composable
 fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = LazyList() 
+	var txtScrollSize by m(txtScroll.size)
 	val inputScroll = Scroll()
 	
 	var goodStr by r(tsk.goodStr())
@@ -153,7 +154,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     RunOnce(goodStr) {
 		if (goodStr > 30) {
 			wait {
-				var scrollBy = toF(txtScroll.size)/toF(tsk.txt.size)
+				var scrollBy = toF(txtScrollSize)/toF(tsk.txt.size)
 				val done = toF(goodStr)*scrollBy - scrollBy*50
 				txtScroll.goTo(done) 
 			}
