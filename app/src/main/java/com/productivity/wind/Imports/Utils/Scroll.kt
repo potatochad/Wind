@@ -133,14 +133,14 @@ val LazyList.it: Float
         return toF(firstIndex * itemHeight + firstOffset)
     }
     
-val LazyList.size: Float by lazy {
-    val items = layoutInfo.visibleItemsInfo
-    if (items.isEmpty()) 0f
-    else {
-        val averageItemHeight = items.sumOf { it.size }.toFloat() / items.size     
-        layoutInfo.totalItemsCount * averageItemHeight
+val LazyList.size: Float
+    get() {
+        val items = layoutInfo.visibleItemsInfo
+        if (items.isEmpty()) return 0f
+
+        val averageItemHeight = items.sumOf { it.size }.toFloat() / items.size
+        return layoutInfo.totalItemsCount * averageItemHeight
     }
-}
 
 typealias Scroll = ScrollState
 typealias LazyList = LazyListState
