@@ -122,8 +122,41 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 
 @Composable
-fun ExtensionsScreen() = LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
+fun ExtensionsScreen() {
+
+/*
+= LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
 	
+}
+@Composable
+fun MyScreen() {
+*/
+
+    var isRefreshing by remember { mutableStateOf(false) }
+
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = {
+            isRefreshing = true
+
+            // simulate refresh
+            LaunchedEffect(Unit) {
+                delay(1500)
+                isRefreshing = false
+            }
+        }
+    ) {
+
+        LazyColumn {
+            items(30) {
+                Text(
+                    text = "Item $it",
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
+
+    }
 }
 
 @Composable
