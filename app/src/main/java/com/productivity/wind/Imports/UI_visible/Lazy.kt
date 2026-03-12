@@ -115,35 +115,34 @@ fun <T> LazzyList(
 
 @Composable
 fun LazyPullToRefresh(
-    isRefreshing: Bool,
+    isRefreshing: Boolean,
     onRefresh: suspend () -> Unit,
     content: @Composable () -> Unit
 ) {
     var offsetY by remember { mutableStateOf(0f) }
     val maxPull = 200f
     val animatedOffset by animateFloatAsState(targetValue = offsetY)
+    val coroutineScope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectVerticalDragGestures(
+                    onVerticalDrag = { change, dragAmount ->
+                        offsetY = (offsetY + dragAmount).coerceIn(0f, maxPull)
+                    },
                     onDragEnd = {
                         if (offsetY >= maxPull) {
                             offsetY = 0f
-                            // Launch refresh
-                            Do { onRefresh() }
+                            coroutineScope.launch { onRefresh() }
                         } else {
                             offsetY = 0f
                         }
-                    },
-                    onDrag = { change, dragAmount ->
-                        offsetY = (offsetY + dragAmount).coerceIn(0f, maxPull)
                     }
                 )
             }
     ) {
-        // Refresh indicator
         if (isRefreshing || offsetY > 0f) {
             CircularProgressIndicator(
                 modifier = Modifier
@@ -153,7 +152,6 @@ fun LazyPullToRefresh(
             )
         }
 
-        // Content moves down as you pull
         Box(
             modifier = Modifier
                 .offset { IntOffset(0, animatedOffset.roundToInt()) }
@@ -162,6 +160,9 @@ fun LazyPullToRefresh(
         }
     }
 }
+
+
+
 
 
 
