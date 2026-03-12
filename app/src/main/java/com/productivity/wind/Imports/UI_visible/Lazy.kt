@@ -147,7 +147,7 @@ fun LazyPullToRefresh(
 			Box(
 				Mod.offset { 
 					IntOffset(0, animatedOffset.roundToInt()) 
-				}
+				}.cardColor
 			){
 				if (isRefreshing || offsetY > 0f) {
 					CircularProgressIndicator(
