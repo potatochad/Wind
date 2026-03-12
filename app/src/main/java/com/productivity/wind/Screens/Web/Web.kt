@@ -79,7 +79,7 @@ fun Web(){
                         web.reload()
                     } 
                     Icon.Delete {
-                        Bar.Url = "https://google.com"
+                        goTo("WebHome")
                     }
                     Item.Add {
                         goTo("WebKeywords")
