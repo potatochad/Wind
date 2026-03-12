@@ -132,7 +132,7 @@ fun LazyPullToRefresh(
                         if (offsetY >= maxPull) {
                             offsetY = 0f
                             // Launch refresh
-                            launch { onRefresh() }
+                            Do { onRefresh() }
                         } else {
                             offsetY = 0f
                         }
