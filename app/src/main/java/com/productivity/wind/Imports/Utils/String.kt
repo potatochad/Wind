@@ -239,7 +239,6 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
     var str by r(toStr(this))
 
     val lines = remember(str, lineChars) {
-        Vlog("toLines ran")
         val result = mList<UIStr>()
         var line = ""
         
