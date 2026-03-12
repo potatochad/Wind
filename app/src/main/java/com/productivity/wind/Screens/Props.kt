@@ -78,10 +78,12 @@ fun NavGraphBuilder.ScreenNav() {
 
     url("Web") { Web() }
     url("WebKeywords") { WebKeywords() }
+	url("WebHome") { WebHome() }
 	url("WebWordConfigure/{WordId}") { 
 		var x: Str = it.url("WordId") ?: ""
 		WebWordConfigure(x) 
 	}
+	
 	url("filterExtraWeb") { filterExtraWeb() }
     
 
