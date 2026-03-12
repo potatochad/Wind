@@ -78,9 +78,6 @@ fun Web(){
                     Icon.Reload{ 
                         web.reload()
                     } 
-                    Icon.Delete {
-                        goTo("WebHome")
-                    }
                     Item.Add {
                         goTo("WebKeywords")
                     }
