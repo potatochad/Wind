@@ -147,6 +147,7 @@ fun WebXml(web: WebController) {
     BackHandler {
         web.back()
     }
+    /*
     val state = rememberPullToRefreshState()
     var isRefreshing by r(no)
     
@@ -165,11 +166,12 @@ fun WebXml(web: WebController) {
             }
         }
     ) {
+     */
         AndroidView(
             factory = { web.rootView },
             modifier = Mod.maxS(),
         )
-    }
+   // }
 }
 
 
