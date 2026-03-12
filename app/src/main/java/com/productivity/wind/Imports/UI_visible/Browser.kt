@@ -154,13 +154,15 @@ fun WebXml(web: WebController) {
         isRefreshing = no
     }
 
-    
-    LazyPullToRefresh(
+    PullToRefreshBox(
         isRefreshing = isRefreshing,
         onRefresh = {
-            isRefreshing = yes
-            web.reload()
-            isRefreshing = no
+            Do {
+                isRefreshing = yes
+                web.reload()
+                wait(300)
+                isRefreshing = no
+            }
         }
     ) {
         AndroidView(
