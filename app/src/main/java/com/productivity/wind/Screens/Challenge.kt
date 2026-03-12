@@ -161,6 +161,9 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 	}
 	RunOnce {
+		wait {
+			txtScrollSize = txtScroll.size
+		}
 		inputScroll.toBottom()
 	}
 
