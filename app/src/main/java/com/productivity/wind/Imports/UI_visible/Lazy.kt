@@ -142,16 +142,19 @@ fun LazyPullToRefresh(
 		}
     ) {
 		Popup(
-			Mod.offset { 
-				IntOffset(0, animatedOffset.roundToInt()) 
-			}
-			.align(Alignment.TopCenter)
+			alignment = Alignment.TopCenter
 		) {
-			if (isRefreshing || offsetY > 0f) {
-				CircularProgressIndicator(
-					Mod.padding(top = 16.dp),
-					strokeWidth = 4.dp
-				)
+			Box(
+				Mod.offset { 
+					IntOffset(0, animatedOffset.roundToInt()) 
+				}
+			){
+				if (isRefreshing || offsetY > 0f) {
+					CircularProgressIndicator(
+						Mod.padding(top = 16.dp),
+						strokeWidth = 4.dp
+					)
+				}
 			}
 		}
 
