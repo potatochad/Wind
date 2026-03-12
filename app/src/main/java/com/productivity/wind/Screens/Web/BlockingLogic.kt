@@ -40,11 +40,12 @@ fun BlockingLogic(web: WebController){
             if (containsBadWord(txt)){
 				if (!containsGoodWord(txt)){
 					blocked = yes
-					Bar.Url = "https://www.google.com"
+					Bar.Url = ""
                     Vlog("bad word: ${foundBadWord(txt)}")
+					goTo("WebHome")
                     return@allVisibleText
                 }
-            }
+			}
         }
 		if (!blocked) {
             Bar.Url = url ?: "https://www.google.com"
