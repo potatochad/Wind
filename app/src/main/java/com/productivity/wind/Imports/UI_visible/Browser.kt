@@ -152,7 +152,6 @@ fun WebXml(web: WebController) {
     var isRefreshing by r(no)
     
     web.onPageFinished{
-        Vlog("PAGE FINISHED")
         isRefreshing = no
     }
 
