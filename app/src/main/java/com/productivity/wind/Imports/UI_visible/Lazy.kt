@@ -115,48 +115,45 @@ fun <T> LazzyList(
 
 @Composable
 fun LazyPullToRefresh(
-    isRefreshing: Boolean,
-    onRefresh: suspend () -> Unit,
-    content: @Composable () -> Unit
+    isRefreshing: Bool,
+    onRefresh: Wait,
+    ui: ui
 ) {
-    var offsetY by remember { mutableStateOf(0f) }
+    var offsetY by r(0f)
     val maxPull = 200f
     val animatedOffset by animateFloatAsState(targetValue = offsetY)
     val coroutineScope = rememberCoroutineScope()
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .pointerInput(Unit) {
-                detectVerticalDragGestures(
-                    onVerticalDrag = { change, dragAmount ->
-                        offsetY = (offsetY + dragAmount).coerceIn(0f, maxPull)
-                    },
-                    onDragEnd = {
-                        if (offsetY >= maxPull) {
-                            offsetY = 0f
-                            coroutineScope.launch { onRefresh() }
-                        } else {
-                            offsetY = 0f
-                        }
-                    }
-                )
-            }
+        Mod.maxS().pointerInput(Unit) {
+			detectVerticalDragGestures(
+				onVerticalDrag = { change, dragAmount ->
+					offsetY = (offsetY + dragAmount).coerceIn(0f, maxPull)
+				},
+				onDragEnd = {
+					if (offsetY >= maxPull) {
+						offsetY = 0f
+						Do { onRefresh() }
+					} else {
+						offsetY = 0f
+					}
+				}
+			)
+		}
     ) {
         if (isRefreshing || offsetY > 0f) {
             CircularProgressIndicator(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 16.dp),
+				Mod.offset { 
+					IntOffset(0, animatedOffset.roundToInt()) 
+				}
+				.align(Alignment.TopCenter)
+				.padding(top = 16.dp),
                 strokeWidth = 4.dp
             )
         }
 
-        Box(
-            modifier = Modifier
-                .offset { IntOffset(0, animatedOffset.roundToInt()) }
-        ) {
-            content()
+        Box {
+            ui()
         }
     }
 }
