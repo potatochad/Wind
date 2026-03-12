@@ -135,21 +135,18 @@ fun ExtensionsScreen() {
 fun MyScreen() {
 */
 
-    var isRefreshing by remember { mutableStateOf(false) }
+    var isRefreshing by r(no)
 
     PullToRefreshBox(
         isRefreshing = isRefreshing,
         onRefresh = {
             isRefreshing = true
 
-            // simulate refresh
-            LaunchedEffect(Unit) {
-                delay(1500)
-                isRefreshing = false
-            }
+			wait(1500){
+				isRefreshing = false
+			}
         }
     ) {
-
         LazyColumn {
             items(30) {
                 Text(
@@ -158,9 +155,10 @@ fun MyScreen() {
                 )
             }
         }
-
     }
 }
+
+
 
 @Composable
 fun SettingsOtherScreen() = LazyScreen("Settings") {
