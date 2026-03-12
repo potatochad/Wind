@@ -60,11 +60,13 @@ fun Web(){
     //returns class: WebController
     var ctx = LocalContext.current
     val web = r { WebController(ctx) }
+
+	RunOnce {
+		if (Bar.Url == "") goTo("WebHome")
+		web.applyFancySettings()
+		web.url(Bar.Url)
+	}
     
-    web.applyFancySettings()
-    
-    web.url(Bar.Url)
-        
     Item.WebPointTimer()
 
 	BlockingLogic(web)
