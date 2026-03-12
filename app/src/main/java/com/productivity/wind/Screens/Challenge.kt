@@ -191,8 +191,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 		val processedLines = remember(tsk.txt, goodStr) {
 			var sum = 0
-
-			Vlog("goodStr: $goodStr")
 		
 			lines.map { txt ->
 				val lineStart = sum
