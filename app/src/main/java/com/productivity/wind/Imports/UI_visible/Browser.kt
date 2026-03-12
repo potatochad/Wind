@@ -138,7 +138,6 @@ import java.net.InetAddress
 import java.net.URLEncoder
 import java.util.*
 import androidx.activity.compose.BackHandler
-
 import androidx.compose.material3.pulltorefresh.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 
@@ -155,24 +154,14 @@ fun WebXml(web: WebController) {
         isRefreshing = no
     }
 
-    PullToRefreshBox(
+    
+    LazyPullToRefresh(
         isRefreshing = isRefreshing,
-        onRefresh = { 
-            Vlog("refreshing")
-         
+        onRefresh = {
             isRefreshing = yes
             web.reload()
             isRefreshing = no
-        },
-        indicator = {
-            Indicator(
-                modifier = Modifier.align(Alignment.TopCenter),
-                isRefreshing = isRefreshing,
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                state = state
-            )
-        },
+        }
     ) {
         AndroidView(
             factory = { web.rootView },
