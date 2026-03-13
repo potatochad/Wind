@@ -169,6 +169,7 @@ fun WebXml(web: WebController) {
      */
         AndroidView(
             factory = { 
+             /*
                 val swipe = SwipeRefreshLayout(context)
 
                 swipe.setOnRefreshListener {
@@ -179,6 +180,8 @@ fun WebXml(web: WebController) {
                 swipe.addView(web.rootView)
 
                 swipe
+                */
+             web.rootView
             },
             modifier = Mod.maxS(),
         )
