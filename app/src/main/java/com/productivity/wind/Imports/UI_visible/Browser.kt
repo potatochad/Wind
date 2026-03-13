@@ -168,7 +168,18 @@ fun WebXml(web: WebController) {
     ) {
      */
         AndroidView(
-            factory = { web.rootView },
+            factory = { 
+                val swipe = SwipeRefreshLayout(context)
+
+                swipe.setOnRefreshListener {
+                    web.reload()
+                    swipe.isRefreshing = false
+                }
+
+                swipe.addView(web.rootView)
+
+                swipe
+            },
             modifier = Mod.maxS(),
         )
    // }
