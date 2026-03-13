@@ -147,6 +147,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = LazyList() 
 	var txtScrollSize by m(txtScroll.size)
 	val inputScroll = Scroll()
+	val TxtLines by m()
 	
 	var goodStr by r(tsk.goodStr())
 	var goodStr2 by r(0)
