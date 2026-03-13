@@ -147,7 +147,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     val txtScroll = LazyList() 
 	var txtScrollSize by m(txtScroll.size)
 	val inputScroll = Scroll()
-	var TxtLinesAmount by r(0)
+	var TxtLines by r(listOf<Str>())
 	
 	var goodStr by r(tsk.goodStr())
 	var goodStr2 by r(0)
@@ -155,6 +155,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     RunOnce(goodStr) {
 		if (goodStr > 30) {
 			wait {
+				Vlog("current line i am typing: ${TxtLines.getLineByChar(goodStr)}")
 				var scrollBy = toF(txtScrollSize)/toF(tsk.txt.size)
 				val done = toF(goodStr)*scrollBy - scrollBy*50
 				txtScroll.goTo(done) 
@@ -189,7 +190,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 	BoxWithConstraints {
 		val maxWidthPx = constraints.maxWidth.toFloat() // pixels
 		val lines = tsk.txt.toLines(maxWidthPx)
-		TxtLinesSize = lines.size
+		TxtLines = lines
 
 		val processedLines = remember(tsk.txt, goodStr) {
 			var sum = 0
