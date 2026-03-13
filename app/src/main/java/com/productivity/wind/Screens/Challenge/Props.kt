@@ -59,33 +59,21 @@ Prop functions are strictly not allow to be imported up a folder
 
 */
 
-data class LineInfo(
-    val text: String,        // the full text of the line
-    var typedChars: Int = 0 // how many characters are typed correctly
-) {
-    val remainingChars: Int
-        get() = text.length - typedChars
-
-    val isDone: Bool
-        get() = typedChars >= text.length
-
-    fun updateTyped(globalTyped: Int, startIndex: Int): LineInfo {
-        // globalTyped = how many characters typed in the whole text
-        val newTyped = (globalTyped - startIndex).coerceIn(0, text.length)
-        return copy(typedChars = newTyped)
-    }
-}
-
-fun mapLinesToInfo(lines: List<Str>, typedSoFar: Int = 0): List<LineInfo> {
-    var sum = 0
-    return lines.map { line ->
-        val lineInfo = LineInfo(line).updateTyped(typedSoFar, sum)
-        sum += line.length
-        lineInfo
-    }
-}
 
 
+
+/*
+  
+Text max here
+123 /n12345678
+/n123456789012
+
+
+
+
+  
+  
+*/
 
 
 
