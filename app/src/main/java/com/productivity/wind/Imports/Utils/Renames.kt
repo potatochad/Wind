@@ -163,6 +163,11 @@ typealias DoBool = (Bool) -> Unit
 typealias Do_<T> = (T) -> Unit
 typealias Do2_<A, B> = (A, B) -> Unit
 
+typealias ListStr = List<Str>
+typealias ListInt = List<Int>
+typealias ListBool = List<Bool>
+typealias ListDouble = List<Double>
+
 typealias Wait = suspend () -> Unit
 typealias Wait_<T> = suspend (T) -> Unit
 
