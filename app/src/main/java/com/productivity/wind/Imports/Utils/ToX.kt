@@ -133,8 +133,8 @@ import android.graphics.*
 
 @Suppress("UNCHECKED_CAST")
 
-fun List<UIStr>.toListStr(): ListStr {
-    return this.map { it.toString() } // convert each ANNOTEDSTRING to regular String
+fun toListStr(x: List<UIStr>): ListStr {
+    return x.map { it.toString() } // convert each ANNOTEDSTRING to regular String
 }
 
 fun toDp(it: Any?): Dp = when (it) {
