@@ -133,6 +133,9 @@ import android.graphics.*
 
 @Suppress("UNCHECKED_CAST")
 
+fun List<UIStr>.toListStr(): ListStr {
+    return this.map { it.toString() } // convert each ANNOTEDSTRING to regular String
+}
 
 fun toDp(it: Any?): Dp = when (it) {
     is Dp -> it           // already Dp
@@ -193,7 +196,7 @@ fun toLatLng(it: Any?): LatLng = when (it) {
     else -> LatLng(0.0, 0.0)
 }
 
-fun toStr(it: Any?): String = when (it) {
+fun toStr(it: Any?): Str = when (it) {
     is Str -> it
     is AnnotatedString -> it.text
     is LatLng -> "${it.latitude},${it.longitude}"
