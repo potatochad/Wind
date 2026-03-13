@@ -258,3 +258,40 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
 }
 
 
+
+
+
+
+
+val String.notEmpty: Bool
+    get() = this.isNotEmpty()
+
+val String.empty: Bool
+    get() = this.isEmpty()
+
+
+
+fun ListStr.takeStr(x: Int): Str {
+    var result = ""
+    var remaining = x
+
+    for (s in this) {
+        if (remaining <= 0) break
+
+        if (result.notEmpty) {
+            result += " "
+            remaining -= 1
+            if (remaining <= 0) break
+        }
+
+        // take min of string length or remaining chars
+        val take = minOf(s.length, remaining)
+        result += s.take(take)
+        remaining -= take
+    }
+
+    return result
+}
+
+
+
