@@ -156,8 +156,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		if (goodStr > 30) {
 			wait(100) {
 				TxtLines.lineIndexByChar(goodStr)
-				
-				txtScroll.goTo(done) 
 			}
 		}
 	}
