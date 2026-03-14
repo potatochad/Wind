@@ -82,7 +82,7 @@ fun WebHome(){
 				goTo("WebInput")
 			},
 		) {
-			LazzyRow(Mod.Vcenter()) {
+			LazzyRow(Mod.centerV) {
                 Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.Gray)
                 move(8)
                 Text(
@@ -94,10 +94,10 @@ fun WebHome(){
 		}
         
 
-        Spacer(mod = Mod.space(h = 16))
+        move(h = 16)
 
         // Quick access cards (like Google shortcuts)
-        LazyRow(spacing = 8) {
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             item {
                 LazyCard(
                     modUI = Mod.size(80, 80).click { goTo("WebInput") },
@@ -121,7 +121,7 @@ fun WebHome(){
             }
         }
 
-        Spacer(mod = Mod.space(h = 16))
+        move(h = 16)
 
         // Recent / suggested sites
         Text("Recent", fontSize = 12.sp, color = Color.Gray, modUI = Mod.space(start = 8))
