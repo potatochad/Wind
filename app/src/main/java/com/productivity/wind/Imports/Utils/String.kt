@@ -304,7 +304,7 @@ fun ListStr.getLineByChar(charIndex: Int): String {
         if (charIndex in runningIndex until nextIndex) {
             return line
         }
-        runningIndex = nextIndex + 1 // +1 for line break
+        runningIndex = nextIndex
     }
     return ""
 }
