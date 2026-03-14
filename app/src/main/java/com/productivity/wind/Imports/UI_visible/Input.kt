@@ -142,6 +142,7 @@ fun BasicInput(
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start,
 	),
+	onAction: Do = {},
 	oneLine: Bool= yes,
     Do: DoStr = {},
 ) {
@@ -173,7 +174,10 @@ fun BasicInput(
 				imeAction = ImeAction.Done
 			),
 			keyboardActions = KeyboardActions(
-				onDone = { focus.clear() }
+				onDone = {
+					focus.clear() 
+					onAction()
+				}
 			),
 			modifier = Mod.w(toF(w)*0.85).focusAsker(focusAsker).click { focusAsker.ask() }
 		)
@@ -242,12 +246,13 @@ fun BigInput(txt: mStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){
 
 
 @Composable
-fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = yes, Do: DoStr = { _ -> }) {  
+fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = yes, onAction: Do = {}, Do: DoStr = { _ -> }) {  
 	var txt = toMStr(value)
     BasicInput(
         "${txt.it}",
         isInt = isInt, 
         mod = mod,
+		onAction = onAction,
     ) {
         val str = it.take(maxLetters)
 		
@@ -262,10 +267,11 @@ fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = ye
     }
 }
 @Composable
-fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, Do: DoInt = { _ -> }) {  
+fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {}, Do: DoInt = { _ -> }) {  
     BasicInput(
         "${value.it}",
         isInt = yes, 
+		onAction = onAction,
         mod = mod,
     ) {
         val str = it.take(maxLetters)
