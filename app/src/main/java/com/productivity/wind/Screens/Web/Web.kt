@@ -50,12 +50,6 @@ fun WebInput(){
 			){       
 				Bar.Url = it
 			}
-    
-            End {
-                Item.Add {
-                    goTo("WebKeywords")
-                }
-            }
         },
         scroll = no,
         DividerPadding = no,
