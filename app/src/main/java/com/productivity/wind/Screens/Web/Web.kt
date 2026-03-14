@@ -100,21 +100,21 @@ fun WebHome(){
         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             item {
                 LazyCard(
-                    modCard = Mod.size(80).click{},
+                    modCard = Mod.s(80).click{},
                 ) {
                     Text("Gmail")
                 }
             }
             item {
                 LazyCard(
-                    modCard = Mod.size(80).click{},
+                    modCard = Mod.s(80).click{},
                 ) {
                     Text("Images")
                 }
             }
             item {
                 LazyCard(
-                    modCard = Mod.size(80).click{},
+                    modCard = Mod.s(80).click{},
                 ) {
                     Text("Maps")
                 }
