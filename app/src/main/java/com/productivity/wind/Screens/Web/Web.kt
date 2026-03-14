@@ -100,21 +100,21 @@ fun WebHome(){
         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             item {
                 LazyCard(
-                    modUI = Mod.size(80).click { goTo("WebInput") },
+                    modCard = Mod.size(80).click{},
                 ) {
                     Text("Gmail")
                 }
             }
             item {
                 LazyCard(
-                    modUI = Mod.size(80).click { goTo("WebInput") },
+                    modCard = Mod.size(80).click{},
                 ) {
                     Text("Images")
                 }
             }
             item {
                 LazyCard(
-                    modUI = Mod.size(80).click { goTo("WebInput") },
+                    modCard = Mod.size(80).click{},
                 ) {
                     Text("Maps")
                 }
