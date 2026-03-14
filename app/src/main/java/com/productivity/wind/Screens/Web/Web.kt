@@ -83,7 +83,7 @@ fun WebHome(){
 			},
 		) {
 			LazzyRow(Mod.centerV) {
-                Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.Gray)
+                Icon.Search()
                 move(8)
                 Text(
                     text = "Search Google or type URL",
@@ -100,21 +100,21 @@ fun WebHome(){
         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             item {
                 LazyCard(
-                    modUI = Mod.size(80, 80).click { goTo("WebInput") },
+                    modUI = Mod.size(80).click { goTo("WebInput") },
                 ) {
                     Text("Gmail")
                 }
             }
             item {
                 LazyCard(
-                    modUI = Mod.size(80, 80).click { goTo("WebInput") },
+                    modUI = Mod.size(80).click { goTo("WebInput") },
                 ) {
                     Text("Images")
                 }
             }
             item {
                 LazyCard(
-                    modUI = Mod.size(80, 80).click { goTo("WebInput") },
+                    modUI = Mod.size(80).click { goTo("WebInput") },
                 ) {
                     Text("Maps")
                 }
@@ -124,13 +124,7 @@ fun WebHome(){
         move(h = 16)
 
         // Recent / suggested sites
-        Text("Recent", fontSize = 12.sp, color = Color.Gray, modUI = Mod.space(start = 8))
-        LazyCard(
-            modUI = Mod.space(start = 8, end = 8, h = 48).fillMaxWidth().click { goTo("WebInput") },
-        ) {
-            Text(Bar.Url)
-        }
-
+        Text("Recent".size(12.sp).gray(), modifier = Mod.space(start = 8))
     }
 }
 
