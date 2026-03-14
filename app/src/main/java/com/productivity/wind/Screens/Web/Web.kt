@@ -55,7 +55,7 @@ fun WebInput(){
         DividerPadding = no,
 		onBackClick = { goTo("Main") }
     ) {
-        Text("Home")
+        
     }
 }
 
