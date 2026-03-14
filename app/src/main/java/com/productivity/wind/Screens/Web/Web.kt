@@ -65,15 +65,6 @@ fun WebInput(){
 fun WebHome(){
     LazyScreen(
         top = {
-			LazyCard(
-				modUI = Mod.space(start = 8),
-				modCard = Mod.space(h=8, w=10).weight(1f).click {    
-					goTo("WebInput")
-				},
-			) {
-				Text(Bar.Url)
-			}
-    
             End {
                 Item.Add {
                     goTo("WebKeywords")
@@ -85,6 +76,14 @@ fun WebHome(){
 		onBackClick = { goTo("Main") }
     ) {
         Text("Home")
+		LazyCard(
+			modUI = Mod.space(start = 8),
+			modCard = Mod.space(h=8, w=10).weight(1f).click {    
+				goTo("WebInput")
+			},
+		) {
+			Text(Bar.Url)
+		}
     }
 }
 
