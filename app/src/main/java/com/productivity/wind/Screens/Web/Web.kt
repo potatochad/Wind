@@ -53,6 +53,7 @@ fun WebInput(){
         },
         scroll = no,
         DividerPadding = no,
+		showDivider = no,
 		onBackClick = { goTo("Main") }
     ) {
         
@@ -64,16 +65,10 @@ fun WebInput(){
 fun WebHome(){
     LazyScreen(
         top = {
-			TinyInput(
-				Bar.Url, 
-				Mod.h(40).w(AppW - 180.dp), 
-				isInt = no, 
-				maxLetters = 400,
-				onAction = {
-					if (Bar.Url != "") goTo("Web")
-				}
-			){       
-				Bar.Url = it
+			LazyCard(Mod.w(AppW - 180.dp).click{
+				goTo("WebInput")
+			}) {
+				Text(Bar.Url)
 			}
     
             End {
