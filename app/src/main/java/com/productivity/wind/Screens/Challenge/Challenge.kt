@@ -154,7 +154,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     RunOnce(goodStr) {
 		if (goodStr > 30) {
-			wait {
+			wait(100) {
 				Vlog("current line i am typing: ${TxtLines.getLineByChar(goodStr)}")
 				var scrollBy = toF(txtScrollSize)/toF(tsk.txt.size)
 				val done = toF(goodStr)*scrollBy - scrollBy*50
