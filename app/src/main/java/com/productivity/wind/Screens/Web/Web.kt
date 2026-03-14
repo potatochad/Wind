@@ -65,9 +65,12 @@ fun WebInput(){
 fun WebHome(){
     LazyScreen(
         top = {
-			LazyCard(Mod.w(AppW - 180.dp).click{
-				goTo("WebInput")
-			}) {
+			LazyCard(
+				modUI = Mod.space(start = 8),
+				modCard = Mod.space(h=8, w=10).weight(1f).click {    
+					goTo("WebInput")
+				},
+			) {
 				Text(Bar.Url)
 			}
     
