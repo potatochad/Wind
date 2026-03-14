@@ -297,7 +297,7 @@ fun ListStr.getLine(lineIndex: Int): String {
     return if (lineIndex in indices) this[lineIndex] else ""
 }
 
-fun ListStr.getLineByChar(charIndex: Int): String {
+fun ListStr.lineByChar(charIndex: Int): String {
     var runningIndex = 0
     for (line in this) {
         val nextIndex = runningIndex + line.length
@@ -307,6 +307,22 @@ fun ListStr.getLineByChar(charIndex: Int): String {
         runningIndex = nextIndex
     }
     return ""
+}
+
+fun ListStr.lineIndexByChar(charIndex: Int): Int {
+    var runningIndex = 0
+
+    for ((i, line) in this.withIndex()) {
+        val nextIndex = runningIndex + line.length
+
+        if (charIndex in runningIndex until nextIndex) {
+            return i
+        }
+
+        runningIndex = nextIndex
+    }
+
+    return -1
 }
 
 
