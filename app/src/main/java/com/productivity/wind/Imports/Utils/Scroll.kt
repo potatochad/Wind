@@ -161,6 +161,16 @@ fun LazyList.toBottom() = wait{
 suspend fun Scroll.scroll(it: Any) = animateScrollBy(toF(it))
 suspend fun LazyList.scroll(it: Any) = animateScrollBy(toF(it))
 
+fun LazyList.goToLineCentered(lineIndex: Int) = wait {
+    val layout = layoutInfo
+    val visible = layout.visibleItemsInfo.size
+    val target = (lineIndex - visible / 2).coerceAtLeast(0)
+    scrollToItem(target)
+}
+
+fun LazyList.goToLine(lineIndex: Int) = wait {
+    scrollToItem(lineIndex.coerceAtLeast(0))
+}
 
 fun Scroll.goTo(it: Any) = wait{ scrollTo(toInt(it)) }
 fun LazyList.goTo(x: Any) = wait {
