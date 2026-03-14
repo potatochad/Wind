@@ -40,6 +40,9 @@ fun WebHome(){
     LazyScreen(
         top = {
             Text("Home")
+
+			TinyInput(Tag, Mod.h(40).weight(1f), isInt = no, maxLetters = 400)
+				
     
             End {
                 Item.Add {
@@ -73,8 +76,9 @@ fun Web(){
 
     LazyScreen(
         top = {
-            Text(" Points ${Bar.funTime}")
-    
+            
+			TinyInput(Tag, Mod.h(40).weight(1f), isInt = no, maxLetters = 400)
+				
             End {
                 Row{
                     Icon.Reload{ 
