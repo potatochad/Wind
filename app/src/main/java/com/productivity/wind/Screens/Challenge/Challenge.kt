@@ -155,7 +155,9 @@ fun CopyTskUI(tsk: CopyTsk) {
     RunOnce(goodStr) {
 		if (goodStr > 30) {
 			wait(100) {
-				TxtLines.lineIndexByChar(goodStr)
+				txtScroll.goToLineCentered(
+					TxtLines.lineIndexByChar(goodStr)
+				)
 			}
 		}
 	}
