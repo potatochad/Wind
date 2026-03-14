@@ -37,13 +37,17 @@ import com.productivity.wind.Screens.*
 
 @Composable
 fun WebHome(){
-	if (Bar.Url != "") goTo("Web")
-    
     LazyScreen(
         top = {
-            Text("Home")
-
-			TinyInput(Bar.Url, Mod.h(40).w(AppW - 180.dp), isInt = no, maxLetters = 400){       
+			TinyInput(
+				Bar.Url, 
+				Mod.h(40).w(AppW - 180.dp), 
+				isInt = no, 
+				maxLetters = 400,
+				onAction = {
+					if (Bar.Url != "") goTo("Web")
+				}
+			){       
 				Bar.Url = it
 			}
     
@@ -57,7 +61,7 @@ fun WebHome(){
         DividerPadding = no,
 		onBackClick = { goTo("Main") }
     ) {
-        
+        Text("Home")
     }
 }
 
