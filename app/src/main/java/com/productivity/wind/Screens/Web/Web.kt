@@ -43,7 +43,7 @@ fun WebHome(){
         top = {
             Text("Home")
 
-			TinyInput(Bar.Url, Mod.h(40).w(AppW - 150.dp), isInt = no, maxLetters = 400){       
+			TinyInput(Bar.Url, Mod.h(40).w(AppW - 180.dp), isInt = no, maxLetters = 400){       
 				Bar.Url = it
 			}
     
@@ -80,7 +80,7 @@ fun Web(){
     LazyScreen(
         top = {
             
-			TinyInput(Bar.Url, Mod.h(40).w(AppW - 150.dp), isInt = no, maxLetters = 400){       
+			TinyInput(Bar.Url, Mod.h(40).w(AppW - 180.dp), isInt = no, maxLetters = 400){       
 				Bar.Url = it
 			}
 				
