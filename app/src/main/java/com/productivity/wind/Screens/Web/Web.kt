@@ -37,12 +37,15 @@ import com.productivity.wind.Screens.*
 
 @Composable
 fun WebHome(){
+	if (Bar.Url != "") goTo("Web")
+    
     LazyScreen(
         top = {
             Text("Home")
 
-			TinyInput(Tag, Mod.h(40).weight(1f), isInt = no, maxLetters = 400)
-				
+			TinyInput(Bar.Url, Mod.h(40).weight(1f), isInt = no, maxLetters = 400){       
+				Bar.Url = it
+			}
     
             End {
                 Item.Add {
@@ -65,10 +68,10 @@ fun Web(){
     val web = r { WebController(ctx) }
 
 	RunOnce {
-		if (Bar.Url == "") goTo("WebHome")
 		web.applyFancySettings()
 		web.url(Bar.Url)
 	}
+	if (Bar.Url == "") goTo("WebHome")
     
     Item.WebPointTimer()
 
@@ -77,7 +80,9 @@ fun Web(){
     LazyScreen(
         top = {
             
-			TinyInput(Tag, Mod.h(40).weight(1f), isInt = no, maxLetters = 400)
+			TinyInput(Bar.Url, Mod.h(40).weight(1f), isInt = no, maxLetters = 400){       
+				Bar.Url = it
+			}
 				
             End {
                 Row{
