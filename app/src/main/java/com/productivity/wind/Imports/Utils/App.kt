@@ -612,7 +612,6 @@ class MainActivity : ComponentActivity() {
 		super.onPause()
 		
 		OnLeaveApp()
-		log("[LEFT APP]")
 	}
 
 	
