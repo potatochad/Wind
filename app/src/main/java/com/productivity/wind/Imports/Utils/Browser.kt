@@ -123,8 +123,22 @@ class WebController(
     }
     val url: Str?
         get() = webView.url
-    fun url(url: Str) {
-        webView.loadUrl(url)
+    fun url(u: Str) {
+        val url = u.trim()
+
+        val finalUrl =
+        if (
+            url.startsWith("http://") ||
+            url.startsWith("https://") ||
+            url.startsWith("file://") ||
+            url.startsWith("about:") ||
+            url.startsWith("data:") ||
+            url.startsWith("javascript:") ||
+            url.startsWith("//")
+        ) url
+        else "https://$url"
+
+        webView.loadUrl(finalUrl)
     }
     val web: WebView?
         get() = webView
