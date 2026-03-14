@@ -82,8 +82,55 @@ fun WebHome(){
 				goTo("WebInput")
 			},
 		) {
-			Text(Bar.Url)
+			LazzyRow(Mod.Vcenter()) {
+                Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.Gray)
+                move(8)
+                Text(
+                    text = "Search Google or type URL",
+                    color = Color.Gray,
+                    fontSize = 14.sp
+                )
+			}
 		}
+        
+
+        Spacer(mod = Mod.space(h = 16))
+
+        // Quick access cards (like Google shortcuts)
+        LazyRow(spacing = 8) {
+            item {
+                LazyCard(
+                    modUI = Mod.size(80, 80).click { goTo("WebInput") },
+                ) {
+                    Text("Gmail")
+                }
+            }
+            item {
+                LazyCard(
+                    modUI = Mod.size(80, 80).click { goTo("WebInput") },
+                ) {
+                    Text("Images")
+                }
+            }
+            item {
+                LazyCard(
+                    modUI = Mod.size(80, 80).click { goTo("WebInput") },
+                ) {
+                    Text("Maps")
+                }
+            }
+        }
+
+        Spacer(mod = Mod.space(h = 16))
+
+        // Recent / suggested sites
+        Text("Recent", fontSize = 12.sp, color = Color.Gray, modUI = Mod.space(start = 8))
+        LazyCard(
+            modUI = Mod.space(start = 8, end = 8, h = 48).fillMaxWidth().click { goTo("WebInput") },
+        ) {
+            Text(Bar.Url)
+        }
+
     }
 }
 
