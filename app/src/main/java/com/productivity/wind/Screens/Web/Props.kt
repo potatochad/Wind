@@ -36,6 +36,7 @@ import androidx.compose.material.icons.outlined.*
 
 
 object WebProps {
+	
 	object Home {
 		@Composable
 		fun Input(){
@@ -52,6 +53,7 @@ object WebProps {
 				}
 			}
 		}
+		
 		@Composable
 		fun RecentCard(
 			label: Str,
@@ -61,30 +63,9 @@ object WebProps {
 				LazyCard(
 					modCard = Mod.s(80).click{ Do() },
 				) {
-					Ring(
-						color = CardColor,
-						strokeWidth = 4,
-						ContentPadding = -3,
-					) {
-						Box(contentAlignment = Alignment.Center) {
-							LazyImage(Icon.Default.Add)
-							Canvas(
-								modifier = Mod
-									.matchParentSize()
-									.space(4)
-							) {
-								drawArc(
-									color = Color(0xFF171717),   // ~10% darker overlay
-									startAngle = 0f,
-									sweepAngle = 360f,
-									useCenter = no,
-									style = Stroke(width = 2.dp.toPx())
-								)
-							}
-						}
-					}
-					//Icon round
+					LazyImage(Icons.Default.Add)
 				}
+					//Icon round
 				Text(label.take(10))
 			}
 		}
