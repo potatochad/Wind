@@ -264,24 +264,23 @@ fun AutoVerticalAlignment(mod: Mod): Alignment.Vertical {
 }
 
 
-fun  AutoHorizontalAlignment(mod: Mod): Arrangement.Horizontal {
+fun AutoHorizontalAlignment(mod: Mod): Alignment.Horizontal {
     return when {
-        mod.hasTag<CenterHTag>() -> Alignment.Center
+        mod.hasTag<CenterHTag>() -> Alignment.CenterHorizontally
         mod.hasTag<StartTag>() -> Alignment.Start
         mod.hasTag<EndTag>() -> Alignment.End
         else -> Alignment.Start
     }
 }
 
-fun AutoVerticalArrangement(mod: Mod): Alignment.Vertical {
+fun AutoVerticalArrangement(mod: Mod): Arrangement.Vertical {
     return when {
-        mod.hasTag<CenterVTag>() -> Arrangement.CenterVertically
+        mod.hasTag<CenterVTag>() -> Arrangement.Center
         mod.hasTag<TopTag>() -> Arrangement.Top
         mod.hasTag<BottomTag>() -> Arrangement.Bottom
-        else -> Arrangement.CenterVertically
+        else -> Arrangement.Top
     }
 }
-
 
   
 @Composable
