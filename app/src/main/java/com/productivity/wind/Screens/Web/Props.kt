@@ -36,7 +36,7 @@ import androidx.compose.material.icons.outlined.*
 
 
 object WebProps {
-	object home {
+	object Home {
 		@Composable
 		fun Input(){
 			LazyCard(
