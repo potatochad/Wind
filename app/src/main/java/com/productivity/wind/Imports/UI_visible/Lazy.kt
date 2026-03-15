@@ -245,7 +245,7 @@ fun LazyLine(
 
 
 
-fun AutoRowHorizontalArrangement(mod: Mod): Arrangement.Horizontal {
+fun AutoHorizontalArrangement(mod: Mod): Arrangement.Horizontal {
     return when {
         mod.hasTag<CenterHTag>() -> Arrangement.Center
         mod.hasTag<StartTag>() -> Arrangement.Start
@@ -254,7 +254,7 @@ fun AutoRowHorizontalArrangement(mod: Mod): Arrangement.Horizontal {
     }
 }
 
-fun AutoRowVerticalAlignment(mod: Mod): Alignment.Vertical {
+fun AutoVerticalAlignment(mod: Mod): Alignment.Vertical {
     return when {
         mod.hasTag<CenterVTag>() -> Alignment.CenterVertically
         mod.hasTag<TopTag>() -> Alignment.Top
@@ -274,8 +274,8 @@ fun LazzyRow(
 	
     Row(
         baseMod.mix(new = mod),
-        horizontalArrangement = AutoRowHorizontalArrangement(mod),
-        verticalAlignment = AutoRowVerticalAlignment(mod),
+        horizontalArrangement = AutoHorizontalArrangement(mod),
+        verticalAlignment = AutoVerticalAlignment(mod),
 	) {
         ui()
     }
@@ -288,8 +288,8 @@ fun LazzyColumn(
 ) {
     Column(
         modifier = Mod.maxW().mix(new = mod),
-        verticalArrangement = AutoColumnVerticalArrangement(mod),
-        horizontalAlignment = AutoColumnHorizontalAlignment(mod),
+        verticalArrangement = AutoVerticalArrangement(mod),
+        horizontalAlignment = AutoHorizontalAlignment(mod),
     ) {
         ui()
     }
