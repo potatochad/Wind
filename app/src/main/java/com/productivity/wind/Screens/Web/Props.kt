@@ -61,9 +61,12 @@ object WebProps {
 		){
 			LazyColumn {
 				LazyCard(
-					modCard = Mod.s(80).click{ Do() },
+					modCard = Mod.click{ Do() }.clip(CircleShape),
 				) {
-					LazyImage(Icons.Default.Add)
+					LazyImage(
+						Icons.Default.Add,
+						Mod.clip(CircleShape)
+					)
 				}
 					//Icon round
 				Text(label.take(10))
