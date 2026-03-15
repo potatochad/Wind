@@ -72,12 +72,11 @@ fun WebHome(){
             }
         },
         scroll = no,
-        DividerPadding = no,
 		onBackClick = { goTo("Main") }
     ) {
 		
         LazzyRow(Mod.centerH.space(5)) {
-			Text("Home".size(18.sp))
+			Text("Home".size(24.sp))
 		}
 		WebProps.Home.Input()
         
