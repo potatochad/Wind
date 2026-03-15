@@ -76,7 +76,7 @@ fun WebHome(){
 		onBackClick = { goTo("Main") }
     ) {
 		
-        LazzyRow(Mod.centerV.space(5)) {
+        LazzyRow(Mod.centerH.space(5)) {
 			Text("Home".size(18.sp))
 		}
 		LazyCard(
@@ -101,7 +101,7 @@ fun WebHome(){
 
         // Quick access cards (like Google shortcuts)
 		Text("Recent".size(12.sp).gray(), modifier = Mod.space(start = 8))
-		LazzyRow(Mod.centerV.space(5)) {
+		LazzyRow(Mod.centerH.space(5)) {
 			LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 				item {
 					LazyCard(
