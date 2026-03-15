@@ -79,22 +79,7 @@ fun WebHome(){
         LazzyRow(Mod.centerH.space(5)) {
 			Text("Home".size(18.sp))
 		}
-		LazyCard(
-			modUI = Mod.space(start = 8),
-			modCard = Mod.space(h=8, w=10).maxW().click {    
-				goTo("WebInput")
-			},
-		) {
-			LazzyRow(Mod.centerV) {
-                Icon.Search()
-                move(8)
-                Text(
-                    text = "Search Google or type URL",
-                    color = Color.Gray,
-                    fontSize = 14.sp
-                )
-			}
-		}
+		WebProps.Home.Input()
         
 
         move(h = 16)
