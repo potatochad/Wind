@@ -2,6 +2,10 @@ name: Build APK
 
 on: push
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # <- force Node 24 for all JS actions
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
