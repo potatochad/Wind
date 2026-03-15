@@ -60,7 +60,7 @@ object WebProps {
 			label: Str,
 			Do: Do = {},
 		){
-			LazyColumn {
+			LazzyColumn {
 				LazyCard(
 					modUI = Mod.space(2),
 					modCard = Mod
