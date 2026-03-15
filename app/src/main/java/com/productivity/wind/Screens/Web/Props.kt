@@ -52,6 +52,20 @@ object WebProps {
 				}
 			}
 		}
+		@Composable
+		fun RecentCard(
+			label: Str,
+			Do: Do = {},
+		){
+			LazyColumn {
+				LazyCard(
+					modCard = Mod.s(80).click{ Do() },
+				) {
+					//Icon round
+				}
+				Text(label.take(10))
+			}
+		}
 
 		
 	}
