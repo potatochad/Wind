@@ -263,6 +263,26 @@ fun AutoVerticalAlignment(mod: Mod): Alignment.Vertical {
     }
 }
 
+
+fun  AutoHorizontalAlignment(mod: Mod): Arrangement.Horizontal {
+    return when {
+        mod.hasTag<CenterHTag>() -> Alignment.Center
+        mod.hasTag<StartTag>() -> Alignment.Start
+        mod.hasTag<EndTag>() -> Alignment.End
+        else -> Alignment.Start
+    }
+}
+
+fun AutoVerticalArrangement(mod: Mod): Alignment.Vertical {
+    return when {
+        mod.hasTag<CenterVTag>() -> Arrangement.CenterVertically
+        mod.hasTag<TopTag>() -> Arrangement.Top
+        mod.hasTag<BottomTag>() -> Arrangement.Bottom
+        else -> Arrangement.CenterVertically
+    }
+}
+
+
   
 @Composable
 fun LazzyRow(
