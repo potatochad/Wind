@@ -81,9 +81,9 @@ fun LazyTheme(content: ui) {
 @Composable
 fun LazyImage(
     source: Any?,
-    mod: Mod = Mod.s(34).space(5)
+    mod: Mod = Mod
 ) {
-	var modifier = mod
+	var modifier = Mod.s(34).space(5).mix(new = mod)
     val contentDescription = "boring"
     when (source) {
         is Painter -> Image(painter = source, contentDescription = contentDescription, modifier = modifier)
