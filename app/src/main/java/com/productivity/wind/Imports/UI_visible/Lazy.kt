@@ -281,6 +281,20 @@ fun LazzyRow(
     }
 }
 
+@Composable
+fun LazzyColumn(
+    mod: Mod = Mod,
+    ui: uiColumn,
+) {
+    Column(
+        modifier = Mod.maxW().mix(new = mod),
+        verticalArrangement = AutoColumnVerticalArrangement(mod),
+        horizontalAlignment = AutoColumnHorizontalAlignment(mod),
+    ) {
+        ui()
+    }
+}
+
 
 @Composable
 fun LazyCard(
