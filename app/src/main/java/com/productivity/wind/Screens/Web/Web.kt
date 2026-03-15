@@ -75,7 +75,10 @@ fun WebHome(){
         DividerPadding = no,
 		onBackClick = { goTo("Main") }
     ) {
-        Text("Home")
+		
+        LazzyRow(Mod.centerV.space(5)) {
+			Text("Home".size(18.sp))
+		}
 		LazyCard(
 			modUI = Mod.space(start = 8),
 			modCard = Mod.space(h=8, w=10).maxW().click {    
@@ -97,36 +100,35 @@ fun WebHome(){
         move(h = 16)
 
         // Quick access cards (like Google shortcuts)
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            item {
-                LazyCard(
-                    modCard = Mod.s(80).click{},
-                ) {
-                    Text("Gmail")
-                }
-            }
-            item {
-                LazyCard(
-                    modCard = Mod.s(80).click{},
-                ) {
-                    Text("Images")
-                }
-            }
-            item {
-                LazyCard(
-                    modCard = Mod.s(80).click{},
-                ) {
-                    Text("Maps")
-                }
-            }
-        }
-
-        move(h = 16)
-
-        // Recent / suggested sites
-        Text("Recent".size(12.sp).gray(), modifier = Mod.space(start = 8))
+		Text("Recent".size(12.sp).gray(), modifier = Mod.space(start = 8))
+		LazzyRow(Mod.centerV.space(5)) {
+			LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+				item {
+					LazyCard(
+						modCard = Mod.s(80).click{},
+					) {
+						Text("Gmail")
+					}
+				}
+				item {
+					LazyCard(
+						modCard = Mod.s(80).click{},
+					) {
+						Text("Images")
+					}
+				}
+				item {
+					LazyCard(
+						modCard = Mod.s(80).click{},
+					) {
+						Text("Maps")
+					}
+				}
+			}
+		}
     }
 }
+
 
 @Composable
 fun Web(){
