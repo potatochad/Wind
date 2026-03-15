@@ -79,6 +79,8 @@ fun WebHome(){
 			Text("Home".size(24.sp))
 		}
 		WebProps.Home.Input()
+
+		WebProps.Home.RecentCard("Github Action")
         
 
         move(h = 16)
