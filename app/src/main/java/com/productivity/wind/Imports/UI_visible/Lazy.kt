@@ -243,45 +243,6 @@ fun LazyLine(
     )
 }
 
-
-
-fun AutoHorizontalArrangement(mod: Mod): Arrangement.Horizontal {
-    return when {
-        mod.hasTag<CenterHTag>() -> Arrangement.Center
-        mod.hasTag<StartTag>() -> Arrangement.Start
-        mod.hasTag<EndTag>() -> Arrangement.End
-        else -> Arrangement.Start
-    }
-}
-
-fun AutoVerticalAlignment(mod: Mod): Alignment.Vertical {
-    return when {
-        mod.hasTag<CenterVTag>() -> Alignment.CenterVertically
-        mod.hasTag<TopTag>() -> Alignment.Top
-        mod.hasTag<BottomTag>() -> Alignment.Bottom
-        else -> Alignment.CenterVertically
-    }
-}
-
-
-fun AutoHorizontalAlignment(mod: Mod): Alignment.Horizontal {
-    return when {
-        mod.hasTag<CenterHTag>() -> Alignment.CenterHorizontally
-        mod.hasTag<StartTag>() -> Alignment.Start
-        mod.hasTag<EndTag>() -> Alignment.End
-        else -> Alignment.Start
-    }
-}
-
-fun AutoVerticalArrangement(mod: Mod): Arrangement.Vertical {
-    return when {
-        mod.hasTag<CenterVTag>() -> Arrangement.Center
-        mod.hasTag<TopTag>() -> Arrangement.Top
-        mod.hasTag<BottomTag>() -> Arrangement.Bottom
-        else -> Arrangement.Top
-    }
-}
-
   
 @Composable
 fun LazzyRow(
