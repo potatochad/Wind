@@ -34,6 +34,31 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 
 
+
+object WebProps {
+	object home {
+		@Composable
+		fun Input(){
+			LazyCard(
+				modUI = Mod.space(start = 8),
+				modCard = Mod.space(h=8, w=10).maxW().click {    
+					goTo("WebInput")
+				},
+			) {
+				LazzyRow(Mod.centerV) {
+					Icon.Search()
+					move(8)
+					Text("Search Google or type URL".gray().size(14.sp))
+				}
+			}
+		}
+
+		
+	}
+
+	
+}
+
 @Composable
 fun BtnAllow(
 	action1: WebAction,
