@@ -71,7 +71,7 @@ object WebProps {
 				) {
 					LazyImage(
 						Icons.Default.Add,
-						Mod.clip(CircleShape)
+						Mod.clip(CircleShape).size(80)
 					)
 				}
 					//Icon round
