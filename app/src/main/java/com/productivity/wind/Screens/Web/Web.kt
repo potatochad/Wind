@@ -80,9 +80,6 @@ fun WebHome(){
 		}
 		WebProps.Home.Input()
 
-		WebProps.Home.RecentCard("Github Action")
-        
-
         move(h = 16)
 
         // Quick access cards (like Google shortcuts)
@@ -98,9 +95,12 @@ fun WebHome(){
 				}
 				item {
 					LazyCard(
-						modCard = Mod.s(80).click{},
+						modCard = Mod.s(80).click{
+							Bar.Url = "youtube.com"
+							goTo("Web")
+						},
 					) {
-						Text("Images")
+						Text("Youtube")
 					}
 				}
 				item {
