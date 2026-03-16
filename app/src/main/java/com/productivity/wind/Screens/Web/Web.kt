@@ -76,7 +76,7 @@ fun WebHome(){
     ) {
 		
         LazzyRow(Mod.centerH.space(5)) {
-			Text("Home".size(24.sp))
+			Text("Home".size(28.sp))
 		}
 		WebProps.Home.Input()
 
