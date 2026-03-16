@@ -326,4 +326,16 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 }
 
 
+fun Str.overFlow(x: Int): Str {
+    return if (this.size > x) {
+        this.take(x) + "..."
+    } else {
+        this
+    }
+}
+
+
+
+
+
 
