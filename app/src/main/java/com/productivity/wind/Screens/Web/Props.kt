@@ -75,7 +75,7 @@ object WebProps {
 					)
 				}
 					//Icon round
-				Text(label.take(10))
+				Text(label.overFlow(10))
 			}
 		}
 
