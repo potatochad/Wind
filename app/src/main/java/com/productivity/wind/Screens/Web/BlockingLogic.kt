@@ -38,7 +38,7 @@ fun BlockingLogic(web: WebController){
 		var blocked by m(no)
         web.allVisibleText { txt ->
             if (containsBadWord(txt)){
-				if (!containsGoodWord(txt)){
+				if (!containsGoodWord(txt) && !containsGoodWord(Bar.Url)){
 					blocked = yes
 					Bar.Url = ""
                     Vlog("bad word: ${foundBadWord(txt)}")
