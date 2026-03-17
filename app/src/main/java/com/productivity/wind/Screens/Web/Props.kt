@@ -40,7 +40,7 @@ object WebProps {
 	
 	object Home {
 		@Composable
-		fun Input(){
+		fun Input(web: WebController){
 			LazyCard(
 				modUI = Mod.space(start = 8),
 				modCard = Mod.space(h=8, w=10).maxW().click {
