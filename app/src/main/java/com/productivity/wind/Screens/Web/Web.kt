@@ -37,6 +37,9 @@ import com.productivity.wind.Screens.*
 
 @Composable
 fun WebHome(){
+	var ctx = LocalContext.current
+    val web = r { WebController(ctx) }
+	
     LazyScreen(
         top = {
             End {
@@ -52,7 +55,7 @@ fun WebHome(){
         LazzyRow(Mod.centerH.space(5)) {
 			Text("Home".size(28.sp))
 		}
-		WebProps.Home.Input()
+		WebProps.Home.Input(web)
 
         move(h = 16)
 
