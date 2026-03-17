@@ -43,8 +43,9 @@ object WebProps {
 		fun Input(){
 			LazyCard(
 				modUI = Mod.space(start = 8),
-				modCard = Mod.space(h=8, w=10).maxW().click {    
-					
+				modCard = Mod.space(h=8, w=10).maxW().click {
+					Bar.Url = "google.com"
+					goTo("Web")
 				},
 			) {
 				LazzyRow(Mod.centerV) {
