@@ -119,6 +119,7 @@ import java.time.*
 import java.time.format.*
 import android.view.*
 import androidx.core.view.*
+import android.view.inputmethod.InputMethodManager
 
 
 data class KeyboardData(
@@ -133,25 +134,34 @@ fun Keyboard(): KeyboardData {
     var open by r(no)
 
     if (h > 0) {
-        open = yes // keyboard is visible
+        open = yes
     }
     if (h < oldH) {
-        open = no // keyboard is closing
+        open = no
     }
 
     oldH = h
     return KeyboardData(open, h)
 }
 
+fun View.showKeyboard() {
+    this.requestFocus()
 
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE)
+            as InputMethodManager
+
+    imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+}
+
+
+//-------------/FOCUS/--------/
 typealias FocusAsker = FocusRequester
+typealias UIFocus = FocusManager
+
 fun FocusAsker.ask() = this.requestFocus()
 
 fun Mod.focusAsker(x: FocusAsker) = this.focusRequester(x)
     
-
-typealias UIFocus = FocusManager
-
 @Composable
 fun UIFocus(): UIFocus = LocalFocusManager.current
 fun UIFocus.clear() = this.clearFocus()
