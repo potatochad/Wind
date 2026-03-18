@@ -39,12 +39,14 @@ fun BlockingLogic(web: WebController){
 		Bar.Url = url ?: "https://www.google.com"
         web.allVisibleText { txt ->
             if (containsBadWord(txt) || containsBadWord(Bar.Url)){
-				if (!containsGoodWord(txt) || !containsGoodWord(Bar.Url)){
-					blocked = yes
-					Bar.Url = ""
-                    Vlog("bad word: ${foundBadWord(txt)}, !containsGoodWord(txt): ${!containsGoodWord(txt)}, (!containsGoodWord(txt): {!containsGoodWord(txt)}")
-					goTo("WebHome")
-                    return@allVisibleText
+				if (!containsGoodWord(txt)){
+					if (!containsGoodWord(Bar.Url)){
+						blocked = yes
+						Bar.Url = ""
+						Vlog("bad word: ${foundBadWord(txt)}, containsGoodWord(txt): ${containsGoodWord(txt)}, (containsGoodWord(url): ${containsGoodWord(url)}")
+						goTo("WebHome")
+						return@allVisibleText
+					}
                 }
 			}
         }
