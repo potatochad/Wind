@@ -344,13 +344,7 @@ fun WebView.forceGoogleInputFocus() {
     ) {
         log("JS result: $it")
 
-        // Use THIS, not webView
-        this.requestFocus()
-
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE)
-                as InputMethodManager
-
-        imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+        this.showKeyboard()
     }
 }
 
