@@ -43,7 +43,7 @@ fun BlockingLogic(web: WebController){
 					if (!containsGoodWord(Bar.Url)){
 						blocked = yes
 						Bar.Url = ""
-						Vlog("bad word: ${foundBadWord(txt)}, containsGoodWord(txt): ${containsGoodWord(txt)}, (containsGoodWord(url): ${containsGoodWord(url)}")
+						Vlog("bad word: ${foundBadWord(txt)}, containsGoodWord(txt): ${containsGoodWord(txt)}, (containsGoodWord(Bar.Url): ${containsGoodWord(Bar.Url)}")
 						goTo("WebHome")
 						return@allVisibleText
 					}
