@@ -110,6 +110,7 @@ fun Web(){
 
     LazyScreen(
         top = {
+			WebProps.TopBarInput(web)
             End {
                 Row{
                     Icon.Reload{ 
