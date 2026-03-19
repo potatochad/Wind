@@ -45,7 +45,7 @@ object WebProps {
 	) {
 		var Input1 by r(Bar.Url)
 		TinyInput(
-			str, 
+			Input1, 
 			Mod.h(40).w(AppW - 180.dp), 
 			isInt = no, 
 			maxLetters = 400,
