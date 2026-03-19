@@ -103,7 +103,6 @@ fun Web(){
 		web.applyFancySettings()
 		web.url(Bar.Url)
 	}
-	if (Bar.Url == "") goTo("WebHome")
     
     Item.WebPointTimer()
 
@@ -111,11 +110,6 @@ fun Web(){
 
     LazyScreen(
         top = {
-            
-			TinyInput(Bar.Url, Mod.h(40).w(AppW - 180.dp), isInt = no, maxLetters = 400){       
-				Bar.Url = it
-			}
-				
             End {
                 Row{
                     Icon.Reload{ 
