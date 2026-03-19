@@ -37,6 +37,17 @@ import androidx.compose.foundation.shape.CircleShape
 
 
 object WebProps {
+
+
+	@Composable
+	fun TopBarInput(
+		str: str = ""
+		onDone: Do = {}
+	){
+		TinyInput(str, Mod.h(40).w(AppW - 180.dp), isInt = no, maxLetters = 400){       
+			Bar.Url = it
+		}
+	}
 	
 	object Home {
 		@Composable
