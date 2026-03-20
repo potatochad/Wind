@@ -186,7 +186,7 @@ fun BasicInput(
 
 
 @Composable
-fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: Int = 150, Do: DoStr = { txt.it = it }){    
+fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: Int = 150, TextField: Do_<TextFieldValue> = {}, Do: DoStr = { txt.it = it }){    
 	var Field by r(TextFieldValue(txt.it))
 	var done = r(no)
 	var itIndex by r(0)
@@ -198,7 +198,7 @@ fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: 
         onValueChange = {    
 					
 			Do(it.text)
-			Field = TextFieldValue(
+			Field = Field.copy(
 				text = txt.it,
 				selection = it.selection
 			)
@@ -212,6 +212,7 @@ fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: 
 		},
 		placeholder = { Text("Start typing...") },
     )
+	TextField(Field)
 }
 
 
