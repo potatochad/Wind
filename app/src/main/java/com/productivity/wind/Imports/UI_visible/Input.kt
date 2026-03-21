@@ -134,7 +134,7 @@ import android.content.ClipboardManager
 
 @Composable
 fun BasicInput(
-    value: str,
+    value: Str,
     isInt: Bool = no,
 	mod: Mod = Mod,            
 	textStyle: TextStyle = TextStyle(
