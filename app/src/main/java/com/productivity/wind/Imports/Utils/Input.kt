@@ -170,7 +170,9 @@ fun UIFocus.clear() = this.clearFocus()
 class TextField(
     a: Any = ""
 ){
-    val uiStr by UIStr(a)
+    var uiStr by m(
+        UIStr(a)
+    )
     var field: TextFieldValue by m(
         TextFieldValue(uiStr)
     )
