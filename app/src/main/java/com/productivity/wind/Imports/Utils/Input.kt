@@ -167,8 +167,47 @@ fun UIFocus(): UIFocus = LocalFocusManager.current
 fun UIFocus.clear() = this.clearFocus()
 
 
+class TextField(
+    private a: Any
+){
+    val uiStr by UIStr(a)
+    var Field by TextFieldValue(uiStr)
 
+    var text get{
+        Field.text
+    }
+    fun text(
+        str1: Str,
+    ){
+        state = state.copy(
+            text = str1,
+        )
+    }
+    fun text(
+        str1: Str,
+        select:  
+    ){
+        state = state.copy(
+            text = str1,
+            selection = state.selection
+        )
+    }
+    
+    fun cursor(){
+        Field = Field.copy(
+            selection = TextRange(0, 0)
+        )
+    }
+    fun select(){
+        Field = Field.copy(
+            selection = TextRange(0, 5)
+        )
+    }
 
+    
+    
+ 
+}
 
 
 
