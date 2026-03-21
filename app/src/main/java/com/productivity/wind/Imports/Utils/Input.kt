@@ -168,39 +168,41 @@ fun UIFocus.clear() = this.clearFocus()
 
 
 class TextField(
-    private a: Any
+    a: Any = ""
 ){
     val uiStr by UIStr(a)
-    var Field by TextFieldValue(uiStr)
+    var field by TextFieldValue(uiStr)
 
-    var text get{
-        Field.text
-    }
-    fun text(
-        str1: Str,
-    ){
-        state = state.copy(
-            text = str1,
+    val text: Str
+        get() = field.text
+    
+    fun text(str: Any) {
+        field = field.copy(
+            text = UIStr(str)
         )
     }
     fun text(
-        str1: Str,
-        select:  
-    ){
-        state = state.copy(
-            text = str1,
-            selection = state.selection
+        str: Any
+        select: TextRange
+    ) {
+        field = field.copy(
+            text = UIStr(str),
+            selection = select
         )
     }
     
-    fun cursor(){
-        Field = Field.copy(
-            selection = TextRange(0, 0)
+    fun cursor(
+        int: Int
+    ){
+        field = field.copy(
+            selection = TextRange(int, int)
         )
     }
-    fun select(){
-        Field = Field.copy(
-            selection = TextRange(0, 5)
+    fun select(
+        x: TextRange
+    ){
+        field = field.copy(
+            selection = x
         )
     }
 
