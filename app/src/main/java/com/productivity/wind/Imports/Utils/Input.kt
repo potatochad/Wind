@@ -171,7 +171,7 @@ class TextField(
     a: Any = ""
 ){
     val uiStr by UIStr(a)
-    var field by TextFieldValue(uiStr)
+    var field by m(TextFieldValue(uiStr))
 
     val text: Str
         get() = field.text
