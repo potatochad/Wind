@@ -166,8 +166,8 @@ fun BasicInput(
 	) {
 		move(3)
 		BasicTextField(
-			value = Field,
-			onValueChange = { Do(it) },
+			value = Field.it,
+			onValueChange = { Do(it.text) },
 			onTextLayout = { onLayout(it) },
 			textStyle = textStyle, 
 			singleLine = oneLine, 
