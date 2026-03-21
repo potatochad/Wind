@@ -198,10 +198,7 @@ fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: 
         onValueChange = {    
 					
 			Do(it.text)
-			Field(
-				text = txt.it,
-				selection = it.selection
-			)
+			Field.text(txt.it, it.selection)
 			itIndex = it.selection.start
 				
 			fixedInputScroll(Field.it, itIndex, done, scroll)
