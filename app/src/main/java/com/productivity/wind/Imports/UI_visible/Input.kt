@@ -142,6 +142,7 @@ fun BasicInput(
 		fontSize = 14.sp,
 		textAlign = TextAlign.Start,
 	),
+	onLayout: Do_<TextLayoutResult> = {},
 	onAction: Do = {},
 	oneLine: Bool= yes,
     Do: DoStr = {},
@@ -167,6 +168,9 @@ fun BasicInput(
 		BasicTextField(
 			value = value,
 			onValueChange = { Do(it) },
+			onTextLayout = {
+				onLayout(it)
+			},
 			textStyle = textStyle, 
 			singleLine = oneLine, 
 			keyboardOptions = KeyboardOptions(
