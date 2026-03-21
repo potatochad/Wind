@@ -167,35 +167,34 @@ fun UIFocus(): UIFocus = LocalFocusManager.current
 fun UIFocus.clear() = this.clearFocus()
 
 
-// Make sure Str is defined
-typealias Str = String
+
 
 class TextField(a: Any = "") {
     private var uiStr by m(UIStr(a))
 
     // Field holds the current text state
-    var field: TextFieldValue by m(
+    var it: TextFieldValue by m(
         TextFieldValue(uiStr)
     )
 
     // Returns the plain string text
     val text: Str
-        get() = field.text
+        get() = it.text
 
     // Returns the AnnotatedString object (for UI/styling purposes)
     val UItext: AnnotatedString
-        get() = field.annotatedString
+        get() = it.annotatedString
 
     // Update text, replacing everything
     fun text(str: Any) {
-        field = field.copy(
+        it = it.copy(
             annotatedString = UIStr(str)
         )
     }
 
     // Update text and selection at the same time
     fun text(str: Any, select: TextRange) {
-        field = field.copy(
+        it = it.copy(
             annotatedString = UIStr(str),
             selection = select
         )
@@ -203,14 +202,14 @@ class TextField(a: Any = "") {
 
     // Move cursor to a specific position
     fun cursor(pos: Int) {
-        field = field.copy(
+        it = it.copy(
             selection = TextRange(pos, pos)
         )
     }
 
     // Select a range of text
     fun select(pos1: Int, pos2: Int) {
-        field = field.copy(
+        it = it.copy(
             selection = TextRange(pos1, pos2)
         )
     }
