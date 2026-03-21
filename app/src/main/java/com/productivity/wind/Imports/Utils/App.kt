@@ -420,12 +420,12 @@ fun getStatusBarHeight(): Int {
     return with(density) { insets.calculateTopPadding().toPx().toInt() }
 }
 
-fun fixedInputScroll(
+fun FixedInputScroll(
     text: TextFieldValue,
-    cursorPos: Int,
     done: m_<Bool>,
     scroll: ScrollState
 ) {
+	var cursorPos = text.selection.start
     if (text.text.isNotEmpty() && !done.it) {
 		done.it = yes
 
