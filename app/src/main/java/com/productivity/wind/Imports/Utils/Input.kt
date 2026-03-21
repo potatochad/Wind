@@ -213,7 +213,7 @@ class TextField(a: Any = "") {
             selection = TextRange(pos1, pos2)
         )
     }
-    val selection: Str
+    val selection: TextRange
         get() = it.selection
     
 }
