@@ -186,25 +186,25 @@ fun BasicInput(
 
 
 @Composable
-fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: Int = 150, TextField: Do_<TextFieldValue> = {}, Do: DoStr = { txt.it = it }){    
-	var Field by r(TextFieldValue(txt.it))
+fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: Int = 150, Do: DoStr = { txt.it = it }){    
+	var Field by r(TextField(txt.it))
 	var done = r(no)
 	var itIndex by r(0)
 
 	var baseMod = Mod.maxW().h(h).Vscroll(scroll)
 		
     OutlinedTextField(
-        value = Field,
+        value = Field.it,
         onValueChange = {    
 					
 			Do(it.text)
-			Field = Field.copy(
+			Field(
 				text = txt.it,
 				selection = it.selection
 			)
 			itIndex = it.selection.start
 				
-			fixedInputScroll(Field, itIndex, done, scroll)
+			fixedInputScroll(Field.it, itIndex, done, scroll)
 
 		},
         modifier = baseMod.mix(new = mod).onFocusChanged{
@@ -212,7 +212,6 @@ fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: 
 		},
 		placeholder = { Text("Start typing...") },
     )
-	TextField(Field)
 }
 
 
