@@ -199,9 +199,8 @@ fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: 
 					
 			Do(it.text)
 			Field.text(txt.it, it.selection)
-			itIndex = it.selection.start
 				
-			fixedInputScroll(Field.it, itIndex, done, scroll)
+			FixedInputScroll(Field.it, done, scroll)
 
 		},
         modifier = baseMod.mix(new = mod).onFocusChanged{
