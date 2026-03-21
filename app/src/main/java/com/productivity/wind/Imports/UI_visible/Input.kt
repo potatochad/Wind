@@ -158,7 +158,7 @@ fun BasicInput(
 	
 	move(3)
 	Row(
-		modifier = baseMod.mix(new = mod).getW{ w = it },
+		modifier = baseMod.mix(new = mod).centerH..getW{ w = it },
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.Start       
 	) {
