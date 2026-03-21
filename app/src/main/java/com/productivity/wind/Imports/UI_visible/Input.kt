@@ -157,11 +157,7 @@ fun BasicInput(
 
 	
 	move(3)
-	Row(
-		modifier = baseMod.mix(new = mod).centerH..getW{ w = it },
-		verticalAlignment = Alignment.CenterVertically,
-		horizontalArrangement = Arrangement.Start       
-	) {
+	Row(baseMod.mix(new = mod).centerH.start.getW{ w = it }) {
 		move(3)
 		BasicTextField(
 			value = value,
