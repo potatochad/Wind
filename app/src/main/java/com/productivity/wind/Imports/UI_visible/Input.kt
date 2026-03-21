@@ -186,7 +186,7 @@ fun BasicInput(
 
 
 @Composable
-fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: Int = 150, Do: DoStr = { txt.it = it }){    
+fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: Int = 150, onLayout: Do_<TextLayoutResult> = {}, Do: DoStr = { txt.it = it }){    
 	var Field by r(TextField(txt.it))
 	var done = r(no)
 	var itIndex by r(0)
@@ -201,8 +201,10 @@ fun ScrollInput(txt: mStr, mod: Mod = Mod, scroll: ScrollState = r_Scroll(), h: 
 			Field.text(txt.it, it.selection)
 				
 			FixedInputScroll(Field.it, done, scroll)
-
 		},
+		onTextLayout = {
+			onLayout(it)
+		}
         modifier = baseMod.mix(new = mod).onFocusChanged{
 			if (!it.isFocused) done.it = no
 		},
