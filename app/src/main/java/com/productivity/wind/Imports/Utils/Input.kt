@@ -168,7 +168,7 @@ fun UIFocus.clear() = this.clearFocus()
 
 
 class TextField(
-    private val a: Any = ""
+    a: Any = ""
 ){
     private var uiStr by m(UIStr(a))
 
@@ -177,11 +177,11 @@ class TextField(
         TextFieldValue(uiStr)
     )
 
-    val text: Str
-        get() = field.text
-    
     val UItext: Str
-        get() = field.text
+        get() = field.annotatedString
+    
+    val text: Str
+        get() = field.annotatedString.text
 
  
     
