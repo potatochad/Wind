@@ -144,7 +144,7 @@ fun BasicInput(
 	),
 	onLayout: Do_<TextLayoutResult> = {},
 	onAction: Do = {},
-	oneLine: Bool= yes,
+	oneLine: Bool = yes,
     Do: DoStr = {},
 ) {
 	val focus = UIFocus()
@@ -157,7 +157,7 @@ fun BasicInput(
 
 	
 	move(3)
-	Row(baseMod.mix(new = mod).centerH.start.getW{ w = it }) {
+	Row(baseMod.centerV.start.mix(new = mod).getW{ w = it }) {
 		move(3)
 		BasicTextField(
 			value = value,
