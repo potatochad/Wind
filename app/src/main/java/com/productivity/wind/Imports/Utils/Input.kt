@@ -188,14 +188,12 @@ class TextField(a: Any = "") {
         it = x
         return this
     }
-
     fun text(str: Any): TextField {
         it = it.copy(
             annotatedString = UIStr(str)
         )
         return this
     }
-
     fun text(str: Any, select: TextRange): TextField {
         it = it.copy(
             annotatedString = UIStr(str),
@@ -203,14 +201,12 @@ class TextField(a: Any = "") {
         )
         return this
     }
-
     fun cursor(pos: Int): TextField {
         it = it.copy(
             selection = TextRange(pos, pos)
         )
         return this
     }
-
     fun select(pos1: Int, pos2: Int): TextField {
         it = it.copy(
             selection = TextRange(pos1, pos2)
@@ -218,9 +214,37 @@ class TextField(a: Any = "") {
         return this
     }
 
+
+    fun style(update: StrStyle.() -> StrStyle): TextField {
+        it = it.copy(
+            annotatedString = it.annotatedString.txt(update)
+        )
+        return this
+    }
+    fun add(str: Any, update: StrStyle.() -> StrStyle = { this }): TextField {
+        it = it.copy(
+            annotatedString = UIStr(it.annotatedString, UIStr(str).txt(update))
+        )
+        return this
+    }
+
 }
 
 
+
+
+
+fun TextField.bold() = style { copy(fontWeight = FontWeight.Bold) }
+fun TextField.gold() = style { copy(color = Gold) }
+fun TextField.green() = style { copy(color = Color.Green) }
+fun TextField.red() = style { copy(color = Color.Red) }
+fun TextField.white() = style { copy(color = Color.White) }
+fun TextField.black() = style { copy(color = Color.Black) }
+fun TextField.darkGray() = style { copy(color = Color.DarkGray) }
+fun TextField.gray() = style { copy(color = Color.Gray) }
+fun TextField.size(x: Int) = style { copy(fontSize = x.sp) }
+fun TextField.size(x: Float) = style { copy(fontSize = x.sp) }
+fun TextField.size(x: TextUnit) = style { copy(fontSize = x) }
 
 
 
