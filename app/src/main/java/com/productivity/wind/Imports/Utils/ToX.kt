@@ -310,7 +310,7 @@ fun Any.toMeters(
 }
 
 
-fun toHumanReadableAmountWritten(n: Int): UIStr {
+fun toHumanReadableAmountWritten(n: Int): Str {
     val l = 50
     val s = 20
     val p = 300
@@ -320,13 +320,16 @@ fun toHumanReadableAmountWritten(n: Int): UIStr {
     val pg = rem / (s * l); rem %= s * l
     val sent = rem / l; rem %= l
 
-    return UIStr(
-        if (b > 0) "$b books " else "",
-        if (pg > 0) "$pg pages " else "",
-        if (sent > 0) "$sent sentences " else "",
-        if (rem > 0) "$rem letters" else ""
+    return Str(
+        if (b > 0) "$b books ",
+        if (pg > 0) "$pg pages ",
+        if (sent > 0) "$sent sentences ",
+        if (rem > 0) "$rem letters"
     )
 }
+
+
+
 
 
 
