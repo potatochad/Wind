@@ -134,7 +134,7 @@ import android.content.ClipboardManager
 
 @Composable
 fun BasicInput(
-    value: Any,
+    Field: TextField,
     isInt: Bool = no,
 	mod: Mod = Mod,            
 	textStyle: TextStyle = TextStyle(
@@ -147,9 +147,6 @@ fun BasicInput(
 	oneLine: Bool = yes,
     Do: Do_<TextField> = {},
 ) {
-	var Field by r(TextField(UIStr(value))) 
-
-	
 	val focus = UIFocus()
 	val focusAsker = r { FocusRequester() }
 	val baseMod = Mod.space(h = 8, w = 4).w(60).h(26).background(InputColor, shape = RoundedCornerShape(4.dp))   
@@ -168,7 +165,6 @@ fun BasicInput(
 				Do(Field.it(it))
 			},
 			onTextLayout = { onLayout(it) },
-			textStyle = textStyle, 
 			singleLine = oneLine, 
 			keyboardOptions = KeyboardOptions(
 				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
@@ -249,31 +245,35 @@ fun BigInput(txt: mStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){
 
 @Composable
 fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = yes, onAction: Do = {}, Do: DoStr = { _ -> }) {  
-	var txt = toMStr(value)
+	var txt = r(toMStr(value))
+	var Field by r(TextField(txt.it).gold().size(14.sp))
+	
     BasicInput(
-        txt.it,
+        Field,
         isInt = isInt, 
         mod = mod,
 		onAction = onAction,
-    ) { Field ->
-		var it = Field.text.take(maxLetters)
+    ) { newF ->
+		var it = newF.text.take(maxLetters)
 		
 		if (isInt) {
             val num = toInt(it)
 			txt.it = "$num"
-			Field.text(txt.it)
+			newF.text(txt.it)
 			Do("$num")
          } else {
             txt.it = it
-			Field.text(txt.it)
+			newF.text(txt.it)
             Do(it)
 		}
     }
 }
 @Composable
 fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {}, Do: DoInt = { _ -> }) {  
+	var f1 by r(TextField(toStr(value.it)).gold().size(14.sp))
+	
     BasicInput(
-        toStr(value.it),
+        f1,
         isInt = yes, 
 		onAction = onAction,
         mod = mod,
