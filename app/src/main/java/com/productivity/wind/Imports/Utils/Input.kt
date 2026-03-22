@@ -190,7 +190,6 @@ class TextField(a: Any = "") {
     }
     fun text(str: Str): TextField {
         it = it.copy(
-            text = str,
             annotatedString = it.annotatedString,
         )
         return this
