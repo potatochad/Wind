@@ -320,12 +320,14 @@ fun toHumanReadableAmountWritten(n: Int): Str {
     val pg = rem / (s * l); rem %= s * l
     val sent = rem / l; rem %= l
 
-    return Str(
-        if (b > 0) "$b books ",
-        if (pg > 0) "$pg pages ",
-        if (sent > 0) "$sent sentences ",
-        if (rem > 0) "$rem letters"
-    )
+    val result = mutableListOf<Any>()
+
+    if (b > 0) result += "$b books "
+    if (pg > 0) result += "$pg pages "
+    if (sent > 0) result += "$sent sentences "
+    if (rem > 0) result += "$rem letters"
+
+    return Str(*result.toTypedArray())
 }
 
 
