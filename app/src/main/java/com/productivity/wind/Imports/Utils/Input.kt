@@ -190,13 +190,15 @@ class TextField(a: Any = "") {
     }
     fun text(str: Str): TextField {
         it = it.copy(
-            text = str
+            text = str,
+            annotatedString = it.annotatedString,
         )
         return this
     }
     fun text(str: Str, select: TextRange): TextField {
         it = it.copy(
             text = str,
+            annotatedString = it.annotatedString,
             selection = select
         )
         return this
