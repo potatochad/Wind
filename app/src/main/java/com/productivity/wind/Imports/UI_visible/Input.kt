@@ -136,12 +136,7 @@ import android.content.ClipboardManager
 fun BasicInput(
     Field: TextField,
     isInt: Bool = no,
-	mod: Mod = Mod,            
-	textStyle: TextStyle = TextStyle(
-		color = Gold,
-		fontSize = 14.sp,
-		textAlign = TextAlign.Start,
-	),
+	mod: Mod = Mod,
 	onLayout: Do_<TextLayoutResult> = {},
 	onAction: Do = {},
 	oneLine: Bool = yes,
@@ -170,6 +165,16 @@ fun BasicInput(
 				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
 				imeAction = ImeAction.Done
 			),
+			visualTransformation = object : VisualTransformation {
+				override fun filter(text: UIStr): TransformedText {
+					return TransformedText(
+						UIStr(
+							Field.
+						), 
+						OffsetMapping.Identity
+					)
+				}
+			},
 			keyboardActions = KeyboardActions(
 				onDone = {
 					focus.clear() 
