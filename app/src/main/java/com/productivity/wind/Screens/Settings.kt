@@ -26,7 +26,10 @@ import android.os.*
 import androidx.compose.ui.text.input.*
 import androidx.compose.material3.pulltorefresh.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator      
-import com.pchocura.richtext.*
+import com.pointlessapps.rt_editor.ui.*
+import com.pointlessapps.rt_editor.utils.*
+import com.pointlessapps.rt_editor.transformations.*
+import com.pointlessapps.rt_editor.model.*
 
 @Composable
 fun SettingsScreen() {
