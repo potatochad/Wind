@@ -143,6 +143,20 @@ fun UIStrBuilder.add(text: UIStr) = append(text)
 fun UIStr(vararg parts: Any): UIStr = makeUIStr {
     parts.forEach { add(toUIStr(it)) }
 }
+fun Str(vararg parts: Any?): Str {
+    return buildString {
+        parts.forEach {
+            when (it) {
+                null, Unit -> {} // skip
+                else -> {
+                    val s = it.toString()
+                    if (s.isNotEmpty()) append(s)
+                }
+            }
+        }
+    }
+}
+
 
 fun toUIStr(it: Any?): UIStr = when (it) {
     is UIStr -> it
