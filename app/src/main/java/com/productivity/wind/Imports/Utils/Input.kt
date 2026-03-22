@@ -178,7 +178,7 @@ class TextField(a: Any = "") {
     )
     val text: Str
         get() = it.text
-    val UItext: AnnotatedString
+    val UIStr: AnnotatedString
         get() = it.annotatedString
     val selection: TextRange
         get() = it.selection
