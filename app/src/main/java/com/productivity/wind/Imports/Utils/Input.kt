@@ -170,7 +170,7 @@ fun UIFocus.clear() = this.clearFocus()
 
 
 class TextField(a: Any = "") {
-    private var uiStr by m(UIStr(a))
+    var UIStr by m(UIStr(a))
     
 
     var it: TextFieldValue by m(
@@ -178,8 +178,6 @@ class TextField(a: Any = "") {
     )
     val text: Str
         get() = it.text
-    val UIStr: AnnotatedString
-        get() = it.annotatedString
     val selection: TextRange
         get() = it.selection
     
@@ -190,13 +188,13 @@ class TextField(a: Any = "") {
     }
     fun text(str: Str): TextField {
         it = it.copy(
-            annotatedString = it.annotatedString,
+            text = str,
         )
         return this
     }
     fun text(str: Str, select: TextRange): TextField {
         it = it.copy(
-            annotatedString = it.annotatedString,
+            text = str,
             selection = select
         )
         return this
@@ -214,19 +212,17 @@ class TextField(a: Any = "") {
         return this
     }
 
-
-    fun style(update: StrStyle.() -> StrStyle): TextField {
-        it = it.copy(
-            annotatedString = it.annotatedString.txt(update)
-        )
-        return this
-    }
-    fun add(str: Any, update: StrStyle.() -> StrStyle = { this }): TextField {
-        it = it.copy(
-            annotatedString = UIStr(it.annotatedString, UIStr(str).txt(update))
-        )
-        return this
-    }
+    fun bold(){ UIStr.bold(); return this }   
+    fun gold(){ UIStr.gold(); return this }
+    fun green(){ UIStr.green(); return this }
+    fun red(){ UIStr.red(); return this }
+    fun white(){ UIStr.white(); return this }
+    fun black(){ UIStr.black(); return this }
+    fun darkGray(){ UIStr.darkGray(); return this }
+    fun gray(){ UIStr.gray(); return this }
+    fun size(x: Int){ UIStr.size(x); return this }
+    fun size(x: Float){ UIStr.size(x); return this }
+    fun size(x: TextUnit){ UIStr.size(x); return this }
 
 }
 
@@ -234,17 +230,6 @@ class TextField(a: Any = "") {
 
 
 
-fun TextField.bold() = style { copy(fontWeight = FontWeight.Bold) }
-fun TextField.gold() = style { copy(color = Gold) }
-fun TextField.green() = style { copy(color = Color.Green) }
-fun TextField.red() = style { copy(color = Color.Red) }
-fun TextField.white() = style { copy(color = Color.White) }
-fun TextField.black() = style { copy(color = Color.Black) }
-fun TextField.darkGray() = style { copy(color = Color.DarkGray) }
-fun TextField.gray() = style { copy(color = Color.Gray) }
-fun TextField.size(x: Int) = style { copy(fontSize = x.sp) }
-fun TextField.size(x: Float) = style { copy(fontSize = x.sp) }
-fun TextField.size(x: TextUnit) = style { copy(fontSize = x) }
 
 
 
