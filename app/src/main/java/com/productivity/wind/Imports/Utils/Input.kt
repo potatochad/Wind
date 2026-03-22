@@ -171,6 +171,7 @@ fun UIFocus.clear() = this.clearFocus()
 
 class TextField(a: Any = "") {
     private var uiStr by m(UIStr(a))
+    
 
     var it: TextFieldValue by m(
         TextFieldValue(uiStr)
@@ -182,7 +183,6 @@ class TextField(a: Any = "") {
     val selection: TextRange
         get() = it.selection
     
-
 
     fun it(x: TextFieldValue): TextField {
         it = x
