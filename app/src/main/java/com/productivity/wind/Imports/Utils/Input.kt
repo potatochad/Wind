@@ -172,53 +172,51 @@ fun UIFocus.clear() = this.clearFocus()
 class TextField(a: Any = "") {
     private var uiStr by m(UIStr(a))
 
-    // Field holds the current text state
     var it: TextFieldValue by m(
         TextFieldValue(uiStr)
     )
-
-    fun it(x: TextFieldValue){
-        it = x
-    }
-
-    // Returns the plain string text
     val text: Str
         get() = it.text
-
-    // Returns the AnnotatedString object (for UI/styling purposes)
     val UItext: AnnotatedString
         get() = it.annotatedString
+    val selection: TextRange
+        get() = it.selection
+    
 
-    // Update text, replacing everything
-    fun text(str: Any) {
+
+    fun it(x: TextFieldValue): TextField {
+        it = x
+        return this
+    }
+
+    fun text(str: Any): TextField {
         it = it.copy(
             annotatedString = UIStr(str)
         )
+        return this
     }
 
-    // Update text and selection at the same time
-    fun text(str: Any, select: TextRange) {
+    fun text(str: Any, select: TextRange): TextField {
         it = it.copy(
             annotatedString = UIStr(str),
             selection = select
         )
+        return this
     }
 
-    // Move cursor to a specific position
-    fun cursor(pos: Int) {
+    fun cursor(pos: Int): TextField {
         it = it.copy(
             selection = TextRange(pos, pos)
         )
+        return this
     }
 
-    // Select a range of text
-    fun select(pos1: Int, pos2: Int) {
+    fun select(pos1: Int, pos2: Int): TextField {
         it = it.copy(
             selection = TextRange(pos1, pos2)
         )
+        return this
     }
-    val selection: TextRange
-        get() = it.selection
     
 }
 
