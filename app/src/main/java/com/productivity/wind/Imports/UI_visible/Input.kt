@@ -261,9 +261,11 @@ fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = ye
 		if (isInt) {
             val num = toInt(it)
 			txt.it = "$num"
+			Field.text(txt.it)
 			Do("$num")
          } else {
             txt.it = it
+			Field.text(txt.it)
             Do(it)
 		}
     }
@@ -280,6 +282,7 @@ fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {
 		
         val num = toInt(it)
 		value.it = num
+		Field.text("$num")
 		Do(num)
     }
 }
