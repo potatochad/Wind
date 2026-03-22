@@ -245,7 +245,7 @@ fun BigInput(txt: mStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){
 
 @Composable
 fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = yes, onAction: Do = {}, Do: DoStr = { _ -> }) {  
-	var txt = r(toMStr(value))
+	var txt = toMStr(value)
 	var Field by r(TextField(txt.it).gold().size(14.sp))
 	
     BasicInput(
