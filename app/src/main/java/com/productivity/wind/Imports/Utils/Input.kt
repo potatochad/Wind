@@ -212,17 +212,17 @@ class TextField(a: Any = "") {
         return this
     }
 
-    fun bold(){ UIStr.bold(); return this }   
-    fun gold(){ UIStr.gold(); return this }
-    fun green(){ UIStr.green(); return this }
-    fun red(){ UIStr.red(); return this }
-    fun white(){ UIStr.white(); return this }
-    fun black(){ UIStr.black(); return this }
-    fun darkGray(){ UIStr.darkGray(); return this }
-    fun gray(){ UIStr.gray(); return this }
-    fun size(x: Int){ UIStr.size(x); return this }
-    fun size(x: Float){ UIStr.size(x); return this }
-    fun size(x: TextUnit){ UIStr.size(x); return this }
+    fun bold(): TextField{ UIStr.bold(); return this }   
+    fun gold(): TextField{ UIStr.gold(); return this }
+    fun green(): TextField{ UIStr.green(); return this }
+    fun red(): TextField{ UIStr.red(); return this }
+    fun white(): TextField{ UIStr.white(); return this }
+    fun black(): TextField{ UIStr.black(); return this }
+    fun darkGray(): TextField{ UIStr.darkGray(); return this }
+    fun gray(): TextField{ UIStr.gray(); return this }
+    fun size(x: Int): TextField{ UIStr.size(x); return this }
+    fun size(x: Float): TextField{ UIStr.size(x); return this }
+    fun size(x: TextUnit): TextField{ UIStr.size(x); return this }
 
 }
 
