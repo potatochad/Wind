@@ -18,7 +18,7 @@ fun Achievements() {
             icon = Icons.Outlined.AdminPanelSettings,
             title = "Typed letters",
             endContent = {
-                Text("${Bar.LettersTyped}")
+                Text("${toHumanReadableAmountWriten(Bar.LettersTyped)}")
             }
         )
     }
