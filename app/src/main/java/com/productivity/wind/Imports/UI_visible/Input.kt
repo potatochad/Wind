@@ -134,7 +134,7 @@ import android.content.ClipboardManager
 
 @Composable
 fun BasicInput(
-    value: Str,
+    value: Any,
     isInt: Bool = no,
 	mod: Mod = Mod,            
 	textStyle: TextStyle = TextStyle(
@@ -145,8 +145,11 @@ fun BasicInput(
 	onLayout: Do_<TextLayoutResult> = {},
 	onAction: Do = {},
 	oneLine: Bool = yes,
-    Do: DoStr = {},
+    Do: (TextField) -> TextField = {},
 ) {
+	var Field by r(TextField(UIStr(value))) 
+
+	
 	val focus = UIFocus()
 	val focusAsker = r { FocusRequester() }
 	val baseMod = Mod.space(h = 8, w = 4).w(60).h(26).background(InputColor, shape = RoundedCornerShape(4.dp))   
@@ -160,8 +163,11 @@ fun BasicInput(
 	Row(baseMod.centerV.start.mix(new = mod).getW{ w = it }) {
 		move(3)
 		BasicTextField(
-			value = value,
-			onValueChange = { Do(it) },
+			value = Field.it,
+			onValueChange = { 
+				Field.text(it)
+				Do(it)
+			},
 			onTextLayout = { onLayout(it) },
 			textStyle = textStyle, 
 			singleLine = oneLine, 
