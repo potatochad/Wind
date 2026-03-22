@@ -26,10 +26,7 @@ import android.os.*
 import androidx.compose.ui.text.input.*
 import androidx.compose.material3.pulltorefresh.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator      
-import com.pointlessapps.rt_editor.ui.*
-import com.pointlessapps.rt_editor.utils.*
-import com.pointlessapps.rt_editor.transformations.*
-import com.pointlessapps.rt_editor.model.*
+
 
 @Composable
 fun SettingsScreen() {
@@ -172,22 +169,6 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
             onClick = { goTo("LogsScreen") }
         )
 
-		var value by remember { mutableStateOf(RichTextValue.get()) }
-
-RichTextEditor(
-    modifier = Modifier,
-    value = value,
-    onValueChange = { value = it },
-    textFieldStyle = defaultRichTextFieldStyle().copy(
-        placeholder = "My rich text editor in action",
-    )
-)
-
-// If you want to render a static text use `RichText` instead
-RichText(
-   modifier = Modifier,
-   value = value,
-)
 		
 }
 
