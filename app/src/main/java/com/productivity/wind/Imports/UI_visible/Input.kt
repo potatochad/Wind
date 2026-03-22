@@ -168,9 +168,7 @@ fun BasicInput(
 			visualTransformation = object : VisualTransformation {
 				override fun filter(text: UIStr): TransformedText {
 					return TransformedText(
-						UIStr(
-							Field.
-						), 
+						Field.UIStr,
 						OffsetMapping.Identity
 					)
 				}
