@@ -145,7 +145,7 @@ fun BasicInput(
 	onLayout: Do_<TextLayoutResult> = {},
 	onAction: Do = {},
 	oneLine: Bool = yes,
-    Do: (TextField) -> TextField = {},
+    Do: Do_<TextField> = {},
 ) {
 	var Field by r(TextField(UIStr(value))) 
 
@@ -165,8 +165,7 @@ fun BasicInput(
 		BasicTextField(
 			value = Field.it,
 			onValueChange = { 
-				Field.text(it)
-				Do(it)
+				Do(Field.it(it))
 			},
 			onTextLayout = { onLayout(it) },
 			textStyle = textStyle, 
@@ -252,33 +251,34 @@ fun BigInput(txt: mStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){
 fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = yes, onAction: Do = {}, Do: DoStr = { _ -> }) {  
 	var txt = toMStr(value)
     BasicInput(
-        "${txt.it}",
+        txt.it,
         isInt = isInt, 
         mod = mod,
 		onAction = onAction,
-    ) {
-        val str = it.take(maxLetters)
+    ) { Field ->
+		var it = Field.text.take(maxLetters)
 		
 		if (isInt) {
-            val num = toInt(str)
+            val num = toInt(it)
 			txt.it = "$num"
 			Do("$num")
          } else {
-            txt.it = str
-            Do(str)
+            txt.it = it
+            Do(it)
 		}
     }
 }
 @Composable
 fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {}, Do: DoInt = { _ -> }) {  
     BasicInput(
-        "${value.it}",
+        toStr(value.it),
         isInt = yes, 
 		onAction = onAction,
         mod = mod,
-    ) {
-        val str = it.take(maxLetters)
-        val num = toInt(str)
+    ) { Field ->
+        var it = Field.text.take(maxLetters)
+		
+        val num = toInt(it)
 		value.it = num
 		Do(num)
     }
