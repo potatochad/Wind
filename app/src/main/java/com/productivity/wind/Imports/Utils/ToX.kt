@@ -322,9 +322,9 @@ fun toHumanReadableAmountWritten(n: Int): Str {
     val letters = rem
 
     val parts = listOf(
-        b.takeIf { it > 0 }?.let { "$it books" },
-        pg.takeIf { it > 0 }?.let { "$it pages" },
-        sent.takeIf { it > 0 }?.let { "$it sentences" },
+        b.takeIf { it > 0 }?.let { "$it books " },
+        pg.takeIf { it > 0 }?.let { "$it pages " },
+        sent.takeIf { it > 0 }?.let { "$it sentences " },
         letters.takeIf { it > 0 }?.let { "$it letters" }
     ).filterNotNull()
 
