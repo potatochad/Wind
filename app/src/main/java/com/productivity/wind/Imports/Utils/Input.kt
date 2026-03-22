@@ -197,7 +197,6 @@ class TextField(a: Any = "") {
     }
     fun text(str: Str, select: TextRange): TextField {
         it = it.copy(
-            text = str,
             annotatedString = it.annotatedString,
             selection = select
         )
