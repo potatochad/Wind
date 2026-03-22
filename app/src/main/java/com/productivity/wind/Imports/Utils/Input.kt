@@ -169,13 +169,10 @@ fun UIFocus.clear() = this.clearFocus()
 
 
 
-class TextField(a: Any = "") {
+class TextField(a: Str = "") {
+    var it by m(TextFieldValue(a))
     var UIStr by m(UIStr(a))
     
-
-    var it: TextFieldValue by m(
-        TextFieldValue(uiStr)
-    )
     val text: Str
         get() = it.text
     val selection: TextRange
@@ -190,6 +187,7 @@ class TextField(a: Any = "") {
         it = it.copy(
             text = str,
         )
+        UIStr(str)
         return this
     }
     fun text(str: Str, select: TextRange): TextField {
@@ -197,6 +195,7 @@ class TextField(a: Any = "") {
             text = str,
             selection = select
         )
+        UIStr(str)
         return this
     }
     fun cursor(pos: Int): TextField {
