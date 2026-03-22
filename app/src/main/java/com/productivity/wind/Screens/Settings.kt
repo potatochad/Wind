@@ -180,8 +180,6 @@ RichTextEditor(
     onValueChange = { value = it },
     textFieldStyle = defaultRichTextFieldStyle().copy(
         placeholder = "My rich text editor in action",
-        textColor = MaterialTheme.colors.onPrimary,
-        placeholderColor = MaterialTheme.colors.secondaryVariant,
     )
 )
 
@@ -189,9 +187,6 @@ RichTextEditor(
 RichText(
    modifier = Modifier,
    value = value,
-   textStyle = defaultRichTextStyle().copy(
-      textColor = MaterialTheme.colors.onPrimary,
-   )
 )
 		
 }
