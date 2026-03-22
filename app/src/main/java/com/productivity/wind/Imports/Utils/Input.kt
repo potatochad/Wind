@@ -177,6 +177,10 @@ class TextField(a: Any = "") {
         TextFieldValue(uiStr)
     )
 
+    fun it(x: TextFieldValue){
+        it = x
+    }
+
     // Returns the plain string text
     val text: Str
         get() = it.text
