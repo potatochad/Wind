@@ -160,7 +160,7 @@ fun BasicInput(
 
 	
 	move(3)
-	Row(baseMod.centerV.start.mix(new = mod).getW{ w = it }) {
+	LazzyRow(baseMod.centerV.start.mix(new = mod).getW{ w = it }) {
 		move(3)
 		BasicTextField(
 			value = Field.it,
