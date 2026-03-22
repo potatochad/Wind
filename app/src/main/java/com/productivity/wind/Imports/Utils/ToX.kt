@@ -310,5 +310,24 @@ fun Any.toMeters(
 }
 
 
+fun toHumanReadableAmountWriten(n: Int): Str {
+    val l = 50        // letters per sentence
+    val s = 20        // sentences per page
+    val p = 300       // pages per book
+
+    var rem = n
+    val b = rem / (p * s * l); rem %= p * s * l
+    val pg = rem / (s * l); rem %= s * l
+    val sent = rem / l; rem %= l
+
+    return buildString {
+        if (b>0) add("$b books ")
+        if (pg>0) add("$pg pages ")
+        if (sent>0) add("$sent sentences ")
+        if (rem>0) add("$rem letters")
+    }.trim()
+}
+
+
 
 
