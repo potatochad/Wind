@@ -157,6 +157,7 @@ fun BasicInput(
 		BasicTextField(
 			value = Field.it,
 			onValueChange = { 
+				Vlog("Field.UIStr: ${Field.UIStr}")
 				Do(Field.it(it))
 			},
 			onTextLayout = { onLayout(it) },
