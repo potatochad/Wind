@@ -157,8 +157,6 @@ fun BasicInput(
 		BasicTextField(
 			value = Field.it,
 			onValueChange = { 
-				Vlog("Field.UIStr: ${Field.UIStr.green()}")
-				Vlog("Test: ${UIStr("helloe").green().bold()}")
 				Do(Field.it(it))
 			},
 			onTextLayout = { onLayout(it) },
@@ -167,16 +165,14 @@ fun BasicInput(
 				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
 				imeAction = ImeAction.Done
 			),
-			
 			visualTransformation = object : VisualTransformation {
 				override fun filter(text: UIStr): TransformedText {
 					return TransformedText(
-						Field.UIStr,
+						Field.UIStr.gold().size(14.sp),
 						OffsetMapping.Identity
 					)
 				}
 			},
-			
 			keyboardActions = KeyboardActions(
 				onDone = {
 					focus.clear() 
