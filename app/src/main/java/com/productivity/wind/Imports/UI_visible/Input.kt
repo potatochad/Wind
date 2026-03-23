@@ -157,7 +157,7 @@ fun BasicInput(
 		BasicTextField(
 			value = Field.it,
 			onValueChange = { 
-				Vlog("Field.UIStr: ${Field.UIStr}")
+				Vlog("Field.UIStr: ${Field.UIStr.green()}")
 				Do(Field.it(it))
 			},
 			onTextLayout = { onLayout(it) },
