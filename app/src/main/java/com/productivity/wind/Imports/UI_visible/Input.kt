@@ -165,6 +165,7 @@ fun BasicInput(
 				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
 				imeAction = ImeAction.Done
 			),
+			/*
 			visualTransformation = object : VisualTransformation {
 				override fun filter(text: UIStr): TransformedText {
 					return TransformedText(
@@ -173,6 +174,7 @@ fun BasicInput(
 					)
 				}
 			},
+			*/
 			keyboardActions = KeyboardActions(
 				onDone = {
 					focus.clear() 
