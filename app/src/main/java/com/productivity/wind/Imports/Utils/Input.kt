@@ -187,7 +187,7 @@ class TextField(a: Str = "") {
         it = it.copy(
             text = str,
         )
-        UIStr = UIStr(str)
+        UIStr = UIStr.keepOneStyle(str)
         return this
     }
     fun text(str: Str, select: TextRange): TextField {
@@ -195,7 +195,7 @@ class TextField(a: Str = "") {
             text = str,
             selection = select
         )
-        UIStr = UIStr(str)
+        UIStr = UIStr.keepOneStyle(str)
         return this
     }
     fun cursor(pos: Int): TextField {
