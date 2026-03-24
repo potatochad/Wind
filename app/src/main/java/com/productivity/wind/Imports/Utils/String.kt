@@ -171,6 +171,12 @@ fun Str.remove(x: Str): Str {
 }
 
 
+fun UIStr.keepOneStyle(newText: Str): UIStr {
+    val style = spanStyles.firstOrNull()?.item ?: StrStyle()
+    return UIText(newText, style)
+}
+
+
 
 fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
     return makeUIStr {
