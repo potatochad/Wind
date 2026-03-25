@@ -52,10 +52,10 @@ fun WebKeywords() {
 	) {
 		LazyCard {
 			LazzyRow(Mod.centerH) {
-				BtnAllow(filterAction) {
+				WebProps.BtnAllow(filterAction) {
 					filterAction = WebAction.Allow
 				}
-				BtnBlock(filterAction) {
+				WebProps.BtnBlock(filterAction) {
 					filterAction = WebAction.Block					
 				}
 			}
@@ -171,10 +171,10 @@ fun WebWordConfigure(id: Str = "") {
 		LazyCard {
 			Column{
 				LazzyRow {
-					BtnAllow(action1) {
+					WebProps.BtnAllow(action1) {
 						action1 = WebAction.Allow
 					}
-					BtnBlock(action1) {
+					WebProps.BtnBlock(action1) {
 						action1 = WebAction.Block					
 					}
 				}
