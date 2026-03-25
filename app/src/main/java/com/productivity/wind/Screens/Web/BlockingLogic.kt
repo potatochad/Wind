@@ -37,7 +37,8 @@ fun BlockingLogic(web: WebController){
     web.doUpdateVisitedHistory { url, isReload ->
 		var blocked by m(no)
 		Bar.Url = url ?: "https://www.google.com"
-		
+
+		each(1000L){
         web.allVisibleText { txt ->
 			WebUtils.logs.ShouldBlock(txt, Bar.Url)
 			
@@ -52,6 +53,7 @@ fun BlockingLogic(web: WebController){
                 }
 			}
         }
+		}
     }
 }
 
