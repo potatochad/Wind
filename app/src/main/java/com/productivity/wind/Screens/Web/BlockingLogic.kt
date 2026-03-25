@@ -34,25 +34,26 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 
 fun BlockingLogic(web: WebController){
+	// web.shouldInterceptRequest
     web.doUpdateVisitedHistory { url, isReload ->
 		var blocked by m(no)
 		Bar.Url = url ?: "https://www.google.com"
-
+		
 		Each(1000){
-        web.allVisibleText { txt ->
-			WebUtils.logs.ShouldBlock(txt, Bar.Url)
+			web.allVisibleText { txt ->
+				WebUtils.logs.ShouldBlock(txt, Bar.Url)
 			
-            if (WebUtils.HasBadWord(txt + Bar.Url)){
-				if (!WebUtils.HasGoodWord(txt + Bar.Url)){
-					WebUtils.logs.Block(txt, Bar.Url)
+				if (WebUtils.HasBadWord(txt + Bar.Url)){
+					if (!WebUtils.HasGoodWord(txt + Bar.Url)){
+						WebUtils.logs.Block(txt, Bar.Url)
 						
-					blocked = yes
-					Bar.Url = "https://www.google.com"
-					goTo("WebHome")
-					return@allVisibleText
-                }
+						blocked = yes
+						Bar.Url = "https://www.google.com"
+						goTo("WebHome")
+						return@allVisibleText
+					}
+				}
 			}
-        }
 		}
     }
 }
