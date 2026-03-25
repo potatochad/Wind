@@ -42,17 +42,17 @@ fun BlockingLogic(web: WebController){
 			WEB CHECK:
 			txt="$txt"; 
 			url="${Bar.Url}"; 
-			containsBadWord(txt)=${containsBadWord(txt)}; 
-			containsBadWord(url)=${containsBadWord(Bar.Url)}; 
-			containsGoodWord(txt)=${containsGoodWord(txt)}; 
-			containsGoodWord(url)=${containsGoodWord(Bar.Url)}; 
-			RESULT=${if ((containsBadWord(txt) || containsBadWord(Bar.Url)) &&
-			(!containsGoodWord(txt) && !containsGoodWord(Bar.Url))) "BLOCK" else "ALLOW"}
+			HasBadWord(txt)=${HasBadWord(txt)}; 
+			HasBadWord(url)=${HasBadWord(Bar.Url)}; 
+			HasGoodWord(txt)=${HasGoodWord(txt)}; 
+			HasGoodWord(url)=${HasGoodWord(Bar.Url)}; 
+			RESULT=${if ((HasBadWord(txt) || HasBadWord(Bar.Url)) &&                  
+			(!HasGoodWord(txt) && !HasGoodWord(Bar.Url))) "BLOCK" else "ALLOW" }
 					""".trimIndent()
 			   )
-            if (containsBadWord(txt) || containsBadWord(Bar.Url)){
-				if (!containsGoodWord(txt)){
-					if (!containsGoodWord(Bar.Url)){
+            if (HasBadWord(txt) || HasBadWord(Bar.Url)){
+				if (!HasGoodWord(txt)){
+					if (!HasGoodWord(Bar.Url)){
 						blocked = yes
 						Bar.Url = ""
 						goTo("WebHome")
