@@ -106,6 +106,26 @@ object WebProps {
 	
 }
 
+
+object WebUtils {
+	object logs {
+		fun Block(txt: Str, url: Str) {
+			val badWord = foundBadWord(txt).ifEmpty { foundBadWord(url) }
+			val msg = "Bad Word: $badWord"
+			Vlog(msg, 400)
+		}
+		fun shouldBlock(txt: Str, url: Str) {
+			val badWord = foundBadWord(txt).ifEmpty { foundBadWord(url) }
+			val goodWord = containsGoodWord(txt).ifEmpty { containsGoodWord(url) }
+			// Prepare log message
+			val msg = "Bad Word: [ $badWord ]; Good Word: [ $goodWord ]"
+
+			// Log it
+			Vlog(msg, 400)
+		}
+	}
+}
+
 @Composable
 fun BtnAllow(
 	action1: WebAction,
