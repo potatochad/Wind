@@ -37,6 +37,33 @@ import androidx.compose.foundation.shape.CircleShape
 
 
 object WebProps {
+	@Composable
+	fun BtnAllow(
+		action1: WebAction,
+		Do: Do = {}
+	){
+		Ctext(
+			"Allow",
+			mod = Mod.space(5),
+			selected = action1 == WebAction.Allow,
+		) {
+			Do()
+		}
+	}
+
+	@Composable
+	fun BtnBlock(
+		action1: WebAction,
+		Do: Do = {}
+	){
+		Ctext(
+			"Block",
+			mod = Mod.space(5),
+			selected = action1 == WebAction.Block,
+		) {
+			Do()				
+		}
+	}
 
 
 	@Composable
@@ -166,7 +193,7 @@ object WebUtils {
 			val badWord = FindBadWord(txt).ifEmpty { FindBadWord(url) }         
 			val goodWord = FindGoodWord(txt).ifEmpty { FindGoodWord(url) }
 			// Prepare log message
-			val msg = "Bad Word: [ $badWord ]; Good Word: [ $goodWord ]"
+			val msg = "Bad Word: [ $badWord ]; Good Word: [ $goodWord ]; url: [ $url ]; txt: [ $txt ]"         
 
 			// Log it
 			Vlog(msg, 400)
@@ -174,33 +201,6 @@ object WebUtils {
 	}
 }
 
-@Composable
-fun BtnAllow(
-	action1: WebAction,
-	Do: Do = {}
-){
-	Ctext(
-		"Allow",
-		mod = Mod.space(5),
-		selected = action1 == WebAction.Allow,
-	) {
-		Do()
-	}
-}
-
-@Composable
-fun BtnBlock(
-	action1: WebAction,
-	Do: Do = {}
-){
-	Ctext(
-		"Block",
-		mod = Mod.space(5),
-		selected = action1 == WebAction.Block,
-	) {
-		Do()				
-	}
-}
 
 
 
