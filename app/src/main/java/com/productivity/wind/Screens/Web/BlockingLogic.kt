@@ -46,7 +46,7 @@ fun BlockingLogic(web: WebController){
 					WebUtils.logs.Block(txt, Bar.Url)
 						
 					blocked = yes
-					Bar.Url = ""
+					Bar.Url = "https://www.google.com"
 					goTo("WebHome")
 					return@allVisibleText
                 }
