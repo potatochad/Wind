@@ -38,21 +38,9 @@ fun BlockingLogic(web: WebController){
 		var blocked by m(no)
 		Bar.Url = url ?: "https://www.google.com"
         web.allVisibleText { txt ->
-			log("""
-			WEB CHECK:
-			txt="$txt"; 
-			url="${Bar.Url}"; 
-			HasBadWord(txt)=${HasBadWord(txt)}; 
-			HasBadWord(url)=${HasBadWord(Bar.Url)}; 
-			HasGoodWord(txt)=${HasGoodWord(txt)}; 
-			HasGoodWord(url)=${HasGoodWord(Bar.Url)}; 
-			RESULT=${if ((HasBadWord(txt) || HasBadWord(Bar.Url)) &&                  
-			(!HasGoodWord(txt) && !HasGoodWord(Bar.Url))) "BLOCK" else "ALLOW" }
-					""".trimIndent()
-			   )
-            if (HasBadWord(txt) || HasBadWord(Bar.Url)){
-				if (!HasGoodWord(txt)){
-					if (!HasGoodWord(Bar.Url)){
+            if (WebUtils.HasBadWord(txt) || WebUtils.HasBadWord(Bar.Url)){
+				if (!WebUtils.HasGoodWord(txt)){
+					if (!WebUtils.HasGoodWord(Bar.Url)){
 						blocked = yes
 						Bar.Url = ""
 						goTo("WebHome")
