@@ -110,13 +110,13 @@ object WebProps {
 object WebUtils {
 	object logs {
 		fun Block(txt: Str, url: Str) {
-			val badWord = foundBadWord(txt).ifEmpty { foundBadWord(url) }
+			val badWord = if (foundBadWord(txt).empty) foundBadWord(url)
 			val msg = "Bad Word: $badWord"
 			Vlog(msg, 400)
 		}
 		fun shouldBlock(txt: Str, url: Str) {
-			val badWord = foundBadWord(txt).ifEmpty { foundBadWord(url) }
-			val goodWord = containsGoodWord(txt).ifEmpty { containsGoodWord(url) }
+			val badWord = if (foundBadWord(txt).empty) foundBadWord(url)                
+			val goodWord = if (containsGoodWord(txt).empty) containsGoodWord(url)
 			// Prepare log message
 			val msg = "Bad Word: [ $badWord ]; Good Word: [ $goodWord ]"
 
