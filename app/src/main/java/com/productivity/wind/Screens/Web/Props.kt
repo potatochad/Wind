@@ -110,13 +110,13 @@ object WebProps {
 object WebUtils {
 	object logs {
 		fun Block(txt: Str, url: Str) {
-			val badWord = if (foundBadWord(txt).empty) foundBadWord(url)
+			val badWord = foundBadWord(txt).ifEmpty { foundBadWord(url) }
 			val msg = "Bad Word: $badWord"
 			Vlog(msg, 400)
 		}
 		fun shouldBlock(txt: Str, url: Str) {
-			val badWord = if (foundBadWord(txt).empty) foundBadWord(url)                
-			val goodWord = if (containsGoodWord(txt).empty) containsGoodWord(url)
+			val badWord = foundBadWord(txt).ifEmpty { foundBadWord(url) }         
+			val goodWord = foundGoodWord(txt).ifEmpty { foundGoodWord(url) }
 			// Prepare log message
 			val msg = "Bad Word: [ $badWord ]; Good Word: [ $goodWord ]"
 
@@ -178,6 +178,18 @@ fun containsGoodWord(txt: Str): Bool {
         }
     }
     return false
+}
+
+fun foundGoodWord(txt: Str): Str {
+    for (y in Bar.webWord) {
+        if (
+            txt.contains(y.word, ignoreCase = true) &&
+            y.action == WebAction.Allow
+        ) {
+            return y.word
+        }
+    }
+    return ""
 }
 
 fun foundBadWord(txt: Str): Str {
