@@ -45,11 +45,10 @@ fun BlockingLogic(web: WebController){
 				if (!WebUtils.HasGoodWord(txt + Bar.Url)){
 					WebUtils.logs.Block(txt, Bar.Url)
 						
-						blocked = yes
-						Bar.Url = ""
-						goTo("WebHome")
-						return@allVisibleText
-					}
+					blocked = yes
+					Bar.Url = ""
+					goTo("WebHome")
+					return@allVisibleText
                 }
 			}
         }
