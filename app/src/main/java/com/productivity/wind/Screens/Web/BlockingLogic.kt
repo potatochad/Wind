@@ -37,10 +37,15 @@ fun BlockingLogic(web: WebController){
     web.doUpdateVisitedHistory { url, isReload ->
 		var blocked by m(no)
 		Bar.Url = url ?: "https://www.google.com"
+		
+		WebUtils.logs.ShouldBlock(txt, Bar.Url)
+		
         web.allVisibleText { txt ->
             if (WebUtils.HasBadWord(txt) || WebUtils.HasBadWord(Bar.Url)){
 				if (!WebUtils.HasGoodWord(txt)){
 					if (!WebUtils.HasGoodWord(Bar.Url)){
+						WebUtils.logs.Block(txt, Bar.Url)
+						
 						blocked = yes
 						Bar.Url = ""
 						goTo("WebHome")
