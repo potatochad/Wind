@@ -41,10 +41,9 @@ fun BlockingLogic(web: WebController){
         web.allVisibleText { txt ->
 			WebUtils.logs.ShouldBlock(txt, Bar.Url)
 			
-            if (WebUtils.HasBadWord(txt) || WebUtils.HasBadWord(Bar.Url)){
-				if (!WebUtils.HasGoodWord(txt)){
-					if (!WebUtils.HasGoodWord(Bar.Url)){
-						WebUtils.logs.Block(txt, Bar.Url)
+            if (WebUtils.HasBadWord(txt + Bar.Url)){
+				if (!WebUtils.HasGoodWord(txt + Bar.Url)){
+					WebUtils.logs.Block(txt, Bar.Url)
 						
 						blocked = yes
 						Bar.Url = ""
