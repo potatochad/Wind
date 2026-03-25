@@ -108,15 +108,63 @@ object WebProps {
 
 
 object WebUtils {
+	fun FindBadWord(txt: Str): Str {
+		for (y in Bar.webWord) {
+			if (
+				txt.contains(y.word, ignoreCase = true) &&
+					y.action == WebAction.Block
+			) {
+				return y.word
+			}
+		}
+		return ""
+	}
+	fun HasBadWord(txt: Str): Bool {
+		for (y in Bar.webWord) {
+			if (
+				txt.contains(y.word, ignoreCase = true) &&
+					y.action == WebAction.Block
+			) {
+				return true
+			}
+		}
+		return false
+	}
+
+	fun HasGoodWord(txt: Str): Bool {
+		for (y in Bar.webWord) {
+			if (
+				txt.contains(y.word, ignoreCase = true) &&
+					y.action == WebAction.Allow
+			) {
+				return true
+			}
+		}
+		return false
+	}
+
+	fun FindGoodWord(txt: Str): Str {
+		for (y in Bar.webWord) {
+			if (
+				txt.contains(y.word, ignoreCase = true) &&
+					y.action == WebAction.Allow
+			) {
+				return y.word
+			}
+		}
+		return ""
+	}
+
+	
 	object logs {
 		fun Block(txt: Str, url: Str) {
-			val badWord = foundBadWord(txt).ifEmpty { foundBadWord(url) }
+			val badWord = FindBadWord(txt).ifEmpty { FindBadWord(url) }
 			val msg = "Bad Word: $badWord"
 			Vlog(msg, 400)
 		}
 		fun shouldBlock(txt: Str, url: Str) {
-			val badWord = foundBadWord(txt).ifEmpty { foundBadWord(url) }         
-			val goodWord = foundGoodWord(txt).ifEmpty { foundGoodWord(url) }
+			val badWord = FindBadWord(txt).ifEmpty { FindBadWord(url) }         
+			val goodWord = FindGoodWord(txt).ifEmpty { FindGoodWord(url) }
 			// Prepare log message
 			val msg = "Bad Word: [ $badWord ]; Good Word: [ $goodWord ]"
 
@@ -156,52 +204,15 @@ fun BtnBlock(
 
 
 
-fun containsBadWord(txt: Str): Bool {
-    for (y in Bar.webWord) {
-        if (
-            txt.contains(y.word, ignoreCase = true) &&
-            y.action == WebAction.Block
-        ) {
-            return true
-        }
-    }
-    return false
-}
 
-fun containsGoodWord(txt: Str): Bool {
-    for (y in Bar.webWord) {
-        if (
-            txt.contains(y.word, ignoreCase = true) &&
-            y.action == WebAction.Allow
-        ) {
-            return true
-        }
-    }
-    return false
-}
 
-fun foundGoodWord(txt: Str): Str {
-    for (y in Bar.webWord) {
-        if (
-            txt.contains(y.word, ignoreCase = true) &&
-            y.action == WebAction.Allow
-        ) {
-            return y.word
-        }
-    }
-    return ""
-}
 
-fun foundBadWord(txt: Str): Str {
-    for (y in Bar.webWord) {
-        if (
-            txt.contains(y.word, ignoreCase = true) &&
-            y.action == WebAction.Block
-        ) {
-            return y.word
-        }
-    }
-    return ""
-}
+
+
+
+
+
+
+
 
 
