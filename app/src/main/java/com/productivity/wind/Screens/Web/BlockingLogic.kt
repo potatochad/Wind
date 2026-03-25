@@ -38,7 +38,7 @@ fun BlockingLogic(web: WebController){
 		var blocked by m(no)
 		Bar.Url = url ?: "https://www.google.com"
 
-		each(1000L){
+		Each(1000){
         web.allVisibleText { txt ->
 			WebUtils.logs.ShouldBlock(txt, Bar.Url)
 			
