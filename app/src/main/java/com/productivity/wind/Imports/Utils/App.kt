@@ -396,14 +396,14 @@ fun folder(folderName: Str): File {
 
 private var lastToast: Toast? = null
 
-fun Vlog(msg: Str, special: Str = "none", delayLevel: Int = 0) {
+fun Vlog(msg: Str, maxInt: Int = 200, special: Str = "none", delayLevel: Int = 0) {
     val delayMs = (delayLevel.coerceIn(0, 100)) * 30L // Example: Level 2 = 60ms
 
     if (special.equals("one", true)) {
         lastToast?.cancel()
     }
 
-	log(msg)
+	log(msg, maxInt)
 
 
     Handler(Looper.getMainLooper()).postDelayed({
