@@ -120,6 +120,15 @@ fun <T : Any> List<T>.find(id: Str = "", match: (T) -> Bool = { yes }): T? {
     }
 }
 
+fun <T> getId(it: T): Str {
+    return try {
+        val idField = it!!::class.members.firstOrNull { m -> m.name == "id" }
+        idField?.call(it)?.toString() ?: ""
+    } catch (e: Exception) {
+        ""
+    }
+}
+
 
 
 
