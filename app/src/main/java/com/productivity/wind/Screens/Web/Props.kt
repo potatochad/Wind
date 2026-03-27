@@ -65,6 +65,31 @@ object WebProps {
 		}
 	}
 
+	@Composable
+	fun BtnsTypes(type: WebType, Do: Do){
+		Ctext(
+			"Url",
+			mod = Mod.space(5),
+			selected = action1 == WebAction.Block,
+		) {
+			Do()				
+		}
+		Ctext(
+			"Blot",
+			mod = Mod.space(5),
+			selected = action1 == WebAction.Block,
+		) {
+			Do()				
+		}
+		Ctext(
+			"KeyWord",
+			mod = Mod.space(5),
+			selected = action1 == WebAction.Block,
+		) {
+			Do()				
+		}
+	}
+
 
 	@Composable
 	fun TopBarInput(
