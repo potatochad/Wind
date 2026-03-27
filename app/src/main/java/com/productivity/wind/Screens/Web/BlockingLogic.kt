@@ -43,7 +43,7 @@ fun BlockingLogic(web: WebController){
 			if (!WebUtils.HasGoodWord(url)){
 				Bar.Url = "https://www.google.com"
 				
-				return WebResourceResponse(
+				return@shouldInterceptRequest WebResourceResponse(
 					"text/plain",
 					"UTF-8",
 					ByteArrayInputStream("".toByteArray())
@@ -51,7 +51,7 @@ fun BlockingLogic(web: WebController){
 			}
 		}
 						
-		return super.shouldInterceptRequest(view, request)
+		null
 	}
 
     web.doUpdateVisitedHistory { url, isReload ->
