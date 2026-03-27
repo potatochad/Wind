@@ -136,7 +136,7 @@ fun Menu() {
 object Item {
 	// Generic function
 	fun <T> LoadItemFromId(
-		id: Str?,
+		id: Str,
 		list: List<T>,
 		getId: (T) -> Str,
 		onFound: (T) -> Unit
