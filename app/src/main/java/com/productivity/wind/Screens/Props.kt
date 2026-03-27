@@ -143,7 +143,7 @@ object Item {
 	) {
 		if (!id.empty) {
 			val item = list.find { 
-				getId(it) == id //‼️
+				getId(it) == id
 			}
 			if (item != null) {
 				onFound(item)
