@@ -180,12 +180,19 @@ enum class WebAction {
     Allow,
     Block
 }
+@Serializable
+enum class WebType {
+    Url,
+    Blot,
+	KeyWord,
+}
 
 @Serializable
 data class WebWord(
     val id: Str = Id(),
 	var word: Str = "",
 	var schedule: Schedule = Schedule(),
+	var type: WebType = WebType.Url,
 	var action: WebAction = WebAction.Block,
 )
 //top saves, end does not
