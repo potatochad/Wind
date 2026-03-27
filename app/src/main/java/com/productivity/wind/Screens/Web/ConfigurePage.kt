@@ -86,6 +86,7 @@ fun WebKeywords() {
 fun WebWordConfigure(id: Str = "") {
     var word1 = r(UrlShort(Bar.Url))
 	var action1 by r(WebAction.Block)
+	var type1 by r(WebAction.Block)
 	var schedule1 by r(Schedule(
 	    	type = "WEEKLY",
 	    	every = 1,
@@ -170,7 +171,7 @@ fun WebWordConfigure(id: Str = "") {
 	}) {
 		LazyCard {
 			Column{
-				LazzyRow {
+				LazzyRow(Mod.centerH) {
 					WebProps.BtnAllow(action1) {
 						action1 = WebAction.Allow
 					}
@@ -180,6 +181,13 @@ fun WebWordConfigure(id: Str = "") {
 				}
 				LazzyRow {
 					TinyInput(word1, Mod.weight(1f), isInt = no, maxLetters = 800)      
+				}
+				move(10)
+				LazzyRow {
+					Text("Type:")
+					WebProps.BtnsTypes(type1) {
+						type1 = it
+					}
 				}
 				
 			}
