@@ -43,8 +43,7 @@ object WebProps {
 		Do: Do = {}
 	){
 		Ctext(
-			"Allow",
-			mod = Mod.space(5),
+			"Allow", Mod.space(5),
 			selected = action1 == WebAction.Allow,
 		) {
 			Do()
@@ -57,8 +56,7 @@ object WebProps {
 		Do: Do = {}
 	){
 		Ctext(
-			"Block",
-			mod = Mod.space(5),
+			"Block", Mod.space(5),
 			selected = action1 == WebAction.Block,
 		) {
 			Do()				
