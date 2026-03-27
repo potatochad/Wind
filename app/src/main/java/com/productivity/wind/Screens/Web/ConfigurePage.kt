@@ -86,7 +86,7 @@ fun WebKeywords() {
 fun WebWordConfigure(id: Str = "") {
     var word1 = r(UrlShort(Bar.Url))
 	var action1 by r(WebAction.Block)
-	var type1 by r(WebAction.Block)
+	var type1 by r(WebType.Url)
 	var schedule1 by r(Schedule(
 	    	type = "WEEKLY",
 	    	every = 1,
