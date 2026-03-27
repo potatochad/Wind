@@ -68,22 +68,19 @@ object WebProps {
 	@Composable
 	fun BtnsTypes(type: WebType, Do: Do_<WebType>){
 		Ctext(
-			"Url",
-			mod = Mod.space(5),
+			"Url", Mod.space(5),
 			selected = type == WebType.Url,
 		) {
 			Do(WebType.Url)				
 		}
 		Ctext(
-			"Blot",
-			mod = Mod.space(5),
+			"Blot", Mod.space(5),
 			selected = type == WebType.Blot,
 		) {
 			Do(WebType.Blot)			
 		}
 		Ctext(
-			"KeyWord",
-			mod = Mod.space(5),
+			"KeyWord", Mod.space(5),
 			selected = type == WebType.KeyWord,
 		) {
 			Do(WebType.KeyWord)				
