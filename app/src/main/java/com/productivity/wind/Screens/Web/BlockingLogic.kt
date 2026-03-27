@@ -35,9 +35,10 @@ import androidx.compose.material.icons.outlined.*
 import android.webkit.WebResourceResponse
 import java.io.ByteArrayInputStream
 
+
 fun BlockingLogic(web: WebController){
 	web.shouldInterceptRequest {
-		val url = request.url.toString()
+		val url = it.url.toString()
 		if (WebUtils.HasBadWord(url)){
 			if (!WebUtils.HasGoodWord(url)){
 				Bar.Url = "https://www.google.com"
