@@ -39,6 +39,11 @@ import java.io.ByteArrayInputStream
 fun BlockingLogic(web: WebController){
 	web.shouldInterceptRequest {
 
+		if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") ||
+				url.endsWith(".gif") || url.endsWith(".webp") || url.endsWith(".ico")) {
+			return@shouldInterceptRequest null
+		}
+
 		log("URL: ${it.url} | BadWord: ${WebUtils.FindBadWord(it.url.toString())} | GoodWord: ${WebUtils.FindGoodWord(it.url.toString())}")
 
 		
@@ -55,7 +60,7 @@ fun BlockingLogic(web: WebController){
 			}
 		}
 						
-		null
+		return@shouldInterceptRequest null
 	}
 
     web.doUpdateVisitedHistory { url, isReload ->
