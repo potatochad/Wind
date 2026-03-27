@@ -183,22 +183,7 @@ object WebUtils {
 	}
 
 	
-	object logs {
-		fun Block(txt: Str, url: Str) {
-			val badWord = FindBadWord(txt).ifEmpty { FindBadWord(url) }
-			val msg = "Bad Word: $badWord"
-			Vlog(msg, 400)
-		}
-		fun ShouldBlock(txt: Str, url: Str) {
-			val badWord = FindBadWord(txt).ifEmpty { FindBadWord(url) }         
-			val goodWord = FindGoodWord(txt).ifEmpty { FindGoodWord(url) }
-			// Prepare log message
-			val msg = "Bad Word: [ $badWord ]; Good Word: [ $goodWord ]; url: [ $url ]; txt: [ $txt ]"         
-
-			// Log it
-			Vlog(msg, 400)
-		}
-	}
+	
 }
 
 
