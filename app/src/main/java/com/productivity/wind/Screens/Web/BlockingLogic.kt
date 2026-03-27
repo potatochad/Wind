@@ -38,6 +38,10 @@ import java.io.ByteArrayInputStream
 
 fun BlockingLogic(web: WebController){
 	web.shouldInterceptRequest {
+
+		log("URL: ${it.url} | BadWord: ${WebUtils.FindBadWord(it.url.toString())} | GoodWord: ${WebUtils.FindGoodWord(it.url.toString())}")
+
+		
 		val url = it.url.toString()
 		if (WebUtils.HasBadWord(url)){
 			if (!WebUtils.HasGoodWord(url)){
@@ -56,6 +60,9 @@ fun BlockingLogic(web: WebController){
 
     web.doUpdateVisitedHistory { url, isReload ->
 		Bar.Url = url ?: "https://www.google.com"
+
+		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url.toString())} | GoodWord: ${WebUtils.FindGoodWord(url.toString())}")
+
 			
 		if (WebUtils.HasBadWord(Bar.Url)){
 			if (!WebUtils.HasGoodWord(Bar.Url)){
