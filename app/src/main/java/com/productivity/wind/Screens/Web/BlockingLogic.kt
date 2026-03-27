@@ -59,7 +59,6 @@ fun BlockingLogic(web: WebController){
 			
 		if (WebUtils.HasBadWord(Bar.Url)){
 			if (!WebUtils.HasGoodWord(Bar.Url)){
-				WebUtils.logs.Block(Bar.Url)
 				Bar.Url = "https://www.google.com"
 			}
 		}
