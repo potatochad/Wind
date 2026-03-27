@@ -72,21 +72,21 @@ object WebProps {
 			mod = Mod.space(5),
 			selected = type == WebType.Url,
 		) {
-			Do(WebType)				
+			Do(WebType.Url)				
 		}
 		Ctext(
 			"Blot",
 			mod = Mod.space(5),
 			selected = type == WebType.Blot,
 		) {
-			Do(WebType)			
+			Do(WebType.Blot)			
 		}
 		Ctext(
 			"KeyWord",
 			mod = Mod.space(5),
 			selected = type == WebType.KeyWord,
 		) {
-			Do(WebType)				
+			Do(WebType.KeyWord)				
 		}
 	}
 
