@@ -39,15 +39,15 @@ import java.io.ByteArrayInputStream
 fun BlockingLogic(web: WebController){
 	web.shouldInterceptRequest {
 
+		val url = it.url.toString()
+
 		if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") ||
 				url.endsWith(".gif") || url.endsWith(".webp") || url.endsWith(".ico")) {
 			return@shouldInterceptRequest null
 		}
 
-		log("URL: ${it.url} | BadWord: ${WebUtils.FindBadWord(it.url.toString())} | GoodWord: ${WebUtils.FindGoodWord(it.url.toString())}")
+		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url)} | GoodWord: ${WebUtils.FindGoodWord(url)}")
 
-		
-		val url = it.url.toString()
 		if (WebUtils.HasBadWord(url)){
 			if (!WebUtils.HasGoodWord(url)){
 				Bar.Url = "https://www.google.com"
