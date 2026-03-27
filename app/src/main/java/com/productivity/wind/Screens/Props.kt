@@ -135,14 +135,16 @@ fun Menu() {
 
 object Item {
 	// Generic function
-	fun <T> CreateFromId(
+	fun <T> LoadItemFromId(
 		id: Str?,
 		list: List<T>,
 		getId: (T) -> Str,
 		onFound: (T) -> Unit
 	) {
-		if (!id.isNullOrEmpty()) {
-			val item = list.find { getId(it) == id }
+		if (!id.empty) {
+			val item = list.find { 
+				getId(it) == id //‼️
+			}
 			if (item != null) {
 				onFound(item)
 			}
