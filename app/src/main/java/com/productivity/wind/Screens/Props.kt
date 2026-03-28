@@ -138,7 +138,6 @@ object Item {
 	fun <T> LoadItemFromId(
 		id: Str,
 		list: List<T>,
-		getId: (T) -> Str,
 		onFound: (T) -> Unit
 	) {
 		if (!id.empty) {
