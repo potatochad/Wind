@@ -169,7 +169,10 @@ fun UIFocus.clear() = this.clearFocus()
 
 
 
-class TextField(a: Str = "") {
+class TextField(
+    a: Str = "",
+    UIStrOn: Bool = yes,
+) {
     var it by m(TextFieldValue(a))
     var UIStr by m(UIStr(a))
     
