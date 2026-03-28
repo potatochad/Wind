@@ -187,7 +187,7 @@ class TextField(a: Str = "") {
         it = it.copy(
             text = str,
         )
-        UIStr = UIStr.keepOneStyle(str)
+        UIStr = UIStr.keepOneStyle(str) //super big lag, 
         return this
     }
     fun text(str: Str, select: TextRange): TextField {
@@ -225,8 +225,62 @@ class TextField(a: Str = "") {
 
 }
 
+/*
+class TextField(a: String = "") {
+    var it by m(TextFieldValue(a))
+    private var rawText: String = a
+    private var styleActions = mutableListOf<UIStrBuilder.() -> Unit>()
+    
+    val UIStr: UIStr
+        get() = AnnotatedString.Builder(rawText).apply {
+            styleActions.forEach { it() }
+        }.toAnnotatedString()
+    
+    val text: String
+        get() = it.text
+    val selection: TextRange
+        get() = it.selection
 
+    fun it(x: TextFieldValue): TextField {
+        it = x
+        rawText = x.text
+        return this
+    }
 
+    fun text(str: String, select: TextRange? = null): TextField {
+        it = it.copy(
+            text = str,
+            selection = select ?: it.selection
+        )
+        rawText = str
+        return this
+    }
+
+    fun cursor(pos: Int): TextField {
+        it = it.copy(selection = TextRange(pos, pos))
+        return this
+    }
+
+    fun select(pos1: Int, pos2: Int): TextField {
+        it = it.copy(selection = TextRange(pos1, pos2))
+        return this
+    }
+
+    // Styling functions just add actions
+    fun bold(): TextField { styleActions.add { bold() }; return this }
+    fun gold(): TextField { styleActions.add { gold() }; return this }
+    fun green(): TextField { styleActions.add { green() }; return this }
+    fun red(): TextField { styleActions.add { red() }; return this }
+    fun white(): TextField { styleActions.add { white() }; return this }
+    fun black(): TextField { styleActions.add { black() }; return this }
+    fun darkGray(): TextField { styleActions.add { darkGray() }; return this }
+    fun gray(): TextField { styleActions.add { gray() }; return this }
+    fun size(x: Int): TextField { styleActions.add { size(x) }; return this }
+    fun size(x: Float): TextField { styleActions.add { size(x) }; return this }
+    fun size(x: TextUnit): TextField { styleActions.add { size(x) }; return this }
+}
+
+*/
 
 
 
