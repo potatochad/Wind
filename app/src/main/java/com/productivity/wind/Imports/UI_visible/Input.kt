@@ -134,7 +134,7 @@ import android.content.ClipboardManager
 
 @Composable
 fun BasicInput(
-    Field: TextField,
+    Field: InputField,
     isInt: Bool = no,
 	mod: Mod = Mod,
 	onLayout: Do_<TextLayoutResult> = {},
@@ -193,7 +193,7 @@ fun ScrollInput(
 	h: Int = 150,  
 	Do: DoStr = { txt.it = it }
 ){    
-	var Field by r(TextField(txt.it, no))
+	var Field by r(InputField(txt.it, no))
 	var done = r(no)
 	var itIndex by r(0)
 
@@ -218,7 +218,7 @@ fun ScrollInput(
 
 @Composable
 fun BigInput(txt: mStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){    
-	var Field by r(TextFieldValue(txt.it, no))
+	var Field by r(TextFieldValue(txt.it))
 	var done = r(no)
 	var itIndex by r(0)
 
@@ -249,7 +249,7 @@ fun BigInput(txt: mStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){
 @Composable
 fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = yes, onAction: Do = {}, Do: DoStr = { _ -> }) {  
 	var txt = toMStr(value)
-	var Field by r(TextField(txt.it).gold().size(14.sp))
+	var Field by r(InputField(txt.it).gold().size(14.sp))
 	
     BasicInput(
         Field,
@@ -273,7 +273,7 @@ fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = ye
 }
 @Composable
 fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {}, Do: DoInt = { _ -> }) {  
-	var f1 by r(TextField(toStr(value.it)).gold().size(14.sp))
+	var f1 by r(InputField(toStr(value.it)).gold().size(14.sp))
 	
     BasicInput(
         f1,
