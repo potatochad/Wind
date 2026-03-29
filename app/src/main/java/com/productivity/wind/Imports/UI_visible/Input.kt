@@ -193,20 +193,20 @@ fun ScrollInput(
 	h: Int = 150,  
 	Do: DoStr = { txt.it = it }
 ){    
-	var Field by r(InputField(txt.it, no))
+	var Field by r(TextFieldValue(txt.it, no))
 	var done = r(no)
 	var itIndex by r(0)
 
 	var baseMod = Mod.maxW().h(h).Vscroll(scroll)
 		
     OutlinedTextField(
-        value = Field.it,
+        value = Field,
         onValueChange = {    
 					
 			Do(it.text)
-			Field.it(it)
+			Field(it)
 				
-			FixedInputScroll(Field.it, done, scroll)
+			FixedInputScroll(Field, done, scroll)
 		},
         modifier = baseMod.mix(new = mod).onFocusChanged{
 			if (!it.isFocused) done.it = no
