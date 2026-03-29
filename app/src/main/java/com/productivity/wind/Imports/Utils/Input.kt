@@ -190,7 +190,7 @@ class TextField(
         it = it.copy(
             text = str,
         )
-        UIStr = UIStr.keepOneStyle(str) //super big lag, 
+        if (UIStrOn) { UIStr = UIStr.keepOneStyle(str) }//super big lag, 
         return this
     }
     fun text(str: Str, select: TextRange): TextField {
@@ -198,7 +198,7 @@ class TextField(
             text = str,
             selection = select
         )
-        UIStr = UIStr.keepOneStyle(str)
+        if (UIStrOn) { UIStr = UIStr.keepOneStyle(str) }
         return this
     }
     fun cursor(pos: Int): TextField {
