@@ -140,7 +140,7 @@ fun BasicInput(
 	onLayout: Do_<TextLayoutResult> = {},
 	onAction: Do = {},
 	oneLine: Bool = yes,
-    Do: Do_<TextField> = {},
+    Do: Do_<InputField> = {},
 ) {
 	val focus = UIFocus()
 	val focusAsker = r { FocusRequester() }
