@@ -191,27 +191,46 @@ fun CopyTskUI(tsk: CopyTsk) {
 		val lines = tsk.txt.toLines(maxWidthPx)
 		TxtLines = toListStr(lines)
 
-		val processedLines = remember(tsk.txt, goodStr) {
-			var sum = 0
-		
-			lines.map { txt ->
-				val lineStart = sum
-				sum += txt.size
-				val lineEnd = sum
 
-				when {
-					goodStr <= lineStart -> UIStr(txt)
-					goodStr >= lineEnd -> txt.green()
-					else -> {
-						val greenChar = goodStr - lineStart
-						UIStr(
-							txt.fromTo(0, greenChar).green(),
-							txt.fromTo(greenChar, txt.size)
-						)
-					}
-				}
-			}
-		}
+
+		
+
+		val processedLines = remember(tsk.txt) { 
+    // Initialize cached UIStr list once
+    lines.map { UIStr(it) }.toMutableStateList() 
+}
+
+// Find which line `goodStr` is in
+val lineIndexToUpdate = remember(goodStr) {
+    var sum = 0
+    var idx = 0
+    for ((i, txt) in lines.withIndex()) {
+        val lineStart = sum
+        sum += txt.size
+        val lineEnd = sum
+        if (goodStr in lineStart until lineEnd) {
+            idx = i
+            break
+        }
+    }
+    idx
+}
+
+// Update only the affected line
+if (goodStr > 0 && lineIndexToUpdate in processedLines.indices) {
+    val sumBefore = lines.take(lineIndexToUpdate).sumOf { it.length }
+    val greenChar = goodStr - sumBefore
+    val txt = lines[lineIndexToUpdate]
+
+    processedLines[lineIndexToUpdate] = if (greenChar >= txt.length) {
+        txt.green()
+    } else {
+        UIStr(txt.fromTo(0, greenChar).green(), txt.fromTo(greenChar, txt.length))
+    }
+}
+
+
+
 		
 		LazyColumn(
 			modifier = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),      
