@@ -182,18 +182,18 @@ class InputField(
         get() = it.selection
     
 
-    fun it(x: TextFieldValue): TextField {
+    fun it(x: TextFieldValue): InputField {
         it = x
         return this
     }
-    fun text(str: Str): TextField {
+    fun text(str: Str): InputField {
         it = it.copy(
             text = str,
         )
         if (UIStrOn) { UIStr = UIStr.keepOneStyle(str) }//super big lag, 
         return this
     }
-    fun text(str: Str, select: TextRange): TextField {
+    fun text(str: Str, select: TextRange): InputField {
         it = it.copy(
             text = str,
             selection = select
@@ -201,30 +201,30 @@ class InputField(
         if (UIStrOn) { UIStr = UIStr.keepOneStyle(str) }
         return this
     }
-    fun cursor(pos: Int): TextField {
+    fun cursor(pos: Int): InputField {
         it = it.copy(
             selection = TextRange(pos, pos)
         )
         return this
     }
-    fun select(pos1: Int, pos2: Int): TextField {
+    fun select(pos1: Int, pos2: Int): InputField {
         it = it.copy(
             selection = TextRange(pos1, pos2)
         )
         return this
     }
 
-    fun bold(): TextField{ UIStr.bold(); return this }   
-    fun gold(): TextField{ UIStr.gold(); return this }
-    fun green(): TextField{ UIStr.green(); return this }
-    fun red(): TextField{ UIStr.red(); return this }
-    fun white(): TextField{ UIStr.white(); return this }
-    fun black(): TextField{ UIStr.black(); return this }
-    fun darkGray(): TextField{ UIStr.darkGray(); return this }
-    fun gray(): TextField{ UIStr.gray(); return this }
-    fun size(x: Int): TextField{ UIStr.size(x); return this }
-    fun size(x: Float): TextField{ UIStr.size(x); return this }
-    fun size(x: TextUnit): TextField{ UIStr.size(x); return this }
+    fun bold(): InputField{ UIStr.bold(); return this }   
+    fun gold(): InputField{ UIStr.gold(); return this }
+    fun green(): InputField{ UIStr.green(); return this }
+    fun red(): InputField{ UIStr.red(); return this }
+    fun white(): InputField{ UIStr.white(); return this }
+    fun black(): InputField{ UIStr.black(); return this }
+    fun darkGray(): InputField{ UIStr.darkGray(); return this }
+    fun gray(): InputField{ UIStr.gray(); return this }
+    fun size(x: Int): InputField{ UIStr.size(x); return this }
+    fun size(x: Float): InputField{ UIStr.size(x); return this }
+    fun size(x: TextUnit): InputField{ UIStr.size(x); return this }
 
 }
 
