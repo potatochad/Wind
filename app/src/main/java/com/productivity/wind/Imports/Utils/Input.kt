@@ -169,7 +169,7 @@ fun UIFocus.clear() = this.clearFocus()
 
 
 
-class TextField(
+class InputField(
     a: Str = "",
     private val UIStrOn: Bool = yes,
 ) {
