@@ -193,7 +193,7 @@ fun ScrollInput(
 	h: Int = 150,  
 	Do: DoStr = { txt.it = it }
 ){    
-	var Field by r(TextField(txt.it))
+	var Field by r(TextField(txt.it, no))
 	var done = r(no)
 	var itIndex by r(0)
 
@@ -218,7 +218,7 @@ fun ScrollInput(
 
 @Composable
 fun BigInput(txt: mStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){    
-	var Field by r(TextFieldValue(txt.it))
+	var Field by r(TextFieldValue(txt.it, no))
 	var done = r(no)
 	var itIndex by r(0)
 
