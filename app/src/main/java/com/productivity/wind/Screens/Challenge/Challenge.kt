@@ -190,7 +190,9 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 	BoxWithConstraints {
 		val maxWidthPx = constraints.maxWidth.toFloat() // pixels
-		val lines = tsk.txt.toLines(maxWidthPx)
+		val lines = MeasureLag("measuring & converting to ui usable lines"){
+			tsk.txt.toLines(maxWidthPx)
+		}
 		TxtLines = toListStr(lines)
 
 		fun MakeProcessedLines(): List<UIStr> {
