@@ -194,12 +194,12 @@ fun CopyTskUI(tsk: CopyTsk) {
 		val processedLines = remember(tsk.txt, goodStr) {
 			var sum = 0
 		
-			lines.map { txt ->
+			lines.change { txt ->
 				val lineStart = sum
 				sum += txt.size
 				val lineEnd = sum
 
-				when {
+				return@change when {
 					goodStr <= lineStart -> UIStr(txt)
 					goodStr >= lineEnd -> txt.green()
 					else -> {
