@@ -93,15 +93,7 @@ fun WebWordConfigure(id: Str = "") {
 	    )
 	)
 	var webWord by r<WebWord?>(null)
-
-	/*
-	WebWord(
-    val id: Str = Id(),
-	var word: Str = "",
-	var schedule: Schedule = Schedule(),
-	var action: WebAction = WebAction.Block,
-)
-	*/
+	
 	
     LoadItemFromId(id, Bar.webWord) { t ->
 		word1.it = t.word
