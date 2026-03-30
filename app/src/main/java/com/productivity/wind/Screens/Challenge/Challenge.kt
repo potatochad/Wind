@@ -192,7 +192,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		TxtLines = toListStr(lines)
 
 		val green1 = lines.charsFromGlobalRange(0, goodStr)
-		val black1 = lines.charsFromGlobalRange(goodStr+1, IntMax)
+		val black1 = lines.charsFromGlobalRange(goodStr+1, maxInt)
 
 		
 
