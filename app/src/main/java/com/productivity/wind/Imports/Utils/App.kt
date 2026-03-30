@@ -327,6 +327,12 @@ fun log(message: Str, int: Int = 200) {
 
     Log.e("[bad]", msg)
 }
+fun MeasureLag(title: Str, block: Do) {
+    val start = System.currentTimeMillis()
+    block()  // run your code here
+    val end = System.currentTimeMillis()
+    log("Code took ${end - start} ms")
+}
 
 
 fun getMyAppLogs() {
