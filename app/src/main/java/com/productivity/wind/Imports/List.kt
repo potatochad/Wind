@@ -130,6 +130,11 @@ fun <T> getId(it: T): Str {
 }
 
 
+inline fun <T, R> Iterable<T>.change(transform: (T) -> R): List<R> {
+    return this.map(transform)
+}
+
+
 
 
 
