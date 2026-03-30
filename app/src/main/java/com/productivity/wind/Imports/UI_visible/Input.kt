@@ -204,7 +204,7 @@ fun ScrollInput(
         onValueChange = {    
 					
 			Do(it.text)
-			Field(it)
+			Field = it
 				
 			FixedInputScroll(Field, done, scroll)
 		},
