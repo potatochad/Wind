@@ -158,25 +158,11 @@ object Item {
 	fun <T> ItemDelete(
 		list: MutableList<T>,
 		item: T?,
-		Do: () -> Unit
+		Do: Do
 	) {
 		if (item != null) {
 			Item.Delete {
-				list.remove(item)
-				Do()
-			}
-		}
-	}
-
-	@Composable
-	fun ItemDelete(
-		list
-		item: T?,
-		Do: Do
-	){
-		if (item != null) {
-			Item.Delete { 
-				item!!.remove()
+				list.remove(item) 
 				Do()
 			}
 		}
