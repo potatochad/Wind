@@ -196,7 +196,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		fun MakeProcessedLines(): ListStr {
 			var sum = 0
 		
-			lines.change { txt ->
+			return lines.change { txt ->
 				val lineStart = sum
 				sum += txt.size
 				val lineEnd = sum
@@ -214,9 +214,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 
 		val processedLines: ListStr = remember(tsk.txt, goodStr) {
-			lateinit var stuff: List<Str>
 			MeasureLag("making processedLines"){
-				stuff = MakeProcessedLines()
+				MakeProcessedLines()
 			}
 		}
 		
