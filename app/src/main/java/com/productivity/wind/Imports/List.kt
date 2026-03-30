@@ -135,6 +135,22 @@ inline fun <T, R> Iterable<T>.change(transform: (T) -> R): List<R> {
 }
 
 
+fun <T> LoadItemFromId(
+	id: Str,
+	list: List<T>,
+	onFound: (T) -> Unit
+) {
+	if (!id.empty) {
+		val item = list.find { 
+			getId(it) == id
+		}
+		if (item != null) {
+			onFound(item)
+		}
+	}
+}
+
+
 
 
 
