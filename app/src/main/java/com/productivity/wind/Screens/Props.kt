@@ -155,7 +155,22 @@ object Item {
 	}
 
 	@Composable
+	fun <T> ItemDelete(
+		list: MutableList<T>,
+		item: T?,
+		Do: () -> Unit
+	) {
+		if (item != null) {
+			Item.Delete {
+				list.remove(item)
+				Do()
+			}
+		}
+	}
+
+	@Composable
 	fun ItemDelete(
+		list
 		item: T?,
 		Do: Do
 	){
