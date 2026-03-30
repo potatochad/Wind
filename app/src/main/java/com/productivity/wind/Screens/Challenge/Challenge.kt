@@ -200,13 +200,13 @@ fun CopyTskUI(tsk: CopyTsk) {
 				val lineEnd = sum
 
 				val greenChar = goodStr - lineStart
-				val uiStrGreen = txt.fromTo(0, greenChar).green()
-				val uiStrNormal = txt.fromTo(greenChar, txt.size)
+				fun uiStrGreen() = txt.fromTo(0, greenChar).green()
+				fun uiStrNormal() = txt.fromTo(greenChar, txt.size)
 
 				return@change when {
 					(goodStr <= lineStart) -> UIStr(txt)
 					(goodStr >= lineEnd) -> txt.green()
-				    else -> UIStr(uiStrGreen, uiStrNormal)
+				    else -> UIStr(uiStrGreen(), uiStrNormal())
 				}
 			}
 		}
