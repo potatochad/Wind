@@ -192,6 +192,7 @@ data class WebWord(
     val id: Str = Id(),
 	var word: Str = "",
 	var schedule: Schedule = Schedule(),
+	var locked: Bool = no,
 	var type: WebType = WebType.Url,
 	var action: WebAction = WebAction.Block,
 )
