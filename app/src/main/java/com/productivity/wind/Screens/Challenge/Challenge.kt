@@ -103,7 +103,7 @@ fun CopyPaste(id: Str ="") {
 		letterPts.it = t.letterPts
 
 		wait {
-			inputScroll.goTo(tsk.goodStr() * 2)
+			inputScroll.goTo(t.goodStr() * 2)
 		}
 	}
 
