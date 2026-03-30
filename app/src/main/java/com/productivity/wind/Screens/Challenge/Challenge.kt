@@ -193,13 +193,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		val lines = tsk.txt.toLines(maxWidthPx)
 		TxtLines = toListStr(lines)
 
-		val processedLines: ListStr = remember(tsk.txt, goodStr) {
-			lateinit var stuff: List<Str>
-			MeasureLag("making processedLines"){
-				stuff = MakeProcessedLines()
-			}
-			return stuff
-		}
 		fun MakeProcessedLines(): ListStr {
 			var sum = 0
 		
@@ -219,6 +212,14 @@ fun CopyTskUI(tsk: CopyTsk) {
 				}
 			}
 		}
+
+		val processedLines: ListStr = remember(tsk.txt, goodStr) {
+			lateinit var stuff: List<Str>
+			MeasureLag("making processedLines"){
+				stuff = MakeProcessedLines()
+			}
+		}
+		
 		
 
 
