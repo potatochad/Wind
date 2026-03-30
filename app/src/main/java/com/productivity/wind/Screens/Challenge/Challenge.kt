@@ -193,7 +193,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		val lines = tsk.txt.toLines(maxWidthPx)
 		TxtLines = toListStr(lines)
 
-		fun MakeProcessedLines(): ListStr {
+		fun MakeProcessedLines(): UIStr {
 			var sum = 0
 		
 			return lines.change { txt ->
