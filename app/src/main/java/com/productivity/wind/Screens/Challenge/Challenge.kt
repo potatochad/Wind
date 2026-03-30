@@ -155,7 +155,7 @@ fun CopyTskUI(tsk: CopyTsk) {
     RunOnce(goodStr) {
 		if (goodStr > 30) {
 			wait(100) {
-				MeasureLag("centering Txt"){
+				MeasureWaitLag("centering Txt"){
 					txtScroll.goToLineCentered(
 						TxtLines.lineIndexByChar(goodStr)
 					)
