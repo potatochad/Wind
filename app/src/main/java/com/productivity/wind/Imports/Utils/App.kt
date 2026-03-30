@@ -329,9 +329,19 @@ fun log(message: Str, int: Int = 200) {
 }
 fun MeasureLag(title: Str, block: Wait) {
     val start = System.currentTimeMillis()
-    Do { block() } // run your code here
+	block() 
     val end = System.currentTimeMillis()
     log("[$title]: code took ${end - start} ms")
+}
+fun <T> MeasureLag(title: String, block: () -> T): T {
+    val start = System.currentTimeMillis()
+
+    val result = block()   // run and capture result
+
+    val end = System.currentTimeMillis()
+    log("[$title]: code took ${end - start} ms")
+
+    return result
 }
 
 
