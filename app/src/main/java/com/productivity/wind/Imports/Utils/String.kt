@@ -355,32 +355,3 @@ fun Str.overFlow(x: Int): Str {
 }
 
 
-fun ListStr.charsFromGlobalRange(start: Int, end: Int): ListStr {
-    val result = mutableListOf<String>()
-    var sum = 0
-
-    for (line in this) {
-        val lineStart = sum
-        val lineEnd = sum + line.length
-
-        if (end <= lineStart) break  // past the range
-        if (start >= lineEnd) {
-            sum = lineEnd
-            continue  // before the range
-        }
-
-        // overlapping part
-        val from = maxOf(0, start - lineStart)
-        val to = minOf(line.length, end - lineStart)
-        result.add(line.substring(from, to))
-
-        sum = lineEnd
-    }
-
-    return result
-}
-
-
-
-
-
