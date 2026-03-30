@@ -96,20 +96,16 @@ fun CopyPaste(id: Str ="") {
 
 	val inputScroll = Scroll()
     
-    if (!id.isEmpty()) {
-      val tsk = Bar.copyTsk.find { it.id == id }
+    LoadItemFromId(id, Bar.copyTsk) { t ->
+		txt.it = t.txt
+		maxDone.it = t.maxDone
+		donePts.it = t.donePts
+		letterPts.it = t.letterPts
 
-      if (tsk != null) {
-		  txt.it = tsk.txt
-		  maxDone.it = tsk.maxDone
-		  donePts.it = tsk.donePts
-		  letterPts.it = tsk.letterPts
-		  
-		  wait {
-			  inputScroll.goTo(tsk.goodStr() * 2)
-		  }
-	  }
-    }
+		wait {
+			inputScroll.goTo(tsk.goodStr() * 2)
+		}
+	}
 
     LazyScreen(top = { 
         Header.CopyPaste(txt, maxDone, donePts, letterPts, id) 
@@ -288,15 +284,11 @@ fun AppUsage(id: Str = "") {
 		appName = it
 	}
   
-    if (!id.isEmpty()) {
-      val app = Bar.apps.find { it.id == id }
-
-      if (app != null) {
-        Time.it = app.DoneTime
-        Points.it = app.Worth
-        appName = app.name
-      }
-    }
+    LoadItemFromId(id, Bar.apps) { a ->
+		Time.it = a.DoneTime
+		Points.it = a.Worth
+		appName = a.name
+	}
 
     LazyScreen(top = {
         Header.AppUsage(Time, Points, appName)
@@ -342,18 +334,14 @@ fun ToDo(id: Str = "") {
 	
 	
   
-    if (!id.isEmpty()) {
-      todo = Bar.doTsk.find { it.id == id }
-
-      if (todo != null) {
-		val t = todo!!
+    LoadItemFromId(id, Bar.doTsk) { t ->
 		description1.it = t.description
-        time1.it = t.doneTime
-        points1.it = t.worth
-        name1.it = t.name
+		time1.it = t.doneTime
+		points1.it = t.worth
+		name1.it = t.name
 		schedule1 = t.schedule
-      }
-    }
+		todo = t
+	}
 
     LazyScreen(top = {
         Text("ToDo")
@@ -514,3 +502,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 	log("WHAT USER SEES| ${tsk.name}: ${Time(tsk.timeLeft)}")
 	
 }
+
+
+
+
