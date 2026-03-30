@@ -333,6 +333,13 @@ fun MeasureWaitLag(title: Str, block: Wait) {
     val end = System.currentTimeMillis()
     log("[$title]: code took ${end - start} ms")
 }
+@Composable
+fun MeasureUILag(title: Str, block: ui) {
+    val start = System.currentTimeMillis()
+	block()
+    val end = System.currentTimeMillis()
+    log("[$title]: code took ${end - start} ms")
+}
 fun <T> MeasureLag(title: String, block: () -> T): T {
     val start = System.currentTimeMillis()
 
