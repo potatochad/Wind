@@ -194,7 +194,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		TxtLines = toListStr(lines)
 
 		MeasureLag("making processedLines"){
-			val processedLines4 = remember(tsk.txt, goodStr) {
 			var sum = 0
 		
 			lines.change { txt ->
@@ -211,7 +210,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 					(goodStr >= lineEnd) -> txt.green()
 				    else -> UIStr(uiStrGreen(), uiStrNormal())
 				}
-			}
 			}
 		}
 
