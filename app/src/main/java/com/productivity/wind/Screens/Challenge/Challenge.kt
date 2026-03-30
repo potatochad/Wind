@@ -191,6 +191,11 @@ fun CopyTskUI(tsk: CopyTsk) {
 		val lines = tsk.txt.toLines(maxWidthPx)
 		TxtLines = toListStr(lines)
 
+		val green1 = lines.charsFromGlobalRange(0, goodStr)
+		val black1 = lines.charsFromGlobalRange(goodStr+1, IntMax)
+
+		
+
 
 		val processedLines = remember(tsk.txt, goodStr) {
 			var sum = 0
