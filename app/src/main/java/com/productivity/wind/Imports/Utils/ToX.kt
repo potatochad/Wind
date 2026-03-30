@@ -194,7 +194,7 @@ fun toLatLng(it: Any?): LatLng = when (it) {
 
 fun toStr(it: Any?): Str = when (it) {
     is Str -> it
-    is AnnotatedString -> it.text
+    is UIStr -> it.text
     is LatLng -> "${it.latitude},${it.longitude}"
     is Pair<*, *> -> "${it.first},${it.second}"
     is Double, is Float, is Int, is Long -> it.toString()
@@ -203,11 +203,10 @@ fun toStr(it: Any?): Str = when (it) {
     else -> it.toString()
 }
 
-fun toListStr(it: Any?): ListStr = when (it) {
-    is List<UIStr> -> it.map { it.toString() }      
+fun toListStr(it: Any?): ListStr = when (it) {      
     is List<*> -> it.map { toStr(it) }              
     is String -> it.lines()                        
-    is AnnotatedString -> it.text.lines()          
+    is UIStr -> it.text.lines()          
     null -> emptyList()
     else -> listOf(toStr(it))
 }
