@@ -133,10 +133,6 @@ import android.graphics.*
 
 @Suppress("UNCHECKED_CAST")
 
-fun toListStr(x: List<UIStr>): ListStr {
-    return x.map { it.toString() } // convert each ANNOTEDSTRING to regular String
-}
-
 fun toDp(it: Any?): Dp = when (it) {
     is Dp -> it           // already Dp
     is Int -> it.dp       // Int → Dp
@@ -202,9 +198,21 @@ fun toStr(it: Any?): Str = when (it) {
     is LatLng -> "${it.latitude},${it.longitude}"
     is Pair<*, *> -> "${it.first},${it.second}"
     is Double, is Float, is Int, is Long -> it.toString()
+    is List<*> -> it.joinToString("\n") { it.toString() }
     null -> ""
     else -> it.toString()
 }
+
+fun toListStr(it: Any?): ListStr = when (it) {
+    is List<UIStr> -> it.map { it.toString() }      
+    is List<*> -> it.map { toStr(it) }              
+    is String -> it.lines()                        
+    is AnnotatedString -> it.text.lines()          
+    null -> emptyList()
+    else -> listOf(toStr(it))
+}
+
+
 
 fun toLocalDate(x: Any?): LocalDate = when (x) { 
     is Str -> LocalDate.parse(x)
