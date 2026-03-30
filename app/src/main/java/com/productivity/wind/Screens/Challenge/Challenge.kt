@@ -156,9 +156,9 @@ fun CopyTskUI(tsk: CopyTsk) {
 		if (goodStr > 30) {
 			wait(100) {
 				MeasureLag("centering Txt"){
-				txtScroll.goToLineCentered(
-					TxtLines.lineIndexByChar(goodStr)
-				)
+					txtScroll.goToLineCentered(
+						TxtLines.lineIndexByChar(goodStr)
+					)
 				}
 			}
 		}
@@ -193,10 +193,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 		val lines = tsk.txt.toLines(maxWidthPx)
 		TxtLines = toListStr(lines)
 
-		
-		val processedLines = remember(tsk.txt, goodStr) {
-			MeasureLag("making processedLines"){
-
+		MeasureLag("making processedLines"){
+			val processedLines4 = remember(tsk.txt, goodStr) {
 			var sum = 0
 		
 			lines.change { txt ->
@@ -214,6 +212,26 @@ fun CopyTskUI(tsk: CopyTsk) {
 				    else -> UIStr(uiStrGreen(), uiStrNormal())
 				}
 			}
+			}
+		}
+
+		val processedLines = remember(tsk.txt, goodStr) {
+			var sum = 0
+		
+			lines.change { txt ->
+				val lineStart = sum
+				sum += txt.size
+				val lineEnd = sum
+
+				val greenChar = goodStr - lineStart
+				fun uiStrGreen() = txt.fromTo(0, greenChar).green()
+				fun uiStrNormal() = txt.fromTo(greenChar, txt.size)
+
+				return@change when {
+					(goodStr <= lineStart) -> UIStr(txt)
+					(goodStr >= lineEnd) -> txt.green()
+				    else -> UIStr(uiStrGreen(), uiStrNormal())
+				}
 			}
 		}
 
