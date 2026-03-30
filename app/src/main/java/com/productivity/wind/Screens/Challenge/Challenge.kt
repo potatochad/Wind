@@ -214,7 +214,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 
 
-
 		
 		LazyColumn(
 			modifier = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),      
