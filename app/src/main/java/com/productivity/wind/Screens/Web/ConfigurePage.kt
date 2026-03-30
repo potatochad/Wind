@@ -103,17 +103,13 @@ fun WebWordConfigure(id: Str = "") {
 )
 	*/
 	
-    if (!id.isEmpty()) {
-      webWord = Bar.webWord.find { it.id == id }
-
-      if (webWord != null) {
-		  val t = webWord!!
-		  word1.it = t.word
-		  action1 = t.action
-		  schedule1 = t.schedule
-	   }
-    }
-
+    LoadItemFromId(id, Bar.webWord) { t ->
+		word1.it = t.word
+		action1 = t.action
+		schedule1 = t.schedule
+		webWord = t
+	}
+	
     LazyScreen(top = {
         Text("Configure")
 
