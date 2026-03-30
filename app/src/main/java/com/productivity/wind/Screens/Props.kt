@@ -153,6 +153,19 @@ object Item {
           Do()
         }
 	}
+
+	@Composable
+	fun ItemDelete(
+		item: T?,
+		Do: Do
+	){
+		if (item != null) {
+			Item.Delete { 
+				item!!.remove()
+				Do()
+			}
+		}
+	}
 	
 	@Composable
     fun Add(Do: Do = { goTo("Challenge") }) {
