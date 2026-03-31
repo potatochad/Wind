@@ -181,7 +181,10 @@ object Item {
 		Icon(iconPick) {
 			if (stop()) return@Icon
 
-			edit(newItem())
+			val target = item ?: newItem()
+			if (item == null) list.add(target)
+
+			edit(target)
 		}
 	}
 	
