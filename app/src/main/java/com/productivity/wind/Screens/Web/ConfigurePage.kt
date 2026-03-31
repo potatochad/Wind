@@ -87,7 +87,7 @@ fun WebWordConfigure(id: Str = "") {
     var word1 = r(UrlShort(Bar.Url))
 	var action1 by r(WebAction.Block)
 	var type1 by r(WebType.Url)
-	var locked1 by m(no)
+	var locked1 by r(no)
 	var schedule1 by r(Schedule(
 	    	type = "WEEKLY",
 	    	every = 1,
@@ -101,6 +101,7 @@ fun WebWordConfigure(id: Str = "") {
 		action1 = t.action
 		schedule1 = t.schedule
 		locked1 = t.locked
+		type1 = t.type
 		webWord = t
 	}
 	
@@ -127,6 +128,7 @@ fun WebWordConfigure(id: Str = "") {
 					word = word1.it
 					schedule = schedule1
 					locked = locked1
+					type = type1
 				}  
 				goTo("WebKeywords")
 			}
@@ -154,8 +156,9 @@ fun WebWordConfigure(id: Str = "") {
 				}
 				LazzyRow {
 					Text("Lock:")
-					WebProps.BtnsTypes(type1) {
-						type1 = it
+					WebProps.SwitchBtn(locked1) {
+						locked1 = it
+						if (locked1) Vlog("Cant be editted or deleted ever")
 					}
 				}
 				
