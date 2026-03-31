@@ -347,11 +347,8 @@ fun ToDo(id: Str = "") {
         Text("ToDo")
         
         End {
-			if (todo != null) {
-				Item.Delete { 
-					todo!!.remove()
-					goTo("Main")
-				}
+			Item.ItemDelete(Bar.doTsk, todo){
+				goTo("Main")
 			}
 
 			Icon(
