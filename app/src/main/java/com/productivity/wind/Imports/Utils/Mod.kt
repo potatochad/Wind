@@ -228,22 +228,22 @@ val Mod.transparent: Mod
     get() = this.background(Transparent)
         
 val Mod.black: Mod
-    get() = this.background(Color.Black)
+    get() = this.background(black)
 
 val Mod.white: Mod
-    get() = this.background(Color.White)
+    get() = this.background(white)
     
 val Mod.red: Mod
-    get() = this.background(Color.Red)
+    get() = this.background(red)
 
 val Mod.green: Mod
-    get() = this.background(Color.Green)
+    get() = this.background(green)
 
 val Mod.cardColor: Mod
-    get() = this.background(CardColor)
+    get() = this.background(cardColor)
 
 val Mod.blue: Mod
-    get() = this.background(Color.Blue)
+    get() = this.background(blue)
 
 
     
@@ -265,24 +265,24 @@ fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
 
 
 
-object CenterHTag : Modifier.Element
-object CenterVTag : Modifier.Element
-object TopTag : Modifier.Element
-object BottomTag : Modifier.Element
-object StartTag : Modifier.Element
-object EndTag : Modifier.Element
+object CenterHTag : Mod.Element
+object CenterVTag : Mod.Element
+object TopTag : Mod.Element
+object BottomTag : Mod.Element
+object StartTag : Mod.Element
+object EndTag : Mod.Element
 
 inline fun <reified T : Modifier.Element> Mod.hasTag(): Bool =
     this.any { it is T }
 
 
 
-val Modifier.centerH: Modifier get() = this.then(CenterHTag)
-val Modifier.centerV: Modifier get() = this.then(CenterVTag)
-val Modifier.top: Modifier get() = this.then(TopTag)
-val Modifier.bottom: Modifier get() = this.then(BottomTag)
-val Modifier.start: Modifier get() = this.then(StartTag)
-val Modifier.end: Modifier get() = this.then(EndTag)
+val Mod.centerH: Mod get() = this.then(CenterHTag)
+val Mod.centerV: Mod get() = this.then(CenterVTag)
+val Mod.top: Mod get() = this.then(TopTag)
+val Mod.bottom: Mod get() = this.then(BottomTag)
+val Mod.start: Mod get() = this.then(StartTag)
+val Mod.end: Mod get() = this.then(EndTag)
 
 
 fun AutoHorizontalArrangement(mod: Mod): Arrangement.Horizontal {
