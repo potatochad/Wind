@@ -158,7 +158,7 @@ fun PickDate(
        containerColor = MaterialTheme.colorScheme.surface,
        selectedDayContainerColor = orange,
        selectedDayContentColor = white,
-       todayDateBorderColor = Color.Transparent,
+       todayDateBorderColor = transparent,
        todayContentColor = orange,              
        titleContentColor = white,         
        headlineContentColor = white,      
