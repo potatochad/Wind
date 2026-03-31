@@ -36,7 +36,7 @@ fun SettingsScreen() {
         var restore = r_m(no)
         LazyItem(
             BigIcon = Icons.Filled.Restore,
-            BigIconColor = DarkBlue,
+            BigIconColor = darkBlue,
             title = "Restore",
             onClick = { 
                 restore.it = yes
@@ -50,7 +50,7 @@ fun SettingsScreen() {
         LazyItem(
             topPadding = 1.dp,
             BigIcon = Icons.Filled.Backup,
-            BigIconColor = DarkBlue,
+            BigIconColor = darkBlue,
             title = "BackUp",
 			endContent = {
 				Ctext(
