@@ -119,7 +119,7 @@ fun WebWordConfigure(id: Str = "") {
 					stop
 				},
 				newItem = { WebWord() },
-			){
+			){ x ->
 				x.edit {
 					action = action1
 					word = word1.it
