@@ -60,7 +60,7 @@ fun DrawScope.drawTriangle(
     y: Float,
     width: Float,
     height: Float,
-    color: Color = Color.Black
+    color: Color = black
 ) {
     drawPath(
         Path().apply {
@@ -85,8 +85,8 @@ fun drawPin(
 	) {
 		Box(
 			Mod.s(50).move(h = 10)
-				.background(Gold, CircleShape)
-				.border(3.dp, Color.White, CircleShape),
+				.background(gold, CircleShape)
+				.border(3.dp, white, CircleShape),
 			contentAlignment = Alignment.Center
 		) {
 			Icon(Icons.Default.VisibilityOff)
@@ -102,11 +102,11 @@ fun drawPin(
 				close()
 			}
 			
-			drawPath(path, Gold)
+			drawPath(path, gold)
 			
 			// Draw left border
 			drawLine(
-				color = Color.White,
+				color = white,
 				start = Offset(0f, 0f),
 				end = Offset(size.width / 2f, size.height),
 				strokeWidth = 9.3f
@@ -114,7 +114,7 @@ fun drawPin(
 
 			// Draw right border
 			drawLine(
-				color = Color.White,
+				color = white,
 				start = Offset(size.width, 0f),
 				end = Offset(size.width / 2f, size.height),
 				strokeWidth = 9.3f
@@ -129,9 +129,9 @@ fun drawPin(
 fun drawSlider(
     sliderPos: Float,
     thumbSize: Float,
-    trackColor: Color = Color.Gray,
-    fillColor: Color = Gold,
-    modifier: Modifier = Modifier
+    trackColor: Color = gray,
+    fillColor: Color = gold,
+    modifier: Mod = Mod
 ) {
     Canvas(modifier = modifier.fillMaxWidth()) {
         val centerY = size.height / 2
