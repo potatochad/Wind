@@ -166,8 +166,8 @@ fun SwitchBtn(
 			checkedTrackColor = Gold.copy(alpha = 0.3f),
 			uncheckedThumbColor = Color.Gray, 
 			uncheckedTrackColor = Color.Gray.copy(alpha = 0.3f),
-			checkedBorderColor = Gold,     
-			uncheckedBorderColor = Color.Gray,
+			checkedBorderColor = Transparent,     
+			uncheckedBorderColor = Transparent,
 			checkedIconColor = Gold,
 			uncheckedIconColor = Color.Gray
         )
