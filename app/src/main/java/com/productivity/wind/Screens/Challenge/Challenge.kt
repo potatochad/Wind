@@ -60,7 +60,7 @@ fun Challenge() {
   LazyScreen("Challenge") {
     LazyItem(
             BigIcon = Icons.Filled.AccessTime,
-            BigIconColor = DarkBlue,
+            BigIconColor = darkBlue,
             title = "App Usage",
             onClick = { 
               goTo("AppUsage/_")
@@ -76,7 +76,7 @@ fun Challenge() {
         )
 	LazyItem(
             BigIcon = Icons.Filled.ContentPaste,
-            BigIconColor = Gold, 
+            BigIconColor = gold, 
             title = "To do",
             onClick = { 
               goTo("ToDo/_")
