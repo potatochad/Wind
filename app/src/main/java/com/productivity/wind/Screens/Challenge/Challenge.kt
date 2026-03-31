@@ -355,15 +355,17 @@ fun ToDo(id: Str = "") {
 				list = Bar.doTsk,
 				item = todo,
 				stop = { 
-					if (time1.it==0) {
-						Vlog("Add time")
-						return@stop yes
+					when {
+						time1.it == 0 -> {
+							Vlog("Add time")
+							yes
+						}
+						name1.it == "" -> {
+							Vlog("Add name")
+							yes
+						}
+						else -> no
 					}
-					if (name1.it=="") {
-						Vlog("Add name")
-						return@stop yes
-					}
-					no
 				},
 				newItem = { DoTsk() },
 			){ x ->
