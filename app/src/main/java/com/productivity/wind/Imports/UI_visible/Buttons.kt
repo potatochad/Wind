@@ -99,7 +99,7 @@ fun BasicSlider(
             interactionSource = r { MutableInteractionSource() },
             thumbSize = DpSize(16.dp, 16.dp),
 			colors = SliderDefaults.colors(
-                thumbColor = Gold
+                thumbColor = gold
             )
         )
     },
@@ -109,10 +109,10 @@ fun BasicSlider(
             modifier = Mod.h(3),
             thumbTrackGapSize = 0.dp,
             colors = SliderDefaults.colors(
-                activeTrackColor = Gold,
-                inactiveTrackColor = Color.Gray,
-                activeTickColor = Color.Transparent,
-                inactiveTickColor = Color.Transparent,
+                activeTrackColor = gold,
+                inactiveTrackColor = gray,
+                activeTickColor = transparent,
+                inactiveTickColor = transparent,
             ),
 			drawStopIndicator = null,
 			drawTick = { _, _ -> }
@@ -163,12 +163,12 @@ fun SwitchBtn(
 		modifier = Mod.s(10),
         onCheckedChange = onCheckedChange,
         colors = SwitchDefaults.colors(
-			checkedThumbColor = White,
-			checkedTrackColor = Gold,
-			uncheckedThumbColor = White, 
-			uncheckedTrackColor = Gray,
-			checkedBorderColor = Transparent,     
-			uncheckedBorderColor = Transparent,
+			checkedThumbColor = white,
+			checkedTrackColor = gold,
+			uncheckedThumbColor = white, 
+			uncheckedTrackColor = gray,
+			checkedBorderColor = transparent,     
+			uncheckedBorderColor = transparent,
         )
     )
 }
@@ -187,9 +187,9 @@ fun CheckRow(
 				checked = isChecked.it,
 				onCheckedChange = { isChecked.it = it },
 				colors = CheckboxDefaults.colors(
-					checkedColor = Gold,
-					uncheckedColor = Color.Gray,
-					checkmarkColor = Color.White
+					checkedColor = gold,
+					uncheckedColor = gray,
+					checkmarkColor = white
 				)
 			)
 			move(5)
@@ -211,8 +211,8 @@ fun CheckCircle(
 			selected = selectedIndex.value == index,
 			onClick = { set(selectedIndex, index) },
 			colors = RadioButtonDefaults.colors(
-				selectedColor = LightBlue,
-				unselectedColor = Color.Gray
+				selectedColor = lightBlue,
+				unselectedColor = gray
 			),
 			modifier = Mod.scale(0.85f)
 		)
@@ -251,9 +251,9 @@ fun Btn(
         onClick = onClick, 
         modifier = mod,
         colors = ButtonDefaults.buttonColors(
-             containerColor = faded(Color.Gray, 0.2f)
+             containerColor = faded(gray, 0.2f)
         ),
-        border = BorderStroke(1.dp, Color.Gray),
+        border = BorderStroke(1.dp, gray),
     ) {
         text()
     }
@@ -269,9 +269,9 @@ fun Btn(
         onClick = onClick, 
         modifier = mod,
         colors = ButtonDefaults.buttonColors(
-             containerColor = faded(Color.Gray, 0.2f)
+             containerColor = faded(gray, 0.2f)
         ),
-        border = BorderStroke(1.dp, Color.Gray),
+        border = BorderStroke(1.dp, gray),
     ) {
         Text(text)
    }
@@ -292,7 +292,7 @@ fun BtnFloating55555(
 			Box(
 				Mod.space(5)
 				.background(faded(Color.Gray, 0.2f))
-				.border(width = 1.dp, color = Color.Gray)
+				.border(width = 1.dp, color = gray)
 				.round(12)
 				.click {
 					Do()
@@ -301,7 +301,7 @@ fun BtnFloating55555(
 				Icon(
 					icon = Icons.Default.Add,
 					size = 30,
-					color = Gold
+					color = gold
 				)
 			}
         }
@@ -328,14 +328,14 @@ fun BtnFloating(
                 Box(
                     Mod
 						.clip(RoundedCornerShape(12.dp))
-                        .background(CardColor.darker(0.1))
+                        .background(cardColor.darker(0.1))
 						.space(12)
                         .click { Do() }
                 ) {
                     Icon(
                         icon = Icons.Default.Add,
                         size = 30,
-                        color = Gold
+                        color = gold
                     )
                 }
             }
