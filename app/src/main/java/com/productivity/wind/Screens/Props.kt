@@ -179,7 +179,7 @@ object Item {
 		val iconPick = if (item != null) Icons.Default.Edit else Icons.Default.Add
 
 		Icon(iconPick) {
-			if (stop) return@Icon
+			if (stop()) return@Icon
 
 			if (item != null) {
 				edit(item)
