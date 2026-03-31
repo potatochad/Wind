@@ -246,7 +246,7 @@ object Icon {
 		on: Bool,
 		Do: DoBool
 	) {
-		BigIcon( if (on) Icons.Default.Pause else Icons.Default.PlayArrow, if (on) Gold else Color.Gray) {
+		BigIcon( if (on) Icons.Default.Pause else Icons.Default.PlayArrow, if (on) gold else gray) {
 			Do(on)
 		}
 	}
