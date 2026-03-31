@@ -273,7 +273,7 @@ object Item {
         LazyItem(
             topPadding = 1.dp,
             BigIcon = Icons.Filled.LockOpen,
-            BigIconColor = Gold,
+            BigIconColor = gold,
             title = "Unlock Threshold",
 			modUI = Mod.space(h=2.5.dp),
             endContent = {             
