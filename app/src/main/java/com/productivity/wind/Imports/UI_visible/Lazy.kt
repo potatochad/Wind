@@ -62,12 +62,12 @@ import androidx.compose.ui.zIndex
 @Composable
 fun LazyTheme(content: ui) {
     val appColorScheme = darkColorScheme(
-        background = Color.Black,
-        onBackground = Color.White,
+        background = black,
+        onBackground = white,
         // surface = Color.Black,
-        onSurface = Color.White,
+        onSurface = white,
         // primary = Color.Black, ✅️
-        onPrimary = Color.White,
+        onPrimary = white,
     )
     MaterialTheme(
         colorScheme = appColorScheme,
@@ -165,25 +165,6 @@ fun LazyPullToRefresh(
     }
 }
 
-
-
-
-
-
-@Composable
-fun LazySwitch(isOn: Bool, onToggle: Do_<Bool>) {
-    Switch(
-      checked = isOn,
-      onCheckedChange = onToggle,
-      modifier = Mod.s(30), // default ~39dp → minus 5dp
-      colors = SwitchDefaults.colors(
-          checkedThumbColor = Color(0xFFFFD700),
-          uncheckedThumbColor = Color.LightGray,
-          checkedTrackColor = Color(0xFFFFF8DC),
-          uncheckedTrackColor = Color(0xFFE0E0E0)
-      )
-    )
-}
 
 
 @Composable
@@ -290,7 +271,7 @@ fun LazyCard(
 ) {
     Card(
         modifier = modCard.shadow(2.dp).round(corners),
-        colors = CardDefaults.cardColors(CardColor),
+        colors = CardDefaults.cardColors(cardColor),
     ) {
         Column(modUI) {
             ui()
@@ -669,7 +650,7 @@ fun LazyMenu(
         Box( Mod.offset { IntOffset(offsetX.roundToPx(), 0) }
                 .w(AppW / 2 + 30.dp)
                 .maxH()
-                .background(Color.DarkGray)
+                .background(darkGray)
         ) {
             ui()
         }
@@ -728,7 +709,7 @@ fun LazyMaps(
             "map".bold().darkGray(),
             Mod.align(Alignment.TopEnd)
                 .space(top = 12, end = 64)
-                .background(faded(Color.White, 0.7f))
+                .background(faded(white, 0.7f))
                 .click {
 					mapType =
                         if (mapType == MapType.NORMAL)
