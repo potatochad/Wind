@@ -129,9 +129,8 @@ val Gold = Color(0xFFFFD700)
 val White = Color.White
 val Gray = Color.Gray
 val LightBlue = Color(0xFFADD8E6)
-val darkGreen = Color(0xFF0A1F0D)
-val orange = Color(0xFFFFA500)
-val white = Color.White
+val DarkGreen = Color(0xFF0A1F0D)
+val Orange = Color(0xFFFFA500)
 val Transparent = Color.Transparent
 
 //tiny renames
