@@ -156,7 +156,7 @@ fun WebWordConfigure(id: Str = "") {
 				}
 				LazzyRow {
 					Text("Lock:")
-					WebProps.SwitchBtn(locked1) {
+					SwitchBtn(locked1) {
 						locked1 = it
 						if (locked1) Vlog("Cant be editted or deleted ever")
 					}
