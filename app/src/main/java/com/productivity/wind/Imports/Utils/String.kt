@@ -198,13 +198,13 @@ fun Any.size(x: TextUnit) = txt { copy(fontSize = x) }
 fun Any.bold() = txt { copy(fontWeight = FontWeight.Bold) }
 
 fun Any.color(x: Color) = txt { copy(color = x) }
-fun Any.gold() = txt { copy(color = Gold) }
-fun Any.green() = txt { copy(color = Color.Green) }
-fun Any.red() = txt { copy(color = Color.Red) }
-fun Any.white() = txt { copy(color = Color.White) }
-fun Any.black() = txt { copy(color = Color.Black) }
-fun Any.darkGray() = txt { copy(color = Color.DarkGray) }
-fun Any.gray() = txt { copy(color = Color.Gray) }
+fun Any.gold() = txt { copy(color = gold) }
+fun Any.green() = txt { copy(color = green) }
+fun Any.red() = txt { copy(color = red) }
+fun Any.white() = txt { copy(color = white) }
+fun Any.black() = txt { copy(color = black) }
+fun Any.darkGray() = txt { copy(color = darkGray) }
+fun Any.gray() = txt { copy(color = gray) }
 
 
 
