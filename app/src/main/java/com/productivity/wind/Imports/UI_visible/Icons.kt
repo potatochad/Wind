@@ -242,6 +242,20 @@ object Icon {
         }
     }
 	@Composable
+	fun Lock(locked: Bool, Do: Do_<Bool>) {
+		var locked by r(no)
+
+		Icon(
+			if (locked) Icons.Default.Lock else Icons.Default.LockOpen,
+			color = if (locked) gold else gray,
+		){
+			Wait{
+				locked = !locked
+				Do(locked)
+			}
+		}
+	}
+	@Composable
 	fun Timer(
 		on: Bool,
 		Do: DoBool
