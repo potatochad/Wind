@@ -239,9 +239,6 @@ val Mod.red: Mod
 val Mod.green: Mod
     get() = this.background(Color.Green)
 
-val Mod.cardColor: Mod
-    get() = this.background(Color.CardColor)
-
 val Mod.blue: Mod
     get() = this.background(Color.Blue)
 
