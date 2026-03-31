@@ -110,7 +110,7 @@ fun WebWordConfigure(id: Str = "") {
 				goTo("WebKeywords")
 			}
 
-			AddOrEdit(
+			Item.AddOrEdit(
 				list = Bar.webWord,
 				item = webWord,
 				stop = { 
