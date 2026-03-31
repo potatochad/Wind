@@ -151,6 +151,24 @@ fun click(x: UI, Do: Do) {
 	}
 }
 
+
+@Composable
+fun SwitchBtn(
+    checked: Bool,
+	mod: Mod = Mod,
+    onCheckedChange: Do_<Bool>,
+) {
+    Switch(
+        checked = checked,
+        onCheckedChange = onCheckedChange,
+        modifier = mod
+            .border(1.dp, Color.Gray)
+            .background(faded(Color.Gray, 0.2f))
+    )
+}
+
+
+
 @Composable
 fun CheckRow(
 	txt: Str="",
