@@ -160,7 +160,7 @@ fun SwitchBtn(
 ) {
     Switch(
         checked = checked,
-		modifier = Mod.s(10)
+		modifier = Mod.s(10),
         onCheckedChange = onCheckedChange,
         colors = SwitchDefaults.colors(
 			checkedThumbColor = White,
