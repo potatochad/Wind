@@ -109,38 +109,32 @@ fun WebWordConfigure(id: Str = "") {
 			Item.ItemDelete(Bar.webWord, webWord){
 				goTo("WebKeywords")
 			}
-			
 
-			Icon(
-				if (webWord != null) Icons.Default.Edit
-				else Icons.Default.Add
-			) {
-                if (word1.it== "") {
-					Vlog("Add time")
-					return@Icon
+			AddOrEdit(
+				list = Bar.webWord,
+				item = webWord,
+				stop = { 
+					var stop = word1.it.empty
+					if (stop) Vlog("Add time")
+					stop
+				},
+				edit = { x ->
+					x.edit {
+						action = action1
+						word = word1.it
+						schedule = schedule1
+					}  
+					goTo("WebKeywords")
+				},
+				add = {
+					Bar.webWord.add {
+						action = action1
+						word = word1.it
+						schedule = schedule1
+					}
+					goTo("WebKeywords")
 				}
-
-                if (!id.empty) {
-                    val wordFound = Bar.webWord.find { it.id == id }
-					
-                    if (wordFound!=null){
-                        wordFound.edit {
-							action = action1
-							word = word1.it
-							schedule = schedule1
-                        }  
-                        goTo("WebKeywords")
-                    }
-                    return@Icon
-                }
-
-                Bar.webWord.add {
-                    action = action1
-					word = word1.it
-					schedule = schedule1
-                }
-                goTo("WebKeywords")
-            }
+			)
 		}
 	}) {
 		LazyCard {
