@@ -127,6 +127,7 @@ fun WebWordConfigure(id: Str = "") {
 				}  
 				goTo("WebKeywords")
 			}
+		}
 	}) {
 		LazyCard {
 			Column{
