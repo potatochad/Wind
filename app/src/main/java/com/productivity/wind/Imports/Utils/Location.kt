@@ -232,7 +232,7 @@ fun GeoCircle(
 	onSelect: DoStr = {},
 ){
 	var center = LatLng(geo.Lat, geo.Lng)
-	var borderColor by r(Color.White)
+	var borderColor by r(white)
 	var borderW by r(2f)
 	
 	val pin = marker(center)
@@ -259,7 +259,7 @@ fun GeoCircle(
 	}
 
 	if (selected.it) {
-		borderColor = Gold
+		borderColor = gold
 		borderW = 3f
 	}
 
@@ -268,7 +268,7 @@ fun GeoCircle(
         radius = toD(geo.radius),
         strokeColor = borderColor,
 		strokeWidth = borderW,
-        fillColor = faded(Gold, 0.4f),
+        fillColor = faded(gold, 0.4f),
     )
 }
 
