@@ -167,28 +167,40 @@ object Item {
 			}
 		}
 	}
+	
+	@Composable
+	fun <T> AddOrEdit(
+		list: MutableList<T>,
+		item: T?,
+		ifs: varag = {
+			if (//something//
+				Vlog("Add x")
+				return@Icon
+		},
+		add: //idk ={
+			x.edit {
+				bla,
+				bla
+			}
+			goTo("Main")
+		}
+	){
+		val itemFound = webWord != null
+		val iconPick= if (itemFound) Icons.Default.Edit else Icons.Default.Add
+		var item = //logic?
 
-	Icon(
-				if (webWord != null) Icons.Default.Edit
-				else Icons.Default.Add
-			) {
-                if (word1.it== "") {
-					Vlog("Add time")
+		fun addItem(){
+            
+			
+		}
+
+				
+		Icon(iconPick){
+			ifs()
+
+                if (itemFound) {
+                    add()
 					return@Icon
-				}
-
-                if (!id.empty) {
-                    val wordFound = Bar.webWord.find { it.id == id }
-					
-                    if (wordFound!=null){
-                        wordFound.edit {
-							action = action1
-							word = word1.it
-							schedule = schedule1
-                        }  
-                        goTo("WebKeywords")
-                    }
-                    return@Icon
                 }
 
                 Bar.webWord.add {
@@ -197,7 +209,10 @@ object Item {
 					schedule = schedule1
                 }
                 goTo("WebKeywords")
+		}
 	}
+
+	
 	
 	@Composable
     fun Add(Do: Do = { goTo("Challenge") }) {
