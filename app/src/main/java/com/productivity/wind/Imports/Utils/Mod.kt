@@ -225,25 +225,25 @@ fun Mod.mix(new: Mod): Mod{
 
 
 val Mod.transparent: Mod
-    get() = this.background(transparent)
+    get() = this.background(Color.Transparent)
         
 val Mod.black: Mod
-    get() = this.background(black)
+    get() = this.background(Color.Black)
 
 val Mod.white: Mod
-    get() = this.background(white)
+    get() = this.background(Color.White)
     
 val Mod.red: Mod
-    get() = this.background(red)
+    get() = this.background(Color.Red)
 
 val Mod.green: Mod
-    get() = this.background(green)
+    get() = this.background(Color.Green)
 
 val Mod.cardColor: Mod
-    get() = this.background(cardColor)
+    get() = this.background(Color.CardColor)
 
 val Mod.blue: Mod
-    get() = this.background(blue)
+    get() = this.background(Color.Blue)
 
 
     
