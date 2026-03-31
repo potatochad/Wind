@@ -169,10 +169,10 @@ object Item {
 	}
 	
 	@Composable
-	fun <T> AddOrEdit(
+	fun <T> FancyAdd(
 		list: MutableList<T>,
 		item: T?,
-		newEmptyItem: () -> T,
+		newItem: () -> T,
 		stop: () -> Bool = { no },
 		edit: (T) -> Unit = {},
 	) {
@@ -181,7 +181,7 @@ object Item {
 		Icon(iconPick) {
 			if (stop()) return@Icon
 
-			edit(newEmptyItem())
+			edit(newItem())
 		}
 	}
 	
