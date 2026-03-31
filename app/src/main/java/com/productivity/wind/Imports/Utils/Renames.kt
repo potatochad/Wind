@@ -122,16 +122,16 @@ import androidx.core.view.*
 
 
 //colors
-var CardColor = Color(0xFF1A1A1A)
-var InputColor = Color(0xFF272727)
-val DarkBlue = Color(0xFF00008B) 
-val Gold = Color(0xFFFFD700)
-val White = Color.White
-val Gray = Color.Gray
-val LightBlue = Color(0xFFADD8E6)
-val DarkGreen = Color(0xFF0A1F0D)
-val Orange = Color(0xFFFFA500)
-val Transparent = Color.Transparent
+var cardColor = Color(0xFF1A1A1A)
+var inputColor = Color(0xFF272727)
+val darkBlue = Color(0xFF00008B) 
+val gold = Color(0xFFFFD700)
+val white = Color.White
+val gray = Color.Gray
+val lightBlue = Color(0xFFADD8E6)
+val darkGreen = Color(0xFF0A1F0D)
+val orange = Color(0xFFFFA500)
+val transparent = Color.Transparent
 
 //tiny renames
 val gson = Gson()
