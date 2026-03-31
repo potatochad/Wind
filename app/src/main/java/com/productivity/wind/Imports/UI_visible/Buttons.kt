@@ -160,16 +160,15 @@ fun SwitchBtn(
 ) {
     Switch(
         checked = checked,
+		modifier = Mod.s(10)
         onCheckedChange = onCheckedChange,
         colors = SwitchDefaults.colors(
-			checkedThumbColor = Gold,
-			checkedTrackColor = Gold.copy(alpha = 0.3f),
-			uncheckedThumbColor = Color.Gray, 
-			uncheckedTrackColor = Color.Gray.copy(alpha = 0.3f),
+			checkedThumbColor = White,
+			checkedTrackColor = Gold,
+			uncheckedThumbColor = White, 
+			uncheckedTrackColor = Color.Gray,
 			checkedBorderColor = Transparent,     
 			uncheckedBorderColor = Transparent,
-			checkedIconColor = Gold,
-			uncheckedIconColor = Color.Gray
         )
     )
 }
