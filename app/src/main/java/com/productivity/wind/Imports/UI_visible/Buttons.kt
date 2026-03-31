@@ -161,9 +161,14 @@ fun SwitchBtn(
     Switch(
         checked = checked,
         onCheckedChange = onCheckedChange,
-        modifier = mod
-            .border(1.dp, Color.Gray)
-            .background(faded(Color.Gray, 0.2f))
+        colors = SwitchDefaults.colors(
+            checkedThumbColor = Color.White,
+            uncheckedThumbColor = Color.White,
+            checkedTrackColor = Color.Gray.copy(alpha = 0.2f),
+            uncheckedTrackColor = Color.Gray.copy(alpha = 0.2f),
+            checkedTrackAlpha = 1f,
+            uncheckedTrackAlpha = 1f
+        )
     )
 }
 
