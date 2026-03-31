@@ -223,25 +223,14 @@ fun Mod.mix(new: Mod): Mod{
 }
 
 
-//‼️ Dont use color short hands, will just call on itself
-val Mod.transparent: Mod
-    get() = this.background(Color.Transparent)
-        
-val Mod.black: Mod
-    get() = this.background(Color.Black)
-
-val Mod.white: Mod
-    get() = this.background(Color.White)
-    
-val Mod.red: Mod
-    get() = this.background(Color.Red)
-
-val Mod.green: Mod
-    get() = this.background(Color.Green)
-
-val Mod.blue: Mod
-    get() = this.background(Color.Blue)
-
+//‼️ Keep them functions
+fun Mod.transparent() = this.background(Color.Transparent)
+fun Mod.black() = this.background(Color.Black)
+fun Mod.white() = this.background(Color.White)
+fun Mod.red() = this.background(Color.Red)
+fun Mod.green() = this.background(Color.Green)
+fun Mod.blue() = this.background(Color.Blue)
+fun Mod.cardColor() = this.background(cardColor)
 
     
 
