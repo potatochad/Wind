@@ -172,43 +172,20 @@ object Item {
 	fun <T> AddOrEdit(
 		list: MutableList<T>,
 		item: T?,
-		ifs: varag = {
-			if (//something//
-				Vlog("Add x")
-				return@Icon
-		},
-		add: //idk ={
-			x.edit {
-				bla,
-				bla
+		stop: () -> Bool = { no }, // return false to stop
+		edit: (T) -> Unit = {},
+		add: () -> Unit = {}
+	) {
+		val iconPick = if (item != null) Icons.Default.Edit else Icons.Default.Add
+
+		Icon(iconPick) {
+			if (stop) return@Icon
+
+			if (item != null) {
+				edit(item)
+			} else {
+				add()
 			}
-			goTo("Main")
-		}
-	){
-		val itemFound = webWord != null
-		val iconPick= if (itemFound) Icons.Default.Edit else Icons.Default.Add
-		var item = //logic?
-
-		fun addItem(){
-            
-			
-		}
-
-				
-		Icon(iconPick){
-			ifs()
-
-                if (itemFound) {
-                    add()
-					return@Icon
-                }
-
-                Bar.webWord.add {
-                    action = action1
-					word = word1.it
-					schedule = schedule1
-                }
-                goTo("WebKeywords")
 		}
 	}
 
