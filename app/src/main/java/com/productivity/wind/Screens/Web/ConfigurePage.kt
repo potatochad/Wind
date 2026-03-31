@@ -115,40 +115,31 @@ fun WebWordConfigure(id: Str = "") {
 				if (webWord != null) Icons.Default.Edit
 				else Icons.Default.Add
 			) {
-				log("clicked icon ")
                 if (word1.it== "") {
 					Vlog("Add time")
 					return@Icon
 				}
-				log("passed the check")
 
 
-                if (!id.isEmpty()) {
+                if (!id.empty) {
                     val wordFound = Bar.webWord.find { it.id == id }
-					log("found something")
 					
                     if (wordFound!=null){
-						log("tsk not null found")
-						
                         wordFound.edit {
 							action = action1
 							word = word1.it
 							schedule = schedule1
                         }  
-						log("going to WebKeywords")
                         goTo("WebKeywords")
                     }
                     return@Icon
                 }
-
-				Vlog("adding task")
 
                 Bar.webWord.add {
                     action = action1
 					word = word1.it
 					schedule = schedule1
                 }
-				Vlog("going to WebKeywords")
                 goTo("WebKeywords")
             }
 		}
