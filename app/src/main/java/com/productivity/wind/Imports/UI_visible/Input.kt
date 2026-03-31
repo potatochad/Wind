@@ -144,7 +144,7 @@ fun BasicInput(
 ) {
 	val focus = UIFocus()
 	val focusAsker = r { FocusRequester() }
-	val baseMod = Mod.space(h = 8, w = 4).w(60).h(26).background(InputColor, shape = RoundedCornerShape(4.dp))   
+	val baseMod = Mod.space(h = 8, w = 4).w(60).h(26).background(inputColor, shape = RoundedCornerShape(4.dp))   
 	var w by r(0)
 
 	val keyboard = Keyboard()
