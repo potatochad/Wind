@@ -404,7 +404,7 @@ fun LazyHeader(
         move(h = getStatusBarHeight()/3)
 
         LazzyRow(
-            Mod.maxW().black.space(w = 12).h(h),
+            Mod.maxW().black().space(w = 12).h(h),
         ) {
             if (showBack) {
 				move(5)
@@ -466,7 +466,7 @@ fun LazyScreen(
 			Column {
 				content()
 			}
-			Box(Mod.s(350).transparent)
+			Box(Mod.s(350).transparent())
         }
     }
 }
