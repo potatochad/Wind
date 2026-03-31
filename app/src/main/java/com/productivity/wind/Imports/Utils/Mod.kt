@@ -223,7 +223,7 @@ fun Mod.mix(new: Mod): Mod{
 }
 
 
-
+//‼️ Dont use color short hands, will just call on itself
 val Mod.transparent: Mod
     get() = this.background(Color.Transparent)
         
