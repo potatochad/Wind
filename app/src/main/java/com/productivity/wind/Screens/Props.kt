@@ -167,6 +167,37 @@ object Item {
 			}
 		}
 	}
+
+	Icon(
+				if (webWord != null) Icons.Default.Edit
+				else Icons.Default.Add
+			) {
+                if (word1.it== "") {
+					Vlog("Add time")
+					return@Icon
+				}
+
+                if (!id.empty) {
+                    val wordFound = Bar.webWord.find { it.id == id }
+					
+                    if (wordFound!=null){
+                        wordFound.edit {
+							action = action1
+							word = word1.it
+							schedule = schedule1
+                        }  
+                        goTo("WebKeywords")
+                    }
+                    return@Icon
+                }
+
+                Bar.webWord.add {
+                    action = action1
+					word = word1.it
+					schedule = schedule1
+                }
+                goTo("WebKeywords")
+	}
 	
 	@Composable
     fun Add(Do: Do = { goTo("Challenge") }) {
