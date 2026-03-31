@@ -120,7 +120,6 @@ fun WebWordConfigure(id: Str = "") {
 					return@Icon
 				}
 
-
                 if (!id.empty) {
                     val wordFound = Bar.webWord.find { it.id == id }
 					
