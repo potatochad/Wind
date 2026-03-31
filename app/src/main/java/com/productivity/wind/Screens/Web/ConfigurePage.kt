@@ -110,7 +110,7 @@ fun WebWordConfigure(id: Str = "") {
 				goTo("WebKeywords")
 			}
 
-			Item.AddOrEdit(
+			Item.FancyAdd(
 				list = Bar.webWord,
 				item = webWord,
 				stop = { 
@@ -118,24 +118,15 @@ fun WebWordConfigure(id: Str = "") {
 					if (stop) Vlog("Add time")
 					stop
 				},
-				edit = { x ->
-					x.edit {
-						action = action1
-						word = word1.it
-						schedule = schedule1
-					}  
-					goTo("WebKeywords")
-				},
-				add = {
-					Bar.webWord.add {
-						action = action1
-						word = word1.it
-						schedule = schedule1
-					}
-					goTo("WebKeywords")
-				}
-			)
-		}
+				newItem = { WebWord() },
+			){
+				x.edit {
+					action = action1
+					word = word1.it
+					schedule = schedule1
+				}  
+				goTo("WebKeywords")
+			}
 	}) {
 		LazyCard {
 			Column{
