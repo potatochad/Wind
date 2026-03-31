@@ -172,7 +172,8 @@ object Item {
 	fun <T> AddOrEdit(
 		list: MutableList<T>,
 		item: T?,
-		stop: () -> Bool = { no }, // return false to stop
+		newEmptyItem: () -> T,
+		stop: () -> Bool = { no },
 		edit: (T) -> Unit = {},
 	) {
 		val iconPick = if (item != null) Icons.Default.Edit else Icons.Default.Add
@@ -180,9 +181,7 @@ object Item {
 		Icon(iconPick) {
 			if (stop()) return@Icon
 
-			if (item != null) {
-				edit(item)
-			}
+			edit(newEmptyItem())
 		}
 	}
 	
