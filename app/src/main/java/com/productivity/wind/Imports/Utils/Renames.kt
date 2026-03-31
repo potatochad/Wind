@@ -132,6 +132,15 @@ val lightBlue = Color(0xFFADD8E6)
 val darkGreen = Color(0xFF0A1F0D)
 val orange = Color(0xFFFFA500)
 val transparent = Color.Transparent
+val black = Color.Black
+val red = Color.Red
+val green = Color.Green
+val blue = Color.Blue
+val cyan = Color.Cyan
+val magenta = Color.Magenta
+val yellow = Color.Yellow
+val darkGray = Color.DarkGray
+val lightGray = Color.LightGray
 
 //tiny renames
 val gson = Gson()
