@@ -351,59 +351,34 @@ fun ToDo(id: Str = "") {
 				goTo("Main")
 			}
 
-			Icon(
-				if (todo != null) Icons.Default.Edit
-				else Icons.Default.Add
-			) {
-				log("clicked icon ")
-                if (time1.it==0) {
-					Vlog("Add time")
-					return@Icon
-				}
-				if (name1.it=="") {
-					Vlog("Add name")
-					return@Icon
-				}
-				log("passed the check")
-
-				
-
+			Item.FancyAdd(
+				list = Bar.doTsk,
+				item = todo,
+				stop = { 
+					if (time1.it==0) {
+						Vlog("Add time")
+						return@stop yes
+					}
+					if (name1.it=="") {
+						Vlog("Add name")
+						return@stop yes
+					}
+					no
+				},
+				newItem = { DoTsk() },
+			){ x ->
 				var gotPerm = Permission.ignoreOptimizations()
 				if (!gotPerm) Vlog("recommended permission")
 
-
-                if (!id.isEmpty()) {
-                    val tsk = Bar.doTsk.find { it.id == id }
-					log("found something")
-					
-                    if (tsk!=null){
-						log("tsk not null found")
-						
-                        tsk.edit {
-							name = name1.it
-							doneTime = time1.it
-							worth = points1.it
-							schedule = schedule1
-							description = description1.it
-                        }  
-						log("going to main")
-                        goTo("Main")
-                    }
-                    return@Icon
-                }
-
-				Vlog("adding task")
-
-                Bar.doTsk.add {
-                    name = name1.it
+				x.edit {
+					name = name1.it
 					doneTime = time1.it
 					worth = points1.it
 					schedule = schedule1
 					description = description1.it
-                }
-				Vlog("going to main")
-                goTo("Main")
-            }
+				}  
+				goTo("Main")
+			}
 		}
 	}) {
 		RuleCard("Info"){
