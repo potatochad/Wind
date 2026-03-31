@@ -174,7 +174,6 @@ object Item {
 		item: T?,
 		stop: () -> Bool = { no }, // return false to stop
 		edit: (T) -> Unit = {},
-		add: () -> Unit = {}
 	) {
 		val iconPick = if (item != null) Icons.Default.Edit else Icons.Default.Add
 
@@ -183,37 +182,9 @@ object Item {
 
 			if (item != null) {
 				edit(item)
-			} else {
-				add()
 			}
 		}
 	}
-
-	@Composable
-	fun <T> AddOrEdit5(
-		list: MutableList<T>,
-		item: T?,
-		stop: () -> Bool = { no },
-		Do: (T) -> Unit = {}
-	) {
-		val iconPick = if (item != null) Icons.Default.Edit else Icons.Default.Add
-
-		Icon(iconPick) {
-			if (stop()) return@Icon
-
-			if (item == null) {
-				//makeDummy item
-			}
-
-			if (item != null) {
-				edit(item)///wait, how do with just doooo
-			} else {
-				
-				Do(T)
-			}
-		}
-	}
-
 	
 	
 	@Composable
