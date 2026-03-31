@@ -166,7 +166,7 @@ fun SwitchBtn(
 			checkedThumbColor = White,
 			checkedTrackColor = Gold,
 			uncheckedThumbColor = White, 
-			uncheckedTrackColor = Color.Gray,
+			uncheckedTrackColor = Gray,
 			checkedBorderColor = Transparent,     
 			uncheckedBorderColor = Transparent,
         )
