@@ -69,7 +69,7 @@ fun Icon(
     icon: icon,
     size: Any = 25,        
     mod: Mod = Mod,
-    color: Color = Color.White,
+    color: Color = white,
 	onClick: Do,
 ) {
 	ComposeCanBeTiny() {
@@ -97,7 +97,7 @@ fun Icon(
     icon: icon,
     size: Any = 25,        
     mod: Mod = Mod,
-    color: Color = Color.White,
+    color: Color = white,
 ) {
 	ComposeCanBeTiny() {
 		Icon(
@@ -112,7 +112,7 @@ fun Icon(
 @Composable
 fun Icon(
     iconRes: Int,
-    color: Color = Color.White,
+    color: Color = white,
     size: Any = 24,
     mod: Mod = Mod,
 ) {
@@ -128,7 +128,7 @@ fun Icon(
 @Composable
 fun Icon(
     iconRes: Int,
-    color: Color = Color.White,
+    color: Color = white,
     size: Any = 24,
     mod: Mod = Mod,
 	Do: Do,
