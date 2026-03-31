@@ -106,12 +106,8 @@ fun WebWordConfigure(id: Str = "") {
         Text("Configure")
 
         End {
-			
-			if (webWord != null) {
-				Item.Delete { 
-					webWord!!.remove()
-					goTo("WebKeywords")
-				}
+			Item.ItemDelete(Bar.webWords, webWord){
+				goTo("WebKeywords")
 			}
 			
 
