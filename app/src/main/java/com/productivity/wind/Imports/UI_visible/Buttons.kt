@@ -158,9 +158,11 @@ fun SwitchBtn(
 	mod: Mod = Mod,
     onCheckedChange: Do_<Bool>,
 ) {
-    Switch(
+	Row{
+	ComposeCanBeTiny {
+		Switch(
         checked = checked,
-		modifier = Mod.s(30),
+		modifier = Mod.s(20),
         onCheckedChange = onCheckedChange,
         colors = SwitchDefaults.colors(
 			checkedThumbColor = white,
@@ -171,6 +173,8 @@ fun SwitchBtn(
 			uncheckedBorderColor = gray,
         )
     )
+	}
+	}
 }
 
 
