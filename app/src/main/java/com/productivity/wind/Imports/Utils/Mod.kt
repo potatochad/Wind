@@ -225,7 +225,7 @@ fun Mod.mix(new: Mod): Mod{
 
 
 val Mod.transparent: Mod
-    get() = this.background(Transparent)
+    get() = this.background(transparent)
         
 val Mod.black: Mod
     get() = this.background(black)
@@ -264,13 +264,14 @@ fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
 
 
 
-
-object CenterHTag : Mod.Element
-object CenterVTag : Mod.Element
-object TopTag : Mod.Element
-object BottomTag : Mod.Element
-object StartTag : Mod.Element
-object EndTag : Mod.Element
+//THESE NAMES MUST BE: Modifier
+//‼️CANT BE Mod
+object CenterHTag : Modifier.Element
+object CenterVTag : Modifier.Element
+object TopTag : Modifier.Element
+object BottomTag : Modifier.Element
+object StartTag : Modifier.Element
+object EndTag : Modifier.Element
 
 inline fun <reified T : Modifier.Element> Mod.hasTag(): Bool =
     this.any { it is T }
