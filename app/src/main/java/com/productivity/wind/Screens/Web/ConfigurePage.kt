@@ -97,6 +97,9 @@ fun WebWordConfigure(id: Str = "") {
 	    )
 	)
 	var webWord by r<WebWord?>(null)
+
+
+	WebProps.Popup.WebWordLock(locked1)
 	
 	
     LoadItemFromId(id, Bar.webWord) { t ->
@@ -159,9 +162,7 @@ fun WebWordConfigure(id: Str = "") {
 				}
 				LazzyRow {
 					Text("Lock:")
-					Icon.Lock(locked1){
-						pop("WebWordLock")
-					}
+					Icon.Lock(locked1)
 				}
 				
 			}
