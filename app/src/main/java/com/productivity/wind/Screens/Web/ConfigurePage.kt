@@ -73,6 +73,9 @@ fun WebKeywords() {
 			) { 
                 LazzyRow {
                     Text(text = it.word)
+					End {
+						if (it.locked) Icon.Lock(color = gold)
+					}
                 }
             }
         }
