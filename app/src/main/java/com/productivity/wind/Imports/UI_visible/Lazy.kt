@@ -231,7 +231,10 @@ fun LazzyRow(
     space: Any = 0,
 	ui: uiRow,
 ) {
-	var baseMod = Mod.maxW().space(space)
+	var baseMod = Mod
+		//.maxW()
+	    .weight(1f)
+		.space(space)
 	
     Row(
         baseMod.mix(new = mod),
