@@ -98,8 +98,7 @@ fun NavGraphBuilder.ScreenNav() {
 	// popups
 	popup("getPoints") { getPoints() }
 	popup("AllowAppUsage") { AllowAppUsage() }
-
-  
+	popup("AllowAppUsage") { AllowAppUsage() }
 }
 
 
