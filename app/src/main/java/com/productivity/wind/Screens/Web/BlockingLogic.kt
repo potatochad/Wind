@@ -35,6 +35,8 @@ import androidx.compose.material.icons.outlined.*
 import android.webkit.WebResourceResponse
 import java.io.ByteArrayInputStream
 
+import com.productivity.wind.Imports.Utils.Browser.*
+
 
 fun BlockingLogic(web: WebController){
 	fun Block(){
