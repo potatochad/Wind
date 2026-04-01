@@ -192,55 +192,7 @@ class WebController(
         }
     }
 
-    fun allVisibleText(done: (String) -> Unit) {
-    webView.evaluateJavascript(
-        """
-        (function(){
-
-            // Create a full copy of the page
-            const bodyCopy = document.body.cloneNode(true);
-
-            // Clean the copy only (not the real page)
-            bodyCopy.querySelectorAll('style, script, link, noscript').forEach(e => e.remove());
-
-            function getText(node){
-                let text = "";
-
-                node.childNodes.forEach(n => {
-
-                    if(n.nodeType === Node.COMMENT_NODE) return;
-
-                    if(n.nodeType === Node.TEXT_NODE){
-                        let t = n.textContent.trim();
-                        if(t.length > 0){
-                            text += t + "\n";
-                        }
-                    }
-                    else if(n.nodeType === Node.ELEMENT_NODE){
-                        text += getText(n);
-                    }
-
-                });
-
-                return text;
-            }
-
-            return getText(bodyCopy);
-
-        })();
-        """.trimIndent()
-    ) { result ->
-
-        val cleaned = result
-            ?.removePrefix("\"")
-            ?.removeSuffix("\"")
-            ?.replace("\\n", "\n")
-            ?.replace("\\\"", "\"")
-
-        done(cleaned ?: "")
-    }
-    }
-
+    
 
     
 }
