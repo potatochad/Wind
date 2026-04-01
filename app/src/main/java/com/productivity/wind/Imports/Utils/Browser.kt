@@ -23,6 +23,8 @@ import com.productivity.wind.Imports.Utils.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import android.view.LayoutInflater
+import android.widget.FrameLayout
+
 fun MonochromeView(context: Context, targetView: View, saturation: Float = 0.1f): FrameLayout {
     // Create a container
     val container = FrameLayout(context)
