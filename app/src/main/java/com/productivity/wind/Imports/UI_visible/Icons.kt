@@ -249,7 +249,7 @@ object Icon {
 			if (locked) Icons.Default.Lock else Icons.Default.LockOpen,
 			color = if (locked) gold else gray,
 		){
-			Wait(300){
+			wait(300){
 				locked = !locked
 				Do(locked)
 			}
