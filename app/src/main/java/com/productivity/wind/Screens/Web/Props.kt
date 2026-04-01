@@ -111,11 +111,20 @@ object WebProps {
 			locked: mBool,
 		){
 			var show = r(locked.it)
+
+			var oldLocked by r(locked.it)
+			RunOnce(locked.it){
+				if (locked.it != oldLocked){
+					if (locked.it) show.it = yes
+				}
+				oldLocked = locked.it
+			}
+			
 			LazyPopup(
 				show, 
 				"Are you sure?",
 				"Locked keywords can NOT be editted, deleted, can NOT reverse choice, ONLY the global settings page option restore can REVERSE it",    
-				on= {
+				onCancel = {
 					if (locked.it) locked.it = no
 				},
 			)
