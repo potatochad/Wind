@@ -181,8 +181,7 @@ fun WebXml(web: WebController) {
 
                 swipe
                 */
-             //web.rootView
-             web.monochromeContainer
+             web.rootView
             },
             modifier = Mod.maxS(),
         )
