@@ -52,16 +52,18 @@ fun WebKeywords() {
 		onBackClick = { goTo("Web") }
 	) {
 		LazyCard {
-			LazzyRow(Mod.centerH) {
-				WebProps.BtnAllow(filterAction) {
-					filterAction = WebAction.Allow
+			LazzyRow(Mod.centerV){
+				LazzyRow(Mod.centerH){
+					WebProps.BtnAllow(filterAction) {
+						filterAction = WebAction.Allow
+					}
+					WebProps.BtnBlock(filterAction) {
+						filterAction = WebAction.Block					
+					}
 				}
-				WebProps.BtnBlock(filterAction) {
-					filterAction = WebAction.Block					
+				End {
+					Icon.Lock(locked1)
 				}
-			}
-			End {
-				Icon.Lock(locked1)
 			}
 		}
 		
