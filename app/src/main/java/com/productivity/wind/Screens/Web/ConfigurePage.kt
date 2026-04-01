@@ -68,7 +68,7 @@ fun WebKeywords() {
 	
         Bar.webWord.findUI({
 			it.action == filterAction &&
-			if (locked1.it) it.locked else yes
+			if (locked1.it) it.locked else !it.locked
 		}) {
             LazyCard(
 				modUI = Mod.space(10),
