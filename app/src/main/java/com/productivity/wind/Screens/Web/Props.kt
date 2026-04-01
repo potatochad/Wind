@@ -111,7 +111,10 @@ object WebProps {
 			LazyPopup(
 				m(yes), 
 				"Are you sure?",
-				"Locked keywords can NOT be editted, deleted, can NOT reverse choice, ONLY the global settings page option restore can REVERSE it"
+				"Locked keywords can NOT be editted, deleted, can NOT reverse choice, ONLY the global settings page option restore can REVERSE it",    
+				onClose = {
+					navBack()
+				},
 			)
 		}
 	}
