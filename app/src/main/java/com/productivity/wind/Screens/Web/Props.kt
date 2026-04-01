@@ -107,16 +107,15 @@ object WebProps {
 
 	object Popup {
 		@Composable
-		fun WebWordLock(){
+		fun WebWordLock(
+			locked: mBool,
+		){
 			LazyPopup(
-				m(yes), 
+				locked, 
 				"Are you sure?",
 				"Locked keywords can NOT be editted, deleted, can NOT reverse choice, ONLY the global settings page option restore can REVERSE it",    
 				onClose = {
-					
-				},
-				onConfirm = {
-					
+					if (locked.it) locked.it = no
 				},
 			)
 		}
