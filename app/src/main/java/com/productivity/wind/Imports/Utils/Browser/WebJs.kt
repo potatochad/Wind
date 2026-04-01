@@ -26,5 +26,36 @@ import android.widget.FrameLayout
 
 
 
+fun WebView.forceGoogleInputFocus() {
+    this.evaluateJavascript(
+        """
+        (function() {
+
+            let input =
+                document.querySelector('textarea[name="q"]') ||
+                document.querySelector('input[name="q"]') ||
+                document.querySelector('[role="combobox"]');
+
+            if (!input) return "not found";
+
+            input.scrollIntoView({behavior: "smooth", block: "center"});
+
+            input.focus();
+            input.click();
+
+            input.dispatchEvent(new Event('focus', {bubbles: true}));
+
+            return "focused";
+
+        })();
+        """.trimIndent()
+    ) {
+        log("JS result: $it")
+
+        this.showKeyboard()
+    }
+}
+
+
 
 
