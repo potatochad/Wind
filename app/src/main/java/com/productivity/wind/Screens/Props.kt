@@ -228,7 +228,7 @@ object Item {
 
     fun enoughPoints(enough: Do) {
         if (Bar.funTime < Bar.Dpoints) {
-            goTo("getPoints")
+            pop("getPoints")
         }
         else enough()
     }
