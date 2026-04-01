@@ -52,7 +52,7 @@ class WebController(
                 super.onPageFinished(view, url)
 
                 view?.evaluateJavascript(
-                    "document.body.style.filter = 'grayscale(10%)';",
+                    "document.body.style.filter = 'grayscale(100%)';",
                     null
                 )
                 
