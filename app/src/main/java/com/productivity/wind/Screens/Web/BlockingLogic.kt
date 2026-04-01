@@ -56,13 +56,8 @@ fun BlockingLogic(web: WebController){
 
 		if (WebUtils.HasBadWord(url)){
 			if (!WebUtils.HasGoodWord(url)){
-				Bar.Url = "https://www.google.com"
-				
-				return@shouldInterceptRequest WebResourceResponse(
-					"text/plain",
-					"UTF-8",
-					ByteArrayInputStream("".toByteArray())
-				)
+				Block()
+				return@shouldInterceptRequest null
 			}
 		}
 						
@@ -74,13 +69,11 @@ fun BlockingLogic(web: WebController){
 
 		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url.toString())} | GoodWord: ${WebUtils.FindGoodWord(url.toString())}")
 
-		if (WebUtils.HasBadWord(url, { it.locked })){
-			Bar.Url = "https://www.google.com"
-		}
+		if (WebUtils.HasBadWord(url, { it.locked })) Block()
 			
 		if (WebUtils.HasBadWord(Bar.Url)){
 			if (!WebUtils.HasGoodWord(Bar.Url)){
-				Bar.Url = "https://www.google.com"
+				Block()
 			}
 		}
     }
