@@ -61,9 +61,9 @@ fun WebKeywords() {
 						filterAction = WebAction.Block					
 					}
 				}
-				Row(Mod.weight(1f))
-				
-				Icon.Lock(locked1)
+				SafeEnd {
+					Icon.Lock(locked1)
+				}
 			}
 		}
 		
