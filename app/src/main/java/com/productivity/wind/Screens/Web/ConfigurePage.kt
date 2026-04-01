@@ -53,17 +53,17 @@ fun WebKeywords() {
 	) {
 		LazyCard {
 			LazzyRow(Mod.centerV){
-				LazzyRow(Mod.centerH){
-					WebProps.BtnAllow(filterAction) {
-						filterAction = WebAction.Allow
-					}
-					WebProps.BtnBlock(filterAction) {
-						filterAction = WebAction.Block					
+				Weight {
+					LazzyRow(Mod.centerH){
+						WebProps.BtnAllow(filterAction) {
+							filterAction = WebAction.Allow
+						}
+						WebProps.BtnBlock(filterAction) {
+							filterAction = WebAction.Block					
+						}
 					}
 				}
-				SafeEnd {
-					Icon.Lock(locked1)
-				}
+				Icon.Lock(locked1)
 			}
 		}
 		
