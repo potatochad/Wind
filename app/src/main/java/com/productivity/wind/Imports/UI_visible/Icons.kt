@@ -248,10 +248,8 @@ object Icon {
 			if (locked) Icons.Default.Lock else Icons.Default.LockOpen,
 			color = if (locked) gold else gray,
 		){
-			wait(300){
-				locked = !locked
-				Do(locked)
-			}
+			locked = !locked
+			Do(locked)
 		}
 	}
 	@Composable
@@ -260,9 +258,7 @@ object Icon {
 			if (locked.it) Icons.Default.Lock else Icons.Default.LockOpen,
 			color = if (locked.it) gold else gray,
 		){
-			wait(300){
-				locked.it = !locked.it
-			}
+			locked.it = !locked.it
 		}
 	}
 	@Composable
