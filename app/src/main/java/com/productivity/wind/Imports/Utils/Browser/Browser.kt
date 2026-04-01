@@ -51,10 +51,7 @@ class WebController(
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
 
-                view?.evaluateJavascript(
-                    "document.body.style.filter = 'grayscale(90%)';",
-                    null
-                )
+                view?.gray(90f)
                 
                 onPageFinished.forEach { it(url) }
             }
