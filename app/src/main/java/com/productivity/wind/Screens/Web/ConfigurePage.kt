@@ -38,7 +38,7 @@ import com.productivity.wind.Screens.*
 @Composable
 fun WebKeywords() {
 	var filterAction by r(WebAction.Block)
-	var 
+	var locked1 = r(no)
 	
     LazyScreen(
 		top = {
@@ -67,7 +67,8 @@ fun WebKeywords() {
 		
 	
         Bar.webWord.findUI({
-			it.action == filterAction
+			it.action == filterAction &&
+			if (locked1.it) it.locked else yes
 		}) {
             LazyCard(
 				modUI = Mod.space(10),
