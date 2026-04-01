@@ -38,6 +38,7 @@ import com.productivity.wind.Screens.*
 @Composable
 fun WebKeywords() {
 	var filterAction by r(WebAction.Block)
+	var 
 	
     LazyScreen(
 		top = {
@@ -58,6 +59,9 @@ fun WebKeywords() {
 				WebProps.BtnBlock(filterAction) {
 					filterAction = WebAction.Block					
 				}
+			}
+			End {
+				Icon.Lock(locked1)
 			}
 		}
 		
