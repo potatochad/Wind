@@ -157,5 +157,75 @@ fun WebController.allVisibleText(done: (String) -> Unit) {
 
 
 
+fun WebView.html(done: (String) -> Unit) {
+    this.evaluateJavascript(
+        """
+        (function(){
+        // Clone the body so we don't break the live page
+        var clone = document.body.cloneNode(true);
+
+        // Remove unwanted tags inside body
+        clone.querySelectorAll('style, script, link').forEach(e => e.remove());
+
+        // Remove all images
+        clone.querySelectorAll('img').forEach(e => e.remove());
+        clone.querySelectorAll('svg').forEach(e => e.remove());
+
+        // Remove inline style attributes
+        clone.querySelectorAll('*').forEach(e => e.removeAttribute('style'));
+
+        // Return only cleaned body HTML
+        return clone.outerHTML;
+    })();
+    """.trimIndent()
+    ) { html ->
+        val cleaned = html
+        ?.removePrefix("\"")
+        ?.removeSuffix("\"")
+        ?.replace("\\u003C", "<")
+        ?.replace("\\u003E", ">")
+        ?.replace("\\\"", "\"")
+        ?.replace("\\n", "\n")
+        
+        done(cleaned ?: "")
+    }
+}
+
+
+fun WebController.html(done: (String) -> Unit) {
+    this.webView.evaluateJavascript(
+        """
+        (function(){
+        // Clone the body so we don't break the live page
+        var clone = document.body.cloneNode(true);
+
+        // Remove unwanted tags inside body
+        clone.querySelectorAll('style, script, link').forEach(e => e.remove());
+
+        // Remove all images
+        clone.querySelectorAll('img').forEach(e => e.remove());
+        clone.querySelectorAll('svg').forEach(e => e.remove());
+
+        // Remove inline style attributes
+        clone.querySelectorAll('*').forEach(e => e.removeAttribute('style'));
+
+        // Return only cleaned body HTML
+        return clone.outerHTML;
+    })();
+    """.trimIndent()
+    ) { html ->
+        val cleaned = html
+        ?.removePrefix("\"")
+        ?.removeSuffix("\"")
+        ?.replace("\\u003C", "<")
+        ?.replace("\\u003E", ">")
+        ?.replace("\\\"", "\"")
+        ?.replace("\\n", "\n")
+        
+        done(cleaned ?: "")
+    }
+}
+
+
 
 
