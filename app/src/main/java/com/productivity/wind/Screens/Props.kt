@@ -95,7 +95,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("SettingsOtherScreen") { SettingsOtherScreen() }
     url("LogsScreen") { LogsScreen() }
 
-	// popups
+	// popups ‼️Nav back on close
 	popup("getPoints") { getPoints() }
 	popup("AllowAppUsage") { AllowAppUsage() }
 	popup("WebWordLock") { WebProps.Popup.WebWordLock() }
