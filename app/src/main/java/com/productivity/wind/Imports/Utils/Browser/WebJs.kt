@@ -227,5 +227,19 @@ fun WebController.html(done: (String) -> Unit) {
 }
 
 
+fun WebView.gray(x: Float) {
+    this.evaluateJavascript(
+        "document.body.style.filter = 'grayscale(${x}%)';",
+        null
+    )
+}
+fun WebController.gray(x: Float) {
+    this.webView.evaluateJavascript(
+        "document.body.style.filter = 'grayscale(${x}%)';",
+        null
+    )
+}
+
+
 
 
