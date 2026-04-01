@@ -106,8 +106,8 @@ fun WebView.allVisibleText(done: (String) -> Unit) {
  }
 
 
-fun .allVisibleText(done: (String) -> Unit) {
-    this.evaluateJavascript(
+fun WebController.allVisibleText(done: (String) -> Unit) {
+    this.webView.evaluateJavascript(
         """
         (function(){
 
