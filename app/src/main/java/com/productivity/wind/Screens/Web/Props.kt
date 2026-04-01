@@ -166,11 +166,15 @@ object WebUtils {
 		}
 		return ""
 	}
-	fun HasBadWord(txt: Str): Bool {
+	fun HasBadWord(
+		txt: Str,
+		extraCheck: (WebWord) -> Bool
+	): Bool {
 		for (y in Bar.webWord) {
 			if (
 				txt.contains(y.word, ignoreCase = true) &&
-					y.action == WebAction.Block
+					y.action == WebAction.Block &&
+					extraCheck(y)
 			) {
 				return true
 			}
