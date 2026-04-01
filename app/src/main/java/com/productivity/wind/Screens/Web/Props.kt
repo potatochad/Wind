@@ -168,7 +168,7 @@ object WebUtils {
 	}
 	fun HasBadWord(
 		txt: Str,
-		extraCheck: (WebWord) -> Bool
+		extraCheck: (WebWord) -> Bool = { yes }
 	): Bool {
 		for (y in Bar.webWord) {
 			if (
