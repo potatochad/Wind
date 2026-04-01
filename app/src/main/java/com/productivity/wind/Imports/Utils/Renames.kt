@@ -280,6 +280,9 @@ fun goTo(route: Str){
 		AppNavUrlChanged = no
 	}
 }
+fun pop(route: Str){ 
+	AppNav.navigate(route) 
+}
 
 fun NavGraphBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
     composable(txt) { UI(it) }
