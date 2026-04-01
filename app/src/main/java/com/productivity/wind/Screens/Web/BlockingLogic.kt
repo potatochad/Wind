@@ -48,6 +48,16 @@ fun BlockingLogic(web: WebController){
 
 		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url)} | GoodWord: ${WebUtils.FindGoodWord(url)}")
 
+		for (y in Bar.webWord) {
+			if (
+				url.contains(y.word, ignoreCase = true) &&
+					y.action == WebAction.Block &&
+					y.locked
+			) {
+				Bar.Url = "https://www.google.com"
+			}
+		}
+
 		if (WebUtils.HasBadWord(url)){
 			if (!WebUtils.HasGoodWord(url)){
 				Bar.Url = "https://www.google.com"
@@ -68,6 +78,15 @@ fun BlockingLogic(web: WebController){
 
 		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url.toString())} | GoodWord: ${WebUtils.FindGoodWord(url.toString())}")
 
+		for (y in Bar.webWord) {
+			if (
+				url.contains(y.word, ignoreCase = true) &&
+					y.action == WebAction.Block &&
+					y.locked
+			) {
+				Bar.Url = "https://www.google.com"
+			}
+		}
 			
 		if (WebUtils.HasBadWord(Bar.Url)){
 			if (!WebUtils.HasGoodWord(Bar.Url)){
