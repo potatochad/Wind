@@ -103,15 +103,16 @@ object WebProps {
 		){       
 			Input1 = it
 		}
-		object Popup {
-			@Composable
-			fun getPoints(){
-				LazyPopup(
-					m(yes), 
-					"Get ${Bar.funTime- Bar.Dpoints} more points", 
-					"Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime- Bar.Dpoints}",
-				)
-			}
+	}
+
+	object Popup {
+		@Composable
+		fun WebWordLock(){
+			LazyPopup(
+				m(yes), 
+				"Are you sure?",
+				"Locked keywords can NOT be editted, deleted, can NOT reverse choice, ONLY the global settings page option restore can REVERSE it"
+			)
 		}
 	}
 	
