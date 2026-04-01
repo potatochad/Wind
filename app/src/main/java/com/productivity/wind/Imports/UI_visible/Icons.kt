@@ -257,8 +257,8 @@ object Icon {
 	@Composable
 	fun Lock(locked: mBool) {
 		Icon(
-			if (locked) Icons.Default.Lock else Icons.Default.LockOpen,
-			color = if (locked) gold else gray,
+			if (locked.it) Icons.Default.Lock else Icons.Default.LockOpen,
+			color = if (locked.it) gold else gray,
 		){
 			wait(300){
 				locked.it = !locked.it
