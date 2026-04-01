@@ -160,7 +160,7 @@ fun WebWordConfigure(id: Str = "") {
 				LazzyRow {
 					Text("Lock:")
 					Icon.Lock(locked1){
-						goTo("WebWordLock")
+						pop("WebWordLock")
 					}
 				}
 				
