@@ -141,6 +141,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.material3.pulltorefresh.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 
+import com.productivity.wind.Imports.Utils.Browser.*
+
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebXml(web: WebController) {
