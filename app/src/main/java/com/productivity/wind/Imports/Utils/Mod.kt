@@ -165,8 +165,6 @@ fun Mod.s(Do: Do_<IntSize>): Mod = this.onSizeChanged { Do(it) }
 fun Mod.center() = this.wrapContentSize(align = Alignment.Center)
 fun Mod.round(x: Any): Mod = this.clip(RoundedCornerShape(toDp(x)))
 
-fun Mod.weight(): Mod = this.weight(1f)
-
 fun Mod.maxS(): Mod= this.fillMaxSize()
 fun Mod.maxW(): Mod= this.fillMaxWidth()
 fun Mod.maxH(): Mod= this.fillMaxHeight()
