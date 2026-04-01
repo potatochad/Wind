@@ -103,6 +103,16 @@ object WebProps {
 		){       
 			Input1 = it
 		}
+		object Popup {
+			@Composable
+			fun getPoints(){
+				LazyPopup(
+					m(yes), 
+					"Get ${Bar.funTime- Bar.Dpoints} more points", 
+					"Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime- Bar.Dpoints}",
+				)
+			}
+		}
 	}
 	
 	object Home {
