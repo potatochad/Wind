@@ -255,12 +255,13 @@ object Icon {
 		}
 	}
 	@Composable
-	fun Lock(locked: mBool) {
+	fun Lock(locked: mBool, Do: Do_<Bool>) {
 		Icon(
 			if (locked.it) Icons.Default.Lock else Icons.Default.LockOpen,
 			color = if (locked.it) gold else gray,
 		){
 			locked.it = !locked.it
+			Do(locked.it)
 		}
 	}
 	@Composable
