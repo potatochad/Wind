@@ -80,7 +80,7 @@ fun BlockingLogic(web: WebController){
 
 		for (y in Bar.webWord) {
 			if (
-				url.contains(y.word, ignoreCase = true) &&
+				Bar.Url.contains(y.word, ignoreCase = true) &&
 					y.action == WebAction.Block &&
 					y.locked
 			) {
