@@ -32,10 +32,14 @@ fun MonochromeView(context: Context, targetView: View, saturation: Float = 0.1f)
     // Add your original view
     container.addView(targetView)
 
-    // Create and apply color filter for monochrome effect
+    // Create a color matrix and paint for monochrome effect
     val matrix = ColorMatrix()
     matrix.setSaturation(saturation)  // 0f = fully grayscale, 1f = full color
-    container.colorFilter = ColorMatrixColorFilter(matrix)
+    val paint = Paint()
+    paint.colorFilter = ColorMatrixColorFilter(matrix)
+
+    // Apply the paint via hardware layer to the container
+    container.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
 
     return container
 }
