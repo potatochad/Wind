@@ -304,7 +304,7 @@ object Item {
 				if (Bar.Dpoints > 0) {
 					if (Bar.funTime < 1) {
 						goTo("main")
-						goTo("getPoints")
+						pop("getPoints")
 					} else {
 						Bar.funTime -= 1
 					}
