@@ -186,44 +186,44 @@ val myAppRes: Int = R.drawable.baseline_radar_24
 
 object Icon {
 	@Composable
-	fun IconShortcut(icon: icon, mod: Mod = Mod.space(34), Do: Do? = null) {
+	fun IconShortcut(icon: icon, mod: Mod = Mod.space(34), color: Color = white, Do: Do? = null) {
 		if (Do != null) {
-			Icon(icon, mod = mod) { Do() }
+			Icon(icon, mod = mod, color = color) { Do() }
 		} else {
-			Icon(icon, mod = mod)
+			Icon(icon, mod = mod, color = color)
 		}
 	}
 
 	
 	@Composable
-	fun Menu(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Menu, mod, Do)
+	fun Menu(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Menu, mod, color, Do)
 	
 	@Composable
-	fun Reload(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Refresh, mod, Do)
+	fun Reload(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Refresh, mod, color, Do)
 	
 	@Composable
-	fun Chill(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.SportsEsports, mod, Do)
+	fun Chill(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.SportsEsports, mod, color, Do)
 	
 	@Composable
-	fun Add(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Add, mod, Do)
+	fun Add(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Add, mod, color, Do)
 	
 	@Composable
-	fun MoreMenu(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.MoreVert, mod, Do)
+	fun MoreMenu(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.MoreVert, mod, color, Do)
 	
 	@Composable
-	fun Edit(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Edit, mod, Do)
+	fun Edit(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Edit, mod, color, Do)
 	
 	@Composable
-	fun Delete(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Delete, mod, Do)    
+	fun Delete(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Delete, mod, color, Do)    
 
 	@Composable
-	fun Search(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Search, mod, Do)
+	fun Search(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Search, mod, color, Do)
 
 	@Composable
-	fun Back(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.ArrowBack, mod, Do)
+	fun Back(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.ArrowBack, mod, color, Do)
 
 	@Composable
-	fun Lock(mod: Mod = Mod.space(5), Do: Do? = null) = IconShortcut(Icons.Default.Lock, mod, Do)
+	fun Lock(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Lock, mod, color, Do)
 
 
 
