@@ -21,35 +21,15 @@ import android.graphics.*
 import kotlinx.coroutines.*
 import com.productivity.wind.Imports.Utils.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 
-fun MonochromeView(context: Context, targetView: View, saturation: Float = 0.1f): FrameLayout {
-    // Create a container
-    val container = FrameLayout(context)
-
-    // Add your original view
-    container.addView(targetView)
-
-    // Create a color matrix and paint for monochrome effect
-    val matrix = ColorMatrix()
-    matrix.setSaturation(saturation)  // 0f = fully grayscale, 1f = full color
-    val paint = Paint()
-    paint.colorFilter = ColorMatrixColorFilter(matrix)
-
-    // Apply the paint via hardware layer to the container
-    container.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
-
-    return container
-}
 
 
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
 ) {
     val rootView: View = LayoutInflater.from(ctx).inflate(R.layout.web, null, false)
-    val monochromeContainer = MonochromeView(ctx, rootView, 1f) // 10% monochrome
     val webView: WebView = rootView.findViewById(R.id.myWebView)
     
     private var shouldOverrideUrlLoading = mutableListOf<(String?) -> Boolean>()
