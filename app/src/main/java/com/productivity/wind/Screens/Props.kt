@@ -98,7 +98,6 @@ fun NavGraphBuilder.ScreenNav() {
 	// popups ‼️Nav back on close
 	popup("getPoints") { getPoints() }
 	popup("AllowAppUsage") { AllowAppUsage() }
-	popup("WebWordLock") { WebProps.Popup.WebWordLock() }
 }
 
 
