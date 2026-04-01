@@ -68,7 +68,7 @@ fun WebKeywords() {
             LazyCard(
 				modUI = Mod.space(10),
 				modCard = Mod.space(10).maxW().click {    
-					goTo("WebWordConfigure/${it.id}")
+					if (!it.locked) goTo("WebWordConfigure/${it.id}")
 				},
 			) { 
                 LazzyRow {
