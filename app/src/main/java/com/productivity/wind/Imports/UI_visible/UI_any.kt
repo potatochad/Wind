@@ -181,6 +181,11 @@ fun End(mod: Mod = Mod, ui: ui) {
 		move(10)
 	}
 }
+@Composable
+fun RowScope.SafeEnd(ui: @Composable RowScope.() -> Unit) {
+    Spacer(modifier = Mod.weight(1f))
+    ui()
+}
 
 @Composable
 fun EmptyBox(
