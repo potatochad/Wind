@@ -183,7 +183,7 @@ fun End(mod: Mod = Mod, ui: ui) {
 }
 @Composable
 fun RowScope.SafeEnd(ui: uiRow) {
-    Spacer(modifier = Mod.weight())
+    Spacer(modifier = Mod.weight(1f))
     ui()
 }
 
