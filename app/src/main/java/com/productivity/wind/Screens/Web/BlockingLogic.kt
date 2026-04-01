@@ -69,7 +69,7 @@ fun BlockingLogic(web: WebController){
 
 		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url.toString())} | GoodWord: ${WebUtils.FindGoodWord(url.toString())}")
 
-		if (WebUtils.HasBadWord(url, { it.locked })) Block()
+		if (WebUtils.HasBadWord(Bar.Url, { it.locked })) Block()
 			
 		if (WebUtils.HasBadWord(Bar.Url)){
 			if (!WebUtils.HasGoodWord(Bar.Url)){
