@@ -310,22 +310,16 @@ object WebUtils {
 		
 
 		var noGoodWords by m(goodWords.empty)
-		var hasBadBlot by m(badWords.any { it.type == WebType.Blot})
-		var hasBadKeyWord by m(badWords.any { it.type == WebType.Blot})
+		var hasBadBlot by m(badWords.any { it.type == Blot })
+		var hasBadKeyWord by m(badWords.any { it.type == KeyWord })
 
-		
-		if ( && 
-			noGoodWords &&
-			if (badWords.none { it.type == WebType.KeyWord })
-		}){
-			Blot()
-		}
-		if (goodWords.any { 
-			it.type == WebType.KeyWord &&
+		if (noGoodWords){
+			if (hasBadBlot){
+				if (hasBadKeyWord) Block()
+				if (!hasBadKeyWord) Blot()
+			}
 			
-		}){
-			Allow()
-		} else
+		}
 		
 						
 		Allow()
