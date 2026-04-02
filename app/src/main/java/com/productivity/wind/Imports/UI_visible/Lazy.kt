@@ -283,35 +283,22 @@ fun LazyCard(
 @Stable
 @Composable
 fun LazyMore(
-    title: Str = "Show more",
+    title: Any = "Show more",
 	initiallyExpanded: Bool = no,
-	modifier: Mod = Mod,
-    
     ui: ui
 ) {
     var expanded by r(initiallyExpanded)
     val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
 
-    Column(modifier = modifier) {
-        Row(
-            modifier = Mod
-                .maxW()
-                .clickable { expanded = !expanded }
-                .space(8),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+    Column {
+        LazzyRow(Mod.maxW().clickable { expanded = !expanded }.space(8).centerV) {
             Icon(
                 imageVector = Icons.Default.ChevronRight,
                 contentDescription = if (expanded) "Show less" else "Show more",
                 modifier = Mod.rotate(rotation),
-                tint = Color(0xFFFFD700) // GOLD icon
             )
-            move(w = 8)
-            Text(
-                text = title,
-                modifier = Mod.weight(1f),
-                color = Color(0xFFFFD700) // GOLD text
-            )
+            move(8)
+            Text(toUIStr(title))
         }
 
         AnimatedVisibility(
@@ -325,9 +312,7 @@ fun LazyMore(
                 shrinkTowards = Alignment.Top
             )
         ) {
-            Column(
-                Mod.maxW().space(start = 32, top = 4)
-            ) {
+            Column(Mod.maxW().space(start = 32, top = 4)) {
                 ui()
             }
         }
