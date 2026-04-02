@@ -198,11 +198,11 @@ fun WebWord.remove() {
 	Bar.webWord.remove(this)
 }
 
-fun WebWord.log(){
-	log("WebWord: [ $this ]")
+fun Any.log(){
+	log("[ $this ]")
 }
-fun WebWord.Vlog(){
-	Vlog("WebWord: [ $this ]")
+fun Any.Vlog(){
+	Vlog("[ $this ]")
 }
 
 
