@@ -178,7 +178,10 @@ data class DoTsk(
 @Serializable
 enum class WebAction {
     Allow,
-    Block
+    Block,
+	AI,
+	BlotImages,
+	BlotVideos,
 }
 @Serializable
 enum class WebType {
