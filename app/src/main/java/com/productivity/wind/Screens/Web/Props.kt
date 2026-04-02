@@ -281,7 +281,7 @@ object WebUtils {
 		var return1 by m(no)
 		EachFoundBadWord(url) {
 			if (it.locked) {
-				Log6(it)
+				it.Vlog()
 				return1 = yes
 			}
 			when (it.type) {
@@ -307,14 +307,23 @@ object WebUtils {
 		
 
 		var noGoodWords by m(goodWords.empty)
-		var hasBadBlot by m(badWords.any { it.type == Blot })
-		var hasBadKeyWord by m(badWords.any { it.type == KeyWord })
+		var BadBlot by m(badWords.find { it.type == Blot })
+		var BadKeyWord by m(badWords.find { it.type == KeyWord })
 
 		if (noGoodWords){
-			if (hasBadKeyWord) return WebAction.Block
-			if (hasBadBlot){
-				if (hasBadKeyWord) return WebAction.Block
-				if (!hasBadKeyWord) return WebAction.Blot
+			if (BadKeyWord != null) {
+				BadKeyWord.Vlog()
+				return WebAction.Block
+			}
+			if (BadBlot != null){
+				if (BadKeyWord != null) {
+					BadKeyWord.Vlog()
+					return WebAction.Block
+				}
+				if (BadKeyWord == null) {
+					BadBlot.Vlog()
+					return WebAction.Blot
+				}
 			}
 		}
 				
