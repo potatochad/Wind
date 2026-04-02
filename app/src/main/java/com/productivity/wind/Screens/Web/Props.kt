@@ -264,7 +264,7 @@ object WebUtils {
 			return@IsGood WebAction.Allow
 		}
 		fun Blot(){
-			return@IsGood WebAction.BlotImages
+			return@IsGood WebAction.Blot
 		}
 		
 		var Blot = WebType.Blot
@@ -307,12 +307,12 @@ object WebUtils {
 
 		
 
-		if (badWords.any { 
-			it.type == WebType.Blot && 
+		if (badWords.any { x ->
+			x.type == WebType.Blot && 
 			goodWords.empty &&
 			if (badWords.none { it.type == WebType.KeyWord }
 		}){
-				 x.type == WebType.Blot) Block()
+			Block()
 		}
 		
 						
