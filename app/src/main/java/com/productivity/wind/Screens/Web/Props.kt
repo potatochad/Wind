@@ -36,10 +36,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.CircleShape
 import com.productivity.wind.Imports.Utils.Browser.*
 
-data class BlockAction(
-	var power: Int = 1,
-	var type: WebType,
-)
 
 object WebProps {
 	@Composable
@@ -260,43 +256,61 @@ object WebUtils {
 		return ""
 	}
 
-	fun IsGood(ask: WebResourceRequest): BlockAction? {
-		fun BlockUrl(){
-			return@IsGood BlockAction
+	fun IsGood(ask: WebResourceRequest): WebAction {
+		fun Block(){
+			return@IsGood WebAction.Block
+		}
+		fun Allow(){
+			return@IsGood WebAction.Allow
+		}
+		fun BlotImages(){
+			return@IsGood WebAction.BlotImages
+		}
+		fun BlotVideos(){
+			return@IsGood WebAction.BlotVideos
 		}
 
+		
+
+		val badWords = mList<WebWord>()
+		var goodWords by mList<WebWord>()
+
+		var Blot = WebType.Blot
+		var KeyWord = WebType.KeyWord
+
+		fun AddBadWord(type1: WebType){
+			badWords.add{ type = type1 }
+		}
+		fun AddGoodWord(type1: WebType){
+			goodWords.add{ type = type1 }
+		}
 		
 		val url = toStr(ask.url))
 
-		val actions = mList<BlockAction>()
-		EachFoundBadWord(url){
-			if (it.locked) { Block() }
-			if (it.type == WebType.Blot){
-				actions.add {
-					type = WebType.Blot
-				}
-				return@EachFoundBadWord
-			}
-			if (it.type == WebType.KeyWord){
-				actions.add {
-					type = WebType.KeyWord
-				}
-				return@EachFoundBadWord
+		
+		
+		EachFoundBadWord(url) {
+			if (it.locked) Block()
+			when (it.type) {
+				Blot -> AddBadWord(Blot)
+				KeyWord -> AddBadWord(KeyWord)
 			}
 		}
 
-		
 		if (actions.empty) Allow()
-		if (!HasGoodWord(url, { it.type = WebType.KeyWord })) Block()
+		if (!HasGoodWord(url, { it.type == KeyWord && it.type == Blot })) Block()
+		//ADD LOGIC HEREE
 
-		WebUtils.EachFoundGoodWord(url){
-			if (actions.any { it.type == WebType.Blot }){
-				if (url.image) return@shouldInterceptRequest null
+		
+		WebUtils.EachFoundGoodWord(url){ x ->
+			when (x.type) {
+				Blot -> AddGoodWord(Blot)
+				KeyWord -> AddGoodWord(KeyWord)
 			}
 			
-			Block()
+			if (actions.any { it.type == WebType.KeyWord }){
+				 x.type == WebType.Blot) Block()
 			}
-			
 		}
 		
 						
