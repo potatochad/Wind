@@ -339,7 +339,7 @@ fun toHumanReadableAmountWritten(n: Int): Str {
 }
 
 
-fun toWeb(x: Any?): WebView = when (x) {
+fun toWeb(x: Any?): WebView? = when (x) {
     is WebView -> x
     is WebController -> x.webView
     else -> null
