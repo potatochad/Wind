@@ -231,6 +231,16 @@ object WebUtils {
 		}
 		return false
 	}
+	fun EachFoundGoodWord(
+		txt: Str,
+		Do: Do_<WebWord>,
+	){
+        for (y in Bar.webWord) {
+            if (txt.contains(y.word, ignoreCase = true) && y.action == WebAction.Allow) {
+				Do(y)
+            }
+        }
+	}
 
 	fun FindGoodWord(txt: Str): Str {
 		for (y in Bar.webWord) {
