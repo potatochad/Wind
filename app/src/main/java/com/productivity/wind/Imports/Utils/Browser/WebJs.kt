@@ -23,6 +23,8 @@ import com.productivity.wind.Imports.Utils.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import android.webkit.WebResourceRequest
+
 
 fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
     toWeb(this)?.evaluateJavascript(code) { result ->
@@ -163,5 +165,13 @@ val Str.image: Bool
             this.endsWith(".webp", yes) ||
             this.endsWith(".ico", yes)
 
+   
+val WebResourceRequest.image: Bool
+    get() {
+        val isImage = this.url.toString().lowercase().image
+        return isImage
+    }
+
+    
 
 
