@@ -241,5 +241,44 @@ fun WebController.gray(x: Float) {
 }
 
 
+fun WebView.noYoutubeThumbnails() {
+    this.evaluateJavascript(
+        """
+        (function () {
+
+            function removeThumbs(root = document) {
+                root.querySelectorAll('ytd-thumbnail, yt-image, #thumbnail, .ytd-thumbnail')
+                    .forEach(el => el.remove());
+            }
+
+            // first run
+            removeThumbs();
+
+            // watch for new ones
+            const observer = new MutationObserver(() => {
+                removeThumbs();
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+
+        })();
+        """.trimIndent(),
+        null
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
