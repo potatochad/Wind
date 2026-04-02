@@ -165,7 +165,7 @@ fun WebWordConfigure(id: Str = "") {
 				move(10)
 				LazzyRow {
 					Text("Type:")
-					WebProps.BtnsTypes(type1) {
+					WebProps.BtnsTypes(action1, type1) {
 						type1 = it
 					}
 				}
