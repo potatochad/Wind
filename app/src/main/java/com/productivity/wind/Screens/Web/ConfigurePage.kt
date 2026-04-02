@@ -176,9 +176,11 @@ fun WebWordConfigure(id: Str = "") {
 				
 			}
 		}
-		RuleCard("Schedule"){
+		LazyCard{
+			LazyMore("Schedule"){
 			ScheduleUI(schedule1) {
 				schedule1 = it
+			}
 			}
 		}
 	  
