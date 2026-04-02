@@ -51,9 +51,10 @@ fun Any?.forceGoogleInputFocus() {
     ) {
         log("JS result: $it")
 
-        this.showKeyboard()
+        toWeb(this)?.showKeyboard()
     }
 }
+
 
 fun Any?.allVisibleText(done: (String) -> Unit) {
     toWeb(this)?.evaluateJavascript(
