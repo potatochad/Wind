@@ -171,6 +171,10 @@ val WebResourceRequest.image: Bool
         val isImage = this.url.toString().lowercase().image
         return isImage
     }
+    
+fun EmptyWebResource(): WebResourceResponse {
+    return WebResourceResponse("text/plain", "utf-8", null)
+}
 
     
 
