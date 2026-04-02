@@ -34,8 +34,14 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import android.webkit.WebResourceResponse
 import java.io.ByteArrayInputStream
-
 import com.productivity.wind.Imports.Utils.Browser.*
+
+data class BlockAction(
+	var power: mInt = m(1),
+	var type: mStr = m("")
+){
+	
+}
 
 
 fun BlockingLogic(web: WebController){
@@ -53,7 +59,7 @@ fun BlockingLogic(web: WebController){
 
 		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url)} | GoodWord: ${WebUtils.FindGoodWord(url)}")
 
-		val blockActions = mutableListOf<Str>()
+		val blockActions = mutableListOf<BlockAction>()
 		/*
 		WebUtils.EachFoundBadWord(url){
 			if (it.type == it.locked) {
