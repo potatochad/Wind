@@ -56,6 +56,8 @@ fun BlockingLogic(web: WebController){
 	}
 	
 	web.shouldInterceptRequest {
+		
+		IsGood(it)//: WebAction
 
 
 
