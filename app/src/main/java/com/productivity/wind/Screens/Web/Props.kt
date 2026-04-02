@@ -257,12 +257,9 @@ object WebUtils {
 		return ""
 	}
 
-	fun IsGood(ask: WebResourceRequest): Bool {
-		fun Block(){
-			return@IsGood no
-		}
-		fun Allow(){
-			return@IsGood yes
+	fun IsGood(ask: WebResourceRequest): BlockAction? {
+		fun BlockUrl(){
+			return@IsGood BlockAction
 		}
 
 		
@@ -290,7 +287,6 @@ object WebUtils {
 		if (!HasGoodWord(url, { it.type = WebType.KeyWord })) Block()
 
 		WebUtils.EachFoundGoodWord(url){
-			if (!WebUtils.HasGoodWord(url)){ 
 			if (actions.any { it.type == WebType.Blot }){
 				if (url.image) return@shouldInterceptRequest null
 			}
