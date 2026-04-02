@@ -279,15 +279,16 @@ object WebUtils {
 		}
 		
 		
-		
+		var return1 by m(no)
 		EachFoundBadWord(url) {
-			if (it.locked) return@IsGood WebAction.Block
+			if (it.locked) return1 = yes
 			when (it.type) {
 				Blot -> AddBadWord(Blot)
 				KeyWord -> AddBadWord(KeyWord)
 				else -> {}
 			}
 		}
+		if (return1) return WebAction.Block
 
 		if (badWords.empty) return WebAction.Allow
 
