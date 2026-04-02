@@ -263,20 +263,19 @@ object WebUtils {
 		fun Allow(){
 			return@IsGood WebAction.Allow
 		}
-		fun BlotImages(){
+		fun Blot(){
 			return@IsGood WebAction.BlotImages
 		}
-		fun BlotVideos(){
-			return@IsGood WebAction.BlotVideos
-		}
-
 		
-
-		val badWords = mList<WebWord>()
-		var goodWords by mList<WebWord>()
-
 		var Blot = WebType.Blot
 		var KeyWord = WebType.KeyWord
+
+		val url = toStr(ask.url))
+
+
+		
+		val badWords = mList<WebWord>()
+		var goodWords by mList<WebWord>()
 
 		fun AddBadWord(type1: WebType){
 			badWords.add{ type = type1 }
@@ -285,8 +284,6 @@ object WebUtils {
 			goodWords.add{ type = type1 }
 		}
 		
-		val url = toStr(ask.url))
-
 		
 		
 		EachFoundBadWord(url) {
@@ -297,20 +294,25 @@ object WebUtils {
 			}
 		}
 
-		if (actions.empty) Allow()
-		if (!HasGoodWord(url, { it.type == KeyWord && it.type == Blot })) Block()
-		//ADD LOGIC HEREE
+		if (badWords.empty) Allow()
 
 		
+
 		WebUtils.EachFoundGoodWord(url){ x ->
 			when (x.type) {
 				Blot -> AddGoodWord(Blot)
 				KeyWord -> AddGoodWord(KeyWord)
 			}
-			
-			if (actions.any { it.type == WebType.KeyWord }){
+		}
+
+		
+
+		if (badWords.any { 
+			it.type == WebType.Blot && 
+			goodWords.empty &&
+			if (badWords.none { it.type == WebType.KeyWord }
+		}){
 				 x.type == WebType.Blot) Block()
-			}
 		}
 		
 						
