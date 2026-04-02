@@ -37,8 +37,8 @@ import java.io.ByteArrayInputStream
 import com.productivity.wind.Imports.Utils.Browser.*
 
 data class BlockAction(
-	var power: mInt = m(1),
-	var type: mStr = m("")
+	var power: Int = 1,
+	var type: WebType,
 ){
 	
 }
@@ -66,13 +66,21 @@ fun BlockingLogic(web: WebController){
 				return@shouldInterceptRequest null
 			}
 			if (it.type = WebType.Url) {
-				Block()
+				actions.add {
+					type = WebType.Url
+				}
 				return@EachFoundBadWord
 			}
 			if (it.type = WebType.Blot){
+				actions.add {
+					type = WebType.Blot
+				}
 				return@EachFoundBadWord
 			}
 			if (it.type = WebType.KeyWord){
+				actions.add {
+					type = WebType.KeyWord
+				}
 				return@EachFoundBadWord
 			}
 
@@ -80,13 +88,10 @@ fun BlockingLogic(web: WebController){
 		
 		if (actions.empty) return@shouldInterceptRequest null
 
-		/*
-		
 		if (!WebUtils.HasGoodWord(url)){
 			Block()
 			return@shouldInterceptRequest null
 		}
-		*/
 		
 						
 		return@shouldInterceptRequest null
