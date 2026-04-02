@@ -52,6 +52,7 @@ class WebController(
                 super.onPageFinished(view, url)
 
                 view?.gray(90f)
+                view?.noYoutubeThumbnails()
                 
                 onPageFinished.forEach { it(url) }
             }
