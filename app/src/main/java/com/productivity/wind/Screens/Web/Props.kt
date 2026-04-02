@@ -35,6 +35,8 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.CircleShape
 import com.productivity.wind.Imports.Utils.Browser.*
+import android.webkit.WebResourceRequest
+
 
 
 object WebProps {
@@ -259,15 +261,9 @@ object WebUtils {
 	}
 
 	fun IsGood(ask: WebResourceRequest): WebAction {
-		fun Block(){
-			return@IsGood WebAction.Block
-		}
-		fun Allow(){
-			return@IsGood WebAction.Allow
-		}
-		fun Blot(){
-			return@IsGood WebAction.Blot
-		}
+		val Block = { return WebAction.Block }
+		val Allow = { return WebAction.Allow }
+		val Blot = { return WebAction.Blot }
 		
 		var Blot = WebType.Blot
 		var KeyWord = WebType.KeyWord
@@ -293,6 +289,7 @@ object WebUtils {
 			when (it.type) {
 				Blot -> AddBadWord(Blot)
 				KeyWord -> AddBadWord(KeyWord)
+				else -> {}
 			}
 		}
 
@@ -304,6 +301,7 @@ object WebUtils {
 			when (x.type) {
 				Blot -> AddGoodWord(Blot)
 				KeyWord -> AddGoodWord(KeyWord)
+				else -> {}
 			}
 		}
 
