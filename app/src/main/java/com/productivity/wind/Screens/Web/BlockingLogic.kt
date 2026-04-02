@@ -44,7 +44,6 @@ fun BlockingLogic(web: WebController){
 		Bar.Url = "google.com"
 	}
 	web.shouldInterceptRequest {
-
 		val url = it.url.toString()
 
 		if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") ||
@@ -54,35 +53,30 @@ fun BlockingLogic(web: WebController){
 
 		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url)} | GoodWord: ${WebUtils.FindGoodWord(url)}")
 
-		
+		val blockActions = mutableListOf<Str>()
 		WebUtils.EachFoundBadWord(url){
 			if (it.type == it.locked) {
 				Block()
 				return@shouldInterceptRequest null
 			}
-			if
+			if (it.type = WebType.Url) {
+				Block()
+				return@EachFoundBadWord
+			}
+			if (it.type = WebType.Blot){
+				return@EachFoundBadWord
+			}
+			if (it.type = WebType.KeyWord){
+				return@EachFoundBadWord
+			}
 
 		}
-		if (WebUtils.HasBadWord(url, {
-			it.type = WebType.Url
-		})){
-			
-		}
-		if (WebUtils.HasBadWord(url, {
-			it.type = WebType.Blot
-		})){
-			
-		}
-		if (WebUtils.HasBadWord(url, {
-			it.type = WebType.KeyWord
-		})){
-			
-		}
+		if (blockActions.empty) return@shouldInterceptRequest null
 		
-			if (!WebUtils.HasGoodWord(url)){
-				Block()
-				return@shouldInterceptRequest null
-			}
+		if (!WebUtils.HasGoodWord(url)){
+			Block()
+			return@shouldInterceptRequest null
+		}
 		
 						
 		return@shouldInterceptRequest null
