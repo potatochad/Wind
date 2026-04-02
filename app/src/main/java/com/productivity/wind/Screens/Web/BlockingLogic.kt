@@ -50,7 +50,8 @@ fun BlockingLogic(web: WebController){
 		Bar.Url = "google.com"
 	}
 	web.shouldInterceptRequest {
-		MeasureLagNoReturn("Each Request of web"){
+		val start = System.currentTimeMillis()
+		
 		val url = it.url.toString()
 
 		if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") ||
@@ -86,6 +87,9 @@ fun BlockingLogic(web: WebController){
 			}
 
 		}
+		val end = System.currentTimeMillis()
+		val timeDiff = end - start
+		log(toStr(timeDiff))
 		
 		if (actions.empty) return@shouldInterceptRequest null
 
@@ -96,7 +100,6 @@ fun BlockingLogic(web: WebController){
 		
 						
 		return@shouldInterceptRequest null
-		}
 	}
 
     web.doUpdateVisitedHistory { url, isReload ->
