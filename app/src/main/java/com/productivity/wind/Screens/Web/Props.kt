@@ -314,18 +314,17 @@ object WebUtils {
 		var hasBadKeyWord by m(badWords.any { it.type == KeyWord })
 
 		if (noGoodWords){
+			if (hasBadKeyWord) Block()
 			if (hasBadBlot){
 				if (hasBadKeyWord) Block()
 				if (!hasBadKeyWord) Blot()
 			}
-			
 		}
-		
-						
+				
 		Allow()
 	}
 
-	
+
 	
 }
 
