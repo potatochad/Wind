@@ -231,6 +231,26 @@ fun BlockKeywords(
 }
 
 
+val Str.image: Bool
+    get() = this.endsWith(".jpg", yes) ||
+            this.endsWith(".jpeg", yes) ||
+            this.endsWith(".png", yes) ||
+            this.endsWith(".gif", yes) ||
+            this.endsWith(".webp", yes) ||
+            this.endsWith(".ico", yes)
+
+   
+val WebResourceRequest.image: Bool
+    get() {
+        val isImage = this.url.toString().lowercase().image
+        return isImage
+    }
+    
+fun EmptyWebResource(): WebResourceResponse {
+    return WebResourceResponse("text/plain", "utf-8", null)
+}
+
+
 
 
 
