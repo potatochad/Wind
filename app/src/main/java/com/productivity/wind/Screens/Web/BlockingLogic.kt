@@ -68,19 +68,19 @@ fun BlockingLogic(web: WebController){
 			if (it.locked) {//‼️ forget this
 				Block()
 			}
-			if (it.type = WebType.Url) {
+			if (it.type == WebType.Url) {
 				actions.add {
 					type = WebType.Url
 				}
 				return@EachFoundBadWord
 			}
-			if (it.type = WebType.Blot){
+			if (it.type == WebType.Blot){
 				actions.add {
 					type = WebType.Blot
 				}
 				return@EachFoundBadWord
 			}
-			if (it.type = WebType.KeyWord){
+			if (it.type == WebType.KeyWord){
 				actions.add {
 					type = WebType.KeyWord
 				}
