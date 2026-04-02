@@ -307,12 +307,10 @@ object WebUtils {
 
 		
 
-		if (badWords.any { x ->
+		badWords.each { x ->
 			x.type == WebType.Blot && 
 			goodWords.empty &&
-			if (badWords.none { it.type == WebType.KeyWord }
-		}){
-			Block()
+			if (badWords.none { it.type == WebType.KeyWord })
 		}
 		
 						
