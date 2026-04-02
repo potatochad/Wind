@@ -49,7 +49,10 @@ fun BlockingLogic(web: WebController){
 		goTo("WebHome")
 		Bar.Url = "google.com"
 	}
+	var requests by m(0)
 	web.shouldInterceptRequest {
+		requests++
+		
 		val start = System.currentTimeMillis()
 		
 		val url = it.url.toString()
@@ -89,7 +92,7 @@ fun BlockingLogic(web: WebController){
 		}
 		val end = System.currentTimeMillis()
 		val timeDiff = end - start
-		log(toStr(timeDiff))
+		log("request time taken: [ $timeDiff ]. Request: [ $requests ]")
 		
 		if (actions.empty) return@shouldInterceptRequest null
 
