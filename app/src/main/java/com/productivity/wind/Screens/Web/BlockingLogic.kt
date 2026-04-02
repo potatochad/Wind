@@ -52,7 +52,6 @@ fun BlockingLogic(web: WebController){
 	var requests by m(0)
 	web.shouldInterceptRequest {
 		requests++
-		
 		val start = System.currentTimeMillis()
 		
 		val url = it.url.toString()
@@ -66,9 +65,8 @@ fun BlockingLogic(web: WebController){
 
 		val actions = mList<BlockAction>()
 		WebUtils.EachFoundBadWord(url){
-			if (it.type == it.locked) {
+			if (it.locked) {//‼️ forget this
 				Block()
-				return@shouldInterceptRequest null
 			}
 			if (it.type = WebType.Url) {
 				actions.add {
