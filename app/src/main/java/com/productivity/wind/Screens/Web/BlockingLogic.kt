@@ -49,6 +49,18 @@ fun BlockingLogic(web: WebController){
 		goTo("WebHome")
 		Bar.Url = "google.com"
 	}
+
+	web.doUpdateVisitedHistory { url, isReload ->
+		Bar.Url = url ?: "https://www.google.com"
+
+		if (WebUtils.HasBadWord(Bar.Url, { it.locked })) Block()
+			
+		if (WebUtils.HasBadWord(Bar.Url)){
+			if (!WebUtils.HasGoodWord(Bar.Url)){
+				Block()
+			}
+		}
+	}
 	
 	web.shouldInterceptRequest {
 		val url = it.url.toString()
@@ -85,18 +97,6 @@ fun BlockingLogic(web: WebController){
 						
 		return@shouldInterceptRequest null
 	}
-
-    web.doUpdateVisitedHistory { url, isReload ->
-		Bar.Url = url ?: "https://www.google.com"
-
-		if (WebUtils.HasBadWord(Bar.Url, { it.locked })) Block()
-			
-		if (WebUtils.HasBadWord(Bar.Url)){
-			if (!WebUtils.HasGoodWord(Bar.Url)){
-				Block()
-			}
-		}
-    }
 }
 
 
