@@ -266,7 +266,6 @@ object WebUtils {
 
 		val url = toStr(ask.url)
 
-
 		
 		val badWords = mList<WebWord>()
 		val goodWords = mList<WebWord>()
@@ -281,7 +280,10 @@ object WebUtils {
 		
 		var return1 by m(no)
 		EachFoundBadWord(url) {
-			if (it.locked) return1 = yes
+			if (it.locked) {
+				Log6(it)
+				return1 = yes
+			}
 			when (it.type) {
 				Blot -> AddBadWord(Blot)
 				KeyWord -> AddBadWord(KeyWord)
