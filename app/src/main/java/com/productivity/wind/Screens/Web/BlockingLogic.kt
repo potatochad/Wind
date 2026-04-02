@@ -54,9 +54,15 @@ fun BlockingLogic(web: WebController){
 
 		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url)} | GoodWord: ${WebUtils.FindGoodWord(url)}")
 
-		if (WebUtils.HasBadWord(url, { it.locked })) Block()
-
 		
+		WebUtils.EachFoundBadWord(url){
+			if (it.type == it.locked) {
+				Block()
+				return@shouldInterceptRequest null
+			}
+			if
+
+		}
 		if (WebUtils.HasBadWord(url, {
 			it.type = WebType.Url
 		})){
