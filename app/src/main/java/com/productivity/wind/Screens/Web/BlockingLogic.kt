@@ -53,10 +53,7 @@ fun BlockingLogic(web: WebController){
 	web.shouldInterceptRequest {
 		val url = it.url.toString()
 
-		if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") ||
-				url.endsWith(".gif") || url.endsWith(".webp") || url.endsWith(".ico")) {
-			return@shouldInterceptRequest null
-		}
+		if (url.image) return@shouldInterceptRequest null
 
 		val actions = mList<BlockAction>()
 		WebUtils.EachFoundBadWord(url){
