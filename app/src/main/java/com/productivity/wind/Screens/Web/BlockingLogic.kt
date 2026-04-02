@@ -56,19 +56,19 @@ fun BlockingLogic(web: WebController){
 	}
 	
 	web.shouldInterceptRequest {
-		if (it.image) return null
+		if (it.image) return@shouldInterceptRequest null
 		
 		var x = IsGood(it)
-		if (x == WebAction.Allow) return null
+		if (x == WebAction.Allow) return@shouldInterceptRequest null
 		if (x == WebAction.Block) Block()
-		if (x == WebAction.Blot) return EmptyWebResource()
+		if (x == WebAction.Blot) return@shouldInterceptRequest EmptyWebResource()
 		
 		//: WebAction
 
 
 
 		
-		return null
+		return@shouldInterceptRequest null
 	}
 }
 
