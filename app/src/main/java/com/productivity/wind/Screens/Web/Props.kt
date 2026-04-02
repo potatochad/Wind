@@ -34,9 +34,12 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.CircleShape
-
 import com.productivity.wind.Imports.Utils.Browser.*
 
+data class BlockAction(
+	var power: Int = 1,
+	var type: WebType,
+)
 
 object WebProps {
 	@Composable
