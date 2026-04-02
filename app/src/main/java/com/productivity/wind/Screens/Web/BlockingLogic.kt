@@ -91,7 +91,7 @@ fun BlockingLogic(web: WebController){
 			
 		}
 		if (!WebUtils.HasGoodWord(url)){ 
-			if (actions.type == WebType.Blot){
+			if (actions.any { it.type == WebType.Blot }){
 				if (url.image) return@shouldInterceptRequest null
 			}
 			
