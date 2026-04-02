@@ -24,9 +24,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 
-fun WebOrController(){
- 
-}
 
 fun WebView.forceGoogleInputFocus() {
     this.evaluateJavascript(
