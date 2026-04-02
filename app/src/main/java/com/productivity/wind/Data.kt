@@ -180,6 +180,7 @@ enum class WebAction {
     Allow,
     Block,
 	AI,
+	Blot,
 	BlotImages,
 	BlotVideos,
 }
