@@ -59,8 +59,7 @@ fun BlockingLogic(web: WebController){
 
 		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url)} | GoodWord: ${WebUtils.FindGoodWord(url)}")
 
-		val blockActions = mutableListOf<BlockAction>()
-		/*
+		val actions = mList<BlockAction>()
 		WebUtils.EachFoundBadWord(url){
 			if (it.type == it.locked) {
 				Block()
@@ -78,8 +77,8 @@ fun BlockingLogic(web: WebController){
 			}
 
 		}
-		*/
-		if (blockActions.empty) return@shouldInterceptRequest null
+		
+		if (actions.empty) return@shouldInterceptRequest null
 
 		/*
 		
