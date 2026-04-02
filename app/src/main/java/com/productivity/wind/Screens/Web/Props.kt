@@ -194,14 +194,15 @@ object WebUtils {
 		}
 		return ""
 	}
-	fun FindAllBadWords(txt: Str): ListStr {
-        val badWordsFound = mutableListOf<Str>()
+	fun EachFoundBadWord(
+		txt: Str,
+		Do: Do_<WebWord>,
+	){
         for (y in Bar.webWord) {
             if (txt.contains(y.word, ignoreCase = true) && y.action == WebAction.Block) {
-                badWordsFound.add(y.word)
+				Do(y)
             }
         }
-        return badWordsFound
 	}
 	fun HasBadWord(
 		txt: Str,
