@@ -261,14 +261,10 @@ object WebUtils {
 	}
 
 	fun IsGood(ask: WebResourceRequest): WebAction {
-		val Block = { return WebAction.Block }
-		val Allow = { return WebAction.Allow }
-		val Blot = { return WebAction.Blot }
-		
 		var Blot = WebType.Blot
 		var KeyWord = WebType.KeyWord
 
-		val url = toStr(ask.url))
+		val url = toStr(ask.url)
 
 
 		
@@ -285,7 +281,7 @@ object WebUtils {
 		
 		
 		EachFoundBadWord(url) {
-			if (it.locked) Block()
+			if (it.locked) return WebAction.Block
 			when (it.type) {
 				Blot -> AddBadWord(Blot)
 				KeyWord -> AddBadWord(KeyWord)
@@ -293,7 +289,7 @@ object WebUtils {
 			}
 		}
 
-		if (badWords.empty) Allow()
+		if (badWords.empty) return WebAction.Allow
 
 		
 
@@ -312,14 +308,14 @@ object WebUtils {
 		var hasBadKeyWord by m(badWords.any { it.type == KeyWord })
 
 		if (noGoodWords){
-			if (hasBadKeyWord) Block()
+			if (hasBadKeyWord) return WebAction.Block
 			if (hasBadBlot){
-				if (hasBadKeyWord) Block()
-				if (!hasBadKeyWord) Blot()
+				if (hasBadKeyWord) return WebAction.Block
+				if (!hasBadKeyWord) return WebAction.Blot
 			}
 		}
 				
-		Allow()
+		return WebAction.Allow
 	}
 
 
