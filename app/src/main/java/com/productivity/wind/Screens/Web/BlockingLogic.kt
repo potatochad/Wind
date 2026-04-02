@@ -49,19 +49,14 @@ fun BlockingLogic(web: WebController){
 		goTo("WebHome")
 		Bar.Url = "google.com"
 	}
-	var requests by m(0)
+	
 	web.shouldInterceptRequest {
-		requests++
-		val start = System.currentTimeMillis()
-		
 		val url = it.url.toString()
 
 		if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png") ||
 				url.endsWith(".gif") || url.endsWith(".webp") || url.endsWith(".ico")) {
 			return@shouldInterceptRequest null
 		}
-
-		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url)} | GoodWord: ${WebUtils.FindGoodWord(url)}")
 
 		val actions = mList<BlockAction>()
 		WebUtils.EachFoundBadWord(url){
@@ -81,10 +76,6 @@ fun BlockingLogic(web: WebController){
 				return@EachFoundBadWord
 			}
 		}
-		val end = System.currentTimeMillis()
-		val timeDiff = end - start
-		log("request time taken: [ $timeDiff ]. Request: [ $requests ]")
-
 
 		
 		if (actions.empty) return@shouldInterceptRequest null
@@ -100,8 +91,6 @@ fun BlockingLogic(web: WebController){
 
     web.doUpdateVisitedHistory { url, isReload ->
 		Bar.Url = url ?: "https://www.google.com"
-
-		log("URL: ${url} | BadWord: ${WebUtils.FindBadWord(url.toString())} | GoodWord: ${WebUtils.FindGoodWord(url.toString())}")
 
 		if (WebUtils.HasBadWord(Bar.Url, { it.locked })) Block()
 			
