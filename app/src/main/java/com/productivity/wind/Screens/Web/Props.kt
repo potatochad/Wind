@@ -307,21 +307,19 @@ object WebUtils {
 
 		
 
-		badWords.each { x ->
-			when (x.type) {
-				Blot -> {
-					
-				}
-				KeyWord -> {
-					
-				}
-			}
-			x.type == WebType.Blot 
-			
-			&& 
+		if (badWords.any { x ->
+			x.type == WebType.Blot && 
 			goodWords.empty &&
 			if (badWords.none { it.type == WebType.KeyWord })
+		}){
+			Blot()
 		}
+		if (goodWords.any { 
+			it.type == WebType.KeyWord &&
+			
+		}){
+			Allow()
+		} else
 		
 						
 		Allow()
