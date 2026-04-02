@@ -36,13 +36,6 @@ import android.webkit.WebResourceResponse
 import java.io.ByteArrayInputStream
 import com.productivity.wind.Imports.Utils.Browser.*
 
-data class BlockAction(
-	var power: Int = 1,
-	var type: WebType,
-){
-	
-}
-
 
 fun BlockingLogic(web: WebController){
 	fun Block(){
