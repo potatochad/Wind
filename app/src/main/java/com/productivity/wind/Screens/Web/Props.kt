@@ -254,8 +254,8 @@ object WebUtils {
 		return ""
 	}
 
-	fun isRequestUrlGood(){
-		val url = it.url.toString()
+	fun IsRequestUrlGood(url){
+		val url = toStr(it.url))
 
 		val actions = mList<BlockAction>()
 		WebUtils.EachFoundBadWord(url){
