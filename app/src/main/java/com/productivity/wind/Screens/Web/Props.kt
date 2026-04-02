@@ -277,7 +277,7 @@ object WebUtils {
 
 		
 		val badWords = mList<WebWord>()
-		var goodWords by mList<WebWord>()
+		val goodWords = mList<WebWord>()
 
 		fun AddBadWord(type1: WebType){
 			badWords.add{ type = type1 }
@@ -309,9 +309,13 @@ object WebUtils {
 
 		
 
-		if (badWords.any { x ->
-			x.type == WebType.Blot && 
-			goodWords.empty &&
+		var noGoodWords by m(goodWords.empty)
+		var hasBadBlot by m(badWords.any { it.type == WebType.Blot})
+		var hasBadKeyWord by m(badWords.any { it.type == WebType.Blot})
+
+		
+		if ( && 
+			noGoodWords &&
 			if (badWords.none { it.type == WebType.KeyWord })
 		}){
 			Blot()
