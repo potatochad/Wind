@@ -312,7 +312,7 @@ fun LazyMore(
                 shrinkTowards = Alignment.Top
             )
         ) {
-            Column(Mod.maxW().space(start = 32, top = 4)) {
+            Column {
                 ui()
             }
         }
