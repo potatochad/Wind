@@ -65,7 +65,7 @@ object WebProps {
 	}
 
 	@Composable
-	fun BtnsTypes(type: WebType, Do: Do_<WebType>){
+	fun BtnsTypes(webAction: WebAction, type: WebType, Do: Do_<WebType>){
 		Ctext(
 			"Url", Mod.space(5),
 			selected = type == WebType.Url,
