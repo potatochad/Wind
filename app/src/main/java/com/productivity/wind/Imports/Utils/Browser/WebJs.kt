@@ -155,7 +155,7 @@ fun Any?.gray(x: Float) {
 }
 
 
-val Str.imageUrl: Bool
+val Str.image: Bool
     get() = this.endsWith(".jpg", yes) ||
             this.endsWith(".jpeg", yes) ||
             this.endsWith(".png", yes) ||
