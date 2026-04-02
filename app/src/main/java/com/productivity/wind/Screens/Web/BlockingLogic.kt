@@ -61,7 +61,7 @@ fun BlockingLogic(web: WebController){
 		var x = IsGood(it)
 		if (x == WebAction.Allow) return null
 		if (x == WebAction.Block) Block()
-		if (x == WebAction.Blot) 
+		if (x == WebAction.Blot) return EmptyWebResource()
 		
 		//: WebAction
 
