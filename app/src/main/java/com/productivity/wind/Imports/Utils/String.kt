@@ -283,10 +283,16 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
 
 
 
-val String.notEmpty: Bool
+val Str.notEmpty: Bool
     get() = this.isNotEmpty()
 
-val String.empty: Bool
+val Str.empty: Bool
+    get() = this.isEmpty()
+
+val <T> Collection<T>.notEmpty: Bool
+    get() = this.isNotEmpty()
+
+val <T> Collection<T>.empty: Bool
     get() = this.isEmpty()
 
 
