@@ -281,7 +281,7 @@ object WebUtils {
 		
 		
 		EachFoundBadWord(url) {
-			if (it.locked) return WebAction.Block
+			if (it.locked) return@IsGood WebAction.Block
 			when (it.type) {
 				Blot -> AddBadWord(Blot)
 				KeyWord -> AddBadWord(KeyWord)
