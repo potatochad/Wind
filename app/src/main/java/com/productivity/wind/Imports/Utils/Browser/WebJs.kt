@@ -24,9 +24,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 
+fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
+    toWeb(this)?.evaluateJavascript(code) { result ->
+        callback?.invoke(result)
+    }
+}
 
 fun Any?.forceGoogleInputFocus() {
-    toWeb(this)?.evaluateJavascript(
+    this.js(
         """
         (function() {
 
@@ -56,8 +61,8 @@ fun Any?.forceGoogleInputFocus() {
 }
 
 
-fun Any?.allVisibleText(done: (String) -> Unit) {
-    toWeb(this)?.evaluateJavascript(
+fun Any?.allVisibleText(done: DoStr) {
+    this.js(
         """
         (function(){
 
@@ -106,8 +111,8 @@ fun Any?.allVisibleText(done: (String) -> Unit) {
  }
 
 
-fun Any?.html(done: (String) -> Unit) {
-    toWeb(this)?.evaluateJavascript(
+fun Any?.html(done: DoStr) {
+    this.js(
         """
         (function(){
         // Clone the body so we don't break the live page
@@ -143,7 +148,7 @@ fun Any?.html(done: (String) -> Unit) {
 
 
 fun Any?.gray(x: Float) {
-    toWeb(this)?.evaluateJavascript(
+    this.js(
         "document.body.style.filter = 'grayscale(${x}%)';",
         null
     )
