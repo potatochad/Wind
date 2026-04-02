@@ -220,16 +220,19 @@ object WebUtils {
 		return false
 	}
 
-	fun HasGoodWord(txt: Str): Bool {
+	fun HasGoodWord(
+		txt: Str,
+		extraCheck: (WebWord) -> Bool = { yes },
+	): Bool {
 		for (y in Bar.webWord) {
 			if (
 				txt.contains(y.word, ignoreCase = true) &&
-					y.action == WebAction.Allow
+					y.action == WebAction.Allow && extraCheck(y)
 			) {
-				return true
+				return yes
 			}
 		}
-		return false
+		return no
 	}
 	fun EachFoundGoodWord(
 		txt: Str,
@@ -254,14 +257,20 @@ object WebUtils {
 		return ""
 	}
 
-	fun IsRequestUrlGood(url){
-		val url = toStr(it.url))
+	fun IsGood(ask: WebResourceRequest): Bool {
+		fun Block(){
+			return@IsGood no
+		}
+		fun Allow(){
+			return@IsGood yes
+		}
+
+		
+		val url = toStr(ask.url))
 
 		val actions = mList<BlockAction>()
-		WebUtils.EachFoundBadWord(url){
-			if (it.locked) {//‼️ forget this
-				Block()
-			}
+		EachFoundBadWord(url){
+			if (it.locked) { Block() }
 			if (it.type == WebType.Blot){
 				actions.add {
 					type = WebType.Blot
@@ -277,21 +286,22 @@ object WebUtils {
 		}
 
 		
-		if (actions.empty) return@shouldInterceptRequest null
+		if (actions.empty) Allow()
+		if (!HasGoodWord(url, { it.type = WebType.KeyWord })) Block()
 
 		WebUtils.EachFoundGoodWord(url){
-			
-		}
-		if (!WebUtils.HasGoodWord(url)){ 
+			if (!WebUtils.HasGoodWord(url)){ 
 			if (actions.any { it.type == WebType.Blot }){
 				if (url.image) return@shouldInterceptRequest null
 			}
 			
 			Block()
+			}
+			
 		}
 		
 						
-		return@shouldInterceptRequest null
+		Allow()
 	}
 
 	
