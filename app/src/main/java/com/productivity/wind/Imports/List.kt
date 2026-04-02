@@ -198,6 +198,13 @@ fun WebWord.remove() {
 	Bar.webWord.remove(this)
 }
 
+fun WebWord.log(){
+	log("WebWord: [ $this ]")
+}
+fun WebWord.Vlog(){
+	Vlog("WebWord: [ $this ]")
+}
+
 
 val DoTsk.timeLeft: Int
     get() = this.doneTime - this.didTime
