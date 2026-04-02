@@ -68,12 +68,6 @@ fun BlockingLogic(web: WebController){
 			if (it.locked) {//‼️ forget this
 				Block()
 			}
-			if (it.type == WebType.Url) {
-				actions.add {
-					type = WebType.Url
-				}
-				return@EachFoundBadWord
-			}
 			if (it.type == WebType.Blot){
 				actions.add {
 					type = WebType.Blot
@@ -86,11 +80,12 @@ fun BlockingLogic(web: WebController){
 				}
 				return@EachFoundBadWord
 			}
-
 		}
 		val end = System.currentTimeMillis()
 		val timeDiff = end - start
 		log("request time taken: [ $timeDiff ]. Request: [ $requests ]")
+
+
 		
 		if (actions.empty) return@shouldInterceptRequest null
 
