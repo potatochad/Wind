@@ -350,6 +350,14 @@ fun <T> MeasureLag(title: String, block: () -> T): T {
 
     return result
 }
+fun MeasureLagNoReturn(title: String, block: () -> Unit) {
+    val start = System.currentTimeMillis()
+
+    block()   // just run it, ignore return
+
+    val end = System.currentTimeMillis()
+    log("[$title]: code took ${end - start} ms")
+}
 
 
 fun getMyAppLogs() {
