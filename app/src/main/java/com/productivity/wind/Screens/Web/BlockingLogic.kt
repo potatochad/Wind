@@ -65,8 +65,6 @@ fun BlockingLogic(web: WebController){
 	web.shouldInterceptRequest {
 		val url = it.url.toString()
 
-		if (url.image) return@shouldInterceptRequest null
-
 		val actions = mList<BlockAction>()
 		WebUtils.EachFoundBadWord(url){
 			if (it.locked) {//‼️ forget this
@@ -89,9 +87,15 @@ fun BlockingLogic(web: WebController){
 		
 		if (actions.empty) return@shouldInterceptRequest null
 
-		if (!WebUtils.HasGoodWord(url)){
+		WebUtils.EachFoundGoodWord(url){
+			
+		}
+		if (!WebUtils.HasGoodWord(url)){ 
+			if (actions.type == WebType.Blot){
+				if (url.image) return@shouldInterceptRequest null
+			}
+			
 			Block()
-			return@shouldInterceptRequest null
 		}
 		
 						
