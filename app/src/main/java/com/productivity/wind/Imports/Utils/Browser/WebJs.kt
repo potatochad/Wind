@@ -25,8 +25,8 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 
 
-fun WebView.forceGoogleInputFocus() {
-    this.evaluateJavascript(
+fun Any?.forceGoogleInputFocus() {
+    toWeb(this)?.evaluateJavascript(
         """
         (function() {
 
@@ -55,8 +55,8 @@ fun WebView.forceGoogleInputFocus() {
     }
 }
 
-fun WebView.allVisibleText(done: (String) -> Unit) {
-    this.evaluateJavascript(
+fun Any?.allVisibleText(done: (String) -> Unit) {
+    toWeb(this)?.evaluateJavascript(
         """
         (function(){
 
@@ -105,59 +105,8 @@ fun WebView.allVisibleText(done: (String) -> Unit) {
  }
 
 
-fun WebController.allVisibleText(done: (String) -> Unit) {
-    this.webView.evaluateJavascript(
-        """
-        (function(){
-
-            // Create a full copy of the page
-            const bodyCopy = document.body.cloneNode(true);
-
-            // Clean the copy only (not the real page)
-            bodyCopy.querySelectorAll('style, script, link, noscript').forEach(e => e.remove());
-
-            function getText(node){
-                let text = "";
-
-                node.childNodes.forEach(n => {
-
-                    if(n.nodeType === Node.COMMENT_NODE) return;
-
-                    if(n.nodeType === Node.TEXT_NODE){
-                        let t = n.textContent.trim();
-                        if(t.length > 0){
-                            text += t + "\n";
-                        }
-                    }
-                    else if(n.nodeType === Node.ELEMENT_NODE){
-                        text += getText(n);
-                    }
-
-                });
-
-                return text;
-            }
-
-            return getText(bodyCopy);
-
-        })();
-        """.trimIndent()
-    ) { result ->
-
-        val cleaned = result
-            ?.removePrefix("\"")
-            ?.removeSuffix("\"")
-            ?.replace("\\n", "\n")
-            ?.replace("\\\"", "\"")
-
-        done(cleaned ?: "")
-    }
- }
-
-
-
-fun WebView.html(done: (String) -> Unit) {
-    this.evaluateJavascript(
+fun Any?.html(done: (String) -> Unit) {
+    toWeb(this)?.evaluateJavascript(
         """
         (function(){
         // Clone the body so we don't break the live page
@@ -191,93 +140,13 @@ fun WebView.html(done: (String) -> Unit) {
 }
 
 
-fun WebController.html(done: (String) -> Unit) {
-    this.webView.evaluateJavascript(
-        """
-        (function(){
-        // Clone the body so we don't break the live page
-        var clone = document.body.cloneNode(true);
 
-        // Remove unwanted tags inside body
-        clone.querySelectorAll('style, script, link').forEach(e => e.remove());
-
-        // Remove all images
-        clone.querySelectorAll('img').forEach(e => e.remove());
-        clone.querySelectorAll('svg').forEach(e => e.remove());
-
-        // Remove inline style attributes
-        clone.querySelectorAll('*').forEach(e => e.removeAttribute('style'));
-
-        // Return only cleaned body HTML
-        return clone.outerHTML;
-    })();
-    """.trimIndent()
-    ) { html ->
-        val cleaned = html
-        ?.removePrefix("\"")
-        ?.removeSuffix("\"")
-        ?.replace("\\u003C", "<")
-        ?.replace("\\u003E", ">")
-        ?.replace("\\\"", "\"")
-        ?.replace("\\n", "\n")
-        
-        done(cleaned ?: "")
-    }
-}
-
-
-fun WebView.gray(x: Float) {
-    this.evaluateJavascript(
+fun Any?.gray(x: Float) {
+    toWeb(this)?.evaluateJavascript(
         "document.body.style.filter = 'grayscale(${x}%)';",
         null
     )
 }
-fun WebController.gray(x: Float) {
-    this.webView.evaluateJavascript(
-        "document.body.style.filter = 'grayscale(${x}%)';",
-        null
-    )
-}
-
-
-fun WebView.noYoutubeThumbnails() {
-    this.evaluateJavascript(
-        """
-        (function () {
-
-            function removeThumbs(root = document) {
-                root.querySelectorAll('ytd-thumbnail, yt-image, #thumbnail, .ytd-thumbnail')
-                    .forEach(el => el.remove());
-            }
-
-            // first run
-            removeThumbs();
-
-            // watch for new ones
-            const observer = new MutationObserver(() => {
-                removeThumbs();
-            });
-
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-
-        })();
-        """.trimIndent(),
-        null
-    )
-}
-
-
-
-
-
-
-
-
-
-
 
 
 
