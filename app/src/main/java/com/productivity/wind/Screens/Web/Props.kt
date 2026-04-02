@@ -72,11 +72,13 @@ object WebProps {
 		) {
 			Do(WebType.Url)				
 		}
-		Ctext(
-			"Blot", Mod.space(5),
-			selected = type == WebType.Blot,
-		) {
-			Do(WebType.Blot)			
+		if (webAction != WebAction.Allow){
+			Ctext(
+				"Blot", Mod.space(5),
+				selected = type == WebType.Blot,
+			) {
+				Do(WebType.Blot)			
+			}
 		}
 		Ctext(
 			"KeyWord", Mod.space(5),
