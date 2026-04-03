@@ -214,11 +214,11 @@ object Item {
 
     fun UpdateAppTsk(){
         Bar.apps.each {
-            Bar.apps.edit(it) { it.nowTime = getTodayAppUsage(it.pkg) }
+            it.edit { it.nowTime = getTodayAppUsage(it.pkg) }
 
             if (it.nowTime > it.doneTime - 1 && !it.done) {
                 Bar.funTime += it.worth
-                Bar.apps.edit(it) { done = yes }
+                it.edit { done = yes }
                 Vlog("${it.name} completed")
             }
         }
