@@ -169,7 +169,7 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
             onClick = { goTo("LogsScreen") }
         )
 		LazyItem(
-            Icon = Icons.Filled.Whatshot,
+            icon = Icons.Filled.Whatshot,
             title = "Burn 5 points",
             onClick = {
 				Bar.funTime-=5
