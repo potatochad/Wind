@@ -212,18 +212,6 @@ object Item {
         }
 	}
 
-    fun UpdateAppTsk(){
-        Bar.apps.each {
-            it.edit { it.nowTime = getTodayAppUsage(it.pkg) }
-
-            if (it.nowTime > it.doneTime - 1 && !it.done) {
-                Bar.funTime += it.worth
-                it.edit { done = yes }
-                Vlog("${it.name} completed")
-            }
-        }
-    }
-
 
     fun enoughPoints(enough: Do) {
         if (Bar.funTime < Bar.Dpoints) {
