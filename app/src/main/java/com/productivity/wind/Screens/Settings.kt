@@ -170,9 +170,8 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
         )
 		LazyItem(
             Icon = Icons.Filled.Whatshot,
-            IconColor = Color(0xFFFF5722),
-            title = "Burn points",
-            onClick = { goTo("LogsScreen") }
+            title = "Burn 5 points",
+            onClick = { }
         )
 
 		
