@@ -269,43 +269,7 @@ object Item {
     
 }
 
-object Header {
-    @Composable
-    fun CopyPaste(text: m_<Str>, MaxDone: m_<Int>, DonePts: m_<Int>, LetterPts: m_<Int>, id: Str){
-        Text("Copy Paste")
-        
-        End {
-            Item.Add {
-                check(text.it.isEmpty(),"Add text") {return@Add}
 
-                if (!id.isEmpty()) {
-                    val tsk = Bar.copyTsk.find { it.id == id }
-
-                    if (tsk!=null){
-                        tsk.edit {
-                            txt = text.it
-                            maxDone = MaxDone.it
-                            donePts = DonePts.it
-                            letterPts = LetterPts.it
-                        }  
-                        goTo("Main")
-                    }
-                    return@Add
-                }
-
-                Bar.copyTsk.add {
-                    txt = text.it
-                    maxDone = MaxDone.it
-                    donePts = DonePts.it
-                    letterPts = LetterPts.it     
-                }
-                goTo("Main")
-            }
-        }
-    }
-
-	
-}
 
 
 
