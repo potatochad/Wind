@@ -322,10 +322,10 @@ fun AppUsage(id: Str = "") {
 				newItem = { AppTsk() },
 			){ x ->
 				x.edit {
-					pkg = getAppPkg(selectedApp)
-                    name = selectedApp
-                    DoneTime = Time.it
-                    Worth = Points.it
+					pkg = getAppPkg(name1)
+                    name = name1
+                    DoneTime = time1.it
+                    Worth = worth1.it
 				}  
 				goTo("Main")
 			}
@@ -333,13 +333,12 @@ fun AppUsage(id: Str = "") {
     }) {
 		RuleCard("If"){
 		  LazzyRow{
-			  CheckCircle(1, WhichIf)
 			  Text("Spend ")
-			  TinyInput(Time)
+			  TinyInput(time1)
 			  Text(" seconds")
           
 			  Text(" on ")
-			  Ctext(appName) {
+			  Ctext(name1) {
 				  show.it = yes
 			  }
 		  }
@@ -347,7 +346,7 @@ fun AppUsage(id: Str = "") {
       RuleCard("Do"){
 		  LazzyRow{
 			  Text("Add ")
-			  TinyInput(Points)
+			  TinyInput(worth1)
 			  Text(" points")
 		  }
       }
