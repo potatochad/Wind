@@ -89,10 +89,12 @@ fun Challenge() {
 
 @Composable
 fun CopyPaste(id: Str ="") {
-    var txt = r("Be always kind")
-    var maxDone = r(5)
-    var donePts = r(10)
-    var letterPts = r(1)
+    var txt1 = r("Be always kind")
+    var maxDone1 = r(5)
+    var donePts1 = r(10)
+    var letterPts1 = r(1)
+
+	var copyTsk1 by r<DoTsk?>(null)
 
 	val inputScroll = Scroll()
     
@@ -101,6 +103,7 @@ fun CopyPaste(id: Str ="") {
 		maxDone.it = t.maxDone
 		donePts.it = t.donePts
 		letterPts.it = t.letterPts
+		copyTsk1 = t
 
 		wait {
 			inputScroll.goTo(t.goodStr() * 2)
@@ -111,42 +114,40 @@ fun CopyPaste(id: Str ="") {
 		Text("Copy Paste")
         
         End {
-			Item.ItemDelete(Bar.apps, app1){
+			Item.ItemDelete(Bar.copyTsk, copyTsk1){
 				goTo("Main")
 			}
 
 			Item.FancyAdd(
-				list = Bar.apps,
-				item = app1,
+				list = Bar.copyTsk,
+				item = copyTsk1,
 				stop = { 
 					when {
 						text.it.empty -> yes
 						else -> no
 					}
 				},
-				newItem = { AppTsk() },
+				newItem = { CopyTsk() },
 			){ x ->
 				x.edit {
-					txt = text.it
-                    maxDone = MaxDone.it
-                    donePts = DonePts.it
-                    letterPts = LetterPts.it
+					txt = txt.it
+                    maxDone = maxDone1.it
+                    donePts = donePts1.it
+                    letterPts = letterPts1.it
 				}  
 				goTo("Main")
 			}
         }
-	}
-        
 	}) {
         RuleCard("If") {
             LazzyRow {
                 Text("Letter typed correctly: ")
-                TinyInput(letterPts)
+                TinyInput(letterPts1)
                 Text(" points")
             }
             LazzyRow {
                 Text("Text typed correctly: ")
-                TinyInput(donePts)
+                TinyInput(donePts1)
                 Text(" points")
             }
         }
@@ -154,7 +155,7 @@ fun CopyPaste(id: Str ="") {
         RuleCard("Other") {
             LazzyRow {
                 Text("DailyMax: ")
-                TinyInput(maxDone)
+                TinyInput(maxDone1)
             }
 			ScrollInput(txt, scroll = inputScroll)
         }
