@@ -1,32 +1,15 @@
 package com.productivity.wind.Imports.Utils.RunKotlin 
 
-import java.io.File
-import javax.script.ScriptEngineManager
+import org.mozilla.javascript.Context
+import org.mozilla.javascript.Scriptable
 
-var MagixBox = 0
-val file = File("magix.kts")
-
-// Schedule code
-fun scheduleCode(code: String) {
-    file.writeText(code)
+fun runJs(script: String): Any? {
+    val ctx = Context.enter()
+    ctx.optimizationLevel = -1
+    val scope = ctx.initStandardObjects()
+    return ctx.evaluateString(scope, script, "<cmd>", 1, null)
 }
 
-// Execute saved code
-fun executeSavedCode() {
-    if (!file.exists()) return
-    val engine = ScriptEngineManager().getEngineByExtension("kts")
-    engine.put("MagixBox", MagixBox) // inject variable
-    engine.eval(file.readText())
-    MagixBox = engine.get("MagixBox") as Int
-}
-
-// Example
-fun main() {
-    println("Before: $MagixBox") // 0
-    scheduleCode("MagixBox = 42")
-    executeSavedCode()
-    println("After: $MagixBox")  // 42
-}
 
 
 
