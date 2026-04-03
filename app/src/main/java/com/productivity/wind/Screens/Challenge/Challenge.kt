@@ -285,8 +285,8 @@ fun AppUsage(id: Str = "") {
 	}
   
     LoadItemFromId(id, Bar.apps) { a ->
-		time1.it = a.DoneTime
-		worth1.it = a.Worth
+		time1.it = a.doneTime
+		worth1.it = a.worth
 		name1 = a.name
 		app1 = a
 	}
@@ -324,8 +324,8 @@ fun AppUsage(id: Str = "") {
 				x.edit {
 					pkg = getAppPkg(name1)
                     name = name1
-                    DoneTime = time1.it
-                    Worth = worth1.it
+                    doneTime = time1.it
+                    worth = worth1.it
 				}  
 				goTo("Main")
 			}
