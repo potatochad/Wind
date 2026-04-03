@@ -500,7 +500,7 @@ fun selectApp(show: mBool =m(yes), Do: DoStr ={}) {
 					move(10)
 					LazyImage(icon)
 					move(10)
-					Text(getAppName(app))
+					Text(getAppName(app).white())
 				}
 			}
 		}
