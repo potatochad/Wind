@@ -59,10 +59,6 @@ fun newDay() {
 	 }
 
 
-	 
-	 Bar.waits.each{
-		 // DoJs = "var x = 5; x = 6;"
-	 }
 }
 
 
@@ -131,9 +127,12 @@ data class CopyTsk(
 data class Waits (
     val id: Str = Id(),
     var start: Long = now(),
-    var wait: Long,
+    var wait: Long,//ml
     var DoJs: Str = "",
-)
+){
+	val end: Long
+        get() = start + wait
+}
 
 @Serializable
 data class AppTsk(
@@ -253,6 +252,12 @@ fun AppStart() {
 	val LocationClient = r { LocationServices.getFusedLocationProviderClient(App) }
     
 	RunOnce {
+		
+		Bar.waits.each{
+			it.end
+			// DoJs = "var x = 5; x = 6;"
+		}
+		
 		captureAppCrashes()
 		getMyAppLogs() 
 
