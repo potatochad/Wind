@@ -231,7 +231,7 @@ fun AppStart_beforeUI() {
 }
 
 fun MAINStart() {
-    Item.UpdateAppTsk()
+    TskProp.UpdateAppTsk()
 
 }
 
