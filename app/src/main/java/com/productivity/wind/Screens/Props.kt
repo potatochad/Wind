@@ -321,31 +321,36 @@ object Header {
         Text("AppUsage")
         
         End {
-            Item.Add {
-                check(!isUsageP_Enabled()) { goTo("AllowAppUsage"); return@Add}
+			Item.ItemDelete(
+				Bar.apps, 
+				webWord
+			){
+				goTo("WebKeywords")
+			}
+
+			Item.FancyAdd(
+				list = Bar.apps,
+				item = webWord,
+				stop = { 
+					var stop = word1.it.empty
+					if (stop) Vlog("Add time")
+					stop
+
+					check(!isUsageP_Enabled()) { goTo("AllowAppUsage"); return@Add}
                 check(Time.it < 1,"Add time") {return@Add}
                 check(selectedApp.isEmpty(),"Select app") {return@Add}
 
-
-                var isAdded = Bar.apps.find { it.name == selectedApp }
-
-                if (isAdded==null){
-                    Bar.apps.add {
-                        pkg = getAppPkg(selectedApp)
-                        name = selectedApp
-                        DoneTime = Time.it
-                        Worth = Points.it
-                    }
-                } else {   
-                    Bar.apps.edit(isAdded) {
-                        pkg = getAppPkg(selectedApp)
-                        name = selectedApp
-                        DoneTime = Time.it
-                        Worth = Points.it
-                    }
-                }
-                goTo("Main")
-            }
+				},
+				newItem = { WebWord() },
+			){ x ->
+				x.edit {
+					pkg = getAppPkg(selectedApp)
+                    name = selectedApp
+                    DoneTime = Time.it
+                    Worth = Points.it
+				}  
+				goTo("Main")
+			}
         }
     }
     
