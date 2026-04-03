@@ -12,7 +12,7 @@ fun RunJs(script: Str): Any? {
     return ctx.evaluateString(scope, script, "<cmd>", 1, null)
 }
 
-fun RunJsLater(10_000) {
+
     
 //test: var x=5
 //clickbutton
