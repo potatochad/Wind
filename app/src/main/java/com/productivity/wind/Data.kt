@@ -36,28 +36,6 @@ import kotlin.properties.*
 import com.google.android.gms.location.*
 import com.productivity.wind.Imports.UI_visible.*
 
-
-/*
-
-import org.mozilla.javascript.Context
-import org.mozilla.javascript.Scriptable
-
-fun runJs(jsCode: String) {
-    val cx = Context.enter()
-    try {
-        val scope: Scriptable = cx.initStandardObjects()
-        cx.evaluateString(scope, jsCode, "JS", 1, null)
-    } finally {
-        Context.exit()
-    }
-}
-*/
-
-fun RunJs(){
-	
-	
-}
-
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
 yea....i cant figure out how fix it or rewire it...(kinda lazy--i made it long ago dont remember what did)
@@ -90,11 +68,14 @@ object Bar {
 	//BASIC
     var funTime by s(0, "funTime")
     var Dpoints by s(0, "Dpoints")
+	
 	var lastDate by s("", "lastDate")
 	var leftApp by s(no, "leftApp")
 	var encryptedBackup by s(yes, "encryptedBackup") 
-	var Url by s("https://google.com", "Url")
 	var logs = sList<Str>("logs")
+	
+	var Url by s("https://google.com", "Url")
+	
 
 	//LOCATION
 	var userLatLng by s("51.5074,-0.1278", "userLatLng")
@@ -111,13 +92,14 @@ object Bar {
 	
 
 	// LISTS
+	
     var copyTsk = sList<CopyTsk>("copyTsk")
-	var waits = sList<Waits>("waits")
 	var apps = sList<AppTsk>("apps")
 	var doTsk = sList<DoTsk>("doTsk")
 
 	var webWord = sList<WebWord>("WebWord", listOf("anime", "youtube.com", "facebook.com", "instagram.com", "x.com", "tiktok.com").map { WebWord(word = it) })
 
+	var waits = sList<Waits>("waits")
 
 
 }
@@ -142,9 +124,9 @@ data class CopyTsk(
 @Serializable
 data class Waits (
     val id: Str = Id(),
-    var whenStart: Bool = no,
-    var whenDo: Bool = no,
-    var DoStr: Str = "",
+    var startTime: Bool = no,
+    var endTime: Bool = no,
+    var DoJs: Str = "",
 )
 
 @Serializable
