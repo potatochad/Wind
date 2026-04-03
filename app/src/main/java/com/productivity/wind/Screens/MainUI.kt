@@ -102,8 +102,8 @@ fun Main() {
 
 			Bar.apps.each {
 				if (!it.done) {
-					if (it.NowTime > it.DoneTime - 1 && !it.done) {
-						Bar.funTime += it.Worth
+					if (it.nowTime > it.doneTime - 1 && !it.done) {
+						Bar.funTime += it.worth
 						Bar.apps.edit(it) { done = yes }
 						Vlog("${it.name} completed")						
 					}
