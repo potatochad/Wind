@@ -491,12 +491,12 @@ fun selectApp(show: mBool =m(yes), Do: DoStr ={}) {
 		Column(Mod.h(200).Vscroll()){
 			appList.forEach{ (app, icon) ->
 				LazzyRow(Mod.click {
-					Do(getAppName(app))
+					Do(app.name)
 					show.it = no
 				}) {
 					LazyImage(icon)
 					move(10)
-					Text(getAppName(app).white())
+					Text(app.name.white())
 				}
 			}
 		}
