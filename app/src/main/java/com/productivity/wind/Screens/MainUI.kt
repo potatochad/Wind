@@ -107,7 +107,7 @@ fun Main() {
 						Bar.apps.edit(it) { done = yes }
 						Vlog("${it.name} completed")						
 					}
-					Item.AppTaskUI(it)
+					AppTaskUI(it)
 				}
 			}
 		} else {
@@ -133,7 +133,7 @@ fun Main() {
 			Bar.apps.findUI({ 
 				it.name.contains(Tag.it) 
 			}) { 
-				Item.AppTaskUI(it) 
+				AppTaskUI(it) 
 			}
 		}
 	}
