@@ -191,6 +191,8 @@ typealias mList<T> = MutableList<T>
 typealias ClassVar<T, R> = KMutableProperty1<T, R>
 typealias ClassValVar<T, R> = KProperty1<T, R>
 
+typealias AppInfo = ResolveInfo
+
 typealias Content = @Composable () -> Unit
 typealias Content_<T> = @Composable (T) -> Unit
 typealias UI = @Composable () -> Unit
