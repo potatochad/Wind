@@ -173,7 +173,7 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
             title = "Burn 5 points",
             onClick = {
 				Bar.funTime-=5
-				Bar.funTime.Vlog("Points left")
+				Bar.funTime.vlog("Points left")
 			}
         )
 
