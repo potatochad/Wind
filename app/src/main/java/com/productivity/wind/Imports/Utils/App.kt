@@ -295,10 +295,12 @@ fun openApp(pkg: Str) {
     }
 }
 
-fun getAppName(info: ResolveInfo): Str {
-    val pkg = info.activityInfo.packageName
-    return info.loadLabel(App.packageManager)?.toString() ?: pkg
-}
+val ResolveInfo.name: Str
+    get() {
+        val pkg = this.activityInfo.packageName
+        return this.loadLabel(App.packageManager)?.toString() ?: pkg
+	}
+	
 fun getAppIcon(packageName: Str?): Drawable? {
     if (packageName.isNullOrBlank()) {
         return App.getDrawable(android.R.drawable.sym_def_app_icon)
