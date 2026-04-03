@@ -108,8 +108,36 @@ fun CopyPaste(id: Str ="") {
 	}
 
     LazyScreen(top = { 
-        Header.CopyPaste(txt, maxDone, donePts, letterPts, id) 
-    }) {
+		Text("Copy Paste")
+        
+        End {
+			Item.ItemDelete(Bar.apps, app1){
+				goTo("Main")
+			}
+
+			Item.FancyAdd(
+				list = Bar.apps,
+				item = app1,
+				stop = { 
+					when {
+						text.it.empty -> yes
+						else -> no
+					}
+				},
+				newItem = { AppTsk() },
+			){ x ->
+				x.edit {
+					txt = text.it
+                    maxDone = MaxDone.it
+                    donePts = DonePts.it
+                    letterPts = LetterPts.it
+				}  
+				goTo("Main")
+			}
+        }
+	}
+        
+	}) {
         RuleCard("If") {
             LazzyRow {
                 Text("Letter typed correctly: ")
