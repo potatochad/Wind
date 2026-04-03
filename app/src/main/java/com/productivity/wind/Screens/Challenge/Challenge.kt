@@ -273,27 +273,64 @@ fun CopyTskUI(tsk: CopyTsk) {
 
 @Composable
 fun AppUsage(id: Str = "") {
-    var Time = r(60)
-    var Points = r(10)
-    var WhichIf = r(0)
-	
+    var time1 = r(60)
+    var worth1 = r(10)
+    var name1 by r("app")
+	var app1 by r<AppTsk?>(null)
+
 	var show = r(no)
-    var appName by r("app")
 	
 	selectApp(show){
-		appName = it
+		name1 = it
 	}
   
     LoadItemFromId(id, Bar.apps) { a ->
-		Time.it = a.DoneTime
-		Points.it = a.Worth
-		appName = a.name
+		time1.it = a.DoneTime
+		worth1.it = a.Worth
+		name1 = a.name
+		app1 = a
 	}
 
     LazyScreen(top = {
-        Header.AppUsage(Time, Points, appName)
-       }
-    ) {
+		Text("AppUsage")
+        
+        End {
+			Item.ItemDelete(Bar.apps, app1){
+				goTo("Main")
+			}
+
+			Item.FancyAdd(
+				list = Bar.apps,
+				item = app1,
+				stop = { 
+					when {
+						isUsageP_Enabled() == no -> { 
+							goTo("AllowAppUsage")
+							yes
+						}
+						time1.it < 1 -> {
+							Vlog("Add time")
+							yes
+						}
+						name1 == "app" -> {
+							Vlog("Select app")
+							yes
+						}
+						else -> no
+					}
+				},
+				newItem = { AppTsk() },
+			){ x ->
+				x.edit {
+					pkg = getAppPkg(selectedApp)
+                    name = selectedApp
+                    DoneTime = Time.it
+                    Worth = Points.it
+				}  
+				goTo("Main")
+			}
+        }
+    }) {
 		RuleCard("If"){
 		  LazzyRow{
 			  CheckCircle(1, WhichIf)
