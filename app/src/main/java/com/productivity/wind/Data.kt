@@ -124,8 +124,8 @@ data class CopyTsk(
 @Serializable
 data class Waits (
     val id: Str = Id(),
-    var startTime: Bool = no,
-    var endTime: Bool = no,
+    var start: Long = now(),
+    var wait: Long,
     var DoJs: Str = "",
 )
 
