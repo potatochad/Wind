@@ -317,44 +317,6 @@ object Item {
 
 object Header {
     @Composable
-    fun AppUsage(Time: mInt, Points: mInt, selectedApp: Str) {
-        Text("AppUsage")
-        
-        End {
-			Item.ItemDelete(
-				Bar.apps, 
-				webWord
-			){
-				goTo("WebKeywords")
-			}
-
-			Item.FancyAdd(
-				list = Bar.apps,
-				item = null,
-				stop = { 
-					var stop = word1.it.empty
-					if (stop) Vlog("Add time")
-					stop
-
-					check(!isUsageP_Enabled()) { goTo("AllowAppUsage"); return@Add}
-                check(Time.it < 1,"Add time") {return@Add}
-                check(selectedApp.isEmpty(),"Select app") {return@Add}
-
-				},
-				newItem = { AppTsk() },
-			){ x ->
-				x.edit {
-					pkg = getAppPkg(selectedApp)
-                    name = selectedApp
-                    DoneTime = Time.it
-                    Worth = Points.it
-				}  
-				goTo("Main")
-			}
-        }
-    }
-    
-    @Composable
     fun CopyPaste(text: m_<Str>, MaxDone: m_<Int>, DonePts: m_<Int>, LetterPts: m_<Int>, id: Str){
         Text("Copy Paste")
         
