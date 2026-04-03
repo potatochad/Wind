@@ -330,7 +330,7 @@ object Header {
 
 			Item.FancyAdd(
 				list = Bar.apps,
-				item = webWord,
+				item = null,
 				stop = { 
 					var stop = word1.it.empty
 					if (stop) Vlog("Add time")
@@ -341,7 +341,7 @@ object Header {
                 check(selectedApp.isEmpty(),"Select app") {return@Add}
 
 				},
-				newItem = { WebWord() },
+				newItem = { AppTsk() },
 			){ x ->
 				x.edit {
 					pkg = getAppPkg(selectedApp)
