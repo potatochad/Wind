@@ -281,7 +281,7 @@ object WebUtils {
 		var return1 by m(no)
 		EachFoundBadWord(url) {
 			if (it.locked) {
-				it.Vlog("Locked word")
+				it.vlog("Locked word")
 				return1 = yes
 			}
 			when (it.type) {
@@ -312,11 +312,11 @@ object WebUtils {
 
 		if (noGoodWords){
 			if (BadKeyWord != null) {
-				BadKeyWord.Vlog("Some random keyword")
+				BadKeyWord.vlog("Some random keyword")
 				return WebAction.Block
 			}
 			if (BadBlot != null){
-				BadBlot.Vlog("Blotting!")
+				BadBlot.vlog("Blotting!")
 				return WebAction.Blot
 			}
 		}
