@@ -317,7 +317,7 @@ object Item {
 
 object Header {
     @Composable
-    fun AppUsage(Time: m_<Int>, Points: m_<Int>, selectedApp: Str) {
+    fun AppUsage(Time: mInt, Points: mInt, selectedApp: Str) {
         Text("AppUsage")
         
         End {
