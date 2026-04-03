@@ -236,7 +236,7 @@ object Item {
     fun AppTaskUI(app: AppTsk){
         val icon = getAppIcon(app.pkg)
         var name = app.name
-		val progress = (toF(app.NowTime) / toF(app.DoneTime)).coerceIn(0f, 1f)
+		val progress = (toF(app.nowTime) / toF(app.doneTime)).coerceIn(0f, 1f)
         
         LazyCard {
             LazzyRow {
@@ -250,7 +250,7 @@ object Item {
 
 
                 move(12)
-                Text("Points ${app.Worth}")
+                Text("Points ${app.worth}")
 
                 End {
                     Item.Edit{
