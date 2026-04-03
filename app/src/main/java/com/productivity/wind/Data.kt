@@ -57,6 +57,12 @@ fun newDay() {
 			 didTime = 0
 		 }
 	 }
+
+
+	 
+	 Bar.waits.each{
+		 // DoJs = "var x = 5; x = 6;"
+	 }
 }
 
 
