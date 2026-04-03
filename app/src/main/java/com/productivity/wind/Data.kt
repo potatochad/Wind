@@ -240,7 +240,7 @@ fun OnLeaveApp(){
 
 fun OnResume(){
 	Bar.leftApp = no
-	Item.UpdateAppTsk()
+	TskProp.UpdateAppTsk()
 
 	if (isNewDay()) newDay()
 
