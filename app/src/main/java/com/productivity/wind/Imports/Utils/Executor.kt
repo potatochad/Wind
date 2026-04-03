@@ -129,6 +129,34 @@ import com.productivity.wind.Imports.UI_visible.*
 import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
+import org.mozilla.javascript.Context
+import org.mozilla.javascript.Scriptable
+
+
+
+fun RunJs(script: Str): Any? {
+    val ctx = Context.enter()
+    ctx.optimizationLevel = -1
+    val scope = ctx.initStandardObjects()
+    return ctx.evaluateString(scope, script, "<cmd>", 1, null)
+}
+
+/*
+Bar.waits.add{
+    startTime = now()
+    endTime = now() + 10_000
+    DoJs = "var x = 5; x = 6;"
+}
+*/
+
+
+
+
+
+
+
+
+
 
 
 fun runOnceEver(action: Wait) {
