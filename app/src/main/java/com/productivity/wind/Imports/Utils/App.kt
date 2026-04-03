@@ -320,7 +320,12 @@ fun getAppIcon(packageName: Str?): Drawable? {
 
 
 
-
+fun Any?.log(x: Str){
+	log("$x: [ $this ]", 400)
+}
+fun Any?.Vlog(x: Str){
+	Vlog("$x: [ $this ]", 400)
+}
 fun log(message: Str, int: Int = 200) {
     var msg = message.replace("\n", " | ").take(int)
     if (msg.length >= int) {msg += " ..."}
