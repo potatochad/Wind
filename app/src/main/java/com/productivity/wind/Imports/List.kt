@@ -180,6 +180,9 @@ fun DoTsk.done(): Bool {
 fun WebWord.edit(block: WebWord.() -> Unit) {
 	Bar.webWord.edit(this, block)
 }
+fun AppTsk.edit(block: AppTsk.() -> Unit) {
+	Bar.apps.edit(this, block)
+}
 fun CopyTsk.edit(block: CopyTsk.() -> Unit) {
     Bar.copyTsk.edit(this, block)
 }
