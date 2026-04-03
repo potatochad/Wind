@@ -221,40 +221,6 @@ object Item {
     }
 
     @Composable
-    fun AppTaskUI(app: AppTsk){
-        val icon = getAppIcon(app.pkg)
-        var name = app.name
-		val progress = (toF(app.nowTime) / toF(app.doneTime)).coerceIn(0f, 1f)
-        
-        LazyCard {
-            LazzyRow {
-                move(10)
-
-                click({
-                    ProgressIcon(icon, progress)
-                }){
-                    openApp(app.pkg)
-                }
-
-
-                move(12)
-                Text("Points ${app.worth}")
-
-                End {
-                    Item.Edit{
-                        enoughPoints {
-                            goTo("AppUsage/${app.id}")
-                        }
-                    }
-                    Icon.Delete{
-                       Bar.apps.remove(app)
-                    }
-                }
-
-            }
-        }
-    }
-    @Composable
     fun UnlockThreshold() {
         LazyItem(
             topPadding = 1.dp,
