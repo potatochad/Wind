@@ -130,6 +130,7 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
+fun now() = System.currentTimeMillis()
 
 fun isNewDay(): Bool {
 	if (Bar.lastDate == "") { Bar.lastDate = "${LocalDate.now()}"}
