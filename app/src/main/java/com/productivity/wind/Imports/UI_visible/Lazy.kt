@@ -528,19 +528,24 @@ fun LazyPopup(
 	msg: Str = "",
     showCancel: Bool = yes,
     showConfirm: Bool = yes,
-    onConfirm: Do? = null,
-    onCancel: Do? = null,
-	onDismiss: Do? = { show.it = no },
+    onConfirm: Do = {},
+    onCancel: Do = {},
+	onDismiss: Do = {},
 	onClose: Do = {},
 	ui: ui? = null,
 ) {
     if (!show.it) return
+
+	fun HidePop(){
+		onClose()
+		hide(show)
+	}
 	
 
     AlertDialog(
         onDismissRequest = {
-            onDismiss?.invoke()
-			onClose()
+            onDismiss()
+			HidePop()
         },
         title = { Text(title) },
         text = {
@@ -553,8 +558,8 @@ fun LazyPopup(
 				move(15)
                 Ctext("OK"){
 					wait {
-						onConfirm?.invoke()
-						hide(show)
+						onConfirm()
+						HidePop()
 					}
                 }
             }
@@ -563,9 +568,8 @@ fun LazyPopup(
             {
 				Ctext("Cancel"){
 					wait {
-						onCancel?.invoke()
-						onClose()
-						hide(show)
+						onCancel()
+						HidePop()
 					}
                 }
             }
