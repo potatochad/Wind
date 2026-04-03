@@ -141,14 +141,6 @@ fun RunJs(script: Str): Any? {
     return ctx.evaluateString(scope, script, "<cmd>", 1, null)
 }
 
-/*
-Bar.waits.add{
-    startTime = now()
-    endTime = now() + 10_000
-    DoJs = "var x = 5; x = 6;"
-}
-*/
-
 
 
 
