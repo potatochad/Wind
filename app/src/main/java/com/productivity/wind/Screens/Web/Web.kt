@@ -106,7 +106,7 @@ fun Web(){
 		web.url(Bar.Url)
 	}
     
-    Item.WebPointTimer()
+    WebProps.WebPointTimer()
 
 	BlockingLogic(web)
 
