@@ -213,6 +213,19 @@ fun toListStr(it: Any?): ListStr = when (it) {
     else -> listOf(toStr(it))
 }
 
+fun toColor(it: Any?): Color = when (it) {
+    is Int -> Color(it)
+    is Long -> Color(it.toInt())
+    is Str -> {
+        // Try parse hex like "FF9C27B0" or "#FF9C27B0"
+        val hex = it.removePrefix("#")
+        try { Color(hex.toLong(16).toInt()) } catch (_: Exception) { Color.Black }
+    }
+    is Color -> it
+    null -> Color.Black
+    else -> Color.Black
+}
+
 
 
 fun toLocalDate(x: Any?): LocalDate = when (x) { 
