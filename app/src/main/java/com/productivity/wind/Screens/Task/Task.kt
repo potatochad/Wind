@@ -351,7 +351,7 @@ fun AppUsage(id: Str = "") {
 				newItem = { AppTsk() },
 			){ x ->
 				x.edit {
-					pkg = getAppPkg(name1)
+					pkg = name1.pkg()
                     name = name1
                     doneTime = time1.it
                     worth = worth1.it
