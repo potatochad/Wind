@@ -58,7 +58,7 @@ object TskProp {
 	
 	@Composable
 	fun PickApp(show: mBool =m(yes), Do: DoStr ={}) {
-		var appList by r_m<List<Pair<ResolveInfo, Drawable?>>>(emptyList())
+		var appList by r_m<List<Pair<AppInfo, Drawable?>>>(emptyList())
 		var loading by r_m(no)
 
 		RunOnce {
