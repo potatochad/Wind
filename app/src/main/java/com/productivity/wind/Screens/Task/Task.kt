@@ -200,7 +200,7 @@ fun CopyTskUI(tsk: CopyTsk) {
         Text("Done: ${tsk.doneTimes}/${tsk.maxDone}")
         End { 
 			AppItem.Edit{
-                Item.enoughPoints {
+                AppItem.enoughPoints {
 					goTo("CopyPaste/${tsk.id}")
                 }
             }
