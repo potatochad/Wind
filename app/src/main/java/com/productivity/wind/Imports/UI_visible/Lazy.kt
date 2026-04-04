@@ -329,16 +329,13 @@ fun LazyMore(
 fun LazyItem(
     title: Str,
 	modUI: Mod = Mod.space(h=2.5.dp).space(end=12),
+    icon: ui,
 	
-    icon: ImageVector? = null,
-    BigIcon: ImageVector? = null,
-    BigIconColor: Color = Color.Green,
-
 	topPadding: Any = 7,
 	bottomPadding: Any = 8,
 	
 	onClick: Do? = null,
-	endContent: uiRow = {},
+	endUI: uiRow = {},
 ) {
 	LazyCard(
 		corners = 12,
@@ -351,22 +348,14 @@ fun LazyItem(
 		modUI = modUI,
 	){
 		LazzyRow(space=4){
-			if (icon != null) {
-				Icon(icon)
-			} 
-			if (BigIcon != null) {
-				BigIcon(
-					BigIcon,
-					BigIconColor
-				)
-			}
+			icon()
 			move(6)
 
 			Row(Mod.weight(1f)){
 				Text(title.bold())
 			}
 				
-			endContent()
+			endUI()
 		}
 	}
 }
