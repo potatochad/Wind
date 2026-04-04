@@ -46,7 +46,7 @@ object WebProps {
 			if (Bar.Dpoints > 0) {
 				if (Bar.funTime < 1) {
 					goTo("main")
-					pop("getPoints")
+					pop("GetPoints")
 				} else {
 					Bar.funTime -= 1
 				}
