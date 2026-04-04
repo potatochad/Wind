@@ -105,7 +105,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 	  var show = m(no)
 	  
 
-	  selectLocation(show)
+	  PickLocation(show)
 	  
       CheckRow("Activate at ", check) {
          Ctext("${Bar.privacyGeo.size} locations") {
