@@ -159,7 +159,7 @@ object AppItem {
 		Do: Do
 	) {
 		if (item != null) {
-			Item.Delete {
+			AppItem.Delete {
 				list.remove(item) 
 				Do()
 			}
@@ -190,7 +190,7 @@ object AppItem {
 	@Composable
     fun Add(Do: Do = { goTo("Challenge") }) {
         Icon.Add {     
-            Item.enoughPoints{
+            AppItem.enoughPoints{
                 Do()
             }
         }
@@ -203,7 +203,7 @@ object AppItem {
     ) {
         Icon.Edit(mod) {
             if (!noPoints){
-                Item.enoughPoints{
+                AppItem.enoughPoints{
                     Do()
                 }
             } else {
