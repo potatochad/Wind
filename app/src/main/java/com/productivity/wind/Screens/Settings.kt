@@ -158,16 +158,15 @@ fun MyScreen() {
 @Composable
 fun SettingsOtherScreen() = LazyScreen("Settings") {
         LazyItem(
-            BigIcon = Icons.Filled.ListAlt,
-            BigIconColor = Color(0xFF90A4AE),
+            icon = BigIcon.ListAlt(0xFF90A4AE),
             title = "Logs",
             onClick = { goTo("LogsScreen") }
         )
 		LazyItem(
-            icon = Icons.Filled.Whatshot,
+            icon = Icon.Whatshot(),
             title = "Burn 5 points",
             onClick = {
-				Bar.funTime-=5
+				Bar.funTime -= 5
 				Bar.funTime.vlog("Points left")
 			}
         )
