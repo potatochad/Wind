@@ -46,7 +46,7 @@ fun WebKeywords() {
 		top = {
 			Text("List")
 			End {
-				Item.Add {
+				AppItem.Add {
 					goTo("WebWordConfigure/_")
 				}
 			}
