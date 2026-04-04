@@ -322,6 +322,9 @@ object BigIcon {
 	@Composable
 	fun Restore(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Restore, mod, color, Do)
 
+	@Composable
+	fun Backup(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Backup, mod, color, Do)
+
 	
 }
 
