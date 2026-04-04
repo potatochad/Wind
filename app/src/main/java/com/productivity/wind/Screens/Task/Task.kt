@@ -309,7 +309,7 @@ fun AppUsage(id: Str = "") {
 
 	var show = r(no)
 	
-	PickApp(show){
+	TskProp.PickApp(show){
 		name1 = it
 	}
   
