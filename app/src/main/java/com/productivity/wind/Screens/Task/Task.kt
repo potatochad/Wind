@@ -94,7 +94,7 @@ fun CopyPaste(id: Str ="") {
     var donePts1 = r(10)
     var letterPts1 = r(1)
 
-	var copyTsk1 by r<DoTsk?>(null)
+	var copyTsk1 by r<CopyTsk?>(null)
 
 	val inputScroll = Scroll()
     
@@ -157,7 +157,7 @@ fun CopyPaste(id: Str ="") {
                 Text("DailyMax: ")
                 TinyInput(maxDone1)
             }
-			ScrollInput(txt, scroll = inputScroll)
+			ScrollInput(txt1, scroll = inputScroll)
         }
     }
 }
