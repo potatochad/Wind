@@ -52,7 +52,7 @@ fun SettingsScreen() {
             BigIcon = Icons.Filled.Backup,
             BigIconColor = darkBlue,
             title = "BackUp",
-			endContent = {
+			endUI = {
 				Ctext(
 					if (Bar.encryptedBackup) "encrypt".darkGray()
 					else "txt".darkGray()
