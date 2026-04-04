@@ -130,6 +130,8 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
+
+
 fun closeApp() {
     App.finishAffinity()
     killProcess(myPid())
@@ -156,10 +158,7 @@ fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 
 
 
-
-
 val MakeTxtFile = ActivityResultContracts.CreateDocument("text/plain")
-
 
 fun TxtFileToMap(ctx: ctx, uri: Uri, fileMap: MutableMap<Str, Str>) {
     ctx.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
@@ -173,10 +172,6 @@ fun TxtFileToMap(ctx: ctx, uri: Uri, fileMap: MutableMap<Str, Str>) {
         }
     }
 }
-
-
-
-
 
 
 
@@ -202,6 +197,7 @@ fun DarkBackground(onDismiss: Do = {}){
 
 
 
+
 fun androidSettings(action: Str) {
     startActivity(
 		Intent(action).apply {
@@ -209,7 +205,6 @@ fun androidSettings(action: Str) {
 		}
 	)
 }
-
 
 
 
@@ -270,21 +265,18 @@ fun getTodayAppUsage(packageName: Str): Int {
 
     return (todayUsage / 1000L).toInt().coerceAtLeast(0)
 }
-fun getAppPkg(input: Any): Str {
-    val pm = App.packageManager
-    val result: Str = when (input) {
-        is ResolveInfo -> input.activityInfo.packageName
-        is Str -> {
-            // Try to find package by app name
-            pm.getInstalledApplications(0)
-                .firstOrNull { 
-                    pm.getApplicationLabel(it).toString().equals(input, ignoreCase = true) 
-                }?.packageName ?: ""
-        }
-        else -> ""
-    }
-    return result
+
+fun AppInfo.pkg(): Str {
+    return this.packageName ?: ""
 }
+
+fun Str.pkg(): Str {
+    val pm = App.packageManager
+    return pm.getInstalledApplications(0)
+        .firstOrNull { pm.getApplicationLabel(it).toString().equals(this, ignoreCase = yes) }
+        ?.packageName ?: this
+}
+
 fun openApp(pkg: Str) {
     val pm: PackageManager = App.packageManager
     val launchIntent: Intent? = pm.getLaunchIntentForPackage(pkg)
