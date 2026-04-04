@@ -124,11 +124,11 @@ fun WebWordConfigure(id: Str = "") {
         Text("Configure")
 
         End {
-			Item.ItemDelete(Bar.webWord, webWord){
+			AppItem.ItemDelete(Bar.webWord, webWord){
 				goTo("WebKeywords")
 			}
 
-			Item.FancyAdd(
+			AppItem.FancyAdd(
 				list = Bar.webWord,
 				item = webWord,
 				stop = { 
