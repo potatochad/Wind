@@ -334,6 +334,12 @@ object BigIcon {
 	@Composable
 	fun Extension(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Extension, mod, toColor(color), Do)
 
+	@Composable
+	fun ListAlt(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.ListAlt, mod, toColor(color), Do)
+
+	@Composable
+	fun Whatshot(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Whatshot, mod, toColor(color), Do)
+
 	
 	
 
