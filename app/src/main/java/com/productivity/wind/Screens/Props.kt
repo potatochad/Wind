@@ -131,7 +131,7 @@ fun Menu() {
 
 
 
-object Item {
+object AppItem {
 	
 	@Composable
 	fun Menu(){
