@@ -225,6 +225,9 @@ object Icon {
 	@Composable
 	fun Lock(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Lock, mod, color, Do)
 
+	@Composable
+	fun Whatshot(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Whatshot, mod, color, Do)
+
 
 
     @Composable
