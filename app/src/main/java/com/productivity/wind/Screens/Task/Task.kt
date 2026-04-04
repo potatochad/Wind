@@ -99,10 +99,10 @@ fun CopyPaste(id: Str ="") {
 	val inputScroll = Scroll()
     
     LoadItemFromId(id, Bar.copyTsk) { t ->
-		txt.it = t.txt
-		maxDone.it = t.maxDone
-		donePts.it = t.donePts
-		letterPts.it = t.letterPts
+		txt1.it = t.txt
+		maxDone1.it = t.maxDone
+		donePts1.it = t.donePts
+		letterPts1.it = t.letterPts
 		copyTsk1 = t
 
 		wait {
