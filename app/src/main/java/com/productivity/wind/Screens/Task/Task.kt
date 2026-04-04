@@ -309,7 +309,7 @@ fun AppUsage(id: Str = "") {
 
 	var show = r(no)
 	
-	selectApp(show){
+	PickApp(show){
 		name1 = it
 	}
   
