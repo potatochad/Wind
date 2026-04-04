@@ -55,6 +55,52 @@ import com.productivity.wind.Screens.*
  
 
 object TskProp {
+	
+	@Composable
+	fun PickApp(show: mBool =m(yes), Do: DoStr ={}) {
+		var appList by r_m<List<Pair<ResolveInfo, Drawable?>>>(emptyList())
+		var loading by r_m(no)
+
+		RunOnce {
+			runHeavyTask(
+				task = {
+					getApps()
+						.filter { getAppPkg(it) != AppPkg }
+						.map { app ->
+							val icon = getAppIcon(getAppPkg(app))
+							app to icon
+						}
+				},
+				onResult = {
+					appList = it
+					loading = no
+				}
+			)
+		}
+
+		LazyPopup(
+           show = show,
+           showCancel = no,
+           showConfirm = no,
+           title = "Select App",
+       ){
+	    	Column(Mod.h(200).Vscroll()){
+		    	appList.forEach{ (app, icon) ->
+			    	LazzyRow(Mod.click {
+			    		Do(app.name)
+			    		show.it = no
+			    	}) {
+			    		LazyImage(icon)
+			    		move(10)
+			    		Text(app.name.white())
+			    	}
+ 		    	}
+    		}
+    	}
+    }
+
+
+
 	fun UpdateAppTsk(){
         Bar.apps.each {
             it.edit { it.nowTime = getTodayAppUsage(it.pkg) }
