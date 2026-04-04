@@ -406,7 +406,7 @@ fun AppTaskUI(app: AppTsk){
 
             End {
                 Item.Edit{
-                    enoughPoints {
+                    Item.enoughPoints {
                         goTo("AppUsage/${app.id}")
                     }
                 }
