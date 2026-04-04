@@ -290,49 +290,49 @@ object BigIcon {
 
 	
 	@Composable
-	fun Menu(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Menu, mod, color, Do)
+	fun Menu(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Menu, mod, toColor(color), Do)
 	
 	@Composable
-	fun Reload(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Refresh, mod, color, Do)
+	fun Reload(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Refresh, mod, toColor(color), Do)
 	
 	@Composable
-	fun Chill(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.SportsEsports, mod, color, Do)
+	fun Chill(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.SportsEsports, mod, toColor(color), Do)
 	
 	@Composable
-	fun Add(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Add, mod, color, Do)
+	fun Add(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Add, mod, toColor(color), Do)
 	
 	@Composable
-	fun MoreMenu(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.MoreVert, mod, color, Do)
+	fun MoreMenu(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.MoreVert, mod, toColor(color), Do)
 	
 	@Composable
-	fun Edit(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Edit, mod, color, Do)
+	fun Edit(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Edit, mod, toColor(color), Do)
 	
 	@Composable
-	fun Delete(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Delete, mod, color, Do)    
+	fun Delete(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Delete, mod, toColor(color), Do)    
 
 	@Composable
-	fun Search(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Search, mod, color, Do)
+	fun Search(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Search, mod, toColor(color), Do)
 
 	@Composable
-	fun Back(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.ArrowBack, mod, color, Do)
+	fun Back(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.ArrowBack, mod, toColor(color), Do)
 
 	@Composable
-	fun Lock(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Lock, mod, color, Do)
+	fun Lock(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Lock, mod, toColor(color), Do)
 
 	@Composable
-	fun Restore(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Restore, mod, color, Do)
+	fun Restore(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Restore, mod, toColor(color), Do)
 
 	@Composable
-	fun Backup(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Backup, mod, color, Do)
+	fun Backup(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Backup, mod, toColor(color), Do)
 	
 	@Composable
-	fun Tune(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Tune, mod, color, Do)
+	fun Tune(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Tune, mod, toColor(color), Do)
 
 	@Composable
-	fun VisibilityOff(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.VisibilityOff, mod, color, Do)
+	fun VisibilityOff(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.VisibilityOff, mod, toColor(color), Do)
 
 	@Composable
-	fun Extension(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Extension, mod, color, Do)
+	fun Extension(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Extension, mod, toColor(color), Do)
 
 	
 	
