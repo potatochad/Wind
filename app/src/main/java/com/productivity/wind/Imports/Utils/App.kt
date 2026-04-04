@@ -267,7 +267,7 @@ fun getTodayAppUsage(packageName: Str): Int {
 }
 
 fun AppInfo.pkg(): Str {
-    return this.packageName ?: ""
+    return this.activityInfo?.packageName ?: ""
 }
 
 fun Str.pkg(): Str {
