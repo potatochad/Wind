@@ -96,7 +96,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("LogsScreen") { LogsScreen() }
 
 	// popups ‼️Nav back on close
-	popup("getPoints") { getPoints() }
+	popup("GetPoints") { GetPoints() }
 	popup("AllowAppUsage") { AllowAppUsage() }
 }
 
@@ -190,7 +190,7 @@ object AppItem {
 	@Composable
     fun Add(Do: Do = { goTo("Challenge") }) {
         Icon.Add {     
-            AppItem.enoughPoints{
+            AppItem.EnoughPoints{
                 Do()
             }
         }
@@ -213,9 +213,9 @@ object AppItem {
 	}
 
 
-    fun enoughPoints(enough: Do) {
+    fun EnoughPoints(enough: Do) {
         if (Bar.funTime < Bar.Dpoints) {
-            pop("getPoints")
+            pop("GetPoints")
         }
         else enough()
     }
@@ -259,7 +259,7 @@ object AppItem {
 
 
 @Composable
-fun getPoints(){
+fun GetPoints(){
     LazyPopup(
         m(yes), 
         "Get ${Bar.funTime- Bar.Dpoints} more points", 
@@ -273,10 +273,8 @@ fun getPoints(){
 
 
 
-
-
 @Composable
-fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
+fun PickLocation(show: mBool = m(yes), Do: DoStr ={}) {
     LazyBigPopup(
         show,
 		"Choose Locations",
@@ -305,10 +303,8 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 							slider.it = selected?.radius ?: slider.it
 						}
 					}
-					
 				}
 			}
-
 			LazySlider(
 				value = slider,
 				min = 5f,
@@ -327,11 +323,8 @@ fun selectLocation(show: mBool = m(yes), Do: DoStr ={}) {
 
 
 
-
-
-
 @Composable
-fun selectApp(show: mBool =m(yes), Do: DoStr ={}) {
+fun PickApp(show: mBool =m(yes), Do: DoStr ={}) {
     var appList by r_m<List<Pair<ResolveInfo, Drawable?>>>(emptyList())
     var loading by r_m(no)
 
@@ -371,7 +364,6 @@ fun selectApp(show: mBool =m(yes), Do: DoStr ={}) {
 			}
 		}
 	}
-	
 }
 
 
