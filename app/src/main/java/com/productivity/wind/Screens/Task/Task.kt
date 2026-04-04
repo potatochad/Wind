@@ -123,14 +123,14 @@ fun CopyPaste(id: Str ="") {
 				item = copyTsk1,
 				stop = { 
 					when {
-						text.it.empty -> yes
+						txt1.it.empty -> yes
 						else -> no
 					}
 				},
 				newItem = { CopyTsk() },
 			){ x ->
 				x.edit {
-					txt = txt.it
+					txt = txt1.it
                     maxDone = maxDone1.it
                     donePts = donePts1.it
                     letterPts = letterPts1.it
