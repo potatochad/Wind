@@ -228,7 +228,7 @@ object AppItem {
             BigIconColor = gold,
             title = "Unlock Threshold",
 			modUI = Mod.space(h=2.5.dp),
-            endContent = {             
+            endUI = {             
                 TinyInput(
                     "${Bar.Dpoints}", 
 					Mod.w(70),
