@@ -53,7 +53,7 @@ fun Main() {
 	LazyScreen(
 		top = { 
 			if (!searching) {
-				Item.Menu()
+				AppItem.Menu()
 				
 				Icon.Chill { goTo("Web") }
 
