@@ -35,8 +35,7 @@ fun SettingsScreen() {
         
         var restore = r_m(no)
         LazyItem(
-            BigIcon = Icons.Filled.Restore,
-            BigIconColor = darkBlue,
+            icon = BigIcon.Restore(darkBlue),
             title = "Restore",
             onClick = { 
                 restore.it = yes
