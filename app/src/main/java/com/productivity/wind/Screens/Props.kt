@@ -203,7 +203,7 @@ object AppItem {
     ) {
         Icon.Edit(mod) {
             if (!noPoints){
-                AppItem.enoughPoints{
+                AppItem.EnoughPoints{
                     Do()
                 }
             } else {
