@@ -406,11 +406,11 @@ fun AppTaskUI(app: AppTsk){
 
             End {
                 AppItem.Edit{
-                    Item.enoughPoints {
+                    AppItem.enoughPoints {
                         goTo("AppUsage/${app.id}")
                     }
                 }
-                AppIcon.Delete{
+                Icon.Delete{
                     Bar.apps.remove(app)
                 }
             }
