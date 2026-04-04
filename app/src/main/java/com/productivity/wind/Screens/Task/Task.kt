@@ -114,11 +114,11 @@ fun CopyPaste(id: Str ="") {
 		Text("Copy Paste")
         
         End {
-			Item.ItemDelete(Bar.copyTsk, copyTsk1){
+			AppItem.ItemDelete(Bar.copyTsk, copyTsk1){
 				goTo("Main")
 			}
 
-			Item.FancyAdd(
+			AppItem.FancyAdd(
 				list = Bar.copyTsk,
 				item = copyTsk1,
 				stop = { 
@@ -199,13 +199,13 @@ fun CopyTskUI(tsk: CopyTsk) {
     LazzyRow {
         Text("Done: ${tsk.doneTimes}/${tsk.maxDone}")
         End { 
-			Item.Edit{
+			AppItem.Edit{
                 Item.enoughPoints {
 					goTo("CopyPaste/${tsk.id}")
                 }
             }
 
-			Item.Delete{ 
+			AppItem.Delete{ 
 				Bar.copyTsk.remove(tsk)
 			}
 		}
@@ -324,11 +324,11 @@ fun AppUsage(id: Str = "") {
 		Text("AppUsage")
         
         End {
-			Item.ItemDelete(Bar.apps, app1){
+			AppItem.ItemDelete(Bar.apps, app1){
 				goTo("Main")
 			}
 
-			Item.FancyAdd(
+			AppItem.FancyAdd(
 				list = Bar.apps,
 				item = app1,
 				stop = { 
@@ -405,12 +405,12 @@ fun AppTaskUI(app: AppTsk){
             Text("Points ${app.worth}")
 
             End {
-                Item.Edit{
+                AppItem.Edit{
                     Item.enoughPoints {
                         goTo("AppUsage/${app.id}")
                     }
                 }
-                Icon.Delete{
+                AppIcon.Delete{
                     Bar.apps.remove(app)
                 }
             }
@@ -447,11 +447,11 @@ fun ToDo(id: Str = "") {
         Text("ToDo")
         
         End {
-			Item.ItemDelete(Bar.doTsk, todo){
+			AppItem.ItemDelete(Bar.doTsk, todo){
 				goTo("Main")
 			}
 
-			Item.FancyAdd(
+			AppItem.FancyAdd(
 				list = Bar.doTsk,
 				item = todo,
 				stop = { 
