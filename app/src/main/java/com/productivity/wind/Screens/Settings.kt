@@ -48,9 +48,8 @@ fun SettingsScreen() {
         var backup = r_m(no)
         LazyItem(
             topPadding = 1.dp,
-            BigIcon = Icons.Filled.Backup,
-            BigIconColor = darkBlue,
-            title = "BackUp",
+            icon = BigIcon.Backup(darkBlue),
+            title = "Backup",
 			endUI = {
 				Ctext(
 					if (Bar.encryptedBackup) "encrypt".darkGray()
