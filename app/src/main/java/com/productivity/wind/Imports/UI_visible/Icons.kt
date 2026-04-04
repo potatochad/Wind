@@ -324,6 +324,18 @@ object BigIcon {
 
 	@Composable
 	fun Backup(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Backup, mod, color, Do)
+	
+	@Composable
+	fun Tune(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Tune, mod, color, Do)
+
+	@Composable
+	fun VisibilityOff(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.VisibilityOff, mod, color, Do)
+
+	@Composable
+	fun Extension(color: Color, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Extension, mod, color, Do)
+
+	
+	
 
 	
 }
