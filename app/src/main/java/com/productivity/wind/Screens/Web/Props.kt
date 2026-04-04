@@ -41,6 +41,22 @@ import android.webkit.WebResourceRequest
 
 object WebProps {
 	@Composable
+    fun WebPointTimer() {
+		OnceEach(1000){
+			if (Bar.Dpoints > 0) {
+				if (Bar.funTime < 1) {
+					goTo("main")
+					pop("getPoints")
+				} else {
+					Bar.funTime -= 1
+				}
+			}
+		}
+	}
+
+
+	
+	@Composable
 	fun BtnAllow(
 		action1: WebAction,
 		Do: Do = {}
