@@ -57,17 +57,17 @@ import com.productivity.wind.Screens.*
 object TskProp {
 	
 	@Composable
-	fun PickApp(show: mBool =m(yes), Do: DoStr ={}) {
-		var appList by r_m<List<Pair<AppInfo, Drawable?>>>(emptyList())
-		var loading by r_m(no)
+	fun PickApp(show: mBool = m(yes), Do: DoStr ={}) {
+		var appList by r<List<Pair<AppInfo, Drawable?>>>(emptyList())
+		var loading by r(no)
 
 		RunOnce {
 			runHeavyTask(
 				task = {
 					getApps()
-						.filter { getAppPkg(it) != AppPkg }
+						.filter { it.pkg() != AppPkg }
 						.map { app ->
-							val icon = getAppIcon(getAppPkg(app))
+							val icon = getAppIcon(app.pkg())
 							app to icon
 						}
 				},
