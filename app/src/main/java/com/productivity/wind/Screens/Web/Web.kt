@@ -45,7 +45,7 @@ fun WebHome(){
     LazyScreen(
         top = {
             End {
-                Item.Add {
+                AppItem.Add {
                     goTo("WebKeywords")
                 }
             }
@@ -118,7 +118,7 @@ fun Web(){
                     Icon.Reload{ 
                         web.reload()
                     } 
-                    Item.Add {
+                    AppItem.Add {
                         goTo("WebKeywords")
                     }
                 }
