@@ -31,7 +31,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 @Composable
 fun SettingsScreen() {
     LazyScreen("Settings") {
-        Item.UnlockThreshold()
+        AppItem.UnlockThreshold()
         
         var restore = r_m(no)
         LazyItem(
