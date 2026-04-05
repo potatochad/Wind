@@ -59,24 +59,21 @@ import com.productivity.wind.Screens.*
 fun Challenge() {
   LazyScreen("Challenge") {
     LazyItem(
-            BigIcon = Icons.Filled.AccessTime,
-            BigIconColor = darkBlue,
+            icon = Icon.AccessTime(),
             title = "App Usage",
             onClick = { 
               goTo("AppUsage/_")
             },
         )
     LazyItem(
-            BigIcon = Icons.Filled.ContentPaste,
-            BigIconColor = Color(0xFF1E88E5), 
+            icon = Icon.ContentPaste(), 
             title = "Copy Paste",
             onClick = { 
               goTo("CopyPaste/_")
             },
         )
 	LazyItem(
-            BigIcon = Icons.Filled.ContentPaste,
-            BigIconColor = gold, 
+            icon = Icon.ContentPaste(), 
             title = "To do",
             onClick = { 
               goTo("ToDo/_")
