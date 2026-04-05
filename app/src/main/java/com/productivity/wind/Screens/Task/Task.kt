@@ -406,7 +406,7 @@ fun AppTaskUI(app: AppTsk){
                         goTo("AppUsage/${app.id}")
                     }
                 }
-                Icon.Delete{
+                AppItem.Delete{
                     Bar.apps.remove(app)
                 }
             }
