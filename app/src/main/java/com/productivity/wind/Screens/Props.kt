@@ -112,17 +112,17 @@ fun Menu() {
         headerHeight = 170,
     ) {
         LazyItem(
-            icon = Icons.Outlined.Chat,
+            icon = Icon.Chat(),
             title = "Support",
             onClick = { SendEmail(); menu = no },
         )
         LazyItem(
-            icon = Icons.Outlined.Landscape,
+            icon = Icon.Landscape(),
             title = "Settings",
-            onClick = { goTo("SettingsScreen"); menu = no },
+            onClick = { goTo("SettingsScreen"); menu = no },         
         )
         LazyItem(
-            icon = Icons.Outlined.QueryStats,
+            icon = Icon.QueryStats(),
             title = "Achievements",
             onClick = { goTo("Achievements"); menu = no },
         )
