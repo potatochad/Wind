@@ -159,15 +159,6 @@ fun RuleCard(
    }
 }
 
-@Composable
-fun BlackStatusBar() {
-    val ui = rememberSystemUiController()
-
-    RunOnce {
-        ui.setStatusBarColor(Color.Black, darkIcons = no)
-    }
-}
-
 
 
 @Composable
