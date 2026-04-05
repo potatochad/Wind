@@ -224,8 +224,7 @@ object AppItem {
     fun UnlockThreshold() {
         LazyItem(
             topPadding = 1.dp,
-            BigIcon = Icons.Filled.LockOpen,
-            BigIconColor = gold,
+            icon = BigIcon.LockOpen(gold),
             title = "Unlock Threshold",
 			modUI = Mod.space(h=2.5.dp),
             endUI = {             
