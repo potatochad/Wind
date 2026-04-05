@@ -140,6 +140,23 @@ fun closeApp() {
 
 
 
+object SystemBars {
+    fun TopBar(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
+        window.statusBarColor = color.toArgb()
+    }
+
+    fun BottomBar(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
+        window.navigationBarColor = color.toArgb()
+    }
+
+    fun Both(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
+        window.statusBarColor = color.toArgb()
+        window.navigationBarColor = color.toArgb()
+    }
+}
+
+
+
 @Composable
 fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 	val sDp = toDp(s)
@@ -443,26 +460,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Set navigation bar black with white icons
-        WindowCompat.setDecorFitsSystemWindows(window, yes)
 
-        // Set navigation bar black with white icons
-        window.navigationBarColor = android.graphics.Color.BLACK
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightNavigationBars = no
-            show(WindowInsetsCompat.Type.systemBars()) // Force visible
-            systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
-        }
-
-
+	
 		App = this
 		AppCtx = this.applicationContext
 		AppPkg = this.packageName
 
 
-
-		
 
 		permission = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -490,18 +494,30 @@ class MainActivity : ComponentActivity() {
 			
 			BlackStatusBar()
 
-			Box(Mod.maxS().navigationBarsPadding()) {
-				AppContent()
+
+			
+
+			AppContent()
+
+
+			
+			
+			val view = LocalView.current
+
+			SideEffect {
+				val window = (view.context as Activity).window
+
+				SystemBars.TopBar(window, Color.Black)
+				SystemBars.BottomBar(window, Color.Black)
 			}
+
+
+			
         }
     }
 
     override fun onResume() {
         super.onResume()
-        // re-apply nav bar color to prevent flashing
-        window.navigationBarColor = android.graphics.Color.BLACK
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = no
-
         OnResume()
     }
 	
