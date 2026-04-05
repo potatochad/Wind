@@ -463,8 +463,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-		// WindowCompat.setDecorFitsSystemWindows(window, false)
-
+		WindowCompat.enableEdgeToEdge(window)
 
 	
 		App = this
@@ -505,45 +504,6 @@ class MainActivity : ComponentActivity() {
 			AppContent()
 
 
-			BlackStatusBar()
-
-
-			
-			/*
-			val statusBarLight = Color.GREEN
-    val statusBarDark = Color.BLUE
-    val navigationBarLight = Color.GREEN
-    val navigationBarDark = Color.BLUE
-    val isDarkMode = isSystemInDarkTheme()
-    val context = LocalContext.current as ComponentActivity
-
-    DisposableEffect(isDarkMode) {
-        context.enableEdgeToEdge(
-            statusBarStyle = if (!isDarkMode) {
-                SystemBarStyle.light(
-                    statusBarLight,
-                    statusBarDark
-                )
-            } else {
-                SystemBarStyle.dark(
-                    statusBarDark
-                )
-            },
-            navigationBarStyle = if(!isDarkMode){
-                SystemBarStyle.light(
-                    navigationBarLight,
-                    navigationBarDark
-                )
-            } else {
-                SystemBarStyle.dark(navigationBarDark)
-            }
-        )
-
-        onDispose { }
-	}*/
-
-
-			
         }
     }
 
