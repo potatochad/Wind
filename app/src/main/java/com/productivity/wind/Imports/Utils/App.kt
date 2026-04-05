@@ -487,9 +487,12 @@ class MainActivity : ComponentActivity() {
 			AppLazyH = AppH - 100.dp - bottomSystemHeight()
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
+			
 			BlackStatusBar()
-		
-			AppContent()
+
+			Box(Mod.maxS().navigationBarsPadding()) {
+				AppContent()
+			}
         }
     }
 
