@@ -15,7 +15,7 @@ fun Achievements() {
     LazyScreen("Achievements") {
             
         LazyItem(
-            icon = Icon.Edit(),
+            icon = { Icon.Edit() },
             title = "Typed letters",
             endUI = {
                 Text("${toHumanReadableAmountWritten(Bar.LettersTyped)}")
