@@ -228,6 +228,16 @@ object Icon {
 	@Composable
 	fun Whatshot(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Whatshot, mod, color, Do)
 
+	@Composable
+	fun Chat(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Chat, mod, color, Do)
+
+	@Composable
+	fun Landscape(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Landscape, mod, color, Do)
+
+	@Composable
+	fun QueryStats(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.QueryStats, mod, color, Do)
+
+
 
 
     @Composable
