@@ -35,7 +35,7 @@ fun SettingsScreen() {
         
         var restore = r_m(no)
         LazyItem(
-            icon = BigIcon.Restore(darkBlue),
+            icon = { BigIcon.Restore(darkBlue) },
             title = "Restore",
             onClick = { 
                 restore.it = yes
@@ -48,7 +48,7 @@ fun SettingsScreen() {
         var backup = r_m(no)
         LazyItem(
             topPadding = 1.dp,
-            icon = BigIcon.Backup(darkBlue),
+            icon = { BigIcon.Backup(darkBlue) },
             title = "Backup",
 			endUI = {
 				Ctext(
@@ -68,7 +68,7 @@ fun SettingsScreen() {
     
 
         LazyItem(
-                icon = BigIcon.Extension(0xFF9C27B0),
+                icon = { BigIcon.Extension(0xFF9C27B0) },
                 title = "Extension",
                 onClick = {
                     goTo("ExtensionsScreen")
@@ -78,14 +78,14 @@ fun SettingsScreen() {
 
 		
         LazyItem(
-                icon = BigIcon.VisibilityOff(0xFF03A9F4),
+                icon = { BigIcon.VisibilityOff(0xFF03A9F4) },
                 title = "Privacy",
                 onClick = {
                     goTo("PrivacyScreen")
                 }
         ) 
         LazyItem(
-                icon = BigIcon.Tune(0xFFB0BEC5),
+                icon = { BigIcon.Tune(0xFFB0BEC5) },
                 title = "Other",
                 onClick = { goTo("SettingsOtherScreen") }
         ) 
