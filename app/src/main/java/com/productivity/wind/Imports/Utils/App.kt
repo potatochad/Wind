@@ -497,7 +497,7 @@ class MainActivity : ComponentActivity() {
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
 			
-			BlackStatusBar()
+			
 
 
 			
@@ -505,8 +505,11 @@ class MainActivity : ComponentActivity() {
 			AppContent()
 
 
+			BlackStatusBar()
+
+
 			
-			
+			/*
 			val statusBarLight = Color.GREEN
     val statusBarDark = Color.BLUE
     val navigationBarLight = Color.GREEN
@@ -537,7 +540,7 @@ class MainActivity : ComponentActivity() {
         )
 
         onDispose { }
-	}
+	}*/
 
 
 			
