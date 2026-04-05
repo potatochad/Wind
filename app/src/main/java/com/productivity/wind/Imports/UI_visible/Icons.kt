@@ -362,6 +362,9 @@ object BigIcon {
 	@Composable
 	fun Whatshot(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.Whatshot, mod, toColor(color), Do)
 
+	Composable
+	fun LockOpen(color: Any, mod: Mod = Mod, Do: Do? = null) = IconShortcut(Icons.Filled.LockOpen, mod, toColor(color), Do)
+
 	
 	
 
