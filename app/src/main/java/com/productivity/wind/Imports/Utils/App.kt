@@ -463,7 +463,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-		WindowCompat.setDecorFitsSystemWindows(window, false)
+		// WindowCompat.setDecorFitsSystemWindows(window, false)
 
 
 	
@@ -507,14 +507,37 @@ class MainActivity : ComponentActivity() {
 
 			
 			
-			val view = LocalView.current
+			val statusBarLight = Color.GREEN
+    val statusBarDark = Color.BLUE
+    val navigationBarLight = Color.GREEN
+    val navigationBarDark = Color.BLUE
+    val isDarkMode = isSystemInDarkTheme()
+    val context = LocalContext.current as ComponentActivity
 
-			SideEffect {
-				val window = (view.context as Activity).window
+    DisposableEffect(isDarkMode) {
+        context.enableEdgeToEdge(
+            statusBarStyle = if (!isDarkMode) {
+                SystemBarStyle.light(
+                    statusBarLight,
+                    statusBarDark
+                )
+            } else {
+                SystemBarStyle.dark(
+                    statusBarDark
+                )
+            },
+            navigationBarStyle = if(!isDarkMode){
+                SystemBarStyle.light(
+                    navigationBarLight,
+                    navigationBarDark
+                )
+            } else {
+                SystemBarStyle.dark(navigationBarDark)
+            }
+        )
 
-				SystemBars.TopBar(window, Color.Black)
-				SystemBars.BottomBar(window, Color.Black)
-			}
+        onDispose { }
+	}
 
 
 			
