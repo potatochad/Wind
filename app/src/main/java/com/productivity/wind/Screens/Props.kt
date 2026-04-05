@@ -112,17 +112,17 @@ fun Menu() {
         headerHeight = 170,
     ) {
         LazyItem(
-            icon = Icon.Chat(),
+            icon = { Icon.Chat() },
             title = "Support",
             onClick = { SendEmail(); menu = no },
         )
         LazyItem(
-            icon = Icon.Landscape(),
+            icon = { Icon.Landscape() },
             title = "Settings",
             onClick = { goTo("SettingsScreen"); menu = no },         
         )
         LazyItem(
-            icon = Icon.QueryStats(),
+            icon = { Icon.QueryStats() },
             title = "Achievements",
             onClick = { goTo("Achievements"); menu = no },
         )
@@ -224,7 +224,7 @@ object AppItem {
     fun UnlockThreshold() {
         LazyItem(
             topPadding = 1.dp,
-            icon = BigIcon.LockOpen(gold),
+            icon = { BigIcon.LockOpen(gold) },
             title = "Unlock Threshold",
 			modUI = Mod.space(h=2.5.dp),
             endUI = {             
