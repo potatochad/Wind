@@ -57,30 +57,29 @@ import com.productivity.wind.Screens.*
 
 @Composable
 fun Challenge() {
-  LazyScreen("Challenge") {
-    LazyItem(
-            icon = Icon.AccessTime(),
+	LazyScreen("Challenge") {
+		LazyItem(
+			icon = { Icon.AccessTime() },
             title = "App Usage",
             onClick = { 
               goTo("AppUsage/_")
             },
         )
-    LazyItem(
-            icon = Icon.ContentPaste(), 
-            title = "Copy Paste",
-            onClick = { 
-              goTo("CopyPaste/_")
-            },
-        )
-	LazyItem(
-            icon = Icon.ContentPaste(), 
-            title = "To do",
-            onClick = { 
-              goTo("ToDo/_")
-            },
-        )
-    
-   }
+		LazyItem(
+			icon = { Icon.ContentPaste() }, 
+			title = "Copy Paste",
+			onClick = { 
+				goTo("CopyPaste/_")
+			},
+		)
+		LazyItem(
+			icon = { Icon.ContentPaste() }, 
+			title = "To do",
+			onClick = { 
+				goTo("ToDo/_")
+			}, 
+		)
+	}
 }
 
 
