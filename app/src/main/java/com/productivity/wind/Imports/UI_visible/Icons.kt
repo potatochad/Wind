@@ -241,7 +241,7 @@ object Icon {
 	fun AccessTime(mod: Mod = Mod, color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.AccessTime, mod, color, Do)
 
 	@Composable
-	fun ContentPaste(mod: Mod = Mod,, color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.ContentPaste, mod, color, Do)
+	fun ContentPaste(mod: Mod = Mod, color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.ContentPaste, mod, color, Do)
 
 
 
