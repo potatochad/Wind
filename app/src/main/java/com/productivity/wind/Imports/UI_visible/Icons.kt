@@ -237,14 +237,11 @@ object Icon {
 	@Composable
 	fun QueryStats(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.QueryStats, mod, color, Do)
 
-	Composable
+	@Composable
 	fun AccessTime(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.AccessTime, mod, color, Do)
 
-	Composable
+	@Composable
 	fun ContentPaste(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.ContentPaste, mod, color, Do)
-
-	Composable
-	fun Whatshot(mod: Mod = Mod.space(5), color: Color = white, Do: Do? = null) = IconShortcut(Icons.Default.Whatshot, mod, color, Do)
 
 
 
