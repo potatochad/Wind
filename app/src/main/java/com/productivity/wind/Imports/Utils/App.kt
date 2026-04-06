@@ -492,13 +492,10 @@ class MainActivity : ComponentActivity() {
 			AppNav = rememberNavController()
 			AppH = LocalConfiguration.current.screenHeightDp.dp
 			AppW = LocalConfiguration.current.screenWidthDp.dp
-			AppLazyH = AppH - 100.dp - bottomSystemHeight()
+			AppLazyH = AppH - bottomSystemHeight()
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
 			
-			
-
-
 			
 
 			AppContent()
