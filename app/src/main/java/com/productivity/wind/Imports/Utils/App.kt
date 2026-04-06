@@ -464,8 +464,7 @@ class MainActivity : ComponentActivity() {
 
 
 		WindowCompat.enableEdgeToEdge(window)
-		WindowCompat.setDecorFitsSystemWindows(window, true)
-
+		
 	
 		App = this
 		AppCtx = this.applicationContext
