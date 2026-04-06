@@ -427,13 +427,17 @@ fun LazyScreen(
 			DividerPadding = DividerPadding,
 			h = headerHeight
 		)
-        Column(modifier.h(AppLazyH).then(
-			if (scroll){
-				Mod.Vscroll()
-			} else {
-				Mod
-			}
-		)) {
+        Column(
+			modifier
+			//.h(AppLazyH)
+			.then(
+				if (scroll){
+					Mod.Vscroll()
+				} else {
+					Mod
+				}
+			)
+		) {
 			/*
 			Column madness helps avoid scroll crash
 			*/
