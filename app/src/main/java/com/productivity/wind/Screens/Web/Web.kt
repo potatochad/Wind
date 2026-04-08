@@ -51,7 +51,7 @@ fun WebHome(){
             }
         },
         scroll = no,
-		onBackClick = { goTo("Main") }
+		onBackIcon = { goTo("Main") }
     ) {
 		
         LazzyRow(Mod.centerH.space(5)) {
@@ -125,8 +125,8 @@ fun Web(){
             }
         },
         scroll = no,
-        DividerPadding = no,
-		onBackClick = { goTo("Main") }
+        dividerM = no,
+		onBackIcon = { goTo("Main") }
     ) {
         WebXml(web)
     }
