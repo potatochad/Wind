@@ -51,7 +51,7 @@ fun WebKeywords() {
 				}
 			}
 		},
-		onBackClick = { goTo("Web") }
+		onBackIcon = { goTo("Web") }
 	) {
 		LazyCard {
 			LazzyRow(Mod.centerV){
