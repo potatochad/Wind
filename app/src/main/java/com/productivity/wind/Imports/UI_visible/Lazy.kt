@@ -59,6 +59,9 @@ import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.*
 import androidx.compose.ui.zIndex
 
+
+
+
 @Composable
 fun LazyTheme(content: ui) {
     val appColorScheme = darkColorScheme(
@@ -77,7 +80,6 @@ fun LazyTheme(content: ui) {
 
 
 
-
 @Composable
 fun LazyImage(
     source: Any?,
@@ -93,6 +95,7 @@ fun LazyImage(
         else -> { /* do nothing if null/unsupported */ }
     }
 }
+
 
 
 @Composable
@@ -201,8 +204,7 @@ fun LazySlider(
 }
 
 
-  
-  
+ 
 @Composable
 fun LazyLine(
     show: Bool = yes,
@@ -223,6 +225,7 @@ fun LazyLine(
             .then(if (width != Dp.Unspecified) Modifier.width(width) else Modifier)
     )
 }
+
 
   
 @Composable
@@ -257,6 +260,7 @@ fun LazzyColumn(
 }
 
 
+
 @Composable
 fun LazyCard(
     corners: Int = 16,
@@ -278,6 +282,7 @@ fun LazyCard(
         }
     }
 }
+
 
 
 @Stable
@@ -419,19 +424,15 @@ fun LazyScreen(
     topH: Int = 44,
     UI: ui,
 ) {
-	Column(Mod.h(200)){
     Column(Mod.black()) {
         LazyHeader(top, onBackIcon, backIcon, Mod.zIndex(1f), divider, dividerM, topH)
-        Column(Mod.black().Vscroll(scroll = scroll)) {
+        Column(Mod.black().Vscroll(scroll = scroll).h(200)) {
 			/* !! Column madness helps avoid scroll crash */
 			Column { UI() }
 			Box(Mod.s(350).transparent())
         }
     }
-	LazzyRow(Mod.red()){
-		
-	}
-	}
+	LazzyRow(Mod.red().h(100)){ Text("HELLO") }
 }
 
 
