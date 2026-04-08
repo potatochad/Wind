@@ -401,14 +401,14 @@ fun LazyHeader(
     }
 }
 
-
 @Composable
 fun LazyScreen(
 	txt: Str = "Hi",
     top: uiRow = { Text("$txt") },
 	
-    backClick: Do = { navBack() },
-    showBack: Bool = yes,
+    goBack: Do = { navBack() },
+    back: Bool = yes,
+	
 	scroll: Bool = yes,
     modifier: Mod = Mod.background(Color.Black),
 	
