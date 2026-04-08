@@ -406,11 +406,11 @@ fun LazyScreen(
 	txt: Str = "Hi",
     top: uiRow = { Text("$txt") },
 	
-    goBack: Do = { navBack() },
-    back: Bool = yes,
+    onBackIcon: Do = { navBack() },
+    backIcon: Bool = yes,
 	
 	scroll: Bool = yes,
-    modifier: Mod = Mod.background(Color.Black),
+    mod: Mod = Mod.background(Color.Black),
 	
     divider: Bool = yes,
     dividerM: Bool = yes,
@@ -418,9 +418,9 @@ fun LazyScreen(
     topH: Int = 44,
     UI: ui,
 ) {
-    Column(modifier) {
-        LazyHeader(top, goBack, back, Mod.zIndex(1f), divider, dividerM, topH)
-        Column(modifier.Vscroll(scroll = scroll)) {
+    Column(mod) {
+        LazyHeader(top, onBackIcon, backIcon, Mod.zIndex(1f), divider, dividerM, topH)
+        Column(mod.Vscroll(scroll = scroll)) {
 			/* !! Column madness helps avoid scroll crash */
 			Column { UI() }
 			Box(Mod.s(350).transparent())
