@@ -75,7 +75,7 @@ fun Main() {
 				BackHandler { stopSearch() }
 			}
 		}, 
-		showBack = no
+		backIcon = no
 	) {
 		if (!searching) {
 			Bar.copyTsk.each {
