@@ -363,12 +363,13 @@ fun LazyItem(
 @Composable
 fun LazyHeader(
     ui: uiRow,
-    onBackClick: Do = { navBack() },
-    showBack: Bool = yes,
+    onBackIcon: Do = { navBack() },
+    backIcon: Bool = yes,
+	
     mod: Mod = Mod,
 
-    showDivider: Bool = yes,
-    DividerPadding: Bool = yes,
+    divider: Bool = yes,
+    dividerM: Bool = yes,
 
     h: Int = 100,
 ) {
@@ -380,12 +381,13 @@ fun LazyHeader(
         LazzyRow(
             Mod.maxW().black().space(w = 12).h(h),
         ) {
-            if (showBack) {
+            if (backIcon) {
 				move(5)
                 Icon.Back {
+					//!! Stops the crashing while navigating
 					if (!clickedBack) {
 						clickedBack = yes
-						onBackClick()
+						onBackIcon()
 					}
 				}
 				move(8)
@@ -394,9 +396,9 @@ fun LazyHeader(
 			LazzyRow(Mod.weight(1f)) { ui() }
 		}
 
-		if (showDivider){
+		if (divider){
 			LazyLine(color = Color.Gray)		
-			if (DividerPadding) move(10)
+			if (dividerM) move(10)
 		}
     }
 }
@@ -410,17 +412,16 @@ fun LazyScreen(
     backIcon: Bool = yes,
 	
 	scroll: Bool = yes,
-    mod: Mod = Mod.background(Color.Black),
-	
+    
     divider: Bool = yes,
     dividerM: Bool = yes,
 
     topH: Int = 44,
     UI: ui,
 ) {
-    Column(mod) {
+    Column(Mod.black()) {
         LazyHeader(top, onBackIcon, backIcon, Mod.zIndex(1f), divider, dividerM, topH)
-        Column(mod.Vscroll(scroll = scroll)) {
+        Column(Mod.black().Vscroll(scroll = scroll)) {
 			/* !! Column madness helps avoid scroll crash */
 			Column { UI() }
 			Box(Mod.s(350).transparent())
