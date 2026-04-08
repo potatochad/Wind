@@ -107,9 +107,9 @@ fun NavGraphBuilder.ScreenNav() {
 fun Menu() {
     LazyScreen(
         top = { MenuHeader() },
-        showBack = no,
-        showDivider = no,
-        headerHeight = 170,
+        backIcon = no,
+        divider = no,
+        topH = 170,
     ) {
         LazyItem(
             icon = { Icon.Chat() },
