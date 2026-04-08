@@ -406,22 +406,23 @@ fun LazyHeader(
 fun LazyScreen(
 	txt: Str = "Hi",
     top: uiRow = { Text("$txt") },
-    onBackClick: Do = { navBack() },
+	
+    backClick: Do = { navBack() },
     showBack: Bool = yes,
 	scroll: Bool = yes,
     modifier: Mod = Mod.background(Color.Black),
 	
-    showDivider: Bool = yes,
-    DividerPadding: Bool = yes,
+    divider: Bool = yes,
+    dividerM: Bool = yes,
 
-    headerHeight: Int = 44,
-    content: ui,
+    topH: Int = 44,
+    UI: ui,
 ) {
     Column(modifier) {
-        LazyHeader(top, onBackClick, showBack, Mod.zIndex(1f), showDivider, DividerPadding, headerHeight)
+        LazyHeader(top, goBack, back, Mod.zIndex(1f), divider, dividerM, topH)
         Column(modifier.Vscroll(scroll = scroll)) {
 			/* !! Column madness helps avoid scroll crash */
-			Column { content() }
+			Column { UI() }
 			Box(Mod.s(350).transparent())
         }
     }
