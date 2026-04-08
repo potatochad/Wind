@@ -418,15 +418,7 @@ fun LazyScreen(
     content: ui,
 ) {
     Column(modifier) {
-        LazyHeader(
-			ui = top,
-			onBackClick = onBackClick,
-			showBack = showBack,
-			showDivider = showDivider,
-			mod = Mod.zIndex(1f),
-			DividerPadding = DividerPadding,
-			h = headerHeight
-		)
+        LazyHeader(top, onBackClick, showBack, Mod.zIndex(1f), showDivider, DividerPadding, headerHeight)
         Column(modifier.Vscroll(scroll = scroll)) {
 			/* !! Column madness helps avoid scroll crash */
 			Column { content() }
