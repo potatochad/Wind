@@ -426,13 +426,12 @@ fun LazyScreen(
 ) {
     Column(Mod.black()) {
         LazyHeader(top, onBackIcon, backIcon, Mod.zIndex(1f), divider, dividerM, topH)
-        Column(Mod.black().h(200).Vscroll(scroll = scroll).h(200)) {
+        Column(Mod.black().Vscroll(scroll = scroll)) {
 			/* !! Column madness helps avoid scroll crash */
 			Column { UI() }
 			Box(Mod.s(350).transparent())
         }
     }
-	LazzyRow { Text("HELLO") }
 }
 
 
