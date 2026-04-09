@@ -495,12 +495,13 @@ class MainActivity : ComponentActivity() {
 			AppLazyH = AppH - bottomSystemHeight()
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
-			
 
-			Box(Mod.space(bottom = bottomSystemHeight())){
-				AppContent()
+			Column {
+				Box(Mod.space(bottom = bottomSystemHeight())){
+					AppContent()
+				}
+				Box(Mod.h(bottomSystemHeight()).black()){}
 			}
-			Box(Mod.h(bottomSystemHeight()).black()){}
 
 
         }
