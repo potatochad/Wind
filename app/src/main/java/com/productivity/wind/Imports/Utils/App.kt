@@ -500,7 +500,7 @@ class MainActivity : ComponentActivity() {
 			Box(Mod.space(bottom = bottomSystemHeight())){
 				AppContent()
 			}
-			Box(Mod.h(bottomSystemHeight().black()){}
+			Box(Mod.h(bottomSystemHeight()).black()){}
 
 
         }
