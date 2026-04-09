@@ -498,12 +498,9 @@ class MainActivity : ComponentActivity() {
 
 			LazzyColumn {
 				LazzyColumn(Mod.h(AppLazyH).centerH){
-					//AppContent()
-					Text("Hello".black())
-					BigIcon.Edit(blue)
+					AppContent()
 				}
 				LazzyColumn(Mod.h(bottomSystemHeight()).black().centerH){
-					BigIcon.Edit(blue)
 					Text("HELLOO".white())
 				}
 			}
