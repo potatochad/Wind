@@ -497,10 +497,13 @@ class MainActivity : ComponentActivity() {
 			Bar.userLocation = toLatLng(Bar.userLatLng)
 
 			Column {
-				Box(Mod.space(bottom = bottomSystemHeight())){
+				Box(Mod.space(bottom = 200)){
 					AppContent()
 				}
-				Box(Mod.h(bottomSystemHeight()).black()){}
+				Column(Mod.h(200).black()){
+					Text("HELLOO".black())
+					Text("HELLOO".white())
+				}
 			}
 
 
