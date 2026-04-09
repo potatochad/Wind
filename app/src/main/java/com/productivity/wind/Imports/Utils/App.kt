@@ -496,15 +496,14 @@ class MainActivity : ComponentActivity() {
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
 
-			Column {
-				Box(Mod.space(bottom = 200)){
+			LazzyColumn {
+				LazzyColumn(Mod.h(AppLazyH)){
 					//AppContent()
 					Text("Hello".black())
 					BigIcon.Edit(blue)
 				}
-				Column(Mod.h(200).black()){
+				LazzyColumn(Mod.h(bottomSystemHeight()).black()){
 					BigIcon.Edit(blue)
-					Text("HELLOO".black())
 					Text("HELLOO".white())
 				}
 			}
