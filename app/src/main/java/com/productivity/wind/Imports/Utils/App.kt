@@ -500,9 +500,7 @@ class MainActivity : ComponentActivity() {
 				LazzyColumn(Mod.h(AppLazyH).centerH){
 					AppContent()
 				}
-				LazzyColumn(Mod.h(bottomSystemHeight()).black().centerH){
-					Text("HELLOO".white())
-				}
+				Box(Mod.h(bottomSystemHeight()).black()){}
 			}
 
 
