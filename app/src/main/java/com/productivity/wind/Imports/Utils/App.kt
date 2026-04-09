@@ -498,9 +498,12 @@ class MainActivity : ComponentActivity() {
 
 			Column {
 				Box(Mod.space(bottom = 200)){
-					AppContent()
+					//AppContent()
+					Text("Hello".black())
+					BigIcon.Edit(blue)
 				}
 				Column(Mod.h(200).black()){
+					BigIcon.Edit(blue)
 					Text("HELLOO".black())
 					Text("HELLOO".white())
 				}
