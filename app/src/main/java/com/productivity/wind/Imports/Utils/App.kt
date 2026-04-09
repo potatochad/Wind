@@ -496,9 +496,11 @@ class MainActivity : ComponentActivity() {
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
 			
-			
 
-			AppContent()
+			Box(Mod.space(bottom = 300)){
+				AppContent()
+			}
+			LazzyRow { Text("HELLO") }
 
 
         }
