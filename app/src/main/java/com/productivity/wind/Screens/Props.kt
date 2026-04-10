@@ -108,12 +108,12 @@ fun Menu() {
     LazzyColumn(Mod.black().maxS()) {
 		move(20)
         MenuHeader()
+		move(20)
         LazyItem(
             icon = { Icon.Chat() },
             title = "Support",
             onClick = { SendEmail(); menu = no },
         )
-		move(20)
         LazyItem(
             icon = { Icon.Landscape() },
             title = "Settings",
