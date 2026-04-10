@@ -114,6 +114,7 @@ data class CopyTsk(
     val id: Str = Id(),
     var txt: Str = "Be always kind",
     var input: Str = "",
+	var name: Str = "Copy Paste",
     var maxDone: Int = 5,
     var doneTimes: Int = 0,
     var donePts: Int = 10,
