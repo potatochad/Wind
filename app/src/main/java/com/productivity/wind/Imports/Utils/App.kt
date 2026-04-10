@@ -263,7 +263,7 @@ fun bottomSystemHeight(): Dp {
 @Composable
 fun BottomSystemPadding(ui: ui){
 	LazzyColumn {
-		LazzyColumn(Mod.h(AppLazyH).centerH){
+		LazzyColumn(Mod.h(AppLazyH)){
 			ui()
 		}
 		LazzyColumn(Mod.h(bottomSystemHeight()).black()){}
