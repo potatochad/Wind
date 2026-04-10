@@ -54,7 +54,7 @@ fun WebHome(){
 		onBackIcon = { goTo("Main") }
     ) {
 		
-        LazzyRow(Mod.centerH.space(5)) {
+        LazzyRow(Mod.centerX.space(5)) {
 			Text("Home".size(28.sp))
 		}
 		WebProps.Home.Input(web)
