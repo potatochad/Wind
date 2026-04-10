@@ -300,7 +300,7 @@ fun LongInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 40, onAction: Do = 
     BasicInput(
         Field,
         isInt = no, 
-        mod = Mod.h(32).mix(new = mod),
+        mod = Mod.h(32).weight(1f).mix(new = mod),
 		onAction = onAction,
     ) { newF ->
 		var it = newF.text.take(maxLetters)
