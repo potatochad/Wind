@@ -89,6 +89,7 @@ fun CopyPaste(id: Str ="") {
     var maxDone1 = r(5)
     var donePts1 = r(10)
     var letterPts1 = r(1)
+	var name1 = r("Copy paste")
 
 	var copyTsk1 by r<CopyTsk?>(null)
 
@@ -106,8 +107,8 @@ fun CopyPaste(id: Str ="") {
 		}
 	}
 
-    LazyScreen(top = { 
-		Text("Copy Paste")
+    LazyScreen(top = {
+		TinyInput(name1, Mod.weight(1f), maxLetters = 15, isInt = no)  
         
         End {
 			AppItem.ItemDelete(Bar.copyTsk, copyTsk1){
