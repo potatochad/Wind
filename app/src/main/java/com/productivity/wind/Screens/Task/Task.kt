@@ -108,7 +108,9 @@ fun CopyPaste(id: Str ="") {
 	}
 
     LazyScreen(top = {
-		TinyInput(name1, Mod.weight(1f), maxLetters = 40, isInt = no)  
+		TinyInput(name1, Mod.h(36).w(AppW - 180.dp), isInt = no, maxLetters = 100)
+
+		// TinyInput(name1, Mod.weight(1f), maxLetters = 40, isInt = no)  
 	
 		// LongInput(name1)  
 		
