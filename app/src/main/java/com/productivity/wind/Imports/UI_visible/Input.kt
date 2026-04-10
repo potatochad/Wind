@@ -152,7 +152,7 @@ fun BasicInput(
 
 	
 	move(3)
-	LazzyRow(baseMod.centerY.start.mix(new = mod).getW{ w = it }) {
+	LazzyRow(baseMod.centerY.start.mix(new = mod).getW{ w = it }.click { focusAsker.ask() }) {
 		move(3)
 		BasicTextField(
 			value = Field.it,
@@ -179,7 +179,7 @@ fun BasicInput(
 					onAction()
 				}
 			),
-			modifier = Mod.w(toF(w)*0.85).focusAsker(focusAsker).click { focusAsker.ask() }
+			modifier = Mod.w(toF(w)*0.85).focusAsker(focusAsker)
 		)
 	}
 }
