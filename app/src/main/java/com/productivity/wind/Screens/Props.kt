@@ -105,7 +105,8 @@ fun NavGraphBuilder.ScreenNav() {
 
 @Composable
 fun Menu() {
-    LazzyColumn(Mod.black()) {
+    LazzyColumn(Mod.black().weight(1f)) {
+		move(20)
         MenuHeader()
         LazyItem(
             icon = { Icon.Chat() },
