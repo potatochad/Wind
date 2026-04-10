@@ -293,7 +293,7 @@ fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {
 
 
 @Composable
-fun LongInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 40, onAction: Do = {}, Do: DoStr = { _ -> }) {  
+fun RowScope.LongInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 40, onAction: Do = {}, Do: DoStr = { _ -> }) {  
 	var txt = toMStr(value)
 	var Field by r(InputField(txt.it).white().size(16.sp))
 	
