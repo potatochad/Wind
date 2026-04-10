@@ -162,7 +162,7 @@ object WebProps {
 					goTo("Web")
 				},
 			) {
-				LazzyRow(Mod.centerV) {
+				LazzyRow(Mod.centerY) {
 					Icon.Search()
 					move(8)
 					Text("Search Google or type URL".gray().size(14.sp))
