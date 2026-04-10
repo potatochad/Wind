@@ -151,7 +151,7 @@ fun WebWordConfigure(id: Str = "") {
 	}) {
 		LazyCard {
 			Column{
-				LazzyRow(Mod.centerH) {
+				LazzyRow(Mod.centerX) {
 					WebProps.BtnAllow(action1) {
 						action1 = WebAction.Allow
 					}
