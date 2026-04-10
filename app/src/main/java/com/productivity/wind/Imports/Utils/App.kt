@@ -260,6 +260,16 @@ fun bottomSystemHeight(): Dp {
     return with(density) { insets.getBottom(this).toDp() }
 }
 
+@Composable
+fun BottomSystemPadding(ui: ui){
+	LazzyColumn {
+		LazzyColumn(Mod.h(AppLazyH).centerH){
+			ui()
+		}
+		LazzyColumn(Mod.h(bottomSystemHeight()).black()){}
+	}
+}
+
 
 
 
@@ -496,14 +506,10 @@ class MainActivity : ComponentActivity() {
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
 
-			LazzyColumn {
-				LazzyColumn(Mod.h(AppLazyH).centerH){
-					AppContent()
-				}
-				LazzyColumn(Mod.h(bottomSystemHeight()).black()){}
+			BottomSystemPadding{
+				AppContent()
 			}
-
-
+			
         }
     }
 
