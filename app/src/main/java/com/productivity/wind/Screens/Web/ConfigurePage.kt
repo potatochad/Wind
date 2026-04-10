@@ -54,9 +54,9 @@ fun WebKeywords() {
 		onBackIcon = { goTo("Web") }
 	) {
 		LazyCard {
-			LazzyRow(Mod.centerV){
+			LazzyRow(Mod.centerY){
 				Weight {
-					LazzyRow(Mod.centerH){
+					LazzyRow(Mod.centerX){
 						WebProps.BtnAllow(filterAction) {
 							filterAction = WebAction.Allow
 						}
