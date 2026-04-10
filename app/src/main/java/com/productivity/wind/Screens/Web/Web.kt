@@ -63,7 +63,7 @@ fun WebHome(){
 
         // Quick access cards (like Google shortcuts)
 		Text("Recent".size(12.sp).gray(), modifier = Mod.space(start = 8))
-		LazzyRow(Mod.centerH.space(5)) {
+		LazzyRow(Mod.centerX.space(5)) {
 			LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 				item {
 					LazyCard(
