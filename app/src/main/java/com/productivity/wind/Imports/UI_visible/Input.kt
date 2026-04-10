@@ -295,12 +295,12 @@ fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {
 @Composable
 fun RowScope.LongInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 40, onAction: Do = {}, Do: DoStr = { _ -> }) {  
 	var txt = toMStr(value)
-	var Field by r(InputField(txt.it).white().size(16.sp))
+	var Field by r(InputField(txt.it).white().size(19.sp))
 	
     BasicInput(
         Field,
         isInt = no, 
-        mod = Mod.h(32).weight(1f).mix(new = mod),
+        mod = Mod.h(50).weight(1f).mix(new = mod),
 		onAction = onAction,
     ) { newF ->
 		var it = newF.text.take(maxLetters)
