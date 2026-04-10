@@ -105,7 +105,7 @@ fun NavGraphBuilder.ScreenNav() {
 
 @Composable
 fun Menu() {
-    LazzyColumn(Mod.black().weight(1f)) {
+    LazzyColumn(Mod.black().maxS()) {
 		move(20)
         MenuHeader()
         LazyItem(
