@@ -110,7 +110,7 @@ fun CopyPaste(id: Str ="") {
     LazyScreen(top = {
 		TinyInput(name1, Mod.weight(1f), maxLetters = 15, isInt = no)  
         
-        SafeEnd {
+        // SafeEnd {
 			AppItem.ItemDelete(Bar.copyTsk, copyTsk1){
 				goTo("Main")
 			}
@@ -134,7 +134,7 @@ fun CopyPaste(id: Str ="") {
 				}  
 				goTo("Main")
 			}
-        }
+        // }
 	}) {
         RuleCard("If") {
             LazzyRow {
