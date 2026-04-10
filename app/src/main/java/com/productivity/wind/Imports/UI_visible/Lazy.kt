@@ -296,7 +296,7 @@ fun LazyMore(
     val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
 
     Column {
-        LazzyRow(Mod.maxW().clickable { expanded = !expanded }.space(8).centerV) {
+        LazzyRow(Mod.maxW().clickable { expanded = !expanded }.space(8).centerY) {
             Icon(
                 imageVector = Icons.Default.ChevronRight,
                 contentDescription = if (expanded) "Show less" else "Show more",
@@ -470,10 +470,7 @@ fun LazyBigPopup(
 			Column(
 				mod.round(12).background(Color.DarkGray).click(no){},
 			) {
-				LazzyRow(
-					Mod.centerH,
-					space = 8
-				) {
+				LazzyRow(Mod.centerX, space = 8) {
 					Text(title.size(18))
 				}
 				Box(Mod.weight(1f)) { 
