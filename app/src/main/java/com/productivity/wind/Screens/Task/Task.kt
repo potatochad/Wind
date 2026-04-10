@@ -195,7 +195,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 
     
     LazzyRow {
-        Text("Done: ${tsk.doneTimes}/${tsk.maxDone}")
+        Text("${tsk.name} ${tsk.doneTimes}/${tsk.maxDone}")
         End { 
 			AppItem.Edit{
                 AppItem.EnoughPoints {
