@@ -113,6 +113,7 @@ fun Menu() {
             title = "Support",
             onClick = { SendEmail(); menu = no },
         )
+		move(10)
         LazyItem(
             icon = { Icon.Landscape() },
             title = "Settings",
