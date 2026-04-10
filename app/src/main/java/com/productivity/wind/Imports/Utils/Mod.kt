@@ -238,40 +238,40 @@ fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
 
 //THESE NAMES MUST BE: Modifier
 //‼️CANT BE Mod
-object CenterHTag : Modifier.Element
-object CenterVTag : Modifier.Element
-object TopTag : Modifier.Element
-object BottomTag : Modifier.Element
-object StartTag : Modifier.Element
-object EndTag : Modifier.Element
+object CenterY_Tag : Modifier.Element
+object CenterX_Tag : Modifier.Element
+object Top_Tag : Modifier.Element
+object Bottom_Tag : Modifier.Element
+object Start_Tag : Modifier.Element
+object End_Tag : Modifier.Element
 
 inline fun <reified T : Modifier.Element> Mod.hasTag(): Bool =
     this.any { it is T }
 
 
 
-val Mod.centerH: Mod get() = this.then(CenterHTag)
-val Mod.centerV: Mod get() = this.then(CenterVTag)
-val Mod.top: Mod get() = this.then(TopTag)
-val Mod.bottom: Mod get() = this.then(BottomTag)
-val Mod.start: Mod get() = this.then(StartTag)
-val Mod.end: Mod get() = this.then(EndTag)
+val Mod.centerX: Mod get() = this.then(CenterX_Tag)
+val Mod.centerY: Mod get() = this.then(CenterY_Tag)
+val Mod.top: Mod get() = this.then(Top_Tag)
+val Mod.bottom: Mod get() = this.then(Bottom_Tag)
+val Mod.start: Mod get() = this.then(Start_Tag)
+val Mod.end: Mod get() = this.then(End_Tag)
 
 
 fun AutoHorizontalArrangement(mod: Mod): Arrangement.Horizontal {
     return when {
-        mod.hasTag<CenterHTag>() -> Arrangement.Center
-        mod.hasTag<StartTag>() -> Arrangement.Start
-        mod.hasTag<EndTag>() -> Arrangement.End
+        mod.hasTag<CenterX_Tag>() -> Arrangement.Center
+        mod.hasTag<Start_Tag>() -> Arrangement.Start
+        mod.hasTag<End_Tag>() -> Arrangement.End
         else -> Arrangement.Start
     }
 }
 
 fun AutoVerticalAlignment(mod: Mod): Alignment.Vertical {
     return when {
-        mod.hasTag<CenterVTag>() -> Alignment.CenterVertically
-        mod.hasTag<TopTag>() -> Alignment.Top
-        mod.hasTag<BottomTag>() -> Alignment.Bottom
+        mod.hasTag<CenterY_Tag>() -> Alignment.CenterVertically
+        mod.hasTag<Top_Tag>() -> Alignment.Top
+        mod.hasTag<Bottom_Tag>() -> Alignment.Bottom
         else -> Alignment.CenterVertically
     }
 }
@@ -279,18 +279,18 @@ fun AutoVerticalAlignment(mod: Mod): Alignment.Vertical {
 
 fun AutoHorizontalAlignment(mod: Mod): Alignment.Horizontal {
     return when {
-        mod.hasTag<CenterHTag>() -> Alignment.CenterHorizontally
-        mod.hasTag<StartTag>() -> Alignment.Start
-        mod.hasTag<EndTag>() -> Alignment.End
+        mod.hasTag<CenterX_Tag>() -> Alignment.CenterHorizontally
+        mod.hasTag<Start_Tag>() -> Alignment.Start
+        mod.hasTag<End_Tag>() -> Alignment.End
         else -> Alignment.Start
     }
 }
 
 fun AutoVerticalArrangement(mod: Mod): Arrangement.Vertical {
     return when {
-        mod.hasTag<CenterVTag>() -> Arrangement.Center
-        mod.hasTag<TopTag>() -> Arrangement.Top
-        mod.hasTag<BottomTag>() -> Arrangement.Bottom
+        mod.hasTag<CenterY_Tag>() -> Arrangement.Center
+        mod.hasTag<Top_Tag>() -> Arrangement.Top
+        mod.hasTag<Bottom_Tag>() -> Arrangement.Bottom
         else -> Arrangement.Top
     }
 }
