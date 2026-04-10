@@ -152,14 +152,7 @@ fun BasicInput(
 
 	
 	move(3)
-	LazzyRow(baseMod.centerY.start.mix(new = mod).getW{ w = it }.pointerInput(Unit) {
-        detectTapGestures(
-            onTap = {
-                focusAsker.ask()
-                Vlog("Clicked")
-            }
-        )
-	}) {
+	LazzyRow(baseMod.centerY.start.mix(new = mod).getW{ w = it }) {
 		move(3)
 		BasicTextField(
 			value = Field.it,
@@ -186,14 +179,7 @@ fun BasicInput(
 					onAction()
 				}
 			),
-			modifier = Mod.w(toF(w)*0.85).focusAsker(focusAsker).pointerInput(Unit) {
-				detectTapGestures(
-					onTap = {
-						focusAsker.ask()
-						Vlog("Clicked")
-					}
-				)
-			}
+			modifier = Mod.w(toF(w)*0.85).focusAsker(focusAsker)
 		)
 	}
 }
