@@ -108,13 +108,8 @@ fun CopyPaste(id: Str ="") {
 	}
 
     LazyScreen(top = {
-		TinyInput(name1, Mod.h(36).w(AppW - 180.dp), isInt = no, maxLetters = 100)
-
-		// TinyInput(name1, Mod.weight(1f), maxLetters = 40, isInt = no)  
-	
-		// LongInput(name1)  
+		LongInput(name1)  
 		
-        
         // SafeEnd {
 			AppItem.ItemDelete(Bar.copyTsk, copyTsk1){
 				goTo("Main")
@@ -132,6 +127,7 @@ fun CopyPaste(id: Str ="") {
 				newItem = { CopyTsk() },
 			){ x ->
 				x.edit {
+					name = name1.it
 					txt = txt1.it
                     maxDone = maxDone1.it
                     donePts = donePts1.it
