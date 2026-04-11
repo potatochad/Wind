@@ -495,7 +495,7 @@ fun ToDo(id: Str = "") {
 				TinyInput(time1)
 				Text(" seconds")
 			}
-			LazzyRow(Mod.space(w=5)){
+			LazzyRow(Mod.space(0, 5)){
 			    Text("On done")
 			    TinyInput(points1)
 			    Text(" points")
