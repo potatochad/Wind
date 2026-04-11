@@ -210,8 +210,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
     }
 	
-	move(10)
-
 	
 	BoxWithConstraints {
 		val maxWidthPx = constraints.maxWidth.toFloat() // pixels
@@ -257,10 +255,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 			}
 		}
 	}
-	move(10)
-
-	Text("1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9")
-
 	move(10)
 
 	
