@@ -131,27 +131,17 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 fun Mod.space(
-    s: Any? = null,
     x: Any? = null,
     y: Any? = null,
     start: Any? = null,
     top: Any? = null,
     end: Any? = null,
-    bottom: Any? = null
-): Mod {
-    return when {
-        s != null -> this.padding(toDp(s))
-        x != null || y != null -> this.padding(
-            horizontal = toDp(x),
-            vertical = toDp(y)
-        )
-        else -> this.padding(
-            start = toDp(start),
-            top = toDp(top),
-            end = toDp(end),
-            bottom = toDp(bottom)
-        )
-    }
+    bottom: Any? = null,
+    s: Any? = null,
+): Mod = when {
+    s != null -> padding(toDp(s))
+    x != null || y != null -> padding(toDp(x), toDp(y))
+    else -> padding(toDp(start), toDp(top), toDp(end), toDp(bottom))
 }
 
 typealias Mod = Modifier
