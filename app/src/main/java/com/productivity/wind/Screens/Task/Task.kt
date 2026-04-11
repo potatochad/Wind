@@ -210,8 +210,9 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
     }
 	
+	move(10)
 
-
+	
 	BoxWithConstraints {
 		val maxWidthPx = constraints.maxWidth.toFloat() // pixels
 		val lines = tsk.txt.toLines(maxWidthPx)
@@ -244,11 +245,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 		
 		
-
-
-		
 		LazyColumn(
-			modifier = Mod.space(bottom = 15, start = 15).h(0, 100).maxW(),      
+			modifier = Mod.h(0, 100).maxW(),      
 			state = txtScroll
 		) {
 			items(
@@ -260,11 +258,8 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 	}
 
-	
-	
-	
-	
-			
+	move(10)
+
 	
 	var txt = r(tsk.input)
     ScrollInput(txt, scroll = inputScroll) {
