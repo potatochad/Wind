@@ -132,8 +132,8 @@ import com.productivity.wind.Imports.UI_visible.*
 
 fun Mod.space(
     s: Any? = null,
-    h: Any? = null,
-    w: Any? = null,
+    x: Any? = null,
+    y: Any? = null,
     start: Any? = null,
     top: Any? = null,
     end: Any? = null,
@@ -141,9 +141,9 @@ fun Mod.space(
 ): Mod {
     return when {
         s != null -> this.padding(toDp(s))
-        h != null || w != null -> this.padding(
-            horizontal = toDp(h),
-            vertical = toDp(w)
+        x != null || y != null -> this.padding(
+            horizontal = toDp(x),
+            vertical = toDp(y)
         )
         else -> this.padding(
             start = toDp(start),
