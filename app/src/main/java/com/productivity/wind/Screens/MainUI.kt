@@ -91,7 +91,7 @@ fun Main() {
 					
 					LazyCard(
 						modUI = Mod.space(start = 8),
-						modCard = Mod.space(x=8, y=10).maxW().click {    
+						modCard = Mod.space(8, 10).maxW().click {    
 							goTo("ToDo/${it.id}")
 						},
 					) { 
@@ -122,7 +122,7 @@ fun Main() {
 			}) { 						
 				LazyCard(
 					modUI = Mod.space(start = 8),
-					modCard = Mod.space(x=8, y=10).maxW().click {    
+					modCard = Mod.space(8, 10).maxW().click {    
 						goTo("ToDo/${it.id}")
 					},
 				) { 
