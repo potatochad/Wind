@@ -221,7 +221,7 @@ fun LazyLine(
         thickness = thickness,
         modifier = Mod
             .offset(y = MoveY.dp)
-            .space(h=spaceH)
+            .space(spaceH, 0)
             .then(if (width != Dp.Unspecified) Modifier.width(width) else Modifier)
     )
 }
