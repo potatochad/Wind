@@ -333,7 +333,7 @@ fun LazyMore(
 @Composable
 fun LazyItem(
     title: Str,
-	modUI: Mod = Mod.space(h=2.5.dp).space(end=12),
+	modUI: Mod = Mod.space(2.5, 0).space(end=12),
     icon: ui,
 	
 	topPadding: Any = 7,
@@ -384,7 +384,7 @@ fun LazyHeader(
         move(h = getStatusBarHeight()/3)
 
         LazzyRow(
-            Mod.maxW().black().space(w = 12).h(h),
+            Mod.maxW().black().space(0, 12).h(h),
         ) {
             if (backIcon) {
 				move(5)
