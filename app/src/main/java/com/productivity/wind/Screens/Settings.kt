@@ -177,8 +177,8 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
 
 @Composable
 fun LogsScreen() {
-    var Reload = r_m(no)
-    var Tag = r_m("")
+    var Reload = r(no)
+    var Tag = r("")
 	var scroll = LazyList()
 
 	val Logs by remember(Tag.it, Bar.logs) {
