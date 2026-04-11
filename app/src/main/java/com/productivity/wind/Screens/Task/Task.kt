@@ -381,7 +381,14 @@ fun AppTaskUI(app: AppTsk){
     val icon = getAppIcon(app.pkg)
     var name = app.name
 	val progress = (toF(app.nowTime) / toF(app.doneTime)).coerceIn(0f, 1f)
-        
+
+		if (it.nowTime > it.doneTime - 1 && !it.done) {
+						Bar.funTime += it.worth
+						Bar.apps.edit(it) { done = yes }
+						Vlog("${it.name} completed")						
+		}
+
+		
     LazyCard {
         LazzyRow {
             move(10)
