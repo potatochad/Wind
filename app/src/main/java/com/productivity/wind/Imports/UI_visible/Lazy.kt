@@ -104,7 +104,7 @@ fun <T> LazzyList(
     modifier: Mod = Mod.h(200),
     content: @Composable (T, Int) -> Unit,
 ) {
-    var data2 by r_m(data)
+    var data2 by r(data)
 
     Column(modifier.scroll().maxW()) {
         data2.forEachIndexed { index, item ->
@@ -264,7 +264,7 @@ fun LazzyColumn(
 @Composable
 fun LazyCard(
     corners: Int = 16,
-    modCard: Mod = Mod.space(h=8, w=10).maxW(),
+    modCard: Mod = Mod.space(8, 10).maxW(),
 	modUI: Mod = Mod.space(
 		start = 16,
 		end = 16,
@@ -680,7 +680,7 @@ fun LazyMaps(
                             MapType.SATELLITE
                         else
                             MapType.NORMAL
-                }.space(h = 8, w = 6)
+                }.space(8, 6)
         )
     }
 }
