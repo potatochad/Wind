@@ -157,7 +157,7 @@ object WebProps {
 		fun Input(web: WebController){
 			LazyCard(
 				modUI = Mod.space(start = 8),
-				modCard = Mod.space(h=8, w=10).maxW().click {
+				modCard = Mod.space(8, 10).maxW().click {
 					Bar.Url = "google.com"
 					goTo("Web")
 				},
