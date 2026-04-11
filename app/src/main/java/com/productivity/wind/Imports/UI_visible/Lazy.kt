@@ -347,8 +347,8 @@ fun LazyItem(
 		modCard = Mod.space(
 			top = topPadding,
 			bottom = bottomPadding,
-			start = 6,
-			end = 6,
+			start = 8,
+			end = 8,
 		).maxW().clickable(enabled = onClick != null) { onClick?.invoke() },
 		modUI = modUI,
 	){
