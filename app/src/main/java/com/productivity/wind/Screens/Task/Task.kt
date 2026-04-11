@@ -156,7 +156,7 @@ fun CopyPaste(id: Str ="") {
                 Text("DailyMax: ")
                 TinyInput(maxDone1)
             }
-			ScrollInput(txt1, scroll = inputScroll)
+			ScrollInput(txt1, scroll = inputScroll, h = 200)
         }
     }
 }
