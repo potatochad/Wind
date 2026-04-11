@@ -100,6 +100,7 @@ fun CopyPaste(id: Str ="") {
 		maxDone1.it = t.maxDone
 		donePts1.it = t.donePts
 		letterPts1.it = t.letterPts
+		name1.it = t.name
 		copyTsk1 = t
 
 		wait {
