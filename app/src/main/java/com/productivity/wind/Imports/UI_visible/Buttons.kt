@@ -91,7 +91,7 @@ import androidx.compose.animation.*
 @Composable
 fun BasicSlider(
 	value: Float = 10f,
-    mod: Mod = Mod.space(h=15),
+    mod: Mod = Mod.space(15, 0),
     valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
     enabled: Bool = yes,
     thumb: ui = {
