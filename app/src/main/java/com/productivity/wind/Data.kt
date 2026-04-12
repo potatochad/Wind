@@ -1,6 +1,6 @@
 package com.productivity.wind
 
-import com.productivity.wind.Imports.Utils.Str.*
+import com.productivity.wind.Imports.Utils.String.*
 import com.productivity.wind.Screens.*
 import android.content.Context
 import android.os.Build
