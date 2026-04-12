@@ -128,11 +128,6 @@ import com.productivity.wind.Imports.UI_visible.*
 import com.productivity.wind.Imports.Utils.*
 
 
-typealias UIStr = AnnotatedString
-typealias UIStrBuilder = AnnotatedString.Builder
-typealias StrStyle = SpanStyle
-
-
 val Str.notEmpty: Bool
     get() = this.isNotEmpty()
 
@@ -147,22 +142,10 @@ val <T> Collection<T>.empty: Bool
     
 
 val Str.size get() = length
-val UIStr.size get() = this.text.size
 fun Str.last(n: Int): Str = this.takeLast(n)
 fun Str.fromTo(start: Int, end: Int = this.size) = this.substring(start, end)
-fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, end)
 
 
-fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
-    return buildAnnotatedString(Do)
-}
-fun UIStrBuilder.add(text: Char) = append(text)
-fun UIStrBuilder.add(text: Str) = append(text)
-fun UIStrBuilder.add(text: UIStr) = append(text)
-
-fun UIStr(vararg parts: Any): UIStr = makeUIStr {
-    parts.forEach { add(toUIStr(it)) }
-}
 fun Str(vararg parts: Any?): Str {
     return buildString {
         parts.forEach {
