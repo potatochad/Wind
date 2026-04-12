@@ -133,6 +133,26 @@ typealias UIStrBuilder = AnnotatedString.Builder
 typealias StrStyle = SpanStyle
 
 
+val Str.notEmpty: Bool
+    get() = this.isNotEmpty()
+
+val Str.empty: Bool
+    get() = this.isEmpty()
+
+val <T> Collection<T>.notEmpty: Bool
+    get() = this.isNotEmpty()
+
+val <T> Collection<T>.empty: Bool
+    get() = this.isEmpty()
+    
+
+val Str.size get() = length
+val UIStr.size get() = this.text.size
+fun Str.last(n: Int): Str = this.takeLast(n)
+fun Str.fromTo(start: Int, end: Int = this.size) = this.substring(start, end)
+fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, end)
+
+
 fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
     return buildAnnotatedString(Do)
 }
@@ -166,9 +186,7 @@ fun toUIStr(it: Any?): UIStr = when (it) {
 }
 
 
-fun Str.remove(x: Str): Str {
-    return this.replace(x, "")
-}
+
 
 
 fun UIStr.keepOneStyle(newText: Str): UIStr {
@@ -214,11 +232,6 @@ fun Any.gray() = txt { copy(color = gray) }
 
 
 
-val Str.size get() = length
-val UIStr.size get() = this.text.size
-fun Str.last(n: Int): Str = this.takeLast(n)
-fun Str.fromTo(start: Int, end: Int = this.size) = this.substring(start, end)
-fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, end)
 
 @Composable
 fun charsW(text: Any, textStyle: TextStyle = LocalTextStyle.current, maxWidthPx: Float = 1000f): Int {
@@ -270,17 +283,6 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
 
 
 
-val Str.notEmpty: Bool
-    get() = this.isNotEmpty()
-
-val Str.empty: Bool
-    get() = this.isEmpty()
-
-val <T> Collection<T>.notEmpty: Bool
-    get() = this.isNotEmpty()
-
-val <T> Collection<T>.empty: Bool
-    get() = this.isEmpty()
 
 
 
