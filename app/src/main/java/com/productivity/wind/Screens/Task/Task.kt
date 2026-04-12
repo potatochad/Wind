@@ -246,7 +246,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		
 		
 		LazyColumn(
-			modifier = Mod.h(0, 100).space(padding2,0).maxW(), 
+			modifier = Mod.h(0, 100).space(padding2.it,0).maxW(), 
 			state = txtScroll,
 		) {
 			items(
