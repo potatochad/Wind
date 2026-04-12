@@ -1,4 +1,4 @@
-package com.productivity.wind.Imports.Utils.Str
+package com.productivity.wind.Imports.Utils.String
     
 import android.annotation.SuppressLint
 import timber.log.Timber
