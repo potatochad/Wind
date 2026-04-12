@@ -80,7 +80,7 @@ fun Main() {
 		Bar.copyTsk.findUI({ 
 			if (searching) it.input.contains(Tag.it) else !it.done()
 		}) { 
-			LazyCard(modUI = Mod.space(0)) { 
+			LazyCard { 
 				CopyTskUI(it) 
 			} 
 		}
