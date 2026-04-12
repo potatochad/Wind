@@ -1,5 +1,6 @@
 package com.productivity.wind.Screens
-  
+
+import com.productivity.wind.Imports.Utils.Str.*
 import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
