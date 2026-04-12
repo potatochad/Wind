@@ -80,26 +80,28 @@ fun Main() {
 		Bar.copyTsk.findUI({ 
 			if (searching) it.input.contains(Tag.it) else !it.done()
 		}) { 
-			LazyCard { CopyTskUI(it) } 
+			LazyCard(modUI = Mod.space(0)) { 
+				CopyTskUI(it) 
+			} 
 		}
 
 		Bar.doTsk.findUI({ 
-				if (searching) { it.name.contains(Tag.it) || it.description.contains(Tag.it) } else { !it.done() && taskDueToday(it.schedule) }					
-			}) { 						
-				LazyCard(
-					modUI = Mod.space(start = 8),
-					modCard = Mod.space(8, 10).maxW().click {    
-						goTo("ToDo/${it.id}")
-					},
-				) { 
-					DoTskUI(it)
-				}
+			if (searching) { it.name.contains(Tag.it) || it.description.contains(Tag.it) } else { !it.done() && taskDueToday(it.schedule) }					
+		}) { 						
+			LazyCard(
+				modUI = Mod.space(start = 8),
+				modCard = Mod.space(8, 10).maxW().click {    
+					goTo("ToDo/${it.id}")
+				},
+			) { 
+				DoTskUI(it)
+			}
 		}
 		
 		Bar.apps.findUI({ 
 				if (searching) it.name.contains(Tag.it) else !it.done
-			}) { 
-				AppTaskUI(it) 
+		}) { 
+			AppTaskUI(it) 
 		}
 
 			
