@@ -1,5 +1,6 @@
 package com.productivity.wind.Imports.Utils
 
+import com.productivity.wind.Imports.Utils.Str.*
 import android.annotation.SuppressLint
 import timber.log.Timber
 import java.text.*
