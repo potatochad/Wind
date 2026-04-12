@@ -401,10 +401,7 @@ fun LazyHeader(
 			LazzyRow(Mod.weight(1f)) { ui() }
 		}
 
-		if (divider){
-			LazyLine(color = gray)		
-			if (dividerM) move(10)
-		}
+		if (divider) LazyLine(color = gray)
     }
 }
 
@@ -425,7 +422,8 @@ fun LazyScreen(
     UI: ui,
 ) {
     Column(Mod.black()) {
-        LazyHeader(top, onBackIcon, backIcon, Mod.zIndex(1f), divider, dividerM, topH)
+        LazyHeader(top, onBackIcon, backIcon, Mod.zIndex(1f), divider, topH)
+		if (dividerM) move(10)
         Column(Mod.black().Vscroll(scroll = scroll)) {
 			/* !! Column madness helps avoid scroll crash */
 			Column { UI() }
