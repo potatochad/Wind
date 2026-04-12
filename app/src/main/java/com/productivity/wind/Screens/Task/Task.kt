@@ -382,11 +382,11 @@ fun AppTaskUI(app: AppTsk){
     var name = app.name
 	val progress = (toF(app.nowTime) / toF(app.doneTime)).coerceIn(0f, 1f)
 
-		if (it.nowTime > it.doneTime - 1 && !it.done) {
-						Bar.funTime += it.worth
-						Bar.apps.edit(it) { done = yes }
-						Vlog("${it.name} completed")						
-		}
+	if (app.nowTime > app.doneTime - 1 && !app.done) {
+		Bar.funTime += app.worth
+		app.edit{ done = yes }
+		Vlog("${app.name} completed")						
+	}
 
 		
     LazyCard {
