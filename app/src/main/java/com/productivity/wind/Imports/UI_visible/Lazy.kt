@@ -374,7 +374,6 @@ fun LazyHeader(
     mod: Mod = Mod,
 
     divider: Bool = yes,
-    dividerM: Bool = yes,
 
     h: Int = 100,
 ) {
