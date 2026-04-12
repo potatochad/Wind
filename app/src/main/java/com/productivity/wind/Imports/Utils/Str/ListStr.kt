@@ -128,111 +128,6 @@ import com.productivity.wind.Imports.UI_visible.*
 import com.productivity.wind.Imports.Utils.*
 
 
-typealias UIStr = AnnotatedString
-typealias UIStrBuilder = AnnotatedString.Builder
-typealias StrStyle = SpanStyle
-
-
-val Str.notEmpty: Bool
-    get() = this.isNotEmpty()
-
-val Str.empty: Bool
-    get() = this.isEmpty()
-
-val <T> Collection<T>.notEmpty: Bool
-    get() = this.isNotEmpty()
-
-val <T> Collection<T>.empty: Bool
-    get() = this.isEmpty()
-    
-
-val Str.size get() = length
-val UIStr.size get() = this.text.size
-fun Str.last(n: Int): Str = this.takeLast(n)
-fun Str.fromTo(start: Int, end: Int = this.size) = this.substring(start, end)
-fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, end)
-
-
-fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
-    return buildAnnotatedString(Do)
-}
-fun UIStrBuilder.add(text: Char) = append(text)
-fun UIStrBuilder.add(text: Str) = append(text)
-fun UIStrBuilder.add(text: UIStr) = append(text)
-
-fun UIStr(vararg parts: Any): UIStr = makeUIStr {
-    parts.forEach { add(toUIStr(it)) }
-}
-fun Str(vararg parts: Any?): Str {
-    return buildString {
-        parts.forEach {
-            when (it) {
-                null, Unit -> {} // skip
-                else -> {
-                    val s = it.toString()
-                    if (s.isNotEmpty()) append(s)
-                }
-            }
-        }
-    }
-}
-
-
-fun toUIStr(it: Any?): UIStr = when (it) {
-    is UIStr -> it
-    is String -> makeUIStr { add(it) }
-    is Char -> makeUIStr { add(it.toString()) }
-    else -> makeUIStr { add(it?.toString() ?: "") }
-}
-
-
-
-
-
-fun UIStr.keepOneStyle(newText: Str): UIStr {
-    val style = spanStyles.firstOrNull()?.item ?: StrStyle()
-    return UIText(newText, style)
-}
-
-fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
-    return makeUIStr {
-        pushStyle(style)
-        add(toUIStr(text))
-        pop()
-    }
-}
-
-fun Any.getStyle(): StrStyle {
-    return toUIStr(this).spanStyles.firstOrNull()?.item ?: StrStyle()
-}
-
-fun Any.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (this.getStyle().update()))
-
-fun Any.size(x: Int) = txt { copy(fontSize = x.sp) }
-fun Any.size(x: Float) = txt { copy(fontSize = x.sp) }
-fun Any.size(x: TextUnit) = txt { copy(fontSize = x) }
-
-fun Any.bold() = txt { copy(fontWeight = FontWeight.Bold) }
-
-fun Any.color(x: Color) = txt { copy(color = x) }
-fun Any.gold() = txt { copy(color = gold) }
-fun Any.green() = txt { copy(color = green) }
-fun Any.red() = txt { copy(color = red) }
-fun Any.white() = txt { copy(color = white) }
-fun Any.black() = txt { copy(color = black) }
-fun Any.darkGray() = txt { copy(color = darkGray) }
-fun Any.gray() = txt { copy(color = gray) }
-
-
-
-
-
-
-
-
-
-
-
 @Composable
 fun charsW(text: Any, textStyle: TextStyle = LocalTextStyle.current, maxWidthPx: Float = 1000f): Int {
     val str = toStr(text)
@@ -277,12 +172,6 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         result
     }
 }
-
-
-
-
-
-
 
 
 
@@ -341,37 +230,4 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 }
 
 
-fun Str.overFlow(x: Int): Str {
-    return if (this.size > x) {
-        this.take(x) + "..."
-    } else {
-        this
-    }
-}
 
-
-// Remove one or more characters or substrings from a string
-fun Str.remove(vararg targets: Any): Str {
-    var result = this
-    for (t in targets) {
-        result = when (t) {
-            is Char -> result.replace(t.toString(), "")
-            is Str -> result.replace(t, "")
-            else -> result
-        }
-    }
-    return result
-}
-fun Str.safeSplit(delim: Str, action: DoStr) {
-    var i = 0
-    while (i < this.length) {
-        val next = this.indexOf(delim, i)
-        if (next == -1) {
-            action(this.substring(i))
-            break
-        } else {
-            action(this.substring(i, next + delim.length)) // include the delimiter
-            i = next + delim.length
-        }
-    }
-}
