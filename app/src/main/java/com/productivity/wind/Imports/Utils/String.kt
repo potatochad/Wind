@@ -255,28 +255,34 @@ fun String.safeSplit(delim: String, action: (String) -> Unit) {
 
 @Composable
 fun Any.toLines(maxWidthPx: Float): List<UIStr> {
-    val lineChars = charsW(this, maxWidthPx = maxWidthPx)
-    var str by r(toStr(this))
+    val textMeasurer = rememberTextMeasurer()
+    val style = LocalTextStyle.current
+    val str = toStr(this)
 
-    val lines = remember(str, lineChars) {
-        val result = mList<UIStr>()
+    return remember(str, maxWidthPx) {
+        val result = mutableListOf<UIStr>()
         var line = ""
-        
-        str.safeSplit(" "){ word ->
-            if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
-                line += word
+
+        str.split(" ").forEach { word ->
+            val testLine = if (line.isEmpty()) word else "$line $word"
+
+            val width = textMeasurer.measure(
+                text = AnnotatedString(testLine),
+                style = style
+            ).size.width
+
+            if (width <= maxWidthPx) {
+                line = testLine
             } else {
-                result.add(UIStr(line))
+                if (line.isNotEmpty()) result.add(UIStr(line))
                 line = word
             }
         }
+
         if (line.isNotEmpty()) result.add(UIStr(line))
         result
     }
-    
-    return lines
 }
-
 
 
 
