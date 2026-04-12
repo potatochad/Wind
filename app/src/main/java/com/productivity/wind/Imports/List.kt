@@ -1,6 +1,6 @@
 package com.productivity.wind.Imports
 
-import com.productivity.wind.Imports.Utils.Str.*
+import com.productivity.wind.Imports.Utils.String.*
 import com.productivity.wind.Imports.Utils.*
 import android.app.usage.UsageStatsManager
 import android.app.*
