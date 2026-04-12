@@ -1,6 +1,6 @@
 package com.productivity.wind.Imports
 
-import com.productivity.wind.Imports.Utils.Str.*
+import com.productivity.wind.Imports.Utils.String.*
 import timber.log.Timber
 import android.app.usage.UsageStatsManager
 import androidx.compose.foundation.interaction.*
