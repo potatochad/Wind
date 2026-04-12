@@ -209,8 +209,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			}
 		}
     }
-
-	var padding2 = r(20)
+	
 	
 	
 	BoxWithConstraints {
@@ -246,7 +245,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		
 		
 		LazyColumn(
-			modifier = Mod.h(0, 100).space(padding2.it,0).maxW(), 
+			modifier = Mod.h(0, 100).space(16,0).maxW(), 
 			state = txtScroll,
 		) {
 			items(
@@ -257,8 +256,6 @@ fun CopyTskUI(tsk: CopyTsk) {
 			}
 		}
 	}
-	
-	TinyInput(padding2)
 	move(10)
 
 	
