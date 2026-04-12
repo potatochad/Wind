@@ -2,7 +2,7 @@
 
 package com.productivity.wind.Imports.UI_visible
 
-import com.productivity.wind.Imports.Utils.Str.*
+import com.productivity.wind.Imports.Utils.String.*
 import android.annotation.SuppressLint
 import androidx.compose.ui.draw.*
 import androidx.compose.foundation.shape.*
