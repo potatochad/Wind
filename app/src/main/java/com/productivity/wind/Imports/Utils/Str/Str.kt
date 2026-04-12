@@ -1,4 +1,4 @@
-package com.productivity.wind.Imports.Utils
+package com.productivity.wind.Imports.Utils.Str
     
 import android.annotation.SuppressLint
 import timber.log.Timber
@@ -125,7 +125,7 @@ import android.net.*
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import com.productivity.wind.Imports.UI_visible.*
-
+import com.productivity.wind.Imports.Utils.*
 
 
 typealias UIStr = AnnotatedString
