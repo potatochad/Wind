@@ -176,8 +176,6 @@ fun UIStr.keepOneStyle(newText: Str): UIStr {
     return UIText(newText, style)
 }
 
-
-
 fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
     return makeUIStr {
         pushStyle(style)
@@ -185,6 +183,7 @@ fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
         pop()
     }
 }
+
 fun Any.getStyle(): StrStyle {
     return toUIStr(this).spanStyles.firstOrNull()?.item ?: StrStyle()
 }
@@ -221,7 +220,6 @@ fun Str.last(n: Int): Str = this.takeLast(n)
 fun Str.fromTo(start: Int, end: Int = this.size) = this.substring(start, end)
 fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, end)
 
-
 @Composable
 fun charsW(text: Any, textStyle: TextStyle = LocalTextStyle.current, maxWidthPx: Float = 1000f): Int {
     val str = toStr(text)
@@ -235,23 +233,6 @@ fun charsW(text: Any, textStyle: TextStyle = LocalTextStyle.current, maxWidthPx:
 
     return (maxWidthPx / charWidth).toInt()
 }
-
-fun String.safeSplit(delim: String, action: (String) -> Unit) {
-    var i = 0
-    while (i < this.length) {
-        val next = this.indexOf(delim, i)
-        if (next == -1) {
-            action(this.substring(i))
-            break
-        } else {
-            action(this.substring(i, next + delim.length)) // include the delimiter
-            i = next + delim.length
-        }
-    }
-}
-
-
-
 
 @Composable
 fun Any.toLines(maxWidthPx: Float): List<UIStr> {
@@ -379,6 +360,20 @@ fun Str.remove(vararg targets: Any): Str {
     }
     return result
 }
+fun Str.safeSplit(delim: Str, action: DoStr) {
+    var i = 0
+    while (i < this.length) {
+        val next = this.indexOf(delim, i)
+        if (next == -1) {
+            action(this.substring(i))
+            break
+        } else {
+            action(this.substring(i, next + delim.length)) // include the delimiter
+            i = next + delim.length
+        }
+    }
+}
+
 
 
 
