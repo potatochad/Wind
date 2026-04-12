@@ -24,6 +24,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.webkit.WebResourceRequest
+import com.productivity.wind.Imports.Utils.Str.*
+
 
 
 fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
