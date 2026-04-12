@@ -1,5 +1,6 @@
 package com.productivity.wind.Screens
- 
+
+import com.productivity.wind.Imports.Utils.Str.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
