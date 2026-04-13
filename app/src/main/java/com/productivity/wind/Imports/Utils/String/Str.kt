@@ -181,6 +181,10 @@ fun Str.remove(vararg targets: Any): Str {
     }
     return result
 }
+fun Str.remove(target: Any): Str {
+    return this.replace(toStr(target), "")
+}
+
 fun Str.safeSplit(delim: Str, action: DoStr) {
     var i = 0
     while (i < this.length) {
