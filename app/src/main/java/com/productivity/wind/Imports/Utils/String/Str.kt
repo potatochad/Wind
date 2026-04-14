@@ -181,8 +181,8 @@ fun Str.remove(vararg targets: Any): Str {
     }
     return result
 }
-fun Str.remove(target: Any): Str {
-    return this.replace(toStr(target), "")
+fun Str.remove(x: Str): Str {
+    return this.replace(x, "")
 }
 
 fun Str.safeSplit(delim: Str, action: DoStr) {
