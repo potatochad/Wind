@@ -159,7 +159,7 @@ object AppItem {
 	) {
 		if (item != null) {
 			AppItem.Delete {
-				list.remove(item) 
+				list.delete(item) 
 				Do()
 			}
 		}
