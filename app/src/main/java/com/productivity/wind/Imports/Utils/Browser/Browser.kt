@@ -205,8 +205,10 @@ fun UrlLong(input: Str): Str {
     }
 }
 @Composable
-fun UrlShort(x: Str) = remember(x) {
-    x.remove("https://", "http://", "www.")
+fun UrlShort(x: String): String {
+    return remember(x) {
+        x.remove("https://", "http://", "www.")
+    }
 }
 
 fun BlockKeywords(
