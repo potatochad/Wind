@@ -195,10 +195,15 @@ fun DoTsk.edit(block: DoTsk.() -> Unit) {
 }
 
 
-fun DoTsk.remove() {
+fun <T> MutableList<T>.delete(item: T) {
+    remove(item)
+}
+
+
+fun DoTsk.delete() {
 	Bar.doTsk.remove(this)
 }
-fun WebWord.remove() {
+fun WebWord.delete() {
 	Bar.webWord.remove(this)
 }
 
