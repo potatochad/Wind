@@ -206,7 +206,7 @@ fun CopyTskUI(tsk: CopyTsk) {
             }
 
 			AppItem.Delete{ 
-				Bar.copyTsk.remove(tsk)
+				Bar.copyTsk.delete(tsk)
 			}
 		}
     }
@@ -411,7 +411,7 @@ fun AppTaskUI(app: AppTsk){
                     }
                 }
                 AppItem.Delete{
-                    Bar.apps.remove(app)
+                    Bar.apps.delete(app)
                 }
             }
 
