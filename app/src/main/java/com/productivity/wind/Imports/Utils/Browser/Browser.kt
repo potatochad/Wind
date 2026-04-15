@@ -23,9 +23,7 @@ import com.productivity.wind.Imports.Utils.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import com.productivity.wind.Imports.Utils.Str.*
-import com.productivity.wind.Imports.Utils.Str.remove
-
+import com.productivity.wind.Imports.Utils.String.*
 
 
 class WebController(
