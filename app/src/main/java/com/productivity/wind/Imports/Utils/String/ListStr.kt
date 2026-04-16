@@ -127,20 +127,12 @@ import kotlinx.coroutines.flow.*
 import com.productivity.wind.Imports.UI_visible.*
 import com.productivity.wind.Imports.Utils.*
 
-
 @Composable
-fun charsW(text: Any, textStyle: TextStyle = LocalTextStyle.current, maxWidthPx: Float = 1000f): Int {
-    val str = toStr(text)
-    
-    val textMeasurer = rememberTextMeasurer()
-
-    val charWidth = textMeasurer.measure(
-        text = AnnotatedString("k"),
-        style = textStyle
-    ).size.width
-
-    return (maxWidthPx / charWidth).toInt()
+fun r_TextMeasurer(): TextMeasurer {
+    return rememberTextMeasurer()
 }
+
+
 
 @Composable
 fun Any.toLines(maxWidthPx: Float): List<UIStr> {
