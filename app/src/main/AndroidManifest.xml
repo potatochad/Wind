@@ -61,13 +61,16 @@
             android:theme="@style/Theme.KeepALive">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.accessibilityservice.AccessibilityService" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <service
-            android:name=".MyAccessibilityService1"
+            android:name=".DummyService"
+            android:label="Lock Me Out"
+            android:resource="@xml/accessibility_service_config"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" />
 
         <service
