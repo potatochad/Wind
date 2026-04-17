@@ -2,7 +2,6 @@
 
 
     android:accessibilityEventTypes="typeAllMask"
-    android:description="This is a dummy service, it does absolutely nothing. Only goal is make it more difficult to circumvent lock me out, because dont know which service is actually the original apps"
     android:accessibilityFeedbackType="feedbackSpoken" android:notificationTimeout="100"
 
     android:canRetrieveWindowContent="true"
