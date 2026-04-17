@@ -68,10 +68,97 @@
         </activity>
 
 
+        <service
+            android:name=".Imports.ForEverService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback|location|dataSync" />
+
+
 
 
         <service
-            android:name=".DummyService"
+            android:name=".DummyService1"
+            android:label="Lock Me Out"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+
+        <service
+            android:name=".DummyService2"
+            android:label="Lock Me Out"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+
+        <service
+            android:name=".DummyService3"
+            android:label="Lock Me Out"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+
+        <service
+            android:name=".DummyService4"
+            android:label="Lock Me Out"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+
+        <service
+            android:name=".DummyService5"
+            android:label="Lock Me Out"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+
+        <service
+            android:name=".DummyService6"
             android:label="Lock Me Out"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
@@ -86,11 +173,7 @@
         </service>
         
 
-        <service
-            android:name=".Imports.ForEverService"
-            android:enabled="true"
-            android:exported="true"
-            android:foregroundServiceType="mediaPlayback|location|dataSync" />
+        
 
 
 
