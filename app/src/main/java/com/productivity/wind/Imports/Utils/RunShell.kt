@@ -138,9 +138,11 @@ object LinuxCore {
     fun start() {
         if (process != null) return
 
-        if (rootfsPath.empty() || prootPath.empty()) {
+        // Do {
+        if (rootfsPath.empty || prootPath.empty) {
             throw IllegalStateException("Missing rootfs or proot path")
         }
+        // }
 
         val cmd = arrayOf(
             "/system/bin/sh",
@@ -183,7 +185,7 @@ object LinuxCore {
         return output.toString().trim()
     }
 
-    fun installPackage(pkg: String): String {
+    fun installPackage(pkg: Str): Str {
         return run("apt install -y $pkg")
     }
 
