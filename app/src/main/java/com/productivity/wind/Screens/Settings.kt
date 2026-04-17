@@ -176,7 +176,7 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
             title = "Install -Lock Me Out- dummy apps",
             onClick = {
 				if (!Permission.installApk{
-				
+					goTo("SettingsAPKLockMeOut")
 				}){
 					Vlog("Need install APK permission")
 				}
