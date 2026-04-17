@@ -127,6 +127,9 @@ import kotlinx.coroutines.flow.*
 import com.productivity.wind.Imports.UI_visible.*
 import com.productivity.wind.Imports.Utils.*
 
+
+
+
 @Composable
 fun r_TextMeasurer(): TextMeasurer {
     return rememberTextMeasurer()
@@ -136,7 +139,7 @@ fun r_TextMeasurer(): TextMeasurer {
 
 @Composable
 fun Any.toLines(maxWidthPx: Float): List<UIStr> {
-    val textMeasurer = rememberTextMeasurer()
+    val textMeasurer = r_TextMeasurer()
     val style = LocalTextStyle.current
     val str = toStr(this)
 
@@ -145,7 +148,7 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         var line = ""
 
         str.split(" ").forEach { word ->
-            val testLine = if (line.isEmpty()) word else "$line $word"
+            val testLine = if (line.empty) word else "$line $word"
 
             val width = textMeasurer.measure(
                 text = AnnotatedString(testLine),
@@ -155,12 +158,12 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
             if (width <= maxWidthPx) {
                 line = testLine
             } else {
-                if (line.isNotEmpty()) result.add(UIStr(line))
+                if (line.notEmpty) result.add(UIStr(line))
                 line = word
             }
         }
 
-        if (line.isNotEmpty()) result.add(UIStr(line))
+        if (line.notEmpty) result.add(UIStr(line))
         result
     }
 }
