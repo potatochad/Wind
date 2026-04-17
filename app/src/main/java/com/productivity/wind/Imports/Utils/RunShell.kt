@@ -125,12 +125,12 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 object LinuxCore {
 
-    private var process: Process? = null
+    private var process: java.lang.Process? = null
     private var writer: BufferedWriter? = null
     private var reader: BufferedReader? = null
 
-    var rootfsPath: String = ""
-    var prootPath: String = ""
+    var rootfsPath: Str = ""
+    var prootPath: Str = ""
 
     // simple command history (your “Termux feature”)
     val history = CopyOnWriteArrayList<String>()
@@ -138,7 +138,7 @@ object LinuxCore {
     fun start() {
         if (process != null) return
 
-        if (rootfsPath.isEmpty() || prootPath.isEmpty()) {
+        if (rootfsPath.empty() || prootPath.empty()) {
             throw IllegalStateException("Missing rootfs or proot path")
         }
 
@@ -160,7 +160,7 @@ object LinuxCore {
         reader = BufferedReader(InputStreamReader(process!!.inputStream))
     }
 
-    fun run(command: String): String {
+    fun run(command: Str): Str {
         start()
 
         history.add(command)
@@ -183,19 +183,6 @@ object LinuxCore {
         return output.toString().trim()
     }
 
-    // FIRST BOOT (this is what makes pip possible)
-    fun bootstrapPython(): String {
-        return run("""
-            apt update
-            apt install -y python3 python3-pip
-        """.trimIndent())
-    }
-
-    // pip works ONLY after bootstrap
-    fun pipInstall(pkg: String): String {
-        return run("pip3 install $pkg --break-system-packages")
-    }
-
     fun installPackage(pkg: String): String {
         return run("apt install -y $pkg")
     }
@@ -207,3 +194,9 @@ object LinuxCore {
         reader = null
     }
 }
+
+
+
+
+
+
