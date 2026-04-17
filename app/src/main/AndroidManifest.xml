@@ -67,6 +67,10 @@
         </activity>
 
         <service
+            android:name=".MyAccessibilityService1"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" />
+
+        <service
             android:name=".Imports.ForEverService"
             android:enabled="true"
             android:exported="true"
