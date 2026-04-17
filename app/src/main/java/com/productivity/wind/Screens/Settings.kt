@@ -171,7 +171,23 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
 				Bar.funTime.vlog("Points left")
 			}
         )
+		LazyItem(
+            icon = { Icon.Whatshot() },
+            title = "Install -Lock Me Out- dummy apps",
+            onClick = {
+				if (!Permission.installApk{
+				
+				}){
+					Vlog("Need install APK permission")
+				}
+			}
+        )
+		
+}
 
+
+@Composable
+fun SettingsAPKLockMeOut() = LazyScreen("Dummy apks") {
 		
 }
 
