@@ -227,6 +227,31 @@ object Permission {
 		onGranted()
 		return true
 	}
+    fun installApk(onGranted: Do = {}): Bool {
+
+        val pm = App.packageManager
+
+        // STEP 1: already allowed?
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O ||
+            pm.canRequestPackageInstalls()
+        ) {
+            onGranted()
+            return true
+        }
+
+        // STEP 2: send user to settings
+        try {
+            val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
+                data = Uri.parse("package:${App.packageName}")
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            App.startActivity(intent)
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
+
+        return false
+	}
 
 
 	
