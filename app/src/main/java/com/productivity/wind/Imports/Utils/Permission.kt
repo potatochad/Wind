@@ -305,13 +305,13 @@ object Permission {
         log("Device Admin intent launched successfully")
         false
     } catch (e: ActivityNotFoundException) {
-        log(e, "ActivityNotFoundException: Device Admin screen not available on this device")
+        log("ActivityNotFoundException: Device Admin screen not available on this device. E: ${e.message}")
         false
     } catch (e: SecurityException) {
-        log(e, "SecurityException: Missing permission or blocked by system policy")
+        log("SecurityException: Missing permission or blocked by system policy. E: ${e.message}")
         false
     } catch (e: Exception) {
-        log(e, "Unknown error while opening Device Admin screen")
+        log("Unknown error while opening Device Admin screen. E: ${e.message}")
         false
     }
 	}
