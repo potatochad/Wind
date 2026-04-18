@@ -144,7 +144,7 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
     val str = toStr(this)
 
     return remember(str, maxWidthPx) {
-        val result = mutableListOf<UIStr>()
+        val result = mList<UIStr>()
         var line = ""
 
         str.split(" ").forEach { word ->
