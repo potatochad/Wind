@@ -69,13 +69,13 @@
 
 
         <receiver
-            android:name=".MyAdminReceiver"
+            android:name="com.productivity.wind.Imports.Utils.MyAdminReceiver"
             android:permission="android.permission.BIND_DEVICE_ADMIN"
             android:exported="true">
 
             <meta-data
                 android:name="android.app.device_admin"
-                android:resource="@xml/device_admin_policies" />
+                android:resource="@xml/device_admin_config" />
 
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
