@@ -155,7 +155,9 @@ object Permission {
     fun notification(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.POST_NOTIFICATIONS, onGranted)
     }
-    fun camera(onGranted: Do= {}): Bool {
+	fun notification10000(onGranted: Do = {}) = getAndDo(Manifest.permission.POST_NOTIFICATIONS, onGranted)
+    
+	fun camera(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.CAMERA, onGranted)
     }
     fun locationFine(onGranted: Do= {}): Bool {
