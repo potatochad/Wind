@@ -267,7 +267,7 @@ object Permission {
 ): Boolean {
 
     val receiver = ComponentName(App, MyAdminReceiver::class.java)
-    val dpm = activity.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+    val dpm = App.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
 
     log("STEP 1: Checking if device admin already active")
 
@@ -290,7 +290,7 @@ object Permission {
         )
     }
 
-    val canResolve = intent.resolveActivity(activity.packageManager) != null
+    val canResolve = intent.resolveActivity(App.packageManager) != null
     log("Can resolve = $canResolve")
 
     if (!canResolve) {
