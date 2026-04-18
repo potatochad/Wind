@@ -148,29 +148,29 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         val result = mList<UIStr>()
         val words = str.split(" ")
 
-        var lineWords = mList<String>()
+        var line = ""
 
         fun flush() {
-            if (lineWords.isNotEmpty()) {
-                result.add(UIStr(lineWords.joinToString(" ")))
-                lineWords.clear()
+            if (line.isNotEmpty()) {
+                result.add(UIStr(line))
+                line = ""
             }
         }
 
         for (word in words) {
 
-            val testLine = (lineWords + word).joinToString(" ")
+            val test = if (line.isEmpty()) word else "$line $word"
 
             val width = textMeasurer.measure(
-                text = AnnotatedString(testLine),
+                text = AnnotatedString(test),
                 style = style
             ).size.width
 
             if (width <= maxWidthPx) {
-                lineWords.add(word)
+                line = test
             } else {
                 flush()
-                lineWords.add(word)
+                line = word
             }
         }
 
@@ -178,7 +178,6 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         result
     }
 }
-
 
 
 
