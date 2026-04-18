@@ -253,6 +253,40 @@ object Permission {
 
         return false
 	}
+	
+	class MyAdminReceiver : DeviceAdminReceiver()
+	
+	fun deviceAdmin(
+		onGranted: Do = {}
+	): Bool {
+		val receiver = ComponentName(App, MyAdminReceiver::class.java)
+
+		val dpm = App.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+
+		// STEP 1: already active?
+		if (dpm.isAdminActive(receiver)) {
+			onGranted()
+			return true
+		}
+
+		// STEP 2: send user to enable screen
+		try {
+			val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
+				putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, receiver)
+				putExtra(
+					DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+					"Enable to protect app and prevent removal during focus mode"
+				)
+				flags = Intent.FLAG_ACTIVITY_NEW_TASK
+			}
+			App.startActivity(intent)
+		} catch (e: Exception) {
+			Timber.e(e)
+		}
+
+		return false
+	}
+	
 
 
 	
@@ -299,7 +333,6 @@ fun Android8OrAbove(Do: Do) {
 
 
 
-class MyAdminReceiver : DeviceAdminReceiver()
 
 
 
