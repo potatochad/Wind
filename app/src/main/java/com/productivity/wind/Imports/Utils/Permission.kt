@@ -302,7 +302,7 @@ object Permission {
         log("Launching Device Admin screen...")
 
         // ✅ ONLY correct launch
-        activity.startActivityForResult(intent, 1)
+        App.startActivityForResult(intent, 1)
 
         false
     } catch (e: Exception) {
