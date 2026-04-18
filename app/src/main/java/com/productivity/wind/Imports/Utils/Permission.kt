@@ -132,6 +132,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.*
 import android.provider.*
+import android.app.admin.DeviceAdminReceiver
 
 
 object Permission {
