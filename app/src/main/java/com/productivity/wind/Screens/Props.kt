@@ -94,8 +94,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("ExtensionsScreen") { ExtensionsScreen() }
 	url("PrivacyScreen") { PrivacyScreen() }
     url("SettingsOtherScreen") { SettingsOtherScreen() }
-	url("SettingsAPKLockMeOut") { SettingsAPKLockMeOut() }
-    url("LogsScreen") { LogsScreen() }
+	url("LogsScreen") { LogsScreen() }
 
 	// popups ‼️Nav back on close
 	popup("GetPoints") { GetPoints() }
