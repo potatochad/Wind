@@ -145,13 +145,13 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
 
     return remember(str, maxWidthPx) {
         val result = mList<UIStr>()
-        var line = ""
+        var line by m("")
 
         str.split(" ").forEach { word ->
-            val testLine = if (line.empty) word else "$line $word"
+            val testLine = line.add(word)
 
             val width = textMeasurer.measure(
-                text = AnnotatedString(testLine),
+                text = UIStr(testLine),
                 style = style
             ).size.width
 
