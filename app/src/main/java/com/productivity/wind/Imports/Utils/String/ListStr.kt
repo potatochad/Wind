@@ -134,22 +134,22 @@ import com.productivity.wind.Imports.Utils.*
 fun rTextMeasurer(): TextMeasurer {
     return rememberTextMeasurer()
 }
-fun TextMeasurer.w(text: UIStr, style: TextStyle): Float {
+fun TextMeasurer.w(text: UIStr): Float {
     return measure(
         text = text,
-        style = style
+        style = text.style
     ).size.width
 }
-fun TextMeasurer.h(text: UIStr, style: TextStyle): Float {
+fun TextMeasurer.h(text: UIStr): Float {
     return measure(
         text = text,
-        style = style
+        style = text.style
     ).size.height
 }
-fun TextMeasurer.s(text: UIStr, style: TextStyle): IntSize {
+fun TextMeasurer.s(text: UIStr): IntSize {
     return measure(
         text = text,
-        style = style
+        style = text.style
     ).size
 }
 
