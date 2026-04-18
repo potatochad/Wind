@@ -194,3 +194,15 @@ fun Str.safeSplit(delim: Str, action: DoStr) {
         }
     }
 }
+
+
+fun Str.takeWords(n: Int): Str{
+    return this
+        .trim()
+        .split(Regex("\\s+"))
+        .take(n)
+        .joinToString(" ")
+}
+
+
+
