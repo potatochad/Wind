@@ -205,4 +205,40 @@ fun Str.takeWords(n: Int): Str{
 }
 
 
+@Composable
+fun Str.wordsFit(
+    maxWidthPx: Float,
+    leaveEmptySpace: Bool = no,
+): Str {
+    val textMeasurer = r_TextMeasurer()
+    val style = LocalTextStyle.current
+    val words = this.trim().split(Regex("\\s+"))
+
+    var line = ""
+
+    fun fits(text: Str): Bool {
+        return textMeasurer.measure(
+            text = AnnotatedString(text),
+            style = style
+        ).size.width <= maxWidthPx
+    }
+
+    for (word in words) {
+        val test = if (line.isEmpty()) word else "$line $word"
+        if (fits(test)) {
+            line = test
+        } else {
+            break
+        }
+    }
+
+    return if (leaveEmptySpace) {
+        // preserve spacing at the end of last visible word
+        if (line.isNotEmpty()) "$line " else ""
+    } else {
+        line
+    }
+}
+
+
 
