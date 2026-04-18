@@ -325,7 +325,35 @@ object Permission {
 
 
 
+	@Composable
+fun AccessibilityPermission() {
+    val context = LocalContext.current
+    val serviceId = "${context.packageName}/${WatchdogAccessibilityService::class.java.name}"
 
+    val enabledServices = Settings.Secure.getString(
+        context.contentResolver,
+        Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+    ) ?: ""
+
+    val isEnabled = enabledServices.contains(serviceId)
+
+    log("Service id AccessibilityPermission${serviceId} ", "bad")
+    log("isEnabled? AccessibilityPermission${isEnabled} ", "bad")
+    if (!isEnabled) {
+            //!Bar.AccesabilityPermission = false
+            AlertDialog.Builder(context)
+                .setTitle("Permission Needed")
+                .setMessage("Please enable accessibility for full features.")
+                .setPositiveButton("ok") { _, _ ->
+                    val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intent)
+                }
+                .show()
+    } else {
+        //!Bar.AccesabilityPermission = true
+    }
+}
 
 
 
