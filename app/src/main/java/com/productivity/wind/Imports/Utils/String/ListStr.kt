@@ -131,15 +131,33 @@ import com.productivity.wind.Imports.Utils.*
 
 
 @Composable
-fun r_TextMeasurer(): TextMeasurer {
+fun rTextMeasurer(): TextMeasurer {
     return rememberTextMeasurer()
+}
+fun TextMeasurer.w(text: UIStr, style: TextStyle): Float {
+    return measure(
+        text = text,
+        style = style
+    ).size.width
+}
+fun TextMeasurer.h(text: UIStr, style: TextStyle): Float {
+    return measure(
+        text = text,
+        style = style
+    ).size.height
+}
+fun TextMeasurer.s(text: UIStr, style: TextStyle): IntSize {
+    return measure(
+        text = text,
+        style = style
+    ).size
 }
 
 
 
 @Composable
 fun Any.toLines(maxWidthPx: Float): List<UIStr> {
-    val textMeasurer = r_TextMeasurer()
+    val textMeasurer = rTextMeasurer()
     val style = LocalTextStyle.current
     val str = toStr(this)
 
