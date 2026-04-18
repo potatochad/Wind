@@ -180,6 +180,9 @@ fun String.remove(vararg targets: String): String {
 fun Str.remove(x: Str): Str {
     return this.replace(x, "")
 }
+fun Str.add(word: Str): Str {
+    return if (this.empty) word else "$this $word"
+}
 
 fun Str.safeSplit(delim: Str, action: DoStr) {
     var i = 0
