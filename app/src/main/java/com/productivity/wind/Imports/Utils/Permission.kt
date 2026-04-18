@@ -396,7 +396,332 @@ fun Android8OrAbove(Do: Do) {
 
 
 
+/*
 
+class WatchdogService : Service() {
+    private val serviceJob = SupervisorJob()
+    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
+    private var OneJob: Job? = null
+
+    override fun onBind(intent: Intent?): IBinder? {
+        Timber.d("onBind: $intent")
+        return null
+    }
+
+    fun GOtowindAPP(){
+        val intent = Intent(Global1.context, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        Global1.context.startActivity(intent)
+    }
+
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
+        NotificationHelper(this).createNotificationChannel()
+        startForeground(1, NotificationHelper(this).buildNotification(),)
+        Global1.context = this
+        if (Bar.BlockingEnabled) {
+            if (OneJob == null || OneJob?.isActive == false) {
+                OneJob = serviceScope.launch {
+                    while (true) {
+
+                        //region SAFETY PURPOSES
+
+                        delay(1000L)
+                        Bar.COUNT +=1
+
+                        //endregion
+
+
+                        //region CURRENT APP
+
+                        val usageStatsManager = Global1.context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+                        val NowTime = System.currentTimeMillis()
+
+                        /*
+                        * THIS IS NOT SUPER ACCURATE
+                        ? If you want better precision, you’ll need an Accessibility Service.
+                        !THIS REQUIRES NAVIGATING USER TO IT*/
+                        val AppsUsed = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, NowTime - 20_000, NowTime)
+                        val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
+
+                        //LOG WHEN WANT TOOO
+                        if (currentApp == Global1.context.packageName || currentApp == null) { } else { log("BACKGROUND — CURRENT APP: $currentApp", "bad") }
+
+                        //endregion CURRENT APP
+
+                        val blocked = Blist.apps.any { it.packageName.value == currentApp && it.Block.value }
+
+                        if (blocked) {
+                            if (Bar.funTime > 0) {
+                                Bar.funTime -= 1
+                                log("BACKGROUND---Spending Time??:::${Bar.funTime};", "bad")
+                            } else {
+                                GOtowindAPP()
+                                log("BACKGROUND---Blocking APP:::${currentApp}; ${Bar.COUNT}", "bad")
+                            }
+                        }
+
+
+                    if (currentApp == "com.seekrtech.waterapp") {
+                        log("NEW DAY??; ${Bar.NewDay}", "bad")
+                        log("waterdo time; ${Bar.WaterDOtime_spent}", "bad")
+                        if (Bar.NewDay) {
+                            if (Bar.WaterDOtime_spent > 50) {
+                                Bar.funTime += 900
+                                Bar.NewDay = false
+                            } else {
+                                Bar.WaterDOtime_spent += 1
+                            }
+                        }
+                    }
+                    }
+                }
+            }
+        }
+
+        return START_STICKY
+    }
+
+    override fun onDestroy() { super.onDestroy(); serviceScope.cancel() }
+}
+
+
+//endregion
+
+
+
+
+
+
+
+
+
+
+//region OnAppStart
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AppStart_beforeUI(applicationContext)
+        setContent {
+            KeepAliveTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    AppStart()
+
+                    Global1.navController = rememberNavController()
+                    MyNavGraph(navController = Global1.navController)
+                }
+            }
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun AppStart_beforeUI(context: Context) {
+    Global1.context = context
+    SettingsSaved.init()
+    SettingsSaved.Bsave()
+
+    UniversalListManager.initialize(context, Blist)
+
+
+    //Background thing
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }
+}
+
+
+@Composable
+fun MAINStart() {
+    LaunchedEffect(Unit) {
+        delay(1_000L)
+        Bar.restoringFromFile = false
+    }
+}
+@Composable
+fun AppStart() {
+    PopUps()
+    val halfWidth = LocalConfiguration.current.screenWidthDp.dp/2+30.dp; Bar.halfWidth = halfWidth
+    val halfHeight = LocalConfiguration.current.screenHeightDp.dp/2; Bar.halfHeight = halfHeight
+    LaunchedEffect(Unit) {
+        DayChecker.start()
+    }
+}
+
+
+
+//endregion
+
+//region GLOBAL
+//* CONTEXT from anywhere!!!
+object Global1 {
+    /* APP CONTEXT
+    Context is weirt:
+    there is application, ok for most things
+    ?and local
+    !which used for popup etc...
+    * */
+    lateinit var context: Context
+    lateinit var navController: NavHostController
+
+
+    /*POPUPS CRASHING??
+    * USE LOCAL CONTEXT
+    * ? YEA GOT NO BETTER SOLUTION SORRRY*/
+
+}
+
+
+
+//endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*?WHEN TESTING IS PAINFUL
+* !AUTO DISABLED EACH TIME*/
+/* IT AUTO CALLS ITSELF
+YEA, WEIRD ONLY FEW FUNCTIONS IT CALLS
+? YOU MUST WORK WITH IT WANT AND SET UP
+! onAccessibilityEvent- IS A MUST AND ONLY ON CHANGE CALLED
+* */
+class WatchdogAccessibilityService  : AccessibilityService() {
+
+    /* ON CHANGE DO X
+    ! this is very important
+    ? must be names onAccessibilityEvent
+
+    * */
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        CurrentApp(event)
+        //GETEVERYTHING(event)
+    }
+    fun CurrentApp(event: AccessibilityEvent?) {
+        if (event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
+            Bar.currentApp = event.packageName.toString()
+            log("CURRENT APP: ${Bar.currentApp}", "bad")
+        }
+    }
+    private fun exploreNodeTree(node: AccessibilityNodeInfo?, depth: Int) {
+        if (node == null) return
+
+        val indent = "  ".repeat(depth)
+
+        val text = node.text
+        val id = node.viewIdResourceName
+        val desc = node.contentDescription
+        val className = node.className
+        val clickable = node.isClickable
+        val enabled = node.isEnabled
+        val focused = node.isFocused
+        val focusable = node.isFocusable
+        val visible = node.isVisibleToUser
+        val bounds = Rect().apply { node.getBoundsInScreen(this) }
+
+        // Header
+        log("$indent Node:", "bad")
+
+        // Properties
+        if (!text.isNullOrEmpty()) log("$indent   Text: $text", "bad")
+        if (!desc.isNullOrEmpty()) log("$indent   Description: $desc", "bad")
+        if (!id.isNullOrEmpty()) log("$indent   ID: $id", "bad")
+        log("$indent   Class: $className", "bad")
+        log("$indent   Clickable: $clickable", "bad")
+        log("$indent   Enabled: $enabled", "bad")
+        log("$indent   Focused: $focused", "bad")
+        log("$indent   Focusable: $focusable", "bad")
+        log("$indent   Visible: $visible", "bad")
+        log("$indent   Bounds: $bounds", "bad")
+
+        // Children
+        for (i in 0 until node.childCount) {
+            exploreNodeTree(node.getChild(i), depth + 1)
+        }
+    }
+
+    fun GETEVERYTHING(event: AccessibilityEvent?) {
+        val root = rootInActiveWindow
+        if (root != null) {
+            exploreNodeTree(root, 0)
+        }
+    }
+    override fun onInterrupt() {
+        log("ACESABILITY Service interrupted.", "bad")
+    }
+}
+
+class NotificationHelper(private val context: Context) {
+    companion object {
+        private const val CHANNEL_ID = "WatchdogServiceChannel"
+    }
+    fun createNotificationChannel() {
+        Timber.d("createNotificationChannel() called")
+        val channel =
+            NotificationChannel(
+                CHANNEL_ID,
+                context.getString(R.string.notification_channel_name_watchdog_service),
+                NotificationManager.IMPORTANCE_DEFAULT,
+            )
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        manager.createNotificationChannel(channel)
+    }
+
+    fun buildNotification(): Notification {
+        Timber.d("buildNotification() called")
+
+        val notificationIntent = Intent(context, MainActivity::class.java)
+        val pendingIntentFlags =
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        val pendingIntent =
+            PendingIntent.getActivity(context, 0, notificationIntent, pendingIntentFlags)
+
+        return NotificationCompat.Builder(context, CHANNEL_ID)
+            .setContentTitle(context.getString(R.string.notification_title_app_watchdog))
+            .setContentText(context.getString(R.string.notification_content_monitoring_apps))
+            .setSmallIcon(R.drawable.baseline_radar_24)
+            .setContentIntent(pendingIntent)
+            // Low priority for ongoing background service notification
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            // Makes the notification persistent
+            .setOngoing(true)
+            .build()
+    }
+}
+
+
+*/
 
 
 
