@@ -175,6 +175,18 @@ fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
 fun Any.getStyle(): StrStyle {
     return toUIStr(this).spanStyles.firstOrNull()?.item ?: StrStyle()
 }
+val UIStr.style: StrStyle
+    get() = spanStyles.firstOrNull()?.item ?: StrStyle()
+
+fun UIStr.style(x: StrStyle): UIStr {
+    val plainText = this.text
+
+    return makeUIStr {
+        pushStyle(x)
+        add(plainText)
+        pop()
+    }
+}
 
 fun Any.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (this.getStyle().update()))
 
