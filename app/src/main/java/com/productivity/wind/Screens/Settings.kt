@@ -45,7 +45,8 @@ fun SettingsScreen() {
 			},
 			endUI = {
 				Text(if (Bar.noUninstall) "ON".gold() else "OFF".darkGray())
-			}
+			},
+			topPadding = 1.dp,
 		)
         
         var restore = r_m(no)
