@@ -155,51 +155,39 @@ object Permission {
     fun notification(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.POST_NOTIFICATIONS, onGranted)
     }
-
     fun camera(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.CAMERA, onGranted)
     }
-
     fun locationFine(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, onGranted)
     }
-
     fun locationCoarse(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, onGranted)
     }
-
     fun readStorage(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.READ_EXTERNAL_STORAGE, onGranted)
     }
-
     fun writeStorage(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.WRITE_EXTERNAL_STORAGE, onGranted)
     }
-
     fun recordAudio(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.RECORD_AUDIO, onGranted)
     }
-
     fun readContacts(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.READ_CONTACTS, onGranted)
     }
-
     fun sendSMS(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.SEND_SMS, onGranted)
     }
-
     fun callPhone(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.CALL_PHONE, onGranted)
     }
-
     fun readPhoneState(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.READ_PHONE_STATE, onGranted)
     }
-
     fun backgroundLocation(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)
     }
-
     fun bodySensors(onGranted: Do= {}): Bool {
         return getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
     }
@@ -208,13 +196,11 @@ object Permission {
 	fun ignoreOptimizations(onGranted: Do = {}): Bool {
 		val pm = App.getSystemService(Context.POWER_SERVICE) as PowerManager
 
-		// Already ignoring? Run callback and return true
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && pm.isIgnoringBatteryOptimizations(App.packageName)) {
 			onGranted()
 			return true
 		}
 
-		// Not ignoring yet? Launch system dialog
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			val intent = Intent().apply {
 				action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
@@ -230,15 +216,13 @@ object Permission {
 			}
 		}
 
-		// Older Android versions don't have battery optimizations
+		// Older Android versions dont have it
 		onGranted()
 		return true
 	}
     fun installApk(onGranted: Do = {}): Bool {
-
         val pm = App.packageManager
 
-        // STEP 1: already allowed?
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O ||
             pm.canRequestPackageInstalls()
         ) {
@@ -246,7 +230,6 @@ object Permission {
             return true
         }
 
-        // STEP 2: send user to settings
         try {
             val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
                 data = Uri.parse("package:${App.packageName}")
@@ -259,56 +242,38 @@ object Permission {
 
         return false
 	}
-	
-	
+	fun deviceAdmin(onGranted: Do = {}): Bool {
+		val receiver = ComponentName(App, MyAdminReceiver::class.java)
+		val dpm = App.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+		val isActive = dpm.isAdminActive(receiver)
 
-	fun deviceAdmin(
-    onGranted: () -> Unit = {}
-): Boolean {
+		if (isActive) {
+			onGranted()
+			return yes
+		}
+		
+		val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
+			putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, receiver)
+			putExtra(
+				DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+				"Enable to protect app and prevent removal during focus mode"
+			)
+		}
 
-    val receiver = ComponentName(App, MyAdminReceiver::class.java)
-    val dpm = App.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+		val canResolve = intent.resolveActivity(App.packageManager) != null
 
-    log("STEP 1: Checking if device admin already active")
+		if (!canResolve) {
+			Vlog("FAILED: no handler")
+			return no
+		}
 
-    val isActive = dpm.isAdminActive(receiver)
-    log("Device admin active = $isActive")
-
-    if (isActive) {
-        log("Already enabled → onGranted()")
-        onGranted()
-        return true
-    }
-
-    log("STEP 2: Preparing intent")
-
-    val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
-        putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, receiver)
-        putExtra(
-            DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-            "Enable to protect app and prevent removal during focus mode"
-        )
-    }
-
-    val canResolve = intent.resolveActivity(App.packageManager) != null
-    log("Can resolve = $canResolve")
-
-    if (!canResolve) {
-        log("FAILED: no handler")
-        return false
-    }
-
-    return try {
-        log("Launching Device Admin screen...")
-
-        // ✅ ONLY correct launch
-        App.startActivityForResult(intent, 1)
-
-        false
-    } catch (e: Exception) {
-        log("ERROR: ${e.message}")
-        false
-    }
+		return try {
+			App.startActivityForResult(intent, 1)
+			yes
+		} catch (e: Exception) {
+			log("ERROR: ${e.message}")
+			no
+		}
 	}
 
 
