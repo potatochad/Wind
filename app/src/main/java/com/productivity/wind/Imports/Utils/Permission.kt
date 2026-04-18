@@ -132,6 +132,9 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.*
 import android.provider.*
+import android.app.admin.DevicePolicyManager
+import android.content.Context
+import android.content.Intent
 import android.app.admin.DeviceAdminReceiver
 
 
