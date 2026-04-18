@@ -173,13 +173,9 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
         )
 		LazyItem(
             icon = { Icon.Whatshot() },
-            title = "Install -Lock Me Out- dummy apps",
+            title = "Locking Properties",
             onClick = {
-				if (!Permission.installApk{
-					goTo("SettingsAPKLockMeOut")
-				}){
-					Vlog("Need install APK permission")
-				}
+				goTo("SettingsAPKLockMeOut")
 			}
         )
 		
@@ -188,7 +184,19 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
 
 @Composable
 fun SettingsAPKLockMeOut() = LazyScreen("Dummy apks") {
-		
+	LazyCard{
+		Text("Currently, there are a bunch of accessibility dummy components, dont worry they do absolutely nothing. \n This is just there for myself and other lock me out app users")           
+	}
+	LazyItem(
+		icon = ,
+		onClick = {
+			if (!Permission.deviceAdmin{
+				//granted
+			}){
+				Vlog("Need Permission to enable licking properties")
+			}
+		}
+	)
 }
 
 
