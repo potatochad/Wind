@@ -187,16 +187,23 @@ fun SettingsAPKLockMeOut() = LazyScreen("Dummy apks") {
 	LazyCard{
 		Text("Currently, there are a bunch of accessibility dummy components, dont worry they do absolutely nothing. \n This is just there for myself and other lock me out app users")           
 	}
+	var uninstallable by r(no)
 	LazyItem(
-		icon = ,
+		icon = { Icon.Lock() },
+		title = "Block Uninstall",
 		onClick = {
 			if (!Permission.deviceAdmin{
 				//granted
 			}){
-				Vlog("Need Permission to enable licking properties")
+				Vlog("Need Permission")
 			}
+		},
+		endUI = {
+			Text(if (Bar.encryptedBackup) "ON".gold() else "OFF".darkGray())
 		}
 	)
+
+	
 }
 
 
