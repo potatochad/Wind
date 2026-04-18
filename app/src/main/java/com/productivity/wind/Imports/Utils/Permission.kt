@@ -152,47 +152,19 @@ object Permission {
         }
     }
 
-    fun notification(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.POST_NOTIFICATIONS, onGranted)
-    }
-	fun notification10000(onGranted: Do = {}) = getAndDo(Manifest.permission.POST_NOTIFICATIONS, onGranted)
-    
-	fun camera(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.CAMERA, onGranted)
-    }
-    fun locationFine(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, onGranted)
-    }
-    fun locationCoarse(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, onGranted)
-    }
-    fun readStorage(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.READ_EXTERNAL_STORAGE, onGranted)
-    }
-    fun writeStorage(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.WRITE_EXTERNAL_STORAGE, onGranted)
-    }
-    fun recordAudio(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.RECORD_AUDIO, onGranted)
-    }
-    fun readContacts(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.READ_CONTACTS, onGranted)
-    }
-    fun sendSMS(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.SEND_SMS, onGranted)
-    }
-    fun callPhone(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.CALL_PHONE, onGranted)
-    }
-    fun readPhoneState(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.READ_PHONE_STATE, onGranted)
-    }
-    fun backgroundLocation(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)
-    }
-    fun bodySensors(onGranted: Do= {}): Bool {
-        return getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
-    }
+    fun notification(onGranted: Do={}) = getAndDo(Manifest.permission.POST_NOTIFICATIONS, onGranted)
+	fun camera(onGranted: Do={}) = getAndDo(Manifest.permission.CAMERA, onGranted)
+    fun locationFine(onGranted: Do={}) = getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, onGranted)
+    fun locationCoarse(onGranted: Do={}) = getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, onGranted)
+    fun readStorage(onGranted: Do={}) = getAndDo(Manifest.permission.READ_EXTERNAL_STORAGE, onGranted)
+    fun writeStorage(onGranted: Do={}) = getAndDo(Manifest.permission.WRITE_EXTERNAL_STORAGE, onGranted)
+    fun recordAudio(onGranted: Do={}) = getAndDo(Manifest.permission.RECORD_AUDIO, onGranted)
+    fun readContacts(onGranted: Do={}) = getAndDo(Manifest.permission.READ_CONTACTS, onGranted)
+    fun sendSMS(onGranted: Do={}) = getAndDo(Manifest.permission.SEND_SMS, onGranted)
+    fun callPhone(onGranted: Do={}) = getAndDo(Manifest.permission.CALL_PHONE, onGranted)
+    fun readPhoneState(onGranted: Do={}) = getAndDo(Manifest.permission.READ_PHONE_STATE, onGranted)
+    fun backgroundLocation(onGranted: Do={}) = getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)
+    fun bodySensors(onGranted: Do={}) = getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
 
 
 	fun ignoreOptimizations(onGranted: Do = {}): Bool {
