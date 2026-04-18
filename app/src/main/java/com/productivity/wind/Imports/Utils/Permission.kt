@@ -290,13 +290,15 @@ fun isNotificationEnabled(): Bool {
 
 
 
-
-
 fun Android8OrAbove(Do: Do) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         Do()
     }
 }
+
+
+
+class MyAdminReceiver : DeviceAdminReceiver()
 
 
 
