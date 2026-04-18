@@ -135,6 +135,10 @@ import android.provider.*
 import android.app.admin.DeviceAdminReceiver
 
 
+
+class MyAdminReceiver : DeviceAdminReceiver()
+	
+
 object Permission {
     private fun getAndDo(permissionStr: Str, onGranted: Do): Bool {
         return if (ContextCompat.checkSelfPermission(App, permissionStr) == PackageManager.PERMISSION_GRANTED) {
@@ -254,7 +258,6 @@ object Permission {
         return false
 	}
 	
-	class MyAdminReceiver : DeviceAdminReceiver()
 	
 	fun deviceAdmin(
 		onGranted: Do = {}
