@@ -77,7 +77,7 @@ object Bar {
 	var lastDate by s("", "lastDate")
 	var leftApp by s(no, "leftApp")
 	var encryptedBackup by s(yes, "encryptedBackup") 
-	var uninstallable by s(no, "uninstallable")
+	var noUninstall by s(no, "noUninstall")
 	var logs = sList<Str>("logs")
 	
 	var Url by s("https://google.com", "Url")
