@@ -263,35 +263,58 @@ object Permission {
 	
 	fun deviceAdmin(
 		onGranted: Do = {}
-	): Bool {
+	): Boolean {
 		val receiver = ComponentName(App, MyAdminReceiver::class.java)
-
 		val dpm = App.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
 
-		// STEP 1: already active?
-		if (dpm.isAdminActive(receiver)) {
-			onGranted()
-			return true
-		}
+    log("STEP 1: Checking if device admin already active")
 
-		// STEP 2: send user to enable screen
-		try {
-			val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
-				putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, receiver)
-				putExtra(
-					DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-					"Enable to protect app and prevent removal during focus mode"
-				)
-				flags = Intent.FLAG_ACTIVITY_NEW_TASK
-			}
-			App.startActivity(intent)
-		} catch (e: Exception) {
-			Timber.e(e)
-		}
+    // STEP 1: already active?
+    val isActive = dpm.isAdminActive(receiver)
+    log("Device admin active = $isActive")
 
-		return false
+    if (isActive) {
+        log("Device admin already enabled → calling onGranted()")
+        onGranted()
+        return true
+    }
+
+    log("STEP 2: Preparing intent to open Device Admin screen")
+
+    val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
+        putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, receiver)
+        putExtra(
+            DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+            "Enable to protect app and prevent removal during focus mode"
+        )
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+
+    // 🔍 STEP 3: Can Android even open this screen?
+    val canResolve = intent.resolveActivity(App.packageManager) != null
+    log("Can resolve Device Admin intent = $canResolve")
+
+    if (!canResolve) {
+        log("DEVICE ADMIN INTENT FAILED: no activity can handle ACTION_ADD_DEVICE_ADMIN")
+        return false
+    }
+
+    return try {
+        log("Launching Device Admin screen now...")
+        App.startActivity(intent)
+        log("Device Admin intent launched successfully")
+        false
+    } catch (e: ActivityNotFoundException) {
+        log(e, "ActivityNotFoundException: Device Admin screen not available on this device")
+        false
+    } catch (e: SecurityException) {
+        log(e, "SecurityException: Missing permission or blocked by system policy")
+        false
+    } catch (e: Exception) {
+        log(e, "Unknown error while opening Device Admin screen")
+        false
+    }
 	}
-	
 
 
 	
