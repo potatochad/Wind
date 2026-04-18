@@ -324,7 +324,7 @@ object Permission {
 
 
 
-
+/*
 	@Composable
 fun AccessibilityPermission() {
     val context = LocalContext.current
@@ -354,6 +354,7 @@ fun AccessibilityPermission() {
         //!Bar.AccesabilityPermission = true
     }
 }
+*/
 
 
 
