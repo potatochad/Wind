@@ -186,13 +186,6 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
 				Bar.funTime.vlog("Points left")
 			}
         )
-		LazyItem(
-            icon = { Icon.Whatshot() },
-            title = "Locking Properties",
-            onClick = {
-				goTo("SettingsAPKLockMeOut")
-			}
-        )
 		
 }
 
