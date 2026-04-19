@@ -128,6 +128,7 @@ import com.productivity.wind.Imports.UI_visible.*
 import com.productivity.wind.Imports.Utils.*
 
 
+
 val Str.notEmpty: Bool
     get() = this.isNotEmpty()
 
@@ -241,6 +242,31 @@ fun Str.wordsFit(
     } else {
         line
     }
+}
+
+
+
+@Composable
+fun rTextMeasurer(): TextMeasurer {
+    return rememberTextMeasurer()
+}
+fun TextMeasurer.w(text: UIStr): Float {
+    return measure(
+        text = text,
+        style = text.textStyle
+    ).size.width.toFloat()
+}
+fun TextMeasurer.h(text: UIStr): Float {
+    return measure(
+        text = text,
+        style = text.textStyle
+    ).size.height.toFloat()
+}
+fun TextMeasurer.s(text: UIStr): IntSize {
+    return measure(
+        text = text,
+        style = text.textStyle
+    ).size
 }
 
 
