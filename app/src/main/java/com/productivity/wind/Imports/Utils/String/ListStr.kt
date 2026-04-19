@@ -146,10 +146,10 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
             if (line.empty || 
                     measure2(line + " " + it) <= maxWidthPx
                ) {
-                line.add(it)
+                line = line.addWord(it)
             } else {
                 lines2.add(UIStr(line))
-                line.add(it)
+                line = line.addWord(it)
             }
         }
         if (line.notEmpty) lines2.add(UIStr(line))
