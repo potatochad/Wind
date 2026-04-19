@@ -130,28 +130,7 @@ import com.productivity.wind.Imports.Utils.*
 
 
 
-@Composable
-fun rTextMeasurer(): TextMeasurer {
-    return rememberTextMeasurer()
-}
-fun TextMeasurer.w(text: UIStr): Float {
-    return measure(
-        text = text,
-        style = text.textStyle
-    ).size.width.toFloat()
-}
-fun TextMeasurer.h(text: UIStr): Float {
-    return measure(
-        text = text,
-        style = text.textStyle
-    ).size.height.toFloat()
-}
-fun TextMeasurer.s(text: UIStr): IntSize {
-    return measure(
-        text = text,
-        style = text.textStyle
-    ).size
-}
+
 
 
 
