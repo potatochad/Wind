@@ -142,10 +142,11 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         val lines2 = mList<UIStr>()
         var line = ""
         
-        Regex("\\S+|\\s+").findAll(str).forEach {
+        str.splitStr {
             it.blog("the word")
             line.blog("the line")
             lines2.blog("the list")
+            maxWidthPx.blog("maxwidth")
             if (line.empty || 
                     measure2(line) <= maxWidthPx
                ) {
