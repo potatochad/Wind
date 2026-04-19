@@ -142,7 +142,7 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         val lines2 = mList<UIStr>()
         var line = ""
         
-        str.split(Regex("\\s+")).forEach {
+        str.split(" ").forEach {
             it.blog("the word")
             line.blog("the line")
             lines2.blog("the list")
