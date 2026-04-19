@@ -185,8 +185,9 @@ fun Str.add(word: Str): Str {
     return if (this.empty) word else "$this $word"
 }
 
-fun Str.safeSplit(delim: Str, action: DoStr) {
+fun Str.words(action: DoStr) {
     var i = 0
+    var delim = " "
     while (i < this.length) {
         val next = this.indexOf(delim, i)
         if (next == -1) {
