@@ -175,10 +175,25 @@ fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
 fun Any.getStyle(): StrStyle {
     return toUIStr(this).spanStyles.firstOrNull()?.item ?: StrStyle()
 }
-val UIStr.style: StrStyle
+val UIStr.textStyle: TextStyle
+    get() {
+        val span = spanStyles.firstOrNull()?.item ?: SpanStyle()
+
+        return TextStyle(
+            color = span.color,
+            fontSize = span.fontSize,
+            fontWeight = span.fontWeight,
+            fontStyle = span.fontStyle,
+            fontFamily = span.fontFamily,
+            letterSpacing = span.letterSpacing,
+            background = span.background,
+            textDecoration = span.textDecoration
+        )
+    }
+val UIStr.strStyle: StrStyle
     get() = spanStyles.firstOrNull()?.item ?: StrStyle()
 
-fun UIStr.style(x: StrStyle): UIStr {
+fun UIStr.strStyle(x: StrStyle): UIStr {
     val plainText = this.text
 
     return makeUIStr {
