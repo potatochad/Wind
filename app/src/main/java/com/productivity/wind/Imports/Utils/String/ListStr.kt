@@ -146,7 +146,7 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
             if (line.empty || 
                     measure2(line + " " + it) <= maxWidthPx
                ) {
-                line += it
+                line.add(it)
             } else {
                 lines2.add(UIStr(line))
                 line.add(it)
