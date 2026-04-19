@@ -128,12 +128,7 @@ import com.productivity.wind.Imports.UI_visible.*
 import com.productivity.wind.Imports.Utils.*
 
 
-
-
-
-
-
-
+/*
 @Composable
 fun Any.toLines(maxWidthPx: Float): List<UIStr> {
     val measure = rTextMeasurer()
@@ -162,39 +157,38 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         result
     }
 }
+*/
 
-/*
+
 @Composable
-fun Any.toLines(): List<UIStr> {
-    var lineChars by r(0)
-    var str by r(toStr(this))
+fun Any.toLines(maxWidthPx: Float): List<UIStr> {
+    val measure = rTextMeasurer()
+    val texttstyle = LocalTextStyle.current
+    val style = texttstyle.toSpanStyle()
+    val str = toStr(this)
 
-    lineChars = charsW(str)
-
-    if (lineChars == 0) return emptyList()
-
-    
+    fun measure2(x: Str) = measure.w(UIStr(x).strStyle(style))
 
     val lines = remember(str, lineChars) {
-        val result = mList<UIStr>()
+        val lines2 = mList<UIStr>()
         var line = ""
         
-        str.safeSplit(" "){ word ->
-            if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
-                line += word
+        str.words{ word ->
+            if (line.empty || 
+                    measure2(line + " " + it) <= maxWidthPx
+               ) {
+                line += it
             } else {
-                result.add(UIStr(line))
-                line = word
+                lines2.add(UIStr(line))
+                line = it
             }
         }
-        if (line.isNotEmpty()) result.add(UIStr(line))
-        result
+        if (line.notEmpty) lines2.add(UIStr(line))
+        lines2
     }
     
     return lines
 }
-
-*/
 
 
 
