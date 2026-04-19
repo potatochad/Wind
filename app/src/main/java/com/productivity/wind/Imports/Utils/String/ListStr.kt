@@ -137,19 +137,19 @@ fun rTextMeasurer(): TextMeasurer {
 fun TextMeasurer.w(text: UIStr): Float {
     return measure(
         text = text,
-        style = text.style
-    ).size.width
+        style = text.textStyle
+    ).size.width.toFloat()
 }
 fun TextMeasurer.h(text: UIStr): Float {
     return measure(
         text = text,
-        style = text.style
-    ).size.height
+        style = text.textStyle
+    ).size.height.toFloat()
 }
 fun TextMeasurer.s(text: UIStr): IntSize {
     return measure(
         text = text,
-        style = text.style
+        style = text.textStyle
     ).size
 }
 
