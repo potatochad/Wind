@@ -213,7 +213,7 @@ fun Str.wordsFit(
     maxWidthPx: Float,
     leaveEmptySpace: Bool = no,
 ): Str {
-    val textMeasurer = r_TextMeasurer()
+    val textMeasurer = rTextMeasurer()
     val style = LocalTextStyle.current
     val words = this.trim().split(Regex("\\s+"))
 
@@ -221,9 +221,9 @@ fun Str.wordsFit(
 
     fun fits(text: Str): Bool {
         return textMeasurer.measure(
-            text = AnnotatedString(text),
+            text = UIStr(text),
             style = style
-        ).size.width <= maxWidthPx
+        ).size.width.toFloat() <= maxWidthPx
     }
 
     for (word in words) {
