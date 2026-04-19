@@ -181,24 +181,7 @@ fun String.remove(vararg targets: String): String {
 fun Str.remove(x: Str): Str {
     return this.replace(x, "")
 }
-fun Str.addWord(word: Str): Str {
-    return if (this.empty) word else "$this $word"
-}
 
-fun Str.words(action: DoStr) {
-    var i = 0
-    var delim = " "
-    while (i < this.length) {
-        val next = this.indexOf(delim, i)
-        if (next == -1) {
-            action(this.substring(i))
-            break
-        } else {
-            action(this.substring(i, next + delim.length)) // include the delimiter
-            i = next + delim.length
-        }
-    }
-}
 
 
 fun Str.takeWords(n: Int): Str{
