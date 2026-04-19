@@ -128,37 +128,6 @@ import com.productivity.wind.Imports.UI_visible.*
 import com.productivity.wind.Imports.Utils.*
 
 
-/*
-@Composable
-fun Any.toLines(maxWidthPx: Float): List<UIStr> {
-    val measure = rTextMeasurer()
-    val texttstyle = LocalTextStyle.current
-    val style = texttstyle.toSpanStyle()
-    val str = toStr(this)
-
-    return remember(str, maxWidthPx) {
-        val result = mList<UIStr>()
-        var line by m("")
-
-        str.split(" ").forEach { word ->
-            val testLine = line.add(word)
-
-            val width = measure.w(UIStr(testLine).strStyle(style))     
-
-            if (width <= maxWidthPx) {
-                line = testLine
-            } else {
-                if (line.notEmpty) result.add(UIStr(line))
-                line = word
-            }
-        }
-
-        if (line.notEmpty) result.add(UIStr(line))
-        result
-    }
-}
-*/
-
 
 @Composable
 fun Any.toLines(maxWidthPx: Float): List<UIStr> {
@@ -180,7 +149,7 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
                 line += it
             } else {
                 lines2.add(UIStr(line))
-                line = it
+                line.add(it)
             }
         }
         if (line.notEmpty) lines2.add(UIStr(line))
