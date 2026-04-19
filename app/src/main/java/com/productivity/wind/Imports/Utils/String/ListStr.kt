@@ -136,7 +136,7 @@ import com.productivity.wind.Imports.Utils.*
 
 @Composable
 fun Any.toLines(maxWidthPx: Float): List<UIStr> {
-    val textMeasurer = rTextMeasurer()
+    val measure = rTextMeasurer()
     val style = LocalTextStyle.current
     val str = toStr(this)
 
@@ -147,10 +147,7 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         str.split(" ").forEach { word ->
             val testLine = line.add(word)
 
-            val width = textMeasurer.measure(
-                text = UIStr(testLine),
-                style = style
-            ).size.width
+            val width = measure.w(UIStr(testLine).strStyle(style))     
 
             if (width <= maxWidthPx) {
                 line = testLine
