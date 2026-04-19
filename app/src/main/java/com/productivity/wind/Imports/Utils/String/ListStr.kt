@@ -137,7 +137,8 @@ import com.productivity.wind.Imports.Utils.*
 @Composable
 fun Any.toLines(maxWidthPx: Float): List<UIStr> {
     val measure = rTextMeasurer()
-    val style = LocalTextStyle.current
+    val texttstyle = LocalTextStyle.current
+    val style = style.toSpanStyle()
     val str = toStr(this)
 
     return remember(str, maxWidthPx) {
