@@ -142,8 +142,7 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         val lines2 = mList<UIStr>()
         var line = ""
         
-        str.words{
-            
+        str.split(" ").forEach {
             if (line.empty || 
                     measure2(line + " " + it) <= maxWidthPx
                ) {
