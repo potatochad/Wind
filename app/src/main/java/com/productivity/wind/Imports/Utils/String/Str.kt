@@ -191,6 +191,11 @@ fun Str.takeWords(n: Int): Str{
         .take(n)
         .joinToString(" ")
 }
+fun Str.splitStr(action: DoStr) {
+    Regex("\\S+|\\s+").findAll(this).forEach {
+        action(it.value)
+    }
+}
 
 
 @Composable
