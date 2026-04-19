@@ -163,6 +163,39 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
     }
 }
 
+/*
+@Composable
+fun Any.toLines(): List<UIStr> {
+    var lineChars by r(0)
+    var str by r(toStr(this))
+
+    lineChars = charsW(str)
+
+    if (lineChars == 0) return emptyList()
+
+    
+
+    val lines = remember(str, lineChars) {
+        val result = mList<UIStr>()
+        var line = ""
+        
+        str.safeSplit(" "){ word ->
+            if (line.isEmpty() || line.size + 1 + word.size <= lineChars) {
+                line += word
+            } else {
+                result.add(UIStr(line))
+                line = word
+            }
+        }
+        if (line.isNotEmpty()) result.add(UIStr(line))
+        result
+    }
+    
+    return lines
+}
+
+*/
+
 
 
 
