@@ -142,15 +142,15 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         val lines2 = mList<UIStr>()
         var line = ""
         
-        str.split(" ").forEach {
+        str.split(Regex("(\\s+)")).forEach {
             it.blog("the word")
             line.blog("the line")
             lines2.blog("the list")
             if (line.empty || 
-                    measure2(line + " " + it) <= maxWidthPx
+                    measure2(line) <= maxWidthPx
                ) {
                 line.blog("keep building")
-                line = if (line.empty) it else line + " " + it
+                line += it
             } else {
                 lines2.add(UIStr(line))
                 line.blog("finished, starting new")
