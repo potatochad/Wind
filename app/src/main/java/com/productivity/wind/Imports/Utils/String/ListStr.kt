@@ -158,6 +158,7 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         if (line.notEmpty) lines2.add(UIStr(line))
         lines2
     }
+    lines.blog("finished result")
     
     return lines
 }
