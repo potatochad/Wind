@@ -130,13 +130,9 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 
-fun encrypt(text: Str, key: Int): Str {
-    return text.map { (it.code + key).toChar() }.joinToString("")
-}
+fun encrypt(text: Str, key: Int) = text.map { (it.code + key).toChar() }.joinToString("")           
+fun decrypt(text: Str, key: Int) = text.map { (it.code - key).toChar() }.joinToString("")
 
-fun decrypt(text: Str, key: Int): Str {
-    return text.map { (it.code - key).toChar() }.joinToString("")
-}
 
 
 
