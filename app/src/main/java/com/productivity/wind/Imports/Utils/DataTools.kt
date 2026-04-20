@@ -134,7 +134,38 @@ fun encrypt(text: Str, key: Int) = text.map { (it.code + key).toChar() }.joinToS
 fun decrypt(text: Str, key: Int) = text.map { (it.code - key).toChar() }.joinToString("")
 
 
-object AppsData {
+object AppData {
+	val storageFile = "Data"
+
+	val it: Str
+    	get() {
+           val prefs = App.getSharedPreferences(storageFile, Context.MODE_PRIVATE)
+
+           val json = JSONObject()
+
+           for ((key, value) in prefs.all) {
+               json.put(key, value)
+           }
+
+           return json.toString()
+    	}
+	val prefs: SharedPreferences
+        get() = App.getSharedPreferences(storageFile, Context.MODE_PRIVATE)
+	fun deleteAll() { prefs.edit().clear().commit() }
+
+	@Suppress("UNCHECKED_CAST")
+	fun <T> getX(key: String, default: T): T {
+		return when (default) {
+			is Int -> prefs.getInt(key, default) as T
+			is Boolean -> prefs.getBoolean(key, default) as T
+			is Float -> prefs.getFloat(key, default) as T
+			is Long -> prefs.getLong(key, default) as T
+			is String -> (prefs.getString(key, default) ?: default) as T
+			else -> default
+		}
+	}
+
+	
 	
 }
 
