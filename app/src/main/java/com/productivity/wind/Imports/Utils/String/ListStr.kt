@@ -144,7 +144,7 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         
         str.splitStr {
             if (line.empty || 
-                    measure2(line + it) <= maxWidthPx - 50
+                    measure2(line + it) < maxWidthPx - 50
                ) {
                 line += it
             } else {
