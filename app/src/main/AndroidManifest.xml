@@ -95,7 +95,7 @@
 
         <service
             android:name=".DummyService1"
-            android:label="Lock Me Out"
+            android:label="DummyService1"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
 
@@ -111,7 +111,7 @@
 
         <service
             android:name=".DummyService2"
-            android:label="Lock Me Out"
+            android:label="DummyService2"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
 
@@ -127,7 +127,7 @@
 
         <service
             android:name=".DummyService3"
-            android:label="Lock Me Out"
+            android:label="DummyService3"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
 
@@ -143,7 +143,7 @@
 
         <service
             android:name=".DummyService4"
-            android:label="Lock Me Out"
+            android:label="DummyService4"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
 
@@ -159,7 +159,7 @@
 
         <service
             android:name=".DummyService5"
-            android:label="Lock Me Out"
+            android:label="DummyService5"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
 
@@ -175,7 +175,7 @@
 
         <service
             android:name=".DummyService6"
-            android:label="Lock Me Out"
+            android:label="DummyService6"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
 
@@ -190,7 +190,7 @@
 
         <service
             android:name=".DummyService7"
-            android:label="Lock Me Out"
+            android:label="DummyService7"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
 
@@ -205,7 +205,7 @@
 
         <service
             android:name=".DummyService8"
-            android:label="Lock Me Out"
+            android:label="DummyService8"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
 
@@ -219,7 +219,161 @@
         </service>
         <service
             android:name=".DummyService9"
-            android:label="Lock Me Out"
+            android:label="DummyService9"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService10"
+            android:label="DummyService10"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService11"
+            android:label="DummyService11"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService12"
+            android:label="DummyService12"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService13"
+            android:label="DummyService13"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService14"
+            android:label="DummyService14"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService15"
+            android:label="DummyService15"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService16"
+            android:label="DummyService16"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService17"
+            android:label="DummyService17"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService18"
+            android:label="DummyService18"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService19"
+            android:label="DummyService19"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_dummyconfig" />
+        </service>
+        <service
+            android:name=".DummyService20"
+            android:label="DummyService20"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="false">
 
