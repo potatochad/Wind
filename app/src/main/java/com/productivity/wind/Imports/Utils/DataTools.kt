@@ -170,7 +170,7 @@ object AppData {
 	fun <T> putX(id: Str, x: T) {
         val e = prefs.edit()
 
-        when (value) {
+        when (x) {
             is Int -> e.putInt(id, x)
             is Bool -> e.putBoolean(id, x)
             is Float -> e.putFloat(id, x)
@@ -179,7 +179,7 @@ object AppData {
             else -> return
         }
 
-        editor.apply()
+        e.apply()
 	}
 
 	
