@@ -134,6 +134,10 @@ fun encrypt(text: Str, key: Int) = text.map { (it.code + key).toChar() }.joinToS
 fun decrypt(text: Str, key: Int) = text.map { (it.code - key).toChar() }.joinToString("")
 
 
+object AppsData {
+	
+}
+
 
 
 fun getData(File: Str = "Data"): SharedPreferences {
