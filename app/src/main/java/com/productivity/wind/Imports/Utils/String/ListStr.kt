@@ -143,16 +143,24 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         var line = ""
         
         str.splitStr {
-            if (line.empty || 
-                    measure2(line + it) < maxWidthPx - 250
-               ) {
-                line += it
-            } else {
-                measure2(line + it).blog("line SIZE")
-                (maxWidthPx - 250).blog("width box")
+            var isLineTooBig by m(
+                measure2(line) < maxWidthPx
+            )
+            isLineTooBig.blog("isLineTooBig")
+
+            var isFutureLineTooBig by m(
+                measure2(line + it) < maxWidthPx
+            )
+            isFutureLineTooBig.blog("isFutureLineTooBig")
+            
+            if (isFutureLineTooBig || !isLineTooBig){
                 lines2.add(UIStr(line))
-                line.blog("new")
+                line.blog("done")
                 line = it
+            }
+            if (!isFutureLineTooBig || !isLineTooBig){
+                line.blog("building")
+                line += it
             }
         }
         if (line.notEmpty) lines2.add(UIStr(line))
