@@ -135,6 +135,7 @@ fun encrypt(text: Str, key: Int) = text.map { (it.code + key).toChar() }.joinToS
 fun decrypt(text: Str, key: Int) = text.map { (it.code - key).toChar() }.joinToString("")
 
 
+
 object AppData {
 	val storageFile = "Data"
 
@@ -152,18 +153,33 @@ object AppData {
     	}
 	val prefs: SharedPreferences
         get() = App.getSharedPreferences(storageFile, Context.MODE_PRIVATE)
+		
 	fun deleteAll() { prefs.edit().clear().commit() }
 
 	@Suppress("UNCHECKED_CAST")
-	fun <T> getX(key: String, default: T): T {
+	fun <T> getX(id: String, default: T): T {
 		return when (default) {
-			is Int -> prefs.getInt(key, default) as T
-			is Boolean -> prefs.getBoolean(key, default) as T
-			is Float -> prefs.getFloat(key, default) as T
-			is Long -> prefs.getLong(key, default) as T
-			is String -> (prefs.getString(key, default) ?: default) as T
+			is Int -> prefs.getInt(id, default) as T
+			is Bool -> prefs.getBoolean(id, default) as T
+			is Float -> prefs.getFloat(id, default) as T
+			is Long -> prefs.getLong(id, default) as T
+			is Str -> (prefs.getString(id, default) ?: default) as T
 			else -> default
 		}
+	}
+	fun <T> putX(id: Str, x: T) {
+        val e = prefs.edit()
+
+        when (value) {
+            is Int -> e.putInt(id, x)
+            is Bool -> e.putBoolean(id, x)
+            is Float -> e.putFloat(id, x)
+            is Long -> e.putLong(id, x)
+            is Str -> e.putString(id, x)
+            else -> return
+        }
+
+        editor.apply()
 	}
 
 	
