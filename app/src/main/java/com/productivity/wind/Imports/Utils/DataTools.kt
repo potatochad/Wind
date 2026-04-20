@@ -372,6 +372,12 @@ fun Restore(show: mBool) {
             editor.commit() 
 			Vlog("Reload app to take effect")
 
+			val json = getData().basicValue("copyTsk", "")
+
+			json.blog("copy task data")
+
+			wait(30)
+
 			closeApp() 
         }
     }
