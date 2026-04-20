@@ -143,14 +143,9 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         var line = ""
         
         str.splitStr {
-            it.blog("the word")
-            line.blog("the line")
-            lines2.blog("the list")
-            maxWidthPx.blog("maxwidth")
             if (line.empty || 
-                    measure2(line) <= maxWidthPx - 100
+                    measure2(line) <= maxWidthPx - 150
                ) {
-                line.blog("keep building")
                 line += it
             } else {
                 lines2.add(UIStr(line))
