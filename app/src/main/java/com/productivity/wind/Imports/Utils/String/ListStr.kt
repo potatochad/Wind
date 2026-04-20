@@ -144,10 +144,12 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         
         str.splitStr {
             if (line.empty || 
-                    measure2(line) <= maxWidthPx - 200
+                    measure2(line) <= maxWidthPx - 225
                ) {
                 line += it
             } else {
+                measure2(line).blog("finishedLineSize")
+                (maxWidthPx - 225).blog("the width of container")
                 lines2.add(UIStr(line))
                 line.blog("finished, starting new")
                 line = it
