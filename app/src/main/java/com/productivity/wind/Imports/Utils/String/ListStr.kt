@@ -143,15 +143,15 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         var line = ""
         
         str.splitStr {
-            if (line.empty || 
-                    measure2(line) <= maxWidthPx - 225
-               ) {
-                line += it
+            val testLine = if (line.isEmpty()) it else "$line $it"
+
+            if (measure2(testLine) <= maxWidthPx) {
+                line = testLine
             } else {
                 measure2(line).blog("finishedLineSize")
-                (maxWidthPx - 225).blog("the width of container")
+                maxWidthPx.blog("the width of container")
+
                 lines2.add(UIStr(line))
-                line.blog("finished, starting new")
                 line = it
             }
         }
