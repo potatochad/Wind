@@ -188,39 +188,6 @@ object AppData {
 
 
 
-fun getData(File: Str = "Data"): SharedPreferences {
-	return App.getSharedPreferences(File, Context.MODE_PRIVATE)
-}
-fun clearAllData(File: String = "Data") {
-    val prefs = App.getSharedPreferences(File, Context.MODE_PRIVATE)
-    prefs.edit().clear().commit()  // deletes everything
-}
-
-@Suppress("UNCHECKED_CAST")
-fun <T> SharedPreferences.basicValue(key: Str, default: T): T {
-    return when (default) {
-        is Int -> getInt(key, default) as T
-        is Bool -> getBoolean(key, default) as T
-        is Float -> getFloat(key, default) as T
-        is Long -> getLong(key, default) as T
-        is Str -> (getString(key, default) ?: default) as T
-        else -> default
-    }
-}
-
-fun <T> saveBasic(key: Str, x: T, File: Str = "Data") {
-    val Data = getData(File).edit()
-    when (x) {
-        is Int -> Data.putInt(key, x)
-        is Bool -> Data.putBoolean(key, x)
-        is Float -> Data.putFloat(key, x)
-        is Long -> Data.putLong(key, x)
-        is Str -> Data.putString(key, x)
-        else -> return
-    }
-    Data.commit()
-}
-
 fun autoId(): Str {
     val e = Throwable().stackTrace[2]
     return "${e.fileName}:${e.lineNumber}"
@@ -237,7 +204,7 @@ inline fun <reified T> sList(
 
 
     Try("error with list saving") {
-        val json = getData().basicValue(id, "")
+        val json = AppData.getX(id, "")
         if (json.isNotEmpty()) {
 			val loaded = Json.decodeFromString<List<T>>(json)
 			list.addAll(loaded)
@@ -252,7 +219,7 @@ inline fun <reified T> sList(
 				if (!restoring) {
 					val jsonOut = Json.encodeToString(list.toList())
 				
-					saveBasic(id, jsonOut)
+					AppData.putX(id, jsonOut)
 				}
 			}
         }
@@ -278,10 +245,10 @@ fun <T> s(default: T, id: Str = autoId()): m_<T> {
     var x = m(default) 
 
 	Try("<fun s >, id: $id") {
-		x = m(getData().basicValue(id, default))
+		x = m(AppData.getX(id, default))
 
 		x.onChange {
-			saveBasic(id, x.it)
+			AppData.putX(id, x.it)
 		}
 	}
 	
@@ -350,7 +317,7 @@ fun Backup(show: mBool) {
         App.contentResolver.openOutputStream(uri)
             ?.bufferedWriter()
             ?.use { File ->
-                getData().all.forEach { (key, value) ->
+                AppData.prefs.all.forEach { (key, value) ->
                     val type = when (value) {
                         is Int -> "Int"
                         is Bool -> "Boolean"
@@ -385,7 +352,7 @@ fun Restore(show: mBool) {
         uri ?: return@rememberLauncherForActivityResult
 
         Do {
-            val editor = getData().edit()
+            val editor = AppData.prefs.edit()
 
             App.contentResolver.openInputStream(uri)
                 ?.bufferedReader()
@@ -420,7 +387,7 @@ fun Restore(show: mBool) {
             editor.commit() 
 			Vlog("Reload app to take effect")
 
-			val json = getData().basicValue("copyTsk", "")
+			val json = AppData.getX("copyTsk", "")
 
 			json.blog("copy task data")
 
