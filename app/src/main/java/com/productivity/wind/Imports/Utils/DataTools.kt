@@ -205,22 +205,19 @@ inline fun <reified T> sList(
 
     Try("error with list saving") {
         val json = AppData.getX(id, "")
-        if (json.isNotEmpty()) {
+        if (json.notEmpty) {
 			val loaded = Json.decodeFromString<List<T>>(json)
 			list.addAll(loaded)
 		} else {
-			Vlog("json is empty: $id")
+			log("json is empty: $id")
 		}
 
 
         Each(1000){
-			//DONT use noLag, DONT tie to lifecycle
-			NoLag {
-				if (!restoring) {
-					val jsonOut = Json.encodeToString(list.toList())
+			if (!restoring) {
+				val jsonOut = Json.encodeToString(list.toList())
 				
-					AppData.putX(id, jsonOut)
-				}
+				AppData.putX(id, jsonOut)
 			}
         }
     }
@@ -259,12 +256,14 @@ fun <T> s(default: T, id: Str = autoId()): m_<T> {
 
 fun <T> m_<T>.onChange(callback: Wait_<T>) {
     Do {
-        snapshotFlow { this@onChange.it }
-            .collectLatest {
-                Do {
-					callback(it)
-				}
-            }
+        snapshotFlow { 
+			this@onChange.it
+		}
+		.collectLatest {
+			Do {
+				callback(it)
+			}
+        }
     }
 }
 
@@ -385,13 +384,7 @@ fun Restore(show: mBool) {
 			restoring = yes
 
             editor.commit() 
-			Vlog("Reload app to take effect")
-
-			val json = AppData.getX("copyTsk", "")
-
-			json.blog("copy task data")
-
-			wait(30)
+			Vlog("Reloading App...")
 
 			closeApp() 
         }
