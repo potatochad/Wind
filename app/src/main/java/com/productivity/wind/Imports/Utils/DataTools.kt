@@ -156,6 +156,11 @@ object AppData {
 		
 	fun deleteAll() { prefs.edit().clear().commit() }
 
+
+	private val json11 = Json { ignoreUnknownKeys = yes }
+	inline fun <reified T> toJson(x: T) = json11.encodeToString(x)
+	inline fun <reified T> decodeJson(x: Str) = json11.decodeFromString<T>(x)
+
 	@Suppress("UNCHECKED_CAST")
 	fun <T> getX(id: String, default: T): T {
 		return when (default) {
