@@ -144,26 +144,6 @@ fun RunJs(script: Str): Any? {
 
 
 
-
-
-
-
-
-
-
-
-fun runOnceEver(action: Wait) {
-    val key = autoId()
-    if (!getData("RunOnceEver").getBoolean(key, no)) {
-        Do{
-          action()
-        }
-        getData("RunOnceEver").edit().putBoolean(key, yes).apply()
-    }
-}
-
-
-
 @Composable
 fun OnceEach(
     s: Any = 1000,
