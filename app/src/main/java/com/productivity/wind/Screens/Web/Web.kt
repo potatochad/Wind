@@ -37,10 +37,58 @@ import com.productivity.wind.Screens.*
 import com.productivity.wind.Imports.Utils.Browser.*
 
 
+
+@Composable
+fun QuickAccessItem(
+    title: String,
+    url: String,
+    icon: ImageVector,
+    onClick: (String) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .size(90.dp)
+            .padding(6.dp)
+            .clickable { onClick(url) },
+        shape = RoundedCornerShape(20.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = title,
+                modifier = Modifier.size(32.dp)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = title,
+                fontSize = 12.sp,
+                maxLines = 1
+            )
+        }
+    }
+}
+
+
+
 @Composable
 fun WebHome(){
 	var ctx = LocalContext.current
     val web = r { WebController(ctx) }
+	val items = listOf(
+        Triple("YouTube", "https://youtube.com", Icons.Default.PlayArrow),
+        Triple("Google", "https://google.com", Icons.Default.Search),
+        Triple("Twitter", "https://twitter.com", Icons.Default.Share),
+        Triple("GitHub", "https://github.com", Icons.Default.Code)
+    )
 	
     LazyScreen(
         top = {
@@ -63,34 +111,31 @@ fun WebHome(){
 
         // Quick access cards (like Google shortcuts)
 		Text("Recent".size(12.sp).gray(), modifier = Mod.space(start = 8))
+		
+		
+		
 		LazzyRow(Mod.centerX.space(5)) {
-			LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-				item {
-					LazyCard(
-						modCard = Mod.s(80).click{},
-					) {
-						Text("Gmail")
-					}
-				}
-				item {
-					LazyCard(
-						modCard = Mod.s(80).click{
-							Bar.Url = "youtube.com"
-							goTo("Web")
-						},
-					) {
-						Text("Youtube")
-					}
-				}
-				item {
-					LazyCard(
-						modCard = Mod.s(80).click{},
-					) {
-						Text("Maps")
-					}
-				}
+			LazyVerticalGrid(
+        columns = GridCells.Fixed(4),
+        modifier = Modifier.padding(10.dp)
+    ) {
+        items(items) { item ->
+
+            QuickAccessItem(
+                title = item.first,
+                url = item.second,
+                icon = item.third
+            ) { clickedUrl ->
+                Bar.Url = clickedUrl
+                goTo("Web")
+            }
+        }
 			}
 		}
+
+
+
+		
     }
 }
 
