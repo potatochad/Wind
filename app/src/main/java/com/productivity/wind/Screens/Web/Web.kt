@@ -46,18 +46,18 @@ fun QuickItem(
 ) {
     LazyCard(
         modCard = Mod
+		    .space(5,0)
             .click {
                 Bar.Url = url
                 goTo("Web")
             }
     ) {
         LazzyColumn(Mod.centerX) {
-
-            Icon(icon = icon, size = 15)
+            Icon(icon = icon, size = 20)
 
             move(8)
 
-            Text(title.size(10.sp))
+            Text(title.size(11.sp))
         }
     }
 }
