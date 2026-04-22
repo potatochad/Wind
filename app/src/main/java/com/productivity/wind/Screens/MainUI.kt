@@ -56,7 +56,7 @@ fun Main() {
 			if (!searching) {
 				AppItem.Menu()
 				
-				// Icon.Chill { goTo("Web") }
+				Icon.Chill { goTo("Web") }
 
 				Icon.Reload{
 					// showOrderNotification(11)
