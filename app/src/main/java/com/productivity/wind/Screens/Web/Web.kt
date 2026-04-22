@@ -40,9 +40,9 @@ import com.productivity.wind.Imports.Utils.Browser.*
 
 @Composable
 fun QuickItem(
-    title: String,
-    url: String,
-    icon: ImageVector
+    title: Str,
+    url: Str,
+    icon: icon,
 ) {
     LazyCard(
         modCard = Mod
@@ -52,9 +52,7 @@ fun QuickItem(
                 goTo("Web")
             }
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        LazzyColumn(Mod.centerX) {
 
             Icon(
                 icon = icon,
