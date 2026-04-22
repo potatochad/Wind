@@ -110,7 +110,8 @@ object WebProps {
 
 	@Composable
 	fun TopBarInput(
-		web: WebController
+		web: WebController,
+		Do: DoStr = {},
 	) {
 		var Input1 by r(Bar.Url)
 		TinyInput(
@@ -119,8 +120,13 @@ object WebProps {
 			isInt = no, 
 			maxLetters = 400,
 			onAction = {
-				Bar.Url = Input1
-				web.url(Bar.Url)
+				if (Input1.empty){
+					Do(Input1)
+				} else {
+					Bar.Url = Input1
+					web.url(Bar.Url)
+					Do(Input1)
+				}
 			},
 		){       
 			Input1 = it
