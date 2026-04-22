@@ -54,12 +54,9 @@ fun QuickItem(
     ) {
         LazzyColumn(Mod.centerX) {
 
-            Icon(
-                icon = icon,
-                size = 30
-            )
+            Icon(icon = icon, size = 30)
 
-            Spacer(8)
+            move(8)
 
             Text(title)
         }
