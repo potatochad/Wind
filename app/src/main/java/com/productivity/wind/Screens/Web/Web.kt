@@ -39,40 +39,31 @@ import com.productivity.wind.Imports.Utils.Browser.*
 
 
 @Composable
-fun QuickAccessItem(
+fun QuickItem(
     title: String,
     url: String,
-    icon: ImageVector,
-    onClick: (String) -> Unit
+    icon: ImageVector
 ) {
-    Card(
-        modifier = Modifier
-            .size(90.dp)
-            .padding(6.dp)
-            .clickable { onClick(url) },
-        shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+    LazyCard(
+        modCard = Mod
+            .s(90)
+            .click {
+                Bar.Url = url
+                goTo("Web")
+            }
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Icon(
-                imageVector = icon,
-                contentDescription = title,
-                modifier = Modifier.size(32.dp)
+                icon = icon,
+                size = 30
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(8)
 
-            Text(
-                text = title,
-                fontSize = 12.sp,
-                maxLines = 1
-            )
+            Text(title)
         }
     }
 }
@@ -83,12 +74,6 @@ fun QuickAccessItem(
 fun WebHome(){
 	var ctx = LocalContext.current
     val web = r { WebController(ctx) }
-	val items = listOf(
-        Triple("YouTube", "https://youtube.com", Icons.Default.PlayArrow),
-        Triple("Google", "https://google.com", Icons.Default.Search),
-        Triple("Twitter", "https://twitter.com", Icons.Default.Share),
-        Triple("GitHub", "https://github.com", Icons.Default.Code)
-    )
 	
     LazyScreen(
         top = {
@@ -114,23 +99,11 @@ fun WebHome(){
 		
 		
 		
-		LazzyRow(Mod.centerX.space(5)) {
-			LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
-        modifier = Modifier.padding(10.dp)
-    ) {
-        items(items) { item ->
-
-            QuickAccessItem(
-                title = item.first,
-                url = item.second,
-                icon = item.third
-            ) { clickedUrl ->
-                Bar.Url = clickedUrl
-                goTo("Web")
-            }
-        }
-			}
+		LazzyRow(Mod.centerX.space(5).Hscroll()) {
+            QuickItem("YouTube", "https://youtube.com", Icons.Default.PlayArrow)
+            QuickItem("Google", "https://google.com", Icons.Default.Search)
+            QuickItem("GitHub", "https://github.com", Icons.Default.Code)
+            QuickItem("X", "https://x.com", Icons.Default.Share)
 		}
 
 
