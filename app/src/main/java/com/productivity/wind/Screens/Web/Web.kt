@@ -125,7 +125,9 @@ fun Web(){
 
     LazyScreen(
         top = {
-			WebProps.TopBarInput(web)
+			WebProps.TopBarInput(web){
+				if (it.empty) goTo("WebHome")
+			}
             End {
                 Row{
                     Icon.Reload{ 
