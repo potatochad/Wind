@@ -50,7 +50,13 @@ fun QuickItem(
             .click {
                 Bar.Url = url
                 goTo("Web")
-            }
+            },
+		modUI = Mod.space(
+			start = 12,
+			end = 12,
+			bottom = 4,
+			top = 8,
+		),
     ) {
         LazzyColumn(Mod.centerX) {
             Icon(icon = icon, size = 20)
