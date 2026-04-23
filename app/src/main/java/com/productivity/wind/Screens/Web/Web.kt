@@ -100,7 +100,7 @@ fun WebHome(){
 		
 		
 		LazzyRow(Mod.centerX.space(5).Hscroll()) {
-            QuickItem("YouTube", "https://youtube.com", Icons.Default.PlayArrow)
+            QuickItem("My First Million", "www.mfmpod.com", Icons.Default.PlayArrow)
             QuickItem("Google", "https://google.com", Icons.Default.Search)
             QuickItem("GitHub", "https://github.com", Icons.Default.Code)
             QuickItem("X", "https://x.com", Icons.Default.Share)
