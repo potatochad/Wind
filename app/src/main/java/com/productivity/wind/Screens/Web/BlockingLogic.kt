@@ -49,8 +49,8 @@ fun BlockingLogic(web: WebController){
 		Bar.Url = url ?: "https://www.google.com"
 
 		if (
-			Bar.Url.contains("https://www.melrobbins.com/podcast/") || 
-			Bar.Url.contains("www.mfmpod.com")        
+			Bar.Url.contains("melrobbins.com/podcast/") || 
+			Bar.Url.contains("mfmpod.com")        
 		} else {
 			Block()
 		}
