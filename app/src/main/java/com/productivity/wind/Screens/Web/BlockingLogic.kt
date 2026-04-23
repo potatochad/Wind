@@ -48,7 +48,9 @@ fun BlockingLogic(web: WebController){
 	web.doUpdateVisitedHistory { url, isReload ->
 		Bar.Url = url ?: "https://www.google.com"
 
-		if (Bar.Url.contains("https://www.melrobbins.com/podcast/") || www.mfmpod.com){           
+		if (
+			Bar.Url.contains("https://www.melrobbins.com/podcast/") || 
+			Bar.Url.contains("www.mfmpod.com")        
 		} else {
 			Block()
 		}
