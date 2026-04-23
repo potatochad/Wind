@@ -44,6 +44,19 @@ fun BlockingLogic(web: WebController){
 		Bar.Url = "google.com"
 	}
 
+
+	web.doUpdateVisitedHistory { url, isReload ->
+		Bar.Url = url ?: "https://www.google.com"
+
+		if (Bar.Url.contains("https://www.melrobbins.com/podcast/") || www.mfmpod.com){           
+		} else {
+			Block()
+		}
+	}
+
+
+	/*
+
 	web.doUpdateVisitedHistory { url, isReload ->
 		Bar.Url = url ?: "https://www.google.com"
 
@@ -71,6 +84,7 @@ fun BlockingLogic(web: WebController){
 		
 		return@shouldInterceptRequest null
 	}
+	*/
 }
 
 
