@@ -133,7 +133,6 @@ typealias UIStrBuilder = AnnotatedString.Builder
 typealias StrStyle = SpanStyle
 
 
-
 val UIStr.size get() = this.text.size
 fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.fromTo(start, end)
 
@@ -193,34 +192,34 @@ fun UIStr.strStyle(x: StrStyle): UIStr = makeUIStr {
 
 
 
-fun Str.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (toUIStr(this).style.update()))
-fun UIStr.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (toUIStr(this).style.update()))
+fun Str.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (toUIStr(this).style.fun1()))
+fun UIStr.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (toUIStr(this).style.fun1()))
 
-fun Str.size(x: Int) = txt { copy(fontSize = x.sp) }
-fun Str.size(x: Float) = txt { copy(fontSize = x.sp) }
-fun Str.size(x: TextUnit) = txt { copy(fontSize = x) }
-fun Str.bold() = txt { copy(fontWeight = FontWeight.Bold) }
-fun Str.color(x: Color) = txt { copy(color = x) }
-fun Str.gold() = txt { copy(color = gold) }
-fun Str.green() = txt { copy(color = green) }
-fun Str.red() = txt { copy(color = red) }
-fun Str.white() = txt { copy(color = white) }
-fun Str.black() = txt { copy(color = black) }
-fun Str.darkGray() = txt { copy(color = darkGray) }
-fun Str.gray() = txt { copy(color = gray) }
+fun Str.size(x: Int) = sty { copy(fontSize = x.sp) }
+fun Str.size(x: Float) = sty { copy(fontSize = x.sp) }
+fun Str.size(x: TextUnit) = sty { copy(fontSize = x) }
+fun Str.bold() = sty { copy(fontWeight = FontWeight.Bold) }
+fun Str.color(x: Color) = sty { copy(color = x) }
+fun Str.gold() = sty { copy(color = gold) }
+fun Str.green() = sty { copy(color = green) }
+fun Str.red() = sty { copy(color = red) }
+fun Str.white() = sty { copy(color = white) }
+fun Str.black() = sty { copy(color = black) }
+fun Str.darkGray() = sty { copy(color = darkGray) }
+fun Str.gray() = sty { copy(color = gray) }
 
-fun UIStr.size(x: Int) = txt { copy(fontSize = x.sp) }
-fun UIStr.size(x: Float) = txt { copy(fontSize = x.sp) }
-fun UIStr.size(x: TextUnit) = txt { copy(fontSize = x) }
-fun UIStr.bold() = txt { copy(fontWeight = FontWeight.Bold) }
-fun UIStr.color(x: Color) = txt { copy(color = x) }
-fun UIStr.gold() = txt { copy(color = gold) }
-fun UIStr.green() = txt { copy(color = green) }
-fun UIStr.red() = txt { copy(color = red) }
-fun UIStr.white() = txt { copy(color = white) }
-fun UIStr.black() = txt { copy(color = black) }
-fun UIStr.darkGray() = txt { copy(color = darkGray) }
-fun UIStr.gray() = txt { copy(color = gray) }
+fun UIStr.size(x: Int) = sty { copy(fontSize = x.sp) }
+fun UIStr.size(x: Float) = sty { copy(fontSize = x.sp) }
+fun UIStr.size(x: TextUnit) = sty { copy(fontSize = x) }
+fun UIStr.bold() = sty { copy(fontWeight = FontWeight.Bold) }
+fun UIStr.color(x: Color) = sty { copy(color = x) }
+fun UIStr.gold() = sty { copy(color = gold) }
+fun UIStr.green() = sty { copy(color = green) }
+fun UIStr.red() = sty { copy(color = red) }
+fun UIStr.white() = sty { copy(color = white) }
+fun UIStr.black() = sty { copy(color = black) }
+fun UIStr.darkGray() = sty { copy(color = darkGray) }
+fun UIStr.gray() = sty { copy(color = gray) }
 
 
 
