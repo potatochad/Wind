@@ -178,43 +178,49 @@ val UIStr.textStyle: TextStyle
     get() {
         val s = this.style
 
-        val span = SpanStyle(
-            color = s.color,
-            brush = s.brush,
-            alpha = s.alpha,
-            fontSize = s.fontSize,
-            fontWeight = s.fontWeight,
-            fontStyle = s.fontStyle,
-            fontSynthesis = s.fontSynthesis,
-            fontFamily = s.fontFamily,
-            fontFeatureSettings = s.fontFeatureSettings,
-            letterSpacing = s.letterSpacing,
-            baselineShift = s.baselineShift,
-            textGeometricTransform = s.textGeometricTransform,
-            localeList = s.localeList,
-            background = s.background,
-            textDecoration = s.textDecoration,
-            shadow = s.shadow,
-            drawStyle = s.drawStyle
-        )
-
-        val paragraph = ParagraphStyle(
-            textAlign = s.textAlign,
-            textDirection = s.textDirection,
-            lineHeight = s.lineHeight,
-            textIndent = s.textIndent,
-            lineHeightStyle = s.lineHeightStyle,
-            lineBreak = s.lineBreak,
-            hyphens = s.hyphens,
-            textMotion = s.textMotion
-        )
 
         return TextStyle(
-            spanStyle = span,
-            paragraphStyle = paragraph,
-            platformStyle = s.platformStyle
+            spanStyle =
+                SpanStyle(
+                    brush = s.brush,
+                    alpha = s.alpha,
+                    fontSize = s.fontSize,
+                    fontWeight = s.fontWeight,
+                    fontStyle = s.fontStyle,
+                    fontSynthesis = s.fontSynthesis,
+                    fontFamily = s.fontFamily,
+                    fontFeatureSettings = s fontFeatureSettings,
+                    letterSpacing = s.letterSpacing,
+                    baselineShift = s.baselineShift,
+                    textGeometricTransform = s.textGeometricTransform,
+                    localeList = s.localeList,
+                    background = s.background,
+                    textDecoration = s.textDecoration,
+                    shadow = s.shadow,
+                    /*
+                    platformStyle = s.spanStyle,
+                    drawStyle = drawStyle,
+                    */
+                ),
+            /*
+            paragraphStyle =
+                ParagraphStyle(
+                    textAlign = textAlign,
+                    textDirection = textDirection,
+                    lineHeight = lineHeight,
+                    textIndent = textIndent,
+                    platformStyle = platformStyle?.paragraphStyle,
+                    lineHeightStyle = lineHeightStyle,
+                    lineBreak = lineBreak,
+                    hyphens = hyphens,
+                    textMotion = textMotion,
+                ),
+            platformStyle = platformStyle,
+            */
         )
     }
+
+        
 fun UIStr.strStyle(x: StrStyle): UIStr = makeUIStr {
     pushStyle(x)
     add(this@strStyle.text)
