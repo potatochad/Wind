@@ -160,9 +160,9 @@ fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
 }
 
 
-val UIStr.strStyle: StrStyle
+val UIStr.style: StrStyle
     get() = spanStyles.firstOrNull()?.item ?: StrStyle()
-val Str.strStyle: StrStyle
+val Str.style: StrStyle
     get() = toUIStr(this).spanStyles.firstOrNull()?.item ?: StrStyle()
 
     
@@ -192,7 +192,7 @@ fun UIStr.strStyle(x: StrStyle): UIStr {
     }
 }
 
-fun Any.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (this.getStyle().update()))
+fun Any.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (this.style.update()))
 
 fun Any.size(x: Int) = txt { copy(fontSize = x.sp) }
 fun Any.size(x: Float) = txt { copy(fontSize = x.sp) }
