@@ -128,6 +128,7 @@ import com.productivity.wind.Imports.UI_visible.*
 import com.productivity.wind.Imports.Utils.*
 
 
+
 typealias UIStr = AnnotatedString
 typealias UIStrBuilder = AnnotatedString.Builder
 typealias StrStyle = SpanStyle
@@ -149,8 +150,7 @@ fun UIStr(vararg parts: Any): UIStr = makeUIStr {
 
 
 fun UIStr.keepOneStyle(newText: Str): UIStr {
-    val style = spanStyles.firstOrNull()?.item ?: StrStyle()
-    return UIText(newText, style)
+    return UIText(newText, this.style)
 }
 
 fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
@@ -187,6 +187,11 @@ val UIStr.textStyle: TextStyle
 fun UIStr.strStyle(x: StrStyle): UIStr = makeUIStr {
     pushStyle(x)
     add(this@strStyle.text)
+    pop()
+}
+fun Str.strStyle(x: StrStyle): UIStr = makeUIStr {
+    pushStyle(x)
+    add(this@strStyle)
     pop()
 }
 
