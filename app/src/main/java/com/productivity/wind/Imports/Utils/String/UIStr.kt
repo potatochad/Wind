@@ -187,7 +187,7 @@ val UIStr.textStyle: TextStyle
 
 fun UIStr.strStyle(x: StrStyle): UIStr = makeUIStr {
     pushStyle(x)
-    add(this.text)
+    add(this@strStyle.text)
     pop()
 }
 
