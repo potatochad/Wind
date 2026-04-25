@@ -251,31 +251,94 @@ fun UIStr.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (t
 
 
 
-fun Str.size(x: Int) = sty { copy(fontSize = x.sp) }
-fun Str.size(x: Float) = sty { copy(fontSize = x.sp) }
-fun Str.size(x: TextUnit) = sty { copy(fontSize = x) }
-fun Str.bold() = sty { copy(fontWeight = FontWeight.Bold) }
-fun Str.color(x: Color) = sty { copy(color = x) }
-fun Str.gold() = sty { copy(color = gold) }
-fun Str.green() = sty { copy(color = green) }
-fun Str.red() = sty { copy(color = red) }
-fun Str.white() = sty { copy(color = white) }
-fun Str.black() = sty { copy(color = black) }
-fun Str.darkGray() = sty { copy(color = darkGray) }
-fun Str.gray() = sty { copy(color = gray) }
+fun Str.size(x: Int) = sty { fontSize(x.sp) }
+fun Str.size(x: Float) = sty { fontSize(x.sp) }
+fun Str.size(x: TextUnit) = sty { fontSize(x) }
 
-fun UIStr.size(x: Int) = sty { copy(fontSize = x.sp) }
-fun UIStr.size(x: Float) = sty { copy(fontSize = x.sp) }
-fun UIStr.size(x: TextUnit) = sty { copy(fontSize = x) }
-fun UIStr.bold() = sty { copy(fontWeight = FontWeight.Bold) }
-fun UIStr.color(x: Color) = sty { copy(color = x) }
-fun UIStr.gold() = sty { copy(color = gold) }
-fun UIStr.green() = sty { copy(color = green) }
-fun UIStr.red() = sty { copy(color = red) }
-fun UIStr.white() = sty { copy(color = white) }
-fun UIStr.black() = sty { copy(color = black) }
-fun UIStr.darkGray() = sty { copy(color = darkGray) }
-fun UIStr.gray() = sty { copy(color = gray) }
+fun Str.color(x: Color) = sty { color(x) }
+fun Str.green() = sty { green() }
+fun Str.red() = sty { red() }
+fun Str.gold() = sty { gold() }
+fun Str.gray() = sty { gray() }
+fun Str.darkGray() = sty { darkGray() }
+fun Str.black() = sty { black() }
+fun Str.white() = sty { white() }
+
+fun Str.thin() = sty { thin() }
+fun Str.light() = sty { light() }
+fun Str.medium() = sty { medium() }
+fun Str.semiBold() = sty { semiBold() }
+fun Str.extraBold() = sty { extraBold() }
+fun Str.normal() = sty { normal() }
+fun Str.bold() = sty { bold() }
+
+fun Str.underline() = sty { underline() }
+fun Str.strike() = sty { strike() }
+fun Str.none() = sty { none() }
+
+fun Str.background(x: Color) = sty { background(x) }
+fun Str.brush(x: Brush?) = sty { brush(x) }
+fun Str.shadow(x: Shadow?) = sty { shadow(x) }
+fun Str.draw(x: DrawStyle?) = sty { draw(x) }
+
+fun Str.italic() = sty { italic() }
+fun Str.fontFamily(x: FontFamily?) = sty { fontFamily(x) }
+fun Str.letterSpacing(x: TextUnit) = sty { letterSpacing(x) }
+fun Str.baselineShift(x: BaselineShift?) = sty { baselineShift(x) }
+fun Str.fontFeatureSettings(x: String?) = sty { fontFeatureSettings(x) }
+fun Str.synthesis(x: FontSynthesis?) = sty { synthesis(x) }
+
+fun Str.geometric(x: TextGeometricTransform?) = sty { geometric(x) }
+
+fun Str.locale(x: LocaleList?) = sty { locale(x) }
+fun Str.platform(x: PlatformSpanStyle?) = sty { platform(x) }
+
+
+
+fun UIStr.size(x: Int) = sty { fontSize(x.sp) }
+fun UIStr.size(x: Float) = sty { fontSize(x.sp) }
+fun UIStr.size(x: TextUnit) = sty { fontSize(x) }
+
+fun UIStr.color(x: Color) = sty { color(x) }
+fun UIStr.green() = sty { green() }
+fun UIStr.red() = sty { red() }
+fun UIStr.gold() = sty { gold() }
+fun UIStr.gray() = sty { gray() }
+fun UIStr.darkGray() = sty { darkGray() }
+fun UIStr.black() = sty { black() }
+fun UIStr.white() = sty { white() }
+
+fun UIStr.thin() = sty { thin() }
+fun UIStr.light() = sty { light() }
+fun UIStr.medium() = sty { medium() }
+fun UIStr.semiBold() = sty { semiBold() }
+fun UIStr.extraBold() = sty { extraBold() }
+fun UIStr.normal() = sty { normal() }
+fun UIStr.bold() = sty { bold() }
+
+fun UIStr.underline() = sty { underline() }
+fun UIStr.strike() = sty { strike() }
+fun UIStr.none() = sty { none() }
+
+fun UIStr.background(x: Color) = sty { background(x) }
+fun UIStr.brush(x: Brush?) = sty { brush(x) }
+fun UIStr.shadow(x: Shadow?) = sty { shadow(x) }
+fun UIStr.draw(x: DrawStyle?) = sty { draw(x) }
+
+fun UIStr.italic() = sty { italic() }
+fun UIStr.fontFamily(x: FontFamily?) = sty { fontFamily(x) }
+fun UIStr.letterSpacing(x: TextUnit) = sty { letterSpacing(x) }
+fun UIStr.baselineShift(x: BaselineShift?) = sty { baselineShift(x) }
+fun UIStr.fontFeatureSettings(x: String?) = sty { fontFeatureSettings(x) }
+fun UIStr.synthesis(x: FontSynthesis?) = sty { synthesis(x) }
+
+fun UIStr.geometric(x: TextGeometricTransform?) = sty { geometric(x) }
+
+fun UIStr.locale(x: LocaleList?) = sty { locale(x) }
+fun UIStr.platform(x: PlatformSpanStyle?) = sty { platform(x) }
+
+
+
 
 
 
