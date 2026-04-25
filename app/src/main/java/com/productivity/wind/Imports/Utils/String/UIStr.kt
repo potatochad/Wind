@@ -146,12 +146,6 @@ fun UIStr(vararg parts: Any): UIStr = makeUIStr {
 }
 
 
-
-
-
-
-
-
 fun UIStr.keepOneStyle(newText: Str): UIStr {
     val style = spanStyles.firstOrNull()?.item ?: StrStyle()
     return UIText(newText, style)
@@ -165,9 +159,13 @@ fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
     }
 }
 
-fun Any.getStyle(): StrStyle {
-    return toUIStr(this).spanStyles.firstOrNull()?.item ?: StrStyle()
-}
+
+val UIStr.strStyle: StrStyle
+    get() = spanStyles.firstOrNull()?.item ?: StrStyle()
+val Str.strStyle: StrStyle
+    get() = toUIStr(this).spanStyles.firstOrNull()?.item ?: StrStyle()
+
+    
 val UIStr.textStyle: TextStyle
     get() {
         val span = spanStyles.firstOrNull()?.item ?: SpanStyle()
@@ -183,8 +181,6 @@ val UIStr.textStyle: TextStyle
             textDecoration = span.textDecoration
         )
     }
-val UIStr.strStyle: StrStyle
-    get() = spanStyles.firstOrNull()?.item ?: StrStyle()
 
 fun UIStr.strStyle(x: StrStyle): UIStr {
     val plainText = this.text
