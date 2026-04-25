@@ -203,37 +203,45 @@ fun Str.strStyle(x: StrStyle): UIStr = makeUIStr {
 
 
 fun StrStyle.fontSize(x: TextUnit) = copy(fontSize = x)
+
 fun StrStyle.color(x: Color) = copy(color = x)
-fun StrStyle.bold() = copy(fontWeight = FontWeight.Bold)
-fun StrStyle.green() = copy(color = green)
-fun StrStyle.red() = copy(color = red)
-fun StrStyle.gold() = copy(color = gold)
-fun StrStyle.gray() = copy(color = gray)
-fun StrStyle.darkGray() = copy(color = darkGray)
-fun StrStyle.black() = copy(color = black)
-fun StrStyle.white() = copy(color = white)
+fun StrStyle.green() = color(green)
+fun StrStyle.red() = color(red)
+fun StrStyle.gold() = color(gold)
+fun StrStyle.gray() = color(gray)
+fun StrStyle.darkGray() = color(darkGray)
+fun StrStyle.black() = color(black)
+fun StrStyle.white() = color(white)
+
 fun StrStyle.thin() = copy(fontWeight = FontWeight.Thin)
 fun StrStyle.light() = copy(fontWeight = FontWeight.Light)
 fun StrStyle.medium() = copy(fontWeight = FontWeight.Medium)
 fun StrStyle.semiBold() = copy(fontWeight = FontWeight.SemiBold)
 fun StrStyle.extraBold() = copy(fontWeight = FontWeight.ExtraBold)
 fun StrStyle.normal() = copy(fontWeight = FontWeight.Normal)
-fun StrStyle.italic() = copy(fontStyle = FontStyle.Italic)
+fun StrStyle.bold() = copy(fontWeight = FontWeight.Bold)
+
 fun StrStyle.underline() = copy(textDecoration = TextDecoration.Underline)
 fun StrStyle.strike() = copy(textDecoration = TextDecoration.LineThrough)
 fun StrStyle.none() = copy(textDecoration = TextDecoration.None)
+
 fun StrStyle.background(x: Color) = copy(background = x)
+fun StrStyle.brush(x: Brush?) = copy(brush = x)
 fun StrStyle.shadow(x: Shadow?) = copy(shadow = x)
+fun StrStyle.draw(x: DrawStyle?) = copy(drawStyle = x)
+
+fun StrStyle.italic() = copy(fontStyle = FontStyle.Italic)
+fun StrStyle.fontFamily(x: FontFamily?) = copy(fontFamily = x)
 fun StrStyle.letterSpacing(x: TextUnit) = copy(letterSpacing = x)
 fun StrStyle.baselineShift(x: BaselineShift?) = copy(baselineShift = x)
-fun StrStyle.fontFamily(x: FontFamily?) = copy(fontFamily = x)
 fun StrStyle.fontFeatureSettings(x: String?) = copy(fontFeatureSettings = x)
-fun StrStyle.locale(x: LocaleList?) = copy(localeList = x)
 fun StrStyle.synthesis(x: FontSynthesis?) = copy(fontSynthesis = x)
+
 fun StrStyle.geometric(x: TextGeometricTransform?) = copy(textGeometricTransform = x)
-fun StrStyle.brush(x: Brush?) = copy(brush = x)
+
+fun StrStyle.locale(x: LocaleList?) = copy(localeList = x)
 fun StrStyle.platform(x: PlatformSpanStyle?) = copy(platformStyle = x)
-fun StrStyle.draw(x: DrawStyle?) = copy(drawStyle = x)
+
 
 
 
