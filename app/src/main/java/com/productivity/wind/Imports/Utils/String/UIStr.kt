@@ -139,6 +139,7 @@ typealias UIStrBuilder = AnnotatedString.Builder
 typealias StrStyle = SpanStyle
 
 
+
 val UIStr.size get() = this.text.size
 fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.fromTo(start, end)
 
