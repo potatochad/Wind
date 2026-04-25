@@ -182,21 +182,21 @@ val UIStr.textStyle: TextStyle
         return TextStyle(
             spanStyle =
                 SpanStyle(
-                    brush = s.brush,
-                    alpha = s.alpha,
+                    // brush = s.brush,
+                    // alpha = s.alpha,
                     fontSize = s.fontSize,
                     fontWeight = s.fontWeight,
                     fontStyle = s.fontStyle,
                     fontSynthesis = s.fontSynthesis,
                     fontFamily = s.fontFamily,
-                    fontFeatureSettings = s fontFeatureSettings,
+                    fontFeatureSettings = s.fontFeatureSettings,
                     letterSpacing = s.letterSpacing,
                     baselineShift = s.baselineShift,
                     textGeometricTransform = s.textGeometricTransform,
                     localeList = s.localeList,
                     background = s.background,
                     textDecoration = s.textDecoration,
-                    shadow = s.shadow,
+                    // shadow = s.shadow,
                     /*
                     platformStyle = s.spanStyle,
                     drawStyle = drawStyle,
@@ -205,7 +205,6 @@ val UIStr.textStyle: TextStyle
             /*
             paragraphStyle =
                 ParagraphStyle(
-                    textAlign = textAlign,
                     textDirection = textDirection,
                     lineHeight = lineHeight,
                     textIndent = textIndent,
