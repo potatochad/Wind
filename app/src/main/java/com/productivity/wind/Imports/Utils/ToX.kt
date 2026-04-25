@@ -360,6 +360,10 @@ fun toWeb(x: Any?): WebView? = when (x) {
     is WebController -> x.webView
     else -> null
 }
+fun toUIStr(it: Any?): UIStr = when (it) {
+    is UIStr -> it
+    else -> UIStr(toStr(it))
+}
 
 
 
