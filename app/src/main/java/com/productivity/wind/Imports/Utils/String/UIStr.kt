@@ -192,7 +192,7 @@ fun UIStr.strStyle(x: StrStyle): UIStr {
     }
 }
 
-fun Any.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (this.style.update()))
+fun Any.txt(update: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (toUIStr(this).style.update()))
 
 fun Any.size(x: Int) = txt { copy(fontSize = x.sp) }
 fun Any.size(x: Float) = txt { copy(fontSize = x.sp) }
