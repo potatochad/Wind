@@ -178,7 +178,7 @@ val UIStr.textStyle: TextStyle
     get() {
         val s = this.style
 
-        return TextStyle(
+        val span = SpanStyle(
             color = s.color,
             brush = s.brush,
             alpha = s.alpha,
@@ -195,8 +195,10 @@ val UIStr.textStyle: TextStyle
             background = s.background,
             textDecoration = s.textDecoration,
             shadow = s.shadow,
-            drawStyle = s.drawStyle,
+            drawStyle = s.drawStyle
+        )
 
+        val paragraph = ParagraphStyle(
             textAlign = s.textAlign,
             textDirection = s.textDirection,
             lineHeight = s.lineHeight,
@@ -204,12 +206,15 @@ val UIStr.textStyle: TextStyle
             lineHeightStyle = s.lineHeightStyle,
             lineBreak = s.lineBreak,
             hyphens = s.hyphens,
-            textMotion = s.textMotion,
+            textMotion = s.textMotion
+        )
 
+        return TextStyle(
+            spanStyle = span,
+            paragraphStyle = paragraph,
             platformStyle = s.platformStyle
         )
     }
-
 fun UIStr.strStyle(x: StrStyle): UIStr = makeUIStr {
     pushStyle(x)
     add(this@strStyle.text)
