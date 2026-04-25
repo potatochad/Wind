@@ -197,8 +197,16 @@ fun Str.strStyle(x: StrStyle): UIStr = makeUIStr {
 
 
 
+fun StrStyle.fontSize(x: TextUnit) = copy(fontSize = x)
+fun StrStyle.color(x: Color) = copy(color = x)
+fun StrStyle.bold() = copy(fontWeight = FontWeight.Bold)
+
+
+
 fun Str.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (toUIStr(this).style.fun1()))
 fun UIStr.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (toUIStr(this).style.fun1()))
+
+
 
 fun Str.size(x: Int) = sty { copy(fontSize = x.sp) }
 fun Str.size(x: Float) = sty { copy(fontSize = x.sp) }
