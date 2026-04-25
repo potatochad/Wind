@@ -133,12 +133,10 @@ typealias UIStrBuilder = AnnotatedString.Builder
 typealias StrStyle = SpanStyle
 
 val UIStr.size get() = this.text.size
-fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.substring(start, end)
+fun UIStr.fromTo(start: Int, end: Int = this.size) = this.text.fromTo(start, end)
 
 
-fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr {
-    return buildAnnotatedString(Do)
-}
+fun makeUIStr(Do: UIStrBuilder.() -> Unit): UIStr = buildAnnotatedString(Do)
 fun UIStrBuilder.add(text: Char) = append(text)
 fun UIStrBuilder.add(text: Str) = append(text)
 fun UIStrBuilder.add(text: UIStr) = append(text)
@@ -150,9 +148,7 @@ fun UIStr(vararg parts: Any): UIStr = makeUIStr {
 
 fun toUIStr(it: Any?): UIStr = when (it) {
     is UIStr -> it
-    is String -> makeUIStr { add(it) }
-    is Char -> makeUIStr { add(it.toString()) }
-    else -> makeUIStr { add(it?.toString() ?: "") }
+    else -> UIStr(toStr(it))
 }
 
 
