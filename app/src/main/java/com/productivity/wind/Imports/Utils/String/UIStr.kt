@@ -146,10 +146,7 @@ fun UIStr(vararg parts: Any): UIStr = makeUIStr {
 }
 
 
-fun toUIStr(it: Any?): UIStr = when (it) {
-    is UIStr -> it
-    else -> UIStr(toStr(it))
-}
+
 
 
 
