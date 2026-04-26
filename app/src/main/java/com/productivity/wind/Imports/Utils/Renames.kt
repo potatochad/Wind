@@ -382,3 +382,37 @@ fun Any.eachValVar(Do: (ClassValVar<Any, *>) -> Unit) {
 fun startActivity(intent: Intent) {
     App.startActivity(intent)
 }
+
+
+
+class makeByFun<T>(
+    private var value: T,
+	onBuild: WaitDo = {},
+	onGet: Do = {},
+	onSet: Do = {},
+) {
+	private fun fancyId(x: KProperty<*>): Str = "${x.name}: {autoId()}"
+
+	lateinit var id: Str
+	var it by m(value)
+	
+    // 1) FIRST TIME CREATION (runs once when "by" is attached)
+    operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): VarDelegate<T> {
+		id = fancyId(property)
+		onBuild()
+        return this
+    }
+
+    // 2) GET
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        log("Get: ${id}")
+        return value
+    }
+
+    // 3) SET
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
+        log("Set $newValue")
+        value = newValue
+		it = newValue
+    }
+}
