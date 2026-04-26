@@ -189,8 +189,11 @@ typealias mStr= m_<Str>
 	
 typealias mList<T> = MutableList<T>
 
-typealias OnlyVar<T, R> = KMutableProperty1<T, R>
-typealias VarVal<T, R> = KProperty1<T, R>
+typealias ClassVar<T, R> = KMutableProperty1<T, R>
+typealias ClassValVar<T, R> = KProperty1<T, R>
+
+typealias Var<R> = KMutableProperty<R>
+typealias ValVar<R> = KProperty<R>
 
 typealias AppInfo = ResolveInfo
 
