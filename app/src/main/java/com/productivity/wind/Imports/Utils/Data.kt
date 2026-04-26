@@ -198,7 +198,20 @@ object AppData {
 
 
 fun <T> VarDelegate(value: T): By<T> {
-    return By(value)
+     
+	
+	
+	val x = By(value)
+		.onBuild{ prop ->
+		
+		}
+		.onGet{ prop ->
+		
+		}
+		.onSet{ prop, newValue ->
+		
+		}
+	return x
 }
 
 fun autoId(): Str {
