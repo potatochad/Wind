@@ -202,20 +202,18 @@ val UIStr.textStyle: TextStyle
                     drawStyle = drawStyle,
                     */
                 ),
-            /*
             paragraphStyle =
                 ParagraphStyle(
                     textDirection = textDirection,
                     lineHeight = lineHeight,
                     textIndent = textIndent,
-                    platformStyle = platformStyle?.paragraphStyle,
+                    // platformStyle = platformStyle?.paragraphStyle,
                     lineHeightStyle = lineHeightStyle,
                     lineBreak = lineBreak,
                     hyphens = hyphens,
                     textMotion = textMotion,
                 ),
-            platformStyle = platformStyle,
-            */
+            // platformStyle = platformStyle,
         )
     }
 
