@@ -178,42 +178,24 @@ val UIStr.textStyle: TextStyle
     get() {
         val s = this.style
 
-
         return TextStyle(
-            spanStyle =
-                SpanStyle(
-                    // brush = s.brush,
-                    // alpha = s.alpha,
-                    fontSize = s.fontSize,
-                    fontWeight = s.fontWeight,
-                    fontStyle = s.fontStyle,
-                    fontSynthesis = s.fontSynthesis,
-                    fontFamily = s.fontFamily,
-                    fontFeatureSettings = s.fontFeatureSettings,
-                    letterSpacing = s.letterSpacing,
-                    baselineShift = s.baselineShift,
-                    textGeometricTransform = s.textGeometricTransform,
-                    localeList = s.localeList,
-                    background = s.background,
-                    textDecoration = s.textDecoration,
-                    // shadow = s.shadow,
-                    /*
-                    platformStyle = s.spanStyle,
-                    drawStyle = drawStyle,
-                    */
-                ),
-            paragraphStyle =
-                ParagraphStyle(
-                    textDirection = textDirection,
-                    lineHeight = lineHeight,
-                    textIndent = textIndent,
-                    // platformStyle = platformStyle?.paragraphStyle,
-                    lineHeightStyle = lineHeightStyle,
-                    lineBreak = lineBreak,
-                    hyphens = hyphens,
-                    textMotion = textMotion,
-                ),
-            // platformStyle = platformStyle,
+            color = s.color,
+            brush = s.brush,
+            alpha = s.alpha,
+            fontSize = s.fontSize,
+            fontWeight = s.fontWeight,
+            fontStyle = s.fontStyle,
+            fontSynthesis = s.fontSynthesis,
+            fontFamily = s.fontFamily,
+            fontFeatureSettings = s.fontFeatureSettings,
+            letterSpacing = s.letterSpacing,
+            baselineShift = s.baselineShift,
+            textGeometricTransform = s.textGeometricTransform,
+            localeList = s.localeList,
+            background = s.background,
+            textDecoration = s.textDecoration,
+            shadow = s.shadow,
+            platformStyle = s.platformStyle
         )
     }
 
