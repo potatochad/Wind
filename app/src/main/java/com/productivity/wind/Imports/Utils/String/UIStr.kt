@@ -126,7 +126,6 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import com.productivity.wind.Imports.UI_visible.*
 import com.productivity.wind.Imports.Utils.*
-
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.drawscope.DrawStyle
@@ -177,9 +176,8 @@ val Str.style: StrStyle
 val UIStr.textStyle: TextStyle
     get() {
         val s = this.style
-        s.color
 
-        return androidx.compose.ui.text.TextStyle(
+        return TextStyle(
             color = s.color,
             fontSize = s.fontSize,
             fontWeight = s.fontWeight,
