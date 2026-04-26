@@ -144,10 +144,10 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
         
         str.splitStr {
             val future = line + it
-            future.blog("future")
+            // future.blog("future")
 
             val isFutureTooBig = measure2(future) > maxWidthPx - 100    
-            log("${measure2(future)} > ${maxWidthPx-100}= [$isFutureTooBig]")   
+            // log("${measure2(future)} > ${maxWidthPx-100}= [$isFutureTooBig]")   
             
             if (line.isNotEmpty() && isFutureTooBig) {
                 lines2.add(UIStr(line))
