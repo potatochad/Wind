@@ -193,6 +193,41 @@ object AppData {
 
 
 
+
+
+
+class VarDelegate<T>(
+    private var value: T
+) {
+
+    // 1) FIRST TIME CREATION (runs once when "by" is attached)
+    operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): VarDelegate<T> {
+        println("Created: ${property.name}")
+        return this
+    }
+
+    // 2) GET
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        println("Get: ${property.name}")
+        return value
+    }
+
+    // 3) SET
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
+        println("Set: ${property.name} = $newValue")
+        value = newValue
+    }
+}
+
+// helper function (clean usage)
+fun <T> varDelegate(initial: T) = VarDelegate(initial)
+
+
+
+
+
+
+
 fun autoId(): Str {
     val e = Throwable().stackTrace[2]
     return "${e.fileName}:${e.lineNumber}"
