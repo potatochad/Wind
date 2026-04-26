@@ -200,12 +200,7 @@ object AppData {
 class VarDelegate<T>(
     private var value: T
 ) {
-	var x by MakeByFun(
-		value,
-		onBuild = { println("built") },
-		onGet = { println("read") },
-		onSet = { println("write") }
-	)
+	
 }
 
 fun autoId(): Str {
