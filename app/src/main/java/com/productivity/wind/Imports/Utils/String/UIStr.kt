@@ -177,6 +177,7 @@ val Str.style: StrStyle
 val UIStr.textStyle: TextStyle
     get() {
         val s = this.style
+        s.color
 
         return TextStyle(
             spanStyle = SpanStyle(
