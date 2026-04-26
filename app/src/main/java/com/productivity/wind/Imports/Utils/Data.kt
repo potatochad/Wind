@@ -225,7 +225,7 @@ class VarDelegate<T>(
 
 fun autoId(): Str {
     val e = Throwable().stackTrace.getOrNull(2)
-    return "${e?.fileName}:${e?.lineNumber}"
+    return "${e?.fileName}:${e?.lineNumber}:${System.nanoTime()}"
 }
 
 
