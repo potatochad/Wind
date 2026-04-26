@@ -207,7 +207,8 @@ class VarDelegate<T>(
 
     // 1) FIRST TIME CREATION (runs once when "by" is attached)
     operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): VarDelegate<T> {
-        log("Created: ${property.name}, autoId: ${autoId()}")
+		id = fancyId(property)
+		log("id: $id")
         return this
     }
 
@@ -219,14 +220,10 @@ class VarDelegate<T>(
 
     // 3) SET
     operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
-        log("Set: ${property.name} = $newValue")
+        log("Set: ${id} = $newValue")
         value = newValue
     }
 }
-
-// helper function (clean usage)
-fun <T> varDelegate(initial: T) = VarDelegate(initial)
-
 
 fun autoId(): Str {
 	val e = Throwable().stackTrace[2]
