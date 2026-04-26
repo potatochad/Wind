@@ -374,7 +374,7 @@ fun startActivity(intent: Intent) {
 
 
 
-class makeByFun<T>(
+class By<T>(
     private var value: T,
 ) {
 	private var onBuild: Do = {}
