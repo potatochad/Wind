@@ -155,7 +155,8 @@ fun UIStr(vararg parts: Any): UIStr = makeUIStr {
 
 
 fun UIStr.keepOneStyle(newText: Str): UIStr {
-    return UIStr(this).style(this.style)
+    val style = this.style
+    return newText.strStyle(style)
 }
 
 
@@ -245,8 +246,8 @@ fun StrStyle.platform(x: PlatformSpanStyle?) = copy(platformStyle = x)
 
 
 
-private fun Str.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIStr(this).style.fun1()          
-private fun UIStr.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIStr(this).style.fun1()
+private fun Str.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIStr(this).style(this.style.fun1())       
+private fun UIStr.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIStr(this).style(this.style.fun1())
 
 
 
