@@ -364,20 +364,6 @@ fun Color.darker(percent: Any): Color {
 
 
 
-
-
-//✴️ Data renames
-fun Any.eachValVar(Do: (ClassValVar<Any, *>) -> Unit) {
-    this::class.memberProperties.forEach {
-        Do(it as ClassValVar<Any, *>)  // cast to safe type
-    }
-}
-
-
-
-
-
-
 // ✴️ PERMISSION RENAMESSS
 fun startActivity(intent: Intent) {
     App.startActivity(intent)
@@ -387,17 +373,17 @@ fun startActivity(intent: Intent) {
 
 class makeByFun<T>(
     private var value: T,
-	onBuild: Do = {},
-	onGet: Do = {},
-	onSet: Do = {},
+	val onBuild: Do = {},
+	val onGet: Do = {},
+	val onSet: Do = {},
 ) {
-	private fun fancyId(x: KProperty1<*>): Str = "${x.name}: {autoId()}"
+	private fun fancyId(x: KProperty<*>): Str = "${x.name}: {autoId()}"
 
 	lateinit var id: Str
 	var it by m(value)
 	
     // 1) FIRST TIME CREATION (runs once when "by" is attached)
-    operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): VarDelegate<T> {
+    operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): makeByFun<T> {
 		id = fancyId(property)
 		onBuild()
         return this
