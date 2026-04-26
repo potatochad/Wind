@@ -373,34 +373,36 @@ fun startActivity(intent: Intent) {
 
 class makeByFun<T>(
     private var value: T,
-	val onBuild: Do = {},
-	val onGet: Do = {},
-	val onSet: Do = {},
 ) {
-	private fun fancyId(x: KProperty<*>): Str = "${x.name}: {autoId()}"
+	private var onBuild: Do = {}
+    private var onGet: Do = {}
+    private var onSet: Do = {}
 
+	fun onBuild(x: Do) = apply { onBuild = x }
+    fun onGet(x: Do) = apply { onGet = x }
+    fun onSet(x: Do) = apply { onSet = x }
+
+	
+	private fun fancyId(x: KProperty<*>): Str = "${x.name}: {autoId()}"
 	lateinit var id: Str
 	var it by m(value)
+
 	
-    // 1) FIRST TIME CREATION (runs once when "by" is attached)
     operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): makeByFun<T> {
 		id = fancyId(property)
 		onBuild()
         return this
     }
-
-    // 2) GET
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
 		onGet()
         return value
     }
-
-    // 3) SET
     operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
         value = newValue
 		it = newValue
 		onSet()
     }
 }
+
 
 
