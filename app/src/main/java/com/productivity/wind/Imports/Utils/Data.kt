@@ -206,7 +206,7 @@ class VarDelegate<T>(
     // 1) FIRST TIME CREATION (runs once when "by" is attached)
     operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): VarDelegate<T> {
 		id = fancyId(property)
-		log("id: $id")
+		log("$id")
         return this
     }
 
