@@ -66,7 +66,7 @@ fun newDay() {
 
 
 /*
-‼️ NEVER PUT IT ONE LINEEE, s—save, it gets its id by getting line and file of S()
+‼️ NEVER GIVE SAME ‼️NAME OR ON SAME ‼️LINE
 */
 
 object Bar {
