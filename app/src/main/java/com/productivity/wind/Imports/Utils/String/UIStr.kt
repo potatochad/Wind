@@ -179,27 +179,32 @@ val UIStr.textStyle: TextStyle
         val s = this.style
         s.color
 
-        return TextStyle(
-            spanStyle = SpanStyle(
-                color = s.color,
-                brush = s.brush,
-                alpha = s.alpha,
-                fontSize = s.fontSize,
-                fontWeight = s.fontWeight,
-                fontStyle = s.fontStyle,
-                fontSynthesis = s.fontSynthesis,
-                fontFamily = s.fontFamily,
-                fontFeatureSettings = s.fontFeatureSettings,
-                letterSpacing = s.letterSpacing,
-                baselineShift = s.baselineShift,
-                textGeometricTransform = s.textGeometricTransform,
-                localeList = s.localeList,
-                background = s.background,
-                textDecoration = s.textDecoration,
-                shadow = s.shadow
-            ),
-            paragraphStyle = ParagraphStyle()
-        )
+        return androidx.compose.ui.text.TextStyle(
+    color: Color,
+    fontSize: TextUnit,
+    fontWeight: FontWeight?,
+    fontStyle: FontStyle?,
+    fontSynthesis: FontSynthesis?,
+    fontFamily: FontFamily?,
+    fontFeatureSettings: String?,
+    letterSpacing: TextUnit,
+    baselineShift: BaselineShift?,
+    textGeometricTransform: TextGeometricTransform?,
+    localeList: LocaleList?,
+    background: Color,
+    textDecoration: TextDecoration?,
+    shadow: Shadow?,
+    drawStyle: DrawStyle?,
+    textAlign: TextAlign,
+    textDirection: TextDirection,
+    lineHeight: TextUnit,
+    textIndent: TextIndent?,
+    platformStyle: PlatformTextStyle?,
+    lineHeightStyle: LineHeightStyle?,
+    lineBreak: LineBreak,
+    hyphens: Hyphens,
+    textMotion: TextMotion?
+)
     }
         
 fun UIStr.strStyle(x: StrStyle): UIStr = makeUIStr {
