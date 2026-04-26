@@ -195,15 +195,6 @@ val UIStr.textStyle: TextStyle
             textDecoration = s.textDecoration,
             shadow = s.shadow,
             drawStyle = s.drawStyle,
-            textAlign = s.textAlign,
-            textDirection = s.textDirection,
-            lineHeight = s.lineHeight,
-            textIndent = s.textIndent,
-            platformStyle = s.platformTextStyle,
-            lineHeightStyle = s.lineHeightStyle,
-            lineBreak = s.lineBreak,
-            hyphens = s.hyphens,
-            textMotion = s.textMotion
         )
     }
         
