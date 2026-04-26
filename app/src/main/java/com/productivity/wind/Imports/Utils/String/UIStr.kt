@@ -246,8 +246,8 @@ fun StrStyle.platform(x: PlatformSpanStyle?) = copy(platformStyle = x)
 
 
 
-private fun Str.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIStr(this).style(this.style.fun1())       
-private fun UIStr.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIStr(this).style(this.style.fun1())
+private fun Str.sty(Do: StrStyle.() -> StrStyle = { this }): UIStr = style(style.Do())       
+private fun UIStr.sty(Do: StrStyle.() -> StrStyle = { this }): UIStr = style(style.Do())
 
 
 
