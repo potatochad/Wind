@@ -192,11 +192,11 @@ typealias mList<T> = MutableList<T>
 typealias ClassVar_<T, R> = KMutableProperty1<T, R>
 typealias ClassVar = KMutableProperty1<*, *>
 typealias ClassValVar_<T, R> = KProperty1<T, R>
-typealias ClassValVar = KProperty1<*>
+typealias ClassValVar = KProperty1<*, *>
 typealias ValVar_<R> = KProperty<R>
 typealias ValVar = KProperty<*>
 typealias Var_<R> = KMutableProperty<R>
-typealias Var = KMutableProperty<*, *>
+typealias Var = KMutableProperty<*>
 
 typealias AppInfo = ResolveInfo
 
@@ -382,7 +382,7 @@ class By<T>(
 ) {
 	private var onBuild: Do_<ValVar> = {}
     private var onGet: Do_<ValVar> = {}
-    private var onSet: Do2_<ValVar, T> = {}
+    private var onSet: Do2_<ValVar, T> = { _, _ -> }
 
 	fun onBuild(x: Do_<ValVar>) = apply { onBuild = x }
     fun onGet(x: Do_<ValVar>) = apply { onGet = x }
