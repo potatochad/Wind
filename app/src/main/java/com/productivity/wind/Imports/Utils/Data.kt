@@ -201,7 +201,7 @@ class VarDelegate<T>(
     private var value: T
 ) {
 	lateinit var id: Str
-	fun fancyId(x: KProperty<*>): Str = "${x.name}, autoId: ${autoId()}"
+	fun fancyId(x: KProperty<*>): Str = "${x.name}: {autoId()}"
 
     // 1) FIRST TIME CREATION (runs once when "by" is attached)
     operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): VarDelegate<T> {
@@ -218,14 +218,14 @@ class VarDelegate<T>(
 
     // 3) SET
     operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
-        log("Set: ${id} = $newValue")
+        log("Set $newValue")
         value = newValue
     }
 }
 
 fun autoId(): Str {
     val e = Throwable().stackTrace.getOrNull(2)
-    return "${e?.fileName}:${e?.lineNumber}:${System.nanoTime()}"
+    return "${e?.fileName}:${e?.lineNumber}line: ${System.nanoTime()}ms"
 }
 
 
