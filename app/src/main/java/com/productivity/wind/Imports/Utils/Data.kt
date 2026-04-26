@@ -201,6 +201,7 @@ class VarDelegate<T>(
     private var value: T
 ) {
 	lateinit var id: Str
+	var it by m(value)
 	fun fancyId(x: KProperty<*>): Str = "${x.name}: {autoId()}"
 
     // 1) FIRST TIME CREATION (runs once when "by" is attached)
@@ -220,6 +221,7 @@ class VarDelegate<T>(
     operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
         log("Set $newValue")
         value = newValue
+		it = newValue
     }
 }
 
