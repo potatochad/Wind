@@ -202,19 +202,19 @@ class VarDelegate<T>(
 
     // 1) FIRST TIME CREATION (runs once when "by" is attached)
     operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): VarDelegate<T> {
-        println("Created: ${property.name}")
+        log("Created: ${property.name}")
         return this
     }
 
     // 2) GET
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        println("Get: ${property.name}")
+        log("Get: ${property.name}")
         return value
     }
 
     // 3) SET
     operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
-        println("Set: ${property.name} = $newValue")
+        log("Set: ${property.name} = $newValue")
         value = newValue
     }
 }
