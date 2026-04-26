@@ -151,6 +151,7 @@ object AppData {
 
            return json.toString()
     	}
+		
 	val prefs: SharedPreferences
         get() = App.getSharedPreferences(storageFile, Context.MODE_PRIVATE)
 		
@@ -162,7 +163,7 @@ object AppData {
 	inline fun <reified T> decodeJson(x: Str) = json11.decodeFromString<T>(x)
 
 	@Suppress("UNCHECKED_CAST")
-	fun <T> getX(id: String, default: T): T {
+	fun <T> getX(id: Str, default: T): T {
 		return when (default) {
 			is Int -> prefs.getInt(id, default) as T
 			is Bool -> prefs.getBoolean(id, default) as T
@@ -199,6 +200,10 @@ object AppData {
 class VarDelegate<T>(
     private var value: T
 ) {
+	lateinit var id: Str
+	fun fancyId(x: KProperty<*>): Str {
+		"${x.name}, autoId: ${autoId()}"
+	}
 
     // 1) FIRST TIME CREATION (runs once when "by" is attached)
     operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): VarDelegate<T> {
@@ -208,7 +213,7 @@ class VarDelegate<T>(
 
     // 2) GET
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        log("Get: ${property.name}")
+        log("Get: ${id}")
         return value
     }
 
@@ -223,16 +228,13 @@ class VarDelegate<T>(
 fun <T> varDelegate(initial: T) = VarDelegate(initial)
 
 
-
-
-
-
-
 fun autoId(): Str {
-    val e = Throwable().stackTrace[2]
-    return "${e.fileName}:${e.lineNumber}"
+	val e = Throwable().stackTrace[2]
+	return "${e.fileName}:${e.lineNumber}"
 }
-//
+
+
+
 
 var restoring by m(no)
 inline fun <reified T> sList(
