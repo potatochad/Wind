@@ -197,8 +197,8 @@ object AppData {
 
 
 
-fun <T> VarDelegate(value: T): makeByFun<T> {
-    return makeByFun(value)
+fun <T> VarDelegate(value: T): By<T> {
+    return By(value)
 }
 
 fun autoId(): Str {
