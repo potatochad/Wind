@@ -180,11 +180,9 @@ fun CopyTskUI(tsk: CopyTsk) {
     RunOnce(goodStr) {
 		if (goodStr > 30) {
 			wait(100) {
-				MeasureWaitLag("centering Txt"){
-					txtScroll.goToLineCentered(
-						TxtLines.lineIndexByChar(goodStr)
-					)
-				}
+				txtScroll.goToLineCentered(
+					TxtLines.lineIndexByChar(goodStr)
+				)
 			}
 		}
 	}
@@ -239,9 +237,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 		}
 
 		val processedLines = remember(tsk.txt, goodStr) {
-			MeasureLag("making processedLines"){
-				MakeProcessedLines()
-			}
+			MakeProcessedLines()
 		}
 		
 		
