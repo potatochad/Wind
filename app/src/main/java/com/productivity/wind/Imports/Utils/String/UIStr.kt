@@ -246,16 +246,8 @@ fun StrStyle.platform(x: PlatformSpanStyle?) = copy(platformStyle = x)
 
 
 
-private fun Str.sty(Do: StrStyle.() -> StrStyle = { this }): UIStr ={
-    val style1 = this.style
-    val style2 = style1.Do()
-    return this.strStyle(style2)
-}
-private fun UIStr.sty(Do: StrStyle.() -> StrStyle = { this }): UIStr = {
-    val style1 = this.style
-    val style2 = style1.Do()
-    return this.strStyle(style2)
-}
+private fun Str.sty(Do: StrStyle.() -> StrStyle = { this }): UIStr = this.strStyle(this.style.Do())
+private fun UIStr.sty(Do: StrStyle.() -> StrStyle = { this }): UIStr = this.strStyle(this.style.Do())      
 
 
 
