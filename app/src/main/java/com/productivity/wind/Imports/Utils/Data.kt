@@ -198,11 +198,10 @@ object AppData {
 
 
 fun <T> VarDelegate(value: T): By<T> {
-     
-	
-	
 	val x = By(value)
-		.onBuild{ prop ->
+	val theId = x.id
+	
+		x.onBuild{ prop ->
 		
 		}
 		.onGet{ prop ->
