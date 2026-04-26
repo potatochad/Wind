@@ -179,26 +179,27 @@ val UIStr.textStyle: TextStyle
         val s = this.style
 
         return TextStyle(
-            color = s.color,
-            brush = s.brush,
-            alpha = s.alpha,
-            fontSize = s.fontSize,
-            fontWeight = s.fontWeight,
-            fontStyle = s.fontStyle,
-            fontSynthesis = s.fontSynthesis,
-            fontFamily = s.fontFamily,
-            fontFeatureSettings = s.fontFeatureSettings,
-            letterSpacing = s.letterSpacing,
-            baselineShift = s.baselineShift,
-            textGeometricTransform = s.textGeometricTransform,
-            localeList = s.localeList,
-            background = s.background,
-            textDecoration = s.textDecoration,
-            shadow = s.shadow,
-            platformStyle = s.platformStyle
+            spanStyle = SpanStyle(
+                color = s.color,
+                brush = s.brush,
+                alpha = s.alpha,
+                fontSize = s.fontSize,
+                fontWeight = s.fontWeight,
+                fontStyle = s.fontStyle,
+                fontSynthesis = s.fontSynthesis,
+                fontFamily = s.fontFamily,
+                fontFeatureSettings = s.fontFeatureSettings,
+                letterSpacing = s.letterSpacing,
+                baselineShift = s.baselineShift,
+                textGeometricTransform = s.textGeometricTransform,
+                localeList = s.localeList,
+                background = s.background,
+                textDecoration = s.textDecoration,
+                shadow = s.shadow
+            ),
+            paragraphStyle = ParagraphStyle()
         )
     }
-
         
 fun UIStr.strStyle(x: StrStyle): UIStr = makeUIStr {
     pushStyle(x)
