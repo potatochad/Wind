@@ -202,7 +202,7 @@ class VarDelegate<T>(
 
     // 1) FIRST TIME CREATION (runs once when "by" is attached)
     operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): VarDelegate<T> {
-        log("Created: ${property.name}")
+        log("Created: ${property.name}, autoId: ${autoId()}")
         return this
     }
 
