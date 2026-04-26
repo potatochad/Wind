@@ -224,8 +224,8 @@ class VarDelegate<T>(
 }
 
 fun autoId(): Str {
-	val e = Throwable().stackTrace[2]
-	return "${e.fileName}:${e.lineNumber}"
+    val e = Throwable().stackTrace.getOrNull(2)
+    return "${e?.fileName}:${e?.lineNumber}"
 }
 
 
