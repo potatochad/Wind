@@ -155,15 +155,7 @@ fun UIStr(vararg parts: Any): UIStr = makeUIStr {
 
 
 fun UIStr.keepOneStyle(newText: Str): UIStr {
-    return UIText(newText, this.style)
-}
-
-fun UIText(text: Any, style: StrStyle = StrStyle()): UIStr {
-    return makeUIStr {
-        pushStyle(style)
-        add(toUIStr(text))
-        pop()
-    }
+    return UIStr(this).style(this.style)
 }
 
 
@@ -171,6 +163,17 @@ val UIStr.style: StrStyle
     get() = spanStyles.firstOrNull()?.item ?: StrStyle()
 val Str.style: StrStyle
     get() = toUIStr(this).spanStyles.firstOrNull()?.item ?: StrStyle()
+
+fun UIStr.strStyle(x: StrStyle): UIStr = makeUIStr {
+    pushStyle(x)
+    add(this@strStyle.text)
+    pop()
+}
+fun Str.strStyle(x: StrStyle): UIStr = makeUIStr {
+    pushStyle(x)
+    add(this@strStyle)
+    pop()
+}
 
     
 val UIStr.textStyle: TextStyle
@@ -196,16 +199,6 @@ val UIStr.textStyle: TextStyle
         )
     }
         
-fun UIStr.strStyle(x: StrStyle): UIStr = makeUIStr {
-    pushStyle(x)
-    add(this@strStyle.text)
-    pop()
-}
-fun Str.strStyle(x: StrStyle): UIStr = makeUIStr {
-    pushStyle(x)
-    add(this@strStyle)
-    pop()
-}
 
 
 
@@ -252,8 +245,8 @@ fun StrStyle.platform(x: PlatformSpanStyle?) = copy(platformStyle = x)
 
 
 
-private fun Str.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (toUIStr(this).style.fun1()))
-private fun UIStr.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIText(this, (toUIStr(this).style.fun1()))
+private fun Str.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIStr(this).style.fun1()          
+private fun UIStr.sty(fun1: StrStyle.() -> StrStyle = { this }): UIStr = UIStr(this).style.fun1()
 
 
 
