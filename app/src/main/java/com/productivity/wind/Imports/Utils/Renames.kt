@@ -189,8 +189,8 @@ typealias mStr= m_<Str>
 	
 typealias mList<T> = MutableList<T>
 
-typealias ClassVar<T, R> = KMutableProperty1<T, R>
-typealias ClassValVar<T, R> = KProperty1<T, R>
+typealias OnlyVar<T, R> = KMutableProperty1<T, R>
+typealias VarVal<T, R> = KProperty1<T, R>
 
 typealias AppInfo = ResolveInfo
 
@@ -387,11 +387,11 @@ fun startActivity(intent: Intent) {
 
 class makeByFun<T>(
     private var value: T,
-	onBuild: WaitDo = {},
+	onBuild: Do = {},
 	onGet: Do = {},
 	onSet: Do = {},
 ) {
-	private fun fancyId(x: KProperty<*>): Str = "${x.name}: {autoId()}"
+	private fun fancyId(x: KProperty1<*>): Str = "${x.name}: {autoId()}"
 
 	lateinit var id: Str
 	var it by m(value)
@@ -405,14 +405,16 @@ class makeByFun<T>(
 
     // 2) GET
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        log("Get: ${id}")
+		onGet()
         return value
     }
 
     // 3) SET
     operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
-        log("Set $newValue")
         value = newValue
 		it = newValue
+		onSet()
     }
 }
+
+
