@@ -201,15 +201,15 @@ fun <T> VarDelegate(value: T): By<T> {
 	val x = By(value)
 	val theId = x.id
 	
-		x.onBuild{ prop ->
-		
-		}
-		.onGet{ prop ->
-		
-		}
-		.onSet{ prop, newValue ->
-		
-		}
+	x.onBuild{ prop ->
+		theId.blog("")
+	}
+	.onGet{ prop ->
+		newValue.blog("newValue")
+	}
+	.onSet{ prop, newValue ->
+		newValue.blog("newValue")
+	}
 	return x
 }
 
