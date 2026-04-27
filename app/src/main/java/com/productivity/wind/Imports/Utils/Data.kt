@@ -205,7 +205,7 @@ fun <T> VarDelegate(value: T): By<T> {
 		theId.blog("")
 	}
 	.onGet{ prop ->
-		newValue.blog("newValue")
+		prop.blog("prop")
 	}
 	.onSet{ prop, newValue ->
 		newValue.blog("newValue")
