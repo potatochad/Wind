@@ -390,7 +390,7 @@ class By<T>(
 
 	
 	private fun fancyId(x: KProperty<*>): Str = "${x.name}: {autoId()}"
-	lateinit var id: Str
+	var id by m("")
 	var it by m(value)
 
 	
