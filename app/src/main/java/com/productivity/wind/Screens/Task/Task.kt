@@ -532,7 +532,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 			wait(1000)
 			
 			if (tskOn && !Bar.leftApp){
-				log("${tsk.name}: ${Time(tsk.timeLeft)}")
+				// log("${tsk.name}: ${Time(tsk.timeLeft)}")
 		
 				timeWorked++
 
@@ -569,7 +569,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 		}
 	}
 	
-	log("WHAT USER SEES| ${tsk.name}: ${Time(tsk.timeLeft)}")
+	// log("WHAT USER SEES| ${tsk.name}: ${Time(tsk.timeLeft)}")
 	
 }
 
