@@ -155,6 +155,28 @@ class WebController(
     fun reload(){
         webView.reload()
     }
+
+    fun blockImages() {
+        shouldInterceptRequest { request ->
+            val url = request.url.toString().lowercase()
+
+            val isImage = url.endsWith(".png") ||
+                url.endsWith(".jpg") ||
+                url.endsWith(".jpeg") ||
+                url.endsWith(".webp") ||
+                url.endsWith(".bmp") ||
+                url.endsWith(".svg") ||
+                url.endsWith(".ico")
+
+        if (!isImage) return@shouldInterceptRequest null
+
+        WebResourceResponse(
+            "image/png",
+            "UTF-8",
+            ByteArrayInputStream(ByteArray(0))
+        )
+        }
+    }
 }
 
 @SuppressLint("SetJavaScriptEnabled")
