@@ -140,6 +140,15 @@ val <T> Collection<T>.notEmpty: Bool
 
 val <T> Collection<T>.empty: Bool
     get() = this.isEmpty()
+
+
+val Str.image: Bool
+    get() = this.endsWith(".jpg", yes) ||
+            this.endsWith(".jpeg", yes) ||
+            this.endsWith(".png", yes) ||
+            this.endsWith(".gif", yes) ||
+            this.endsWith(".webp", yes) ||
+            this.endsWith(".ico", yes)
     
 
 val Str.size get() = length
