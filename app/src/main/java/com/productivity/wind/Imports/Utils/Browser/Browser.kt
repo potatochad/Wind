@@ -162,10 +162,10 @@ class WebController(
 
             val host = request.url.host?.lowercase()
 
-         if (host?.contains("ytimg") == true) {
+            if (host?.contains("ytimg") == true) {
 
-          return WebResource.emptyImage()
-         }
+                return@shouldInterceptRequest WebResource.emptyImage()
+            }
             
             if (!url.image && Do()) return@shouldInterceptRequest null
             else WebResource.emptyImage()
