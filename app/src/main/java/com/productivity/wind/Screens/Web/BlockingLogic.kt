@@ -48,7 +48,7 @@ fun BlockingLogic(web: WebController){
 	web.doUpdateVisitedHistory { url, isReload ->
 		Bar.Url = url ?: "https://www.google.com"
 
-		if (Bar.Url == "youtube.com")
+		web.blockImages(url.hasAny("youtube.com"))
 
 		if (Bar.Url.hasAny("melrobbins.com/podcast/", "mfmpod.com", "youtube.com")) {
 			//Allow
