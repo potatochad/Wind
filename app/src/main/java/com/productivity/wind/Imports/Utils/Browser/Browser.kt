@@ -159,6 +159,13 @@ class WebController(
     fun blockImages(Do: () -> Bool = { yes }) {
         shouldInterceptRequest { request ->
             val url = request.url.toString().lowercase()
+
+            val host = request.url.host?.lowercase()
+
+         if (host?.contains("ytimg") == true) {
+
+          return WebResource.emptyImage()
+         }
             
             if (!url.image && Do()) return@shouldInterceptRequest null
             else WebResource.emptyImage()
