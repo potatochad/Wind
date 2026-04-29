@@ -160,13 +160,8 @@ class WebController(
         shouldInterceptRequest { request ->
             val url = request.url.toString().lowercase()
             
-            if (!url.image) return@shouldInterceptRequest null
-
-        WebResourceResponse(
-            "image/png",
-            "UTF-8",
-            ByteArrayInputStream(ByteArray(0))
-        )
+            if (!url.image && Do()) return@shouldInterceptRequest null
+            else WebResource.emptyImage()
         }
     }
 }
@@ -244,18 +239,26 @@ fun BlockKeywords(
     }
 }
 
-
-
-
-   
 val WebResourceRequest.image: Bool
-    get() {
-        val isImage = this.url.toString().lowercase().image
-        return isImage
+        get() = url.toString().lowercase().image
+
+
+class WebResource {
+    fun empty(): WebResourceResponse {
+        return WebResourceResponse(
+            "text/plain",
+            "UTF-8",
+            ByteArrayInputStream(ByteArray(0))
+        )
     }
-    
-fun EmptyWebResource(): WebResourceResponse {
-    return WebResourceResponse("text/plain", "utf-8", null)
+
+    fun emptyImage(): WebResourceResponse {
+        return WebResourceResponse(
+            "image/png",
+            null,
+            ByteArrayInputStream(ByteArray(0))
+        )
+    }
 }
 
 
