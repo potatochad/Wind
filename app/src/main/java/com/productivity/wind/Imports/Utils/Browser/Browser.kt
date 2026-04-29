@@ -24,7 +24,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.productivity.wind.Imports.Utils.String.*
-
+import java.io.ByteArrayInputStream
 
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
@@ -244,20 +244,22 @@ val WebResourceRequest.image: Bool
 
 
 class WebResource {
-    fun empty(): WebResourceResponse {
-        return WebResourceResponse(
-            "text/plain",
-            "UTF-8",
-            ByteArrayInputStream(ByteArray(0))
-        )
-    }
+    companion object {
+        fun empty(): WebResourceResponse {
+            return WebResourceResponse(
+                "text/plain",
+                "UTF-8",
+                ByteArrayInputStream(ByteArray(0))
+            )
+        }
 
-    fun emptyImage(): WebResourceResponse {
-        return WebResourceResponse(
-            "image/png",
-            null,
-            ByteArrayInputStream(ByteArray(0))
-        )
+        fun emptyImage(): WebResourceResponse {
+            return WebResourceResponse(
+                "image/png",
+                null,
+                ByteArrayInputStream(ByteArray(0))
+            )
+        }
     }
 }
 
