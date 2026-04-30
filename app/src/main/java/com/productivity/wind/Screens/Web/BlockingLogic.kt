@@ -50,7 +50,12 @@ fun BlockingLogic(web: WebController){
 		Bar.Url.blog("BarUrl")
 		web.blockImages({Bar.Url.hasAny("youtube.com")})
 
-		if (Bar.Url.hasAny("melrobbins.com/podcast/", "mfmpod.com", "youtube.com")) {
+		if (Bar.Url.hasAny(
+			"melrobbins.com/podcast/", 
+			"mfmpod.com", 
+			"youtube.com",
+		)) {
+			if (Bar.Url.hasAny("/shorts/")) Block()
 			//Allow
 		} else {
 			Block()
