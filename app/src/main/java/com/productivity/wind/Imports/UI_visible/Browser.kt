@@ -150,45 +150,27 @@ fun WebXml(web: WebController) {
     BackHandler {
         web.back()
     }
-    /*
     val state = rememberPullToRefreshState()
     var isRefreshing by r(no)
-    
-    web.onPageFinished{
-        isRefreshing = no
-    }
 
+    LaunchedEffect(state.distanceFraction) {
+        log("Pull progress: ${state.distanceFraction}")
+    }
+    
     PullToRefreshBox(
         isRefreshing = isRefreshing,
+        state = state,
         onRefresh = {
-            Do {
-                isRefreshing = yes
-                web.reload()
-                wait(300)
-                isRefreshing = no
-            }
+            isRefreshing = no
         }
     ) {
-     */
         AndroidView(
             factory = { 
-             /*
-                val swipe = SwipeRefreshLayout(context)
-
-                swipe.setOnRefreshListener {
-                    web.reload()
-                    swipe.isRefreshing = false
-                }
-
-                swipe.addView(web.rootView)
-
-                swipe
-                */
              web.rootView
             },
             modifier = Mod.maxS(),
         )
-   // }
+    }
 }
 
 
