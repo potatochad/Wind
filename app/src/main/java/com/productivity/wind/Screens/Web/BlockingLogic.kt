@@ -43,9 +43,7 @@ fun BlockingLogic(web: WebController){
 		goTo("WebHome")
 		Bar.Url = "google.com"
 	}
-	/*
-
-
+	
 	web.doUpdateVisitedHistory { url, isReload ->
 		Bar.Url = url ?: "https://www.google.com"
 
@@ -58,7 +56,6 @@ fun BlockingLogic(web: WebController){
 			Block()
 		}
 	}
-	*/
 
 
 	/*
