@@ -73,6 +73,8 @@ class WebController(
 
                 view?.gray(90f)
                 swipeRefresh.isRefreshing = false
+
+                view?.hideYouTubeShorts()
                 
                 onPageFinished.forEach { it(url) }
             }
