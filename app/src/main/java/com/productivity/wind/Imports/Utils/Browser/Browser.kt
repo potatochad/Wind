@@ -62,6 +62,7 @@ class WebController(
         swipeRefresh.setOnChildScrollUpCallback { _, _ ->
             webView.scrollY > 0
         }
+        // swipe.setDistanceToTriggerSync(250)
         
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
@@ -71,6 +72,7 @@ class WebController(
                 super.onPageFinished(view, url)
 
                 view?.gray(90f)
+                swipe.isRefreshing = false
                 
                 onPageFinished.forEach { it(url) }
             }
