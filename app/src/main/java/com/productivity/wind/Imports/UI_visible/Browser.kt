@@ -149,29 +149,13 @@ import com.productivity.wind.Imports.Utils.Browser.*
 @Composable
 fun WebXml(web: WebController) {
     BackHandler { web.back() }
-    val state = rememberPullToRefreshState()
-    var isRefreshing by r(no)
-
-    LaunchedEffect(state.distanceFraction) {
-        log("Pull progress: ${state.distanceFraction}")
-    }
     
-    PullToRefreshBox(
-        isRefreshing = isRefreshing,
-        state = state,
-        onRefresh = {
-            isRefreshing = no
-        }
-    ) {
-        LazzyColumn(Mod.Vscroll){
-            AndroidView(
-                factory = { 
-                    web.rootView
-                },
-                modifier = Mod.maxS(),
-            )
-        }
-    }
+    AndroidView(
+        factory = { 
+            web.rootView
+        },
+        modifier = Mod.maxS(),
+    )
 }
 
 
