@@ -26,11 +26,22 @@ import android.widget.FrameLayout
 import com.productivity.wind.Imports.Utils.String.*
 import java.io.ByteArrayInputStream
 
+
+
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
 ) {
-    val rootView: View = LayoutInflater.from(ctx).inflate(R.layout.web, null, false)
-    val webView: WebView = rootView.findViewById(R.id.myWebView)
+    val rootView: View =
+        LayoutInflater.from(ctx).inflate(R.layout.web, null, false)
+
+    val webView: WebView =
+        rootView.findViewById(R.id.myWebView)
+
+    val swipeRefresh: SwipeRefreshLayout =
+        rootView.findViewById(R.id.swipeRefreshContainer)
+
+
+
     
     private var shouldOverrideUrlLoading = mutableListOf<(String?) -> Boolean>()
     private var onPageFinished = mutableListOf<(String?) -> Unit>()
@@ -44,6 +55,14 @@ class WebController(
 
     
     init {
+     swipeRefresh.setOnRefreshListener {
+            webView.reload()
+        }
+
+        swipeRefresh.setOnChildScrollUpCallback { _, _ ->
+            webView.scrollY > 0
+        }
+        
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 return shouldOverrideUrlLoading.any { it(url) } // return true if any handler wants to override
