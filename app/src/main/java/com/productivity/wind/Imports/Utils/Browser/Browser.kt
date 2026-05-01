@@ -72,7 +72,7 @@ class WebController(
                 super.onPageFinished(view, url)
 
                 view?.gray(90f)
-                swipe.isRefreshing = false
+                swipeRefresh.isRefreshing = false
                 
                 onPageFinished.forEach { it(url) }
             }
