@@ -37,32 +37,29 @@ fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
 fun Any?.hideYouTubeShorts() {
     this.js(
         """
-        (function() {
-            if (document.getElementById('yt-shorts-blocker')) return;
+        (function () {
+    function hideShorts() {
+        document.querySelectorAll('a[href*="/shorts/"]').forEach(el => {
+            const box = el.closest('ytd-rich-item-renderer, ytd-grid-video-renderer, ytd-video-renderer');
+            if (box) box.style.display = 'none';
+        });
 
-            const style = document.createElement('style');
-            style.id = 'yt-shorts-blocker';
+        document.querySelectorAll('ytd-reel-shelf-renderer').forEach(el => {
+            el.style.display = 'none';
+        });
+    }
 
-            style.textContent = `
-                /* Shorts in subscription feed */
-                #items.ytd-grid-renderer
-                  > ytd-grid-video-renderer.ytd-grid-renderer:has([href*="/shorts/"]) {
-                    display: none !important;
-                }
+    hideShorts();
 
-                /* Sidebar link to Shorts */
-                [title*="Shorts"] {
-                    display: none !important;
-                }
+    const observer = new MutationObserver(() => {
+        hideShorts();
+    });
 
-                /* Shorts shelf on Home page */
-                [is-shorts] {
-                    display: none !important;
-                }
-            `;
-
-            document.head.appendChild(style);
-        })();
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
         """.trimIndent(),
         null
     )
