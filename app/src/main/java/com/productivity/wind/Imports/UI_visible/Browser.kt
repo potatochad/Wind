@@ -141,15 +141,14 @@ import java.util.*
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.pulltorefresh.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
-
 import com.productivity.wind.Imports.Utils.Browser.*
+
+
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebXml(web: WebController) {
-    BackHandler {
-        web.back()
-    }
+    BackHandler { web.back() }
     val state = rememberPullToRefreshState()
     var isRefreshing by r(no)
 
@@ -164,12 +163,14 @@ fun WebXml(web: WebController) {
             isRefreshing = no
         }
     ) {
-        AndroidView(
-            factory = { 
-             web.rootView
-            },
-            modifier = Mod.maxS(),
-        )
+        LazzyColumn(Mod.Vscroll){
+            AndroidView(
+                factory = { 
+                    web.rootView
+                },
+                modifier = Mod.maxS(),
+            )
+        }
     }
 }
 
