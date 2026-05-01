@@ -34,6 +34,40 @@ fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
     }
 }
 
+fun Any?.hideYouTubeShorts() {
+    this.js(
+        """
+        (function() {
+            if (document.getElementById('yt-shorts-blocker')) return;
+
+            const style = document.createElement('style');
+            style.id = 'yt-shorts-blocker';
+
+            style.textContent = `
+                /* Shorts in subscription feed */
+                #items.ytd-grid-renderer
+                  > ytd-grid-video-renderer.ytd-grid-renderer:has([href*="/shorts/"]) {
+                    display: none !important;
+                }
+
+                /* Sidebar link to Shorts */
+                [title*="Shorts"] {
+                    display: none !important;
+                }
+
+                /* Shorts shelf on Home page */
+                [is-shorts] {
+                    display: none !important;
+                }
+            `;
+
+            document.head.appendChild(style);
+        })();
+        """.trimIndent(),
+        null
+    )
+}
+
 fun Any?.forceGoogleInputFocus() {
     this.js(
         """
