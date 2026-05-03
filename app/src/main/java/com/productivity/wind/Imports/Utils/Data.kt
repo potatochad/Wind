@@ -199,10 +199,9 @@ object AppData {
 
 fun <T> VarDelegate(value: T): By<T> {
 	val x = By(value)
-	val theId = x.id
 	
-	x.onBuild{ prop ->
-		theId.blog("id")
+	x.onBuild{ prop, id ->
+		id.blog("id")
 	}
 	.onGet{ prop ->
 		prop.blog("prop")
