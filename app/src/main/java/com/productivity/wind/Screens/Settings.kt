@@ -38,8 +38,9 @@ fun SettingsScreen() {
 			title = "Block Uninstall",
 			onClick = {
 				if (!Permission.deviceAdmin{
-					//granted
+					Bar.noUninstall = yes
 				}){
+					Bar.noUninstall = no
 					Vlog("Need Permission")
 				}
 			},
