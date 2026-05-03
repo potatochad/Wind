@@ -384,7 +384,7 @@ class By<T>(
     private var onGet: Do_<ValVar> = {}
     private var onSet: Do2_<ValVar, T> = { _, _ -> }
 
-	fun onBuild(x: Do_<ValVar>) = apply { onBuild = x }
+	fun onBuild(x: Do2_<ValVar, Str>) = apply { onBuild = x }
     fun onGet(x: Do_<ValVar>) = apply { onGet = x }
     fun onSet(x: Do2_<ValVar, T>) = apply { onSet = x }
 
