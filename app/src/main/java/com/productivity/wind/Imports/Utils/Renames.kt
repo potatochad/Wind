@@ -389,7 +389,7 @@ class By<T>(
     fun onSet(x: Do2_<ValVar, T>) = apply { onSet = x }
 
 	
-	private fun fancyId(x: KProperty<*>): Str = "${x.name}: {autoId()}"
+	private fun fancyId(x: KProperty<*>): Str = "${x.name}: ${autoId()}"
 	var id by m("")
 	var it by m(value)
 
