@@ -144,7 +144,7 @@ fun Web(){
             }
         },
         scroll = no,
-        dividerM = no,
+        dividerP = no,
 		onBackIcon = { goTo("Main") }
     ) {
         WebXml(web)
