@@ -380,7 +380,7 @@ fun startActivity(intent: Intent) {
 class By<T>(
     private var value: T,
 ) {
-	private var onBuild: Do2_<ValVar, Str> = {}
+	private var onBuild: Do2_<ValVar, Str> = { _, _ -> }
     private var onGet: Do_<ValVar> = {}
     private var onSet: Do2_<ValVar, T> = { _, _ -> }
 
