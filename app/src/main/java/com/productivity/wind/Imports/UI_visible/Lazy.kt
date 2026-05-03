@@ -416,15 +416,15 @@ fun LazyScreen(
 	scroll: Bool = yes,
     
     divider: Bool = yes,
-    dividerM: Bool = yes,
+    dividerP: Bool = yes,
 
     topH: Int = 44,
     UI: ui,
 ) {
     Column(Mod.black()) {
         LazyHeader(top, onBackIcon, backIcon, Mod.zIndex(1f), divider, topH)
-		if (dividerM) move(10)
         Column(Mod.black().Vscroll(scroll = scroll)) {
+			if (dividerP) move(10)
 			/* !! Column madness helps avoid scroll crash */
 			Column { UI() }
 			Box(Mod.s(350).transparent())
