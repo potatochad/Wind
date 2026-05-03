@@ -380,7 +380,7 @@ fun startActivity(intent: Intent) {
 class By<T>(
     private var value: T,
 ) {
-	private var onBuild: Do_<ValVar> = {}
+	private var onBuild: Do2_<ValVar, Str> = {}
     private var onGet: Do_<ValVar> = {}
     private var onSet: Do2_<ValVar, T> = { _, _ -> }
 
@@ -390,13 +390,13 @@ class By<T>(
 
 	
 	private fun fancyId(x: KProperty<*>): Str = "${x.name}: ${autoId()}"
-	var id by m("")
+	private var id by m("")
 	var it by m(value)
 
 	
     operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): By<T> {
 		id = fancyId(property)
-		onBuild(property)
+		onBuild(property, id)
         return this
     }
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
