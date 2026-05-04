@@ -75,7 +75,9 @@ class WebController(
                 swipeRefresh.isRefreshing = false
 
                 view?.hideYouTubeShorts()
+				Each(1000){
                 foundYoutubeChannel()
+				}
                 
                 onPageFinished.forEach { it(url) }
             }
