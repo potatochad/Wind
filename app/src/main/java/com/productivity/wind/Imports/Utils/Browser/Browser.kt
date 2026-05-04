@@ -75,6 +75,7 @@ class WebController(
                 swipeRefresh.isRefreshing = false
 
                 view?.hideYouTubeShorts()
+                foundYoutubeChannel()
                 
                 onPageFinished.forEach { it(url) }
             }
@@ -193,6 +194,23 @@ class WebController(
             if (!url.image && Do()) return@shouldInterceptRequest null
             else WebResource.emptyImage()
         }
+    }
+    fun foundYoutubeChannel(channel: Str = "") {
+		val cleanStyle = """
+			(function() {
+				const style = document.createElement('style');
+				style.innerHTML = `
+					* {
+						color: red !important;
+						background: rgba(255, 0, 0, 0.05) !important;
+						border-color: red !important;
+					}
+				`;
+				document.head.appendChild(style);
+			})();
+		""".trimIndent()
+
+		webView?.evaluateJavascript(cleanStyle, null)
     }
 }
 
