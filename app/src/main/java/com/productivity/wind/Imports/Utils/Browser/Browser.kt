@@ -105,21 +105,21 @@ class WebController(
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 onProgressChanged.forEach { it(newProgress) }
             }
-            override fun onReceivedTitle(view: WebView?, title: String?) {
+            override fun onReceivedTitle(view: WebView?, title: Str?) {
                 onReceivedTitle.forEach { it(title) }
             }
 			override fun onConsoleMessage(message: ConsoleMessage): Bool {
 				val msg = message.message()
 
-				if (msg.startsWith("[APP]")) {
-					Log.d("WEBVIEW_JS", msg)
+				if (msg.startsWith("[WINDWEB_LOG]")) {
+					Log.d("WEB_LOG", msg)
 				}
-				return true
+				return yes
 			}
         }
     }
 
-    fun shouldOverrideUrlLoading(Do: (String?) -> Boolean) {
+    fun shouldOverrideUrlLoading(Do: (Str?) -> Bool) {
         shouldOverrideUrlLoading.add(Do)
     }
     fun onPageFinished(Do: (String?) -> Unit) {
