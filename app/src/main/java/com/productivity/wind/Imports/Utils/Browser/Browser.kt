@@ -108,6 +108,14 @@ class WebController(
             override fun onReceivedTitle(view: WebView?, title: String?) {
                 onReceivedTitle.forEach { it(title) }
             }
+			override fun onConsoleMessage(message: ConsoleMessage): Bool {
+				val msg = message.message()
+
+				if (msg.startsWith("[APP]")) {
+					Log.d("WEBVIEW_JS", msg)
+				}
+				return true
+			}
         }
     }
 
