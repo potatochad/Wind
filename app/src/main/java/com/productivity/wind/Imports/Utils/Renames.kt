@@ -188,6 +188,8 @@ typealias mInt= m_<Int>
 typealias mStr= m_<Str>
 	
 typealias mList<T> = MutableList<T>
+typealias MutableStateList<T> = SnapshotStateList<T>
+
 
 typealias ClassVar_<T, R> = KMutableProperty1<T, R>
 typealias ClassVar = KMutableProperty1<*, *>
@@ -232,7 +234,7 @@ inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotState
 @Composable
 fun <T> track(value: () -> T): State<T> = r { derivedStateOf(value) }
 fun <T> mList() = mutableStateListOf<T>()
-
+fun <T> mStateList() = mutableStateListOf<T>()
 
 fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Mod =
     this.then(
