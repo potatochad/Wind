@@ -33,16 +33,20 @@ fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
         callback?.invoke(result)
     }
 }
-fun Any?.runJSfun(code: Str, callback: ((Str?) -> Unit)? = null) {
-    toWeb(this)?.evaluateJavascript(
-        "(function() {" +
-        code +
-            "})();"
-    ) { result ->
-        callback?.invoke(result)
-    }
+fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
+    this.js(
+        """
+        (function() {
+            try {
+                $code
+            } catch (e) {
+                console.log("JS error:", e);
+            }
+        })();
+        """.trimIndent(),
+        callback
+    )
 }
-
 
 fun Any?.hideYouTubeShorts() {
     this.js(
