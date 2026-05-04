@@ -50,7 +50,7 @@ fun SettingsScreen() {
 			topPadding = 1.dp,
 		)
         
-        var restore = r_m(no)
+        var restore = r(no)
         LazyItem(
             icon = { BigIcon.Restore(darkBlue) },
             title = "Restore",
@@ -62,7 +62,7 @@ fun SettingsScreen() {
 	    Restore(restore)
 		
 
-        var backup = r_m(no)
+        var backup = r(no)
         LazyItem(
             topPadding = 1.dp,
             icon = { BigIcon.Backup(darkBlue) },
