@@ -187,7 +187,7 @@ typealias mBool= m_<Bool>
 typealias mInt= m_<Int>
 typealias mStr= m_<Str>
 	
-typealias mList<T> = MutableList<T>
+	
 typealias MutableStateList<T> = SnapshotStateList<T>
 
 
@@ -229,10 +229,6 @@ fun <T> onChange(vararg keys: Any?, block: () -> T): T {
     return remember(*keys) { block() }
 }
 
-inline fun <reified T> ml(): MutableList<T> = mutableListOf()
-inline fun <reified T> ml(@Suppress("UNUSED_PARAMETER") dummy: T): SnapshotStateList<T> { return mutableStateListOf() }
-@Composable
-fun <T> track(value: () -> T): State<T> = r { derivedStateOf(value) }
 fun <T> mList() = mutableStateListOf<T>()
 fun <T> mStateList() = mutableStateListOf<T>()
 
