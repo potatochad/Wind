@@ -559,8 +559,8 @@ fun LazyMenu(
     onDismiss: Do? = null,
     ui: ui,
 ) {
-    val visible = r_m(yes)
-    val internalVisible = r_m(no)
+    val visible = r(yes)
+    val internalVisible = r(no)
 
     // Trigger showing/hiding Popup
     RunOnce(menu) {
