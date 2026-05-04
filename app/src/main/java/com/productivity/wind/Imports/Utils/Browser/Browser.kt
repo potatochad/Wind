@@ -43,15 +43,15 @@ class WebController(
 
 
     
-    private var shouldOverrideUrlLoading = mutableListOf<(String?) -> Boolean>()
-    private var onPageFinished = mutableListOf<(String?) -> Unit>()
-    private var onLoadResource = mutableListOf<(String?) -> Unit>()
-    private val doUpdateVisitedHistory = mutableListOf<(String?, Boolean) -> Unit>()
-    private val onPageStarted = mutableListOf<(String?) -> Unit>()
-    private val shouldInterceptRequest = mutableListOf<(WebResourceRequest) -> WebResourceResponse?>()
+    private var shouldOverrideUrlLoading = mutableListOf<(Str?) -> Bool>()
+    private var onPageFinished = mStateList<(Str?) -> Unit>()
+    private var onLoadResource = mStateList<(Str?) -> Unit>()
+    private val doUpdateVisitedHistory = mStateList<(Str?, Bool) -> Unit>()
+    private val onPageStarted = mutableListOf<(Str?) -> Unit>()
+    private val shouldInterceptRequest = mStateList<(WebResourceRequest) -> WebResourceResponse?>()
 
-    private var onProgressChanged = mutableListOf<(Int) -> Unit>()
-    private var onReceivedTitle = mutableListOf<(String?) -> Unit>()
+    private var onProgressChanged = mStateList<(Int) -> Unit>()
+    private var onReceivedTitle = mStateList<(Str?) -> Unit>()
 
     
     init {
