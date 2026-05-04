@@ -153,7 +153,6 @@ var <T> m_<T>.it: T
     set(value) { this.value = value }
 
 //tiny more complex renames
-fun <T> m(value: T) = mutableStateOf(value)
 fun <T> set(state: m_<T>?, value: T) { state?.value = value }
 fun show(state: m_<Bool>?) = set(state, yes)
 fun hide(state: m_<Bool>?) = set(state, no)
@@ -219,10 +218,9 @@ fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {
 
 @Composable
 fun <T> r(x: () -> T) = remember { x() }
+fun <T> m(value: T) = mutableStateOf(value)
 @Composable
-fun <T> r_m(x: T) = r { m(x) }
-@Composable
-fun <T> r(x: T) = r_m(x)
+fun <T> r(x: T) = r { m(x) }
 
 @Composable
 fun <T> onChange(vararg keys: Any?, block: () -> T): T {
