@@ -75,7 +75,7 @@ class WebController(
                 swipeRefresh.isRefreshing = no
 
                 view?.hideYouTubeShorts()
-				showMovingRedBox()
+				// showMovingRedBox()
                 
                 onPageFinished.forEach { it(url) }
             }
