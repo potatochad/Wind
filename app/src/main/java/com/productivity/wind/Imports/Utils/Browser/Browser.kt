@@ -65,14 +65,14 @@ class WebController(
         // swipe.setDistanceToTriggerSync(250)
         
         webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            override fun shouldOverrideUrlLoading(view: WebView?, url: Str?): Bool {
                 return shouldOverrideUrlLoading.any { it(url) } // return true if any handler wants to override
             }
-            override fun onPageFinished(view: WebView?, url: String?) {
+            override fun onPageFinished(view: WebView?, url: Str?) {
                 super.onPageFinished(view, url)
 
                 view?.gray(90f)
-                swipeRefresh.isRefreshing = false
+                swipeRefresh.isRefreshing = no
 
                 view?.hideYouTubeShorts()
 				showMovingRedBox()
@@ -87,7 +87,7 @@ class WebController(
                 super.doUpdateVisitedHistory(view, url, isReload)
                 doUpdateVisitedHistory.forEach { it(url, isReload) } // call your handlers
             }
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            override fun onPageStarted(view: WebView?, url: Str?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 onPageStarted.forEach { it(url) }
             }
@@ -122,16 +122,16 @@ class WebController(
     fun shouldOverrideUrlLoading(Do: (Str?) -> Bool) {
         shouldOverrideUrlLoading.add(Do)
     }
-    fun onPageFinished(Do: (String?) -> Unit) {
+    fun onPageFinished(Do: (Str?) -> Unit) {
         onPageFinished.add(Do)
     }
-    fun onLoadResource(Do: (String?) -> Unit) {
+    fun onLoadResource(Do: (Str?) -> Unit) {
         onLoadResource.add(Do)
     }
-    fun doUpdateVisitedHistory(handler: (String?, Boolean) -> Unit) {
+    fun doUpdateVisitedHistory(handler: (Str?, Bool) -> Unit) {
         doUpdateVisitedHistory.add(handler)
     }
-    fun onPageStarted(handler: (String?) -> Unit) {
+    fun onPageStarted(handler: (Str?) -> Unit) {
         onPageStarted.add(handler)
     }
     fun shouldInterceptRequest(handler: (WebResourceRequest) -> WebResourceResponse?) {
@@ -142,7 +142,7 @@ class WebController(
     fun onProgressChanged(handler: (Int) -> Unit) {
         onProgressChanged.add(handler)
     }
-    fun onReceivedTitle(handler: (String?) -> Unit) {
+    fun onReceivedTitle(handler: (Str?) -> Unit) {
         onReceivedTitle.add(handler)
     }    
 
