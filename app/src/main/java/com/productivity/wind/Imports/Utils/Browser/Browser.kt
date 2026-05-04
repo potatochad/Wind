@@ -25,7 +25,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.productivity.wind.Imports.Utils.String.*
 import java.io.ByteArrayInputStream
-
+import android.util.Log
 
 
 class WebController(
