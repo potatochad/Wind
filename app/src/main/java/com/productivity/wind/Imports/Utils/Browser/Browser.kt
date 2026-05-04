@@ -75,9 +75,7 @@ class WebController(
                 swipeRefresh.isRefreshing = false
 
                 view?.hideYouTubeShorts()
-				Each(1000){
-                foundYoutubeChannel()
-				}
+				showMovingRedBox()
                 
                 onPageFinished.forEach { it(url) }
             }
@@ -197,6 +195,43 @@ class WebController(
             else WebResource.emptyImage()
         }
     }
+	fun showMovingRedBox() {
+
+	val js = """
+		(function() {
+
+			if (document.getElementById("moving-box")) return;
+
+			const box = document.createElement("div");
+			box.id = "moving-box";
+
+			box.style.position = "fixed";
+			box.style.left = "20px";
+			box.style.top = "100px";
+			box.style.width = "120px";
+			box.style.height = "120px";
+			box.style.background = "red";
+			box.style.zIndex = "999999";
+			box.style.borderRadius = "12px";
+
+			document.body.appendChild(box);
+
+			let direction = 1;
+
+			setInterval(() => {
+				let top = parseInt(box.style.top);
+
+				if (top > window.innerHeight - 150) direction = -1;
+				if (top < 50) direction = 1;
+
+				box.style.top = (top + direction * 5) + "px";
+			}, 16);
+
+		})();
+	""".trimIndent()
+
+	webView?.evaluateJavascript(js, null)
+	}
     fun foundYoutubeChannel(channel: Str = "") {
 		val cleanStyle = """
 			(function() {
