@@ -48,6 +48,16 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
     )
 }
 
+fun Any?.importsJS() {
+    this.jsFun(
+        """
+        window.log = function(msg) {
+           console.log("[APP] " + msg);
+        };
+        """
+    )
+}
+
 fun Any?.hideYouTubeShorts() {
     this.js(
         """
