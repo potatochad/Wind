@@ -228,7 +228,6 @@ fun <T> onChange(vararg keys: Any?, block: () -> T): T {
 }
 
 fun <T> mList() = mutableStateListOf<T>()
-fun <T> mStateList() = mutableStateListOf<T>()
 
 fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Mod =
     this.then(
