@@ -48,6 +48,8 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
     )
 }
 
+
+
 fun Any?.importsJS() {
     this.jsFun(
         """
@@ -57,6 +59,8 @@ fun Any?.importsJS() {
         """
     )
 }
+
+
 
 fun Any?.hideYouTubeShorts() {
     this.js(
