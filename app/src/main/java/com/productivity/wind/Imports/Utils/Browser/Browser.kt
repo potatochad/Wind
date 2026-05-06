@@ -68,6 +68,11 @@ class WebController(
             override fun shouldOverrideUrlLoading(view: WebView?, url: Str?): Bool {
                 return shouldOverrideUrlLoading.any { it(url) } // return true if any handler wants to override
             }
+			override fun onPageCommitVisible(view: WebView?, url: Str?) {
+				super.onPageCommitVisible(view, url)
+
+				view?.importsJS()
+			}
             override fun onPageFinished(view: WebView?, url: Str?) {
                 super.onPageFinished(view, url)
 
