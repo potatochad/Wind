@@ -54,7 +54,7 @@ fun Any?.importsJS() {
     this.jsFun(
         """
         window.log = function(msg) {
-           console.log("[APP] " + msg);
+           console.log("[WINDWEB_LOG] " + msg);
         };
         """
     )
