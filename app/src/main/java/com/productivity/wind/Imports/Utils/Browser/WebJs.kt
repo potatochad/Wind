@@ -76,6 +76,7 @@ fun Any?.hideYouTubeShorts() {
             el.style.display = 'none';
         });
     }
+    log("hello from web!");
 
     hideShorts();
 
