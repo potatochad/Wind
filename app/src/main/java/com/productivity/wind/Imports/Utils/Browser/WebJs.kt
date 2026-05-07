@@ -56,6 +56,7 @@ fun Any?.importsJS() {
         window.log = function(msg) {
            console.log("[WINDWEB_LOG] " + msg);
         };
+        log("Hello function called");
         """
     )
 }
