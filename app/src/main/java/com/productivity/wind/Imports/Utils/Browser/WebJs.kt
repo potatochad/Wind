@@ -72,9 +72,16 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
         function hideChannels() {
 
-            const items = document.querySelectorAll(
-                'ytd-video-renderer, ytd-rich-item-renderer'
-            );
+            const items = document.querySelectorAll(`
+               ytd-video-renderer,
+               ytd-rich-item-renderer,
+               ytd-compact-video-renderer,
+               ytd-grid-video-renderer,
+               ytd-playlist-renderer,
+               ytd-radio-renderer,
+               ytd-reel-shelf-renderer,
+               ytd-rich-section-renderer
+            `);
 
             log(`ITEM COUNT: ${'$'}{items.length}`);
             
