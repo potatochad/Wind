@@ -120,7 +120,7 @@ class WebController(
 				log("msg.has([WINDWEB_LOG]): ${msg.has("[WINDWEB_LOG]")}")
 
 				if (msg.has("[WINDWEB_LOG]")) {
-					Log.d("WEB_LOG", msg)
+					Log.e("WEB_LOG", msg)
 				}
 				return yes
 			}
