@@ -49,7 +49,7 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
 }
 
 
-
+//RUNS BEFORE PAGE LOADS
 fun Any?.importsJS() {
     this.jsFun(
         """
