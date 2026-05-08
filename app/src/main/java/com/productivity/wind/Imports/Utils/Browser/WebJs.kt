@@ -71,7 +71,6 @@ fun Any?.hideYoutubeChannel(channel: Str) {
         const target = "$channel".toLowerCase();
 
         function scan() {
-
             const items = document.querySelectorAll('a');
 
             log(`LINK COUNT: ${'$'}{items.length}`);
@@ -80,7 +79,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                 const href = item.href || "";
                 const text = item.innerText || "";
 
-                log(`LINK ${'$'}{index}: ${'$'}{href}`);
+                log(`LINK ${'$'}{index}: ${'$'}{href}, TEXT: ${'$'}{text}`);
             });
         }
 
