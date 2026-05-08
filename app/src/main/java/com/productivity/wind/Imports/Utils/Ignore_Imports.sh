@@ -50,9 +50,9 @@ find_and_source() {
 }
 
 
-KEYSTORE_PASSWORD="123456"
-KEY_ALIAS="my-key"
-KEY_PASSWORD="123456"
+KEYSTORE_PASSWORD="123456789"
+KEY_ALIAS="my-keyAlias"
+KEY_PASSWORD="123456789"
 KEYSTORE_PATH="$(pwd)/app/my-release-key.keystore"
 
 Create_Keystore() {
