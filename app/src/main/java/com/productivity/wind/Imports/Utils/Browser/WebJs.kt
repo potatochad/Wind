@@ -69,14 +69,27 @@ fun Any?.hideYoutubeChannel(channel: Str) {
         log("Channel blocker starting...");
 
         const target = "$channel".toLowerCase();
-         const items = document.querySelectorAll('a');
-         log(`LINK COUNT: ${'$'}{items.length}`);
-            
-         items.forEach((item, index) => {
-         const href = item.href || "";
-         const text = item.innerText || "";
-         log(`LINK ${'$'}{index}: ${'$'}{href} | TEXT: ${'$'}{text}`);
-         });
+
+        function scan() {
+
+            const items = document.querySelectorAll('a');
+
+            log(`LINK COUNT: ${'$'}{items.length}`);
+
+            items.forEach((item, index) => {
+                const href = item.href || "";
+                const text = item.innerText || "";
+
+                log(`LINK ${'$'}{index}: ${href}`);
+            });
+        }
+
+        // run immediately
+        scan();
+
+        // keep scanning (YouTube loads late)
+        setInterval(scan, 3000);
+
         """
     )
 }
