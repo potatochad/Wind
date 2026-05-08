@@ -56,44 +56,56 @@ fun Any?.importsJS() {
         window.log = function(msg) {
            console.log("[WINDWEB_LOG] " + msg);
         };
-        log("Hello function called");
+        // log("Hello function called");
         """
     )
 }
 
 
 
-fun Any?.hideYouTubeShorts() {
-    this.js(
+fun Any?.hideYoutubeChannel(channel: Str) {
+    this.jsFun(
         """
-        (function () {
-    function hideShorts() {
-        document.querySelectorAll('a[href*="/shorts/"]').forEach(el => {
-            const box = el.closest('ytd-rich-item-renderer, ytd-grid-video-renderer, ytd-video-renderer');
-            if (box) box.style.display = 'none';
+        log("Channel blocker starting...");
+
+        const target = "$channel".toLowerCase();
+
+        function hideChannels() {
+
+            const items = document.querySelectorAll(
+                'ytd-video-renderer, ytd-rich-item-renderer'
+            );
+
+            items.forEach(item => {
+
+                const text = (item.innerText || "").toLowerCase();
+
+                if (text.includes(target)) {
+                    item.style.display = "none";
+                    log("HIDDEN: " + target);
+                }
+            });
+        }
+
+        // run once
+        hideChannels();
+
+        // keep updating for new videos
+        const observer = new MutationObserver(() => {
+            hideChannels();
         });
 
-        document.querySelectorAll('ytd-reel-shelf-renderer').forEach(el => {
-            el.style.display = 'none';
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
         });
-    }
-    log("hello from web!");
 
-    hideShorts();
-
-    const observer = new MutationObserver(() => {
-        hideShorts();
-    });
-
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
-})();
-        """.trimIndent(),
-        null
+        log("Channel blocker active: " + target);
+        """
     )
 }
+
+
 
 fun Any?.forceGoogleInputFocus() {
     this.js(
