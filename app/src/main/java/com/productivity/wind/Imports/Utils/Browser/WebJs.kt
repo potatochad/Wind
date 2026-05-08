@@ -40,7 +40,7 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
             try {
                 $code
             } catch (e) {
-                console.log("JS error:", e);
+                log("JS error: " + e.message);
             }
         })();
         """.trimIndent(),
@@ -69,59 +69,14 @@ fun Any?.hideYoutubeChannel(channel: Str) {
         log("Channel blocker starting...");
 
         const target = "$channel".toLowerCase();
-
-        function hideChannels() {
-
-            const items = document.querySelectorAll(`
-               ytd-video-renderer,
-               ytd-rich-item-renderer,
-               ytd-compact-video-renderer,
-               ytd-grid-video-renderer,
-               ytd-playlist-renderer,
-               ytd-radio-renderer,
-               ytd-reel-shelf-renderer,
-               ytd-rich-section-renderer
-            `);
-
-            //ITEM COUNT FIND ALWAYS ZEROOOO
-            log(`ITEM COUNT: ${'$'}{items.length}`);
+         const items = document.querySelectorAll('a');
+         log(`LINK COUNT: ${'$'}{items.length}`);
             
-            const items = document.querySelectorAll('a');
-            log(`LINK COUNT: ${'$'}{items.length}`);
-            
-            items.forEach((item, index) => {
-            const href = item.href || "";
-            const text = item.innerText || "";
-            log(`LINK ${'$'}{index}: ${'$'}{href} | TEXT: ${'$'}{text}`);
-            });
-
-
-
-            items.forEach(item => {
-
-                const text = (item.innerText || "").toLowerCase();
-
-                if (text.includes(target)) {
-                    item.style.display = "none";
-                    log("HIDDEN: " + target);
-                }
-            });
-        }
-
-        // run once
-        hideChannels();
-
-        // keep updating for new videos
-        const observer = new MutationObserver(() => {
-            hideChannels();
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-
-        log("Channel blocker active: " + target);
+         items.forEach((item, index) => {
+         const href = item.href || "";
+         const text = item.innerText || "";
+         log(`LINK ${'$'}{index}: ${'$'}{href} | TEXT: ${'$'}{text}`);
+         });
         """
     )
 }
