@@ -363,6 +363,11 @@ fun Color.darker(percent: Any): Color {
 }
 
 
+fun loadTextAsset(fileName: Str): Str {
+    return App.assets.open(fileName)
+        .bufferedReader()
+        .use { it.readText() }
+}
 
 
 // ✴️ PERMISSION RENAMESSS
