@@ -169,19 +169,17 @@ fun Str(vararg parts: Any?): Str {
         }
     }
 }
-fun Str.hasAny(vararg parts: Str): Bool {
-    return parts.any { this.contains(it) }
-}
-fun Str.hasAny(parts: ListStr): Bool {
-    return parts.any { this.contains(it) }
-}
-fun Str.hasAll(vararg parts: Str): Bool {
-    return parts.all { this.contains(it) }
-}
 
-fun Str.hasAll(parts: ListStr): Bool {
-    return parts.all { this.contains(it) }
-}
+
+
+fun Str.hasAny(vararg x: Str) = x.any { this.contains(it) }
+fun Str.hasAny(x: ListStr) = x.any { this.contains(it) }
+fun Str.hasAll(vararg x: Str) = x.all { this.contains(it) }
+fun Str.hasAll(x: ListStr) = x.all { this.contains(it) }
+fun Str.has(x: Str) = this.contains(x)
+
+
+
 
 fun Str.overFlow(x: Int): Str {
     return if (this.size > x) {
