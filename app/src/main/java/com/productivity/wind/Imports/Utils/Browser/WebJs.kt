@@ -92,7 +92,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
             items.forEach((item, index) => {
             const href = item.href || "";
             const text = item.innerText || "";
-            log(`LINK ${'$'}{index}: ${href} | TEXT: ${text}`);
+            log(`LINK ${'$'}{index}: ${'$'}{href} | TEXT: ${'$'}{text}`);
             });
 
 
