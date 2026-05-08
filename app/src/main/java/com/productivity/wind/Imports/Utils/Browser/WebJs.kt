@@ -83,11 +83,19 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                ytd-rich-section-renderer
             `);
 
+            //ITEM COUNT FIND ALWAYS ZEROOOO
             log(`ITEM COUNT: ${'$'}{items.length}`);
             
+            const items = document.querySelectorAll('a');
+            log(`LINK COUNT: ${'$'}{items.length}`);
+            
             items.forEach((item, index) => {
-               log(`ITEM ${'$'}{index}: ${'$'}{item.innerText}`);
+            const href = item.href || "";
+            const text = item.innerText || "";
+            log(`LINK ${'$'}{index}: ${href} | TEXT: ${text}`);
             });
+
+
 
             items.forEach(item => {
 
