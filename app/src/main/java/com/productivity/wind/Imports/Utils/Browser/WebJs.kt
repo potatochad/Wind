@@ -75,7 +75,10 @@ fun Any?.hideYoutubeChannel(channel: Str) {
             const items = document.querySelectorAll(
                 'ytd-video-renderer, ytd-rich-item-renderer'
             );
-            log(`All Items Gotten: ${items}`);
+            
+            items.forEach((item, index) => {
+               log(`ITEM ${'$'}{index}: ${'$'}{item.innerText}`);
+            });
 
             items.forEach(item => {
 
