@@ -116,7 +116,8 @@ class WebController(
 			override fun onConsoleMessage(message: ConsoleMessage): Bool {
 				val msg = message.message()
 
-				log("all messages: $msg")
+				log("msg: $msg")
+				log("msg.has([WINDWEB_LOG]): ${msg.has("[WINDWEB_LOG]")}")
 
 				if (msg.has("[WINDWEB_LOG]")) {
 					Log.d("WEB_LOG", msg)
