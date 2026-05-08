@@ -92,7 +92,7 @@
 
 
 
-
+<!--
         <service
             android:name=".DummyService1"
             android:label="DummyService1"
@@ -5170,7 +5170,7 @@
 		
         
 
-        
+        -->
 
 
 
