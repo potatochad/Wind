@@ -51,11 +51,18 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
 
 //RUNS BEFORE PAGE LOADS
 fun Any?.importsJS() {
-    this.jsFun(
-        Try("importing js to web"){
-            getTextAsset("ImportsJS.js")
+    var output by m("")
+    Try("importing js to web", 
+        onError = {
+            output = ""
+            Vlog("webview ERROR, failed load js asset")
+        }, 
+        Do = {
+            output = getTextAsset("ImportsJS.js")
         }
     )
+    
+    this.jsFun(output)
 }
 
 
