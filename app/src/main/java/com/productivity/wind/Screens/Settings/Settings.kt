@@ -1,4 +1,4 @@
-package com.productivity.wind.Screens
+package com.productivity.wind.Screens.Settings
 
 import com.productivity.wind.Imports.Utils.String.*
 import androidx.compose.foundation.layout.*
