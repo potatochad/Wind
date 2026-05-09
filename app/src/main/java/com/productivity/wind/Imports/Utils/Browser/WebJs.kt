@@ -52,15 +52,12 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
 //RUNS BEFORE PAGE LOADS
 fun Any?.importsJS() {
     var output by m("")
-    Try("importing js to web", 
-        onError = {
-            output = ""
-            Vlog("webview ERROR, failed load js asset")
-        }, 
-        Do = {
-            output = getTextAsset("ImportsJS.js")
-        }
-    )
+
+    try {
+        output = getTextAsset("ImportsJS.js")
+    } catch (e: Exception) {
+        Vlog("importing JS: ${e.message}")
+    }
     
     this.jsFun(output)
 }
