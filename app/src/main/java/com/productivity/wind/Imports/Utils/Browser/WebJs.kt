@@ -55,6 +55,7 @@ fun Any?.importsJS() {
 
     try {
         output = getTextAsset("ImportsJS.js")
+        Vlog("SUCCESFULLY DONE imports js")
     } catch (e: Exception) {
         Vlog("importing JS: ${e.message}")
     }
