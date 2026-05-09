@@ -40,7 +40,7 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
             try {
                 $code
             } catch (e) {
-                log("JS error: " + e.message);
+                WindWeb.log("JS error: " + e.message);
             }
         })();
         """.trimIndent(),
@@ -98,20 +98,20 @@ fun Any?.importsJS() {
 fun Any?.hideYoutubeChannel(channel: Str) {
     this.jsFun(
         """
-        log("Channel blocker starting...");
+        WindWeb.log("Channel blocker starting...");
 
         const target = "$channel".toLowerCase();
 
         function scan() {
             const items = document.querySelectorAll('a');
 
-            log(`LINK COUNT: ${'$'}{items.length}`);
+            WindWeb.log(`LINK COUNT: ${'$'}{items.length}`);
 
             items.forEach((item, index) => {
                 const href = item.href || "";
                 const text = item.innerText || "";
 
-                log(`LINK ${'$'}{index}: ${'$'}{href}, TEXT: ${'$'}{text}`);
+                WindWeb.log(`LINK ${'$'}{index}: ${'$'}{href}, TEXT: ${'$'}{text}`);
             });
         }
 
@@ -123,7 +123,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
         // const container = window.WindWeb.findContainerHTML(el);
 
-        log("FOUND CONTAINER: ${'$'}{container}");
+        WindWeb.log("FOUND CONTAINER: ${'$'}{container}");
 
         """
     )
