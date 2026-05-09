@@ -60,7 +60,7 @@ fun Any?.importsJS() {
                  .join(" ")
                  .replace(/\n/g, "|");
               console.log("[WINDWEB_LOG]", msg);
-           };
+           },
 
            findContainerHTML(el) {
               let current = el;
