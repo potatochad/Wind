@@ -55,7 +55,7 @@ fun Any?.importsJS() {
         """
         window.WindWeb = {
            log(...args) {
-              console.log("[WINDWEB_LOG]", ...args.join(" "));
+              console.log("[WINDWEB_LOG]", ...args);
            },
 
            findContainerHTML(el) {
