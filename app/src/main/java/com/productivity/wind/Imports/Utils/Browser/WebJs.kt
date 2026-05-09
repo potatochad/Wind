@@ -121,9 +121,9 @@ fun Any?.hideYoutubeChannel(channel: Str) {
         // keep scanning (YouTube loads late)
         setInterval(scan, 3000);
 
-        const container = window.WindWeb.findContainerHTML(el);
+        // const container = window.WindWeb.findContainerHTML(el);
 
-        log("FOUND CONTAINER: ${'$'}{container});
+        log("FOUND CONTAINER: ${'$'}{container}");
 
         """
     )
