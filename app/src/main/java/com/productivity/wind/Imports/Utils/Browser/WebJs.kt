@@ -219,6 +219,16 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                 const text = item.innerText || "";
 
                 WindWeb.log("LINK", index, ":", href, "TEXT:", text);
+
+                const container = window.WindWeb.findContainerHTML(item);    
+
+                if (container) {
+                    WindWeb.log(
+                        "FOUND CONTAINER:",
+                        container.tagName,
+                        container.className
+                    );
+                }
             });
         }
 
@@ -227,11 +237,6 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
         // keep scanning (YouTube loads late)
         setInterval(scan, 3000);
-
-        // const container = window.WindWeb.findContainerHTML(el);
-
-        // WindWeb.log("FOUND CONTAINER:", container);
-
         """
     )
 }
