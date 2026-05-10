@@ -61,15 +61,6 @@ fun Any?.importsJS() {
                  .replace(/\n/g, " | ");
               console.log("[WINDWEB_LOG]", msg);
            },
-
-           findContainerHTML(el, maxSteps = 3) {
-              let current = el;
-              for (let i = 0; i < maxSteps; i++) {
-                 if (!current || current === document.body) break;
-                 current = current.parentElement;
-              }
-              return current || el;
-          }
       };
       """
     )
