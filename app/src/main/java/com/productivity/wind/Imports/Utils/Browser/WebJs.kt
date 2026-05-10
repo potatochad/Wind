@@ -53,16 +53,33 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
 fun Any?.importsJS() {
     this.jsFun(
         """
-        window.WindWeb = {
-           log(...args) {
-              const msg = args
-                 .map(a => String(a))
-                 .join(" ")
-                 .replace(/\n/g, " | ");
-              console.log("[WINDWEB_LOG]", msg);
-           },
-      };
-      """
+        window.WindWeb = window.WindWeb || {};
+
+        window.WindWeb.log = function(...args) {
+           const msg = args
+              .map(a => String(a))
+              .join(" ")
+              .replace(/\n/g, " | ");
+           console.log("[WINDWEB_LOG]", msg);
+        };
+        """
+    )
+
+    this.jsFun(
+        """
+        window.WindWeb = window.WindWeb || {};
+
+        window.WindWeb.findContainerHTML = function(el, maxSteps = 3) {
+           let current = el;
+
+           for (let i = 0; i < maxSteps; i++) {
+              if (!current || current === document.body) break;
+              current = current.parentElement;
+           }
+
+           return current || el;
+        };
+        """
     )
 }
 
