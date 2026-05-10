@@ -197,8 +197,10 @@ object AppData {
 
 
 
-fun <T> VarDelegate(value: T): By<T> {
-	val x = By(value)
+fun <T> sBetter(default: T): By<T> {
+	//x = m(AppData.getX(id, default))
+	val x = By(default)
+	
 	
 	x.onBuild{ prop, id ->
 		id.blog("id")
@@ -208,6 +210,7 @@ fun <T> VarDelegate(value: T): By<T> {
 	}
 	.onSet{ prop, newValue ->
 		newValue.blog("newValue")
+		// AppData.putX(id, x.it)
 	}
 	return x
 }
