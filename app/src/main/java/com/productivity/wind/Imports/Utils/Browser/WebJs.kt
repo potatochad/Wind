@@ -212,13 +212,11 @@ fun Any?.hideYoutubeChannel(channel: Str) {
         function scan() {
             const items = document.querySelectorAll('a');
 
-            WindWeb.log("LINK COUNT:", items.length);
-
             items.forEach((item, index) => {
                 const href = item.href || "";
                 const text = item.innerText || "";
 
-                WindWeb.log("LINK", index, ":", href, "TEXT:", text);
+                WindWeb.log(index, ":", href, "TEXT:", text);
 
                 const container = window.WindWeb.findContainerHTML(item);    
 
