@@ -59,16 +59,6 @@ fun Any?.importsJS() {
            const msg = args
               .map(a => {
                  if (typeof a === "string") return a;
-                 if (a instanceof Error) {
-                    return `[ ERROR: ${'$'}{a.message} ]`;
-                 }
-                 if (typeof a === "object" && a !== null) {
-                    try {
-                       return `[ ${'$'}{JSON.stringify(a)} ]`;
-                    } catch (e) {
-                       return "[ [Unserializable Object] ]";
-                    }
-                 }
                  return `[ ${'$'}{String(a)} ]`;
                })
                .join(" ")
