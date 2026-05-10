@@ -57,7 +57,10 @@ fun Any?.importsJS() {
 
         window.WindWeb.log = function(...args) {
            const msg = args
-              .map(a => String(a))
+              .map(a => {
+                 if (typeof a === "string") return a;   // do nothing
+                    return `[ ${String(a)} ]`;             // wrap anything else
+                 })
               .join(" ")
               .replace(/\n/g, " | ");
            console.log("[WINDWEB_LOG]", msg);
