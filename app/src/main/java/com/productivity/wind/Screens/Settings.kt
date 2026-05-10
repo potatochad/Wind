@@ -197,10 +197,8 @@ fun LogsScreen() {
     var Tag = r("")
 	var scroll = LazyList()
 
-	val Logs by remember(Tag.it, Bar.logs) {
-		derivedStateOf {
-			Bar.logs.filter { it.contains(Tag.it) }
-		}
+	val Logs by r(Tag.it, Bar.logs) {
+		Bar.logs.filter { it.has(Tag.it) }
 	}
 
 
@@ -212,10 +210,8 @@ fun LogsScreen() {
 		top = {
 			TinyInput(Tag, Mod.h(36).w(AppW - 180.dp), isInt = no, maxLetters = 100)
 
-			val Logs by remember(Tag.it, Bar.logs) {
-				derivedStateOf {
-					Bar.logs.filter { it.contains(Tag.it) }
-				}
+			val Logs by r(Tag.it, Bar.logs) {
+				Bar.logs.filter { it.has(Tag.it) }
 			}
 		
 			End {
@@ -227,15 +223,13 @@ fun LogsScreen() {
 		},
 		scroll = no,
 	) {
-        if (Bar.logs.isEmpty()){
+        if (Bar.logs.empty){
               EmptyBox("No logs")
         } else {
 			Box(
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Hscroll()
 			) {
-				LazyColumn(
-					state = scroll
-				) {
+				LazyColumn(state = scroll) {
 					items(
 						Logs
 					) { line ->
@@ -249,8 +243,6 @@ fun LogsScreen() {
 			}
         }
     }
-
-	
 }
 
 
