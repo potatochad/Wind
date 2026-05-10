@@ -85,7 +85,7 @@ object TskProp {
            showConfirm = no,
            title = "Select App",
        ){
-	    	Column(Mod.h(200).Vscroll()){
+	    	Column(Mod.h(200).Yscroll()){
 		    	appList.forEach{ (app, icon) ->
 			    	LazzyRow(Mod.click {
 			    		Do(app.name)
