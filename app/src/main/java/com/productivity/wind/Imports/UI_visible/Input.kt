@@ -198,7 +198,7 @@ fun ScrollInput(
 	var done = r(no)
 	var itIndex by r(0)
 
-	var baseMod = Mod.maxW().h(h).Vscroll(scroll)
+	var baseMod = Mod.maxW().h(h).Yscroll(scroll)
 		
     OutlinedTextField(
         value = Field.it,
