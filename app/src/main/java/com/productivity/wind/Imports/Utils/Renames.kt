@@ -375,7 +375,7 @@ fun startActivity(intent: Intent) {
 
 fun autoId(): Str {
     val e = Throwable().stackTrace.getOrNull(2)
-    return "${e?.fileName}:${e?.lineNumber}line: ${System.nanoTime()}ms"
+    return "${e?.fileName}: line ${e?.lineNumber}"
 }
 
 class By<T>(
