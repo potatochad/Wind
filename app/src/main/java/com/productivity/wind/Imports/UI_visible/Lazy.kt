@@ -423,7 +423,7 @@ fun LazyScreen(
 ) {
     Column(Mod.black()) {
         LazyHeader(top, onBackIcon, backIcon, Mod.zIndex(1f), divider, topH)
-        Column(Mod.black().Vscroll(scroll = scroll)) {
+        Column(Mod.black().Yscroll(scroll = scroll)) {
 			if (dividerP) move(10)
 			/* !! Column madness helps avoid scroll crash */
 			Column { UI() }
