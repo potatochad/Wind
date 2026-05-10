@@ -160,9 +160,9 @@ fun Mod.scroll(
 }
 
 @Composable
-fun Mod.Vscroll(r_v: Scroll = Scroll(), scroll: Bool = yes) = scroll(scroll, no, r_v)
+fun Mod.Yscroll(r_v: Scroll = Scroll(), scroll: Bool = yes) = scroll(scroll, no, r_v)
 @Composable
-fun Mod.Hscroll(r_h: Scroll = Scroll(), scroll: Bool = yes) = scroll(no, scroll, r_h=r_h)
+fun Mod.Xscroll(r_h: Scroll = Scroll(), scroll: Bool = yes) = scroll(no, scroll, r_h=r_h)
 
 fun Scroll.toBottom() = wait{ scrollTo(maxValue) }
 
