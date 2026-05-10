@@ -60,7 +60,7 @@ fun Any?.importsJS() {
               .map(a => {
                  if (typeof a === "string") return a;
                  if (a instanceof Error) {
-                    return `[ ERROR: ${a.message} ]`;
+                    return `[ ERROR: ${'$'}{a.message} ]`;
                  }
                  if (typeof a === "object" && a !== null) {
                     try {
