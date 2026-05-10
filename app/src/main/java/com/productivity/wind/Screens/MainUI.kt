@@ -39,7 +39,7 @@ import com.productivity.wind.Screens.Task.*
 
 @Composable
 fun Main() {
-	Bar.test = 15
+	Bar.test ++
 	RunOnce { MAINStart() }
 	
 	var searching by r(no)
