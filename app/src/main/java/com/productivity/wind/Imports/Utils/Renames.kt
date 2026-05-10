@@ -395,16 +395,16 @@ class By<T>(
 	var it by m(value)
 
 	
-    operator fun provideDelegate(thisRef: Any?, property: KProperty<*>): By<T> {
+    operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
 		id = fancyId(property)
 		onBuild(property, id)
         return this
     }
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+    operator fun getValue(thisRef: Any?, property: ValVar): T {
 		onGet(property)
         return value
     }
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
+    operator fun setValue(thisRef: Any?, property: ValVar, newValue: T) {
         value = newValue
 		it = value
 		onSet(property, it)
