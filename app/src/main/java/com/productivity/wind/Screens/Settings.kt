@@ -198,7 +198,7 @@ fun LogsScreen() {
 	var scroll = LazyList()
 
 	val Logs by r(Tag.it, Bar.logs) {
-		Bar.logs.filter { it.has(Tag.it) }
+		Bar.logs.filter { it.contains(Tag.it) }
 	}
 
 
@@ -211,7 +211,7 @@ fun LogsScreen() {
 			TinyInput(Tag, Mod.h(36).w(AppW - 180.dp), isInt = no, maxLetters = 100)
 
 			val Logs by r(Tag.it, Bar.logs) {
-				Bar.logs.filter { it.has(Tag.it) }
+				Bar.logs.filter { it.contains(Tag.it) }
 			}
 		
 			End {
