@@ -64,12 +64,12 @@ fun Any?.importsJS() {
                  }
                  if (typeof a === "object" && a !== null) {
                     try {
-                       return `[ ${JSON.stringify(a)} ]`;
+                       return `[ ${'$'}{JSON.stringify(a)} ]`;
                     } catch (e) {
                        return "[ [Unserializable Object] ]";
                     }
                  }
-                 return `[ ${String(a)} ]`;
+                 return `[ ${'$'}{String(a)} ]`;
                })
                .join(" ")
                .replace(/\n/g, " | ");
