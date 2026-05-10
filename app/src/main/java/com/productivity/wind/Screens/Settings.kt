@@ -227,7 +227,7 @@ fun LogsScreen() {
               EmptyBox("No logs")
         } else {
 			Box(
-				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Hscroll()
+				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Xscroll()
 			) {
 				LazyColumn(state = scroll) {
 					items(
