@@ -96,7 +96,7 @@ fun Any?.importsJS() {
       """
     )
 }
-fun Any?.hideYoutubeChannel(channel: Str) {
+fun Any?.hideYoutubeChannel5(channel: Str) {
     this.jsFun(
         """
         WindWeb.log("Channel blocker starting...");
@@ -202,7 +202,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 }
 
 
-fun Any?.hideYoutubeChannel2(channel: Str) {
+fun Any?.hideYoutubeChannel(channel: Str) {
     this.jsFun(
         """
         WindWeb.log("Channel blocker starting...");
