@@ -58,7 +58,7 @@ fun Any?.importsJS() {
               const msg = args
                  .map(a => String(a))
                  .join(" ")
-                 .replace(/\n/g, "|");
+                 .replace(/\n/g, " | ");
               console.log("[WINDWEB_LOG]", msg);
            },
 
