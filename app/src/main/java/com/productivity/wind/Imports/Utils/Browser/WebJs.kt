@@ -96,10 +96,113 @@ fun Any?.importsJS() {
       """
     )
 }
-
-
-
 fun Any?.hideYoutubeChannel(channel: Str) {
+    this.jsFun(
+        """
+        WindWeb.log("Channel blocker starting...");
+
+        const target = "$channel".toLowerCase();
+
+        const hidden = new WeakSet();
+
+        function scan() {
+
+            const items = document.querySelectorAll("a");
+
+            WindWeb.log("LINK COUNT:", items.length);
+
+            items.forEach((item, index) => {
+
+                try {
+
+                    const href = (item.href || "").toLowerCase();
+                    const text = (item.innerText || "").trim();
+
+                    // skip empty junk
+                    if (!href && !text) return;
+
+                    let matched = false;
+
+                    // METHOD 1:
+                    // Detect from @channel url
+                    if (href.includes("/@" + target.replace(/\s+/g, ""))) {
+                        matched = true;
+                    }
+
+                    // METHOD 2:
+                    // Detect from rendered text
+                    if (!matched && text.includes("|")) {
+
+                        const parts = text.split("|");
+
+                        if (parts.length >= 2) {
+
+                            const meta = parts[1];
+                            const extracted =
+                                meta.split("•")[0]
+                                .trim()
+                                .toLowerCase();
+
+                            if (extracted === target) {
+                                matched = true;
+                            }
+                        }
+                    }
+
+                    if (!matched) return;
+
+                    WindWeb.log(
+                        "MATCHED:",
+                        "INDEX:", index,
+                        "HREF:", href,
+                        "TEXT:", text
+                    );
+
+                    const container =
+                        window.WindWeb.findContainerHTML(item);
+
+                    if (!container) {
+                        WindWeb.log("NO CONTAINER FOUND");
+                        return;
+                    }
+
+                    // already hidden
+                    if (hidden.has(container)) {
+                        return;
+                    }
+
+                    hidden.add(container);
+
+                    container.style.display = "none";
+
+                    WindWeb.log(
+                        "HIDDEN CONTAINER:",
+                        container.tagName,
+                        container.className
+                    );
+
+                } catch (e) {
+
+                    WindWeb.log(
+                        "SCAN ERROR:",
+                        e.message
+                    );
+                }
+            });
+        }
+
+        // first scan
+        scan();
+
+        // youtube lazy loads forever
+        setInterval(scan, 3000);
+
+        """
+    )
+}
+
+
+fun Any?.hideYoutubeChannel2(channel: Str) {
     this.jsFun(
         """
         WindWeb.log("Channel blocker starting...");
@@ -127,7 +230,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
         // const container = window.WindWeb.findContainerHTML(el);
 
-        WindWeb.log("FOUND CONTAINER:", container);
+        // WindWeb.log("FOUND CONTAINER:", container);
 
         """
     )
