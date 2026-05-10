@@ -197,7 +197,7 @@ fun LogsScreen() {
     var Tag = r("")
 	var scroll = LazyList()
 
-	val Logs by remember(Tag.it, Bar.logs) {
+	val Logs = remember(Tag.it, Bar.logs) {
 		Bar.logs.filter { it.contains(Tag.it) }
 	}
 
@@ -209,10 +209,6 @@ fun LogsScreen() {
     LazyScreen(
 		top = {
 			TinyInput(Tag, Mod.h(36).w(AppW - 180.dp), isInt = no, maxLetters = 100)
-
-			val Logs by remember(Tag.it, Bar.logs) {
-				Bar.logs.filter { it.contains(Tag.it) }
-			}
 		
 			End {
 				Icon.Delete {
