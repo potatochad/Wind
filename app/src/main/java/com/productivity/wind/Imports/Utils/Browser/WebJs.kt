@@ -62,35 +62,13 @@ fun Any?.importsJS() {
               console.log("[WINDWEB_LOG]", msg);
            },
 
-           findContainerHTML(el) {
+           findContainerHTML(el, maxSteps = 3) {
               let current = el;
-              let best = el;
-
-              while (current && current !== document.body) {
-
-                  const style = window.getComputedStyle(current);
-
-                  const hasLayout =
-                      style.display !== "inline" &&
-                      style.visibility !== "hidden";
-
-                  const hasChildren =
-                      current.children && current.children.length >= 2;
-
-                  const hasContent =
-                      (current.innerText || "").trim().length > 10;
-
-                  const isBigEnough =
-                      current.getBoundingClientRect().height > 20;
-
-                  if (hasLayout && hasChildren && hasContent && isBigEnough) {
-                      best = current;
-                  }
-
-                  current = current.parentElement;
+              for (let i = 0; i < maxSteps; i++) {
+                 if (!current || current === document.body) break;
+                 current = current.parentElement;
               }
-
-              return best;
+              return current || el;
           }
       };
       """
