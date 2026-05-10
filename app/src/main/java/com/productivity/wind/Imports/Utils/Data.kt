@@ -198,19 +198,22 @@ object AppData {
 
 
 fun <T> sBetter(default: T): By<T> {
-	//x = m(AppData.getX(id, default))
 	val x = By(default)
+	var id2 by m("")
 	
 	
 	x.onBuild{ prop, id ->
 		id.blog("id")
+		id2 = id
+		x.it = AppData.getX(id, default)
+		AppData.getX(id, default).blog("ValueGotten")
 	}
 	.onGet{ prop ->
 		prop.blog("prop")
 	}
 	.onSet{ prop, newValue ->
 		newValue.blog("newValue")
-		// AppData.putX(id, x.it)
+		AppData.putX(id2, newValue)
 	}
 	return x
 }
