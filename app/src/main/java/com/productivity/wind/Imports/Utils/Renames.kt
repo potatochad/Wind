@@ -392,7 +392,12 @@ class By<T>(
 	
 	private fun fancyId(x: KProperty<*>): Str = "${x.name}: ${autoId()}"
 	private var id by m("")
-	var it by m(value)
+	
+	var it: T
+        get() = value
+        set(v) {
+            value = v
+		}
 
 	
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
