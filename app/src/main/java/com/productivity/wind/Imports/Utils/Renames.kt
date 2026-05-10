@@ -395,9 +395,7 @@ class By<T>(
 	
 	var it: T
         get() = value
-        set(v) {
-            value = v
-		}
+        set(v) { value = v }
 
 	
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
@@ -411,7 +409,6 @@ class By<T>(
     }
     operator fun setValue(thisRef: Any?, property: ValVar, newValue: T) {
         value = newValue
-		it = value
 		onSet(property, it)
     }
 }
