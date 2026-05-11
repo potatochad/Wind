@@ -142,7 +142,6 @@ object AppData {
 	val it: Str
     	get() {
            val prefs = App.getSharedPreferences(storageFile, Context.MODE_PRIVATE)
-
            val json = JSONObject()
 
            for ((key, value) in prefs.all) {
@@ -175,7 +174,6 @@ object AppData {
 	}
 	fun <T> putX(id: Str, x: T) {
         val e = prefs.edit()
-
         when (x) {
             is Int -> e.putInt(id, x)
             is Bool -> e.putBoolean(id, x)
@@ -184,7 +182,6 @@ object AppData {
             is Str -> e.putString(id, x)
             else -> return
         }
-
         e.apply()
 	}
 
