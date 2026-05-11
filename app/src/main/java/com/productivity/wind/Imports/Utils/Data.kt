@@ -178,7 +178,7 @@ object AppData {
 	}
 	fun <T> putX(id: Str, x: T) {
 		if (hasId(id)) {
-			Vlog("ID: [ $id ] already exists, make new one!"
+			Vlog("ID: [ $id ] already exists, make new one!")
 			return
 		}
         val e = prefs.edit()
