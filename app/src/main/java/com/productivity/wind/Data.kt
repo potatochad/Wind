@@ -65,9 +65,6 @@ fun newDay() {
 }
 
 
-/*
-‼️ NEVER GIVE SAME ‼️NAME
-*/
 
 object Bar {
 	var test by sBetter(10)
