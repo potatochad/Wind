@@ -161,6 +161,10 @@ object AppData {
 	inline fun <reified T> toJson(x: T) = json11.encodeToString(x)
 	inline fun <reified T> decodeJson(x: Str) = json11.decodeFromString<T>(x)
 
+
+	
+	fun hasId(id: Str) = prefs.contains(id)
+
 	@Suppress("UNCHECKED_CAST")
 	fun <T> getX(id: Str, default: T): T {
 		return when (default) {
@@ -173,6 +177,10 @@ object AppData {
 		}
 	}
 	fun <T> putX(id: Str, x: T) {
+		if (hasId(id)) {
+			Vlog("ID: [ $id ] already exists, make new one!"
+			return
+		}
         val e = prefs.edit()
         when (x) {
             is Int -> e.putInt(id, x)
@@ -180,7 +188,10 @@ object AppData {
             is Float -> e.putFloat(id, x)
             is Long -> e.putLong(id, x)
             is Str -> e.putString(id, x)
-            else -> return
+            else -> {
+				Vlog("Cant save a complex type: [ $x ]")
+				return
+			}
         }
         e.apply()
 	}
