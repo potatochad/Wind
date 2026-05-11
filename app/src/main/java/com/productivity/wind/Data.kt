@@ -66,7 +66,7 @@ fun newDay() {
 
 
 /*
-‼️ NEVER GIVE SAME ‼️NAME OR ON SAME ‼️LINE
+‼️ NEVER GIVE SAME ‼️NAME
 */
 
 object Bar {
