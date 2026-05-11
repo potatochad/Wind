@@ -203,14 +203,15 @@ object AppData {
 var idList by mList<Str>()
 fun <T> sBetter(default: T): By<T> {
 	val x = By(default)
-	var localId by m("")
-	
+	var localId = ""
+	var badId = no
 	
 	x.onBuild{ prop, id ->
 		id.blog("id")
 		localId = id
 		
-		if (idList.contains(id)) Vlog("Duplicate id detected: $id")
+		badId = idList.contains(id)
+		if (badId) Vlog("Duplicate id detected: $id")
 		
 		idList.add(id)
 		
@@ -224,7 +225,7 @@ fun <T> sBetter(default: T): By<T> {
 	.onSet{ prop, newValue ->
 		newValue.blog("saving")
 		
-		if (!idList.contains(id)) AppData.putX(localId, newValue)
+		if (!badId) AppData.putX(localId, newValue)
 	}
 	return x
 }
