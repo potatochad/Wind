@@ -217,6 +217,15 @@ fun <T> sBetter(default: T): By<T> {
 		
 		
 		x.it = AppData.getX(id, default)
+		val got = AppData.getX(id, default)
+
+    Vlog("TYPE = ${got?.let { it::class }}")
+
+    if (got is String) {
+        Vlog("Got is String")
+    } else {
+        Vlog("Got is NOT String")
+	}
 		AppData.getX(id, default).blog("ValueGot that was saved")
 	}
 	.onGet{ prop ->
@@ -224,6 +233,7 @@ fun <T> sBetter(default: T): By<T> {
 	}
 	.onSet{ prop, newValue ->
 		newValue.blog("saving")
+		if (newValue is Str) Vlog("Newvalue is string")
 		
 		if (!badId) AppData.putX(localId, newValue)
 	}
