@@ -375,7 +375,7 @@ fun startActivity(intent: Intent) {
 
 fun autoId(): Str {
     val e = Throwable().stackTrace.getOrNull(2)
-    return "${e?.fileName}: line ${e?.lineNumber}"
+    return "${e?.fileName}"
 }
 
 class By<T>(
@@ -390,7 +390,7 @@ class By<T>(
     fun onSet(x: Do2_<ValVar, T>) = apply { onSet = x }
 
 	
-	private fun fancyId(x: KProperty<*>): Str = "${x.name}: ${autoId()}"
+	private fun fancyId(x: ValVar): Str = "${x.name}: ${autoId()}"
 	private var id by m("")
 	
 	var it: T
