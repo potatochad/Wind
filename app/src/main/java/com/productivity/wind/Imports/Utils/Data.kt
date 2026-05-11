@@ -210,7 +210,7 @@ fun <T> sBetter(default: T): By<T> {
 		id.blog("id")
 		localId = id
 		
-		if (idList.contains(id)) error("Duplicate id detected: $id")
+		if (idList.contains(id)) Vlog("Duplicate id detected: $id")
 		
 		idList.add(id)
 		
