@@ -68,8 +68,7 @@ fun newDay() {
 
 object Bar {
 	var test by sBetter(10)
-	var test5 by sBetter(10.5)
-	var test5 by sBetter(10.5)
+	var test5 by sBetter(toLatLng(userLatLng))
 	//BASIC
     var funTime by s(0, "funTime")
     var Dpoints by s(0, "Dpoints")
