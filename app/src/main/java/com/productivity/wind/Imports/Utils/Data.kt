@@ -200,10 +200,10 @@ object AppData {
 
 
 
-var idList by mList<Str>()
+var idList = mList<Str>()
 fun <T> sBetter(default: T): By<T> {
 	val x = By(default)
-	var localId = ""
+	var localId by m("")
 	var badId = no
 	
 	x.onBuild{ prop, id ->
