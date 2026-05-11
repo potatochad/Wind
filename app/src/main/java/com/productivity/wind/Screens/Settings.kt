@@ -190,7 +190,7 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
 		
 		var showDeleteSure = r(no)
 		IsSure(showDeleteSure) {
-          
+            AppData.deleteAll()
 		}
 		LazyItem(
             icon = { Icon.Whatshot() },
