@@ -177,10 +177,6 @@ object AppData {
 		}
 	}
 	fun <T> putX(id: Str, x: T) {
-		if (hasId(id)) {
-			Vlog("ID: [ $id ] already exists, make new one!")
-			return
-		}
         val e = prefs.edit()
         when (x) {
             is Int -> e.putInt(id, x)
@@ -207,6 +203,7 @@ object AppData {
 
 fun <T> sBetter(default: T): By<T> {
 	val x = By(default)
+	var idList by mList<Str>()
 	var id2 by m("")
 	
 	
@@ -214,13 +211,13 @@ fun <T> sBetter(default: T): By<T> {
 		id.blog("id")
 		id2 = id
 		x.it = AppData.getX(id, default)
-		AppData.getX(id, default).blog("ValueGotten")
+		AppData.getX(id, default).blog("ValueGot that was saved")
 	}
 	.onGet{ prop ->
 		prop.blog("prop")
 	}
 	.onSet{ prop, newValue ->
-		newValue.blog("newValue")
+		newValue.blog("saving")
 		AppData.putX(id2, newValue)
 	}
 	return x
