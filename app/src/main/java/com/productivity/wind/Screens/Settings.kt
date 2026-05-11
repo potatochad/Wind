@@ -187,6 +187,13 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
 				Bar.funTime.vlog("Points left")
 			}
         )
+		LazyItem(
+            icon = { Icon.Whatshot() },
+            title = "DELETE ALL DATA",
+            onClick = {
+				
+			}
+        )
 		
 }
 
