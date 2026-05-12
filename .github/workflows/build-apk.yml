@@ -31,7 +31,7 @@ jobs:
             gradle-
 
       - name: Wait 600 seconds
-        run: sleep 600
+        run: sleep 300
 
 
       - name: Build APK
@@ -47,6 +47,14 @@ jobs:
         with:
           name: app-release-${{ github.run_number }}.apk
           path: app/build/outputs/apk/release/app-release.apk
+
+      - name: Wait 600 seconds
+        run: |
+          sleep 0
+          sleep 0
+          sleep 0
+          sleep 0
+          sleep 300
 
 
 
