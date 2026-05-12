@@ -191,10 +191,11 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
 		var showDeleteSure = r(no)
 		IsSure(showDeleteSure) {
             AppData.deleteAll()
+			closeApp()
 		}
 		LazyItem(
             icon = { Icon.Whatshot() },
-            title = "DELETE ALL DATA",
+            title = "‼️ DELETE ALL DATA",
             onClick = {
 				showDeleteSure.it = yes
 			}
