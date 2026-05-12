@@ -174,7 +174,7 @@ object AppData {
 			is Long -> prefs.getLong(id, default) as T
 			is Str -> (prefs.getString(id, default) ?: default) as T
 			else -> {
-				Vlog("Cant get a complex type: $id, [ ${default::class} ]")
+				Vlog("Cant get a complex type: $id, [ ${default?.let { it::class }} ]")
 				default
 			}
 		}
@@ -188,7 +188,7 @@ object AppData {
             is Long -> e.putLong(id, x)
             is Str -> e.putString(id, x)
             else -> {
-				Vlog("Cant save a complex type: $id, [ ${default::class} ]")
+				Vlog("Cant save a complex type: $id, [ ${default?.let { it::class }} ]")
 				return
 			}
         }
