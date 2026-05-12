@@ -166,16 +166,16 @@ object AppData {
 	fun hasId(id: Str) = prefs.contains(id)
 
 	@Suppress("UNCHECKED_CAST")
-	fun <T> get(id: Str, default: T): T {
+	fun <T> get(id: Str, x: T): T {
 		return when (default) {
-			is Int -> prefs.getInt(id, default) as T
-			is Bool -> prefs.getBoolean(id, default) as T
-			is Float -> prefs.getFloat(id, default) as T
-			is Long -> prefs.getLong(id, default) as T
-			is Str -> (prefs.getString(id, default) ?: default) as T
+			is Int -> prefs.getInt(id, x) as T
+			is Bool -> prefs.getBoolean(id, x) as T
+			is Float -> prefs.getFloat(id, x) as T
+			is Long -> prefs.getLong(id, x) as T
+			is Str -> (prefs.getString(id, x) ?: x) as T
 			else -> {
-				Vlog("Cant get a complex type: $id, [ ${default?.let { it::class }} ]")
-				default
+				Vlog("Cant get a complex type: $id, [ ${x?.let { it::class }} ]")
+				x
 			}
 		}
 	}
