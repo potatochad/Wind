@@ -166,7 +166,7 @@ object AppData {
 	fun hasId(id: Str) = prefs.contains(id)
 
 	@Suppress("UNCHECKED_CAST")
-	fun <T> getX(id: Str, default: T): T {
+	fun <T> get(id: Str, default: T): T {
 		return when (default) {
 			is Int -> prefs.getInt(id, default) as T
 			is Bool -> prefs.getBoolean(id, default) as T
@@ -179,7 +179,7 @@ object AppData {
 			}
 		}
 	}
-	fun <T> putX(id: Str, x: T) {
+	fun <T> put(id: Str, x: T) {
         val e = prefs.edit()
         when (x) {
             is Int -> e.putInt(id, x)
@@ -217,10 +217,10 @@ fun <T> sBetter(default: T): By<T> {
 			if (badId) Vlog("Duplicate id detected: $id")
 			idList.add(id)
 		
-			delegate.it = AppData.getX(id, default)
+			delegate.it = AppData.get(id, default)
 		}
 		.onSet{ prop, newValue ->
-			if (!badId) AppData.putX(localId, newValue)
+			if (!badId) AppData.put(localId, newValue)
 		}
 	return delegate
 }
@@ -238,7 +238,7 @@ inline fun <reified T> sList(
 
 
     Try("error with list saving") {
-        val json = AppData.getX(id, "")
+        val json = AppData.get(id, "")
         if (json.notEmpty) {
 			val loaded = Json.decodeFromString<List<T>>(json)
 			list.addAll(loaded)
@@ -251,7 +251,7 @@ inline fun <reified T> sList(
 			if (!restoring) {
 				val jsonOut = Json.encodeToString(list.toList())
 				
-				AppData.putX(id, jsonOut)
+				AppData.put(id, jsonOut)
 			}
         }
     }
@@ -276,10 +276,10 @@ fun <T> s(default: T, id: Str = autoId()): m_<T> {
     var x = m(default) 
 
 	Try("<fun s >, id: $id") {
-		x = m(AppData.getX(id, default))
+		x = m(AppData.get(id, default))
 
 		x.onChange {
-			AppData.putX(id, x.it)
+			AppData.put(id, x.it)
 		}
 	}
 	
