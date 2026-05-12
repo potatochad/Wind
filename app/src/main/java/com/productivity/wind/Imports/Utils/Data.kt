@@ -173,7 +173,10 @@ object AppData {
 			is Float -> prefs.getFloat(id, default) as T
 			is Long -> prefs.getLong(id, default) as T
 			is Str -> (prefs.getString(id, default) ?: default) as T
-			else -> default
+			else -> {
+				Vlog("Cant get a complex type: $id, [ ${default::class} ]")
+				default
+			}
 		}
 	}
 	fun <T> putX(id: Str, x: T) {
@@ -185,7 +188,7 @@ object AppData {
             is Long -> e.putLong(id, x)
             is Str -> e.putString(id, x)
             else -> {
-				Vlog("Cant save a complex type: [ $x ]")
+				Vlog("Cant save a complex type: $id, [ ${default::class} ]")
 				return
 			}
         }
@@ -212,28 +215,15 @@ fun <T> sBetter(default: T): By<T> {
 		
 		badId = idList.contains(id)
 		if (badId) Vlog("Duplicate id detected: $id")
-		
 		idList.add(id)
 		
-		
 		x.it = AppData.getX(id, default)
-		val got = AppData.getX(id, default)
-
-    Vlog("TYPE = ${got?.let { it::class }}")
-
-    if (got is String) {
-        Vlog("Got is String")
-    } else {
-        Vlog("Got is NOT String")
-	}
-		AppData.getX(id, default).blog("ValueGot that was saved")
 	}
 	.onGet{ prop ->
 		prop.blog("prop")
 	}
 	.onSet{ prop, newValue ->
 		newValue.blog("saving")
-		if (newValue is Str) Vlog("Newvalue is string")
 		
 		if (!badId) AppData.putX(localId, newValue)
 	}
