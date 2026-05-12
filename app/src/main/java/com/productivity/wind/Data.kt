@@ -67,7 +67,6 @@ fun newDay() {
 
 
 object Bar {
-	var test by sBetter(10)
 	var test20 by sBetter(CopyTsk())
 	//BASIC
     var funTime by s(0, "funTime")
