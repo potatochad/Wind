@@ -188,7 +188,7 @@ object AppData {
             is Long -> e.putLong(id, x)
             is Str -> e.putString(id, x)
             else -> {
-				Vlog("Cant save a complex type: $id, [ ${default?.let { it::class }} ]")
+				Vlog("Cant save a complex type: $id, [ ${x?.let { it::class }} ]")
 				return
 			}
         }
