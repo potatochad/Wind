@@ -31,7 +31,7 @@ jobs:
             gradle-
 
       - name: Wait 600 seconds
-        run: sleep 2
+        run: sleep 3
 
 
       - name: Build APK
