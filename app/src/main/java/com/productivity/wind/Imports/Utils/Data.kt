@@ -226,6 +226,46 @@ fun <T> s(default: T): By<T> {
 }
 
 
+inline fun <reified T> sList2(
+	default: T,
+	default: List<T> = emptyList(),
+): By<T> {
+	val delegate = By(default)
+	var localId by m("")
+	var badId = no
+	
+
+	val list = mList<T>()
+	val Oldlist = mList<T>()
+	
+	delegate
+		.onBuild{ prop, id ->
+			localId = id
+			badId = idList.has(id)
+			if (badId) Vlog("Duplicate id detected: $id")
+			idList.add(id)
+
+			
+
+			val json = AppData.get(id, "")
+			if (json.notEmpty) {
+				val loaded = Json.decodeFromString<List<T>>(json)
+				list.addAll(loaded)
+			}
+
+			delegate.it = list
+		}
+		.onSet{ prop, newValue ->
+			if (!badId) {
+				val jsonOut = Json.encodeToString(list.toList())
+				AppData.put(localId, jsonOut)
+			}
+		}
+	return delegate
+}
+
+
+
 
 
 var restoring by m(no)
