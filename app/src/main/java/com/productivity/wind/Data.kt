@@ -101,7 +101,7 @@ object Bar {
 	// LISTS
 	
     var copyTsk = sList<CopyTsk>("copyTsk")
-	var apps by sList2<AppTsk>()
+	var apps = sList<AppTsk>("apps")
 	var doTsk = sList<DoTsk>("doTsk")
 
 	var webWord = sList<WebWord>("WebWord", listOf("anime", "youtube.com", "facebook.com", "instagram.com", "x.com", "tiktok.com").map { WebWord(word = it) })
