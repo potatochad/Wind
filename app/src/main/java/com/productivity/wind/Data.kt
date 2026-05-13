@@ -37,6 +37,9 @@ import kotlin.properties.*
 import com.google.android.gms.location.*
 import com.productivity.wind.Imports.UI_visible.*
 import com.productivity.wind.Screens.Task.*
+import com.google.android.gms.maps.model.*
+import com.google.maps.android.compose.*
+import com.google.android.gms.location.*
 
 
 /*! NEVER move bar and lists to another FOLDER, or other file
