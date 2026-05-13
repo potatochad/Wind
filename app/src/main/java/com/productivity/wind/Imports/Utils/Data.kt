@@ -230,38 +230,93 @@ fun <T> s(
 }
 
 
+
 inline fun <reified T> sList2(
-    default: List<T> = emptyList(),
-): By<List<T>> {
+    default: MutableList<T> = mutableListOf(),
+): By<MutableList<T>> {
+
     val delegate = By(default)
 
     var localId by m("")
     var badId = no
 
-    val list = mList<T>()
+    val list = mutableListOf<T>()
+
+    fun save() {
+        if (!badId) {
+            val jsonOut = Json.encodeToString(list)
+            AppData.put(localId, jsonOut)
+        }
+    }
 
     delegate
         .onBuild { prop, id ->
+
             localId = id
+
             badId = idList.has(id)
-            if (badId) Vlog("Duplicate id detected: $id")
+
+            if (badId) {
+                Vlog("Duplicate id detected: $id")
+            }
+
             idList.add(id)
-			
 
             val json = AppData.get(id, "")
 
             if (json.notEmpty) {
-                val loaded = Json.decodeFromString<List<T>>(json)
+
+                val loaded =
+                    Json.decodeFromString<List<T>>(json)
+
                 list.addAll(loaded)
             }
 
-            delegate.it = list.toList()
+            delegate.it =
+                object : MutableList<T> by list {
+
+                    override fun add(element: T): Boolean {
+                        val result = list.add(element)
+                        save()
+                        return result
+                    }
+
+                    override fun remove(element: T): Boolean {
+                        val result = list.remove(element)
+                        save()
+                        return result
+                    }
+
+                    override fun removeAt(index: Int): T {
+                        val result = list.removeAt(index)
+                        save()
+                        return result
+                    }
+
+                    override fun clear() {
+                        list.clear()
+                        save()
+                    }
+
+                    override fun addAll(
+                        elements: Collection<T>
+                    ): Boolean {
+
+                        val result = list.addAll(elements)
+
+                        save()
+
+                        return result
+                    }
+                }
         }
+
         .onSet { prop, newValue ->
-            if (!badId) {
-                val jsonOut = Json.encodeToString(newValue)
-                AppData.put(localId, jsonOut)
-            }
+
+            list.clear()
+            list.addAll(newValue)
+
+            save()
         }
 
     return delegate
