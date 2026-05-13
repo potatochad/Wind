@@ -386,9 +386,13 @@ fun autoId(): Str {
     return "${e?.fileName}"
 }
 
-class By<T>(
-    private var value: T,
-) {
+class By<T>(value: T) {
+	var it by m(value)
+	private fun fancyId(x: ValVar): Str = "${x.name}: ${autoId()}"
+	private var id by m("")
+	
+
+	
 	private var onBuild: Do2_<ValVar, Str> = { _, _ -> }
     private var onGet: Do_<ValVar> = {}
     private var onSet: Do2_<ValVar, T> = { _, _ -> }
@@ -397,13 +401,6 @@ class By<T>(
     fun onGet(x: Do_<ValVar>) = apply { onGet = x }
     fun onSet(x: Do2_<ValVar, T>) = apply { onSet = x }
 
-	
-	private fun fancyId(x: ValVar): Str = "${x.name}: ${autoId()}"
-	private var id by m("")
-	
-	var it: T
-        get() = value
-        set(v) { value = v }
 
 	
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
@@ -413,10 +410,10 @@ class By<T>(
     }
     operator fun getValue(thisRef: Any?, property: ValVar): T {
 		onGet(property)
-        return value
+        return it
     }
     operator fun setValue(thisRef: Any?, property: ValVar, newValue: T) {
-        value = newValue
+        it = newValue
 		onSet(property, it)
     }
 }
