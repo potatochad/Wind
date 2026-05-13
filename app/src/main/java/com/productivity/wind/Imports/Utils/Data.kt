@@ -206,7 +206,6 @@ object AppData {
 var idList = mList<Str>()
 fun <T> s(
 	default: T,
-	onBuild: Do = |}
 ): By<T> {
 	val delegate = By(default)
 	var localId by m("")
@@ -215,10 +214,12 @@ fun <T> s(
 	delegate
 		.onBuild{ prop, id ->
 			localId = id
+
 			
 			badId = idList.has(id)
-			if (badId) Vlog("Duplicate id detected: $id")
 			idList.add(id)
+			if (badId) Vlog("Duplicate id detected: $id")
+			
 		
 			delegate.it = AppData.get(id, default)
 		}
