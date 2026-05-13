@@ -377,6 +377,9 @@ fun startActivity(intent: Intent) {
 }
 
 
+val Any?.type: KClass<*>?
+	get() = this?.let { it::class }
+
 
 fun autoId(): Str {
     val e = Throwable().stackTrace.getOrNull(2)
