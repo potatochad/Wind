@@ -204,7 +204,10 @@ object AppData {
 
 
 var idList = mList<Str>()
-fun <T> s(default: T): By<T> {
+fun <T> s(
+	default: T,
+	onBuild: Do = |}
+): By<T> {
 	val delegate = By(default)
 	var localId by m("")
 	var badId = no
@@ -226,7 +229,7 @@ fun <T> s(default: T): By<T> {
 }
 
 
-inline fun <reified T> sList2(
+class sList2(
     default: List<T> = emptyList(),
 ): By<List<T>> {
 
