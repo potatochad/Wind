@@ -39,6 +39,13 @@ import com.productivity.wind.Screens.Task.*
 
 @Composable
 fun Main() {
+	var testing by sList2<CopyTsk>()
+
+	testing.forEach{
+		
+	}
+
+	
 	RunOnce { MAINStart() }
 	
 	var searching by r(no)
