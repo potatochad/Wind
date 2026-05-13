@@ -191,7 +191,7 @@ fun Str.overFlow(x: Int): Str {
 
 
 // Remove one or more characters or substrings from a string
-fun String.remove(vararg targets: String): String {
+fun Str.remove(vararg targets: Str): Str {
     var result = this
     for (t in targets) {
         result = result.replace(t, "")
