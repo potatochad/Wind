@@ -67,32 +67,31 @@ fun newDay() {
 
 
 object Bar {
-	var test20 by sBetter(CopyTsk())
 	//BASIC
-    var funTime by s(0, "funTime")
-    var Dpoints by s(0, "Dpoints")
+    var funTime by s(0)
+    var Dpoints by s(0)
 	
-	var lastDate by s("", "lastDate")
-	var leftApp by s(no, "leftApp")
-	var encryptedBackup by s(yes, "encryptedBackup") 
-	var noUninstall by s(no, "noUninstall")
+	var lastDate by s("")
+	var leftApp by s(no)
+	var encryptedBackup by s(yes) 
+	var noUninstall by s(no)
 	var logs = sList<Str>("logs")
 	
-	var Url by s("https://google.com", "Url")
+	var Url by s("https://google.com")
 	
 
 	//LOCATION
-	var userLatLng by s("51.5074,-0.1278", "userLatLng")
+	var userLatLng by s("51.5074,-0.1278")
 	var userLocation by synch(toLatLng(userLatLng)) {
 		userLatLng = toStr(it)
 	}
-	var privacyLocation by s(no, "privacyLocation")
+	var privacyLocation by s(no)
 	var privacyGeo = sList<GeoCircle>("privacyGeo")
 
 
     
     //ACHIEVEMENTS
-    var LettersTyped by s(0, "LettersTyped")
+    var LettersTyped by s(0)
 	
 
 	// LISTS
