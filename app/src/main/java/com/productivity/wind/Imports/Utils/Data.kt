@@ -242,15 +242,11 @@ inline fun <reified T> sList2(
 
     delegate
         .onBuild { prop, id ->
-
             localId = id
             badId = idList.has(id)
-
-            if (badId) {
-                Vlog("Duplicate id detected: $id")
-            }
-
+            if (badId) Vlog("Duplicate id detected: $id")
             idList.add(id)
+			
 
             val json = AppData.get(id, "")
 
@@ -261,9 +257,7 @@ inline fun <reified T> sList2(
 
             delegate.it = list.toList()
         }
-
         .onSet { prop, newValue ->
-
             if (!badId) {
                 val jsonOut = Json.encodeToString(newValue)
                 AppData.put(localId, jsonOut)
