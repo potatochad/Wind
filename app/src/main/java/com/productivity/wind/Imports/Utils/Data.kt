@@ -229,10 +229,9 @@ fun <T> s(
 }
 
 
-class sList2(
+inline fun <reified T> sList2(
     default: List<T> = emptyList(),
 ): By<List<T>> {
-
     val delegate = By(default)
 
     var localId by m("")
