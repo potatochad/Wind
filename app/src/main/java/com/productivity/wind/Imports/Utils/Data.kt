@@ -174,7 +174,7 @@ object AppData {
 			is Long -> prefs.getLong(id, x) as T
 			is Str -> (prefs.getString(id, x) ?: x) as T
 			else -> {
-				Vlog("Cant get a complex type: $id, [ ${x?.let { it::class }} ]")
+				Vlog("Cant get a complex type: $id, [ ${x.type} ]")
 				x
 			}
 		}
@@ -188,7 +188,7 @@ object AppData {
             is Long -> e.putLong(id, x)
             is Str -> e.putString(id, x)
             else -> {
-				Vlog("Cant save a complex type: $id, [ ${x?.let { it::class }} ]")
+				Vlog("Cant save a complex type: $id, [ ${x.type} ]")
 				return
 			}
         }
@@ -204,7 +204,7 @@ object AppData {
 
 
 var idList = mList<Str>()
-fun <T> sBetter(default: T): By<T> {
+fun <T> s(default: T): By<T> {
 	val delegate = By(default)
 	var localId by m("")
 	var badId = no
@@ -269,21 +269,6 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 
         this.add(index, itemCopy) 
 	}
-}
-
-
-fun <T> s(default: T, id: Str = autoId()): m_<T> {
-    var x = m(default) 
-
-	Try("<fun s >, id: $id") {
-		x = m(AppData.get(id, default))
-
-		x.onChange {
-			AppData.put(id, x.it)
-		}
-	}
-	
-    return x
 }
 
 
