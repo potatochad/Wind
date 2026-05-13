@@ -238,6 +238,11 @@ fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Mod =
     )
 
 
+fun <T> Collection<T>.has(item: T): Bool = contains(item)
+fun <K, V> Map<K, V>.hasKey(key: K): Bool = containsKey(key)
+fun SharedPreferences.has(key: Str) = contains(key)
+
+
 
 fun File.file(name: Str): File {
     return File(this, name)
