@@ -633,9 +633,9 @@ fun LazyMaps(
 	ui: ui = {},
 ) {
 	var mapType by synch(
-		MapType.valueOf(savedMapType)
+		MapType.valueOf(Bar.savedMapType)
 	) {
-		savedMapType = it.name
+		Bar.savedMapType = it.name
 	}
 	
     val camera = rememberCameraPositionState {
