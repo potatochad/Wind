@@ -163,7 +163,7 @@ object AppData {
 
 
 	
-	fun hasId(id: Str) = prefs.contains(id)
+	fun hasKey(x: Str) = prefs.hasKey(x)
 
 	@Suppress("UNCHECKED_CAST")
 	fun <T> get(id: Str, x: T): T {
@@ -213,7 +213,7 @@ fun <T> sBetter(default: T): By<T> {
 		.onBuild{ prop, id ->
 			localId = id
 			
-			badId = idList.contains(id)
+			badId = idList.has(id)
 			if (badId) Vlog("Duplicate id detected: $id")
 			idList.add(id)
 		
