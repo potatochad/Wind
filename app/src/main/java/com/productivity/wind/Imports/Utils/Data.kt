@@ -167,7 +167,7 @@ object AppData {
 
 	@Suppress("UNCHECKED_CAST")
 	fun <T> get(id: Str, x: T): T {
-		return when (default) {
+		return when (x) {
 			is Int -> prefs.getInt(id, x) as T
 			is Bool -> prefs.getBoolean(id, x) as T
 			is Float -> prefs.getFloat(id, x) as T
