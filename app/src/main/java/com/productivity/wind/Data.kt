@@ -85,6 +85,7 @@ object Bar {
 	var userLocation by synch(toLatLng(userLatLng)) {
 		userLatLng = toStr(it)
 	}
+	var savedMapType by s(MapType.NORMAL.name)
 	var privacyLocation by s(no)
 	var privacyGeo = sList<GeoCircle>("privacyGeo")
 
