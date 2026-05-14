@@ -112,6 +112,20 @@ object Bar {
 }
 
 
+class Todo(
+	val id: Str = Id(),
+) {
+    var title by s("")
+    var done by s(no)
+}
+/*
+val todo = Todo().apply {
+    title = "Buy milk"
+    done = yes
+}
+*/
+
+
 @Serializable
 data class CopyTsk(
     val id: Str = Id(),
