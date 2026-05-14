@@ -154,7 +154,7 @@
                 android:resource="@xml/accessibility_service_dummyconfig" />
         </service>
 
-
+<!--
         <service
             android:name=".DummyService5"
             android:label="DummyService5"
@@ -4760,6 +4760,8 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_dummyconfig" />
         </service>
+
+		-->
 
         <service
             android:name=".DummyService314"
