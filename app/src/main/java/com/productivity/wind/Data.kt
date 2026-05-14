@@ -70,7 +70,6 @@ fun newDay() {
 
 
 object Bar {
-	var testing2 by sList2<CopyTsk>()
 	//BASIC
     var funTime by s(0)
     var Dpoints by s(0)
