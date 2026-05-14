@@ -241,7 +241,9 @@ inline fun <reified T> sList(
         if (json.notEmpty) {
             val loaded = Json.decodeFromString<List<T>>(json)
             list.addAll(loaded)
+			Vlog("Getting data: $id")
         } else {
+			Vlog("Nothing saved: $id")
             list.addAll(default)
         }
 
@@ -255,6 +257,7 @@ inline fun <reified T> sList(
 		.distinctUntilChanged()
         .debounce(300)
 		.collectLatest { updatedList ->
+			Vlog("Saving data: $id")
             try {
                 val jsonOut = Json.encodeToString(updatedList)
                 AppData.put(id, jsonOut)
