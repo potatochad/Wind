@@ -231,88 +231,6 @@ fun <T> s(
 
 
 
-inline fun <reified T> sList2(
-    default: MutableStateList<T> = mList(),
-): By<MutableStateList<T>> {
-    val delegate = By(default)
-    var localId by m("")
-    var badId = no
-    val list = mList<T>()
-
-    val save = {
-        if (!badId) {
-            val jsonOut = Json.encodeToString(list)
-            AppData.put(localId, jsonOut)
-        }
-    }
-
-    delegate
-        .onBuild { prop, id ->
-            localId = id
-            badId = idList.has(id)
-            if (badId) Vlog("Duplicate id detected: $id")
-            idList.add(id)
-
-			
-
-            val json = AppData.get(id, "")
-
-            if (json.notEmpty) {
-                val loaded = Json.decodeFromString<List<T>>(json)
-
-                list.addAll(loaded)
-            }
-
-            delegate.it =
-                object : MutableStateList<T> by list {
-
-                    override fun add(element: T): Bool {
-                        val result = list.add(element)
-                        save()
-                        return result
-                    }
-
-                    override fun remove(element: T): Bool {
-                        val result = list.remove(element)
-                        save()
-                        return result
-                    }
-
-                    override fun removeAt(index: Int): T {
-                        val result = list.removeAt(index)
-                        save()
-                        return result
-                    }
-
-                    override fun clear() {
-                        list.clear()
-                        save()
-                    }
-
-                    override fun addAll(elements: Collection<T>): Bool {
-                        val result = list.addAll(elements)
-
-                        save()
-
-                        return result
-                    }
-                }
-        }
-        .onSet { prop, newValue ->
-
-            list.clear()
-            list.addAll(newValue)
-
-            save()
-        }
-
-    return delegate
-}
-
-
-
-
-
 var restoring by m(no)
 inline fun <reified T> sList(
 	id: Str,
@@ -322,15 +240,12 @@ inline fun <reified T> sList(
 	val Oldlist = mList<T>()
 
 
-    Try("error with list saving") {
+    try {
         val json = AppData.get(id, "")
         if (json.notEmpty) {
 			val loaded = Json.decodeFromString<List<T>>(json)
 			list.addAll(loaded)
-		} else {
-			log("json is empty: $id")
 		}
-
 
         Each(1000){
 			if (!restoring) {
@@ -339,7 +254,9 @@ inline fun <reified T> sList(
 				AppData.put(id, jsonOut)
 			}
         }
-    }
+    } catch (e: Exception) {
+		Vlog("error with saving List: ${e.message}")
+	}
 
     return list
 }
