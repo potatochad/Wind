@@ -383,7 +383,11 @@ val Any?.type: KClass<*>?
 
 fun autoId(): Str {
     val e = Throwable().stackTrace.getOrNull(2)
-    return "${e?.fileName}"
+    return Str(
+		e?.fileName,
+		e?.className,
+		e?.methodName
+	)
 }
 
 class By<T>(value: T) {
