@@ -41,7 +41,7 @@ import com.productivity.wind.Screens.Task.*
 fun Main() {
 	
 
-	testing2.forEach{
+	Bar.testing2.forEach{
 		
 	}
 
@@ -69,7 +69,7 @@ fun Main() {
 					// showOrderNotification(11)
 				}
 				move(12)
-				Text("Points ${Bar.funTime")
+				Text("Points ${Bar.funTime}")
         
 				End { 
 					Icon.Search {
