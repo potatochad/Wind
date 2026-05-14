@@ -206,15 +206,16 @@ fun <T> s(
 ): By<T> {
 	val delegate = By(default)
 	var goodId by m("")
+	var badId by m(no)
 	
 	delegate
 		.onBuild{ prop, id ->
 			goodId = "$id: $idExtra"
 			
 			badId = idList.has(goodId)
-			idList.add(id)
-			if (badId) Vlog("Duplicate id detected: $id")
-			else delegate.it = AppData.get(id, default)
+			idList.add(goodId)
+			if (badId) Vlog("Duplicate id detected: $goodId")
+			else delegate.it = AppData.get(goodId, default)
 		}
 		.onSet{ prop, newValue ->
 			if (!badId) AppData.put(goodId, newValue)
