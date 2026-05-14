@@ -390,7 +390,6 @@ fun autoId(): Str {
 
 class By<T>(value: T) {
 	var it by m(value)
-	private fun fancyId(x: ValVar): Str = "${x.name}: ${autoId()}"
 	private var id by m("")
 	
 
@@ -406,7 +405,7 @@ class By<T>(value: T) {
 
 	
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
-		id = fancyId(property)
+		id = property.name
 		onBuild(property, id)
         return this
     }
