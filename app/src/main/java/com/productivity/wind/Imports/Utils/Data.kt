@@ -202,25 +202,22 @@ object AppData {
 var idList = mList<Str>()
 fun <T> s(
 	default: T,
+	idExtra: Str = "",
 ): By<T> {
 	val delegate = By(default)
-	var localId by m("")
-	var badId = no
+	var goodId by m("")
 	
 	delegate
 		.onBuild{ prop, id ->
-			localId = id
-
+			goodId = "$id: $idExtra"
 			
-			badId = idList.has(id)
+			badId = idList.has(goodId)
 			idList.add(id)
 			if (badId) Vlog("Duplicate id detected: $id")
-			
-		
-			delegate.it = AppData.get(id, default)
+			else delegate.it = AppData.get(id, default)
 		}
 		.onSet{ prop, newValue ->
-			if (!badId) AppData.put(localId, newValue)
+			if (!badId) AppData.put(goodId, newValue)
 		}
 	return delegate
 }
