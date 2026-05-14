@@ -232,7 +232,7 @@ fun <T> s(
 
 
 inline fun <reified T> sList2(
-    default: MutableList<T> = mutableListOf(),
+    default: MutableList<T> = mList(),
 ): By<MutableList<T>> {
     val delegate = By(default)
     var localId by m("")
