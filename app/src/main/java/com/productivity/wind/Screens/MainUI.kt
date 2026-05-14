@@ -41,7 +41,7 @@ import com.productivity.wind.Screens.Task.*
 fun Main() {
 	
 
-	testing.forEach{
+	testing2.forEach{
 		
 	}
 
