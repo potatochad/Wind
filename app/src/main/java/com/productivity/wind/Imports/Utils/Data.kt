@@ -242,7 +242,7 @@ inline fun <reified T> sList2(
 
     val list = mutableListOf<T>()
 
-    fun save() {
+    val save = {
         if (!badId) {
             val jsonOut = Json.encodeToString(list)
             AppData.put(localId, jsonOut)
