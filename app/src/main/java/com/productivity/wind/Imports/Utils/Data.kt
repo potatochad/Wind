@@ -250,7 +250,8 @@ inline fun <reified T> sList(
         list.addAll(default)
     }
 
-    snapshotFlow { list.toList() }
+	Do {
+		snapshotFlow { list.toList() }
 		.distinctUntilChanged()
         .debounce(300)
 		.collectLatest { updatedList ->
