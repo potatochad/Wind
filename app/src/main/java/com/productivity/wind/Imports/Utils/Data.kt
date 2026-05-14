@@ -255,22 +255,18 @@ inline fun <reified T> sList(
         list.addAll(default)
     }
 
-    Do {
-        snapshotFlow { list.toList() }
-            .distinctUntilChanged()
-            .debounce(300)
-            .collectLatest { updatedList ->
+    snapshotFlow { list.toList() }
+		.distinctUntilChanged()
+        .debounce(300)
+		.collectLatest { updatedList ->
+            try {
+                val jsonOut = Json.encodeToString(updatedList)
+                AppData.put(id, jsonOut)
 
-                if (restoring) return@collectLatest
-
-                try {
-                    val jsonOut = Json.encodeToString(updatedList)
-                    AppData.put(id, jsonOut)
-
-                } catch (e: Exception) {
-                    Vlog("Error saving list [$id]: ${e.message}")
-                }
+            } catch (e: Exception) {
+				Vlog("Error saving list [$id]: ${e.message}")
             }
+		}
     }
 
     return list
