@@ -107,24 +107,7 @@ object Bar {
 	var webWord = sList<WebWord>("WebWord", listOf("anime", "youtube.com", "facebook.com", "instagram.com", "x.com", "tiktok.com").map { WebWord(word = it) })
 
 	var waits = sList<Waits>("waits")
-
-
 }
-
-
-class Todo(
-	val id: Str = Id(),
-) {
-    var title by s("")
-    var done by s(no)
-}
-/*
-val todo = Todo().apply {
-    title = "Buy milk"
-    done = yes
-}
-*/
-
 
 @Serializable
 data class CopyTsk(
