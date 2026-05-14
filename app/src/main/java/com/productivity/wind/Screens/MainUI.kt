@@ -39,7 +39,7 @@ import com.productivity.wind.Screens.Task.*
 
 @Composable
 fun Main() {
-	var testing by sList2<CopyTsk>()
+	
 
 	testing.forEach{
 		
@@ -69,7 +69,7 @@ fun Main() {
 					// showOrderNotification(11)
 				}
 				move(12)
-				Text("Points ${Bar.funTime}")
+				Text("Points ${Bar.funTime")
         
 				End { 
 					Icon.Search {
