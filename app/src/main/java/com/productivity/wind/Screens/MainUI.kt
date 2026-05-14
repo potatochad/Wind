@@ -85,6 +85,18 @@ fun Main() {
 		}, 
 		backIcon = no
 	) {
+
+		
+		LazyItem(
+            icon = { Icon.Whatshot() },
+            title = "‼️ DELETE ALL DATA",
+            onClick = {
+				AppData.deleteAll()
+				closeApp()
+			}
+        )
+
+		
 		Bar.copyTsk.findUI({ 
 			if (searching) it.input.contains(Tag.it) else !it.done()
 		}) { 
