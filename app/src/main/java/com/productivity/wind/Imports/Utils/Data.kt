@@ -225,7 +225,6 @@ fun <T> s(
 
 
 
-var restoring by m(no)
 inline fun <reified T> sList(
     id: Str,
     default: List<T> = emptyList(),
