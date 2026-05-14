@@ -132,11 +132,6 @@ import kotlinx.coroutines.flow.*
 
 
 
-fun encrypt(text: Str, key: Int) = text.map { (it.code + key).toChar() }.joinToString("")           
-fun decrypt(text: Str, key: Int) = text.map { (it.code - key).toChar() }.joinToString("")
-
-
-
 object AppData {
 	val storageFile = "Data"
 
@@ -321,6 +316,8 @@ class synch<T>(initial: T, var onChange: (T) -> Unit) : ReadWriteProperty<Any?, 
 
 
 
+fun encrypt(text: Str, key: Int) = text.map { (it.code + key).toChar() }.joinToString("")           
+fun decrypt(text: Str, key: Int) = text.map { (it.code - key).toChar() }.joinToString("")
 
 
 @Composable
