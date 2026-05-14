@@ -128,6 +128,7 @@ import kotlinx.coroutines.flow.*
 import kotlin.properties.*
 import org.json.JSONObject
 import com.productivity.wind.Imports.UI_visible.*
+import kotlinx.coroutines.flow.*
 
 
 
@@ -233,33 +234,50 @@ fun <T> s(
 
 var restoring by m(no)
 inline fun <reified T> sList(
-	id: Str,
+    id: Str,
     default: List<T> = emptyList(),
 ): SnapshotStateList<T> {
-    val list = mList<T>()
-	val Oldlist = mList<T>()
 
+    val list = mList<T>()
 
     try {
         val json = AppData.get(id, "")
-        if (json.notEmpty) {
-			val loaded = Json.decodeFromString<List<T>>(json)
-			list.addAll(loaded)
-		}
 
-        Each(1000){
-			if (!restoring) {
-				val jsonOut = Json.encodeToString(list.toList())
-				
-				AppData.put(id, jsonOut)
-			}
+        if (json.notEmpty) {
+            val loaded = Json.decodeFromString<List<T>>(json)
+            list.addAll(loaded)
+        } else {
+            list.addAll(default)
         }
+
     } catch (e: Exception) {
-		Vlog("error with saving List: ${e.message}")
-	}
+        Vlog("Error loading list [$id]: ${e.message}")
+        list.addAll(default)
+    }
+
+    Do {
+        snapshotFlow { list.toList() }
+            .distinctUntilChanged()
+            .debounce(300)
+            .collectLatest { updatedList ->
+
+                if (restoring) return@collectLatest
+
+                try {
+                    val jsonOut = Json.encodeToString(updatedList)
+                    AppData.put(id, jsonOut)
+
+                } catch (e: Exception) {
+                    Vlog("Error saving list [$id]: ${e.message}")
+                }
+            }
+    }
 
     return list
 }
+
+
+
 
 fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	Do {
@@ -272,24 +290,6 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
         this.add(index, itemCopy) 
 	}
 }
-
-
-
-fun <T> m_<T>.onChange(callback: Wait_<T>) {
-    Do {
-        snapshotFlow { 
-			this@onChange.it
-		}
-		.collectLatest {
-			Do {
-				callback(it)
-			}
-        }
-    }
-}
-
-
-
 
 
 
