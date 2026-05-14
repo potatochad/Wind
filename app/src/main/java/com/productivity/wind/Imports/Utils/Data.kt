@@ -232,12 +232,12 @@ fun <T> s(
 
 
 inline fun <reified T> sList2(
-    default: MutableList<T> = mList(),
-): By<MutableList<T>> {
+    default: MutableStateList<T> = mList(),
+): By<MutableStateList<T>> {
     val delegate = By(default)
     var localId by m("")
     var badId = no
-    val list = mutableListOf<T>()
+    val list = mList<T>()
 
     val save = {
         if (!badId) {
@@ -264,7 +264,7 @@ inline fun <reified T> sList2(
             }
 
             delegate.it =
-                object : MutableList<T> by list {
+                object : MutableStateList<T> by list {
 
                     override fun add(element: T): Bool {
                         val result = list.add(element)
@@ -289,10 +289,7 @@ inline fun <reified T> sList2(
                         save()
                     }
 
-                    override fun addAll(
-                        elements: Collection<T>
-                    ): Boolean {
-
+                    override fun addAll(elements: Collection<T>): Bool {
                         val result = list.addAll(elements)
 
                         save()
