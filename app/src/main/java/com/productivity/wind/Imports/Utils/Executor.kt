@@ -204,8 +204,10 @@ fun Do(onError: Wait ={}, Do: Wait) {
 	App.lifecycleScope.launch {
 		try {
 			Do()
+		} catch (e: CancellationException) {
+			throw e
 		} catch (e: Exception) {
-			Vlog("Do_error: ${e.message}")
+			Vlog("Do Error: ${e.message}")
 			onError()
 		}
 	} 
