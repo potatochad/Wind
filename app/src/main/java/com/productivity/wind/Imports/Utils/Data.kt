@@ -271,12 +271,17 @@ inline fun <reified T> sList(
 fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 	Do {
 		val index = this.indexOf(item)
+		if (index == -1) {
+			Vlog("item not found: $item, $this")
+			return
+		}
 		val itemCopy = this[index] // get the item
         this.removeAt(index)       // remove old item
 
         itemCopy.block()           // apply the changes directly
 
-        this.add(index, itemCopy) 
+        //this.add(index, itemCopy) 
+		this[index] = itemCopy
 	}
 }
 
@@ -393,7 +398,6 @@ fun Restore(show: mBool) {
                         }
                     }
                 }
-			restoring = yes
 
             editor.commit() 
 			Vlog("Reloading App...")
