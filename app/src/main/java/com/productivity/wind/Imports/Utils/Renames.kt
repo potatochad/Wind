@@ -383,7 +383,15 @@ val Any?.type: KClass<*>?
 
 fun autoId(): Str {
     val e = Throwable().stackTrace.getOrNull(2)
-    return "${e?.fileName} ${e?.className} ${e?.methodName}"
+	val shortClassName = e?.className
+        ?.substringAfterLast('.')
+    return "${e?.fileName} $shortClassName ${e?.methodName}"
+}
+fun autoId(): Str {
+    return Throwable().stackTrace
+        .joinToString(", ") {
+            "${it.fileName}-${it.className.substringAfterLast('.')}-${it.methodName}"
+        }
 }
 
 class By<T>(value: T) {
