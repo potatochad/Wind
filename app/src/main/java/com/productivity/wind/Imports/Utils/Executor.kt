@@ -191,14 +191,16 @@ fun wait(x: Any = 20, Do: Wait) {
 suspend fun wait(x: Any = 20) { delay(toL(x)) }
 
 
-fun Do(log: Str="", onError: Wait ={}, Do: Wait) {
+fun Do(eLog: Str="", onError: Wait ={}, Do: Wait) {
+	var whereCalled by m("")
 	App.lifecycleScope.launch {
 		try {
+			whereCalled = callerId(2)
 			Do()
 		} catch (e: CancellationException) {
 			throw e
 		} catch (e: Exception) {
-			Vlog("Do error, $log: ${e.message}, $")
+			Vlog("Do error, $eLog: ${e.message}, $whereCalled")
 			onError()
 		}
 	} 
