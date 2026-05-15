@@ -232,7 +232,8 @@ inline fun <reified T> sList(
 
     val list = mList<T>()
 	val ref = "${list::class.simpleName}@${System.identityHashCode(list)}"
-	barListMap.add(ref, id)
+	barListMap[ref] = id
+	log("Lists ($id) ref: $ref")
 
     try {
         val json = AppData.get(id, "")
@@ -268,11 +269,12 @@ inline fun <reified T> sList(
 }
 
 
-
 var edittedList by m("")
+var lastEdittedList by m("")
 fun <T> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
 	try {
-		edittedList = "$it"
+		edittedList = "$this"
+		log("edited List: $this")
 		val index = this.indexOf(item)
 		val itemCopy = this[index] // get the item
         this.removeAt(index)       // remove old item
