@@ -196,6 +196,9 @@ fun <T : Any> KClass<T>.setProp(
 
 
 
+
+/*
+
 @Serializable
 data class SavedListState<T>(
     val items: List<T>
@@ -278,7 +281,7 @@ var todos by PersistedStateList(
     }
 )
 
-/*
+
 ```
 
 Then use normally
@@ -288,15 +291,14 @@ todos.add(Todo(text = "Buy milk"))
 todos[0] = todos[0].copy(done = yes)
 
 todos.removeAt(0)
-*/
-/*
+
 Rules for scalability:
 
 * item must be `@Serializable`
 * item must be `data class`
 * mutations must use `.copy(...)`
 * never mutate inner vars directly:
-*/
+
 
 todos[0].done = yes
 
@@ -313,7 +315,7 @@ inline fun <T> SnapshotStateList<T>.update(
 
 
 
-    
+    */
     
 
 
