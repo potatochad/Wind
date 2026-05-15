@@ -50,10 +50,10 @@ find_and_source() {
 }
 
 
-KEYSTORE_PASSWORD="123456789"
-KEY_ALIAS="my-keyAlias"
-KEY_PASSWORD="123456789"
-KEYSTORE_PATH="$(pwd)/app/newKeyStorePath.keystore"
+KEYSTORE_PASSWORD="123456781"
+KEY_ALIAS="myKeyAlias"
+KEY_PASSWORD="123456781"
+KEYSTORE_PATH="$(pwd)/app/keyStore.keystore"
 
 Create_Keystore() {
     mkdir -p app
