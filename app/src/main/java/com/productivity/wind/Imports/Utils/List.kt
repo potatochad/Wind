@@ -148,6 +148,22 @@ val List<*>.sameType: Bool
 val List<*>.itemKType: KClass<*>?
     get() = if (sameType) firstOrNull()?.let { it::class } else null
 
+val KClass<*>.isDataClass: Bool
+    get() = this.isData
+
+fun KClass<*>.hasId(): Bool {
+    if (!this.isData) return no
+    return memberProperties.any { it.name == "id" }
+}
+fun KClass<*>.hasId(): Bool {
+    if (!this.isData) return no
+    return this.props.any { it.name == "id" }
+}
+fun KClass<*>.hasName(name: Str): Bool =
+    props.any { it.name == name }
+    
+val KClass<*>.props
+    get() = this.memberProperties
 
 
 
@@ -157,6 +173,8 @@ val List<*>.itemKType: KClass<*>?
 
 
 
+
+    
     
 
 
