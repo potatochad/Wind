@@ -224,33 +224,13 @@ fun <T> s(
 }
 
 
-val barListMap = mutableStateMapOf<Str, Str>()
 inline fun <reified T> sList(
     id: Str,
     default: List<T> = emptyList(),
 ): SnapshotStateList<T> {
 
     val list = mList<T>()
-	val ref = "${list::class.simpleName}@${System.identityHashCode(list)}"
-	barListMap[id] = ref
-	log("Lists ($id) ref: $ref")
-
-	var thisListEditted by m(1)
-
-	Do(eLog = "error with edit recomposing in List: $id") {
-		snapshotFlow { edittedList }
-		.debounce(600)
-		.collectLatest {
-			Vlog("is $edittedList == ${barListMap[id]}")
-			if (edittedList == barListMap[id]){
-				Vlog("yes")
-				thisListEditted++
-			} else {
-				Vlog("no")
-			}
-		}
-	}
-
+	
     try {
         val json = AppData.get(id, "")
 
@@ -267,8 +247,8 @@ inline fun <reified T> sList(
     }
 
 	Do(eLog = "error saving list $id") {
-		snapshotFlow { list.toList() to thisListEditted }
-        .debounce(600)
+		snapshotFlow { list.toList() }
+        .debounce(700)
 		.collectLatest { updatedList ->
             try {
 				Vlog("SAVING")
@@ -285,22 +265,18 @@ inline fun <reified T> sList(
 }
 
 
-var edittedList by m("")
-fun <T> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
-	try {
-		val ref = "${this::class.simpleName}@${System.identityHashCode(this)}"
-		edittedList = ref
-		log("edited List: $ref")
-		val index = this.indexOf(item)
-		val itemCopy = this[index] // get the item
-        this.removeAt(index)       // remove old item
+inline fun <T> SnapshotStateList<T>.edit(
+    item: T,
+    edit: T.() -> Unit
+) {
+    val index = indexOf(item)
 
-        itemCopy.block()           // apply the changes directly
+    if (index != -1) {
+        item.edit()
 
-        this.add(index, itemCopy) 
-	} catch (e: Exception) {
-		Vlog("error editting list: ${e.message}: [ $this:$item ]")
-	}
+        // force replace for recomposition
+        this[index] = item
+    }
 }
 
 
