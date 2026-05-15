@@ -332,7 +332,7 @@ val LocalDate.words: Str
     }
 
 // Overload for String input (assume ISO date like "2026-01-31")
-val String.words: Str
+val Str.words: Str
     get() {
         return try {
             val date = LocalDate.parse(this)
