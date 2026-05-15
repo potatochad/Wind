@@ -279,7 +279,7 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
         //this.add(index, itemCopy) 
 		this[index] = itemCopy
 	} catch (e: Exception) {
-		Vlog("error editting list [ $this: $item ]: ${e.message}")
+		Vlog("error editting list: ${e.message}: [ $this:$item ]")
 	}
 }
 
