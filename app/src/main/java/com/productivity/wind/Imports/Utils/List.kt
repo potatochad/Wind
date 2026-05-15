@@ -196,6 +196,122 @@ fun <T : Any> KClass<T>.setProp(
 
 
 
+@Serializable
+data class SavedListState<T>(
+    val items: List<T>
+)
+
+class PersistedStateList<T : Any>(
+    private val key: Str,
+    private val clazz: KClass<T>,
+    private val save: (Str, Str) -> Unit,
+    private val load: (Str) -> Str?,
+    private val json: Json = Json {
+        ignoreUnknownKeys = yes
+        encodeDefaults = yes
+    }
+) : ReadOnlyProperty<Any?, SnapshotStateList<T>> {
+
+    private var cache: SnapshotStateList<T>? = null
+
+    override fun getValue(
+        thisRef: Any?,
+        property: KProperty<*>
+    ): SnapshotStateList<T> {
+
+        cache?.let { return it }
+
+        require(clazz.isData) {
+            "Only data classes supported"
+        }
+
+        val list = mutableStateListOf<T>()
+
+        // restore
+        load(key)?.let { raw ->
+            runCatching {
+                val serializer = ListSerializer(clazz.serializer())
+                val restored = json.decodeFromString(serializer, raw)
+                list.addAll(restored)
+            }
+        }
+
+        // auto save
+        CoroutineScope(Dispatchers.IO).launch {
+
+            snapshotFlow { list.toList() }
+                .collect { items ->
+
+                    runCatching {
+
+                        val serializer = ListSerializer(clazz.serializer())
+                        val encoded = json.encodeToString(serializer, items)
+
+                        save(key, encoded)
+                    }
+                }
+        }
+
+        cache = list
+        return list
+    }
+}
+
+@Serializable
+data class Todo(
+    val id: Str = UUID.randomUUID().toString(),
+    var text: Str = "",
+    var done: Bool = no
+)
+
+
+var todos by PersistedStateList(
+    key = "todos",
+    clazz = Todo::class,
+
+    save = { key, value ->
+        prefs.edit().putString(key, value).apply()
+    },
+
+    load = { key ->
+        prefs.getString(key, null)
+    }
+)
+
+/*
+```
+
+Then use normally
+
+todos.add(Todo(text = "Buy milk"))
+
+todos[0] = todos[0].copy(done = yes)
+
+todos.removeAt(0)
+*/
+/*
+Rules for scalability:
+
+* item must be `@Serializable`
+* item must be `data class`
+* mutations must use `.copy(...)`
+* never mutate inner vars directly:
+*/
+
+todos[0].done = yes
+
+// todos[0] = todos[0].copy(done = yes)
+
+
+
+inline fun <T> SnapshotStateList<T>.update(
+    index: Int,
+    block: T.() -> T
+) {
+    this[index] = this[index].block()
+}
+
+
 
     
     
