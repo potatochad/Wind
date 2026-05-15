@@ -247,7 +247,7 @@ inline fun <reified T> sList(
         list.addAll(default)
     }
 
-	Do {
+	Try("") {
 		snapshotFlow { list.toList() }
 		.distinctUntilChanged()
         .debounce(300)
