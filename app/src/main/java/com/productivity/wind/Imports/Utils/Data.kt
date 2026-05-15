@@ -249,8 +249,7 @@ inline fun <reified T> sList(
 
 	Do(eLog = "error saving list $id") {
 		snapshotFlow { list.toList() }
-		.distinctUntilChanged()
-        .debounce(300)
+        .debounce(350)
 		.collectLatest { updatedList ->
             try {
                 val jsonOut = Json.encodeToString(updatedList)
