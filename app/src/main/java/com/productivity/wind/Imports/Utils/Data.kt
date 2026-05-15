@@ -268,7 +268,7 @@ inline fun <reified T> sList(
 
 
 
-fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
+fun <T> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
 	try {
 		val index = this.indexOf(item)
 		val itemCopy = this[index] // get the item
@@ -276,8 +276,7 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 
         itemCopy.block()           // apply the changes directly
 
-        //this.add(index, itemCopy) 
-		this[index] = itemCopy
+        this.add(index, itemCopy) 
 	} catch (e: Exception) {
 		Vlog("error editting list: ${e.message}: [ $this:$item ]")
 	}
