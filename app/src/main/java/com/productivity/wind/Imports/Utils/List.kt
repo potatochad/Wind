@@ -163,7 +163,7 @@ val KClass<*>.props
 
 fun <T : Any> KClass<T>.getProp(name: Str) =
     props.firstOrNull { it.name == name }
-
+        .also { if (it == null) Vlog("Cant find prop ($name) in instance $this") }
     
 fun <T : Any> KClass<T>.getPropValue(
     instance: T,   // User(1, "A")
@@ -171,6 +171,23 @@ fun <T : Any> KClass<T>.getPropValue(
 ): Any? {
     val prop = this.getProp(name)
     return prop?.getter.call(instance)
+}
+
+val KProperty1<*, *>.isMutable: Bool
+    get() = this is KMutableProperty1<*, *>
+
+fun <T : Any> KClass<T>.setProp(
+    instance: T,   // User(1, "A")
+    name: Str,
+    value: Any?
+) {
+    val prop = props.getProp(name) 
+    val mutableProp = prop as? KMutableProperty1<T, Any?> ?: run {
+        Vlog("Cant change val prop ($name) in instance $instance")
+        return
+    }
+
+    mutableProp.set(instance, value)
 }
 
 
