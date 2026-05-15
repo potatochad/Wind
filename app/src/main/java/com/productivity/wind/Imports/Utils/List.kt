@@ -164,7 +164,14 @@ val KClass<*>.props
 fun <T : Any> KClass<T>.getProp(name: Str) =
     props.firstOrNull { it.name == name }
 
-
+    
+fun <T : Any> KClass<T>.getPropValue(
+    instance: T,   // User(1, "A")
+    name: Str
+): Any? {
+    val prop = this.getProp(name)
+    return prop?.getter.call(instance)
+}
 
 
 
