@@ -198,7 +198,7 @@ fun Do(log: Str="", onError: Wait ={}, Do: Wait) {
 		} catch (e: CancellationException) {
 			throw e
 		} catch (e: Exception) {
-			Vlog("Do Error: ${e.message}")
+			Vlog("Do error, $log: ${e.message}, $")
 			onError()
 		}
 	} 
