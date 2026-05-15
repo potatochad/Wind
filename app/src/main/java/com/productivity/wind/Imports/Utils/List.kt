@@ -170,7 +170,9 @@ fun <T : Any> KClass<T>.getPropValue(
     name: Str
 ): Any? {
     val prop = this.getProp(name)
-    return prop?.get(instance)
+
+    @Suppress("UNCHECKED_CAST")
+    return (prop as? KProperty1<T, *>)?.get(instance)
 }
 
 val KProperty1<*, *>.isMutable: Bool
