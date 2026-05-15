@@ -247,7 +247,7 @@ inline fun <reified T> sList(
         list.addAll(default)
     }
 
-	Try("") {
+	Do(eLog = "error saving list $id") {
 		snapshotFlow { list.toList() }
 		.distinctUntilChanged()
         .debounce(300)
