@@ -153,10 +153,6 @@ val KClass<*>.isDataClass: Bool
 
 fun KClass<*>.hasId(): Bool {
     if (!this.isData) return no
-    return memberProperties.any { it.name == "id" }
-}
-fun KClass<*>.hasId(): Bool {
-    if (!this.isData) return no
     return this.props.any { it.name == "id" }
 }
 fun KClass<*>.hasName(name: Str): Bool =
@@ -165,7 +161,8 @@ fun KClass<*>.hasName(name: Str): Bool =
 val KClass<*>.props
     get() = this.memberProperties
 
-
+fun <T : Any> KClass<T>.getProp(name: Str) =
+    props.firstOrNull { it.name == name }
 
 
 
