@@ -134,7 +134,9 @@ import kotlinx.coroutines.flow.*
 
 val List<*>.isRecomposable: Bool
     get() = this is SnapshotStateList<*>
-
+    
+val Any?.tempId: Str
+    get() = "${this?.javaClass?.simpleName ?: "null"}@${System.identityHashCode(this)}"
 
   
 
