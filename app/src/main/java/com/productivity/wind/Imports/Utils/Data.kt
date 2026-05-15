@@ -232,8 +232,24 @@ inline fun <reified T> sList(
 
     val list = mList<T>()
 	val ref = "${list::class.simpleName}@${System.identityHashCode(list)}"
-	barListMap[ref] = id
+	barListMap[id] = ref
 	log("Lists ($id) ref: $ref")
+
+	var thisListEditted by m(1)
+
+	Do(eLog = "error with edit recomposing in List: $id") {
+		snapshotFlow { edittedList }
+		.debounce(600)
+		.collectLatest {
+			Vlog("is $edittedList == ${barListMap[id]}")
+			if (edittedList == barListMap[id]){
+				Vlog("yes")
+				thisListEditted++
+			} else {
+				Vlog("no")
+			}
+		}
+	}
 
     try {
         val json = AppData.get(id, "")
@@ -251,8 +267,8 @@ inline fun <reified T> sList(
     }
 
 	Do(eLog = "error saving list $id") {
-		snapshotFlow { list.toList() }
-        .debounce(350)
+		snapshotFlow { list.toList() to thisListEditted }
+        .debounce(600)
 		.collectLatest { updatedList ->
             try {
 				Vlog("SAVING")
@@ -270,11 +286,11 @@ inline fun <reified T> sList(
 
 
 var edittedList by m("")
-var lastEdittedList by m("")
 fun <T> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
 	try {
-		edittedList = "$this"
-		log("edited List: $this")
+		val ref = "${this::class.simpleName}@${System.identityHashCode(this)}"
+		edittedList = ref
+		log("edited List: $ref")
 		val index = this.indexOf(item)
 		val itemCopy = this[index] // get the item
         this.removeAt(index)       // remove old item
