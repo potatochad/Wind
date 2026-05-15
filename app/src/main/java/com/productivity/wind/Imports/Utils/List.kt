@@ -138,11 +138,26 @@ val List<*>.isRecomposable: Bool
 val Any?.tempId: Str
     get() = "${this?.javaClass?.simpleName ?: "null"}@${System.identityHashCode(this)}"
 
-  
+val List<*>.sameType: Bool
+    get() {
+        if (size <= 1) return true
+        val type = firstOrNull()?.javaClass
+        return all { it?.javaClass == type }
+    }
+
+val List<*>.itemKType: KClass<*>?
+    get() = if (sameType) firstOrNull()?.let { it::class } else null
 
 
 
 
+
+
+
+
+
+
+    
 
 
   
