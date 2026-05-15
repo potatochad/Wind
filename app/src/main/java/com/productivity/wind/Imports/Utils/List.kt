@@ -170,7 +170,7 @@ fun <T : Any> KClass<T>.getPropValue(
     name: Str
 ): Any? {
     val prop = this.getProp(name)
-    return prop?.getter.call(instance)
+    return prop?.get(instance)
 }
 
 val KProperty1<*, *>.isMutable: Bool
@@ -181,7 +181,7 @@ fun <T : Any> KClass<T>.setProp(
     name: Str,
     value: Any?
 ) {
-    val prop = props.getProp(name) 
+    val prop = this.getProp(name) 
     val mutableProp = prop as? KMutableProperty1<T, Any?> ?: run {
         Vlog("Cant change val prop ($name) in instance $instance")
         return
