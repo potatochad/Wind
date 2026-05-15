@@ -224,13 +224,15 @@ fun <T> s(
 }
 
 
-
+val barListMap = mutableStateMapOf<Str, Str>()
 inline fun <reified T> sList(
     id: Str,
     default: List<T> = emptyList(),
 ): SnapshotStateList<T> {
 
     val list = mList<T>()
+	val ref = "${list::class.simpleName}@${System.identityHashCode(list)}"
+	barListMap.add(ref, id)
 
     try {
         val json = AppData.get(id, "")
@@ -252,6 +254,7 @@ inline fun <reified T> sList(
         .debounce(350)
 		.collectLatest { updatedList ->
             try {
+				Vlog("SAVING")
                 val jsonOut = Json.encodeToString(updatedList)
                 AppData.put(id, jsonOut)
 
@@ -266,9 +269,10 @@ inline fun <reified T> sList(
 
 
 
-
+var edittedList by m("")
 fun <T> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
 	try {
+		edittedList = "$it"
 		val index = this.indexOf(item)
 		val itemCopy = this[index] // get the item
         this.removeAt(index)       // remove old item
