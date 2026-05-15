@@ -269,7 +269,7 @@ inline fun <reified T> sList(
 
 
 fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
-	Do {
+	try {
 		val index = this.indexOf(item)
 		val itemCopy = this[index] // get the item
         this.removeAt(index)       // remove old item
@@ -278,6 +278,8 @@ fun <T> MutableList<T>.edit(item: T, block: T.() -> Unit) {
 
         //this.add(index, itemCopy) 
 		this[index] = itemCopy
+	} catch (e: Exception) {
+		Vlog("error editting list [ $this: $item ]: ${e.message}")
 	}
 }
 
