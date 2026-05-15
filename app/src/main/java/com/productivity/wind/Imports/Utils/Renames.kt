@@ -381,11 +381,16 @@ val Any?.type: KClass<*>?
 	get() = this?.let { it::class }
 
 
-fun autoId(): Str {
-    return Throwable().stackTrace
-        .joinToString(", ") {
-            "${it.fileName}-${it.className.substringAfterLast('.')}-${it.methodName}"
-        }
+fun callerId(depth: Int = 0): Str {
+    val stack = Throwable().stackTrace
+
+    if (depth !in stack.indices) {
+        return "invalid-depth"
+    }
+
+    val it = stack[depth]
+
+    return "${it.fileName}-${it.className.substringAfterLast('.')}-${it.methodName}"
 }
 
 class By<T>(value: T) {
