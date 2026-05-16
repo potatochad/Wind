@@ -247,12 +247,11 @@ inline fun <reified T> sList(
     }
 
 	Do(eLog = "error saving list $id") {
-		snapshotFlow { Json.encodeToString(list) }
+		snapshotFlow { Json.encodeToString(list.toList()) }
         .debounce(700)
-		.collectLatest { updatedList ->
+		.collectLatest { jsonOut ->
             try {
 				Vlog("SAVING")
-                val jsonOut = Json.encodeToString(updatedList)
                 AppData.put(id, jsonOut)
 
             } catch (e: Exception) {
