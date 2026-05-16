@@ -247,7 +247,7 @@ inline fun <reified T> sList(
     }
 
 	Do(eLog = "error saving list $id") {
-		snapshotFlow { list.toList() }
+		snapshotFlow { Json.encodeToString(list) }
         .debounce(700)
 		.collectLatest { updatedList ->
             try {
@@ -265,18 +265,18 @@ inline fun <reified T> sList(
 }
 
 
-inline fun <T> SnapshotStateList<T>.edit(
-    item: T,
-    edit: T.() -> Unit
-) {
-    val index = indexOf(item)
+fun <T> SnapshotStateList<T>.edit(item: T, block: T.() -> Unit) {
+	try {
+		val index = this.indexOf(item)
+		val itemCopy = this[index] // get the item
+        this.removeAt(index)       // remove old item
 
-    if (index != -1) {
-        item.edit()
+        itemCopy.block()           // apply the changes directly
 
-        // force replace for recomposition
-        this[index] = item
-    }
+        this.add(index, itemCopy) 
+	} catch (e: Exception) {
+		Vlog("error editting list: ${e.message}: [ $this:$item ]")
+	}
 }
 
 
