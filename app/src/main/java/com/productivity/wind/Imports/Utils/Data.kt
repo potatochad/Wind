@@ -193,6 +193,7 @@ object AppData {
 
 	inline fun <reified T> saveList(id: Str, list: List<T>) {
 		try {
+			if(!list.isRecomposable) Vlog("Warning: saveList and getList work with snapshotList only")
 			put(id, toJson(list))
 		} catch (e: Exception) {
 			Vlog("Cant save list: $id, [ ${T::class} ] -> ${e.message}")
