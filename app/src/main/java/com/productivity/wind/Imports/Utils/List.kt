@@ -210,7 +210,6 @@ fun <T : Any> KClass<T>.setProp(
 class PersistList<T>(
     private val id: Str,
     private val serializer: KSerializer<List<T>>,
-    private val clazz: KClass<T>,
     items: List<T> = emptyList()
 ) : MutableList<T> {
 
@@ -278,7 +277,7 @@ class PersistList<T>(
 
 inline fun <reified T> specialList(
     default: List<T> = emptyList(),
-    idExtra: String = ""
+    idExtra: Str = ""
 ): By<PersistList<T>> {
 
     val delegate = By(
