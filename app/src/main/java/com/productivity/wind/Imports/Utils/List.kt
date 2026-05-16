@@ -206,6 +206,94 @@ fun <T : Any> KClass<T>.setProp(
 
 
 //---------<Testing>-----//
+class PersistList<T>(
+    private val id: Str,
+    items: List<T> = emptyList()
+) : MutableList<T> {
+
+    private val inner = mutableStateListOf<T>()
+
+    init {
+        inner.addAll(items)
+    }
+
+    private fun save() {
+        AppData.put(id, inner.toList())
+    }
+
+    override val size get() = inner.size
+
+    override fun add(element: T): Boolean {
+        val r = inner.add(element)
+        save()
+        return r
+    }
+
+    override fun remove(element: T): Boolean {
+        val r = inner.remove(element)
+        save()
+        return r
+    }
+
+    override fun clear() {
+        inner.clear()
+        save()
+    }
+
+    override fun set(index: Int, element: T): T {
+        val r = inner.set(index, element)
+        save()
+        return r
+    }
+
+    override fun add(index: Int, element: T) {
+        inner.add(index, element)
+        save()
+    }
+
+    override fun removeAt(index: Int): T {
+        val r = inner.removeAt(index)
+        save()
+        return r
+    }
+
+    override fun get(index: Int) = inner[index]
+    override fun isEmpty() = inner.isEmpty()
+    override fun iterator() = inner.iterator()
+    override fun contains(element: T) = inner.contains(element)
+    override fun containsAll(elements: Collection<T>) = inner.containsAll(elements)
+    override fun addAll(elements: Collection<T>) = inner.addAll(elements).also { save() }
+    override fun addAll(index: Int, elements: Collection<T>) = inner.addAll(index, elements).also { save() }
+    override fun removeAll(elements: Collection<T>) = inner.removeAll(elements).also { save() }
+    override fun retainAll(elements: Collection<T>) = inner.retainAll(elements).also { save() }
+    override fun indexOf(element: T) = inner.indexOf(element)
+    override fun lastIndexOf(element: T) = inner.lastIndexOf(element)
+    override fun listIterator() = inner.listIterator()
+    override fun listIterator(index: Int) = inner.listIterator(index)
+    override fun subList(fromIndex: Int, toIndex: Int) = inner.subList(fromIndex, toIndex)
+}
+fun <T> specialList(
+    default: List<T> = emptyList(),
+    id: String
+): By<PersistList<T>> {
+    val delegate = By(default)
+	var goodId by m("")
+	var badId by m(no)
+
+    delegate
+		.onBuild{ prop, id ->
+			goodId = "$id: $idExtra"
+			
+			badId = idList.has(goodId)
+			idList.add(goodId)
+			if (badId) Vlog("Duplicate id detected: $goodId")
+			else delegate.it = AppData.get(goodId, default)
+		}
+
+    val saved = AppData.get(id, default)
+
+    return PersistList(id, saved)
+}
 
 
 var testList = mList<TestData>()
