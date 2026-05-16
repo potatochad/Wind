@@ -191,6 +191,28 @@ object AppData {
         e.apply()
 	}
 
+	inline fun <reified T> saveList(id: Str, list: List<T>) {
+		try {
+			put(id, toJson(list))
+		} catch (e: Exception) {
+			Vlog("Cant save list: $id, [ ${T::class} ] -> ${e.message}")
+		}
+	}
+	
+	inline fun <reified T> getList(id: Str): SnapshotStateList<T> {
+		return try {
+			val json = get(id, "")
+			if (json.isBlank()) {
+				mutableStateListOf()
+			} else {
+				decodeJson<List<T>>(json).toMutableStateList()
+			}
+		} catch (e: Exception) {
+			Vlog("Cant load list: $id, [ ${T::class} ] -> ${e.message}")
+			mutableStateListOf()
+		}
+	}
+
 	
 	
 }
