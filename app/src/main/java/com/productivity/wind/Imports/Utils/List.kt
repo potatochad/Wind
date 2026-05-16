@@ -205,14 +205,20 @@ fun <T : Any> KClass<T>.setProp(
 }
 
 
+//---------<Testing>-----//
+
+
 var testList = mList<TestData>()
 
 class TestData() {
     val id: Str = Id()
-    var whenChanged by m("")//date
-    
     var name by m("hello")
 }
+
+
+
+
+
 
 
 
