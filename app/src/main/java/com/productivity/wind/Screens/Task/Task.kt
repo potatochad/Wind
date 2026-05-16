@@ -262,9 +262,7 @@ fun CopyTskUI(tsk: CopyTsk) {
 			txt.it=it
 			
 			tsk.edit{ 
-				copy(
-					input = it 
-				)
+				input = it 
 			}
 
 			if (goodStr < tsk.goodStr()) {
