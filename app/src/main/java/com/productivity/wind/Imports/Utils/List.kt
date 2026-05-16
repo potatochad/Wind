@@ -217,8 +217,8 @@ class PersistList<T>(
         inner.addAll(items)
     }
 
-    private fun save() {
-        AppData.put(id, inner.toList())
+    fun save() {
+        AppData.saveList(id, inner)
     }
 
     override val size get() = inner.size
@@ -229,7 +229,7 @@ class PersistList<T>(
         return r
     }
 
-    override fun remove(element: T): Boolean {
+    override fun remove(element: T): Bool {
         val r = inner.remove(element)
         save()
         return r
@@ -273,7 +273,7 @@ class PersistList<T>(
     override fun subList(fromIndex: Int, toIndex: Int) = inner.subList(fromIndex, toIndex)
 }
 
-fun <T> specialList(
+inline fun <reified T> specialList(
     default: List<T> = emptyList(),
     idExtra: String = ""
 ): By<PersistList<T>> {
@@ -298,7 +298,7 @@ fun <T> specialList(
                 return@onBuild
             }
 
-            val saved = AppData.get(goodId, default)
+            val saved = AppData.getList<T>(goodId)
 
             delegate.it = PersistList(
                 goodId,
