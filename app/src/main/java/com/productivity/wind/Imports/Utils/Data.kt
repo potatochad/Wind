@@ -252,7 +252,7 @@ inline fun <reified T> sList(
         .debounce(1200)
 		.collectLatest { jsonOut ->
             try {
-				Vlog("SAVING $id")
+				// log("SAVING $id")
                 AppData.put(id, jsonOut)
 
             } catch (e: Exception) {
