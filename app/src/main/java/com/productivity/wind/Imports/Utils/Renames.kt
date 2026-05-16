@@ -388,7 +388,7 @@ class VTimer(private val name: Str = "") {
             (System.nanoTime() - start) / 1_000_000.0
         )
 
-        Vlog("${if (name.empty()) "It" else name} took ${ms}ms")
+        Vlog("${if (name.empty) "It" else name} took ${ms}ms")
     }
 }
 
