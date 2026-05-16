@@ -151,12 +151,24 @@ val List<*>.itemKType: KClass<*>?
 val KClass<*>.isDataClass: Bool
     get() = this.isData
 
+val KClass<*>.isSimpleClass: Bool
+    get() =
+        !isData &&
+        !isSealed &&
+        !isAbstract &&
+        !java.isInterface &&
+        !java.isEnum
+
 fun KClass<*>.hasId(): Bool {
     if (!this.isData) return no
     return this.props.any { it.name == "id" }
 }
-fun KClass<*>.hasName(name: Str): Bool =
+fun KClass<*>.hasProp(name: Str): Bool =
     props.any { it.name == name }
+fun KClass<*>.hasProps(vararg names: Str): Bool =
+    names.all { name ->
+        props.any { it.name == name }
+    }
     
 val KClass<*>.props
     get() = this.memberProperties
@@ -196,7 +208,9 @@ fun <T : Any> KClass<T>.setProp(
 
 class Todo() {
     val id: Str = Id()
-    var name by mutableStateOf("hello")
+    var whenChanged by m("")//date
+    
+    var name by m("hello")
 }
 
 
