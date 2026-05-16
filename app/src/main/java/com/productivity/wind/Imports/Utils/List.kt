@@ -205,7 +205,7 @@ fun <T : Any> KClass<T>.setProp(
 }
 
 
-var testList by mList(TestData())
+var testList = mList<TestData>()
 
 class TestData() {
     val id: Str = Id()
