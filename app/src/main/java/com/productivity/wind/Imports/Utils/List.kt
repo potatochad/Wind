@@ -312,8 +312,12 @@ inline fun <reified T> specialList(
 
 var testList = mList<TestData>()
 
-class TestData() {
+
+abstract class LazyData {
     val id: Str = Id()
+}
+
+class TestData(): LazyData() {
     var name by m("hello")
 }
 
