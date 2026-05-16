@@ -208,6 +208,7 @@ fun <T : Any> KClass<T>.setProp(
 //---------<Testing>-----//
 class PersistList<T>(
     private val id: Str,
+    private val serializer: KSerializer<List<T>>,
     private val clazz: KClass<T>,
     items: List<T> = emptyList()
 ) : MutableList<T> {
@@ -219,7 +220,7 @@ class PersistList<T>(
     }
 
     fun save() {
-        AppData.saveList(id, inner, clazz)
+        AppData.saveList(id, inner, serializer)
     }
 
     override val size get() = inner.size
@@ -280,7 +281,7 @@ inline fun <reified T> specialList(
 ): By<PersistList<T>> {
 
     val delegate = By(
-        PersistList<T>("temp", T::class, default)
+        PersistList<T>("temp", ListSerializer(serializer<T>()), default)
     )
 
     var goodId by m("")
