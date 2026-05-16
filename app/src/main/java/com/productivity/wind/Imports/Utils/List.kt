@@ -272,27 +272,41 @@ class PersistList<T>(
     override fun listIterator(index: Int) = inner.listIterator(index)
     override fun subList(fromIndex: Int, toIndex: Int) = inner.subList(fromIndex, toIndex)
 }
+
 fun <T> specialList(
     default: List<T> = emptyList(),
-    id: String
+    idExtra: String = ""
 ): By<PersistList<T>> {
-    val delegate = By(default)
-	var goodId by m("")
-	var badId by m(no)
+
+    val delegate = By(
+        PersistList<T>("temp", default)
+    )
+
+    var goodId by m("")
+    var badId by m(no)
 
     delegate
-		.onBuild{ prop, id ->
-			goodId = "$id: $idExtra"
-			
-			badId = idList.has(goodId)
-			idList.add(goodId)
-			if (badId) Vlog("Duplicate id detected: $goodId")
-			else delegate.it = AppData.get(goodId, default)
-		}
+        .onBuild { prop, id ->
 
-    val saved = AppData.get(id, default)
+            goodId = "$id: $idExtra"
 
-    return PersistList(id, saved)
+            badId = idList.has(goodId)
+            idList.add(goodId)
+
+            if (badId) {
+                Vlog("Duplicate id detected: $goodId")
+                return@onBuild
+            }
+
+            val saved = AppData.get(goodId, default)
+
+            delegate.it = PersistList(
+                goodId,
+                saved
+            )
+        }
+
+    return delegate
 }
 
 
