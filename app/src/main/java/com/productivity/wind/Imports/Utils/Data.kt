@@ -248,6 +248,7 @@ inline fun <reified T> sList(
 
 	Do(eLog = "error saving list $id") {
 		snapshotFlow { Json.encodeToString(list.toList()) }
+		.distinctUntilChanged()
         .debounce(1200)
 		.collectLatest { jsonOut ->
             try {
