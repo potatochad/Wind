@@ -377,6 +377,19 @@ fun startActivity(intent: Intent) {
 }
 
 
+
+class VTimer(private val name: Str = "") {
+
+    private val start = System.nanoTime()
+
+    fun end() {
+        val ms = (System.nanoTime() - start) / 1_000_000.0
+        Vlog("${if (name.empty()) "It" else name} took %.3f ms".format(ms))
+    }
+}
+
+
+
 val Any?.type: KClass<*>?
 	get() = this?.let { it::class }
 
