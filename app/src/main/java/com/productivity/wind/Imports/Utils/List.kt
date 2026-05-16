@@ -304,6 +304,7 @@ inline fun <reified T> specialList(
 
             delegate.it = PersistList(
                 goodId,
+                ListSerializer(serializer<T>()),
                 saved
             )
         }
