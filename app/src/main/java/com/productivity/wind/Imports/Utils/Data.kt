@@ -155,6 +155,7 @@ object AppData {
 
 	val json11 = Json { ignoreUnknownKeys = yes }
 	inline fun <reified T> toJson(x: T) = json11.encodeToString(x)
+	fun <T> toJson(x: T, serializer: KSerializer<T>) = json11.encodeToString(serializer, x)
 	inline fun <reified T> decodeJson(x: Str) = json11.decodeFromString<T>(x)
 
 
@@ -197,6 +198,15 @@ object AppData {
 			put(id, toJson(list))
 		} catch (e: Exception) {
 			Vlog("Cant save list: $id, [ ${T::class} ] -> ${e.message}")
+		}
+	}
+	fun <T> saveList(id: Str, list: List<T>, serializer: KSerializer<List<T>>) {
+		try {
+			if (!list.isRecomposable) Vlog("Warning: saveList and getList work with snapshotList only")
+
+			put(id, toJson(list, serializer))
+		} catch (e: Exception) {
+			Vlog("Cant save list: $id -> ${e.message}")
 		}
 	}
 	
