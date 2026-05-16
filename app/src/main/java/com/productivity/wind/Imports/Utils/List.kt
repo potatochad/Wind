@@ -205,8 +205,9 @@ fun <T : Any> KClass<T>.setProp(
 }
 
 
+var testList by mList(TestData())
 
-class Todo() {
+class TestData() {
     val id: Str = Id()
     var whenChanged by m("")//date
     
