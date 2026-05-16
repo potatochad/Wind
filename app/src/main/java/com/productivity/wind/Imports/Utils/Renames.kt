@@ -378,7 +378,7 @@ fun startActivity(intent: Intent) {
 
 
 
-class VTimer(private val name: Str = "") {
+class Vtimer(private val name: Str = "") {
 
     private val start = System.nanoTime()
 
