@@ -156,7 +156,6 @@ val KClass<*>.isSimpleClass: Bool
     get() =
         !isData &&
         !isSealed &&
-        !isAbstract &&
         !java.isInterface &&
         !java.isEnum
 
@@ -220,8 +219,6 @@ class PersistList<T>(
         inner.addAll(items)
     }
 
-    //
-
     fun save() {
         AppData.saveList(id, inner, serializer)
     }
@@ -282,7 +279,21 @@ inline fun <reified T> specialList(
     default: List<T> = emptyList(),
     idExtra: Str = ""
 ): By<PersistList<T>> {
+    
+    if (!T is LazyData) {
+        Vlog("The class $T must use LazyData, like so: class TestData(): LazyData(){}")
+        return By(PersistList<T>("temp", ListSerializer(serializer<T>()), default))
+    }
+    if (!T is LazyData) {
+        Vlog("The class $T must use LazyData, like so: class TestData(): LazyData()")
+        return By(PersistList<T>("temp", ListSerializer(serializer<T>()), default))
+    }
+    if (!T.isSimpleClass){
+        Vlog("Only simple Data class allowed: class TestData(): LazyData(){}")
+    }
 
+    
+    
     val delegate = By(
         PersistList<T>("temp", ListSerializer(serializer<T>()), default)
     )
@@ -322,8 +333,7 @@ var testList = mList<TestData>()
 abstract class LazyData {
     val id: Str = Id()
 
-    var inList by m(KSerializer<List<*>>)
-    )
+    var parentList: PersistList<*>? = null
 }
 
 class TestData(): LazyData() {
