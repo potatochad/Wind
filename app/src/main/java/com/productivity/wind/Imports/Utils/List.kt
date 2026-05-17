@@ -232,7 +232,7 @@ class PersistList<T>(
         return emptyList()
     }
 
-    if (id == "tempKeyWind") stop()
+    if (id == "tempKeyWind") return stop()
     
 
     init {
@@ -301,14 +301,14 @@ inline fun <reified T> specialList(
 ): By<PersistList<T>> {
     val delegate = By(PersistList<T>("tempKeyWind", ListSerializer(serializer<T>()), default))
 
-    fun stop(log: Str){
+    fun stop(log: Str): By<PersistList<T>> {
         Vlog(log)
         return By(PersistList<T>("tempKeyWind", ListSerializer(serializer<T>()), default))
     }
     
-    if (!LazyData::class.java.isAssignableFrom(T::class.java)) stop("The class ${T::class} must use LazyData")     
-    if (!T::class.isSimpleClass) stop("Only simple Data class allowed: class TestData(): LazyData(){}")
-    if (!isSerializable<T>()) stop("Class ${T::class} must be @Serializable")
+    if (!LazyData::class.java.isAssignableFrom(T::class.java)) return stop("The class ${T::class} must use LazyData")     
+    if (!T::class.isSimpleClass) return stop("Only simple Data class allowed: class TestData(): LazyData(){}")
+    if (!isSerializable<T>()) return stop("Class ${T::class} must be @Serializable")
     
     
     
