@@ -206,6 +206,7 @@ fun <T : Any> KClass<T>.setProp(
 }
 
 
+
 //---------<Testing>-----//
 class PersistList<T>(
     private val id: Str,
@@ -218,6 +219,8 @@ class PersistList<T>(
     init {
         inner.addAll(items)
     }
+
+    //
 
     fun save() {
         AppData.saveList(id, inner, serializer)
