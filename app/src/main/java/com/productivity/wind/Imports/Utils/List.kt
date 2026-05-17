@@ -280,15 +280,11 @@ inline fun <reified T> specialList(
     idExtra: Str = ""
 ): By<PersistList<T>> {
     
-    if (!T is LazyData) {
+    if (!LazyData::class.java.isAssignableFrom(T::class.java)) {
         Vlog("The class $T must use LazyData, like so: class TestData(): LazyData(){}")
         return By(PersistList<T>("temp", ListSerializer(serializer<T>()), default))
     }
-    if (!T is LazyData) {
-        Vlog("The class $T must use LazyData, like so: class TestData(): LazyData()")
-        return By(PersistList<T>("temp", ListSerializer(serializer<T>()), default))
-    }
-    if (!T.isSimpleClass){
+    if (!T::class.isSimpleClass){
         Vlog("Only simple Data class allowed: class TestData(): LazyData(){}")
     }
 
