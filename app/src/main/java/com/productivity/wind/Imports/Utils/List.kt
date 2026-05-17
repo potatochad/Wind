@@ -229,10 +229,10 @@ class PersistList<T>(
     
     fun stop(log: Str =""){
         if (!log.empty) Vlog(log)
-        return emptyList()
+        return
     }
 
-    if (id == "tempKeyWind") return stop()
+    //if (id == "tempKeyWind") return stop()
     
 
     init {
