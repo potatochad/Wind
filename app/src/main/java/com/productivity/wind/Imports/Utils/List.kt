@@ -325,13 +325,15 @@ inline fun <reified T> specialList(
 
 var testList = mList<TestData>()
 
-
+@Serializable
 abstract class LazyData {
     val id: Str = Id()
 
+    @Transient //dont save
     var parentList: PersistList<*>? = null
 }
 
+@Serializable
 class TestData(): LazyData() {
     var name by m("hello")
 }
