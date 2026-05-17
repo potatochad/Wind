@@ -281,20 +281,19 @@ inline fun <reified T> specialList(
     default: List<T> = emptyList(),
     idExtra: Str = ""
 ): By<PersistList<T>> {
-    
-    if (!LazyData::class.java.isAssignableFrom(T::class.java)) {
-        Vlog("The class ${T::class} must use LazyData")
+    val delegate = By(PersistList<T>("temp", ListSerializer(serializer<T>()), default))
+
+    fun stop(log: Str){
+        Vlog(log)
         return By(PersistList<T>("temp", ListSerializer(serializer<T>()), default))
     }
-    if (!T::class.isSimpleClass){
-        Vlog("Only simple Data class allowed: class TestData(): LazyData(){}")
-    }
+    
+    if (!LazyData::class.java.isAssignableFrom(T::class.java)) stop("The class ${T::class} must use LazyData")     
+    if (!T::class.isSimpleClass) stop("Only simple Data class allowed: class TestData(): LazyData(){}")
 
     
     
-    val delegate = By(
-        PersistList<T>("temp", ListSerializer(serializer<T>()), default)
-    )
+    
 
     var goodId by m("")
     var badId by m(no)
