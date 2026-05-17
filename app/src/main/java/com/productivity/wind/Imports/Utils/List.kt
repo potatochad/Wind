@@ -137,6 +137,15 @@ import kotlinx.serialization.builtins.ListSerializer
 
 val List<*>.isRecomposable: Bool
     get() = this is SnapshotStateList<*>
+
+inline fun <reified T> isSerializable(): Bool {
+    return try {
+        serializer<T>()
+        true
+    } catch (_: Exception) {
+        false
+    }
+}
     
 val Any?.tempId: Str
     get() = "${this?.javaClass?.simpleName ?: "null"}@${System.identityHashCode(this)}"
@@ -217,6 +226,15 @@ class PersistList<T>(
 
     private val inner = mutableStateListOf<T>()
 
+    
+    fun stop(log: Str =""){
+        if (!log.empty) Vlog(log)
+        return emptyList()
+    }
+
+    if (id == "tempKeyWind") stop()
+    
+
     init {
         inner.addAll(items)
     }
@@ -281,16 +299,16 @@ inline fun <reified T> specialList(
     default: List<T> = emptyList(),
     idExtra: Str = ""
 ): By<PersistList<T>> {
-    val delegate = By(PersistList<T>("temp", ListSerializer(serializer<T>()), default))
+    val delegate = By(PersistList<T>("tempKeyWind", ListSerializer(serializer<T>()), default))
 
     fun stop(log: Str){
         Vlog(log)
-        return By(PersistList<T>("temp", ListSerializer(serializer<T>()), default))
+        return By(PersistList<T>("tempKeyWind", ListSerializer(serializer<T>()), default))
     }
     
     if (!LazyData::class.java.isAssignableFrom(T::class.java)) stop("The class ${T::class} must use LazyData")     
     if (!T::class.isSimpleClass) stop("Only simple Data class allowed: class TestData(): LazyData(){}")
-
+    if (!isSerializable<T>()) stop("Class ${T::class} must be @Serializable")
     
     
     
