@@ -318,6 +318,9 @@ var testList = mList<TestData>()
 
 abstract class LazyData {
     val id: Str = Id()
+
+    var inList by m(KSerializer<List<*>>)
+    )
 }
 
 class TestData(): LazyData() {
