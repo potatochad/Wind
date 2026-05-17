@@ -91,7 +91,9 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.gestures.*
 import androidx.compose.ui.input.pointer.*
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.text.style.*
 import androidx.compose.foundation.lazy.*
