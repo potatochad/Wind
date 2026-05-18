@@ -228,10 +228,10 @@ class PersistList<T>(
 
 
     var stop by m(no)
-    if (id == "tempKeyWind") stop = yes
     
 
     init {
+        if (id == "tempKeyWind") stop = yes
         inner.addAll(items)
     }
 
@@ -241,7 +241,7 @@ class PersistList<T>(
 
     override val size get() = inner.size
 
-    override fun add(element: T): Boolean {
+    override fun add(element: T): Bool {
         val r = inner.add(element)
         save()
         return r
