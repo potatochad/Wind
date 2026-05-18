@@ -386,11 +386,33 @@ abstract class LazyData {
 
     @Transient //dont save
     var parentList: PersistList<*>? = null
+    
+    fun <T> lazyState(default: T) =
+      object {
+        private var state by m(default)
+
+        operator fun getValue(
+            thisRef: LazyData,
+            property: KProperty<*>
+        ): T {
+            return state
+        }
+
+        operator fun setValue(
+            thisRef: LazyData,
+            property: KProperty<*>,
+            value: T
+        ) {
+            state = value
+
+            thisRef.parentList?.save()
+        }
+    }
 }
 
 @Serializable
 class TestData(): LazyData() {
-    var name by m("hello")
+    var name by lazyState("hello")
 }
 
 
