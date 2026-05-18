@@ -301,9 +301,9 @@ inline fun <reified T> specialList(
 ): By<PersistList<T>> {
     val delegate = By(PersistList<T>("tempKeyWind", ListSerializer(serializer<T>()), default))
 
-    fun stop(log: Str): By<PersistList<T>> {
+    val stop: (Str) -> By<PersistList<T>> = { log ->
         Vlog(log)
-        return By(PersistList<T>("tempKeyWind", ListSerializer(serializer<T>()), default))
+        By(PersistList<T>("tempKeyWind", ListSerializer(serializer<T>()), default))
     }
     
     if (!LazyData::class.java.isAssignableFrom(T::class.java)) return stop("The class ${T::class} must use LazyData")     
