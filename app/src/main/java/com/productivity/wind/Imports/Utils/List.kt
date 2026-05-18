@@ -229,9 +229,14 @@ class PersistList<T>(
 
     var stop by m(no)
     
+    private fun bind(element: T) {
+        (element as? LazyData)?.parentList = this
+    }
+    
 
     init {
         if (id == "tempKeyWind") stop = yes
+        items.forEach(::bind)
         inner.addAll(items)
     }
 
@@ -242,6 +247,7 @@ class PersistList<T>(
     override val size get() = inner.size
 
     override fun add(element: T): Bool {
+        bind(element)
         val r = inner.add(element)
         save()
         return r
@@ -259,12 +265,14 @@ class PersistList<T>(
     }
 
     override fun set(index: Int, element: T): T {
+        bind(element)
         val r = inner.set(index, element)
         save()
         return r
     }
 
     override fun add(index: Int, element: T) {
+        bind(element)
         inner.add(index, element)
         save()
     }
@@ -278,8 +286,8 @@ class PersistList<T>(
     override fun get(index: Int) = inner[index]
     override fun isEmpty() = inner.isEmpty()
     override fun iterator() = inner.iterator()
-    override fun contains(element: T) = inner.contains(element)
-    override fun containsAll(elements: Collection<T>) = inner.containsAll(elements)
+    override fun has(element: T) = inner.contains(element)
+    override fun hasAll(elements: Collection<T>) = inner.containsAll(elements)
     override fun addAll(elements: Collection<T>) = inner.addAll(elements).also { save() }
     override fun addAll(index: Int, elements: Collection<T>) = inner.addAll(index, elements).also { save() }
     override fun removeAll(elements: Collection<T>) = inner.removeAll(elements).also { save() }
