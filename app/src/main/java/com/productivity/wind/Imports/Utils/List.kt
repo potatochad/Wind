@@ -226,13 +226,9 @@ class PersistList<T>(
 
     private val inner = mutableStateListOf<T>()
 
-    
-    fun stop(log: Str =""){
-        if (!log.empty) Vlog(log)
-        return
-    }
 
-    //if (id == "tempKeyWind") return stop()
+    var stop by m(no)
+    if (id == "tempKeyWind") stop = yes
     
 
     init {
@@ -240,7 +236,7 @@ class PersistList<T>(
     }
 
     fun save() {
-        AppData.saveList(id, inner, serializer)
+        if (!stop) AppData.saveList(id, inner, serializer)
     }
 
     override val size get() = inner.size
