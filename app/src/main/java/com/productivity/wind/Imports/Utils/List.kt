@@ -283,15 +283,47 @@ class PersistList<T>(
         return r
     }
 
+
+
+    override fun addAll(elements: Collection<T>): Bool {
+        elements.forEach(::bind)
+
+        val r = inner.addAll(elements)
+        if (r) save()
+
+        return r
+    }
+
+    override fun addAll(index: Int, elements: Collection<T>): Bool {
+        elements.forEach(::bind)
+
+        val r = inner.addAll(index, elements)
+        if (r) save()
+    
+        return r
+    }
+
+
+    override fun removeAll(elements: Collection<T>): Bool {
+        val r = inner.removeAll(elements)
+
+        if (r) save()
+
+        return r
+    }
+
+    override fun retainAll(elements: Collection<T>): Bool {
+        val r = inner.retainAll(elements)
+
+        if (r) save()
+
+        return r
+    }
+
     override fun get(index: Int) = inner[index]
-    override fun isEmpty() = inner.isEmpty()
     override fun iterator() = inner.iterator()
     override fun has(element: T) = inner.contains(element)
     override fun hasAll(elements: Collection<T>) = inner.containsAll(elements)
-    override fun addAll(elements: Collection<T>) = inner.addAll(elements).also { save() }
-    override fun addAll(index: Int, elements: Collection<T>) = inner.addAll(index, elements).also { save() }
-    override fun removeAll(elements: Collection<T>) = inner.removeAll(elements).also { save() }
-    override fun retainAll(elements: Collection<T>) = inner.retainAll(elements).also { save() }
     override fun indexOf(element: T) = inner.indexOf(element)
     override fun lastIndexOf(element: T) = inner.lastIndexOf(element)
     override fun listIterator() = inner.listIterator()
