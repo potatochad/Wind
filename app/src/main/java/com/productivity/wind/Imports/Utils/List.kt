@@ -232,6 +232,7 @@ class PersistList<T>(
     private fun bind(element: T) {
         (element as? LazyData)?.parentList = this
     }
+
     
 
     init {
@@ -240,8 +241,17 @@ class PersistList<T>(
         inner.addAll(items)
     }
 
+
+    private var saveJob: Job? = null
+
     fun save() {
-        if (!stop) AppData.saveList(id, inner, serializer)
+        if (!stop) return
+        saveJob?.cancel()
+        
+        saveJob = scope.launch {
+            delay(300)
+            AppData.saveList(id, inner, serializer)
+        }
     }
 
     override val size get() = inner.size
