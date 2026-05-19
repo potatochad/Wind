@@ -332,8 +332,6 @@ class PersistList<T>(
 
     override fun get(index: Int) = inner[index]
     override fun iterator() = inner.iterator()
-    override fun has(element: T) = inner.contains(element)
-    override fun hasAll(elements: Collection<T>) = inner.containsAll(elements)
     override fun indexOf(element: T) = inner.indexOf(element)
     override fun lastIndexOf(element: T) = inner.lastIndexOf(element)
     override fun listIterator() = inner.listIterator()
