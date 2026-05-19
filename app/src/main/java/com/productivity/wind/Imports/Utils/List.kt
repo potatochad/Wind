@@ -337,6 +337,9 @@ class PersistList<T>(
     override fun listIterator() = inner.listIterator()
     override fun listIterator(index: Int) = inner.listIterator(index)
     override fun subList(fromIndex: Int, toIndex: Int) = inner.subList(fromIndex, toIndex)
+    override fun contains(element: T): Boolean = inner.contains(element)
+    override fun containsAll(elements: Collection<T>): Boolean = inner.containsAll(elements)
+    override fun isEmpty(): Bool = inner.isEmpty()
 }
 
 inline fun <reified T> specialList(
