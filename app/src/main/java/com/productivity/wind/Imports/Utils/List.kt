@@ -388,52 +388,45 @@ inline fun <reified T> specialList(
 
 var testList = mList<TestData>()
 
+
 @Serializable
 abstract class LazyData {
-    val id: Str = Id()
 
-    @Transient //dont save
+    val id: String = "id"
+
+    @Transient
     var parentList: PersistList<*>? = null
-    
-    fun <T> lazyState(default: T) =
-      object {
-        private var state by m(default)
 
-        operator fun getValue(
-            thisRef: LazyData,
-            property: KProperty<*>
-        ): T {
-            return state
-        }
+    fun <T> lazyState(default: T): ReadWriteProperty<LazyData, T> {
 
-        operator fun setValue(
-            thisRef: LazyData,
-            property: KProperty<*>,
-            value: T
-        ) {
-            state = value
+        return object : ReadWriteProperty<LazyData, T> {
 
-            thisRef.parentList?.save()
+            private var state = default
+
+            override fun getValue(
+                thisRef: LazyData,
+                property: KProperty<*>
+            ): T {
+                return state
+            }
+
+            override fun setValue(
+                thisRef: LazyData,
+                property: KProperty<*>,
+                value: T
+            ) {
+                state = value
+                thisRef.parentList?.save()
+            }
         }
     }
 }
 
 @Serializable
-class TestData(): LazyData() {
+class TestData : LazyData() {
+
     var name by lazyState("hello")
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
