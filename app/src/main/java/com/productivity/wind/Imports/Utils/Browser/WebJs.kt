@@ -85,44 +85,64 @@ fun Any?.importsJS() {
 }
 
 
-
 fun Any?.hideYoutubeChannel(channel: Str) {
     this.jsFun(
         """
         WindWeb.log("Channel blocker starting...");
 
         const target = "$channel".toLowerCase();
+        let running = false;
 
         function scan() {
-            const items = document.querySelectorAll('a');
+            // prevent overlap
+            if (running) return;
+            running = true;
 
-            items.forEach((item, index) => {
-                const href = item.href || "";
-                const text = item.innerText || "";
+            try {
+                const items = document.querySelectorAll('a');
 
-                WindWeb.log(index, ":", href, "TEXT:", text);
+                items.forEach((item) => {
+                    const href = item.href || "";
+                    const text = (item.innerText || "").toLowerCase();
 
-                const container = window.WindWeb.findContainerHTML(item);    
+                    // skip empty fast
+                    if (!text) return;
+                    if (!href) return;
 
-                if (container) {
-                    WindWeb.log(
-                        "FOUND CONTAINER:",
-                        container.tagName,
-                        container.className
-                    );
-                }
-            });
+                    WindWeb.log("link:", href, "TEXT:", text);
+
+                    // only work when needed
+                    if (text.includes(target)) {
+
+                        const container = window.WindWeb.findContainerHTML(item);
+
+                        if (container) {
+                            WindWeb.log(
+                               "FOUND CONTAINER:",
+                               container.tagName,
+                               container.className
+                            );
+                            
+                            // container.style.display = "none";
+                        }
+                    }
+                });
+
+            } catch (e) {
+                WindWeb.log("Scan error:", e.message);
+            }
+
+            running = false;
         }
 
-        // run immediately
+        // first run
         scan();
 
-        // keep scanning (YouTube loads late)
-        setInterval(scan, 3000);
+        // slower interval
+        setInterval(scan, 5000);
         """
     )
 }
-
 
 
 fun Any?.forceGoogleInputFocus() {
