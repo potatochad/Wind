@@ -128,27 +128,18 @@ import android.view.inputmethod.InputMethodManager
 
 
 object Keyboard {
-
     var h by m(0)
         private set
     var isOpen by m(no)
         private set
-
-    private var focusManager: FocusManager? = null
+    
 
     @Composable
     fun track() {
         val density = LocalDensity.current
-        val fm = LocalFocusManager.current
-
-        focusManager = fm
 
         h = WindowInsets.ime.getBottom(density)
         isOpen = WindowInsets.isImeVisible
-    }
-
-    fun clearFocus() {
-        focusManager?.clearFocus()
     }
     
 }
