@@ -124,26 +124,22 @@ import android.view.inputmethod.InputMethodManager
 
 
 
-data class KeyboardData(
-    val open: Bool,
-    val h: Int
-)
+object Keyboard {
 
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun Keyboard(): KeyboardData {
-    val density = LocalDensity.current
+    @get:Composable
+    @get:OptIn(ExperimentalLayoutApi::class)
+    val isOpen: Boolean
+        get() = WindowInsets.isImeVisible
 
-    val isOpen = WindowInsets.isImeVisible
-    val height = WindowInsets.ime.getBottom(density)
-
-    return remember(isOpen, height) {
-        KeyboardData(
-            open = isOpen,
-            h = height
-        )
-    }
+    @get:Composable
+    @get:OptIn(ExperimentalLayoutApi::class)
+    val height: Int
+        get() {
+            val density = LocalDensity.current
+            return WindowInsets.ime.getBottom(density)
+        }
 }
+
 
 fun View.showKeyboard() {
     this.requestFocus()
