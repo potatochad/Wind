@@ -143,13 +143,9 @@ fun BasicInput(
 	oneLine: Bool = yes,
     Do: Do_<InputField> = {},
 ) {
-	val focus = UIFocus()
 	val focusAsker = r { FocusRequester() }
 	val baseMod = Mod.space(8, 4).w(60).h(26).background(inputColor, shape = RoundedCornerShape(4.dp))   
 	var w by r(0)
-
-	if (!Keyboard.isOpen) focus.clear()
-
 	
 	move(3)
 	LazzyRow(baseMod.centerY.start.mix(new = mod).getW{ w = it }) {
