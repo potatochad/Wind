@@ -155,6 +155,9 @@ fun View.showKeyboard() {
 }
 
 
+//focus manager should stay in UI scope only
+fun FocusManager.clear() = this.clearFocus()
+
 fun Mod.canFocus(): Mod = composed {
     val fr = r { FocusRequester() }
 
