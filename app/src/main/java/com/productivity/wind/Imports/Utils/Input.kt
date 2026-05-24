@@ -127,17 +127,12 @@ import android.view.inputmethod.InputMethodManager
 object Keyboard {
 
     @get:Composable
-    @get:OptIn(ExperimentalLayoutApi::class)
-    val isOpen: Boolean
+    val isOpen: Bool
         get() = WindowInsets.isImeVisible
 
     @get:Composable
-    @get:OptIn(ExperimentalLayoutApi::class)
     val height: Int
-        get() {
-            val density = LocalDensity.current
-            return WindowInsets.ime.getBottom(density)
-        }
+        get() = WindowInsets.ime.getBottom(LocalDensity.current)
 }
 
 
