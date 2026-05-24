@@ -129,13 +129,19 @@ import android.view.inputmethod.InputMethodManager
 
 object Keyboard {
 
-    @get:Composable
-    val isOpen: Bool
-        get() = WindowInsets.isImeVisible
+    var h by m(0)
+        private set
+    var isOpen by m(no)
+        private set
 
-    @get:Composable
-    val h: Int
-        get() = WindowInsets.ime.getBottom(LocalDensity.current)
+    @Composable
+    fun track() {
+        val density = LocalDensity.current
+
+        h = WindowInsets.ime.getBottom(density)
+        isOpen = WindowInsets.isImeVisible
+    }
+    
 }
 
 
