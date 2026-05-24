@@ -252,6 +252,7 @@ fun OnResume(){
 
 @Composable
 fun AppStart() {
+	Keyboard.track()
 	val LocationClient = r { LocationServices.getFusedLocationProviderClient(App) }
     
 	RunOnce {
