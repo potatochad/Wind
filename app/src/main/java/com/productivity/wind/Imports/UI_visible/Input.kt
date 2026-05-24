@@ -143,7 +143,6 @@ fun BasicInput(
 	oneLine: Bool = yes,
     Do: Do_<InputField> = {},
 ) {
-	val focusAsker = r { FocusRequester() }
 	val baseMod = Mod.space(8, 4).w(60).h(26).background(inputColor, shape = RoundedCornerShape(4.dp))   
 	var w by r(0)
 	
@@ -173,7 +172,7 @@ fun BasicInput(
 					onAction()
 				}
 			),
-			modifier = Mod.w(toF(w)*0.85).focusAsker(focusAsker)
+			modifier = Mod.w(toF(w)*0.85).canFocus()
 		)
 	}
 }
