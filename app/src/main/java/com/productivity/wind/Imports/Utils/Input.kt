@@ -155,9 +155,7 @@ fun View.showKeyboard() {
 }
 
 
-//focus manager should stay in UI scope only
-fun FocusManager.clear() = this.clearFocus()
-
+//focus manager DONT PUT in box
 object AppFocus {
     private var clear by m(0)
 
