@@ -149,7 +149,7 @@ fun BasicInput(
 	var w by r(0)
 
 	val keyboard = Keyboard()
-	if (!keyboard.open) focus.clear()
+	if (!keyboard.isOpen) focus.clear()
 
 	
 	move(3)
