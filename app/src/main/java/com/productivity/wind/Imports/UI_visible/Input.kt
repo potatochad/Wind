@@ -143,6 +143,7 @@ fun BasicInput(
 	oneLine: Bool = yes,
     Do: Do_<InputField> = {},
 ) {
+	val AppFocus = LocalFocusManager.current
 	val baseMod = Mod.space(8, 4).w(60).h(26).background(inputColor, shape = RoundedCornerShape(4.dp))   
 	var w by r(0)
 	
@@ -168,7 +169,7 @@ fun BasicInput(
 			},
 			keyboardActions = KeyboardActions(
 				onDone = {
-					focus.clear() 
+					AppFocus.clear() 
 					onAction()
 				}
 			),
