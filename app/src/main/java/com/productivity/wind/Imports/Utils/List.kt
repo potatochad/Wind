@@ -245,7 +245,7 @@ class PersistList<T>(
     private var saveJob: Job? = null
 
     fun save() {
-        if (!stop) return
+        if (stop) return
         saveJob?.cancel()
         
         saveJob = scope.launch {
@@ -331,12 +331,24 @@ class PersistList<T>(
     }
 
     override fun get(index: Int) = inner[index]
-    override fun iterator() = inner.iterator()
+    override fun iterator(): MutableIterator<T> {
+        val it = inner.iterator()
+        return object : MutableIterator<T> {
+            override fun hasNext() = it.hasNext()
+            override fun next() = it.next()
+            override fun remove() {
+                it.remove()
+                save()
+            }
+        }
+    }
     override fun indexOf(element: T) = inner.indexOf(element)
     override fun lastIndexOf(element: T) = inner.lastIndexOf(element)
     override fun listIterator() = inner.listIterator()
     override fun listIterator(index: Int) = inner.listIterator(index)
-    override fun subList(fromIndex: Int, toIndex: Int) = inner.subList(fromIndex, toIndex)
+    override fun subList(fromIndex: Int, toIndex: Int): MutableList<T> {
+        return inner.subList(fromIndex, toIndex).toMutableList()
+    }
     override fun contains(element: T): Boolean = inner.contains(element)
     override fun containsAll(elements: Collection<T>): Boolean = inner.containsAll(elements)
     override fun isEmpty(): Bool = inner.isEmpty()
