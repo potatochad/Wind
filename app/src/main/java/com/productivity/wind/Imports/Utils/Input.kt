@@ -130,7 +130,7 @@ data class KeyboardData(
 )
 
 @Composable
-fun keyboard(): KeyboardData {
+fun Keyboard(): KeyboardData {
     val density = LocalDensity.current
 
     val isOpen by remember {
