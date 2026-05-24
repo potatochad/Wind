@@ -332,22 +332,57 @@ class PersistList<T>(
 
     override fun get(index: Int) = inner[index]
     override fun iterator(): MutableIterator<T> {
-        val it = inner.iterator()
-        return object : MutableIterator<T> {
-            override fun hasNext() = it.hasNext()
-            override fun next() = it.next()
-            override fun remove() {
-                it.remove()
-                save()
-            }
-        }
+        return wrapListIterator(inner.listIterator())
     }
     override fun indexOf(element: T) = inner.indexOf(element)
     override fun lastIndexOf(element: T) = inner.lastIndexOf(element)
-    override fun listIterator() = inner.listIterator()
-    override fun listIterator(index: Int) = inner.listIterator(index)
+    override fun listIterator(): MutableListIterator<T> {
+        return wrapListIterator(inner.listIterator())
+    }
+
+override fun listIterator(index: Int): MutableListIterator<T> {
+    return wrapListIterator(inner.listIterator(index))
+}
+
+private fun wrapListIterator(
+    it: MutableListIterator<T>
+): MutableListIterator<T> {
+
+    return object : MutableListIterator<T> {
+
+        override fun hasNext() = it.hasNext()
+
+        override fun next() = it.next()
+
+        override fun remove() {
+            it.remove()
+            save()
+        }
+
+        override fun hasPrevious() = it.hasPrevious()
+
+        override fun nextIndex() = it.nextIndex()
+
+        override fun previous() = it.previous()
+
+        override fun previousIndex() = it.previousIndex()
+
+        override fun add(element: T) {
+            bind(element)
+            it.add(element)
+            save()
+        }
+
+        override fun set(element: T) {
+            bind(element)
+            it.set(element)
+            save()
+        }
+    }
+}
     override fun subList(fromIndex: Int, toIndex: Int): MutableList<T> {
-        return inner.subList(fromIndex, toIndex).toMutableList()
+        Vlog("subList not supported")
+        error("subList not supported")
     }
     override fun contains(element: T): Boolean = inner.contains(element)
     override fun containsAll(elements: Collection<T>): Boolean = inner.containsAll(elements)
