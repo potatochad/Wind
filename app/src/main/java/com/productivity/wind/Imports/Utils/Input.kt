@@ -158,6 +158,25 @@ fun View.showKeyboard() {
 //focus manager should stay in UI scope only
 fun FocusManager.clear() = this.clearFocus()
 
+object AppFocus {
+    private var clear by m(0)
+
+    fun clear() {
+        clear++
+    }
+
+    @Composable
+    fun track() {
+        val focusManager = LocalFocusManager.current
+
+        LaunchedEffect(clear) {
+            if (clear > 0) {
+                focusManager.clearFocus()
+            }
+        }
+    }
+}
+
 fun Mod.canFocus(): Mod = composed {
     val fr = r { FocusRequester() }
 
