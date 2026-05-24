@@ -157,9 +157,7 @@ fun BasicInput(
 		move(3)
 		BasicTextField(
 			value = Field.it,
-			onValueChange = { 
-				Do(Field.it(it))
-			},
+			onValueChange = { Do(Field.it(it)) },
 			onTextLayout = { onLayout(it) },
 			singleLine = oneLine, 
 			keyboardOptions = KeyboardOptions(
