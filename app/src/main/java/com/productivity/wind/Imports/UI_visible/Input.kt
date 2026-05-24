@@ -149,6 +149,7 @@ fun BasicInput(
 	var w by r(0)
 
 	val keyboard = Keyboard()
+	keyboard.open.vlog("keyboard.open")
 	if (!keyboard.open) focus.clear()
 
 	
