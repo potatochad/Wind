@@ -129,21 +129,13 @@ data class KeyboardData(
     val h: Int
 )
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Keyboard(): KeyboardData {
     val density = LocalDensity.current
 
-    val isOpen by remember {
-        derivedStateOf {
-            WindowInsets.isImeVisible
-        }
-    }
-
-    val height by remember {
-        derivedStateOf {
-            WindowInsets.ime.getBottom(density)
-        }
-    }
+    val isOpen = WindowInsets.isImeVisible
+    val height = WindowInsets.ime.getBottom(density)
 
     return remember(isOpen, height) {
         KeyboardData(
