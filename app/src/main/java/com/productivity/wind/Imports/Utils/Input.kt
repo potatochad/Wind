@@ -166,7 +166,15 @@ fun Mod.focusAsker(x: FocusAsker) = this.focusRequester(x)
 @Composable
 fun UIFocus(): UIFocus = LocalFocusManager.current
 fun UIFocus.clear() = this.clearFocus()
+fun Modifier.autoFocus(): Modifier = composed {
+    val fr = r { FocusRequester() }
 
+    LaunchedEffect(Unit) {
+        fr.requestFocus()
+    }
+
+    focusRequester(fr)
+}
 
 
 
