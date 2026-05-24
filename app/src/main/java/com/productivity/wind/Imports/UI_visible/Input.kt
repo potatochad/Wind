@@ -148,8 +148,7 @@ fun BasicInput(
 	val baseMod = Mod.space(8, 4).w(60).h(26).background(inputColor, shape = RoundedCornerShape(4.dp))   
 	var w by r(0)
 
-	val keyboard = Keyboard()
-	if (!keyboard.isOpen) focus.clear()
+	if (!Keyboard.isOpen) focus.clear()
 
 	
 	move(3)
