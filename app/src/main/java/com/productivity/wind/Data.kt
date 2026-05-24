@@ -253,6 +253,8 @@ fun OnResume(){
 @Composable
 fun AppStart() {
 	Keyboard.track()
+	AppFocus.track()
+	
 	val LocationClient = r { LocationServices.getFusedLocationProviderClient(App) }
     
 	RunOnce {
