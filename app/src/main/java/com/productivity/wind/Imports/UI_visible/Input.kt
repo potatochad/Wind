@@ -147,7 +147,7 @@ fun BasicInput(
 	var w by r(0)
 	
 	move(3)
-	LazzyRow(baseMod.centerY.start.mix(new = mod).getW{ w = it }) {
+	// LazzyRow(baseMod.centerY.start.mix(new = mod).getW{ w = it }) {
 		move(3)
 		BasicTextField(
 			value = Field.it,
@@ -172,9 +172,9 @@ fun BasicInput(
 					onAction()
 				}
 			),
-			modifier = Mod.w(toF(w)*0.85).canFocus()
+			modifier = baseMod.mix(new = mod).canFocus()
 		)
-	}
+//	}
 }
 
 
