@@ -202,12 +202,12 @@ fun Mod.cardColor() = this.background(cardColor)
     
 
 
-fun Mod.getW(onWidth: Do_<Int>): Mod = this.then(
+fun Mod.getW(onWidth: DoInt): Mod = this.then(
     Mod.onGloballyPositioned {
         onWidth(it.size.width)
     }
 )
-fun Mod.getH(onWidth: Do_<Int>): Mod = this.then(
+fun Mod.getH(onWidth: DoInt): Mod = this.then(
     Mod.onGloballyPositioned {
         onWidth(it.size.height)
     }
