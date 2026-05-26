@@ -141,20 +141,20 @@ fun CopyPaste(id: Str ="") {
 	}) {
         RuleCard("If") {
             LazzyRow {
-                Text("Letter typed correctly: ")
+                Text("Letter typed correctly:")
                 TinyInput(letterPts1)
-                Text(" points")
+                Text("points")
             }
             LazzyRow {
-                Text("Text typed correctly: ")
+                Text("Text typed correctly:")
                 TinyInput(donePts1)
-                Text(" points")
+                Text("points")
             }
         }
 
         RuleCard("Other") {
             LazzyRow {
-                Text("DailyMax: ")
+                Text("DailyMax:")
                 TinyInput(maxDone1)
             }
 			ScrollInput(txt1, scroll = inputScroll, h = 200)
