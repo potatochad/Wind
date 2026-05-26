@@ -242,12 +242,11 @@ fun BigInput(txt: mStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){
 fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = yes, onAction: Do = {}, Do: DoStr = { _ -> }) {  
 	var txt = toMStr(value)
 	var Field by r(InputField(txt.it).gold().size(14.sp))
-	var baseMod = Mod.w(60).h(26).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 3, top = 5)
 	
     BasicInput(
         Field,
         isInt = isInt, 
-        mod = baseMod.mix(new = mod),
+        mod = mod,
 		onAction = onAction,
     ) { newF ->
 		var it = newF.text.take(maxLetters)
@@ -267,14 +266,12 @@ fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = ye
 @Composable
 fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {}, Do: DoInt = { _ -> }) {  
 	var f1 by r(InputField(toStr(value.it)).gold().size(14.sp))
-	var baseMod = Mod.w(60).h(26).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 3, top = 5)
-	
 	
     BasicInput(
         f1,
         isInt = yes, 
 		onAction = onAction,
-        mod = baseMod.mix(new = mod),
+        mod = mod,
     ) { Field ->
         var it = Field.text.take(maxLetters)
 		
@@ -291,11 +288,13 @@ fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {
 fun RowScope.LongInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 40, onAction: Do = {}, Do: DoStr = { _ -> }) {  
 	var txt = toMStr(value)
 	var Field by r(InputField(txt.it).white().size(19.sp))
+	val baseMod = Mod.weight(1f).h(50).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 3, top = 5)             
+
 	
     BasicInput(
         Field,
         isInt = no, 
-        mod = Mod.h(50).weight(1f).mix(new = mod),
+        mod = Mod.baseMod.mix(new = mod) // Mod.h(50).weight(1f).mix(new = mod),
 		onAction = onAction,
     ) { newF ->
 		var it = newF.text.take(maxLetters)
@@ -309,7 +308,3 @@ fun RowScope.LongInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 40, onActi
 
 
 	
-
-
-
-
