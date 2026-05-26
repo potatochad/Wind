@@ -143,7 +143,7 @@ fun BasicInput(
 	oneLine: Bool = yes,
     Do: Do_<InputField> = {},
 ) {
-	val baseMod = Mod.space(8, 4).w(60).h(26).background(inputColor, shape = RoundedCornerShape(4.dp))   
+	val baseMod = Mod.space(8, 4).w(60).h(26).space(0, 5).background(inputColor, shape = RoundedCornerShape(4.dp))   
 	var w by r(0)
 	
 	move(3)
