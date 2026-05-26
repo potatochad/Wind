@@ -131,6 +131,8 @@ import android.os.Process.*
 import android.content.ClipData
 import android.content.ClipboardManager
 
+
+
 @Suppress("UNCHECKED_CAST")
 
 @Composable
@@ -143,46 +145,36 @@ fun BasicInput(
 	oneLine: Bool = yes,
     Do: Do_<InputField> = {},
 ) {
-	var h by m(0)
-	val letterH = 16
-	val topPad: Int = remember(h) {
-		val height = if (h == 0) 26 else h
-		Vlog("topPad is ${(height - letterH) / 2}")
-		(height - letterH) / 2
-	}
-	val baseMod = Mod.w(60).h(26).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 2, top = topPad)                       
-	var w by r(0)
+	val baseMod = Mod.w(60).h(26).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 3, top = 5)             
 	
-	move(3)
-	// LazzyRow(baseMod.centerY.start.mix(new = mod).getW{ w = it }) {
-		move(3)
-		BasicTextField(
-			value = Field.it,
-			onValueChange = { Do(Field.it(it)) },
-			onTextLayout = { onLayout(it) },
-			singleLine = oneLine, 
-			keyboardOptions = KeyboardOptions(
-				keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
-				imeAction = ImeAction.Done
-			),
-			visualTransformation = object : VisualTransformation {
-				override fun filter(text: UIStr): TransformedText {
-					return TransformedText(
-						Field.UIStr.gold().size(14.sp),
-						OffsetMapping.Identity
-					)
-				}
-			},
-			keyboardActions = KeyboardActions(
-				onDone = {
-					AppFocus.clear() 
-					onAction()
-				}
-			),
-			modifier = baseMod.mix(new = mod).canFocus().getH{h = it}
-		)
-//	}
+	
+	BasicTextField(
+		value = Field.it,
+		onValueChange = { Do(Field.it(it)) },
+		onTextLayout = { onLayout(it) },
+		singleLine = oneLine, 
+		keyboardOptions = KeyboardOptions(
+			keyboardType = if (isInt) KeyboardType.Number else KeyboardType.Text,
+			imeAction = ImeAction.Done
+		),
+		visualTransformation = object : VisualTransformation {
+			override fun filter(text: UIStr): TransformedText {
+				return TransformedText(
+					Field.UIStr.gold().size(14.sp),
+					OffsetMapping.Identity
+				)
+			}
+		},
+		keyboardActions = KeyboardActions(
+			onDone = {
+				AppFocus.clear() 
+				onAction()
+			}
+		),
+		modifier = baseMod.mix(new = mod).canFocus()
+	)
 }
+
 
 
 @Composable
