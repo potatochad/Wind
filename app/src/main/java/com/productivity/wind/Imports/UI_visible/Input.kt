@@ -143,7 +143,10 @@ fun BasicInput(
 	oneLine: Bool = yes,
     Do: Do_<InputField> = {},
 ) {
-	val baseMod = Mod.w(60).h(26).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 2, top = 5)                       
+	var h by m(0)
+	val letterH = 16
+	val topPad = remember(h) { (h-letterH)/2 }
+	val baseMod = Mod.w(60).h(26).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 2, top = topPad)                       
 	var w by r(0)
 	
 	move(3)
@@ -172,7 +175,7 @@ fun BasicInput(
 					onAction()
 				}
 			),
-			modifier = baseMod.mix(new = mod).canFocus()
+			modifier = baseMod.mix(new = mod).canFocus().getH{h = it}
 		)
 //	}
 }
