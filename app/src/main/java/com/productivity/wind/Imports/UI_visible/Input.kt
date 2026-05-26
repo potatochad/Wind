@@ -150,7 +150,7 @@ fun BasicInput(
 		Vlog("topPad is ${(height - letterH) / 2}")
 		(height - letterH) / 2
 	}
-	val baseMod = Mod.w(60).h(26).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 2, top = topPad)                       
+	val baseMod = Mod.w(60).h(26).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 2, top = topPad)                       
 	var w by r(0)
 	
 	move(3)
