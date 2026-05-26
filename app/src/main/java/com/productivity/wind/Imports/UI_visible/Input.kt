@@ -145,7 +145,11 @@ fun BasicInput(
 ) {
 	var h by m(0)
 	val letterH = 16
-	val topPad = (h-letterH)/2
+	val topPad: Int = remember(h) {
+		val height = if (h == 0) 26 else h
+		Vlog("topPad is ${(height - letterH) / 2}")
+		(height - letterH) / 2
+	}
 	val baseMod = Mod.w(60).h(26).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 2, top = topPad)                       
 	var w by r(0)
 	
