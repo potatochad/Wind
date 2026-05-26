@@ -294,7 +294,7 @@ fun RowScope.LongInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 40, onActi
     BasicInput(
         Field,
         isInt = no, 
-        mod = Mod.baseMod.mix(new = mod) // Mod.h(50).weight(1f).mix(new = mod),
+        mod = Mod.baseMod.mix(new = mod), // Mod.h(50).weight(1f).mix(new = mod),
 		onAction = onAction,
     ) { newF ->
 		var it = newF.text.take(maxLetters)
