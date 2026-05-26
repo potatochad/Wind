@@ -182,7 +182,7 @@ fun BasicInput(
 fun ScrollInput(
 	txt: mStr, 
 	mod: Mod = Mod, 
-	scroll: ScrollState = r_Scroll(), 
+	scroll: ScrollState = Scroll(), 
 	h: Int = 150,  
 	Do: DoStr = { txt.it = it }
 ){    
