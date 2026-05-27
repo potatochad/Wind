@@ -147,7 +147,6 @@ fun BasicInput(
 ) {
 	val baseMod = Mod.w(60).h(26).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 3, top = 5)             
 	
-	LazzyRow(baseMod.mix(new = mod)){
 	BasicTextField(
 		value = Field.it,
 		onValueChange = { Do(Field.it(it)) },
@@ -171,9 +170,8 @@ fun BasicInput(
 				onAction()
 			}
 		),
-		modifier = Mod.canFocus()
+		modifier = baseMod.mix(new = mod).canFocus()
 	)
-	}
 }
 
 
