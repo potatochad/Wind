@@ -145,7 +145,7 @@ fun BasicInput(
 	oneLine: Bool = yes,
     Do: Do_<InputField> = {},
 ) {
-	val baseMod = Mod.w(60).h(36).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 3, top = 5)             
+	val baseMod = Mod.w(64).h(32).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 3, top = 5)             
 	
 	BasicTextField(
 		value = Field.it,
