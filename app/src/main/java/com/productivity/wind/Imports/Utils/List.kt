@@ -221,7 +221,7 @@ fun <T : Any> KClass<T>.setProp(
 
 
 
-//---------<Testing>-----//
+//------------<Testing>----------//
 @Serializable
 abstract class LazyData {
 
@@ -282,7 +282,7 @@ class TrackList<T : LazyData>(
         old: Any?,
         new: Any?
     ) {
-        println(
+        Vlog(
             """
             LIST   : $listName
             ITEM   : ${item.tempId}
@@ -378,17 +378,6 @@ class TestData : LazyData() {
     var name by lazyState("hello")
 }
 
-fun main() {
-
-    val users = TrackList<TestData>("users")
-
-    val item = TestData()
-
-    users.add(item)
-
-    item.name = "A"
-    item.name = "B"
-}
 
 
 
