@@ -210,8 +210,10 @@ fun LogsScreen() {
     var Tag = r("")
 	var scroll = LazyList()
 
-	val Logs = remember(Tag.it, Bar.logs) {
-		Bar.logs.filter { it.contains(Tag.it) }
+	val Logs = remember(Tag.it, Bar.logs.size) {
+		Bar.logs
+			.filter { it.contains(Tag.it) }
+			.toList()
 	}
 
 
