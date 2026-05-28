@@ -217,235 +217,16 @@ fun <T : Any> KClass<T>.setProp(
 
 
 
+
+
+
+
 //---------<Testing>-----//
-class PersistList<T>(
-    private val id: Str,
-    private val serializer: KSerializer<List<T>>,
-    items: List<T> = emptyList()
-) : MutableList<T> {
-
-    private val inner = mutableStateListOf<T>()
-
-
-    var stop by m(no)
-    
-    private fun bind(element: T) {
-        (element as? LazyData)?.parentList = this
-    }
-
-    
-
-    init {
-        if (id == "tempKeyWind") stop = yes
-        items.forEach(::bind)
-        inner.addAll(items)
-    }
-
-
-    private var saveJob: Job? = null
-
-    fun save() {
-        if (stop) return
-        saveJob?.cancel()
-        
-        saveJob = scope.launch {
-            delay(300)
-            AppData.saveList(id, inner, serializer)
-        }
-    }
-
-    override val size get() = inner.size
-
-    override fun add(element: T): Bool {
-        bind(element)
-        val r = inner.add(element)
-        save()
-        return r
-    }
-
-    override fun remove(element: T): Bool {
-        val r = inner.remove(element)
-        save()
-        return r
-    }
-
-    override fun clear() {
-        inner.clear()
-        save()
-    }
-
-    override fun set(index: Int, element: T): T {
-        bind(element)
-        val r = inner.set(index, element)
-        save()
-        return r
-    }
-
-    override fun add(index: Int, element: T) {
-        bind(element)
-        inner.add(index, element)
-        save()
-    }
-
-    override fun removeAt(index: Int): T {
-        val r = inner.removeAt(index)
-        save()
-        return r
-    }
-
-
-
-    override fun addAll(elements: Collection<T>): Bool {
-        elements.forEach(::bind)
-
-        val r = inner.addAll(elements)
-        if (r) save()
-
-        return r
-    }
-
-    override fun addAll(index: Int, elements: Collection<T>): Bool {
-        elements.forEach(::bind)
-
-        val r = inner.addAll(index, elements)
-        if (r) save()
-    
-        return r
-    }
-
-
-    override fun removeAll(elements: Collection<T>): Bool {
-        val r = inner.removeAll(elements)
-
-        if (r) save()
-
-        return r
-    }
-
-    override fun retainAll(elements: Collection<T>): Bool {
-        val r = inner.retainAll(elements)
-
-        if (r) save()
-
-        return r
-    }
-
-    override fun get(index: Int) = inner[index]
-    override fun iterator(): MutableIterator<T> {
-        return wrapListIterator(inner.listIterator())
-    }
-    override fun indexOf(element: T) = inner.indexOf(element)
-    override fun lastIndexOf(element: T) = inner.lastIndexOf(element)
-    override fun listIterator(): MutableListIterator<T> {
-        return wrapListIterator(inner.listIterator())
-    }
-
-override fun listIterator(index: Int): MutableListIterator<T> {
-    return wrapListIterator(inner.listIterator(index))
-}
-
-private fun wrapListIterator(
-    it: MutableListIterator<T>
-): MutableListIterator<T> {
-
-    return object : MutableListIterator<T> {
-
-        override fun hasNext() = it.hasNext()
-
-        override fun next() = it.next()
-
-        override fun remove() {
-            it.remove()
-            save()
-        }
-
-        override fun hasPrevious() = it.hasPrevious()
-
-        override fun nextIndex() = it.nextIndex()
-
-        override fun previous() = it.previous()
-
-        override fun previousIndex() = it.previousIndex()
-
-        override fun add(element: T) {
-            bind(element)
-            it.add(element)
-            save()
-        }
-
-        override fun set(element: T) {
-            bind(element)
-            it.set(element)
-            save()
-        }
-    }
-}
-    override fun subList(fromIndex: Int, toIndex: Int): MutableList<T> {
-        Vlog("subList not supported")
-        error("subList not supported")
-    }
-    override fun contains(element: T): Boolean = inner.contains(element)
-    override fun containsAll(elements: Collection<T>): Boolean = inner.containsAll(elements)
-    override fun isEmpty(): Bool = inner.isEmpty()
-}
-
-inline fun <reified T> specialList(
-    default: List<T> = emptyList(),
-    idExtra: Str = ""
-): By<PersistList<T>> {
-    val delegate = By(PersistList<T>("tempKeyWind", ListSerializer(serializer<T>()), default))
-
-    val stop: (Str) -> By<PersistList<T>> = { log ->
-        Vlog(log)
-        By(PersistList<T>("tempKeyWind", ListSerializer(serializer<T>()), default))
-    }
-    
-    if (!LazyData::class.java.isAssignableFrom(T::class.java)) return stop("The class ${T::class} must use LazyData")     
-    if (!T::class.isSimpleClass) return stop("Only simple Data class allowed: class TestData(): LazyData(){}")
-    if (!isSerializable<T>()) return stop("Class ${T::class} must be @Serializable")
-    
-    
-    
-
-    var goodId by m("")
-    var badId by m(no)
-
-    delegate
-        .onBuild { prop, id ->
-
-            goodId = "$id: $idExtra"
-
-            badId = idList.has(goodId)
-            idList.add(goodId)
-
-            if (badId) {
-                Vlog("Duplicate id detected: $goodId")
-                return@onBuild
-            }
-
-            val saved = AppData.getList<T>(goodId)
-
-            delegate.it = PersistList(
-                goodId,
-                ListSerializer(serializer<T>()),
-                saved
-            )
-        }
-
-    return delegate
-}
-
-
-var testList = mList<TestData>()
-
-
 @Serializable
 abstract class LazyData {
 
-    val id: String = "id"
-
     @Transient
-    var parentList: PersistList<*>? = null
+    var parentList: TrackList<*>? = null
 
     fun <T> lazyState(default: T): ReadWriteProperty<LazyData, T> {
 
@@ -465,18 +246,160 @@ abstract class LazyData {
                 property: KProperty<*>,
                 value: T
             ) {
+                val old = state
                 state = value
-                thisRef.parentList?.save()
+
+                thisRef.parentList?.onItemChanged(
+                    item = thisRef,
+                    prop = property.name,
+                    old = old,
+                    new = value
+                )
             }
         }
     }
 }
+
+class TrackList<T : LazyData>(
+    val listName: String,
+    items: List<T> = emptyList()
+) : MutableList<T> {
+
+    private val inner = mutableStateListOf<T>()
+
+    init {
+        items.forEach(::bind)
+        inner.addAll(items)
+    }
+
+    private fun bind(item: T) {
+        item.parentList = this
+    }
+
+    fun onItemChanged(
+        item: Any,
+        prop: String,
+        old: Any?,
+        new: Any?
+    ) {
+        println(
+            """
+            LIST   : $listName
+            ITEM   : ${item.tempId}
+            PROP   : $prop
+            OLD    : $old
+            NEW    : $new
+            TIME   : ${System.currentTimeMillis()}
+            """.trimIndent()
+        )
+    }
+
+    override val size get() = inner.size
+
+    override fun add(element: T): Boolean {
+        bind(element)
+        return inner.add(element)
+    }
+
+    override fun add(index: Int, element: T) {
+        bind(element)
+        inner.add(index, element)
+    }
+
+    override fun addAll(elements: Collection<T>): Boolean {
+        elements.forEach(::bind)
+        return inner.addAll(elements)
+    }
+
+    override fun addAll(index: Int, elements: Collection<T>): Boolean {
+        elements.forEach(::bind)
+        return inner.addAll(index, elements)
+    }
+
+    override fun clear() = inner.clear()
+
+    override fun get(index: Int): T = inner[index]
+
+    override fun isEmpty(): Boolean = inner.isEmpty()
+
+    override fun iterator(): MutableIterator<T> = inner.iterator()
+
+    override fun listIterator(): MutableListIterator<T> =
+        inner.listIterator()
+
+    override fun listIterator(index: Int): MutableListIterator<T> =
+        inner.listIterator(index)
+
+    override fun remove(element: T): Boolean =
+        inner.remove(element)
+
+    override fun removeAll(elements: Collection<T>): Boolean =
+        inner.removeAll(elements)
+
+    override fun removeAt(index: Int): T =
+        inner.removeAt(index)
+
+    override fun retainAll(elements: Collection<T>): Boolean =
+        inner.retainAll(elements)
+
+    override fun set(index: Int, element: T): T {
+        bind(element)
+        return inner.set(index, element)
+    }
+
+    override fun subList(
+        fromIndex: Int,
+        toIndex: Int
+    ): MutableList<T> = inner.subList(fromIndex, toIndex)
+
+    override fun contains(element: T): Boolean =
+        inner.contains(element)
+
+    override fun containsAll(elements: Collection<T>): Boolean =
+        inner.containsAll(elements)
+
+    override fun indexOf(element: T): Int =
+        inner.indexOf(element)
+
+    override fun lastIndexOf(element: T): Int =
+        inner.lastIndexOf(element)
+}
+
+val Any?.tempId: String
+    get() = "${this?.javaClass?.simpleName}@${System.identityHashCode(this)}"
+
+
+
+// ---------------- TEST ----------------
 
 @Serializable
 class TestData : LazyData() {
 
     var name by lazyState("hello")
 }
+
+fun main() {
+
+    val users = TrackList<TestData>("users")
+
+    val item = TestData()
+
+    users.add(item)
+
+    item.name = "A"
+    item.name = "B"
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
