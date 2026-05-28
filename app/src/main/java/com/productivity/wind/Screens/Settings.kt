@@ -215,6 +215,16 @@ fun LogsScreen() {
 			.filter { it.contains(Tag.it) }
 			.toList()
 	}
+	val measure = rTextMeasurer()
+    val texttstyle = LocalTextStyle.current
+    val style = texttstyle.toSpanStyle()
+	
+	val maxWidth = remember(Logs) {
+		Logs.maxOfOrNull { line ->
+			measure.w(UIStr(line).size(14))
+		} ?: 0
+	}
+
 
 
 	RunOnce {
@@ -240,7 +250,14 @@ fun LogsScreen() {
 			Box(
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Xscroll()
 			) {
-				LazyColumn(state = scroll) {
+				LazyColumn(
+					state = scroll,
+					modifier = Modifier.w(
+						with(LocalDensity.current) {
+							maxWidth.toDp() + 20.dp
+						}
+					)
+				) {
 					items(
 						Logs
 					) { line ->
