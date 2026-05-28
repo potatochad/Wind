@@ -135,7 +135,7 @@ import android.content.ClipboardManager
 
 fun Mod.centeredWithWhiteBackground() =
     drawBehind {
-        drawRect(Color.White)
+        drawRect(inputColor)
     }.layout { measurable, constraints ->
 
         val placeable = measurable.measure(constraints)
