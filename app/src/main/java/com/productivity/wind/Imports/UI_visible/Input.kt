@@ -133,21 +133,7 @@ import android.content.ClipboardManager
 
 
 
-fun Mod.centeredWithWhiteBackground() =
-    drawBehind {
-        drawRect(inputColor)
-    }.layout { measurable, constraints ->
 
-        val placeable = measurable.measure(constraints)
-
-        layout(constraints.maxWidth, constraints.maxHeight) {
-
-            val x = (constraints.maxWidth - placeable.width) / 2
-            val y = (constraints.maxHeight - placeable.height) / 2
-
-            placeable.placeRelative(x, y)
-        }
-	}
 
 
 @Suppress("UNCHECKED_CAST")
@@ -162,7 +148,7 @@ fun BasicInput(
 	oneLine: Bool = yes,
     Do: Do_<InputField> = {},
 ) {
-	val baseMod = Mod.w(70).h(32).space(8, 4).centeredWithWhiteBackground()// background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 3, top = 5)             
+	val baseMod = Mod.w(70).h(32).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp)).space(start = 3, top = 5)             
 	
 	BasicTextField(
 		value = Field.it,
