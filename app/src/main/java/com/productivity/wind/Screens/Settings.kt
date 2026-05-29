@@ -218,7 +218,7 @@ fun LogsScreen() {
 	}
 	val textMeasurer = rTextMeasurer()
 	
-	val maxWidth by m(100)
+	var maxWidth by m(100)
 
 
 
