@@ -443,3 +443,26 @@ class By<T>(value: T) {
 
 
 
+@JvmInline
+value class Px(val value: Float)
+
+val Int.px get() = Px(toFloat())
+val Float.px get() = Px(this)
+val Double.px get() = Px(toFloat())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
