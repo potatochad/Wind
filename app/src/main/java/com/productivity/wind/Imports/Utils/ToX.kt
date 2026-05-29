@@ -144,6 +144,10 @@ fun toDp(it: Any?): Dp = when (it) {
     null -> 0.dp             // null → 0.dp
     else -> 0.dp             // anything else → 0.dp
 }
+fun toDp(value: Float?, density: Density): Dp =
+    if (value == null) 0.dp 
+    else with(density) { value.toDp() }
+
 fun toF(it: Any?): Float = when (it) {
     is Float -> it
     is Int -> it.toFloat()
