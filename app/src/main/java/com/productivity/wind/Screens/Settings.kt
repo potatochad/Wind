@@ -248,7 +248,7 @@ fun LogsScreen() {
 			) {
 				LazyColumn(
 					state = scroll,
-					modifier = Mod.w(toDp(maxWidth, density))
+					modifier = Mod.w(toDp(toF(maxWidth), density))
 				) {
 					items(
 						Logs
