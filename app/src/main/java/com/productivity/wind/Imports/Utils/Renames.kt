@@ -376,6 +376,9 @@ fun startActivity(intent: Intent) {
     App.startActivity(intent)
 }
 
+@Composable
+fun DensityCurrent(): Density = LocalDensity.current
+
 
 
 class Vtimer(private val name: Str = "") {
