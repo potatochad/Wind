@@ -443,37 +443,3 @@ class By<T>(value: T) {
 
 
 
-@JvmInline
-value class Px(val value: Float) {
-    operator fun plus(other: Px): Px = Px(value + other.value)
-    operator fun minus(other: Px): Px = Px(value - other.value)
-    operator fun times(other: Float): Px = Px(value * other)
-    operator fun div(other: Float): Px = Px(value / other)
-    operator fun unaryMinus(): Px = Px(-value)
-    operator fun compareTo(other: Px): Int = value.compareTo(other.value)
-	
-    fun toDp(density: Density): Dp = with(density) { value.toDp() }
-    override fun toString(): Str = "${value}px"
-}
-
-
-val Int.px get() = Px(toFloat())
-val Float.px get() = Px(this)
-val Double.px get() = Px(toFloat())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
