@@ -210,6 +210,7 @@ fun LogsScreen() {
     var Reload = r(no)
     var Tag = r("")
 	var scroll = LazyList()
+	val density = DensityCurrent()
 
 	val Logs = remember(Tag.it, Bar.logs.size) {
 		Bar.logs
@@ -247,7 +248,7 @@ fun LogsScreen() {
 			) {
 				LazyColumn(
 					state = scroll,
-					modifier = Mod.w(maxWidth)
+					modifier = Mod.w(toDp(maxWidth, density))
 				) {
 					items(
 						Logs
