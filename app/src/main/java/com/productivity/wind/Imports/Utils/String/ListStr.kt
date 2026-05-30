@@ -223,12 +223,34 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 
 
 
-fun ListStr.longerThanAverage(): ListStr {
+fun List<String>.getLazilyLongerStr(): ListStr {
     if (isEmpty()) return emptyList()
 
-    val avg = sumOf { it.length }.toDouble() / size
-    return filter { it.length >= avg }
+    val avg = map { it.length }.average()
+
+    val deviations = map { kotlin.math.abs(it.length - avg) }
+    val avgDeviation = deviations.average()
+
+    // only activate filter if spread is big
+    val isSpreadBig = avgDeviation > avg * 0.5
+
+    return if (!isSpreadBig) {
+        this
+    } else {
+        filter { it.length > avg }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
