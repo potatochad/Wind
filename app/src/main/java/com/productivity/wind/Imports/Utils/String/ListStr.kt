@@ -223,3 +223,18 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 
 
 
+fun ListStr.longerThanAverage(): ListStr {
+    if (isEmpty()) return emptyList()
+
+    val avg = sumOf { it.length }.toDouble() / size
+    return filter { it.length >= avg }
+}
+
+
+
+
+
+
+
+
+
