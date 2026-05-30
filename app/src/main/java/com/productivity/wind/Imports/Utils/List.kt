@@ -134,6 +134,46 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 
+@Composable
+fun <T> rGetNewItems(items: MutableList<T>): List<T> {
+    var previous by r { mutableStateOf(emptyList<T>()) }
+
+    val result = remember(items.toList()) {
+        val now = items.toList()
+
+        when {
+            now.size < previous.size -> now // reset
+            else -> now.drop(previous.size)
+        }
+    }
+
+    LaunchedEffect(items.toList()) {
+        previous = items.toList()
+    }
+
+    return result
+}
+
+@Composable
+fun <T> rGetNewItems(items: SnapshotStateList<T>): List<T> {
+    var previous by r { mutableStateOf(emptyList<T>()) }
+
+    val result = remember(items.toList()) {
+        val now = items.toList()
+
+        when {
+            now.size < previous.size -> now // reset
+            else -> now.drop(previous.size)
+        }
+    }
+
+    LaunchedEffect(items.toList()) {
+        previous = items.toList()
+    }
+
+    return result
+}
+
 // IF list items DECREASE, returns FULL LIST
 @Composable
 fun <T> rGetNewItems(items: List<T>): List<T> {
