@@ -226,7 +226,7 @@ fun LogsScreen() {
     ).size.width
 } ?: 100
 
-val maxWidthDp = with(LocalDensity.current) { maxWidthPx.toDp() }
+val maxWidthDp = with(density) { maxWidthPx.toDp() }
 
 
 
