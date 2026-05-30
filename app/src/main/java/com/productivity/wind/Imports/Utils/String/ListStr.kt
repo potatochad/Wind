@@ -223,7 +223,7 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 
 
 
-fun List<String>.getLazilyLongerStr(): ListStr {
+fun ListStr.getLazilyLongerStr(): ListStr {
     if (isEmpty()) return emptyList()
 
     val avg = map { it.length }.average()
@@ -234,11 +234,14 @@ fun List<String>.getLazilyLongerStr(): ListStr {
     // only activate filter if spread is big
     val isSpreadBig = avgDeviation > avg * 0.5
 
-    return if (!isSpreadBig) {
+    val FinalListStr = if (!isSpreadBig) {
         this
     } else {
         filter { it.length > avg }
     }
+    val saved = size - filtered.size
+
+    return FinalListStr
 }
 
 
