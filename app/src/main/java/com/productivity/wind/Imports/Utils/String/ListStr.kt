@@ -241,6 +241,8 @@ fun ListStr.getLazilyLongerStr(): ListStr {
     }
     val saved = size - filtered.size
 
+    saved.vlog("saved items")
+
     return FinalListStr
 }
 
