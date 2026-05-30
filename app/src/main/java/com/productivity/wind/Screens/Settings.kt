@@ -219,22 +219,15 @@ fun LogsScreen() {
 			.filter { it.contains(Tag.it) }
 			.toList()
 	}
-	
-val layoutDirection = LocalLayoutDirection.current
 
-val maxWidthPx = Logs.maxOfOrNull { line ->
-    textMeasurer.measure(
-        text = line,
-        style = TextStyle(
-            fontSize = 14.sp,
-            fontFamily = FontFamily.Default,
-            letterSpacing = 0.sp
-        ),
-        density = density,
-        layoutDirection = layoutDirection
-    ).size.width
-} ?: 100 
-
+	val measure = rTextMeasurer()
+    val style = LocalTextStyle.current.toSpanStyle()
+    
+	val maxWidthPx = remember(Logs) {
+		Logs.maxOfOrNull { line -> 
+			measure.w(UIStr(line).strStyle(style))
+		}
+	}
 
 	RunOnce {
 		scroll.toBottom()
