@@ -219,6 +219,8 @@ fun LogsScreen() {
 			.filter { it.contains(Tag.it) }
 			.toList()
 	}
+	val NewLogs = rGetNewItems(Logs)
+	
 
 	val measure = rTextMeasurer()
     val style = LocalTextStyle.current.toSpanStyle()
@@ -226,8 +228,8 @@ fun LogsScreen() {
 
 	val vTime = Vtimer("log w measure speed")
     
-	val maxWidthPx = remember(Logs) {
-		Logs.getLazilyLongerStr().maxOfOrNull { line -> 
+	val maxWidthPx = remember(NewLogs) {
+		NewLogs.getLazilyLongerStr().maxOfOrNull { line -> 
 			measure.w(UIStr(line).strStyle(style).size(14))
 		}
 	}
