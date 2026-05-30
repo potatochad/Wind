@@ -135,6 +135,14 @@ import kotlinx.serialization.builtins.ListSerializer
 
 
 
+inline fun <T, R : Comparable<R>> Iterable<T>.max(selector: (T) -> R): R? =
+    maxOfOrNull(selector)
+
+inline fun <T, R : Comparable<R>> Iterable<T>.min(selector: (T) -> R): R? =
+    minOfOrNull(selector)
+
+    
+
 @Composable
 fun <T> rGetNewItems(items: SnapshotStateList<T>): List<T> {
     var previous by r { mutableStateOf(emptyList<T>()) }
