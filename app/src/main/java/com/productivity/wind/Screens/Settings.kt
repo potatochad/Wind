@@ -228,7 +228,7 @@ fun LogsScreen() {
     
 	val maxWidthPx = remember(Logs) {
 		Logs.maxOfOrNull { line -> 
-			measure.w(UIStr(line).strStyle(style))
+			measure.w(UIStr(line).strStyle(style).size(14))
 		}
 	}
 
