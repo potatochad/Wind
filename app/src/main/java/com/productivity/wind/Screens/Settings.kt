@@ -231,7 +231,7 @@ fun LogsScreen() {
 	var maxWidthPx by r(toF(AppW))
     
 	val maybeMax = remember(NewLogs) {
-		var tempW = NewLogs.getLazilyLonger().maxOfOrNull { line -> 
+		var tempW = NewLogs.getLazilyLonger().max { line -> 
 			measure.w(UIStr(line).strStyle(style).size(14))
 		}
 		if (tempW > maxWidthPx) maxWidthPx = tempW
