@@ -134,6 +134,25 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 
+// IF list items DECREASE, returns FULL LIST
+@Composable
+fun <T> rGetNewItems(items: List<T>): List<T> {
+    var previous by r { mutableStateOf(emptyList<T>()) }
+
+    val result = remember(items) {
+        when {
+            items.size < previous.size -> items // reset
+            else -> items.drop(previous.size)
+        }
+    }
+
+    LaunchedEffect(items) {
+        previous = items
+    }
+
+    return result
+}
+
 
 val List<*>.isRecomposable: Bool
     get() = this is SnapshotStateList<*>
