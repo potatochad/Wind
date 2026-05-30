@@ -219,20 +219,7 @@ fun LogsScreen() {
 			.toList()
 	}
 
-	val density = DensityCurrent()
-	val NewLogs = rGetNewItems(Logs)
-	val measure = rTextMeasurer()
-    val style = LocalTextStyle.current.toSpanStyle()
 	var maxWidthPx by r(10.dp)
-    
-	val maybeMax = remember(NewLogs) {
-		var tempPx = NewLogs.getLazilyLonger().max { line -> 
-			measure.w(UIStr(line).strStyle(style).size(14))
-		}
-		var tempDp = toDp(tempPx, density)
-		
-		if (tempDp > maxWidthPx) maxWidthPx = tempDp
-	}
 
 	
 
