@@ -248,7 +248,7 @@ fun ListStr.getLong(): ListStr {
 
 @Composable
 fun ListStr.rMaxWidth(
-    letterSize: Int
+    letterSize: Int = 14,
 ): Dp {
 	val density = DensityCurrent()
 	val NewLogs = rGetNewItems(Logs)
