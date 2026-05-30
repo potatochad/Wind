@@ -222,12 +222,19 @@ fun LogsScreen() {
 
 	val measure = rTextMeasurer()
     val style = LocalTextStyle.current.toSpanStyle()
+
+
+	val vTime = Vtime("log w measure speed")
     
 	val maxWidthPx = remember(Logs) {
 		Logs.maxOfOrNull { line -> 
 			measure.w(UIStr(line).strStyle(style))
 		}
 	}
+
+	vTime.end()
+
+	
 
 	RunOnce {
 		scroll.toBottom()
