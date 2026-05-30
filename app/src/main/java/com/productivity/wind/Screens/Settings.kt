@@ -212,22 +212,17 @@ fun LogsScreen() {
     var Reload = r(no)
     var Tag = r("")
 	var scroll = LazyList()
-	val density = DensityCurrent()
 
 	val Logs = remember(Tag.it, Bar.logs.size) {
 		Bar.logs
 			.filter { it.contains(Tag.it) }
 			.toList()
 	}
-	val NewLogs = rGetNewItems(Logs)
-	
 
+	val density = DensityCurrent()
+	val NewLogs = rGetNewItems(Logs)
 	val measure = rTextMeasurer()
     val style = LocalTextStyle.current.toSpanStyle()
-
-
-	val vTime = Vtimer("log w measure speed")
-
 	var maxWidthPx by r(10.dp)
     
 	val maybeMax = remember(NewLogs) {
@@ -237,10 +232,7 @@ fun LogsScreen() {
 		var tempDp = toDp(tempPx, density)
 		
 		if (tempDp > maxWidthPx) maxWidthPx = tempDp
-		tempDp.vlog("tempDp")
 	}
-
-	vTime.end()
 
 	
 
