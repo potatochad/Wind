@@ -228,13 +228,15 @@ fun LogsScreen() {
 
 	val vTime = Vtimer("log w measure speed")
 
-	var maxWidthPx by r(toF(AppW, density))
+	var maxWidthPx by r(AppW)
     
 	val maybeMax = remember(NewLogs) {
-		var tempW = NewLogs.getLazilyLonger().max { line -> 
+		var tempPx = NewLogs.getLazilyLonger().max { line -> 
 			measure.w(UIStr(line).strStyle(style).size(14))
 		}
-		if (toF(tempW) > maxWidthPx) maxWidthPx = toF(tempW)
+		var tempDp = toDp(tempPx, density)
+		
+		if (tempDp > maxWidthPx) maxWidthPx = tempDp
 	}
 
 	vTime.end()
@@ -266,7 +268,7 @@ fun LogsScreen() {
 			) {
 				LazyColumn(
 					state = scroll,
-					modifier = Mod.w(toDp(toF(maxWidthPx), density)).border(2.dp, red)      
+					modifier = Mod.w(maxWidthPx).border(2.dp, red)      
 				) {
 					items(
 						Logs
