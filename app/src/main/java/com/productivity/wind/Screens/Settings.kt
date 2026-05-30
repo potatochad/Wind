@@ -222,7 +222,10 @@ fun LogsScreen() {
 	val maxWidth = remember(Logs) {
     Logs.maxOfOrNull { line ->
         textMeasurer.measure(
-            text = line
+            text = line,
+			style = TextStyle(
+                fontSize = 14.sp
+            )
         ).size.width
     } ?: 100
 	}
