@@ -224,7 +224,7 @@ fun LogsScreen() {
     val style = LocalTextStyle.current.toSpanStyle()
 
 
-	val vTime = Vtime("log w measure speed")
+	val vTime = Vtimer("log w measure speed")
     
 	val maxWidthPx = remember(Logs) {
 		Logs.maxOfOrNull { line -> 
