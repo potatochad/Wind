@@ -234,7 +234,7 @@ fun ListStr.getLazilyLongerStr(): ListStr {
     // only activate filter if spread is big
     val isSpreadBig = avgDeviation > avg * 0.5
 
-    val FinalListStr = if (!isSpreadBig) {
+    val filtered = if (!isSpreadBig) {
         this
     } else {
         filter { it.length > avg }
@@ -243,7 +243,7 @@ fun ListStr.getLazilyLongerStr(): ListStr {
 
     saved.vlog("saved items")
 
-    return FinalListStr
+    return filtered
 }
 
 
