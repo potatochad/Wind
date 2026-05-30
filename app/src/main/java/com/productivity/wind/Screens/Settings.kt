@@ -28,7 +28,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.*
 import androidx.compose.material3.pulltorefresh.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator      
-
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.platform.LocalLayoutDirection
 
 @Composable
 fun SettingsScreen() {
