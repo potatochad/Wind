@@ -193,7 +193,19 @@ data class Schedule(
 
 
 
+class Vtimer(private val name: Str = "") {
 
+    private val start = System.nanoTime()
+
+    fun end() {
+        val ms = String.format(
+            "%.3f",
+            (System.nanoTime() - start) / 1_000_000.0
+        )
+
+        Vlog("${if (name.empty) "It" else name} took ${ms}ms")
+    }
+}
 
 
 
