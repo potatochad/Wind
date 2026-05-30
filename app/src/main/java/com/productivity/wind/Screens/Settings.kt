@@ -228,7 +228,7 @@ fun LogsScreen() {
 
 	val vTime = Vtimer("log w measure speed")
 
-	var maxWidthPx by r(toF(AppW))
+	var maxWidthPx by r(toF(AppW, density))
     
 	val maybeMax = remember(NewLogs) {
 		var tempW = NewLogs.getLazilyLonger().max { line -> 
