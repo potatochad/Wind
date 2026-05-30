@@ -223,7 +223,7 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 
 
 
-fun ListStr.getLazilyLongerStr(): ListStr {
+fun ListStr.getLazilyLonger(): ListStr {
     if (isEmpty()) return emptyList()
 
     val avg = map { it.length }.average()
