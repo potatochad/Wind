@@ -223,29 +223,6 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 
 
 
-fun ListStr.getLong(): ListStr {
-    if (isEmpty()) return emptyList()
-
-    val avg = map { it.length }.average()
-
-    val deviations = map { kotlin.math.abs(it.length - avg) }
-    val avgDeviation = deviations.average()
-
-    // only activate filter if spread is big
-    val isSpreadBig = avgDeviation > avg * 0.5
-
-    val filtered = if (!isSpreadBig) {
-        this
-    } else {
-        filter { it.length > avg }
-    }
-    val saved = size - filtered.size
-
-    saved.vlog("saved items")
-
-    return filtered
-}
-
 @Composable
 fun ListStr.rMaxWidth(
     letterSize: Int = 14,
@@ -257,7 +234,7 @@ fun ListStr.rMaxWidth(
 	var maxWidthPx by r(10.dp)
     
 	RunOnce(NewLogs) {
-		var tempPx = NewLogs.getLong().max { line -> 
+		var tempPx = NewLogs.max { line -> 
 			measure.w(UIStr(line).strStyle(style).size(letterSize))
 		}
 		var tempDp = toDp(tempPx, density)
