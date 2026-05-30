@@ -144,9 +144,16 @@ fun toDp(it: Any?): Dp = when (it) {
     null -> 0.dp             // null → 0.dp
     else -> 0.dp             // anything else → 0.dp
 }
-fun toDp(value: Float?, density: Density): Dp =
-    if (value == null) 0.dp 
-    else with(density) { value.toDp() }
+fun toDp(value: Any?, density: Density): Dp = with(density) {
+    when (value) {
+        is Dp -> value
+        is Float -> value.toDp()
+        is Int -> value.toFloat().toDp()
+        is Double -> value.toFloat().toDp()
+        null -> 0.dp
+        else -> 0.dp
+    }
+}
 
 fun toF(it: Any?): Float = when (it) {
     is Float -> it
@@ -156,6 +163,15 @@ fun toF(it: Any?): Float = when (it) {
     null -> 0f
     else -> 0f
 }
+fun toF(value: Any?, density: Density): Float = when (value) {
+    is Float -> value
+    is Int -> value.toFloat()
+    is Double -> value.toFloat()
+    is Dp -> with(density) { value.toPx() }
+    null -> 0f
+    else -> 0f
+}
+
 fun toInt(it: Any?): Int = when (it) {
     is Int -> it
     is Float -> it.toInt()
