@@ -217,17 +217,21 @@ fun LogsScreen() {
 			.filter { it.contains(Tag.it) }
 			.toList()
 	}
-	val textMeasurer = rTextMeasurer()
 	
-	val maxWidthPx = Logs.maxOfOrNull { line ->
+val layoutDirection = LocalLayoutDirection.current
+
+val maxWidthPx = Logs.maxOfOrNull { line ->
     textMeasurer.measure(
         text = line,
-        style = TextStyle(fontSize = 14.sp)
+        style = TextStyle(
+            fontSize = 14.sp,
+            fontFamily = FontFamily.Default,
+            letterSpacing = 0.sp
+        ),
+        density = density,
+        layoutDirection = layoutDirection
     ).size.width
-} ?: 100
-
-val maxWidthDp = with(density) { maxWidthPx.toDp() }
-
+} ?: 100 
 
 
 	RunOnce {
@@ -255,7 +259,7 @@ val maxWidthDp = with(density) { maxWidthPx.toDp() }
 			) {
 				LazyColumn(
 					state = scroll,
-					modifier = Mod.width(maxWidthDp)
+					modifier = Mod.w(toDp(toF(maxWidthPx), density))
 				) {
 					items(
 						Logs
