@@ -219,7 +219,13 @@ fun LogsScreen() {
 	}
 	val textMeasurer = rTextMeasurer()
 	
-	var maxWidth by m(100)
+	val maxWidth = remember(Logs) {
+    Logs.maxOfOrNull { line ->
+        textMeasurer.measure(
+            text = line
+        ).size.width
+    } ?: 100
+	}
 
 
 
@@ -257,11 +263,6 @@ fun LogsScreen() {
 							text = line,
 							fontSize = 14.sp,
 							softWrap = no,
-							onTextLayout = {
-								if (it.size.width > maxWidth) {
-									maxWidth = it.size.width
-								}
-							}
 						)
 					}
 				}
