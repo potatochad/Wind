@@ -222,26 +222,46 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 }
 
 
+fun Str.estimateTextWidth(): Int {
+    var size = 0.0
+
+    for (c in this) {
+        size += when (c) {
+            'i', 'l' -> 0.5
+            'I' -> 0.6
+            '.', ',' -> 0.4
+            ' ' -> 0.5
+
+            'W', 'M', '@' -> 1.8
+            '#' -> 1.6
+
+            else -> 1.0
+        }
+    }
+
+    return size.toInt()
+}
+
+
 
 fun ListStr.getLong(): ListStr {
     if (isEmpty()) return emptyList()
 
-    val avg = map { it.length }.average()
+	//1
+    val max = maxOf { it.size }
+	val min = minOf { it.size }
 
-    val deviations = map { kotlin.math.abs(it.length - avg) }
-    val avgDeviation = deviations.average()
+	if (max >= min * 15) {
+		return filter { it.size >= max / 2 }
+	}
+	if (max >= min * 5) {
+        val widths = map { it.estimateTextWidth() }
+        val avg = widths.average()
 
-    // only activate filter if spread is big
-    val isSpreadBig = avgDeviation > avg * 0.5
-
-    val filtered = if (!isSpreadBig) {
-        this
-    } else {
-        filter { it.length > avg }
+        return filterIndexed { index, _ ->
+            widths[index] >= avg
+        }
     }
-    val saved = size - filtered.size
-
-    saved.vlog("saved items")
 
     return filtered
 }
