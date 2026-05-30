@@ -227,11 +227,14 @@ fun LogsScreen() {
 
 
 	val vTime = Vtimer("log w measure speed")
+
+	var maxWidthPx by r(toF(AppW))
     
-	val maxWidthPx = remember(NewLogs) {
-		NewLogs.getLazilyLonger().maxOfOrNull { line -> 
+	val maybeMax = remember(NewLogs) {
+		var tempW = NewLogs.getLazilyLonger().maxOfOrNull { line -> 
 			measure.w(UIStr(line).strStyle(style).size(14))
 		}
+		if (tempW > maxWidthPx) maxWidthPx = tempW
 	}
 
 	vTime.end()
