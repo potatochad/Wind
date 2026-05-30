@@ -223,7 +223,7 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 
 
 
-fun ListStr.getLazilyLonger(): ListStr {
+fun ListStr.getLong(): ListStr {
     if (isEmpty()) return emptyList()
 
     val avg = map { it.length }.average()
@@ -246,6 +246,26 @@ fun ListStr.getLazilyLonger(): ListStr {
     return filtered
 }
 
+@Composable
+fun ListStr.rMaxWidth(
+    letterSize: Int
+): Dp {
+	val density = DensityCurrent()
+	val NewLogs = rGetNewItems(Logs)
+	val measure = rTextMeasurer()
+    val style = LocalTextStyle.current.toSpanStyle()
+	var maxWidthPx by r(10.dp)
+    
+	RunOnce(NewLogs) {
+		var tempPx = NewLogs.getLong().max { line -> 
+			measure.w(UIStr(line).strStyle(style).size(letterSize))
+		}
+		var tempDp = toDp(tempPx, density)
+		
+		if (tempDp > maxWidthPx) maxWidthPx = tempDp
+    }
+    return maxWidthPx
+}
 
 
 
