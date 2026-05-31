@@ -244,39 +244,10 @@ fun Str.estimateTextWidth(): Int {
 
 
 
-fun ListStr.getLong(): ListStr {
-    if (isEmpty()) return emptyList()
-
-    val max = maxOf { it.size }
-    val min = minOf { it.size }
-
-    val result = when {
-        max >= min * 15 -> {
-            filter { it.size >= max / 2 }
-        }
-
-        max >= min * 5 -> {
-            val widths = map { it.estimateTextWidth() }
-            val avg = widths.average()
-
-            filterIndexed { index, _ ->
-                widths[index] >= avg
-            }
-        }
-
-        else -> this
-    }
-
-    val saved = size - result.size
-    saved.vlog("saved lines")
-
-    return result
-}
-
-
 @Composable
 fun ListStr.rMaxWidth(
     letterSize: Int = 14,
+	font: //idk,
 ): Dp {
 	val density = DensityCurrent()
 	val NewLogs = rGetNewItems(this)
@@ -285,7 +256,7 @@ fun ListStr.rMaxWidth(
 	var maxWidthPx by r(10.dp)
     
 	RunOnce(NewLogs) {
-		var tempPx = NewLogs.getLong().max { line -> 
+		var tempPx = NewLogs.max { line -> 
 			measure.w(UIStr(line).strStyle(style).size(letterSize))
 		}
 		var tempDp = toDp(tempPx, density)
