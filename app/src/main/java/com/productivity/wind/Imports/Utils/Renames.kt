@@ -377,7 +377,7 @@ fun startActivity(intent: Intent) {
 }
 
 @Composable
-fun DensityCurrent(): Density = LocalDensity.current
+fun rDensity(): Density = LocalDensity.current
 
 
 
