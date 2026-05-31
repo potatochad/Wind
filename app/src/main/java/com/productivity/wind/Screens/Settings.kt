@@ -252,7 +252,7 @@ fun LogsScreen() {
 			) {
 				LazyColumn(
 					state = scroll,
-					modifier = Mod.w(maxW).border(2.dp, red)      
+					modifier = Mod.w(maxW)   
 				) {
 					items(Logs) { LogTxt(it) }
 				}
