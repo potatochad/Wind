@@ -282,7 +282,7 @@ fun Str.shadow(x: Shadow?) = sty { shadow(x) }
 fun Str.draw(x: DrawStyle?) = sty { draw(x) }
 
 fun Str.italic() = sty { italic() }
-fun Str.font(x: FontFamily?) = sty { fontFamily(x) }
+fun Str.font(x: FontFamily?) = sty { font(x) }
 fun Str.letterSpacing(x: TextUnit) = sty { letterSpacing(x) }
 fun Str.baselineShift(x: BaselineShift?) = sty { baselineShift(x) }
 fun Str.fontFeatureSettings(x: String?) = sty { fontFeatureSettings(x) }
@@ -326,7 +326,7 @@ fun UIStr.shadow(x: Shadow?) = sty { shadow(x) }
 fun UIStr.draw(x: DrawStyle?) = sty { draw(x) }
 
 fun UIStr.italic() = sty { italic() }
-fun UIStr.font(x: FontFamily?) = sty { fontFamily(x) }
+fun UIStr.font(x: FontFamily?) = sty { font(x) }
 fun UIStr.letterSpacing(x: TextUnit) = sty { letterSpacing(x) }
 fun UIStr.baselineShift(x: BaselineShift?) = sty { baselineShift(x) }
 fun UIStr.fontFeatureSettings(x: String?) = sty { fontFeatureSettings(x) }
