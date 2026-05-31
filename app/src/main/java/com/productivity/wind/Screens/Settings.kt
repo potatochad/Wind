@@ -219,7 +219,7 @@ fun LogsScreen() {
 			.toList()
 	}
 
-	//09:17:54.732 CUTS this out part
+	
 	var maxW = Logs.map { it.drop(13) }.rMaxWidth(
 		letterSize = 14
 	)
