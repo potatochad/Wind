@@ -239,7 +239,7 @@ fun ListStr.rMaxWidth(
     val style = LocalTextStyle.current.toSpanStyle()
 	var maxW by r(10.dp)
 	
-	val monoW = remember(font, letterSize, style) {
+	val monoW = remember(font, letterS, style) {
 		font?.let { measure.w("x".strStyle(style).size(letterS).font(it)) }
 	}
 	this.onDelete{
