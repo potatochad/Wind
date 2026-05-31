@@ -233,7 +233,7 @@ fun ListStr.rMaxWidth(
 	val density = rDensity()
 	val newLogs = this.rNewItems()
 	val measure = rTextMeasurer()
-    val style = LocalTextStyle.current.toSpanStyle()
+    val style = rLocalTextStyle().toSpanStyle()
 	var maxW by r(10.dp)
 	
 	val monoW = remember(font, letterS, style) {
