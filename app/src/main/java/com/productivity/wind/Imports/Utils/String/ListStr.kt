@@ -246,9 +246,9 @@ fun ListStr.rMaxWidth(
 		maxW = 10.dp
 	}
     
-	RunOnce(NewLogs) {
+	RunOnce(newLogs) {
 		var tempPx = newLogs.max { line -> 
-			if (monoW == null) measure.w(line.strStyle(style).size(letterSize))         
+			if (monoW == null) measure.w(line.strStyle(style).size(letterS))         
 			else monoW * line.size
 		}
 		var temp = toDp(tempPx, density)
