@@ -232,23 +232,26 @@ fun ListStr.rMaxWidth(
 	font: FontFamily? = null,
 ): Dp {
 	val density = DensityCurrent()
-	val NewLogs = rGetNewItems(this)
+	val newLogs = this.newItems()
 	val measure = rTextMeasurer()
     val style = LocalTextStyle.current.toSpanStyle()
-	var maxWidthPx by r(10.dp)
+	var maxW by r(10.dp)
 	
-	var monoW = if (font != null) measure.w(UIStr("x").strStyle(style).size(letterSize).font(font)) else null     
+	var monoW = if (font != null) measure.w(UIStr("x").strStyle(style).size(letterSize).font(font)) else null 
+	this.onDelete{
+		maxW = 10.dp
+	}
     
 	RunOnce(NewLogs) {
-		var tempPx = NewLogs.max { line -> 
+		var tempPx = newLogs.max { line -> 
 			if (monoW == null) measure.w(UIStr(line).strStyle(style).size(letterSize))         
 			else monoW * line.size
 		}
-		var tempDp = toDp(tempPx, density)
+		var temp = toDp(tempPx, density)
 		
-		if (tempDp > maxWidthPx) maxWidthPx = tempDp
+		if (temp > maxW) maxW = temp
     }
-    return maxWidthPx
+    return maxW
 }
 
 
