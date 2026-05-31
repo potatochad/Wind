@@ -224,9 +224,6 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 
 
 
-// measure should take in string
-// rTextStyle
-// rDensity, so on
 
 @Composable
 fun ListStr.rMaxWidth(
