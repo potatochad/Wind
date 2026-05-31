@@ -171,12 +171,12 @@ fun <T> List<T>.onDelete(
 
 
 @Composable
-fun <T> List<T>.newItems(): List<T> {
+fun <T> List<T>.rNewItems(): List<T> {
     var previous by r(emptyList<T>())
     var result by r(emptyList<T>())
 
     RunOnce(this.toList()) {
-        snapshotFlow { this@newItems.toList() }
+        snapshotFlow { this@rNewItems.toList() }
             .collect { now ->
                 val newItems =
                     if (now.size < previous.size) {
