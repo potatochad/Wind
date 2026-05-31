@@ -222,25 +222,7 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 }
 
 
-fun Str.estimateTextWidth(): Int {
-    var size = 0.0
 
-    for (c in this) {
-        size += when (c) {
-            'i', 'l' -> 0.5
-            'I' -> 0.6
-            '.', ',' -> 0.4
-            ' ' -> 0.5
-
-            'W', 'M', '@' -> 1.8
-            '#' -> 1.6
-
-            else -> 1.0
-        }
-    }
-
-    return size.toInt()
-}
 
 
 
