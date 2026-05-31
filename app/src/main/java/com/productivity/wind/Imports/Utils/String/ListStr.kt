@@ -247,7 +247,7 @@ fun Str.estimateTextWidth(): Int {
 @Composable
 fun ListStr.rMaxWidth(
     letterSize: Int = 14,
-	font: //idk,
+	font: FontFamily? = null,
 ): Dp {
 	val density = DensityCurrent()
 	val NewLogs = rGetNewItems(this)
@@ -257,7 +257,8 @@ fun ListStr.rMaxWidth(
     
 	RunOnce(NewLogs) {
 		var tempPx = NewLogs.max { line -> 
-			measure.w(UIStr(line).strStyle(style).size(letterSize))
+			if (font == null) measure.w(UIStr(line).strStyle(style).size(letterSize))           
+			else measure.w(UIStr(line).strStyle(style).size(letterSize).font(font))      
 		}
 		var tempDp = toDp(tempPx, density)
 		
