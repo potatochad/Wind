@@ -379,6 +379,8 @@ fun startActivity(intent: Intent) {
 @Composable
 fun rDensity(): Density = LocalDensity.current
 
+@Composable
+fun rLocalTextStyle(): TextStyle = LocalTextStyle.current
 
 
 
