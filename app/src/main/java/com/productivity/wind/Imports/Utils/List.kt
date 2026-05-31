@@ -143,97 +143,56 @@ inline fun <T, R : Comparable<R>> Iterable<T>.min(selector: (T) -> R): R? =
 
     
 @Composable
-fun <T> SnapshotStateList<T>.onDelete(
-    onDelete: (List<T>) -> Unit
-): List<T> {
-    var previous by remember { mutableStateOf(emptyList<T>()) }
-
-    val deletedItems = remember(this.toList()) {
-        val now = this.toList()
-
-        val removed = if (now.size < previous.size) {
-            previous - now.toSet()
-        } else emptyList()
-
-        if (removed.isNotEmpty()) onDelete(removed)
-
-        removed
-    }
-
-    LaunchedEffect(this.toList()) {
-        previous = this.toList()
-    }
-
-    return deletedItems
-}
-
-
-
-@Composable
 fun <T> List<T>.onDelete(
     onDelete: (List<T>) -> Unit
 ): List<T> {
-    var previous by remember { mutableStateOf(emptyList<T>()) }
-
-    val deletedItems = remember(this) {
-        val now = this
-
-        val removed = if (now.size < previous.size) {
-            previous - now.toSet()
-        } else emptyList()
-
-        if (removed.isNotEmpty()) onDelete(removed)
-
-        removed
-    }
+    var previous by r(emptyList<T>())
+    var deleted by r(emptyList<T>())
 
     LaunchedEffect(this) {
-        previous = this
+        snapshotFlow { this@onDelete.toList() }
+            .collect { now ->
+                val removed =
+                    if (now.size < previous.size) {
+                        previous - now.toSet()
+                    } else emptyList()
+
+                if (removed.notEmpty) {
+                    onDelete(removed)
+                    deleted = removed
+                }
+
+                previous = now
+            }
     }
 
-    return deletedItems
+    return deleted
 }
 
 
-
 @Composable
-fun <T> rGetNewItems(items: SnapshotStateList<T>): List<T> {
-    var previous by r { mutableStateOf(emptyList<T>()) }
+fun <T> List<T>.rGetNewItems(): List<T> {
+    var previous by r(emptyList<T>())
+    var result by r(emptyList<T>())
 
-    val result = remember(items.toList()) {
-        val now = items.toList()
-
-        when {
-            now.size < previous.size -> now // reset
-            else -> now.drop(previous.size)
-        }
-    }
-
-    LaunchedEffect(items.toList()) {
-        previous = items.toList()
+    RunOnce(this) {
+        snapshotFlow { this@rGetNewItems.toList() }
+            .collect { now ->
+                val newItems =
+                    if (now.size < previous.size) {
+                        now // reset
+                    } else {
+                        now.drop(previous.size)
+                    }
+                result = newItems
+                previous = now
+            }
     }
 
     return result
 }
 
-// IF list items DECREASE, returns FULL LIST
-@Composable
-fun <T> rGetNewItems(items: List<T>): List<T> {
-    var previous by r { mutableStateOf(emptyList<T>()) }
 
-    val result = remember(items) {
-        when {
-            items.size < previous.size -> items // reset
-            else -> items.drop(previous.size)
-        }
-    }
-
-    LaunchedEffect(items) {
-        previous = items
-    }
-
-    return result
-}
 
 
 val List<*>.isRecomposable: Bool
