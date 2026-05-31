@@ -234,7 +234,7 @@ fun ListStr.rMaxWidth(
 	font: FontFamily? = null,
 ): Dp {
 	val density = DensityCurrent()
-	val newLogs = this.newItems()
+	val newLogs = this.rNewItems()
 	val measure = rTextMeasurer()
     val style = LocalTextStyle.current.toSpanStyle()
 	var maxW by r(10.dp)
