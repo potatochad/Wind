@@ -253,15 +253,7 @@ fun LogsScreen() {
 					state = scroll,
 					modifier = Mod.w(maxW).border(2.dp, red)      
 				) {
-					items(
-						Logs
-					) { line ->
-						Text(
-							text = line,
-							fontSize = 14.sp,
-							softWrap = no,
-						)
-					}
+					items(Logs) { LogTxt(it) }
 				}
 			}
         }
