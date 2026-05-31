@@ -376,12 +376,16 @@ fun startActivity(intent: Intent) {
     App.startActivity(intent)
 }
 
+
+//remember or (r) means composable or the output can change over time, screen rotation or other function change.
 @Composable
 fun rDensity(): Density = LocalDensity.current
 
 @Composable
 fun rLocalTextStyle(): TextStyle = LocalTextStyle.current
 
+@Composable
+fun rLocalTextSpanStyle(): SpanStyle = rLocalTextStyle().toSpanStyle()
 
 
 
