@@ -203,8 +203,8 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
 				showDeleteSure.it = yes
 			}
         )
-		
 }
+
 
 
 @Composable
@@ -221,7 +221,8 @@ fun LogsScreen() {
 
 	
 	var maxW = Logs.map { it.drop(13) }.rMaxWidth(
-		letterSize = 14
+		letterSize = 14,
+		font = FontFamily.Monospace
 	)
 
 	
