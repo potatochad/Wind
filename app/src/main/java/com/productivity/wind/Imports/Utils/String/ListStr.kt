@@ -224,11 +224,12 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 
 
 
-
+// measure should take in string
+// currentStyle
 
 @Composable
 fun ListStr.rMaxWidth(
-    letterSize: Int = 14,
+    letterS: Int = 14,
 	font: FontFamily? = null,
 ): Dp {
 	val density = DensityCurrent()
@@ -237,14 +238,16 @@ fun ListStr.rMaxWidth(
     val style = LocalTextStyle.current.toSpanStyle()
 	var maxW by r(10.dp)
 	
-	var monoW = if (font != null) measure.w(UIStr("x").strStyle(style).size(letterSize).font(font)) else null 
+	val monoW = remember(font, letterSize, style) {
+		font?.let { measure.w("x".strStyle(style).size(letterS).font(it)) }
+	}
 	this.onDelete{
 		maxW = 10.dp
 	}
     
 	RunOnce(NewLogs) {
 		var tempPx = newLogs.max { line -> 
-			if (monoW == null) measure.w(UIStr(line).strStyle(style).size(letterSize))         
+			if (monoW == null) measure.w(line.strStyle(style).size(letterSize))         
 			else monoW * line.size
 		}
 		var temp = toDp(tempPx, density)
