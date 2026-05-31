@@ -247,23 +247,30 @@ fun Str.estimateTextWidth(): Int {
 fun ListStr.getLong(): ListStr {
     if (isEmpty()) return emptyList()
 
-	//1
     val max = maxOf { it.size }
-	val min = minOf { it.size }
+    val min = minOf { it.size }
 
-	if (max >= min * 15) {
-		return filter { it.size >= max / 2 }
-	}
-	if (max >= min * 5) {
-        val widths = map { it.estimateTextWidth() }
-        val avg = widths.average()
-
-        return filterIndexed { index, _ ->
-            widths[index] >= avg
+    val result = when {
+        max >= min * 15 -> {
+            filter { it.size >= max / 2 }
         }
+
+        max >= min * 5 -> {
+            val widths = map { it.estimateTextWidth() }
+            val avg = widths.average()
+
+            filterIndexed { index, _ ->
+                widths[index] >= avg
+            }
+        }
+
+        else -> this
     }
 
-    return filtered
+    val saved = size - result.size
+    saved.vlog("saved lines")
+
+    return result
 }
 
 
