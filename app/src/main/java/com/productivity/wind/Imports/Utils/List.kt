@@ -142,6 +142,59 @@ inline fun <T, R : Comparable<R>> Iterable<T>.min(selector: (T) -> R): R? =
     minOfOrNull(selector)
 
     
+@Composable
+fun <T> SnapshotStateList<T>.onDelete(
+    onDelete: (List<T>) -> Unit
+): List<T> {
+    var previous by remember { mutableStateOf(emptyList<T>()) }
+
+    val deletedItems = remember(this.toList()) {
+        val now = this.toList()
+
+        val removed = if (now.size < previous.size) {
+            previous - now.toSet()
+        } else emptyList()
+
+        if (removed.isNotEmpty()) onDelete(removed)
+
+        removed
+    }
+
+    LaunchedEffect(this.toList()) {
+        previous = this.toList()
+    }
+
+    return deletedItems
+}
+
+
+
+@Composable
+fun <T> List<T>.onDelete(
+    onDelete: (List<T>) -> Unit
+): List<T> {
+    var previous by remember { mutableStateOf(emptyList<T>()) }
+
+    val deletedItems = remember(this) {
+        val now = this
+
+        val removed = if (now.size < previous.size) {
+            previous - now.toSet()
+        } else emptyList()
+
+        if (removed.isNotEmpty()) onDelete(removed)
+
+        removed
+    }
+
+    LaunchedEffect(this) {
+        previous = this
+    }
+
+    return deletedItems
+}
+
+
 
 @Composable
 fun <T> rGetNewItems(items: SnapshotStateList<T>): List<T> {
