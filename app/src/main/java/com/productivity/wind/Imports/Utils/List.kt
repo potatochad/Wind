@@ -171,7 +171,7 @@ fun <T> List<T>.onDelete(
 
 
 @Composable
-fun <T> List<T>.rGetNewItems(): List<T> {
+fun <T> List<T>.newItems(): List<T> {
     var previous by r(emptyList<T>())
     var result by r(emptyList<T>())
 
