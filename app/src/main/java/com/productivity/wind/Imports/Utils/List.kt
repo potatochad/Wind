@@ -176,7 +176,7 @@ fun <T> List<T>.newItems(): List<T> {
     var result by r(emptyList<T>())
 
     RunOnce(this.toList()) {
-        snapshotFlow { this@rGetNewItems.toList() }
+        snapshotFlow { this@newItems.toList() }
             .collect { now ->
                 val newItems =
                     if (now.size < previous.size) {
