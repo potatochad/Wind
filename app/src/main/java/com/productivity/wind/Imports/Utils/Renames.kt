@@ -222,8 +222,8 @@ fun <T> m(value: T) = mutableStateOf(value)
 @Composable
 fun <T> r(x: T) = r { m(x) }
 @Composable
-inline fun <T> r(vararg keys: Any?, calc: () -> T): T = remember(*keys, calc)
-
+inline fun <T> r(vararg keys: Any?, crossinline calc: () -> T): T = remember(*keys, calculation = calc)
+	
 @Composable
 fun <T> onChange(vararg keys: Any?, block: () -> T): T {
     return remember(*keys) { block() }
