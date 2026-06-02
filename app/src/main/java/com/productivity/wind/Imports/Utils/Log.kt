@@ -202,6 +202,12 @@ fun MeasureLagNoReturn(title: String, block: () -> Unit) {
 
 
 fun getMyAppLogs() {
+	fun AddLog(s: Str) {
+		Bar.logs.add(s)
+		if (Bar.logs.size > 2000) {
+			Bar.logs.removeAt(0)
+		}
+	}
 	Thread {
 		val pid = android.os.Process.myPid()
 		val process = Runtime.getRuntime().exec("logcat --pid=$pid *:W")
@@ -216,10 +222,10 @@ fun getMyAppLogs() {
 			val last = Bar.logs.lastOrNull()
 
 			if (last != s){
-				Bar.logs.add(s)
+				AddLog(s)
 			} else {
 				if ("[bad]" in s) {
-					Bar.logs.add(s)
+					AddLog(s)
 				}
 			}
 
@@ -227,6 +233,7 @@ fun getMyAppLogs() {
 		}
 	}.start()
 }
+
 
 fun captureAppCrashes() {
     Thread {
