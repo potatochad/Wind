@@ -213,6 +213,20 @@ fun LogsScreen() {
     var Tag = r("")
 	var scroll = LazyList()
 
+	Thread.setDefaultUncaughtExceptionHandler { _, e ->
+    Log.e("Crash", "Fatal crash", e)
+
+    prefs.edit()
+        .putString("last_crash", e.stackTraceToString())
+        .commit() // synchronous
+
+    defaultHandler?.uncaughtException(Thread.currentThread(), e)
+	}
+	val crash = prefs.getString("last_crash", null)
+	if (crash != null) {
+		// Show dialog, send report, display to developer, etc.
+	}
+
 	val Logs = remember(Tag.it, Bar.logs.size) {
 		Bar.logs
 			.filter { it.contains(Tag.it) }
