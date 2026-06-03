@@ -141,6 +141,13 @@ inline fun <T, R : Comparable<R>> Iterable<T>.max(selector: (T) -> R): R? =
 inline fun <T, R : Comparable<R>> Iterable<T>.min(selector: (T) -> R): R? =
     minOfOrNull(selector)
 
+
+fun <T> MutableList<T>.keep(max: Int) {
+    if (size > max) {
+        subList(0, size - max).clear()
+    }
+}
+
     
 @Composable
 fun <T> List<T>.onDelete(
