@@ -204,9 +204,7 @@ fun MeasureLagNoReturn(title: String, block: () -> Unit) {
 fun getMyAppLogs() {
 	fun AddLog(s: Str) {
 		Bar.logs.add(s)
-		if (Bar.logs.size > 2000) {
-			Bar.logs.removeAt(0)
-		}
+		if (Bar.logs.size > 2000) Bar.logs.keep(2000)
 	}
 	Thread {
 		val pid = android.os.Process.myPid()
