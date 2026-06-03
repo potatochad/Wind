@@ -226,6 +226,21 @@ fun AppContent() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI() {
+	Thread.setDefaultUncaughtExceptionHandler { _, e ->
+    Log.e("Crash", "Fatal crash", e)
+
+    AppData.prefs.edit()
+        .putString("last_crash", e.stackTraceToString())
+        .commit() // synchronous
+
+		defaultHandler?.uncaughtException(Thread.currentThread(), e)
+	}
+	val crash = AppData.prefs.getString("last_crash", null)
+	if (crash != null) {
+		Vlog(crash)
+		// Show dialog, send report, display to developer, etc.
+	}
+
 
     //Background thing! Disabled
     //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }
