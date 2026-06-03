@@ -40,6 +40,7 @@ import com.productivity.wind.Screens.Task.*
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
 import com.google.android.gms.location.*
+import android.util.Log
 
 
 /*! NEVER move bar and lists to another FOLDER, or other file
@@ -226,20 +227,25 @@ fun AppContent() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI() {
-	Thread.setDefaultUncaughtExceptionHandler { _, e ->
-    Log.e("Crash", "Fatal crash", e)
+	val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+
+Thread.setDefaultUncaughtExceptionHandler { thread, e ->
 
     AppData.prefs.edit()
         .putString("last_crash", e.stackTraceToString())
-        .commit() // synchronous
+        .commit()
 
-		defaultHandler?.uncaughtException(Thread.currentThread(), e)
-	}
-	val crash = AppData.prefs.getString("last_crash", null)
-	if (crash != null) {
-		Vlog(crash)
-		// Show dialog, send report, display to developer, etc.
-	}
+    defaultHandler?.uncaughtException(thread, e)
+}
+
+val crash = AppData.prefs.getString("last_crash", null)
+if (crash != null) {
+    Vlog(crash)
+
+    AppData.prefs.edit()
+        .remove("last_crash")
+        .apply()
+}
 
 
     //Background thing! Disabled
