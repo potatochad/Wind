@@ -215,6 +215,7 @@ fun LogsScreen() {
 
 	
 	val Logs = remember(Tag.it, Bar.logs.size) {
+		if (Bar.logs.size > 2000) Bar.logs = Bar.logs.take(2000)
 		Bar.logs
 			.filter { it.contains(Tag.it) }
 			.toList()
