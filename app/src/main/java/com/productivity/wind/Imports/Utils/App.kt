@@ -471,7 +471,6 @@ lateinit var scope: CoroutineScope
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-		LogAppCrashes()
 
 		WindowCompat.enableEdgeToEdge(window)
 		
@@ -490,8 +489,9 @@ class MainActivity : ComponentActivity() {
 		CreateNotificationChannel(this)
 		
 		
-	
+	    LogAppCrashes()
 		AppStart_beforeUI()
+		
 
         setContent { 
 			AppDensity = LocalDensity.current.density
