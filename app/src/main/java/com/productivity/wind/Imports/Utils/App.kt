@@ -471,16 +471,13 @@ lateinit var scope: CoroutineScope
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
+		LogAppCrashes()
 
 		WindowCompat.enableEdgeToEdge(window)
 		
-	
 		App = this
 		AppCtx = this.applicationContext
 		AppPkg = this.packageName
-
 
 
 		permission = registerForActivityResult(
@@ -493,7 +490,7 @@ class MainActivity : ComponentActivity() {
 		CreateNotificationChannel(this)
 		
 		
-
+	
 		AppStart_beforeUI()
 
         setContent { 
