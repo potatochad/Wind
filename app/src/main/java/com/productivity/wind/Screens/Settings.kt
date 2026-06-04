@@ -232,7 +232,7 @@ fun LogsScreen() {
 	var maxW = Logs.rMaxWidth(
 		letterS = 14,
 		font = FontFamily.Monospace
-	)
+	) + 10.dp
 
 	
 
