@@ -194,6 +194,7 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
             icon = { Icon.Whatshot() },
             title = "Delete logs",
             onClick = {
+				Vlog("Logs are cleared!")
 				Bar.logs.clear()
 			}
         )
