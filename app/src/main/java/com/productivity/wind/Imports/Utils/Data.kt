@@ -176,6 +176,8 @@ object AppData {
 			}
 		}
 	}
+
+	//✴️‼️✴️‼️❌️‼️ think about using commit instead, instead of apply.
 	fun <T> put(id: Str, x: T) {
         val e = prefs.edit()
         when (x) {
