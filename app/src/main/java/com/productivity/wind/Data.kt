@@ -227,26 +227,7 @@ fun AppContent() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI() {
-	val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
-
-Thread.setDefaultUncaughtExceptionHandler { thread, e ->
-
-    AppData.prefs.edit()
-        .putString("last_crash", e.stackTraceToString())
-        .commit()
-
-    defaultHandler?.uncaughtException(thread, e)
-}
-
-val crash = AppData.prefs.getString("last_crash", null)
-if (crash != null) {
-    Vlog(crash)
-
-    AppData.prefs.edit()
-        .remove("last_crash")
-        .apply()
-}
-
+	
 
     //Background thing! Disabled
     //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { context.startForegroundService(Intent(context, WatchdogService::class.java))} else { context.startService(Intent(context, WatchdogService::class.java)) }
@@ -285,7 +266,6 @@ fun AppStart() {
 			// DoJs = "var x = 5; x = 6;"
 		}
 		
-		captureAppCrashes()
 		getMyAppLogs() 
 
 		if (Bar.privacyLocation) {
