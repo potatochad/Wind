@@ -229,7 +229,7 @@ fun LogsScreen() {
 	}
 
 	
-	var maxW = Logs.map { it.drop(13) }.rMaxWidth(
+	var maxW = Logs.rMaxWidth(
 		letterS = 14,
 		font = FontFamily.Monospace
 	)
