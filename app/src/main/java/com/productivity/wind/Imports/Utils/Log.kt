@@ -234,7 +234,23 @@ fun getMyAppLogs() {
 
 
 fun LogAppCrashes() {
-    
+    val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+
+	Thread.setDefaultUncaughtExceptionHandler { thread, e ->
+		AppData.prefs.edit()
+			.putString("last_crash", e.stackTraceToString())
+			.commit()
+		defaultHandler?.uncaughtException(thread, e)
+	}
+	
+	val crash = AppData.prefs.getString("last_crash", null)
+	if (crash != null) {
+		log(crash)
+		
+		AppData.prefs.edit()
+			.remove("last_crash")
+			.apply()
+	}
 }
 
 
