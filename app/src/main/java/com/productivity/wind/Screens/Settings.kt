@@ -190,6 +190,13 @@ fun SettingsOtherScreen() = LazyScreen("Settings") {
 				Bar.funTime.vlog("Points left")
 			}
         )
+		LazyItem(
+            icon = { Icon.Whatshot() },
+            title = "Delete logs",
+            onClick = {
+				Bar.logs.clear()
+			}
+        )
 		
 		var showDeleteSure = r(no)
 		IsSure(showDeleteSure) {
