@@ -133,17 +133,12 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
                     // only work when needed
                     if (text.includes(target)) {
-                        const container1 = window.WindWeb.findContainerHTML(item, 1);
-                        const container2 = window.WindWeb.findContainerHTML(item, 2);
-                        const container3 = window.WindWeb.findContainerHTML(item, 3);
-                        const container4 = window.WindWeb.findContainerHTML(item, 4);
-
+                        const itemUrl = WindWeb.itemCustomUrl(item);
 
                         if (container1) {
                             WindWeb.log(
                                "FOUND CONTAINER:",
-                               container1.tagName,
-                               container1.className
+                               itemUrl
                             );
                             
                             
