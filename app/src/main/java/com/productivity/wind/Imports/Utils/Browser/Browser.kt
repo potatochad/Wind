@@ -56,8 +56,8 @@ class WebController(
     init {
 		webView.addJavascriptInterface(object {
 			@android.webkit.JavascriptInterface
-			fun log(msg: String) {
-				android.util.Log.d("JS", msg)
+			fun log(msg: Str) {
+				android.util.Log.d("badWEB", msg)
 			}
 		}, "Android")
 		
@@ -123,7 +123,7 @@ class WebController(
 				val msg = message.message()
 
 				if (msg.has("[WINDWEB_LOG]")) {
-					Log.e("badWEB", msg)
+					// Log.e("badWEB", msg)
 				}
 				return yes
 			}
