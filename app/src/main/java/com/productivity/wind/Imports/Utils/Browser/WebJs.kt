@@ -122,7 +122,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                                "FOUND CONTAINER:",
                                container2.tagName,
                                container2.className,
-                               "/"
+                               "/",
                                container3.tagName,
                                container3.className,
                             );
