@@ -113,17 +113,6 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
                     // only work when needed
                     if (text.includes(target)) {
-
-                        const card = item.closest("yt-lockup-view-model");
-                        if (card) {
-                           WindWeb.log(
-                              "CARD:",
-                              card?.tagName,
-                              card?.className
-                           );
-                           card.style.display = "none";
-                        }
-
                         const container = window.WindWeb.findContainerHTML(item);
 
                         if (container) {
