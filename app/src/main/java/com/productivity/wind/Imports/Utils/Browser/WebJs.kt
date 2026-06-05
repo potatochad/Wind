@@ -87,15 +87,16 @@ fun Any?.importsJS() {
         """
         window.WindWeb = window.WindWeb || {};
         
-        window.WindWeb.unique = function(arr, getKey) {
-           const seen = new Set();
-        
-           return arr.filter(item => {
-              const key = getKey ? getKey(item) : item;
-              if (seen.has(key)) return false;
-              seen.add(key);
-              return true;
-           });
+        window.WindWeb.unique = function(list, getKey) {
+            const arr = Array.from(list || []);
+            const seen = new Set();
+
+            return arr.filter(item => {
+                const key = getKey ? getKey(item) : item;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
         };
         """
     )
