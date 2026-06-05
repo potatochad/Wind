@@ -94,8 +94,9 @@ fun Any?.importsJS() {
            const urls = [ container1, container2, container3, container4 ];
            
            const divUrl = urls
-              .map(a => String(a))
-              .join("/")
+              .filter(Boolean)
+              .map(a => (a.tagName || "") + "." + (a.className || ""))
+              .join(" / ");
 
            return divUrl;
         };
