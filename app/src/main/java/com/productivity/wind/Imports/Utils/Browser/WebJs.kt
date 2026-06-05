@@ -82,6 +82,22 @@ fun Any?.importsJS() {
         };
         """
     )
+
+    this.jsFun(
+        """
+        Array.prototype.unique = function(getKey) {
+    const seen = new Set();
+
+    return this.filter(item => {
+        const key = getKey ? getKey(item) : item;
+
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+    });
+};
+        """
+    )
 }
 
 
