@@ -99,13 +99,14 @@ fun Any?.hideYoutubeChannel(channel: Str) {
             running = true;
 
             try {
-                const items = document.querySelectorAll('a[href*="youtube.com/watch"]');
+                const items = document.querySelectorAll('a');
 
                 items.forEach((item) => {
                     const href = item.href || "";
                     const text = (item.innerText || "").toLowerCase();
 
                     // skip empty fast
+                    if (!href.includes("youtube.com/watch?v=")) return;
                     if (!text) return;
                     if (!href) return;
 
