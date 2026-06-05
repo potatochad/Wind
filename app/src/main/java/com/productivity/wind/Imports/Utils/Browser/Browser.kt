@@ -54,7 +54,7 @@ class WebController(
 
     
     init {
-		this.enable()
+		webView.enable()
 		webView.addJavascriptInterface(object {
 			@android.webkit.JavascriptInterface
 			fun log(msg: Str) {
@@ -83,7 +83,7 @@ class WebController(
             override fun onPageFinished(view: WebView?, url: Str?) {
                 super.onPageFinished(view, url)
 
-				this.zoomOut()
+				//this.zoomOut()
                 view?.gray(90f)
                 swipeRefresh.isRefreshing = no
 
