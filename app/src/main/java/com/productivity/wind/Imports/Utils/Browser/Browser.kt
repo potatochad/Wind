@@ -119,7 +119,7 @@ class WebController(
 				val msg = message.message()
 
 				if (msg.has("[WINDWEB_LOG]")) {
-					// Log.e("badWEB", msg)
+					Log.e("badWEB", msg)
 				}
 				return yes
 			}
