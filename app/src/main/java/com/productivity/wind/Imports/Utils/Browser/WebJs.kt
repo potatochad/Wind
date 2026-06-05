@@ -90,12 +90,12 @@ fun Any?.importsJS() {
            const container1 = window.WindWeb.findContainerHTML(el, 1);
            const container2 = window.WindWeb.findContainerHTML(el, 2);
            const container3 = window.WindWeb.findContainerHTML(el, 3);
-           const container4 = window.WindWeb.findContainerHTML(el, 4);
+           const container4 = window.WindWeb.findContainerHTML(el, 4);   
+           const urls = [ container1, container2, container3, container4 ];
            
-           const msg = args
+           const divUrl = urls
               .map(a => String(a))
               .join("/")
-           const divUrl = "container1.tagName, container1.className..."
 
            return divUrl;
         };
