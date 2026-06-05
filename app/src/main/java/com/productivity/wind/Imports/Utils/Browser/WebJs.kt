@@ -133,16 +133,15 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
                     // only work when needed
                     if (text.includes(target)) {
-                        const itemUrl = WindWeb.itemCustomUrl(item);
+                        //const itemUrl = WindWeb.itemCustomUrl(item);
 
                         
                          WindWeb.log(
                             "FOUND CONTAINER:",
-                            itemUrl
+                            ""
                          );
                             
                             
-                            // container1.style.display = "none";
                         }
                     }
                 });
