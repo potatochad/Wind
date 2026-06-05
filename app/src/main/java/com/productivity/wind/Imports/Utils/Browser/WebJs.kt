@@ -128,8 +128,6 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                             );
                             
                          if (container2 || container3 || container4) {
-                            
-                            
                             container2.style.display = "none";
                             container3.style.display = "none";
                             container4.style.display = "none";
