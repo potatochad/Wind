@@ -99,7 +99,8 @@ fun Any?.hideYoutubeChannel(channel: Str) {
             running = true;
 
             try {
-                const items = document.querySelectorAll('a');
+                //const items = document.querySelectorAll('a');
+                const items = document.querySelectorAll('ytm-media-item');
 
                 items.forEach((item) => {
                     const href = item.href || "";
