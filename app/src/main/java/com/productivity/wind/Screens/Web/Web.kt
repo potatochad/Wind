@@ -119,7 +119,6 @@ fun Web(){
     val web = r { WebController(ctx) }
 
 	RunOnce {
-		web.applyFancySettings()
 		web.url(Bar.Url)
 	}
     
