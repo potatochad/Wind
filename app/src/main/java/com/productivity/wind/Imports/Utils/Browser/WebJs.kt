@@ -88,13 +88,6 @@ fun Any?.importsJS() {
 fun Any?.hideYoutubeChannel(channel: Str) {
     this.jsFun(
         """
-        WindWeb.log("THIS IS BROKEN CODE...");
-        ,HI
-        """
-    )
-    this.jsFun(
-        """
-        WindWeb.log("this code should work");
         const target = "$channel".toLowerCase();
         let running = false;
 
@@ -103,7 +96,6 @@ fun Any?.hideYoutubeChannel(channel: Str) {
             if (running) return;
             running = true;
 
-            try {
                 const items = document.querySelectorAll('a');
                 
                 items.forEach((item) => {
@@ -140,10 +132,6 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                         }
                     }
                 });
-
-            } catch (e) {
-                WindWeb.log("Scan error:", e.message);
-            }
 
             running = false;
         }
