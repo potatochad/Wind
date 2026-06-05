@@ -87,13 +87,13 @@ fun Any?.importsJS() {
         window.WindWeb = window.WindWeb || {};
 
         window.WindWeb.itemDivUrl = function(el) {
-           const container1 = window.WindWeb.findContainerHTML(item, 1);
-           const container2 = window.WindWeb.findContainerHTML(item, 2);
-           const container3 = window.WindWeb.findContainerHTML(item, 3);
-           const container4 = window.WindWeb.findContainerHTML(item, 4);
-           const divUrl = 
+           const container1 = window.WindWeb.findContainerHTML(el, 1);
+           const container2 = window.WindWeb.findContainerHTML(el, 2);
+           const container3 = window.WindWeb.findContainerHTML(el, 3);
+           const container4 = window.WindWeb.findContainerHTML(el, 4);
+           const divUrl = "container1.tagName, container1.className..."
 
-           return stringgg;
+           return divUrl;
         };
         """
     )
