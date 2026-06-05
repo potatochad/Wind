@@ -85,17 +85,18 @@ fun Any?.importsJS() {
 
     this.jsFun(
         """
-        Array.prototype.unique = function(getKey) {
-    const seen = new Set();
-
-    return this.filter(item => {
-        const key = getKey ? getKey(item) : item;
-
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-    });
-};
+        window.WindWeb = window.WindWeb || {};
+        
+        window.WindWeb.unique = function(arr, getKey) {
+           const seen = new Set();
+        
+           return arr.filter(item => {
+              const key = getKey ? getKey(item) : item;
+              if (seen.has(key)) return false;
+              seen.add(key);
+              return true;
+           });
+        };
         """
     )
 }
