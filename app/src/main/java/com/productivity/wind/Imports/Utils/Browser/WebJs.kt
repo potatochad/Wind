@@ -86,11 +86,15 @@ fun Any?.importsJS() {
         """
         window.WindWeb = window.WindWeb || {};
 
-        window.WindWeb.itemDivUrl = function(el) {
+        window.WindWeb.itemCustomUrl = function(el) {
            const container1 = window.WindWeb.findContainerHTML(el, 1);
            const container2 = window.WindWeb.findContainerHTML(el, 2);
            const container3 = window.WindWeb.findContainerHTML(el, 3);
            const container4 = window.WindWeb.findContainerHTML(el, 4);
+           
+           const msg = args
+              .map(a => String(a))
+              .join("/")
            const divUrl = "container1.tagName, container1.className..."
 
            return divUrl;
