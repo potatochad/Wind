@@ -54,6 +54,7 @@ class WebController(
 
     
     init {
+		this.enable()
 		webView.addJavascriptInterface(object {
 			@android.webkit.JavascriptInterface
 			fun log(msg: Str) {
@@ -218,12 +219,7 @@ class WebController(
 }
 
 @SuppressLint("SetJavaScriptEnabled")
-fun WebView.enable(
-	javaScript: Bool,
-	domStorage: Bool,
-	wideViewPort: Bool,
-	overviewMode: Bool,
-){
+fun WebView.enable(){
 	this.settings.apply {
         javaScriptEnabled = yes
 		domStorageEnabled = yes
