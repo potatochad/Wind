@@ -82,6 +82,21 @@ fun Any?.importsJS() {
         };
         """
     )
+    this.jsFun(
+        """
+        window.WindWeb = window.WindWeb || {};
+
+        window.WindWeb.itemDivUrl = function(el) {
+           const container1 = window.WindWeb.findContainerHTML(item, 1);
+           const container2 = window.WindWeb.findContainerHTML(item, 2);
+           const container3 = window.WindWeb.findContainerHTML(item, 3);
+           const container4 = window.WindWeb.findContainerHTML(item, 4);
+           const divUrl = 
+
+           return stringgg;
+        };
+        """
+    )
 }
 
 
