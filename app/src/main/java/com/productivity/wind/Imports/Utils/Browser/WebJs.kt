@@ -115,7 +115,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
                 const items = document.querySelectorAll('a');
                 
-                items.forEach((item) => {
+                WindWeb.unique(items, i => i.href).forEach((item) => {
                     const href = item.href || "";
                     const text = (item.innerText || "").toLowerCase();
 
