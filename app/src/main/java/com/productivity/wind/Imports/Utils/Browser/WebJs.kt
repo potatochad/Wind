@@ -88,7 +88,7 @@ fun Any?.importsJS() {
 fun Any?.hideYoutubeChannel(channel: Str) {
     this.jsFun(
         """
-        Android.log("Channel blocker starting...");
+        WindWeb.log("Channel blocker starting...");
 
         const target = "$channel".toLowerCase();
         let running = false;
