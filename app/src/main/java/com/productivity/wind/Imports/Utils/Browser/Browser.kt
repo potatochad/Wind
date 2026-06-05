@@ -55,12 +55,6 @@ class WebController(
     
     init {
 		webView.enable()
-		webView.addJavascriptInterface(object {
-			@android.webkit.JavascriptInterface
-			fun log(msg: Str) {
-				android.util.Log.d("badWEB", msg)
-			}
-		}, "Android")
 		
 		swipeRefresh.setOnRefreshListener {
             webView.reload()
