@@ -99,9 +99,8 @@ fun Any?.hideYoutubeChannel(channel: Str) {
             running = true;
 
             try {
-                //const items = document.querySelectorAll('a');
-                const items = document.querySelectorAll('ytm-media-item');
-
+                const items = document.querySelectorAll('a');
+                
                 items.forEach((item) => {
                     const href = item.href || "";
                     const text = (item.innerText || "").toLowerCase();
@@ -115,17 +114,22 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
                     // only work when needed
                     if (text.includes(target)) {
-                        const container = window.WindWeb.findContainerHTML(item);
+                        const container2 = window.WindWeb.findContainerHTML(item, 2);
+                        const container3 = window.WindWeb.findContainerHTML(item, 3);
 
-                        if (container) {
+                        if (container2 || container3) {
                             WindWeb.log(
                                "FOUND CONTAINER:",
-                               container.tagName,
-                               container.className
+                               container2.tagName,
+                               container2.className,
+                               "/"
+                               container3.tagName,
+                               container3.className,
                             );
                             
                             
-                            container.style.display = "none";
+                            container2.style.display = "none";
+                            container3.style.display = "none";
                         }
                     }
                 });
