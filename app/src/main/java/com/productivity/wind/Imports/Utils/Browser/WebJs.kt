@@ -88,8 +88,13 @@ fun Any?.importsJS() {
 fun Any?.hideYoutubeChannel(channel: Str) {
     this.jsFun(
         """
-        WindWeb.log("Channel blocker starting...");
-
+        WindWeb.log("THIS IS BROKEN CODE...");
+        ,HI
+        """
+    )
+    this.jsFun(
+        """
+        WindWeb.log("this code should work");
         const target = "$channel".toLowerCase();
         let running = false;
 
