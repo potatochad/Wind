@@ -82,26 +82,6 @@ fun Any?.importsJS() {
         };
         """
     )
-    this.jsFun(
-        """
-        window.WindWeb = window.WindWeb || {};
-
-        window.WindWeb.itemCustomUrl = function(el) {
-           const container1 = window.WindWeb.findContainerHTML(el, 1);
-           const container2 = window.WindWeb.findContainerHTML(el, 2);
-           const container3 = window.WindWeb.findContainerHTML(el, 3);
-           const container4 = window.WindWeb.findContainerHTML(el, 4);   
-           const urls = [ container1, container2, container3, container4 ];
-           
-           const divUrl = urls
-              .filter(Boolean)
-              .map(a => (a.tagName || "") + "." + (a.className || ""))
-              .join(" / ");
-
-           return divUrl;
-        };
-        """
-    )
 }
 
 
@@ -133,15 +113,17 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
                     // only work when needed
                     if (text.includes(target)) {
-                        //const itemUrl = WindWeb.itemCustomUrl(item);
+                        const container = window.WindWeb.findContainerHTML(item);
 
-                        
-                         WindWeb.log(
-                            "FOUND CONTAINER:",
-                            ""
-                         );
+                        if (container) {
+                            WindWeb.log(
+                               "FOUND CONTAINER:",
+                               container.tagName,
+                               container.className
+                            );
                             
                             
+                            // container.style.display = "none";
                         }
                     }
                 });
@@ -288,6 +270,9 @@ fun Any?.gray(x: Float) {
 }
 
 
+
+
+    
 
 
     
