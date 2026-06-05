@@ -99,7 +99,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
             running = true;
 
             try {
-                const items = document.querySelectorAll('a');
+                const items = document.querySelectorAll('a[href*="youtube.com/watch"]');
 
                 items.forEach((item) => {
                     const href = item.href || "";
@@ -123,7 +123,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                             );
                             
                             
-                            // container.style.display = "none";
+                            container.style.display = "none";
                         }
                     }
                 });
