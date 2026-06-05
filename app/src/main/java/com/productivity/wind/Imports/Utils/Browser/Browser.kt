@@ -42,7 +42,6 @@ class WebController(
 
 
 
-    
     private var shouldOverrideUrlLoading = mList<(Str?) -> Bool>()
     private var onPageFinished = mList<(Str?) -> Unit>()
     private var onLoadResource = mList<(Str?) -> Unit>()
@@ -55,7 +54,14 @@ class WebController(
 
     
     init {
-     swipeRefresh.setOnRefreshListener {
+		webView.addJavascriptInterface(object {
+			@android.webkit.JavascriptInterface
+			fun log(msg: String) {
+				android.util.Log.d("JS", msg)
+			}
+		}, "Android")
+		
+		swipeRefresh.setOnRefreshListener {
             webView.reload()
         }
 
