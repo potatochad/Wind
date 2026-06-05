@@ -135,11 +135,11 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                     if (text.includes(target)) {
                         const itemUrl = WindWeb.itemCustomUrl(item);
 
-                        if (container1) {
-                            WindWeb.log(
-                               "FOUND CONTAINER:",
-                               itemUrl
-                            );
+                        
+                         WindWeb.log(
+                            "FOUND CONTAINER:",
+                            itemUrl
+                         );
                             
                             
                             // container1.style.display = "none";
