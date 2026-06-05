@@ -82,6 +82,7 @@ class WebController(
             override fun onPageFinished(view: WebView?, url: Str?) {
                 super.onPageFinished(view, url)
 
+				this.zoomOut()
                 view?.gray(90f)
                 swipeRefresh.isRefreshing = no
 
@@ -217,16 +218,18 @@ class WebController(
 }
 
 @SuppressLint("SetJavaScriptEnabled")
-fun WebController.applyFancySettings(){
-    this.settings {
+fun WebView.enable(
+	javaScript: Bool,
+	domStorage: Bool,
+	wideViewPort: Bool,
+	overviewMode: Bool,
+){
+	this.settings.apply {
         javaScriptEnabled = yes
-        domStorageEnabled = yes
+		domStorageEnabled = yes
         useWideViewPort = yes
         loadWithOverviewMode = yes
-    }
-    this.onPageFinished { url ->
-        this.zoomOut()
-    }
+	}
 }
 
 
