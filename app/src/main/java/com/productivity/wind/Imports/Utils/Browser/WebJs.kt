@@ -117,7 +117,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                         const container2 = window.WindWeb.findContainerHTML(item, 2);
                         const container3 = window.WindWeb.findContainerHTML(item, 3);
 
-                        if (container2 || container3) {
+                        
                             WindWeb.log(
                                "FOUND CONTAINER:",
                                container2.tagName,
@@ -126,6 +126,8 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                                container3.tagName,
                                container3.className,
                             );
+                            
+                         if (container2 || container3) {
                             
                             
                             container2.style.display = "none";
