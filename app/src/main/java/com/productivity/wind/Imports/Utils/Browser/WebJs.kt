@@ -155,26 +155,16 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
                     // only work when needed
                     if (text.includes(target)) {
-                        const container2 = window.WindWeb.findContainerHTML(item, 2);
-                        const container3 = window.WindWeb.findContainerHTML(item, 3);       
-                        const container4 = window.WindWeb.findContainerHTML(item, 4);
-                        //only removing container 4 works
-                            WindWeb.log(
-                               "FOUND CONTAINER:",
-                               container4.tagName,
-                               container4.className,
-                               "/",
-                               container3.tagName,
-                               container3.className,
-                               "/",
-                               container2.tagName,
-                               container2.className,
-                            );
+                        const logUrl = WindWeb.webItemUrl(item, 4);    
+                        const container = window.WindWeb.findContainerHTML(item, 4);
+                        
+                        WindWeb.log(
+                           "FOUND CONTAINER:",
+                            logUrl,
+                        );
                             
-                         if (container2 || container3 || container4) {
-                            container2.style.display = "none";
-                            container3.style.display = "none";
-                            container4.style.display = "none";
+                         if (container) {
+                            container.style.display = "none";
                         }
                     }
                 });
