@@ -128,6 +128,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                     if (!href.includes("youtube.com/watch?v=")) return;
                     if (!text) return;
                     if (!href) return;
+                    if (href.startsWith("intent://")) return;
 
                     WindWeb.log("link:", href, "TEXT:", text);
 
