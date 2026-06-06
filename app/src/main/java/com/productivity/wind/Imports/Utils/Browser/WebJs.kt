@@ -120,10 +120,9 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                 items.forEach((item) => {
                     const href = item.href || "";
                     const text = (item.innerText || "").toLowerCase();
-                    const text = (item.innerText || "").trim().toLowerCase();
-
+                    
                     // skip duration links like 10:03, 1:02:15
-                    if (/^\d+(?::\d+)+$/.test(text)) return;
+                    if (/^\d+(?::\d+)+$/.test(text.trim())) return;
 
                     // skip empty fast
                     if (!href.includes("youtube.com/watch?v=")) return;
