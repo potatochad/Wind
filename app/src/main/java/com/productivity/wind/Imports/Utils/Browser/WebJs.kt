@@ -82,6 +82,27 @@ fun Any?.importsJS() {
         };
         """
     )
+    this.jsFun(
+        """
+        window.WindWeb = window.WindWeb || {};
+
+        window.WindWeb.webItemUrl = function(el, depth = 3) {
+            let cur = el;
+            const stack = [];
+
+            for (let i = 0; i < depth; i++) {
+                if (!cur || cur === document.body) break;
+                cur = cur.parentElement;
+                if (!cur) break;
+
+                stack.push(cur.tagName + ", " + (cur.className || ""));
+            }
+
+            return stack.reverse().join(" / ");
+        };
+        """
+    )
+    
 
     this.jsFun(
         """
