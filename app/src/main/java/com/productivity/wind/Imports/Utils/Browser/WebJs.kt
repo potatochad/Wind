@@ -124,11 +124,13 @@ fun Any?.importsJS() {
 }
 
 
-fun Any?.hideYoutubeChannel(channel: Str) {
+fun Any?.hideYoutubeChannel(channels: ListStr) {
+    val jsChannels = channels.joinToString(",") { it.lowercase() }
+ 
     this.jsFun(
         """
         WindWeb.log("FILTERRING LOGIC RUNNING");
-        const target = "$channel".toLowerCase();
+        const targets = "$jsChannels".split(",");
         let running = false;
 
         function scan() {
@@ -151,21 +153,21 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                     if (!href) return;
                     if (href.startsWith("intent://")) return;
 
+                    const hit = targets.some(t => text.includes(t));
+                    if (!hit) return;
+
                     WindWeb.log("link:", href, "TEXT:", text);
 
-                    // only work when needed
-                    if (text.includes(target)) {
-                        const logUrl = window.WindWeb.webItemUrl(item, 4);    
-                        const container = window.WindWeb.findContainerHTML(item, 4);
+                    const logUrl = window.WindWeb.webItemUrl(item, 4);    
+                    const container = window.WindWeb.findContainerHTML(item, 4);
                         
-                        window.WindWeb.log(
-                           "FOUND CONTAINER:",
-                            logUrl,
-                        );
+                    window.WindWeb.log(
+                        "FOUND CONTAINER:",
+                        logUrl,
+                    );
                             
-                         if (container) {
-                            container.style.display = "none";
-                        }
+                    if (container) {
+                        container.style.display = "none";
                     }
                 });
 
