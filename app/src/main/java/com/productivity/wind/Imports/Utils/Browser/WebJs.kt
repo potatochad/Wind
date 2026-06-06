@@ -114,7 +114,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
             if (running) return;
             running = true;
 
-                const items = document.querySelectorAll('YTM-MEDIA-ITEM');
+                const items = document.querySelectorAll('a');
                 
                 items.forEach((item) => {
                     const href = item.href || "";
@@ -132,7 +132,7 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                         const container2 = window.WindWeb.findContainerHTML(item, 2);
                         const container3 = window.WindWeb.findContainerHTML(item, 3);       
                         const container4 = window.WindWeb.findContainerHTML(item, 4);
-                        
+                        //only removing container 4 works
                             WindWeb.log(
                                "FOUND CONTAINER:",
                                container4.tagName,
