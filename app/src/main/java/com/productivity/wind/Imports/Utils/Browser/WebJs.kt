@@ -169,6 +169,8 @@ fun Any?.hideYoutubeChannel(channel: Str) {
                     }
                 });
 
+                
+
             running = false;
         }
 
