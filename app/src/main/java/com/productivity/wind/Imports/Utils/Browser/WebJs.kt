@@ -125,12 +125,12 @@ fun Any?.importsJS() {
 
 
 fun Any?.hideYoutubeChannel(channels: ListStr) {
-    val jsChannels = channels.joinToString(",") { it.lowercase() }
- 
+    val jsChannels = channels.joinToString(",") { "\"${it.lowercase()}\"" }
+    
     this.jsFun(
         """
         WindWeb.log("FILTERRING LOGIC RUNNING");
-        const targets = "$jsChannels".split(",");
+        const targets = [$jsChannels];
         let running = false;
 
         function scan() {
