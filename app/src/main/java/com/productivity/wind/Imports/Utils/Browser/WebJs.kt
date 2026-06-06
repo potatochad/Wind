@@ -127,6 +127,7 @@ fun Any?.importsJS() {
 fun Any?.hideYoutubeChannel(channel: Str) {
     this.jsFun(
         """
+        WindWeb.log("FILTERRING LOGIC RUNNING");
         const target = "$channel".toLowerCase();
         let running = false;
 
@@ -155,10 +156,10 @@ fun Any?.hideYoutubeChannel(channel: Str) {
 
                     // only work when needed
                     if (text.includes(target)) {
-                        const logUrl = WindWeb.webItemUrl(item, 4);    
+                        const logUrl = window.WindWeb.webItemUrl(item, 4);    
                         const container = window.WindWeb.findContainerHTML(item, 4);
                         
-                        WindWeb.log(
+                        window.WindWeb.log(
                            "FOUND CONTAINER:",
                             logUrl,
                         );
