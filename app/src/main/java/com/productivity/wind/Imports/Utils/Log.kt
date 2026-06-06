@@ -242,9 +242,17 @@ fun LogAppCrashes() {
 			.commit()
 		defaultHandler?.uncaughtException(thread, e)
 	}
+
+	//what left with
 	
 	val crash = AppData.prefs.getString("last_crash", null)
 	if (crash != null) {
+		val root = crash.lineSequence()
+			.firstOrNull { it.trim().startsWith("at ") }
+		    ?.trim()
+
+		log("Crash at: $root")
+		
 		log(crash)
 		
 		AppData.prefs.edit()
