@@ -25,7 +25,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.webkit.WebResourceRequest
 import com.productivity.wind.Imports.Utils.String.*
-
+import org.json.JSONArray
 
 
 fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
@@ -125,12 +125,12 @@ fun Any?.importsJS() {
 
 
 fun Any?.hideYoutubeChannel(channels: ListStr) {
-    val jsChannels = channels.joinToString(",") { "\"${it.lowercase()}\"" }
+    val jsChannels = JSONArray(channels.map { it.lowercase() }).toString()
     
     this.jsFun(
         """
         WindWeb.log("FILTERRING LOGIC RUNNING");
-        const targets = [$jsChannels];
+        const targets = $jsChannels;
         let running = false;
 
         function scan() {
