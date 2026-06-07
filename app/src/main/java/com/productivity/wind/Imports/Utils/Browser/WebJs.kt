@@ -38,6 +38,8 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
         """
         (function() {
             try {
+                window.WindWeb = window.WindWeb || {};
+                const App = window.WindWeb;
                 $code
             } catch (e) {
                 const errorMsg = "JS error:" + String(e.message);
@@ -50,7 +52,7 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
 }
 
 fun Any?.jsGlobalFun(name: Str, function: Str) {
-   val global = "WindWeb"
+   val global = "WindWeb"//dont change this!!
    this.jsFun(
        """
        window.$global = window.$global || {};
