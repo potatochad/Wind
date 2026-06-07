@@ -48,35 +48,6 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
         callback
     )
 }
-fun Any?.jsFun(code: Str) {
-    this.js(
-        """
-        (function() {
-            try {
-                $code
-            } catch (e) {
-                WindWeb.log("JS error:", e.message);
-            }
-        })();
-        """.trimIndent(),
-        callback
-    )
-}
-this.jsFun(
-        """
-        window.WindWeb = window.WindWeb || {};
-
-        window.WindWeb.log = function(...args) {
-           const msg = args
-              .map(a => String(a))
-              .join(" ")
-              .replace(/\n/g, " | ");
-                 
-            console.log("[WINDWEB_LOG]", msg);
-        };
-        """
-    )
-
 
 //RUNS BEFORE PAGE LOADS
 fun Any?.importsJS() {
