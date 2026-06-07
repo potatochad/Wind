@@ -79,11 +79,9 @@ fun Any?.importsJS() {
         """
     )
 
-    this.jsFun(
+    this.jsGlobalFun("findContainerHTML",
         """
-        window.WindWeb = window.WindWeb || {};
-
-        window.WindWeb.findContainerHTML = function(el, maxSteps = 3) {
+        function(el, maxSteps = 3) {
            let current = el;
 
            for (let i = 0; i < maxSteps; i++) {
