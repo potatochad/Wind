@@ -149,7 +149,7 @@ fun Any?.hideYoutubeChannel(channels: ListStr) {
     
     this.jsFun(
         """
-        WindWeb.log("FILTERRING LOGIC RUNNING");
+        App.log("FILTERRING LOGIC RUNNING");
         
         const targets = $jsChannels;
         let running = false;
