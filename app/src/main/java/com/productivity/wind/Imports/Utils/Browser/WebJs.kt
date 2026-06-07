@@ -49,6 +49,19 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
     )
 }
 
+fun Any?.jsGlobalFun(name: Str, function: Str) {
+   val global = "WindWeb"
+   this.jsFun(
+       """
+       window.$global = window.$global || {};
+
+       window.$global.$name = $function
+       //!!dont forget ;
+       """
+   )
+}
+
+
 //RUNS BEFORE PAGE LOADS
 fun Any?.importsJS() {
     this.jsFun(
