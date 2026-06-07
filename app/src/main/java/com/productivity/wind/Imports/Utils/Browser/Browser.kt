@@ -84,7 +84,7 @@ class WebController(
                 view?.gray(90f)
                 swipeRefresh.isRefreshing = no
 
-                view?.hideYoutubeChannel(listOf("MrBeast"))
+                view?.hideYoutubeChannel(listOf("MrBeast", "McYum"))
 				
                 
                 onPageFinished.forEach { it(url) }
