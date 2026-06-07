@@ -74,8 +74,11 @@ class WebController(
 
 				view?.importsJS()
 			}
+
+			private var lastFinishedUrl: Str? = null
             override fun onPageFinished(view: WebView?, url: Str?) {
                 super.onPageFinished(view, url)
+				if (url == lastFinishedUrl) return
 
 				//this.zoomOut()
                 view?.gray(90f)
