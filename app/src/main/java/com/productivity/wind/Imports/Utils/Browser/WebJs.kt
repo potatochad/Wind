@@ -40,8 +40,8 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
             try {
                 $code
             } catch (e) {
-                const errorMsg = String(e.message);
-                console.log("[WINDWEB_LOG]", "JS error: $errorMsg");
+                const errorMsg = "JS error:" + String(e.message);
+                console.log("[WINDWEB_LOG]", errorMsg);
             }
         })();
         """.trimIndent(),
