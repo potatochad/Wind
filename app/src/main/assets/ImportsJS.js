@@ -1,14 +1,16 @@
+
+const document_DocumentElement_GetAttribute_data_filtertube_debug = yes
+
 (function () {
     'use strict';
 
     // Idempotency guard
     if (window.filterTubeLogicHasRun) {
         try {
-            if (window.__filtertubeDebug || document.documentElement?.getAttribute('data-filtertube-debug') === 'true') {
+            if (window.__filtertubeDebug || document_DocumentElement_GetAttribute_data_filtertube_debug === 'true') {         
                 console.debug('FilterTube (FilterLogic): Already initialized, skipping');
             }
-        } catch (e) {
-        }
+        } catch (e) {}
         return; // Now legal because it's inside a function
     }
     window.filterTubeLogicHasRun = true;
