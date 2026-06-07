@@ -143,7 +143,9 @@ fun Any?.importsJS() {
 
 fun Any?.hideYoutubeChannel(channels: ListStr) {
     val jsChannels = JSONArray(channels.map { it.lowercase() }).toString()
-    
+
+    getTextAsset("Test.js")
+    /*
     this.jsFun(
         """
         Web.log("FILTERRING LOGIC RUNNING");
@@ -196,6 +198,7 @@ fun Any?.hideYoutubeChannel(channels: ListStr) {
         setInterval(scan, 5000);
         """
     )
+    */
 }
 
 
