@@ -143,9 +143,6 @@ fun Any?.importsJS() {
 
 fun Any?.hideYoutubeChannel(channels: ListStr) {
     val jsChannels = JSONArray(channels.map { it.lowercase() }).toString()
-
-    // val importJs = getTextAsset("ImportsJS.js")
-    // Vlog("$importJs")
     
     this.jsFun(
         """
@@ -177,17 +174,14 @@ fun Any?.hideYoutubeChannel(channels: ListStr) {
                     const hit = targets.some(t => text.includes(t));
                     if (!hit) return;
 
-                    WindWeb.log("link:", href, "TEXT:", text);
+                    Web.log("link:", href, "TEXT:", text);
 
-                    const logUrl = window.WindWeb.webItemUrl(item, 4);    
-                    const container = window.WindWeb.findContainerHTML(item, 4);
+                    const logUrl = Web.webItemUrl(item, 4);    
+                    const container = Web.findContainerHTML(item, 4);
                         
-                    window.WindWeb.log(
-                        "FOUND CONTAINER:",
-                        logUrl,
-                    );
+                    Web.log("Hiding:", logUrl);
                             
-                    window.WindWeb.hide(container);
+                    Web.hide(container);
                 });
 
                 
