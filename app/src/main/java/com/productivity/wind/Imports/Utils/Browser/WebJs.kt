@@ -127,6 +127,15 @@ fun Any?.importsJS() {
         };
         """
     )
+    this.jsGlobalFun("hide",
+        """
+        function(el) {
+            if (el) {
+               el.style.display = "none"
+            }
+        };
+        """
+    )
 }
 
 
@@ -176,9 +185,7 @@ fun Any?.hideYoutubeChannel(channels: ListStr) {
                         logUrl,
                     );
                             
-                    if (container) {
-                        container.style.display = "none";
-                    }
+                    window.WindWeb.hide(container);
                 });
 
                 
