@@ -92,11 +92,9 @@ fun Any?.importsJS() {
         };
         """
     )
-    this.jsFun(
+    this.jsGlobalFun("webItemUrl",
         """
-        window.WindWeb = window.WindWeb || {};
-
-        window.WindWeb.webItemUrl = function(el, depth = 3) {
+        function(el, depth = 3) {
             let cur = el;
             const stack = [];
 
@@ -114,11 +112,9 @@ fun Any?.importsJS() {
     )
     
 
-    this.jsFun(
+    this.jsFun("unique",
         """
-        window.WindWeb = window.WindWeb || {};
-        
-        window.WindWeb.unique = function(list, getKey) {
+        function(list, getKey) {
             const arr = Array.from(list || []);
             const seen = new Set();
 
