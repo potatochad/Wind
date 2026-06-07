@@ -1565,7 +1565,7 @@ const document_DocumentElement_GetAttribute_data_filtertube_debug = yes
         _log(message, ...args) {
             const enabled = (() => {
                 try {
-                    return !!window.__filtertubeDebug || document.documentElement?.getAttribute('data-filtertube-debug') === 'true';
+                    return !!window.__filtertubeDebug || document_DocumentElement_GetAttribute_data_filtertube_debug === 'true';
                 } catch (e) {
                     return !!this.debugEnabled;
                 }
@@ -1580,7 +1580,7 @@ const document_DocumentElement_GetAttribute_data_filtertube_debug = yes
                 if (this.settings?.listMode !== 'whitelist') return;
                 const debugEnabled = (() => {
                     try {
-                        return !!window.__filtertubeDebug || document.documentElement?.getAttribute('data-filtertube-debug') === 'true';
+                        return !!window.__filtertubeDebug || document_DocumentElement_GetAttribute_data_filtertube_debug === 'true';
                     } catch (e) {
                         return !!window.__filtertubeDebug;
                     }
