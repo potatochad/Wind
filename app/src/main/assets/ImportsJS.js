@@ -1,8 +1,7 @@
-
-const document_DocumentElement_GetAttribute_data_filtertube_debug = yes
-
 (function () {
     'use strict';
+    const document_DocumentElement_GetAttribute_data_filtertube_debug = true;
+
 
     // Idempotency guard
     if (window.filterTubeLogicHasRun) {
