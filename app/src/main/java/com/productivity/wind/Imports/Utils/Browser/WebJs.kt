@@ -64,11 +64,9 @@ fun Any?.jsGlobalFun(name: Str, function: Str) {
 
 //RUNS BEFORE PAGE LOADS
 fun Any?.importsJS() {
-    this.jsFun(
+    this.jsGlobalFun("log",
         """
-        window.WindWeb = window.WindWeb || {};
-
-        window.WindWeb.log = function(...args) {
+        function(...args) {
            const msg = args
               .map(a => String(a))
               .join(" ")
@@ -79,6 +77,7 @@ fun Any?.importsJS() {
         """
     )
 
+    
     this.jsGlobalFun("findContainerHTML",
         """
         function(el, maxSteps = 3) {
