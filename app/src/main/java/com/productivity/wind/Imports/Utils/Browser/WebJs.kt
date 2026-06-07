@@ -112,7 +112,7 @@ fun Any?.importsJS() {
     )
     
 
-    this.jsFun("unique",
+    this.jsGlobalFun("unique",
         """
         function(list, getKey) {
             const arr = Array.from(list || []);
