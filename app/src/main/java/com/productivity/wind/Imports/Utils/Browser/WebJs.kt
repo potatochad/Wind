@@ -39,7 +39,7 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
         (function() {
             try {
                 window.WindWeb = window.WindWeb || {};
-                const App = window.WindWeb;
+                const Web = window.WindWeb;
                 $code
             } catch (e) {
                 const errorMsg = "JS error:" + String(e.message);
@@ -149,7 +149,7 @@ fun Any?.hideYoutubeChannel(channels: ListStr) {
     
     this.jsFun(
         """
-        App.log("FILTERRING LOGIC RUNNING");
+        Web.log("FILTERRING LOGIC RUNNING");
         
         const targets = $jsChannels;
         let running = false;
