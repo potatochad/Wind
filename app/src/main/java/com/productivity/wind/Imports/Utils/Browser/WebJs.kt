@@ -127,8 +127,8 @@ fun Any?.importsJS() {
 fun Any?.hideYoutubeChannel(channels: ListStr) {
     val jsChannels = JSONArray(channels.map { it.lowercase() }).toString()
 
-    val importJs = getTextAsset("ImportsJS.js")
-    Vlog("$importJs")
+    // val importJs = getTextAsset("ImportsJS.js")
+    // Vlog("$importJs")
     
     this.jsFun(
         """
