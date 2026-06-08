@@ -145,13 +145,14 @@ fun Any?.hideYoutubeChannel(channels: ListStr) {
     val jsChannels = JSONArray(channels.map { it.lowercase() }).toString()
 
     var testJs = getTextAsset("Test.js")
-    this.jsFun(testJs)
     
-    /*
+    
     this.jsFun(
         """
-        
-    */
+        const targets = $jsChannels;
+        $testJs
+        """
+    )
 }
 
 
