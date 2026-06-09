@@ -1,4 +1,4 @@
-function watchHtml(root = document.body) {
+function WatchHtml(root = document.body) {
     const listeners = new Set();
 
     const obs = new MutationObserver((mutations) => {
@@ -54,49 +54,36 @@ function watchHtml(root = document.body) {
 
 
 Web.log("FILTERRING LOGIC RUNNING");
-let running = false;
 
-function scan() {
-    // prevent overlap
-    if (running) return;
-    running = true;
+function processItem(item) {
+    const href = item.href || "";
+    const text = (item.innerText || "").toLowerCase();
 
-    const items = document.querySelectorAll('a');
-    
-                
-    items.forEach((item) => {
-        const href = item.href || "";
-        const text = (item.innerText || "").toLowerCase();                
-                    
-        // skip duration links like 10:03, 1:02:15
-        if (/^\d+(?::\d+)+$/.test(text.trim())) return;
+    if (/^\d+(?::\d+)+$/.test(text.trim())) return;
 
-        // skip empty fast
-        if (!href.includes("youtube.com/watch?v=")) return;
-        if (!text) return;
-        if (!href) return;
-        if (href.startsWith("intent://")) return;
+    if (!href.includes("youtube.com/watch?v=")) return;
+    if (!text) return;
+    if (!href) return;
+    if (href.startsWith("intent://")) return;
 
-        const hit = targets.some(t => text.includes(t));
-        if (!hit) return;
+    const hit = targets.some(t => text.includes(t));
+    if (!hit) return;
 
-        Web.log("link:", href, "TEXT:", text);
+    Web.log("link:", href, "TEXT:", text);
 
-        const logUrl = Web.webItemUrl(item, 4);    
-        const container = Web.findContainerHTML(item, 4);
-                        
-        Web.log("Hiding:", logUrl);
-                            
-        Web.hide(container);
-    });
-    running = false;
+    const logUrl = Web.webItemUrl(item, 4);
+    const container = Web.findContainerHTML(item, 4);
+
+    Web.log("Hiding:", logUrl);
+
+    Web.hide(container);
 }
-// first run
-scan();
 
-// slower interval
-setInterval(scan, 5000);
+document.querySelectorAll("a").forEach(processLink);
 
 
+WatchHtml().onNewElements(elements =>
+    elements.forEach(processItem)
+);
 
 
