@@ -79,7 +79,7 @@ function processItem(item) {
     Web.hide(container);
 }
 
-document.querySelectorAll("a").forEach(processLink);
+document.querySelectorAll("a").forEach(processItem);
 
 
 WatchHtml().onNewElements(elements =>
