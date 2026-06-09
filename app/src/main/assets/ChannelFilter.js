@@ -42,13 +42,7 @@ function watchHtml(root = document.body) {
     };
 }
 
-const watcher = watchHtml();
 
-watcher.onNewElements(elements =>
-    elements.forEach(a => {
-        
-    })
-);
 
 
 
@@ -68,6 +62,7 @@ function scan() {
     running = true;
 
     const items = document.querySelectorAll('a');
+    
                 
     items.forEach((item) => {
         const href = item.href || "";
