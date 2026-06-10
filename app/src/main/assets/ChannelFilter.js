@@ -41,7 +41,17 @@ function WatchHtml(root = document.body) {
         }
     };
 }
-
+function GetCardHtml(el) {
+    return el.closest(
+        "ytd-video-renderer," +
+        "ytd-compact-video-renderer," +
+        "ytd-grid-video-renderer," +
+        "ytd-rich-item-renderer," +
+        "ytd-reel-item-renderer," +
+        "ytd-movie-renderer," +
+        "ytd-mix-renderer"
+    );
+}
 
 
 
@@ -72,7 +82,7 @@ function processItem(item) {
     Web.log("link:", href, "TEXT:", text);
 
     const logUrl = Web.webItemUrl(item, 4);
-    const container = Web.findContainerHTML(item, 4);
+    const container = GetCardHtml(item); //Web.findContainerHTML(item, 4);        
 
     Web.log("Hiding:", logUrl);
 
