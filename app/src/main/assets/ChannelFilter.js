@@ -82,9 +82,10 @@ function processItem(item) {
     Web.log("link:", href, "TEXT:", text);
 
     const logUrl = Web.webItemUrl(item, 4);
-    const container = GetCardHtml(item); //Web.findContainerHTML(item, 4);        
+    const container = GetCardHtml(item); //Web.findContainerHTML(item, 4);  
+    if (!container) return;
 
-    Web.log("Hiding:", logUrl);
+    Web.log("Hiding:", logUrl, "Container:", container);
 
     Web.hide(container);
 }
