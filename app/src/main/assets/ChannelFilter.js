@@ -41,22 +41,37 @@ function WatchHtml(root = document.body) {
         }
     };
 }
+
 function GetCardHtml(el) {
     return el.closest(`
+        /* desktop */
         ytd-video-renderer,
         ytd-rich-item-renderer,
         ytd-compact-video-renderer,
         ytd-grid-video-renderer,
         ytd-reel-item-renderer,
         ytd-mix-renderer,
+        ytd-playlist-video-renderer,
 
+        /* mobile classic */
         ytm-media-item,
         ytm-video-with-context-renderer,
-        ytm-item-section-renderer,
+        ytm-compact-video-renderer,
         ytm-rich-item-renderer,
+        ytm-item-section-renderer,
+        ytm-shelf-renderer,
+        ytm-section-list-renderer,
+        ytm-browse,
 
+        /* shorts / reels */
+        ytm-shorts-lockup-view-model,
+        ytm-reel-video-renderer,
+        ytm-reel-item-view-model,
+
+        /* modern system */
         yt-list-item-view-model,
         yt-lockup-view-model,
+        yt-lockup-view-model-wiz,
 
         a[href*="watch"],
         a[href*="shorts"]
