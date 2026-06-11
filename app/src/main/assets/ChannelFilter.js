@@ -49,14 +49,17 @@ function GetCardHtml(el) {
         ytd-grid-video-renderer,
         ytd-reel-item-renderer,
         ytd-mix-renderer,
+
         ytm-media-item,
         ytm-video-with-context-renderer,
         ytm-item-section-renderer,
         ytm-rich-item-renderer,
+
         yt-list-item-view-model,
         yt-lockup-view-model,
-        href*="watch", 
-        [href*="shorts"]
+
+        a[href*="watch"],
+        a[href*="shorts"]
     `);
 }
 
