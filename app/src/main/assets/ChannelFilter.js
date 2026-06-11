@@ -42,15 +42,22 @@ function WatchHtml(root = document.body) {
     };
 }
 function GetCardHtml(el) {
-    return el.closest(
-        "ytd-video-renderer," +
-        "ytd-compact-video-renderer," +
-        "ytd-grid-video-renderer," +
-        "ytd-rich-item-renderer," +
-        "ytd-reel-item-renderer," +
-        "ytd-movie-renderer," +
-        "ytd-mix-renderer"
-    );
+    return el.closest(`
+        ytd-video-renderer,
+        ytd-rich-item-renderer,
+        ytd-compact-video-renderer,
+        ytd-grid-video-renderer,
+        ytd-reel-item-renderer,
+        ytd-mix-renderer,
+        ytm-media-item,
+        ytm-video-with-context-renderer,
+        ytm-item-section-renderer,
+        ytm-rich-item-renderer,
+        yt-list-item-view-model,
+        yt-lockup-view-model,
+        href*="watch", 
+        [href*="shorts"]
+    `);
 }
 
 
