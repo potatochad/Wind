@@ -110,7 +110,13 @@ function processItem(item) {
     const container = GetCardHtml(item); //Web.findContainerHTML(item, 4);  
     if (!container) return;
 
-    Web.log("Hiding:", logUrl, "Container:", container);
+    Web.log("Hiding:");
+    Web.log(item.parentElement?.tagName);
+    Web.log(item.parentElement?.parentElement?.tagName);
+    Web.log(item.parentElement?.parentElement?.parentElement?.tagName);
+    Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.tagName);
+    Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.tagName);
+    Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.tagName);       
 
     Web.hide(container);
 }
