@@ -43,6 +43,7 @@ function WatchHtml(root = document.body) {
 }
 
 function GetCardHtml(el) {
+    /*
     const container = el.closest([
         "ytd-video-renderer",
         "ytd-rich-item-renderer",
@@ -71,7 +72,9 @@ function GetCardHtml(el) {
     ].join(","));
 
     // fallback to link itself (your href case)
-    return container || el.closest('a[href*="watch"], a[href*="shorts"]');
+    return container || 
+    */
+    return el.closest('a[href*="watch"], a[href*="shorts"]');
 }
 
 
@@ -108,10 +111,11 @@ function processItem(item) {
     Web.log("Hiding:");
     Web.log(item.parentElement?.tagName);
     Web.log(item.parentElement?.parentElement?.tagName);
-    Web.log(item.parentElement?.parentElement?.parentElement?.tagName);
-    Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.tagName);
-    Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.tagName);
-    Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.tagName);       
+    Web.log("Hidden:", item.parentElement?.parentElement?.parentElement?.tagName);
+    Web.hide(item.parentElement?.parentElement?.parentElement?.tagName);
+    //Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.tagName);
+    //Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.tagName);
+    //Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.tagName);       
 
     Web.hide(container);
 }
