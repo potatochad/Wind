@@ -112,7 +112,9 @@ function processItem(item) {
     Web.log(item.parentElement?.tagName);
     Web.log(item.parentElement?.parentElement?.tagName);
     Web.log("Hidden:", item.parentElement?.parentElement?.parentElement?.tagName);
-    Web.hide(item.parentElement?.parentElement?.parentElement);
+
+    //5
+    Web.hide(item.parentElement?.parentElement?.parentElement?.parentElement);
     //Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.tagName);
     //Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.tagName);
     //Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.tagName);       
