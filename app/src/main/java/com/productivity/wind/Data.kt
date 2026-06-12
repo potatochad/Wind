@@ -56,7 +56,8 @@ fun newDay() {
      }
 	 Bar.copyTsk.each{
 		 it.edit {
-			 doneTimes = 0
+			 doneTimes = 0 
+			 input = ""
 		 }
 	 }
 	 Bar.doTsk.each{
