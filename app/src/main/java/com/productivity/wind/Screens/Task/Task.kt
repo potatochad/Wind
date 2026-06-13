@@ -113,14 +113,7 @@ fun CopyPaste(id: Str ="") {
 	
 
 
-	val users = TrackList<TestData>("users")
-
-    val item = TestData()
-
-    users.add(item)
-
-    item.name = "A"
-    item.name = "B"
+	
 
 
 	
