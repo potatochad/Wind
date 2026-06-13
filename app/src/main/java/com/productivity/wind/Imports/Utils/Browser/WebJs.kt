@@ -53,7 +53,7 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
 
 //RUNS BEFORE PAGE LOADS
 fun Any?.importsJS() {
- 
+ //delete does nothing
 }
 
 
@@ -61,10 +61,12 @@ fun Any?.hideYoutubeChannel(channels: ListStr) {
     val jsChannels = JSONArray(channels.map { it.lowercase() }).toString()
 
     var channelFilter = getTextAsset("ChannelFilter.js")
+    var jsImports = getTextAsset("Imports.js")
     
     
     this.jsFun(
         """
+        $jsImports
         const targets = $jsChannels;
         $channelFilter
         """
