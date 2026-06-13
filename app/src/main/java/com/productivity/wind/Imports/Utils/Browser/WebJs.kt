@@ -42,7 +42,7 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
                 const Web = window.WindWeb;
                 $code
             } catch (e) {
-                const errorMsg = "JS error:" + String(e.message);
+                const errorMsg = "JS error: " + String(e.message);
                 console.log("[WINDWEB_LOG]", errorMsg);
             }
         })();
