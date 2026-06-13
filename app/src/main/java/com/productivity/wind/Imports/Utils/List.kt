@@ -395,11 +395,6 @@ class TrackList<T : LazyData>(
     override fun lastIndexOf(element: T): Int =
         inner.lastIndexOf(element)
 } 
-*/
-
-
-
-// ---------------- TEST ----------------
 
 @Serializable
 abstract class LazyData {
@@ -437,6 +432,19 @@ abstract class LazyData {
         }
     }
 }
+*/
+
+
+@Serializable
+abstract class LazyData {
+    fun <T> lazyState(d: T) = object : ReadWriteProperty<Any?, T> {
+        val s = m(d)
+        override fun getValue(r: Any?, p: kotlin.reflect.KProperty<*>) = s.it
+        override fun setValue(r: Any?, p: kotlin.reflect.KProperty<*>, v: T) { s.it = v }
+    }
+}
+
+
 
 
 @Serializable
@@ -444,7 +452,7 @@ class TestData : LazyData() {
 
     var name by lazyState("hello")
 }
-
+// list using testdata class
 
 
 
