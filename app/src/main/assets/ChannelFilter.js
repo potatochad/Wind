@@ -85,13 +85,13 @@ function GetCardHtml(el) {
 //const targets = $jsChannels; //array
 
 
-Web.log("Filtering Youtube");
+log("Filtering Youtube");
 
 function processItem(item) {
     const href = item.href || "";
     const text = (item.innerText || "").toLowerCase();
     const listItem = targets.some(t => text.includes(t));
-    const logUrl = Web.webItemUrl(item, 8);
+    const logUrl = webItemUrl(item, 8);
     
 
     if (/^\d+(?::\d+)+$/.test(text.trim())) return;
@@ -102,12 +102,12 @@ function processItem(item) {
     if (!href.includes("youtube.com/watch?v=")) return;
     if (href.startsWith("intent://")) return;
 
-    Web.log("link:", href, "TEXT:", text, "Url:", logUrl);
+    log("link:", href, "TEXT:", text, "Url:", logUrl);
 
     
 
-    Web.log("Hiding:");
-    Web.hide(item.parentElement?.parentElement?.parentElement?.parentElement);
+    log("Hiding:");
+    hide(item.parentElement?.parentElement?.parentElement?.parentElement);
     // Web.hide(container);
 }
 
