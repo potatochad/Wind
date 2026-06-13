@@ -140,16 +140,40 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 
 @Composable
-fun ExtensionsScreen() {
-	val users = TrackList<TestData>("users")
+fun ExtensionsScreen() = LazyScreen("Extensions") {
 
-    val item = TestData()
+    val users = remember { TrackList<TestData>("users") }
 
-    users.add(item)
+    Column {
 
-    item.name = "A"
-    item.name = "B"
-    
+        LazzyRow {
+            Icon.Add {
+                users.add(
+                    TestData(name = users.size.toString())
+                )
+            }
+        }
+
+        users.eachIndexed { index, item ->
+
+            LazzyRow {
+
+                Text(item.name)
+
+                End {
+
+                    AppItem.Edit {
+                        val current = item.name.toIntOrNull() ?: 0
+                        item.name = (current + 1).toString()
+                    }
+
+                    AppItem.Delete {
+                        users.removeAt(index)
+                    }
+                }
+            }
+        }
+    }
 }
 
 
