@@ -1,20 +1,13 @@
-this.jsGlobalFun("log",
-        """
-        function(...args) {
+function log(...args) {
            const msg = args
               .map(a => String(a))
               .join(" ")
               .replace(/\n/g, " | ");
                  
             console.log("[WINDWEB_LOG]", msg);
-        };
-        """
-    )
+};
 
-    
-    this.jsGlobalFun("findContainerHTML",
-        """
-        function(el, maxSteps = 3) {
+function findContainerHTML(el, maxSteps = 3) {
            let current = el;
 
            for (let i = 0; i < maxSteps; i++) {
@@ -23,12 +16,9 @@ this.jsGlobalFun("log",
            }
 
            return current || el;
-        };
-        """
-    )
-    this.jsGlobalFun("webItemUrl",
-        """
-        function(el, depth = 3) {
+};
+        
+function webItemUrl(el, depth = 3) {
             let cur = el;
             const stack = [];
 
@@ -41,14 +31,10 @@ this.jsGlobalFun("log",
             }
 
             return stack.reverse().join(" / ");
-        };
-        """
-    )
+};
     
 
-    this.jsGlobalFun("unique",
-        """
-        function(list, getKey) {
+function unique(list, getKey) {
             const arr = Array.from(list || []);
             const seen = new Set();
 
@@ -58,15 +44,16 @@ this.jsGlobalFun("log",
                 seen.add(key);
                 return true;
             });
-        };
-        """
-    )
-    this.jsGlobalFun("hide",
-        """
-        function(el) {
+};
+        
+    
+function hide(el) {
             if (el) {
                el.style.display = "none"
             }
-        };
-        """
-    )
+};
+        
+
+
+
+
