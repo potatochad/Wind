@@ -141,36 +141,15 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 @Composable
 fun ExtensionsScreen() {
+	val users = TrackList<TestData>("users")
 
-/*
-= LazyScreen("Extensions", scroll = no, DividerPadding = no) {  
-	
-}
-@Composable
-fun MyScreen() {
-*/
+    val item = TestData()
 
-    var isRefreshing by r(no)
+    users.add(item)
 
-    PullToRefreshBox(
-        isRefreshing = isRefreshing,
-        onRefresh = {
-            isRefreshing = true
-
-			wait(1500){
-				isRefreshing = false
-			}
-        }
-    ) {
-        LazyColumn {
-            items(30) {
-                Text(
-                    text = "Item $it",
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-        }
-    }
+    item.name = "A"
+    item.name = "B"
+    
 }
 
 
