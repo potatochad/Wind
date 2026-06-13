@@ -289,44 +289,8 @@ fun <T : Any> KClass<T>.setProp(
 
 
 //------------<Testing>----------//
-@Serializable
-abstract class LazyData {
 
-    @Transient
-    var parentList: TrackList<*>? = null
-
-    fun <T> lazyState(default: T): ReadWriteProperty<LazyData, T> {
-
-        return object : ReadWriteProperty<LazyData, T> {
-
-            private var state = default
-
-            override fun getValue(
-                thisRef: LazyData,
-                property: KProperty<*>
-            ): T {
-                return state
-            }
-
-            override fun setValue(
-                thisRef: LazyData,
-                property: KProperty<*>,
-                value: T
-            ) {
-                val old = state
-                state = value
-
-                thisRef.parentList?.onItemChanged(
-                    item = thisRef,
-                    prop = property.name,
-                    old = old,
-                    new = value
-                )
-            }
-        }
-    }
-}
-
+/*
 class TrackList<T : LazyData>(
     val listName: String,
     items: List<T> = emptyList()
@@ -431,11 +395,49 @@ class TrackList<T : LazyData>(
     override fun lastIndexOf(element: T): Int =
         inner.lastIndexOf(element)
 } 
-
+*/
 
 
 
 // ---------------- TEST ----------------
+
+@Serializable
+abstract class LazyData {
+    @Transient
+    var parentList: TrackList<*>? = null
+
+    fun <T> lazyState(default: T): ReadWriteProperty<LazyData, T> {
+
+        return object : ReadWriteProperty<LazyData, T> {
+
+            private var state = default
+
+            override fun getValue(
+                thisRef: LazyData,
+                property: KProperty<*>
+            ): T {
+                return state
+            }
+
+            override fun setValue(
+                thisRef: LazyData,
+                property: KProperty<*>,
+                value: T
+            ) {
+                val old = state
+                state = value
+
+                thisRef.parentList?.onItemChanged(
+                    item = thisRef,
+                    prop = property.name,
+                    old = old,
+                    new = value
+                )
+            }
+        }
+    }
+}
+
 
 @Serializable
 class TestData : LazyData() {
