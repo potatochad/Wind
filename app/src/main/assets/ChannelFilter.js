@@ -74,7 +74,6 @@ function GetCardHtml(el) {
     // fallback to link itself (your href case)
     return container || 
     */
-    return el.closest('a[href*="watch"], a[href*="shorts"]');
 }
 
 
@@ -86,40 +85,30 @@ function GetCardHtml(el) {
 //const targets = $jsChannels; //array
 
 
-Web.log("FILTERRING LOGIC RUNNING");
+Web.log("Filtering Youtube");
 
 function processItem(item) {
     const href = item.href || "";
     const text = (item.innerText || "").toLowerCase();
+    const listItem = targets.some(t => text.includes(t));
+    const logUrl = Web.webItemUrl(item, 8);
+    
 
     if (/^\d+(?::\d+)+$/.test(text.trim())) return;
 
-    if (!href.includes("youtube.com/watch?v=")) return;
     if (!text) return;
     if (!href) return;
+    if (!listItem) return;
+    if (!href.includes("youtube.com/watch?v=")) return;
     if (href.startsWith("intent://")) return;
 
-    const hit = targets.some(t => text.includes(t));
-    if (!hit) return;
+    Web.log("link:", href, "TEXT:", text, "Url:", logUrl);
 
-    Web.log("link:", href, "TEXT:", text);
-
-    const logUrl = Web.webItemUrl(item, 4);
-    const container = GetCardHtml(item); //Web.findContainerHTML(item, 4);  
-    if (!container) return;
+    
 
     Web.log("Hiding:");
-    Web.log(item.parentElement?.tagName);
-    Web.log(item.parentElement?.parentElement?.tagName);
-    Web.log("Hidden:", item.parentElement?.parentElement?.parentElement?.tagName);
-
-    //5
     Web.hide(item.parentElement?.parentElement?.parentElement?.parentElement);
-    //Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.tagName);
-    //Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.tagName);
-    //Web.log(item.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.tagName);       
-
-    Web.hide(container);
+    // Web.hide(container);
 }
 
 document.querySelectorAll("a").forEach(processItem);
@@ -128,5 +117,7 @@ document.querySelectorAll("a").forEach(processItem);
 WatchHtml().onNewElements(elements =>
     elements.forEach(processItem)
 );
+
+
 
 
