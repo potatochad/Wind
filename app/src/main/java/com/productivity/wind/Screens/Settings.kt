@@ -182,6 +182,8 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
             }
         }
 
+		Column(Mod.h(300)) {
+
         LazyColumn {
 
             items(
@@ -189,11 +191,10 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                 key = { it.hashCode() }
             ) { item ->
 
-                println("RECOMPOSE ITEM ${item.name}")
-
                 Text(item.name)
             }
         }
+		}
     }
 }
 
