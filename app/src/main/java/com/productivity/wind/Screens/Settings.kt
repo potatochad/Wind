@@ -141,41 +141,60 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions") {
-
-	/*
-    val users = r { TrackList<TestData>("users") }
+    val items = r {
+        mutableStateListOf(
+            TestData(),
+            TestData(),
+            TestData()
+        )
+    }
 
     Column {
 
-        LazzyRow {
-            Icon.Add {
-                users.add(
-                    TestData(name = users.size.toString())
-                )
+        Row {
+
+            Button(
+                onClick = {
+                    items += TestData()
+                }
+            ) {
+                Text("Add")
+            }
+
+            Button(
+                onClick = {
+                    if (items.isNotEmpty()) {
+                        items.removeAt(0)
+                    }
+                }
+            ) {
+                Text("Delete")
+            }
+
+            Button(
+                onClick = {
+                    if (items.isNotEmpty()) {
+                        items[0].name = "updated ${System.currentTimeMillis()}"
+                    }
+                }
+            ) {
+                Text("Edit First")
             }
         }
 
-        users.forEachIndexed { index, item ->
+        LazyColumn {
 
-            LazzyRow {
+            items(
+                items = items,
+                key = { it.hashCode() }
+            ) { item ->
+
+                println("RECOMPOSE ITEM ${item.name}")
 
                 Text(item.name)
-
-                End {
-
-                    AppItem.Edit {
-                        val current = item.name.toIntOrNull() ?: 0
-                        item.name = (current + 1).toString()
-                    }
-
-                    AppItem.Delete {
-                        users.removeAt(index)
-                    }
-                }
             }
         }
     }
-	*/
 }
 
 
