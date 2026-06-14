@@ -106,7 +106,7 @@ function processItem(item) {
 
     
 
-    log("Hiding:" item.parentElement?.parentElement?.parentElement?.parentElement?.tagName);   
+    log("Hiding:", item.parentElement?.parentElement?.parentElement?.parentElement?.tagName);   
     hide(item.parentElement?.parentElement?.parentElement?.parentElement);
     // Web.hide(container);
 }
