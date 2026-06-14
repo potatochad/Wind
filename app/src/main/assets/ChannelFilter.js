@@ -88,6 +88,7 @@ function GetCardHtml(el) {
 log("Filtering Youtube");
 
 function processItem(item) {
+    log("Item: ", item);
     const href = item.href || "";
     const text = (item.innerText || "").toLowerCase();
     const listItem = targets.some(t => text.includes(t));
