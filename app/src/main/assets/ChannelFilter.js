@@ -102,11 +102,11 @@ function processItem(item) {
     if (!href.includes("youtube.com/watch?v=")) return;
     if (href.startsWith("intent://")) return;
 
-    log("link:", href, "TEXT:", text, "Url:", logUrl);
+    log("TEXT:", text, "Url:", logUrl, "link:", href);
 
     
 
-    log("Hiding:");
+    log("Hiding:" item.parentElement?.parentElement?.parentElement?.parentElement?.tagName);   
     hide(item.parentElement?.parentElement?.parentElement?.parentElement);
     // Web.hide(container);
 }
