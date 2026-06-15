@@ -42,6 +42,19 @@ function WatchHtml(root = document.body) {
     };
 }
 
+
+function getText(item) {
+    return (
+        item.innerText ||
+        item.getAttribute("title") ||
+        item.getAttribute("aria-label") ||
+        item.textContent ||
+        ""
+    ).trim().toLowerCase();
+}
+
+
+
 function GetCardHtml(el) {
     /*
     const container = el.closest([
@@ -88,11 +101,14 @@ function GetCardHtml(el) {
 log("Filtering Youtube");
 
 function processItem(item) {
-    log("Item: ", item);
     const href = item.href || "";
-    const text = (item.innerText || "").toLowerCase();
+    const text = getText(item);
     const listItem = targets.some(t => text.includes(t));
     const logUrl = webItemUrl(item, 8);
+
+    log("1. TEXT:", text, "Url:", logUrl, "link:", href);
+
+    
     
 
     if (/^\d+(?::\d+)+$/.test(text.trim())) return;
@@ -103,7 +119,7 @@ function processItem(item) {
     if (!href.includes("youtube.com/watch?v=")) return;
     if (href.startsWith("intent://")) return;
 
-    log("TEXT:", text, "Url:", logUrl, "link:", href);
+    log("2. TEXT:", text, "Url:", logUrl, "link:", href);
 
     
 
