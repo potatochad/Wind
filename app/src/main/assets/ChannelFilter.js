@@ -90,7 +90,40 @@ function GetCardHtml(el) {
 }
 
 
+function shouldProcessItem({ text, href, listItem }) {
+    if (/^\d+(?::\d+)+$/.test(text.trim())) {
+        log("REJECT: duration only", text);
+        return false;
+    }
 
+    if (!text) {
+        log("REJECT: empty text", href);
+        return false;
+    }
+
+    if (!href) {
+        log("REJECT: empty href");
+        return false;
+    }
+
+    if (!listItem) {
+        log("REJECT: text not matched target list", text);
+        return false;
+    }
+
+    if (!href.includes("youtube.com/watch?v=")) {
+        log("REJECT: not a watch url", href);
+        return false;
+    }
+
+    if (href.startsWith("intent://")) {
+        log("REJECT: intent url", href);
+        return false;
+    }
+
+    log("ACCEPT:", href);
+    return true;
+}
 
 
 
@@ -109,7 +142,7 @@ function processItem(item) {
     log("1. TEXT:", text, "Url:", logUrl, "link:", href);
 
     
-    
+    shouldProcessItem({ text, href, listItem });
 
     if (/^\d+(?::\d+)+$/.test(text.trim())) return;
 
