@@ -52,10 +52,6 @@ function shouldProcessItem({ text, href, listItem }) {
 
 log("Filtering Youtube");
 
-setTimeout(() => {
-    buildDomTrace(document.querySelector("ytd-app"));
-}, 2000);
-
 function processItem(item) {
     const href = item.href || "";
     const text = getText(item);
@@ -81,7 +77,6 @@ function processItem(item) {
 
     log("Hiding:", item.parentElement?.parentElement?.parentElement?.parentElement?.tagName);   
     hide(item.parentElement?.parentElement?.parentElement?.parentElement);
-    // Web.hide(container);
 }
 
 document.querySelectorAll("a").forEach(processItem);
