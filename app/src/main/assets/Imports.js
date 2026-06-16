@@ -52,7 +52,50 @@ function hide(el) {
                el.style.display = "none"
             }
 };
-        
+
+function WatchHtml(root = document.body) {
+    const listeners = new Set();
+
+    const obs = new MutationObserver((mutations) => {
+        const newElements = [];
+
+        for (const m of mutations) {
+            for (const node of m.addedNodes) {
+                if (node.nodeType !== 1) continue;
+
+                if (node.tagName === "A") {
+                    newElements.push(node);
+                }
+
+                const anchors = node.querySelectorAll?.("a");
+                if (anchors?.length) {
+                    newElements.push(...anchors);
+                }
+            }
+        }
+
+        if (newElements.length) {
+            for (const cb of listeners) {
+                cb(newElements);
+            }
+        }
+    });
+
+    obs.observe(root, {
+        childList: true,
+        subtree: true
+    });
+
+    return {
+        onNewElements(cb) {
+            listeners.add(cb);
+        },
+        disconnect() {
+            obs.disconnect();
+            listeners.clear();
+        }
+    };
+}
 
 
 
