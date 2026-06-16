@@ -79,10 +79,7 @@ function processItem(item2) {
 
     log("2. TEXT:", text, "Url:", logUrl, "link:", href);
 
-    
-
-    log("Hiding:", item.parentElement?.parentElement?.parentElement?.parentElement?.tagName);   
-    hide(item.parentElement?.parentElement?.parentElement?.parentElement);
+    hide(item);
 }
 
 document.querySelectorAll("a").forEach(processItem);
