@@ -52,7 +52,9 @@ function shouldProcessItem({ text, href, listItem }) {
 
 log("Filtering Youtube");
 
-function processItem(item) {
+function processItem(item2) {
+    const item = item2.closest("yt-lockup-view-model");
+
     const href = item.href || "";
     const text = getText(item);
     const listItem = targets.some(t => text.includes(t));
