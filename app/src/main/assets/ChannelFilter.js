@@ -53,40 +53,6 @@ function getText(item) {
     ).trim().toLowerCase();
 }
 
-function GetCardHtml(el) {
-    /*
-    const container = el.closest([
-        "ytd-video-renderer",
-        "ytd-rich-item-renderer",
-        "ytd-compact-video-renderer",
-        "ytd-grid-video-renderer",
-        "ytd-reel-item-renderer",
-        "ytd-mix-renderer",
-        "ytd-playlist-video-renderer",
-
-        "ytm-media-item",
-        "ytm-video-with-context-renderer",
-        "ytm-compact-video-renderer",
-        "ytm-rich-item-renderer",
-        "ytm-item-section-renderer",
-        "ytm-shelf-renderer",
-        "ytm-section-list-renderer",
-        "ytm-browse",
-
-        "ytm-shorts-lockup-view-model",
-        "ytm-reel-video-renderer",
-        "ytm-reel-item-view-model",
-
-        "yt-list-item-view-model",
-        "yt-lockup-view-model",
-        "yt-lockup-view-model-wiz"
-    ].join(","));
-
-    // fallback to link itself (your href case)
-    return container || 
-    */
-}
-
 
 function shouldProcessItem({ text, href, listItem }) {
     if (/^\d+(?::\d+)+$/.test(text.trim())) {
