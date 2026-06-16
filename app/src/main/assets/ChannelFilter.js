@@ -53,50 +53,6 @@ function getText(item) {
     ).trim().toLowerCase();
 }
 
-function buildDomTrace(root = document.body) {
-    const out = [];
-
-    function cleanText(el) {
-        const t =
-            el.getAttribute?.("aria-label") ||
-            el.getAttribute?.("title") ||
-            el.textContent ||
-            "";
-        return t.trim().replace(/\s+/g, " ").slice(0, 120);
-    }
-
-    function walk(el, depth = 0, path = "") {
-        if (!el || depth > 10) return;
-
-        const tag = el.tagName?.toLowerCase?.() || "x";
-        const id = el.id ? `#${el.id}` : "";
-        const cls = el.className
-            ? "." + String(el.className).split(" ").slice(0, 2).join(".")
-            : "";
-
-        const text = cleanText(el);
-        const shortText = text ? ` | "${text}"` : "";
-
-        const line =
-            `${" ".repeat(depth * 2)}${tag}${id}${cls}${shortText}`;
-
-        out.push(line);
-
-        const children = el.children;
-        if (!children) return;
-
-        for (let i = 0; i < children.length; i++) {
-            walk(children[i], depth + 1, path + "/" + tag);
-        }
-    }
-
-    walk(root);
-
-    log("Youtube Map:", out.join("|"));
-}
-
-
-
 function GetCardHtml(el) {
     /*
     const container = el.closest([
