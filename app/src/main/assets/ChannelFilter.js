@@ -53,9 +53,13 @@ function shouldProcessItem({ text, href, listItem }) {
 log("Filtering Youtube");
 
 function processItem(item2) {
-    const item = item2.closest("yt-lockup-view-model");
+    const item =
+    item2.closest("yt-lockup-view-model") ||
+    item2.closest("ytm-media-item") ||
+    item2.closest("ytm-video-with-context-renderer");
+    
 
-    const href = item.href || "";
+    const href = item.querySelector('a[href*="/watch?v="]')?.href || "";
     const text = getText(item);
     const listItem = targets.some(t => text.includes(t));
     const logUrl = webItemUrl(item, 8);
