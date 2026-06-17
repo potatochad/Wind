@@ -60,14 +60,7 @@ function processItem(item2) {
     item2.closest("ytm-video-with-context-renderer") ||
     item2;
     
-    const shorts =
-    item2.closest("ytd-reel-item-renderer") ||
-    item2.closest("ytm-reel-item-renderer");
-
-if (shorts) {
-    hide(shorts);
-    return;
-}
+    
     
 
     
@@ -79,6 +72,16 @@ if (shorts) {
 
     log("1. TEXT:", text, "Url:", logUrl, "link:", href);
 
+
+    const shorts =
+    item2.closest("ytd-reel-item-renderer") ||
+    item2.closest("ytm-reel-item-renderer");
+
+if (shorts) {
+    log("Hiding shorts, TEXT:", text);
+    hide(shorts);
+    return;
+}
 
     
     if (!shouldProcessItem({ text, href, listItem })) return;
