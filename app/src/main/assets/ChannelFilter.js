@@ -20,6 +20,15 @@ function shouldProcessItem({ text, href, listItem }) {
         return false;
     }
 
+    if (
+        text
+          .split(/\n|\|/)
+          .some(part => part.trim() === "shorts")
+    ) {
+        log("REJECT: shorts", text);
+        return false;
+    }
+
     if (!href) {
         log("REJECT: empty href");
         return false;
@@ -54,9 +63,12 @@ log("Filtering Youtube");
 
 function processItem(item2) {
     const item =
-    item2.closest("yt-lockup-view-model") ||
-    item2.closest("ytm-media-item") ||
-    item2.closest("ytm-video-with-context-renderer");
+        item2.closest("yt-lockup-view-model") ||
+        item2.closest("ytm-media-item") ||
+        item2.closest("ytm-video-with-context-renderer") ||
+        item2.closest("ytd-reel-item-renderer") ||
+        item2.closest("ytm-reel-item-renderer");
+
     
 
     const href = item.querySelector('a[href*="/watch?v="]')?.href || "";
@@ -67,16 +79,9 @@ function processItem(item2) {
     log("1. TEXT:", text, "Url:", logUrl, "link:", href);
 
     
-    shouldProcessItem({ text, href, listItem });
+    if (!shouldProcessItem({ text, href, listItem })) return;
 
-    if (/^\d+(?::\d+)+$/.test(text.trim())) return;
-
-    if (!text) return;
-    if (!href) return;
-    if (!listItem) return;
-    if (!href.includes("youtube.com/watch?v=")) return;
-    if (href.startsWith("intent://")) return;
-
+    
     log("2. TEXT:", text, "Url:", logUrl, "link:", href);
 
     hide(item);
