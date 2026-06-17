@@ -63,16 +63,12 @@ log("Filtering Youtube");
 
 function processItem(item2) {
     const item =
-        item2.closest("yt-lockup-view-model") ||
-        item2.closest("ytm-media-item") ||
-        item2.closest("ytm-video-with-context-renderer") ||
-        item2.closest("ytd-reel-item-renderer") ||
-        item2.closest("ytm-reel-item-renderer");
-
-    if (!item) {
-        log("REJECT: no container", item2.tagName);
-        return;
-    }
+    item2.closest("yt-lockup-view-model") ||
+    item2.closest("ytm-media-item") ||
+    item2.closest("ytm-video-with-context-renderer") ||
+    item2.closest("ytd-reel-item-renderer") ||
+    item2.closest("ytm-reel-item-renderer") ||
+    item2;
 
     
 
