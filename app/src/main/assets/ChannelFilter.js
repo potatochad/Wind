@@ -9,19 +9,6 @@ function getText(item) {
 }
 
 
-function HideShorts(item, onFound = () => {}) {
-    const text = getText(item);
-
-    const found = text
-        .split(/\n|\|/)
-        .some(part => part.trim() === "shorts");
-
-    if (found) {
-        hide(item);
-        onFound();
-    }
-}
-
 
 function shouldProcessItem({ text, href, listItem }) {
     if (/^\d+(?::\d+)+$/.test(text.trim())) {
@@ -71,9 +58,17 @@ function processItem(item2) {
     item2.closest("yt-lockup-view-model") ||
     item2.closest("ytm-media-item") ||
     item2.closest("ytm-video-with-context-renderer") ||
-    item2.closest("ytd-reel-item-renderer") ||
-    item2.closest("ytm-reel-item-renderer") ||
     item2;
+    
+    const shorts =
+    item2.closest("ytd-reel-item-renderer") ||
+    item2.closest("ytm-reel-item-renderer");
+
+if (shorts) {
+    hide(shorts);
+    return;
+}
+    
 
     
 
@@ -84,11 +79,6 @@ function processItem(item2) {
 
     log("1. TEXT:", text, "Url:", logUrl, "link:", href);
 
-    
-
-    HideShorts(item, () => {
-        return;
-    });
 
     
     if (!shouldProcessItem({ text, href, listItem })) return;
