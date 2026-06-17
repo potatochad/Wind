@@ -9,6 +9,20 @@ function getText(item) {
 }
 
 
+function HideShorts(item, onFound = () => {}) {
+    const text = getText(item);
+
+    const found = text
+        .split(/\n|\|/)
+        .some(part => part.trim() === "shorts");
+
+    if (found) {
+        hide(item);
+        onFound();
+    }
+}
+
+
 function shouldProcessItem({ text, href, listItem }) {
     if (/^\d+(?::\d+)+$/.test(text.trim())) {
         log("REJECT: duration only", text);
@@ -17,15 +31,6 @@ function shouldProcessItem({ text, href, listItem }) {
 
     if (!text) {
         log("REJECT: empty text", href);
-        return false;
-    }
-
-    if (
-        text
-          .split(/\n|\|/)
-          .some(part => part.trim() === "shorts")
-    ) {
-        log("REJECT: shorts", text);
         return false;
     }
 
@@ -78,6 +83,12 @@ function processItem(item2) {
     const logUrl = webItemUrl(item, 8);
 
     log("1. TEXT:", text, "Url:", logUrl, "link:", href);
+
+    
+
+    HideShorts(item, () => {
+        return;
+    });
 
     
     if (!shouldProcessItem({ text, href, listItem })) return;
