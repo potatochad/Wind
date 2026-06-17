@@ -100,5 +100,40 @@ WatchHtml().onNewElements(elements =>
 );
 
 
+/*
+item2.closest("yt-lockup-view-model") ||
+    item2.closest("ytm-media-item") ||
+    item2.closest("ytm-video-with-context-renderer") ||
+    
+function getFilterContainers(root = document) {
+    return root.querySelectorAll(`
+        ytd-video-renderer,
+        ytd-compact-video-renderer,
+        ytd-grid-video-renderer,
+        ytd-rich-item-renderer,
+        ytd-watch-card-compact-video-renderer,
+        ytd-channel-video-player-renderer,
+        ytd-shelf-renderer,
+        ytd-reel-shelf-renderer,
+        ytd-horizontal-card-list-renderer,
+        ytd-universal-watch-card-renderer,
+        ytd-radio-renderer,
+        ytd-channel-renderer,
+        ytd-grid-channel-renderer,
+        ytd-reel-item-renderer,
+        ytm-shorts-lockup-view-model,
+        ytd-movie-renderer,
+        ytd-mix-renderer,
+        ytd-reel-video-renderer,
+        ytd-search-refinement-card-renderer,
+        ytd-watch-card-rich-header-renderer,
+        ytd-watch-card-section-sequence-renderer,
+        yt-lockup-metadata-view-model,
+        .yt-lockup-metadata-view-model-wiz,
+        .yt-lockup-view-model-wiz
+    `);
+}
+*/
+
 
 
