@@ -69,6 +69,11 @@ function processItem(item2) {
         item2.closest("ytd-reel-item-renderer") ||
         item2.closest("ytm-reel-item-renderer");
 
+    if (!item) {
+        log("REJECT: no container", item2.tagName);
+        return;
+    }
+
     
 
     const href = item.querySelector('a[href*="/watch?v="]')?.href || "";
