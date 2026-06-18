@@ -54,6 +54,11 @@ function shouldProcessItem({ text, href, listItem }) {
 log("Filtering Youtube");
 
 function processItem(item2) {
+    if (item2.href.includes('/shorts/')) {
+        hide();
+        return;
+    }
+    
     const item =
     item2.closest("yt-lockup-view-model") ||
     item2.closest("ytm-media-item") ||
@@ -74,6 +79,10 @@ function processItem(item2) {
 
 
     const shorts =
+        ytd-reel-shelf-renderer
+ytd-reel-item-renderer
+ytm-shorts-lockup-view-model
+ytd-reel-video-renderer
     item2.closest("ytd-reel-item-renderer") ||
     item2.closest("ytm-reel-item-renderer");
 
