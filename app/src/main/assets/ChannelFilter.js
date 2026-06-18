@@ -55,7 +55,19 @@ log("Filtering Youtube");
 
 function processItem(item2) {
     if (item2.href.includes('/shorts/')) {
-        hide();
+        hide(item2);
+        return;
+    }
+    const shorts =
+        item2.closest("ytd-reel-shelf-renderer") ||
+        item2.closest("ytd-reel-item-renderer") ||
+        item2.closest("ytm-shorts-lockup-view-model") ||
+        item2.closest("ytd-reel-video-renderer") ||
+        item2.closest("ytm-reel-item-renderer");
+
+    if (shorts) {
+        log("Hiding shorts, TEXT:", text);
+        hide(shorts);
         return;
     }
     
@@ -65,10 +77,6 @@ function processItem(item2) {
     item2.closest("ytm-video-with-context-renderer") ||
     item2;
     
-    
-    
-
-    
 
     const href = item.querySelector('a[href*="/watch?v="]')?.href || "";
     const text = getText(item);
@@ -76,21 +84,6 @@ function processItem(item2) {
     const logUrl = webItemUrl(item, 8);
 
     log("1. TEXT:", text, "Url:", logUrl, "link:", href);
-
-
-    const shorts =
-        ytd-reel-shelf-renderer
-ytd-reel-item-renderer
-ytm-shorts-lockup-view-model
-ytd-reel-video-renderer
-    item2.closest("ytd-reel-item-renderer") ||
-    item2.closest("ytm-reel-item-renderer");
-
-if (shorts) {
-    log("Hiding shorts, TEXT:", text);
-    hide(shorts);
-    return;
-}
 
     
     if (!shouldProcessItem({ text, href, listItem })) return;
@@ -108,41 +101,6 @@ WatchHtml().onNewElements(elements =>
     elements.forEach(processItem)
 );
 
-
-/*
-item2.closest("yt-lockup-view-model") ||
-    item2.closest("ytm-media-item") ||
-    item2.closest("ytm-video-with-context-renderer") ||
-    
-function getFilterContainers(root = document) {
-    return root.querySelectorAll(`
-        ytd-video-renderer,
-        ytd-compact-video-renderer,
-        ytd-grid-video-renderer,
-        ytd-rich-item-renderer,
-        ytd-watch-card-compact-video-renderer,
-        ytd-channel-video-player-renderer,
-        ytd-shelf-renderer,
-        ytd-reel-shelf-renderer,
-        ytd-horizontal-card-list-renderer,
-        ytd-universal-watch-card-renderer,
-        ytd-radio-renderer,
-        ytd-channel-renderer,
-        ytd-grid-channel-renderer,
-        ytd-reel-item-renderer,
-        ytm-shorts-lockup-view-model,
-        ytd-movie-renderer,
-        ytd-mix-renderer,
-        ytd-reel-video-renderer,
-        ytd-search-refinement-card-renderer,
-        ytd-watch-card-rich-header-renderer,
-        ytd-watch-card-section-sequence-renderer,
-        yt-lockup-metadata-view-model,
-        .yt-lockup-metadata-view-model-wiz,
-        .yt-lockup-view-model-wiz
-    `);
-}
-*/
 
 
 
