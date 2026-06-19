@@ -142,254 +142,93 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions") {
 
-	val list = r { 
-		CustomList(
-    items = listOf("A", "B"),
+    val list = r {
+        CustomList(
+            items = listOf("A", "B"),
 
-    add = { item ->
-        println("ADD: $item")
-        true
-    },
+            add = { item ->
+                log("ADD: $item")
+                true
+            },
 
-    addAt = { index, item ->
-        println("ADD AT: $index -> $item")
-    },
+            addAt = { index, item ->
+                log("ADD AT: $index -> $item")
+            },
 
-    addAll = { items ->
-        println("ADD ALL: $items")
-        true
-    },
+            addAll = { items ->
+                log("ADD ALL: $items")
+                true
+            },
 
-    addAllAt = { index, items ->
-        println("ADD ALL AT: $index -> $items")
-        true
-    },
+            addAllAt = { index, items ->
+                log("ADD ALL AT: $index -> $items")
+                true
+            },
 
-    clear = {
-        println("CLEAR")
-    },
+            clear = {
+                log("CLEAR")
+            },
 
-    get = { index ->
-        println("GET: $index")
-        "fake-$index"
-    },
+            get = { index ->
+                log("GET: $index")
+                "fake-$index"
+            },
 
-    remove = { item ->
-        println("REMOVE: $item")
-        true
-    },
+            remove = { item ->
+                log("REMOVE: $item")
+                true
+            },
 
-    removeAt = { index ->
-        println("REMOVE AT: $index")
-        "removed"
-    },
+            removeAt = { index ->
+                log("REMOVE AT: $index")
+                "removed"
+            },
 
-    removeAll = { items ->
-        println("REMOVE ALL: $items")
-        true
-    },
+            removeAll = { items ->
+                log("REMOVE ALL: $items")
+                true
+            },
 
-    set = { index, item ->
-        println("SET: $index = $item")
-        item
-    },
+            set = { index, item ->
+                log("SET: $index = $item")
+                item
+            },
 
-    contains = { item ->
-        println("CONTAINS: $item")
-        true
-    },
+            contains = { item ->
+                log("CONTAINS: $item")
+                true
+            },
 
-    containsAll = { items ->
-        println("CONTAINS ALL: $items")
-        true
-    },
+            containsAll = { items ->
+                log("CONTAINS ALL: $items")
+                true
+            },
 
-    indexOf = { item ->
-        println("INDEX OF: $item")
-        99
-    },
+            indexOf = { item ->
+                log("INDEX OF: $item")
+                99
+            },
 
-    lastIndexOf = { item ->
-        println("LAST INDEX OF: $item")
-        100
-    },
+            lastIndexOf = { item ->
+                log("LAST INDEX OF: $item")
+                100
+            },
 
-    isEmpty = {
-        println("EMPTY?")
-        false
-    },
+            isEmpty = {
+                log("EMPTY?")
+                false
+            },
 
-    toString = {
-        "MY CUSTOM LIST"
+            toString = {
+                "MY CUSTOM LIST"
+            }
+        )
     }
-)
-	}
 
-	val start = System.nanoTime()
+    val addBenchmark = r { mutableStateOf("Not run") }
+    val createBenchmark = r { mutableStateOf("Not run") }
+    val miscResult = r { mutableStateOf("") }
 
-repeat(1_000_000) {
-    list.add(it)
-}
-
-val end = System.nanoTime()
-
-println(
-    "Time: ${(end-start)/1_000_000} ms"
-)
-
-
-
-
-val start = System.nanoTime()
-
-repeat(1_000_000) {
-    CustomList(
-    items = listOf("A", "B"),
-
-    add = { item ->
-        println("ADD: $item")
-        true
-    },
-
-    addAt = { index, item ->
-        println("ADD AT: $index -> $item")
-    },
-
-    addAll = { items ->
-        println("ADD ALL: $items")
-        true
-    },
-
-    addAllAt = { index, items ->
-        println("ADD ALL AT: $index -> $items")
-        true
-    },
-
-    clear = {
-        println("CLEAR")
-    },
-
-    get = { index ->
-        println("GET: $index")
-        "fake-$index"
-    },
-
-    remove = { item ->
-        println("REMOVE: $item")
-        true
-    },
-
-    removeAt = { index ->
-        println("REMOVE AT: $index")
-        "removed"
-    },
-
-    removeAll = { items ->
-        println("REMOVE ALL: $items")
-        true
-    },
-
-    set = { index, item ->
-        println("SET: $index = $item")
-        item
-    },
-
-    contains = { item ->
-        println("CONTAINS: $item")
-        true
-    },
-
-    containsAll = { items ->
-        println("CONTAINS ALL: $items")
-        true
-    },
-
-    indexOf = { item ->
-        println("INDEX OF: $item")
-        99
-    },
-
-    lastIndexOf = { item ->
-        println("LAST INDEX OF: $item")
-        100
-    },
-
-    isEmpty = {
-        println("EMPTY?")
-        false
-    },
-
-    toString = {
-        "MY CUSTOM LIST"
-    }
-)
-}
-}
-
-val end = System.nanoTime()
-
-println(
-    "Time: ${(end-start)/1_000_000} ms"
-)
-	
-	
-
-	
-
-	list.add("C")
-
-list.add(0, "Z")
-
-list.addAll(
-    listOf("D", "E")
-)
-
-list.addAll(
-    1,
-    listOf("X", "Y")
-)
-
-println(
-    list[0]
-)
-
-list[0] = "NEW"
-
-list.remove("A")
-
-list.removeAt(0)
-
-list.removeAll(
-    listOf("B")
-)
-
-println(
-    list.contains("A")
-)
-
-println(
-    list.containsAll(listOf("A"))
-)
-
-println(
-    list.indexOf("A")
-)
-
-println(
-    list.lastIndexOf("A")
-)
-
-println(
-    list.isEmpty()
-)
-
-println(list)
-
-list.clear()
-
-
-
-	
     val items = r {
         mutableStateListOf(
             TestData(),
@@ -399,6 +238,202 @@ list.clear()
     }
 
     Column {
+
+        Text("CustomList Tests")
+
+        Row {
+
+            Button(
+                onClick = {
+
+                    val start = System.nanoTime()
+
+                    repeat(1_000_000) {
+                        list.add(it.toString())
+                    }
+
+                    val end = System.nanoTime()
+
+                    addBenchmark.value =
+                        "${(end - start) / 1_000_000} ms"
+
+                    log(
+                        "Add Time: ${addBenchmark.value}"
+                    )
+                }
+            ) {
+                Text("Benchmark Add")
+            }
+
+            Button(
+                onClick = {
+
+                    val start = System.nanoTime()
+
+                    repeat(1_000_000) {
+                        CustomList(
+                            items = listOf("A", "B"),
+
+                            add = { true },
+                            addAt = { _, _ -> },
+                            addAll = { true },
+                            addAllAt = { _, _ -> true },
+                            clear = {},
+                            get = { "fake-$it" },
+                            remove = { true },
+                            removeAt = { "removed" },
+                            removeAll = { true },
+                            set = { _, item -> item },
+                            contains = { true },
+                            containsAll = { true },
+                            indexOf = { 99 },
+                            lastIndexOf = { 100 },
+                            isEmpty = { false },
+                            toString = { "MY CUSTOM LIST" }
+                        )
+                    }
+
+                    val end = System.nanoTime()
+
+                    createBenchmark.value =
+                        "${(end - start) / 1_000_000} ms"
+
+                    log(
+                        "Create Time: ${createBenchmark.value}"
+                    )
+                }
+            ) {
+                Text("Benchmark Create")
+            }
+        }
+
+        Text("Add: ${addBenchmark.value}")
+        Text("Create: ${createBenchmark.value}")
+
+        Row {
+
+            Button(
+                onClick = {
+
+                    list.add("C")
+                    list.add(0, "Z")
+
+                    list.addAll(
+                        listOf(
+                            "D",
+                            "E"
+                        )
+                    )
+
+                    list.addAll(
+                        1,
+                        listOf(
+                            "X",
+                            "Y"
+                        )
+                    )
+
+                    miscResult.value =
+                        "Add operations done"
+                }
+            ) {
+                Text("Add Tests")
+            }
+
+            Button(
+                onClick = {
+
+                    val result = buildString {
+
+                        appendLine("get = ${list[0]}")
+
+                        list[0] = "NEW"
+
+                        appendLine(
+                            "contains = ${
+                                list.contains("A")
+                            }"
+                        )
+
+                        appendLine(
+                            "containsAll = ${
+                                list.containsAll(
+                                    listOf("A")
+                                )
+                            }"
+                        )
+
+                        appendLine(
+                            "indexOf = ${
+                                list.indexOf("A")
+                            }"
+                        )
+
+                        appendLine(
+                            "lastIndexOf = ${
+                                list.lastIndexOf("A")
+                            }"
+                        )
+
+                        appendLine(
+                            "isEmpty = ${
+                                list.isEmpty()
+                            }"
+                        )
+
+                        appendLine(
+                            "toString = $list"
+                        )
+                    }
+
+                    miscResult.value = result
+                    log(result)
+                }
+            ) {
+                Text("Read Tests")
+            }
+        }
+
+        Row {
+
+            Button(
+                onClick = {
+
+                    list.remove("A")
+
+                    list.removeAt(0)
+
+                    list.removeAll(
+                        listOf("B")
+                    )
+
+                    miscResult.value =
+                        "Remove operations done"
+                }
+            ) {
+                Text("Remove Tests")
+            }
+
+            Button(
+                onClick = {
+
+                    list.clear()
+
+                    miscResult.value =
+                        "List cleared"
+                }
+            ) {
+                Text("Clear")
+            }
+        }
+
+        Text(
+            text = miscResult.value
+        )
+
+        Spacer()
+
+        Text("Recompose Test")
 
         Row {
 
@@ -423,7 +458,8 @@ list.clear()
             Button(
                 onClick = {
                     if (items.isNotEmpty()) {
-                        items[0].name = "updated ${System.currentTimeMillis()}"
+                        items[0].name =
+                            "updated ${System.currentTimeMillis()}"
                     }
                 }
             ) {
@@ -431,22 +467,25 @@ list.clear()
             }
         }
 
-		Column(Mod.h(300)) {
+        Column(
+            Mod.h(300)
+        ) {
 
-        LazyColumn {
+            LazyColumn {
 
-            items(
-                items = items,
-                key = { it.hashCode() }
-            ) { item ->
+                items(
+                    items = items,
+                    key = { it.hashCode() }
+                ) { item ->
 
-                Text(item.name)
+                    Text(
+                        text = item.name
+                    )
+                }
             }
         }
-		}
     }
 }
-
 
 
 @Composable
