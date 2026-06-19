@@ -431,8 +431,6 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
             text = miscResult.value
         )
 
-        Spacer()
-
         Text("Recompose Test")
 
         Row {
