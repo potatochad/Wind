@@ -85,7 +85,7 @@ class WebController(
                 swipeRefresh.isRefreshing = no
 
                 view?.hideYoutubeChannel(
-					listOf("MrBeast", "McYum", "Technoblade", "Skeppy", "Grian", "Spifey", "Minecraft", "Speedrun", "Mr Bean", "POV", "m views", "redstone", "command blocks", "00 IQ", "poly bridge", "iswho", "rageplaysgames", "leowook", "shalz")         
+					listOf("MrBeast", "McYum", "Technoblade", "Skeppy", "Grian", "Spifey", "Minecraft", "Speedrun", "Mr Bean", "POV", "m views", "redstone", "command blocks", "00 IQ", "poly bridge", "iswho", "rageplaysgames", "leowook", "shalz", "chess", " vs ")         
 				)
 				
                 
