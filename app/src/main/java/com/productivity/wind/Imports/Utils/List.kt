@@ -135,10 +135,10 @@ import kotlinx.serialization.builtins.ListSerializer
 
 
 
-fun <T> customList(
+fun <T> CustomList(
     items: Collection<T> = emptyList(),
 
-    add: ((T) -> Boolean)? = null,
+    add: ((T) -> Bool)? = null,
     addAt: ((Int, T) -> Unit)? = null,
     addAll: ((Collection<T>) -> Boolean)? = null,
     addAllAt: ((Int, Collection<T>) -> Boolean)? = null,
