@@ -135,6 +135,129 @@ import kotlinx.serialization.builtins.ListSerializer
 
 
 
+fun <T> customList(
+    items: Collection<T> = emptyList(),
+
+    add: ((T) -> Boolean)? = null,
+    addAt: ((Int, T) -> Unit)? = null,
+    addAll: ((Collection<T>) -> Boolean)? = null,
+    addAllAt: ((Int, Collection<T>) -> Boolean)? = null,
+
+    clear: (() -> Unit)? = null,
+
+    get: ((Int) -> T)? = null,
+
+    remove: ((T) -> Bool)? = null,
+    removeAt: ((Int) -> T)? = null,
+    removeAll: ((Collection<T>) -> Boolean)? = null,
+
+    set: ((Int, T) -> T)? = null,
+
+    contains: ((T) -> Boolean)? = null,
+    containsAll: ((Collection<T>) -> Boolean)? = null,
+
+    indexOf: ((T) -> Int)? = null,
+    lastIndexOf: ((T) -> Int)? = null,
+
+    isEmpty: (() -> Boolean)? = null,
+
+    toString: (() -> String)? = null
+): MutableList<T> {
+
+    val inner = items.toMutableList()
+
+    return object : MutableList<T> {
+
+        override val size get() = inner.size
+
+        override fun add(element: T) =
+            add?.invoke(element)
+                ?: inner.add(element)
+
+        override fun add(index: Int, element: T) {
+            addAt?.invoke(index, element)
+                ?: inner.add(index, element)
+        }
+
+        override fun addAll(elements: Collection<T>) =
+            addAll?.invoke(elements)
+                ?: inner.addAll(elements)
+
+        override fun addAll(
+            index: Int,
+            elements: Collection<T>
+        ) =
+            addAllAt?.invoke(index, elements)
+                ?: inner.addAll(index, elements)
+
+        override fun clear() {
+            clear?.invoke()
+                ?: inner.clear()
+        }
+
+        override fun get(index: Int) =
+            get?.invoke(index)
+                ?: inner[index]
+
+        override fun remove(element: T) =
+            remove?.invoke(element)
+                ?: inner.remove(element)
+
+        override fun removeAt(index: Int) =
+            removeAt?.invoke(index)
+                ?: inner.removeAt(index)
+
+        override fun removeAll(elements: Collection<T>) =
+            removeAll?.invoke(elements)
+                ?: inner.removeAll(elements)
+
+        override fun set(index: Int, element: T) =
+            set?.invoke(index, element)
+                ?: inner.set(index, element)
+
+        override fun contains(element: T) =
+            contains?.invoke(element)
+                ?: inner.contains(element)
+
+        override fun containsAll(elements: Collection<T>) =
+            containsAll?.invoke(elements)
+                ?: inner.containsAll(elements)
+
+        override fun indexOf(element: T) =
+            indexOf?.invoke(element)
+                ?: inner.indexOf(element)
+
+        override fun lastIndexOf(element: T) =
+            lastIndexOf?.invoke(element)
+                ?: inner.lastIndexOf(element)
+
+        override fun isEmpty() =
+            isEmpty?.invoke()
+                ?: inner.isEmpty()
+
+        override fun iterator() =
+            inner.iterator()
+
+        override fun listIterator() =
+            inner.listIterator()
+
+        override fun listIterator(index: Int) =
+            inner.listIterator(index)
+
+        override fun subList(
+            fromIndex: Int,
+            toIndex: Int
+        ) =
+            inner.subList(fromIndex, toIndex)
+
+        override fun toString() =
+            toString?.invoke()
+                ?: inner.toString()
+    }
+}
+
+
+
 inline fun <T, R : Comparable<R>> Iterable<T>.max(selector: (T) -> R): R? =
     maxOfOrNull(selector)
 
