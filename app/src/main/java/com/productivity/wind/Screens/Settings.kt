@@ -141,6 +141,255 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions") {
+
+	val list = r { 
+		CustomList(
+    items = listOf("A", "B"),
+
+    add = { item ->
+        println("ADD: $item")
+        true
+    },
+
+    addAt = { index, item ->
+        println("ADD AT: $index -> $item")
+    },
+
+    addAll = { items ->
+        println("ADD ALL: $items")
+        true
+    },
+
+    addAllAt = { index, items ->
+        println("ADD ALL AT: $index -> $items")
+        true
+    },
+
+    clear = {
+        println("CLEAR")
+    },
+
+    get = { index ->
+        println("GET: $index")
+        "fake-$index"
+    },
+
+    remove = { item ->
+        println("REMOVE: $item")
+        true
+    },
+
+    removeAt = { index ->
+        println("REMOVE AT: $index")
+        "removed"
+    },
+
+    removeAll = { items ->
+        println("REMOVE ALL: $items")
+        true
+    },
+
+    set = { index, item ->
+        println("SET: $index = $item")
+        item
+    },
+
+    contains = { item ->
+        println("CONTAINS: $item")
+        true
+    },
+
+    containsAll = { items ->
+        println("CONTAINS ALL: $items")
+        true
+    },
+
+    indexOf = { item ->
+        println("INDEX OF: $item")
+        99
+    },
+
+    lastIndexOf = { item ->
+        println("LAST INDEX OF: $item")
+        100
+    },
+
+    isEmpty = {
+        println("EMPTY?")
+        false
+    },
+
+    toString = {
+        "MY CUSTOM LIST"
+    }
+)
+	}
+
+	val start = System.nanoTime()
+
+repeat(1_000_000) {
+    list.add(it)
+}
+
+val end = System.nanoTime()
+
+println(
+    "Time: ${(end-start)/1_000_000} ms"
+)
+
+
+
+
+val start = System.nanoTime()
+
+repeat(1_000_000) {
+    CustomList(
+    items = listOf("A", "B"),
+
+    add = { item ->
+        println("ADD: $item")
+        true
+    },
+
+    addAt = { index, item ->
+        println("ADD AT: $index -> $item")
+    },
+
+    addAll = { items ->
+        println("ADD ALL: $items")
+        true
+    },
+
+    addAllAt = { index, items ->
+        println("ADD ALL AT: $index -> $items")
+        true
+    },
+
+    clear = {
+        println("CLEAR")
+    },
+
+    get = { index ->
+        println("GET: $index")
+        "fake-$index"
+    },
+
+    remove = { item ->
+        println("REMOVE: $item")
+        true
+    },
+
+    removeAt = { index ->
+        println("REMOVE AT: $index")
+        "removed"
+    },
+
+    removeAll = { items ->
+        println("REMOVE ALL: $items")
+        true
+    },
+
+    set = { index, item ->
+        println("SET: $index = $item")
+        item
+    },
+
+    contains = { item ->
+        println("CONTAINS: $item")
+        true
+    },
+
+    containsAll = { items ->
+        println("CONTAINS ALL: $items")
+        true
+    },
+
+    indexOf = { item ->
+        println("INDEX OF: $item")
+        99
+    },
+
+    lastIndexOf = { item ->
+        println("LAST INDEX OF: $item")
+        100
+    },
+
+    isEmpty = {
+        println("EMPTY?")
+        false
+    },
+
+    toString = {
+        "MY CUSTOM LIST"
+    }
+)
+}
+}
+
+val end = System.nanoTime()
+
+println(
+    "Time: ${(end-start)/1_000_000} ms"
+)
+	
+	
+
+	
+
+	list.add("C")
+
+list.add(0, "Z")
+
+list.addAll(
+    listOf("D", "E")
+)
+
+list.addAll(
+    1,
+    listOf("X", "Y")
+)
+
+println(
+    list[0]
+)
+
+list[0] = "NEW"
+
+list.remove("A")
+
+list.removeAt(0)
+
+list.removeAll(
+    listOf("B")
+)
+
+println(
+    list.contains("A")
+)
+
+println(
+    list.containsAll(listOf("A"))
+)
+
+println(
+    list.indexOf("A")
+)
+
+println(
+    list.lastIndexOf("A")
+)
+
+println(
+    list.isEmpty()
+)
+
+println(list)
+
+list.clear()
+
+
+
+	
     val items = r {
         mutableStateListOf(
             TestData(),
