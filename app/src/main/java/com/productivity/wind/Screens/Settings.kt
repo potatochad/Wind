@@ -225,9 +225,9 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
         )
     }
 
-    val addBenchmark = r { mutableStateOf("Not run") }
-    val createBenchmark = r { mutableStateOf("Not run") }
-    val miscResult = r { mutableStateOf("") }
+    val addBenchmark = r("Not run")
+    val createBenchmark = r("Not run")
+    val miscResult = r("")
 
     val items = r {
         mutableStateListOf(
