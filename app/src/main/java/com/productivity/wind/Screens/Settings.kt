@@ -297,6 +297,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                         "Create Time: ${createBenchmark.value}"
                     )
                 }
+		}
 
         Text("Add av: ${addBenchmark.value}")
         Text("Create av: ${createBenchmark.value}")
@@ -375,6 +376,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                     miscResult.value = result
                     log(result)
 			}
+		}
 
         Row {
 
@@ -456,6 +458,9 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
             }
         }
     }
+	*/
+		}
+	}
 }
 
 
