@@ -243,34 +243,29 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 
         Row {
 
-            Button(
-                onClick = {
+            Btn("Average time to add"){
 
                     val start = System.nanoTime()
 
-                    repeat(1_000_000) {
+                    repeat(100000) {
                         list.add(it.toString())
                     }
 
                     val end = System.nanoTime()
 
                     addBenchmark.value =
-                        "${(end - start) / 1_000_000} ms"
+                        "${(end - start) / 100000} ms"
 
                     log(
                         "Add Time: ${addBenchmark.value}"
                     )
-                }
-            ) {
-                Text("Benchmark Add")
             }
 
-            Button(
-                onClick = {
+            Btn("Average time to Create list"){
 
                     val start = System.nanoTime()
 
-                    repeat(1_000_000) {
+                    repeat(100000) {
                         CustomList(
                             items = listOf("A", "B"),
 
@@ -296,24 +291,19 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                     val end = System.nanoTime()
 
                     createBenchmark.value =
-                        "${(end - start) / 1_000_000} ms"
+                        "${(end - start) / 100000} ms"
 
                     log(
                         "Create Time: ${createBenchmark.value}"
                     )
                 }
-            ) {
-                Text("Benchmark Create")
-            }
-        }
 
-        Text("Add: ${addBenchmark.value}")
-        Text("Create: ${createBenchmark.value}")
+        Text("Add av: ${addBenchmark.value}")
+        Text("Create av: ${createBenchmark.value}")
 
         Row {
 
-            Button(
-                onClick = {
+            Btn("Test add oporations"){
 
                     list.add("C")
                     list.add(0, "Z")
@@ -336,12 +326,8 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                     miscResult.value =
                         "Add operations done"
                 }
-            ) {
-                Text("Add Tests")
-            }
 
-            Button(
-                onClick = {
+            Btn("List Read function Tests"){
 
                     val result = buildString {
 
@@ -388,16 +374,11 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 
                     miscResult.value = result
                     log(result)
-                }
-            ) {
-                Text("Read Tests")
-            }
-        }
+			}
 
         Row {
 
-            Button(
-                onClick = {
+            Btn("Testing list remove operations"){
 
                     list.remove("A")
 
@@ -410,29 +391,21 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                     miscResult.value =
                         "Remove operations done"
                 }
-            ) {
-                Text("Remove Tests")
-            }
 
-            Button(
-                onClick = {
+            Btn("Testing clear function"){
 
                     list.clear()
 
                     miscResult.value =
                         "List cleared"
                 }
-            ) {
-                Text("Clear")
-            }
-        }
 
-        Text(
-            text = miscResult.value
-        )
+        Text(miscResult.value)
 
         Text("Recompose Test")
 
+
+		/*
         Row {
 
             Button(
