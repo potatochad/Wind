@@ -253,6 +253,9 @@ fun <T> customList(
         override fun toString() =
             toString?.invoke()
                 ?: inner.toString()
+
+        override fun retainAll(elements: Collection<T>) =
+            inner.retainAll(elements)
     }
 }
 
