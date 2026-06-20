@@ -141,54 +141,42 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions") {
-		/*
-        Row {
+	var items = mList(
+		TestData(),
+		TestData(),
+		TestData()
+	)
+	LazzyColumm {
+        LazzyRow {
 
             Btn("Add"){
-                    items += TestData()
-                }
+                items += TestData()
+            }
 
-            Button(
-                onClick = {
+            Btn("Delete"){
                     if (items.isNotEmpty()) {
                         items.removeAt(0)
                     }
                 }
-            ) {
-                Text("Delete")
-            }
 
-            Button(
-                onClick = {
+            Btn("Edit"){
                     if (items.isNotEmpty()) {
                         items[0].name =
                             "updated ${System.currentTimeMillis()}"
                     }
                 }
-            ) {
-                Text("Edit First")
-            }
-        }
 
-        Column(
-            Mod.h(300)
-        ) {
-
+        LazzyColumn(Mod.h(300)) {
             LazyColumn {
-
                 items(
                     items = items,
                     key = { it.hashCode() }
-                ) { item ->
-
-                    Text(
-                        text = item.name
-                    )
+                ) {
+                    Text(it.name)
                 }
             }
         }
     }
-	*/
 		
 }
 
