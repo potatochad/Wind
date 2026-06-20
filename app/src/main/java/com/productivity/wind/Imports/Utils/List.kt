@@ -563,10 +563,18 @@ abstract class LazyData {
 
 @Serializable
 abstract class LazyData {
-    fun <T> lazyState(d: T) = object : ReadWriteProperty<Any?, T> {
-        val s = m(d)
-        override fun getValue(r: Any?, p: KProperty<*>) = s.it
-        override fun setValue(r: Any?, p: KProperty<*>, v: T) { s.it = v }
+    
+    fun <T> lazyS(d: T){
+        var name by By("John")
+        .onBuild { prop, id ->
+            println("build: ${prop.name}, id=$id")
+        }
+        .onGet { prop ->
+            println("get: ${prop.name}")
+        }
+        .onSet { prop, value ->
+            
+        }
     }
 }
 
