@@ -141,7 +141,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions") {
-	var items = mList(
+	var items = mutableStateListOf(
 		TestData(),
 		TestData(),
 		TestData()
