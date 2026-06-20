@@ -162,6 +162,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                             "updated ${System.currentTimeMillis()}"
                     }
                 }
+		}
 
         LazzyColumn(Mod.h(300)) {
             LazyColumn {
