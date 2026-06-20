@@ -571,7 +571,26 @@ abstract class LazyData {
 }
 
 
+CustomList(
+    items = listOf("A", "B"),
 
+                            add = { true },
+                            addAt = { _, _ -> },
+                            addAll = { true },
+                            addAllAt = { _, _ -> true },
+                            clear = {},
+                            get = { "fake-$it" },
+                            remove = { true },
+                            removeAt = { "removed" },
+                            removeAll = { true },
+                            set = { _, item -> item },
+                            contains = { true },
+                            containsAll = { true },
+                            indexOf = { 99 },
+                            lastIndexOf = { 100 },
+                            isEmpty = { false },
+                            toString = { "MY CUSTOM LIST" }
+                        )
 
 @Serializable
 class TestData : LazyData() {
