@@ -578,7 +578,7 @@ abstract class LazyData {
     }
 }
 
-
+/*
 CustomList(
     items = listOf("A", "B"),
 
@@ -599,6 +599,7 @@ CustomList(
                             isEmpty = { false },
                             toString = { "MY CUSTOM LIST" }
                         )
+                        */
 
 @Serializable
 class TestData : LazyData() {
