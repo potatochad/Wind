@@ -146,7 +146,8 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 		TestData(),
 		TestData()
 	)
-	LazzyColumm {
+	
+	LazzyColumn {
         LazzyRow {
             Btn("Add"){
                 items += TestData()
