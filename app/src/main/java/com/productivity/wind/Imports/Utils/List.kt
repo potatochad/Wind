@@ -564,7 +564,7 @@ abstract class LazyData {
 @Serializable
 abstract class LazyData {
     
-    fun <T> lazyS(x: T): By<T> {
+    inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, id ->
                 log("build: ${prop.name}, id=$id")
