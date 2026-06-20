@@ -564,17 +564,17 @@ abstract class LazyData {
 @Serializable
 abstract class LazyData {
     
-    fun <T> lazyS(d: T){
-        var name by By("John")
-        .onBuild { prop, id ->
-            println("build: ${prop.name}, id=$id")
-        }
-        .onGet { prop ->
-            println("get: ${prop.name}")
-        }
-        .onSet { prop, value ->
-            
-        }
+    fun <T> lazyS(x: T): By<T> {
+        return By(x)
+            .onBuild { prop, id ->
+                log("build: ${prop.name}, id=$id")
+            }
+            .onGet { prop ->
+                log("get: ${prop.name}")
+            }
+            .onSet { prop, value ->
+                log("set: ${prop.name} = $value")
+            }
     }
 }
 
