@@ -148,17 +148,14 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 	)
 	LazzyColumm {
         LazzyRow {
-
             Btn("Add"){
                 items += TestData()
             }
-
             Btn("Delete"){
                     if (items.isNotEmpty()) {
                         items.removeAt(0)
                     }
                 }
-
             Btn("Edit"){
                     if (items.isNotEmpty()) {
                         items[0].name =
