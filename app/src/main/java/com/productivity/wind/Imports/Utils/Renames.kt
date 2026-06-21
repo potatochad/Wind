@@ -394,6 +394,32 @@ fun rLocalTextSpanStyle(): SpanStyle = rLocalTextStyle().toSpanStyle()
 
 
 
+fun <R> (() -> R)?.doOr(
+    fallback: () -> R
+): R = this?.invoke() ?: fallback()
+
+
+fun <A, R> ((A) -> R)?.doOr(
+    a: A,
+    fallback: () -> R
+): R = this?.invoke(a) ?: fallback()
+
+
+fun <A, B, R> ((A, B) -> R)?.doOr(
+    a: A,
+    b: B,
+    fallback: () -> R
+): R = this?.invoke(a, b) ?: fallback()
+
+
+fun <A, B, C, R> ((A, B, C) -> R)?.doOr(
+    a: A,
+    b: B,
+    c: C,
+    fallback: () -> R
+): R = this?.invoke(a, b, c) ?: fallback()
+
+
 
 
 val Any?.type: KClass<*>?
