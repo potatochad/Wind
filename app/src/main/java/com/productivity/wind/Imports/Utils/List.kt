@@ -138,30 +138,30 @@ import kotlinx.serialization.builtins.ListSerializer
 fun <T> CustomList(
     items: Collection<T> = emptyList(),
 
-    add: ((T) -> Bool)? = null,
-    addAt: ((Int, T) -> Unit)? = null,
-    addAll: ((Collection<T>) -> Boolean)? = null,
-    addAllAt: ((Int, Collection<T>) -> Boolean)? = null,
+    add: (mList<T>.(T) -> Bool)? = null,
+    addAt: (mList<T>.(Int, T) -> Unit)? = null,
+    addAll: (mList<T>.(Collection<T>) -> Boolean)? = null,
+    addAllAt: (mList<T>.(Int, Collection<T>) -> Boolean)? = null,
 
-    clear: (() -> Unit)? = null,
+    clear: (mList<T>.() -> Unit)? = null,
 
-    get: ((Int) -> T)? = null,
+    get: (mList<T>.(Int) -> T)? = null,
 
-    remove: ((T) -> Bool)? = null,
-    removeAt: ((Int) -> T)? = null,
-    removeAll: ((Collection<T>) -> Boolean)? = null,
+    remove: (mList<T>.(T) -> Bool)? = null,
+    removeAt: (mList<T>.(Int) -> T)? = null,
+    removeAll: (mList<T>.(Collection<T>) -> Boolean)? = null,
 
-    set: ((Int, T) -> T)? = null,
+    set: (mList<T>.(Int, T) -> T)? = null,
 
-    contains: ((T) -> Boolean)? = null,
-    containsAll: ((Collection<T>) -> Boolean)? = null,
+    contains: (mList<T>.(T) -> Boolean)? = null,
+    containsAll: (mList<T>.(Collection<T>) -> Boolean)? = null,
 
-    indexOf: ((T) -> Int)? = null,
-    lastIndexOf: ((T) -> Int)? = null,
+    indexOf: (mList<T>.(T) -> Int)? = null,
+    lastIndexOf: (mList<T>.(T) -> Int)? = null,
 
-    isEmpty: (() -> Bool)? = null,
+    isEmpty: (mList<T>.() -> Bool)? = null,
 
-    toString: (() -> Str)? = null
+    toString: (mList<T>.() -> Str)? = null
 ): MutableList<T> {
     return object : MutableList<T> {
         val inner = items.toMutableList()
