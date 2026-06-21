@@ -569,10 +569,34 @@ data class VarField(
     val type: KType
 )
 
+class TrackList<T : LazyData>(
+    items: List<T> = emptyList()
+) : {
+    CustomList(
+    items = listOf("A", "B"),
+
+                            add = { true },
+                            addAt = { _, _ -> },
+                            addAll = { true },
+                            addAllAt = { _, _ -> true },
+                            clear = {},
+                            get = { "fake-$it" },
+                            remove = { true },
+                            removeAt = { "removed" },
+                            removeAll = { true },
+                            set = { _, item -> item },
+                            contains = { true },
+                            containsAll = { true },
+                            indexOf = { 99 },
+                            lastIndexOf = { 100 },
+                            isEmpty = { false },
+                            toString = { "MY CUSTOM LIST" }
+                        )
+}
 
 abstract class LazyData {
     
-    val clazzName = this.className
+    val className1 = this.className
     val varList = mutableMapOf<Str, VarField>()
     
     inline fun <reified T> lazyS(x: T): By<T> {
@@ -594,29 +618,6 @@ abstract class LazyData {
     }
 }
 
-
-/*
-CustomList(
-    items = listOf("A", "B"),
-
-                            add = { true },
-                            addAt = { _, _ -> },
-                            addAll = { true },
-                            addAllAt = { _, _ -> true },
-                            clear = {},
-                            get = { "fake-$it" },
-                            remove = { true },
-                            removeAt = { "removed" },
-                            removeAll = { true },
-                            set = { _, item -> item },
-                            contains = { true },
-                            containsAll = { true },
-                            indexOf = { 99 },
-                            lastIndexOf = { 100 },
-                            isEmpty = { false },
-                            toString = { "MY CUSTOM LIST" }
-                        )
-                        */
 
 
 class TestData : LazyData() {
