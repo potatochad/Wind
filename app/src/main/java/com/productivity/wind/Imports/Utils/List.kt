@@ -200,74 +200,45 @@ fun <T> CustomList(
             remove.doOr(inner, element){ inner.remove(element) }
 
         override fun removeAt(index: Int) =
-            removeAt.doOr(inner, index) { inner.removeAt(index) }
+            removeAt.doOr(inner, index){ inner.removeAt(index) }
         
 
         override fun removeAll(elements: Collection<T>) =
-            removeAll.doOr(inner, elements) { inner.removeAll(elements) }
+            removeAll.doOr(inner, elements){ inner.removeAll(elements) }
         
 
         override fun set(index: Int, element: T) =
-            set.doOr(inner, index, element) { inner.set(index, element) }
+            set.doOr(inner, index, element){ inner.set(index, element) }
         
 
         override fun contains(element: T) =
-        
-            contains?.invoke(inner, element)
-                ?: inner.contains(element)
+            contains.doOr(inner, element){ inner.contains(element) }
         
 
         override fun containsAll(elements: Collection<T>) =
-        
-            containsAll?.invoke(inner, elements)
-                ?: inner.containsAll(elements)
+            containsAll.doOr(inner, elements){ inner.containsAll(elements) }
         
 
         override fun indexOf(element: T) =
-        
-            indexOf?.invoke(inner, element)
-                ?: inner.indexOf(element)
+            indexOf.doOr(inner, element){ inner.indexOf(element) }
         
 
         override fun lastIndexOf(element: T) =
-        
-            lastIndexOf?.invoke(inner, element)
-                ?: inner.lastIndexOf(element)
+            lastIndexOf.doOr(inner, element){ inner.lastIndexOf(element) }
         
 
         override fun isEmpty() =
+            isEmpty.doOr(inner){ inner.isEmpty() }
         
-            isEmpty?.invoke(inner)
-                ?: inner.isEmpty()
-        
-
-        override fun iterator() =
-            inner.iterator()
-        
-
-        override fun listIterator() =
-            inner.listIterator()
-        
-
-        override fun listIterator(index: Int) =
-            inner.listIterator(index)
-        
-
-        override fun subList(
-            fromIndex: Int,
-            toIndex: Int
-        ) =
-            inner.subList(fromIndex, toIndex)
-        
-
         override fun toString() =
-            toString?.invoke(inner)
-                ?: inner.toString()
+            toString.doOr(inner){ toStr(inner) }
         
 
-        override fun retainAll(elements: Collection<T>) =
-            inner.retainAll(elements)
-        
+        override fun iterator() = inner.iterator()
+        override fun listIterator() = inner.listIterator()
+        override fun listIterator(index: Int) = inner.listIterator(index)
+        override fun subList(fromIndex: Int, toIndex: Int) = inner.subList(fromIndex, toIndex)
+        override fun retainAll(elements: Collection<T>) = inner.retainAll(elements)
     }
 }
 
