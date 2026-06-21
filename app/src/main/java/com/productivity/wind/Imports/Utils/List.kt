@@ -566,7 +566,7 @@ data class VarField(
     val type: KType
 )
 
-@Serializable
+
 abstract class LazyData {
     val varList = mutableMapOf<Str, VarField>()
     
@@ -613,7 +613,7 @@ CustomList(
                         )
                         */
 
-@Serializable
+
 class TestData : LazyData() {
 
     var name by lazyS("hello")
