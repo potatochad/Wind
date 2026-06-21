@@ -168,16 +168,12 @@ fun <T> CustomList(
         override val size get() = inner.size
 
         override fun add(element: T) =
-        inner.run {
             add?.invoke(element)
                 ?: inner.add(element)
-        }
 
         override fun add(index: Int, element: T) {
-            inner.run {
             addAt?.invoke(index, element)
                 ?: inner.add(index, element)
-            }
         }
 
         override fun addAll(elements: Collection<T>) =
