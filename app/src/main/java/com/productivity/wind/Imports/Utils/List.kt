@@ -560,23 +560,35 @@ abstract class LazyData {
 }
 */
 
+data class VarField(
+    val name: Str,
+    var value: Any?,
+    val type: KType
+)
 
 @Serializable
 abstract class LazyData {
+    val varList = mutableMapOf<Str, VarField>()
     
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, id ->
-                log("build: ${prop.name}, id=$id")
+                varList[id] = VarField(id, x, typeOf<T>())
+                
+                log("varList: $varList")
             }
             .onGet { prop ->
-                log("get: ${prop.name}")
+                
             }
             .onSet { prop, value ->
+                varList[prop.name]?.value = value
+                
                 log("set: ${prop.name} = $value")
+                log("varList: $varList")
             }
     }
 }
+
 
 /*
 CustomList(
@@ -605,6 +617,7 @@ CustomList(
 class TestData : LazyData() {
 
     var name by lazyS("hello")
+    var boringName by lazyS("boring")
 }
 
 // list using testdata class
