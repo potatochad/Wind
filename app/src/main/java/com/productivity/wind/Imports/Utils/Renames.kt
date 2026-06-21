@@ -178,6 +178,9 @@ typealias ListInt = List<Int>
 typealias ListBool = List<Bool>
 typealias ListDouble = List<Double>
 
+typealias mList<T> = MutableList<T>
+	
+
 typealias Wait = suspend () -> Unit
 typealias Wait_<T> = suspend (T) -> Unit
 
