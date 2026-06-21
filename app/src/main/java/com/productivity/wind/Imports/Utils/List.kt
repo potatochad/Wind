@@ -171,54 +171,44 @@ fun <T> CustomList(
         override val size get() = inner.size
 
         override fun add(element: T) =
-            add?.invoke(inner, element) ?: inner.add(element)
+            add.doOr(inner, element){ inner.add(element) }
 
         override fun add(index: Int, element: T) {
-            addAt?.invoke(inner, index, element)
-                ?: inner.add(index, element)
+            addAt.doOr(inner, index, element){ inner.add(index, element) }
         }
 
         override fun addAll(elements: Collection<T>) =
-            addAll?.invoke(inner, elements)
-                ?: inner.addAll(elements)
+            addAll.doOr(inner, elements){ inner.addAll(elements) }
 
         override fun addAll(
             index: Int,
             elements: Collection<T>
         ) =
-            addAllAt?.invoke(inner, index, elements)
-                ?: inner.addAll(index, elements)
+            addAllAt.doOr(inner, index, elements){ inner.addAll(index, elements) }
             
 
         override fun clear() {
-            clear?.invoke(inner)
-                ?: inner.clear()
+            clear.doOr(inner){ inner.clear() }
             
         }
 
         override fun get(index: Int) =
-            get?.invoke(inner, index)
-                ?: inner[index]
+            get.doOr(inner, index){ inner[index] }
         
 
         override fun remove(element: T) =
-            remove?.invoke(inner, element)
-                ?: inner.remove(element)
-        
+            remove.doOr(inner, element){ inner.remove(element) }
 
         override fun removeAt(index: Int) =
-            removeAt?.invoke(inner, index)
-                ?: inner.removeAt(index)
+            removeAt.doOr(inner, index) { inner.removeAt(index) }
         
 
         override fun removeAll(elements: Collection<T>) =
-            removeAll?.invoke(inner, elements)
-                ?: inner.removeAll(elements)
+            removeAll.doOr(inner, elements) { inner.removeAll(elements) }
         
 
         override fun set(index: Int, element: T) =
-            set?.invoke(inner, index, element)
-                ?: inner.set(index, element)
+            set.doOr(inner, index, element) { inner.set(index, element) }
         
 
         override fun contains(element: T) =
