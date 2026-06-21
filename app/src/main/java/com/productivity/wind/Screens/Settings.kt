@@ -141,10 +141,12 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions") {
-	var items = mutableStateListOf(
-		TestData(),
-		TestData(),
-		TestData()
+	val items = TrackList(
+		listOf(
+			TestData(),
+			TestData(),
+			TestData()
+		)
 	)
 	
 	LazzyColumn {
