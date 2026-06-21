@@ -573,21 +573,15 @@ data class VarField(
 
 class TrackList<T : LazyData>(
     items: List<T> = emptyList()
-): MutableList<T> {
-
-    private val list = mutableStateListOf<T>()
-
-    fun stop {
-        
-    }
+): mList<T> {
     init {
         if (items.itemKType == null) {
             Vlog("Use same data Class for all items!")
-            return list
+            return mList<T>()
         }
     }
 
-    CustomList(
+    return CustomList(
         items = listOf("A", "B"),
 
                             add = { true },
