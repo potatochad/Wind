@@ -567,36 +567,35 @@ data class VarField(
     val type: KType
 )
 
+
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): mList<T> {
-    init {
-        if (items.itemKType == null) {
-            Vlog("Use same data Class for all items!")
-            return mList<T>()
-        }
+
+    if (items.itemKType == null) {
+        Vlog("Use same data Class for all items!")
+        return mList<T>()
     }
 
     return CustomList(
-        items = listOf("A", "B"),
-
-                            add = { true },
-                            addAt = { _, _ -> },
-                            addAll = { true },
-                            addAllAt = { _, _ -> true },
-                            clear = {},
-                            get = { "fake-$it" },
-                            remove = { true },
-                            removeAt = { "removed" },
-                            removeAll = { true },
-                            set = { _, item -> item },
-                            contains = { true },
-                            containsAll = { true },
-                            indexOf = { 99 },
-                            lastIndexOf = { 100 },
-                            isEmpty = { false },
-                            toString = { "MY CUSTOM LIST" }
-                        )
+        items = items,
+        add = { true },
+        addAt = { _, _ -> },
+        addAll = { true },
+        addAllAt = { _, _ -> true },
+        clear = {},
+        get = { items[it] },
+        remove = { true },
+        removeAt = { items[it] },
+        removeAll = { true },
+        set = { _, item -> item },
+        contains = { true },
+        containsAll = { true },
+        indexOf = { 99 },
+        lastIndexOf = { 100 },
+        isEmpty = { false },
+        toString = { items.firstOrNull()?.className ?: "Unknown" }
+    )
 }
 
 abstract class LazyData {
