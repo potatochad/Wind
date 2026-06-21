@@ -599,25 +599,60 @@ fun <T : LazyData> TrackList(
 
     return CustomList(
         items = items,
-        add = { 
+        add = {
             this.add(it)
             true
         },
-        addAt = { _, _ -> },
-        addAll = { true },
-        addAllAt = { _, _ -> true },
-        clear = {},
-        get = { items[it] },
-        remove = { true },
-        removeAt = { items[it] },
-        removeAll = { true },
-        set = { _, item -> item },
-        contains = { true },
-        containsAll = { true },
-        indexOf = { 99 },
-        lastIndexOf = { 100 },
-        isEmpty = { false },
-        toString = { items.firstOrNull()?.className ?: "Unknown" }
+        addAt = { index, item ->
+            this.add(index, item)
+        },
+        addAll = {
+            this.addAll(it)
+            true
+        },
+        addAllAt = { index, items ->
+            this.addAll(index, items)
+            true
+        },
+        clear = {
+            this.clear()
+        },
+        get = {
+            this[it]
+        },
+        remove = {
+            this.remove(it)
+            true
+        },
+        removeAt = {
+            this.removeAt(it)
+        },
+        removeAll = {
+            this.removeAll(it)
+            true
+        },
+        set = { index, item ->
+            this[index] = item
+            item
+        },
+        contains = {
+            this.contains(it)
+        },
+        containsAll = {
+            this.containsAll(it)
+        },
+        indexOf = {
+            this.indexOf(it)
+        },
+        lastIndexOf = {
+            this.lastIndexOf(it)
+        },
+        isEmpty = {
+            this.isEmpty()
+        },
+        toString = {
+            this.firstOrNull()?.className ?: "Unknown"
+        }
     )
 }
 
