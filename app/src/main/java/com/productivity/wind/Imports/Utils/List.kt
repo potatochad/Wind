@@ -619,7 +619,7 @@ fun <T : LazyData> TrackList(
     return CustomList(
         items = items,
         add = { 
-            inner.add(it)
+            this.add(it)
             true
         },
         addAt = { _, _ -> },
