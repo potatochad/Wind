@@ -408,12 +408,8 @@ fun <T : Any> KClass<T>.setProp(
     mutableProp.set(instance, value)
 }
 
-val className: Str
+val Any.className: Str
     get() = this::class.simpleName ?: "Unknown"
-
-val className: Str
-    get() = items.firstOrNull()?.className ?: "Unknown"
-
 
 
 
