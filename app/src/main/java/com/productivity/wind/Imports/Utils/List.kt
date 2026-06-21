@@ -163,8 +163,9 @@ fun <T> CustomList(
 
     toString: (mList<T>.() -> Str)? = null
 ): MutableList<T> {
+    val inner = items.toMutableList()
+    
     return object : MutableList<T> {
-        val inner = items.toMutableList()
         override val size get() = inner.size
 
         override fun add(element: T) =
