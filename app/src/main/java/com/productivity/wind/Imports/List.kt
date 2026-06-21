@@ -105,7 +105,7 @@ inline fun <T> MutableList<T>.each(
 
 @Composable
 inline fun <T> List<T>.findUI(
-    match: (T) -> Boolean,
+    match: (T) -> Bool,
     crossinline uiBlock: @Composable MutableList<T>.(T) -> Unit
 ) {
     this.filter(match)
