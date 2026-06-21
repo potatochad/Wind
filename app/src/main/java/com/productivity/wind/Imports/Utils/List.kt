@@ -189,7 +189,7 @@ fun <T> CustomList(
             
 
         override fun clear() {
-            clear?.invoke()
+            clear?.invoke(inner)
                 ?: inner.clear()
             
         }
@@ -221,66 +221,60 @@ fun <T> CustomList(
 
         override fun contains(element: T) =
         
-            contains?.invoke(element)
+            contains?.invoke(inner, element)
                 ?: inner.contains(element)
         
 
         override fun containsAll(elements: Collection<T>) =
         
-            containsAll?.invoke(elements)
+            containsAll?.invoke(inner, elements)
                 ?: inner.containsAll(elements)
         
 
         override fun indexOf(element: T) =
         
-            indexOf?.invoke(element)
+            indexOf?.invoke(inner, element)
                 ?: inner.indexOf(element)
         
 
         override fun lastIndexOf(element: T) =
         
-            lastIndexOf?.invoke(element)
+            lastIndexOf?.invoke(inner, element)
                 ?: inner.lastIndexOf(element)
         
 
         override fun isEmpty() =
         
-            isEmpty?.invoke()
+            isEmpty?.invoke(inner)
                 ?: inner.isEmpty()
         
 
         override fun iterator() =
-        
-            inner.iterator()
+            inner.iterator(inner)
         
 
         override fun listIterator() =
-        
-            inner.listIterator()
+            inner.listIterator(inner)
         
 
         override fun listIterator(index: Int) =
-        
-            inner.listIterator(index)
+            inner.listIterator(inner, index)
         
 
         override fun subList(
             fromIndex: Int,
             toIndex: Int
         ) =
-        
-            inner.subList(fromIndex, toIndex)
+            inner.subList(inner, fromIndex, toIndex)
         
 
         override fun toString() =
-        
-            toString?.invoke()
+            toString?.invoke(inner)
                 ?: inner.toString()
         
 
         override fun retainAll(elements: Collection<T>) =
-        
-            inner.retainAll(elements)
+            inner.retainAll(inner, elements)
         
     }
 }
