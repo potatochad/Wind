@@ -140,8 +140,8 @@ fun <T> CustomList(
 
     add: (mList<T>.(T) -> Bool)? = null,
     addAt: (mList<T>.(Int, T) -> Unit)? = null,
-    addAll: (mList<T>.(Collection<T>) -> Boolean)? = null,
-    addAllAt: (mList<T>.(Int, Collection<T>) -> Boolean)? = null,
+    addAll: (mList<T>.(Collection<T>) -> Bool)? = null,
+    addAllAt: (mList<T>.(Int, Collection<T>) -> Bool)? = null,
 
     clear: (mList<T>.() -> Unit)? = null,
 
@@ -149,12 +149,12 @@ fun <T> CustomList(
 
     remove: (mList<T>.(T) -> Bool)? = null,
     removeAt: (mList<T>.(Int) -> T)? = null,
-    removeAll: (mList<T>.(Collection<T>) -> Boolean)? = null,
+    removeAll: (mList<T>.(Collection<T>) -> Bool)? = null,
 
     set: (mList<T>.(Int, T) -> T)? = null,
 
-    contains: (mList<T>.(T) -> Boolean)? = null,
-    containsAll: (mList<T>.(Collection<T>) -> Boolean)? = null,
+    contains: (mList<T>.(T) -> Bool)? = null,
+    containsAll: (mList<T>.(Collection<T>) -> Bool)? = null,
 
     indexOf: (mList<T>.(T) -> Int)? = null,
     lastIndexOf: (mList<T>.(T) -> Int)? = null,
@@ -171,8 +171,7 @@ fun <T> CustomList(
         override val size get() = inner.size
 
         override fun add(element: T) =
-            add?.invoke(inner, element)
-                ?: inner.add(element)
+            add?.invoke(inner, element) ?: inner.add(element)
 
         override fun add(index: Int, element: T) {
             addAt?.invoke(inner, index, element)
