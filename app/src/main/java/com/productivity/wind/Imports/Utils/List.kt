@@ -177,120 +177,117 @@ fun <T> CustomList(
         }
 
         override fun addAll(elements: Collection<T>) =
-        inner.run {
             addAll?.invoke(elements)
                 ?: inner.addAll(elements)
-        }
 
         override fun addAll(
             index: Int,
             elements: Collection<T>
         ) =
-            inner.run {
             addAllAt?.invoke(index, elements)
                 ?: inner.addAll(index, elements)
-            }
+            
 
         override fun clear() {
-            inner.run {
+            
             clear?.invoke()
                 ?: inner.clear()
-            }
+            
         }
 
         override fun get(index: Int) =
-        inner.run {
+        
             get?.invoke(index)
                 ?: inner[index]
-        }
+        
 
         override fun remove(element: T) =
-        inner.run {
+        
             remove?.invoke(element)
                 ?: inner.remove(element)
-        }
+        
 
         override fun removeAt(index: Int) =
-        inner.run {
+        
             removeAt?.invoke(index)
                 ?: inner.removeAt(index)
-        }
+        
 
         override fun removeAll(elements: Collection<T>) =
-        inner.run {
+        
             removeAll?.invoke(elements)
                 ?: inner.removeAll(elements)
-        }
+        
 
         override fun set(index: Int, element: T) =
-        inner.run {
+        
             set?.invoke(index, element)
                 ?: inner.set(index, element)
-        }
+        
 
         override fun contains(element: T) =
-        inner.run {
+        
             contains?.invoke(element)
                 ?: inner.contains(element)
-        }
+        
 
         override fun containsAll(elements: Collection<T>) =
-        inner.run {
+        
             containsAll?.invoke(elements)
                 ?: inner.containsAll(elements)
-        }
+        
 
         override fun indexOf(element: T) =
-        inner.run {
+        
             indexOf?.invoke(element)
                 ?: inner.indexOf(element)
-        }
+        
 
         override fun lastIndexOf(element: T) =
-        inner.run {
+        
             lastIndexOf?.invoke(element)
                 ?: inner.lastIndexOf(element)
-        }
+        
 
         override fun isEmpty() =
-        inner.run {
+        
             isEmpty?.invoke()
                 ?: inner.isEmpty()
-        }
+        
 
         override fun iterator() =
-        inner.run {
+        
             inner.iterator()
-        }
+        
 
         override fun listIterator() =
-        inner.run {
+        
             inner.listIterator()
-        }
+        
 
         override fun listIterator(index: Int) =
-        inner.run {
+        
             inner.listIterator(index)
-        }
+        
 
         override fun subList(
             fromIndex: Int,
             toIndex: Int
         ) =
-        inner.run {
+        
             inner.subList(fromIndex, toIndex)
-        }
+        
 
         override fun toString() =
-        inner.run {
+        
             toString?.invoke()
                 ?: inner.toString()
-        }
+        
 
         override fun retainAll(elements: Collection<T>) =
-        inner.run {
+        
             inner.retainAll(elements)
-        }
+        
     }
 }
 
