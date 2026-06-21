@@ -408,6 +408,9 @@ fun <T : Any> KClass<T>.setProp(
     mutableProp.set(instance, value)
 }
 
+val className: Str
+    get() = this::class.simpleName ?: "Unknown"
+
 
 
 
@@ -568,6 +571,8 @@ data class VarField(
 
 
 abstract class LazyData {
+    
+    val clazzName = this.className
     val varList = mutableMapOf<Str, VarField>()
     
     inline fun <reified T> lazyS(x: T): By<T> {
