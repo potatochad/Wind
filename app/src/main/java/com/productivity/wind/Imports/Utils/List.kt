@@ -411,6 +411,8 @@ fun <T : Any> KClass<T>.setProp(
 val className: Str
     get() = this::class.simpleName ?: "Unknown"
 
+val className: Str
+    get() = items.firstOrNull()?.className ?: "Unknown"
 
 
 
@@ -571,7 +573,16 @@ data class VarField(
 
 class TrackList<T : LazyData>(
     items: List<T> = emptyList()
-) : {
+) : Idk {
+
+    fun stop {
+        
+    }
+
+    if (items.itemKType == null){
+        Vlog("Use same data Class for all items!")
+        return stop
+    }
     CustomList(
     items = listOf("A", "B"),
 
