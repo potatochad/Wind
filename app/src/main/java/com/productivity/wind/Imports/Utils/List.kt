@@ -168,60 +168,54 @@ fun <T> CustomList(
         override val size get() = inner.size
 
         override fun add(element: T) =
-            add?.invoke(element)
+            add?.invoke(inner, element)
                 ?: inner.add(element)
 
         override fun add(index: Int, element: T) {
-            addAt?.invoke(index, element)
+            addAt?.invoke(inner, index, element)
                 ?: inner.add(index, element)
         }
 
         override fun addAll(elements: Collection<T>) =
-            addAll?.invoke(elements)
+            addAll?.invoke(inner, elements)
                 ?: inner.addAll(elements)
 
         override fun addAll(
             index: Int,
             elements: Collection<T>
         ) =
-            addAllAt?.invoke(index, elements)
+            addAllAt?.invoke(inner, index, elements)
                 ?: inner.addAll(index, elements)
             
 
         override fun clear() {
-            
             clear?.invoke()
                 ?: inner.clear()
             
         }
 
         override fun get(index: Int) =
-        
-            get?.invoke(index)
+            get?.invoke(inner, index)
                 ?: inner[index]
         
 
         override fun remove(element: T) =
-        
-            remove?.invoke(element)
+            remove?.invoke(inner, element)
                 ?: inner.remove(element)
         
 
         override fun removeAt(index: Int) =
-        
-            removeAt?.invoke(index)
+            removeAt?.invoke(inner, index)
                 ?: inner.removeAt(index)
         
 
         override fun removeAll(elements: Collection<T>) =
-        
-            removeAll?.invoke(elements)
+            removeAll?.invoke(inner, elements)
                 ?: inner.removeAll(elements)
         
 
         override fun set(index: Int, element: T) =
-        
-            set?.invoke(index, element)
+            set?.invoke(inner, index, element)
                 ?: inner.set(index, element)
         
 
