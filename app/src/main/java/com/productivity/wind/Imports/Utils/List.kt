@@ -159,15 +159,12 @@ fun <T> CustomList(
     indexOf: ((T) -> Int)? = null,
     lastIndexOf: ((T) -> Int)? = null,
 
-    isEmpty: (() -> Boolean)? = null,
+    isEmpty: (() -> Bool)? = null,
 
-    toString: (() -> String)? = null
+    toString: (() -> Str)? = null
 ): MutableList<T> {
-
-    val inner = items.toMutableList()
-
     return object : MutableList<T> {
-
+        val inner = items.toMutableList()
         override val size get() = inner.size
 
         override fun add(element: T) =
