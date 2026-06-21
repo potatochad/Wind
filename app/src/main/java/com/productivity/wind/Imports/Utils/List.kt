@@ -250,22 +250,22 @@ fun <T> CustomList(
         
 
         override fun iterator() =
-            inner.iterator(inner)
+            inner.iterator()
         
 
         override fun listIterator() =
-            inner.listIterator(inner)
+            inner.listIterator()
         
 
         override fun listIterator(index: Int) =
-            inner.listIterator(inner, index)
+            inner.listIterator(index)
         
 
         override fun subList(
             fromIndex: Int,
             toIndex: Int
         ) =
-            inner.subList(inner, fromIndex, toIndex)
+            inner.subList(fromIndex, toIndex)
         
 
         override fun toString() =
@@ -274,7 +274,7 @@ fun <T> CustomList(
         
 
         override fun retainAll(elements: Collection<T>) =
-            inner.retainAll(inner, elements)
+            inner.retainAll(elements)
         
     }
 }
