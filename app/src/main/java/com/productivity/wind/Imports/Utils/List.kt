@@ -567,7 +567,7 @@ data class VarField(
     val type: KType
 )
 
-class TrackList<T : LazyData>(
+fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): mList<T> {
     init {
