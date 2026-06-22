@@ -162,12 +162,12 @@ fun <T> CustomList(
     isEmpty: (mList<T>.() -> Bool)? = null,
 
     toString: (mList<T>.() -> Str)? = null
-): MutableList<T> {
-    val list = mutableStateListOf<T>().apply {
+): mList<T> {
+    val list = mList<T>().apply {
         addAll(items)
     }
     
-    return object : MutableList<T> {
+    return object : mList<T> {
         override fun add(element: T) =
             add.doOr(list, element){ list.add(element) }
 
@@ -182,7 +182,7 @@ fun <T> CustomList(
             index: Int,
             elements: Collection<T>
         ) =
-            addAllAt.doOr(list, index, elements){ inner.addAll(index, elements) }
+            addAllAt.doOr(list, index, elements){ list.addAll(index, elements) }
             
 
         override fun clear() {
