@@ -560,11 +560,10 @@ fun <T : LazyData> lazySerialize(
     }
 
     return buildString {
-        append("type: $kType\n")
+        add("type: $kType\n")
 
         items.forEach { item ->
-            append("data: $item\n")
-            append("varList: ${item.varList}\n")
+            add("varList: ${item.varList}\n")
         }
     }
 }
@@ -651,6 +650,7 @@ abstract class LazyData {
                 log("varList: $varList")
             }
     }
+    val name by lazyS(id())
 }
 
 
