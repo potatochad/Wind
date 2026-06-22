@@ -550,20 +550,39 @@ data class VarField(
 )
 
 
-fun <T : LazyData> TrackList(
+fun <T : LazyData> lazySerialize(
     items: List<T> = emptyList()
-): mList<T> {
-
+) {
     var kType = items.itemKType
     if (kType == null) {
         Vlog("Use same data Class for all items!")
-        return mList<T>()
+        return
     }
 
+    return buildString {
+        append("type: $kType\n")
+
+        items.forEach { item ->
+            append("data: $item\n")
+            append("varList: ${item.varList}\n")
+        }
+    }
+
+
+    items.forEach {
+        log("type: $kType, data: ${it}")
+    }
+    log("kType: $kType, it.varList: ${it.varList}")
+            
+}
+
+
+fun <T : LazyData> TrackList(
+    items: List<T> = emptyList()
+): mList<T> {
     return CustomList(
         items = items,
         add = {
-            log("kType: $kType, it.varList: ${it.varList}")
             this.add(it)
             true
         },
