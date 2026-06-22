@@ -163,82 +163,81 @@ fun <T> CustomList(
 
     toString: (mList<T>.() -> Str)? = null
 ): MutableList<T> {
-    val inner = mutableStateListOf<T>().apply {
+    val list = mutableStateListOf<T>().apply {
         addAll(items)
     }
     
     return object : MutableList<T> {
-        override val size get() = inner.size
-
         override fun add(element: T) =
-            add.doOr(inner, element){ inner.add(element) }
+            add.doOr(list, element){ list.add(element) }
 
         override fun add(index: Int, element: T) {
-            addAt.doOr(inner, index, element){ inner.add(index, element) }
+            addAt.doOr(list, index, element){ list.add(index, element) }
         }
 
         override fun addAll(elements: Collection<T>) =
-            addAll.doOr(inner, elements){ inner.addAll(elements) }
+            addAll.doOr(list, elements){ list.addAll(elements) }
 
         override fun addAll(
             index: Int,
             elements: Collection<T>
         ) =
-            addAllAt.doOr(inner, index, elements){ inner.addAll(index, elements) }
+            addAllAt.doOr(list, index, elements){ inner.addAll(index, elements) }
             
 
         override fun clear() {
-            clear.doOr(inner){ inner.clear() }
+            clear.doOr(list){ list.clear() }
             
         }
 
         override fun get(index: Int) =
-            get.doOr(inner, index){ inner[index] }
+            get.doOr(list, index){ list[index] }
         
 
         override fun remove(element: T) =
-            remove.doOr(inner, element){ inner.remove(element) }
+            remove.doOr(list, element){ list.remove(element) }
 
         override fun removeAt(index: Int) =
-            removeAt.doOr(inner, index){ inner.removeAt(index) }
+            removeAt.doOr(list, index){ list.removeAt(index) }
         
 
         override fun removeAll(elements: Collection<T>) =
-            removeAll.doOr(inner, elements){ inner.removeAll(elements) }
+            removeAll.doOr(list, elements){ list.removeAll(elements) }
         
 
         override fun set(index: Int, element: T) =
-            set.doOr(inner, index, element){ inner.set(index, element) }
+            set.doOr(list, index, element){ list.set(index, element) }
         
 
         override fun contains(element: T) =
-            contains.doOr(inner, element){ inner.contains(element) }
+            contains.doOr(list, element){ list.contains(element) }
         
 
         override fun containsAll(elements: Collection<T>) =
-            containsAll.doOr(inner, elements){ inner.containsAll(elements) }
+            containsAll.doOr(list, elements){ list.containsAll(elements) }
         
 
         override fun indexOf(element: T) =
-            indexOf.doOr(inner, element){ inner.indexOf(element) }
+            indexOf.doOr(list, element){ list.indexOf(element) }
         
 
         override fun lastIndexOf(element: T) =
-            lastIndexOf.doOr(inner, element){ inner.lastIndexOf(element) }
+            lastIndexOf.doOr(list, element){ list.lastIndexOf(element) }
         
 
         override fun isEmpty() =
-            isEmpty.doOr(inner){ inner.isEmpty() }
+            isEmpty.doOr(list){ list.isEmpty() }
         
         override fun toString() =
-            toString.doOr(inner){ toStr(inner) }
+            toString.doOr(list){ toStr(list) }
         
 
-        override fun iterator() = inner.iterator()
-        override fun listIterator() = inner.listIterator()
-        override fun listIterator(index: Int) = inner.listIterator(index)
-        override fun subList(fromIndex: Int, toIndex: Int) = inner.subList(fromIndex, toIndex)
-        override fun retainAll(elements: Collection<T>) = inner.retainAll(elements)
+        override val size get() = list.size
+        override fun iterator() = list.iterator()
+        override fun listIterator() = list.listIterator()
+        override fun listIterator(index: Int) = list.listIterator(index)
+        override fun subList(fromIndex: Int, toIndex: Int) = list.subList(fromIndex, toIndex)
+        override fun retainAll(elements: Collection<T>) = list.retainAll(elements)
     }
 }
 
