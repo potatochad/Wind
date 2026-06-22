@@ -141,7 +141,7 @@ fun Any?.blog(x: Str){
 	log("$x: [ $this ]", 400)
 }
 
-fun log(message: Str, int: Int = 200) {
+fun log(message: Str, int: Int = 400) {
     var msg = message.replace("\n", " | ").take(int)
     if (msg.length >= int) {msg += " ..."}
 
@@ -149,7 +149,7 @@ fun log(message: Str, int: Int = 200) {
 }
 private var lastToast: Toast? = null
 
-fun Vlog(msg: Str, maxInt: Int = 200, special: Str = "none", delayLevel: Int = 0) {
+fun Vlog(msg: Str, maxInt: Int = 400, special: Str = "none", delayLevel: Int = 0) {
     val delayMs = (delayLevel.coerceIn(0, 100)) * 30L // Example: Level 2 = 60ms
 
     if (special.equals("one", true)) {
