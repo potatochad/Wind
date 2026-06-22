@@ -560,11 +560,11 @@ fun <T : LazyData> lazySerialize(
     }
 
     return buildString {
-        add("type: $kType\n")
+    appendLine("type: $kType")
 
-        items.forEach { item ->
-            add("varList: ${item.varList}\n")
-        }
+    items.forEach { item ->
+        appendLine("varList: ${item.varList}")
+    }
     }
 }
 
