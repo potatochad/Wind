@@ -550,21 +550,21 @@ data class VarField(
 )
 
 
+
 fun <T : LazyData> lazySerialize(
     items: List<T> = emptyList()
-) {
-    var kType = items.itemKType
+): Str {
+    val kType = items.itemKType
     if (kType == null) {
         Vlog("Use same data Class for all items!")
-        return
+        return ""
     }
 
     return buildString {
-    appendLine("type: $kType")
-
-    items.forEach { item ->
-        appendLine("varList: ${item.varList}")
-    }
+        appendLine("type: $kType")
+        items.forEach { item ->
+            appendLine("varList: ${item.varList}")
+        }
     }
 }
 
@@ -650,7 +650,7 @@ abstract class LazyData {
                 log("varList: $varList")
             }
     }
-    val name by lazyS(Id())
+    val id by lazyS(Id())
 }
 
 
