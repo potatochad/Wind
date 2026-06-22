@@ -554,7 +554,8 @@ fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): mList<T> {
 
-    if (items.itemKType == null) {
+    var kType = items.itemKType
+    if (kType == null) {
         Vlog("Use same data Class for all items!")
         return mList<T>()
     }
@@ -562,6 +563,7 @@ fun <T : LazyData> TrackList(
     return CustomList(
         items = items,
         add = {
+            log("kType: $kType, it.varList: ${it.varList}")
             this.add(it)
             true
         },
@@ -608,9 +610,6 @@ fun <T : LazyData> TrackList(
         },
         lastIndexOf = {
             this.lastIndexOf(it)
-        },
-        isEmpty = {
-            this.isEmpty()
         },
         toString = {
             this.firstOrNull()?.className ?: "Unknown"
