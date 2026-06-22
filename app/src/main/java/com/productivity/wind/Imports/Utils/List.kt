@@ -567,13 +567,6 @@ fun <T : LazyData> lazySerialize(
             append("varList: ${item.varList}\n")
         }
     }
-
-
-    items.forEach {
-        log("type: $kType, data: ${it}")
-    }
-    log("kType: $kType, it.varList: ${it.varList}")
-            
 }
 
 
