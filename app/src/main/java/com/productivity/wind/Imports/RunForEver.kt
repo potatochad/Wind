@@ -95,12 +95,20 @@ import com.productivity.wind.Imports.UI_visible.*
 
 // Start the service
 fun start(service: Class<out Service>) {
-    val intent = Intent(AppCtx, service)
-	
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        AppCtx.startForegroundService(intent)		
-	} else {
-		AppCtx.startService(intent)		
+    try {
+        val intent = Intent(AppCtx, service)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            AppCtx.startForegroundService(intent)
+        } else {
+            AppCtx.startService(intent)
+        }
+    } catch (e: SecurityException) {
+    Vlog("Permission problem: ${e.message}")
+} catch (e: IllegalStateException) {
+    Vlog("Foreground service problem: ${e.message}")
+} catch (e: Exception) {
+    Vlog("Unknown crash starting ForEverservice: ${e.message}")
 	}
 }
 
