@@ -71,7 +71,7 @@ fun Any?.youtubeFilter(
     this.jsFun(
         """
         $jsImports
-        const targets = $block1;
+        const blockTargets = $block1;
         const allowTargets = $allow1;
         $channelFilter
         """
