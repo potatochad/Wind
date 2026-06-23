@@ -230,7 +230,7 @@ fun AppContent() {
 fun AppStart_beforeUI() {
 	
 
-	start(ForEverService::class.java)
+	
 }
 
 fun MAINStart() {
