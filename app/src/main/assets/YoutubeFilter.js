@@ -87,9 +87,17 @@ function processItem(item2) {
     log("1. TEXT:", text, "Url:", logUrl, "link:", href);
 
     
-    if (!shouldProcessItem({ text, href, listItem })) return;
+    if (!shouldProcessItem({ text, href, listItem })) {
+        const words = text.trim().split(/\s+/);
+        const validTargets = allowTargets.filter(t => t?.trim());
+        
+        const allowItem =
+            validTargets.length === 0 ||
+            (words.length > 2 && validTargets.some(t => text.includes(t)));
+        if (!allowItem) hide(item);
+        return;
+    }
 
-    
     log("2. TEXT:", text, "Url:", logUrl, "link:", href);
 
     hide(item);
