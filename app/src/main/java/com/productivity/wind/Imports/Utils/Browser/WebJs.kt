@@ -64,7 +64,7 @@ fun Any?.youtubeFilter(
     val allow1 = JSONArray(allowOnly?.map { it.lowercase() } ?: emptyList<String>()).toString()
     val block1 = JSONArray(block?.map { it.lowercase() } ?: emptyList<String>()).toString()
 
-    var channelFilter = getTextAsset("ChannelFilter.js")
+    var filter = getTextAsset("YoutubeFilter.js")
     var jsImports = getTextAsset("Imports.js")
     
     
@@ -73,7 +73,7 @@ fun Any?.youtubeFilter(
         $jsImports
         const blockTargets = $block1;
         const allowTargets = $allow1;
-        $channelFilter
+        $filter
         """
     )
 }
