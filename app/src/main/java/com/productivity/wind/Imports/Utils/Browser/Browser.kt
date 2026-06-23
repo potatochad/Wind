@@ -90,13 +90,15 @@ class WebController(
 				// my first million
 				//mel robbins
 				//mindset
-				view?.allowOnlyYoutube(
-					
+				//daren daily
+				//tony robbins
+				view?.youtubeFilter(
+					allowOnly = null,
+					block = null,
 				)
-				view?.hideYoutube(
-					listOf("MrBeast")         
-					// listOf("MrBeast", "McYum", "Mark Rober", " TABS ", " Aliens ", "Technoblade", "Skeppy", "Grian", "Spifey", "Minecraft", "Speedrun", "Mr Bean", "POV", "m views", "redstone", "command blocks", "00 IQ", "poly bridge", "iswho", "rageplaysgames", "leowook", "shalz", "chess", " vs ", " vs. ", "reddoons", "real civil engineer", "cappy army", "iwantcheckmate", "Can I", "but everyone", " noob ", " OP ", " 1v1 ", " 3v1 ", " 2v1 ", ".io", "! ", " trackmania ", " 100% ", "Players", "Market crash", "king", "flood", "but all", "geometry dash", "just lost", "world box", "law by mike", "smartest", "baronVonGames", "...", " SMP ", "1000 days", "100 days")         
-				)
+				
+				// listOf("MrBeast", "McYum", "Mark Rober", " TABS ", " Aliens ", "Technoblade", "Skeppy", "Grian", "Spifey", "Minecraft", "Speedrun", "Mr Bean", "POV", "m views", "redstone", "command blocks", "00 IQ", "poly bridge", "iswho", "rageplaysgames", "leowook", "shalz", "chess", " vs ", " vs. ", "reddoons", "real civil engineer", "cappy army", "iwantcheckmate", "Can I", "but everyone", " noob ", " OP ", " 1v1 ", " 3v1 ", " 2v1 ", ".io", "! ", " trackmania ", " 100% ", "Players", "Market crash", "king", "flood", "but all", "geometry dash", "just lost", "world box", "law by mike", "smartest", "baronVonGames", "...", " SMP ", "1000 days", "100 days")         
+				
 				
 				
                 
