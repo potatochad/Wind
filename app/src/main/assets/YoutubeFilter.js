@@ -95,9 +95,10 @@ function processItem(item2) {
     hide(item);
 }
 
+//init load
 document.querySelectorAll("a").forEach(processItem);
 
-
+//new item detect
 WatchHtml().onNewElements(elements =>
     elements.forEach(processItem)
 );
