@@ -72,6 +72,22 @@ fun Any?.hideYoutubeChannel(channels: ListStr) {
         """
     )
 }
+fun Any?.allowOnlyYoutubeChannel(channels: ListStr) {
+    val jsChannels = JSONArray(channels.map { it.lowercase() }).toString()
+
+    var channelFilter = getTextAsset("ChannelFilter.js")
+    var jsImports = getTextAsset("Imports.js")
+    
+    
+    this.jsFun(
+        """
+        $jsImports
+        const targets = $jsChannels;
+        $channelFilter
+        """
+    )
+}
+
 
 
 fun Any?.forceGoogleInputFocus() {
