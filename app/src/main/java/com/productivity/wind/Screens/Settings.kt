@@ -148,6 +148,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 			TestData()
 		)
 	)
+	start(ForEverService::class.java)
 	
 	LazzyColumn {
         LazzyRow {
