@@ -123,13 +123,9 @@ class ForEverService : Service() {
 
 	override fun onCreate() {
         super.onCreate()
-        log("service: top layer")
 	}
 	
     override fun onBind(intent: Intent?): IBinder? {
-        Timber.d("onBind: $intent")
-		log("service: onBind")
-
         return null
     }
 
@@ -138,11 +134,6 @@ class ForEverService : Service() {
         flags: Int,
         startId: Int,
     ): Int {
-		var tsk2 = Bar.doTsk.find { it.on == yes }
-		if (tsk2 == null) {
-			stopSelf()              // ⚡ kills the service immediately
-			return START_NOT_STICKY // don’t restart it
-		}			
 		lateinit var notifManager: NotificationManager
 		lateinit var notifBuilder: NotificationBuilder
 		
@@ -151,7 +142,6 @@ class ForEverService : Service() {
 			notifBuilder = builder
 		}    
                       
-
 		startForeground(1, notif)
 
         if (OneJob == null || OneJob?.isActive == no) {
@@ -159,35 +149,6 @@ class ForEverService : Service() {
             OneJob = serviceScope.launch {
                 while (yes) {
 					wait(1000)
-					var tsk = Bar.doTsk.find { it.on == yes }
-					if (tsk != null){
-			
-						var timeWorked2 = tsk.didTime
-						
-						
-						if (tsk.on && Bar.leftApp){
-							if (tsk.timeLeft != 0){
-						
-								timeWorked2++
-
-								tsk.edit{
-									didTime = timeWorked2
-								}
-				
-								Bar.funTime++	
-								val notifi = notifBuilder.title("Timer").text(Time(tsk.timeLeft)).build()
-
-								notifManager.notify(1, notifi)
-							} else {
-								tsk.edit {
-									on = false
-								} 
-								val notifi = notifBuilder.title("Done").text("Done").build()
-								notifManager.notify(1, notifi)
-							}
-						}
-					}					
-
 
 				}
             }
