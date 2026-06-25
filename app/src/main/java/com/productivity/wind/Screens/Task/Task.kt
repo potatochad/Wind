@@ -521,6 +521,7 @@ fun ToDo(id: Str = "") {
 
 
 
+//THIS DOESNT  WORK AT ALLLL
 @Composable
 fun DoTskUI(tsk: DoTsk) = LazzyRow {
 
@@ -555,7 +556,7 @@ fun DoTskUI(tsk: DoTsk) = LazzyRow {
 				
 				Bar.funTime++	
 
-				start(ForEverService::class.java)
+				//background logic
 
 			}
 			if (tsk.done()){
