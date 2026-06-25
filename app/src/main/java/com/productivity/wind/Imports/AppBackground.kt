@@ -131,7 +131,7 @@ class AppBackground : Service() {
 
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
-				AppBackground_Task()
+				AppBackground()
                 while (yes) {
 					wait(1000)
 					log("service running: $timeRan")
