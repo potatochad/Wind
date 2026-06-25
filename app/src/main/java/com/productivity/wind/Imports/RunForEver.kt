@@ -117,25 +117,24 @@ fun stop(service: Class<out Service>) {
 }
 
 class ForEverService : Service() {
-	private val serviceScope =
+	val serviceScope =
         CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-    private var oneJob: Job? = null
-	
+    var job: Job? = null
+	var timeRan by m(1)
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {        
-		
         val notif = Notification("name", "running...")
                       
 		startForeground(1, notif)
 
-        if (OneJob == null || OneJob?.isActive == no) {
-            OneJob = serviceScope.launch {
+        if (job == null || job?.isActive == no) {
+            job = serviceScope.launch {
                 while (yes) {
 					wait(1000)
-					log("service running: ")
-					log("service running for: ")
+					log("service running: $timeRan")
+					timeRan++
 				}
             }
         }
