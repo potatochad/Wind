@@ -225,6 +225,10 @@ fun AppContent() {
 	}
 }
 
+fun AppBackground_Task(){
+	
+}
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI() {
