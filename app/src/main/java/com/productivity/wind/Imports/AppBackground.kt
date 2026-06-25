@@ -116,7 +116,7 @@ fun stop(service: Class<out Service>) {
     AppCtx.stopService(Intent(AppCtx, service))
 }
 
-class ForEverService : Service() {
+class AppBackground : Service() {
 	val serviceScope =
         CoroutineScope(Dispatchers.Main + SupervisorJob())
 
