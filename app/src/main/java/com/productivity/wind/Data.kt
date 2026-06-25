@@ -225,7 +225,7 @@ fun AppContent() {
 	}
 }
 
-fun AppBackground_Task(){
+fun AppBackground(){
 	
 }
 
