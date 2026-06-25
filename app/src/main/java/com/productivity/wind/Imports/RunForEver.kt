@@ -117,39 +117,24 @@ fun stop(service: Class<out Service>) {
 }
 
 class ForEverService : Service() {
-    private val serviceJob = SupervisorJob()
-    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
-    private var OneJob: Job? = null
+	private val serviceScope =
+        CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-	override fun onCreate() {
-        super.onCreate()
-	}
+    private var oneJob: Job? = null
 	
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
 
-    override fun onStartCommand(
-        intent: Intent?,
-        flags: Int,
-        startId: Int,
-    ): Int {
-		lateinit var notifManager: NotificationManager
-		lateinit var notifBuilder: NotificationBuilder
-		
-        val notif = Notification("name", Time(20), id = 1){ builder, manager ->
-			notifManager = manager
-			notifBuilder = builder
-		}    
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val notif = Notification("name", Time(20), id = 1)
                       
 		startForeground(1, notif)
 
         if (OneJob == null || OneJob?.isActive == no) {
-
             OneJob = serviceScope.launch {
                 while (yes) {
 					wait(1000)
-
+					log("service running: ")
+					log("service running for: ")
 				}
             }
         }
@@ -158,6 +143,7 @@ class ForEverService : Service() {
     }
 
     override fun onDestroy() { super.onDestroy(); serviceScope.cancel() }
+	override fun onBind(intent: Intent?) = null
 }
 
 
