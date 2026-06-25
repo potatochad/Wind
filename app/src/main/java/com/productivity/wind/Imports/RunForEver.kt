@@ -95,6 +95,8 @@ import com.productivity.wind.Imports.UI_visible.*
 
 // Start the service
 fun start(service: Class<out Service>) {
+	if (Bar.AppServiceRunning) return
+	
     try {
         val intent = Intent(AppCtx, service)
 
@@ -104,11 +106,11 @@ fun start(service: Class<out Service>) {
             AppCtx.startService(intent)
         }
     } catch (e: SecurityException) {
-    Vlog("Permission problem: ${e.message}")
-} catch (e: IllegalStateException) {
-    Vlog("Foreground service problem: ${e.message}")
-} catch (e: Exception) {
-    Vlog("Unknown crash starting ForEverservice: ${e.message}")
+		Vlog("Permission problem: ${e.message}")
+	} catch (e: IllegalStateException) {
+		Vlog("Foreground service problem: ${e.message}")
+	} catch (e: Exception) {
+		Vlog("Unknown crash starting ForEverservice: ${e.message}")
 	}
 }
 
@@ -142,7 +144,11 @@ class ForEverService : Service() {
         return START_STICKY
     }
 
-    override fun onDestroy() { super.onDestroy(); serviceScope.cancel() }
+    override fun onDestroy() { 
+		Bar.AppServiceRunning = no
+		serviceScope.cancel() 
+		super.onDestroy()
+	}
 	override fun onBind(intent: Intent?) = null
 }
 
