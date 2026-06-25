@@ -131,6 +131,7 @@ class ForEverService : Service() {
 
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
+				AppBackground_Task()
                 while (yes) {
 					wait(1000)
 					log("service running: $timeRan")
