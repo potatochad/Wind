@@ -85,10 +85,11 @@
 
 
         <service
-            android:name=".Imports.ForEverService"
+            android:name=".Imports.AppBackground"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="mediaPlayback|location|dataSync" />
+            android:foregroundServiceType="mediaPlayback|location|dataSync" 
+		/>
 
 
         <service
