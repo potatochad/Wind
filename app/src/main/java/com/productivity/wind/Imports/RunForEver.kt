@@ -124,8 +124,9 @@ class ForEverService : Service() {
 	
 
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val notif = Notification("name", Time(20), id = 1)
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {        
+		
+        val notif = Notification("name", "running...")
                       
 		startForeground(1, notif)
 
