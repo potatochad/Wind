@@ -95,8 +95,6 @@ import com.productivity.wind.Imports.UI_visible.*
 
 // Start the service
 fun start(service: Class<out Service>) {
-	if (Bar.AppServiceRunning) return
-	
     try {
         val intent = Intent(AppCtx, service)
 
@@ -133,7 +131,6 @@ class ForEverService : Service() {
 
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
-				Bar.AppServiceRunning = yes
                 while (yes) {
 					wait(1000)
 					log("service running: $timeRan")
@@ -146,7 +143,6 @@ class ForEverService : Service() {
     }
 
     override fun onDestroy() { 
-		Bar.AppServiceRunning = no
 		serviceScope.cancel() 
 		super.onDestroy()
 	}
