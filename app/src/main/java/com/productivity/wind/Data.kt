@@ -80,6 +80,7 @@ object Bar {
 	var leftApp by s(no)
 	var encryptedBackup by s(yes) 
 	var noUninstall by s(no)
+	var AppServiceRunning by s(no)
 	var logs = sList<Str>("logs")
 	
 	var Url by s("https://google.com")
