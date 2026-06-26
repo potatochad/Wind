@@ -127,7 +127,7 @@ class AppBackground : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {  
 		val notif = Notifi("Background Tasks:", "running...")
 		
-		startForeground(1, notif.it)
+		notif.startForeground(this)
 
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
