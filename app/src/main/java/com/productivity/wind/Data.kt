@@ -225,8 +225,21 @@ fun AppContent() {
 	}
 }
 
-fun AppBackground(){
-	
+fun AppBackground(notif: Notifi){
+	while (yes) {
+		wait(1000)
+		notif.text = "running..."
+		wait(1000)
+		notif.text = "running.."
+		wait(1000)
+		notif.text = "running."
+		wait(1000)
+		notif.text = "running"
+		wait(1000)
+		notif.text = "running."
+		wait(1000)
+		notif.text = "running.."
+	}
 }
 
 
