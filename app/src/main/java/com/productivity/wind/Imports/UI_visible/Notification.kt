@@ -176,7 +176,7 @@ class Notifi(
 	id: Int = 1,
 ) {
     Permission.notification()
-    var firstTime = if (notifMap[id]== null) yes else no
+    var firstTime = NotifBuilt()
     
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
