@@ -171,9 +171,9 @@ fun showOrderNotification(
 
 
 class Notifi(
-    id: Int = 1,
     title: Str,
-    text: Str
+    text: Str,
+	id: Int = 1,
 ) {
     val id = id
 
