@@ -174,7 +174,7 @@ class Notifi(
     title: Str,
     text: Str,
 	id: Int = 111,
-): Notification? {
+) {
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 	
@@ -203,9 +203,10 @@ class Notifi(
 		}
 	}
 
-	//make sure this recomposesss, when set text
 	fun startForeground(service: Service) {
-		service.startForeground(id, build())
+		if (Permission.notification()) {
+			service.startForeground(id, build())
+		}
 	}
 }
 
