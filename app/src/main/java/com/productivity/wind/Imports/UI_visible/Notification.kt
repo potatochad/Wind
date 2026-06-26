@@ -192,8 +192,11 @@ class Notifi(
 
     fun build(): Notification {
         return getNotifBuilder(id)
-            .setContentTitle(title)
-            .setContentText(text)
+            .title(title)
+            .text(text)
+			.setOngoing(true)
+			.setPriority(NotificationCompat.PRIORITY_MIN)
+			.setSilent(true)
             .build()
     }
 
