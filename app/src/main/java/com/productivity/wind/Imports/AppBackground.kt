@@ -146,16 +146,7 @@ class AppBackground : Service() {
 }
 
 
-/*
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
-<receiver
-    android:name=".BootReceiver"
-    android:exported="false">
-    <intent-filter>
-        <action android:name="android.intent.action.BOOT_COMPLETED"/>
-    </intent-filter>
-</receiver>
 
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -165,7 +156,7 @@ class BootReceiver : BroadcastReceiver() {
         }
     }
 }
-*/
+
 
 
 
