@@ -107,9 +107,10 @@ fun CreateNotificationChannel(context: Context) {
         val channel = NotificationChannel(
             "WindApp_id",
             "WindChannel_name",
-            NotificationManager.IMPORTANCE_DEFAULT
+            NotificationManager.IMPORTANCE_MIN
         ).apply {
             description = "Channel description"
+            setShowBadge(false)
         }
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
