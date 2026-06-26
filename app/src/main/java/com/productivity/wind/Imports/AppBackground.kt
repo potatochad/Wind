@@ -124,9 +124,10 @@ class AppBackground : Service() {
 	var timeRan by m(1)
 
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {        
-        val notif = Notification("name", "running...")
-                      
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {  
+		val notifi = Notifi("Background Tasks:", "running...")
+		
+        
 		startForeground(1, notif)
 
         if (job == null || job?.isActive == no) {
@@ -134,8 +135,18 @@ class AppBackground : Service() {
 				AppBackground()
                 while (yes) {
 					wait(1000)
-					log("service running: $timeRan")
-					timeRan++
+					notifi.text = "running..."
+					wait(1000)
+					notifi.text = "running.."
+					wait(1000)
+					notifi.text = "running."
+					wait(1000)
+					notifi.text = "running"
+					wait(1000)
+					notifi.text = "running."
+					wait(1000)
+					notifi.text = "running.."
+					
 				}
             }
         }
