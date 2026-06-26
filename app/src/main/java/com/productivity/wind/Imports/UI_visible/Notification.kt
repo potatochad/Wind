@@ -171,10 +171,36 @@ fun showOrderNotification(
 
 
 class Notifi(
-	
+    id: Int = 1,
+    title: Str,
+    text: Str
 ) {
+    val id = id
+
+    var title = title
+        set(value) {
+            field = value
+            update()
+        }
+
+    var text = text
+        set(value) {
+            field = value
+            update()
+        }
+
+    init {
+        update()
+    }
+
+    private fun update() {
+        Notification(
+            id = id,
+            title = title,
+            text = text
+        )
+    }
 }
-	
 
 
 fun Notification(
