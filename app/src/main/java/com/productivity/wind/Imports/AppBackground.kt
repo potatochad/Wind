@@ -125,26 +125,26 @@ class AppBackground : Service() {
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {  
-		val notifi = Notifi("Background Tasks:", "running...")
+		val notif = Notifi("Background Tasks:", "running...")
 		
-		startForeground(1, notifi)
+		startForeground(1, notif.it)
 
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
 				AppBackground()
                 while (yes) {
 					wait(1000)
-					notifi.text = "running..."
+					notif.text = "running..."
 					wait(1000)
-					notifi.text = "running.."
+					notif.text = "running.."
 					wait(1000)
-					notifi.text = "running."
+					notif.text = "running."
 					wait(1000)
-					notifi.text = "running"
+					notif.text = "running"
 					wait(1000)
-					notifi.text = "running."
+					notif.text = "running."
 					wait(1000)
-					notifi.text = "running.."
+					notif.text = "running.."
 					
 				}
             }
