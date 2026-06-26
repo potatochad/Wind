@@ -174,25 +174,10 @@ class Notifi(
     title: Str,
     text: Str,
 	id: Int = 111,
-) {
+): Notification? {
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    val builder = getNotifBuilder(id).setContentTitle(title).setContentText(text)
-
-            
-    val notifi = builder.build()
-    manager.notify(id, notifi)
-
-	init {
-        Permission.notification()
-
-        val firstTime = !NotifBuiltBefore(id)
-
-        val n = build(title, text)
-        manager.notify(id, n)
-    }
-
-
+	
     var title = title
         set(value) {
             field = value
@@ -205,11 +190,23 @@ class Notifi(
             make()
         }
 
-    fun make() {
-        
+    fun build(): Notification {
+        return getNotifBuilder(id)
+            .setContentTitle(titleValue)
+            .setContentText(textValue)
+            .build()
     }
-	val it: Notification
-        get() = 
+
+    fun make() {
+        if (Permission.notification()) {
+			manager.notify(id, build())
+		}
+	}
+
+	//make sure this recomposesss, when set text
+	fun startForeground(service: Service) {
+		service.startForeground(id, build())
+	}
 }
 
 
@@ -222,7 +219,7 @@ fun Notification(
     val myMediaSession = MediaSessionCompat(AppCtx, "MyMedia")
 
     Permission.notification()
-    var firstTime = if (notifMap[id]== null) yes else no
+    var firstTime = !NotifBuiltBefore(id)
     
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
