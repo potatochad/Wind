@@ -90,7 +90,7 @@ class NotificationSwipeReceiver : BroadcastReceiver() {
 }
 
 
-fun NotifBuilt(id: Int) = notifMap[id] != null
+fun NotifBuiltBefore(id: Int) = notifMap[id] != null
 
 fun getNotifBuilder(id: Int): NotificationBuilder {
     val builder = notifMap[id] ?: NotificationBuilder(AppCtx, "WindApp_id")
