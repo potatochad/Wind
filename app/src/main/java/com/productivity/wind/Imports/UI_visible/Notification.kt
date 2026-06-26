@@ -173,7 +173,7 @@ fun showOrderNotification(
 class Notifi(
     title: Str,
     text: Str,
-	id: Int = 111,
+	val id: Int = 111,
 ) {
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -192,8 +192,8 @@ class Notifi(
 
     fun build(): Notification {
         return getNotifBuilder(id)
-            .setContentTitle(titleValue)
-            .setContentText(textValue)
+            .setContentTitle(title)
+            .setContentText(text)
             .build()
     }
 
