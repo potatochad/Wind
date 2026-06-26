@@ -175,8 +175,6 @@ class Notifi(
     text: Str,
 	id: Int = 1,
 ) {
-    val myMediaSession = MediaSessionCompat(AppCtx, "MyMedia")
-
     Permission.notification()
     var firstTime = if (notifMap[id]== null) yes else no
     
@@ -188,12 +186,6 @@ class Notifi(
     val notifi = builder.build()
     manager.notify(id, notifi)
 
-    // optional dynamic updates
-    if (firstTime){
-        CoroutineScope(Dispatchers.Default).launch {
-           Do(builder, manager)
-        }
-	}
 
     var title = title
         set(value) {
