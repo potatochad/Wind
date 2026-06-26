@@ -131,22 +131,7 @@ class AppBackground : Service() {
 
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
-				AppBackground()
-                while (yes) {
-					wait(1000)
-					notif.text = "running..."
-					wait(1000)
-					notif.text = "running.."
-					wait(1000)
-					notif.text = "running."
-					wait(1000)
-					notif.text = "running"
-					wait(1000)
-					notif.text = "running."
-					wait(1000)
-					notif.text = "running.."
-					
-				}
+				AppBackground(notif)
             }
         }
 
