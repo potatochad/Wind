@@ -225,7 +225,7 @@ fun AppContent() {
 	}
 }
 
-fun AppBackground(notif: Notifi){
+suspend fun AppBackground(notif: Notifi){
 	while (yes) {
 		wait(1000)
 		notif.text = "running..."
