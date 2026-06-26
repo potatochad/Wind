@@ -146,6 +146,28 @@ class AppBackground : Service() {
 }
 
 
+/*
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+<receiver
+    android:name=".BootReceiver"
+    android:exported="false">
+    <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+    </intent-filter>
+</receiver>
+
+class BootReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
+            val i = Intent(context, AppBackground::class.java)
+            ContextCompat.startForegroundService(context, i)
+        }
+    }
+}
+*/
+
+
 
 
 
