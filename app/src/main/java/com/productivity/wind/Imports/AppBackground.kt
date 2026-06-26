@@ -128,7 +128,7 @@ class AppBackground : Service() {
 		val notifi = Notifi("Background Tasks:", "running...")
 		
         
-		startForeground(1, notif)
+		startForeground(1, notifi)
 
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
