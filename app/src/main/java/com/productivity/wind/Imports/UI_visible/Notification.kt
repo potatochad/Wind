@@ -206,18 +206,10 @@ class Notifi(
         }
 
     fun make() {
-        Notification(
-            id = id,
-            title = title,
-            text = text
-        )
+        
     }
 	val it: Notification
-        get() = Notification(
-            id = id,
-            title = title,
-            text = text
-        )
+        get() = 
 }
 
 
