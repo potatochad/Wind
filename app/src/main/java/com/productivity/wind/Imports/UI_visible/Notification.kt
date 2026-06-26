@@ -180,26 +180,28 @@ class Notifi(
     var title = title
         set(value) {
             field = value
-            update()
+            make()
         }
 
     var text = text
         set(value) {
             field = value
-            update()
+            make()
         }
 
-    init {
-        update()
-    }
-
-    private fun update() {
+    fun make() {
         Notification(
             id = id,
             title = title,
             text = text
         )
     }
+	val it: Notification
+        get() = Notification(
+            id = id,
+            title = title,
+            text = text
+        )
 }
 
 
