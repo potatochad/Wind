@@ -173,11 +173,8 @@ fun showOrderNotification(
 class Notifi(
     title: Str,
     text: Str,
-	id: Int = 1,
+	id: Int = 111,
 ) {
-    Permission.notification()
-    var firstTime = NotifBuilt()
-    
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     val builder = getNotifBuilder(id).setContentTitle(title).setContentText(text)
@@ -185,6 +182,15 @@ class Notifi(
             
     val notifi = builder.build()
     manager.notify(id, notifi)
+
+	init {
+        Permission.notification()
+
+        val firstTime = !NotifBuiltBefore(id)
+
+        val n = build(title, text)
+        manager.notify(id, n)
+    }
 
 
     var title = title
