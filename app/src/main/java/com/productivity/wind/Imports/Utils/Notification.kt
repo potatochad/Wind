@@ -102,6 +102,7 @@ fun getNotifBuilder(id: Int): NotificationBuilder {
 }
 
 
+//called in App.kt
 fun CreateNotificationChannel(context: Context) {
     Android8OrAbove {
         val channel = NotificationChannel(
