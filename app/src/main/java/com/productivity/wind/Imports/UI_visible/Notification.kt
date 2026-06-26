@@ -175,7 +175,25 @@ class Notifi(
     text: Str,
 	id: Int = 1,
 ) {
-    val id = id
+    val myMediaSession = MediaSessionCompat(AppCtx, "MyMedia")
+
+    Permission.notification()
+    var firstTime = if (notifMap[id]== null) yes else no
+    
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    val builder = getNotifBuilder(id).setContentTitle(title).setContentText(text)
+
+            
+    val notifi = builder.build()
+    manager.notify(id, notifi)
+
+    // optional dynamic updates
+    if (firstTime){
+        CoroutineScope(Dispatchers.Default).launch {
+           Do(builder, manager)
+        }
+	}
 
     var title = title
         set(value) {
