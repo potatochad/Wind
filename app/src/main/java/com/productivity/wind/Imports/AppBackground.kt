@@ -127,7 +127,6 @@ class AppBackground : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {  
 		val notifi = Notifi("Background Tasks:", "running...")
 		
-        
 		startForeground(1, notifi)
 
         if (job == null || job?.isActive == no) {
