@@ -84,7 +84,7 @@ fun startSystemTimer(context: Context, minutes: Int) {
     val triggerAtMillis = System.currentTimeMillis() + minutes * 60 * 1000
 
     // This PendingIntent opens your app when the timer is tapped
-    val intent = Intent(context, MainActivity::class.java)
+    val intent = Intent(context, AppUI::class.java)
     val pendingIntent = PendingIntent.getActivity(
         context,
         0,
