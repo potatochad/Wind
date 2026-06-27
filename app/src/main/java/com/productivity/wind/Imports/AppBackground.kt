@@ -126,6 +126,8 @@ class AppBackground : Service() {
     var job: Job? = null
 	var timeRan by m(1)
 
+	// stopSelf() is real functionnn
+
 
 	override fun onCreate() {
 		super.onCreate()
