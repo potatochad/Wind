@@ -225,6 +225,7 @@ fun AppContent() {
 	}
 }
 
+//Dont use APP context
 suspend fun AppBackground(notif: Notifi){
 	while (yes) {
 		wait(1000)
