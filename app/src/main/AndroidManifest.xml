@@ -55,7 +55,6 @@
     android:value="NOKEY" />
 
         <activity
-            android:name=".Imports.Utils.AppUI"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             android:exported="true"
