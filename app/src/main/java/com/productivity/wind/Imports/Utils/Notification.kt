@@ -66,6 +66,8 @@ import android.content.*
 import com.productivity.wind.Imports.UI_visible.*
 
 
+val notif_Id = "WindApp"
+val notif_Name = "WindChannel"
 
 
 
@@ -81,7 +83,7 @@ fun Show(notifi: Notification, id: Int = 1) {
 
 class NotificationSwipeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val notifId = intent.getIntExtra("notif_id", -1)
+        val notifId = intent.getIntExtra(notif_Id, -1)
 
         
         log("DOESNT WORK CURRENTLY")
@@ -93,7 +95,7 @@ class NotificationSwipeReceiver : BroadcastReceiver() {
 fun NotifBuiltBefore(id: Int) = notifMap[id] != null
 
 fun getNotifBuilder(id: Int): NotificationBuilder {
-    val builder = notifMap[id] ?: NotificationBuilder(AppCtx, "WindApp_id")
+    val builder = notifMap[id] ?: NotificationBuilder(AppCtx, notif_Id)
         .setSmallIcon(myAppRes)
         .setAutoCancel(true)
 
@@ -106,8 +108,8 @@ fun getNotifBuilder(id: Int): NotificationBuilder {
 fun CreateNotificationChannel(context: Context) {
     Android8OrAbove {
         val channel = NotificationChannel(
-            "WindApp",
-            "WindChannel",
+            notif_Id,
+            notif_Name,
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
             description = "Channel description"
