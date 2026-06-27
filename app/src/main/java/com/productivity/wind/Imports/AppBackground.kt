@@ -94,7 +94,7 @@ import androidx.core.content.ContextCompat
 
 //region LATER USE
 
-// Start the service
+//‼️‼️foreground service must PASS CONTEXTT (cause jot initialized yet, when app closed APPCTX)
 fun start(service: Class<out Service>) {
     try {
         val intent = Intent(AppCtx, service)
@@ -116,6 +116,23 @@ fun start(service: Class<out Service>) {
 fun stop(service: Class<out Service>) {
     AppCtx.stopService(Intent(AppCtx, service))
 }
+
+
+fun Context.start(service: Class<out Service>) {
+    val intent = Intent(this, service)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        startForegroundService(intent)
+    } else {
+        startService(intent)
+    }
+}
+
+fun Context.stop(service: Class<out Service>) {
+    stopService(Intent(this, service))
+}
+
+
 
 class AppBackground : Service() {
 	val notif = Notifi("Background Tasks:", "running...")
