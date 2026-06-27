@@ -151,6 +151,7 @@ class AppBackground : Service() {
 
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+		log("App rebooted")
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             val i = Intent(context, AppBackground::class.java)
             ContextCompat.startForegroundService(context, i)
