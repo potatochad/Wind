@@ -466,9 +466,28 @@ var AppDensity by m(0f)
 
 lateinit var scope: CoroutineScope
 
-  
+
+
+
+
+
+
+
+
+/*
+class App : Application() {
+    override fun onCreate() {
+        super.onCreate()
+
+        AppCtx = applicationContext
+
+        CreateNotificationChannel(this)
+        LogAppCrashes()
+    }
+}
+*/
 	
-class MainActivity : ComponentActivity() {
+class AppUI : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
