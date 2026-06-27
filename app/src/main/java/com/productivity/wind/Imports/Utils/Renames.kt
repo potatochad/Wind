@@ -131,7 +131,7 @@ val white = Color.White
 val gray = Color.Gray
 val lightBlue = Color(0xFFADD8E6)
 val darkGreen = Color(0xFF0A1F0D)
-val orange = Color(0xFFFFA500)
+val orange = Color(0xF7FFA500)
 val transparent = Color.Transparent
 val black = Color.Black
 val red = Color.Red
@@ -226,11 +226,7 @@ fun <T> m(value: T) = mutableStateOf(value)
 fun <T> r(x: T) = r { m(x) }
 @Composable
 inline fun <T> r(vararg keys: Any?, crossinline calc: () -> T): T = remember(*keys, calculation = calc)
-	
-@Composable
-fun <T> onChange(vararg keys: Any?, block: () -> T): T {
-    return remember(*keys) { block() }
-}
+
 
 fun <T> mList() = mutableStateListOf<T>()
 
