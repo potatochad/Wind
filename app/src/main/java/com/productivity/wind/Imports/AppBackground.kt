@@ -118,6 +118,8 @@ fun stop(service: Class<out Service>) {
 }
 
 class AppBackground : Service() {
+	val notif = Notifi("Background Tasks:", "running...")
+            
 	val serviceScope =
         CoroutineScope(Dispatchers.Main + SupervisorJob())
 
@@ -125,11 +127,21 @@ class AppBackground : Service() {
 	var timeRan by m(1)
 
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {  
-		val notif = Notifi("Background Tasks:", "running...")
-		
-		notif.startForeground(this)
+	override fun onCreate() {
+        super.onCreate()
 
+        try {
+            Vlog("service create")
+
+            notif.startForeground(this)
+        } catch (e: Exception) {
+            Vlog("foreground failed: ${e.message}")
+            Vlog(e.stackTraceToString())
+        }
+    }
+
+	
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {  
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
 				AppBackground(notif)
@@ -151,7 +163,7 @@ class AppBackground : Service() {
 
 class BootReceiver : BroadcastReceiver() {
 	override fun onReceive(context: Context, intent: Intent) {
-		log("Receiver: ${intent.action}")
+		Vlog("Receiver: ${intent.action}")
 
     if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
         try {
@@ -159,9 +171,9 @@ class BootReceiver : BroadcastReceiver() {
                 context,
                 Intent(context, AppBackground::class.java)
             )
-            log("service started")
+            Vlog("service started")
         } catch (e: Exception) {
-            log("service failed $e")
+            Vlog("service failed $e")
         }
     }
 	}
