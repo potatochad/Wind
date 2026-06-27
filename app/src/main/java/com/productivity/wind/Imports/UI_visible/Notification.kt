@@ -194,6 +194,7 @@ class Notifi(
         return getNotifBuilder(id)
             .title(title)
             .text(text)
+			.setPriority(Notification.PRIORITY_HIGH) // for under android 26 compatibility
 			.setOngoing(true)
 			.setSilent(true)
             .build()
