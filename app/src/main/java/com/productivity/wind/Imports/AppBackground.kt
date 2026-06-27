@@ -94,30 +94,7 @@ import androidx.core.content.ContextCompat
 
 //region LATER USE
 
-//‼️‼️foreground service must PASS CONTEXTT (cause jot initialized yet, when app closed APPCTX)
-fun start(service: Class<out Service>) {
-    try {
-        val intent = Intent(AppCtx, service)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            AppCtx.startForegroundService(intent)
-        } else {
-            AppCtx.startService(intent)
-        }
-    } catch (e: SecurityException) {
-		Vlog("Permission problem: ${e.message}")
-	} catch (e: IllegalStateException) {
-		Vlog("Foreground service problem: ${e.message}")
-	} catch (e: Exception) {
-		Vlog("Unknown crash starting ForEverservice: ${e.message}")
-	}
-}
-
-fun stop(service: Class<out Service>) {
-    AppCtx.stopService(Intent(AppCtx, service))
-}
-
-
+//‼️‼️foreground service must PASS CONTEXTT (cause not initialized yet, when app closed APPCTX)
 fun Context.start(service: Class<out Service>) {
     val intent = Intent(this, service)
 
