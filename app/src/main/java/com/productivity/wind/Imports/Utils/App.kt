@@ -452,9 +452,11 @@ fun MyNavGraph(navController: NavHostController) {
 
 
 
-
+//DONT CALL OR USE OUTSIDE OF APPUI: (foreground services, etc...)
 lateinit var App: ComponentActivity
 lateinit var AppCtx: Context
+
+
 lateinit var AppNav: NavHostController
 lateinit var AppPkg: Str
 lateinit var permission: ActivityResultLauncher<Str>
@@ -474,18 +476,7 @@ lateinit var scope: CoroutineScope
 
 
 
-/*
-class App : Application() {
-    override fun onCreate() {
-        super.onCreate()
 
-        AppCtx = applicationContext
-
-        CreateNotificationChannel(this)
-        LogAppCrashes()
-    }
-}
-*/
 	
 class AppUI : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
