@@ -195,7 +195,6 @@ class Notifi(
             .title(title)
             .text(text)
 			.setOngoing(true)
-			.setPriority(NotificationCompat.PRIORITY_MIN)
 			.setSilent(true)
             .build()
     }
