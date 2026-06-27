@@ -109,7 +109,7 @@ fun showOrderNotification(
     
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    val builder = NotificationCompat.Builder(AppCtx, "WindApp_id")
+    val builder = NotificationCompat.Builder(AppCtx, notif_Id)
         .setSmallIcon(R.drawable.ic_launcher_foreground)
         .setContentTitle("You order is being placed")
         .setContentText("Confirming with bakery...")
@@ -247,13 +247,14 @@ fun Notification(
 
 
 
+// doesnt work‼️‼️
 fun Notification(
     xml: Int,
     id: Int = 1,
     Do: suspend (builder: NotificationCompat.Builder, remoteView: RemoteViews, manager: NotificationManager) -> Unit = { _, _, _ -> }
 ) {
     val deleteIntent = Intent(AppCtx, NotificationSwipeReceiver::class.java).apply {
-        putExtra("notif_id", id)
+        putExtra(notif_Id, id)
     }
     
     val pendingIntent = PendingIntent.getBroadcast(
@@ -270,7 +271,7 @@ fun Notification(
         val remoteView = RemoteViews(AppCtx.packageName, xml)
 
         // create or reuse builder
-        val builder = notifMap[id] ?: NotificationCompat.Builder(AppCtx, "WindApp_id")
+        val builder = notifMap[id] ?: NotificationCompat.Builder(AppCtx, notif_Id)
             .setSmallIcon(myAppRes)         
             .setAutoCancel(false)
             .setCustomContentView(remoteView)
