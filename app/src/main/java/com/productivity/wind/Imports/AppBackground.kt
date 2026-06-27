@@ -165,19 +165,17 @@ class AppBackground : Service() {
 
 class BootReceiver : BroadcastReceiver() {
 	override fun onReceive(context: Context, intent: Intent) {
-		Vlog("Receiver: ${intent.action}")
-
-    if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
-        try {
-            ContextCompat.startForegroundService(
-                context,
-                Intent(context, AppBackground::class.java)
-            )
-            Vlog("service started")
-        } catch (e: Exception) {
-            Vlog("service failed $e")
+        if (intent.action == Intent.ACTION_BOOT_COMPLETED && getServiceState(context) == ServiceState.STARTED) {
+            Intent(context, AppBackground::class.java).also {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    log("Starting the service in >=26 Mode from a BroadcastReceiver")
+                    context.startForegroundService(it)
+                    return
+                }
+                log("Starting the service in < 26 Mode from a BroadcastReceiver")
+                context.startService(it)
+            }
         }
-    }
 	}
 }
 
