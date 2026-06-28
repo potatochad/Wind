@@ -83,7 +83,7 @@ var notifyID by m(0)
 
 fun NotifBuiltBefore(id: Int) = notifMap[id] != null
 
-fun Context.NotifiBuilder(id: Int): NotifiBuilder {
+fun NotifiBuilder(ctx: Context, id: Int): NotifiBuilder {
     val builder = notifMap[id] ?: NotifiBuilder(this, notif_Id)
         .setSmallIcon(myAppRes)
         .setAutoCancel(true)
