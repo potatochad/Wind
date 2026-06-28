@@ -136,7 +136,7 @@ class LazyNotifi_XML(
 ) {
     val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    var remoteView = RemoteViews(ctx.packageName, xml)
+    var remoteView = RemoteViews(AppPkg, xml)
         set(value) {
             field = value
             make()
