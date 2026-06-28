@@ -71,8 +71,8 @@ import kotlin.math.*
 import java.util.logging.*
 
 fun Context.Notifi(
-    title: String,
-    text: String,
+    title: Str,
+    text: Str,
     id: Int = 111,
 ) = LazyNotifi(title, text, id, this)
 
