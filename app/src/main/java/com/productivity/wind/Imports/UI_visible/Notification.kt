@@ -80,7 +80,7 @@ class LazyNotifi(
     title: Str,
     text: Str,
 	val id: Int = 111,
-	ctx: Context,
+	val ctx: Context,
 ) {
     val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
