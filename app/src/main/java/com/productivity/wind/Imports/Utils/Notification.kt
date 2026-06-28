@@ -76,19 +76,8 @@ val notif_Name = "WindChannel"
 
 typealias NotifiBuilder = NotificationCompat.Builder
 
-val notifMap = mutableMapOf<Int, NotifiBuilder>()
-var notifyID by m(0)
 
-
-
-fun NotifBuiltBefore(id: Int) = notifMap[id] != null
-
-fun NotifiBuild(ctx: Context, id: Int): NotifiBuilder {
-    val builder = notifMap[id] ?: NotifiBuilder(ctx, notif_Id)
-
-    notifMap[id] = builder
-    return builder
-}
+fun NotifiBuild(ctx: Context) = NotifiBuilder(ctx, notif_Id)
 
 
 //called in App.kt
