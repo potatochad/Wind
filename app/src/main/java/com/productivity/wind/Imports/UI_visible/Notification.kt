@@ -1,4 +1,8 @@
-//‼️‼️‼️DONT USE GLOBAL CONTEXT HERE
+//‼️‼️‼️RULES:
+//DONT USE GLOBAL CONTEXT HERE
+//DONT USE LATEINIT HERE
+//DONT SAVE ANY NOTIFI VALUE IN A GLOBAL VAR
+//Call create channels when building notifi
 
 
 package com.productivity.wind.Imports.UI_visible
@@ -73,31 +77,37 @@ import java.util.logging.*
 
 
 
-val notif_Id = "WindApp"
-val notif_Name = "WindChannel"
+val notifi_Id = "WindApp"
+val notifi_Name = "WindChannel"
 
 
 
 typealias NotifiBuilder = NotificationCompat.Builder
 
 
-fun NotifiBuild(ctx: Context) = NotifiBuilder(ctx, notif_Id)
+fun NotifiManager(ctx: Context) = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 
-//called in App.kt
-fun NotifiChannel(ctx: Context) {
+fun NotifiChannel(
+	ctx: Context,
+    id: Str = notifi_Id,
+    name: Str = notifi_Name,
+    importance: Int = NotificationManager.IMPORTANCE_HIGH,
+    Do: NotificationChannel.() -> Unit = {
+        description = "Channel description"
+        setShowBadge(false)
+	}
+) {
     Android8OrAbove {
-        val channel = NotificationChannel(
-            notif_Id,
-            notif_Name,
-            NotificationManager.IMPORTANCE_HIGH
-        ).apply {
-            description = "Channel description"
-            setShowBadge(false)
-        }
-
-        val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.createNotificationChannel(channel)
+        NotifiManager(ctx).createNotificationChannel(
+			NotificationChannel(
+				id,
+				name,
+				importance,
+			).apply {
+				Do()
+			}
+		)
     }
 }
 
@@ -148,7 +158,7 @@ class LazyNotifi(
         }
 
     fun build(): Notification {
-        return NotifiBuild(ctx, id)
+        return NotifiBuilder(ctx, notifi_Id)
 			.setSmallIcon(myAppRes)
 			.setAutoCancel(false)
             .title(title)
@@ -194,7 +204,7 @@ class LazyNotifi_XML(
 		}
 
     fun build(): Notification {
-        return NotifiBuild(ctx, id)
+        return NotifiBuilder(ctx, notifi_Id)
 			.setSmallIcon(myAppRes)
 			.setAutoCancel(false)
 			.setCustomContentView(remoteView)
