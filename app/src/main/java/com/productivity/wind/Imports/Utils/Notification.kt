@@ -1,3 +1,6 @@
+//‼️ DONT USE GLOBAL APP CONTEXT HERE
+
+
 package com.productivity.wind.Imports.Utils
 
 import com.productivity.wind.Imports.Utils.String.*
@@ -71,7 +74,7 @@ val notif_Name = "WindChannel"
 
 
 
-typealias NotificationBuilder = NotificationCompat.Builder
+typealias NotifiBuilder = NotificationCompat.Builder
 
 val notifMap = mutableMapOf<Int, NotificationBuilder>()
 var notifyID by m(0)
@@ -80,8 +83,8 @@ var notifyID by m(0)
 
 fun NotifBuiltBefore(id: Int) = notifMap[id] != null
 
-fun getNotifBuilder(id: Int): NotificationBuilder {
-    val builder = notifMap[id] ?: NotificationBuilder(AppCtx, notif_Id)
+fun Context.NotifiBuilder(id: Int): NotifiBuilder {
+    val builder = notifMap[id] ?: NotifiBuilder(this, notif_Id)
         .setSmallIcon(myAppRes)
         .setAutoCancel(true)
 
@@ -111,32 +114,14 @@ fun CreateNotificationChannel(context: Context) {
 
 
 
-fun NotificationBuilder.title(x: Str) = apply { setContentTitle(x) }
-fun NotificationBuilder.text(x: Str)  = apply { setContentText(x) }
+fun NotifiBuilder.title(x: Str) = apply { setContentTitle(x) }
+fun NotifiBuilder.text(x: Str)  = apply { setContentText(x) }
 
-
-
-
-
-
-
-// 1. Set text (any type, auto toString)
-fun RemoteViews.text(id: Int, value: Any) = setTextViewText(id, value.toString())
-
-// 2. Set image resource
+fun RemoteViews.text(id: Int, value: Any) = setTextViewText(id, toStr(value))
 fun RemoteViews.image(id: Int, resId: Int) = setImageViewResource(id, resId)
-
-// 3. Set visibility
-fun RemoteViews.visible(id: Int, visible: Bool) =
-    setViewVisibility(id, if (visible) View.VISIBLE else View.GONE)
-
-// 4. Set click pending intent
-fun RemoteViews.click(id: Int, pendingIntent: PendingIntent) =
-    setOnClickPendingIntent(id, pendingIntent)
-
-// 5. Set text color
-fun RemoteViews.color(id: Int, color: Int) =
-    setTextColor(id, color)
+fun RemoteViews.visible(id: Int, visible: Bool) = setViewVisibility(id, if (visible) View.VISIBLE else View.GONE)
+fun RemoteViews.click(id: Int, pendingIntent: PendingIntent) = setOnClickPendingIntent(id, pendingIntent)
+fun RemoteViews.color(id: Int, color: Int) = setTextColor(id, color)
 
 
 
