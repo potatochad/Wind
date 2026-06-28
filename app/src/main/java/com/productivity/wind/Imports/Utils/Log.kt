@@ -245,20 +245,23 @@ fun LogAppCrashes() {
 
 	//what left with
 	
-	val crash = AppData.prefs.getString("last_crash", null)
-	if (crash != null) {
-		val root = crash.lineSequence()
-			.firstOrNull { it.trim().startsWith("at ") }
-		    ?.trim()
+val crash = AppData.prefs.getString("last_crash", null)
+if (crash != null) {
+    val lines = crash.lineSequence()
 
-		log("Crash at: $root")
-		
-		log(crash)
-		
-		AppData.prefs.edit()
-			.remove("last_crash")
-			.apply()
-	}
+    val message = lines.firstOrNull()
+    val root = crash.lineSequence()
+        .firstOrNull { it.trim().startsWith("at ") }
+        ?.trim()
+
+    log("Crash: $message")
+    log("Where: $root")
+    log(crash)
+
+    AppData.prefs.edit()
+        .remove("last_crash")
+        .apply()
+}
 }
 
 
