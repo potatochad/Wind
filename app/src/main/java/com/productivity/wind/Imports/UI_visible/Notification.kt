@@ -127,9 +127,6 @@ fun RemoteViews.color(id: Int, color: Int) = setTextColor(id, color)
 
 
 
-
-    
-
 fun Context.Notifi(title: Str, text: Str, id: Int) = LazyNotifi(title, text, id, this)
 
 class LazyNotifi(
@@ -137,9 +134,16 @@ class LazyNotifi(
     text: Str,
 	val id: Int,
 	val ctx: Context,
+	
+	channel_Id: Str = notifi_Id,
+	channel_Name: Str = notifi_Name,
+	importance: Int = NotificationManager.IMPORTANCE_HIGH,
+    Do: NotificationChannel.() -> Unit = {
+        description = "Channel description"
+        setShowBadge(no)
+	}
 ) {
-    val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
+	NotifiChannel(ctx, channel_Id, channel_Name, importance, Do())
 	
     var title = title
         set(value) {
@@ -154,7 +158,7 @@ class LazyNotifi(
         }
 
     fun build(): Notification {
-        return NotifiBuilder(ctx, notifi_Id)
+        return NotifiBuilder(ctx, channel_Id)
 			.setSmallIcon(myAppRes)
 			.setAutoCancel(false)
             .title(title)
@@ -167,7 +171,7 @@ class LazyNotifi(
 
     fun make() {
         if (Permission.notification()) {
-			manager.notify(id, build())
+			NotifiManager(ctx).notify(id, build())
 		}
 	}
 
@@ -186,18 +190,26 @@ fun Context.Notifi(xml: Int, id: Int) = LazyNotifi_XML(xml, id, this)
 class LazyNotifi_XML(
     val xml: Int,
 	val id: Int,
-	val ctx: Context
+	val ctx: Context,
+	
+	channel_Id: Str = notifi_Id,
+	channel_Name: Str = notifi_Name,
+	importance: Int = NotificationManager.IMPORTANCE_HIGH,
+    Do: NotificationChannel.() -> Unit = {
+        description = "Channel description"
+        setShowBadge(no)
+	}
 ) {
-    val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    var remoteView = RemoteViews(AppPkg, xml)
+	NotifiChannel(ctx, channel_Id, channel_Name, importance, Do())
+	
+	var remoteView = RemoteViews(AppPkg, xml)
         set(value) {
             field = value
             make()
 		}
 
     fun build(): Notification {
-        return NotifiBuilder(ctx, notifi_Id)
+        return NotifiBuilder(ctx, channel_Id)
 			.setSmallIcon(myAppRes)
 			.setAutoCancel(false)
 			.setCustomContentView(remoteView)
@@ -210,7 +222,7 @@ class LazyNotifi_XML(
 
     fun make() {
         if (Permission.notification()) {
-			manager.notify(id, build())
+			NotifiManager(ctx).notify(id, build())
 		}
 	}
 
