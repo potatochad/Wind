@@ -154,78 +154,7 @@ class Notifi_XML(
 
 
 
-fun Notification(
-    title: Str,
-    text: Str,
-    id: Int = 1,                         
-    Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _ -> }     
-): Notification {
-    Permission.notification()
-    var firstTime = !NotifBuiltBefore(id)
-    
-    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    val builder = getNotifBuilder(id).title(title).text(text)
-
-    val notifi = builder.build()
-    manager.notify(id, notifi)
-
-    // optional dynamic updates
-    if (firstTime){
-        CoroutineScope(Dispatchers.Default).launch {
-           Do(builder, manager)
-        }
-    }
-        
-    return notifi
-}
-
-
-
 /*
-// doesnt work‼️‼️
-fun Notification(
-    xml: Int,
-    id: Int = 1,
-    Do: suspend (builder: NotificationCompat.Builder, remoteView: RemoteViews, manager: NotificationManager) -> Unit = { _, _, _ -> }
-) {
-    val deleteIntent = Intent(AppCtx, NotificationSwipeReceiver::class.java).apply {
-        putExtra(notif_Id, id)
-    }
-    
-    val pendingIntent = PendingIntent.getBroadcast(
-        AppCtx,
-        id,
-        deleteIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
-
-    Permission.notification()
-        val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        // create RemoteViews from your XML layout
-        val remoteView = RemoteViews(AppCtx.packageName, xml)
-
-        // create or reuse builder
-        val builder = notifMap[id] ?: NotificationCompat.Builder(AppCtx, notif_Id)
-            .setSmallIcon(myAppRes)         
-            .setAutoCancel(false)
-            .setCustomContentView(remoteView)
-            .setCustomBigContentView(remoteView)
-            .setDeleteIntent(pendingIntent)
-
-        notifMap[id] = builder
-
-        // show notification
-        manager.notify(id, builder.build())
-
-        
-        CoroutineScope(Dispatchers.Default).launch {
-            Do(builder, remoteView, manager)
-        }
-    
-}
-
 
 fun showOrderNotification(
     id: Int = 2,
