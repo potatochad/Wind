@@ -123,8 +123,7 @@ class AppBackground : Service() {
 	
 	override fun onCreate() {
 		super.onCreate()
-		NotifiChannel(this)
-		val notif: LazyNotifi = Notifi("Background Tasks: [testing]", "running...", 1)
+		val notif = Notifi("Background Tasks: [testing]", "running...", 1)
 
         Vlog("service create")
         notif.startForeground(this)
@@ -134,7 +133,7 @@ class AppBackground : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {  
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
-				val notif: LazyNotifi = Notifi("Background Tasks: [testing]", "running...", 1)
+				val notif = Notifi("Background Tasks: [testing]", "running...", 1)
 				AppBackground(notif)
             }
         }
