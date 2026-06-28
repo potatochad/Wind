@@ -69,107 +69,6 @@ import java.util.logging.*
 
 
 
-
-@RequiresApi(Build.VERSION_CODES.S)
-fun startSystemTimer(context: Context, minutes: Int) {
-    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-
-    if (!alarmManager.canScheduleExactAlarms()) {
-        startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
-        return
-    }
-
-    // Time from now in milliseconds
-    val triggerAtMillis = System.currentTimeMillis() + minutes * 60 * 1000
-
-    // This PendingIntent opens your app when the timer is tapped
-    val intent = Intent(context, AppUI::class.java)
-    val pendingIntent = PendingIntent.getActivity(
-        context,
-        0,
-        intent,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
-
-    // Build AlarmClockInfo
-    val alarmClockInfo = AlarmManager.AlarmClockInfo(triggerAtMillis, pendingIntent)
-
-    // Register it
-    alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
-}
-
-fun showOrderNotification(
-    id: Int = 2,
-    title: Str = "hi",
-    text: Str = "test",                        
-    Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _ -> }     
-): Notification {
-    Permission.notification()
-    
-    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    val builder = NotificationCompat.Builder(AppCtx, notif_Id)
-        .setSmallIcon(R.drawable.ic_launcher_foreground)
-        .setContentTitle("You order is being placed")
-        .setContentText("Confirming with bakery...")
-        .setShortCriticalText("Placing")
-        .setOngoing(true)
-        .setRequestPromotedOngoing(true)
-        .setStyle(NotificationCompat.ProgressStyle()
-                .setProgress(75)  // max=100, current=0, determinate
-        )
-		.setLargeIcon(toBitmap(myAppRes))
-        .setUsesChronometer(true)
-        .setChronometerCountDown(true) // optional, for countdown
-		.setWhen(System.currentTimeMillis() + 10_000) // example 10 sec timer
-        .setShortCriticalText("Arrived")
-        //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
-
-	if (Build.VERSION.SDK_INT >= 36) {
-		if (!manager.canPostPromotedNotifications()) {
-			Vlog("CANNOT POST PROMOTED")
-			/*
-			// real way: Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS
-			val intent = Intent(Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS).apply {
-				putExtra(Settings.EXTRA_APP_PACKAGE, AppCtx.packageName)
-			}
-			startActivity(intent)
-			*/
-		}
-	} else {
-		Vlog("Device too old for promoted notifications")
-	}
-	
-
-          
-            
-    val notifi = builder.build()
-    manager.notify(id, notifi)
-        
-    return notifi
-}
-
-
-//setDeleteIntent() when user dismisses what doo
-
-/*
-.setStyle(
-                        buildBaseProgressStyle(ORDER_COMPLETE)
-                            .setProgressTrackerIcon(
-                                IconCompat.createWithResource(
-                                    AppCtx, myAppRes
-                                )
-                            )
-                            .setProgress(100)
-                    )
-                    .setShortCriticalText("Arrived")
-
-
-*/
-
-
-
 class Notifi(
     title: Str,
     text: Str,
@@ -302,6 +201,7 @@ fun Notification(
 }
 
 
+
 /*
 // doesnt work‼️‼️
 fun Notification(
@@ -345,326 +245,90 @@ fun Notification(
         }
     
 }
-*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-@RequiresApi(Build.VERSION_CODES.BAKLAVA)
-@Composable
-fun LiveUpdateSample() {
-    val notifiManager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    Notifi2.Init(notifiManager)
-
-    /*
-
-    Try("postNotification ERROR"){
-       var isPostPromotionsEnabled by m(Notifi2.isPostPromotionsEnabled())
-    }
+fun showOrderNotification(
+    id: Int = 2,
+    title: Str = "hi",
+    text: Str = "test",                        
+    Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _ -> }     
+): Notification {
+    Permission.notification()
     
-    
-    
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
-        isPostPromotionsEnabled = Notifi2.isPostPromotionsEnabled()
-    }
-    if (!isPostPromotionsEnabled) {
-        Text(
-            text = "string.post_promoted_permission_message",
-            modifier = Mod.space(h = 10),
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    val builder = NotificationCompat.Builder(AppCtx, notif_Id)
+        .setSmallIcon(R.drawable.ic_launcher_foreground)
+        .setContentTitle("You order is being placed")
+        .setContentText("Confirming with bakery...")
+        .setShortCriticalText("Placing")
+        .setOngoing(true)
+        .setRequestPromotedOngoing(true)
+        .setStyle(NotificationCompat.ProgressStyle()
+                .setProgress(75)  // max=100, current=0, determinate
         )
-        Button(
-            onClick = {
-                val intent = Intent(Settings.ACTION_APP_NOTIFICATION_PROMOTION_SETTINGS).apply {
-                    putExtra(Settings.EXTRA_APP_PACKAGE, AppCtx.packageName)
-                }
-                AppCtx.startActivity(intent)
-            },
-        ) {
-            Text("string.to_settings")
-        }
-    }
+		.setLargeIcon(toBitmap(myAppRes))
+        .setUsesChronometer(true)
+        .setChronometerCountDown(true) // optional, for countdown
+		.setWhen(System.currentTimeMillis() + 10_000) // example 10 sec timer
+        .setShortCriticalText("Arrived")
+        //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
+
+	if (Build.VERSION.SDK_INT >= 36) {
+		if (!manager.canPostPromotedNotifications()) {
+			Vlog("CANNOT POST PROMOTED")
+			/*
+			// real way: Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS
+			val intent = Intent(Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS).apply {
+				putExtra(Settings.EXTRA_APP_PACKAGE, AppCtx.packageName)
+			}
+			startActivity(intent)
+			*/
+		}
+	} else {
+		Vlog("Device too old for promoted notifications")
+	}
+	
+
+          
             
-    
-            Text("liveUodateSummaryText")
-            move(4)
-            Btn("Checkout"){
-                Notifi2.start()
-                Vlog("orderdd")
-            }
-     */
-    
+    val notifi = builder.build()
+    manager.notify(id, notifi)
+        
+    return notifi
+}
+
+
+@RequiresApi(Build.VERSION_CODES.S)
+fun startSystemTimer(context: Context, minutes: Int) {
+    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+
+    if (!alarmManager.canScheduleExactAlarms()) {
+        startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
+        return
+    }
+
+    // Time from now in milliseconds
+    val triggerAtMillis = System.currentTimeMillis() + minutes * 60 * 1000
+
+    // This PendingIntent opens your app when the timer is tapped
+    val intent = Intent(context, AppUI::class.java)
+    val pendingIntent = PendingIntent.getActivity(
+        context,
+        0,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
+    // Build AlarmClockInfo
+    val alarmClockInfo = AlarmManager.AlarmClockInfo(triggerAtMillis, pendingIntent)
+
+    // Register it
+    alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
 }
 
 
 
 
-object Notifi2 {
-    private lateinit var notificationManager: NotificationManager
-    const val CHANNEL_ID = "live_updates_channel_id"
-    private const val CHANNEL_NAME = "live_updates_channel_name"
-    private const val NOTIFICATION_ID = 1234
-
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun Init(notifManager: NotificationManager) {
-        notificationManager = notifManager
-        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-        notificationManager.createNotificationChannel(channel)
-    }
-
-    private enum class OrderState(val delay: Long) {
-        INITIALIZING(5000) {
-            @RequiresApi(Build.VERSION_CODES.BAKLAVA)
-            override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(INITIALIZING)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentTitle("You order is being placed")
-                    .setContentText("Confirming with bakery...")
-                    .setShortCriticalText("Placing")
-                    .setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
-            }
-        },
-        FOOD_PREPARATION(9000) {
-            @RequiresApi(Build.VERSION_CODES.BAKLAVA)
-            override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(FOOD_PREPARATION)
-                    .setContentTitle("Your order is being prepared")
-                    .setContentText("Next step will be delivery")
-                    .setShortCriticalText("Prepping")
-                    .setLargeIcon(toBitmap(myAppRes))
-                    .setStyle(buildBaseProgressStyle(FOOD_PREPARATION).setProgress(25))
-            }
-        },
-        FOOD_ENROUTE(13000) {
-            @RequiresApi(Build.VERSION_CODES.BAKLAVA)
-            override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(FOOD_ENROUTE)
-                    .setContentTitle("Your order is on its way")
-                    .setContentText("Enroute to destination")
-                    .setStyle(
-                        buildBaseProgressStyle(FOOD_ENROUTE)
-                            .setProgressTrackerIcon(
-                                IconCompat.createWithResource(
-                                    AppCtx, myAppRes
-                                )
-                            )
-                            .setProgress(50)
-                    )
-                    .setLargeIcon(toBitmap(myAppRes))
-                    .setWhen(System.currentTimeMillis().plus(11 * 60 * 1000 /* 10 min */))
-                    .setUsesChronometer(true)
-                    .setChronometerCountDown(true)
-            }
-        },
-        FOOD_ARRIVING(18000) {
-            @RequiresApi(Build.VERSION_CODES.BAKLAVA)
-            override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(FOOD_ARRIVING)
-                    .setContentTitle("Your order is arriving and has been dropped off")
-                    .setContentText("Enjoy & don't forget to refrigerate any perishable items.")
-                    .setStyle(
-                        buildBaseProgressStyle(FOOD_ARRIVING)
-                            .setProgressTrackerIcon(
-                                IconCompat.createWithResource(
-                                    AppCtx, myAppRes
-                                )
-                            )
-                            .setProgress(75)
-                    )
-                    .setLargeIcon(toBitmap(myAppRes))
-                    .setWhen(System.currentTimeMillis().plus(11 * 60 * 500 /* 5 min */))
-                    .setUsesChronometer(true)
-                    .setChronometerCountDown(true)
-            }
-        },
-        ORDER_COMPLETE(21000) {
-            @RequiresApi(Build.VERSION_CODES.BAKLAVA)
-            override fun buildNotification(): NotificationCompat.Builder {
-                return buildBaseNotification(ORDER_COMPLETE)
-                    .setContentTitle("Your order is complete.")
-                    .setContentText("Thank you for using JetSnack for your snacking needs.")
-                    .setStyle(
-                        buildBaseProgressStyle(ORDER_COMPLETE)
-                            .setProgressTrackerIcon(
-                                IconCompat.createWithResource(
-                                    AppCtx, myAppRes
-                                )
-                            )
-                            .setProgress(100)
-                    )
-                    .setShortCriticalText("Arrived")
-                    .setLargeIcon(toBitmap(myAppRes))
-            }
-        };
-
-
-        @RequiresApi(Build.VERSION_CODES.BAKLAVA)
-        fun buildBaseProgressStyle(orderState: OrderState): ProgressStyle {
-            val pointColor = android.graphics.Color.valueOf(
-                236f / 255f, // Normalize red value to be between 0.0 and 1.0
-                183f / 255f, // Normalize green value to be between 0.0 and 1.0
-                255f / 255f, // Normalize blue value to be between 0.0 and 1.0
-                1f,
-            ).toArgb()
-            val segmentColor = android.graphics.Color.valueOf(
-                134f / 255f, // Normalize red value to be between 0.0 and 1.0
-                247f / 255f, // Normalize green value to be between 0.0 and 1.0
-                250f / 255f, // Normalize blue value to be between 0.0 and 1.0
-                1f,
-            ).toArgb()
-            var progressStyle = NotificationCompat.ProgressStyle()
-                .setProgressPoints(
-                    listOf(
-                        ProgressStyle.Point(25).setColor(pointColor),
-                        ProgressStyle.Point(50).setColor(pointColor),
-                        ProgressStyle.Point(75).setColor(pointColor),
-                        ProgressStyle.Point(100).setColor(pointColor)
-                    )
-                ).setProgressSegments(
-                    listOf(
-                        ProgressStyle.Segment(25).setColor(segmentColor),
-                        ProgressStyle.Segment(25).setColor(segmentColor),
-                        ProgressStyle.Segment(25).setColor(segmentColor),
-                        ProgressStyle.Segment(25).setColor(segmentColor)
-
-                    )
-                )
-            when (orderState) {
-                INITIALIZING -> {}
-                FOOD_PREPARATION -> {}
-                FOOD_ENROUTE -> progressStyle.setProgressPoints(
-                    listOf(
-                        ProgressStyle.Point(25).setColor(pointColor)
-                    )
-                )
-
-                FOOD_ARRIVING -> progressStyle.setProgressPoints(
-                    listOf(
-                        ProgressStyle.Point(25).setColor(pointColor),
-                        ProgressStyle.Point(50).setColor(pointColor)
-                    )
-                )
-
-                ORDER_COMPLETE -> progressStyle.setProgressPoints(
-                    listOf(
-                        ProgressStyle.Point(25).setColor(pointColor),
-                        ProgressStyle.Point(50).setColor(pointColor),
-                        ProgressStyle.Point(75).setColor(pointColor)
-                    )
-                )
-            }
-            return progressStyle
-        }
-
-        @RequiresApi(Build.VERSION_CODES.O)
-        fun buildBaseNotification(orderState: OrderState): NotificationCompat.Builder {
-            val notificationBuilder = NotificationCompat.Builder(AppCtx, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setOngoing(true)
-                .setRequestPromotedOngoing(true)
-
-            when (orderState) {
-                INITIALIZING -> {}
-                FOOD_PREPARATION -> {}
-                FOOD_ENROUTE -> {}
-                FOOD_ARRIVING ->
-                    notificationBuilder
-                        .addAction(
-                            NotificationCompat.Action.Builder(null, "Got it", null).build()
-                        )
-                        .addAction(
-                            NotificationCompat.Action.Builder(null, "Tip", null).build()
-                        )
-                ORDER_COMPLETE ->
-                    notificationBuilder
-                        .addAction(
-                            NotificationCompat.Action.Builder(
-                                null, "Rate delivery", null).build()
-                        )
-            }
-            return notificationBuilder
-        }
-
-        abstract fun buildNotification(): NotificationCompat.Builder
-    }
-
-    @RequiresApi(Build.VERSION_CODES.BAKLAVA)
-    fun start() {
-        for (state in OrderState.entries) {
-            val notification = state.buildNotification().build()
-
-            Logger.getLogger("canPostPromotedNotifications")
-                .log(
-                    Level.INFO,
-                    notificationManager.canPostPromotedNotifications().toString())
-            Logger.getLogger("hasPromotableCharacteristics")
-                .log(
-                    Level.INFO,
-                    notification.hasPromotableCharacteristics().toString())
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                notificationManager.notify(NOTIFICATION_ID, notification)
-            }, state.delay)
-        }
-    }
-
-    /*
-    @RequiresApi(Build.VERSION_CODES.BAKLAVA)
-    fun isPostPromotionsEnabled(): Boolean {
-        return if (::notificationManager.isInitialized) {
-           notificationManager.canPostPromotedNotifications()
-        } else {
-           false // or true if you prefer default
-        }
-    }
-    */
-
-
-    @RequiresApi(Build.VERSION_CODES.BAKLAVA)
-    fun isPostPromotionsEnabled(): Bool {
-        return notificationManager.canPostPromotedNotifications()
-    }
-}
-
-
-
+*/
