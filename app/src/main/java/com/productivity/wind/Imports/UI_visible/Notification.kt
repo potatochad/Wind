@@ -70,6 +70,56 @@ import kotlinx.coroutines.*
 import kotlin.math.*
 import java.util.logging.*
 
+
+
+
+val notif_Id = "WindApp"
+val notif_Name = "WindChannel"
+
+
+
+typealias NotifiBuilder = NotificationCompat.Builder
+
+
+fun NotifiBuild(ctx: Context) = NotifiBuilder(ctx, notif_Id)
+
+
+//called in App.kt
+fun NotifiChannel(ctx: Context) {
+    Android8OrAbove {
+        val channel = NotificationChannel(
+            notif_Id,
+            notif_Name,
+            NotificationManager.IMPORTANCE_HIGH
+        ).apply {
+            description = "Channel description"
+            setShowBadge(false)
+        }
+
+        val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
+    }
+}
+
+
+
+
+
+fun NotifiBuilder.title(x: Str) = apply { setContentTitle(x) }
+fun NotifiBuilder.text(x: Str)  = apply { setContentText(x) }
+
+fun RemoteViews.text(id: Int, value: Any) = setTextViewText(id, toStr(value))
+fun RemoteViews.image(id: Int, resId: Int) = setImageViewResource(id, resId)
+fun RemoteViews.visible(id: Int, visible: Bool) = setViewVisibility(id, if (visible) View.VISIBLE else View.GONE)
+fun RemoteViews.click(id: Int, pendingIntent: PendingIntent) = setOnClickPendingIntent(id, pendingIntent)
+fun RemoteViews.color(id: Int, color: Int) = setTextColor(id, color)
+
+
+
+
+
+    
+
 fun Context.Notifi(
     title: Str,
     text: Str,
