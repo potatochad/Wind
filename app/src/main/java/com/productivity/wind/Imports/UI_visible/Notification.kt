@@ -143,7 +143,7 @@ class LazyNotifi(
         setShowBadge(no)
 	}
 ) {
-	NotifiChannel(ctx, channel_Id, channel_Name, importance, Do())
+	NotifiChannel(ctx, channel_Id, channel_Name, importance, Do)
 	
     var title = title
         set(value) {
@@ -200,7 +200,7 @@ class LazyNotifi_XML(
         setShowBadge(no)
 	}
 ) {
-	NotifiChannel(ctx, channel_Id, channel_Name, importance, Do())
+	NotifiChannel(ctx, channel_Id, channel_Name, importance, Do)
 	
 	var remoteView = RemoteViews(AppPkg, xml)
         set(value) {
