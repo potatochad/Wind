@@ -82,7 +82,7 @@ class LazyNotifi(
 	val id: Int = 111,
 	ctx: Context,
 ) {
-    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 	
     var title = title
@@ -122,15 +122,21 @@ class LazyNotifi(
 
 
 
+fun Context.Notifi(
+    title: Str,
+    text: Str,
+    id: Int = 111,
+) = Notifi(title, text, id, this)
 
 //DIDNT TEST THISS
 class LazyNotifi_XML(
     val xml: Int,
 	val id: Int = 111,
+	ctx: Context
 ) {
-    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    var remoteView = RemoteViews(AppCtx.packageName, xml)
+    var remoteView = RemoteViews(ctx.packageName, xml)
         set(value) {
             field = value
             make()
