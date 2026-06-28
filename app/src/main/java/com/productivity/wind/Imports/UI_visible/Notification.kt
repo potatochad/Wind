@@ -1,3 +1,6 @@
+‼️//DONT USE GLOBAL CONTEXT HERE
+
+
 package com.productivity.wind.Imports.UI_visible
 
 import com.productivity.wind.Imports.Utils.String.*
@@ -68,11 +71,17 @@ import kotlin.math.*
 import java.util.logging.*
 
 
+fun Context.Notifi(
+    title: String,
+    text: String,
+    id: Int = 111,
+) = Notifi(title, text, id, this)
 
 class Notifi(
     title: Str,
     text: Str,
 	val id: Int = 111,
+	ctx: Context,
 ) {
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
