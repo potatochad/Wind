@@ -214,7 +214,7 @@ class Notifi(
 }
 
 
-
+/*
 class Notifi(
     xml: Int,
     val id: Int = 111,
@@ -268,7 +268,7 @@ class Notifi(
         make()
     }
 }
-
+*/
 
 fun Notification(
     title: Str,
