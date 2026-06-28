@@ -98,7 +98,9 @@ class LazyNotifi(
         }
 
     fun build(): Notification {
-        return NotifiBuilder(ctx, id)
+        return NotifiBuild(ctx, id)
+			.setSmallIcon(myAppRes)
+			.setAutoCancel(false)
             .title(title)
             .text(text)
 			.setPriority(Notification.PRIORITY_HIGH) // for under android 26 compatibility
@@ -142,7 +144,7 @@ class LazyNotifi_XML(
 		}
 
     fun build(): Notification {
-        return NotifiBuilder(ctx, id)
+        return NotifiBuild(ctx, id)
 			.setSmallIcon(myAppRes)
 			.setAutoCancel(false)
 			.setCustomContentView(remoteView)
