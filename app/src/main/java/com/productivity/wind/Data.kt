@@ -226,7 +226,7 @@ fun AppContent() {
 }
 
 //Dont use APP context
-suspend fun AppBackground(notif: Notifi){
+suspend fun AppBackground(notif: LazyNotifi){
 	while (yes) {
 		wait(1000)
 		notif.text = "running..."
