@@ -171,90 +171,9 @@ class LazyNotifi_XML(
 
 
 
-/*
-
-fun showOrderNotification(
-    id: Int = 2,
-    title: Str = "hi",
-    text: Str = "test",                        
-    Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _ -> }     
-): Notification {
-    Permission.notification()
-    
-    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    val builder = NotificationCompat.Builder(AppCtx, notif_Id)
-        .setSmallIcon(R.drawable.ic_launcher_foreground)
-        .setContentTitle("You order is being placed")
-        .setContentText("Confirming with bakery...")
-        .setShortCriticalText("Placing")
-        .setOngoing(true)
-        .setRequestPromotedOngoing(true)
-        .setStyle(NotificationCompat.ProgressStyle()
-                .setProgress(75)  // max=100, current=0, determinate
-        )
-		.setLargeIcon(toBitmap(myAppRes))
-        .setUsesChronometer(true)
-        .setChronometerCountDown(true) // optional, for countdown
-		.setWhen(System.currentTimeMillis() + 10_000) // example 10 sec timer
-        .setShortCriticalText("Arrived")
-        //.setStyle(buildBaseProgressStyle(INITIALIZING).setProgressIndeterminate(true))
-
-	if (Build.VERSION.SDK_INT >= 36) {
-		if (!manager.canPostPromotedNotifications()) {
-			Vlog("CANNOT POST PROMOTED")
-			/*
-			// real way: Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS
-			val intent = Intent(Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS).apply {
-				putExtra(Settings.EXTRA_APP_PACKAGE, AppCtx.packageName)
-			}
-			startActivity(intent)
-			*/
-		}
-	} else {
-		Vlog("Device too old for promoted notifications")
-	}
-	
-
-          
-            
-    val notifi = builder.build()
-    manager.notify(id, notifi)
-        
-    return notifi
-}
-
-
-@RequiresApi(Build.VERSION_CODES.S)
-fun startSystemTimer(context: Context, minutes: Int) {
-    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-
-    if (!alarmManager.canScheduleExactAlarms()) {
-        startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
-        return
-    }
-
-    // Time from now in milliseconds
-    val triggerAtMillis = System.currentTimeMillis() + minutes * 60 * 1000
-
-    // This PendingIntent opens your app when the timer is tapped
-    val intent = Intent(context, AppUI::class.java)
-    val pendingIntent = PendingIntent.getActivity(
-        context,
-        0,
-        intent,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
-
-    // Build AlarmClockInfo
-    val alarmClockInfo = AlarmManager.AlarmClockInfo(triggerAtMillis, pendingIntent)
-
-    // Register it
-    alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
-}
 
 
 
 
-*/
+
+
