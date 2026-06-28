@@ -175,18 +175,13 @@ fun Notification(
     id: Int = 1,                         
     Do: suspend (builder: NotificationBuilder, manager: NotificationManager) -> Unit = { _, _ -> }     
 ): Notification {
-    val myMediaSession = MediaSessionCompat(AppCtx, "MyMedia")
-
     Permission.notification()
     var firstTime = !NotifBuiltBefore(id)
     
     val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    val builder = getNotifBuilder(id)
-            .setContentTitle(title)
-            .setContentText(text)
+    val builder = getNotifBuilder(id).title(title).text(text)
 
-            
     val notifi = builder.build()
     manager.notify(id, notifi)
 
