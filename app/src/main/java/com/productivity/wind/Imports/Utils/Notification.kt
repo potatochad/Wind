@@ -78,17 +78,6 @@ var notifyID by m(0)
 
 
 
-class NotificationSwipeReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        val notifId = intent.getIntExtra(notif_Id, -1)
-
-        
-        log("DOESNT WORK CURRENTLY")
-        
-    }
-}
-
-
 fun NotifBuiltBefore(id: Int) = notifMap[id] != null
 
 fun getNotifBuilder(id: Int): NotificationBuilder {
