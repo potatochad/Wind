@@ -81,7 +81,7 @@ fun NotifiBuild(ctx: Context) = NotifiBuilder(ctx, notif_Id)
 
 
 //called in App.kt
-fun CreateNotificationChannel(context: Context) {
+fun NotifiChannel(ctx: Context) {
     Android8OrAbove {
         val channel = NotificationChannel(
             notif_Id,
@@ -92,7 +92,7 @@ fun CreateNotificationChannel(context: Context) {
             setShowBadge(false)
         }
 
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
     }
 }
