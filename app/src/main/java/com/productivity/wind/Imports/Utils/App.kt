@@ -494,9 +494,6 @@ class AppUI : ComponentActivity() {
         ) { granted ->
             log("permission granted?: $granted")
 		}
-
-
-		CreateNotificationChannel(this)
 		
 		
 	    LogAppCrashes()
