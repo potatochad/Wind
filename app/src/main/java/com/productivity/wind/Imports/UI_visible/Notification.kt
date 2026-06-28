@@ -114,7 +114,7 @@ class Notifi(
 
 
 //DIDNT TEST THISS
-class Notifi(
+class Notifi_XML(
     val xml: Int,
 	val id: Int = 111,
 ) {
