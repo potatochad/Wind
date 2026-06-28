@@ -133,7 +133,7 @@ fun Context.Notifi(
 class LazyNotifi_XML(
     val xml: Int,
 	val id: Int = 111,
-	ctx: Context
+	val ctx: Context
 ) {
     val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
