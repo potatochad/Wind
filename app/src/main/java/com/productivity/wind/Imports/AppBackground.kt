@@ -1,3 +1,6 @@
+//‼️CAREFULL WITH APP CONTEXT
+
+
 package com.productivity.wind.Imports
 
 import com.productivity.wind.Imports.Utils.String.*
@@ -94,7 +97,6 @@ import androidx.core.content.ContextCompat
 
 //region LATER USE
 
-//‼️‼️foreground service must PASS CONTEXTT (cause not initialized yet, when app closed APPCTX)
 fun Context.start(service: Class<out Service>) {
     val intent = Intent(this, service)
 
@@ -112,28 +114,19 @@ fun Context.stop(service: Class<out Service>) {
 
 
 class AppBackground : Service() {
-	val notif = Notifi("Background Tasks:", "running...")
+	val notif: LazyNotifi = Notifi("Background Tasks: [testing]", "running...")
             
-	val serviceScope =
-        CoroutineScope(Dispatchers.Main + SupervisorJob())
+	val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     var job: Job? = null
 	var timeRan by m(1)
 
-	// stopSelf() is real functionnn
-
-
+	
 	override fun onCreate() {
 		super.onCreate()
 
-        try {
-            Vlog("service create")
-
-            notif.startForeground(this)
-        } catch (e: Exception) {
-            Vlog("foreground failed: ${e.message}")
-            Vlog(e.stackTraceToString())
-        }
+        Vlog("service create")
+        notif.startForeground(this)
     }
 
 	
