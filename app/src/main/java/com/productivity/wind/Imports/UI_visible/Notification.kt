@@ -70,14 +70,13 @@ import kotlinx.coroutines.*
 import kotlin.math.*
 import java.util.logging.*
 
-
 fun Context.Notifi(
     title: String,
     text: String,
     id: Int = 111,
 ) = Notifi(title, text, id, this)
 
-class Notifi(
+class LazyNotifi(
     title: Str,
     text: Str,
 	val id: Int = 111,
@@ -122,8 +121,10 @@ class Notifi(
 }
 
 
+
+
 //DIDNT TEST THISS
-class Notifi_XML(
+class LazyNotifi_XML(
     val xml: Int,
 	val id: Int = 111,
 ) {
