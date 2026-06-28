@@ -123,10 +123,9 @@ class LazyNotifi(
 
 
 fun Context.Notifi(
-    title: Str,
-    text: Str,
+    xml: Int,
     id: Int = 111,
-) = Notifi(title, text, id, this)
+) = LazyNotifi_XML(xml, id, this)
 
 //DIDNT TEST THISS
 class LazyNotifi_XML(
