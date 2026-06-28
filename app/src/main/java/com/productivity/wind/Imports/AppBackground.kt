@@ -123,7 +123,7 @@ class AppBackground : Service() {
 	
 	override fun onCreate() {
 		super.onCreate()
-		CreateNotificationChannel(this)
+		NotifiChannel(this)
 		val notif: LazyNotifi = Notifi("Background Tasks: [testing]", "running...", 111)
 
         Vlog("service create")
