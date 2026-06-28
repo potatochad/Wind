@@ -114,8 +114,7 @@ fun Context.stop(service: Class<out Service>) {
 
 
 class AppBackground : Service() {
-	val notif: LazyNotifi = Notifi("Background Tasks: [testing]", "running...")
-            
+	
 	val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     var job: Job? = null
@@ -124,6 +123,7 @@ class AppBackground : Service() {
 	
 	override fun onCreate() {
 		super.onCreate()
+		val notif: LazyNotifi = Notifi("Background Tasks: [testing]", "running...", 111)
 
         Vlog("service create")
         notif.startForeground(this)
@@ -133,6 +133,7 @@ class AppBackground : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {  
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
+				val notif: LazyNotifi = Notifi("Background Tasks: [testing]", "running...", 111)
 				AppBackground(notif)
             }
         }
