@@ -76,7 +76,7 @@ val notif_Name = "WindChannel"
 
 typealias NotifiBuilder = NotificationCompat.Builder
 
-val notifMap = mutableMapOf<Int, NotificationBuilder>()
+val notifMap = mutableMapOf<Int, NotifiBuilder>()
 var notifyID by m(0)
 
 
