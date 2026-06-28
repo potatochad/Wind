@@ -113,61 +113,46 @@ class Notifi(
 }
 
 
-/*
+//DIDNT TEST THISS
 class Notifi(
-    xml: Int,
-    val id: Int = 111,
+    val xml: Int,
+	val id: Int = 111,
 ) {
-
-    val manager =
-        AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    val manager = AppCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     var remoteView = RemoteViews(AppCtx.packageName, xml)
         set(value) {
             field = value
             make()
-        }
+		}
 
-    val builder = NotificationCompat.Builder(AppCtx, notif_Id)
-        .setSmallIcon(myAppRes)
-        .setAutoCancel(false)
-        .setCustomContentView(remoteView)
-        .setCustomBigContentView(remoteView)
-        .setDeleteIntent(
-            PendingIntent.getBroadcast(
-                AppCtx,
-                id,
-                Intent(AppCtx, NotificationSwipeReceiver::class.java).apply {
-                    putExtra(notif_Id, id)
-                },
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-        )
-
-    fun build(): android.app.Notification {
-        builder.setCustomContentView(remoteView)
-        builder.setCustomBigContentView(remoteView)
-        return builder.build()
+    fun build(): Notification {
+        return getNotifBuilder(id)
+			.setSmallIcon(myAppRes)
+			.setAutoCancel(false)
+			.setCustomContentView(remoteView)
+			.setCustomBigContentView(remoteView)
+			.setPriority(Notification.PRIORITY_HIGH) // for under android 26 compatibility
+			.setOngoing(true)
+			.setSilent(true)
+            .build()
     }
 
     fun make() {
         if (Permission.notification()) {
-            manager.notify(id, build())
-        }
-    }
+			manager.notify(id, build())
+		}
+	}
 
-    fun startForeground(service: Service) {
-        if (Permission.notification()) {
-            service.startForeground(id, build())
-        }
-    }
-
-    fun update(block: RemoteViews.() -> Unit) {
-        remoteView.block()
-        make()
-    }
+	fun startForeground(service: Service) {
+		if (Permission.notification()) {
+			service.startForeground(id, build())
+		}
+	}
 }
-*/
+
+
+
 
 fun Notification(
     title: Str,
