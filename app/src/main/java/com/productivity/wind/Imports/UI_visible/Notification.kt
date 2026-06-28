@@ -74,7 +74,7 @@ fun Context.Notifi(
     title: String,
     text: String,
     id: Int = 111,
-) = Notifi(title, text, id, this)
+) = LazyNotifi(title, text, id, this)
 
 class LazyNotifi(
     title: Str,
