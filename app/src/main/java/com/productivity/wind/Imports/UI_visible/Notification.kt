@@ -95,7 +95,7 @@ fun NotifiChannel(
     importance: Int = NotificationManager.IMPORTANCE_HIGH,
     Do: NotificationChannel.() -> Unit = {
         description = "Channel description"
-        setShowBadge(false)
+        setShowBadge(no)
 	}
 ) {
     Android8OrAbove {
@@ -130,16 +130,12 @@ fun RemoteViews.color(id: Int, color: Int) = setTextColor(id, color)
 
     
 
-fun Context.Notifi(
-    title: Str,
-    text: Str,
-    id: Int = 111,
-) = LazyNotifi(title, text, id, this)
+fun Context.Notifi(title: Str, text: Str, id: Int) = LazyNotifi(title, text, id, this)
 
 class LazyNotifi(
     title: Str,
     text: Str,
-	val id: Int = 111,
+	val id: Int,
 	val ctx: Context,
 ) {
     val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -184,15 +180,12 @@ class LazyNotifi(
 
 
 
-fun Context.Notifi(
-    xml: Int,
-    id: Int = 111,
-) = LazyNotifi_XML(xml, id, this)
+fun Context.Notifi(xml: Int, id: Int) = LazyNotifi_XML(xml, id, this)
 
 //DIDNT TEST THISS
 class LazyNotifi_XML(
     val xml: Int,
-	val id: Int = 111,
+	val id: Int,
 	val ctx: Context
 ) {
     val manager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
