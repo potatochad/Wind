@@ -247,15 +247,25 @@ fun LogAppCrashes() {
 	
 val crash = AppData.prefs.getString("last_crash", null)
 if (crash != null) {
-    val lines = crash.lineSequence()
+    val message = crash.lineSequence().firstOrNull()
 
-    val message = lines.firstOrNull()
-    val root = crash.lineSequence()
-        .firstOrNull { it.trim().startsWith("at ") }
-        ?.trim()
+    val cause = crash.lineSequence()
+        .firstOrNull { it.startsWith("Caused by:") }
+
+    val where = crash.lineSequence()
+        .map(String::trim)
+        .firstOrNull { it.startsWith("at com.productivity.wind.") }
+        ?: crash.lineSequence()
+            .map(String::trim)
+            .firstOrNull { it.startsWith("at ") }
 
     log("Crash: $message")
-    log("Where: $root")
+
+    cause?.let {
+        log(it)
+    }
+
+    log("Where: $where")
     log(crash)
 
     AppData.prefs.edit()
