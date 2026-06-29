@@ -486,8 +486,6 @@ class AppUI : ComponentActivity() {
 		
 		App = this
 		AppCtx = this.applicationContext
-		AppPkg = this.packageName
-
 
 		permission = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
