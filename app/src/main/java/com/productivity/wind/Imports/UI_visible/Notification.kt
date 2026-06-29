@@ -135,10 +135,10 @@ class LazyNotifi(
 	val id: Int,
 	val ctx: Context,
 	
-	channel_Id: Str = notifi_Id,
-	channel_Name: Str = notifi_Name,
-	importance: Int = NotificationManager.IMPORTANCE_HIGH,
-    Do: NotificationChannel.() -> Unit = {
+	val channel_Id: Str = notifi_Id,
+	val channel_Name: Str = notifi_Name,
+	val importance: Int = NotificationManager.IMPORTANCE_HIGH,
+    val Do: NotificationChannel.() -> Unit = {
         description = "Channel description"
         setShowBadge(no)
 	}
@@ -194,10 +194,10 @@ class LazyNotifi_XML(
 	val id: Int,
 	val ctx: Context,
 	
-	channel_Id: Str = notifi_Id,
-	channel_Name: Str = notifi_Name,
-	importance: Int = NotificationManager.IMPORTANCE_HIGH,
-    Do: NotificationChannel.() -> Unit = {
+	val channel_Id: Str = notifi_Id,
+	val channel_Name: Str = notifi_Name,
+	val importance: Int = NotificationManager.IMPORTANCE_HIGH,
+    val Do: NotificationChannel.() -> Unit = {
         description = "Channel description"
         setShowBadge(no)
 	}
