@@ -153,6 +153,7 @@ class AppBackground : Service() {
 
 class BootReceiver : BroadcastReceiver() {
 	override fun onReceive(context: Context, intent: Intent) {
+		try {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             Intent(context, AppBackground::class.java).also {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -164,8 +165,12 @@ class BootReceiver : BroadcastReceiver() {
                 context.startService(it)
             }
         }
+		} catch (e: Exception) {
+            LogCrash(e)
+		}
 	}
 }
+
 
 
 
