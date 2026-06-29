@@ -233,6 +233,9 @@ fun getMyAppLogs() {
 }
 
 
+
+fun LogCrash(e: Throwable) = AppData.put("last_crash", e.stackTraceToString())
+
 fun LogAppCrashes() {
     val old = AppData.get("last_crash", "")
 
@@ -254,8 +257,8 @@ fun LogAppCrashes() {
     val handler = Thread.getDefaultUncaughtExceptionHandler()
 
     Thread.setDefaultUncaughtExceptionHandler { thread, e ->
-        AppData.put("last_crash", e.stackTraceToString())
-        handler?.uncaughtException(thread, e)
+        LogCrash(e)
+		handler?.uncaughtException(thread, e)
     }
 }
 
