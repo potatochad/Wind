@@ -234,44 +234,29 @@ fun getMyAppLogs() {
 
 
 fun LogAppCrashes() {
-    val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+    val old = AppData.get("last_crash", "")
 
-	Thread.setDefaultUncaughtExceptionHandler { thread, e ->
-		AppData.prefs.edit()
-			.putString("last_crash", e.stackTraceToString())
-			.commit()
-		defaultHandler?.uncaughtException(thread, e)
-	}
+    if (!old.empty) {
+        val lines = old.lineSequence()
 
-	//what left with
-	
-val crash = AppData.prefs.getString("last_crash", null)
-if (crash != null) {
-    val message = crash.lineSequence().firstOrNull()
+        log("Crash: ${lines.firstOrNull()}")
+        log(lines.firstOrNull { it.startsWith("Caused by:") } ?: "")
+        log("Where: ${
+            lines.map(Str::trim)
+                .firstOrNull { it.startsWith("at com.productivity.wind.") }
+                ?: lines.firstOrNull { it.startsWith("at ") }
+        }")
 
-    val cause = crash.lineSequence()
-        .firstOrNull { it.startsWith("Caused by:") }
-
-    val where = crash.lineSequence()
-        .map(String::trim)
-        .firstOrNull { it.startsWith("at com.productivity.wind.") }
-        ?: crash.lineSequence()
-            .map(String::trim)
-            .firstOrNull { it.startsWith("at ") }
-
-    log("Crash: $message")
-
-    cause?.let {
-        log(it)
+        log(old)
+        AppData.put("last_crash", "")
     }
 
-    log("Where: $where")
-    log(crash)
+    val handler = Thread.getDefaultUncaughtExceptionHandler()
 
-    AppData.prefs.edit()
-        .remove("last_crash")
-        .apply()
-}
+    Thread.setDefaultUncaughtExceptionHandler { thread, e ->
+        AppData.put("last_crash", e.stackTraceToString())
+        handler?.uncaughtException(thread, e)
+    }
 }
 
 
