@@ -123,20 +123,29 @@ class AppBackground : Service() {
 	
 	override fun onCreate() {
 		super.onCreate()
+
+		try {
 		val notif = Notifi("Background Tasks: [testing]", "running...", 1)
 
         Vlog("service create")
         notif.startForeground(this)
-    }
+		} catch (e: Exception) {
+            LogCrash(e)
+		}
+	}
 
 	
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {  
+		try {
         if (job == null || job?.isActive == no) {
             job = serviceScope.launch {
 				val notif = Notifi("Background Tasks: [testing]", "running...", 1)
 				AppBackground(notif)
             }
         }
+		} catch (e: Exception) {
+            LogCrash(e)
+		}
 
         return START_STICKY
     }
