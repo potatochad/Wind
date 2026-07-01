@@ -175,7 +175,7 @@ class AppBackground : Service() {
         createNotificationChannel()
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification) // REQUIRED
+            .setSmallIcon(myAppRes) // REQUIRED
             .setContentTitle("Background Tasks")
             .setContentText("Running...")
             .setOngoing(true)
