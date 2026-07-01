@@ -112,7 +112,7 @@ fun Context.stop(service: Class<out Service>) {
 }
 
 
-
+/*
 class AppBackground : Service() {
 	
 	val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
@@ -156,7 +156,69 @@ class AppBackground : Service() {
 	}
 	override fun onBind(intent: Intent?) = null
 }
+*/
 
+
+class AppBackground : Service() {
+
+    companion object {
+        private const val CHANNEL_ID = "background_tasks"
+        private const val NOTIFICATION_ID = 1
+    }
+
+    private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private var job: Job? = null
+
+    override fun onCreate() {
+        super.onCreate()
+
+        createNotificationChannel()
+
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification) // REQUIRED
+            .setContentTitle("Background Tasks")
+            .setContentText("Running...")
+            .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .build()
+
+        startForeground(NOTIFICATION_ID, notification)
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        if (job?.isActive != true) {
+            job = serviceScope.launch {
+                AppBackground()
+            }
+        }
+
+        return START_STICKY
+    }
+
+    override fun onDestroy() {
+        job?.cancel()
+        serviceScope.cancel()
+        super.onDestroy()
+    }
+
+    override fun onBind(intent: Intent?) = null
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "Background Tasks",
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                description = "Background service"
+            }
+
+            getSystemService(NotificationManager::class.java)
+                .createNotificationChannel(channel)
+        }
+    }
+}
 
 
 
