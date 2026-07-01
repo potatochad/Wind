@@ -125,10 +125,10 @@ class AppBackground : Service() {
 		super.onCreate()
 
 		try {
-		val notif = Notifi("Background Tasks: [testing]", "running...", 1)
+   		   val notif = Notifi("Background Tasks: [testing]", "running...", 1)
 
-        Vlog("service create")
-        notif.startForeground(this)
+           Vlog("service create")
+           notif.startForeground(this)
 		} catch (e: Exception) {
             LogCrash(e)
 		}
