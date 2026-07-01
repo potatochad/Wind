@@ -185,7 +185,6 @@ class BootReceiver : BroadcastReceiver() {
 
 
 
-
 /*
 class WatchdogService : Service() {
     private val serviceJob = SupervisorJob()
