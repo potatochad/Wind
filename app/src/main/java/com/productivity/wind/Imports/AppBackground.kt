@@ -137,12 +137,12 @@ class AppBackground : Service() {
 	
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {  
 		try {
-        if (job == null || job?.isActive == no) {
-            job = serviceScope.launch {
-				val notif = Notifi("Background Tasks: [testing]", "running...", 1)
-				AppBackground(notif)
-            }
-        }
+           if (job == null || job?.isActive == no) {
+               job = serviceScope.launch {
+				   val notif = Notifi("Background Tasks: [testing]", "running...", 1)
+				   AppBackground(notif)
+               }
+           }
 		} catch (e: Exception) {
             LogCrash(e)
 		}
