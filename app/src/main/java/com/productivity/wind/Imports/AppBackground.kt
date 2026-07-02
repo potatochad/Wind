@@ -201,13 +201,23 @@ class AppBackground : Service() {
         if (job?.isActive != true) {
             job = serviceScope.launch {
 
-                updateNotification("Downloading...")
-                // work
+                updateNotification("Running...")
+    delay(1000)
 
-                updateNotification("Processing...")
-                // work
+    updateNotification("Running..")
+    delay(1000)
 
-                updateNotification("Done")
+    updateNotification("Running.")
+    delay(1000)
+
+    updateNotification("Running")
+    delay(1000)
+
+    updateNotification("Running.")
+    delay(1000)
+
+    updateNotification("Running..")
+    delay(1000)
             }
         }
 
