@@ -169,38 +169,45 @@ class AppBackground : Service() {
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
 
+    private lateinit var notificationBuilder: NotificationCompat.Builder
+
     override fun onCreate() {
         super.onCreate()
 
         createNotificationChannel()
 
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(myAppRes) // REQUIRED
             .setContentTitle("Background Tasks")
             .setContentText("Running...")
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
+
+        startForeground(NOTIFICATION_ID, notificationBuilder.build())
+    }
+
+    private fun updateNotification(text: String) {
+        val updated = notificationBuilder
+            .setContentText(text)
+            .setOnlyAlertOnce(true)
             .build()
 
-        startForeground(NOTIFICATION_ID, notification)
+        NotificationManagerCompat.from(this)
+            .notify(NOTIFICATION_ID, updated)
     }
-	private fun updateNotification(text: String) {
-       notificationBuilder.setContentText(text)
-
-       NotificationManagerCompat.from(this)
-           .notify(NOTIFICATION_ID, notificationBuilder.build())
-	}
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         if (job?.isActive != true) {
             job = serviceScope.launch {
-                //AppBackground()
-				updateNotification("Downloading...")
-    // work
-				updateNotification("Processing...")
-    // work
-				updateNotification("Done")
+
+                updateNotification("Downloading...")
+                // work
+
+                updateNotification("Processing...")
+                // work
+
+                updateNotification("Done")
             }
         }
 
