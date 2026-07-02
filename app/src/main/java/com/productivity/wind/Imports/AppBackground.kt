@@ -200,24 +200,25 @@ class AppBackground : Service() {
 
         if (job?.isActive != true) {
             job = serviceScope.launch {
+				while (true){
+					updateNotification("Running...")
+					delay(1000)
+					
+					updateNotification("Running..")
+					delay(1000)
 
-                updateNotification("Running...")
-    delay(1000)
+					updateNotification("Running.")
+					delay(1000)
 
-    updateNotification("Running..")
-    delay(1000)
+					updateNotification("Running")
+					delay(1000)
 
-    updateNotification("Running.")
-    delay(1000)
+					updateNotification("Running.")
+					delay(1000)
 
-    updateNotification("Running")
-    delay(1000)
-
-    updateNotification("Running.")
-    delay(1000)
-
-    updateNotification("Running..")
-    delay(1000)
+					updateNotification("Running..")
+					delay(1000)
+				}
             }
         }
 
