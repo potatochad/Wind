@@ -184,12 +184,23 @@ class AppBackground : Service() {
 
         startForeground(NOTIFICATION_ID, notification)
     }
+	private fun updateNotification(text: String) {
+       notificationBuilder.setContentText(text)
+
+       NotificationManagerCompat.from(this)
+           .notify(NOTIFICATION_ID, notificationBuilder.build())
+	}
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         if (job?.isActive != true) {
             job = serviceScope.launch {
-                AppBackground()
+                //AppBackground()
+				updateNotification("Downloading...")
+    // work
+				updateNotification("Processing...")
+    // work
+				updateNotification("Done")
             }
         }
 
