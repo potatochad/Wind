@@ -563,7 +563,7 @@ fun <T : LazyData> lazySerialize(
     return buildString {
         appendLine("type: $kType")
         items.forEach { item ->
-            appendLine("varList: ${item.varList}")
+            appendLine("itemInfo: ${item.itemInfo}")
         }
     }
 }
