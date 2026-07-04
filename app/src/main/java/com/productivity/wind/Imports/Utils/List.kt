@@ -631,23 +631,23 @@ fun <T : LazyData> TrackList(
 abstract class LazyData {
     
     val className1 = this.className
-    val varList = mutableMapOf<Str, VarField>()
+    val itemInfo = mutableMapOf<Str, VarField>()
     
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, id ->
-                varList[id] = VarField(id, x, typeOf<T>())
+                itemInfo[id] = VarField(id, x, typeOf<T>())
                 
-                log("varList: $varList")
+                log("itemInfo: $itemInfo")
             }
             .onGet { prop ->
                 
             }
             .onSet { prop, value ->
-                varList[prop.name]?.value = value
+                itemInfo[prop.name]?.value = value
                 
                 log("set: ${prop.name} = $value")
-                log("varList: $varList")
+                log("itemInfo: $itemInfo")
             }
     }
     
