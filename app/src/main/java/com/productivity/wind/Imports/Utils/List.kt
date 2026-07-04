@@ -650,6 +650,7 @@ abstract class LazyData {
                 log("varList: $varList")
             }
     }
+    
     val id by lazyS(Id())
 }
 
