@@ -624,7 +624,7 @@ fun <T : LazyData> TrackList(
 
 abstract class LazyData {
 
-    internal var onChanged: (() -> Unit)? = null
+    var onChanged: (() -> Unit)? = null
 
     
     val className1 = this.className
