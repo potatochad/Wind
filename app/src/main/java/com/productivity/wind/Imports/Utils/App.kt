@@ -299,6 +299,29 @@ fun AppInfo.pkg(): Str {
     return this.activityInfo?.packageName ?: ""
 }
 
+
+fun LastUsedApp(context: Context, lookBackMs: Long = 10_000): Str? {
+    val usm = context.getSystemService(UsageStatsManager::class.java)
+
+    val end = System.currentTimeMillis()
+    val start = end - lookBackMs
+
+    val events = usm.queryEvents(start, end)
+    val event = UsageEvents.Event()
+
+    var lastApp: String? = null
+
+    while (events.hasNextEvent()) {
+        events.getNextEvent(event)
+
+        if (event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
+            lastApp = event.packageName
+        }
+    }
+
+    return lastApp
+}
+
 fun Str.pkg(): Str {
     val pm = App.packageManager
     return pm.getInstalledApplications(0)
