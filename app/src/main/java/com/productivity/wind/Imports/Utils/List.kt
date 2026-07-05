@@ -543,12 +543,6 @@ abstract class LazyData {
 }
 */
 
-data class VarField(
-    val name: Str,
-    var value: Any?,
-    val type: KType
-)
-
 
 
 fun <T : LazyData> lazySerialize(
@@ -634,23 +628,19 @@ abstract class LazyData {
 
     
     val className1 = this.className
-    val itemInfo = mutableMapOf<Str, VarField>()
+    
     
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, id ->
-                itemInfo[id] = VarField(id, x, typeOf<T>())
                 
-                log("itemInfo: $itemInfo")
             }
             .onGet { prop ->
                 
             }
             .onSet { prop, value ->
-                itemInfo[prop.name]?.value = value
-                
+                onChanged?.invoke()
                 log("set: ${prop.name} = $value")
-                log("itemInfo: $itemInfo")
             }
     }
     
