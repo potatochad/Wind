@@ -85,11 +85,16 @@
 
 
         <service
-            android:name=".Imports.AppBackground"
-            android:enabled="true"
-            android:exported="true"
-            android:foregroundServiceType="mediaPlayback|location|dataSync" 
-		/>
+			android:name=".Imports.AppBackground"
+			android:enabled="true"
+			android:exported="true"
+			android:foregroundServiceType="specialUse">
+			
+			<property
+				android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+				android:value="used only for background work needing to be done by app (in notification, listed what types, including making app greyscale, depending on usage of specific apps)"/>      
+		</service>
+
 		
 		<receiver
 			android:name=".Imports.BootReceiver"
