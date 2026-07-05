@@ -201,44 +201,25 @@ class AppBackground : Service() {
         if (job?.isActive != true) {
             job = serviceScope.launch {
 				while (true){
-					delay(1000L)
-                        val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-                        val NowTime = System.currentTimeMillis()
-
-                        /*
-                        * THIS IS NOT SUPER ACCURATE
-                        ? If you want better precision, you’ll need an Accessibility Service.
-                        !THIS REQUIRES NAVIGATING USER TO IT*/
-                        val AppsUsed = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, NowTime - 20_000, NowTime)
-                        val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
-
-                        //LOG WHEN WANT TOOO
-                        // if (currentApp != null) { }
-
-                        // val blocked = apps.any { it.packageName == currentApp && it.Block }
-
-                        // if (blocked) {
-                            
-                        // }
-				    }
-				}
-				while (true){
-					updateNotification("Running...")
+					//for better accuracy need accesibility permission
+					var lastUsed = LastUsedApp(this)
+					
+					updateNotification("Running...$lastUsed")
 					delay(1000)
 					
-					updateNotification("Running..")
+					updateNotification("Running.. $lastUsed")
 					delay(1000)
 
-					updateNotification("Running.")
+					updateNotification("Running.  $lastUsed")
 					delay(1000)
 
-					updateNotification("Running")
+					updateNotification("Running   $lastUsed")
 					delay(1000)
 
-					updateNotification("Running.")
+					updateNotification("Running.  $lastUsed")
 					delay(1000)
 
-					updateNotification("Running..")
+					updateNotification("Running.. $lastUsed")
 					delay(1000)
 				}
             }
