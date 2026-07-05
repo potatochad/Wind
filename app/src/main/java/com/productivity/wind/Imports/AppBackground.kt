@@ -202,7 +202,7 @@ class AppBackground : Service() {
             job = serviceScope.launch {
 				while (true){
 					delay(1000L)
-                        val usageStatsManager = Global1.context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+                        val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
                         val NowTime = System.currentTimeMillis()
 
                         /*
@@ -213,13 +213,13 @@ class AppBackground : Service() {
                         val currentApp = AppsUsed?.maxByOrNull { it.lastTimeUsed }?.packageName
 
                         //LOG WHEN WANT TOOO
-                        if (currentApp == Global1.context.packageName || currentApp == null) { } else { log("BACKGROUND — CURRENT APP: $currentApp", "bad") }
+                        // if (currentApp != null) { }
 
-                        val blocked = apps.any { it.packageName == currentApp && it.Block }
+                        // val blocked = apps.any { it.packageName == currentApp && it.Block }
 
-                        if (blocked) {
+                        // if (blocked) {
                             
-                        }
+                        // }
 				    }
 				}
 				while (true){
