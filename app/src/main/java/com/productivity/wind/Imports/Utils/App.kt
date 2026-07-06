@@ -499,7 +499,12 @@ lateinit var scope: CoroutineScope
 
 
 
-
+class MyApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        instance = this
+    }
+}
 	
 class AppUI : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
