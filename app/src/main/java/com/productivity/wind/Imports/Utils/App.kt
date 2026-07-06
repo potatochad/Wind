@@ -499,10 +499,10 @@ lateinit var scope: CoroutineScope
 
 
 
-class MyApp : Application() {
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        AppCtx = this
     }
 }
 	
