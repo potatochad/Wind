@@ -129,6 +129,8 @@ import androidx.compose.ui.window.*
 import com.productivity.wind.Imports.UI_visible.*
 import android.os.Process.*
 import android.content.ClipData
+import android.app.usage.UsageEvents
+import android.app.usage.UsageStatsManager
 import android.content.ClipboardManager
 import androidx.compose.ui.graphics.toArgb
 
