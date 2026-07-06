@@ -130,7 +130,6 @@ import com.productivity.wind.Imports.UI_visible.*
 import android.os.Process.*
 import android.content.ClipData
 import android.app.usage.UsageEvents
-import android.app.usage.UsageStatsManager
 import android.content.ClipboardManager
 import androidx.compose.ui.graphics.toArgb
 
@@ -302,7 +301,7 @@ fun AppInfo.pkg(): Str {
 }
 
 
-fun LastUsedApp(context: Context, lookBackMs: Long = 10_000): Str? {
+fun LastUsedApp(context: Context = AppCtx, lookBackMs: Long = 10_000): Str? {
     val usm = context.getSystemService(UsageStatsManager::class.java)
 
     val end = System.currentTimeMillis()
