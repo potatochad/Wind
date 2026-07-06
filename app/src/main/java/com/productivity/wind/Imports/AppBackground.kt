@@ -202,7 +202,7 @@ class AppBackground : Service() {
             job = serviceScope.launch {
 				while (true){
 					//for better accuracy need accesibility permission
-					var lastUsed = LastUsedApp(this)
+					var lastUsed = LastUsedApp()
 					
 					updateNotification("Running...$lastUsed")
 					delay(1000)
