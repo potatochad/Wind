@@ -36,7 +36,7 @@
     
 
     <application
-		android:name=".Imports.Utils.App"
+		android:name=".Imports.Utils.TheApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
