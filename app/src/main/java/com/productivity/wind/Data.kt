@@ -245,8 +245,12 @@ suspend fun AppBackground(notif: LazyNotifi){
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun AppStart_beforeUI() {
-	
+fun AppStart_beforeUI(activity: Activity) {
+	if (closeAppAsk){
+		activity.finishAffinity()
+		killProcess(myPid())
+		System.exit(0)
+	}
 
 	
 }
