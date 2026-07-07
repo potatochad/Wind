@@ -472,7 +472,7 @@ fun MyNavGraph(navController: NavHostController) {
 
 //difficult to use ON PURPOSE. Activity should be used only when necessary
 object AppActivity {
-    private var activityRef: WeakReference<Activity>? = null
+    private var activityRef: WeakReference<ComponentActivity>? = null
 
     var it: Activity?
         get() = activityRef?.get()
@@ -483,7 +483,6 @@ object AppActivity {
 
 
 
-//DONT CALL OR USE OUTSIDE OF APPUI: (foreground services, etc...)
 lateinit var App: ComponentActivity
 lateinit var AppCtx: Context
 
@@ -527,6 +526,7 @@ class AppUI : ComponentActivity() {
 		WindowCompat.enableEdgeToEdge(window)
 		
 		App = this
+		AppActivity.it = this
 		AppCtx = this.applicationContext
 
 		permission = registerForActivityResult(
@@ -567,8 +567,14 @@ class AppUI : ComponentActivity() {
 	
 	override fun onDestroy() {
 		super.onDestroy()
-		
+
+		// prevents accidentally clearing a newer Activity.
+		if (AppActivity.current === this) {
+			AppActivity.current = null
+		}
 	}
+
+	// happens for small interruptions too (dialogs, permission screens, another Activity)
 	override fun onPause() {
 		super.onPause()
 		
