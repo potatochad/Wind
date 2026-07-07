@@ -199,11 +199,12 @@ class AppBackground : Service() {
 
         if (job?.isActive != true) {
             job = serviceScope.launch {
-				while (Permission.appearOnTop()){
+				var appearOnTop = Permission.appearOnTop()
+				while (appearOnTop){
 					//for better accuracy need accesibility permission
 					var lastUsed = LastUsedApp()
 
-					log("lastUsed: $lastUsed")
+					log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
 
 
 
