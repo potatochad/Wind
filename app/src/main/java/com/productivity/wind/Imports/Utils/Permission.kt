@@ -193,6 +193,32 @@ object Permission {
 	}
 	*/
 
+	fun appearOnTop(onGranted: Do = {}): Bool {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.canDrawOverlays(App)) {
+			onGranted()
+			return true
+		}
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			val intent = Intent().apply {
+				action = Settings.ACTION_MANAGE_OVERLAY_PERMISSION
+				data = Uri.parse("package:${App.packageName}")
+				flags = Intent.FLAG_ACTIVITY_NEW_TASK
+			}
+			
+			return try {
+				AppActivity.it?.startActivity(intent)
+				false
+			} catch (e: Exception) {
+				false
+			}
+		}
+		
+		// Older Android versions don't have it
+		onGranted()
+		return true
+	}
+
 	fun ignoreOptimizations(onGranted: Do = {}): Bool {
 		val pm = App.getSystemService(Context.POWER_SERVICE) as PowerManager
 
