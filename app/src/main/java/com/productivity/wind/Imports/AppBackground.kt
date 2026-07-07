@@ -1,6 +1,3 @@
-//‼️CAREFULL WITH APP CONTEXT
-
-
 package com.productivity.wind.Imports
 
 import com.productivity.wind.Imports.Utils.String.*
@@ -202,7 +199,7 @@ class AppBackground : Service() {
 
         if (job?.isActive != true) {
             job = serviceScope.launch {
-				while (true){
+				while (Permission.appearOnTop()){
 					//for better accuracy need accesibility permission
 					var lastUsed = LastUsedApp()
 
