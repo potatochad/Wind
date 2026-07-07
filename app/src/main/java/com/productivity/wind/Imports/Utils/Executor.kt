@@ -179,7 +179,7 @@ fun RunOnce(key1: Any? = Unit, key2: Any? = Unit, Do: Wait) {
 }
 
 fun wait(x: Any = 20, Do: Wait) {
-    scope.launch {
+    appScope.launch {
 		try {
 			wait(x)
 			Do()
@@ -193,7 +193,7 @@ suspend fun wait(x: Any = 20) { delay(toL(x)) }
 
 fun Do(eLog: Str="", onError: Wait ={}, Do: Wait) {
 	var whereCalled by m("")
-	App.lifecycleScope.launch {
+	appScope.launch {
 		try {
 			whereCalled = callerId(2)
 			Do()
@@ -206,7 +206,7 @@ fun Do(eLog: Str="", onError: Wait ={}, Do: Wait) {
 	} 
 }
 fun NoLag(onError: Str = "noLag error", Do: Wait) {
-    App.lifecycleScope.launch(Dispatchers.Default) {
+    appScope.launch(Dispatchers.Default) {
 		try {
 			Do()
 		} catch (e: Exception) {
