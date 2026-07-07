@@ -166,9 +166,30 @@ object Permission {
     fun backgroundLocation(onGranted: Do={}) = getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)       
     fun bodySensors(onGranted: Do={}) = getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
 	
-	fun locationFine(onGranted: () -> Unit = {}) = getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, onGranted)
-    fun locationCoarse(onGranted: () -> Unit = {}) = getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, onGranted)         
-
+	fun location(onGranted: Do = {}): Bool {
+		val fine = ContextCompat.checkSelfPermission(
+			App,
+			Manifest.permission.ACCESS_FINE_LOCATION
+		) == PackageManager.PERMISSION_GRANTED
+		
+		val coarse = ContextCompat.checkSelfPermission(
+			App,
+			Manifest.permission.ACCESS_COARSE_LOCATION
+		) == PackageManager.PERMISSION_GRANTED
+		
+		return if (fine || coarse) {
+			onGranted()
+			true
+		} else {
+			permission.launch(
+				arrayOf(
+					Manifest.permission.ACCESS_FINE_LOCATION,
+					Manifest.permission.ACCESS_COARSE_LOCATION
+				)
+			)
+			false
+		}
+	}
 
 	fun ignoreOptimizations(onGranted: Do = {}): Bool {
 		val pm = App.getSystemService(Context.POWER_SERVICE) as PowerManager
