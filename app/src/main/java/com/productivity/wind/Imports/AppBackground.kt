@@ -203,6 +203,8 @@ class AppBackground : Service() {
 				while (true){
 					//for better accuracy need accesibility permission
 					var lastUsed = LastUsedApp()
+
+					log("lastUsed: $lastUsed")
 					
 					updateNotification("Running...$lastUsed")
 					delay(1000)
