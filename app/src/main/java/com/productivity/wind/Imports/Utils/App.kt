@@ -299,7 +299,7 @@ fun AppInfo.pkg(): Str {
 }
 
 
-fun LastUsedApp(context: Context = AppCtx, lookBackMs: Long = 10_000): Str? {
+fun LastUsedApp(context: Context = App, lookBackMs: Long = 10_000): Str? {
     val usm = context.getSystemService(UsageStatsManager::class.java)
 
     val end = System.currentTimeMillis()
@@ -509,7 +509,7 @@ lateinit var appScope: CoroutineScope
 class TheApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        AppCtx = this
+        App = this
     }
 }
 
