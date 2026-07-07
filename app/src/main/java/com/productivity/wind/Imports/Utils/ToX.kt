@@ -302,7 +302,7 @@ fun toUI(it: Any?): UI {
 
 fun toBitmap(it: Any?): Bitmap {
     var default = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
-    val context = AppCtx
+    val context = App
 
     return try {
         when (it) {
