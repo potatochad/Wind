@@ -174,6 +174,7 @@ class AppBackground : Service() {
         super.onCreate()
 
         createNotificationChannel()
+		createOverlay()
 
         notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(myAppRes) // REQUIRED
@@ -194,6 +195,33 @@ class AppBackground : Service() {
         NotificationManagerCompat.from(this)
             .notify(NOTIFICATION_ID, updated)
     }
+
+
+	private fun createOverlay() {
+		overlayView = View(this)
+		
+		val paint = Paint().apply {
+			colorFilter = ColorMatrixColorFilter(
+				ColorMatrix().apply {
+					setSaturation(0f)
+				}
+			)
+		}
+
+		overlayView!!.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
+		overlayView!!.setBackgroundColor(Color.WHITE)
+
+		val params = WindowManager.LayoutParams(
+			-1,
+			-1,
+			WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+			WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
+			WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+			PixelFormat.TRANSLUCENT
+		)
+
+		windowManager.addView(overlayView, params)
+	}
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
