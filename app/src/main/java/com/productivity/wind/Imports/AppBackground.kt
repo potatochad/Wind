@@ -205,6 +205,11 @@ class AppBackground : Service() {
 					var lastUsed = LastUsedApp()
 
 					log("lastUsed: $lastUsed")
+
+
+
+
+					
 					
 					updateNotification("Running...$lastUsed")
 					delay(1000)
