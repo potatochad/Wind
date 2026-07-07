@@ -497,6 +497,7 @@ var AppDensity by m(0f)
 val AppPkg = "com.productivity.wind"
 
 lateinit var scope: CoroutineScope
+lateinit var appScope: CoroutineScope
 
 
 
@@ -526,6 +527,7 @@ class AppUI : ComponentActivity() {
 		App = this
 		AppActivity.it = this
 		AppCtx = this.applicationContext
+		appScope = lifecycleScope
 
 		permission = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
