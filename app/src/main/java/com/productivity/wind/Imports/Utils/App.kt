@@ -136,7 +136,7 @@ import androidx.compose.ui.graphics.toArgb
 
 
 fun closeApp() {
-    App.finishAffinity()
+    // App.finishAffinity()
     killProcess(myPid())
     System.exit(0)
 }
