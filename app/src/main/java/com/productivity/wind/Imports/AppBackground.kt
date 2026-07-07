@@ -91,7 +91,6 @@ import com.productivity.wind.*
 import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.UI_visible.*
 import androidx.core.content.ContextCompat
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
@@ -174,11 +173,15 @@ class AppBackground : Service() {
 
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
+	private lateinit var windowManager: WindowManager
+    private var overlayView: View? = null
 
     private lateinit var notificationBuilder: NotificationCompat.Builder
 
     override fun onCreate() {
         super.onCreate()
+
+		windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
         createNotificationChannel()
 		createOverlay()
@@ -205,6 +208,8 @@ class AppBackground : Service() {
 
 
 	private fun createOverlay() {
+		if (overlayView != null) return
+
 		overlayView = View(this)
 		
 		val paint = Paint().apply {
@@ -272,6 +277,12 @@ class AppBackground : Service() {
     override fun onDestroy() {
         job?.cancel()
         serviceScope.cancel()
+		overlayView?.let {
+            windowManager.removeView(it)
+        }
+        overlayView = null
+
+		
         super.onDestroy()
     }
 
