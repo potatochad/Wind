@@ -135,11 +135,7 @@ import androidx.compose.ui.graphics.toArgb
 
 
 
-fun closeApp() {
-    // App.finishAffinity()
-    killProcess(myPid())
-    System.exit(0)
-}
+
 
 
 
@@ -506,6 +502,12 @@ class TheApp : Application() {
         AppCtx = this
     }
 }
+
+
+var closeAppAsk by m(no)
+fun closeApp() {
+	closeAppAsk = yes
+}
 	
 class AppUI : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -524,7 +526,7 @@ class AppUI : ComponentActivity() {
 		
 		
 	    LogAppCrashes()
-		AppStart_beforeUI()
+		AppStart_beforeUI(this)
 		
 
         setContent { 
@@ -541,6 +543,8 @@ class AppUI : ComponentActivity() {
 			BottomSystemPadding{
 				AppContent()
 			}
+
+			
 			
         }
     }
