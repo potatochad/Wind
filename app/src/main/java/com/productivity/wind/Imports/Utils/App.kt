@@ -136,7 +136,9 @@ import java.lang.ref.WeakReference
 
 
 
-
+fun closeApp() {
+    AppActivity.it?.finishAffinity()
+}
 
 
 object SystemBars {
@@ -514,10 +516,8 @@ class TheApp : Application() {
 }
 
 
-var closeAppAsk by m(no)
-fun closeApp() {
-	closeAppAsk = yes
-}
+
+
 	
 class AppUI : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
