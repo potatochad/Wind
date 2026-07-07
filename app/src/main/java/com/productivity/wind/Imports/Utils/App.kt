@@ -470,6 +470,17 @@ fun MyNavGraph(navController: NavHostController) {
         }
 }
 
+//difficult to use ON PURPOSE. Activity should be used only when necessary
+object AppActivity {
+    private var activityRef: WeakReference<Activity>? = null
+
+    var it: Activity?
+        get() = activityRef?.get()
+        set(value) {
+            activityRef = value?.let { WeakReference(it) }
+        }
+}
+
 
 
 //DONT CALL OR USE OUTSIDE OF APPUI: (foreground services, etc...)
