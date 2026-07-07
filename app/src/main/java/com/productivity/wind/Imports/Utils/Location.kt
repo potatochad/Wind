@@ -184,7 +184,9 @@ fun location(Do: Do = {}) {
 		if (locationOn()) Do()
 		else Vlog("turn on location")
 	} else {
-        ActivityCompat.requestPermissions(App, arrayOf(ACCESS_FINE_LOCATION), 100)
+		AppActivity.it?.let {
+			ActivityCompat.requestPermissions(it, arrayOf(ACCESS_FINE_LOCATION), 100)
+		}
     }
 }
 
