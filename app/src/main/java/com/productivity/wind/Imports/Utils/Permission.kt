@@ -165,7 +165,8 @@ object Permission {
     fun readPhoneState(onGranted: Do={}) = getAndDo(Manifest.permission.READ_PHONE_STATE, onGranted)
     fun backgroundLocation(onGranted: Do={}) = getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)       
     fun bodySensors(onGranted: Do={}) = getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
-	
+
+	/* NOT TESTEDDD
 	fun location(onGranted: Do = {}): Bool {
 		val fine = ContextCompat.checkSelfPermission(
 			App,
@@ -190,6 +191,7 @@ object Permission {
 			false
 		}
 	}
+	*/
 
 	fun ignoreOptimizations(onGranted: Do = {}): Bool {
 		val pm = App.getSystemService(Context.POWER_SERVICE) as PowerManager
