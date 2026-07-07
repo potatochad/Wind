@@ -221,7 +221,7 @@ class AppBackground : Service() {
 		}
 
 		overlayView!!.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
-		overlayView!!.setBackgroundColor(Color.WHITE)
+		overlayView!!.setBackgroundColor(android.graphics.Color.WHITE)
 
 		val params = WindowManager.LayoutParams(
 			-1,
