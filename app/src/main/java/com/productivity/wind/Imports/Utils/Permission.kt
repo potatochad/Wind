@@ -183,7 +183,7 @@ object Permission {
 			}
 
 			return try {
-				App.startActivity(intent)
+				AppActivity.it?.startActivity(intent)
 				false
 			} catch (e: Exception) {
 				false
@@ -209,7 +209,7 @@ object Permission {
                 data = Uri.parse("package:${App.packageName}")
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
-            App.startActivity(intent)
+            AppActivity.it?.startActivity(intent)
         } catch (e: Exception) {
             Timber.e(e)
         }
@@ -242,7 +242,7 @@ object Permission {
 		}
 
 		return try {
-			App.startActivityForResult(intent, 1)
+			AppActivity.it?.startActivityForResult(intent, 1)
 			yes
 		} catch (e: Exception) {
 			log("ERROR: ${e.message}")
