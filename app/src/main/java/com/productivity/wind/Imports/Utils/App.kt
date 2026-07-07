@@ -470,17 +470,17 @@ fun MyNavGraph(navController: NavHostController) {
         }
 }
 
-//difficult to use ON PURPOSE. Activity should be used only when necessary
+//!!difficult to use ON PURPOSE. Activity should be used only when necessary
+//*component activity, same as activity, just more UI features*
 object AppActivity {
     private var activityRef: WeakReference<ComponentActivity>? = null
 
-    var it: Activity?
+    var it: ComponentActivity?
         get() = activityRef?.get()
         set(value) {
             activityRef = value?.let { WeakReference(it) }
         }
 }
-
 
 
 lateinit var App: ComponentActivity
@@ -569,8 +569,8 @@ class AppUI : ComponentActivity() {
 		super.onDestroy()
 
 		// prevents accidentally clearing a newer Activity.
-		if (AppActivity.current === this) {
-			AppActivity.current = null
+		if (AppActivity.it === this) {
+			AppActivity.it = null
 		}
 	}
 
