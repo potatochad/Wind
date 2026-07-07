@@ -100,6 +100,8 @@ import androidx.core.content.ContextCompat
 fun Context.start(service: Class<out Service>) {
     val intent = Intent(this, service)
 
+	Permission.ignoreOptimizations()
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         startForegroundService(intent)
     } else {
@@ -205,7 +207,6 @@ class AppBackground : Service() {
 					var lastUsed = LastUsedApp()
 
 					log("lastUsed: $lastUsed")
-
 
 
 
