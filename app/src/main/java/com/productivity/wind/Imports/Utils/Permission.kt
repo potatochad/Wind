@@ -163,8 +163,11 @@ object Permission {
     fun sendSMS(onGranted: Do={}) = getAndDo(Manifest.permission.SEND_SMS, onGranted)
     fun callPhone(onGranted: Do={}) = getAndDo(Manifest.permission.CALL_PHONE, onGranted)
     fun readPhoneState(onGranted: Do={}) = getAndDo(Manifest.permission.READ_PHONE_STATE, onGranted)
-    fun backgroundLocation(onGranted: Do={}) = getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)
+    fun backgroundLocation(onGranted: Do={}) = getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)       
     fun bodySensors(onGranted: Do={}) = getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
+	
+	fun locationFine(onGranted: () -> Unit = {}) = getAndDo(Manifest.permission.ACCESS_FINE_LOCATION, onGranted)
+    fun locationCoarse(onGranted: () -> Unit = {}) = getAndDo(Manifest.permission.ACCESS_COARSE_LOCATION, onGranted)         
 
 
 	fun ignoreOptimizations(onGranted: Do = {}): Bool {
