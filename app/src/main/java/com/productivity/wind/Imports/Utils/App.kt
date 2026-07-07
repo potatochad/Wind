@@ -487,8 +487,6 @@ object AppActivity {
 
 lateinit var App: ComponentActivity
 lateinit var AppCtx: Context
-
-
 lateinit var AppNav: NavHostController
 lateinit var permission: ActivityResultLauncher<Str>
 
