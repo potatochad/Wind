@@ -91,6 +91,13 @@ import com.productivity.wind.*
 import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.UI_visible.*
 import androidx.core.content.ContextCompat
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.PixelFormat
+import android.view.View
+import android.view.WindowManager
 
 //region LATER USE
 
