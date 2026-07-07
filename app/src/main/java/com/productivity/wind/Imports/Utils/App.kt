@@ -485,8 +485,7 @@ object AppActivity {
 }
 
 
-lateinit var App: ComponentActivity
-lateinit var AppCtx: Context
+lateinit var App: Context
 lateinit var AppNav: NavHostController
 lateinit var permission: ActivityResultLauncher<Str>
 
@@ -524,9 +523,8 @@ class AppUI : ComponentActivity() {
 
 		WindowCompat.enableEdgeToEdge(window)
 		
-		App = this
 		AppActivity.it = this
-		AppCtx = this.applicationContext
+		App = this.applicationContext
 		appScope = lifecycleScope
 
 		permission = registerForActivityResult(
