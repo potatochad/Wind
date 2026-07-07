@@ -537,7 +537,7 @@ class AppUI : ComponentActivity() {
 		
 		
 	    LogAppCrashes()
-		AppStart_beforeUI(this)
+		AppStart_beforeUI()
 		
 
         setContent { 
