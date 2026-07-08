@@ -566,6 +566,10 @@ fun <T : LazyData> lazySerialize(
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): mList<T> {
+
+    // Save
+    // Init
+    
     return CustomList(
         items = items,
         add = {
@@ -624,7 +628,7 @@ fun <T : LazyData> TrackList(
 
 abstract class LazyData {
 
-    var onChanged: (() -> Unit)? = null
+    var onChanged: Do = {}
 
     
     val className1 = this.className
@@ -639,12 +643,12 @@ abstract class LazyData {
                 
             }
             .onSet { prop, value ->
-                onChanged?.invoke()
+                onChanged()
                 log("set: ${prop.name} = $value")
             }
     }
     
-    val id by lazyS(Id())
+    val id by lazyS(Id()) // str
 }
 
 
