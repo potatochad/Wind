@@ -284,10 +284,12 @@ class AppBackground : Service() {
     override fun onDestroy() {
         job?.cancel()
         serviceScope.cancel()
+		/*
 		overlayView?.let {
             windowManager.removeView(it)
         }
         overlayView = null
+		*/
 
 		
         super.onDestroy()
