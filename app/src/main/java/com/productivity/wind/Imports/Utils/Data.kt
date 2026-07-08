@@ -131,6 +131,9 @@ import com.productivity.wind.Imports.UI_visible.*
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
+fun Id() = UUID.randomUUID().toString()
+fun ListId() = UUID.randomUUID().toString()
+
 
 object AppData {
 	val storageFile = "Data"
