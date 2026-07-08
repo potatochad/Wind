@@ -178,7 +178,7 @@ object AppData {
 	}
 
 	//✴️‼️✴️‼️❌️‼️ think about using commit instead, instead of apply.
-	fun <T> put(id: Str, x: T) {
+	fun <T> put(id: Str, x: T, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
         val e = prefs.edit()
         when (x) {
             is Int -> e.putInt(id, x)
@@ -191,7 +191,11 @@ object AppData {
 				return
 			}
         }
-        e.apply()
+		Do(e)
+	}
+	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
+	fun <T> apply(id: Str, x: T) {
+        put(id, x)
 	}
 
 	inline fun <reified T> saveList(id: Str, list: List<T>) {
