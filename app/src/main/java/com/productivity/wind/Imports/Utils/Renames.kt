@@ -156,7 +156,6 @@ var <T> m_<T>.it: T
 fun <T> set(state: m_<T>?, value: T) { state?.value = value }
 fun show(state: m_<Bool>?) = set(state, yes)
 fun hide(state: m_<Bool>?) = set(state, no)
-fun Id(): Str { return UUID.randomUUID().toString() }
 
 
 // <<<---Type aliases--->>>
