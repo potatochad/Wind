@@ -173,18 +173,18 @@ class AppBackground : Service() {
 
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
-	private lateinit var windowManager: WindowManager
-    private var overlayView: View? = null
+	// private lateinit var windowManager: WindowManager
+    // private var overlayView: View? = null
 
     private lateinit var notificationBuilder: NotificationCompat.Builder
 
     override fun onCreate() {
         super.onCreate()
 
-		windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+		// windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
         createNotificationChannel()
-		createOverlay()
+		// createOverlay()
 
         notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(myAppRes) // REQUIRED
@@ -207,6 +207,7 @@ class AppBackground : Service() {
     }
 
 
+	/*
 	private fun createOverlay() {
 		if (overlayView != null) return
 
@@ -234,6 +235,7 @@ class AppBackground : Service() {
 
 		windowManager.addView(overlayView, params)
 	}
+	*/
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
