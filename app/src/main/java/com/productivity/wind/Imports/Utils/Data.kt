@@ -177,7 +177,7 @@ object AppData {
 		}
 	}
 
-	//✴️‼️✴️‼️❌️‼️ think about using commit instead, instead of apply.
+	
 	fun <T> put(id: Str, x: T, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
         val e = prefs.edit()
         when (x) {
