@@ -117,7 +117,7 @@ fun Context.stop(service: Class<out Service>) {
 }
 
 
-
+/*
 class AppBackground : Service() {
 	
 	val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
@@ -166,9 +166,9 @@ class AppBackground : Service() {
 	}
 	override fun onBind(intent: Intent?) = null
 }
+*/
 
 
-/*
 class AppBackground : Service() {
 
     companion object {
@@ -310,7 +310,7 @@ class AppBackground : Service() {
         }
     }
 }
-*/
+
 
 
 class BootReceiver : BroadcastReceiver() {
