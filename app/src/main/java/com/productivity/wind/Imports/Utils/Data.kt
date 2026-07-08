@@ -194,9 +194,7 @@ object AppData {
 		Do(e)
 	}
 	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
-	fun <T> apply(id: Str, x: T) {
-        put(id, x)
-	}
+	fun <T> apply(id: Str, x: T) = put(id, x)
 
 	inline fun <reified T> saveList(id: Str, list: List<T>) {
 		try {
