@@ -148,7 +148,7 @@ class AppBackground : Service() {
 
 				   var lastUsed = LastUsedApp()
 
-					log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
+					log("lastUsed: $lastUsed")
 				   
 				   AppBackground(notif)
                }
