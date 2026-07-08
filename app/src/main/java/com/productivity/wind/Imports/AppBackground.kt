@@ -145,6 +145,11 @@ class AppBackground : Service() {
            if (job == null || job?.isActive == no) {
                job = serviceScope.launch {
 				   val notif = Notifi("Background Tasks: [testing]", "running...", 1)
+
+				   var lastUsed = LastUsedApp()
+
+					log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
+				   
 				   AppBackground(notif)
                }
            }
