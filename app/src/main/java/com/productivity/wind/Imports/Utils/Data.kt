@@ -132,8 +132,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 fun Id() = UUID.randomUUID().toString()
-fun ListId(info: Str) = info + UUID.randomUUID().toString()
-
 
 object AppData {
 	val storageFile = "Data"
