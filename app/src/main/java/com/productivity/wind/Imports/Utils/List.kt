@@ -563,17 +563,32 @@ fun <T : LazyData> lazySerialize(
 }
 
 
+
+
+enum class ChangeType {
+        ADD,
+        EDIT,
+        DELETE
+    }
+    
+    data class ChangeEvent(
+        val type: ChangeType,
+        val id: Str = "",
+        val name: Str = "",
+        val value: Any = "",
+        val className: Str = "",
+    )
+
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): mList<T> {
 
+    
+
     // Save
     // Init
-    fun onAnyChange(event: Str, id: Str){
-        event = "delete"
-        event = "edit"
-        event = "add"
-    }
+    
+
     
     return CustomList(
         items = items,
@@ -633,12 +648,9 @@ fun <T : LazyData> TrackList(
 
 abstract class LazyData {
 
-    var onChanged: Do = {
-        
-    }
-
-    
-    val className1 = this.className
+    var onChanged: (ChangeEvent) -> Unit = {}
+    val id by m(Id())
+    val clazzName = this.className
     
     
     inline fun <reified T> lazyS(x: T): By<T> {
@@ -650,12 +662,20 @@ abstract class LazyData {
                 
             }
             .onSet { prop, value ->
-                onChanged()
+                onChanged(
+                    ChangeEvent(
+                        type = ChangeType.EDIT,
+                        id = id,
+                        name = prop.name,
+                        value = value,
+                        className = clazzName,
+                    )
+                )
                 log("set: ${prop.name} = $value")
             }
     }
     
-    val id by lazyS(Id()) // str
+    
 }
 
 
