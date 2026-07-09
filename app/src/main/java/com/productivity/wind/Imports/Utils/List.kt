@@ -565,19 +565,7 @@ fun <T : LazyData> lazySerialize(
 
 
 
-enum class ChangeType {
-        ADD,
-        EDIT,
-        DELETE
-    }
-    
-    data class ChangeEvent<T : LazyData>(
-        val type: ChangeType,
-        val id: Str = "",
-        val name: Str = "",
-        val value: T = "",
-        val className: Str = "",
-    )
+
 
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
