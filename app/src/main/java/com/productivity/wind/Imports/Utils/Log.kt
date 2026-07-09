@@ -166,6 +166,20 @@ fun Vlog(msg: Str, maxInt: Int = 400, special: Str = "none", delayLevel: Int = 0
     }, delayMs)
 }
 
+// This always cancels the previous toast before showing the new one.
+fun VlogOne(
+    msg: Str,
+    maxInt: Int = 400,
+    delayLevel: Int = 0
+) {
+    Vlog(
+        msg = msg,
+        maxInt = maxInt,
+        special = "one",
+        delayLevel = delayLevel
+    )
+}
+
 
 
 fun MeasureWaitLag(title: Str, block: Wait) {
