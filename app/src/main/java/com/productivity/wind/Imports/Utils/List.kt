@@ -575,7 +575,7 @@ fun <T : LazyData> TrackList(
         //save logic later, like if called often what do etc...
     }
     fun changed(){
-        Vlog("An item was changed")
+        VlogOne("An item was changed")
         save()
     }
 
