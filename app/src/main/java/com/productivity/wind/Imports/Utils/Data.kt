@@ -132,7 +132,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 fun Id() = UUID.randomUUID().toString()
-fun ListId() = UUID.randomUUID().toString()
+fun ListId(info: Str) = info + UUID.randomUUID().toString()
 
 
 object AppData {
@@ -198,6 +198,9 @@ object AppData {
 	}
 	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
 	fun <T> apply(id: Str, x: T) = put(id, x)
+
+
+	
 
 	inline fun <reified T> saveList(id: Str, list: List<T>) {
 		try {
