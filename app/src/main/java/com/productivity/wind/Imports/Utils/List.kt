@@ -574,17 +574,16 @@ fun <T : LazyData> TrackList(
     fun save(){
         //save logic later, like if called often what do etc...
     }
-    private var lastChangedTime = 0L
-
+    
+    var lastChanged = 0L
     fun changed() {
-        val now = System.currentTimeMillis()
+        val now = TimeMillis()
         
-        if (now - lastChangedTime >= 300) {
+        if (now - lastChanged >= 300) {
             lastChangedTime = now
             VlogOne("An item was changed")
+            save()
         }
-
-        save()
     }
     
     items.forEach {
