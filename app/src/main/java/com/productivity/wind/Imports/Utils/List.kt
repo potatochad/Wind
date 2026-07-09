@@ -590,27 +590,36 @@ fun <T : LazyData> TrackList(
         save()
     }
 
-    items.all.onChanged{ // this isnt real code (line this one)
-        changed()
+    items.forEach {
+        it.onChanged = ::changed
     }
+    
     return CustomList(
         items = items,
         add = {
             this.add(it)
+            it.onChanged = ::changed
             changed()
             true
         },
         addAt = { index, item ->
             this.add(index, item)
+            item.onChanged = ::changed
             changed()
         },
-        addAll = {
-            this.addAll(it)
+        addAll = { items -> 
+            this.addAll(items)
+            items.forEach {
+                it.onChanged = ::changed
+            }
             changed()
             true
         },
         addAllAt = { index, items ->
             this.addAll(index, items)
+            items.forEach {
+                it.onChanged = ::changed
+            }
             changed()
             true
         },
