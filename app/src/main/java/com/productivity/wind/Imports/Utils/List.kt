@@ -597,51 +597,45 @@ fun <T : LazyData> TrackList(
         items = items,
         add = {
             this.add(it)
+            changed()
             true
         },
         addAt = { index, item ->
             this.add(index, item)
+            changed()
         },
         addAll = {
             this.addAll(it)
+            changed()
             true
         },
         addAllAt = { index, items ->
             this.addAll(index, items)
+            changed()
             true
         },
         clear = {
             this.clear()
-        },
-        get = {
-            this[it]
+            changed()
         },
         remove = {
             this.remove(it)
+            changed()
             true
         },
         removeAt = {
             this.removeAt(it)
+            changed()
         },
         removeAll = {
             this.removeAll(it)
+            changed()
             true
         },
         set = { index, item ->
             this[index] = item
+            changed()
             item
-        },
-        contains = {
-            this.contains(it)
-        },
-        containsAll = {
-            this.containsAll(it)
-        },
-        indexOf = {
-            this.indexOf(it)
-        },
-        lastIndexOf = {
-            this.lastIndexOf(it)
         },
         toString = {
             this.firstOrNull()?.className ?: "Unknown"
