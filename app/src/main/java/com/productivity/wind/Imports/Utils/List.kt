@@ -580,7 +580,7 @@ fun <T : LazyData> TrackList(
         val now = TimeMillis()
         
         if (now - lastChanged >= 300) {
-            lastChangedTime = now
+            lastChanged = now
             VlogOne("An item was changed")
             save()
         }
