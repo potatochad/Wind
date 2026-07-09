@@ -628,7 +628,9 @@ fun <T : LazyData> TrackList(
 
 abstract class LazyData {
 
-    var onChanged: Do = {}
+    var onChanged: Do = {
+        
+    }
 
     
     val className1 = this.className
