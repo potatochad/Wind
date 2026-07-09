@@ -569,6 +569,11 @@ fun <T : LazyData> TrackList(
 
     // Save
     // Init
+    fun onAnyChange(event: Str, id: Str){
+        event = "delete"
+        event = "edit"
+        event = "add"
+    }
     
     return CustomList(
         items = items,
