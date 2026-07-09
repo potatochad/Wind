@@ -582,6 +582,17 @@ enum class ChangeType {
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): mList<T> {
+
+    fun save(){
+        //save logic later, like if called often what do etc...
+    }
+    fun changed(){
+        save()
+    }
+
+    items.all.onChanged{ // this isnt real code (line this one)
+        changed()
+    }
     return CustomList(
         items = items,
         add = {
@@ -640,7 +651,7 @@ fun <T : LazyData> TrackList(
 
 abstract class LazyData {
 
-    var onChanged: (ChangeEvent) -> Unit = {}
+    var onChanged: Do = {}
     val id by m(Id())
     val clazzName = this.className
     
@@ -654,15 +665,7 @@ abstract class LazyData {
                 
             }
             .onSet { prop, value ->
-                onChanged(
-                    ChangeEvent(
-                        type = ChangeType.EDIT,
-                        id = id,
-                        name = prop.name,
-                        value = value,
-                        className = clazzName,
-                    )
-                )
+                onChanged()
                 log("set: ${prop.name} = $value")
             }
     }
