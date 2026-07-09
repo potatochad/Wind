@@ -575,21 +575,13 @@ enum class ChangeType {
         val type: ChangeType,
         val id: Str = "",
         val name: Str = "",
-        val value: Any = "",
+        val value: T = "",
         val className: Str = "",
     )
 
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): mList<T> {
-
-    
-
-    // Save
-    // Init
-    
-
-    
     return CustomList(
         items = items,
         add = {
