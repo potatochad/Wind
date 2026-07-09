@@ -571,7 +571,7 @@ enum class ChangeType {
         DELETE
     }
     
-    data class ChangeEvent(
+    data class ChangeEvent<T : LazyData>(
         val type: ChangeType,
         val id: Str = "",
         val name: Str = "",
