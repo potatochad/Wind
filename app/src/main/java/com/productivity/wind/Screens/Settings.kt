@@ -162,8 +162,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                 }
             Btn("Edit"){
                     if (items.isNotEmpty()) {
-                        items[0].name =
-                            "updated ${System.currentTimeMillis()}"
+                        items[0].name = "updated ${TimeMillis()}"
                     }
                 }
 		}
