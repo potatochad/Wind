@@ -622,8 +622,8 @@ fun <T : LazyData> TrackList(
             true
         },
         removeAt = {
-            this.removeAt(it)
             changed()
+            this.removeAt(it)
         },
         removeAll = {
             this.removeAll(it)
