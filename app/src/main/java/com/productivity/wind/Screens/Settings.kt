@@ -166,6 +166,13 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                     }
                 }
 		}
+		LazzyRow {
+            Btn("Edit"){
+                    items.forEach {
+						it.name = "updated ${TimeMillis()}"
+					}
+                }
+		}
 
         LazzyColumn(Mod.h(300)) {
             LazyColumn {
