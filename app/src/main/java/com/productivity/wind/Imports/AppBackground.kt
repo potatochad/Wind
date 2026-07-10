@@ -220,7 +220,7 @@ class AppBackground : Service() {
 
 					
 					if (lastUsed == "com.chess") DeviceGray() else DeviceGray(no)         
-					if (!Permission.hasOverlay("com.teqtic.lockmeout")) DeviceGray() else DeviceGray(no)
+					if (!Permission.hasAccessibility("com.teqtic.lockmeout")) DeviceGray() else DeviceGray(no)        
 
 
 					
