@@ -31,6 +31,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.platform.LocalLayoutDirection
+import android.provider.Settings
 
 @Composable
 fun SettingsScreen() {
@@ -174,14 +175,14 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                 }
 			Btn("Grey on"){
                     Settings.Secure.putInt(
-						contentResolver,
+						App.contentResolver,
 						"accessibility_display_daltonizer_enabled",
 						1
 					)
 			}
 			Btn("Grey off"){
                     Settings.Secure.putInt(
-						contentResolver,
+						App.contentResolver,
 						"accessibility_display_daltonizer_enabled",
 						0
 					)
