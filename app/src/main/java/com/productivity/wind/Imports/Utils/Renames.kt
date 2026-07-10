@@ -171,6 +171,7 @@ typealias DoInt = (Int) -> Unit
 typealias DoBool = (Bool) -> Unit 
 typealias Do_<T> = (T) -> Unit
 typealias Do2_<A, B> = (A, B) -> Unit
+typealias Do3_<A, B, C> = (A, B, C) -> Unit
 
 typealias ListStr = List<Str>
 typealias ListInt = List<Int>
@@ -441,11 +442,11 @@ class By<T>(value: T) {
 	
 	private var onBuild: Do2_<ValVar, Str> = { _, _ -> }
     private var onGet: Do_<ValVar> = {}
-    private var onSet: Do2_<ValVar, Str, T> = { _, _, _ -> }
+    private var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
 
 	fun onBuild(x: Do2_<ValVar, Str>) = apply { onBuild = x }
     fun onGet(x: Do_<ValVar>) = apply { onGet = x }
-    fun onSet(x: Do2_<ValVar, Str, T>) = apply { onSet = x }
+    fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
 
 
 	
