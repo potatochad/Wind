@@ -573,7 +573,7 @@ fun <T : LazyData> TrackList(
 ): By<mList<T>> {
 
     var listName by m("")
-    var customList: CustomList<T>? = null
+    var customList: mList<T>? = null
 
 
     fun save(){
