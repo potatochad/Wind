@@ -570,7 +570,7 @@ fun <T : LazyData> lazySerialize(
 
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
-): mList<T> {
+): By<mList<T>> {
 
     fun save(){
         Vlog("saving...")
@@ -599,7 +599,20 @@ fun <T : LazyData> TrackList(
     
     items.forEach { it.onChanged = ::changed }
     
-    return CustomList(
+    return By(items)
+            .onBuild { prop, id ->
+                
+            }
+            .onGet { prop ->
+                
+            }
+            .onSet { prop, value ->
+                VlogOne("LIST MUST BE VAL")
+            }
+    }
+    
+    
+    CustomList(
         items = items,
         add = {
             this.add(it)
@@ -676,6 +689,11 @@ abstract class LazyData {
                 onChanged()
                 log("set: ${prop.name} = $value")
             }
+    }
+
+
+    fun save(listName: Str){
+        
     }
     
     
