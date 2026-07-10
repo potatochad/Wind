@@ -472,6 +472,16 @@ fun MyNavGraph(navController: NavHostController) {
         }
 }
 
+fun Context.gray(enabled: Bool) {
+	Settings.Secure.putInt(
+		this.contentResolver,
+		"accessibility_display_daltonizer_enabled",
+		if (enabled) 1 else 0
+	)
+}
+
+
+
 //!!difficult to use ON PURPOSE. Activity should be used only when necessary
 //*component activity, same as activity, just more UI features*
 object AppActivity {
