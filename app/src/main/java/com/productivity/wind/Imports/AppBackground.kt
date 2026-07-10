@@ -178,18 +178,13 @@ class AppBackground : Service() {
 
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
-	// private lateinit var windowManager: WindowManager
-    // private var overlayView: View? = null
-
+	
     private lateinit var notificationBuilder: NotificationCompat.Builder
 
     override fun onCreate() {
         super.onCreate()
 
-		// windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
-
         createNotificationChannel()
-		// createOverlay()
 
         notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(myAppRes) // REQUIRED
@@ -212,36 +207,6 @@ class AppBackground : Service() {
     }
 
 
-	/*
-	private fun createOverlay() {
-		if (overlayView != null) return
-
-		overlayView = View(this)
-		
-		val paint = Paint().apply {
-			colorFilter = ColorMatrixColorFilter(
-				ColorMatrix().apply {
-					setSaturation(0f)
-				}
-			)
-		}
-
-		overlayView!!.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
-		overlayView!!.setBackgroundColor(android.graphics.Color.WHITE)
-
-		val params = WindowManager.LayoutParams(
-			-1,
-			-1,
-			WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-			WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
-			WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-			PixelFormat.TRANSLUCENT
-		)
-
-		windowManager.addView(overlayView, params)
-	}
-	*/
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         if (job?.isActive != true) {
@@ -252,6 +217,19 @@ class AppBackground : Service() {
 					var lastUsed = LastUsedApp()
 
 					log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
+
+					Settings.Secure.putInt(
+						App.contentResolver,
+						"accessibility_display_daltonizer_enabled",
+						1
+					)
+			}
+			Btn("Grey off"){
+                    Settings.Secure.putInt(
+						App.contentResolver,
+						"accessibility_display_daltonizer_enabled",
+						0
+					)
 
 
 
@@ -284,14 +262,7 @@ class AppBackground : Service() {
     override fun onDestroy() {
         job?.cancel()
         serviceScope.cancel()
-		/*
-		overlayView?.let {
-            windowManager.removeView(it)
-        }
-        overlayView = null
-		*/
 
-		
         super.onDestroy()
     }
 
