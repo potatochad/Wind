@@ -311,7 +311,7 @@ object Permission {
 	object Apps {
 		fun hasOverlay(pkg: Str) = op(pkg, AppOpsManager.OPSTR_SYSTEM_ALERT_WINDOW)
 		fun hasUsage(pkg: Str) = op(pkg, AppOpsManager.OPSTR_GET_USAGE_STATS)
-		fun hasNotification(pkg: Str) = op(pkg, AppOpsManager.OPSTR_POST_NOTIFICATION)
+		fun hasNotification(pkg: Str) = op(pkg, "android:post_notification")
 
 		fun hasCamera(pkg: Str) = perm(pkg, Manifest.permission.CAMERA)
 		fun hasMic(pkg: Str) = perm(pkg, Manifest.permission.RECORD_AUDIO)
