@@ -258,7 +258,7 @@ fun <T> s(
 			if (badId) Vlog("Duplicate id detected: $goodId")
 			else delegate.it = AppData.get(goodId, default)
 		}
-		.onSet{ prop, newValue ->
+		.onSet{ prop, id, newValue ->
 			if (!badId) AppData.put(goodId, newValue)
 		}
 	return delegate
