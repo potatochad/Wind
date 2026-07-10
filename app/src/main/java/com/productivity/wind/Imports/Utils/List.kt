@@ -596,7 +596,7 @@ fun <T : LazyData> TrackList(
         }
     }
     
-    items.all { it.onChanged = ::changed }
+    items.forEach { it.onChanged = ::changed }
     
     return CustomList(
         items = items,
