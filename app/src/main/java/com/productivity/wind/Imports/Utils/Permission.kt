@@ -135,6 +135,8 @@ import android.provider.*
 import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.app.admin.DeviceAdminReceiver
+import android.accessibilityservice.AccessibilityServiceInfo
+import android.view.accessibility.AccessibilityManager
 
 
 
@@ -330,6 +332,16 @@ object Permission {
 	fun hasSms(pkg: Str) = perm(pkg, Manifest.permission.READ_SMS)
 	fun hasCalendar(pkg: String) = perm(pkg, Manifest.permission.READ_CALENDAR)
 	fun hasBluetooth(pkg: Str) = perm(pkg, Manifest.permission.BLUETOOTH_CONNECT)
+
+	fun hasAccessibility(pkg: Str): Bool {
+		val am = App.getSystemService(AccessibilityManager::class.java)
+
+		return am.getEnabledAccessibilityServiceList(
+			AccessibilityServiceInfo.FEEDBACK_ALL_MASK
+		).any {
+			it.resolveInfo.serviceInfo.packageName == pkg
+		}
+	}
 
 	
 }
