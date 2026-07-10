@@ -142,7 +142,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions") {
-	val items = TrackList(
+	val items by TrackList(
 		listOf(
 			TestData(),
 			TestData(),
