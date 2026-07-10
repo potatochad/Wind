@@ -675,7 +675,7 @@ fun <T : LazyData> TrackList(
         .onBuild { prop, id -> 
             listName = id
         }
-        .onSet { prop, value -> VlogOne("LIST MUST BE VAL") }
+        .onSet { prop, id, value -> VlogOne("LIST MUST BE VAL") }
 }
 
 abstract class LazyData {
@@ -693,7 +693,7 @@ abstract class LazyData {
             .onGet { prop ->
                 
             }
-            .onSet { prop, value ->
+            .onSet { prop, id, value ->
                 onChanged()
                 log("set: ${prop.name} = $value")
             }
