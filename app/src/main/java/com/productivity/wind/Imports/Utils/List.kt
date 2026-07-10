@@ -572,11 +572,9 @@ fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): By<mList<T>> {
 
-    fun save(){
-        Vlog("saving...")
-        //save logic later, like if called often what do etc...
-    }
-    
+    var listName by m("")
+
+
     var saveJob: Job? = null
     var changed by m(no)
 
@@ -598,21 +596,9 @@ fun <T : LazyData> TrackList(
     }
     
     items.forEach { it.onChanged = ::changed }
-    
-    return By(items)
-            .onBuild { prop, id ->
-                
-            }
-            .onGet { prop ->
-                
-            }
-            .onSet { prop, value ->
-                VlogOne("LIST MUST BE VAL")
-            }
-    }
-    
-    
-    CustomList(
+
+
+    val customList = CustomList(
         items = items,
         add = {
             this.add(it)
@@ -668,6 +654,22 @@ fun <T : LazyData> TrackList(
             this.firstOrNull()?.className ?: "Unknown"
         }
     )
+
+    fun save(){
+        customList.forEach {
+            it.save(listName)
+        }
+        Vlog("saving...")
+        //save logic later, like if called often what do etc...
+    }
+    
+
+    return By(customList)
+        .onBuild { prop, id -> 
+            listName = id
+            id.vlog("list name")
+        }
+        .onSet { prop, value -> VlogOne("LIST MUST BE VAL") }
 }
 
 abstract class LazyData {
@@ -692,7 +694,7 @@ abstract class LazyData {
     }
 
 
-    fun save(listName: Str){
+    open fun save(listName: Str){
         
     }
     
