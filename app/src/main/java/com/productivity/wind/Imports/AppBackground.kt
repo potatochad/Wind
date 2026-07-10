@@ -219,7 +219,7 @@ class AppBackground : Service() {
 					log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
 
 					
-					if (lastUsed == "com.chess") DeviceGray()
+					if (lastUsed == "com.chess") DeviceGray() else DeviceGray(no) 
 
 
 
