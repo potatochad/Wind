@@ -472,9 +472,9 @@ fun MyNavGraph(navController: NavHostController) {
         }
 }
 
-fun Context.gray(enabled: Bool = yes) {
+fun DeviceGray(enabled: Bool = yes) {
 	Settings.Secure.putInt(
-		this.contentResolver,
+		App.contentResolver,
 		"accessibility_display_daltonizer_enabled",
 		if (enabled) 1 else 0
 	)
