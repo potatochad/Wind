@@ -167,11 +167,25 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                 }
 		}
 		LazzyRow {
-            Btn("Edit"){
+            Btn("Edit All"){
                     items.forEach {
 						it.name = "updated ${TimeMillis()}"
 					}
                 }
+			Btn("Grey on"){
+                    Settings.Secure.putInt(
+						contentResolver,
+						"accessibility_display_daltonizer_enabled",
+						1
+					)
+			}
+			Btn("Grey off"){
+                    Settings.Secure.putInt(
+						contentResolver,
+						"accessibility_display_daltonizer_enabled",
+						0
+					)
+			}
 		}
 
         LazzyColumn(Mod.h(300)) {
