@@ -305,6 +305,35 @@ object Permission {
 
 	
 	val systemAlertWindow = "android.permission.SYSTEM_ALERT_WINDOW"
+
+
+
+	object Apps {
+		fun hasOverlay(pkg: Str) = op(pkg, AppOpsManager.OPSTR_SYSTEM_ALERT_WINDOW)
+		fun hasUsage(pkg: Str) = op(pkg, AppOpsManager.OPSTR_GET_USAGE_STATS)
+		fun hasNotification(pkg: Str) = op(pkg, AppOpsManager.OPSTR_POST_NOTIFICATION)
+
+		fun hasCamera(pkg: Str) = perm(pkg, Manifest.permission.CAMERA)
+		fun hasMic(pkg: Str) = perm(pkg, Manifest.permission.RECORD_AUDIO)
+		fun hasLocation(pkg: Str) = perm(pkg, Manifest.permission.ACCESS_FINE_LOCATION)
+		fun hasContacts(pkg: Str) = perm(pkg, Manifest.permission.READ_CONTACTS)
+		fun hasStorage(pkg: Str) = perm(pkg, Manifest.permission.READ_EXTERNAL_STORAGE)
+		fun hasPhone(pkg: Str) = perm(pkg, Manifest.permission.READ_PHONE_STATE)
+		fun hasSms(pkg: Str) = perm(pkg, Manifest.permission.READ_SMS)
+		fun hasCalendar(pkg: String) = perm(pkg, Manifest.permission.READ_CALENDAR)
+		fun hasBluetooth(pkg: Str) = perm(pkg, Manifest.permission.BLUETOOTH_CONNECT)
+
+		fun perm(pkg: Str, permission: Str) =
+		   App.packageManager.checkPermission(permission, pkg) ==
+		      PackageManager.PERMISSION_GRANTED
+		
+		fun op(pkg: Str, name: Str): Bool {
+			val info = App.packageManager.getApplicationInfo(pkg, 0)
+			return App.getSystemService(AppOpsManager::class.java)
+				.unsafeCheckOpNoThrow(name, info.uid, pkg) ==
+			       AppOpsManager.MODE_ALLOWED
+		}
+	}
 	
 }
 
