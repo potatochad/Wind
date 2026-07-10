@@ -218,18 +218,8 @@ class AppBackground : Service() {
 
 					log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
 
-					Settings.Secure.putInt(
-						App.contentResolver,
-						"accessibility_display_daltonizer_enabled",
-						1
-					)
-			}
-			Btn("Grey off"){
-                    Settings.Secure.putInt(
-						App.contentResolver,
-						"accessibility_display_daltonizer_enabled",
-						0
-					)
+					
+					if (lastUsed == "com.chess") DeviceGray()
 
 
 
