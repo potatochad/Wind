@@ -674,7 +674,6 @@ fun <T : LazyData> TrackList(
     return By(customList)
         .onBuild { prop, id -> 
             listName = id
-            id.vlog("list name")
         }
         .onSet { prop, value -> VlogOne("LIST MUST BE VAL") }
 }
@@ -702,7 +701,7 @@ abstract class LazyData {
 
 
     open fun save(listName: Str){
-        
+        val key = "$listName:$id"
     }
     
     
