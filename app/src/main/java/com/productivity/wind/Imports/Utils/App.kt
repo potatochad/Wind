@@ -472,7 +472,7 @@ fun MyNavGraph(navController: NavHostController) {
         }
 }
 
-fun Context.gray(enabled: Bool) {
+fun Context.gray(enabled: Bool = yes) {
 	Settings.Secure.putInt(
 		this.contentResolver,
 		"accessibility_display_daltonizer_enabled",
