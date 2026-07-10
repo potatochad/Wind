@@ -243,6 +243,9 @@ fun <T> CustomList(
 
 
 
+fun <T> Iterable<T>.all(action: (T) -> Unit) = forEach(action)
+
+
 inline fun <T, R : Comparable<R>> Iterable<T>.max(selector: (T) -> R): R? =
     maxOfOrNull(selector)
 
@@ -575,25 +578,27 @@ fun <T : LazyData> TrackList(
         //save logic later, like if called often what do etc...
     }
     
-    var lastChanged = 0L
+    var saveJob: Job? = null
+    var changed by m(no)
 
     fun changed() {
-        val now = TimeMillis()
-        lastChanged = now
-        
-        Thread {
-            Thread.sleep(300)
+        changed = yes
 
-            if (lastChanged == now) {
-                VlogOne("An item was changed")
+        if (saveJob != null) return
+
+        saveJob = scope.launch {
+            delay(300)
+
+            if (changed) {
                 save()
+                changed = no
             }
-        }.start()
+
+            saveJob = null
+        }
     }
     
-    items.forEach {
-        it.onChanged = ::changed
-    }
+    items.all { it.onChanged = ::changed }
     
     return CustomList(
         items = items,
