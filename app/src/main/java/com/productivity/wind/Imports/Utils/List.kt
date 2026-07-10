@@ -243,8 +243,6 @@ fun <T> CustomList(
 
 
 
-fun <T> Iterable<T>.all(action: (T) -> Unit) = forEach(action)
-
 
 inline fun <T, R : Comparable<R>> Iterable<T>.max(selector: (T) -> R): R? =
     maxOfOrNull(selector)
