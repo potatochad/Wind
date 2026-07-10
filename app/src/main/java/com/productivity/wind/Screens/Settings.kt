@@ -173,20 +173,6 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 						it.name = "updated ${TimeMillis()}"
 					}
                 }
-			Btn("Grey on"){
-                    Settings.Secure.putInt(
-						App.contentResolver,
-						"accessibility_display_daltonizer_enabled",
-						1
-					)
-			}
-			Btn("Grey off"){
-                    Settings.Secure.putInt(
-						App.contentResolver,
-						"accessibility_display_daltonizer_enabled",
-						0
-					)
-			}
 		}
 
         LazzyColumn(Mod.h(300)) {
