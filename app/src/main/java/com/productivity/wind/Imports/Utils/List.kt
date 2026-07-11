@@ -706,9 +706,11 @@ abstract class LazyData {
         val key = "$listName:$id"
 
         var customStr by m("")
+        customStr += "{ id: [ $key ], "
         props.forEach { (name, prop) ->
-            customStr += "{ id: [ $key ], name: [ $name ], value: [ ${prop.value} ], type: [ ${prop.type} ] }, "
+            customStr += "[ $name ][ ${prop.type} ][ ${prop.value} ]"                
         }
+        customStr += " }"
         VlogOne(customStr, 1200)
     }
     
