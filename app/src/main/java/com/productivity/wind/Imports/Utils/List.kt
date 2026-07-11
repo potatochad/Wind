@@ -707,7 +707,7 @@ abstract class LazyData {
 
         var customStr by m("")
         props.forEach { (name, prop) ->
-            customStr += "{ name: [ $name ], value: [ ${prop.value} ], type: [ ${prop.type} ] } "
+            customStr += "{ id: [ $key ], name: [ $name ], value: [ ${prop.value} ], type: [ ${prop.type} ] }, "
         }
         VlogOne(customStr, 1200)
     }
@@ -721,7 +721,7 @@ class TestData : LazyData() {
 
     var name by lazyS("hello")
     var name2 by lazyS("boring")
-    var time by lazyS("10:30")
+    var time by lazyS(Schedule())
     var done by lazyS(no)
     var doneTimes by lazyS(3)
 }
