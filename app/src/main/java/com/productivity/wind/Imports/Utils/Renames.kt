@@ -254,7 +254,7 @@ data class T<T>(
     val value: T,
     val type: Class<*> = value!!::class.java
 )
-data class Var<T>(
+data class VarInfo<T>(
 	val name: Str,
     val value: T,
     val type: Class<*> = value!!::class.java,
