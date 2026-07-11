@@ -704,6 +704,10 @@ abstract class LazyData {
 
     open fun save(listName: Str){
         val key = "$listName:$id"
+        
+        props.forEach { (key, value) ->
+            
+        }
     }
     
     
@@ -714,7 +718,10 @@ abstract class LazyData {
 class TestData : LazyData() {
 
     var name by lazyS("hello")
-    var boringName by lazyS("boring")
+    var name2 by lazyS("boring")
+    var time by lazyS("10:30")
+    var done by lazyS(no)
+    var doneTimes by lazyS(3)
 }
 
 // list using testdata class
