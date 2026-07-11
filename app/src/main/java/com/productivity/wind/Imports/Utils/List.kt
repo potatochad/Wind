@@ -707,7 +707,7 @@ abstract class LazyData {
         var customStr by m("")
         customStr += "{ id: [ $key ], "
         props.forEach { (name, prop) ->
-            customStr += "[ $name ][ ${prop.type} ][ ${prop.value} ]"                
+            customStr += "[ $name ][ ${prop.type} ][ ${prop.value} ], "                
         }
         customStr += " }"
         VlogOne(customStr, 1200)
