@@ -685,17 +685,17 @@ abstract class LazyData {
     val id by m(Id())
     val clazzName = this.className
     
-    val props = mutableMapOf<Str, Any?>()
+    val props = mutableMapOf<Str, T<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, id ->
-                props[id] = x
+                props[id] = T(x)
             }
             .onGet { prop ->
                 
             }
             .onSet { prop, id, value ->
-                props[id] = value
+                props[id] = T(value)
                 onChanged()
                 log("set: ${prop.name} = $value")
             }
