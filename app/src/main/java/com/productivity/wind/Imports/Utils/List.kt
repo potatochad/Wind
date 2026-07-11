@@ -697,7 +697,6 @@ abstract class LazyData {
             .onSet { prop, id, value ->
                 props[id] = T(value)
                 onChanged()
-                log("set: ${prop.name} = $value")
             }
     }
 
