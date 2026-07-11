@@ -184,6 +184,8 @@ class AppBackground : Service() {
     override fun onCreate() {
         super.onCreate()
 
+		Permission.notification()
+
         createNotificationChannel()
 
         notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
