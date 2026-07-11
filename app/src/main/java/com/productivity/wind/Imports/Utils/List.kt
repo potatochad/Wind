@@ -685,17 +685,17 @@ abstract class LazyData {
     val id by m(Id())
     val clazzName = this.className
     
-    var props = mutableMapOf<Str, T<*>>()
+    var vars = listOf<Var<Str, *>>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
-            .onBuild { prop, id ->
-                props[id] = T(x)
+            .onBuild { prop, name ->
+                Var(name, x)
             }
             .onGet { prop ->
                 
             }
-            .onSet { prop, id, value ->
-                props[id] = T(value)
+            .onSet { prop, name, value ->
+                Var(name, value)
                 onChanged()
             }
     }
@@ -704,12 +704,14 @@ abstract class LazyData {
     open fun save(listName: Str){
         val key = "$listName:$id"
 
+        /*
         var customStr by m("")
         customStr += "{ id: [ $key ], "
-        props.forEach { (name, prop) ->
+        vars.forEach {
             customStr += "[ $name ][ ${prop.type} ][ ${prop.value} ], "                
         }
         customStr += " }"
+        */
         VlogOne(customStr, 1200)
     }
     
