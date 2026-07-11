@@ -263,6 +263,7 @@ fun OnLeaveApp(){
 }
 
 fun OnResume(){
+	DeviceGray(no)
 	Bar.leftApp = no
 	TskProp.UpdateAppTsk()
 
