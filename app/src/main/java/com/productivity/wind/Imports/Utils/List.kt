@@ -684,7 +684,7 @@ abstract class LazyData {
     val id by m(Id())
     val clazzName = this.className
     
-    private val props = MapOf<Str, Any>()
+    private val props = mutableMapOf<Str, Any>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, id ->
