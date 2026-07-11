@@ -219,9 +219,11 @@ class AppBackground : Service() {
 					log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
 
 					
-					if (lastUsed == "com.chess") DeviceGray() else DeviceGray(no)         
-					if (!Permission.hasAccessibility("com.teqtic.lockmeout")) DeviceGray() else DeviceGray(no)        
-
+					if (lastUsed == "com.chess" || !Permission.hasAccessibility("com.teqtic.lockmeout")) {
+						DeviceGray()
+					} else {
+						DeviceGray(no)
+					}
 
 					
 					
