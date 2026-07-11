@@ -250,6 +250,12 @@ fun File.file(name: Str): File {
 }
 
 
+data class T<T>(
+    val value: T,
+    val type: Class<*> = value!!::class.java
+)
+
+
 fun navBack() { AppNav.popBackStack() }
 
 inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
