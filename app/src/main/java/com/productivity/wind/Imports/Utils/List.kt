@@ -705,7 +705,7 @@ abstract class LazyData {
     open fun save(listName: Str){
         val key = "$listName:$id"
 
-        val customStr by m("")
+        var customStr by m("")
         props.forEach { (name, prop) ->
             customStr += "{ name: [ $name ], value: [ ${prop.value} ], type: [ ${prop.type} ] } "
         }
