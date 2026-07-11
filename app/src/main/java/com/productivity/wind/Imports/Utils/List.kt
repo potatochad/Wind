@@ -685,7 +685,7 @@ abstract class LazyData {
     val id by m(Id())
     val clazzName = this.className
     
-    var vars = mutableListOf<VarInfo<Str, *>>()
+    var vars = mutableListOf<VarInfo<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, name ->
@@ -712,7 +712,7 @@ abstract class LazyData {
         }
         customStr += " }"
         */
-        VlogOne(customStr, 1200)
+        //VlogOne(customStr, 1200)
     }
     
     
