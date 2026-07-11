@@ -254,6 +254,11 @@ data class T<T>(
     val value: T,
     val type: Class<*> = value!!::class.java
 )
+data class Var<T>(
+	val name: Str,
+    val value: T,
+    val type: Class<*> = value!!::class.java,
+)
 
 
 fun navBack() { AppNav.popBackStack() }
