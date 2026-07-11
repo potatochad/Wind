@@ -678,13 +678,14 @@ fun <T : LazyData> TrackList(
         .onSet { prop, id, value -> VlogOne("LIST MUST BE VAL") }
 }
 
+//nothing can be private
 abstract class LazyData {
 
     var onChanged: Do = {}
     val id by m(Id())
     val clazzName = this.className
     
-    private val props = mutableMapOf<Str, Any>()
+    val props = mutableMapOf<Str, Any?>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, id ->
