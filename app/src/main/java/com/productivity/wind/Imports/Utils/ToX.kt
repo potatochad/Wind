@@ -226,9 +226,14 @@ fun toStr(it: Any?): Str = when (it) {
     else -> it.toString()
 }
 
-fun toStr(it: List<VarInfo<*>>()): Str = when (it) {
+fun toStr(vars: List<VarInfo<*>>): Str {
+    return vars.joinToString(
+        prefix = "{ ",
+        postfix = " }"
+    ) {
+        "[${it.name}][${it.value}]"
+    }
 }
-
 
 fun toListStr(it: Any?): ListStr = when (it) {      
     is List<*> -> it.map { toStr(it) }              
