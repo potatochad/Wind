@@ -226,6 +226,9 @@ fun toStr(it: Any?): Str = when (it) {
     else -> it.toString()
 }
 
+fun toStr(it: ?): Str = when (it) {
+
+
 fun toListStr(it: Any?): ListStr = when (it) {      
     is List<*> -> it.map { toStr(it) }              
     is String -> it.lines()                        
