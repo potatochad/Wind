@@ -228,10 +228,31 @@ fun toStr(it: Any?): Str = when (it) {
 
 fun toStr(id: Str = "", vars: List<VarInfo<*>>): Str {
     val varsStr = vars.joinToString(", ") { v ->
-        "[${v.name}][${v.type}][${v.value}]"
+        "[${v.name}][${v.type}][${ComplexTypeToStr(v.value)}]"
     }
 
-    return "{ id: [$id], vars: $varsStr }" // { id: [fhdihdhosidh], vars: [name][String][John], [age][Int][20] }               
+    return "{ id: [$id], vars: $varsStr }"
+}
+
+//SLOWW
+fun ComplexTypeToStr(value: Any?): Str {
+    if (value == null) return "null"
+
+    return when (value) {
+        is String -> "\"$value\""
+        is Number, is Boolean -> value.toString()
+
+        else -> {
+            val fields = value.javaClass.declaredFields
+                .filter { !it.isSynthetic }
+                .joinToString(", ") { field ->
+                    field.isAccessible = true
+                    "${field.name}=${valueToStr(field.get(value))}"
+                }
+
+            "${value.javaClass.simpleName}($fields)"
+        }
+    }
 }
 
 fun toListStr(it: Any?): ListStr = when (it) {      
