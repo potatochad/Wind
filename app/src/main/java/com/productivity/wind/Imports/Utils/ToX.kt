@@ -231,8 +231,8 @@ fun toStr(vars: List<VarInfo<*>>): Str {
         prefix = "{ ",
         postfix = " }"
     ) {
-        "[${it.name}][${it.value}]"
-    }
+        "[${it.name}][${it.type}][${it.value}]" 
+    } // { [name][String][John], [age][Int][20] }
 }
 
 fun toListStr(it: Any?): ListStr = when (it) {      
