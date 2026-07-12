@@ -1,12 +1,11 @@
 //‼️‼️‼️RULES:
-//DONT USE GLOBAL CONTEXT HERE
-//DONT USE LATEINIT HERE
 //DONT SAVE ANY NOTIFI VALUE IN A GLOBAL VAR
 //Call create channels when building notifi
 
 
 package com.productivity.wind.Imports.UI_visible
 
+import com.productivity.wind.Imports.Utils.ToX.*
 import com.productivity.wind.Imports.Utils.String.*
 import android.annotation.*
 import androidx.annotation.RequiresApi
