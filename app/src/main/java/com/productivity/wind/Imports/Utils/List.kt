@@ -693,14 +693,14 @@ abstract class LazyData {
                 
             }
             .onSet { prop, name, value ->
-                vars[name] = VarInfo(name, x)
+                vars[name] = VarInfo(name, value)
                 onChanged()
             }
     }
 
 
     open fun save(listName: Str){
-        var customStr by m(toStr("$listName:$id", vars))
+        var customStr by m(toStr("$listName:$id", vars.values.toList()))
         
         VlogOne(customStr, 1200)
     }
