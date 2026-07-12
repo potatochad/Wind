@@ -703,15 +703,12 @@ abstract class LazyData {
     open fun save(listName: Str){
         val key = "$listName:$id"
 
-        /*
+        
         var customStr by m("")
         customStr += "{ id: [ $key ], "
-        vars.forEach {
-            customStr += "[ $name ][ ${prop.type} ][ ${prop.value} ], "                
-        }
-        customStr += " }"
-        */
-        //VlogOne(customStr, 1200)
+        customStr += toStr(vars)
+        
+        VlogOne(customStr, 1200)
     }
     
     
