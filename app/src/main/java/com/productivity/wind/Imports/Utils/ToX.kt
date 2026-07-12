@@ -257,10 +257,13 @@ fun ComplexTypeToStr(value: Any?): Str {
     }
 }
 
-private fun getFields(clazz: Class<*>): List<java.lang.reflect.Field> {
+fun getFields(clazz: Class<*>): List<java.lang.reflect.Field> {
     return fieldsCache.getOrPut(clazz) {
         clazz.declaredFields
-            .filter { !it.isSynthetic }
+            .filter { 
+                !it.isSynthetic &&
+                !Modifier.isStatic(it.modifiers)
+            }
             .onEach { it.isAccessible = true }
     }
 }
