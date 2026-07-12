@@ -1,5 +1,6 @@
 package com.productivity.wind.Screens
 
+import com.productivity.wind.Screens.Settings.*
 import com.productivity.wind.Imports.Utils.ToX.*
 import com.productivity.wind.Imports.Utils.String.*
 import android.content.Intent
