@@ -226,6 +226,11 @@ fun toStr(it: Any?): Str = when (it) {
     else -> it.toString()
 }
 
+
+
+
+private val fieldsCache = mutableMapOf<Class<*>, List<java.lang.reflect.Field>>()
+
 fun toStr(id: Str = "", vars: List<VarInfo<*>>): Str {
     val varsStr = vars.joinToString(", ") { v ->
         "[${v.name}][${v.type}][${ComplexTypeToStr(v.value)}]"
@@ -233,8 +238,7 @@ fun toStr(id: Str = "", vars: List<VarInfo<*>>): Str {
 
     return "{ id: [$id], vars: $varsStr }"
 }
-
-//SLOWW
+// SLOWWWW
 fun ComplexTypeToStr(value: Any?): Str {
     if (value == null) return "null"
 
@@ -243,17 +247,26 @@ fun ComplexTypeToStr(value: Any?): Str {
         is Number, is Boolean -> value.toString()
 
         else -> {
-            val fields = value.javaClass.declaredFields
-                .filter { !it.isSynthetic }
+            val fields = getFields(value.javaClass)
                 .joinToString(", ") { field ->
-                    field.isAccessible = true
-                    "${field.name}=${valueToStr(field.get(value))}"
+                    "${field.name}=${ComplexTypeToStr(field.get(value))}"
                 }
 
             "${value.javaClass.simpleName}($fields)"
         }
     }
 }
+
+private fun getFields(clazz: Class<*>): List<java.lang.reflect.Field> {
+    return fieldsCache.getOrPut(clazz) {
+        clazz.declaredFields
+            .filter { !it.isSynthetic }
+            .onEach { it.isAccessible = true }
+    }
+}
+
+
+
 
 fun toListStr(it: Any?): ListStr = when (it) {      
     is List<*> -> it.map { toStr(it) }              
