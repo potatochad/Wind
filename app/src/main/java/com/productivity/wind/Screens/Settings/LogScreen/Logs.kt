@@ -30,3 +30,57 @@ import androidx.compose.material3.pulltorefresh.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator      
 
 
+@Composable
+fun LogsScreen() {
+    var Reload = r(no)
+    var Tag = r("")
+	var scroll = LazyList()
+
+	
+	val Logs = remember(Tag.it, Bar.logs.size) {
+		Bar.logs
+			.filter { it.contains(Tag.it) }
+			.toList()
+	}
+
+	
+	var maxW = Logs.rMaxWidth(
+		letterS = 14,
+		font = FontFamily.Monospace
+	) + 15.dp
+
+	
+
+	RunOnce {
+		scroll.toBottom()
+	}
+
+    LazyScreen(
+		top = {
+			TinyInput(Tag, Mod.h(36).w(AppW - 180.dp), isInt = no, maxLetters = 100)
+		
+			End {
+				Icon.Delete {
+					Bar.logs.clear()
+				}
+				Icon.Copy(Logs.joinToString("\n"))
+			}
+		},
+		scroll = no,
+	) {
+        if (Bar.logs.empty){
+              EmptyBox("No logs")
+        } else {
+			Box(
+				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Xscroll()
+			) {
+				LazyColumn(
+					state = scroll,
+					modifier = Mod.w(maxW)   
+				) {
+					items(Logs) { LogTxt(it) }
+				}
+			}
+        }
+    }
+}
