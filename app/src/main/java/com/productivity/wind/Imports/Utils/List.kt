@@ -683,17 +683,17 @@ abstract class LazyData {
     val id by m(Id())
     val clazzName = this.className
     
-    var vars = mList<VarInfo<*>>()
+    val vars = mutableMapOf<String, VarInfo<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, name ->
-                vars.add(VarInfo(name, x))
+                vars[name] = VarInfo(name, x)
             }
             .onGet { prop ->
                 
             }
             .onSet { prop, name, value ->
-                vars.add(VarInfo(name, value))
+                vars[name] = VarInfo(name, x)
                 onChanged()
             }
     }
