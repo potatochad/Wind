@@ -679,7 +679,6 @@ fun <T : LazyData> TrackList(
 
 //nothing can be private
 abstract class LazyData {
-
     var onChanged: Do = {}
     val id by m(Id())
     val clazzName = this.className
@@ -701,8 +700,7 @@ abstract class LazyData {
 
 
     open fun save(listName: Str){
-        var customStr by m("")
-        customStr += toStr("$listName:$id", vars)
+        var customStr by m(toStr("$listName:$id", vars))
         
         VlogOne(customStr, 1200)
     }
