@@ -670,7 +670,6 @@ fun <T : LazyData> TrackList(
 
     
     
-
     return By(customList)
         .onBuild { prop, id -> 
             listName = id
@@ -685,17 +684,17 @@ abstract class LazyData {
     val id by m(Id())
     val clazzName = this.className
     
-    var vars = mutableListOf<VarInfo<*>>()
+    var vars = mList<VarInfo<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, name ->
-                VarInfo(name, x)
+                vars.add(VarInfo(name, x))
             }
             .onGet { prop ->
                 
             }
             .onSet { prop, name, value ->
-                VarInfo(name, value)
+                vars.add(VarInfo(name, value))
                 onChanged()
             }
     }
