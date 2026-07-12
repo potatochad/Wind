@@ -226,18 +226,17 @@ fun toStr(it: Any?): Str = when (it) {
     else -> it.toString()
 }
 
-fun toStr(vars: List<VarInfo<*>>): Str {
-    return vars.joinToString(
-        prefix = "{ ",
-        postfix = " }"
-    ) {
-        "[${it.name}][${it.type}][${it.value}]" 
-    } // { [name][String][John], [age][Int][20] }
+fun toStr(id: Str = "", vars: List<VarInfo<*>>): Str {
+    val varsStr = vars.joinToString(", ") { v ->
+        "[${v.name}][${v.type}][${v.value}]"
+    }
+
+    return "{ id: [$id], vars: $varsStr }" // { id: [fhdihdhosidh], vars: [name][String][John], [age][Int][20] }               
 }
 
 fun toListStr(it: Any?): ListStr = when (it) {      
     is List<*> -> it.map { toStr(it) }              
-    is String -> it.lines()                        
+    is Str -> it.lines()                        
     is UIStr -> it.text.lines()          
     null -> emptyList()
     else -> listOf(toStr(it))
