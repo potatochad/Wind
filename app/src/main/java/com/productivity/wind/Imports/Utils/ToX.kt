@@ -262,7 +262,7 @@ fun getFields(clazz: Class<*>): List<java.lang.reflect.Field> {
         clazz.declaredFields
             .filter { 
                 !it.isSynthetic &&
-                !Modifier.isStatic(it.modifiers)
+                !java.lang.reflect.Modifier.isStatic(it.modifiers)
             }
             .onEach { it.isAccessible = true }
     }
