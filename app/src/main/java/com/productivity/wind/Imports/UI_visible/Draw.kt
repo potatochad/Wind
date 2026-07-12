@@ -1,5 +1,6 @@
 package com.productivity.wind.Imports.UI_visible
 
+import com.productivity.wind.Imports.Utils.ToX.*
 import com.productivity.wind.Imports.Utils.String.*
 import android.content.Intent
 import android.provider.Settings
@@ -9,8 +10,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.*
-import androidx.compose.foundation.*
-import androidx.compose.material.icons.filled.*
+import androidx.compose.foundation.*import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.OutlinedTextField
 import com.productivity.wind.*
