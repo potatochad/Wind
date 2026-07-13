@@ -762,6 +762,10 @@ open class Base {
 class Child : Base() {
     val b = 2
 }
+enum class Status {
+    WAITING,
+    DONE
+}
 
 
 class TestData : LazyData() {
