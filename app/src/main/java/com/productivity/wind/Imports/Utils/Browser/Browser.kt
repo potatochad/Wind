@@ -177,6 +177,8 @@ class WebController(
 				"overcoming fear",
 				"failure lessons",
 				"success stories",
+						"founderspodcast1",
+						"work ethic",
 				"inspiration",
 				"motivational speech",
 				"motivational podcast",
