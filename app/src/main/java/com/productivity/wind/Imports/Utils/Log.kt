@@ -280,6 +280,7 @@ fun LogAppCrashes() {
     val crash = AppData.get("crash", "")
 
     if (!crash.empty) {
+		/*
         val lines = crash.lineSequence()
 
         log("Crash: ${lines.firstOrNull()}")
@@ -289,9 +290,11 @@ fun LogAppCrashes() {
                 .firstOrNull { it.startsWith("at com.productivity.wind.") }
                 ?: lines.firstOrNull { it.startsWith("at ") }
         }")
+		*/
 
-        log(crash)
+        log("Crash: $crash")
         AppData.put("crash", "")
+		
     }
 
 	
@@ -299,8 +302,7 @@ fun LogAppCrashes() {
     val handler = Thread.getDefaultUncaughtExceptionHandler()
 
     Thread.setDefaultUncaughtExceptionHandler { thread, e ->
-		log("CRASHEDD")
-        AppData.put("crash", e.stackTraceToString())
+        AppData.put("crash", "$e")
 		handler?.uncaughtException(thread, e)
     }
 }
