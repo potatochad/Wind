@@ -710,15 +710,69 @@ abstract class LazyData {
 }
 
 
+data class User2(
+    val name: String,
+    val age: Int
+)
+data class User3(
+    val name: String = "unknown",
+    val age: Int = 0
+)
+data class User4(
+    var name: String,
+    var age: Int
+)
+data class Group(
+    val users: List<String>
+)
+class Schedule5(
+    val hour: Int = 10
+)
+class Schedule6(
+    val name: Str
+) {
+    var time = 10
+    val created = System.currentTimeMillis()
+
+    fun reset() {
+        time = 0
+    }
+}
+data class User7(
+    val settings: Settings
+)
+
+data class Settings7(
+    val darkMode: Bool
+)
 
 class TestData : LazyData() {
 
     var name by lazyS("hello")
     var name2 by lazyS("boring")
-    var time by lazyS(Schedule())
+    var time by lazyS(Schedule())// data class (with vars and all defaults)   
     var done by lazyS(no)
     var doneTimes by lazyS(3)
+
+    var string by lazyS("hello")
+    var int by lazyS(3)
+    var long by lazyS(3L)
+    var double by lazyS(3.0)
+    var boolean by lazyS(true)
+    var char by lazyS('a')
+    var status by lazyS(Status.WAITING)// enum
+    var user2 by lazyS(User2("John", 20)) //valss emptyy
+    var user3 by lazyS(User3("John", 20)) //valss
+    var user4 by lazyS(User4("John", 20)) //vaRSSS
+    var names by lazyS(listOf("A", "B")) // list
+    var group by lazyS(
+        Group(listOf("A", "B"))
+    )
+    var schedule by lazyS(Schedule5())
+    var schedule6 by lazyS(Schedule6("helloo"))
+    var nullable by lazyS<Str?>(null)
 }
+
 
 // list using testdata class
 
