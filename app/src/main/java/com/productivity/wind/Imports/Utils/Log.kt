@@ -249,13 +249,13 @@ fun getMyAppLogs() {
 
 
 
-fun LogCrash(e: Throwable) = AppData.put("last_crash", e.stackTraceToString())
+fun LogCrash(e: Throwable) = AppData.put("crash", e.stackTraceToString())
 
 fun LogAppCrashes() {
 	log("Installing crash handler")
-    val old = AppData.get("last_crash", "")
+    val crash = AppData.get("crash", "")
 
-    if (!old.empty) {
+    if (!crash.empty) {
         val lines = old.lineSequence()
 
         log("Crash: ${lines.firstOrNull()}")
