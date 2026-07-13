@@ -164,6 +164,7 @@ fun ComplexTypeToStr(value: Any?): Str {
 
     return when (value) {
         is String -> "\"$value\""
+        is this.commonType()
         is Number, is Boolean -> value.toString()
 
         else -> {
@@ -175,6 +176,24 @@ fun ComplexTypeToStr(value: Any?): Str {
             "${value.javaClass.simpleName}($fields)"
         }
     }
+}
+fun ComplexTypeToStr(value: Any?): Str {
+    if (value == null) return "null"
+
+    if (value.commonType()) {
+        return when (value) {
+            is String -> "\"$value\""
+            is Enum<*> -> value.name
+            else -> value.toString()
+        }
+    }
+
+    val fields = getFields(value.javaClass)
+        .joinToString(", ") { field ->
+            "${field.name}=${ComplexTypeToStr(field.get(value))}"
+        }
+
+    return "${value.javaClass.simpleName}($fields)"
 }
 
 fun getFields(clazz: Class<*>): List<java.lang.reflect.Field> {
