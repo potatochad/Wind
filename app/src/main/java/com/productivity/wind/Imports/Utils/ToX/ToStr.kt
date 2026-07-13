@@ -158,25 +158,8 @@ fun toStr(id: Str = "", vars: List<VarInfo<*>>): Str {
 
     return "{ id: [$id], vars: $varsStr }"
 }
+
 // SLOWWWW
-fun ComplexTypeToStr(value: Any?): Str {
-    if (value == null) return "null"
-
-    return when (value) {
-        is String -> "\"$value\""
-        is this.commonType()
-        is Number, is Boolean -> value.toString()
-
-        else -> {
-            val fields = getFields(value.javaClass)
-                .joinToString(", ") { field ->
-                    "${field.name}=${ComplexTypeToStr(field.get(value))}"
-                }
-
-            "${value.javaClass.simpleName}($fields)"
-        }
-    }
-}
 fun ComplexTypeToStr(value: Any?): Str {
     if (value == null) return "null"
 
