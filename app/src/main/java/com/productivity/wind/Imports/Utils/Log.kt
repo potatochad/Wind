@@ -248,7 +248,25 @@ fun getMyAppLogs() {
 }
 
 
+object AppCrash {
 
+    fun LogAppCrashes() {
+        log("Installing crash handler")
+
+        val crash = AppData.get("crash", "")
+
+        if (crash.isNotEmpty()) {
+            log("Crash: ${crash.lineSequence().firstOrNull()}")
+            log(crash)
+
+            AppData.put("crash", "")
+        }
+
+        Thread.setDefaultUncaughtExceptionHandler { _, e ->
+            AppData.put("crash", e.stackTraceToString())
+        }
+    }
+}
 fun LogCrash(e: Throwable) = AppData.put("crash", e.stackTraceToString())
 
 fun LogAppCrashes() {
