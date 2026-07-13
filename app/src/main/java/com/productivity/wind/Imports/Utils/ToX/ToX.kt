@@ -215,6 +215,10 @@ fun toLatLng(it: Any?): LatLng = when (it) {
     else -> LatLng(0.0, 0.0)
 }
 
+
+
+
+
 fun toStr(it: Any?): Str = when (it) {
     is Str -> it
     is UIStr -> it.text
@@ -278,6 +282,10 @@ fun toListStr(it: Any?): ListStr = when (it) {
     null -> emptyList()
     else -> listOf(toStr(it))
 }
+
+
+
+
 
 fun toColor(it: Any?): Color = when (it) {
     is Int -> Color(it)
