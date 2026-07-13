@@ -709,7 +709,7 @@ abstract class LazyData {
     
 }
 
-/*
+
 data class User2(
     val name: String,
     val age: Int
@@ -739,13 +739,30 @@ class Schedule6(
     }
 }
 data class User7(
-    val settings: Settings
+    val settings: Settings7
 )
 
 data class Settings7(
     val darkMode: Bool
 )
-*/
+data class Box<T>(
+    val value: T
+)
+sealed class Result {
+    data class Success(val value:Int): Result()
+    data class Error(val msg:String): Result()
+}
+object Config {
+    val version = 1
+}
+open class Base {
+    val a = 1
+}
+
+class Child : Base() {
+    val b = 2
+}
+
 
 class TestData : LazyData() {
 
@@ -754,7 +771,7 @@ class TestData : LazyData() {
     var time by lazyS(Schedule())// data class (with vars and all defaults)   
     var done by lazyS(no)
     var doneTimes by lazyS(3)
-    /*
+    
 
     var string by lazyS("hello")
     var int by lazyS(3)
@@ -773,7 +790,15 @@ class TestData : LazyData() {
     var schedule by lazyS(Schedule5())
     var schedule6 by lazyS(Schedule6("helloo"))
     var nullable by lazyS<Str?>(null)
-    */
+    var box by lazyS(Box(123))
+    var result by lazyS(Result.Success(10))
+    var data2 by lazyS(
+        listOf(
+            User4("A", 1),
+            User4("B", 2)
+        )
+    )
+    var child by lazyS(Child())
 }
 
 
