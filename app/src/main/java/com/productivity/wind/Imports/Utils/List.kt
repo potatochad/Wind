@@ -799,6 +799,7 @@ class TestData : LazyData() {
         )
     )
     var child by lazyS(Child())
+    var user7settings by lazyS(User7(Settings7(false)))
 }
 
 
