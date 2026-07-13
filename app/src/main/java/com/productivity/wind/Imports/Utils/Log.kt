@@ -301,10 +301,12 @@ fun LogAppCrashes() {
 
     val handler = Thread.getDefaultUncaughtExceptionHandler()
 
+	log("Before: ${handler?.javaClass?.name}")
     Thread.setDefaultUncaughtExceptionHandler { thread, e ->
         AppData.put("crash", "$e")
 		handler?.uncaughtException(thread, e)
     }
+	log("After: ${Thread.getDefaultUncaughtExceptionHandler()?.javaClass?.name}")
 }
 
 
