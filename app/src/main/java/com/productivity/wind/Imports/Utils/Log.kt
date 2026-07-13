@@ -258,8 +258,8 @@ object AppCrash {
            !name.startsWith("java.") &&
            !name.startsWith("kotlin.") &&
            !name.startsWith("com.android.") &&
-           !name.contains("""$$ExternalSynthetic""") &&
-           !name.contains("""$r8$lambda""")
+           !name.contains("${'$'}${'$'}ExternalSynthetic") &&
+           !name.contains("${'$'}r8${'$'}lambda")
 	}
 
 	private fun usefulStackTrace(throwable: Throwable): Str {
