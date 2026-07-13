@@ -528,7 +528,9 @@ class TheApp : Application() {
     override fun onCreate() {
         super.onCreate()
         App = this
-		LogAppCrashes()
+		
+		AppCrash.printLastCrash(this)
+        AppCrash.install(this)
     }
 }
 
