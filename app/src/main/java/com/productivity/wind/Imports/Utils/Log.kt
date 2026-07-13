@@ -247,68 +247,37 @@ fun getMyAppLogs() {
 	}.start()
 }
 
-/*
 object AppCrash {
-	var doStuff: ()-> Unit = {}
-	
-	Thread.setDefaultUncaughtExceptionHandler { _, e ->
-		doStuff
-    }
 
-    fun Log() {
-        log("Installing crash handler")
+    fun install(context: Context) {
+        val previous = Thread.getDefaultUncaughtExceptionHandler()
 
-        val crash = AppData.get("crash", "")
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            try {
+                val file = File(context.filesDir, "crash.txt")
+                file.writeText(throwable.stackTraceToString())
+            } catch (_: Throwable) {
+            }
 
-        if (crash.isNotEmpty()) {
-            log("Crash: ${crash.lineSequence().firstOrNull()}")
-            log(crash)
-
-            AppData.put("crash", "")
+            previous?.uncaughtException(thread, throwable)
         }
+    }
 
-        
+    fun printLastCrash(context: Context) {
+        val file = File(context.filesDir, "crash.txt")
+
+        if (!file.exists()) return
+
+        val crash = file.readText()
+
+        Log.e("AppCrash", crash)
+
+        file.delete()
     }
 }
-*/
 
 
-fun LogCrash(e: Throwable) = AppData.put("crash", e.stackTraceToString())
 
-fun LogAppCrashes() {
-	log("Installing crash handler")
-    val crash = AppData.get("crash", "")
-
-    if (!crash.empty) {
-		Vlog("FOUND A CRASH")
-		/*
-        val lines = crash.lineSequence()
-
-        log("Crash: ${lines.firstOrNull()}")
-        log(lines.firstOrNull { it.startsWith("Caused by:") } ?: "")
-        log("Where: ${
-            lines.map(Str::trim)
-                .firstOrNull { it.startsWith("at com.productivity.wind.") }
-                ?: lines.firstOrNull { it.startsWith("at ") }
-        }")
-		*/
-
-        log("Crash: $crash")
-        AppData.put("crash", "")
-		
-    }
-
-	
-
-    val handler = Thread.getDefaultUncaughtExceptionHandler()
-
-	log("Before: ${handler?.javaClass?.name}")
-    Thread.setDefaultUncaughtExceptionHandler { thread, e ->
-        AppData.put("crash", "$e")
-		handler?.uncaughtException(thread, e)
-    }
-	log("After: ${Thread.getDefaultUncaughtExceptionHandler()?.javaClass?.name}")
-}
 
 
 fun folder(folderName: Str): File {
