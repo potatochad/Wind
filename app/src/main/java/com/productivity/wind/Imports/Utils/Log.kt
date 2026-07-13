@@ -247,6 +247,8 @@ fun getMyAppLogs() {
 	}.start()
 }
 
+//‼️‼️THIS IS VERY SENSITIVE CODE AND CAN EASILY NO WORK 
+//‼️‼️‼️DONT USE OUTSIDE FUNCTIONS‼️‼️
 object AppCrash {
 
     fun install(context: Context) {
@@ -255,7 +257,14 @@ object AppCrash {
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             try {
                 val file = File(context.filesDir, "crash.txt")
-                file.writeText(throwable.stackTraceToString())
+
+                file.writeText(
+                    """
+                    ${System.currentTimeMillis()}
+                    ${throwable.stackTraceToString()}
+                    """.trimIndent()
+                )
+
             } catch (_: Throwable) {
             }
 
@@ -268,11 +277,12 @@ object AppCrash {
 
         if (!file.exists()) return
 
-        val crash = file.readText()
-
-        Log.e("AppCrash", crash)
-
-        file.delete()
+        try {
+            Log.e("AppCrash", file.readText())
+        } catch (_: Throwable) {
+        } finally {
+            file.delete()
+        }
     }
 }
 
