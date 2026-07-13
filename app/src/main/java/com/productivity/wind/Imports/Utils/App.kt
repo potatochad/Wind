@@ -528,6 +528,7 @@ class TheApp : Application() {
     override fun onCreate() {
         super.onCreate()
         App = this
+		LogAppCrashes()
     }
 }
 
@@ -551,8 +552,6 @@ class AppUI : ComponentActivity() {
             log("permission granted?: $granted")
 		}
 		
-		
-	    LogAppCrashes()
 		AppStart_beforeUI()
 		
 
