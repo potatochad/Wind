@@ -349,15 +349,7 @@ class synch<T>(initial: T, var onChange: (T) -> Unit) : ReadWriteProperty<Any?, 
 
     
 
-fun Any?.commonType() = when (this) {
-    null -> true
-    is Str -> true
-    is Number -> true
-    is Bool -> true
-    is Char -> true
-    is Enum<*> -> true
-    else -> false
-}
+
 
 
 
