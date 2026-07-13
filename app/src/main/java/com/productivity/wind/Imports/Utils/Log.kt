@@ -252,6 +252,7 @@ fun getMyAppLogs() {
 fun LogCrash(e: Throwable) = AppData.put("last_crash", e.stackTraceToString())
 
 fun LogAppCrashes() {
+	log("Installing crash handler")
     val old = AppData.get("last_crash", "")
 
     if (!old.empty) {
