@@ -250,7 +250,7 @@ fun getMyAppLogs() {
 //‼️‼️THIS IS VERY SENSITIVE CODE AND CAN EASILY NO WORK 
 //‼️‼️‼️DONT USE OUTSIDE FUNCTIONS‼️‼️
 object AppCrash {
-	fun usefulFrame(frame: StackTraceElement): Boolean {
+	fun usefulFrame(frame: StackTraceElement): Bool {
 		val name = frame.className
 
 		return !name.startsWith("android.") &&
@@ -258,8 +258,8 @@ object AppCrash {
            !name.startsWith("java.") &&
            !name.startsWith("kotlin.") &&
            !name.startsWith("com.android.") &&
-           !name.contains("${'$'}${'$'}ExternalSynthetic") &&
-           !name.contains("${'$'}r8${'$'}lambda")
+		   !name.contains("ComposableSingletons") &&
+           !name.contains("${'$'}${'$'}ExternalSynthetic")
 	}
 
 	private fun usefulStackTrace(throwable: Throwable): Str {
@@ -283,12 +283,7 @@ object AppCrash {
             try {
                 val file = File(context.filesDir, "crash.txt")
 
-                file.writeText(
-                    """
-                    ${System.currentTimeMillis()}
-                    ${usefulStackTrace(throwable)}
-                    """.trimIndent()
-                )
+                file.writeText("${usefulStackTrace(throwable)}")
 
             } catch (_: Throwable) {
             }
