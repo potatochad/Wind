@@ -247,10 +247,15 @@ fun getMyAppLogs() {
 	}.start()
 }
 
-
+/*
 object AppCrash {
+	var doStuff: ()-> Unit = {}
+	
+	Thread.setDefaultUncaughtExceptionHandler { _, e ->
+		doStuff
+    }
 
-    fun LogAppCrashes() {
+    fun Log() {
         log("Installing crash handler")
 
         val crash = AppData.get("crash", "")
@@ -262,11 +267,12 @@ object AppCrash {
             AppData.put("crash", "")
         }
 
-        Thread.setDefaultUncaughtExceptionHandler { _, e ->
-            AppData.put("crash", e.stackTraceToString())
-        }
+        
     }
 }
+*/
+
+
 fun LogCrash(e: Throwable) = AppData.put("crash", e.stackTraceToString())
 
 fun LogAppCrashes() {
@@ -288,11 +294,14 @@ fun LogAppCrashes() {
         AppData.put("crash", "")
     }
 
+	
+
     val handler = Thread.getDefaultUncaughtExceptionHandler()
 
     Thread.setDefaultUncaughtExceptionHandler { thread, e ->
+		log("CRASHEDD")
         AppData.put("crash", e.stackTraceToString())
-		// handler?.uncaughtException(thread, e)
+		handler?.uncaughtException(thread, e)
     }
 }
 
