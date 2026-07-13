@@ -280,6 +280,7 @@ fun LogAppCrashes() {
     val crash = AppData.get("crash", "")
 
     if (!crash.empty) {
+		Vlog("FOUND A CRASH")
 		/*
         val lines = crash.lineSequence()
 
