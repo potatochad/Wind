@@ -250,6 +250,31 @@ fun getMyAppLogs() {
 //‼️‼️THIS IS VERY SENSITIVE CODE AND CAN EASILY NO WORK 
 //‼️‼️‼️DONT USE OUTSIDE FUNCTIONS‼️‼️
 object AppCrash {
+	fun usefulFrame(frame: StackTraceElement): Boolean {
+		val name = frame.className
+
+		return !name.startsWith("android.") &&
+		   !name.startsWith("androidx.") &&
+           !name.startsWith("java.") &&
+           !name.startsWith("kotlin.") &&
+           !name.startsWith("com.android.") &&
+           !name.contains("$$ExternalSynthetic") &&
+           !name.contains("$r8$lambda")
+	}
+
+	private fun usefulStackTrace(throwable: Throwable): Str {
+		return buildString {
+			appendLine(throwable::class.java.name)
+			appendLine(throwable.message)
+
+			throwable.stackTrace
+				.filter(::usefulFrame)
+				.take(20)
+				.forEach {
+					appendLine("at $it")
+				}  
+		}
+	}
 
     fun install(context: Context) {
         val previous = Thread.getDefaultUncaughtExceptionHandler()
@@ -261,7 +286,7 @@ object AppCrash {
                 file.writeText(
                     """
                     ${System.currentTimeMillis()}
-                    ${throwable.stackTraceToString()}
+                    ${usefulStackTrace(throwable)}
                     """.trimIndent()
                 )
 
