@@ -303,7 +303,6 @@ class WebController(
     }
 
     fun blockImages(Do: () -> Bool = { yes }) {
-		/*
         shouldInterceptRequest { request ->
             val url = request.url.toString().lowercase()
 
@@ -317,7 +316,6 @@ class WebController(
             if (!url.image && Do()) return@shouldInterceptRequest null
             else WebResource.emptyImage()
         }
-		*/
     }
 }
 
