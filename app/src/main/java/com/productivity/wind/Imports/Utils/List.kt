@@ -310,6 +310,8 @@ fun <T> List<T>.rNewItems(): List<T> {
 }
 
 
+fun Any?.isArray(): Bool =
+    this?.javaClass?.isArray == true
 
 
 val List<*>.isRecomposable: Bool
