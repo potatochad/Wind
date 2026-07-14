@@ -179,13 +179,17 @@ fun ComplexTypeToStr(value: Any?): Str {
     return "${value.javaClass.simpleName}($fields)"
 }
 
+
 fun getFields(clazz: Class<*>): List<java.lang.reflect.Field> {
     return fieldsCache.getOrPut(clazz) {
+        val order = clazz.kotlin.primaryConstructor?.parameters?.map { it.name } ?: emptyList()
+
         clazz.declaredFields
             .filter { 
                 !it.isSynthetic &&
                 !java.lang.reflect.Modifier.isStatic(it.modifiers)
             }
+            .sortedBy { order.indexOf(it.name) }
             .onEach { it.isAccessible = true }
     }
 }
