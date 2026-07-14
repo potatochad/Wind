@@ -151,7 +151,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 			TestData()
 		)
 	)
-	App.start(AppBackground::class.java)
+	// App.start(AppBackground::class.java)
 	
 	LazzyColumn {
         LazzyRow {
