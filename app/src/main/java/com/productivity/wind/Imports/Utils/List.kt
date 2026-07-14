@@ -705,7 +705,7 @@ abstract class LazyData {
     open fun save(listName: Str){
         var customStr by m(toStr("$listName:$id", vars.values.toList()))
         
-        VlogOne(customStr, 4000)
+        VlogOne(customStr, 10000)
     }
     
     
