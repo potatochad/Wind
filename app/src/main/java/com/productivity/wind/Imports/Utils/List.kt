@@ -771,7 +771,6 @@ enum class Status {
 class TestData : LazyData() {
 
     var name by lazyS("hello")
-    var name2 by lazyS("boring")
     var time by lazyS(Schedule())// data class (with vars and all defaults)   
     var done by lazyS(no)
     var doneTimes by lazyS(3)
