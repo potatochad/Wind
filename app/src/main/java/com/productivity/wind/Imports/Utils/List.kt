@@ -802,6 +802,7 @@ class TestData : LazyData() {
             User4("B", 2)
         )
     )
+    var listNull by lazyS(listOf(null, null))
     var child by lazyS(Child())
     var user7settings by lazyS(User7(Settings7(false)))
 }
