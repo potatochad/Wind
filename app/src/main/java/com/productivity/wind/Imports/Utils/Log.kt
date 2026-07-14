@@ -136,13 +136,13 @@ import android.content.ClipboardManager
          
 
 fun Any?.vlog(x: Str){
-	Vlog("$x: [ $this ]", 400)
+	Vlog("$x: [ $this ]", 800)
 }
 fun Any?.blog(x: Str){
-	log("$x: [ $this ]", 400)
+	log("$x: [ $this ]", 800)
 }
 
-fun log(message: Str, int: Int = 400) {
+fun log(message: Str, int: Int = 800) {
     var msg = message.replace("\n", " | ").take(int)
     if (msg.length >= int) {msg += " ..."}
 
@@ -150,7 +150,7 @@ fun log(message: Str, int: Int = 400) {
 }
 private var lastToast: Toast? = null
 
-fun Vlog(msg: Str, maxInt: Int = 400, special: Str = "none", delayLevel: Int = 0) {
+fun Vlog(msg: Str, maxInt: Int = 800, special: Str = "none", delayLevel: Int = 0) {
     val delayMs = (delayLevel.coerceIn(0, 100)) * 30L // Example: Level 2 = 60ms
 
     if (special.equals("one", true)) {
@@ -170,7 +170,7 @@ fun Vlog(msg: Str, maxInt: Int = 400, special: Str = "none", delayLevel: Int = 0
 // This always cancels the previous toast before showing the new one.
 fun VlogOne(
     msg: Str,
-    maxInt: Int = 400,
+    maxInt: Int = 800,
     delayLevel: Int = 0
 ) {
     Vlog(
