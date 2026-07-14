@@ -802,6 +802,7 @@ class TestData : LazyData() {
             User4("B", 2)
         )
     )
+    var ListSchedule6 by lazyS(listOf(Schedule6("helloo")))
     var listNull by lazyS(mList<Str?>("hi", "cool"))//newly added, so shouldnt see this in logs, didnt test
     var listNull by lazyS(listOf(null, null))
     var child by lazyS(Child())
