@@ -144,9 +144,16 @@ fun Any?.blog(x: Str){
 
 fun log(message: Str, int: Int = 800) {
     var msg = message.replace("\n", " | ").take(int)
-    if (msg.length >= int) {msg += " ..."}
+    if (msg.length >= int) { msg += " ..." }
 
-    Log.e("[bad]", msg)
+	val chunkSize = 4000
+    var start = 0
+
+    while (start < msg.length) {
+        val end = minOf(start + chunkSize, msg.size)
+		Log.e("[bad]", msg.fromTo(start, end))
+        start = end
+	}
 }
 private var lastToast: Toast? = null
 
