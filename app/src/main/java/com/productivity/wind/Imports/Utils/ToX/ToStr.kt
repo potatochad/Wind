@@ -161,6 +161,29 @@ fun toStr(id: Str = "", vars: List<VarInfo<*>>): Str {
 
 // SLOWWWW
 fun ComplexTypeToStr(value: Any?): Str {
+    fun listToStr(list: List<*>): String {
+        val type = list.firstOrNull()?.let {
+            if (it.commonType()) it.javaClass.simpleName
+            else it.javaClass.simpleName
+        } ?: "?"
+
+        val values = list.joinToString(", ") {
+            ComplexTypeToStr(it)
+        }
+
+        return "List<$type>[$values]"
+    }
+    
+    fun setToStr(set: Set<*>): Str =
+       "Set[${set.joinToString(", ") { ComplexTypeToStr(it) }}]"
+
+    fun mapToStr(map: Map<*, *>): Str =
+       "Map[" + map.entries.joinToString(", ") {
+           "${ComplexTypeToStr(it.key)}=${ComplexTypeToStr(it.value)}"
+       } + "]"
+    
+
+
     if (value == null) return "null"
 
     when (value) {
@@ -200,27 +223,6 @@ fun getFields(clazz: Class<*>): List<java.lang.reflect.Field> {
     }
 }
 
-
-private fun listToStr(list: List<*>): String {
-    val type = list.firstOrNull()?.let {
-        if (it.commonType()) it.javaClass.simpleName
-        else it.javaClass.simpleName
-    } ?: "?"
-
-    val values = list.joinToString(", ") {
-        ComplexTypeToStr(it)
-    }
-
-    return "List<$type>[$values]"
-}
-
-private fun setToStr(set: Set<*>): String =
-    "Set[${set.joinToString(", ") { ComplexTypeToStr(it) }}]"
-
-private fun mapToStr(map: Map<*, *>): String =
-    "Map[" + map.entries.joinToString(", ") {
-        "${ComplexTypeToStr(it.key)}=${ComplexTypeToStr(it.value)}"
-    } + "]"
 
 
 
