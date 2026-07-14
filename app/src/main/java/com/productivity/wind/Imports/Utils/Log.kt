@@ -265,7 +265,10 @@ object AppCrash {
 	private fun usefulStackTrace(throwable: Throwable): Str {
 		return buildString {
 			appendLine(throwable::class.java.name)
-			appendLine(throwable.message)
+			
+			throwable.message?.let {
+				appendLine(it)
+			}
 
 			throwable.stackTrace
 				.filter(::usefulFrame)
