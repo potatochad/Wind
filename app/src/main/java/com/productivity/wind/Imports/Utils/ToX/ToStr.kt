@@ -163,6 +163,12 @@ fun toStr(id: Str = "", vars: List<VarInfo<*>>): Str {
 fun ComplexTypeToStr(value: Any?): Str {
     if (value == null) return "null"
 
+    when (value) {
+        is List<*> -> return listToStr(value)
+        is Set<*> -> return setToStr(value)
+        is Map<*, *> -> return mapToStr(value)
+    }
+
     if (value.commonType()) {
         return when (value) {
             is String -> "\"$value\""
@@ -193,6 +199,28 @@ fun getFields(clazz: Class<*>): List<java.lang.reflect.Field> {
             .onEach { it.isAccessible = true }
     }
 }
+
+
+private fun listToStr(list: List<*>): String {
+    val type = list.firstOrNull()?.let {
+        if (it.commonType()) it.javaClass.simpleName
+        else it.javaClass.simpleName
+    } ?: "?"
+
+    val values = list.joinToString(", ") {
+        ComplexTypeToStr(it)
+    }
+
+    return "List<$type>[$values]"
+}
+
+private fun setToStr(set: Set<*>): String =
+    "Set[${set.joinToString(", ") { ComplexTypeToStr(it) }}]"
+
+private fun mapToStr(map: Map<*, *>): String =
+    "Map[" + map.entries.joinToString(", ") {
+        "${ComplexTypeToStr(it.key)}=${ComplexTypeToStr(it.value)}"
+    } + "]"
 
 
 
