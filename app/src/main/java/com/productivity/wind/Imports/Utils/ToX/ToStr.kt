@@ -181,10 +181,20 @@ fun ComplexTypeToStr(value: Any?): Str {
        "Map[" + map.entries.joinToString(", ") {
            "${ComplexTypeToStr(it.key)}=${ComplexTypeToStr(it.value)}"
        } + "]"
-    
+
+    fun arrayToStr(array: Any): String {
+        val values = List(java.lang.reflect.Array.getLength(array)) {
+            java.lang.reflect.Array.get(array, it)
+        }
+
+        val type = values.firstOrNull()?.javaClass?.simpleName ?: "?"
+
+        return "Array<$type>[${values.joinToString(", ") { ComplexTypeToStr(it) }}]"
+    }
 
 
     if (value == null) return "null"
+    if (value.isArray()) return arrayToStr(value)
 
     when (value) {
         is List<*> -> return listToStr(value)
