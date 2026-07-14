@@ -740,7 +740,208 @@ class TestData : LazyData() {
 
     //‼️all vas that in {} get stored (treated as inputs)
     var schedule6 by lazyS(Schedule6("helloo"))
+
+
+
+    
+    // basic collections
+    var emptyList by lazyS(emptyList<String>())
+    var emptyMutableList by lazyS(mutableListOf<String>())
+    var emptySet by lazyS(emptySet<String>())
+    var emptyMap by lazyS(emptyMap<String, String>())
+
+    var list by lazyS(listOf("A", "B", "C"))
+    var mutableList by lazyS(mutableListOf("A", "B", "C"))
+    var set by lazyS(setOf("A", "B", "C"))
+    var mutableSet by lazyS(mutableSetOf("A", "B", "C"))
+
+    var map by lazyS(mapOf(
+        "a" to "A",
+        "b" to "B"
+    ))
+
+    var mutableMap by lazyS(mutableMapOf(
+        "a" to "A",
+        "b" to "B"
+    ))
+
+
+    // nullable collections
+    var nullableList by lazyS<List<String?>>(listOf("A", null, "B"))
+    var nullableMutableList by lazyS<MutableList<String?>>(mutableListOf("A", null))
+
+    var nullableMap by lazyS<Map<String?, String?>>(
+        mapOf(
+            "a" to null,
+            null to "B"
+        )
+    )
+
+
+    // primitive arrays
+    var intArray by lazyS(intArrayOf(1, 2, 3))
+    var longArray by lazyS(longArrayOf(1L, 2L))
+    var doubleArray by lazyS(doubleArrayOf(1.1, 2.2))
+    var booleanArray by lazyS(booleanArrayOf(true, false))
+    var charArray by lazyS(charArrayOf('a', 'b'))
+
+    // object arrays
+    var array by lazyS(arrayOf("A", "B"))
+    var nullableArray by lazyS(arrayOf("A", null, "B"))
+
+
+    // lists inside lists
+    var listInsideList by lazyS(
+        listOf(
+            listOf("A", "B"),
+            listOf("C", "D")
+        )
+    )
+
+    var crazyNestedList by lazyS(
+        listOf(
+            listOf(
+                listOf(1, 2, 3),
+                listOf(4, 5)
+            ),
+            listOf(
+                listOf(6)
+            )
+        )
+    )
+
+
+    // mixed types
+    var anyList by lazyS(
+        listOf(
+            "hello",
+            10,
+            true,
+            5L,
+            2.5,
+            Status.WAITING
+        )
+    )
+
+
+    // objects inside lists
+    var classList by lazyS(
+        listOf(
+            Schedule6("one"),
+            Schedule6("two")
+        )
+    )
+
+    var nullableClassList by lazyS(
+        listOf(
+            Schedule6("one"),
+            null,
+            Schedule6("two")
+        )
+    )
+
+
+    // class containing collections
+    var classWithLists by lazyS(
+        ComplexClass(
+            list = listOf("A", "B"),
+            map = mapOf("x" to 1),
+            array = arrayOf(1, 2, 3)
+        )
+    )
+
+
+    // generic classes
+    var boxString by lazyS(Box("hello"))
+
+    var boxList by lazyS(
+        Box(
+            listOf(
+                "A",
+                "B"
+            )
+        )
+    )
+
+    var boxBox by lazyS(
+        Box(
+            Box(
+                Box(5)
+            )
+        )
+    )
+
+
+    // maps with complex values
+    var complexMap by lazyS(
+        mapOf(
+            "list" to listOf(1, 2, 3),
+            "object" to Schedule6("test"),
+            "nested" to mapOf(
+                "a" to listOf("x", "y")
+            )
+        )
+    )
+
+
+    // deep nightmare
+    var nightmare by lazyS(
+        listOf(
+            mapOf(
+                "users" to listOf(
+                    Schedule6("A"),
+                    Schedule6("B")
+                ),
+                "numbers" to arrayOf(
+                    listOf(1, 2),
+                    listOf(3, 4)
+                )
+            ),
+            listOf(
+                mapOf(
+                    "empty" to emptyList<String>()
+                )
+            )
+        )
+    )
+
+
+    // anonymous/object classes
+    var objectClass by lazyS(object {
+        val name = "test"
+        val values = listOf(1, 2, 3)
+    })
+
+
+    // sealed/enum
+    var enumValue by lazyS(Status.WAITING)
+
+    var sealedList by lazyS(
+        listOf(
+            SomeData(1),
+            SomeData(2)
+        )
+    )
 }
+
+
+data class ComplexClass(
+    val list: List<String>,
+    val map: Map<String, Int>,
+    val array: Array<Int>
+)
+
+
+data class Box<T>(
+    val value: T
+)
+
+
+sealed class TestSealed
+
+data class SomeData(
+    val number: Int
+) : TestSealed()
 
 
 // list using testdata class
