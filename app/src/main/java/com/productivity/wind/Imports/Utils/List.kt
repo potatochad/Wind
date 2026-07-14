@@ -710,24 +710,7 @@ abstract class LazyData {
 }
 
 
-data class User2(
-    val name: String,
-    val age: Int
-)
-data class User3(
-    val name: String = "unknown",
-    val age: Int = 0
-)
-data class User4(
-    var name: String,
-    var age: Int
-)
-data class Group(
-    val users: List<String>
-)
-class Schedule5(
-    val hour: Int = 10
-)
+
 class Schedule6(
     val name: Str
 ) {
@@ -738,33 +721,8 @@ class Schedule6(
         time = 0
     }
 }
-data class User7(
-    val settings: Settings7
-)
-
-data class Settings7(
-    val darkMode: Bool
-)
-data class Box<T>(
-    val value: T
-)
-sealed class Result {
-    data class Success(val value:Int): Result()
-    data class Error(val msg:String): Result()
-}
 object Config {
-    val version = 1
-}
-open class Base {
-    val a = 1
-}
-
-class Child : Base() {
-    val b = 2
-}
-enum class Status {
-    WAITING,
-    DONE
+    val version = 1 // not testedd
 }
 
 
@@ -772,45 +730,51 @@ class TestData : LazyData() {
 
     var name by lazyS("hello")
     var time by lazyS(Schedule())// data class (with vars and all defaults)   
-    var done by lazyS(no)
-    var doneTimes by lazyS(3)
-    
 
-    var string by lazyS("hello")
-    var int by lazyS(3)
-    var long by lazyS(3L)
-    var double by lazyS(3.0)
-    var boolean by lazyS(true)
-    var char by lazyS('a')
-    var status by lazyS(Status.WAITING)// enum
-    var user2 by lazyS(User2("John", 20)) //valss emptyy
-    var user3 by lazyS(User3("John", 20)) //valss
-    var user4 by lazyS(User4("John", 20)) //vaRSSS
-    var names by lazyS(listOf("A", "B")) // list
-    var group by lazyS(
-        Group(listOf("A", "B"))
-    )
-    var schedule by lazyS(Schedule5())
+    //a list with nullable str type, stored as with just type str
+    //IT ALSO LOGS VERY DIFF if single item in list (doesnt say type, value is a class called Singleton)
+    //ONLY DOESNT SHOW what inside list (tells what type class or etc) (all else works fine, if class holds or so on)
+    var names by lazyS(listOf("A", "B"))
+
+    //‼️all vas that in {} get stored (treated as inputs)
     var schedule6 by lazyS(Schedule6("helloo"))
-    var nullable by lazyS<Str?>(null)
-    var box by lazyS(Box(123))
-    var result by lazyS(Result.Success(10))
-    var data2 by lazyS(
-        listOf(
-            User4("A", 1),
-            User4("B", 2)
-        )
-    )
-    var ListSchedule6 by lazyS(listOf(Schedule6("helloo")))
-    // var listNull by lazyS(mList<Str?>("hi", "cool"))//newly added, so shouldnt see this in logs, didnt test
-    var listNull by lazyS(listOf<Str?>(null, "ggg"))
-    var child by lazyS(Child())
-    var user7settings by lazyS(User7(Settings7(false)))
 }
 
 
 // list using testdata class
+/*
+WHAT TO STORING works with (only TO STORING)
 
+    var name by lazyS("hello")
+
+    //DOESNT MATTER IF DATA CLASS OR CLASS
+    var time by lazyS(Schedule()) //doesnt matter if vals or vars or about defaults (TALKING ONLY ABOUT WHAT INSIDR (), NOT {} 
+    
+    var done by lazyS(no)
+    var doneTimes by lazyS(3)
+    var string by lazyS("hello")
+    var long by lazyS(3L)
+    var double by lazyS(3.0)
+    var char by lazyS('a')
+    var status by lazyS(Status.WAITING)// enum BUT TYPE IS LIKE ANY OTHER CLASS
+
+    var nullable by lazyS<Str?>(null)// stored as varName[null][null]
+
+    //works the same with T as any other class
+    data class Box<T>(
+       val value: T
+    )
+
+    //!! SEALED CLASS STORES a bit strange
+    .SealedClass$DataClassThatInIt][DataClassThatInIt(6)]
+
+    // treated same as any other class
+    class Child : Base() {
+       val b = 2
+    }
+
+    //class in class is stored correctly pvz: x(y=c(5))
+*/
 
 
 
