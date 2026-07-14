@@ -258,8 +258,9 @@ data class T<T>(
 data class VarInfo<T>(
 	val name: Str,
     val value: T,
-    val type: Class<*> = value!!::class.java,
+    val type: Class<*>? = value?.let { it::class.java },
 )
+
 
 fun Any?.commonType() = when (this) {
     null -> true
