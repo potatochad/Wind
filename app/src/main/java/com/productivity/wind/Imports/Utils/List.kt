@@ -819,7 +819,6 @@ class TestData : LazyData() {
             true,
             5L,
             2.5,
-            Status.WAITING
         )
     )
 
@@ -914,8 +913,6 @@ class TestData : LazyData() {
 
 
     // sealed/enum
-    var enumValue by lazyS(Status.WAITING)
-
     var sealedList by lazyS(
         listOf(
             SomeData(1),
