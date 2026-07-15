@@ -170,11 +170,7 @@ fun LogTxt(
     )
 
     Text(
-        text = buildAnnotatedString {
-            withStyle(style) {
-                append(text)
-            }
-        },
+        text = text.strStyle(style),
         softWrap = false
     )
 
