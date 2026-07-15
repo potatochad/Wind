@@ -219,7 +219,7 @@ class AppBackground : Service() {
 					//for better accuracy need accesibility permission
 					var lastUsed = LastUsedApp()
 
-					log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
+					// log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
 
 					
 					if (lastUsed == "com.chess" || !Permission.hasAccessibility("com.teqtic.lockmeout")) {
