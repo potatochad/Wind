@@ -160,9 +160,9 @@ Text(
 @Composable
 fun LogTxt(
     text: Str,
-    Do: Do_<SpanStyle>
+    Do: Do_<StrStyle>
 ) {
-    val spanStyle = SpanStyle(
+    val style = StrStyle(
         fontSize = 14.sp,
         fontWeight = FontWeight.Normal,
         fontStyle = FontStyle.Normal,
@@ -171,14 +171,14 @@ fun LogTxt(
 
     Text(
         text = buildAnnotatedString {
-            withStyle(spanStyle) {
+            withStyle(style) {
                 append(text)
             }
         },
         softWrap = false
     )
 
-    Do(spanStyle)
+    Do(style)
 }
 
 
