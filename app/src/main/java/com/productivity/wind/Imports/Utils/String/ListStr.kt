@@ -233,7 +233,8 @@ fun ListStr.rMaxWidth(style: StrStyle): Dp {
 	val newLogs = this.rNewItems()
 	
 	var maxW by r(10.dp)
-	
+
+	var font = if (style.fontFamily == FontFamily.Monospace) FontFamily.Monospace else null
 	val monoW = r(style) {
 		font?.let { measure.w("x".strStyle(style)) }
 	}
