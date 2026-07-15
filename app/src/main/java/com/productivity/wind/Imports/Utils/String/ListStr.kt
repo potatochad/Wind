@@ -232,14 +232,14 @@ fun ListStr.rMaxWidth(style: StrStyle): Dp {
 	val measure = rTextMeasurer()
 	val newLogs = this.rNewItems()
 	
-	var maxW by r(10.dp)
+	var maxW by r(100.dp)
 
 	var font = if (style.fontFamily == FontFamily.Monospace) FontFamily.Monospace else null
 	val monoW = r(style) {
 		font?.let { measure.w("x".strStyle(style)) }
 	}
 	this.onDelete{
-		maxW = 10.dp
+		maxW = 100.dp
 	}
     
 	RunOnce(newLogs) {
