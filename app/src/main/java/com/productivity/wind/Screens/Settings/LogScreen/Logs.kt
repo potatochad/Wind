@@ -83,10 +83,10 @@ fun LogsScreen() {
 				) {
 					items(Logs) { 
 						LogTxt(it){ style ->
-						   if (!gotStyle) {
+						   if (gotStyle == no) {
+							   gotStyle = yes
 							   Vlog("strStyle is set")
 							   strStyle = style
-							   gotStyle = yes
 						   }
 					   } 
 					}
