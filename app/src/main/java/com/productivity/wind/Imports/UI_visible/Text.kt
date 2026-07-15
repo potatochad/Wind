@@ -158,15 +158,28 @@ Text(
 */
 
 @Composable
-fun LogTxt(text: Str) {
-    Text(
-        text = text,
+fun LogTxt(
+    text: Str,
+    Do: Do_<SpanStyle>
+) {
+    val spanStyle = SpanStyle(
         fontSize = 14.sp,
-        softWrap = false,
-        fontFamily = FontFamily.Monospace
+        fontWeight = FontWeight.Normal,
+        fontStyle = FontStyle.Normal,
+        fontFamily = FontFamily.Monospace,
     )
-}
 
+    Text(
+        text = buildAnnotatedString {
+            withStyle(spanStyle) {
+                append(text)
+            }
+        },
+        softWrap = false
+    )
+
+    Do(spanStyle)
+}
 
 
 
