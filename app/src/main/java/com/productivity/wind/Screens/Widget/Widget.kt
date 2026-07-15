@@ -24,7 +24,7 @@ class HelloWidget : GlanceAppWidget() {
     ) {
         provideContent {
             GlanceTheme {
-                Log.d("WIDGET_TEST", "Rendering started")
+                Vlog("Rendering started")
                 Text("Hello")
             }
         }
