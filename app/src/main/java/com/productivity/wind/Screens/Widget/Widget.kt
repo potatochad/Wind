@@ -11,6 +11,7 @@ import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.provideContent
 import android.content.Context
 import androidx.glance.text.Text
+import com.productivity.wind.Imports.Utils.Vlog
 
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
