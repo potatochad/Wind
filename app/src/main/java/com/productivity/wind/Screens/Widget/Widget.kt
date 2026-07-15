@@ -22,10 +22,9 @@ class HelloWidget : GlanceAppWidget() {
         context: Context,
         id: GlanceId
     ) {
-        GlanceTheme {
-            Log.d("WIDGET_TEST", "Rendering started")
-
-            provideContent {
+        provideContent {
+            GlanceTheme {
+                Log.d("WIDGET_TEST", "Rendering started")
                 Text("Hello")
             }
         }
