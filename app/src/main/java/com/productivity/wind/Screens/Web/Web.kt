@@ -114,7 +114,7 @@ fun WebHome(){
 
 
 @Composable
-fun Main(){
+fun Web(){
     //returns class: WebController
     var ctx = LocalContext.current
     val web = r { WebController(ctx) }
@@ -145,7 +145,7 @@ fun Main(){
         },
         scroll = no,
         dividerP = no,
-		onBackIcon = { goTo("Main2") }
+		onBackIcon = { goTo("Main") }
     ) {
         WebXml(web)
     }
