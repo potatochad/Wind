@@ -6,7 +6,7 @@
    android:minResizeHeight="128dp"
    android:minResizeWidth="128dp"
     
-   android:configure="com.google.android.samples.socialite.widget.SociaLiteAppWidgetConfigActivity"
+   android:configure="com.productivity.wind.Widget  ConfigActivity"
    android:widgetFeatures="configuration_optional|reconfigurable"
    android:previewImage="@drawable/widget_preview"
     
