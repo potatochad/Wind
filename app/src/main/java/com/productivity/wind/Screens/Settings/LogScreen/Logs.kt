@@ -50,8 +50,9 @@ fun LogsScreen() {
 	}
 
 	var strStyle by m(StrStyle())
-	var maxW = Logs.rMaxWidth(strStyle) + 15.dp
-
+	var maxW = remember(strStyle) { 
+		Logs.rMaxWidth(strStyle) + 15.dp
+	}
 	
 
 	RunOnce {
