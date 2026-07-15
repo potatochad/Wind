@@ -3,6 +3,7 @@ package com.productivity.wind.Widget
 //‼️IMPORTS NEED BE CLOSELY CONTROLLED
 //BECAUSE: import androidx.glance.text.Text ‼️= import androidx.compose.material3.Text
 
+import androidx.glance.GlanceTheme
 import androidx.glance.GlanceId
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
@@ -20,10 +21,12 @@ class HelloWidget : GlanceAppWidget() {
         context: Context,
         id: GlanceId
     ) {
-        Log.d("WIDGET_TEST", "Rendering started")
+        GlanceTheme {
+            Log.d("WIDGET_TEST", "Rendering started")
 
-        provideContent {
-            Text("Hello")
+            provideContent {
+                Text("Hello")
+            }
         }
     }
 }
