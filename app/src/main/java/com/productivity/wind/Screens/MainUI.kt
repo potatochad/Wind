@@ -39,7 +39,7 @@ import com.productivity.wind.Screens.Task.*
 
 
 @Composable
-fun Main2() {
+fun Main() {
 	RunOnce { MAINStart() }
 	
 	var searching by r(no)
