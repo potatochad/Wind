@@ -227,11 +227,7 @@ fun ListStr.lineIndexByChar(charIndex: Int): Int {
 
 
 @Composable
-fun ListStr.rMaxWidth(
-	style: StrStyle,
-    letterS: Int = 14,
-	font: FontFamily? = null,
-): Dp {
+fun ListStr.rMaxWidth(style: StrStyle): Dp {
 	val density = rDensity()
 	val measure = rTextMeasurer()
 	val newLogs = this.rNewItems()
