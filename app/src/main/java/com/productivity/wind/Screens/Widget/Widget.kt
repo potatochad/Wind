@@ -3,6 +3,7 @@ package com.productivity.wind.Widget
 //‼️IMPORTS NEED BE CLOSELY CONTROLLED
 //BECAUSE: import androidx.glance.text.Text ‼️= import androidx.compose.material3.Text
 
+import android.util.Log
 import androidx.glance.GlanceTheme
 import androidx.glance.GlanceId
 import androidx.glance.appwidget.GlanceAppWidget
