@@ -136,6 +136,13 @@ import androidx.compose.ui.graphics.toArgb
 import java.lang.ref.WeakReference
 import android.provider.Settings
 
+import androidx.glance.GlanceId
+import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.provideContent
+
+
+
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget = HelloWidget()
 }
