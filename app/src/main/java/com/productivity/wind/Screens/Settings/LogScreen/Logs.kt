@@ -49,7 +49,7 @@ fun LogsScreen() {
 			.toList()
 	}
 
-	
+	var strStyle by m(StrStyle())
 	var maxW = Logs.rMaxWidth(
 		letterS = 14,
 		font = FontFamily.Monospace
@@ -84,7 +84,11 @@ fun LogsScreen() {
 					state = scroll,
 					modifier = Mod.w(maxW)   
 				) {
-					items(Logs) { LogTxt(it) }
+					items(Logs) { 
+						LogTxt(it){ style ->
+						   strStyle = style
+					   } 
+					}
 				}
 			}
         }
