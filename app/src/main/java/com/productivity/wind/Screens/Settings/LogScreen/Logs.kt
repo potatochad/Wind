@@ -50,9 +50,7 @@ fun LogsScreen() {
 	}
 
 	var strStyle by m(StrStyle())
-	var maxW = r(strStyle) { 
-		Logs.rMaxWidth(strStyle) + 15.dp
-	}
+	var maxW = Logs.rMaxWidth(strStyle) + 15.dp
 	
 
 	RunOnce {
@@ -84,7 +82,10 @@ fun LogsScreen() {
 				) {
 					items(Logs) { 
 						LogTxt(it){ style ->
-						   strStyle = style
+						   if (style != strStyle) {
+							   Vlog("strStyle is set")
+							   strStyle = style
+						   }
 					   } 
 					}
 				}
