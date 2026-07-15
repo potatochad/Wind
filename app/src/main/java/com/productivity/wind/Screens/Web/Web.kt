@@ -114,7 +114,7 @@ fun WebHome(){
 
 
 @Composable
-fun Web(){
+fun Main(){
     //returns class: WebController
     var ctx = LocalContext.current
     val web = r { WebController(ctx) }
