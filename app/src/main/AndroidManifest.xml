@@ -111,7 +111,8 @@
 		
 		<receiver
 			android:name=".HelloWidgetReceiver"
-			android:exported="true">
+			android:exported="true"
+			android:label="Favorite Contact">
 
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
