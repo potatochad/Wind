@@ -146,7 +146,7 @@ fun log(message: Str, int: Int = 800) {
     var msg = message.replace("\n", " | ").take(int)
     if (msg.length >= int) { msg += " ..." }
 
-	val chunkSize = 4000
+	val chunkSize = 3000
     var start = 0
 
     while (start < msg.length) {
