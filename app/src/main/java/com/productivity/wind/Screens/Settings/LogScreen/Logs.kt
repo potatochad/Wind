@@ -49,8 +49,8 @@ fun LogsScreen() {
 			.toList()
 	}
 
-	var gotStyle by m(no)
-	var strStyle by m(StrStyle())
+	var gotStyle by r(no)
+	var strStyle by r(StrStyle())
 	var maxW = Logs.rMaxWidth(strStyle) + 15.dp
 	
 
@@ -85,7 +85,7 @@ fun LogsScreen() {
 						LogTxt(it){ style ->
 						   if (gotStyle == no) {
 							   gotStyle = yes
-							   Vlog("strStyle is set")
+							   Vlog("gotStyle: $gotStyle")
 							   strStyle = style
 						   }
 					   } 
