@@ -145,7 +145,7 @@ fun Main(){
         },
         scroll = no,
         dividerP = no,
-		onBackIcon = { goTo("Main") }
+		onBackIcon = { goTo("Main2") }
     ) {
         WebXml(web)
     }
