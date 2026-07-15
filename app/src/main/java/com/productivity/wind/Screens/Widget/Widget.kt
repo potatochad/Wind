@@ -136,3 +136,17 @@ import androidx.compose.ui.graphics.toArgb
 import java.lang.ref.WeakReference
 import android.provider.Settings
 
+class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
+    override val glanceAppWidget = HelloWidget()
+}
+class HelloWidget : GlanceAppWidget() {
+
+    override suspend fun provideGlance(
+        context: Context,
+        id: GlanceId
+    ) {
+        provideContent {
+            Text("Hello")
+        }
+    }
+}
