@@ -16,13 +16,13 @@ import com.productivity.wind.Imports.Utils.Vlog
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
     init {
-        Vlog("Receiver created")
+        // Vlog("Receiver created")
     }
     override val glanceAppWidget = HelloWidget()
 }
 class HelloWidget : GlanceAppWidget() {
     init {
-        Vlog("Widget started")
+        // Vlog("Widget started")
     }
 
     override suspend fun provideGlance(
