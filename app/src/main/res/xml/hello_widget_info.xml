@@ -6,12 +6,11 @@
     android:minWidth="1dp"
     android:minHeight="1dp"
 
-    android:minResizeWidth="57dp"
-    android:minResizeHeight="102dp"
+    android:minResizeWidth="1dp"
+    android:minResizeHeight="1dp"
 
     android:resizeMode="none"
 
-    android:updatePeriodMillis="3600000"
     android:configure="com.productivity.wind.Widget.HelloWidget"
     android:widgetFeatures="configuration_optional|reconfigurable"
     android:initialLayout="@layout/glance_default_loading_layout" 
