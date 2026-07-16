@@ -283,6 +283,18 @@ object AppCrash {
 				.forEach {
 					appendLine("at $it")
 				}  
+
+			throwable.cause?.let { cause ->
+				appendLine("Caused by: ${cause::class.java.name}")
+				appendLine(cause.message ?: "")
+				cause.stackTrace
+					.filter(::usefulFrame)
+					.take(20)
+					.forEach {
+						appendLine("at $it")
+					}
+			}
+			
 		}
 	}
 
