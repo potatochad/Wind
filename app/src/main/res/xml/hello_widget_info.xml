@@ -3,8 +3,8 @@
     android:targetCellWidth="1"
     android:targetCellHeight="1"
 
-    android:minWidth="57dp"
-    android:minHeight="102dp"
+    android:minWidth="1dp"
+    android:minHeight="1dp"
 
     android:minResizeWidth="57dp"
     android:minResizeHeight="102dp"
