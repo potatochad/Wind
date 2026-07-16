@@ -1,35 +1,20 @@
 //‼️‼️THIS IS VERY SENSITIVE CODE AND CAN EASILY NO WORK 
-//‼️‼️‼️DONT USE OUTSIDE FUNCTIONS‼️‼️
+//‼️‼️‼️DONT USE MY OUTSIDE FUNCTIONS‼️‼️
 
 package com.productivity.wind.Imports.Utils.Log
 
 import com.productivity.wind.Imports.Utils.ToX.*
 import com.productivity.wind.Imports.Utils.String.*
 import com.productivity.wind.Imports.Utils.*
-import android.annotation.SuppressLint
-import timber.log.Timber
-import java.text.*
-import android.app.*
-import androidx.core.app.*
 import android.os.*
 import android.content.*
 import android.util.*
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import android.net.Uri
 import android.widget.Toast
-import com.productivity.wind.*
-import kotlin.collections.*
-import android.content.*
-import java.util.*
-import java.util.*
-import kotlin.concurrent.*
-import android.content.*
-import android.net.*
 import androidx.compose.runtime.Composable
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
+import java.util.*
 
          
 
@@ -101,7 +86,7 @@ fun MeasureUILag(title: Str, block: ui) {
     val end = System.currentTimeMillis()
     log("[$title]: code took ${end - start} ms")
 }
-fun <T> MeasureLag(title: String, block: () -> T): T {
+fun <T> MeasureLag(title: Str, block: () -> T): T {
     val start = System.currentTimeMillis()
 
     val result = block()   // run and capture result
@@ -111,7 +96,7 @@ fun <T> MeasureLag(title: String, block: () -> T): T {
 
     return result
 }
-fun MeasureLagNoReturn(title: String, block: () -> Unit) {
+fun MeasureLagNoReturn(title: Str, block: () -> Unit) {
     val start = System.currentTimeMillis()
 
     block()   // just run it, ignore return
