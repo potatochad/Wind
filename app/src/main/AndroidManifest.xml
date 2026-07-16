@@ -110,7 +110,7 @@
 		</receiver>
 		
 		<receiver
-			android:name=".com.productivity.wind.Screens.Widget.HelloWidgetReceiver"
+			android:name=".Screens.Widget.HelloWidgetReceiver"
 			android:exported="true"
 			android:label="Favorite Contact">
 
