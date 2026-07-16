@@ -1,4 +1,4 @@
-package com.productivity.wind.Widget
+package com.productivity.wind.Screens.Widget
 
 //‼️IMPORTS NEED BE CLOSELY CONTROLLED
 //BECAUSE: import androidx.glance.text.Text ‼️= import androidx.compose.material3.Text
