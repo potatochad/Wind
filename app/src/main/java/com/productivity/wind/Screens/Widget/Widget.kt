@@ -20,23 +20,15 @@ import androidx.glance.GlanceModifier
 import com.productivity.wind.Imports.Utils.AppUI
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
-    init {
-        // Vlog("Receiver created")
-    }
     override val glanceAppWidget = HelloWidget()
 }
 class HelloWidget : GlanceAppWidget() {
-    init {
-        // Vlog("Widget started")
-    }
-
     override suspend fun provideGlance(
         context: Context,
         id: GlanceId
     ) {
         provideContent {
             GlanceTheme {
-                Vlog("Rendering started")
                 Text("Hello")
             }
         }
