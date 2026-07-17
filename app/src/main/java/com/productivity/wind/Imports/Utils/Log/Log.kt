@@ -4,8 +4,10 @@
 package com.productivity.wind.Imports.Utils.Log
 
 import com.productivity.wind.Bar
-import com.productivity.wind.appScope
+import com.productivity.wind.Imports.Utils.appScope
 import com.productivity.wind.Imports.Utils.App
+import com.productivity.wind.Imports.Utils.m
+
 
 import android.os.*
 import android.content.*
@@ -38,6 +40,7 @@ fun <T> mList<T>.keep(max: Int) {
         fromTo(0, size - max).clear()
     }
 }
+
 fun Do(eLog: Str="", onError: Wait ={}, Do: Wait) {
 	var whereCalled by m("")
 	appScope.launch {
