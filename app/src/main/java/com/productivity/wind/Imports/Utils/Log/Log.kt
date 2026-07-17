@@ -23,6 +23,8 @@ typealias Wait = suspend () -> Unit
 
 val Str.size: Int
     get() = length
+val Str.size: Int
+    get() = length
 
          
 
