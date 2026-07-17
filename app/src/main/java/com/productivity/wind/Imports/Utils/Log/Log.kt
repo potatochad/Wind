@@ -18,6 +18,12 @@ import java.util.*
 
 typealias Str = String
 typealias Bool = Boolean
+typealias Do = () -> Unit
+typealias Wait = suspend () -> Unit
+
+val Str.size: Int
+    get() = length
+
          
 
 fun Any?.vlog(x: Str){
