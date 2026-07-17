@@ -19,6 +19,8 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.GlanceModifier
 import com.productivity.wind.Imports.Utils.AppUI
 
+
+
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget = HelloWidget()
 }
@@ -29,7 +31,13 @@ class HelloWidget : GlanceAppWidget() {
     ) {
         provideContent {
             GlanceTheme {
-                Text("Hello")
+                Box(
+                    GlanceModifier
+                        .fillMaxSize()
+                        .clickable(actionStartActivity<AppUI>())
+                ) {
+                    Text("Hello")
+                }
             }
         }
     }
