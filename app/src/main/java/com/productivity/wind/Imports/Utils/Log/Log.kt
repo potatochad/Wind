@@ -20,6 +20,11 @@ typealias Str = String
 typealias Bool = Boolean
 typealias Do = () -> Unit
 typealias Wait = suspend () -> Unit
+typealias mList<T> = MutableList<T>
+
+typealias ui = @Composable () -> Unit
+typealias ui_<T> = @Composable (T) -> Unit
+
 
 val Str.size: Int
     get() = length
@@ -27,10 +32,13 @@ val Str.size: Int
     get() = length
 fun Str.last(n: Int): Str = takeLast(n)
 fun Str.fromTo(start: Int, end: Int = this.size) = substring(start, end)
+fun <T> List<T>.fromTo(start: Int, end: Int = this.size): List<T> = subList(start, end)
 
-typealias ui = @Composable () -> Unit
-typealias ui_<T> = @Composable (T) -> Unit
-         
+fun <T> mList<T>.keep(max: Int) {
+    if (size > max) {
+        fromTo(0, size - max).clear()
+    }
+}
 
 
 fun Any?.vlog(x: Str){
