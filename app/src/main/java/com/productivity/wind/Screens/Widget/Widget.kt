@@ -15,11 +15,16 @@ import com.productivity.wind.Imports.Utils.Vlog
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.layout.Box
+import androidx.glance.layout.Alignment
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.GlanceModifier
 import com.productivity.wind.Imports.Utils.AppUI
 import android.content.Intent
-
+import com.productivity.wind.R
+import androidx.glance.unit.ColorProvider
+import androidx.glance.color.ColorFilter
+import androidx.glance.Image
+import androidx.glance.ImageProvider
 
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
@@ -39,7 +44,8 @@ class HelloWidget : GlanceAppWidget() {
                             actionStartActivity(
                                 Intent(context, AppUI::class.java)
                             )
-                        )
+                        ),
+                    contentAlignment = Alignment.Center,
                 ) {
                     Text("Hello")
                 }
