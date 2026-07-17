@@ -25,6 +25,8 @@ val Str.size: Int
     get() = length
 val Str.size: Int
     get() = length
+fun Str.last(n: Int): Str = takeLast(n)
+fun Str.fromTo(start: Int, end: Int = this.size) = substring(start, end)
 
          
 
