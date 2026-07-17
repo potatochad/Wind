@@ -18,6 +18,7 @@ import java.io.InputStreamReader
 import java.util.*
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateListOf
 
 
 typealias Str = String
