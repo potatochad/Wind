@@ -16,6 +16,8 @@ import java.io.File
 import java.io.InputStreamReader
 import java.util.*
 
+typealias Str = String
+typealias Bool = Boolean
          
 
 fun Any?.vlog(x: Str){
