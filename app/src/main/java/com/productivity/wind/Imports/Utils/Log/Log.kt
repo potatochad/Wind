@@ -4,6 +4,7 @@
 package com.productivity.wind.Imports.Utils.Log
 
 import com.productivity.wind.Bar
+import com.productivity.wind.appScope
 import com.productivity.wind.Imports.Utils.App
 
 import android.os.*
@@ -37,6 +38,21 @@ fun <T> mList<T>.keep(max: Int) {
         fromTo(0, size - max).clear()
     }
 }
+fun Do(eLog: Str="", onError: Wait ={}, Do: Wait) {
+	var whereCalled by m("")
+	appScope.launch {
+		try {
+			whereCalled = callerId(2)
+			Do()
+		} catch (e: CancellationException) {
+			throw e
+		} catch (e: Exception) {
+			Vlog("Do error, $eLog: ${e.message}, $whereCalled")
+			onError()
+		}
+	} 
+}
+
 
 
 fun Any?.vlog(x: Str){
