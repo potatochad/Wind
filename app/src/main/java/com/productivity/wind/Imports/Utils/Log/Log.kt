@@ -28,7 +28,10 @@ val Str.size: Int
 fun Str.last(n: Int): Str = takeLast(n)
 fun Str.fromTo(start: Int, end: Int = this.size) = substring(start, end)
 
+typealias ui = @Composable () -> Unit
+typealias ui_<T> = @Composable (T) -> Unit
          
+
 
 fun Any?.vlog(x: Str){
 	Vlog("$x: [ $this ]", 800)
