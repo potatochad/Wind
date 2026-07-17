@@ -47,7 +47,13 @@ class HelloWidget : GlanceAppWidget() {
                         ),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text("Hello")
+                    Image(
+                        provider = ImageProvider(R.drawable.ic_sports_esports),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(
+                            ColorProvider(Color.rgb(255, 215, 0))
+                        )
+                    )
                 }
             }
         }
