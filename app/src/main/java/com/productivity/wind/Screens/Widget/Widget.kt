@@ -12,6 +12,12 @@ import androidx.glance.appwidget.provideContent
 import android.content.Context
 import androidx.glance.text.Text
 import com.productivity.wind.Imports.Utils.Vlog
+import androidx.glance.action.clickable
+import androidx.glance.appwidget.action.actionStartActivity
+import androidx.glance.layout.Box
+import androidx.glance.layout.fillMaxSize
+import androidx.glance.GlanceModifier
+import com.productivity.wind.MainActivity
 
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
