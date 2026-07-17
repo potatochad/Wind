@@ -17,8 +17,7 @@ import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.layout.Box
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.GlanceModifier
-import com.productivity.wind.MainActivity
-
+import com.productivity.wind.Imports.Utils.AppUI
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
     init {
