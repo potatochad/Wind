@@ -18,6 +18,7 @@ import androidx.glance.layout.Box
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.GlanceModifier
 import com.productivity.wind.Imports.Utils.AppUI
+import android.content.Intent
 
 
 
@@ -34,7 +35,11 @@ class HelloWidget : GlanceAppWidget() {
                 Box(
                     GlanceModifier
                         .fillMaxSize()
-                        .clickable(actionStartActivity<AppUI>())
+                        .clickable(
+                            actionStartActivity(
+                                Intent(context, AppUI::class.java)
+                            )
+                        )
                 ) {
                     Text("Hello")
                 }
