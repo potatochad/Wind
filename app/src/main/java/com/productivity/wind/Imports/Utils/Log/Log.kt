@@ -16,6 +16,9 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.util.*
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+
 
 typealias Str = String
 typealias Bool = Boolean
