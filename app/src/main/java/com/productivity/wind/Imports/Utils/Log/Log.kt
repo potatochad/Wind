@@ -28,11 +28,9 @@ typealias ui_<T> = @Composable (T) -> Unit
 
 val Str.size: Int
     get() = length
-val Str.size: Int
-    get() = length
 fun Str.last(n: Int): Str = takeLast(n)
 fun Str.fromTo(start: Int, end: Int = this.size) = substring(start, end)
-fun <T> List<T>.fromTo(start: Int, end: Int = this.size): List<T> = subList(start, end)
+fun <T> mList<T>.fromTo(start: Int, end: Int = size): mList<T> = subList(start, end)
 
 fun <T> mList<T>.keep(max: Int) {
     if (size > max) {
