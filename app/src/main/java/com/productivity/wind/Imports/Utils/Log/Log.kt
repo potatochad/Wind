@@ -145,82 +145,6 @@ fun getMyAppLogs() {
 	}.start()
 }
 
-//‼️‼️THIS IS VERY SENSITIVE CODE AND CAN EASILY NO WORK 
-//‼️‼️‼️DONT USE OUTSIDE FUNCTIONS‼️‼️
-object AppCrash {
-	fun usefulFrame(frame: StackTraceElement): Bool {
-		val name = frame.className
-
-		return !name.startsWith("android.") &&
-		   !name.startsWith("androidx.") &&
-           !name.startsWith("java.") &&
-           !name.startsWith("kotlin.") &&
-           !name.startsWith("com.android.") &&
-		   !name.contains("ComposableSingletons") &&
-           !name.contains("${'$'}${'$'}ExternalSynthetic")
-	}
-
-	private fun usefulStackTrace(throwable: Throwable): Str {
-		return buildString {
-			appendLine(throwable::class.java.name)
-			
-			throwable.message?.let {
-				appendLine(it)
-			}
-
-			throwable.stackTrace
-				.filter(::usefulFrame)
-				.take(20)
-				.forEach {
-					appendLine("at $it")
-				}  
-
-			throwable.cause?.let { cause ->
-				appendLine("Caused by: ${cause::class.java.name}")
-				appendLine(cause.message ?: "")
-				cause.stackTrace
-					.filter(::usefulFrame)
-					.take(20)
-					.forEach {
-						appendLine("at $it")
-					}
-			}
-			
-		}
-	}
-
-    fun install(context: Context) {
-        val previous = Thread.getDefaultUncaughtExceptionHandler()
-
-        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            try {
-                val file = File(context.filesDir, "crash.txt")
-
-                file.writeText("${usefulStackTrace(throwable)}")
-
-            } catch (_: Throwable) {
-            }
-
-            previous?.uncaughtException(thread, throwable)
-        }
-    }
-
-    fun printLastCrash(context: Context) {
-        val file = File(context.filesDir, "crash.txt")
-
-        if (!file.exists()) return
-
-        try {
-            Log.e("AppCrash", file.readText())
-        } catch (_: Throwable) {
-        } finally {
-            file.delete()
-        }
-    }
-}
-
-
-
 
 
 fun folder(folderName: Str): File {
@@ -230,3 +154,6 @@ fun folder(folderName: Str): File {
     }
     return folder
 }
+
+
+
