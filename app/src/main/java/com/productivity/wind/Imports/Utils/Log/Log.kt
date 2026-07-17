@@ -72,6 +72,17 @@ fun Do(eLog: Str="", onError: Wait ={}, Do: Wait) {
 		}
 	} 
 }
+fun callerId(depth: Int = 0): Str {
+    val stack = Throwable().stackTrace
+
+    if (depth !in stack.indices) {
+        return "invalid-depth"
+    }
+
+    val it = stack[depth]
+
+    return "${it.fileName}-${it.className.substringAfterLast('.')}-${it.methodName}"
+}
 
 
 
