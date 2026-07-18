@@ -52,7 +52,7 @@ class HelloWidget : GlanceAppWidget() {
                     // Text("fun")
                     
                     Image(
-    provider = ImageProvider(android.R.drawable.ic_menu_camera),
+    provider = ImageProvider(R.drawable.ic_sports_esports),
     contentDescription = null
 )
                     
