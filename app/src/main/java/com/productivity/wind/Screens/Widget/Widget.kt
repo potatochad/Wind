@@ -48,20 +48,20 @@ class HelloWidget : GlanceAppWidget() {
         provideContent {
             GlanceTheme {
                 Box(
-    modifier = GlanceModifier
-        .fillMaxSize()
-        .background(ColorProvider(Color.BLACK))
-        .cornerRadius(20.dp)
-        .padding(20.dp)
-        .clickable(
-            actionStartActivity(
-                Intent(context, AppUI::class.java)
-            )
-        ),
-    contentAlignment = Alignment.Center
-) {
-    Column(
-    horizontalAlignment = Alignment.Horizontal.CenterHorizontally
+                    modifier = GlanceModifier
+                        .fillMaxSize()
+                        .background(ColorProvider(Color.BLACK))
+                        .cornerRadius(20.dp)
+                        .padding(20.dp)
+                        .clickable(
+                            actionStartActivity(
+                                Intent(context, AppUI::class.java)
+                            )
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.Horizontal.CenterHorizontally
 ) {
     Image(
         provider = ImageProvider(R.drawable.ic_sports_esports),
