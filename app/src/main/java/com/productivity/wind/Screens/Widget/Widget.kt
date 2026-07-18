@@ -31,6 +31,9 @@ import androidx.glance.background
 import androidx.glance.layout.padding
 import androidx.glance.unit.dp
 import androidx.glance.appwidget.cornerRadius
+import androidx.glance.layout.Column
+import androidx.glance.layout.Alignment
+import androidx.glance.text.TextStyle
 
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
@@ -79,7 +82,6 @@ class HelloWidget : GlanceAppWidget() {
                     
                 }
             }
-        }
         } catch (e: Exception) {
             Log.e("HelloWidget", "Widget failed", e)
         }
