@@ -32,6 +32,7 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.layout.Column
 import androidx.glance.layout.Alignment
 import androidx.glance.text.TextStyle
+import kotlinx.coroutines.CancellationException
 
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
@@ -79,6 +80,9 @@ class HelloWidget : GlanceAppWidget() {
                     }
                 }
             }
+        } catch (e: CancellationException) {
+            Log.e("HelloWidget", "CancellationException", e)
+            throw e
         } catch (e: Exception) {
             Log.e("HelloWidget", "Widget failed", e)
         }
