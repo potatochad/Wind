@@ -15,7 +15,6 @@ import com.productivity.wind.Imports.Utils.Vlog
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.layout.Box
-import androidx.glance.layout.Alignment
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.GlanceModifier
 import com.productivity.wind.Imports.Utils.AppUI
@@ -26,7 +25,6 @@ import androidx.glance.ColorFilter
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import android.graphics.Color
-
 import androidx.glance.background
 import androidx.glance.layout.padding
 import androidx.glance.unit.dp
@@ -45,42 +43,44 @@ class HelloWidget : GlanceAppWidget() {
         id: GlanceId
     ) {
         try {
-        provideContent {
-            GlanceTheme {
-                Box(
-                    modifier = GlanceModifier
-                        .fillMaxSize()
-                        .background(ColorProvider(Color.BLACK))
-                        .cornerRadius(20.dp)
-                        .padding(20.dp)
-                        .clickable(
-                            actionStartActivity(
-                                Intent(context, AppUI::class.java)
-                            )
-                        ),contentAlignment = Alignment.Center
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.Horizontal.CenterHorizontally
+            provideContent {
+                GlanceTheme {
+                    Box(
+                        modifier = GlanceModifier
+                            .fillMaxSize()
+                            .background(ColorProvider(Color.BLACK))
+                            .cornerRadius(20.dp)
+                            .padding(20.dp)
+                            .clickable(
+                                actionStartActivity(
+                                    Intent(context, AppUI::class.java)
+                                )
+                            ),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Image(
-                            provider = ImageProvider(R.drawable.ic_sports_esports),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(
-                                ColorProvider(Color.rgb(255, 215, 0))
+                        Column(
+                            horizontalAlignment = Alignment.Horizontal.CenterHorizontally
+                        ) {
+                            Image(
+                                provider = ImageProvider(R.drawable.ic_sports_esports),
+                                contentDescription = null,
+                                colorFilter = ColorFilter.tint(
+                                    ColorProvider(Color.rgb(255, 215, 0))
+                                )
                             )
-                        )
-
-                        Text(
-                            "Wind",
-                            style = TextStyle(
-                                color = ColorProvider(Color.WHITE)
+                            
+                            Text(
+                                "Wind",
+                                style = TextStyle(
+                                    color = ColorProvider(Color.WHITE)
+                                )
                             )
-                        )
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                Log.e("HelloWidget", "Widget failed", e)
             }
-        } catch (e: Exception) {
-            Log.e("HelloWidget", "Widget failed", e)
         }
     }
 }
