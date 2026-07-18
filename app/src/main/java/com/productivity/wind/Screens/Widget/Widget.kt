@@ -27,6 +27,11 @@ import androidx.glance.Image
 import androidx.glance.ImageProvider
 import android.graphics.Color
 
+import androidx.glance.background
+import androidx.glance.layout.padding
+import androidx.glance.unit.dp
+import androidx.glance.appwidget.cornerRadius
+
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget = HelloWidget()
