@@ -25,7 +25,7 @@ import androidx.glance.unit.ColorProvider
 import androidx.glance.ColorFilter
 import androidx.glance.Image
 import androidx.glance.ImageProvider
-import androidx.compose.ui.graphics.Color
+import android.graphics.Color
 
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
