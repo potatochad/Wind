@@ -48,6 +48,8 @@ class HelloWidget : GlanceAppWidget() {
                         ),
                     contentAlignment = Alignment.Center,
                 ) {
+                    Text("fun")
+                    /*
                     Image(
                         provider = ImageProvider(R.drawable.ic_sports_esports),
                         contentDescription = null,
@@ -55,6 +57,7 @@ class HelloWidget : GlanceAppWidget() {
                             ColorProvider(Color.rgb(255, 215, 0))
                         )
                     )
+                    */
                 }
             }
         }
