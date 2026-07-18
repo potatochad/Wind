@@ -36,6 +36,7 @@ class HelloWidget : GlanceAppWidget() {
         context: Context,
         id: GlanceId
     ) {
+        try {
         provideContent {
             GlanceTheme {
                 Box(
@@ -51,15 +52,15 @@ class HelloWidget : GlanceAppWidget() {
                     // Text("fun")
                     
                     Image(
-                        provider = ImageProvider(R.drawable.ic_sports_esports),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(
-                            ColorProvider(Color.rgb(255, 215, 0))
-                        )
-                    )
+    provider = ImageProvider(android.R.drawable.ic_menu_camera),
+    contentDescription = null
+)
                     
                 }
             }
+        }
+        } catch (e: Exception) {
+            Log.e("HelloWidget", "Widget failed", e)
         }
     }
 }
