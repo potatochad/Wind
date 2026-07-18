@@ -78,9 +78,9 @@ class HelloWidget : GlanceAppWidget() {
                         }
                     }
                 }
-            } catch (e: Exception) {
-                Log.e("HelloWidget", "Widget failed", e)
             }
+        } catch (e: Exception) {
+            Log.e("HelloWidget", "Widget failed", e)
         }
     }
 }
