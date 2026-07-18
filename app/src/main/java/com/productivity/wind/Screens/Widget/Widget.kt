@@ -45,21 +45,37 @@ class HelloWidget : GlanceAppWidget() {
         provideContent {
             GlanceTheme {
                 Box(
-                    GlanceModifier
-                        .fillMaxSize()
-                        .clickable(
-                            actionStartActivity(
-                                Intent(context, AppUI::class.java)
-                            )
-                        ),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    // Text("fun")
-                    
-                    Image(
-    provider = ImageProvider(R.drawable.ic_sports_esports),
-    contentDescription = null
-)
+    modifier = GlanceModifier
+        .fillMaxSize()
+        .background(ColorProvider(Color.BLACK))
+        .cornerRadius(20.dp)
+        .padding(20.dp)
+        .clickable(
+            actionStartActivity(
+                Intent(context, AppUI::class.java)
+            )
+        ),
+    contentAlignment = Alignment.Center
+) {
+    Column(
+    horizontalAlignment = Alignment.Horizontal.CenterHorizontally
+) {
+    Image(
+        provider = ImageProvider(R.drawable.ic_sports_esports),
+        contentDescription = null,
+        colorFilter = ColorFilter.tint(
+            ColorProvider(Color.rgb(255, 215, 0))
+        )
+    )
+
+    Text(
+        "Wind",
+        style = TextStyle(
+            color = ColorProvider(Color.WHITE)
+        )
+    )
+    }
+                }
                     
                 }
             }
