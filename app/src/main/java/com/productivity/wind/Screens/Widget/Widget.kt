@@ -59,7 +59,7 @@ class HelloWidget : GlanceAppWidget() {
                         contentAlignment = Alignment.Center
                     ) {
                         Column(
-                            horizontalAlignment = Alignment.Horizontal.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Image(
                                 provider = ImageProvider(R.drawable.ic_sports_esports),
