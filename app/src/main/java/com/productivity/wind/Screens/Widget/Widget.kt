@@ -57,29 +57,26 @@ class HelloWidget : GlanceAppWidget() {
                             actionStartActivity(
                                 Intent(context, AppUI::class.java)
                             )
-                        ),
-                    contentAlignment = Alignment.Center
+                        ),contentAlignment = Alignment.Center
                 ) {
                     Column(
                         horizontalAlignment = Alignment.Horizontal.CenterHorizontally
-) {
-    Image(
-        provider = ImageProvider(R.drawable.ic_sports_esports),
-        contentDescription = null,
-        colorFilter = ColorFilter.tint(
-            ColorProvider(Color.rgb(255, 215, 0))
-        )
-    )
+                    ) {
+                        Image(
+                            provider = ImageProvider(R.drawable.ic_sports_esports),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(
+                                ColorProvider(Color.rgb(255, 215, 0))
+                            )
+                        )
 
-    Text(
-        "Wind",
-        style = TextStyle(
-            color = ColorProvider(Color.WHITE)
-        )
-    )
-    }
-                }
-                    
+                        Text(
+                            "Wind",
+                            style = TextStyle(
+                                color = ColorProvider(Color.WHITE)
+                            )
+                        )
+                    }
                 }
             }
         } catch (e: Exception) {
