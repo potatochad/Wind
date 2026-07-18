@@ -22,12 +22,11 @@ import com.productivity.wind.Imports.Utils.AppUI
 import android.content.Intent
 import com.productivity.wind.R
 import androidx.glance.unit.ColorProvider
-// import androidx.glance.color.ColorFilter
+import androidx.glance.ColorFilter
 import androidx.glance.Image
 import androidx.glance.ImageProvider
-
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
+
 
 class HelloWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget = HelloWidget()
