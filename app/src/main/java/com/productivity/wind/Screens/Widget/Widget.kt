@@ -5,10 +5,10 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.RemoteViews
 import com.productivity.wind.Imports.Utils.AppUI
 import com.productivity.wind.R
-
 
 class HelloWidgetProvider : AppWidgetProvider() {
 
@@ -18,36 +18,40 @@ class HelloWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
 
-        appWidgetIds.forEach { widgetId ->
+        try {
 
-            val views = RemoteViews(
-                context.packageName,
-                R.layout.widget_hello
-            )
+            appWidgetIds.forEach { widgetId ->
 
-            val intent = Intent(
-                context,
-                AppUI::class.java
-            )
+                val views = RemoteViews(
+                    context.packageName,
+                    R.layout.widget_hello
+                )
 
-            val pendingIntent = PendingIntent.getActivity(
-                context,
-                0,
-                intent,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+                val intent = Intent(
+                    context,
+                    AppUI::class.java
+                )
 
-            views.setOnClickPendingIntent(
-                R.id.widget_root,
-                pendingIntent
-            )
+                val pendingIntent = PendingIntent.getActivity(
+                    context,
+                    0,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                )
 
-            appWidgetManager.updateAppWidget(
-                widgetId,
-                views
-            )
+                views.setOnClickPendingIntent(
+                    R.id.widget_root,
+                    pendingIntent
+                )
+
+                appWidgetManager.updateAppWidget(
+                    widgetId,
+                    views
+                )
+            }
+
+        } catch (e: Exception) {
+            Log.e("HelloWidgetProvider", "Widget update failed", e)
         }
     }
 }
-
-
