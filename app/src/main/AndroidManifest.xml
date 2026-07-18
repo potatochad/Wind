@@ -110,9 +110,9 @@
 		</receiver>
 		
 		<receiver
-			android:name=".Screens.Widget.HelloWidgetReceiver"
+			android:name=".Screens.Widget.HelloWidgetProvider"
 			android:exported="true"
-			android:label="Favorite Contact">
+			android:label="Fun screen">
 
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
