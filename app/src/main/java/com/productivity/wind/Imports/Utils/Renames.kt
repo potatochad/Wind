@@ -497,5 +497,27 @@ fun RemoteViews.onClick(
     setOnClickPendingIntent(viewId, pendingIntent)
 }
 
+fun goTo(
+    uri: Str,
+    ctx: Context,
+    requestCode: Int = 0
+): PendingIntent {
+    val intent = if (uri.startsWith("wind://")) {
+        Intent(
+            Intent.ACTION_VIEW,
+            uri.toUri(),
+            ctx,
+            AppUI::class.java
+        )
+    } else {
+        Intent()
+    }
 
+    return PendingIntent.getActivity(
+        ctx,
+        requestCode,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+}
 
