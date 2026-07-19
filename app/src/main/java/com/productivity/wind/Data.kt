@@ -254,7 +254,7 @@ fun HandleIntent(intent: Intent){
 	if (uri.scheme == "wind") {
 		when (uri.host) {
 			"web" -> {
-				goTo("Web")
+				defaultScreen = "Web"
 			}
 		}
 	}
