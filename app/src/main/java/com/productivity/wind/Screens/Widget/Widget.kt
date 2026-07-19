@@ -135,14 +135,12 @@ import android.content.ClipboardManager
 import androidx.compose.ui.graphics.toArgb
 import java.lang.ref.WeakReference
 import android.provider.Settings
-
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.content.Intent
 import android.widget.RemoteViews
-import com.productivity.wind.R
+
 
 class HelloWidgetProvider : AppWidgetProvider() {
 
@@ -162,16 +160,18 @@ class HelloWidgetProvider : AppWidgetProvider() {
                 )
 
                 val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    "wind://web".toUri(),
                     context,
                     AppUI::class.java
                 )
-
                 val pendingIntent = PendingIntent.getActivity(
                     context,
                     0,
                     intent,
-                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
+
 
                 views.setOnClickPendingIntent(
                     R.id.widget_root,
