@@ -140,6 +140,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
+import androidx.core.net.toUri
 
 
 class HelloWidgetProvider : AppWidgetProvider() {
