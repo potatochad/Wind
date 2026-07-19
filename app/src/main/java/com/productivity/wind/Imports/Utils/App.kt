@@ -468,7 +468,7 @@ fun SendEmail(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MyNavGraph(navController: NavHostController) {
-        NavHost(navController = navController, startDestination = "Main") {
+        NavHost(navController = navController, startDestination = defaultScreen) {
             ScreenNav()
         }
 }
