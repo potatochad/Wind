@@ -296,29 +296,6 @@ val m_<Web?>.url: Str
     get() = this.it?.url ?: ""
 
 
-typealias Nav = NavHostController
-typealias NavBuilder = NavHostController
-
-var AppNavUrlChanged by m(no)
-fun goTo(route: Str){ 
-	Do {
-		AppNavUrlChanged = yes
-		AppNav.navigate(route) 
-
-		wait(1000)
-		AppNavUrlChanged = no
-	}
-}
-fun pop(route: Str){ 
-	AppNav.navigate(route) 
-}
-
-fun NavGraphBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
-    composable(txt) { UI(it) }
-}
-fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
-    dialog(txt){ UI(it) }
-}
 
 
 
