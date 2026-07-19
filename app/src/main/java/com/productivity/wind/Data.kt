@@ -246,6 +246,18 @@ suspend fun AppBackground(notif: LazyNotifi){
 	}
 }
 
+fun HandleIntent(intent: Intent){
+	val uri = intent.data ?: return
+	
+	if (uri.scheme == "wind") {
+		when (uri.host) {
+			"web" -> {
+				goTo("Web")
+			}
+		}
+	}
+}
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI() {
