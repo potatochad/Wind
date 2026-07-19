@@ -74,7 +74,7 @@ fun newDay() {
 
 }
 
-
+var defaultScreen by m("Main")
 
 object Bar {
 	//BASIC
