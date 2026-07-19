@@ -47,6 +47,8 @@ import android.app.Activity
 import android.os.Process
 import android.content.Intent
 import androidx.navigation.NavGraphBuilder
+import com.productivity.wind.Screens.Settings.LogScreen.*    
+import com.productivity.wind.Screens.Settings.*
 
 
 /*! NEVER move bar and lists to another FOLDER, or other file
