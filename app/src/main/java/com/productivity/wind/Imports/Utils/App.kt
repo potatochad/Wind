@@ -553,6 +553,7 @@ class AppUI : ComponentActivity() {
         ) { granted ->
             log("permission granted?: $granted")
 		}
+		handleIntent(intent)
 		
 		AppStart_beforeUI()
 		
