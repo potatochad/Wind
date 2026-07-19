@@ -137,12 +137,15 @@ import java.lang.ref.WeakReference
 import android.provider.Settings
 
 
+typealias Nav = NavHostController
+typealias NavBuilder = NavHostController
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MyNavGraph(navController: NavHostController) {
-        NavHost(navController = navController, startDestination = defaultScreen) {
-            ScreenNav()
-        }
+    NavHost(navController = navController, startDestination = defaultScreen) {
+        ScreenNav()
+    }
 }
 
 fun navBack() { AppNav.popBackStack() }
@@ -153,5 +156,27 @@ inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
     return v as? T
 }
 
+
+
+var AppNavUrlChanged by m(no)
+fun goTo(route: Str){ 
+    Do {
+        AppNavUrlChanged = yes
+		AppNav.navigate(route) 
+
+		wait(1000)
+		AppNavUrlChanged = no
+	}
+}
+fun pop(route: Str){ 
+   AppNav.navigate(route) 
+}
+
+fun NavGraphBuilder.url(txt: Str, UI: ui_<NavBackStackEntry>) {
+    composable(txt) { UI(it) }
+}
+fun NavGraphBuilder.popup(txt: Str, UI: ui_<NavBackStackEntry>) {
+    dialog(txt){ UI(it) }
+}
 
 
