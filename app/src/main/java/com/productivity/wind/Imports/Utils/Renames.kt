@@ -121,7 +121,7 @@ import java.time.*
 import java.time.format.*
 import android.view.*
 import androidx.core.view.*
-
+import android.widget.RemoteViews
 
 //colors
 var cardColor = Color(0xFF1A1A1A)
@@ -491,12 +491,6 @@ class By<T>(value: T) {
 
 
 fun RemoteViews.onClick(
-    viewId: Int,
-    pendingIntent: PendingIntent
-) {
-    setOnClickPendingIntent(viewId, pendingIntent)
-}
-fun Views.onClick(
     viewId: Int,
     pendingIntent: PendingIntent
 ) {
