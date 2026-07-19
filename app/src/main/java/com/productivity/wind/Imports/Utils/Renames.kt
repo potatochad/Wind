@@ -274,13 +274,8 @@ fun Any?.commonType() = when (this) {
 }
 
 
-fun navBack() { AppNav.popBackStack() }
 
-inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
-    val v = arguments?.get(key)
-    if (v == "_") return null
-    return v as? T
-}
+
 
 fun Web?.url(url: Str) {
     this?.loadUrl(url)
