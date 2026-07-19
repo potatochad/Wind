@@ -45,6 +45,8 @@ import com.google.android.gms.location.*
 import android.util.Log
 import android.app.Activity
 import android.os.Process
+import android.content.Intent
+
 
 /*! NEVER move bar and lists to another FOLDER, or other file
 aka....got some functions in datatools, that though a bit tantrum...
