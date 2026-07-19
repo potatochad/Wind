@@ -74,6 +74,7 @@ fun newDay() {
 
 }
 
+//!! Global var that shouldnt be saved
 var defaultScreen by m("Main")
 
 object Bar {
