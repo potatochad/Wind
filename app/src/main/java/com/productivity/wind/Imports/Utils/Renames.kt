@@ -490,3 +490,18 @@ class By<T>(value: T) {
 
 
 
+fun RemoteViews.onClick(
+    viewId: Int,
+    pendingIntent: PendingIntent
+) {
+    setOnClickPendingIntent(viewId, pendingIntent)
+}
+fun Views.onClick(
+    viewId: Int,
+    pendingIntent: PendingIntent
+) {
+    setOnClickPendingIntent(viewId, pendingIntent)
+}
+
+
+
