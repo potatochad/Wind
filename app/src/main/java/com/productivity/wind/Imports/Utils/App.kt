@@ -553,7 +553,8 @@ class AppUI : ComponentActivity() {
         ) { granted ->
             log("permission granted?: $granted")
 		}
-		handleIntent(intent)
+		
+		HandleIntent(intent)
 		
 		AppStart_beforeUI()
 		
@@ -597,6 +598,11 @@ class AppUI : ComponentActivity() {
 		super.onPause()
 		
 		OnLeaveApp()
+	}
+
+	override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        HandleIntent(intent)
 	}
 
 	
