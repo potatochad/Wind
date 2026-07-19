@@ -174,7 +174,7 @@ class HelloWidgetProvider : AppWidgetProvider() {
                 )
 
 
-                views.setOnClickPendingIntent(
+                views.onClick(
                     R.id.widget_root,
                     pendingIntent
                 )
