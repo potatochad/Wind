@@ -137,3 +137,13 @@ import java.lang.ref.WeakReference
 import android.provider.Settings
 
 
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun MyNavGraph(navController: NavHostController) {
+        NavHost(navController = navController, startDestination = defaultScreen) {
+            ScreenNav()
+        }
+}
+
+
+
