@@ -62,51 +62,6 @@ import com.productivity.wind.Screens.Task.*
 
 
 
-fun NavGraphBuilder.ScreenNav() {
-    //Main—StartDestination    
-    url("Main") { Main() }
-
-    url("Achievements") { Achievements() }
-    url("Challenge") { Challenge() }
-    url("AppUsage/{appId}") {
-		var x: Str = it.url("appId") ?: ""
-		AppUsage(x) 
-	}
-
-    url("CopyPaste/{appId}") { 
-		var x: Str = it.url("appId") ?: ""
-		CopyPaste(x) 
-	}
-	url("ToDo/{toDoId}") { 
-		var x: Str = it.url("toDoId") ?: ""
-		ToDo(x) 
-	}
-
-    url("Web") { Web() }
-    url("WebKeywords") { WebKeywords() }
-	url("WebHome") { WebHome() }
-	url("WebWordConfigure/{WordId}") { 
-		var x: Str = it.url("WordId") ?: ""
-		WebWordConfigure(x) 
-	}
-	
-	url("filterExtraWeb") { filterExtraWeb() }
-    
-
-    url("SettingsScreen") { SettingsScreen() }
-    url("ExtensionsScreen") { ExtensionsScreen() }
-	url("PrivacyScreen") { PrivacyScreen() }
-    url("SettingsOtherScreen") { SettingsOtherScreen() }
-	url("LogsScreen") { LogsScreen() }
-
-	// popups ‼️Nav back on close
-	popup("GetPoints") { GetPoints() }
-	popup("AllowAppUsage") { AllowAppUsage() }
-}
-
-
-
-
 @Composable
 fun Menu() {
     LazzyColumn(Mod.black().maxS()) {
