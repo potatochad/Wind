@@ -554,6 +554,8 @@ class AppUI : ComponentActivity() {
             log("permission granted?: $granted")
 		}
 		
+		HandleIntent(intent)
+		
 		AppStart_beforeUI()
 		
 
@@ -567,8 +569,6 @@ class AppUI : ComponentActivity() {
 			AppLazyH = AppH - bottomSystemHeight()
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
-			
-			HandleIntent(intent)
 			
 			BottomSystemPadding{
 				AppContent()
