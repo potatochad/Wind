@@ -160,23 +160,9 @@ class HelloWidgetProvider : AppWidgetProvider() {
                     R.layout.widget_hello
                 )
 
-                val intent = Intent(
-                    Intent.ACTION_VIEW,
-                    "wind://web".toUri(),
-                    context,
-                    AppUI::class.java
-                )
-                val pendingIntent = PendingIntent.getActivity(
-                    context,
-                    0,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
-
-
                 views.onClick(
                     R.id.widget_root,
-                    pendingIntent
+                    goTo("wind://web", context)
                 )
 
                 appWidgetManager.updateAppWidget(
