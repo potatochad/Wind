@@ -145,5 +145,13 @@ fun MyNavGraph(navController: NavHostController) {
         }
 }
 
+fun navBack() { AppNav.popBackStack() }
+
+inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
+    val v = arguments?.get(key)
+    if (v == "_") return null
+    return v as? T
+}
+
 
 
