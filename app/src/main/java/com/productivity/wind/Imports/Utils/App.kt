@@ -465,13 +465,6 @@ fun SendEmail(
 	startActivity(chooser)
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun MyNavGraph(navController: NavHostController) {
-        NavHost(navController = navController, startDestination = defaultScreen) {
-            ScreenNav()
-        }
-}
 
 //THISS MIGHT BE INVERTING COLOURS (BASED ON USER SETTINGS THAT ACTUALLY MAKING DEVICE MONOCROME, (IDKKK)
 fun DeviceGray(enabled: Bool = true) {
