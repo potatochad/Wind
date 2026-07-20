@@ -1,5 +1,6 @@
 package com.productivity.wind.Screens
 
+import com.productivity.wind.Imports.Utils.NavControl.*
 import com.productivity.wind.Imports.Utils.ToX.*
 import com.productivity.wind.Imports.Utils.String.*
 import androidx.compose.material3.Text
