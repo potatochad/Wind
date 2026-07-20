@@ -70,7 +70,7 @@ object TskProp {
 					getApps()
 						.filter { it.pkg() != AppPkg }
 						.map { app ->
-							val icon = getAppIcon(app.pkg())
+							val icon = AppIcon(app.pkg())
 							app to icon
 						}
 				},
@@ -106,7 +106,7 @@ object TskProp {
 
 	fun UpdateAppTsk(){
         Bar.apps.each {
-            it.edit { it.nowTime = getTodayAppUsage(it.pkg) }
+            it.edit { it.nowTime = TodayAppUsage(it.pkg) }
 
             if (it.nowTime > it.doneTime - 1 && !it.done) {
                 Bar.funTime += it.worth
