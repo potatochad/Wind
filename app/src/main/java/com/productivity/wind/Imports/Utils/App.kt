@@ -205,20 +205,7 @@ fun ComposeCanBeTiny(ui: ui) {
 
 
 
-//THISS MIGHT BE INVERTING COLOURS (BASED ON USER SETTINGS THAT ACTUALLY MAKING DEVICE MONOCROME, (IDKKK)
-fun DeviceGray(enabled: Bool = true) {
-    Settings.Secure.putInt(
-        App.contentResolver,
-        "accessibility_display_daltonizer",
-        0
-    )
 
-    Settings.Secure.putInt(
-        App.contentResolver,
-        "accessibility_display_daltonizer_enabled",
-        if (enabled) 1 else 0
-    )
-}
 
 
 
