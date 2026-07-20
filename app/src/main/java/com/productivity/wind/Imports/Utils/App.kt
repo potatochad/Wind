@@ -156,10 +156,6 @@ fun AndroidSettings(action: Str) {
 
 
 
-
-
-
-
 @Composable
 fun StatusBarHeight(): Int {
     val insets = WindowInsets.statusBars.asPaddingValues()
@@ -187,11 +183,7 @@ fun getH(): Float {
 var SettingsItemCardColor = Color(0xFF121212)
 
 
-fun CopyToClipboard(txt: Str) {
-	val clipboard = App.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-	val clip = ClipData.newPlainText("label", txt)
-	clipboard.setPrimaryClip(clip)
-}
+
 
 fun ProgressColor(progress: Float): Color {
 	return when {
