@@ -143,12 +143,12 @@ fun CloseMyApp() {
 }
 
 
-object SystemBars {
-    fun TopBar(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
+object AppBars {
+    fun Top(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
         window.statusBarColor = color.toArgb()
     }
 
-    fun BottomBar(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
+    fun Bottom(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
         window.navigationBarColor = color.toArgb()
     }
 
