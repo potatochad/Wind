@@ -144,7 +144,7 @@ fun CloseMyApp() {
 
 
 
-fun androidSettings(action: Str) {
+fun AndroidSettings(action: Str) {
     startActivity(
 		Intent(action).apply {
 			addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -155,7 +155,7 @@ fun androidSettings(action: Str) {
 
 
 @Suppress("DEPRECATION")
-fun gotInternet(): Bool {
+fun GotInternet(): Bool {
     val connectivityManager = App.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -191,7 +191,7 @@ fun BottomAppBarHeight(): Dp {
 
 
 
-fun getTodayAppUsage(packageName: Str): Int {
+fun TodayAppUsage(packageName: Str): Int {
     val end = System.currentTimeMillis()
     val cal = Calendar.getInstance().apply {
         set(Calendar.HOUR_OF_DAY, 0)
@@ -246,7 +246,7 @@ fun Str.pkg(): Str {
         ?.packageName ?: this
 }
 
-fun openApp(pkg: Str) {
+fun OpenApp(pkg: Str) {
     val pm: PackageManager = App.packageManager
     val launchIntent: Intent? = pm.getLaunchIntentForPackage(pkg)
     if (launchIntent != null) {
@@ -262,7 +262,7 @@ val ResolveInfo.name: Str
         return this.loadLabel(App.packageManager)?.toString() ?: pkg
 	}
 	
-fun getAppIcon(packageName: Str?): Drawable? {
+fun AppIcon(packageName: Str?): Drawable? {
     if (packageName.isNullOrBlank()) {
         return App.getDrawable(android.R.drawable.sym_def_app_icon)
     }
