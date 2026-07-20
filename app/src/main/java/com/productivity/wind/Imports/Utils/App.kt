@@ -143,20 +143,7 @@ fun CloseMyApp() {
 }
 
 
-val MakeTxtFile = ActivityResultContracts.CreateDocument("text/plain")
 
-fun TxtFileToMap(ctx: ctx, uri: Uri, fileMap: MutableMap<Str, Str>) {
-    ctx.contentResolver.openInputStream(uri)?.bufferedReader()?.useLines { lines ->
-        lines.forEach { line ->
-            if (!line.contains("=")) {
-                Vlog("Error...corrupted data")
-                return@forEach
-            }
-            val (key, value) = line.split("=", limit = 2)
-            fileMap[key] = value
-        }
-    }
-}
 
 
 
