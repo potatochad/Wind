@@ -143,13 +143,6 @@ import android.provider.Settings
 
 
 
-fun AndroidSettings(action: Str) {
-    startActivity(
-		Intent(action).apply {
-			addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-		}
-	)
-}
 
 
 
