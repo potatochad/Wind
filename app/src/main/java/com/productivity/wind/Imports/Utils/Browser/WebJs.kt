@@ -27,6 +27,7 @@ import android.widget.FrameLayout
 import android.webkit.WebResourceRequest
 import com.productivity.wind.Imports.Utils.String.*
 import org.json.JSONArray
+import com.productivity.wind.Imports.Utils.NavControl.*
 
 
 fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
