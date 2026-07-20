@@ -1,4 +1,4 @@
-package com.productivity.wind.Imports.Utils.App
+package com.productivity.wind.Imports.Utils.Apps
 
 import com.productivity.wind.Imports.Utils.NavControl.*
 import com.productivity.wind.Imports.Utils.ToX.*
