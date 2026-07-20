@@ -187,14 +187,14 @@ fun gotInternet(): Bool {
 
 
 @Composable
-fun bottomSystemHeight(): Dp {
+fun BottomAppBarHeight(): Dp {
     val insets = WindowInsets.navigationBars // includes bottom system bar
     val density = LocalDensity.current
     return with(density) { insets.getBottom(this).toDp() }
 }
 
 @Composable
-fun BottomSystemPadding(ui: ui){
+fun BottomAppBarPadding(ui: ui){
 	LazzyColumn {
 		LazzyColumn(Mod.h(AppLazyH)){
 			ui()
