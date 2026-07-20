@@ -82,6 +82,8 @@ fun newDay() {
 
 //!! Global var that shouldnt be saved
 var defaultScreen by m("Main")
+var SettingsItemCardColor = Color(0xFF121212)
+
 
 object Bar {
 	//BASIC
