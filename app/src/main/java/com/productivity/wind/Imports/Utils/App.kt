@@ -154,23 +154,7 @@ fun AndroidSettings(action: Str) {
 
 
 
-@Suppress("DEPRECATION")
-fun GotInternet(): Bool {
-    val connectivityManager = App.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    val isConnected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        val network = connectivityManager.activeNetwork
-        val activeNetwork = network?.let { connectivityManager.getNetworkCapabilities(it) }
-        activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == yes ||
-                activeNetwork?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == yes
-    } else {
-        val networkInfo = connectivityManager.activeNetworkInfo
-        networkInfo?.isConnected == yes
-    }
-
-    if (!isConnected) Vlog("No internet")
-    return isConnected
-}
 
 
 
