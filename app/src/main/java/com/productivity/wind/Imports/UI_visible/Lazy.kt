@@ -383,7 +383,7 @@ fun LazyHeader(
 	var clickedBack by r(no)
 
     Column(mod) {
-        move(h = getStatusBarHeight()/3)
+        move(h = StatusBarHeight()/3)
 
         LazzyRow(
             Mod.maxW().black().space(0, 12).h(h),
