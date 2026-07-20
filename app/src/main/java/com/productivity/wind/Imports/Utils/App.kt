@@ -153,9 +153,6 @@ fun AndroidSettings(action: Str) {
 
 
 
-
-
-
 @Composable
 fun StatusBarHeight(): Int {
     val insets = WindowInsets.statusBars.asPaddingValues()
@@ -165,16 +162,6 @@ fun StatusBarHeight(): Int {
 
 
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ComposeCanBeTiny(ui: ui) {
-	CompositionLocalProvider(
-		LocalMinimumInteractiveComponentEnforcement provides false
-	) {
-		ui()
-	}
-}
 
 
 
