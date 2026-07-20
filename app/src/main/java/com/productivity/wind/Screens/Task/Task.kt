@@ -388,7 +388,7 @@ fun AppUsage(id: Str = "") {
 
 @Composable
 fun AppTaskUI(app: AppTsk){
-    val icon = getAppIcon(app.pkg)
+    val icon = AppIcon(app.pkg)
     var name = app.name
 	val progress = (toF(app.nowTime) / toF(app.doneTime)).coerceIn(0f, 1f)
 
@@ -406,7 +406,7 @@ fun AppTaskUI(app: AppTsk){
             click({
                 ProgressIcon(icon, progress)
             }){
-                openApp(app.pkg)
+                OpenApp(app.pkg)
             }
 
 
