@@ -139,9 +139,7 @@ import java.lang.ref.WeakReference
 import android.provider.Settings
 
 
-fun CloseMyApp() {
-    AppActivity.it?.finishAffinity()
-}
+
 
 
 
@@ -152,16 +150,6 @@ fun AndroidSettings(action: Str) {
 		}
 	)
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
