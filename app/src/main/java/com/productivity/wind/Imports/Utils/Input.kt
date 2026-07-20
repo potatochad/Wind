@@ -245,6 +245,26 @@ class InputField(
 }
 
 
+fun FixedInputScroll(
+    text: TextFieldValue,
+    done: m_<Bool>,
+    scroll: ScrollState
+) {
+	var cursorPos = text.selection.start
+    if (text.text.isNotEmpty() && !done.it) {
+		done.it = yes
+
+        val ratio = toF(cursorPos) / toF(text.text.size)
+        val max = toF(scroll.maxValue)
+        val scrollTo = (max * ratio)
+
+        scroll.goTo(scrollTo)
+    }
+
+	if (cursorPos == text.text.size) {
+		scroll.toBottom()
+	}
+}
 
 
 
