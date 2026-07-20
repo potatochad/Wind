@@ -104,6 +104,15 @@ fun RuleCard(
    }
 }
 
+@Composable
+fun BottomAppBarPadding(ui: ui){
+	LazzyColumn {
+		LazzyColumn(Mod.h(AppLazyH)){
+			ui()
+		}
+		LazzyColumn(Mod.h(BottomAppBarHeight()).black()){}
+	}
+}
 
 
 @Composable
