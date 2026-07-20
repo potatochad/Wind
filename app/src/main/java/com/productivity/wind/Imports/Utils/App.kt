@@ -199,7 +199,7 @@ fun BottomAppBarPadding(ui: ui){
 		LazzyColumn(Mod.h(AppLazyH)){
 			ui()
 		}
-		LazzyColumn(Mod.h(bottomSystemHeight()).black()){}
+		LazzyColumn(Mod.h(BottomAppBarHeight()).black()){}
 	}
 }
 
@@ -491,7 +491,7 @@ class AppUI : ComponentActivity() {
 			AppNav = rememberNavController()
 			AppH = LocalConfiguration.current.screenHeightDp.dp
 			AppW = LocalConfiguration.current.screenWidthDp.dp
-			AppLazyH = AppH - bottomSystemHeight()
+			AppLazyH = AppH - BottomAppBarHeight()
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
 			
