@@ -158,28 +158,6 @@ fun AndroidSettings(action: Str) {
 
 
 
-val ResolveInfo.name: Str
-    get() {
-        val pkg = this.activityInfo.packageName
-        return this.loadLabel(App.packageManager)?.toString() ?: pkg
-	}
-	
-fun AppIcon(packageName: Str?): Drawable? {
-    if (packageName.isNullOrBlank()) {
-        return App.getDrawable(android.R.drawable.sym_def_app_icon)
-    }
-
-    val pm = App.packageManager
-    return try {
-        val info = pm.getApplicationInfo(packageName, 0)
-        info.loadIcon(pm)
-    } catch (e: Exception) {
-        log("Bad package: $packageName")
-        App.getDrawable(android.R.drawable.sym_def_app_icon)
-    }
-}
-
-
 
 
 @Composable
