@@ -138,4 +138,25 @@ import java.lang.ref.WeakReference
 import android.provider.Settings
 
 
+object Device {
+    @Composable
+    fun BottomBarHeight(): Dp {
+        val insets = WindowInsets.navigationBars // includes bottom system bar
+        val density = LocalDensity.current
+        return with(density) { insets.getBottom(this).toDp() }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
