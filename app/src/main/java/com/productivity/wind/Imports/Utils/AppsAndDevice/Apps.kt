@@ -187,3 +187,22 @@ fun LastUsedApp(context: Context = App, lookBackMs: Long = 10_000): Str? {
     return lastApp
 }
 
+
+fun Str.pkg(): Str {
+    val pm = App.packageManager
+    return pm.getInstalledApplications(0)
+        .firstOrNull { pm.getApplicationLabel(it).toString().equals(this, ignoreCase = yes) }
+        ?.packageName ?: this
+}
+
+fun OpenApp(pkg: Str) {
+    val pm: PackageManager = App.packageManager
+    val launchIntent: Intent? = pm.getLaunchIntentForPackage(pkg)
+    if (launchIntent != null) {
+        App.startActivity(launchIntent)
+    } else {
+        Vlog("App not installed")
+    }
+}
+
+
