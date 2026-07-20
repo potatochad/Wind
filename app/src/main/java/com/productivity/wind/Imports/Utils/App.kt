@@ -144,11 +144,6 @@ fun CloseMyApp() {
 
 
 
-
-
-
-
-
 fun androidSettings(action: Str) {
     startActivity(
 		Intent(action).apply {
@@ -191,16 +186,6 @@ fun BottomAppBarHeight(): Dp {
     val insets = WindowInsets.navigationBars // includes bottom system bar
     val density = LocalDensity.current
     return with(density) { insets.getBottom(this).toDp() }
-}
-
-@Composable
-fun BottomAppBarPadding(ui: ui){
-	LazzyColumn {
-		LazzyColumn(Mod.h(AppLazyH)){
-			ui()
-		}
-		LazzyColumn(Mod.h(BottomAppBarHeight()).black()){}
-	}
 }
 
 
