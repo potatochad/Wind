@@ -421,7 +421,7 @@ class AppUI : ComponentActivity() {
 			AppNav = rememberNavController()
 			AppH = LocalConfiguration.current.screenHeightDp.dp
 			AppW = LocalConfiguration.current.screenWidthDp.dp
-			AppLazyH = AppH - BottomAppBarHeight()
+			AppLazyH = AppH - Device.bottomBarHeight()
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
 			
