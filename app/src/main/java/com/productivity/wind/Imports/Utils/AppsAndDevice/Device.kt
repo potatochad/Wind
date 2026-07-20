@@ -138,6 +138,14 @@ import java.lang.ref.WeakReference
 import android.provider.Settings
 
 
+
+@Composable
+fun StatusBarHeight(): Int {
+    val insets = WindowInsets.statusBars.asPaddingValues()
+    val density = LocalDensity.current
+    return with(density) { insets.calculateTopPadding().toPx().toInt() }
+}
+
 object Device {
     @Composable
     fun bottomBarHeight(): Dp {
