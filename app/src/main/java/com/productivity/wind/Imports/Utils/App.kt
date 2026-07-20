@@ -265,7 +265,7 @@ fun AppIcon(packageName: Str?): Drawable? {
 
 
 @Composable
-fun getStatusBarHeight(): Int {
+fun StatusBarHeight(): Int {
     val insets = WindowInsets.statusBars.asPaddingValues()
     val density = LocalDensity.current
     return with(density) { insets.calculateTopPadding().toPx().toInt() }
