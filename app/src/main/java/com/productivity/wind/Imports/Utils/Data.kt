@@ -439,7 +439,7 @@ fun Restore(show: mBool) {
             editor.commit() 
 			Vlog("Reloading App...")
 
-			closeApp() 
+			CloseMyApp() 
         }
     }
 
