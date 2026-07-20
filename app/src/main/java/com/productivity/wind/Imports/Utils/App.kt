@@ -143,41 +143,6 @@ fun CloseMyApp() {
 }
 
 
-object AppBars {
-    fun Top(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
-        window.statusBarColor = color.toArgb()
-    }
-
-    fun Bottom(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
-        window.navigationBarColor = color.toArgb()
-    }
-
-    fun Both(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
-        window.statusBarColor = color.toArgb()
-        window.navigationBarColor = color.toArgb()
-    }
-}
-
-
-
-@Composable
-fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
-	val sDp = toDp(s)
-	val wDp = toDp(w)
-	val hDp = toDp(h)
-
-	Spacer(
-		modifier = if (sDp > 0.dp) {
-			Mod.s(sDp)  // uniform size
-		} else {
-			Mod.w(wDp).h(hDp)
-		}
-	)
-}
-
-
-
-
 val MakeTxtFile = ActivityResultContracts.CreateDocument("text/plain")
 
 fun TxtFileToMap(ctx: ctx, uri: Uri, fileMap: MutableMap<Str, Str>) {
