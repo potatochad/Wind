@@ -1,5 +1,6 @@
 package com.productivity.wind
 
+import com.productivity.wind.Imports.Utils.NavControl.*
 import com.productivity.wind.Screens.Settings.*
 import com.productivity.wind.Imports.Utils.ToX.*
 import com.productivity.wind.Imports.Utils.String.*
