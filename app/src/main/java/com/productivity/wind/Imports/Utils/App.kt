@@ -138,7 +138,7 @@ import java.lang.ref.WeakReference
 import android.provider.Settings
 
 
-fun closeApp() {
+fun CloseMyApp() {
     AppActivity.it?.finishAffinity()
 }
 
