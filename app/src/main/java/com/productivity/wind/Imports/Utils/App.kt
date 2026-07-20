@@ -165,33 +165,6 @@ fun StatusBarHeight(): Int {
 
 
 
-@Composable
-fun getW(): Float {
-    return toF(BoxWithConstraints {
-        toInt(maxWidth)
-    })
-}
-
-@Composable
-fun getH(): Float {
-    return toF(BoxWithConstraints {
-        toInt(maxHeight)
-    })
-}
-
-
-var SettingsItemCardColor = Color(0xFF121212)
-
-
-
-
-fun ProgressColor(progress: Float): Color {
-	return when {
-		progress < 0.33f -> Color.Red
-		progress < 0.66f -> Color.Yellow
-		else -> Color.Green
-	}
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
