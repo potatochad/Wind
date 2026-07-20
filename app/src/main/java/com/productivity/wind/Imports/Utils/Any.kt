@@ -162,3 +162,14 @@ fun ProgressColor(progress: Float): Color {
 		else -> Color.Green
 	}
 }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ComposeCanBeTiny(ui: ui) {
+	CompositionLocalProvider(
+		LocalMinimumInteractiveComponentEnforcement provides false
+	) {
+		ui()
+	}
+}
