@@ -495,7 +495,7 @@ class AppUI : ComponentActivity() {
 
 			Bar.userLocation = toLatLng(Bar.userLatLng)
 			
-			BottomSystemPadding{
+			BottomAppBarPadding{
 				AppContent()
 			}
 
