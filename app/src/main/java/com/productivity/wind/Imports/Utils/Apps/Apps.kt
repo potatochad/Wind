@@ -138,27 +138,7 @@ import java.lang.ref.WeakReference
 import android.provider.Settings
 
 
-fun closeApp() {
-    AppActivity.it?.finishAffinity()
-}
-
-
-object SystemBars {
-    fun TopBar(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
-        window.statusBarColor = color.toArgb()
-    }
-
-    fun BottomBar(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
-        window.navigationBarColor = color.toArgb()
-    }
-
-    fun Both(window: android.view.Window, color: androidx.compose.ui.graphics.Color) {
-        window.statusBarColor = color.toArgb()
-        window.navigationBarColor = color.toArgb()
-    }
-}
-
-
+/*
 
 @Composable
 fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
@@ -601,3 +581,5 @@ class AppUI : ComponentActivity() {
 
 	
 }
+
+*/
