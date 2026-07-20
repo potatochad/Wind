@@ -139,29 +139,6 @@ import java.lang.ref.WeakReference
 import android.provider.Settings
 
 
-
-
-
-
-
-
-
-@Composable
-fun StatusBarHeight(): Int {
-    val insets = WindowInsets.statusBars.asPaddingValues()
-    val density = LocalDensity.current
-    return with(density) { insets.calculateTopPadding().toPx().toInt() }
-}
-
-
-
-
-
-
-
-
-
-
 //!!difficult to use ON PURPOSE. Activity should be used only when necessary
 //*component activity, same as activity, just more UI features*
 object AppActivity {
