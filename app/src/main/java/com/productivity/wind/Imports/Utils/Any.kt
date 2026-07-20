@@ -138,3 +138,27 @@ import androidx.compose.ui.graphics.toArgb
 import java.lang.ref.WeakReference
 import android.provider.Settings
 
+@Composable
+fun getW(): Float {
+    return toF(BoxWithConstraints {
+        toInt(maxWidth)
+    })
+}
+
+@Composable
+fun getH(): Float {
+    return toF(BoxWithConstraints {
+        toInt(maxHeight)
+    })
+}
+
+
+
+
+fun ProgressColor(progress: Float): Color {
+	return when {
+		progress < 0.33f -> Color.Red
+		progress < 0.66f -> Color.Yellow
+		else -> Color.Green
+	}
+}
