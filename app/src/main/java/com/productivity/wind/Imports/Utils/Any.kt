@@ -138,6 +138,15 @@ import androidx.compose.ui.graphics.toArgb
 import java.lang.ref.WeakReference
 import android.provider.Settings
 
+fun AndroidSettings(action: Str) {
+    startActivity(
+		Intent(action).apply {
+			addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+		}
+	)
+}
+
+
 @Composable
 fun getW(): Float {
     return toF(BoxWithConstraints {
