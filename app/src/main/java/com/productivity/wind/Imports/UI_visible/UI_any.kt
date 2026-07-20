@@ -111,7 +111,7 @@ fun BottomAppBarPadding(ui: ui){
 		LazzyColumn(Mod.h(AppLazyH)){
 			ui()
 		}
-		LazzyColumn(Mod.h(Device.BottomBarHeight()).black()){}
+		LazzyColumn(Mod.h(Device.bottomBarHeight()).black()){}
 	}
 }
 
