@@ -154,15 +154,6 @@ fun AndroidSettings(action: Str) {
 
 
 
-@Composable
-fun BottomAppBarHeight(): Dp {
-    val insets = WindowInsets.navigationBars // includes bottom system bar
-    val density = LocalDensity.current
-    return with(density) { insets.getBottom(this).toDp() }
-}
-
-
-
 
 fun TodayAppUsage(packageName: Str): Int {
     val end = System.currentTimeMillis()
