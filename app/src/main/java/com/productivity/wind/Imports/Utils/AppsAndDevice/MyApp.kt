@@ -157,3 +157,15 @@ object AppActivity {
 }
 
 
+lateinit var App: Context
+lateinit var AppNav: NavHostController
+lateinit var permission: ActivityResultLauncher<Str>
+
+var AppH by m(0.dp)
+var AppW by m(0.dp)
+var AppLazyH by m(0.dp)
+var AppDensity by m(0f)
+val AppPkg = "com.productivity.wind"
+
+lateinit var scope: CoroutineScope
+lateinit var appScope: CoroutineScope
