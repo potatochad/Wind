@@ -734,14 +734,13 @@ object Config {
 class TestData : LazyData() {
 
     var name by lazyS("hello")
-    var time by lazyS(Schedule())// data class (with vars and all defaults)   
-
+    
     //a list with nullable str type, stored as with just type str
     //IT ALSO LOGS VERY DIFF if single item in list (doesnt say type, value is a class called Singleton)
-    //ONLY DOESNT SHOW what inside list (tells what type class or etc) (all else works fine, if class holds or so on)
+    //[class java.util.Arrays$ArrayList][List<String>["A", "B"]
     var names by lazyS(listOf("A", "B"))
 
-    //‼️all vas that in {} get stored (treated as inputs)
+    //‼️all vas that in {} get stored (treated as inputs) + not in order that they are in code
     var schedule6 by lazyS(Schedule6("helloo"))
 
 
