@@ -4,8 +4,8 @@
 package com.productivity.wind.Imports.Utils.Log
 
 import com.productivity.wind.Bar
-import com.productivity.wind.Imports.Utils.appScope
-import com.productivity.wind.Imports.Utils.App
+import com.productivity.wind.Imports.Utils.AppsAndDevice.appScope
+import com.productivity.wind.Imports.Utils.AppsAndDevice.App
 
 import android.os.*
 import android.content.*
