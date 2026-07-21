@@ -33,6 +33,7 @@ fun Any?.blog(x: Str){
 	log("$x: [ $this ]", 800)
 }
 
+//‼️DONT use any lateinit vars here
 fun log(message: Str, int: Int = 800) {
     var msg = message.replace("\n", " | ").take(int)
     if (msg.length >= int) { msg += " ..." }
@@ -48,6 +49,7 @@ fun log(message: Str, int: Int = 800) {
 }
 private var lastToast: Toast? = null
 
+//‼️DONT use any lateinit vars here
 fun Vlog(msg: Str, maxInt: Int = 800, special: Str = "none", delayLevel: Int = 0) {
     val delayMs = (delayLevel.coerceIn(0, 100)) * 30L // Example: Level 2 = 60ms
 
