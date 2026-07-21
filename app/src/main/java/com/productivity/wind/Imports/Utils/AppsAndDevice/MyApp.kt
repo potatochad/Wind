@@ -169,3 +169,92 @@ val AppPkg = "com.productivity.wind"
 
 lateinit var scope: CoroutineScope
 lateinit var appScope: CoroutineScope
+
+
+class TheApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        App = this
+
+		try {
+			AppCrash.printLastCrash(this)
+			AppCrash.install(this)
+		} catch(e: Exception){
+			Vlog("Logs crashed: ${e.message}")
+		}
+    }
+}
+
+
+
+
+	
+class AppUI : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+		WindowCompat.enableEdgeToEdge(window)
+		
+		AppActivity.it = this
+		App = this.applicationContext
+		appScope = lifecycleScope
+
+		permission = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { granted ->
+            log("permission granted?: $granted")
+		}
+		
+		HandleIntent(intent)
+		
+		AppStart_beforeUI()
+		
+
+        setContent { 
+			AppDensity = LocalDensity.current.density
+			scope = rememberCoroutineScope()
+
+			AppNav = rememberNavController()
+			AppH = LocalConfiguration.current.screenHeightDp.dp
+			AppW = LocalConfiguration.current.screenWidthDp.dp
+			AppLazyH = AppH - Device.bottomBarHeight()
+
+			Bar.userLocation = toLatLng(Bar.userLatLng)
+			
+			BottomAppBarPadding{
+				AppContent()
+			}
+
+			
+			
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        OnResume()
+    }
+	
+	override fun onDestroy() {
+		super.onDestroy()
+
+		// prevents accidentally clearing a newer Activity.
+		if (AppActivity.it === this) {
+			AppActivity.it = null
+		}
+	}
+
+	// happens for small interruptions too (dialogs, permission screens, another Activity)
+	override fun onPause() {
+		super.onPause()
+		
+		OnLeaveApp()
+	}
+
+	override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        HandleIntent(intent)
+	}
+
+	
+}
