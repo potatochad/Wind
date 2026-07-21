@@ -945,6 +945,9 @@ data class SomeData(
 
 // list using testdata class
 /*
+‼️‼️ Do one last test of everythinggg
+‼️‼️ And make a cheat sheet (.md) so can look up + for others)
+
 WHAT TO STORING works with (only TO STORING)
 
     var name by lazyS("hello")
