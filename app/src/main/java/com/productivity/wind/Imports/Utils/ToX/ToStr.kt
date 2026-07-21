@@ -228,7 +228,8 @@ fun getFields(clazz: Class<*>): List<java.lang.reflect.Field> {
         clazz.declaredFields
             .filter { 
                 !it.isSynthetic &&
-                !java.lang.reflect.Modifier.isStatic(it.modifiers)
+                !java.lang.reflect.Modifier.isStatic(it.modifiers) &&
+                it.name in order
             }
             .sortedBy { order.indexOf(it.name) }
             .onEach { it.isAccessible = true }
