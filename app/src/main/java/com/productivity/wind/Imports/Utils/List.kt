@@ -743,43 +743,7 @@ class TestData : LazyData() {
     //‼️all vas that in {} get stored (treated as inputs) + not in order that they are in code
     var schedule6 by lazyS(Schedule6("helloo"))
 
-
-
     
-    // basic collections
-    var emptyList by lazyS(emptyList<String>())
-    var emptyMutableList by lazyS(mutableListOf<String>())
-    var emptySet by lazyS(emptySet<String>())
-    var emptyMap by lazyS(emptyMap<String, String>())
-
-    var list by lazyS(listOf("A", "B", "C"))
-    var mutableList by lazyS(mutableListOf("A", "B", "C"))
-    var set by lazyS(setOf("A", "B", "C"))
-    var mutableSet by lazyS(mutableSetOf("A", "B", "C"))
-
-    var map by lazyS(mapOf(
-        "a" to "A",
-        "b" to "B"
-    ))
-
-    var mutableMap by lazyS(mutableMapOf(
-        "a" to "A",
-        "b" to "B"
-    ))
-
-
-    // nullable collections
-    var nullableList by lazyS<List<String?>>(listOf("A", null, "B"))
-    var nullableMutableList by lazyS<MutableList<String?>>(mutableListOf("A", null))
-
-    var nullableMap by lazyS<Map<String?, String?>>(
-        mapOf(
-            "a" to null,
-            null to "B"
-        )
-    )
-
-
     // primitive arrays
     var intArray by lazyS(intArrayOf(1, 2, 3))
     var longArray by lazyS(longArrayOf(1L, 2L))
@@ -979,6 +943,34 @@ WHAT TO STORING works with (only TO STORING)
     }
 
     //class in class is stored correctly pvz: x(y=c(5))
+
+
+    //TYPE UNKNOWNNN
+    // emptyList][class kotlin.collections.EmptyList][List<?>[]],!!!!!
+    var emptyList by lazyS(emptyList<String>())
+    var emptyMutableList by lazyS(mutableListOf<String>())
+    var emptySet by lazyS(emptySet<String>())
+    var emptyMap by lazyS(emptyMap<String, String>())
+
+
+    //saved save as listOf
+    var mutableList by lazyS(mutableListOf("A", "B", "C"))
+
+    //saved slightly diff, but works
+    var set by lazyS(setOf("A", "B", "C"))
+
+
+    //the type isnt registerd as NULL!!, but values correctly
+    var nullableList by lazyS<List<String?>>(listOf("A", null, "B"))
+
+    //MAP type NOT DPECIFIC
+    [nullableMap][class java.util.LinkedHashMap][Map["a"=null, null="B"]
+    var nullableMap by lazyS<Map<String?, String?>>(
+        mapOf(
+            "a" to null,
+            null to "B"
+        )
+    )
 */
 
 
