@@ -139,17 +139,6 @@ import java.lang.ref.WeakReference
 import android.provider.Settings
 
 
-//!!difficult to use ON PURPOSE. Activity should be used only when necessary
-//*component activity, same as activity, just more UI features*
-object AppActivity {
-    private var activityRef: WeakReference<ComponentActivity>? = null
-
-    var it: ComponentActivity?
-        get() = activityRef?.get()
-        set(value) {
-            activityRef = value?.let { WeakReference(it) }
-        }
-}
 
 
 lateinit var App: Context
