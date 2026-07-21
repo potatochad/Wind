@@ -38,7 +38,7 @@
     
 
     <application
-		android:name=".Imports.Utils.TheApp"
+		android:name=".Imports.Utils.AppsAndDevice.TheApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -48,6 +48,20 @@
         android:theme="@style/Theme.KeepALive"
         tools:targetApi="31">
 
+	<activity
+		android:name=".Imports.Utils.AppsAndDevice.AppUI"
+        android:windowSoftInputMode="adjustResize"
+        android:screenOrientation="portrait"
+        android:exported="true"
+        android:label="Wind"
+        android:theme="@style/Theme.KeepALive">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.accessibilityservice.AccessibilityService" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
 
 
 
@@ -55,19 +69,7 @@
     android:name="com.google.android.geo.API_KEY"
     android:value="NOKEY" />
 
-        <activity
-			android:name=".Imports.Utils.AppUI"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait"
-            android:exported="true"
-            android:label="Wind"
-            android:theme="@style/Theme.KeepALive">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        
 
 
 
