@@ -155,9 +155,13 @@ class TheApp : Application() {
     override fun onCreate() {
         super.onCreate()
         App = this
-		
-		AppCrash.printLastCrash(this)
-        AppCrash.install(this)
+
+		try {
+			AppCrash.printLastCrash(this)
+			AppCrash.install(this)
+		} catch(e: Exception){
+			Vlog("Logs crashed: ${e.message}")
+		}
     }
 }
 
