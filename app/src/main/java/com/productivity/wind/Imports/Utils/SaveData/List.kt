@@ -252,6 +252,7 @@ fun <T : LazyData> TrackList(
             listName = name
             list.forEach {
                 it.listName = name
+                it.key = "$name:${it.id}"
             }
         }
         .onSet { prop, id, value -> VlogOne("LIST MUST BE VAL") }
@@ -262,7 +263,7 @@ abstract class LazyData {
     var onChanged: Do = {}
     val id by m(Id())
     var listName by m("")
-    var key = "$listName:$id"
+    var key by m("")
     
     val clazzName = this.className
     
@@ -271,7 +272,7 @@ abstract class LazyData {
         return By(x)
             .onBuild { prop, name ->
                 //DEAL LATER WITH NEW TYPES AND RENAMES
-                AppData.get(key, x) //returns string
+                if (key.notEmpty) AppData.get(key, x)
                 vars[name] = VarInfo(name, x)
             }
             .onGet { prop ->
