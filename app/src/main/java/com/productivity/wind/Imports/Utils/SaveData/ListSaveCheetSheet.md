@@ -14,6 +14,7 @@ Stored as (one str):
 
 ```text
 {
+//"$listName:$id"
 id: [items:bdc95870-d61e-4d6f-aac2-5b6663a0956f],
 vars:
 [stringVar][java.lang.String]["hello"],
