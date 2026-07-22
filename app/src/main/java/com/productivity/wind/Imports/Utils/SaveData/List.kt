@@ -250,7 +250,7 @@ fun <T : LazyData> TrackList(
     return By(customList)
         .onBuild { prop, name -> 
             listName = name
-            list.forEach {
+            customList?.forEach {
                 it.listName = name
                 it.key = "$name:${it.id}"
             }
