@@ -284,8 +284,11 @@ abstract class LazyData {
             Vlog("Unsupported type: ${it.typeStr} (${it.name})")
         }
         if (badVars.notEmpty) return
+        
         var key = "$listName:$id"
         var customStr by m(toStr(key, varList))
+
+        AppData.put(key, customStr) 
         
         VlogOne(customStr, 10000)
     }
