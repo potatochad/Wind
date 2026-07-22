@@ -293,7 +293,10 @@ class Schedule6(
 
 class TestData : LazyData() {
 
-    var name by lazyS("hello")
+    var stringVar by lazyS("hello")
+    var intVar by lazyS(2)
+    var boolVar by lazyS(yes)
+    val stringVAL by lazyS("hello")
 }
 
 
