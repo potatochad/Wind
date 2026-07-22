@@ -283,7 +283,7 @@ abstract class LazyData {
         badVars.forEach {
             Vlog("Unsupported type: ${it.typeStr} (${it.name})")
         }
-        if (badVars.empty) return
+        if (badVars.notEmpty) return
         
         var customStr by m(toStr("$listName:$id", varList))
         
