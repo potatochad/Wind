@@ -16,10 +16,9 @@ Stored as (one str):
 {
 id: [items:bdc95870-d61e-4d6f-aac2-5b6663a0956f],
 vars:
-[stringVar][class java.lang.String]["hello"],
-[intVar][class java.lang.Integer][2],
-[boolVar][class java.lang.Boolean][true],
-[stringVAL][class java.lang.String]["hello"]
+[stringVar][java.lang.String]["hello"],
+[intVar][java.lang.Integer][2],
+[boolVar][java.lang.Boolean][true]
 }
 
 ```
@@ -28,8 +27,10 @@ Rules:
 
 ```text
 
-Only VARS
-Only: Bool, string, Int (can store)
+Only:
+java.lang.String
+java.lang.Boolean
+java.lang.Integer
 
 ```
 
