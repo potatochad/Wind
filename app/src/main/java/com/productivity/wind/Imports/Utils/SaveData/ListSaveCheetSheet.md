@@ -13,13 +13,14 @@ class TestData : LazyData() {
 Stored as (one str):
 
 ```text
-{ id: [items:bdc95870-d61e-4d6f-aac2-5b6663a0956f],
+{
+id: [items:bdc95870-d61e-4d6f-aac2-5b6663a0956f],
 vars:
-[name][class java.lang.String]["item"],
 [stringVar][class java.lang.String]["hello"],
 [intVar][class java.lang.Integer][2],
 [boolVar][class java.lang.Boolean][true],
-[stringVAL][class java.lang.String]["hello"]}
+[stringVAL][class java.lang.String]["hello"]
+}
 
 ```
 
