@@ -156,7 +156,7 @@ private val fieldsCache = mutableMapOf<Class<*>, List<java.lang.reflect.Field>>(
 
 fun toStr(id: Str = "", vars: List<VarInfo<*>>): Str {
     val varsStr = vars.joinToString(", ") { v ->
-        "[${v.name}][${v.type?.name}][${ComplexTypeToStr(v.value)}]"
+        "[${v.name}][${v.typeStr}][${ComplexTypeToStr(v.value)}]"
     }
 
     return "{ id: [$id], vars: $varsStr }"
