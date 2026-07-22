@@ -284,8 +284,8 @@ abstract class LazyData {
             Vlog("Unsupported type: ${it.typeStr} (${it.name})")
         }
         if (badVars.notEmpty) return
-        
-        var customStr by m(toStr("$listName:$id", varList))
+        var key = "$listName:$id"
+        var customStr by m(toStr(key, varList))
         
         VlogOne(customStr, 10000)
     }
