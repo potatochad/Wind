@@ -277,14 +277,15 @@ abstract class LazyData {
 
 
     open fun save(listName: Str){
-        val badVars = vars.filter { it.typeStr !in supportedTypes }
+        var varList = vars.values.toList()
+        val badVars = varList.filter { it.typeStr !in supportedTypes }
         
         badVars.forEach {
             Vlog("Unsupported type: ${it.typeStr} (${it.name})")
         }
         if (badVars.empty) return
         
-        var customStr by m(toStr("$listName:$id", vars.values.toList()))
+        var customStr by m(toStr("$listName:$id", varList))
         
         VlogOne(customStr, 10000)
     }
