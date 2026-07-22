@@ -289,9 +289,6 @@ class Schedule6(
         time = 0
     }
 }
-object Config {
-    val version = 1 // not testedd
-}
 
 
 class TestData : LazyData() {
@@ -300,87 +297,6 @@ class TestData : LazyData() {
 }
 
 
-data class ComplexClass(
-    val list: List<String>,
-    val map: Map<String, Int>,
-    val array: Array<Int>
-)
 
 
-data class Box<T>(
-    val value: T
-)
 
-
-sealed class TestSealed
-
-data class SomeData(
-    val number: Int
-) : TestSealed()
-
-
-// list using testdata class
-/*
-‼️‼️ Do one last test of everythinggg
-‼️‼️ And make a cheat sheet (.md) so can look up + for others)
-
-WHAT TO STORING works with (only TO STORING)
-
-    var name by lazyS("hello")
-
-    //DOESNT MATTER IF DATA CLASS OR CLASS
-    var time by lazyS(Schedule()) //doesnt matter if vals or vars or about defaults (TALKING ONLY ABOUT WHAT INSIDR (), NOT {} 
-    
-    var done by lazyS(no)
-    var doneTimes by lazyS(3)
-    var string by lazyS("hello")
-    var long by lazyS(3L)
-    var double by lazyS(3.0)
-    var char by lazyS('a')
-    var status by lazyS(Status.WAITING)// enum BUT TYPE IS LIKE ANY OTHER CLASS
-
-    var nullable by lazyS<Str?>(null)// stored as varName[null][null]
-
-    //works the same with T as any other class
-    data class Box<T>(
-       val value: T
-    )
-
-    //!! SEALED CLASS STORES a bit strange
-    .SealedClass$DataClassThatInIt][DataClassThatInIt(6)]
-
-    // treated same as any other class
-    class Child : Base() {
-       val b = 2
-    }
-
-    //class in class is stored correctly pvz: x(y=c(5))
-
-
-    //TYPE UNKNOWNNN
-    // emptyList][class kotlin.collections.EmptyList][List<?>[]],!!!!!
-    var emptyList by lazyS(emptyList<String>())
-    var emptyMutableList by lazyS(mutableListOf<String>())
-    var emptySet by lazyS(emptySet<String>())
-    var emptyMap by lazyS(emptyMap<String, String>())
-
-
-    //saved save as listOf
-    var mutableList by lazyS(mutableListOf("A", "B", "C"))
-
-    //saved slightly diff, but works
-    var set by lazyS(setOf("A", "B", "C"))
-
-
-    //the type isnt registerd as NULL!!, but values correctly
-    var nullableList by lazyS<List<String?>>(listOf("A", null, "B"))
-
-    //MAP type NOT DPECIFIC
-    [nullableMap][class java.util.LinkedHashMap][Map["a"=null, null="B"]
-    var nullableMap by lazyS<Map<String?, String?>>(
-        mapOf(
-            "a" to null,
-            null to "B"
-        )
-    )
-*/
