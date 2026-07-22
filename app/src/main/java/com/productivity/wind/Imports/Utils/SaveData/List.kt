@@ -269,6 +269,9 @@ abstract class LazyData {
 
 
     open fun save(listName: Str){
+        vars.any(it.typeStr == java.lang.String ||
+                java.lang.Boolean || orr
+                 java.lang.Integer
         var customStr by m(toStr("$listName:$id", vars.values.toList()))
         
         VlogOne(customStr, 10000)
