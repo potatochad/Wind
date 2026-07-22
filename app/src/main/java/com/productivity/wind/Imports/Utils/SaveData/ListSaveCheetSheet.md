@@ -17,3 +17,12 @@ Stored as:
 
 ```
 
+Rules:
+
+```text
+
+Only VARS
+Only: Bool, string, Int (can store)
+
+```
+
