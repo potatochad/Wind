@@ -158,7 +158,7 @@ fun <T : LazyData> TrackList(
             return
         }
         list.forEach {
-            it.save(listName)
+            it.save()
         }
         VlogOne("saving...")
     }
@@ -248,8 +248,11 @@ fun <T : LazyData> TrackList(
     
     
     return By(customList)
-        .onBuild { prop, id -> 
-            listName = id
+        .onBuild { prop, name -> 
+            listName = name
+            list.forEach {
+                it.listName = name
+            }
         }
         .onSet { prop, id, value -> VlogOne("LIST MUST BE VAL") }
 }
@@ -258,9 +261,12 @@ fun <T : LazyData> TrackList(
 abstract class LazyData {
     var onChanged: Do = {}
     val id by m(Id())
+    var listName by m("")
+    var key = "$listName:$id"
+    
     val clazzName = this.className
     
-    val vars = mutableMapOf<String, VarInfo<*>>()
+    val vars = mutableMapOf<Str, VarInfo<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, name ->
@@ -278,7 +284,7 @@ abstract class LazyData {
     }
 
 
-    open fun save(listName: Str){
+    open fun save(){
         var varList = vars.values.toList()
         val badVars = varList.filter { it.typeStr !in supportedTypes }
         
@@ -287,7 +293,7 @@ abstract class LazyData {
         }
         if (badVars.notEmpty) return
         
-        var key = "$listName:$id"
+        
         var customStr by m(toStr(key, varList))
 
         AppData.put(key, customStr) 
