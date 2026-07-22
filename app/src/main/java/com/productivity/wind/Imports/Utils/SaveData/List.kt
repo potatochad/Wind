@@ -136,6 +136,13 @@ import com.productivity.wind.Imports.UI_visible.*
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
+private var supportedTypes = listOf(
+    "java.lang.String",
+    "java.lang.Boolean",
+    "java.lang.Integer"
+)
+
+
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): By<mList<T>> {
@@ -269,9 +276,13 @@ abstract class LazyData {
 
 
     open fun save(listName: Str){
-        vars.any(it.typeStr == java.lang.String ||
-                java.lang.Boolean || orr
-                 java.lang.Integer
+        val badVar = vars.filter { it.typeStr !in supportedTypes }
+        
+        badVars.forEach {
+            Vlog("Unsupported type: ${it.typeStr} (${it.name})")
+        }
+        if (badVar.empty) return
+        
         var customStr by m(toStr("$listName:$id", vars.values.toList()))
         
         VlogOne(customStr, 10000)
