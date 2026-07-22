@@ -277,12 +277,12 @@ abstract class LazyData {
 
 
     open fun save(listName: Str){
-        val badVar = vars.filter { it.typeStr !in supportedTypes }
+        val badVars = vars.filter { it.typeStr !in supportedTypes }
         
         badVars.forEach {
             Vlog("Unsupported type: ${it.typeStr} (${it.name})")
         }
-        if (badVar.empty) return
+        if (badVars.empty) return
         
         var customStr by m(toStr("$listName:$id", vars.values.toList()))
         
