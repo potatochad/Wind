@@ -1,9 +1,19 @@
 
-//ALLOWED EXAMPPLE (DO NOT DEVIETE FROM IT IN SLIGHTEST)
-var stringVar by lazyS("hello")
-var intVar by lazyS(2)
-var boolVar by lazyS(yes)
-val stringVAL by lazyS("hello")
+# Allowed Example (Do Not Deviate)
 
--> (stored as)
+```kotlin
+class TestData : LazyData() {
+    var stringVar by lazyS("hello")
+    var intVar by lazyS(2)
+    var boolVar by lazyS(yes)
+    val stringVAL by lazyS("hello")
+}
+```
+
+Stored as:
+
+```text
+...
+
+```
 
