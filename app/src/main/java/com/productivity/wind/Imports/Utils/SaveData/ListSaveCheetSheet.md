@@ -10,12 +10,16 @@ class TestData : LazyData() {
 }
 ```
 
-Stored as:
+Stored as (one str):
 
 ```text
- 15:35:33.158 E [bad]   : { id: [items:bdc95870-d61e-4d6f-aac2-5b6663a0956f], vars: [name][class java.lang.String]["item"], [stringVar][class java.lang.String]["hello"], [intVar][class java.lang.Integer][2], [boolVar][class java.lang.Boolean][true], [stringVAL][class java.lang.String]["hello"] }
- 15:35:33.158 E [bad]   : saving...
- 15:35:35.230 E [bad]   : gotStyle: true
+{ id: [items:bdc95870-d61e-4d6f-aac2-5b6663a0956f],
+vars:
+[name][class java.lang.String]["item"],
+[stringVar][class java.lang.String]["hello"],
+[intVar][class java.lang.Integer][2],
+[boolVar][class java.lang.Boolean][true],
+[stringVAL][class java.lang.String]["hello"]}
 
 ```
 
