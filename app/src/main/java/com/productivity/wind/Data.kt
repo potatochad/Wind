@@ -88,6 +88,13 @@ var SettingsItemCardColor = Color(0xFF121212)
 
 
 object Bar {
+	val items by TrackList(
+		listOf(
+			TestData(),
+			TestData(),
+		)
+	)
+	
 	//BASIC
     var funTime by s(0)
     var Dpoints by s(0)
