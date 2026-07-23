@@ -496,11 +496,13 @@ fun RemoteViews.onClick(
 class OneAtATime {
     private val mutex = Mutex()
 
-    suspend fun <T> use(block: suspend () -> T): T {
-        return mutex.withLock {
-            block()
-        }
-    }
+    fun <T> use(block: suspend () -> T): Deferred<T> {
+		return appScope.async {
+			mutex.withLock {
+				block()
+			}
+		}
+	}
 }
 
 fun goTo(
