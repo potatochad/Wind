@@ -143,6 +143,23 @@ private var supportedTypes = listOf(
     "java.lang.Integer"
 )
 
+private fun getVar(key: String, varName: String): Any? {
+    val data = AppData.get(key, "") ?: return null
+
+    val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
+    val match = regex.find(data) ?: return null
+
+    val type = match.groupValues[1]
+    val raw = match.groupValues[2]
+
+    return when (type) {
+        "java.lang.String" -> raw.removeSurrounding("\"")
+        "java.lang.Integer" -> raw.toInt()
+        "java.lang.Boolean" -> raw.toBoolean()
+        else -> null
+    }
+}
+
 
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
