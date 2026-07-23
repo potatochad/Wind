@@ -287,14 +287,14 @@ abstract class LazyData {
     val vars = mutableMapOf<Str, VarInfo<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
-            .onBuild { prop, name, delegate ->
+            .onBuild { prop, name, mValue ->
                 //DEAL LATER WITH TYPE CHANGED OR NAME CHANGED
                 //OR HANDELING MORE TYPES
                 var savedX: Any? = null
                 if (key.notEmpty) savedX = getLazyDataVar(key, name)
-                if (savedX != null) delegate.it = savedX as T
+                if (savedX != null) mValue.it = savedX as T
                 
-                vars[name] = VarInfo(name, delegate.it)
+                vars[name] = VarInfo(name, mValue.it)
             }
             .onGet { prop ->
                 
