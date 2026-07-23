@@ -253,13 +253,13 @@ fun <T> s(
 	var badId by m(no)
 	
 	delegate
-		.onBuild{ prop, id, delegateIt ->
+		.onBuild{ prop, id, delegate ->
 			goodId = "$id: $idExtra"
 			
 			badId = idList.has(goodId)
 			idList.add(goodId)
 			if (badId) Vlog("Duplicate id detected: $goodId")
-			else delegateIt = AppData.get(goodId, default)
+			else delegate.it = AppData.get(goodId, default)
 		}
 		.onSet{ prop, id, newValue ->
 			if (!badId) AppData.put(goodId, newValue)
