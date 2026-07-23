@@ -468,15 +468,17 @@ class By<T>(value: T) {
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
 		id = property.name
 		onBuild(property, id, delegateValue)
+		it = delegateValue.it 
         return this
     }
     operator fun getValue(thisRef: Any?, property: ValVar): T {
 		onGet(property)
+		it = delegateValue.it 
         return it
     }
     operator fun setValue(thisRef: Any?, property: ValVar, newValue: T) {
         it = newValue
-		delegateValue = it
+		delegateValue.it = it
 		onSet(property, id, it)
     }
 }
