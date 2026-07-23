@@ -165,19 +165,24 @@ fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): By<mList<T>> {
 
+    var onlyOne = OneAtATime()
+
     var listName by m("")
     var customList: mList<T>? = null
 
 
     fun save(){
-        val list = customList ?: run {
-            VlogOne("Custom list is not initialized before saving!")
-            return
+        onlyOne.use {
+            val list = customList ?: run {
+                VlogOne("Custom list is not initialized before saving!")
+                return
+            }
+            
+            list.forEach {
+                it.save()
+            }
+            VlogOne("saving...")
         }
-        list.forEach {
-            it.save()
-        }
-        VlogOne("saving...")
     }
 
 
