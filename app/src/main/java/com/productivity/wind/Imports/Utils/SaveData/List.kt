@@ -288,8 +288,9 @@ abstract class LazyData {
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, name ->
-                //DEAL LATER WITH NEW TYPES AND RENAMES
-                if (key.notEmpty) AppData.get(key, x)
+                //DEAL LATER WITH TYPE CHANGED OR NAME CHANGED
+                //OR HANDELING MORE TYPES
+                if (key.notEmpty) getVar(key, name)
                 vars[name] = VarInfo(name, x)
             }
             .onGet { prop ->
