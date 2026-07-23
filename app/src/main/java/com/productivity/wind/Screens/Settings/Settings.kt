@@ -147,12 +147,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 @Composable
 fun ExtensionsScreen() = LazyScreen("Extensions") {
-	val items by TrackList(
-		listOf(
-			TestData(),
-			TestData(),
-		)
-	)
+	
 	// App.start(AppBackground::class.java)
 	
 	LazzyColumn {
