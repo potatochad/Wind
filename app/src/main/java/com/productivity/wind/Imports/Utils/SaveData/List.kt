@@ -286,8 +286,7 @@ abstract class LazyData {
     
     val vars = mutableMapOf<Str, VarInfo<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
-        val delegate = By(x)
-        return delegate(x)
+        return By(x)
             .onBuild { prop, name ->
                 //DEAL LATER WITH TYPE CHANGED OR NAME CHANGED
                 //OR HANDELING MORE TYPES
