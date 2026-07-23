@@ -492,6 +492,17 @@ fun RemoteViews.onClick(
     setOnClickPendingIntent(viewId, pendingIntent)
 }
 
+
+class OneAtATime {
+    private val mutex = Mutex()
+
+    suspend fun <T> use(block: () -> T): T {
+        return mutex.withLock {
+            block()
+        }
+    }
+}
+
 fun goTo(
     uri: Str,
     ctx: Context,
