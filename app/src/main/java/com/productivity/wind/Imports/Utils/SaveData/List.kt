@@ -292,7 +292,7 @@ abstract class LazyData {
                 //OR HANDELING MORE TYPES
                 var savedX: Any? = null
                 if (key.notEmpty) savedX = getLazyDataVar(key, name)
-                if (savedX != null) delegate.it = savedX
+                if (savedX != null) delegate.it = savedX as T
                 
                 vars[name] = VarInfo(name, delegate.it)
             }
