@@ -496,7 +496,7 @@ fun RemoteViews.onClick(
 class OneAtATime {
     private val mutex = Mutex()
 
-    suspend fun <T> use(block: () -> T): T {
+    suspend fun <T> use(block: suspend () -> T): T {
         return mutex.withLock {
             block()
         }
