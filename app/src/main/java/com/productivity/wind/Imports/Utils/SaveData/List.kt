@@ -286,12 +286,13 @@ abstract class LazyData {
     
     val vars = mutableMapOf<Str, VarInfo<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
-        return By(x)
+        val delegate = By(x)
+        return delegate(x)
             .onBuild { prop, name ->
                 //DEAL LATER WITH TYPE CHANGED OR NAME CHANGED
                 //OR HANDELING MORE TYPES
-                if (key.notEmpty) getLazyDataVar(key, name)
-                vars[name] = VarInfo(name, x)
+                if (key.notEmpty) delegate.it = getLazyDataVar(key, name)
+                vars[name] = VarInfo(name, delegate.it)
             }
             .onGet { prop ->
                 
