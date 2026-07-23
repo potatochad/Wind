@@ -143,7 +143,7 @@ private var supportedTypes = listOf(
     "java.lang.Integer"
 )
 
-private fun getVar(key: String, varName: String): Any? {
+fun getLazyDataVar(key: String, varName: String): Any? {
     val data = AppData.get(key, "") ?: return null
 
     val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
@@ -290,7 +290,7 @@ abstract class LazyData {
             .onBuild { prop, name ->
                 //DEAL LATER WITH TYPE CHANGED OR NAME CHANGED
                 //OR HANDELING MORE TYPES
-                if (key.notEmpty) getVar(key, name)
+                if (key.notEmpty) getLazyDataVar(key, name)
                 vars[name] = VarInfo(name, x)
             }
             .onGet { prop ->
