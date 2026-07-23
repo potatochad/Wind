@@ -265,7 +265,7 @@ fun <T : LazyData> TrackList(
     
     
     return By(customList)
-        .onBuild { prop, name -> 
+        .onBuild { prop, name, _ -> 
             listName = name
             customList?.forEach {
                 it.listName = name
@@ -287,11 +287,11 @@ abstract class LazyData {
     val vars = mutableMapOf<Str, VarInfo<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
-            .onBuild { prop, name ->
+            .onBuild { prop, name, delegateIt ->
                 //DEAL LATER WITH TYPE CHANGED OR NAME CHANGED
                 //OR HANDELING MORE TYPES
-                if (key.notEmpty) delegate.it = getLazyDataVar(key, name)
-                vars[name] = VarInfo(name, delegate.it)
+                if (key.notEmpty) delegateIt = getLazyDataVar(key, name)
+                vars[name] = VarInfo(name, delegateIt)
             }
             .onGet { prop ->
                 
