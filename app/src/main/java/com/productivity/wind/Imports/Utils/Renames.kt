@@ -454,11 +454,11 @@ class By<T>(value: T) {
 	
 
 	
-	private var onBuild: Do3_<ValVar, Str, T> = { _, _, _ -> }
+	private var onBuild: Do3_<ValVar, Str, By<T>> = { _, _, _ -> }
     private var onGet: Do_<ValVar> = {}
     private var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
 
-	fun onBuild(x: Do3_<ValVar, Str, T>) = apply { onBuild = x }
+	fun onBuild(x: Do3_<ValVar, Str, By<T>>) = apply { onBuild = x }
     fun onGet(x: Do_<ValVar>) = apply { onGet = x }
     fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
 
@@ -466,7 +466,7 @@ class By<T>(value: T) {
 	
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
 		id = property.name
-		onBuild(property, id, it)
+		onBuild(property, id, this)
         return this
     }
     operator fun getValue(thisRef: Any?, property: ValVar): T {
