@@ -290,7 +290,10 @@ abstract class LazyData {
             .onBuild { prop, name, delegate ->
                 //DEAL LATER WITH TYPE CHANGED OR NAME CHANGED
                 //OR HANDELING MORE TYPES
-                if (key.notEmpty) delegate.it = getLazyDataVar(key, name)
+                var savedX = null
+                if (key.notEmpty) savedX = getLazyDataVar(key, name)
+                if (savedX != null) delegate.it = savedX
+                
                 vars[name] = VarInfo(name, delegate.it)
             }
             .onGet { prop ->
