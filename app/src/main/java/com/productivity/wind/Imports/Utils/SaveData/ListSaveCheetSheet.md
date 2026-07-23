@@ -28,10 +28,13 @@ Rules:
 
 ```text
 
-Only:
+Types Only:
 java.lang.String
 java.lang.Boolean
 java.lang.Integer
+
+Where use:
+Not in compose function! Or atleast use remember
 
 ```
 
