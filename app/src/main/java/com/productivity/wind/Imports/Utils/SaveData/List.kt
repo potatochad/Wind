@@ -1,7 +1,7 @@
 package com.productivity.wind.Imports.Utils.SaveData
 
-//DEAL LATER WITH TYPE CHANGED OR NAME CHANGED
-//OR HANDELING MORE TYPES
+//DEAL LATER WITH TYPE CHANGED OR NAME CHANGED in class
+//only handles 3 types (bool, str, int)
 //Currently the hole list updates on a tiny change.
 
 import com.productivity.wind.Imports.Utils.*
