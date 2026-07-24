@@ -508,7 +508,7 @@ class OneAtATime {
 }
 
 class IgnoreRepeatedCalls(
-	private val block: Wait,
+	private val block: suspend () -> Unit,
     private val delayMs: Long = 300,
     private val scope: CoroutineScope = appScope
 ) {
