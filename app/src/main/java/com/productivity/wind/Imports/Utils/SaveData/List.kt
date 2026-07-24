@@ -175,7 +175,7 @@ fun <T : LazyData> TrackList(
         onlyOne.use {
             val list = customList ?: run {
                 VlogOne("Custom list is not initialized before saving!")
-                return
+                return@use
             }
             
             list.forEach {
