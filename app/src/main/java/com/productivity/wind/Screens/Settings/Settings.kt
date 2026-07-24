@@ -155,6 +155,11 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
             Btn("Add"){
                 Bar.items += TestData()
             }
+			Btn("Add 10"){
+                repeat(10) {
+                    Bar.items += TestData()
+				}
+			}
             Btn("Delete"){
                     if (Bar.items.isNotEmpty()) {
                         Bar.items.removeAt(0)
