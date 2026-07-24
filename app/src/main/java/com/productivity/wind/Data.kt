@@ -98,7 +98,9 @@ object Bar {
 	//BASIC
     var funTime by s(0)
     var Dpoints by s(0)
+
 	
+	var appCrashed by s(no)
 	var lastDate by s("")
 	var leftApp by s(no)
 	var encryptedBackup by s(yes) 
