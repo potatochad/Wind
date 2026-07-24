@@ -1,5 +1,9 @@
 package com.productivity.wind.Imports.Utils.SaveData
 
+//DEAL LATER WITH TYPE CHANGED OR NAME CHANGED
+//OR HANDELING MORE TYPES
+//Currently the hole list updates on a tiny change.
+
 import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.Utils.AppsAndDevice.*
 import com.productivity.wind.Imports.Utils.NavControl.*
@@ -171,7 +175,7 @@ fun <T : LazyData> TrackList(
     var customList: mList<T>? = null
 
 
-    fun save(){
+    val save = IgnoreRepeatedCalls {
         onlyOne.use {
             val list = customList ?: run {
                 VlogOne("Custom list is not initialized before saving!")
@@ -181,90 +185,68 @@ fun <T : LazyData> TrackList(
             list.forEach {
                 it.save()
             }
+
             VlogOne("saving...")
         }
     }
 
 
-    var saveJob: Job? = null
-    var changed by m(no)
-
-    fun changed() {
-        changed = yes
-
-        if (saveJob != null) return
-
-        saveJob = scope.launch {
-            delay(300)
-
-            if (changed) {
-                save()
-                changed = no
-            }
-
-            saveJob = null
-        }
-    }
-    
-    items.forEach { it.onChanged = ::changed }
+    items.forEach { it.onChanged = save::run }
 
 
     customList = CustomList(
         items = items,
         add = {
             this.add(it)
-            it.onChanged = ::changed
-            changed()
+            it.onChanged = save::run
+            save.run()
             true
         },
         addAt = { index, item ->
             this.add(index, item)
-            item.onChanged = ::changed
-            changed()
+            item.onChanged = save::run
+            save.run()
         },
         addAll = { items -> 
             this.addAll(items)
             items.forEach {
-                it.onChanged = ::changed
+                it.onChanged = save::run 
             }
-            changed()
+            save.run()
             true
         },
         addAllAt = { index, items ->
             this.addAll(index, items)
             items.forEach {
-                it.onChanged = ::changed
+                it.onChanged = save::run 
             }
-            changed()
+            save.run()
             true
         },
         clear = {
             this.clear()
-            changed()
+            save.run()
         },
         remove = {
             this.remove(it)
-            changed()
+            save.run()
             true
         },
         removeAt = {
             val result = this.removeAt(it)
-            changed()
+            save.run()
             result
         },
         removeAll = {
             this.removeAll(it)
-            changed()
+            save.run()
             true
         },
         set = { index, item ->
             this[index] = item
-            changed()
+            save.run()
             item
         },
-        toString = {
-            this.firstOrNull()?.className ?: "Unknown"
-        }
     )
 
     
@@ -293,8 +275,6 @@ abstract class LazyData {
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, name, mValue ->
-                //DEAL LATER WITH TYPE CHANGED OR NAME CHANGED
-                //OR HANDELING MORE TYPES
                 var savedX: Any? = null
                 if (key.notEmpty) savedX = getLazyDataVar(key, name)
                 if (savedX != null) mValue.it = savedX as T
