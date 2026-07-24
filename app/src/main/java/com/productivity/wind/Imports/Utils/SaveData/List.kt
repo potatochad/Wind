@@ -176,7 +176,7 @@ fun <T : LazyData> TrackList(
 
 
     val save = IgnoreRepeatedCalls {
-        onlyOne.use {
+        onlyOne.lazyUse {
             val list = customList ?: run {
                 VlogOne("Custom list is not initialized before saving!")
                 return@use
