@@ -507,7 +507,7 @@ class OneAtATime {
 	}
 }
 
-class IgnoreWhileWaiting(
+class IgnoreRepeatedCalls(
     private val delayMs: Long = 300,
     private val scope: CoroutineScope = appScope
 ) {
