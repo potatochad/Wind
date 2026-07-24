@@ -147,7 +147,7 @@ typealias NavBuilder = NavHostController
 fun MyNavGraph(navController: NavHostController) {
     NavHost(
 		navController = navController, 
-		startDestination = if (Bar.appCrashed) "" else defaultScreen
+		startDestination = if (Bar.appCrashed) "LogsScreen" else defaultScreen
 	) {
         ScreenNav()
     }
