@@ -145,7 +145,10 @@ typealias NavBuilder = NavHostController
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MyNavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = defaultScreen) {
+    NavHost(
+		navController = navController, 
+		startDestination = if (appCrashed) "" else defaultScreen
+	) {
         ScreenNav()
     }
 }
