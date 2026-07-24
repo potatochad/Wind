@@ -507,6 +507,31 @@ class OneAtATime {
 	}
 }
 
+class IgnoreWhileWaiting(
+    private val delayMs: Long = 300,
+    private val scope: CoroutineScope = appScope
+) {
+    private var job: Job? = null
+    private var pending = false
+
+    fun run(block: () -> Unit) {
+        pending = true
+
+        if (job != null) return
+
+        job = scope.launch {
+            delay(delayMs)
+
+            if (pending) {
+                block()
+                pending = false
+            }
+
+            job = null
+        }
+    }
+}
+
 fun goTo(
     uri: Str,
     ctx: Context,
