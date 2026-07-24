@@ -187,7 +187,7 @@ fun <T : LazyData> TrackList(
             }
 
             VlogOne("saving...")
-        }.wait()
+        }.await()
     }
 
 
