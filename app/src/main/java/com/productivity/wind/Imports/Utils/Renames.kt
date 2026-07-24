@@ -505,6 +505,14 @@ class OneAtATime {
 			}
 		}
 	}
+	fun <T> lazyUse(block: suspend () -> T) {
+		appScope.async {
+			mutex.withLock {
+				block()
+			}
+		}
+	}
+	
 }
 
 class IgnoreRepeatedCalls(
