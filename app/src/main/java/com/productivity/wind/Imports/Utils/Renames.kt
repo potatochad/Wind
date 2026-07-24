@@ -516,9 +516,9 @@ class OneAtATime {
 }
 
 class IgnoreRepeatedCalls(
-	private val block: suspend () -> Unit,
-    private val delayMs: Long = 300,
-    private val scope: CoroutineScope = appScope
+	var block: suspend () -> Unit,
+    val delayMs: Long = 300,
+    val scope: CoroutineScope = appScope,
 ) {
     private var job: Job? = null
     private var pending = false
