@@ -47,11 +47,6 @@ fun <T> mList<T>.keep(max: Int) {
     }
 }
 
-val Str.notEmpty: Bool
-    get() = this.isNotEmpty()
-
-val Str.empty: Bool
-    get() = this.isEmpty()
 
 @Composable
 fun <T> r(x: () -> T) = remember { x() }
