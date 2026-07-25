@@ -157,7 +157,7 @@ fun folder(folderName: Str): File {
     return folder
 }
 
-class logTime(val name: Str = "") {
+class logTimer(val name: Str = "") {
 
     private val start = System.nanoTime()
 
