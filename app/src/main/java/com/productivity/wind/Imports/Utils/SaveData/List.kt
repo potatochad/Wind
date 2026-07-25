@@ -181,11 +181,13 @@ fun <T : LazyData> TrackList(
                 VlogOne("Custom list is not initialized before saving!")
                 return@lazyUse
             }
-            
-            list.forEach {
+
+            val timer = logTimer()
+            list.filter { it.changed }.forEach {
                 it.save()
                 it.changed = no
             }
+            timer.stop()
 
             VlogOne("saving...")
         }
