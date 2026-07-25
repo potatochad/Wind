@@ -156,7 +156,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                 Bar.items += TestData()
             }
 			Btn("Add 10"){
-				val timer = logTime()
+				val timer = logTimer()
 				repeat(10) {
 					Bar.items += TestData()
 				}
