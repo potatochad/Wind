@@ -161,7 +161,7 @@ class logTime(val name: Str = "") {
 
     private val start = System.nanoTime()
 
-    fun end() {
+    fun stop() {
         val ms = String.format(
             "%.3f",
             (System.nanoTime() - start) / 1_000_000.0
