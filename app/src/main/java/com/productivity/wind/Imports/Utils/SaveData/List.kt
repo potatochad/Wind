@@ -5,7 +5,7 @@ package com.productivity.wind.Imports.Utils.SaveData
 //Currently the hole list updates on a tiny change.
 //THERE IS A bunch of data saved data (that doesnt get cleaned up, after years, massive issue)
 
-import com.productivity.wind.Imports.Utils.Log.*
+import com.productivity.wind.Imports.Utils.Log.logTimer
 import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.Utils.AppsAndDevice.*
 import com.productivity.wind.Imports.Utils.NavControl.*
