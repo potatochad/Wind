@@ -334,6 +334,10 @@ fun MAINStart() {
 
 }
 
+fun OnLogsScreen() {
+
+}
+
 fun OnLeaveApp(){
 	Bar.leftApp = yes
 	
