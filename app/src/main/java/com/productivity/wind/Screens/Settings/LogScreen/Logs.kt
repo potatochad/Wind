@@ -41,6 +41,7 @@ import android.provider.Settings
 
 @Composable
 fun LogsScreen() {
+	appCrashed = no
     var Reload = r(no)
     var Tag = r("")
 	var scroll = LazyList()
