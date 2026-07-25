@@ -39,15 +39,15 @@ fun log(message: String, int: Int = 800) {
     var start = 0
 
     while (start < msg.length) {
-        val end = minOf(start + chunkSize, msg.size)
-		Log.e("[bad]", msg.fromTo(start, end))
+        val end = minOf(start + chunkSize, msg.length)
+		Log.e("[bad]", msg.substring(start, end))
         start = end
 	}
 }
 private var lastToast: Toast? = null
 
 //‼️DONT use any lateinit vars here
-fun Vlog(msg: String, maxInt: Int = 800, special: Str = "none", delayLevel: Int = 0) {
+fun Vlog(msg: String, maxInt: Int = 800, special: String = "none", delayLevel: Int = 0) {
     val delayMs = (delayLevel.coerceIn(0, 100)) * 30L // Example: Level 2 = 60ms
 
     if (special.equals("one", true)) {
@@ -82,7 +82,10 @@ fun VlogOne(
 fun getMyAppLogs() {
 	fun AddLog(s: String) {
 		Bar.logs.add(s)
-		if (Bar.logs.size > 2000) Bar.logs.keep(2000)
+
+        if (Bar.logs.size > 2000) {
+            Bar.logs.subList(0, Bar.logs.size - 2000).clear()
+        }
 	}
 	Thread {
 		val pid = android.os.Process.myPid()

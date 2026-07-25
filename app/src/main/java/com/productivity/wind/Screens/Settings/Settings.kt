@@ -1,6 +1,6 @@
 package com.productivity.wind.Screens.Settings
 
-import com.productivity.wind.Imports.Utils.Log.*
+// import com.productivity.wind.Imports.Utils.Log.*
 import com.productivity.wind.Imports.Utils.SaveData.*
 import com.productivity.wind.Imports.Utils.AppsAndDevice.*
 import com.productivity.wind.Imports.Utils.NavControl.*
@@ -38,6 +38,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.platform.LocalLayoutDirection
 import android.provider.Settings
+import com.productivity.wind.Imports.Utils.Log.logTimer
 
 @Composable
 fun SettingsScreen() {
@@ -157,11 +158,11 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                 Bar.items += TestData()
             }
 			Btn("Add 10"){
-				//val timer = logTimer()
+				val timer = logTimer("Bar.items size: ${Bar.items.size}")
 				repeat(10) {
 					Bar.items += TestData()
 				}
-				//timer.stop()
+                timer.stop()
 			   
 			}
             Btn("Delete"){

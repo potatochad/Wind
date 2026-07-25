@@ -148,6 +148,7 @@ class MyAdminReceiver : DeviceAdminReceiver()
 	
 
 object Permission {
+    val writeSecureSettings = "android.permission.WRITE_SECURE_SETTINGS"
 	val systemAlertWindow = "android.permission.SYSTEM_ALERT_WINDOW"
 
     private fun getAndDo(permissionStr: Str, onGranted: Do): Bool {
@@ -157,6 +158,19 @@ object Permission {
         } else {
             permission.launch(permissionStr) // request permission
             false // permission not granted yet
+        }
+    }
+    private fun check(permissionStr: Str, onGranted: Do): Bool {
+        return if (
+            ContextCompat.checkSelfPermission(
+                App,
+                permissionStr
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            onGranted()
+            true
+        } else {
+            false
         }
     }
 
@@ -173,6 +187,8 @@ object Permission {
     fun readPhoneState(onGranted: Do={}) = getAndDo(Manifest.permission.READ_PHONE_STATE, onGranted)
     fun backgroundLocation(onGranted: Do={}) = getAndDo(Manifest.permission.ACCESS_BACKGROUND_LOCATION, onGranted)       
     fun bodySensors(onGranted: Do={}) = getAndDo(Manifest.permission.BODY_SENSORS, onGranted)
+
+    fun writeSecureSettings(onGranted: Do = {}) = check(writeSecureSettings, onGranted)
 
 	/* NOT TESTEDDD
 	fun location(onGranted: Do = {}): Bool {
