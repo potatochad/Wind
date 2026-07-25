@@ -73,6 +73,7 @@ object AppCrash {
 
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             try {
+				
                 val file = File(context.filesDir, "crash.txt")
 
                 file.writeText("${usefulStackTrace(throwable)}")
