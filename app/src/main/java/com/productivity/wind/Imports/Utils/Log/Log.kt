@@ -27,15 +27,11 @@ import kotlinx.coroutines.CancellationException
 
 
 
-fun Any?.vlog(x: Str){
-	Vlog("$x: [ $this ]", 800)
-}
-fun Any?.blog(x: Str){
-	log("$x: [ $this ]", 800)
-}
+fun Any?.vlog(x: String) = Vlog("$x: [ $this ]", 800)
+fun Any?.blog(x: String) = log("$x: [ $this ]", 800)
 
 //‼️DONT use any lateinit vars here
-fun log(message: Str, int: Int = 800) {
+fun log(message: String, int: Int = 800) {
     var msg = message.replace("\n", " | ").take(int)
     if (msg.length >= int) { msg += " ..." }
 
@@ -51,7 +47,7 @@ fun log(message: Str, int: Int = 800) {
 private var lastToast: Toast? = null
 
 //‼️DONT use any lateinit vars here
-fun Vlog(msg: Str, maxInt: Int = 800, special: Str = "none", delayLevel: Int = 0) {
+fun Vlog(msg: String, maxInt: Int = 800, special: Str = "none", delayLevel: Int = 0) {
     val delayMs = (delayLevel.coerceIn(0, 100)) * 30L // Example: Level 2 = 60ms
 
     if (special.equals("one", true)) {
@@ -70,7 +66,7 @@ fun Vlog(msg: Str, maxInt: Int = 800, special: Str = "none", delayLevel: Int = 0
 
 // This always cancels the previous toast before showing the new one.
 fun VlogOne(
-    msg: Str,
+    msg: String,
     maxInt: Int = 800,
     delayLevel: Int = 0
 ) {
@@ -83,42 +79,8 @@ fun VlogOne(
 }
 
 
-
-fun MeasureWaitLag(title: Str, block: Wait) {
-    val start = System.currentTimeMillis()
-	Do { block() }
-    val end = System.currentTimeMillis()
-    log("[$title]: code took ${end - start} ms")
-}
-@Composable
-fun MeasureUILag(title: Str, block: ui) {
-    val start = System.currentTimeMillis()
-	block()
-    val end = System.currentTimeMillis()
-    log("[$title]: code took ${end - start} ms")
-}
-fun <T> MeasureLag(title: Str, block: () -> T): T {
-    val start = System.currentTimeMillis()
-
-    val result = block()   // run and capture result
-
-    val end = System.currentTimeMillis()
-    log("[$title]: code took ${end - start} ms")
-
-    return result
-}
-fun MeasureLagNoReturn(title: Str, block: () -> Unit) {
-    val start = System.currentTimeMillis()
-
-    block()   // just run it, ignore return
-
-    val end = System.currentTimeMillis()
-    log("[$title]: code took ${end - start} ms")
-}
-
-
 fun getMyAppLogs() {
-	fun AddLog(s: Str) {
+	fun AddLog(s: String) {
 		Bar.logs.add(s)
 		if (Bar.logs.size > 2000) Bar.logs.keep(2000)
 	}
@@ -150,7 +112,7 @@ fun getMyAppLogs() {
 
 
 
-fun folder(folderName: Str): File {
+fun folder(folderName: String): File {
     val folder = File(App.filesDir, folderName)
     if (!folder.exists()) {
         folder.mkdirs()
@@ -158,7 +120,7 @@ fun folder(folderName: Str): File {
     return folder
 }
 
-class logTimer(private val name: Str = "") {
+class logTimer(val name: String = "") {
 
     private val start = System.nanoTime()
 
