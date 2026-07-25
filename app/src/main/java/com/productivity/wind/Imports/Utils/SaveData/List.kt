@@ -4,6 +4,7 @@ package com.productivity.wind.Imports.Utils.SaveData
 //only handles 3 types (bool, str, int)
 //Currently the hole list updates on a tiny change.
 
+import com.productivity.wind.Imports.Utils.Log.*
 import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.Utils.AppsAndDevice.*
 import com.productivity.wind.Imports.Utils.NavControl.*
