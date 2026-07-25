@@ -241,6 +241,29 @@ object AppData {
 
 
 
+fun isSaved(key: Str, input: Str) {
+    val saved = AppData.prefs.getString(key, null)
+
+    if (saved == null) {
+        log("Nothing saved")
+        return
+    }
+
+    if (input == saved) {
+        log("MATCH ✅")
+    } else {
+        log("DIFFERENT ❌")
+        log("Input size: ${input.length}")
+        log("Saved size: ${saved.length}")
+
+        // optional: find first difference
+        val index = input.zip(saved)
+            .indexOfFirst { it.first != it.second }
+
+        log("First difference at: $index")
+    }
+}
+
 
 
 var idList = mList<Str>()
