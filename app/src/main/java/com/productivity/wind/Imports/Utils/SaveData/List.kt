@@ -239,7 +239,7 @@ fun <T : LazyData> TrackList(
         },
         removeAll = {
             this.removeAll(it)
-            this.all { it.changed = yes }
+            this.forEach { it.changed = yes }
             save.run()
             true
         },
