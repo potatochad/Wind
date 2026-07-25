@@ -156,11 +156,12 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                 Bar.items += TestData()
             }
 			Btn("Add 10"){
-				MeasureLagNoReturn("Lag to change 10"){
-					repeat(10) {
-						Bar.items += TestData()
-					}
+				val timer = logTime()
+				repeat(10) {
+					Bar.items += TestData()
 				}
+				timer.end()
+			   
 			}
             Btn("Delete"){
                     if (Bar.items.isNotEmpty()) {
