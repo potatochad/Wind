@@ -335,7 +335,7 @@ fun MAINStart() {
 }
 
 fun OnLogsScreen() {
-
+	Bar.appCrashed = no
 }
 
 fun OnLeaveApp(){
