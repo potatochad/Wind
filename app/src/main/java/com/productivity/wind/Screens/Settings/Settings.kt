@@ -160,7 +160,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 				repeat(10) {
 					Bar.items += TestData()
 				}
-				timer.end()
+				timer.stop()
 			   
 			}
             Btn("Delete"){
