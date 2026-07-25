@@ -184,6 +184,7 @@ fun <T : LazyData> TrackList(
             
             list.forEach {
                 it.save()
+                it.changed = no
             }
 
             VlogOne("saving...")
@@ -191,7 +192,9 @@ fun <T : LazyData> TrackList(
     }
 
 
-    items.forEach { it.onChanged = save::run }
+    items.forEach { 
+        it.onChanged = save::run 
+    }
 
 
     customList = CustomList(
@@ -199,17 +202,21 @@ fun <T : LazyData> TrackList(
         add = {
             this.add(it)
             it.onChanged = save::run
+            it.changed = yes
             save.run()
             true
         },
         addAt = { index, item ->
             this.add(index, item)
             item.onChanged = save::run
+            item.changed = yes
+            
             save.run()
         },
         addAll = { items -> 
             this.addAll(items)
             items.forEach {
+                it.changed = yes
                 it.onChanged = save::run 
             }
             save.run()
@@ -218,6 +225,7 @@ fun <T : LazyData> TrackList(
         addAllAt = { index, items ->
             this.addAll(index, items)
             items.forEach {
+                it.changed = yes
                 it.onChanged = save::run 
             }
             save.run()
@@ -229,6 +237,8 @@ fun <T : LazyData> TrackList(
         },
         remove = {
             this.remove(it)
+
+            it.changed = yes
             save.run()
             true
         },
@@ -239,14 +249,15 @@ fun <T : LazyData> TrackList(
         },
         removeAll = {
             this.removeAll(it)
-            this.forEach { it.changed = yes }
             save.run()
             true
         },
         set = { index, item ->
             this[index] = item
+            
             item.changed = yes
             save.run()
+            
             item
         },
     )
