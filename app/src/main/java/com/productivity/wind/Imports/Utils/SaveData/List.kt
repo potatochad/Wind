@@ -239,11 +239,13 @@ fun <T : LazyData> TrackList(
         },
         removeAll = {
             this.removeAll(it)
+            this.all.changed = yes
             save.run()
             true
         },
         set = { index, item ->
             this[index] = item
+            item.changed = yes
             save.run()
             item
         },
@@ -264,6 +266,7 @@ fun <T : LazyData> TrackList(
 
 //nothing can be private
 abstract class LazyData {
+    var changed by m(no)
     var onChanged: Do = {}
     val id by m(Id())
     var listName by m("")
@@ -286,6 +289,7 @@ abstract class LazyData {
             }
             .onSet { prop, name, value ->
                 vars[name] = VarInfo(name, value)
+                changed = yes
                 onChanged()
             }
     }
