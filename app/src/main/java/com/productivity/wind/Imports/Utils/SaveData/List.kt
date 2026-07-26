@@ -324,7 +324,6 @@ abstract class LazyData {
 
         
         AppData.commit(key, customStr) 
-        isSaved(key, customStr)
         isSaved2(key, customStr)
         
         VlogOne(customStr, 10000)
