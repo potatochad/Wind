@@ -149,7 +149,7 @@ private var supportedTypes = listOf(
     "java.lang.Integer"
 )
 
-fun getLazyDataVar(key: String, varName: String): Any? {
+fun getLazyDataVar(key: Str, varName: Str): Any? {
     val data = AppData.get(key, "") ?: return null
 
     val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
@@ -325,6 +325,7 @@ abstract class LazyData {
         
         AppData.commit(key, customStr) 
         isSaved(key, customStr)
+        isSaved2(key, customStr)
         
         VlogOne(customStr, 10000)
     }
