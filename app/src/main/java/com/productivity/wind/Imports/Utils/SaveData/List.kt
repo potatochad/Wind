@@ -323,7 +323,7 @@ abstract class LazyData {
         var customStr by m(toStr(key, varList))
 
         
-        AppData.put(key, customStr) 
+        AppData.commit(key, customStr) 
         isSaved(key, customStr)
         
         VlogOne(customStr, 10000)
