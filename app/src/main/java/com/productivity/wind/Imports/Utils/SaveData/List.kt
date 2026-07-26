@@ -274,6 +274,7 @@ fun <T : LazyData> TrackList(
             customList?.forEach {
                 it.listName = name
                 it.key = "$name:${it.id}"
+                
             }
         }
         .onSet { prop, id, value -> VlogOne("LIST MUST BE VAL") }
