@@ -293,6 +293,9 @@ abstract class LazyData {
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onBuild { prop, name, mValue ->
+                
+                Vlog("lazyS build key='$key' var=$name")
+                
                 var savedX: Any? = null
                 if (key.notEmpty) savedX = getLazyDataVar(key, name)
                 if (savedX != null) mValue.it = savedX as T
