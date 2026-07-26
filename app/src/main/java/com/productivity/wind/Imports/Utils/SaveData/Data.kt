@@ -239,6 +239,9 @@ object AppData {
 
 
 fun isSaved(key: Str, input: Str) {
+	appScope.launch {
+        while (true) {
+            delay(1000)
     val saved = AppData.prefs.getString(key, null)
 
     log("---- SAVE CHECK ----")
@@ -269,9 +272,14 @@ fun isSaved(key: Str, input: Str) {
     }
 
     log("-------------------")
+		}
+	}
 }
 
 fun isSaved2(key: Str, input: Str) {
+	appScope.launch {
+        while (true) {
+            delay(1000)
 	var found = false
 
     AppData.prefs.all.forEach { (savedKey, value) ->
@@ -283,6 +291,8 @@ fun isSaved2(key: Str, input: Str) {
 
     if (!found) {
         log("❌ Value not found in any key")
+	}
+		}
 	}
 }
 
