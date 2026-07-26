@@ -271,38 +271,19 @@ fun isSaved(key: Str, input: Str) {
     log("-------------------")
 }
 
-fun isSaved(key: Str, input: Str) {
-	AppData.prefs.all.forEach { (key, value) ->
-    val saved = AppData.prefs.getString(key, null)
+fun isSaved2(key: Str, input: Str) {
+	var found = false
 
-    log("---- SAVE CHECK ----")
-
-    if (saved == null) {
-        log("❌ Nothing saved")
-        return
-    }
-
-    if (input == saved) {
-        log("✅ MATCH")
-        log("Size: ${saved.length}")
-    } else {
-        log("❌ DIFFERENT")
-        log("Input size: ${input.length}")
-        log("Saved size: ${saved.length}")
-
-        val max = minOf(input.length, saved.length)
-
-        for (i in 0 until max) {
-            if (input[i] != saved[i]) {
-                log("First difference: index $i")
-                log("Input: ${input.substring(i, minOf(i + 50, input.length))}")
-                log("Saved: ${saved.substring(i, minOf(i + 50, saved.length))}")
-                break
-            }
+    AppData.prefs.all.forEach { (savedKey, value) ->
+        if (value == input) {
+            log("✅ MATCH: using forEach")
+            found = true
         }
     }
 
-    log("-------------------")
+    if (!found) {
+        log("❌ Value not found in any key")
+	}
 }
 
 
