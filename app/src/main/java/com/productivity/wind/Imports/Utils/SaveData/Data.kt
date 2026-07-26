@@ -239,29 +239,37 @@ object AppData {
 	
 }
 
-
-
 fun isSaved(key: Str, input: Str) {
     val saved = AppData.prefs.getString(key, null)
 
+    log("---- SAVE CHECK ----")
+
     if (saved == null) {
-        log("Nothing saved")
+        log("❌ Nothing saved")
         return
     }
 
     if (input == saved) {
-        log("MATCH ✅")
+        log("✅ MATCH")
+        log("Size: ${saved.length}")
     } else {
-        log("DIFFERENT ❌")
+        log("❌ DIFFERENT")
         log("Input size: ${input.length}")
         log("Saved size: ${saved.length}")
 
-        // optional: find first difference
-        val index = input.zip(saved)
-            .indexOfFirst { it.first != it.second }
+        val max = minOf(input.length, saved.length)
 
-        log("First difference at: $index")
+        for (i in 0 until max) {
+            if (input[i] != saved[i]) {
+                log("First difference: index $i")
+                log("Input: ${input.substring(i, minOf(i + 50, input.length))}")
+                log("Saved: ${saved.substring(i, minOf(i + 50, saved.length))}")
+                break
+            }
+        }
     }
+
+    log("-------------------")
 }
 
 
