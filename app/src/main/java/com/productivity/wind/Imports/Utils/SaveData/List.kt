@@ -5,6 +5,7 @@ package com.productivity.wind.Imports.Utils.SaveData
 //Currently the hole list updates on a tiny change.
 //THERE IS A bunch of data saved data (that doesnt get cleaned up, after years, massive issue)
 //It doesnt handle Delete or clear (saved doesnt change)
+// CustomAlertList may habe way more inputs that needs do (like onAdd  but you know others)
 
 import com.productivity.wind.Imports.Utils.Log.logTimer
 import com.productivity.wind.Imports.Utils.*
@@ -218,43 +219,43 @@ fun <T : LazyData> TrackList(
     }
 
 
-    customList = CustomList(
+    customList = CustomAlertList(
                 items = items,
-                add = {
+                onAdd = {
                     this.add(it)
                     it.prepare()
                     true
                 },
-                addAt = { index, item ->
+                onAddAt = { index, item ->
                     this.add(index, item)
                     item.prepare()
                 },
-                addAll = { items -> 
+                onAddAll = { items -> 
                     this.addAll(items)
                     items.prepare()
                     true
                 },
-                addAllAt = { index, items ->
+                onAddAllAt = { index, items ->
                     this.addAll(index, items)
                     items.prepare()
                     true
                 },
-                clear = {
+                onClear = {
                     this.clear()
                 },
-                remove = {
+                onRemove = {
                     this.remove(it)
                     true
                 },
-                removeAt = {
+                onRemoveAt = {
                     val result = this.removeAt(it)
                     result
                 },
-                removeAll = {
+                onRemoveAll = {
                     this.removeAll(it)
                     true
                 },
-                set = { index, item ->
+                onSet = { index, item ->
                     this[index] = item
                     item.prepare()
                     item
