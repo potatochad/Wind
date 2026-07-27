@@ -245,9 +245,112 @@ fun <T> CustomOverrideList(
     }
 }
 
-CustomAlertList(){
+fun <T> CustomAlertList(
+    items: Collection<T> = emptyList(),
+
+    add: (mList<T>.(T) -> Bool)? = null,
+    addAt: (mList<T>.(Int, T) -> Unit)? = null,
+    addAll: (mList<T>.(Collection<T>) -> Bool)? = null,
+    addAllAt: (mList<T>.(Int, Collection<T>) -> Bool)? = null,
+
+    clear: (mList<T>.() -> Unit)? = null,
+
+    get: (mList<T>.(Int) -> T)? = null,
+
+    remove: (mList<T>.(T) -> Bool)? = null,
+    removeAt: (mList<T>.(Int) -> T)? = null,
+    removeAll: (mList<T>.(Collection<T>) -> Bool)? = null,
+
+    set: (mList<T>.(Int, T) -> T)? = null,
+
+    contains: (mList<T>.(T) -> Bool)? = null,
+    containsAll: (mList<T>.(Collection<T>) -> Bool)? = null,
+
+    indexOf: (mList<T>.(T) -> Int)? = null,
+    lastIndexOf: (mList<T>.(T) -> Int)? = null,
+
+    isEmpty: (mList<T>.() -> Bool)? = null,
+
+    toString: (mList<T>.() -> Str)? = null
+): mList<T> {
+    val list = mList<T>().apply {
+        addAll(items)
+    }
     
+    return object : mList<T> {
+        override fun add(element: T) =
+            add.doOr(list, element){ list.add(element) }
+
+        override fun add(index: Int, element: T) {
+            addAt.doOr(list, index, element){ list.add(index, element) }
+        }
+
+        override fun addAll(elements: Collection<T>) =
+            addAll.doOr(list, elements){ list.addAll(elements) }
+
+        override fun addAll(
+            index: Int,
+            elements: Collection<T>
+        ) =
+            addAllAt.doOr(list, index, elements){ list.addAll(index, elements) }
+            
+
+        override fun clear() {
+            clear.doOr(list){ list.clear() }
+            
+        }
+
+        override fun get(index: Int) =
+            get.doOr(list, index){ list[index] }
+        
+
+        override fun remove(element: T) =
+            remove.doOr(list, element){ list.remove(element) }
+
+        override fun removeAt(index: Int) =
+            removeAt.doOr(list, index){ list.removeAt(index) }
+        
+
+        override fun removeAll(elements: Collection<T>) =
+            removeAll.doOr(list, elements){ list.removeAll(elements) }
+        
+
+        override fun set(index: Int, element: T) =
+            set.doOr(list, index, element){ list.set(index, element) }
+        
+
+        override fun contains(element: T) =
+            contains.doOr(list, element){ list.contains(element) }
+        
+
+        override fun containsAll(elements: Collection<T>) =
+            containsAll.doOr(list, elements){ list.containsAll(elements) }
+        
+
+        override fun indexOf(element: T) =
+            indexOf.doOr(list, element){ list.indexOf(element) }
+        
+
+        override fun lastIndexOf(element: T) =
+            lastIndexOf.doOr(list, element){ list.lastIndexOf(element) }
+        
+
+        override fun isEmpty() =
+            isEmpty.doOr(list){ list.isEmpty() }
+        
+        override fun toString() =
+            toString.doOr(list){ toStr(list) }
+        
+
+        override val size get() = list.size
+        override fun iterator() = list.iterator()
+        override fun listIterator() = list.listIterator()
+        override fun listIterator(index: Int) = list.listIterator(index)
+        override fun subList(fromIndex: Int, toIndex: Int) = list.subList(fromIndex, toIndex)
+        override fun retainAll(elements: Collection<T>) = list.retainAll(elements)
+    }
 }
+
 
 
 
