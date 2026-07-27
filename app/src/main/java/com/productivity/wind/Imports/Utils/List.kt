@@ -291,9 +291,9 @@ fun <T> CustomAlertList(
         override fun contains(element: T) =
         override fun containsAll(elements: Collection<T>) =
         override fun indexOf(element: T) =
-        override fun lastIndexOf(element: T) =
-        override fun isEmpty() =
-        override fun toString() =
+        override fun lastIndexOf(element: T) = list.lastIndexOf(element)
+        override fun isEmpty() = list.isEmpty() 
+        override fun toString() = list.toString() 
         override val size get() = list.size
         override fun iterator() = list.iterator()
         override fun listIterator() = list.listIterator()
