@@ -271,10 +271,13 @@ fun <T : LazyData> TrackList(
     return By(customList)
         .onBuild { prop, name, _ -> 
             listName = name
+            AppData.prefs.all.forEach { (savedKey, savedValue) ->
+                if (savedKey.startsWith(name)) getLazyDataVar(key, name)//Value onlyyy 
+            }
+        
             customList?.forEach {
                 it.listName = name
                 it.key = "$name:${it.id}"
-                
             }
         }
         .onSet { prop, id, value -> VlogOne("LIST MUST BE VAL") }
@@ -301,7 +304,6 @@ abstract class LazyData {
                 if (savedX != null) mValue.it = savedX as T
                 vars[name] = VarInfo(name, mValue.it)
             }
-            .onGet { prop -> }
             .onSet { prop, name, value ->
                 vars[name] = VarInfo(name, value)
                 changed = yes
