@@ -272,7 +272,7 @@ fun <T : LazyData> TrackList(
         .onBuild { prop, name, _ -> 
             listName = name
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
-                if (savedKey.startsWith(name)) getLazyDataVar(key, name)//Value onlyyy 
+                if (savedKey.startsWith("$name:")) getLazyDataVar(key, name)//Value onlyyy 
             }
         
             customList?.forEach {
