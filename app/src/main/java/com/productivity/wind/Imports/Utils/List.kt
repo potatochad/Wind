@@ -261,7 +261,7 @@ fun <T> CustomAlertList(
     onRemoveAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
     onRemoveAll: mList<T>.(Collection<T>) -> Unit = {},
 
-    onSet: mList<T>.(Int, T) -> Unit = {},
+    onSet: mList<T>.(Int, T) -> Unit = { _, _ -> },
 
     onContains: mList<T>.(T) -> Unit = {},
     onContainsAll: mList<T>.(Collection<T>) -> Unit = {},
@@ -269,9 +269,9 @@ fun <T> CustomAlertList(
     onIndexOf: mList<T>.(T, Int) -> Unit = { _, _ -> },
     onLastIndexOf: mList<T>.(T, Int) -> Unit = { _, _ -> },
 
-    onEmptyCheck: mList<T>.(Boolean) -> Unit = {},
+    onEmptyCheck: mList<T>.(Bool) -> Unit = {},
 
-    onToString: mList<T>.(String) -> Unit = {}
+    onToString: mList<T>.(Str) -> Unit = {}
 ): mList<T> {
 
     val list = mList<T>().apply {
