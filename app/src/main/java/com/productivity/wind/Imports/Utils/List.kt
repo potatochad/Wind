@@ -139,7 +139,7 @@ import kotlinx.serialization.builtins.ListSerializer
 
 
 
-fun <T> CustomList(
+fun <T> CustomOverrideList(
     items: Collection<T> = emptyList(),
 
     add: (mList<T>.(T) -> Bool)? = null,
@@ -245,6 +245,9 @@ fun <T> CustomList(
     }
 }
 
+CustomList(){
+    
+}
 
 
 
