@@ -248,30 +248,30 @@ fun <T> CustomOverrideList(
 fun <T> CustomAlertList(
     items: Collection<T> = emptyList(),
 
-    add: (mList<T>.(T) -> Bool) = {},
-    addAt: (mList<T>.(Int, T) -> Unit) = {},
-    addAll: (mList<T>.(Collection<T>) -> Bool) = {},
-    addAllAt: (mList<T>.(Int, Collection<T>) -> Bool) = {},
+    add: mList<T>.(T) -> Bool = { false },
+    addAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
+    addAll: mList<T>.(Collection<T>) -> Bool = { false },
+    addAllAt: mList<T>.(Int, Collection<T>) -> Bool = { false },
 
-    clear: (mList<T>.() -> Unit) = {},
+    clear: mList<T>.() -> Unit = {},
 
-    get: (mList<T>.(Int) -> T) = {},
+    get: mList<T>.(Int) -> T = { error("Not implemented") },
 
-    remove: (mList<T>.(T) -> Bool) = {},
-    removeAt: (mList<T>.(Int) -> T) = {},
-    removeAll: (mList<T>.(Collection<T>) -> Bool) = {},
+    remove: mList<T>.(T) -> Bool = { false },
+    removeAt: mList<T>.(Int) -> T = { error("Not implemented") },
+    removeAll: mList<T>.(Collection<T>) -> Bool = { false },
 
-    set: (mList<T>.(Int, T) -> T) = {},
+    set: mList<T>.(Int, T) -> T = { _, _ -> error("Not implemented") },
 
-    contains: (mList<T>.(T) -> Bool) = {},
-    containsAll: (mList<T>.(Collection<T>) -> Bool) = {},
+    contains: mList<T>.(T) -> Bool = { false },
+    containsAll: mList<T>.(Collection<T>) -> Bool = { false },
 
-    indexOf: (mList<T>.(T) -> Int) = {},
-    lastIndexOf: (mList<T>.(T) -> Int) = {},
+    indexOf: mList<T>.(T) -> Int = { -1 },
+    lastIndexOf: mList<T>.(T) -> Int = { -1 },
 
-    isEmpty: (mList<T>.() -> Bool) = {},
+    isEmpty: mList<T>.() -> Bool = { true },
 
-    toString: (mList<T>.() -> Str) = {}
+    toString: mList<T>.() -> Str = { "" }
 ): mList<T> {
     val list = mList<T>().apply {
         addAll(items)
