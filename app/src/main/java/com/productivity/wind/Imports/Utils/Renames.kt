@@ -454,16 +454,19 @@ class By<T>(value: T) {
 	var it by m(value)
 	var delegateValue = m(value)
 	private var id by m("")
+	private var gotOrSet by m(no)
 	
 
 	
 	private var onBuild: Do3_<ValVar, Str, m_<T>> = { _, _, _ -> }
     private var onGet: Do_<ValVar> = {}
     private var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
+	private var onFirstGetOrSet: Do3_<ValVar, Str, m_<T>> = { _, _, _ -> }
 
 	fun onBuild(x: Do3_<ValVar, Str, m_<T>>) = apply { onBuild = x }
     fun onGet(x: Do_<ValVar>) = apply { onGet = x }
     fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
+	fun onFirstGetOrSet(x: Do3_<ValVar, Str, m_<T>>) = apply { if (gotOrSet) onFirstGetOrSet = x; gotOrSet = yes }
 
 
 	
@@ -474,11 +477,13 @@ class By<T>(value: T) {
         return this
     }
     operator fun getValue(thisRef: Any?, property: ValVar): T {
+		onFirstGetOrSet(property, id, delegateValue)
 		onGet(property)
 		it = delegateValue.it 
         return it
     }
     operator fun setValue(thisRef: Any?, property: ValVar, newValue: T) {
+		onFirstGetOrSet(property, id, delegateValue)
         it = newValue
 		delegateValue.it = it
 		onSet(property, id, it)
