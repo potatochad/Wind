@@ -4,6 +4,7 @@ package com.productivity.wind.Imports.Utils.SaveData
 //only handles 3 types (bool, str, int)
 //Currently the hole list updates on a tiny change.
 //THERE IS A bunch of data saved data (that doesnt get cleaned up, after years, massive issue)
+//It doesnt handle Delete or clear (saved doesnt change)
 
 import com.productivity.wind.Imports.Utils.Log.logTimer
 import com.productivity.wind.Imports.Utils.*
@@ -205,6 +206,19 @@ fun <T : LazyData> TrackList(
     customList = 
 
     
+    fun LazyData.prepare() {
+        changed = yes
+        onChanged = save::run
+        save.run()
+    }
+
+    fun <T : LazyData> Collection<T>.prepare() {
+        forEach { 
+            changed = yes
+            onChanged = save::run 
+        }
+        save.run()
+    }
     
     return By(customList)
         .onBuild { prop, name, _ -> 
@@ -213,53 +227,36 @@ fun <T : LazyData> TrackList(
                 items = items,
                 add = {
                     this.add(it)
-                    it.onChanged = save::run
-                    it.changed = yes
-                    save.run()
+                    it.prepare()
                     true
                 },
                 addAt = { index, item ->
                     this.add(index, item)
-                    item.onChanged = save::run
-                    item.changed = yes
-                    save.run()
+                    item.prepare()
                 },
                 addAll = { items -> 
                     this.addAll(items)
-                    items.forEach {
-                        it.changed = yes
-                        it.onChanged = save::run 
-                    }
-                    save.run()
+                    items.prepare()
                     true
                 },
                 addAllAt = { index, items ->
                     this.addAll(index, items)
-                    items.forEach {
-                        it.changed = yes
-                        it.onChanged = save::run 
-                    }
-                    save.run()
+                    items.prepare()
                     true
                 },
                 clear = {
                     this.clear()
-                    save.run()
                 },
                 remove = {
                     this.remove(it)
-                    it.changed = yes
-                    save.run()
                     true
                 },
                 removeAt = {
                     val result = this.removeAt(it)
-                    save.run()
                     result
                 },
                 removeAll = {
                     this.removeAll(it)
-                    save.run()
                     true
                 },
                 set = { index, item ->
