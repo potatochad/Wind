@@ -466,7 +466,7 @@ class By<T>(value: T) {
 	fun onBuild(x: Do3_<ValVar, Str, m_<T>>) = apply { onBuild = x }
     fun onGet(x: Do_<ValVar>) = apply { onGet = x }
     fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
-	fun onFirstGetOrSet(x: Do3_<ValVar, Str, m_<T>>) = apply { if (gotOrSet) onFirstGetOrSet = x; gotOrSet = yes }
+	fun onFirstGetOrSet(x: Do3_<ValVar, Str, m_<T>>) = apply { if (!gotOrSet) onFirstGetOrSet = x; gotOrSet = yes }
 
 
 	
