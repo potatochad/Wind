@@ -248,63 +248,152 @@ fun <T> CustomOverrideList(
 fun <T> CustomAlertList(
     items: Collection<T> = emptyList(),
 
-    onAdd: mList<T>.(T) -> Bool = { false },
-    addAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
-    addAll: mList<T>.(Collection<T>) -> Bool = { false },
-    addAllAt: mList<T>.(Int, Collection<T>) -> Bool = { _, _ -> false },
+    onAdd: mList<T>.(T) -> Unit = {},
+    onAddAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
+    onAddAll: mList<T>.(Collection<T>) -> Unit = {},
+    onAddAllAt: mList<T>.(Int, Collection<T>) -> Unit = { _, _ -> },
 
-    clear: mList<T>.() -> Unit = {},
+    onClear: mList<T>.() -> Unit = {},
 
-    get: mList<T>.(Int) -> T = { error("Not implemented") },
+    onGet: mList<T>.(Int, T) -> Unit = { _, _ -> },
 
-    remove: mList<T>.(T) -> Bool = { false },
-    removeAt: mList<T>.(Int) -> T = { error("Not implemented") },
-    removeAll: mList<T>.(Collection<T>) -> Bool = { false },
+    onRemove: mList<T>.(T) -> Unit = {},
+    onRemoveAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
+    onRemoveAll: mList<T>.(Collection<T>) -> Unit = {},
 
-    set: mList<T>.(Int, T) -> T = { _, _ -> error("Not implemented") },
+    onSet: mList<T>.(Int, T) -> Unit = {},
 
-    contains: mList<T>.(T) -> Bool = { false },
-    containsAll: mList<T>.(Collection<T>) -> Bool = { false },
+    onContains: mList<T>.(T) -> Unit = {},
+    onContainsAll: mList<T>.(Collection<T>) -> Unit = {},
 
-    indexOf: mList<T>.(T) -> Int = { -1 },
-    lastIndexOf: mList<T>.(T) -> Int = { -1 },
+    onIndexOf: mList<T>.(T, Int) -> Unit = { _, _ -> },
+    onLastIndexOf: mList<T>.(T, Int) -> Unit = { _, _ -> },
 
-    isEmpty: mList<T>.() -> Bool = { true },
+    onEmptyCheck: mList<T>.(Boolean) -> Unit = {},
 
-    toString: mList<T>.() -> Str = { "" }
+    onToString: mList<T>.(String) -> Unit = {}
 ): mList<T> {
+
     val list = mList<T>().apply {
         addAll(items)
     }
 
     return object : mList<T> {
+
         override fun add(element: T) {
-			list.add(element)
-			list.onAdd(element)
-		}
-        override fun add(index: Int, element: T) = list.add(index, element)
-        override fun addAll(elements: Collection<T>) = list.addAll(elements)
-        override fun addAll(index: Int, elements: Collection<T>) = list.addAll(index, elements)
-        override fun clear() = list.clear()
-        override fun get(index: Int) = list[index]
-        override fun remove(element: T) = list.remove(element)
-        override fun removeAt(index: Int) = list.removeAt(index)
-        override fun removeAll(elements: Collection<T>) = list.removeAll(elements)
-        override fun set(index: Int, element: T) = list.set(index, element)
-        override fun contains(element: T) = list.contains(element)
-        override fun containsAll(elements: Collection<T>) = list.containsAll(elements)
-        override fun indexOf(element: T) = list.indexOf(element)
-        override fun lastIndexOf(element: T) = list.lastIndexOf(element)
-        override fun isEmpty() = list.isEmpty()
-        override fun toString() = list.toString()
-        override val size get() = list.size
+            list.add(element)
+            list.onAdd(element)
+        }
+
+        override fun add(index: Int, element: T) {
+            list.add(index, element)
+            list.onAddAt(index, element)
+        }
+
+        override fun addAll(elements: Collection<T>): Boolean {
+            val result = list.addAll(elements)
+            if (result) list.onAddAll(elements)
+            return result
+        }
+
+        override fun addAll(index: Int, elements: Collection<T>): Boolean {
+            val result = list.addAll(index, elements)
+            if (result) list.onAddAllAt(index, elements)
+            return result
+        }
+
+        override fun clear() {
+            list.clear()
+            list.onClear()
+        }
+
+        override fun get(index: Int): T {
+            val value = list[index]
+            list.onGet(index, value)
+            return value
+        }
+
+        override fun remove(element: T): Boolean {
+            val result = list.remove(element)
+            if (result) list.onRemove(element)
+            return result
+        }
+
+        override fun removeAt(index: Int): T {
+            val value = list.removeAt(index)
+            list.onRemoveAt(index, value)
+            return value
+        }
+
+        override fun removeAll(elements: Collection<T>): Boolean {
+            val result = list.removeAll(elements)
+            if (result) list.onRemoveAll(elements)
+            return result
+        }
+
+        override fun set(index: Int, element: T): T {
+            val old = list.set(index, element)
+            list.onSet(index, element)
+            return old
+        }
+
+        override fun contains(element: T): Boolean {
+            val result = list.contains(element)
+            list.onContains(element)
+            return result
+        }
+
+        override fun containsAll(elements: Collection<T>): Boolean {
+            val result = list.containsAll(elements)
+            list.onContainsAll(elements)
+            return result
+        }
+
+        override fun indexOf(element: T): Int {
+            val result = list.indexOf(element)
+            list.onIndexOf(element, result)
+            return result
+        }
+
+        override fun lastIndexOf(element: T): Int {
+            val result = list.lastIndexOf(element)
+            list.onLastIndexOf(element, result)
+            return result
+        }
+
+        override fun isEmpty(): Boolean {
+            val result = list.isEmpty()
+            list.onEmptyCheck(result)
+            return result
+        }
+
+        override fun toString(): String {
+            val result = list.toString()
+            list.onToString(result)
+            return result
+        }
+
+        override val size
+            get() = list.size
+
         override fun iterator() = list.iterator()
+
         override fun listIterator() = list.listIterator()
+
         override fun listIterator(index: Int) = list.listIterator(index)
-		override fun subList(fromIndex: Int, toIndex: Int) = list.subList(fromIndex, toIndex)
-		override fun retainAll(elements: Collection<T>) = list.retainAll(elements)
-		override fun equals(other: Any?) = list == other
-		override fun hashCode() = list.hashCode()
+
+        override fun subList(
+            fromIndex: Int,
+            toIndex: Int
+        ) = list.subList(fromIndex, toIndex)
+
+        override fun retainAll(elements: Collection<T>): Boolean {
+            return list.retainAll(elements)
+        }
+
+        override fun equals(other: Any?) = list == other
+
+        override fun hashCode() = list.hashCode()
     }
 }
 
