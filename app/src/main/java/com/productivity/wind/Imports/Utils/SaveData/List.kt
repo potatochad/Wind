@@ -202,55 +202,60 @@ fun <T : LazyData> TrackList(
     }
 
 
-    customList = CustomList(
-        items = items,
-        add = {
-            this.add(it)
-            it.onChanged = save::run
-            it.changed = yes
-            save.run()
-            true
-        },
-        addAt = { index, item ->
-            this.add(index, item)
-            item.onChanged = save::run
-            item.changed = yes
-            
-            save.run()
-        },
-        addAll = { items -> 
-            this.addAll(items)
-            items.forEach {
-                it.changed = yes
-                it.onChanged = save::run 
-            }
-            save.run()
-            true
-        },
-        addAllAt = { index, items ->
-            this.addAll(index, items)
-            items.forEach {
-                it.changed = yes
-                it.onChanged = save::run 
-            }
-            save.run()
-            true
-        },
-        clear = {
-            this.clear()
-            save.run()
-        },
-        remove = {
-            this.remove(it)
+    customList = 
 
-            it.changed = yes
-            save.run()
-            true
-        },
-        removeAt = {
-            val result = this.removeAt(it)
-            save.run()
-            result
+    
+    
+    return By(customList)
+        .onBuild { prop, name, _ -> 
+            
+            CustomList(
+                items = items,
+                add = {
+                    this.add(it)
+                    it.onChanged = save::run
+                    it.changed = yes
+                    save.run()
+                    true
+                },
+                addAt = { index, item ->
+                    this.add(index, item)
+                    item.onChanged = save::run
+                    item.changed = yes
+                    save.run()
+                },
+                addAll = { items -> 
+                    this.addAll(items)
+                    items.forEach {
+                        it.changed = yes
+                        it.onChanged = save::run 
+                    }
+                    save.run()
+                    true
+                },
+                addAllAt = { index, items ->
+                    this.addAll(index, items)
+                    items.forEach {
+                        it.changed = yes
+                        it.onChanged = save::run 
+                    }
+                    save.run()
+                    true
+                },
+                clear = {
+                    this.clear()
+                    save.run()
+                },
+                remove = {
+                    this.remove(it)
+                    it.changed = yes
+                    save.run()
+                    true
+                },
+                removeAt = {
+                    val result = this.removeAt(it)
+                    save.run()
+                    result
         },
         removeAll = {
             this.removeAll(it)
@@ -266,11 +271,7 @@ fun <T : LazyData> TrackList(
             item
         },
     )
-
-    
-    
-    return By(customList)
-        .onBuild { prop, name, _ -> 
+            
             listName = name
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
                 if (savedKey.startsWith("$name:")) getLazyDataVar(key, name)//Value onlyyy 
