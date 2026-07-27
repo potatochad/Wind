@@ -283,23 +283,10 @@ fun <T> CustomAlertList(
         override fun addAll(elements: Collection<T>) =
         override fun addAll(index: Int, elements: Collection<T>) =
         override fun clear() {}
-        
-
         override fun get(index: Int) =
-            get.doOr(list, index){ list[index] }
-        
-
         override fun remove(element: T) =
-            remove.doOr(list, element){ list.remove(element) }
-
         override fun removeAt(index: Int) =
-            removeAt.doOr(list, index){ list.removeAt(index) }
-        
-
         override fun removeAll(elements: Collection<T>) =
-            removeAll.doOr(list, elements){ list.removeAll(elements) }
-        
-
         override fun set(index: Int, element: T) =
             set.doOr(list, index, element){ list.set(index, element) }
         
