@@ -256,21 +256,19 @@ fun <T : LazyData> TrackList(
                     val result = this.removeAt(it)
                     save.run()
                     result
-        },
-        removeAll = {
-            this.removeAll(it)
-            save.run()
-            true
-        },
-        set = { index, item ->
-            this[index] = item
-            
-            item.changed = yes
-            save.run()
-            
-            item
-        },
-    )
+                },
+                removeAll = {
+                    this.removeAll(it)
+                    save.run()
+                    true
+                },
+                set = { index, item ->
+                    this[index] = item
+                    item.changed = yes
+                    save.run()
+                    item
+                },
+            )
             
             listName = name
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
