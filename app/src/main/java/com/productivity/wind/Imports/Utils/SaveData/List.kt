@@ -171,7 +171,7 @@ fun getLazyDataVar(key: Str, varName: Str): Any? {
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): By<mList<T>> {
-    var emptyList = mList()
+    // var emptyList = mList()
 
     var onlyOne = OneAtATime()
 
@@ -203,9 +203,6 @@ fun <T : LazyData> TrackList(
     }
 
 
-    customList = 
-
-    
     fun LazyData.prepare() {
         changed = yes
         onChanged = save::run
@@ -219,11 +216,9 @@ fun <T : LazyData> TrackList(
         }
         save.run()
     }
-    
-    return By(customList)
-        .onBuild { prop, name, _ -> 
-            
-            CustomList(
+
+
+    customList = CustomList(
                 items = items,
                 add = {
                     this.add(it)
@@ -266,11 +261,19 @@ fun <T : LazyData> TrackList(
                     item
                 },
             )
-            
+
+    
+    
+    
+    return By(customList)
+        .onBuild { prop, name, _ -> 
             listName = name
+
+            /*
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
                 if (savedKey.startsWith("$name:")) getLazyDataVar(key, name)//Value onlyyy 
             }
+            */
         
             customList?.forEach {
                 it.listName = name
