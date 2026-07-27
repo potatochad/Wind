@@ -280,7 +280,9 @@ fun <T : LazyData> TrackList(
                 it.key = "$name:${it.id}"
             }
         }
-        .onSet { prop, id, value -> VlogOne("LIST MUST BE VAL") }
+        .onSet { prop, id, value -> 
+            VlogOne("LIST MUST BE VAL") 
+        }
 }
 
 //nothing can be private
