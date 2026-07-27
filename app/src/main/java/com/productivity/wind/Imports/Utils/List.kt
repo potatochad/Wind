@@ -277,57 +277,31 @@ fun <T> CustomAlertList(
         addAll(items)
     }
 
-    	return object : mList<T> {
-            override fun add(element: T) = list.add(element)
-            override fun add(index: Int, element: T) = list.add(index, element)
-            override fun addAll(elements: Collection<T>) = list.addAll(elements)
-            override fun addAll(index: Int, elements: Collection<T>) = list.addAll(index, elements)
-            override fun clear() = list.clear()
-            override fun get(index: Int) = list[index]
-            override fun remove(element: T) = list.remove(element)
-            override fun removeAt(index: Int) = list.removeAt(index)
-            override fun removeAll(elements: Collection<T>) = list.removeAll(elements)
-            override fun set(index: Int, element: T) = list.set(index, element)
-            override fun contains(element: T) = list.contains(element)
-            override fun containsAll(elements: Collection<T>) = list.containsAll(elements)
-            override fun indexOf(element: T) = list.indexOf(element)
-            override fun lastIndexOf(element: T) = list.lastIndexOf(element)
-            override fun isEmpty() = list.isEmpty()
-            override fun toString() = list.toString()
-            override val size get() = list.size
-            override fun iterator() = list.iterator()
-            override fun listIterator() = list.listIterator()
-            override fun listIterator(index: Int) = list.listIterator(index)
-		override fun subList(fromIndex: Int, toIndex: Int) = list.subList(fromIndex, toIndex)
-		override fun retainAll(elements: Collection<T>) = list.retainAll(elements)
-        }
-    
     return object : mList<T> {
-        override fun add(element: T) = list.
-        override fun add(index: Int, element: T) =  list.
-        override fun addAll(elements: Collection<T>) = list.
-        override fun addAll(index: Int, elements: Collection<T>) = list.
-        override fun clear() =  list. 
-        override fun get(index: Int) = list.
-        override fun remove(element: T) = list.
-        override fun removeAt(index: Int) = list.
-        override fun removeAll(elements: Collection<T>) = list.
-        override fun set(index: Int, element: T) = list.
-        override fun contains(element: T) = list.
-        override fun containsAll(elements: Collection<T>) = list.
-        override fun indexOf(element: T) = list.
+        override fun add(element: T) = list.add(element)
+        override fun add(index: Int, element: T) = list.add(index, element)
+        override fun addAll(elements: Collection<T>) = list.addAll(elements)
+        override fun addAll(index: Int, elements: Collection<T>) = list.addAll(index, elements)
+        override fun clear() = list.clear()
+        override fun get(index: Int) = list[index]
+        override fun remove(element: T) = list.remove(element)
+        override fun removeAt(index: Int) = list.removeAt(index)
+        override fun removeAll(elements: Collection<T>) = list.removeAll(elements)
+        override fun set(index: Int, element: T) = list.set(index, element)
+        override fun contains(element: T) = list.contains(element)
+        override fun containsAll(elements: Collection<T>) = list.containsAll(elements)
+        override fun indexOf(element: T) = list.indexOf(element)
         override fun lastIndexOf(element: T) = list.lastIndexOf(element)
-        override fun isEmpty() = list.isEmpty() 
-        override fun toString() = list.toString() 
+        override fun isEmpty() = list.isEmpty()
+        override fun toString() = list.toString()
         override val size get() = list.size
         override fun iterator() = list.iterator()
         override fun listIterator() = list.listIterator()
         override fun listIterator(index: Int) = list.listIterator(index)
-        override fun subList(fromIndex: Int, toIndex: Int) = list.subList(fromIndex, toIndex)
-        override fun retainAll(elements: Collection<T>) = list.retainAll(elements)
-        
-        override fun equals(other: Any?) = list == other
-        override fun hashCode() = list.hashCode()
+		override fun subList(fromIndex: Int, toIndex: Int) = list.subList(fromIndex, toIndex)
+		override fun retainAll(elements: Collection<T>) = list.retainAll(elements)
+		override fun equals(other: Any?) = list == other
+		override fun hashCode() = list.hashCode()
     }
 }
 
