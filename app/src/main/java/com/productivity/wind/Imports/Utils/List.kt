@@ -251,7 +251,7 @@ fun <T> CustomAlertList(
     add: mList<T>.(T) -> Bool = { false },
     addAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
     addAll: mList<T>.(Collection<T>) -> Bool = { false },
-    addAllAt: mList<T>.(Int, Collection<T>) -> Bool = { false },
+    addAllAt: mList<T>.(Int, Collection<T>) -> Bool = { _, _ -> false },
 
     clear: mList<T>.() -> Unit = {},
 
