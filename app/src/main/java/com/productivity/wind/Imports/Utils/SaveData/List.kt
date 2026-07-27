@@ -293,7 +293,8 @@ abstract class LazyData {
     val vars = mutableMapOf<Str, VarInfo<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
-            .onBuild { prop, name, mValue -> }
+            .onBuild { prop, name, mValue -> 
+            }
             .onGet { prop ->
                 Vlog("lazyS build key='$key' var=$name")
                 
