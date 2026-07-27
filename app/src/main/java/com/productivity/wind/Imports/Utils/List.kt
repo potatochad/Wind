@@ -248,7 +248,7 @@ fun <T> CustomOverrideList(
 fun <T> CustomAlertList(
     items: Collection<T> = emptyList(),
 
-    add: mList<T>.(T) -> Bool = { false },
+    onAdd: mList<T>.(T) -> Bool = { false },
     addAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
     addAll: mList<T>.(Collection<T>) -> Bool = { false },
     addAllAt: mList<T>.(Int, Collection<T>) -> Bool = { _, _ -> false },
@@ -278,7 +278,10 @@ fun <T> CustomAlertList(
     }
 
     return object : mList<T> {
-        override fun add(element: T) = list.add(element)
+        override fun add(element: T) {
+			list.add(element)
+			list.onAdd(element)
+		}
         override fun add(index: Int, element: T) = list.add(index, element)
         override fun addAll(elements: Collection<T>) = list.addAll(elements)
         override fun addAll(index: Int, elements: Collection<T>) = list.addAll(index, elements)
