@@ -288,32 +288,12 @@ fun <T> CustomAlertList(
         override fun removeAt(index: Int) =
         override fun removeAll(elements: Collection<T>) =
         override fun set(index: Int, element: T) =
-            set.doOr(list, index, element){ list.set(index, element) }
-        
-
         override fun contains(element: T) =
-            contains.doOr(list, element){ list.contains(element) }
-        
-
         override fun containsAll(elements: Collection<T>) =
-            containsAll.doOr(list, elements){ list.containsAll(elements) }
-        
-
         override fun indexOf(element: T) =
-            indexOf.doOr(list, element){ list.indexOf(element) }
-        
-
         override fun lastIndexOf(element: T) =
-            lastIndexOf.doOr(list, element){ list.lastIndexOf(element) }
-        
-
         override fun isEmpty() =
-            isEmpty.doOr(list){ list.isEmpty() }
-        
         override fun toString() =
-            toString.doOr(list){ toStr(list) }
-        
-
         override val size get() = list.size
         override fun iterator() = list.iterator()
         override fun listIterator() = list.listIterator()
