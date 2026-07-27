@@ -210,9 +210,9 @@ fun <T : LazyData> TrackList(
     }
 
     fun <T : LazyData> Collection<T>.prepare() {
-        forEach { 
-            changed = yes
-            onChanged = save::run 
+        this.forEach { 
+            it.changed = yes
+            it.onChanged = save::run 
         }
         save.run()
     }
