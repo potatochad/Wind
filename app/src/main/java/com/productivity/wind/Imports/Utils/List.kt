@@ -245,7 +245,7 @@ fun <T> CustomOverrideList(
     }
 }
 
-CustomList(){
+CustomAlertList(){
     
 }
 
