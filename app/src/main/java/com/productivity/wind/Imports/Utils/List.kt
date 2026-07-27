@@ -283,14 +283,14 @@ fun <T> CustomAlertList(
         override fun addAll(elements: Collection<T>) =
         override fun addAll(index: Int, elements: Collection<T>) =
         override fun clear() {}
-        override fun get(index: Int) =
-        override fun remove(element: T) =
-        override fun removeAt(index: Int) =
-        override fun removeAll(elements: Collection<T>) =
-        override fun set(index: Int, element: T) =
-        override fun contains(element: T) =
-        override fun containsAll(elements: Collection<T>) =
-        override fun indexOf(element: T) =
+        override fun get(index: Int) = list.
+        override fun remove(element: T) = list.
+        override fun removeAt(index: Int) = list.
+        override fun removeAll(elements: Collection<T>) = list.
+        override fun set(index: Int, element: T) = list.
+        override fun contains(element: T) = list.
+        override fun containsAll(elements: Collection<T>) = list.
+        override fun indexOf(element: T) = list.
         override fun lastIndexOf(element: T) = list.lastIndexOf(element)
         override fun isEmpty() = list.isEmpty() 
         override fun toString() = list.toString() 
