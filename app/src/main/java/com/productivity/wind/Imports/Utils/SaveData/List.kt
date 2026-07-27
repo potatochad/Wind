@@ -170,6 +170,7 @@ fun getLazyDataVar(key: Str, varName: Str): Any? {
 fun <T : LazyData> TrackList(
     items: List<T> = emptyList()
 ): By<mList<T>> {
+    var emptyList = mList()
 
     var onlyOne = OneAtATime()
 
