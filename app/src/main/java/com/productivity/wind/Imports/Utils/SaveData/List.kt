@@ -256,8 +256,7 @@ fun <T : LazyData> TrackList(
                 },
                 set = { index, item ->
                     this[index] = item
-                    item.changed = yes
-                    save.run()
+                    item.prepare()
                     item
                 },
             )
