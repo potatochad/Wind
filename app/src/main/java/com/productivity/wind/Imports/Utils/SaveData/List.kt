@@ -170,19 +170,17 @@ fun getLazyDataVar(key: Str, varName: Str): Any? {
 
 
 fun <T : LazyData> TrackList(
-    items: List<T> = emptyList()
+    defaultItems: List<T> = emptyList()
 ): By<mList<T>> {
-    // var emptyList = mList()
-
     var onlyOne = OneAtATime()
 
     var listName by m("")
-    var customList: mList<T>? = null
+    var theList: mList<T>? = null
 
 
     val save = IgnoreRepeatedCalls {
         onlyOne.lazyUse {
-            val list = customList ?: run {
+            val list = theList ?: run {
                 VlogOne("Custom list is not initialized before saving!")
                 return@lazyUse
             }
@@ -198,10 +196,6 @@ fun <T : LazyData> TrackList(
         }
     }
 
-
-    items.forEach { 
-        it.onChanged = save::run 
-    }
 
 
     fun LazyData.prepare() {
@@ -219,55 +213,43 @@ fun <T : LazyData> TrackList(
     }
 
 
-    customList = CustomAlertList(
-                items = items,
-                onAdd = {
-                    it.prepare()
-                },
-                onAddAt = { index, item ->
-                    item.prepare()
-                },
-                onAddAll = { items -> 
-                    items.prepare()
-                },
-                onAddAllAt = { index, items ->
-                    items.prepare()
-                },
-                onClear = {
-                    
-                },
-                onRemove = {
-                    
-                },
-                onRemoveAll = {
-                    
-                },
-                onSet = { index, item ->
-                    item.prepare()
-                },
-            )
-
     
-    
-    
-    return By(customList)
-        .onBuild { prop, name, _ -> 
-            listName = name
-
+    return By(mList())
+        .onBuild { prop, listName, _ -> 
+            var savedItems: mList<T>? = null
+            log("List build runs once")
+            
             /*
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
                 if (savedKey.startsWith("$name:")) getLazyDataVar(key, name)//Value onlyyy 
             }
             */
+
+            //check if override defaultItems
+            if (savedItems != null){
+                savedItems?.forEach { 
+                    it.onChanged = save::run 
+                }
+            }
+
+            theList = CustomAlertList(
+                items = defaultItems,
+                onAdd = { it.prepare() },
+                onAddAt = { _, it -> it.prepare() },
+                onAddAll = { it.prepare() },
+                onAddAllAt = { _, it -> it.prepare() },
+                onClear = {},
+                onRemove = {},
+                onRemoveAll = {},
+                onSet = { _, it -> it.prepare() },
+            )
         
-            customList?.forEach {
+            theList?.forEach {
                 it.listName = name
                 it.key = "$name:${it.id}"
             }
         }
-        .onSet { prop, id, value -> 
-            VlogOne("LIST MUST BE VAL") 
-        }
+        .onSet { _, _, _ -> VlogOne("LIST MUST BE VAL") }
 }
 
 //nothing can be private
@@ -313,7 +295,6 @@ abstract class LazyData {
 
         
         AppData.commit(key, customStr) 
-        isSaved2(key, customStr)
         
         VlogOne(customStr, 10000)
     }
