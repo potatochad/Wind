@@ -215,13 +215,10 @@ fun <T : LazyData> TrackList(
     return By(mutableListOf<T>())
         .onBuild { prop, listName, _ -> 
             var savedItems: mList<T>? = null
-            log("List build runs once")
-            
-            /*
+
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
-                if (savedKey.startsWith("$name:")) getLazyDataVar(key, name)//Value onlyyy 
+                if (savedKey.startsWith("$listName:")) savedItems.add(getLazyDataVar(key, name))            
             }
-            */
 
             //check if override defaultItems
             if (savedItems != null){
