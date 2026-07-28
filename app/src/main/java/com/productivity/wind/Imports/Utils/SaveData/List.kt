@@ -222,43 +222,31 @@ fun <T : LazyData> TrackList(
     customList = CustomAlertList(
                 items = items,
                 onAdd = {
-                    this.add(it)
                     it.prepare()
-                    true
                 },
                 onAddAt = { index, item ->
-                    this.add(index, item)
                     item.prepare()
                 },
                 onAddAll = { items -> 
-                    this.addAll(items)
                     items.prepare()
-                    true
                 },
                 onAddAllAt = { index, items ->
-                    this.addAll(index, items)
                     items.prepare()
-                    true
                 },
                 onClear = {
-                    this.clear()
+                    
                 },
                 onRemove = {
-                    this.remove(it)
-                    true
+                    
                 },
                 onRemoveAt = {
-                    val result = this.removeAt(it)
-                    result
+                    
                 },
                 onRemoveAll = {
-                    this.removeAll(it)
-                    true
+                    
                 },
                 onSet = { index, item ->
-                    this[index] = item
                     item.prepare()
-                    item
                 },
             )
 
