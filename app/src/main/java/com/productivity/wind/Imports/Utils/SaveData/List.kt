@@ -214,7 +214,7 @@ fun <T : LazyData> TrackList(
 
 
     
-    return By(mList())
+    return By(mList<T>())
         .onBuild { prop, listName, _ -> 
             var savedItems: mList<T>? = null
             log("List build runs once")
