@@ -214,21 +214,21 @@ fun <T : LazyData> TrackList(
     
     return By(mutableListOf<T>())
         .onBuild { prop, listName, _ -> 
-            var savedItems: mList<T>? = null
+            val savedItems = mutableListOf<T>()
 
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
                 if (savedKey.startsWith("$listName:")) savedItems.add(getLazyDataVar(key, name))            
             }
 
             //check if override defaultItems
-            if (savedItems != null){
+            if (savedItems.notEmpty){
                 savedItems?.forEach { 
                     it.onChanged = save::run 
                 }
             }
 
             theList = CustomAlertList(
-                items = defaultItems,
+                items = if (savedItems.notEmpty) savedItems else defaultItems,
                 onAdd = { it.prepare() },
                 onAddAt = { _, it -> it.prepare() },
                 onAddAll = { it.prepare() },
