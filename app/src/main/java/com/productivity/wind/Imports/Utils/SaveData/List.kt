@@ -239,9 +239,6 @@ fun <T : LazyData> TrackList(
                 onRemove = {
                     
                 },
-                onRemoveAt = {
-                    
-                },
                 onRemoveAll = {
                     
                 },
