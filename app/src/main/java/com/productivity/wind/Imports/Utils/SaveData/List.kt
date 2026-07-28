@@ -216,7 +216,12 @@ inline fun <reified T : LazyData> TrackList(
             val savedItems = mutableListOf<T>()
 
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
-                if (savedKey.startsWith("$listName:")) savedItems.add(getLazyDataVar(key, name))            
+                if (savedKey.startsWith("$listName:")) {
+                    val item = T()
+                    item.key = savedKey
+                    item.listName = listName
+                    savedItems.add(item)
+                }
             }
 
             //check if override defaultItems
