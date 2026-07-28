@@ -173,8 +173,6 @@ fun <T : LazyData> TrackList(
     defaultItems: List<T> = emptyList()
 ): By<mList<T>> {
     var onlyOne = OneAtATime()
-
-    var listName by m("")
     var theList: mList<T>? = null
 
 
