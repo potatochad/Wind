@@ -280,9 +280,10 @@ fun <T> CustomAlertList(
 
     return object : mList<T> {
 
-        override fun add(element: T) {
-            list.add(element)
-            list.onAdd(element)
+        override fun add(element: T): Bool {
+            val result = list.add(element)
+            if (result) list.onAdd(element)
+            return result
         }
 
         override fun add(index: Int, element: T) {
