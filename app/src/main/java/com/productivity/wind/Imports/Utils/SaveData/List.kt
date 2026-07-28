@@ -214,7 +214,7 @@ fun <T : LazyData> TrackList(
 
 
     
-    return By(mList<T>())
+    return By(mutableListOf<T>())
         .onBuild { prop, listName, _ -> 
             var savedItems: mList<T>? = null
             log("List build runs once")
@@ -245,8 +245,8 @@ fun <T : LazyData> TrackList(
             )
         
             theList?.forEach {
-                it.listName = name
-                it.key = "$name:${it.id}"
+                it.listName = listName
+                it.key = "$listName:${it.id}"
             }
         }
         .onSet { _, _, _ -> VlogOne("LIST MUST BE VAL") }
