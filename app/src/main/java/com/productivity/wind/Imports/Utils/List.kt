@@ -142,36 +142,36 @@ import kotlinx.serialization.builtins.ListSerializer
 fun <T> CustomOverrideList(
     items: Collection<T> = emptyList(),
 
-    add: (mList<T>.(T) -> Bool)? = null,
-    addAt: (mList<T>.(Int, T) -> Unit)? = null,
-    addAll: (mList<T>.(Collection<T>) -> Bool)? = null,
-    addAllAt: (mList<T>.(Int, Collection<T>) -> Bool)? = null,
+    add: (MutableList<T>.(T) -> Bool)? = null,
+    addAt: (MutableList<T>.(Int, T) -> Unit)? = null,
+    addAll: (MutableList<T>.(Collection<T>) -> Bool)? = null,
+    addAllAt: (MutableList<T>.(Int, Collection<T>) -> Bool)? = null,
 
-    clear: (mList<T>.() -> Unit)? = null,
+    clear: (MutableList<T>.() -> Unit)? = null,
 
-    get: (mList<T>.(Int) -> T)? = null,
+    get: (MutableList<T>.(Int) -> T)? = null,
 
-    remove: (mList<T>.(T) -> Bool)? = null,
-    removeAt: (mList<T>.(Int) -> T)? = null,
-    removeAll: (mList<T>.(Collection<T>) -> Bool)? = null,
+    remove: (MutableList<T>.(T) -> Bool)? = null,
+    removeAt: (MutableList<T>.(Int) -> T)? = null,
+    removeAll: (MutableList<T>.(Collection<T>) -> Bool)? = null,
 
-    set: (mList<T>.(Int, T) -> T)? = null,
+    set: (MutableList<T>.(Int, T) -> T)? = null,
 
-    contains: (mList<T>.(T) -> Bool)? = null,
-    containsAll: (mList<T>.(Collection<T>) -> Bool)? = null,
+    contains: (MutableList<T>.(T) -> Bool)? = null,
+    containsAll: (MutableList<T>.(Collection<T>) -> Bool)? = null,
 
-    indexOf: (mList<T>.(T) -> Int)? = null,
-    lastIndexOf: (mList<T>.(T) -> Int)? = null,
+    indexOf: (MutableList<T>.(T) -> Int)? = null,
+    lastIndexOf: (MutableList<T>.(T) -> Int)? = null,
 
-    isEmpty: (mList<T>.() -> Bool)? = null,
+    isEmpty: (MutableList<T>.() -> Bool)? = null,
 
-    toString: (mList<T>.() -> Str)? = null
+    toString: (MutableList<T>.() -> Str)? = null
 ): mList<T> {
-    val list = mList<T>().apply {
+    val list = MutableList<T>().apply {
         addAll(items)
     }
     
-    return object : mList<T> {
+    return object : MutableList<T> {
         override fun add(element: T) =
             add.doOr(list, element){ list.add(element) }
 
@@ -248,37 +248,37 @@ fun <T> CustomOverrideList(
 fun <T> CustomAlertList(
     items: Collection<T> = emptyList(),
 
-    onAdd: mList<T>.(T) -> Unit = {},
-    onAddAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
-    onAddAll: mList<T>.(Collection<T>) -> Unit = {},
-    onAddAllAt: mList<T>.(Int, Collection<T>) -> Unit = { _, _ -> },
+    onAdd: MutableList<T>.(T) -> Unit = {},
+    onAddAt: MutableList<T>.(Int, T) -> Unit = { _, _ -> },
+    onAddAll: MutableList<T>.(Collection<T>) -> Unit = {},
+    onAddAllAt: MutableList<T>.(Int, Collection<T>) -> Unit = { _, _ -> },
 
-    onClear: mList<T>.() -> Unit = {},
+    onClear: MutableList<T>.() -> Unit = {},
 
-    onGet: mList<T>.(Int, T) -> Unit = { _, _ -> },
+    onGet: MutableList<T>.(Int, T) -> Unit = { _, _ -> },
 
-    onRemove: mList<T>.(T) -> Unit = {},
-    onRemoveAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
-    onRemoveAll: mList<T>.(Collection<T>) -> Unit = {},
+    onRemove: MutableList<T>.(T) -> Unit = {},
+    onRemoveAt: MutableList<T>.(Int, T) -> Unit = { _, _ -> },
+    onRemoveAll: MutableList<T>.(Collection<T>) -> Unit = {},
 
-    onSet: mList<T>.(Int, T) -> Unit = { _, _ -> },
+    onSet: MutableList<T>.(Int, T) -> Unit = { _, _ -> },
 
-    onContains: mList<T>.(T) -> Unit = {},
-    onContainsAll: mList<T>.(Collection<T>) -> Unit = {},
+    onContains: MutableList<T>.(T) -> Unit = {},
+    onContainsAll: MutableList<T>.(Collection<T>) -> Unit = {},
 
-    onIndexOf: mList<T>.(T, Int) -> Unit = { _, _ -> },
-    onLastIndexOf: mList<T>.(T, Int) -> Unit = { _, _ -> },
+    onIndexOf: MutableList<T>.(T, Int) -> Unit = { _, _ -> },
+    onLastIndexOf: MutableList<T>.(T, Int) -> Unit = { _, _ -> },
 
-    onEmptyCheck: mList<T>.(Bool) -> Unit = {},
+    onEmptyCheck: MutableList<T>.(Bool) -> Unit = {},
 
-    onToString: mList<T>.(Str) -> Unit = {}
-): mList<T> {
+    onToString: MutableList<T>.(Str) -> Unit = {}
+): MutableList<T> {
 
-    val list = mList<T>().apply {
+    val list = MutableList<T>().apply {
         addAll(items)
     }
 
-    return object : mList<T> {
+    return object : MutableList<T> {
 
         override fun add(element: T): Bool {
             val result = list.add(element)
