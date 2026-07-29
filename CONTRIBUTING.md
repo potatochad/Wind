@@ -1,8 +1,8 @@
 At its current state, the app does not follow any well-known Android architecture, making the app harder to understand and contribute to.
-Most code is also written with assistance from AI copilots like GitHub Copilot, Gemini, ChatGPT, and Jules.
+Most code is also written with assistance from AI.
 
-> ⚠️ _DISCLAIMER: The app is mostly generated with AI (Copilot, Jules, Gemini, ChatGPT, etc.). It does not follow any best practices._
+> ⚠️ _DISCLAIMER: The app is mostly generated with AI.
 
-Feel free to open an issue first to get some guidelines on how to approach any feature work or bug fixes if you are interested in contributing.
+Feel free to use the code, copy it or report bugs.
 
 Thank you for your support. 🎉
