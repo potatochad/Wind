@@ -3,6 +3,7 @@
 Quick heads up, the code has a lot of renames. Examples:
 
 * `m` -> mutable
+* `mState` -> mutableState
 * `r` -> remember
 * `s` -> save / size
 * `w` -> width
