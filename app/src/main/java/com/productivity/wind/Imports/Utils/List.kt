@@ -166,7 +166,7 @@ fun <T> CustomOverrideList(
     isEmpty: (MutableList<T>.() -> Bool)? = null,
 
     toString: (MutableList<T>.() -> Str)? = null
-): mList<T> {
+): MutableList<T> {
     val list = MutableList<T>().apply {
         addAll(items)
     }
@@ -274,7 +274,7 @@ fun <T> CustomAlertList(
     onToString: MutableList<T>.(Str) -> Unit = {}
 ): MutableList<T> {
 
-    val list = MutableList<T>().apply {
+    val list = mutableListOf<T>().apply {
         addAll(items)
     }
 
