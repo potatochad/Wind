@@ -180,8 +180,6 @@ typealias Do_<T> = (T) -> Unit
 typealias Do2_<A, B> = (A, B) -> Unit
 typealias Do3_<A, B, C> = (A, B, C) -> Unit
 
-typealias mList<T> = MutableList<T>
-
 typealias ListStr = List<Str>
 typealias ListInt = List<Int>
 typealias ListBool = List<Bool>
