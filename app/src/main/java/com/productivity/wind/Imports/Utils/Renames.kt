@@ -185,9 +185,6 @@ typealias ListInt = List<Int>
 typealias ListBool = List<Bool>
 typealias ListDouble = List<Double>
 
-typealias mList<T> = MutableList<T>
-	
-
 typealias Wait = suspend () -> Unit
 typealias Wait_<T> = suspend (T) -> Unit
 
@@ -196,9 +193,6 @@ typealias mBool= m_<Bool>
 typealias mInt= m_<Int>
 typealias mStr= m_<Str>
 	
-	
-typealias MutableStateList<T> = SnapshotStateList<T>
-
 
 typealias ClassVar_<T, R> = KMutableProperty1<T, R>
 typealias ClassVar = KMutableProperty1<*, *>
@@ -234,8 +228,6 @@ fun <T> r(x: T) = r { m(x) }
 @Composable
 inline fun <T> r(vararg keys: Any?, crossinline calc: () -> T): T = remember(*keys, calculation = calc)
 
-
-fun <T> mList() = mutableStateListOf<T>()
 
 fun Mod.move(s: Any = 0, h: Any = s, w: Any = s): Mod =
     this.then(
