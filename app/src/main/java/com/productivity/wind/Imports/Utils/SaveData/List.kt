@@ -168,7 +168,8 @@ fun getLazyDataVar(key: Str, varName: Str): Any? {
     }
 }
 
-inline fun <reified T : LazyData> TrackList(
+fun < T : LazyData> TrackList(
+    createItem: () -> T,
     defaultItems: List<T> = emptyList()
 ): By<mList<T>> {
     var onlyOne = OneAtATime()
@@ -217,7 +218,7 @@ inline fun <reified T : LazyData> TrackList(
 
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
                 if (savedKey.startsWith("$listName:")) {
-                    val item = T()
+                    val item = createItem()
                     item.key = savedKey
                     item.listName = listName
                     savedItems.add(item)
