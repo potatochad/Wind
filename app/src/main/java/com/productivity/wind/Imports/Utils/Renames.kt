@@ -188,10 +188,10 @@ typealias ListDouble = List<Double>
 typealias Wait = suspend () -> Unit
 typealias Wait_<T> = suspend (T) -> Unit
 
-typealias m_<T> = MutableState<T>
-typealias mBool= m_<Bool>
-typealias mInt= m_<Int>
-typealias mStr= m_<Str>
+typealias MState_<T> = MutableState<T>
+typealias MStateBool= MState_<Bool>
+typealias MStateInt= MState_<Int>
+typealias MStateStr= MState_<Str>
 	
 
 typealias ClassVar_<T, R> = KMutableProperty1<T, R>
@@ -222,9 +222,9 @@ fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {
 
 @Composable
 fun <T> r(x: () -> T) = remember { x() }
-fun <T> m(value: T) = mutableStateOf(value)
+fun <T> mState(value: T) = mutableStateOf(value)
 @Composable
-fun <T> r(x: T) = r { m(x) }
+fun <T> r(x: T) = r { mState(x) }
 @Composable
 inline fun <T> r(vararg keys: Any?, crossinline calc: () -> T): T = remember(*keys, calculation = calc)
 
