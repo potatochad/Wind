@@ -445,7 +445,7 @@ fun LazyScreen(
 
 @Composable
 fun LazyBigPopup(
-    show: mBool,
+    show: mStateBool,
 	title: Str = "Title",
 	onOk: Do = {},
 	onCancel: Do = {},
@@ -500,7 +500,7 @@ fun LazyBigPopup(
 
 @Composable
 fun LazyPopup(
-    show: m_<Bool>,
+    show: mState_<Bool>,
     title: Str = "Info",
 	msg: Str = "",
     showCancel: Bool = yes,
@@ -557,7 +557,7 @@ fun LazyPopup(
 
 
 
-var menu by m(no)
+var menu by mState(no)
 @Composable
 fun LazyMenu(
     onDismiss: Do? = null,
