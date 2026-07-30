@@ -186,7 +186,7 @@ fun SwitchBtn(
 @Composable
 fun CheckRow(
 	txt: Str="",
-	isChecked: mBool,
+	isChecked: mStateBool,
 	EndUI: ui_<Bool> = { _ -> }
 ) {
 	LazzyRow{
@@ -210,7 +210,7 @@ fun CheckRow(
 @Composable
 fun CheckCircle(
     index: Int,
-    selectedIndex: m_<Int>,
+    selectedIndex: mState_<Int>,
 ) {
 	Box(
 		Mod.s(15)
