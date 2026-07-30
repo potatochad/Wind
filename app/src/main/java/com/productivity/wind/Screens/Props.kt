@@ -221,7 +221,7 @@ object AppItem {
 @Composable
 fun GetPoints(){
     LazyPopup(
-        m(yes), 
+        mState(yes), 
         "Get ${Bar.funTime- Bar.Dpoints} more points", 
         "Only need ${Bar.funTime}(points)-${Bar.Dpoints}(unlock)=${Bar.funTime- Bar.Dpoints}",
         showCancel = no,
@@ -234,7 +234,7 @@ fun GetPoints(){
 
 
 @Composable
-fun PickLocation(show: mBool = m(yes), Do: DoStr ={}) {
+fun PickLocation(show: mStateBool = m(yes), Do: DoStr ={}) {
     LazyBigPopup(
         show,
 		"Choose Locations",
