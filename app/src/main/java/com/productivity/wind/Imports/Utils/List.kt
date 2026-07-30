@@ -167,7 +167,7 @@ fun <T> CustomOverrideList(
 
     toString: (MutableList<T>.() -> Str)? = null
 ): MutableList<T> {
-    val list = MutableList<T>().apply {
+    val list = mutableListOf<T>().apply {
         addAll(items)
     }
     
