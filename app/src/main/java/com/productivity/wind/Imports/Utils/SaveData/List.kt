@@ -255,11 +255,11 @@ fun < T : LazyData> TrackList(
 
 //nothing can be private
 abstract class LazyData {
-    var changed by m(no)
+    var changed by mState(no)
     var onChanged: Do = {}
-    val id by m(Id())
-    var listName by m("")
-    var key by m("")
+    val id by mState(Id())
+    var listName by mState("")
+    var key by mState("")
     
     val clazzName = this.className
     
@@ -292,7 +292,7 @@ abstract class LazyData {
         if (badVars.notEmpty) return
         
         
-        var customStr by m(toStr(key, varList))
+        var customStr by mState(toStr(key, varList))
 
         
         AppData.commit(key, customStr) 
