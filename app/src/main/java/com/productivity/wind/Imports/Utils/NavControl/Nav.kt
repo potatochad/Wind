@@ -163,7 +163,7 @@ inline fun <reified T> NavBackStackEntry.url(key: Str): T? {
 
 
 
-var AppNavUrlChanged by m(no)
+var AppNavUrlChanged by mState(no)
 fun goTo(route: Str){ 
     Do {
         AppNavUrlChanged = yes
