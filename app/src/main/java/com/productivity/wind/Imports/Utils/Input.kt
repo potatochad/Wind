@@ -132,9 +132,9 @@ import androidx.compose.ui.composed
 
 
 object Keyboard {
-    var h by m(0)
+    var h by mState(0)
         private set
-    var isOpen by m(no)
+    var isOpen by mState(no)
         private set
     
 
@@ -161,7 +161,7 @@ fun View.showKeyboard() {
 
 //focus manager DONT PUT in box
 object AppFocus {
-    private var clear by m(0)
+    private var clear by mState(0)
 
     fun clear() {
         clear++
@@ -192,7 +192,7 @@ class InputField(
     private val UIStrOn: Bool = yes,
 ) {
     var it by m(TextFieldValue(a))
-    var UIStr by m(UIStr(a))
+    var UIStr by mState(UIStr(a))
     
     val text: Str
         get() = it.text
@@ -249,7 +249,7 @@ class InputField(
 
 fun FixedInputScroll(
     text: TextFieldValue,
-    done: m_<Bool>,
+    done: mState_<Bool>,
     scroll: ScrollState
 ) {
 	var cursorPos = text.selection.start
