@@ -261,7 +261,7 @@ fun isSaved2(key: Str, input: Str) {
 
 
 
-var idList = mList<Str>()
+var idList = mutableListOf<Str>()
 fun <T> s(
 	default: T,
 	idExtra: Str = "",
@@ -291,7 +291,7 @@ inline fun <reified T> sList(
     default: List<T> = emptyList(),
 ): SnapshotStateList<T> {
 
-    val list = mList<T>()
+    val list = mutableStateListOf<T>()
 	
     try {
         val json = AppData.get(id, "")
