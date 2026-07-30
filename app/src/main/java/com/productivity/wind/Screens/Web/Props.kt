@@ -294,8 +294,8 @@ object WebUtils {
 		val url = toStr(ask.url)
 
 		
-		val badWords = mList<WebWord>()
-		val goodWords = mList<WebWord>()
+		val badWords = mutableListOf<WebWord>()
+		val goodWords = mutableListOf<WebWord>()
 
 		fun AddBadWord(type1: WebType){
 			badWords.add{ type = type1 }
