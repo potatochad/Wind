@@ -316,9 +316,9 @@ fun toBitmap(it: Any?): Bitmap {
 
 
 @Composable
-fun toMStr(what: Any?): mStr = when {
+fun toMStateStr(what: Any?): mStr = when {
     isMStr(what) -> what as mStr
-    else -> m("$what") as mStr
+    else -> mState("$what") as mStr
 }
 
 
