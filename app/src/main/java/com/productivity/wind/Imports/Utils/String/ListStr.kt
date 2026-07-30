@@ -143,7 +143,7 @@ fun Any.toLines(maxWidthPx: Float): List<UIStr> {
     fun measure2(x: Str) = measure.w(UIStr(x).strStyle(style))
 
     val lines = remember(str) {
-        val lines2 = mList<UIStr>()
+        val lines2 = mutableListOf<UIStr>()
         var line = ""
         
         str.splitStr {
