@@ -140,7 +140,7 @@ object WebProps {
 	object Popup {
 		@Composable
 		fun WebWordLock(
-			locked: mBool,
+			locked: mStateBool,
 		){
 			var show = r(locked.it)
 
@@ -305,7 +305,7 @@ object WebUtils {
 		}
 		
 		
-		var return1 by m(no)
+		var return1 by mState(no)
 		EachFoundBadWord(url) {
 			if (it.locked) {
 				it.vlog("Locked word")
@@ -333,9 +333,9 @@ object WebUtils {
 
 		
 
-		var noGoodWords by m(goodWords.empty)
-		var BadBlot by m(badWords.find { it.type == Blot })
-		var BadKeyWord by m(badWords.find { it.type == KeyWord })
+		var noGoodWords by mState(goodWords.empty)
+		var BadBlot by mState(badWords.find { it.type == Blot })
+		var BadKeyWord by mState(badWords.find { it.type == KeyWord })
 
 		if (noGoodWords){
 			if (BadKeyWord != null) {
