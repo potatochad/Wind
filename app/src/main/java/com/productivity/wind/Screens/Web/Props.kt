@@ -298,10 +298,10 @@ object WebUtils {
 		val goodWords = mutableListOf<WebWord>()
 
 		fun AddBadWord(type1: WebType){
-			badWords.add{ type = type1 }
+			badWords.add(WebWord(type = type1))
 		}
 		fun AddGoodWord(type1: WebType){
-			goodWords.add{ type = type1 }
+			goodWords.add(WebWord(type = type1))
 		}
 		
 		
