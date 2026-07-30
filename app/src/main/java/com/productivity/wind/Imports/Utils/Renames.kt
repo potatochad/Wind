@@ -155,14 +155,14 @@ val gson = Gson()
 val yes = true
 val no = false
 val maxInt = Int.MAX_VALUE
-var <T> m_<T>.it: T
+var <T> mState_<T>.it: T
     get() = this.value
     set(value) { this.value = value }
 
 //tiny more complex renames
-fun <T> set(state: MState_<T>?, value: T) { state?.value = value }
-fun show(state: MStateBool?) = set(state, yes)
-fun hide(state: MStateBool?) = set(state, no)
+fun <T> set(state: mState_<T>?, value: T) { state?.value = value }
+fun show(state: mStateBool?) = set(state, yes)
+fun hide(state: mStateBool?) = set(state, no)
 
 
 // <<<---Type aliases--->>>
@@ -295,16 +295,16 @@ fun Web?.url(url: Str) {
 fun Web?.reload() {
 	this?.reload()
 }
-fun m_<Web?>.reload() {
+fun mState_<Web?>.reload() {
     this.it?.reload()
 }
-fun m_<Web?>.url(url: Str) {
+fun mState_<Web?>.url(url: Str) {
     this.it?.loadUrl(url)
 }
 val Web?.url: Str
     get() = this?.url ?: ""
 
-val m_<Web?>.url: Str
+val mState_<Web?>.url: Str
     get() = this.it?.url ?: ""
 
 
