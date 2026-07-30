@@ -185,7 +185,7 @@ fun BasicInput(
 
 @Composable
 fun ScrollInput(
-	txt: mStr, 
+	txt: mStateStr, 
 	mod: Mod = Mod, 
 	scroll: ScrollState = Scroll(), 
 	h: Int = 150,  
@@ -215,7 +215,7 @@ fun ScrollInput(
 
 
 @Composable
-fun BigInput(txt: mStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){    
+fun BigInput(txt: mStateStr, mod: Mod = Mod, Do: DoStr = { txt.it = it }){    
 	var Field by r(TextFieldValue(txt.it))
 	var done = r(no)
 	var itIndex by r(0)
@@ -270,7 +270,7 @@ fun TinyInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 4, isInt: Bool = ye
     }
 }
 @Composable
-fun TinyInput(value: mInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {}, Do: DoInt = { _ -> }) {  
+fun TinyInput(value: mStateInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: Do = {}, Do: DoInt = { _ -> }) {  
 	var f1 by r(InputField(toStr(value.it)).gold().size(14.sp))
 	
     BasicInput(
