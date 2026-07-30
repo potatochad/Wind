@@ -380,7 +380,7 @@ fun decrypt(text: Str, key: Int) = text.map { (it.code - key).toChar() }.joinToS
 
 
 @Composable
-fun Backup(show: MStateBool) {
+fun Backup(show: mStateBool) {
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("text/plain")
     ) { uri ->
@@ -417,7 +417,7 @@ fun Backup(show: MStateBool) {
 
 
 @Composable
-fun Restore(show: MStateBool) {
+fun Restore(show: mStateBool) {
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
     ) { uri ->
