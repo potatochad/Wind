@@ -188,10 +188,10 @@ typealias ListDouble = List<Double>
 typealias Wait = suspend () -> Unit
 typealias Wait_<T> = suspend (T) -> Unit
 
-typealias MState_<T> = MutableState<T>
-typealias MStateBool= MState_<Bool>
-typealias MStateInt= MState_<Int>
-typealias MStateStr= MState_<Str>
+typealias mState_<T> = MutableState<T>
+typealias mStateBool= mState_<Bool>
+typealias mStateInt= mState_<Int>
+typealias mStateStr= mState_<Str>
 	
 
 typealias ClassVar_<T, R> = KMutableProperty1<T, R>
