@@ -62,7 +62,7 @@ import com.productivity.wind.Screens.*
 object TskProp {
 	
 	@Composable
-	fun PickApp(show: mBool = m(yes), Do: DoStr ={}) {
+	fun PickApp(show: mStateBool = m(yes), Do: DoStr ={}) {
 		var appList by r<List<Pair<AppInfo, Drawable?>>>(emptyList())
 		var loading by r(no)
 
