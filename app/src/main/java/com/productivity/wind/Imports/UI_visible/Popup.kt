@@ -88,7 +88,7 @@ fun DarkBackground(onDismiss: Do = {}){
 
 
 @Composable
-fun IsSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
+fun IsSure(show: mStateBool, msg: Str = "delete this item for ever", Do: Do) {
     LazyPopup(
         show,
         "Delete",
@@ -100,7 +100,7 @@ fun IsSure(show: mBool, msg: Str = "delete this item for ever", Do: Do) {
 @Composable
 fun AllowAppUsage() {
     LazyPopup(
-        m(yes),
+        mState(yes),
         "Need Usage Permission",
         "To function correctly, this app requires access to your app usage data. Granting this permission allows the app to monitor usage statistics and manage app-related tasks efficiently. Without it, this feature won't work.",
         onConfirm = {
