@@ -235,7 +235,7 @@ fun insideGeoCircle(point: LatLng, center: LatLng, radiusMeters: Double) = Spher
 @Composable
 fun GeoCircle(
 	geo: GeoCircle,
-	selected: mBool = m(no),
+	selected: mStateBool = m(no),
 	onSelect: DoStr = {},
 ){
 	var center = LatLng(geo.Lat, geo.Lng)
