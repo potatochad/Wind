@@ -160,9 +160,9 @@ var <T> m_<T>.it: T
     set(value) { this.value = value }
 
 //tiny more complex renames
-fun <T> set(state: m_<T>?, value: T) { state?.value = value }
-fun show(state: m_<Bool>?) = set(state, yes)
-fun hide(state: m_<Bool>?) = set(state, no)
+fun <T> set(state: MState_<T>?, value: T) { state?.value = value }
+fun show(state: MStateBool?) = set(state, yes)
+fun hide(state: MStateBool?) = set(state, no)
 
 
 // <<<---Type aliases--->>>
@@ -443,22 +443,22 @@ fun callerId(depth: Int = 0): Str {
 }
 
 class By<T>(value: T) {
-	var it by m(value)
-	var delegateValue = m(value)
-	private var id by m("")
-	private var gotOrSet by m(no)
+	var it by mState(value)
+	var delegateValue = mState(value)
+	private var id by mState("")
+	private var gotOrSet by mState(no)
 	
 
 	
-	private var onBuild: Do3_<ValVar, Str, m_<T>> = { _, _, _ -> }
+	private var onBuild: Do3_<ValVar, Str, MState_<T>> = { _, _, _ -> }
     private var onGet: Do_<ValVar> = {}
     private var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
-	private var onFirstGetOrSet: Do3_<ValVar, Str, m_<T>> = { _, _, _ -> }
+	private var onFirstGetOrSet: Do3_<ValVar, Str, MState_<T>> = { _, _, _ -> }
 
-	fun onBuild(x: Do3_<ValVar, Str, m_<T>>) = apply { onBuild = x }
+	fun onBuild(x: Do3_<ValVar, Str, MState_<T>>) = apply { onBuild = x }
     fun onGet(x: Do_<ValVar>) = apply { onGet = x }
     fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
-	fun onFirstGetOrSet(x: Do3_<ValVar, Str, m_<T>>) = apply { if (!gotOrSet) onFirstGetOrSet = x; gotOrSet = yes }
+	fun onFirstGetOrSet(x: Do3_<ValVar, Str, MState_<T>>) = apply { if (!gotOrSet) onFirstGetOrSet = x; gotOrSet = yes }
 
 
 	
