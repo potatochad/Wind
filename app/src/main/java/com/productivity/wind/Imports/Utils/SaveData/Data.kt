@@ -267,8 +267,8 @@ fun <T> s(
 	idExtra: Str = "",
 ): By<T> {
 	val delegate = By(default)
-	var goodId by m("")
-	var badId by m(no)
+	var goodId by mState("")
+	var badId by mState(no)
 	
 	delegate
 		.onBuild{ prop, id, mValue ->
