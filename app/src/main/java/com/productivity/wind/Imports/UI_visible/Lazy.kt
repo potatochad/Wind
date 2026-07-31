@@ -184,7 +184,7 @@ fun LazySlider(
     value: mState_<Float> = m(min),
     onChange: Do_<Float>,
 ) {
-    var sliderPos by remember(value.it, linear, min, max) { m(
+    var sliderPos by remember(value.it, linear, min, max) { mState(
             if (linear) {
 				((value.it - min) / (max - min)).coerceIn(0f, 1f)
 			} else {
