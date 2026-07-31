@@ -234,7 +234,7 @@ fun GetPoints(){
 
 
 @Composable
-fun PickLocation(show: mStateBool = m(yes), Do: DoStr ={}) {
+fun PickLocation(show: mStateBool = mState(yes), Do: DoStr ={}) {
     LazyBigPopup(
         show,
 		"Choose Locations",
@@ -257,7 +257,7 @@ fun PickLocation(show: mStateBool = m(yes), Do: DoStr ={}) {
 					},
 				){
 					Bar.privacyGeo.each {
-						GeoCircle(it, m(no)){ Id ->
+						GeoCircle(it, mState(no)){ Id ->
 							
 							selected = Bar.privacyGeo.find(Id)
 							slider.it = selected?.radius ?: slider.it
