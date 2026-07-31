@@ -430,7 +430,7 @@ fun Restore(show: mStateBool) {
                 ?.bufferedReader()
                 ?.useLines { lines ->
                     lines.forEach { lineEncrypted ->
-						var line by m("")
+						var line by mState("")
 						if (Bar.encryptedBackup) {
 							line = decrypt(lineEncrypted, 132)
 						} else {
