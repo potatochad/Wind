@@ -220,6 +220,10 @@ fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {
     return this.getDelegate(instance)
 }
 
+
+fun <T> mList() = mutableListOf<T>()
+fun <T> mStateList() = mutableStateListOf<T>()
+
 @Composable
 fun <T> r(x: () -> T) = remember { x() }
 fun <T> mState(value: T) = mutableStateOf(value)
