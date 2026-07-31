@@ -292,7 +292,7 @@ fun TinyInput(value: mStateInt, mod: Mod = Mod, maxLetters: Int = 4, onAction: D
 
 @Composable
 fun RowScope.LongInput(value: Any?, mod: Mod = Mod, maxLetters: Int = 40, onAction: Do = {}, Do: DoStr = { _ -> }) {  
-	var txt = toMStr(value)
+	var txt = toMStateStr(value)
 	var Field by r(InputField(txt.it).white().size(19.sp))
 	val baseMod = Mod.weight(1f).h(50).space(8, 4).background(inputColor, shape = RoundedCornerShape(4.dp))          
 
