@@ -354,10 +354,10 @@ val Str.words: Str
 
 
 
-fun isM(x: Any?): Bool = x is m_<*>
-fun isMBool(x: Any?): Bool = x is m_<*> && x.it is Bool
-fun isMStr(x: Any?): Bool = x is m_<*> && x.it is Str
-fun isMInt(x: Any?): Bool = x is m_<*> && x.it is Int
+fun isMState(x: Any?): Bool = x is mState_<*>
+fun isMStateBool(x: Any?): Bool = x is mState_<*> && x.it is Bool
+fun isMStateStr(x: Any?): Bool = x is mState_<*> && x.it is Str
+fun isMStateInt(x: Any?): Bool = x is mState_<*> && x.it is Int
 
 
 
