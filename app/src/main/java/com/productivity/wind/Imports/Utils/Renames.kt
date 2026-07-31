@@ -450,12 +450,12 @@ class By<T>(value: T) {
 	
 
 	
-	private var onBuild: Do3_<ValVar, Str, MState_<T>> = { _, _, _ -> }
+	private var onBuild: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
     private var onGet: Do_<ValVar> = {}
     private var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
 	private var onFirstGetOrSet: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
 
-	fun onBuild(x: Do3_<ValVar, Str, MState_<T>>) = apply { onBuild = x }
+	fun onBuild(x: Do3_<ValVar, Str, mState_<T>>) = apply { onBuild = x }
     fun onGet(x: Do_<ValVar>) = apply { onGet = x }
     fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
 	fun onFirstGetOrSet(x: Do3_<ValVar, Str, mState_<T>>) = apply { if (!gotOrSet) onFirstGetOrSet = x; gotOrSet = yes }
