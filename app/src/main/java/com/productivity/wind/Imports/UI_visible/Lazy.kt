@@ -181,7 +181,7 @@ fun LazySlider(
     max: Float = 200_000f,
     linear: Bool = no,
     circleS: Float = 15f,
-    value: m_<Float> = m(min),
+    value: mState_<Float> = m(min),
     onChange: Do_<Float>,
 ) {
     var sliderPos by remember(value.it, linear, min, max) { m(
