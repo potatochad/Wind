@@ -191,7 +191,7 @@ class InputField(
     a: Str = "",
     private val UIStrOn: Bool = yes,
 ) {
-    var it by m(TextFieldValue(a))
+    var it by mState(TextFieldValue(a))
     var UIStr by mState(UIStr(a))
     
     val text: Str
