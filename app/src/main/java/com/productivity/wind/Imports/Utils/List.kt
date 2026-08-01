@@ -401,7 +401,7 @@ fun <T> CustomAlertList(
 
 
 class LazyList<T> {
-    private val list = mutableStateListOf<T>()
+    private val list = mStateList<T>()
 
     var onAdd: ((T) -> Unit)? = null
     var onRemove: ((T) -> Unit)? = null
