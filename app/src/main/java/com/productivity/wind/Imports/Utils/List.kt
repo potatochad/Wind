@@ -183,7 +183,7 @@ fun <T> CustomAlertList(
     onEmptyCheck: mList<T>.(Bool) -> Unit = {},
 
     onToString: mList<T>.(Str) -> Unit = {}
-): MutableList<T> {
+): mList<T> {
 
     val list = mList<T>().apply {
         addAll(items)
@@ -225,7 +225,7 @@ fun <T> CustomAlertList(
             return value
         }
 
-        override fun remove(element: T): Boolean {
+        override fun remove(element: T): Bool {
             val result = list.remove(element)
             if (result) list.onRemove(element)
             return result
@@ -237,7 +237,7 @@ fun <T> CustomAlertList(
             return value
         }
 
-        override fun removeAll(elements: Collection<T>): Boolean {
+        override fun removeAll(elements: Collection<T>): Bool {
             val result = list.removeAll(elements)
             if (result) list.onRemoveAll(elements)
             return result
@@ -249,13 +249,13 @@ fun <T> CustomAlertList(
             return old
         }
 
-        override fun contains(element: T): Boolean {
+        override fun contains(element: T): Bool {
             val result = list.contains(element)
             list.onContains(element)
             return result
         }
 
-        override fun containsAll(elements: Collection<T>): Boolean {
+        override fun containsAll(elements: Collection<T>): Bool {
             val result = list.containsAll(elements)
             list.onContainsAll(elements)
             return result
