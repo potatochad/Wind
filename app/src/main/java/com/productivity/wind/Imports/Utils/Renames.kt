@@ -180,11 +180,19 @@ typealias Do_<T> = (T) -> Unit
 typealias Do2_<A, B> = (A, B) -> Unit
 typealias Do3_<A, B, C> = (A, B, C) -> Unit
 
+
 typealias ListStr = List<Str>
 typealias ListInt = List<Int>
 typealias ListBool = List<Bool>
 typealias ListDouble = List<Double>
 
+typealias mList<T> = MutableList<T>
+typealias mListStr = mList<Str>
+typealias mListInt = mList<Int>
+typealias mListBool = mList<Bool>
+typealias mListDouble = mList<Double>
+
+	
 typealias Wait = suspend () -> Unit
 typealias Wait_<T> = suspend (T) -> Unit
 
