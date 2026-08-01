@@ -260,11 +260,13 @@ fun File.file(name: Str): File {
     return File(this, name)
 }
 
-
+/*
 data class T<T>(
     val value: T,
     val type: Class<*> = value!!::class.java
 )
+*/
+	
 data class VarInfo<T>(
 	val name: Str,
     val value: T,
