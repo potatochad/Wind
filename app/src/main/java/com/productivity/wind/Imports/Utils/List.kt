@@ -307,50 +307,25 @@ fun <T> CustomAlertList(
     }
 }
 
-/*
-//maybe use reifiend inline or something so that, it knows the typee
+
 class LazyList<T>(
-    items: Collection<T> = emptyList(),
+    vararg items: T,
 ) {
-    private val list = mStateList<T>()
+    val it = items.toMList()
+    var it = mStateList<T>()
 
 // onAdd: mList<T>.(T) -> Unit = {},
-    var onAdd: ((T) -> Unit)? = null
-    var onRemove: ((T) -> Unit)? = null
-    
-    private inline fun update(block: () -> Unit) {
-        block()
-        onChange?.invoke()
-    }
 
     val size get() = list.size
+    operator fun get(index: Int) = list[index] //val item = lazyList[0]
 
-    operator fun get(index: Int) = list[index]
-
-    fun add(item: T) = update {
-        list.add(item)
-        onAdd?.invoke(item)
-    }
-
-    fun remove(item: T) = update {
-        if (list.remove(item)) {
-            onRemove?.invoke(item)
-        }
-    }
-
-    fun removeAt(index: Int) = update {
-        onRemove?.invoke(list.removeAt(index))
-    }
-
-    fun clear() = update {
-        list.clear()
-    }
-
-    fun forEach(block: (T) -> Unit) = list.forEach(block)
-
-    fun toList() = list.toList()
+    fun clear() = it.clear()
+    fun add(item: T) = it.add(item)
+    fun remove(item: T) = it.remove(item)
+    fun removeAt(index: Int) = it.removeAt(index)
+    fun each(block: (T) -> Unit) = it.forEach(block)
 }
-*/
+
 
 
 
