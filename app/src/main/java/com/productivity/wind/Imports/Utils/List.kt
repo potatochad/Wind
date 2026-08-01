@@ -273,13 +273,13 @@ fun <T> CustomAlertList(
             return result
         }
 
-        override fun isEmpty(): Boolean {
+        override fun isEmpty(): Bool {
             val result = list.isEmpty()
             list.onEmptyCheck(result)
             return result
         }
 
-        override fun toString(): String {
+        override fun toString(): Str {
             val result = list.toString()
             list.onToString(result)
             return result
@@ -297,7 +297,7 @@ fun <T> CustomAlertList(
         override fun subList(fromIndex: Int, toIndex: Int) 
            = list.subList(fromIndex, toIndex)
 
-        override fun retainAll(elements: Collection<T>): Boolean {
+        override fun retainAll(elements: Collection<T>): Bool {
             return list.retainAll(elements)
         }
 
@@ -308,9 +308,13 @@ fun <T> CustomAlertList(
 }
 
 /*
-class LazyList<T> {
+//maybe use reifiend inline or something so that, it knows the typee
+class LazyList<T>(
+    items: Collection<T> = emptyList(),
+) {
     private val list = mStateList<T>()
 
+// onAdd: mList<T>.(T) -> Unit = {},
     var onAdd: ((T) -> Unit)? = null
     var onRemove: ((T) -> Unit)? = null
     
