@@ -138,34 +138,11 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 
-
+/*
 fun <T> CustomOverrideList(
     items: Collection<T> = emptyList(),
 
     add: (MutableList<T>.(T) -> Bool)? = null,
-    addAt: (MutableList<T>.(Int, T) -> Unit)? = null,
-    addAll: (MutableList<T>.(Collection<T>) -> Bool)? = null,
-    addAllAt: (MutableList<T>.(Int, Collection<T>) -> Bool)? = null,
-
-    clear: (MutableList<T>.() -> Unit)? = null,
-
-    get: (MutableList<T>.(Int) -> T)? = null,
-
-    remove: (MutableList<T>.(T) -> Bool)? = null,
-    removeAt: (MutableList<T>.(Int) -> T)? = null,
-    removeAll: (MutableList<T>.(Collection<T>) -> Bool)? = null,
-
-    set: (MutableList<T>.(Int, T) -> T)? = null,
-
-    contains: (MutableList<T>.(T) -> Bool)? = null,
-    containsAll: (MutableList<T>.(Collection<T>) -> Bool)? = null,
-
-    indexOf: (MutableList<T>.(T) -> Int)? = null,
-    lastIndexOf: (MutableList<T>.(T) -> Int)? = null,
-
-    isEmpty: (MutableList<T>.() -> Bool)? = null,
-
-    toString: (MutableList<T>.() -> Str)? = null
 ): MutableList<T> {
     val list = mutableListOf<T>().apply {
         addAll(items)
@@ -175,111 +152,44 @@ fun <T> CustomOverrideList(
         override fun add(element: T) =
             add.doOr(list, element){ list.add(element) }
 
-        override fun add(index: Int, element: T) {
-            addAt.doOr(list, index, element){ list.add(index, element) }
-        }
-
-        override fun addAll(elements: Collection<T>) =
-            addAll.doOr(list, elements){ list.addAll(elements) }
-
-        override fun addAll(
-            index: Int,
-            elements: Collection<T>
-        ) =
-            addAllAt.doOr(list, index, elements){ list.addAll(index, elements) }
-            
-
-        override fun clear() {
-            clear.doOr(list){ list.clear() }
-            
-        }
-
-        override fun get(index: Int) =
-            get.doOr(list, index){ list[index] }
-        
-
-        override fun remove(element: T) =
-            remove.doOr(list, element){ list.remove(element) }
-
-        override fun removeAt(index: Int) =
-            removeAt.doOr(list, index){ list.removeAt(index) }
-        
-
-        override fun removeAll(elements: Collection<T>) =
-            removeAll.doOr(list, elements){ list.removeAll(elements) }
-        
-
-        override fun set(index: Int, element: T) =
-            set.doOr(list, index, element){ list.set(index, element) }
-        
-
-        override fun contains(element: T) =
-            contains.doOr(list, element){ list.contains(element) }
-        
-
-        override fun containsAll(elements: Collection<T>) =
-            containsAll.doOr(list, elements){ list.containsAll(elements) }
-        
-
-        override fun indexOf(element: T) =
-            indexOf.doOr(list, element){ list.indexOf(element) }
-        
-
-        override fun lastIndexOf(element: T) =
-            lastIndexOf.doOr(list, element){ list.lastIndexOf(element) }
-        
-
-        override fun isEmpty() =
-            isEmpty.doOr(list){ list.isEmpty() }
-        
-        override fun toString() =
-            toString.doOr(list){ toStr(list) }
-        
-
-        override val size get() = list.size
-        override fun iterator() = list.iterator()
-        override fun listIterator() = list.listIterator()
-        override fun listIterator(index: Int) = list.listIterator(index)
-        override fun subList(fromIndex: Int, toIndex: Int) = list.subList(fromIndex, toIndex)
-        override fun retainAll(elements: Collection<T>) = list.retainAll(elements)
-    }
 }
+*/
 
 
 fun <T> CustomAlertList(
     items: Collection<T> = emptyList(),
 
-    onAdd: MutableList<T>.(T) -> Unit = {},
-    onAddAt: MutableList<T>.(Int, T) -> Unit = { _, _ -> },
-    onAddAll: MutableList<T>.(Collection<T>) -> Unit = {},
-    onAddAllAt: MutableList<T>.(Int, Collection<T>) -> Unit = { _, _ -> },
+    onAdd: mList<T>.(T) -> Unit = {},
+    onAddAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
+    onAddAll: mList<T>.(Collection<T>) -> Unit = {},
+    onAddAllAt: mList<T>.(Int, Collection<T>) -> Unit = { _, _ -> },
 
-    onClear: MutableList<T>.() -> Unit = {},
+    onClear: mList<T>.() -> Unit = {},
 
-    onGet: MutableList<T>.(Int, T) -> Unit = { _, _ -> },
+    onGet: mList<T>.(Int, T) -> Unit = { _, _ -> },
 
-    onRemove: MutableList<T>.(T) -> Unit = {},
-    onRemoveAt: MutableList<T>.(Int, T) -> Unit = { _, _ -> },
-    onRemoveAll: MutableList<T>.(Collection<T>) -> Unit = {},
+    onRemove: mList<T>.(T) -> Unit = {},
+    onRemoveAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
+    onRemoveAll: mList<T>.(Collection<T>) -> Unit = {},
 
-    onSet: MutableList<T>.(Int, T) -> Unit = { _, _ -> },
+    onSet: mList<T>.(Int, T) -> Unit = { _, _ -> },
 
-    onContains: MutableList<T>.(T) -> Unit = {},
-    onContainsAll: MutableList<T>.(Collection<T>) -> Unit = {},
+    onContains: mList<T>.(T) -> Unit = {},
+    onContainsAll: mList<T>.(Collection<T>) -> Unit = {},
 
-    onIndexOf: MutableList<T>.(T, Int) -> Unit = { _, _ -> },
-    onLastIndexOf: MutableList<T>.(T, Int) -> Unit = { _, _ -> },
+    onIndexOf: mList<T>.(T, Int) -> Unit = { _, _ -> },
+    onLastIndexOf: mList<T>.(T, Int) -> Unit = { _, _ -> },
 
-    onEmptyCheck: MutableList<T>.(Bool) -> Unit = {},
+    onEmptyCheck: mList<T>.(Bool) -> Unit = {},
 
-    onToString: MutableList<T>.(Str) -> Unit = {}
+    onToString: mList<T>.(Str) -> Unit = {}
 ): MutableList<T> {
 
-    val list = mutableListOf<T>().apply {
+    val list = mList<T>().apply {
         addAll(items)
     }
 
-    return object : MutableList<T> {
+    return object : mList<T> {
 
         override fun add(element: T): Bool {
             val result = list.add(element)
@@ -384,10 +294,8 @@ fun <T> CustomAlertList(
 
         override fun listIterator(index: Int) = list.listIterator(index)
 
-        override fun subList(
-            fromIndex: Int,
-            toIndex: Int
-        ) = list.subList(fromIndex, toIndex)
+        override fun subList(fromIndex: Int, toIndex: Int) 
+           = list.subList(fromIndex, toIndex)
 
         override fun retainAll(elements: Collection<T>): Boolean {
             return list.retainAll(elements)
