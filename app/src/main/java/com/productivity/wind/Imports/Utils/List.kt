@@ -245,6 +245,7 @@ fun <T> CustomOverrideList(
     }
 }
 
+
 fun <T> CustomAlertList(
     items: Collection<T> = emptyList(),
 
@@ -397,6 +398,52 @@ fun <T> CustomAlertList(
         override fun hashCode() = list.hashCode()
     }
 }
+
+
+class LazyList<T> {
+    private val list = mutableStateListOf<T>()
+
+    
+
+    val size get() = list.size
+
+    operator fun get(index: Int) = list[index]
+
+    fun add(item: T) = list.add(item)
+
+    fun remove(item: T) = list.remove(item)
+
+    fun removeAt(index: Int) = list.removeAt(index)
+
+    fun clear() = list.clear()
+
+    fun forEach(block: (T) -> Unit) = list.forEach(block)
+
+    fun toList(): List<T> = list
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
