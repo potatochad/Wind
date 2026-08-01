@@ -403,23 +403,40 @@ fun <T> CustomAlertList(
 class LazyList<T> {
     private val list = mutableStateListOf<T>()
 
+    var onAdd: ((T) -> Unit)? = null
+    var onRemove: ((T) -> Unit)? = null
     
+    private inline fun update(block: () -> Unit) {
+        block()
+        onChange?.invoke()
+    }
 
     val size get() = list.size
 
     operator fun get(index: Int) = list[index]
 
-    fun add(item: T) = list.add(item)
+    fun add(item: T) = update {
+        list.add(item)
+        onAdd?.invoke(item)
+    }
 
-    fun remove(item: T) = list.remove(item)
+    fun remove(item: T) = update {
+        if (list.remove(item)) {
+            onRemove?.invoke(item)
+        }
+    }
 
-    fun removeAt(index: Int) = list.removeAt(index)
+    fun removeAt(index: Int) = update {
+        onRemove?.invoke(list.removeAt(index))
+    }
 
-    fun clear() = list.clear()
+    fun clear() = update {
+        list.clear()
+    }
 
     fun forEach(block: (T) -> Unit) = list.forEach(block)
 
-    fun toList(): List<T> = list
+    fun toList() = list.toList()
 }
 
 
