@@ -312,7 +312,7 @@ fun <T> CustomOverrideList(
 
 
 abstract class EasyListExtension<T>(
-    vararg items: T,
+    items: Array<out T>,
 ) {
     protected var list = items.toMutableList()
     
