@@ -229,8 +229,9 @@ fun <T> KProperty1<T, *>.getTheBy(instance: T): Any? {
 }
 
 
-fun <T> mList() = mutableListOf<T>()
-fun <T> mStateList() = mutableStateListOf<T>()
+fun <T> mList(vararg items: T) = mutableListOf(*items)
+fun <T> mStateList(vararg items: T) = mutableStateListOf(*items)
+
 
 @Composable
 fun <T> r(x: () -> T) = remember { x() }
