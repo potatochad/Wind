@@ -344,6 +344,11 @@ abstract class EasyListExtension<T>(
     fun each(block: (T) -> Unit) {
         list.forEach(block)
     }
+
+    operator fun get(index: Int) = list[index]
+    operator fun set(index: Int, value: T) = list[index] = value
+    operator fun plusAssign(item: T) = add(item)
+    operator fun minusAssign(item: T) = remove(item)
 }
 
 
@@ -353,7 +358,6 @@ class EasyList<T>(
 
     val size get() = list.size
 
-    operator fun get(index: Int) = list[index]
 }
 
 
