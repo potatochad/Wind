@@ -309,7 +309,7 @@ fun <T> CustomOverrideList(
 }
 */
 
-class LazyList<T>(
+class mLazyList<T>(
     vararg items: T,
 ) {
     val it = items.toMutableList()
