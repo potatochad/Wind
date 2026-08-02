@@ -314,7 +314,8 @@ fun <T> CustomOverrideList(
 abstract class EasyListExtension<T>(
     vararg items: T,
 ) {
-    private var list = items.toMutableList()
+    protected var list = items.toMutableList()
+    
     var onAdd: mList<T>.(T) -> Unit = {}
     var onClear: mList<T>.() -> Unit = {}
     var onRemove: mList<T>.(T) -> Unit = {}
