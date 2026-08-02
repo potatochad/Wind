@@ -218,8 +218,8 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 		}
 		LazzyRow {
             Btn("Edit All"){
-                test2List.each {
-					it = toInt(TimeMillis())
+                test2List.each { index, it ->
+					test2List[index] = toInt(TimeMillis())
 				}
              }
 		}
