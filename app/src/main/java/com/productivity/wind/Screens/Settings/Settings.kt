@@ -189,7 +189,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
             LazyColumn {
                 items(
                     items = Bar.items,
-                    key = { it.hashCode() }
+                    key = { it.id }
                 ) {
                     Text(it.name)
                 }
