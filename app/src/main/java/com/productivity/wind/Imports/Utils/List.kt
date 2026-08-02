@@ -309,9 +309,19 @@ fun <T> CustomOverrideList(
 }
 */
 
+
+
+abstract class EasyListExtension {
+    var changed by mState(no)
+    var onChanged: Do = {}
+}
+    
+
+
+
 class EasyList<T>(
     vararg items: T,
-) {
+) : EasyListExtension() {
     val it = items.toMutableList()
 
     onAdd: mList<T>.(T) -> Unit = {},
