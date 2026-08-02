@@ -197,7 +197,9 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
         }
     }
 
-	val test2List by r(easyList(1,2,3,4))
+	
+
+	val test2List by r(EasyList(1,2,3,4))
 
 	move(20)
 	Text("test easyList")
@@ -205,21 +207,11 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 	LazzyColumn {
         LazzyRow {
             Btn("Add"){
-                Bar.items += TestData()
+                test2List += 1
             }
-			Btn("Add 10"){
-				val timer = logTimer("Bar.items size: ${Bar.items.size}")
-				repeat(10) {
-					Bar.items += TestData()
-				}
-                timer.stop()
-			   
-			}
             Btn("Delete"){
-                    if (Bar.items.isNotEmpty()) {
-                        Bar.items.removeAt(0)
-                    }
-                }
+                test2List.removeAt(0)
+            }
             Btn("Edit"){
                     if (Bar.items.isNotEmpty()) {
                         Bar.items[0].name = "updated ${TimeMillis()}"
