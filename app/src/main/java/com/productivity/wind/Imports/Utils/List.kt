@@ -314,7 +314,9 @@ class EasyList<T>(
 ) {
     val it = items.toMutableList()
 
-    // onAdd: mList<T>.(T) -> Unit = {},
+    onAdd: mList<T>.(T) -> Unit = {},
+    onClear: mList<T>.(T) -> Unit = {},
+    onRemove: mList<T>.(T) -> Unit = {},
 
     val size get() = it.size
     operator fun get(index: Int) = it[index] //val item = lazyList[0]
