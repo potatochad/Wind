@@ -314,42 +314,44 @@ fun <T> CustomOverrideList(
 abstract class EasyListExtension<T>(
     items: Array<out T>,
 ) {
-    protected var list = mStateList<T>(*items)
+    var it = mStateList<T>(*items)
     
     var onAdd: mList<T>.(T) -> Unit = {}
     var onClear: mList<T>.() -> Unit = {}
     var onRemove: mList<T>.(T) -> Unit = {}
 
     fun clear() {
-        list.clear()
-        list.onClear()
+        it.clear()
+        it.onClear()
     }
 
     fun add(item: T) {
-        list.add(item)
-        list.onAdd(item)
+        it.add(item)
+        it.onAdd(item)
     }
 
     fun remove(item: T) {
-        list.remove(item)
-        list.onRemove(item)
+        it.remove(item)
+        it.onRemove(item)
     }
 
     fun removeAt(index: Int) {
-        val item = list.getOrNull(index) ?: return
-        list.removeAt(index)
-        list.onRemove(item)
+        val item = it.getOrNull(index) ?: return
+        it.removeAt(index)
+        it.onRemove(item)
     }
 
     fun each(block: (T) -> Unit) = list.forEach(block)
     fun each(block: (index: Int, item: T) -> Unit) {
-        list.forEachIndexed { index, item ->
+        it.forEachIndexed { index, item ->
             block(index, item)
         }
     }
 
-    operator fun get(index: Int) = list[index]
-    operator fun set(index: Int, value: T){ list[index] = value }
+    val size get() = it.size
+
+    operator fun get(index: Int) = it[index]
+    operator fun set(index: Int, value: T){ it[index] = value }
     operator fun plusAssign(item: T) = add(item)
     operator fun minusAssign(item: T) = remove(item)
 }
@@ -359,7 +361,7 @@ class EasyList<T>(
     vararg items: T
 ) : EasyListExtension<T>(items) {
 
-    val size get() = list.size
+    
 
 }
 
