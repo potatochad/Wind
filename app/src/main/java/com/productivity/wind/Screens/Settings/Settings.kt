@@ -213,30 +213,29 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                 test2List.removeAt(0)
             }
             Btn("Edit"){
-                    if (Bar.items.isNotEmpty()) {
-                        Bar.items[0].name = "updated ${TimeMillis()}"
-                    }
-                }
+                test2List[0] = TimeMillis()
+			}
 		}
 		LazzyRow {
             Btn("Edit All"){
-                    Bar.items.forEach {
-						it.name = "updated ${TimeMillis()}"
-					}
-                }
+                test2List.each {
+					it = TimeMillis()
+				}
+             }
 		}
 
         LazzyColumn(Mod.h(300)) {
             LazyColumn {
                 items(
-                    items = Bar.items,
+                    items = test2List,
                     key = { it.hashCode() }
                 ) {
-                    Text(it.name)
+                    Text("$it")
                 }
             }
         }
 	}
+	
 }
 
 
