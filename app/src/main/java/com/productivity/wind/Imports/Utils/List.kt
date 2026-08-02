@@ -138,23 +138,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 
-/*
-fun <T> CustomOverrideList(
-    items: Collection<T> = emptyList(),
-
-    add: (MutableList<T>.(T) -> Bool)? = null,
-): MutableList<T> {
-    val list = mutableListOf<T>().apply {
-        addAll(items)
-    }
-    
-    return object : MutableList<T> {
-        override fun add(element: T) =
-            add.doOr(list, element){ list.add(element) }
-
-}
-*/
-
 
 fun <T> CustomAlertList(
     items: Collection<T> = emptyList(),
@@ -308,13 +291,30 @@ fun <T> CustomAlertList(
 }
 
 
+
+/*
+fun <T> CustomOverrideList(
+    items: Collection<T> = emptyList(),
+
+    add: (MutableList<T>.(T) -> Bool)? = null,
+): MutableList<T> {
+    val list = mutableListOf<T>().apply {
+        addAll(items)
+    }
+    
+    return object : MutableList<T> {
+        override fun add(element: T) =
+            add.doOr(list, element){ list.add(element) }
+
+}
+*/
+
 class LazyList<T>(
     vararg items: T,
 ) {
     val it = items.toMList()
-    var it = mStateList<T>()
 
-// onAdd: mList<T>.(T) -> Unit = {},
+    // onAdd: mList<T>.(T) -> Unit = {},
 
     val size get() = list.size
     operator fun get(index: Int) = list[index] //val item = lazyList[0]
