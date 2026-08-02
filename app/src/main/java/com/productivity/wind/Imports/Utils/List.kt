@@ -341,8 +341,11 @@ abstract class EasyListExtension<T>(
         list.onRemove(item)
     }
 
-    fun each(block: (T) -> Unit) {
-        list.forEach(block)
+    fun each(block: (T) -> Unit) = list.forEach(block)
+    fun each(block: (index: Int, item: T) -> Unit) {
+        list.forEachIndexed { index, item ->
+            block(index, item)
+        }
     }
 
     operator fun get(index: Int) = list[index]
