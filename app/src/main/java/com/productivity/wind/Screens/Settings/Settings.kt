@@ -199,7 +199,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 
 	
 
-	val test2List by r(EasyList(1,2,3,4))
+	val test2List = r(EasyList(1,2,3,4))
 
 	move(20)
 	Text("test easyList")
