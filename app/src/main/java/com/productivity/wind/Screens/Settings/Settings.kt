@@ -213,13 +213,13 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
                 test2List.removeAt(0)
             }
             Btn("Edit"){
-                test2List[0] = TimeMillis()
+                test2List[0] = toInt(TimeMillis())
 			}
 		}
 		LazzyRow {
             Btn("Edit All"){
                 test2List.each {
-					it = TimeMillis()
+					it = toInt(TimeMillis())
 				}
              }
 		}
