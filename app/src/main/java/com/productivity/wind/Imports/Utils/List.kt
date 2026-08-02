@@ -308,7 +308,7 @@ fun <T> CustomOverrideList(
 
 }
 */
-
+/*
 class LazyList<T>(
     vararg items: T,
 ) {
@@ -325,7 +325,7 @@ class LazyList<T>(
     fun removeAt(index: Int) = it.removeAt(index)
     fun each(block: (T) -> Unit) = it.forEach(block)
 }
-
+*/
 
 
 
