@@ -346,7 +346,7 @@ abstract class EasyListExtension<T>(
 }
 
 
-class EasyList<T>(
+class easyList<T>(
     vararg items: T
 ) : EasyListExtension<T>(items) {
 
