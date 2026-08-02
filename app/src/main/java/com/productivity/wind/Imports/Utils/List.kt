@@ -308,16 +308,16 @@ fun <T> CustomOverrideList(
 
 }
 */
-/*
+
 class LazyList<T>(
     vararg items: T,
 ) {
-    val it = items.toMList()
+    val it = items.toMutableList()
 
     // onAdd: mList<T>.(T) -> Unit = {},
 
-    val size get() = list.size
-    operator fun get(index: Int) = list[index] //val item = lazyList[0]
+    val size get() = it.size
+    operator fun get(index: Int) = it[index] //val item = lazyList[0]
 
     fun clear() = it.clear()
     fun add(item: T) = it.add(item)
@@ -325,7 +325,7 @@ class LazyList<T>(
     fun removeAt(index: Int) = it.removeAt(index)
     fun each(block: (T) -> Unit) = it.forEach(block)
 }
-*/
+
 
 
 
