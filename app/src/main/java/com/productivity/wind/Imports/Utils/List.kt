@@ -311,31 +311,47 @@ fun <T> CustomOverrideList(
 
 
 
-abstract class EasyListExtension {
-    var changed by mState(no)
-    var onChanged: Do = {}
-}
-    
+abstract class EasyListExtension<T>(
+    vararg items: T,
+) {
+    private var list = items.toMutableList()
+    var onAdd: mList<T>.(T) -> Unit = {}
+    var onClear: mList<T>.() -> Unit = {}
+    var onRemove: mList<T>.(T) -> Unit = {}
 
+    fun clear() {
+        list.clear()
+        list.onClear()
+    }
+
+    fun add(item: T) {
+        list.add(item)
+        list.onAdd(item)
+    }
+
+    fun remove(item: T) {
+        list.remove(item)
+        list.onRemove(item)
+    }
+
+    fun removeAt(index: Int) {
+        val item = list.removeAt(index)
+        list.onRemove(item)
+    }
+
+    fun each(block: (T) -> Unit) {
+        list.forEach(block)
+    }
+}
 
 
 class EasyList<T>(
-    vararg items: T,
-) : EasyListExtension() {
-    val it = items.toMutableList()
+    vararg items: T
+) : EasyListExtension<T>(items) {
 
-    onAdd: mList<T>.(T) -> Unit = {},
-    onClear: mList<T>.(T) -> Unit = {},
-    onRemove: mList<T>.(T) -> Unit = {},
+    val size get() = list.size
 
-    val size get() = it.size
-    operator fun get(index: Int) = it[index] //val item = lazyList[0]
-
-    fun clear() = it.clear()
-    fun add(item: T) = it.add(item)
-    fun remove(item: T) = it.remove(item)
-    fun removeAt(index: Int) = it.removeAt(index)
-    fun each(block: (T) -> Unit) = it.forEach(block)
+    operator fun get(index: Int) = list[index]
 }
 
 
