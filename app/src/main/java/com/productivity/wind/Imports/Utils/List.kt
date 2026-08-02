@@ -336,7 +336,8 @@ abstract class EasyListExtension<T>(
     }
 
     fun removeAt(index: Int) {
-        val item = list.removeAt(index)
+        val item = list.getOrNull(index) ?: return
+        list.removeAt(index)
         list.onRemove(item)
     }
 
@@ -346,7 +347,7 @@ abstract class EasyListExtension<T>(
 }
 
 
-class easyList<T>(
+class EasyList<T>(
     vararg items: T
 ) : EasyListExtension<T>(items) {
 
