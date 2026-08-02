@@ -361,9 +361,8 @@ class EasyList<T>(
 }
 
 
-
-
-
+@Composable
+fun <T> rEasyList(vararg items: T) = r { EasyList(*items) }
 
 
 
