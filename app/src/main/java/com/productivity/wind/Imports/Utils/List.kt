@@ -351,14 +351,12 @@ abstract class EasyListExtension<T>(
         }
     }
 
-    fun each(block: (T) -> Unit) = oneAtime.use { it.forEach(block) }
+    fun each(block: (T) -> Unit) = it.toList().forEach(block)
 
     //this may cause issues??
     fun each(block: (index: Int, item: T) -> Unit) {
-        oneAtime.use { 
-            it.forEachIndexed { index, item ->
-                block(index, item)
-            }
+        it.toList().forEachIndexed { index, item ->
+            block(index, item)
         }
     }
 
