@@ -506,19 +506,33 @@ fun RemoteViews.onClick(
     setOnClickPendingIntent(viewId, pendingIntent)
 }
 
+// no courotines!! 
+class OneWorker {
+    private val scope = CoroutineScope(Dispatchers.IO)
+    private val queue = Channel<suspend () -> Unit>()
 
+    init {
+        scope.launch {
+            for (task in queue) {
+                task()
+            }
+        }
+    }
+
+    fun post(task: suspend () -> Unit) {
+        queue.trySend(task)
+    }
+}
 class OneAtATime {
     private val mutex = Mutex()
 
-    fun <T> use(block: suspend () -> T): Deferred<T> {
-		return appScope.async {
+    fun <T> use(block: () -> T): Deferred<T> {
 			mutex.withLock {
 				block()
 			}
 		}
 	}
-	fun <T> lazyUse(block: suspend () -> T) {
-		appScope.async {
+	fun <T> lazyUse(block: () -> T) {
 			mutex.withLock {
 				block()
 			}
