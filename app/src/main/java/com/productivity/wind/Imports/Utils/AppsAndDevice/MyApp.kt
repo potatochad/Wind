@@ -170,12 +170,14 @@ val AppPkg = "com.productivity.wind"
 
 lateinit var scope: CoroutineScope
 lateinit var appScope: CoroutineScope
+lateinit var appWorker: OneWorker
 
 
 class TheApp : Application() {
     override fun onCreate() {
         super.onCreate()
         App = this
+		appWorker = OneWorker()
 
 		try {
 			AppCrash.printLastCrash(this)
