@@ -345,9 +345,10 @@ abstract class EasyListExtension<T>(
 
     fun removeAt(index: Int) {
         oneAtime.use {
-            val item = it.getOrNull(index) ?: return
-            it.removeAt(index)
-            it.onRemove(item)
+            it.getOrNull(index)?.let { item ->
+                it.removeAt(index)
+                it.onRemove(item)
+            }
         }
     }
 
@@ -365,10 +366,9 @@ abstract class EasyListExtension<T>(
 
     operator fun get(index: Int) = oneAtime.use { it[index] }
     operator fun set(index: Int, value: T){ oneAtime.use { it[index] = value } }
-    operator fun plusAssign(item: T) = oneAtime.use { add(item) }
-    operator fun minusAssign(item: T) = oneAtime.use { remove(item) }
-
-    override fun iterator(): Iterator<T> = oneAtime.use { it.iterator() }
+    operator fun plusAssign(item: T) = add(item)
+    operator fun minusAssign(item: T) = remove(item)
+    override fun iterator(): Iterator<T> = it.toList().iterator()
 
 }
 
