@@ -527,16 +527,19 @@ class OneWorker {
         queue.trySend(task)
     }
 }
+
 class OneAtATime {
     private val mutex = Mutex()
 
-    fun <T> use(block: () -> T): Deferred<T> {
+    fun <T> use(block: suspend () -> T): Deferred<T> {
+		return appScope.async {
 			mutex.withLock {
 				block()
 			}
 		}
 	}
-	fun <T> lazyUse(block: () -> T) {
+	fun <T> lazyUse(block: suspend () -> T) {
+		appScope.async {
 			mutex.withLock {
 				block()
 			}
