@@ -313,7 +313,7 @@ fun <T> CustomOverrideList(
 
 abstract class EasyListExtension<T>(
     items: Array<out T>,
-) {
+) : Iterable<T> {
     var it = mStateList<T>(*items)
     
     var onAdd: mList<T>.(T) -> Unit = {}
@@ -355,6 +355,9 @@ abstract class EasyListExtension<T>(
     operator fun set(index: Int, value: T){ it[index] = value }
     operator fun plusAssign(item: T) = add(item)
     operator fun minusAssign(item: T) = remove(item)
+
+    override fun iterator(): Iterator<T> = it.iterator()
+
 }
 
 
