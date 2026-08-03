@@ -349,7 +349,7 @@ abstract class EasyListExtension<T>(
     }
 
     val size get() = it.size
-    val id = Id()
+
 
     operator fun get(index: Int) = it[index]
     operator fun set(index: Int, value: T){ it[index] = value }
@@ -361,7 +361,7 @@ abstract class EasyListExtension<T>(
 class EasyList<T>(
     vararg items: T
 ) : EasyListExtension<T>(items) {
-
+    val id = Id()
     
 
 }
