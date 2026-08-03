@@ -228,7 +228,6 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
             LazyColumn {
                 items(
                     items = test2List.it,
-                    key = { it.id }
                 ) {
                     Text("$it")
                 }
