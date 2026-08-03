@@ -314,6 +314,8 @@ fun <T> CustomOverrideList(
 abstract class EasyListExtension<T>(
     items: Array<out T>,
 ) : Iterable<T> {
+    val oneAtime = OneAtATime()
+
     var it = mStateList<T>(*items)
     
     var onAdd: mList<T>.(T) -> Unit = {}
@@ -321,24 +323,32 @@ abstract class EasyListExtension<T>(
     var onRemove: mList<T>.(T) -> Unit = {}
 
     fun clear() {
-        it.clear()
-        it.onClear()
+        oneAtime.use {
+            it.clear()
+            it.onClear()
+        }
     }
 
     fun add(item: T) {
-        it.add(item)
-        it.onAdd(item)
+        oneAtime.use {
+            it.add(item)
+            it.onAdd(item)
+        }
     }
 
     fun remove(item: T) {
-        it.remove(item)
-        it.onRemove(item)
+        oneAtime.use {
+            it.remove(item)
+            it.onRemove(item)
+        }
     }
 
     fun removeAt(index: Int) {
-        val item = it.getOrNull(index) ?: return
-        it.removeAt(index)
-        it.onRemove(item)
+        oneAtime.use {
+            val item = it.getOrNull(index) ?: return
+            it.removeAt(index)
+            it.onRemove(item)
+        }
     }
 
     fun each(block: (T) -> Unit) = it.forEach(block)
