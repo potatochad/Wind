@@ -174,12 +174,11 @@ fun getLazyDataVar(key: Str, varName: Str): Any? {
 fun < T : LazyData> TrackList(
     createItem: () -> T,
     defaultItems: List<T> = emptyList()
-): By<mList<T>> {
-    var theList: mList<T>? = null
+): By<EasyList<T>> {
+    var theList: EasyList<T>? = null
 
 
     val save = IgnoreRepeatedCalls {
-        
             val list = theList ?: run {
                 VlogOne("Custom list is not initialized before saving!")
                 return@lazyUse
@@ -193,7 +192,6 @@ fun < T : LazyData> TrackList(
             timer.stop()
 
             VlogOne("saving...")
-        
     }
 
 
@@ -234,23 +232,7 @@ fun < T : LazyData> TrackList(
                 }
             }
 
-            EasyList()
-            onAdd: mList<T>.(T) -> Unit = {}
-            onClear: mList<T>.() -> Unit = {}
-            onRemove: mList<T>.(T) -> Unit = {}
-
-
-            theList = CustomAlertList(
-                items = if (savedItems.notEmpty) savedItems else defaultItems,
-                onAdd = { it.prepare() },
-                onAddAt = { _, it -> it.prepare() },
-                onAddAll = { it.prepare() },
-                onAddAllAt = { _, it -> it.prepare() },
-                onClear = {},
-                onRemove = {},
-                onRemoveAll = {},
-                onSet = { _, it -> it.prepare() },
-            )
+            EasyList().onAdd{}.onClear{}.onRemove{}
         
             theList?.forEach {
                 it.listName = listName
