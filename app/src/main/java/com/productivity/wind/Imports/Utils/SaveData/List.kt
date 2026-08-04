@@ -168,16 +168,18 @@ fun getLazyDataVar(key: Str, varName: Str): Any? {
     }
 }
 
+
+
+
 fun < T : LazyData> TrackList(
     createItem: () -> T,
     defaultItems: List<T> = emptyList()
 ): By<mList<T>> {
-    var onlyOne = OneAtATime()
     var theList: mList<T>? = null
 
 
     val save = IgnoreRepeatedCalls {
-        onlyOne.lazyUse {
+        
             val list = theList ?: run {
                 VlogOne("Custom list is not initialized before saving!")
                 return@lazyUse
@@ -191,7 +193,7 @@ fun < T : LazyData> TrackList(
             timer.stop()
 
             VlogOne("saving...")
-        }
+        
     }
 
 
@@ -212,9 +214,9 @@ fun < T : LazyData> TrackList(
 
 
     
-    return By(mutableListOf<T>())
+    return By(mList<T>())
         .onBuild { prop, listName, mValue -> 
-            val savedItems = mutableListOf<T>()
+            val savedItems = mList<T>()
 
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
                 if (savedKey.startsWith("$listName:")) {
