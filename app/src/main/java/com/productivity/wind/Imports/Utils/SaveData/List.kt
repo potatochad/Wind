@@ -232,6 +232,20 @@ fun < T : LazyData> TrackList(
                 }
             }
 
+            /*
+            theList = CustomAlertList(
+                items = if (savedItems.notEmpty) savedItems else defaultItems,
+                onAdd = { it.prepare() },
+                onAddAt = { _, it -> it.prepare() },
+                onAddAll = { it.prepare() },
+                onAddAllAt = { _, it -> it.prepare() },
+                onClear = {},
+                onRemove = {},
+                onRemoveAll = {},
+                onSet = { _, it -> it.prepare() },
+            )
+            */
+
             EasyList().onAdd{}.onClear{}.onRemove{}
         
             theList?.forEach {
