@@ -234,6 +234,12 @@ fun < T : LazyData> TrackList(
                 }
             }
 
+            EasyList()
+            onAdd: mList<T>.(T) -> Unit = {}
+            onClear: mList<T>.() -> Unit = {}
+            onRemove: mList<T>.(T) -> Unit = {}
+
+
             theList = CustomAlertList(
                 items = if (savedItems.notEmpty) savedItems else defaultItems,
                 onAdd = { it.prepare() },
