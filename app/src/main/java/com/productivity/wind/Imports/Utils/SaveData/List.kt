@@ -179,13 +179,15 @@ fun < T : LazyData> TrackList(
 
 
     val save = IgnoreRepeatedCalls {
-            if (theList == null){ 
+        val aList = theList
+        
+            if (aList == null){ 
                 VlogOne("Custom list is not initialized before saving!")
             } else {
                 val timer = logTimer()
-                theList.filter { it.changed }.each { index, item ->
-                    theList[index].save() 
-                    theList[index].changed = no
+                aList.filter { it.changed }.each { index, item ->
+                    aList[index].save() 
+                    aList[index].changed = no
                 }
                 timer.stop()
 
@@ -218,7 +220,7 @@ fun < T : LazyData> TrackList(
 
             //check if override defaultItems
             if (savedItems.notEmpty){
-                savedItems?.each { index, items ->
+                savedItems.each { index, items ->
                     theList[index].onChanged = save::run 
                 }
             }
