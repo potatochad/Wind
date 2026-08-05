@@ -179,19 +179,18 @@ fun < T : LazyData> TrackList(
 
 
     val save = IgnoreRepeatedCalls {
-            val list = theList ?: run {
+            if (theList == null){ 
                 VlogOne("Custom list is not initialized before saving!")
-                return@lazyUse
-            }
+            } else {
+                val timer = logTimer()
+                list.filter { it.changed }.forEach {
+                    it.save()
+                    it.changed = no
+                }
+                timer.stop()
 
-            val timer = logTimer()
-            list.filter { it.changed }.forEach {
-                it.save()
-                it.changed = no
+                VlogOne("saving...")
             }
-            timer.stop()
-
-            VlogOne("saving...")
     }
 
 
@@ -212,7 +211,7 @@ fun < T : LazyData> TrackList(
 
 
     
-    return By(mList<T>())
+    return By(EasyList<T>())
         .onBuild { prop, listName, mValue -> 
             val savedItems = mList<T>()
 
@@ -246,11 +245,11 @@ fun < T : LazyData> TrackList(
             )
             */
 
-            EasyList().onAdd{}.onClear{}.onRemove{}
+            theList = EasyList().onAdd{}.onClear{}.onRemove{}
         
-            theList?.forEach {
-                it.listName = listName
-                it.key = "$listName:${it.id}"
+            theList?.each { index, item -> 
+                theList[index].listName = listName
+                theList[index].key = "$listName:${it.id}"
             }
             mValue.it = theList
         }
