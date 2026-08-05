@@ -360,6 +360,7 @@ abstract class EasyListExtension<T>(
             block(index, item)
         }
     }
+    fun filter(logic: (T) -> Bool): EasyList<T> = EasyList(it.filter(logic))
 
     val size get() = it.size
 
@@ -377,6 +378,9 @@ class EasyList<T>(
     vararg items: T
 ) : EasyListExtension<T>(items) {
     val id = Id()
+
+    constructor(vararg items: T) : this(items.asList())
+
     
 
 }
