@@ -201,14 +201,6 @@ fun < T : LazyData> TrackList(
         save.run()
     }
 
-    fun <T : LazyData> Collection<T>.prepare() {
-        this.each { index, item ->
-            theList[index].changed = yes
-            theList[index].onChanged = save::run 
-        }
-        save.run()
-    }
-
 
     
     return By(EasyList<T>())
@@ -231,23 +223,9 @@ fun < T : LazyData> TrackList(
                 }
             }
 
-            /*
-            theList = CustomAlertList(
-                items = ,
-                onAdd = { it.prepare() },
-                onAddAt = { _, it -> it.prepare() },
-                onAddAll = { it.prepare() },
-                onAddAllAt = { _, it -> it.prepare() },
-                onClear = {},
-                onRemove = {},
-                onRemoveAll = {},
-                onSet = { _, it -> it.prepare() },
-            )
-            */
-
             theList = EasyList( if (savedItems.notEmpty) savedItems else defaultItems )
                 .onAdd{
-                
+                    it.prepare() 
                 }
                 .onClear{
                     
