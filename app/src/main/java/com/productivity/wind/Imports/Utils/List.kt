@@ -379,10 +379,6 @@ class EasyList<T>(
 ) : EasyListExtension<T>(items) {
     val id = Id()
 
-    constructor(vararg items: T) : this(items.asList())
-
-    
-
 }
 
 
