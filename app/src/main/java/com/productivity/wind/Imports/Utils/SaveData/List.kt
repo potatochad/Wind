@@ -204,8 +204,7 @@ fun < T : LazyData> TrackList(
     fun <T : LazyData> Collection<T>.prepare() {
         this.each { index, item ->
             theList[index].changed = yes
-            theList[index].save()
-            it.onChanged = save::run 
+            theList[index].onChanged = save::run 
         }
         save.run()
     }
@@ -214,7 +213,7 @@ fun < T : LazyData> TrackList(
     
     return By(EasyList<T>())
         .onBuild { prop, listName, mValue -> 
-            val savedItems = mList<T>()
+            val savedItems = EasyList<T>()
 
             AppData.prefs.all.forEach { (savedKey, savedValue) ->
                 if (savedKey.startsWith("$listName:")) {
@@ -227,8 +226,8 @@ fun < T : LazyData> TrackList(
 
             //check if override defaultItems
             if (savedItems.notEmpty){
-                savedItems?.forEach { 
-                    it.onChanged = save::run 
+                savedItems?.each { index, items ->
+                    theList[index].onChanged = save::run 
                 }
             }
 
