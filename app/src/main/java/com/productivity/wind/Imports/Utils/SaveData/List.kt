@@ -184,9 +184,8 @@ fun < T : LazyData> TrackList(
             } else {
                 val timer = logTimer()
                 theList.filter { it.changed }.each { index, item ->
-                    theList[index].listName = listName
-                    it.save()
-                    it.changed = no
+                    theList[index].save() 
+                    theList[index].changed = no
                 }
                 timer.stop()
 
