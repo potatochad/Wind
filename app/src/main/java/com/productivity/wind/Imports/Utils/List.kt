@@ -360,8 +360,14 @@ abstract class EasyListExtension<T>(
             block(index, item)
         }
     }
-    fun filter(logic: (T) -> Bool): EasyList<T> = EasyList(it.filter(logic))
-
+    fun filter(logic: (T) -> Bool): EasyList<T> {
+        val result = EasyList<T>()
+        it.filter(logic).forEach { item ->
+            result.add(item)
+        }
+        return result
+    }
+    
     val size get() = it.size
 
 
