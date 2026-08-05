@@ -369,6 +369,8 @@ abstract class EasyListExtension<T>(
     }
     
     val size get() = it.size
+    val notEmpty get() = it.notEmpty
+    
 
 
     operator fun get(index: Int) = oneAtime.use { it[index] }
