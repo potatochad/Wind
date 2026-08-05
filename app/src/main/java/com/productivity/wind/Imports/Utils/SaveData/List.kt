@@ -226,15 +226,10 @@ fun < T : LazyData> TrackList(
             }
 
             theList = EasyList( if (savedItems.notEmpty) savedItems else defaultItems )
-                .onAdd{
+                .onAdd = {
                     it.prepare() 
                 }
-                .onClear{
-                    
-                }
-                .onRemove{
-                    
-                }
+                /*.onClear{} .onRemove{}*/
                 
         
             theList?.each { index, item -> 
