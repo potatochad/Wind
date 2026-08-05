@@ -373,7 +373,7 @@ abstract class EasyListExtension<T>(
     
 
 
-    operator fun get(index: Int) = oneAtime.use { it[index] }
+    operator fun get(index: Int) = it[index]
     operator fun set(index: Int, value: T){ oneAtime.use { it[index] = value } }
     operator fun plusAssign(item: T) = add(item)
     operator fun minusAssign(item: T) = remove(item)
