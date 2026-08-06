@@ -167,20 +167,20 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 			   
 			}
             Btn("Delete"){
-                    if (Bar.items.isNotEmpty()) {
+                    if (Bar.items.notEmpty) {
                         Bar.items.removeAt(0)
                     }
                 }
             Btn("Edit"){
-                    if (Bar.items.isNotEmpty()) {
+                    if (Bar.items.notEmpty) {
                         Bar.items[0].name = "updated ${TimeMillis()}"
                     }
                 }
 		}
 		LazzyRow {
             Btn("Edit All"){
-                    Bar.items.forEach {
-						it.name = "updated ${TimeMillis()}"
+                    Bar.items.each { index, item -> 
+						Bar.items[index].name = "updated ${TimeMillis()}"
 					}
                 }
 		}
@@ -188,7 +188,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
         LazzyColumn(Mod.h(300)) {
             LazyColumn {
                 items(
-                    items = Bar.items,
+                    items = Bar.items.it,
                     key = { it.id }
                 ) {
                     Text(it.name)
@@ -197,43 +197,6 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
         }
     }
 
-	
-
-	val test2List = rEasyList(1,2,3,4)
-
-	move(20)
-	Text("test easyList")
-
-	LazzyColumn {
-        LazzyRow {
-            Btn("Add"){
-                test2List += 1
-            }
-            Btn("Delete"){
-                test2List.removeAt(0)
-            }
-            Btn("Edit"){
-                test2List[0] = toInt(TimeMillis())
-			}
-		}
-		LazzyRow {
-            Btn("Edit All"){
-                test2List.each { index, it ->
-					test2List[index] = toInt(TimeMillis())
-				}
-             }
-		}
-
-        LazzyColumn(Mod.h(300)) {
-            LazyColumn {
-                items(
-                    items = test2List.it,
-                ) {
-                    Text("$it")
-                }
-            }
-        }
-	}
 	
 }
 
