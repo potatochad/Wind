@@ -219,9 +219,9 @@ fun < T : LazyData> TrackList(
             }
 
             //check if override defaultItems
-            if (savedItems.notEmpty){
-                savedItems.each { index, items ->
-                    theList[index].onChanged = save::run 
+            theList?.let { list ->
+                savedItems.each { index, _ ->
+                    list[index].onChanged = save::run
                 }
             }
 
