@@ -221,7 +221,7 @@ fun < T : LazyData> TrackList(
             //check if override defaultItems
             theList?.let { list ->
                 savedItems.each { index, _ ->
-                    list[index].onChanged = save::run
+                    list[index]?.onChanged = save::run
                 }
             }
 
