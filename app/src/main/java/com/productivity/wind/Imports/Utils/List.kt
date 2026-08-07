@@ -197,6 +197,7 @@ abstract class EasyListExtra<T>(
     
     val size get() = it.size
     val notEmpty get() = it.notEmpty
+    val empty get() = it.empty
     
 
 
