@@ -138,180 +138,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 
-
-fun <T> CustomAlertList(
-    items: Collection<T> = emptyList(),
-
-    onAdd: mList<T>.(T) -> Unit = {},
-    onAddAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
-    onAddAll: mList<T>.(Collection<T>) -> Unit = {},
-    onAddAllAt: mList<T>.(Int, Collection<T>) -> Unit = { _, _ -> },
-
-    onClear: mList<T>.() -> Unit = {},
-
-    onGet: mList<T>.(Int, T) -> Unit = { _, _ -> },
-
-    onRemove: mList<T>.(T) -> Unit = {},
-    onRemoveAt: mList<T>.(Int, T) -> Unit = { _, _ -> },
-    onRemoveAll: mList<T>.(Collection<T>) -> Unit = {},
-
-    onSet: mList<T>.(Int, T) -> Unit = { _, _ -> },
-
-    onContains: mList<T>.(T) -> Unit = {},
-    onContainsAll: mList<T>.(Collection<T>) -> Unit = {},
-
-    onIndexOf: mList<T>.(T, Int) -> Unit = { _, _ -> },
-    onLastIndexOf: mList<T>.(T, Int) -> Unit = { _, _ -> },
-
-    onEmptyCheck: mList<T>.(Bool) -> Unit = {},
-
-    onToString: mList<T>.(Str) -> Unit = {}
-): mList<T> {
-
-    val list = mList<T>().apply {
-        addAll(items)
-    }
-
-    return object : mList<T> {
-
-        override fun add(element: T): Bool {
-            val result = list.add(element)
-            if (result) list.onAdd(element)
-            return result
-        }
-
-        override fun add(index: Int, element: T) {
-            list.add(index, element)
-            list.onAddAt(index, element)
-        }
-
-        override fun addAll(elements: Collection<T>): Boolean {
-            val result = list.addAll(elements)
-            if (result) list.onAddAll(elements)
-            return result
-        }
-
-        override fun addAll(index: Int, elements: Collection<T>): Boolean {
-            val result = list.addAll(index, elements)
-            if (result) list.onAddAllAt(index, elements)
-            return result
-        }
-
-        override fun clear() {
-            list.clear()
-            list.onClear()
-        }
-
-        override fun get(index: Int): T {
-            val value = list[index]
-            list.onGet(index, value)
-            return value
-        }
-
-        override fun remove(element: T): Bool {
-            val result = list.remove(element)
-            if (result) list.onRemove(element)
-            return result
-        }
-
-        override fun removeAt(index: Int): T {
-            val value = list.removeAt(index)
-            list.onRemoveAt(index, value)
-            return value
-        }
-
-        override fun removeAll(elements: Collection<T>): Bool {
-            val result = list.removeAll(elements)
-            if (result) list.onRemoveAll(elements)
-            return result
-        }
-
-        override fun set(index: Int, element: T): T {
-            val old = list.set(index, element)
-            list.onSet(index, element)
-            return old
-        }
-
-        override fun contains(element: T): Bool {
-            val result = list.contains(element)
-            list.onContains(element)
-            return result
-        }
-
-        override fun containsAll(elements: Collection<T>): Bool {
-            val result = list.containsAll(elements)
-            list.onContainsAll(elements)
-            return result
-        }
-
-        override fun indexOf(element: T): Int {
-            val result = list.indexOf(element)
-            list.onIndexOf(element, result)
-            return result
-        }
-
-        override fun lastIndexOf(element: T): Int {
-            val result = list.lastIndexOf(element)
-            list.onLastIndexOf(element, result)
-            return result
-        }
-
-        override fun isEmpty(): Bool {
-            val result = list.isEmpty()
-            list.onEmptyCheck(result)
-            return result
-        }
-
-        override fun toString(): Str {
-            val result = list.toString()
-            list.onToString(result)
-            return result
-        }
-
-        override val size
-            get() = list.size
-
-        override fun iterator() = list.iterator()
-
-        override fun listIterator() = list.listIterator()
-
-        override fun listIterator(index: Int) = list.listIterator(index)
-
-        override fun subList(fromIndex: Int, toIndex: Int) 
-           = list.subList(fromIndex, toIndex)
-
-        override fun retainAll(elements: Collection<T>): Bool {
-            return list.retainAll(elements)
-        }
-
-        override fun equals(other: Any?) = list == other
-
-        override fun hashCode() = list.hashCode()
-    }
-}
-
-
-
-/*
-fun <T> CustomOverrideList(
-    items: Collection<T> = emptyList(),
-
-    add: (MutableList<T>.(T) -> Bool)? = null,
-): MutableList<T> {
-    val list = mutableListOf<T>().apply {
-        addAll(items)
-    }
-    
-    return object : MutableList<T> {
-        override fun add(element: T) =
-            add.doOr(list, element){ list.add(element) }
-
-}
-*/
-
-
-
-abstract class EasyListExtension<T>(
+abstract class EasyList<T>(
     items: Array<out T>,
 ) : Iterable<T> {
     val oneAtime = OneAtATime()
@@ -382,18 +209,38 @@ abstract class EasyListExtension<T>(
 }
 
 
-class EasyList<T>(
+class easyList<T>(
     vararg items: T
-) : EasyListExtension<T>(items) {
+) : EasyList<T>(items) {
     val id = Id()
 
 }
 
 
+
 @Composable
 fun <T> rEasyList(vararg items: T) = r { EasyList(*items) }
 
+fun <T> mEasyList<T>.onAdd(
+    block: mList<T>.(T) -> Unit
+): mEasyList<T> {
+    onAdd = block
+    return this
+}
 
+fun <T> mEasyList<T>.onClear(
+    block: mList<T>.() -> Unit
+): mEasyList<T> {
+    onClear = block
+    return this
+}
+
+fun <T> mEasyList<T>.onRemove(
+    block: mList<T>.(T) -> Unit
+): mEasyList<T> {
+    onRemove = block
+    return this
+}
 
 
 
