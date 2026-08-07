@@ -138,7 +138,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 
-abstract class EasyList<T>(
+abstract class EasyListExtra<T>(
     items: Array<out T>,
 ) : Iterable<T> {
     val oneAtime = OneAtATime()
@@ -209,9 +209,9 @@ abstract class EasyList<T>(
 }
 
 
-class easyList<T>(
+class EasyList<T>(
     vararg items: T
-) : EasyList<T>(items) {
+) : EasyListExtra<T>(items) {
     val id = Id()
 
 }
@@ -221,27 +221,26 @@ class easyList<T>(
 @Composable
 fun <T> rEasyList(vararg items: T) = r { EasyList(*items) }
 
-fun <T> mEasyList<T>.onAdd(
+fun <T> EasyListExtra<T>.onAdd(
     block: mList<T>.(T) -> Unit
-): mEasyList<T> {
+): EasyListExtra<T> {
     onAdd = block
     return this
 }
 
-fun <T> mEasyList<T>.onClear(
+fun <T> EasyListExtra<T>.onClear(
     block: mList<T>.() -> Unit
-): mEasyList<T> {
+): EasyListExtra<T> {
     onClear = block
     return this
 }
 
-fun <T> mEasyList<T>.onRemove(
+fun <T> EasyListExtra<T>.onRemove(
     block: mList<T>.(T) -> Unit
-): mEasyList<T> {
+): EasyListExtra<T> {
     onRemove = block
     return this
 }
-
 
 
 
