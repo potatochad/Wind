@@ -234,7 +234,7 @@ fun < T : LazyData> TrackList(
         
             theList?.each { index, item -> 
                 theList[index].listName = listName
-                theList[index].key = "$listName:${it.id}"
+                theList[index].key = "$listName:${item.id}"
             }
             mValue.it = theList
         }
