@@ -213,7 +213,8 @@ abstract class EasyListExtra<T>(
 class EasyList<T>(
     vararg items: T
 ) : EasyListExtra<T>(items) {
-    constructor(items: Iterable<T>) : super(items.toList().toTypedArray())
+    constructor(items: Iterable<T>) :
+        this(*items.toList().toTypedArray())
 
     val id = Id()
 
