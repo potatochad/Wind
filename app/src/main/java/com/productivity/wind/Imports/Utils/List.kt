@@ -188,29 +188,16 @@ abstract class EasyListExtra<T>(
         }
     }
 
-
-    fun each(block: (Int, T) -> Unit) {
+    
+    fun each3(block: (Int, T) -> Unit) {
         try {
-            val copy = it.toList()
-            val used = BooleanArray(copy.size)
+            val snapshot = it.mapIndexed { index, item -> index to item }
 
-            for ((originalIndex, originalItem) in copy.withIndex()) {
-                var realIndex = -1
-
-                for (i in it.indices) {
-                    if (!used.getOrNull(i)!! && it[i] === originalItem) {
-                        realIndex = i
-                        used[i] = true
-                        break
-                    }
-                }
-
-                if (realIndex != -1) {
-                    block(realIndex, it[realIndex])
-                } else {
-                    Vlog("EasyList each: item at original index $originalIndex was not found")
-                }
+            for ((index, item) in snapshot) {
+                block(index, item)
+                it[index] = ref.value
             }
+            
         } catch (e: Throwable) {
             Vlog("Error with EasyList for each: $e")
         }
