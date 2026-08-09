@@ -224,23 +224,23 @@ class EasyList<T> : EasyListExtra<T> {
 @Composable
 fun <T> rEasyList(vararg items: T) = r { EasyList(*items) }
 
-fun <T> EasyListExtra<T>.onAdd(
+fun <T, L : EasyListExtra<T>> L.onAdd(
     block: mList<T>.(T) -> Unit
-): EasyListExtra<T> {
+): L {
     onAdd = block
     return this
 }
 
-fun <T> EasyListExtra<T>.onClear(
+fun <T, L : EasyListExtra<T>> L.onClear(
     block: mList<T>.() -> Unit
-): EasyListExtra<T> {
+): L {
     onClear = block
     return this
 }
 
-fun <T> EasyListExtra<T>.onRemove(
+fun <T, L : EasyListExtra<T>> L.onRemove(
     block: mList<T>.(T) -> Unit
-): EasyListExtra<T> {
+): L {
     onRemove = block
     return this
 }
