@@ -139,11 +139,11 @@ import kotlinx.serialization.builtins.ListSerializer
 
 
 abstract class EasyListExtra<T>(
-    items: Array<out T>,
+    items: Iterable<T>
 ) : Iterable<T> {
     val oneAtime = OneAtATime()
 
-    var it = mStateList<T>(*items)
+    var it = mStateList<T>().apply { addAll(items) }
     
     var onAdd: mList<T>.(T) -> Unit = {}
     var onClear: mList<T>.() -> Unit = {}
@@ -210,11 +210,10 @@ abstract class EasyListExtra<T>(
 }
 
 
-class EasyList<T>(
-    vararg items: T
-) : EasyListExtra<T>(items) {
-    constructor(items: Iterable<T>) :
-        this(*items.toList().toTypedArray())
+class EasyList<T> : EasyListExtra<T> {
+    constructor(vararg items: T) : super(items.toList())
+    constructor(items: Iterable<T>) : super(items)
+    
 
     val id = Id()
 
