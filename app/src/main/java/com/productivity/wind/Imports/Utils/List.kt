@@ -189,45 +189,32 @@ abstract class EasyListExtra<T>(
     }
 
 
-    /*
-    fun each(block: (T) -> Unit) {
-        val original = it
-        val processed = IdentityHashMap<T, Boolean>()
-
-        while (processed.size < original.size && original.isNotEmpty()) {
-            val item = original.firstOrNull { !processed.containsKey(it) }
-            ?: break
-
-            processed[item] = true
-            block(item)
-    }
-    }
-    fun each(block: (T) -> Unit) {
-    val original = it
-    var index = 0
-    var remaining = original.size
-
-    while (remaining > 0 && original.isNotEmpty()) {
-        val item = try {
-            original[index]
-        } catch (_: IndexOutOfBoundsException) {
-            break
-        }
-
-        block(item)
-
+    fun each(block: (Int, T) -> Unit) {
         try {
-            if (original[index] === item) {
-                index++
-            }
-        } catch (_: IndexOutOfBoundsException) {
-            // List became too short.
-        }
+            val copy = it.toList()
+            val used = BooleanArray(copy.size)
 
-        remaining--
+            for ((originalIndex, originalItem) in copy.withIndex()) {
+                var realIndex = -1
+
+                for (i in it.indices) {
+                    if (!used.getOrNull(i)!! && it[i] === originalItem) {
+                        realIndex = i
+                        used[i] = true
+                        break
+                    }
+                }
+
+                if (realIndex != -1) {
+                    block(realIndex, it[realIndex])
+                } else {
+                    Vlog("EasyList each: item at original index $originalIndex was not found")
+                }
+            }
+        } catch (e: Throwable) {
+            Vlog("Error with EasyList for each: $e")
+        }
     }
-    }
-    */
 
 
     
