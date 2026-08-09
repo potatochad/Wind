@@ -195,7 +195,7 @@ abstract class EasyListExtra<T>(
 
             for ((index, item) in snapshot) {
                 block(index, item)
-                it[index] = ref.value
+                if (item.commonType()) it[index] = item
             }
             
         } catch (e: Throwable) {
