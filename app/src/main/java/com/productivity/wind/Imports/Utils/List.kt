@@ -187,6 +187,50 @@ abstract class EasyListExtra<T>(
             block(index, item)
         }
     }
+
+
+    /*
+    fun each(block: (T) -> Unit) {
+        val original = it
+        val processed = IdentityHashMap<T, Boolean>()
+
+        while (processed.size < original.size && original.isNotEmpty()) {
+            val item = original.firstOrNull { !processed.containsKey(it) }
+            ?: break
+
+            processed[item] = true
+            block(item)
+    }
+    }
+    fun each(block: (T) -> Unit) {
+    val original = it
+    var index = 0
+    var remaining = original.size
+
+    while (remaining > 0 && original.isNotEmpty()) {
+        val item = try {
+            original[index]
+        } catch (_: IndexOutOfBoundsException) {
+            break
+        }
+
+        block(item)
+
+        try {
+            if (original[index] === item) {
+                index++
+            }
+        } catch (_: IndexOutOfBoundsException) {
+            // List became too short.
+        }
+
+        remaining--
+    }
+    }
+    */
+
+
+    
     fun filter(logic: (T) -> Bool): EasyList<T> {
         val result = EasyList<T>()
         it.filter(logic).forEach { item ->
