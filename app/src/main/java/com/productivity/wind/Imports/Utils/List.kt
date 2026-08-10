@@ -155,9 +155,18 @@ abstract class EasyListExtra<T>(
         it.onAdd(item)
     }
 
+    private var eachIndex = -1
+
     fun remove(item: T) {
-        if (it.remove(item)){
-            version++
+        val index = it.indexOf(item)
+
+        if (index != -1) {
+            it.removeAt(index)
+
+            if (index <= eachIndex) {
+                eachIndex--
+            }
+
             it.onRemove(item)
         }
     }
@@ -179,24 +188,19 @@ abstract class EasyListExtra<T>(
     
 
     fun each(block: (T) -> Unit) {
-        try {
-            var index = 0
-            var lastVersion = version
+    try {
+        eachIndex = 0
 
-            while (index < it.size) {
-                val item = it[index]
-
-                block(item)
-
-                if (version == lastVersion) {
-                    index++
-                } else {
-                    lastVersion = version
-                }
-            }
-        } catch (e: Throwable) {
-            Vlog("Error with EasyList for each: $e")
+        while (eachIndex < it.size) {
+            val item = it[eachIndex]
+            block(item)
+            eachIndex++
         }
+    } catch (e: Throwable) {
+        Vlog("Error with EasyList for each: $e")
+    } finally {
+        eachIndex = -1
+    }
     }
 
     //this may cause issues??
