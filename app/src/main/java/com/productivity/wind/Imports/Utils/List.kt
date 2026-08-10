@@ -141,47 +141,36 @@ import kotlinx.serialization.builtins.ListSerializer
 abstract class EasyListExtra<T>(
     items: Iterable<T>
 ) : Iterable<T> {
-    val oneAtime = OneAtATime()
-
     var it = mStateList<T>().apply { addAll(items) }
     
     var onAdd: mList<T>.(T) -> Unit = {}
-    var onClear: mList<T>.() -> Unit = {}
     var onRemove: mList<T>.(T) -> Unit = {}
 
 
     //‼️‼️ADD and remove can be the only code 
     // THAT ACTUALLY REMOVES THE ITEMS OR ADDS IT   
     fun add(item: T) {
-        oneAtime.use {
-            it.add(item)
-            it.onAdd(item)
-        }
+        it.add(item)
+        it.onAdd(item)
     }
 
     fun remove(item: T) {
-        oneAtime.use {
-            it.remove(item)
-            it.onRemove(item)
-        }
+        it.remove(item)
+        it.onRemove(item)
     }
     //------//
 
     
 
     fun clear() {
-        oneAtime.use {
-            it.clear()
-            it.onClear()
+        each { item ->
+            remove(item)
         }
     }
 
     fun removeAt(index: Int) {
-        oneAtime.use {
-            it.getOrNull(index)?.let { item ->
-                it.removeAt(index)
-                it.onRemove(item)
-            }
+        it.getOrNull(index)?.let { item ->
+            remove(item)
         }
     }
     
@@ -248,13 +237,6 @@ fun <T, L : EasyListExtra<T>> L.onAdd(
     block: mList<T>.(T) -> Unit
 ): L {
     onAdd = block
-    return this
-}
-
-fun <T, L : EasyListExtra<T>> L.onClear(
-    block: mList<T>.() -> Unit
-): L {
-    onClear = block
     return this
 }
 
