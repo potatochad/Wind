@@ -211,7 +211,7 @@ abstract class EasyListExtra<T>(
 
 
     operator fun get(index: Int) = it[index]
-    operator fun set(index: Int, value: T){ oneAtime.use { it[index] = value } }
+    operator fun set(index: Int, value: T){ it[index] = value }
     operator fun plusAssign(item: T) = add(item)
     operator fun minusAssign(item: T) = remove(item)
     override fun iterator(): Iterator<T> = it.toList().iterator()
