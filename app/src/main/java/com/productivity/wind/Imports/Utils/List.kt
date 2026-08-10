@@ -180,7 +180,20 @@ abstract class EasyListExtra<T>(
 
     fun each(block: (T) -> Unit) {
         try {
-            it.forEach(block)
+            var index = 0
+            var lastVersion = version
+
+            while (index < it.size) {
+                val item = it[index]
+
+                block(item)
+
+                if (version == lastVersion) {
+                    index++
+                } else {
+                    lastVersion = version
+                }
+            }
         } catch (e: Throwable) {
             Vlog("Error with EasyList for each: $e")
         }
@@ -189,8 +202,19 @@ abstract class EasyListExtra<T>(
     //this may cause issues??
     fun each(block: (index: Int, item: T) -> Unit) {
         try {
-            it.forEachIndexed { index, item ->
+            var index = 0
+            var lastVersion = version
+
+            while (index < it.size) {
+                val item = it[index]
+
                 block(index, item)
+
+                if (version == lastVersion) {
+                    index++
+                } else {
+                    lastVersion = version
+                }
             }
         } catch (e: Throwable) {
             Vlog("Error with EasyList for each: $e")
