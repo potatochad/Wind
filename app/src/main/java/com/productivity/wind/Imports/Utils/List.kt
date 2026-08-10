@@ -203,29 +203,22 @@ abstract class EasyListExtra<T>(
     }
     }
 
-    //this may cause issues??
     fun each(block: (index: Int, item: T) -> Unit) {
-        try {
-            var index = 0
-            var lastVersion = version
+    try {
+        eachIndex = 0
 
-            while (index < it.size) {
-                val item = it[index]
-
-                block(index, item)
-
-                if (version == lastVersion) {
-                    index++
-                } else {
-                    lastVersion = version
-                }
-            }
-        } catch (e: Throwable) {
-            Vlog("Error with EasyList for each: $e")
+        while (eachIndex < it.size) {
+            val item = it[eachIndex]
+            block(eachIndex, item)
+            eachIndex++
         }
+    } catch (e: Throwable) {
+        Vlog("Error with EasyList for each: $e")
+    } finally {
+        eachIndex = -1
     }
-
-
+    }
+    
     
     fun filter(logic: (T) -> Bool): EasyList<T> {
         val result = EasyList<T>()
