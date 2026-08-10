@@ -163,7 +163,7 @@ abstract class EasyListExtra<T>(
     
 
     fun clear() {
-        each { item ->
+        it.toList().forEach { item ->
             remove(item)
         }
     }
