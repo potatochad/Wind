@@ -145,18 +145,21 @@ abstract class EasyListExtra<T>(
     
     var onAdd: mList<T>.(T) -> Unit = {}
     var onRemove: mList<T>.(T) -> Unit = {}
-
+    private var version = 0
 
     //‼️‼️ADD and remove can be the only code 
     // THAT ACTUALLY REMOVES THE ITEMS OR ADDS IT   
     fun add(item: T) {
         it.add(item)
+        version++
         it.onAdd(item)
     }
 
     fun remove(item: T) {
-        it.remove(item)
-        it.onRemove(item)
+        if (it.remove(item)){
+            version++
+            it.onRemove(item)
+        }
     }
     //------//
 
