@@ -149,13 +149,9 @@ abstract class EasyListExtra<T>(
     var onClear: mList<T>.() -> Unit = {}
     var onRemove: mList<T>.(T) -> Unit = {}
 
-    fun clear() {
-        oneAtime.use {
-            it.clear()
-            it.onClear()
-        }
-    }
 
+    //‼️‼️ADD and remove can be the only code 
+    // THAT ACTUALLY REMOVES THE ITEMS OR ADDS IT   
     fun add(item: T) {
         oneAtime.use {
             it.add(item)
@@ -169,6 +165,16 @@ abstract class EasyListExtra<T>(
             it.onRemove(item)
         }
     }
+    //------//
+
+    
+
+    fun clear() {
+        oneAtime.use {
+            it.clear()
+            it.onClear()
+        }
+    }
 
     fun removeAt(index: Int) {
         oneAtime.use {
@@ -178,26 +184,22 @@ abstract class EasyListExtra<T>(
             }
         }
     }
+    
 
-    fun each(block: (T) -> Unit) = it.toList().forEach(block)
-
-    //this may cause issues??
-    fun each(block: (index: Int, item: T) -> Unit) {
-        it.toList().forEachIndexed { index, item ->
-            block(index, item)
+    fun each(block: (T) -> Unit) {
+        try {
+            it.forEach(block)
+        } catch (e: Throwable) {
+            Vlog("Error with EasyList for each: $e")
         }
     }
 
-    
-    fun each3(block: (Int, T) -> Unit) {
+    //this may cause issues??
+    fun each(block: (index: Int, item: T) -> Unit) {
         try {
-            val snapshot = it.mapIndexed { index, item -> index to item }
-
-            for ((index, item) in snapshot) {
+            it.forEachIndexed { index, item ->
                 block(index, item)
-                if (item.commonType()) it[index] = item
             }
-            
         } catch (e: Throwable) {
             Vlog("Error with EasyList for each: $e")
         }
