@@ -213,7 +213,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .h(200)
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
