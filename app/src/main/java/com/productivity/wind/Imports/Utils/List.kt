@@ -154,6 +154,11 @@ abstract class EasyListExtra<T>(
         version++
         it.onAdd(item)
     }
+    fun add(index: Int, item: T) {
+        it.add(index, item)
+        version++
+        it.onAdd(item)
+    }
 
     private var eachIndex = -1
 
