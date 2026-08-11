@@ -163,7 +163,7 @@ abstract class EasyListExtra<T>(
         if (index != -1) {
             it.removeAt(index)
 
-            if (index <= eachIndex) {
+            if (index < eachIndex) {
                 eachIndex--
             }
 
@@ -187,37 +187,33 @@ abstract class EasyListExtra<T>(
     }
     
 
-    fun each(block: (T) -> Unit) {
-    try {
-        eachIndex = 0
+    
 
-        while (eachIndex < it.size) {
-            val item = it[eachIndex]
+    fun each(block: (T) -> Unit) {
+        each { _, item ->
             block(item)
-            eachIndex++
         }
-    } catch (e: Throwable) {
-        Vlog("Error with EasyList for each: $e")
-    } finally {
-        eachIndex = -1
-    }
     }
 
     fun each(block: (index: Int, item: T) -> Unit) {
-    try {
-        eachIndex = 0
+        try {
+            eachIndex = 0
 
-        while (eachIndex < it.size) {
-            val item = it[eachIndex]
-            block(eachIndex, item)
-            eachIndex++
+            while (eachIndex < it.size) {
+                val index = eachIndex
+                val item = it[index]
+
+                block(index, item)
+
+                eachIndex++
+            }
+        } catch (e: Throwable) {
+            Vlog("Error with EasyList for each: $e")
+        } finally {
+            eachIndex = -1
         }
-    } catch (e: Throwable) {
-        Vlog("Error with EasyList for each: $e")
-    } finally {
-        eachIndex = -1
     }
-    }
+    
     
     
     fun filter(logic: (T) -> Bool): EasyList<T> {
