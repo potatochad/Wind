@@ -211,178 +211,171 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
         }
     }
 
-    Column(
+        Column(
         modifier = Modifier
             .h(200)
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
 
-        Button(
-            onClick = {
-                log = ""
+        fun button(name: String, test: () -> Unit) {
+            Button(
+                onClick = {
+                    Vlog("🔥 RUNNING: $name")
 
-                runTest("Remove current") {
-                    val list = EasyList(1, 2, 3, 4, 5)
-
-                    list.each {
-                        list.remove(it)
+                    try {
+                        test()
+                        Vlog("✅ PASSED: $name")
+                    } catch (e: Throwable) {
+                        Vlog("💥 CRASHED: $name: ${e::class.simpleName}: ${e.message}")
                     }
                 }
-
-                runTest("Remove next") {
-                    val list = EasyList(1, 2, 3, 4, 5)
-
-                    list.each { index, _ ->
-                        if (index + 1 < list.size)
-                            list.removeAt(index + 1)
-                    }
-                }
-
-                runTest("Remove previous") {
-                    val list = EasyList(1, 2, 3, 4, 5)
-
-                    list.each { index, _ ->
-                        if (index > 0)
-                            list.removeAt(index - 1)
-                    }
-                }
-
-                runTest("Clear during each") {
-                    val list = EasyList(1, 2, 3, 4, 5)
-
-                    list.each {
-                        list.clear()
-                    }
-                }
-
-                runTest("Add during each") {
-                    val list = EasyList(1, 2, 3)
-
-                    var count = 0
-
-                    list.each {
-                        count++
-
-                        if (count < 1000)
-                            list.add(count + 100)
-                    }
-                }
-
-                runTest("Add + remove") {
-                    val list = EasyList(1, 2, 3, 4, 5)
-
-                    list.each { index, item ->
-                        list.add(item + 1000)
-
-                        if (list.size > 2)
-                            list.removeAt(0)
-                    }
-                }
-
-                runTest("Remove all repeatedly") {
-                    val list = EasyList(1, 2, 3, 4, 5)
-
-                    list.each {
-                        repeat(10) {
-                            if (list.notEmpty)
-                                list.removeAt(0)
-                        }
-                    }
-                }
-
-                runTest("Nested each") {
-                    val list = EasyList(1, 2, 3, 4, 5)
-
-                    list.each {
-                        list.each {
-                            list.remove(it)
-                        }
-                    }
-                }
-
-                runTest("Nested mutation") {
-                    val list = EasyList(1, 2, 3, 4, 5)
-
-                    list.each { index, item ->
-                        list.each { innerIndex, innerItem ->
-                            if (innerIndex == 0) {
-                                list.add(item + innerItem)
-                            }
-
-                            if (list.size > 3) {
-                                list.removeAt(list.size - 1)
-                            }
-                        }
-                    }
-                }
-
-                runTest("Throw inside callback") {
-                    val list = EasyList(1, 2, 3)
-
-                    list.each {
-                        error("BOOM")
-                    }
-
-                    // Should still be usable afterward
-                    list.add(999)
-                }
-
-                runTest("Huge mutation") {
-                    val list = EasyList(1, 2, 3)
-
-                    list.each {
-                        repeat(100) {
-                            list.add(it)
-                            if (list.size > 20)
-                                list.removeAt(0)
-                        }
-                    }
-                }
-
-                runTest("Everything at once") {
-                    val list = EasyList(1, 2, 3, 4, 5)
-
-                    list.each { index, item ->
-
-                        // Add
-                        list.add(item * 100)
-
-                        // Remove current
-                        list.remove(item)
-
-                        // Remove arbitrary
-                        if (list.notEmpty)
-                            list.removeAt(0)
-
-                        // Clear occasionally
-                        if (index % 2 == 0)
-                            list.clear()
-
-                        // Add again
-                        list.add(index)
-
-                        // Nested iteration
-                        list.each {
-                            if (list.size > 10)
-                                list.remove(it)
-                        }
-                    }
-                }
-
-                running = false
+            ) {
+                Text(name)
             }
-        ) {
-            Text("🔥 TORTURE EasyList")
         }
 
-        Spacer(Modifier.height(16.dp))
+        button("Remove current") {
+            val list = EasyList(1, 2, 3, 4, 5)
 
-        Text(
-            text = log,
-            fontFamily = FontFamily.Monospace
-        )
-    }
+            list.each {
+                list.remove(it)
+            }
+        }
+
+        button("Remove next") {
+            val list = EasyList(1, 2, 3, 4, 5)
+
+            list.each { index, _ ->
+                if (index + 1 < list.size)
+                    list.removeAt(index + 1)
+            }
+        }
+
+        button("Remove previous") {
+            val list = EasyList(1, 2, 3, 4, 5)
+
+            list.each { index, _ ->
+                if (index > 0)
+                    list.removeAt(index - 1)
+            }
+        }
+
+        button("Clear during each") {
+            val list = EasyList(1, 2, 3, 4, 5)
+
+            list.each {
+                list.clear()
+            }
+        }
+
+        button("Add during each") {
+            val list = EasyList(1, 2, 3)
+
+            var count = 0
+
+            list.each {
+                count++
+
+                if (count < 1000)
+                    list.add(count + 100)
+            }
+        }
+
+        button("Add + remove") {
+            val list = EasyList(1, 2, 3, 4, 5)
+
+            list.each { _, item ->
+                list.add(item + 1000)
+
+                if (list.size > 2)
+                    list.removeAt(0)
+            }
+        }
+
+        button("Remove all repeatedly") {
+            val list = EasyList(1, 2, 3, 4, 5)
+
+            list.each {
+                repeat(10) {
+                    if (list.notEmpty)
+                        list.removeAt(0)
+                }
+            }
+        }
+
+        button("Nested each") {
+            val list = EasyList(1, 2, 3, 4, 5)
+
+            list.each {
+                list.each {
+                    list.remove(it)
+                }
+            }
+        }
+
+        button("Nested mutation") {
+            val list = EasyList(1, 2, 3, 4, 5)
+
+            list.each { _, item ->
+                list.each { _, innerItem ->
+
+                    list.add(item + innerItem)
+
+                    if (list.size > 3)
+                        list.removeAt(list.size - 1)
+                }
+            }
+        }
+
+        button("Throw inside callback") {
+            val list = EasyList(1, 2, 3)
+
+            list.each {
+                error("BOOM")
+            }
+
+            list.add(999)
+        }
+
+        button("Huge mutation") {
+            val list = EasyList(1, 2, 3)
+
+            list.each {
+                repeat(100) {
+                    list.add(it)
+
+                    if (list.size > 20)
+                        list.removeAt(0)
+                }
+            }
+        }
+
+        button("Everything at once") {
+            val list = EasyList(1, 2, 3, 4, 5)
+
+            list.each { index, item ->
+
+                list.add(item * 100)
+
+                list.remove(item)
+
+                if (list.notEmpty)
+                    list.removeAt(0)
+
+                if (index % 2 == 0)
+                    list.clear()
+
+                list.add(index)
+
+                list.each {
+                    if (list.size > 10)
+                        list.remove(it)
+                }
+            }
+        }
+		}
+        
 
 
 	
