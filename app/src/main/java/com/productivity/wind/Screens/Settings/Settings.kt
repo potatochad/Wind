@@ -236,53 +236,6 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
             }
         }
 
-        button("Remove current") {
-            val list = EasyList(1, 2, 3, 4, 5)
-
-            list.each {
-                list.remove(it)
-            }
-        }
-
-        button("Remove next") {
-            val list = EasyList(1, 2, 3, 4, 5)
-
-            list.each { index, _ ->
-                if (index + 1 < list.size)
-                    list.removeAt(index + 1)
-            }
-        }
-
-        button("Remove previous") {
-            val list = EasyList(1, 2, 3, 4, 5)
-
-            list.each { index, _ ->
-                if (index > 0)
-                    list.removeAt(index - 1)
-            }
-        }
-
-        button("Clear during each") {
-            val list = EasyList(1, 2, 3, 4, 5)
-
-            list.each {
-                list.clear()
-            }
-        }
-
-        button("Add during each") {
-            val list = EasyList(1, 2, 3)
-
-            var count = 0
-
-            list.each {
-                count++
-
-                if (count < 1000)
-                    list.add(count + 100)
-            }
-        }
-
         button("Add + remove") {
             val list = EasyList(1, 2, 3, 4, 5)
 
