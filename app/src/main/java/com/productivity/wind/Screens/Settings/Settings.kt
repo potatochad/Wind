@@ -218,7 +218,8 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
             .padding(16.dp)
     ) {
 
-        fun button(name: String, test: () -> Unit) {
+			@Composable
+			fun button(name: Str, test: () -> Unit) {
             Button(
                 onClick = {
                     Vlog("🔥 RUNNING: $name")
