@@ -157,28 +157,39 @@ abstract class EasyListExtra<T>(
     //----------------------------------------//
     fun add(item: T) {
         if (isEach) {
-            pending.add { it.removeAt(index) }
+            pending.add { 
+                it.add(item)
+                it.onAdd(item)
+            }
             return
         }
         
         it.add(item)
-        version++
         it.onAdd(item)
     }
     fun add(index: Int, item: T) {
         if (isEach) {
-            pending.add { it.removeAt(index) }
+            pending.add {
+                it.add(index, item)
+                it.onAdd(item)
+            }
             return
         }
         
         it.add(index, item)
-        version++
         it.onAdd(item)
     }
 
     fun remove(item: T) {
         if (isEach) {
-            pending.add { it.removeAt(index) }
+            pending.add {
+                val index = it.indexOf(item)
+                
+                if (index != -1) {
+                    it.removeAt(index)
+                    it.onRemove(item)
+                } 
+            }
             return
         }
         
