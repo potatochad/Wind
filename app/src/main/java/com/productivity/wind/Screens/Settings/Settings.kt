@@ -496,16 +496,6 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
     }
 
 
-    button("Remove last repeatedly") {
-        val list = EasyList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-
-        list.each { _, _ ->
-            if (list.notEmpty)
-                list.removeAt(list.lastIndex)
-        }
-
-        list
-    }
 
 
     button("Massive mutation") {
