@@ -138,6 +138,12 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 
+data class EachItem<T>(
+    val item: T,
+    val index: Int,
+    var done: Bool = false
+)
+
 abstract class EasyListExtra<T>(
     items: Iterable<T>
 ) : Iterable<T> {
@@ -145,37 +151,49 @@ abstract class EasyListExtra<T>(
     
     var onAdd: mList<T>.(T) -> Unit = {}
     var onRemove: mList<T>.(T) -> Unit = {}
-    private var version = 0
+
+    val pending = mList<Do>()
+    var isEach = false
+
+    
 
     //‼️‼️ADD and remove can be the only code 
     // THAT ACTUALLY REMOVES THE ITEMS OR ADDS IT   
     fun add(item: T) {
+        if (isEach) {
+            pending.add { it.removeAt(index) }
+            return
+        }
+        
         it.add(item)
         version++
         it.onAdd(item)
     }
     fun add(index: Int, item: T) {
+        if (isEach) {
+            pending.add { it.removeAt(index) }
+            return
+        }
+        
         it.add(index, item)
         version++
         it.onAdd(item)
     }
 
-    private var eachIndex = -1
-
     fun remove(item: T) {
+        if (isEach) {
+            pending.add { it.removeAt(index) }
+            return
+        }
+        
         val index = it.indexOf(item)
 
         if (index != -1) {
             it.removeAt(index)
-
-            if (index < eachIndex) {
-                eachIndex--
-            }
-
             it.onRemove(item)
         }
     }
-    //------//
+    //-----------------------------------------//
 
     
 
@@ -200,22 +218,17 @@ abstract class EasyListExtra<T>(
         }
     }
 
-    fun each(block: (index: Int, item: T) -> Unit) {
+    fun each(block: (Int, T) -> Unit) {
+        isEach = true
         try {
-            eachIndex = 0
-
-            while (eachIndex < it.size) {
-                val index = eachIndex
-                val item = it[index]
-
-                block(index, item)
-
-                eachIndex++
+            for (index in it.indices) {
+                block(index, it[index])
             }
-        } catch (e: Throwable) {
-            Vlog("Error with EasyList for each: $e")
         } finally {
-            eachIndex = -1
+            isEach = false
+
+            pending.forEach { it() }
+            pending.clear()
         }
     }
     
