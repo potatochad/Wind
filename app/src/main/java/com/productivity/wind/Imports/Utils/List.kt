@@ -138,11 +138,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 
-data class EachItem<T>(
-    val item: T,
-    val index: Int,
-    var done: Bool = false
-)
 
 abstract class EasyListExtra<T>(
     items: Iterable<T>
@@ -153,12 +148,13 @@ abstract class EasyListExtra<T>(
     var onRemove: mList<T>.(T) -> Unit = {}
 
     val pending = mList<Do>()
-    var isEach = false
+    var isEach = no
 
     
 
     //‼️‼️ADD and remove can be the only code 
     // THAT ACTUALLY REMOVES THE ITEMS OR ADDS IT   
+    //----------------------------------------//
     fun add(item: T) {
         if (isEach) {
             pending.add { it.removeAt(index) }
@@ -195,7 +191,31 @@ abstract class EasyListExtra<T>(
     }
     //-----------------------------------------//
 
+
     
+    operator fun get(index: Int) = it[index]
+    operator fun set(index: Int, value: T){ it[index] = value }
+    operator fun plusAssign(item: T) = add(item)
+    operator fun minusAssign(item: T) = remove(item)
+    override fun iterator(): Iterator<T> = it.toList().iterator()
+
+}
+
+
+
+//‼️‼️ INSIDE CODE
+//ONLY USE function ‼️ MYYY EACH, REMOVE, ADD
+class EasyList<T> : EasyListExtra<T> {
+    constructor(vararg items: T) : super(items.toList())
+    constructor(items: Iterable<T>) : super(items)
+    
+    val id = Id()
+
+    
+    val size get() = it.size
+    val notEmpty get() = it.notEmpty
+    val empty get() = it.empty
+
 
     fun clear() {
         it.toList().forEach { item ->
@@ -208,9 +228,7 @@ abstract class EasyListExtra<T>(
             remove(item)
         }
     }
-    
 
-    
 
     fun each(block: (T) -> Unit) {
         each { _, item ->
@@ -219,13 +237,13 @@ abstract class EasyListExtra<T>(
     }
 
     fun each(block: (Int, T) -> Unit) {
-        isEach = true
+        isEach = yes
         try {
             for (index in it.indices) {
                 block(index, it[index])
             }
         } finally {
-            isEach = false
+            isEach = no
 
             pending.forEach { it() }
             pending.clear()
@@ -233,36 +251,18 @@ abstract class EasyListExtra<T>(
     }
     
     
-    
     fun filter(logic: (T) -> Bool): EasyList<T> {
         val result = EasyList<T>()
-        it.filter(logic).forEach { item ->
-            result.add(item)
+        
+        each { _, item ->
+            if (logic(item)) {
+                result.add(item)
+            }
         }
         return result
     }
-    
-    val size get() = it.size
-    val notEmpty get() = it.notEmpty
-    val empty get() = it.empty
-    
 
 
-    operator fun get(index: Int) = it[index]
-    operator fun set(index: Int, value: T){ it[index] = value }
-    operator fun plusAssign(item: T) = add(item)
-    operator fun minusAssign(item: T) = remove(item)
-    override fun iterator(): Iterator<T> = it.toList().iterator()
-
-}
-
-
-class EasyList<T> : EasyListExtra<T> {
-    constructor(vararg items: T) : super(items.toList())
-    constructor(items: Iterable<T>) : super(items)
-    
-
-    val id = Id()
 
 }
 
