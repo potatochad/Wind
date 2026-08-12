@@ -488,7 +488,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
         val list = EasyList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
         list.each { _, _ ->
-            if (list.isNotEmpty())
+            if (list.notEmpty)
                 list.removeAt(0)
         }
 
@@ -500,7 +500,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
         val list = EasyList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
         list.each { _, _ ->
-            if (list.isNotEmpty())
+            if (list.notEmpty)
                 list.removeAt(list.lastIndex)
         }
 
@@ -602,7 +602,7 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
         val list = EasyList(*Array(100) { it })
 
         list.each { _, _ ->
-            if (list.isNotEmpty())
+            if (list.notEmpty)
                 list.removeAt(0)
         }
 
