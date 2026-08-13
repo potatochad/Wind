@@ -180,11 +180,12 @@ abstract class EasyListExtra<T>(
     //-----------------------------------------//
 
 
-    //‼️NO ITERATER OVERRIDE, ONLY EACH function use
     operator fun get(index: Int) = it[index]
     operator fun set(index: Int, value: T){ it[index] = value }
     operator fun plusAssign(item: T) = add(item)
     operator fun minusAssign(item: T) = remove(item)
+    //‼️ shall crash onRemove
+    override fun iterator(): Iterator<T> = it.iterator()
 }
 
 
