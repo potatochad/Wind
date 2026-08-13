@@ -179,30 +179,14 @@ fun < T : LazyData> TrackList(
 
 
     val save = IgnoreRepeatedCalls {
-        val aList = theList
-        
-            if (aList == null){ 
-                VlogOne("Custom list is not initialized before saving!")
-            } else {
-                val timer = logTimer()
-                aList.filter { it.changed }.each {
-                    it.save() 
-                    it.changed = no
-                }
-                timer.stop()
-
-                VlogOne("saving...")
+        theList?.each {
+            if (it.changed) {
+                it.save() 
+                it.changed = no
             }
+        }
     }
-
-
-
-    fun LazyData.prepare() {
-        changed = yes
-        onChanged = save::run
-        save.run()
-    }
-
+    
 
     
     return By(EasyList<T>())
@@ -226,8 +210,12 @@ fun < T : LazyData> TrackList(
             }
 
             theList = EasyList( if (savedItems.notEmpty) savedItems else defaultItems )
-                .onAdd { it.prepare() }
-                /*.onClear{} .onRemove{}*/
+                .onAdd { 
+                    it.changed = yes
+                    it.onChanged = save::run
+                    save.run() 
+                }
+                /*.onRemove{}*/
                 
         
             theList?.each {
