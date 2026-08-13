@@ -148,51 +148,28 @@ abstract class EasyListExtra<T>(
     var onRemove: mList<T>.(T) -> Unit = {}
 
     val pending = mList<Do>()
-    var isEach = no
+    var eachDepth = 0
+
+    fun waitIfEach(Do: Do) {
+        if (eachDepth > 0) pending.add(Do)
+        else Do()
+    }
 
     
 
     //‼️‼️ADD and remove can be the only code 
     // THAT ACTUALLY REMOVES THE ITEMS OR ADDS IT   
     //----------------------------------------//
-    fun add(item: T) {
-        if (isEach) {
-            pending.add { 
-                it.add(item)
-                it.onAdd(item)
-            }
-            return
-        }
-        
+    fun add(item: T) = waitIfEach {
         it.add(item)
         it.onAdd(item)
     }
-    fun add(index: Int, item: T) {
-        if (isEach) {
-            pending.add {
-                it.add(index, item)
-                it.onAdd(item)
-            }
-            return
-        }
-        
+    fun add(index: Int, item: T) = waitIfEach {
         it.add(index, item)
         it.onAdd(item)
     }
 
-    fun remove(item: T) {
-        if (isEach) {
-            pending.add {
-                val index = it.indexOf(item)
-                
-                if (index != -1) {
-                    it.removeAt(index)
-                    it.onRemove(item)
-                } 
-            }
-            return
-        }
-        
+    fun remove(item: T) = waitIfEach {
         val index = it.indexOf(item)
 
         if (index != -1) {
@@ -203,13 +180,11 @@ abstract class EasyListExtra<T>(
     //-----------------------------------------//
 
 
-    
+    //‼️NO ITERATER OVERRIDE, ONLY EACH function use
     operator fun get(index: Int) = it[index]
     operator fun set(index: Int, value: T){ it[index] = value }
     operator fun plusAssign(item: T) = add(item)
     operator fun minusAssign(item: T) = remove(item)
-    override fun iterator(): Iterator<T> = it.toList().iterator()
-
 }
 
 
@@ -248,13 +223,13 @@ class EasyList<T> : EasyListExtra<T> {
     }
 
     fun each(block: (Int, T) -> Unit) {
-        isEach = yes
+        eachDepth++
         try {
             for (index in it.indices) {
                 block(index, it[index])
             }
         } finally {
-            isEach = no
+            eachDepth--
 
             pending.forEach { it() }
             pending.clear()
