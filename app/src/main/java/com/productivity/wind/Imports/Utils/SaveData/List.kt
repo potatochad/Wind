@@ -193,10 +193,10 @@ fun < T : LazyData> TrackList(
         .onBuild { prop, listName, mValue -> 
             val savedItems = EasyList<T>()
 
-            AppData.prefs.all.forEach { (savedKey, savedValue) ->
-                if (savedKey.startsWith("$listName:")) {
+            AppData.each { key, value ->
+                if (key.startsWith("$listName:")) {
                     val item = createItem()
-                    item.key = savedKey
+                    item.key = key
                     item.listName = listName
                     savedItems.add(item)
                 }
