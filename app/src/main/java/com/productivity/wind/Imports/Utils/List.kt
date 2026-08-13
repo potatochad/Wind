@@ -232,8 +232,11 @@ class EasyList<T> : EasyListExtra<T> {
         } finally {
             eachDepth--
 
-            pending.forEach { it() }
-            pending.clear()
+            if (eachDepth == 0) {
+                pending.forEach { it() }
+                pending.clear()
+            }
+
         }
     }
     
