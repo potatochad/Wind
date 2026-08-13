@@ -200,6 +200,11 @@ object AppData {
 	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
 	fun <T> apply(id: Str, x: T) = put(id, x)
 
+	fun each(Do: (Str, Any?) -> Unit) {
+		prefs.all.forEach { (savedKey, savedValue) ->
+			Do(savedKey, savedValue)
+		}
+	}
 
 	
 
