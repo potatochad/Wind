@@ -463,7 +463,9 @@ class By<T>(value: T) {
 	var it by mState(value)
 	var delegateValue = mState(value)
 	private var id by mState("")
+	
 	private var gotOrSet by mState(no)
+	private var onUsagefreeze by mState(no)
 	
 
 	
@@ -475,7 +477,10 @@ class By<T>(value: T) {
 	fun onBuild(x: Do3_<ValVar, Str, mState_<T>>) = apply { onBuild = x }
     fun onGet(x: Do_<ValVar>) = apply { onGet = x }
     fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
-	fun onFirstGetOrSet(freeze: Bool = no, x: Do3_<ValVar, Str, mState_<T>>) = apply { if (!gotOrSet && !freeze) onFirstGetOrSet = x; gotOrSet = yes }
+	fun onFirstGetOrSet(freeze: Bool = no, x: Do3_<ValVar, Str, mState_<T>>) = apply { 
+		onFirstGetOrSet = x
+		onUsagefreeze = freeze
+	}
 
 
 	
@@ -486,13 +491,17 @@ class By<T>(value: T) {
         return this
     }
     operator fun getValue(thisRef: Any?, property: ValVar): T {
-		onFirstGetOrSet(property, id, delegateValue)
+		if (!gotOrSet && !onUsagefreeze) onFirstGetOrSet(property, id, delegateValue)
+		gotOrSet = yes
+		
 		onGet(property)
 		it = delegateValue.it 
         return it
     }
     operator fun setValue(thisRef: Any?, property: ValVar, newValue: T) {
-		onFirstGetOrSet(property, id, delegateValue)
+		if (!gotOrSet && !onUsagefreeze) onFirstGetOrSet(property, id, delegateValue)
+		gotOrSet = yes
+		
         it = newValue
 		delegateValue.it = it
 		onSet(property, id, it)
