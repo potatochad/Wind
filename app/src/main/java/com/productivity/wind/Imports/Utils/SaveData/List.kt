@@ -175,40 +175,35 @@ fun < T : LazyData> TrackList(
     createItem: () -> T,
     defaultItems: List<T> = emptyList()
 ): By<EasyList<T>> {
-    var theList = EasyList<T>()
+    var list = EasyList<T>()
 
 
     val save = IgnoreRepeatedCalls {
-        theList.each {
+        list.each {
             if (it.changed) it.save()
         }
     }
 
     
-    return By(EasyList<T>())
+    return By(list)
         .onBuild { prop, listName, mValue -> 
             AppData.each { key, value ->
                 if (key.startsWith("$listName:")) {
                     val item = createItem()
                     item.key = key
                     item.listName = listName
-                    theList.add(item)
+                    list.add(item)
                 }
             }
 
-            theList.onAdd { 
+            list.onAdd { 
                 it.changed = yes
                 it.onChanged = save::run
                 save.run() 
             }
-                /*.onRemove{}*/
+            //onRemove{} add
                 
-        
-            theList?.each {
-                it.listName = listName
-                it.key = "$listName:${it.id}"
-            }
-            mValue.it = theList
+            mValue.it = list
         }
         .onSet { _, _, _ -> VlogOne("LIST MUST BE VAL") }
 }
