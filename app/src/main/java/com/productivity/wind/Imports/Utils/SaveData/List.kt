@@ -201,7 +201,9 @@ fun < T : LazyData> TrackList(
                 it.onChanged = save::run
                 save.run() 
             }
-            //onRemove{} add
+            list.onRemove{
+                AppData.remove(it.key)
+            }
                 
             mValue.it = list
         }
