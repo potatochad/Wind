@@ -214,7 +214,7 @@ fun < T : LazyData> TrackList(
 abstract class LazyData {
     var changed by mState(no)
     var onChanged: Do = {}
-    val id by mState(Id())
+    val id = Id()
     var listName by mState("")
     var key by mState("")
     
