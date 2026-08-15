@@ -459,15 +459,10 @@ fun callerId(depth: Int = 0): Str {
     return "${it.fileName}-${it.className.substringAfterLast('.')}-${it.methodName}"
 }
 
-class By<T>(value: T) {
-	var it by mState(value)
-	var delegateValue = mState(value)
-	private var id by mState("")
-	
-	private var gotOrSet by mState(no)
-	private var onUsagefreeze by mState(no)
-	
 
+abstract class ByExtra<T> {
+	var gotOrSet by mState(no)
+	var onUsagefreeze by mState(no)
 	
 	private var onBuild: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
     private var onGet: Do_<ValVar> = {}
@@ -482,7 +477,13 @@ class By<T>(value: T) {
 		onUsagefreeze = freeze
 	}
 
-
+}
+class By<T>(value: T) : ByExtra<T>() {
+	var it by mState(value)
+	var delegateValue = mState(value)
+	private var id by mState("")
+	
+	
 	
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
 		id = property.name
