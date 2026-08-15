@@ -175,11 +175,11 @@ fun < T : LazyData> TrackList(
     createItem: () -> T,
     defaultItems: List<T> = emptyList()
 ): By<EasyList<T>> {
-    var theList: EasyList<T>? = null
+    var theList = EasyList<T>()
 
 
     val save = IgnoreRepeatedCalls {
-        theList?.each {
+        theList.each {
             if (it.changed) it.save()
         }
     }
@@ -187,30 +187,20 @@ fun < T : LazyData> TrackList(
     
     return By(EasyList<T>())
         .onBuild { prop, listName, mValue -> 
-            val savedItems = EasyList<T>()
-
             AppData.each { key, value ->
                 if (key.startsWith("$listName:")) {
                     val item = createItem()
                     item.key = key
                     item.listName = listName
-                    savedItems.add(item)
+                    theList.add(item)
                 }
             }
 
-            //check if override defaultItems
-            theList?.let { list ->
-                savedItems.each { index, _ ->
-                    list[index]?.onChanged = save::run
-                }
+            theList.onAdd { 
+                it.changed = yes
+                it.onChanged = save::run
+                save.run() 
             }
-
-            theList = EasyList( if (savedItems.notEmpty) savedItems else defaultItems )
-                .onAdd { 
-                    it.changed = yes
-                    it.onChanged = save::run
-                    save.run() 
-                }
                 /*.onRemove{}*/
                 
         
