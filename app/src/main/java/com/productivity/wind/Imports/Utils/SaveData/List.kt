@@ -180,13 +180,9 @@ fun < T : LazyData> TrackList(
 
     val save = IgnoreRepeatedCalls {
         theList?.each {
-            if (it.changed) {
-                it.save() 
-                it.changed = no
-            }
+            if (it.changed) it.save()
         }
     }
-    
 
     
     return By(EasyList<T>())
@@ -272,6 +268,7 @@ abstract class LazyData {
         AppData.commit(key, customStr) 
         
         VlogOne(customStr, 10000)
+        changed = no
     }
     
     
