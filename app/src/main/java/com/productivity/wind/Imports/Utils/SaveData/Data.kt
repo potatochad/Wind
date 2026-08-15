@@ -205,6 +205,9 @@ object AppData {
 			Do(savedKey, savedValue)
 		}
 	}
+	fun remove(id: Str) {
+		prefs.edit().remove(id).apply()
+	}
 
 	
 
