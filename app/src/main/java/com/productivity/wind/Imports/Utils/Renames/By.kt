@@ -144,7 +144,10 @@ class By<T>(value: T){
     var onGet: Do_<ValVar> = {}
     var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
 	var onFirstGetOrSet: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
-
+	fun onfirstGetOrSet(property: ValVar) {
+		if (!gotOrSet && !onUsagefreeze) onFirstGetOrSet(property, id, delegateValue) 
+		gotOrSet = yes
+	}
 	
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
 		id = property.name
@@ -153,7 +156,7 @@ class By<T>(value: T){
         return this
     }
     operator fun getValue(thisRef: Any?, property: ValVar): T {
-		if (!gotOrSet && !onUsagefreeze) onFirstGetOrSet(property, id, delegateValue)
+		onFirstGetOrSet(property)
 		gotOrSet = yes
 		
 		onGet(property)
@@ -161,8 +164,7 @@ class By<T>(value: T){
         return it
     }
     operator fun setValue(thisRef: Any?, property: ValVar, newValue: T) {
-		if (!gotOrSet && !onUsagefreeze) onFirstGetOrSet(property, id, delegateValue)
-		gotOrSet = yes
+		onFirstGetOrSet(property)
 		
         it = newValue
 		delegateValue.it = it
