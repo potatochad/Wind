@@ -460,55 +460,6 @@ fun callerId(depth: Int = 0): Str {
 }
 
 
-
-class By<T>(value: T) : ByExtra<T>() {
-	var it by mState(value)
-	var delegateValue = mState(value)
-	private var id by mState("")
-
-	var gotOrSet by mState(no)
-	var onUsagefreeze by mState(no)
-	
-	private var onBuild: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
-    private var onGet: Do_<ValVar> = {}
-    private var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
-	private var onFirstGetOrSet: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
-
-	fun onBuild(x: Do3_<ValVar, Str, mState_<T>>) = apply { onBuild = x }
-    fun onGet(x: Do_<ValVar>) = apply { onGet = x }
-    fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
-	fun onFirstGetOrSet(freeze: Bool = no, x: Do3_<ValVar, Str, mState_<T>>) = apply { 
-		onFirstGetOrSet = x
-		onUsagefreeze = freeze
-	}
-	
-	
-	
-    operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
-		id = property.name
-		onBuild(property, id, delegateValue)
-		it = delegateValue.it 
-        return this
-    }
-    operator fun getValue(thisRef: Any?, property: ValVar): T {
-		if (!gotOrSet && !onUsagefreeze) onFirstGetOrSet(property, id, delegateValue)
-		gotOrSet = yes
-		
-		onGet(property)
-		it = delegateValue.it 
-        return it
-    }
-    operator fun setValue(thisRef: Any?, property: ValVar, newValue: T) {
-		if (!gotOrSet && !onUsagefreeze) onFirstGetOrSet(property, id, delegateValue)
-		gotOrSet = yes
-		
-        it = newValue
-		delegateValue.it = it
-		onSet(property, id, it)
-    }
-}
-
-
 fun RemoteViews.onClick(
     viewId: Int,
     pendingIntent: PendingIntent
