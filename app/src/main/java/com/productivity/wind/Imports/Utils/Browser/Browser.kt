@@ -95,6 +95,7 @@ class WebController(
 						"my first million",
 						"mindset",
 						"AllThingsSecured",
+						"university",
 				"hard work",
 				"motivation",
 				"Mel Robbins",
