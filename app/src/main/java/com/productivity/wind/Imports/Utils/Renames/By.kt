@@ -131,7 +131,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.channels.Channel
 
 
-class By<T>(value: T) : ByExtra<T>() {
+class By<T>(value: T){
 	var it by mState(value)
 	var delegateValue = mState(value)
 	private var id by mState("")
