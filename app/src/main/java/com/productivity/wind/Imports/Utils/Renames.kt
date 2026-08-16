@@ -460,7 +460,12 @@ fun callerId(depth: Int = 0): Str {
 }
 
 
-abstract class ByExtra<T> {
+
+class By<T>(value: T) : ByExtra<T>() {
+	var it by mState(value)
+	var delegateValue = mState(value)
+	private var id by mState("")
+
 	var gotOrSet by mState(no)
 	var onUsagefreeze by mState(no)
 	
@@ -476,12 +481,6 @@ abstract class ByExtra<T> {
 		onFirstGetOrSet = x
 		onUsagefreeze = freeze
 	}
-
-}
-class By<T>(value: T) : ByExtra<T>() {
-	var it by mState(value)
-	var delegateValue = mState(value)
-	private var id by mState("")
 	
 	
 	
