@@ -140,20 +140,11 @@ class By<T>(value: T){
 	var gotOrSet by mState(no)
 	var onUsagefreeze by mState(no)
 	
-	private var onBuild: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
-    private var onGet: Do_<ValVar> = {}
-    private var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
-	private var onFirstGetOrSet: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
+	var onBuild: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
+    var onGet: Do_<ValVar> = {}
+    var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
+	var onFirstGetOrSet: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
 
-	fun onBuild(x: Do3_<ValVar, Str, mState_<T>>) = apply { onBuild = x }
-    fun onGet(x: Do_<ValVar>) = apply { onGet = x }
-    fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
-	fun onFirstGetOrSet(freeze: Bool = no, x: Do3_<ValVar, Str, mState_<T>>) = apply { 
-		onFirstGetOrSet = x
-		onUsagefreeze = freeze
-	}
-	
-	
 	
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
 		id = property.name
@@ -180,3 +171,14 @@ class By<T>(value: T){
 }
 
 
+
+fun <T> By<T>.something(x: T): T {
+    return x
+}
+fun onBuild(x: Do3_<ValVar, Str, mState_<T>>) = apply { onBuild = x }
+    fun onGet(x: Do_<ValVar>) = apply { onGet = x }
+    fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
+	fun onFirstGetOrSet(freeze: Bool = no, x: Do3_<ValVar, Str, mState_<T>>) = apply { 
+		onFirstGetOrSet = x
+		onUsagefreeze = freeze
+	}
