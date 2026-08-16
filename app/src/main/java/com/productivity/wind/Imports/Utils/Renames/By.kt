@@ -172,13 +172,30 @@ class By<T>(value: T){
 
 
 
-fun <T> By<T>.something(x: T): T {
-    return x
+fun <T> By<T>.onBuild(
+    x: Do3_<ValVar, Str, mState_<T>>
+) = apply {
+    this.onBuild = x
 }
-fun onBuild(x: Do3_<ValVar, Str, mState_<T>>) = apply { onBuild = x }
-    fun onGet(x: Do_<ValVar>) = apply { onGet = x }
-    fun onSet(x: Do3_<ValVar, Str, T>) = apply { onSet = x }
-	fun onFirstGetOrSet(freeze: Bool = no, x: Do3_<ValVar, Str, mState_<T>>) = apply { 
-		onFirstGetOrSet = x
-		onUsagefreeze = freeze
-	}
+
+fun <T> By<T>.onGet(
+    x: Do_<ValVar>
+) = apply {
+    this.onGet = x
+}
+
+fun <T> By<T>.onSet(
+    x: Do3_<ValVar, Str, T>
+) = apply {
+    this.onSet = x
+}
+
+fun <T> By<T>.onFirstGetOrSet(
+    freeze: Bool = no,
+    x: Do3_<ValVar, Str, mState_<T>>
+) = apply {
+    this.onFirstGetOrSet = x
+    this onUsagefreeze = freeze
+}
+
+
