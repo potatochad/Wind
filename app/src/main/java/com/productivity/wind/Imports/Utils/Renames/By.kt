@@ -195,7 +195,7 @@ fun <T> By<T>.onFirstGetOrSet(
     x: Do3_<ValVar, Str, mState_<T>>
 ) = apply {
     this.onFirstGetOrSet = x
-    this onUsagefreeze = freeze
+    this.onUsagefreeze = freeze
 }
 
 
