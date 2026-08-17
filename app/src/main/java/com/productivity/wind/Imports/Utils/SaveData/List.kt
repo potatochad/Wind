@@ -264,6 +264,8 @@ abstract class LazyData {
 
         
         AppData.commit(key, customStr) 
+
+        Vlog("Saved key: $key")
         
         VlogOne(customStr, 10000)
         changed = no
