@@ -206,6 +206,7 @@ fun < T : LazyData> TrackList(
             }
 
             list.onAdd { 
+                Vlog("item added")
                 it.changed = yes
                 it.onChanged = save::run
                 save.run() 
