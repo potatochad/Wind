@@ -153,6 +153,7 @@ private var supportedTypes = listOf(
 )
 
 fun getLazyDataVar(key: Str, varName: Str): Any? {
+    if (key.empty) return null
     val data = AppData.get(key, "") ?: return null
 
     val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
@@ -222,24 +223,27 @@ fun < T : LazyData> TrackList(
 
 //nothing can be private
 abstract class LazyData {
-    var changed by mState(no)
-    var onChanged: Do = {}
     val id = Id()
     var listName by mState("")
     var key by mState("")
+    
+    var changed by mState(no)
+    var onChanged: Do = {}
     var freezeOnFirstGetOrSet = yes
     
     val clazzName = this.className
     
+    
     val vars = mutableMapOf<Str, VarInfo<*>>()
+    
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onFirstGetOrSet(freezeOnFirstGetOrSet) { prop, name, mValue -> 
                 Vlog("key='$key', listName: $listName, var: $name")
                 
-                var savedX: Any? = null
-                if (key.notEmpty) savedX = getLazyDataVar(key, name)
-                if (savedX != null) mValue.it = savedX as T
+                var savedValue: Any? = null
+                savedValue = getLazyDataVar(key, name)
+                if (savedValue != null) mValue.it = savedValue as T
                 vars[name] = VarInfo(name, mValue.it)
             }
             .onSet { prop, name, value ->
@@ -260,7 +264,7 @@ abstract class LazyData {
         if (badVars.notEmpty) return
         
         
-        var customStr by mState(toStr(key, varList))
+        var customStr = toStr(key, varList)
 
         
         AppData.commit(key, customStr) 
