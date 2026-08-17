@@ -146,6 +146,14 @@ import com.productivity.wind.Imports.UI_visible.*
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
+private fun hasUnsupportedTypes(varList: List<ValVar>): Bool {
+    varList
+        .filter { it.typeStr !in supportedTypes }
+        .forEach { Vlog("Unsupported type: ${it.typeStr} (${it.name})") }
+
+    return varList.any { it.typeStr !in supportedTypes }
+}
+
 private var supportedTypes = listOf(
     "java.lang.String",
     "java.lang.Boolean",
@@ -256,12 +264,11 @@ abstract class LazyData {
 
     open fun save(){
         var varList = vars.values.toList()
-        val badVars = varList.filter { it.typeStr !in supportedTypes }
+
+        Vlog("Running item save")
         
-        badVars.forEach {
-            Vlog("Unsupported type: ${it.typeStr} (${it.name})")
-        }
-        if (badVars.notEmpty) return
+        if (hasUnsupportedTypes(varList)) return
+        Vlog("supported type")
         
         
         var customStr = toStr(key, varList)
