@@ -190,10 +190,11 @@ fun < T : LazyData> TrackList(
         .onBuild { prop, listName, mValue -> 
             AppData.each { key, value ->
                 if (key.startsWith("$listName:")) {
-                    val item = createItem().apply{
-                        this.key = key
-                        this.listName = listName
-                    }
+                    val item = createItem()
+                    item.key = key
+                    item.listName = listName
+                    item.freezeOnFirstGetOrSet = no
+                    
                     list.add(item)
                 }
             }
@@ -219,13 +220,14 @@ abstract class LazyData {
     val id = Id()
     var listName by mState("")
     var key by mState("")
+    var freezeOnFirstGetOrSet = yes
     
     val clazzName = this.className
     
     val vars = mutableMapOf<Str, VarInfo<*>>()
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
-            .onFirstGetOrSet { prop, name, mValue -> 
+            .onFirstGetOrSet(freezeOnFirstGetOrSet) { prop, name, mValue -> 
                 Vlog("key='$key', listName: $listName, var: $name")
                 
                 var savedX: Any? = null
