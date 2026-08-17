@@ -145,8 +145,10 @@ class By<T>(value: T){
     var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
 	var onFirstGetOrSet: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
 	fun onFirstGetOrSet(property: ValVar) {
-		if (!gotOrSet && !onUsagefreeze) onFirstGetOrSet(property, id, delegateValue) 
-		gotOrSet = yes
+		if (!onUsagefreeze){
+			if (!gotOrSet) onFirstGetOrSet(property, id, delegateValue) 
+			gotOrSet = yes
+		}
 	}
 	
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
