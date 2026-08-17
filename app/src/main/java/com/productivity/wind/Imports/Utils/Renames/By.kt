@@ -144,7 +144,7 @@ class By<T>(value: T){
     var onGet: Do_<ValVar> = {}
     var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
 	var onFirstGetOrSet: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
-	fun onfirstGetOrSet(property: ValVar) {
+	fun onFirstGetOrSet(property: ValVar) {
 		if (!gotOrSet && !onUsagefreeze) onFirstGetOrSet(property, id, delegateValue) 
 		gotOrSet = yes
 	}
