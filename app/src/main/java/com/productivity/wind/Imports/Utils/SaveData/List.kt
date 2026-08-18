@@ -203,13 +203,12 @@ fun < T : LazyData> TrackList(
         .onBuild { prop, listName, mValue -> 
             Vlog("starting onBuild for [$listName]")
             
-            AppData.each { key, value ->
-                Vlog("AppData key:[$key], value:[$value]")
+            AppData.each { id, value ->
+                Vlog("AppData key:[$id], value:[$value]")
                 if (key.startsWith("$listName:")) {
                     Vlog("AppData item created")
                     val item = createItem()
-                    item.key = key
-                    item.listName = listName
+                    item.id = id
                     item.freezeOnFirstGetOrSet = no
 
                     Vlog("AppData added to list")
