@@ -235,7 +235,7 @@ fun < T : LazyData> TrackList(
 
 //nothing can be private
 abstract class LazyData {
-    val id = ""
+    var id = ""
     
     var changed by mState(no)
     var onChanged: Do = {}
