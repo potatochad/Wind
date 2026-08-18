@@ -138,24 +138,31 @@ import kotlinx.serialization.builtins.ListSerializer
 fun Id() = UUID.randomUUID().toString()
 
 object AppData {
-	val storageFile = "Data"
+	val saveTo = "Data"
+
+	val prefs: SharedPreferences
+        get() = App.getSharedPreferences(saveTo, Context.MODE_PRIVATE)
+	
+	fun each(Do: (Str, Any?) -> Unit) {
+		prefs.all.forEach { (key, value) ->
+			Do(key, value)
+		}
+	}
 
 	val it: Str
     	get() {
-           val prefs = App.getSharedPreferences(storageFile, Context.MODE_PRIVATE)
            val json = JSONObject()
 
-           for ((key, value) in prefs.all) {
+           each { key, value ->
                json.put(key, value)
            }
 
            return json.toString()
     	}
 		
-	val prefs: SharedPreferences
-        get() = App.getSharedPreferences(storageFile, Context.MODE_PRIVATE)
-		
+	
 	fun deleteAll() { prefs.edit().clear().commit() }
+	fun remove(id: Str) = prefs.edit().remove(id).apply()
 
 
 	val json11 = Json { ignoreUnknownKeys = yes }
@@ -201,15 +208,8 @@ object AppData {
 	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
 	fun <T> apply(id: Str, x: T) = put(id, x)
 
-	fun each(Do: (Str, Any?) -> Unit) {
-		prefs.all.forEach { (savedKey, savedValue) ->
-			Do(savedKey, savedValue)
-		}
-	}
-	fun remove(id: Str) {
-		prefs.edit().remove(id).apply()
-	}
-
+	
+	
 	
 
 	inline fun <reified T> saveList(id: Str, list: List<T>) {
