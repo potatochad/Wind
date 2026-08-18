@@ -238,13 +238,13 @@ object AppData {
 		return try {
 			val json = get(id, "")
 			if (json.isBlank()) {
-				mStateListOf()
+				mStateList()
 			} else {
 				decodeJson<List<T>>(json).toMutableStateList()
 			}
 		} catch (e: Exception) {
 			Vlog("Cant load list: $id, [ ${T::class} ] -> ${e.message}")
-			mStateListOf()
+			mStateList()
 		}
 	}
 }
