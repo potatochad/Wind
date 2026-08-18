@@ -222,6 +222,7 @@ fun < T : LazyData> TrackList(
                 Vlog("item added")
                 it.changed = yes
                 it.onChanged = save::run
+                it.id = "$listName:${Id()}"
                 save.run() 
             }
             list.onRemove{
@@ -235,9 +236,7 @@ fun < T : LazyData> TrackList(
 
 //nothing can be private
 abstract class LazyData {
-    val id = Id()
-    var listName by mState("")
-    var key by mState("")
+    val id = ""
     
     var changed by mState(no)
     var onChanged: Do = {}
@@ -251,10 +250,10 @@ abstract class LazyData {
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onFirstGetOrSet(freezeOnFirstGetOrSet) { prop, name, mValue -> 
-                Vlog("key='$key', listName: $listName, var: $name")
+                Vlog("id='$id', var: $name")
                 
                 var savedValue: Any? = null
-                savedValue = getLazyDataVar(key, name)
+                savedValue = getLazyDataVar(id, name)
                 if (savedValue != null) mValue.it = savedValue as T
                 vars[name] = VarInfo(name, mValue.it)
             }
@@ -275,12 +274,12 @@ abstract class LazyData {
         Vlog("supported type")
         
         
-        var customStr = toStr(key, varList)
+        var customStr = toStr(id, varList)
 
         
-        AppData.commit(key, customStr) 
+        AppData.commit(id, customStr) 
 
-        Vlog("Saved key: $key")
+        Vlog("Saved id: $id")
         
         VlogOne(customStr, 10000)
         changed = no
