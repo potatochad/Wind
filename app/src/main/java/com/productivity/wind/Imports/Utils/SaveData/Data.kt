@@ -142,6 +142,8 @@ object AppData {
 
 	val prefs: SharedPreferences
         get() = App.getSharedPreferences(saveTo, Context.MODE_PRIVATE)
+
+	val dataEdit get() = prefs.edit()
 	
 	fun each(Do: (Str, Any?) -> Unit) {
 		prefs.all.forEach { (key, value) ->
@@ -161,8 +163,10 @@ object AppData {
     	}
 		
 	
-	fun deleteAll() { prefs.edit().clear().commit() }
-	fun remove(id: Str) = prefs.edit().remove(id).apply()
+	fun deleteAll() = dataEdit.clear().apply()
+	fun remove(id: Str) = dataEdit.remove(id).apply()
+
+	fun hasKey(x: Str) = prefs.hasKey(x)
 
 
 	val json11 = Json { ignoreUnknownKeys = yes }
@@ -172,7 +176,7 @@ object AppData {
 
 
 	
-	fun hasKey(x: Str) = prefs.hasKey(x)
+	
 
 	@Suppress("UNCHECKED_CAST")
 	fun <T> get(id: Str, x: T): T {
@@ -191,7 +195,7 @@ object AppData {
 
 	
 	fun <T> put(id: Str, x: T, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
-        val e = prefs.edit()
+        val e = dataEdit
         when (x) {
             is Int -> e.putInt(id, x)
             is Bool -> e.putBoolean(id, x)
@@ -234,13 +238,13 @@ object AppData {
 		return try {
 			val json = get(id, "")
 			if (json.isBlank()) {
-				mutableStateListOf()
+				mStateListOf()
 			} else {
 				decodeJson<List<T>>(json).toMutableStateList()
 			}
 		} catch (e: Exception) {
 			Vlog("Cant load list: $id, [ ${T::class} ] -> ${e.message}")
-			mutableStateListOf()
+			mStateListOf()
 		}
 	}
 }
