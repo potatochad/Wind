@@ -205,7 +205,7 @@ fun < T : LazyData> TrackList(
             
             AppData.each { id, value ->
                 Vlog("AppData key:[$id], value:[$value]")
-                if (key.startsWith("$listName:")) {
+                if (id.startsWith("$listName:")) {
                     Vlog("AppData item created")
                     val item = createItem()
                     item.id = id
@@ -225,7 +225,7 @@ fun < T : LazyData> TrackList(
                 save.run() 
             }
             list.onRemove{
-                AppData.remove(it.key)
+                AppData.remove(it.id)
             }
                 
             mValue.it = list
