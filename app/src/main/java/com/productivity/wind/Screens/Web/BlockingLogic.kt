@@ -49,7 +49,7 @@ fun BlockingLogic(web: WebController){
 		Bar.Url = "google.com"
 	}
 	fun youtubeFilter(){
-		web.youtubeFilter(
+		web.web?.youtubeFilter(
 			allowOnly = listOf(
 				"discipline",
 				"my first million",
