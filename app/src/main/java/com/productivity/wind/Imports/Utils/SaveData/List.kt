@@ -146,10 +146,14 @@ import com.productivity.wind.Imports.UI_visible.*
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
-private fun hasUnsupportedTypes(varList: List<ValVar>): Bool {
+private fun hasUnsupportedTypes(
+    varList: List<VarInfo<*>>
+): Bool {
     varList
         .filter { it.typeStr !in supportedTypes }
-        .forEach { Vlog("Unsupported type: ${it.typeStr} (${it.name})") }
+        .forEach {
+            Vlog("Unsupported type: ${it.typeStr} (${it.name})")
+        }
 
     return varList.any { it.typeStr !in supportedTypes }
 }
