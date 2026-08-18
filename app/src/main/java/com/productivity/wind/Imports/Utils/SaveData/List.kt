@@ -279,6 +279,11 @@ abstract class LazyData {
         AppData.commit(id, customStr) 
 
         Vlog("Saved id: $id")
+        Vlog("AFTER COMMIT:")
+        AppData.each { key, value ->
+
+            Vlog("key=[$key], value=[$value]")
+        }
         
         VlogOne(customStr, 10000)
         changed = no
