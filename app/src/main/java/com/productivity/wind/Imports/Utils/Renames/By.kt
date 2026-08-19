@@ -138,17 +138,15 @@ class By<T>(value: T){
 	private var id by mState("")
 
 	var gotOrSet by mState(no)
-	var onUsagefreeze by mState(no)
 	
 	var onBuild: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
     var onGet: Do_<ValVar> = {}
     var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
 	var onFirstGetOrSet: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
 	fun onFirstGetOrSet(property: ValVar) {
-		if (!onUsagefreeze){
-			if (!gotOrSet) onFirstGetOrSet(property, id, delegateValue) 
-			gotOrSet = yes
-		}
+		Vlog("onFirstGotOrSet called, gotOrSet = $gotOrSet ")
+		if (!gotOrSet) onFirstGetOrSet(property, id, delegateValue) 
+		gotOrSet = yes
 	}
 	
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
@@ -195,11 +193,9 @@ fun <T> By<T>.onSet(
 }
 
 fun <T> By<T>.onFirstGetOrSet(
-    freeze: Bool = no,
     x: Do3_<ValVar, Str, mState_<T>>
 ) = apply {
     this.onFirstGetOrSet = x
-    this.onUsagefreeze = freeze
 }
 
 
