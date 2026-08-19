@@ -270,19 +270,16 @@ abstract class LazyData {
         Vlog("supported type")
         
         
-        var customStr = toStr(id, varList)
+        var customStr = VarInfoListToStr(varList)
 
         
-        AppData.commit(id, customStr) 
+        AppData.put(id, customStr) 
 
         Vlog("Saved id: $id")
         Vlog("AFTER COMMIT:")
-        AppData.each { key, value ->
-
-            Vlog("key=[$key], value=[$value]")
+        AppData.find{ it.startsWith("$listName:") }.forEach { id, value ->
+            Vlog("SAVED DATA FOUND: $id, $value")
         }
-        
-        VlogOne(customStr, 10000)
         changed = no
     }
     
