@@ -163,6 +163,7 @@ abstract class EasyListExtra<T>(
     //----------------------------------------//
     fun add(item: T) = waitIfEach {
         it.add(item)
+        Vlog("easy List ADD CALLED")
         it.onAdd(item)
     }
     fun add(index: Int, item: T) = waitIfEach {
