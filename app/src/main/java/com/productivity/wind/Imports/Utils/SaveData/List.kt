@@ -204,9 +204,8 @@ fun < T : LazyData> TrackList(
             Vlog("starting onBuild for [$listName]")
             
             AppData.each { id, value ->
-                Vlog("AppData key:[$id], value:[$value]")
                 if (id.startsWith("$listName:")) {
-                    Vlog("AppData item created")
+                    Vlog("SAVED DATA FOUND: $id, $value")
                     val item = createItem()
                     item.id = id
                     item.freezeOnFirstGetOrSet = no
