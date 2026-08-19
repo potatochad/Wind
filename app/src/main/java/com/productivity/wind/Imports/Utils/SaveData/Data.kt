@@ -167,8 +167,7 @@ object AppData {
 	fun remove(id: Str) = dataEdit.remove(id).apply()
 
 	fun hasKey(x: Str) = prefs.hasKey(x)
-	fun findKeyPart(key: Str) = prefs.all.keys.any { it.contains(key) }
-
+	fun findKeyPart(key: Str) = prefs.all.keys.firstOrNull { it.contains(key) }
 
 	val json11 = Json { ignoreUnknownKeys = yes }
 	inline fun <reified T> toJson(x: T) = json11.encodeToString(x)
