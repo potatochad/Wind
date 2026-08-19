@@ -208,6 +208,7 @@ fun < T : LazyData> TrackList(
                 val item = createItem()
                 item.id = id
                 item.freezeOnFirstGetOrSet = no
+                item.id //activates the onFirstGetOrSet
 
                 Vlog("AppData added to list")
                     
@@ -246,6 +247,7 @@ abstract class LazyData {
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onFirstGetOrSet(freezeOnFirstGetOrSet) { prop, name, mValue -> 
+                Vlog("onFirstGetOrSet RANNN")
                 Vlog("id='$id', var: $name")
                 
                 var savedValue: Any? = null
