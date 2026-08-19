@@ -277,7 +277,7 @@ abstract class LazyData {
 
         Vlog("Saved id: $id")
         Vlog("AFTER COMMIT:")
-        AppData.find{ it.startsWith("$listName:") }.forEach { id, value ->
+        AppData.find{ it.contains(id) }.forEach { id, value ->
             Vlog("SAVED DATA FOUND: $id, $value")
         }
         changed = no
