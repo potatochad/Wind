@@ -208,7 +208,7 @@ fun < T : LazyData> TrackList(
                 val item = createItem()
                 item.id = id
                 item.freezeOnFirstGetOrSet = no
-                item.id //activates the onFirstGetOrSet
+                item.id = id//activates the onFirstGetOrSet
 
                 Vlog("AppData added to list")
                     
