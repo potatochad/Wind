@@ -13,10 +13,9 @@ class TestData : LazyData() {
 Stored as (one str):
 
 ```text
-{
-//"$listName:$id"
-id: [items:bdc95870-d61e-4d6f-aac2-5b6663a0956f],
-vars:
+AppData.put(key, value)
+key = "$listName:$id" (id-the items)
+value = vars: {
 [stringVar][java.lang.String]["hello"],
 [intVar][java.lang.Integer][2],
 [boolVar][java.lang.Boolean][true]
