@@ -264,7 +264,7 @@ abstract class LazyData {
     open fun save(){
         var varList = vars.values.toList()
 
-        Vlog("Running item save")
+        Vlog("Running item save, vars: [$varList]")
         
         if (hasUnsupportedTypes(varList)) return
         Vlog("supported type")
