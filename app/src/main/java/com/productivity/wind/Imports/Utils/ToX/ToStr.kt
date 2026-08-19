@@ -160,7 +160,7 @@ fun toStr(id: Str = "", vars: List<VarInfo<*>>): Str {
         "${v.name}:${v.typeStr}:${ComplexTypeToStr(v.value)}"
     }
 
-    return "{ id: [$id], vars: { $varsStr } }"
+    return "vars: { $varsStr }"
 }
 
 // SLOWWWW
