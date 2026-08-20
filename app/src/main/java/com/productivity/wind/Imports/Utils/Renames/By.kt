@@ -137,38 +137,28 @@ class By<T>(value: T){
 	var delegateValue = mState(value)
 	private var id by mState("")
 
-	var gotOrSet by mState(no)
-	
-	var onBuild: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
-    var onGet: Do_<ValVar> = {}
-    var onSet: Do3_<ValVar, Str, T> = { _, _, _ -> }
-	var onFirstGetOrSet: Do3_<ValVar, Str, mState_<T>> = { _, _, _ -> }
-	fun onFirstGetOrSet(property: ValVar) {
-		Vlog("onFirstGotOrSet called, gotOrSet = $gotOrSet ")
-		if (!gotOrSet) onFirstGetOrSet(property, id, delegateValue) 
-		gotOrSet = yes
-	}
-	
+	val builds = mList<Do3_<ValVar, Str, mState_<T>>>()
+    val gets = mList<Do_<ValVar>>()
+    val sets = mList<Do3_<ValVar, Str, T>>()
+
     operator fun provideDelegate(thisRef: Any?, property: ValVar): By<T> {
 		id = property.name
-		onBuild(property, id, delegateValue)
+		
+		builds.forEach { it(property, id, delegateValue) }
+
 		it = delegateValue.it 
         return this
     }
     operator fun getValue(thisRef: Any?, property: ValVar): T {
-		onFirstGetOrSet(property)
-		gotOrSet = yes
+		gets.forEach { it(property) }
 		
-		onGet(property)
 		it = delegateValue.it 
         return it
     }
     operator fun setValue(thisRef: Any?, property: ValVar, newValue: T) {
-		onFirstGetOrSet(property)
-		
         it = newValue
 		delegateValue.it = it
-		onSet(property, id, it)
+		sets.forEach { it(property, id, it) }
     }
 }
 
@@ -177,25 +167,37 @@ class By<T>(value: T){
 fun <T> By<T>.onBuild(
     x: Do3_<ValVar, Str, mState_<T>>
 ) = apply {
-    this.onBuild = x
+    builds += x
 }
 
 fun <T> By<T>.onGet(
     x: Do_<ValVar>
 ) = apply {
-    this.onGet = x
+    gets += x
 }
 
 fun <T> By<T>.onSet(
     x: Do3_<ValVar, Str, T>
 ) = apply {
-    this.onSet = x
+    sets += x
 }
+
+private val firstGetOrSet = mutableMapOf<By<*>, Bool>()
 
 fun <T> By<T>.onFirstGetOrSet(
     x: Do3_<ValVar, Str, mState_<T>>
 ) = apply {
-    this.onFirstGetOrSet = x
+    fun first(property: ValVar) {
+        if (firstGetOrSet[this] != true) {
+            firstGetOrSet[this] = true
+            x(property, id, delegateValue)
+        }
+    }
+
+    onGet { property -> first(property) }
+    onSet { property, _, _ -> first(property) }
 }
+
+
 
 
