@@ -135,7 +135,7 @@ import kotlinx.coroutines.channels.Channel
 class By<T>(value: T){
 	var it by mState(value)
 	var delegateValue = mState(value)
-	private var id by mState("")
+	var id by mState("")
 
 	val builds = mList<Do3_<ValVar, Str, mState_<T>>>()
     val gets = mList<Do_<ValVar>>()
