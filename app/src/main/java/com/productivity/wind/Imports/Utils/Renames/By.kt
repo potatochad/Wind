@@ -158,7 +158,7 @@ class By<T>(value: T){
     operator fun setValue(thisRef: Any?, property: ValVar, newValue: T) {
         it = newValue
 		delegateValue.it = it
-		sets.forEach { it(property, id, it) }
+		sets.forEach { it(property, id, newValue) }
     }
 }
 
