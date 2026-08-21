@@ -226,6 +226,7 @@ class EasyList<T> : EasyListExtra<T> {
     }
 
     fun each(block: (Int, T) -> Unit) {
+        var lazyListEach = logTimer("lazylist each")
         eachDepth++
         try {
             for (index in it.indices) {
@@ -240,6 +241,7 @@ class EasyList<T> : EasyListExtra<T> {
             }
 
         }
+        lazyListEach.stop()
     }
     
     
