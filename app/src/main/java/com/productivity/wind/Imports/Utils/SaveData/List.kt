@@ -243,7 +243,6 @@ abstract class LazyData {
         return By(x)
             .onFirstGetOrSet{ prop, name, mValue -> 
                 Vlog("onFirstGetOrSet RANNN")
-                Vlog("id='$id', var: $name")
                 
                 var savedValue: Any? = null
                 savedValue = getLazyDataVar(id, name)
@@ -251,9 +250,13 @@ abstract class LazyData {
                 vars[name] = VarInfo(name, mValue.it)
             }
             .onSet { prop, name, value ->
+                Vlog("onSet RANNN")
                 vars[name] = VarInfo(name, value)
                 changed = yes
                 onChanged()
+            }
+            .onGet { 
+                Vlog("onGet RANNN")
             }
     }
 
