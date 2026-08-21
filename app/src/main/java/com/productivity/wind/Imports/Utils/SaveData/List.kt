@@ -264,9 +264,10 @@ abstract class LazyData {
         if (hasUnsupportedTypes(varList)) return
         Vlog("supported type")
         
-        var timeTest = logTimer("VarInfoListToStr")
+        val start = System.nanoTime()
         var customStr = VarInfoListToStr(varList)
-        timeTest.stop()
+        val elapsedMs = (System.nanoTime() - start) / 1_000_000.0
+        Vlog("VarInfoListToStr: $elapsedMs ms")
 
         AppData.put(id, customStr) 
         changed = no
