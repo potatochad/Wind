@@ -264,8 +264,9 @@ abstract class LazyData {
         if (hasUnsupportedTypes(varList)) return
         Vlog("supported type")
         
-        
+        var timeTest = logTimer("VarInfoListToStr")
         var customStr = VarInfoListToStr(varList)
+        timeTest.stop()
 
         AppData.put(id, customStr) 
         changed = no
