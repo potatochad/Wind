@@ -240,21 +240,15 @@ abstract class LazyData {
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onFirstGetOrSet{ prop, name, mValue -> 
-                Vlog("onFirstGetOrSet RANNN")
-                
                 var savedValue: Any? = null
                 savedValue = getLazyDataVar(id, name)
                 if (savedValue != null) mValue.it = savedValue as T
                 vars[name] = VarInfo(name, mValue.it)
             }
             .onSet { prop, name, value ->
-                Vlog("onSet RANNN")
                 vars[name] = VarInfo(name, value)
                 changed = yes
                 onChanged()
-            }
-            .onGet { 
-                Vlog("onGet RANNN")
             }
     }
 
