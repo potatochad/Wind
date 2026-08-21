@@ -208,12 +208,12 @@ fun < T : LazyData> TrackList(
                 Vlog("SAVED DATA FOUND: $id, $value")
                 val item = createItem()
                 item.id = id
+                item.onChanged = save::run
                     
                 list.add(item)
             }
 
             list.onAdd { 
-                Vlog("item added")
                 it.changed = yes
                 it.onChanged = save::run
                 it.id = "$listName:${Id()}"
