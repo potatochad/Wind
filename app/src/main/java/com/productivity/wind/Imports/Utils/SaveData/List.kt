@@ -194,7 +194,9 @@ fun < T : LazyData> TrackList(
     var list = EasyList<T>()
 
 
+    var times by mState(0)
     val save = IgnoreRepeatedCalls {
+        Vlog("Ran: [${times++}]")
         list.each {
             if (it.changed) it.save()
         }
