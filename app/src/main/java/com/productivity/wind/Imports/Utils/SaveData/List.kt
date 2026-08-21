@@ -264,14 +264,7 @@ abstract class LazyData {
         
         var customStr = VarInfoListToStr(varList)
 
-        
         AppData.put(id, customStr) 
-
-        Vlog("Saved id: $id")
-        Vlog("AFTER COMMIT:")
-        AppData.find{ it.contains(id) }.forEach { id, value ->
-            Vlog("SAVED DATA FOUND: $id, $value")
-        }
         changed = no
     }
     
