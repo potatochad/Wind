@@ -259,15 +259,10 @@ abstract class LazyData {
     open fun save(){
         var varList = vars.values.toList()
 
-        Vlog("Running item save, vars: [$varList]")
         
         if (hasUnsupportedTypes(varList)) return
-        Vlog("supported type")
         
-        val start = System.nanoTime()
         var customStr = VarInfoListToStr(varList)
-        val elapsedMs = (System.nanoTime() - start) / 1_000_000.0
-        Vlog("VarInfoListToStr: $elapsedMs ms")
 
         AppData.put(id, customStr) 
         changed = no
