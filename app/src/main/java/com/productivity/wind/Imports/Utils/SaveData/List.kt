@@ -201,11 +201,10 @@ fun < T : LazyData> TrackList(
         }
     }
 
-    
+    var initTime = logTimer()
     return By(list)
         .onBuild { prop, listName, mValue -> 
             AppData.find{ it.startsWith("$listName:") }.forEach { id, value ->
-                Vlog("SAVED DATA FOUND: $id, $value")
                 val item = createItem()
                 item.id = id
                 item.onChanged = save::run
@@ -224,8 +223,11 @@ fun < T : LazyData> TrackList(
             }
                 
             mValue.it = list
+
+            
         }
         .onSet { _, _, _ -> VlogOne("LIST MUST BE VAL") }
+        initTime.stop()
 }
 
 //nothing can be private
