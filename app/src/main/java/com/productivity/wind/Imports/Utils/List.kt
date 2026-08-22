@@ -160,6 +160,7 @@ abstract class EasyListExtra<T>(
 
     //‼️‼️ADD and remove can be the only code 
     // THAT ACTUALLY REMOVES THE ITEMS OR ADDS IT   
+    //IF want add more: waitIfEach and onX
     //----------------------------------------//
     fun add(item: T) = waitIfEach {
         it.add(item)
@@ -168,6 +169,11 @@ abstract class EasyListExtra<T>(
     fun add(index: Int, item: T) = waitIfEach {
         it.add(index, item)
         it.onAdd(item)
+    }
+    fun addAll(items: Iterable<T>) = waitIfEach {
+        it.addAll(items)
+        
+        it.onAddAll(items)
     }
 
     fun remove(item: T) = waitIfEach {
@@ -185,6 +191,7 @@ abstract class EasyListExtra<T>(
     operator fun set(index: Int, value: T){ it[index] = value }
     operator fun plusAssign(item: T) = add(item)
     operator fun minusAssign(item: T) = remove(item)
+    
     //‼️ shall crash onRemove
     override fun iterator(): Iterator<T> = it.iterator()
 }
