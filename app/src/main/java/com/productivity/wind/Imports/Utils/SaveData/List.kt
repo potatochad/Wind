@@ -201,9 +201,10 @@ fun < T : LazyData> TrackList(
         }
     }
 
-    var initTime = logTimer()
+    var initTime = logTimer("initTime")
     return By(list)
         .onBuild { prop, listName, mValue -> 
+            var initTimeAppData = logTimer("initTimeAppData")
             AppData.find{ it.startsWith("$listName:") }.forEach { id, value ->
                 val item = createItem()
                 item.id = id
@@ -211,6 +212,7 @@ fun < T : LazyData> TrackList(
                     
                 list.add(item)
             }
+            initTimeAppData.stop()
 
             list.onAdd { 
                 it.changed = yes
