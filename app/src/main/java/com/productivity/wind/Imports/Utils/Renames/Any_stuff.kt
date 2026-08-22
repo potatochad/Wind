@@ -515,7 +515,7 @@ class OneAtATime {
 
 
 class IgnoreRepeatedCalls(
-    val delayMs: Long = 300,
+    val delay: Long = 300,
     val scope: CoroutineScope = appScope,
 	var block: suspend () -> Unit,
 ) {
@@ -528,7 +528,7 @@ class IgnoreRepeatedCalls(
         if (job != null) return
 
         job = scope.launch {
-            delay(delayMs)
+            delay(delay)
 
             if (pending) {
                 block()
