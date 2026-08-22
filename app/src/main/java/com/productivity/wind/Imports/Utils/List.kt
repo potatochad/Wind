@@ -146,6 +146,7 @@ abstract class EasyListExtra<T>(
     var it = mStateList<T>().apply { addAll(items) }
     
     var onAdd: mList<T>.(T) -> Unit = {}
+    var onAddAll: mList<T>.(Iterable<T>) -> Unit = {}
     var onRemove: mList<T>.(T) -> Unit = {}
 
     val pending = mList<Do>()
@@ -171,9 +172,8 @@ abstract class EasyListExtra<T>(
         it.onAdd(item)
     }
     fun addAll(items: Iterable<T>) = waitIfEach {
-        it.addAll(items)
-        
-        it.onAddAll(items)
+       it.addAll(items)
+       it.onAddAll(items)
     }
 
     fun remove(item: T) = waitIfEach {
@@ -232,7 +232,6 @@ class EasyList<T> : EasyListExtra<T> {
     }
 
     fun each(block: (Int, T) -> Unit) {
-        var lazyListEach = logTimer("lazylist each")
         eachDepth++
         try {
             for (index in it.indices) {
@@ -247,7 +246,6 @@ class EasyList<T> : EasyListExtra<T> {
             }
 
         }
-        lazyListEach.stop()
     }
     
     
