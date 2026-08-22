@@ -195,7 +195,7 @@ fun < T : LazyData> TrackList(
 
 
     var times by mState(0)
-    val save = IgnoreRepeatedCalls {
+    val save = IgnoreRepeatedCalls(delay = 1000) {
         list.each {
             if (it.changed) it.save()
         }
