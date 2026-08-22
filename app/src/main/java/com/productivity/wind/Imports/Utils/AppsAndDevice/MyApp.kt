@@ -171,6 +171,7 @@ val AppPkg = "com.productivity.wind"
 
 lateinit var scope: CoroutineScope
 lateinit var appScope: CoroutineScope
+lateinit var appNonUIScope: CoroutineScope
 lateinit var appWorker: OneWorker
 
 
@@ -202,7 +203,8 @@ class AppUI : ComponentActivity() {
 		AppActivity.it = this
 		App = this.applicationContext
 		appScope = lifecycleScope
-
+		appNonUIScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+		
 		permission = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { granted ->
