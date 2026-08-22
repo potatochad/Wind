@@ -169,6 +169,8 @@ var AppLazyH by mState(0.dp)
 var AppDensity by mState(0f)
 val AppPkg = "com.productivity.wind"
 
+//‼️ scope - for basic ui scope, appscope is wider ui scope!
+//dont TOUCH IT (also forgot why, so idk)
 lateinit var scope: CoroutineScope
 lateinit var appScope: CoroutineScope
 lateinit var appNonUIScope: CoroutineScope
