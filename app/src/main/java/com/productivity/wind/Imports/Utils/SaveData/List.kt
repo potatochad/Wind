@@ -203,22 +203,31 @@ fun < T : LazyData> TrackList(
 
     return By(list)
         .onBuild { prop, listName, mValue -> 
-            val start = System.nanoTime()
-            
-            AppData.find{ it.startsWith("$listName:") }.forEach { id, value ->
-                val item = createItem()
-                item.id = id
-                item.onChanged = save::run
-                    
-                list.add(item)
-            }
-            Vlog("initTimeAppData took ${(System.nanoTime() - start) / 1_000_000.0}ms")
+            var t = logTimer("find")
+            val data = AppData.find { it.startsWith("$listName:") }
+            t.stop()
 
+            t = logTimer("create")
+            val items = data.map { (id, _) ->
+                createItem().apply {
+                    this.id = id
+                    this.onChanged = save::run
+                }
+            }
+            t.stop()
+
+            t = logTimer("add")
+            list.addAll(items)
+            t.stop()
+            
             list.onAdd { 
                 it.changed = yes
                 it.onChanged = save::run
                 it.id = "$listName:${Id()}"
                 save.run() 
+            }
+            list.onAddAll { 
+                Vlog("DONT USE onAddALL !!!")
             }
             list.onRemove{
                 AppData.remove(it.id)
