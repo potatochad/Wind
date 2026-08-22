@@ -201,10 +201,10 @@ fun < T : LazyData> TrackList(
         }
     }
 
-    var initTime = logTimer("initTime")
     return By(list)
         .onBuild { prop, listName, mValue -> 
-            var initTimeAppData = logTimer("initTimeAppData")
+            val start = System.nanoTime()
+            
             AppData.find{ it.startsWith("$listName:") }.forEach { id, value ->
                 val item = createItem()
                 item.id = id
@@ -212,7 +212,7 @@ fun < T : LazyData> TrackList(
                     
                 list.add(item)
             }
-            initTimeAppData.stop()
+            Vlog("initTimeAppData took ${(System.nanoTime() - start) / 1_000_000.0}ms")
 
             list.onAdd { 
                 it.changed = yes
@@ -229,7 +229,6 @@ fun < T : LazyData> TrackList(
             
         }
         .onSet { _, _, _ -> VlogOne("LIST MUST BE VAL") }
-        initTime.stop()
 }
 
 //nothing can be private
