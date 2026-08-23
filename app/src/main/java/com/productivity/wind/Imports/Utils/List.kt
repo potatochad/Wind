@@ -282,6 +282,12 @@ fun <T, L : EasyListExtra<T>> L.onRemove(
     onRemove = block
     return this
 }
+fun <T, L : EasyListExtra<T>> L.onAddAll(
+    block: mList<T>.(Iterable<T>) -> Unit
+): L {
+    onAddAll = block
+    return this
+}
 
 
 
