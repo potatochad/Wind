@@ -139,7 +139,7 @@ import kotlinx.serialization.builtins.ListSerializer
 
 fun Id() = UUID.randomUUID().toString()
 
-object AppData {
+class AppData {
 	val saveTo = "Data" //top folder
 
 	val prefs: SharedPreferences
