@@ -207,7 +207,7 @@ fun < T : LazyData> TrackList(
 
     return By(list)
         .onBuild { prop, listName, mValue -> 
-            val t = logTimer("AppDataGetAll")
+            var t = logTimer("AppDataGetAll")
             val data = AppListData.all
             t.stop()
 
