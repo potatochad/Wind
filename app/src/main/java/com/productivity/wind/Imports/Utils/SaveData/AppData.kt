@@ -171,6 +171,8 @@ class LazyAppData(saveWhere: Str = saveBasicTo) {
 
            return json.toString()
     	}
+	val all: Map<Str, Any?>
+        get() = prefs.all
 		
 	
 	fun deleteAll() = dataEdit.clear().apply()
