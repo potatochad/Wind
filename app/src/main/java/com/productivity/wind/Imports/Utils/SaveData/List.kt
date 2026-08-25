@@ -207,16 +207,22 @@ fun < T : LazyData> TrackList(
 
     return By(list)
         .onBuild { prop, listName, mValue -> 
-            val data = AppListData.find { it.startsWith("$listName:") }
+            val t = logTimer("AppDataGetAll")
+            val data = AppListData.all
+            t.stop()
 
+            t = logTimer("Input value")
             val items = data.map { (id, _) ->
                 createItem().apply {
                     this.id = id
                     this.onChanged = save::run
                 }
             }
-            
+            t.stop()
+
+            t = logTimer("Add all")
             list.addAll(items)
+            t.stop
             
             list.onAdd { 
                 it.changed = yes
