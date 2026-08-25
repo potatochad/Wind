@@ -172,7 +172,7 @@ private var supportedTypes = listOf(
 
 fun getLazyDataVar(key: Str, varName: Str): Any? {
     if (key.empty) return null
-    val data = AppData.get(key, "") ?: return null
+    val data = AppListData.get(key, "") ?: return null
 
     val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
     val match = regex.find(data) ?: return null
@@ -207,7 +207,7 @@ fun < T : LazyData> TrackList(
 
     return By(list)
         .onBuild { prop, listName, mValue -> 
-            val data = AppData.find { it.startsWith("$listName:") }
+            val data = AppListData.find { it.startsWith("$listName:") }
 
             val items = data.map { (id, _) ->
                 createItem().apply {
@@ -275,7 +275,7 @@ abstract class LazyData {
         
         var customStr = VarInfoListToStr(varList)
 
-        AppData.put(id, customStr) 
+        AppListData.put(id, customStr) 
         changed = no
     }
     
