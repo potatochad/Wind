@@ -144,10 +144,10 @@ val saveBasicTo = "Data"
 val saveListTo = "ListData"
 
 //treat as global objects
-val AppData = AppData()
-val AppListData = AppData("ListData")
+val AppData = LazyAppData()
+val AppListData = LazyAppData("ListData")
 
-class AppData(saveWhere: Str = saveBasicTo) {
+class LazyAppData(saveWhere: Str = saveBasicTo) {
 	val saveTo = saveWhere
 
 	val prefs: SharedPreferences
