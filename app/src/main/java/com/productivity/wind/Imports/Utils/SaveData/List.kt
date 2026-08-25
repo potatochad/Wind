@@ -222,7 +222,7 @@ fun < T : LazyData> TrackList(
 
             t = logTimer("Add all")
             list.addAll(items)
-            t.stop
+            t.stop()
             
             list.onAdd { 
                 it.changed = yes
