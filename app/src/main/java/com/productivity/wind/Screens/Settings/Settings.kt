@@ -216,6 +216,12 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 
 @Composable
 fun GrayScaleScreen() = LazyScreen("GrayScale") {
+	EmptyBox(
+		text = "GrayScale",
+		icon = Icons.Default.Palette,
+		color = gold,
+	)
+
 	
 }
         
