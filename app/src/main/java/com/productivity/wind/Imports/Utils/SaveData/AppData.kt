@@ -145,7 +145,6 @@ val saveListTo = "ListData"
 
 //treat as global objects
 val AppData = LazyAppData()
-val AppListData = LazyAppData("ListData")
 
 class LazyAppData(saveWhere: Str = saveBasicTo) {
 	val saveTo = saveWhere
