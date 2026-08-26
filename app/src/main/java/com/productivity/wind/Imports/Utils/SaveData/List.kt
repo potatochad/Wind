@@ -170,9 +170,9 @@ private var supportedTypes = listOf(
     "java.lang.Integer"
 )
 
-fun getLazyDataVar(key: Str, varName: Str): Any? {
+fun getLazyDataVar(key: Str, varName: Str, listName: Str): Any? {
     if (key.empty) return null
-    val data = AppListData.get(key, "") ?: return null
+    val data = AppListData[listName].get(key, "") ?: return null
 
     val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
     val match = regex.find(data) ?: return null
@@ -189,7 +189,6 @@ fun getLazyDataVar(key: Str, varName: Str): Any? {
 }
 
 
-var AppListData = LazyAppData("ListData")
 
 fun < T : LazyData> TrackList(
     createItem: () -> T,
@@ -208,7 +207,7 @@ fun < T : LazyData> TrackList(
     return By(list)
         .onBuild { prop, listName, mValue -> 
             var t = logTimer("AppDataGetAll")
-            val data = AppListData.all
+            val data = AppListData[listName].all
             t.stop()
 
             t = logTimer("Input value")
@@ -248,6 +247,7 @@ fun < T : LazyData> TrackList(
 //nothing can be private
 abstract class LazyData {
     var id = ""
+    var listName = ""
     
     var changed by mState(no)
     var onChanged: Do = {}
@@ -261,7 +261,7 @@ abstract class LazyData {
         return By(x)
             .onFirstGetOrSet{ prop, name, mValue -> 
                 var savedValue: Any? = null
-                savedValue = getLazyDataVar(id, name)
+                savedValue = getLazyDataVar(id, name, listName)
                 if (savedValue != null) mValue.it = savedValue as T
                 vars[name] = VarInfo(name, mValue.it)
             }
@@ -281,7 +281,7 @@ abstract class LazyData {
         
         var customStr = VarInfoListToStr(varList)
 
-        AppListData.put(id, customStr) 
+        AppListData[listName].put(id, customStr) 
         changed = no
     }
     
