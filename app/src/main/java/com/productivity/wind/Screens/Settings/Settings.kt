@@ -225,10 +225,10 @@ fun GrayScaleScreen() = LazyScreen("GrayScale") {
 	LazySlider(
 		min = 0f,
 		max = 1f,
-		linear: Bool = yes,
+		linear = yes,
 		value = mState(0f),
 	){
-		
+		DeviceGray(it)
 	}
 
 	
