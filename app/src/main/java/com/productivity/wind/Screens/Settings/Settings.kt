@@ -62,7 +62,9 @@ fun SettingsScreen() {
 			},
 			topPadding = 1.dp,
 		)
-        
+
+		/*
+		‼️‼️SAVE AND RESTORE DONT WORKKKK
         var restore = r(no)
         LazyItem(
             icon = { BigIcon.Restore(darkBlue) },
@@ -93,6 +95,7 @@ fun SettingsScreen() {
             },
         )
         Backup(backup)
+		*/
 
 
     
