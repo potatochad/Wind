@@ -189,7 +189,7 @@ fun getLazyDataVar(key: Str, varName: Str): Any? {
 }
 
 
-
+var AppListData = LazyAppData("ListData")
 
 fun < T : LazyData> TrackList(
     createItem: () -> T,
