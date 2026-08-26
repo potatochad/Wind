@@ -140,14 +140,13 @@ import kotlinx.serialization.builtins.ListSerializer
 fun Id() = UUID.randomUUID().toString()
 
 //basic data (‼️Dont change storage location)
-val saveBasicTo = "Data"
-val saveListTo = "ListData"
+private val basicTo = "Data"
 
 //treat as global objects
 val AppData = LazyAppData()
 
-class LazyAppData(saveWhere: Str = saveBasicTo) {
-	val saveTo = saveWhere
+class LazyAppData(Where: Str = basicTo) {
+	val saveTo = Where
 
 	val prefs: SharedPreferences
         get() = App.getSharedPreferences(saveTo, Context.MODE_PRIVATE)
