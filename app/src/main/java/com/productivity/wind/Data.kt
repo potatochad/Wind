@@ -270,6 +270,7 @@ fun NavGraphBuilder.ScreenNav() {
     url("ExtensionsScreen") { ExtensionsScreen() }
 	url("PrivacyScreen") { PrivacyScreen() }
     url("SettingsOtherScreen") { SettingsOtherScreen() }
+	url("GrayScaleScreen") { GrayScaleScreen() }
 	url("LogsScreen") { LogsScreen() }
 
 	// popups ‼️Nav back on close
