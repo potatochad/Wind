@@ -107,6 +107,13 @@ fun SettingsScreen() {
                     goTo("ExtensionsScreen")
                 }
         ) 
+		LazyItem(
+            icon = { BigIcon.Lock(gold) },
+            title = "Grayscale",
+            onClick = {
+                goTo("GrayScaleScreen")
+            }
+        ) 
 		
 
 		
@@ -204,6 +211,14 @@ fun ExtensionsScreen() = LazyScreen("Extensions") {
 	
 }
 
+
+
+
+@Composable
+fun GrayScaleScreen() = LazyScreen("GrayScale") {
+	
+}
+        
 
 @Composable
 fun SettingsOtherScreen() = LazyScreen("Settings") {
