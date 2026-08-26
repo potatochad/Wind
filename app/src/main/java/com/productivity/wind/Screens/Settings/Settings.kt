@@ -221,6 +221,15 @@ fun GrayScaleScreen() = LazyScreen("GrayScale") {
 		icon = Icons.Default.Palette,
 		color = gold,
 	)
+	
+	LazySlider(
+		min = 0f,
+		max = 1f,
+		linear: Bool = yes,
+		value = mState(0f),
+	){
+		
+	}
 
 	
 }
