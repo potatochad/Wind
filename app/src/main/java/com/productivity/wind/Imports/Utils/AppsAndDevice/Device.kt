@@ -219,7 +219,7 @@ fun DeviceGray(enabled: Bool = true) {
     }
 }
 
-fun DeviceGray(amount: Float = 1f) {
+fun DeviceGray(amount: Float) {
     val value = amount.coerceIn(0f, 1f)
 
     if (Permission.writeSecureSettings()) {
