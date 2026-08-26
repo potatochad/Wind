@@ -219,6 +219,53 @@ fun DeviceGray(enabled: Bool = true) {
     }
 }
 
+fun DeviceGray(amount: Float = 1f) {
+    val value = amount.coerceIn(0f, 1f)
+
+    if (Permission.writeSecureSettings()) {
+
+        // 0% grayscale = identity
+        // 100% grayscale = full grayscale
+        //
+        // Interpolate between them:
+        //
+        // R' = R * (1 - amount) + Gray * amount
+        // G' = G * (1 - amount) + Gray * amount
+        // B' = B * (1 - amount) + Gray * amount
+
+        val inverse = 1f - value
+
+        val r = 0.2126f * value
+        val g = 0.7152f * value
+        val b = 0.0722f * value
+
+        val matrix = floatArrayOf(
+            inverse + r, g,         b,         0f,
+            r,           inverse + g, b,       0f,
+            r,           g,         inverse + b, 0f,
+            0f,          0f,        0f,          1f
+        )
+
+        val matrixString = matrix.joinToString(",")
+
+        Settings.Secure.putString(
+            App.contentResolver,
+            "accessibility_display_color_matrix",
+            matrixString
+        )
+
+        // Don't enable the daltonizer itself.
+        Settings.Secure.putInt(
+            App.contentResolver,
+            "accessibility_display_daltonizer_enabled",
+            0
+        )
+
+    } else {
+        log("Write secure settings permission: false")
+    }
+}
+
 
 
 
