@@ -1,15 +1,15 @@
-package com.productivity.testwind
+package com.productivity.wind
 
-import com.productivity.testwind.Imports.Utils.Log.*
-import com.productivity.testwind.Imports.Utils.Generic_list.*
-import com.productivity.testwind.Imports.Utils.Renames.*
-import com.productivity.testwind.Imports.Utils.SaveData.*
-import com.productivity.testwind.Imports.Utils.AppsAndDevice.*
-import com.productivity.testwind.Imports.Utils.NavControl.*
-import com.productivity.testwind.Screens.Settings.*
-import com.productivity.testwind.Imports.Utils.ToX.*
-import com.productivity.testwind.Imports.Utils.String.*
-import com.productivity.testwind.Screens.*
+import com.productivity.wind.Imports.Utils.Log.*
+import com.productivity.wind.Imports.Utils.Generic_list.*
+import com.productivity.wind.Imports.Utils.Renames.*
+import com.productivity.wind.Imports.Utils.SaveData.*
+import com.productivity.wind.Imports.Utils.AppsAndDevice.*
+import com.productivity.wind.Imports.Utils.NavControl.*
+import com.productivity.wind.Screens.Settings.*
+import com.productivity.wind.Imports.Utils.ToX.*
+import com.productivity.wind.Imports.Utils.String.*
+import com.productivity.wind.Screens.*
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -26,7 +26,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.platform.LocalConfiguration
-import com.productivity.testwind.Imports.*
+import com.productivity.wind.Imports.*
 import androidx.core.view.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -43,8 +43,8 @@ import java.io.File
 import kotlinx.coroutines.*
 import kotlin.properties.*
 import com.google.android.gms.location.*
-import com.productivity.testwind.Imports.UI_visible.*
-import com.productivity.testwind.Screens.Task.*
+import com.productivity.wind.Imports.UI_visible.*
+import com.productivity.wind.Screens.Task.*
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
 import com.google.android.gms.location.*
@@ -53,9 +53,9 @@ import android.app.Activity
 import android.os.Process
 import android.content.Intent
 import androidx.navigation.NavGraphBuilder
-import com.productivity.testwind.Screens.Settings.LogScreen.*    
-import com.productivity.testwind.Screens.Settings.*
-import com.productivity.testwind.Screens.Web.*
+import com.productivity.wind.Screens.Settings.LogScreen.*    
+import com.productivity.wind.Screens.Settings.*
+import com.productivity.wind.Screens.Web.*
 import androidx.compose.ui.graphics.Color
 
 
