@@ -138,12 +138,12 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 
-object AppListData {
+object LazyListData {
     private val lists = mutableMapOf<Str, LazyAppData>()
 
     operator fun get(listName: Str): LazyAppData {
         return lists.getOrPut(listName) {
-            LazyAppData(listName)
+            LazyData(listName)
         }
     }
 }
