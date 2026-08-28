@@ -143,9 +143,9 @@ fun Id() = UUID.randomUUID().toString()
 private val basicTo = "Data"
 
 //treat as global objects
-val AppData = LazyAppData()
+val AppData = LazyData()
 
-class LazyAppData(Where: Str = basicTo) {
+class LazyData(Where: Str = basicTo) {
 	val saveTo = Where
 
 	val prefs: SharedPreferences
