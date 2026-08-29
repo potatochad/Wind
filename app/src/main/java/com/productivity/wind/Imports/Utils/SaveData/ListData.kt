@@ -139,9 +139,9 @@ import kotlinx.serialization.builtins.ListSerializer
 
 
 object ListData {
-    private val lists = mutableMapOf<Str, LazyAppData>()
+    private val lists = mutableMapOf<Str, LazyData>()
 
-    operator fun get(listName: Str): LazyAppData {
+    operator fun get(listName: Str): LazyData {
         return lists.getOrPut(listName) {
             LazyData(listName)
         }
