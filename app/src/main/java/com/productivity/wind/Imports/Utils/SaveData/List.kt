@@ -190,7 +190,7 @@ fun getLazyDataVar(key: Str, varName: Str, listName: Str): Any? {
 
 
 
-fun < T : LazyData> TrackList(
+fun < T : EasySave> TrackList(
     createItem: () -> T,
     defaultItems: List<T> = emptyList()
 ): By<EasyList<T>> {
@@ -239,7 +239,7 @@ fun < T : LazyData> TrackList(
 }
 
 //nothing can be private
-abstract class LazyData {
+abstract class EasySave {
     var id = ""
     var listName = ""
     
@@ -296,7 +296,7 @@ class Schedule6(
 }
 
 
-class TestData : LazyData() {
+class TestData : EasySave() {
 
     var name by lazyS("item")
 
