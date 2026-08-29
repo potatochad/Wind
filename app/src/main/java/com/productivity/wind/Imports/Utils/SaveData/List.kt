@@ -211,6 +211,7 @@ fun < T : EasySave> TrackList(
             val items = data.map { (id, _) ->
                 createItem().apply {
                     this.id = id
+                    this.listName = listName
                     this.onChanged = save::run
                 }
             }
@@ -228,7 +229,7 @@ fun < T : EasySave> TrackList(
                 //‼️ its not implemented yet!!
             }
             list.onRemove{
-                AppData.remove(it.id)
+                ListData[listName].remove(it.id)
             }
                 
             mValue.it = list
