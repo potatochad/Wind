@@ -209,6 +209,7 @@ fun < T : EasySave> TrackList(
             val data = ListData[listName].all
 
             val items = data.map { (id, _) ->
+                Vlog("listAll: ${ListData[listName]})
                 createItem().apply {
                     this.id = id
                     this.listName = listName
@@ -270,6 +271,7 @@ abstract class EasySave {
 
     open fun save(){
         var varList = vars.values.toList()
+        Vlog("varList: ${varList})
 
         
         if (hasUnsupportedTypes(varList)) return
