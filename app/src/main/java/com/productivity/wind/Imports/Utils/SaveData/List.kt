@@ -207,6 +207,8 @@ fun < T : EasySave> TrackList(
     return By(list)
         .onBuild { prop, listName, mValue -> 
             val data = ListData[listName].all
+            Vlog("listData: ${data}")
+                
 
             val items = data.map { (id, _) ->
                 Vlog("listAll: ${ListData[listName]}")
@@ -272,6 +274,7 @@ abstract class EasySave {
     open fun save(){
         var varList = vars.values.toList()
         Vlog("varList: ${varList}")
+        Vlog("listName: ${listName}")
 
         
         if (hasUnsupportedTypes(varList)) return
@@ -279,6 +282,7 @@ abstract class EasySave {
         var customStr = VarInfoListToStr(varList)
 
         ListData[listName].put(id, customStr) 
+        Vlog("customStr: ${customStr}")
         changed = no
     }
     
