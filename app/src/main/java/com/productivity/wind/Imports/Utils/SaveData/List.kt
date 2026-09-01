@@ -225,6 +225,7 @@ fun < T : EasySave> TrackList(
                 it.changed = yes
                 it.onChanged = save::run
                 it.id = "$listName:${Id()}"
+                it.listName = listName
                 save.run() 
             }
             list.onAddAll { 
