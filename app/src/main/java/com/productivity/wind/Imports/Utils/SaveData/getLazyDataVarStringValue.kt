@@ -149,7 +149,8 @@ private fun getVarValue(type: Str, raw: Str): Any? {
         "java.lang.Long" -> null
         "java.lang.Double" -> null
         "java.lang.Float" -> null
-        else -> null
+        "null" -> null
+        else -> "[/*UNSUPPORTED VAR SAVE TYPE*/]"
     }
 }
 
