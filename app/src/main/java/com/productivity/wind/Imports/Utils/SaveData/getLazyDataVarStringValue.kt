@@ -141,6 +141,14 @@ import com.productivity.wind.Imports.UI_visible.*
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
+private fun getVarValue(type: Str, raw: Str): Any? {
+    return when (type) {
+        "java.lang.String" -> raw.removeSurrounding("\"")
+        "java.lang.Integer" -> raw.toIntOrNull()
+        "java.lang.Boolean" -> raw.toBooleanStrictOrNull()
+        else -> null
+    }
+}
 
 fun getLazyDataVar(key: Str, varName: Str, listName: Str): Any? {
     if (key.empty) return null
@@ -152,11 +160,6 @@ fun getLazyDataVar(key: Str, varName: Str, listName: Str): Any? {
     val type = match.groupValues[1]
     val raw = match.groupValues[2]
 
-    return when (type) {
-        "java.lang.String" -> raw.removeSurrounding("\"")
-        "java.lang.Integer" -> raw.toInt()
-        "java.lang.Boolean" -> raw.toBoolean()
-        else -> null
-    }
+    return getVarValue(type, raw)
 }
 
