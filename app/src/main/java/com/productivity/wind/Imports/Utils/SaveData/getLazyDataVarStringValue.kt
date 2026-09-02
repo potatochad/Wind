@@ -1,14 +1,5 @@
 package com.productivity.wind.Imports.Utils.SaveData
 
-//‼️ISSUES
-//DEAL LATER WITH TYPE CHANGED OR NAME CHANGED in class
-//only handles 3 types (bool, str, int)
-//Currently the hole list updates on a tiny change.
-//THERE IS A bunch of data saved data (that doesnt get cleaned up, after years, massive issue)
-//It doesnt handle Delete or clear (saved doesnt change)
-// CustomAlertList may habe way more inputs that needs do (like onAdd  but you know others)
-//Cause doesnt save in order, it doesnt onBuild in orderrr. not 1,2,3 indexes, but 5,1,3
-
 import com.productivity.wind.Imports.Utils.Log.*
 import com.productivity.wind.Imports.Utils.Generic_list.*
 import com.productivity.wind.Imports.Utils.Renames.*
