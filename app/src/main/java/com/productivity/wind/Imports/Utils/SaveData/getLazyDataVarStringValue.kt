@@ -146,6 +146,9 @@ private fun getVarValue(type: Str, raw: Str): Any? {
         "java.lang.String" -> raw.removeSurrounding("\"")
         "java.lang.Integer" -> raw.toIntOrNull()
         "java.lang.Boolean" -> raw.toBooleanStrictOrNull()
+        "java.lang.Long" -> null
+        "java.lang.Double" -> null
+        "java.lang.Float" -> null
         else -> null
     }
 }
