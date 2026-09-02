@@ -142,14 +142,19 @@ import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
 private fun getVarValue(type: Str, raw: Str): Any? {
-    return when (type) {
-        "java.lang.String" -> raw.removeSurrounding("\"")
-        "java.lang.Integer" -> raw.toIntOrNull()
-        "java.lang.Boolean" -> raw.toBooleanStrictOrNull()
-        "java.lang.Long" -> null
-        "java.lang.Double" -> null
-        "java.lang.Float" -> null
-        "null" -> null
+    return when {
+        type == "java.lang.String" -> raw.removeSurrounding("\"")
+        type == "java.lang.Integer" -> raw.toIntOrNull()
+        type == "java.lang.Boolean" -> raw.toBooleanStrictOrNull()
+        type == "java.lang.Long" -> raw.toLongOrNull()
+        type == "java.lang.Double" -> raw.toDoubleOrNull()
+        type == "java.lang.Float" -> raw.toFloatOrNull()
+        type == "null" -> null
+
+        type.startsWith("com.productivity.wind") -> {
+            // Custom Wind class
+            null
+        }
         else -> "[/*UNSUPPORTED VAR SAVE TYPE*/]"
     }
 }
