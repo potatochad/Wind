@@ -148,45 +148,6 @@ import kotlin.properties.*
 import org.json.JSONObject
 import com.productivity.wind.Imports.UI_visible.*
 import kotlinx.coroutines.flow.*
-import kotlinx.serialization.builtins.ListSerializer
-
-
-private fun hasUnsupportedTypes(
-    varList: List<VarInfo<*>>
-): Bool {
-    for (it in varList) {
-        if (it.typeStr !in supportedTypes) {
-            Vlog("Unsupported type: ${it.typeStr} (${it.name})")
-            return yes
-        }
-    }
-
-    return no
-}
-
-private var supportedTypes = listOf(
-    "java.lang.String",
-    "java.lang.Boolean",
-    "java.lang.Integer"
-)
-
-fun getLazyDataVar(key: Str, varName: Str, listName: Str): Any? {
-    if (key.empty) return null
-    val data = ListData[listName].get(key, "") ?: return null
-
-    val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
-    val match = regex.find(data) ?: return null
-
-    val type = match.groupValues[1]
-    val raw = match.groupValues[2]
-
-    return when (type) {
-        "java.lang.String" -> raw.removeSurrounding("\"")
-        "java.lang.Integer" -> raw.toInt()
-        "java.lang.Boolean" -> raw.toBoolean()
-        else -> null
-    }
-}
 
 
 
@@ -277,9 +238,6 @@ abstract class EasySave {
         Vlog("varList: ${varList}")
         Vlog("listName: ${listName}")
 
-        
-        if (hasUnsupportedTypes(varList)) return
-        
         var customStr = VarInfoListToStr(varList)
 
         ListData[listName].put(id, customStr) 
