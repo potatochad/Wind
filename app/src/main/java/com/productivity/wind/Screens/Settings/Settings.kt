@@ -160,56 +160,87 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 
 
 @Composable
-fun ExtensionsScreen() = LazyScreen("Extensions") {
-	
-	// App.start(AppBackground::class.java)
-	
-	
-	LazzyColumn {
+fun ExtensionsScreen() = LazyScreen("Test Data") {
+
+    LazzyColumn {
+
+        Bar.items.each { index, item ->
+
+            LazzyColumn {
+                Text("Item $index")
+
+                LazzyRow {
+                    Text("name: ${item.name}")
+
+                    Btn("Change") {
+                        item.name = "changed ${TimeMillis()}"
+                    }
+                }
+
+                LazzyRow {
+                    Text("intVar: ${item.intVar}")
+
+                    Btn("Change") {
+                        item.intVar += 1
+                    }
+                }
+
+                LazzyRow {
+                    Text("boolVar: ${item.boolVar}")
+
+                    Btn("Change") {
+                        item.boolVar = !item.boolVar
+                    }
+                }
+
+                LazzyRow {
+                    Text("doubleVar: ${item.doubleVar}")
+
+                    Btn("Change") {
+                        item.doubleVar += 1.1
+                    }
+                }
+
+                LazzyRow {
+                    Text("floatVar: ${item.floatVar}")
+
+                    Btn("Change") {
+                        item.floatVar += 1f
+                    }
+                }
+
+                LazzyRow {
+                    Text("longVar: ${item.longVar}")
+
+                    Btn("Change") {
+                        item.longVar += 1L
+                    }
+                }
+
+                LazzyRow {
+                    Text("nullVar: ${item.nullVar}")
+
+                    Btn("Change") {
+                        item.nullVar = "not null"
+                    }
+                }
+            }
+        }
+
         LazzyRow {
-            Btn("Add"){
+            Btn("Add") {
                 Bar.items += TestData()
             }
-			Btn("Add 10"){
-				val timer = logTimer("Bar.items size: ${Bar.items.size}")
-				repeat(10) {
-					Bar.items += TestData()
-				}
-                timer.stop()
-			   
-			}
-            Btn("Delete"){
-                    if (Bar.items.notEmpty) {
-                        Bar.items.removeAt(0)
-                    }
-                }
-            Btn("Edit"){
-                    if (Bar.items.notEmpty) {
-                        Bar.items[0].name = "updated ${TimeMillis()}"
-                    }
-                }
-		}
-		LazzyRow {
-            Btn("Edit All"){
-                    Bar.items.each { index, item -> 
-						item.name = "updated ${TimeMillis()}"
-					}
-                }
-		}
 
-        LazzyColumn(Mod.h(300)) {
-            LazyColumn {
-                items(
-                    items = Bar.items.it,
-                    key = { it.id }
-                ) {
-                    Text(it.name)
+            Btn("Add 10") {
+                repeat(10) {
+                    Bar.items += TestData()
                 }
             }
         }
     }
-	
 }
+
 
 
 
