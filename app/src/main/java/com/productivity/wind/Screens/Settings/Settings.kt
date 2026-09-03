@@ -164,7 +164,7 @@ fun ExtensionsScreen() = LazyScreen("Test Data") {
 
     LazzyColumn {
 
-        Bar.items.each { index, item ->
+        Bar.items.eachCompose { index, item ->
 
             LazzyColumn {
                 Text("Item $index")
@@ -221,7 +221,7 @@ fun ExtensionsScreen() = LazyScreen("Test Data") {
                     Text("nullVar: ${item.nullVar}")
 
                     Btn("Change") {
-                        item.nullVar = "not null"
+                        item.nullVar = null
                     }
                 }
             }
