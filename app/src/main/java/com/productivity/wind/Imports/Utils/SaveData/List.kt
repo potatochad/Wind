@@ -271,7 +271,7 @@ class TestData : EasySave() {
     var boolVar by lazyS(yes)
     var doubleVar by lazyS(1.2)
     var floatVar by lazyS(5f)
-    var floatVar by lazyS(5f)
+    var longVar by lazyS(5L)
     var nullVar by lazyS(null)
 }
 
