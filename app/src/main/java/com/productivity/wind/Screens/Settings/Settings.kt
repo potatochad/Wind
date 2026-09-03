@@ -164,64 +164,69 @@ fun ExtensionsScreen() = LazyScreen("Test Data") {
 
     LazzyColumn {
 
-        Bar.items.eachCompose { index, item ->
+        LazyColumn {
+            items(
+                items = Bar.items.it,
+                key = { it.id }
+            ) { item ->
 
-            LazzyColumn {
-                Text("Item $index")
+                LazzyColumn {
+                    Text("Item ${item.id}")
 
-                LazzyRow {
-                    Text("name: ${item.name}")
+                    LazzyRow {
+                        Text("name: ${item.name}")
 
-                    Btn("Change") {
-                        item.name = "changed ${TimeMillis()}"
+                        Btn("Change") {
+                            item.name = "changed ${TimeMillis()}"
+                        }
                     }
-                }
 
-                LazzyRow {
-                    Text("intVar: ${item.intVar}")
+                    LazzyRow {
+                        Text("intVar: ${item.intVar}")
 
-                    Btn("Change") {
-                        item.intVar += 1
+                        Btn("Change") {
+                            item.intVar += 1
+                        }
                     }
-                }
 
-                LazzyRow {
-                    Text("boolVar: ${item.boolVar}")
+                    LazzyRow {
+                        Text("boolVar: ${item.boolVar}")
 
-                    Btn("Change") {
-                        item.boolVar = !item.boolVar
+                        Btn("Change") {
+                            item.boolVar = !item.boolVar
+                        }
                     }
-                }
 
-                LazzyRow {
-                    Text("doubleVar: ${item.doubleVar}")
+                    LazzyRow {
+                        Text("doubleVar: ${item.doubleVar}")
 
-                    Btn("Change") {
-                        item.doubleVar += 1.1
+                        Btn("Change") {
+                            item.doubleVar += 1.1
+                        }
                     }
-                }
 
-                LazzyRow {
-                    Text("floatVar: ${item.floatVar}")
+                    LazzyRow {
+                        Text("floatVar: ${item.floatVar}")
 
-                    Btn("Change") {
-                        item.floatVar += 1f
+                        Btn("Change") {
+                            item.floatVar += 1f
+                        }
                     }
-                }
 
-                LazzyRow {
-                    Text("longVar: ${item.longVar}")
+                    LazzyRow {
+                        Text("longVar: ${item.longVar}")
 
-                    Btn("Change") {
-                        item.longVar += 1L
+                        Btn("Change") {
+                            item.longVar += 1L
+                        }
                     }
-                }
 
-                LazzyRow {
-                    Text("nullVar: ${item.nullVar}")
+                    LazzyRow {
+                        Text("nullVar: ${item.nullVar}")
 
-                    Btn("Change") {
-                        item.nullVar = null
+                        Btn("Change") {
+                            item.nullVar = null
+                        }
                     }
                 }
             }
@@ -240,8 +245,6 @@ fun ExtensionsScreen() = LazyScreen("Test Data") {
         }
     }
 }
-
-
 
 
 
