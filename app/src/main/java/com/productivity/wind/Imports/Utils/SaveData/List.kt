@@ -267,11 +267,12 @@ class Schedule6(
 class TestData : EasySave() {
 
     var name by lazyS("item")
-
-    var stringVar by lazyS("hello")
-    var intVar by lazyS(2)
+    var intVar by lazyS("h")
     var boolVar by lazyS(yes)
-    var stringVAL by lazyS("hello")
+    var doubleVar by lazyS(1.2)
+    var floatVar by lazyS(5f)
+    var floatVar by lazyS(5f)
+    var nullVar by lazyS(null)
 }
 
 
