@@ -163,6 +163,7 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 fun ExtensionsScreen() = LazyScreen("Test Data") {
 
         LazyColumn {
+			modifier = Mod.h(400),
             items(
                 items = Bar.items.it,
                 key = { it.id }
