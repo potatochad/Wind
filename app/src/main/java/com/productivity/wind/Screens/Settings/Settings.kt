@@ -162,14 +162,11 @@ fun PrivacyScreen() = LazyScreen("Privacy") {
 @Composable
 fun ExtensionsScreen() = LazyScreen("Test Data") {
 
-    LazzyColumn {
-
         LazyColumn {
             items(
                 items = Bar.items.it,
                 key = { it.id }
             ) { item ->
-				/*
 
                 LazzyColumn {
                     Text("Item ${item.id}")
@@ -231,7 +228,7 @@ fun ExtensionsScreen() = LazyScreen("Test Data") {
                     }
                 }
 
-				*/
+				
             }
         }
 
@@ -247,7 +244,7 @@ fun ExtensionsScreen() = LazyScreen("Test Data") {
             }
         }
 		
-    }
+    
 }
 
 
