@@ -152,8 +152,11 @@ private fun getVarValue(type: Str, raw: Str): Any? {
         type == "null" -> null
 
         type.startsWith("com.productivity.wind") -> {
-            // Custom Wind class
-            null
+            val clazz = Class.forName(type)
+
+            if (clazz.isEnum) return getEnumValue(clazz, raw)
+                
+            return null
         }
         else -> "[/*UNSUPPORTED VAR SAVE TYPE*/]"
     }
@@ -171,4 +174,10 @@ fun getLazyDataVar(key: Str, varName: Str, listName: Str): Any? {
 
     return getVarValue(type, raw)
 }
+
+
+private fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
+    clazz.enumConstants?.firstOrNull {
+        (it as Enum<*>).name == raw
+    }
 
