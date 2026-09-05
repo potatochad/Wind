@@ -108,6 +108,13 @@ fun SettingsScreen() {
                 }
         ) 
 		LazyItem(
+                icon = { BigIcon.Extension(0xFF9C27B0) },
+                title = "Test Screen",
+                onClick = {
+                    goTo("TestScreen")
+                }
+        ) 
+		LazyItem(
             icon = { BigIcon.Lock(gold) },
             title = "Grayscale",
             onClick = {
