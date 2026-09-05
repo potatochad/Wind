@@ -182,10 +182,10 @@ fun ExtensionsScreen() = LazyScreen("Test Data") {
                     Text("Item ${item.id}")
 
                     LazzyRow {
-                        Text("name: ${item.name}")
+                        Text("item.enumThing: ${item.enumThing}")
 
                         Btn("Change") {
-                            item.name = "changed ${TimeMillis()}"
+                            if (item.enumThing == WebAction.Allow) item.enumThing = WebAction.Block else item.enumThing = WebAction.Allow    
                         }
                     }
                 }
