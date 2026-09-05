@@ -267,7 +267,7 @@ class Schedule6(
 class TestData : EasySave() {
 
     var name by lazyS("item")
-    var enumThing by lazyS()
+    var enumThing by lazyS(WebAction.Allow)
 }
 
 
