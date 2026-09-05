@@ -1,8 +1,5 @@
 package com.productivity.wind.Screens.Settings
 
-
-@file:Suppress("UNUSED_PARAMETER")
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
