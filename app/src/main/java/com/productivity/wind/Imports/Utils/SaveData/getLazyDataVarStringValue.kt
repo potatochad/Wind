@@ -151,8 +151,11 @@ private fun getVarValue(type: Str, raw: Str): Any? {
         type == "java.lang.Float" -> raw.toFloatOrNull()
         type == "null" -> null
 
-        type.startsWith("com.productivity.wind") -> {
+        type.startsWith(pkgMyApp) -> {
+            Vlog("Found my apps complex class")
             val clazz = Class.forName(type)
+            Vlog("its a: $clazz")
+            Vlog("got value: ${getEnumValue(clazz, raw)}")
 
             if (clazz.isEnum) return getEnumValue(clazz, raw)
                 
