@@ -268,6 +268,7 @@ fun NavGraphBuilder.ScreenNav() {
 
     url("SettingsScreen") { SettingsScreen() }
     url("ExtensionsScreen") { ExtensionsScreen() }
+	url("TestScreen") { TestScreen() }
 	url("PrivacyScreen") { PrivacyScreen() }
     url("SettingsOtherScreen") { SettingsOtherScreen() }
 	url("GrayScaleScreen") { GrayScaleScreen() }
