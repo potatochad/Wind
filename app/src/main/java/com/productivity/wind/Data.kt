@@ -87,6 +87,7 @@ fun newDay() {
 
 //!! Global var that shouldnt be saved
 var defaultScreen by mState("Main")
+val pkgMyApp = "com.productivity.wind"
 var SettingsItemCardColor = Color(0xFF121212)
 
 
