@@ -172,7 +172,6 @@ fun < T : EasySave> TrackList(
                 
 
             val items = data.map { (id, _) ->
-                Vlog("listAll: ${ListData[listName]}")
                 createItem().apply {
                     this.id = id
                     this.listName = listName
