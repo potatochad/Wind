@@ -188,54 +188,6 @@ fun ExtensionsScreen() = LazyScreen("Test Data") {
                             item.name = "changed ${TimeMillis()}"
                         }
                     }
-
-                    LazzyRow {
-                        Text("intVar: ${item.intVar}")
-
-                        Btn("Change") {
-                            item.intVar += 1
-                        }
-                    }
-
-                    LazzyRow {
-                        Text("boolVar: ${item.boolVar}")
-
-                        Btn("Change") {
-                            item.boolVar = !item.boolVar
-                        }
-                    }
-
-                    LazzyRow {
-                        Text("doubleVar: ${item.doubleVar}")
-
-                        Btn("Change") {
-                            item.doubleVar += 1.1
-                        }
-                    }
-
-                    LazzyRow {
-                        Text("floatVar: ${item.floatVar}")
-
-                        Btn("Change") {
-                            item.floatVar += 1f
-                        }
-                    }
-
-                    LazzyRow {
-                        Text("longVar: ${item.longVar}")
-
-                        Btn("Change") {
-                            item.longVar += 1L
-                        }
-                    }
-
-                    LazzyRow {
-                        Text("nullVar: ${item.nullVar}")
-
-                        Btn("Change") {
-                            item.nullVar = null
-                        }
-                    }
                 }
 
 				
