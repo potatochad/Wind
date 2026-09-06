@@ -211,8 +211,6 @@ abstract class EasySave {
     var changed by mState(no)
     var onChanged: Do = {}
     
-    val clazzName = this.className
-    
     
     val vars = mutableMapOf<Str, VarInfo<*>>()
     
