@@ -212,7 +212,7 @@ abstract class EasySave {
     var onChanged: Do = {}
     
     
-    val vars = mutableMapOf<Str, VarInfo<*>>()
+    val vars = MapVarInfo()
     
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
