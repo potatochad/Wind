@@ -155,9 +155,14 @@ class MapVarInfo {
         map[name] = VarInfo(name, value)
 	}
 
+	fun <T> edit(name: Str, value: T) {
+        map[name] = VarInfo(name, value)
+	}
+
 	fun add(info: VarInfo<*>) {
         map[info.name] = info
 	}
+	
 
     fun remove(name: Str) = map.remove(name)
 
