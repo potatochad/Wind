@@ -139,3 +139,19 @@ data class VarInfo<T>(
     val type: Class<*>? = value?.let { it::class.java },
 	val typeStr: Str = type?.name ?: "null",
 )
+
+class MapVarInfo {
+    private val map = mutableMapOf<Str, VarInfo<*>>()
+
+    operator fun get(name: Str) = map[name]
+
+    operator fun set(name: Str, info: VarInfo<*>) {
+        map[name] = info
+    }
+
+    fun remove(name: Str) = map.remove(name)
+
+    fun clear() = map.clear()
+
+    fun contains(name: Str) = name in map
+}
