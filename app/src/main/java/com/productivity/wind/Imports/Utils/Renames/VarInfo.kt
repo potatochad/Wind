@@ -133,6 +133,8 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.channels.Channel
 
+
+
 data class VarInfo<T>(
 	val name: Str,
     val value: T,
@@ -148,6 +150,14 @@ class MapVarInfo {
     operator fun set(name: Str, info: VarInfo<*>) {
         map[name] = info
     }
+
+	fun <T> add(name: Str, value: T) {
+        map[name] = VarInfo(name, value)
+	}
+
+	fun add(info: VarInfo<*>) {
+        map[info.name] = info
+	}
 
     fun remove(name: Str) = map.remove(name)
 
