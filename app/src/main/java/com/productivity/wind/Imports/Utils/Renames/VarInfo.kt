@@ -169,4 +169,6 @@ class MapVarInfo {
     fun clear() = map.clear()
 
     fun contains(name: Str) = name in map
+
+	fun toList() = map.values.toList()
 }
