@@ -220,10 +220,11 @@ abstract class EasySave {
                 var savedValue: Any? = null
                 savedValue = getLazyDataVar(id, name, listName)
                 if (savedValue != null) mValue.it = savedValue as T
-                vars[name] = VarInfo(name, mValue.it)
+                vars.add(name, mValue.it)
             }
             .onSet { prop, name, value ->
-                vars[name] = VarInfo(name, value)
+                vars.edit(name, value)
+                
                 changed = yes
                 onChanged()
             }
