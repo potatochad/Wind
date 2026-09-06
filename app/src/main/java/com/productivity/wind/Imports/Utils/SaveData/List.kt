@@ -217,9 +217,10 @@ abstract class EasySave {
     inline fun <reified T> lazyS(x: T): By<T> {
         return By(x)
             .onFirstGetOrSet{ prop, name, mValue -> 
-                var savedValue: Any? = null
-                savedValue = getLazyDataVar(id, name, listName)
+                val savedValue = getLazyDataVar(id, name, listName)
+                
                 if (savedValue != null) mValue.it = savedValue as T
+                
                 vars.add(name, mValue.it)
             }
             .onSet { prop, name, value ->
@@ -232,7 +233,7 @@ abstract class EasySave {
 
 
     open fun save(){
-        var varList = vars.values.toList()
+        var varList = vars.toList()
         Vlog("varList: ${varList}")
         Vlog("listName: ${listName}")
 
@@ -244,22 +245,9 @@ abstract class EasySave {
         Vlog("customStr: ${customStr}")
         changed = no
     }
+}
     
     
-}
-
-
-
-class Schedule6(
-    val name: Str
-) {
-    var time = 10
-    val created = System.currentTimeMillis()
-
-    fun reset() {
-        time = 0
-    }
-}
 
 
 class TestData : EasySave() {
