@@ -215,7 +215,10 @@ abstract class EasySave {
     val vars = MapVarInfo()
     
     inline fun <reified T> lazyS(x: T): By<T> {
-        return By(x)
+        var theBy = By(x)
+            .onBuild{
+                
+            }
             .onFirstGetOrSet{ prop, name, mValue -> 
                 val savedValue = getLazyDataVar(id, name, listName)
                 
@@ -229,6 +232,8 @@ abstract class EasySave {
                 changed = yes
                 onChanged()
             }
+
+        return theBy
     }
 
 
