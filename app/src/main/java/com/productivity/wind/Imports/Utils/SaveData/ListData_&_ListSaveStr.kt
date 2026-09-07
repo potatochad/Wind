@@ -154,6 +154,11 @@ class ListSaveStr(listName: Str) {
 
     var strData: Str = ListData[listName]
 
+    // I COULD MAKE THIS PRODUCE MAP THAT THEN USEE LATER
+    //FOR LIKE VARS MATCH
+    // ‼️ HOWEVER I THINK BETTER IS PRODUCE GLOBAL MAPS OF MAPS
+    //As i already make a map while iterating through each stuff
+    //AND IN GENERAL would be nicerr
     private fun countVars(): Int {
         val start = strData.indexOf('{')
         val end = strData.lastIndexOf('}')
