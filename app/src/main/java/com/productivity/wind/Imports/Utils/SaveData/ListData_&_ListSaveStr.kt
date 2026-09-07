@@ -148,10 +148,34 @@ object ListData {
     }
 }
 
-
+//vars: { age:Int:17, name:String:"Joe", person:Person:Person(name="Joe", age=17) }
+//vars: { name:type:value, name:type:value }
 class ListSaveStr(listName: Str) {
 
     var customJson: Str = ListData[listName]
+
+    private fun countVars(customJson: Str): Int {
+        val start = json.indexOf('{')
+        val end = json.lastIndexOf('}')
+
+        if (start == -1 || end == -1 || start >= end) return 0
+
+    val vars = json.substring(start + 1, end).trim()
+    if (vars.isEmpty()) return 0
+
+    var count = 1
+    var depth = 0
+
+    for (c in vars) {
+        when (c) {
+            '(', '{', '[' -> depth++
+            ')', '}', ']' -> depth--
+            ',' -> if (depth == 0) count++
+        }
+    }
+
+    return count
+    }
 
     // Cached final string
     private var theString: Str = customJson
