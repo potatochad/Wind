@@ -149,4 +149,37 @@ object ListData {
 }
 
 
+class ListSaveStr(listName: Str) {
+
+    var customJson: Str = ListData[listName]
+
+    // Cached final string
+    private var theString: Str = customJson
+
+    // Information about the previous structure
+    private var previousVarCount = 0
+
+    // Rebuild only when necessary
+    val it: Str
+        get() {
+            // magic here 👀
+            return theString
+        }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
