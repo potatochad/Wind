@@ -217,7 +217,7 @@ abstract class EasySave {
     inline fun <reified T> lazyS(x: T): By<T> {
         var theBy = By(x)
             .onBuild{ prop, name, mValue -> 
-                
+                vars.add(name, mValue.it)
             }
             .onFirstGetOrSet{ prop, name, mValue -> 
                 val savedValue = getLazyDataVar(id, name, listName)
