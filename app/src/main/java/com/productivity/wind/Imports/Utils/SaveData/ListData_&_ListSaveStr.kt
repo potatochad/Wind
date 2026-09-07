@@ -152,43 +152,33 @@ object ListData {
 //vars: { name:type:value, name:type:value }
 class ListSaveStr(listName: Str) {
 
-    var customJson: Str = ListData[listName]
+    var strData: Str = ListData[listName]
 
-    private fun countVars(customJson: Str): Int {
-        val start = json.indexOf('{')
-        val end = json.lastIndexOf('}')
+    private fun countVars(): Int {
+        val start = strData.indexOf('{')
+        val end = strData.lastIndexOf('}')
 
         if (start == -1 || end == -1 || start >= end) return 0
 
-    val vars = json.substring(start + 1, end).trim()
-    if (vars.isEmpty()) return 0
+        val vars = strData.fromTo(start + 1, end).trim()
+        if (vars.empty) return 0
 
-    var count = 1
-    var depth = 0
+        var count = 1
+        var depth = 0
 
-    for (c in vars) {
-        when (c) {
-            '(', '{', '[' -> depth++
-            ')', '}', ']' -> depth--
-            ',' -> if (depth == 0) count++
+        for (c in vars) {
+            when (c) {
+                '(', '{', '[' -> depth++
+                ')', '}', ']' -> depth--
+                ',' -> if (depth == 0) count++
+            }
         }
+        return count
+    }
+    private fun mapMatchesVars(map: Map): Bool {
+    return map.size == countVars()
     }
 
-    return count
-    }
-
-    // Cached final string
-    private var theString: Str = customJson
-
-    // Information about the previous structure
-    private var previousVarCount = 0
-
-    // Rebuild only when necessary
-    val it: Str
-        get() {
-            // magic here 👀
-            return theString
-        }
 }
 
 
