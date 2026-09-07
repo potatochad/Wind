@@ -138,6 +138,7 @@ import kotlinx.coroutines.channels.Channel
 data class VarInfo<T>(
 	val name: Str,
     val value: T,
+	var changed: Bool = no,
     val type: Class<*>? = value?.let { it::class.java },
 	val typeStr: Str = type?.name ?: "null",
 )
@@ -151,8 +152,8 @@ class MapVarInfo {
         map[name] = info
     }
 
-	fun <T> add(name: Str, value: T) {
-        map[name] = VarInfo(name, value)
+	fun <T> add(name: Str, value: T, changed: Bool = no) {
+        map[name] = VarInfo(name, value, changed)
 	}
 
 	fun <T> edit(name: Str, value: T) {
