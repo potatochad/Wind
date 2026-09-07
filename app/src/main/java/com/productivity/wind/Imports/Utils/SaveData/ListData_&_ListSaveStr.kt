@@ -175,8 +175,8 @@ class ListSaveStr(listName: Str) {
         }
         return count
     }
-    private fun mapMatchesVars(map: Map): Bool {
-    return map.size == countVars()
+    private fun varsMatch(map: MapVarInfo): Bool {
+        return map.size == countVars()
     }
 
 }
