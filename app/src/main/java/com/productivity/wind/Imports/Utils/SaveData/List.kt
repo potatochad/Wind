@@ -236,6 +236,9 @@ abstract class EasySave {
         return theBy
     }
 
+    //ADD A SLOW.RUNNER. THAT SLOWLY CHECKS IF ALL CHANGEDDD
+    //AND HAVE IT BE LIKE IF WANT NOWW. TO GO FASTERR‼️‼️
+
 
     open fun save(){
         var varList = vars.toList()
