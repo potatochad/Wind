@@ -216,7 +216,7 @@ abstract class EasySave {
     
     inline fun <reified T> lazyS(x: T): By<T> {
         var theBy = By(x)
-            .onBuild{
+            .onBuild{ prop, name, mValue -> 
                 
             }
             .onFirstGetOrSet{ prop, name, mValue -> 
