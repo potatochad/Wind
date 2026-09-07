@@ -155,14 +155,25 @@ class MapVarInfo {
 	fun <T> add(name: Str, value: T, changed: Bool = no) {
         map[name] = VarInfo(name, value, changed)
 	}
+	fun add(info: VarInfo<*>) {
+        map[info.name] = info
+	}
+	
 
 	fun <T> edit(name: Str, value: T) {
         map[name] = VarInfo(name, value)
 	}
 
-	fun add(info: VarInfo<*>) {
-        map[info.name] = info
+	fun editAllChanged(edit: (Str, VarInfo<*>) -> VarInfo<*>) {
+		map.entries
+			.filter { it.value.changed }
+			.forEach { (name, info) ->
+				map[name] = edit(name, info)
+			}
 	}
+
+
+	
 	
 
     fun remove(name: Str) = map.remove(name)
