@@ -148,6 +148,7 @@ object ListData {
     }
 }
 
+//‼️ADDD THIS FUNCTIONALITY IN LISTDATA
 //vars: { age:Int:17, name:String:"Joe", person:Person:Person(name="Joe", age=17) }
 //vars: { name:type:value, name:type:value }
 class ListSaveStr(listName: Str) {
