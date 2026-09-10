@@ -151,6 +151,7 @@ class ItemVars {
     }
     fun Same(): Bool {
         same = no
+        return same
     }
 }
 
@@ -167,17 +168,21 @@ object ListData {
 
     fun varsIncreased(listName: Str, varList: MapVarInfo): Bool {
         MapVarInfo.toList()
-        ListData[listName]
+        LazyData(listName)
+        return no
     }
     fun varsDecreased(listName: Str, varList: MapVarInfo): Bool {
         MapVarInfo.toList()
-        ListData[listName]
+        LazyData(listName)
+        return no
     }
 }
 
 //‼️ADDD THIS FUNCTIONALITY IN LISTDATA
 //vars: { age:Int:17, name:String:"Joe", person:Person:Person(name="Joe", age=17) }
 //vars: { name:type:value, name:type:value }
+
+/*
 class ListSaveStr(listName: Str) {
 
     var strData: Str = 
@@ -208,7 +213,7 @@ class ListSaveStr(listName: Str) {
         return map.entries.size == countVars()
     }
 }
-
+*/
 
 
 
