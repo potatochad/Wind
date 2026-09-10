@@ -146,6 +146,13 @@ object ListData {
             LazyData(listName)
         }
     }
+
+    fun varsIncreased(listName: Str, varList){
+        ListData[listName]
+    }
+    fun varsDecreased(listName: Str, varList){
+        
+    }
 }
 
 //‼️ADDD THIS FUNCTIONALITY IN LISTDATA
@@ -153,7 +160,7 @@ object ListData {
 //vars: { name:type:value, name:type:value }
 class ListSaveStr(listName: Str) {
 
-    var strData: Str = ListData[listName]
+    var strData: Str = 
 
     private fun countVars(): Int {
         val start = strData.indexOf('{')
