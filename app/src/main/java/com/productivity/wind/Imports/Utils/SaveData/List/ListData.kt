@@ -137,6 +137,24 @@ import com.productivity.wind.Imports.UI_visible.*
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
+//TREAT THIS AS WEIRD ENUM 
+class ItemVars {
+    var increased = ""
+    var decreased = ""
+    var same = yes
+    
+    fun Increased(){
+        
+    }
+    fun Decreased(){
+        
+    }
+    fun Same(): Bool {
+        same = no
+    }
+}
+
+
 
 object ListData {
     private val lists = mutableMapOf<Str, LazyData>()
@@ -147,11 +165,13 @@ object ListData {
         }
     }
 
-    fun varsIncreased(listName: Str, varList){
+    fun varsIncreased(listName: Str, varList: MapVarInfo): Bool {
+        MapVarInfo.toList()
         ListData[listName]
     }
-    fun varsDecreased(listName: Str, varList){
-        
+    fun varsDecreased(listName: Str, varList: MapVarInfo): Bool {
+        MapVarInfo.toList()
+        ListData[listName]
     }
 }
 
