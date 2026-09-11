@@ -168,48 +168,127 @@ object ListData {
     }
 
     fun varsIncreased(listName: Str, varList: MapVarInfo): Bool {
-        MapVarInfo.toList()
+        varList.toList()
         LazyData(listName)
         return no
     }
     fun varsDecreased(listName: Str, varList: MapVarInfo): Bool {
-        MapVarInfo.toList()
+        varList.toList()
         LazyData(listName)
         return no
     }
 }
 
-//‼️ADDD THIS FUNCTIONALITY IN LISTDATA
-//vars: { age:Int:17, name:String:"Joe", person:Person:Person(name="Joe", age=17) }
-//vars: { name:type:value, name:type:value }
 
 /*
+data class VarInfo(
+    val name: Str,
+    val type: Str,
+    val value: Str
+)
+
 class ListSaveStr(listName: Str) {
 
-    var strData: Str = 
+    var strData: Str = ""
 
-    private fun countVars(): Int {
+    private fun getVars(): List<VarInfo> {
         val start = strData.indexOf('{')
         val end = strData.lastIndexOf('}')
 
-        if (start == -1 || end == -1 || start >= end) return 0
+        if (start == -1 || end == -1 || start >= end)
+            return emptyList()
 
-        val vars = strData.fromTo(start + 1, end).trim()
-        if (vars.empty) return 0
+        val varsStr = strData.fromTo(start + 1, end).trim()
 
-        var count = 1
+        if (varsStr.empty)
+            return emptyList()
+
+        val result = mutableListOf<VarInfo>()
+
+        // Split variables by commas outside nested structures
+        val vars = mutableListOf<Str>()
         var depth = 0
+        var current = ""
 
-        for (c in vars) {
+        for (c in varsStr) {
             when (c) {
-                '(', '{', '[' -> depth++
-                ')', '}', ']' -> depth--
-                ',' -> if (depth == 0) count++
+                '(', '{', '[' -> {
+                    depth++
+                    current += c
+                }
+
+                ')', '}', ']' -> {
+                    depth--
+                    current += c
+                }
+
+                ',' -> {
+                    if (depth == 0) {
+                        vars.add(current.trim())
+                        current = ""
+                    } else {
+                        current += c
+                    }
+                }
+
+                else -> current += c
             }
         }
-        return count
+
+        if (current.trim().notEmpty())
+            vars.add(current.trim())
+
+        // Parse name:type:value
+        for (variable in vars) {
+            val parts = mutableListOf<Str>()
+            depth = 0
+            current = ""
+
+            for (c in variable) {
+                when (c) {
+                    '(', '{', '[' -> {
+                        depth++
+                        current += c
+                    }
+
+                    ')', '}', ']' -> {
+                        depth--
+                        current += c
+                    }
+
+                    ':' -> {
+                        if (depth == 0) {
+                            parts.add(current.trim())
+                            current = ""
+                        } else {
+                            current += c
+                        }
+                    }
+
+                    else -> current += c
+                }
+            }
+
+            parts.add(current.trim())
+
+            if (parts.size >= 3) {
+                result.add(
+                    VarInfo(
+                        name = parts[0],
+                        type = parts[1],
+                        value = parts.drop(2).joinToString(":")
+                    )
+                )
+            }
+        }
+
+        return result
     }
-    
+
+    private fun countVars(): Int {
+        return getVars().size
+    }
+
     private fun varsMatch(map: MapVarInfo): Bool {
         return map.entries.size == countVars()
     }
