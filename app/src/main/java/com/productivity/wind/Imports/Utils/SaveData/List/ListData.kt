@@ -156,7 +156,12 @@ class ItemVars {
     }
 }
 
-
+/*
+fun LoadList(name: Str): ListData {
+    val savedString = getSavedString(name)
+    return ListData(name, savedString)
+}
+*/
 
 object ListData {
     private val lists = mutableMapOf<Str, LazyData>()
