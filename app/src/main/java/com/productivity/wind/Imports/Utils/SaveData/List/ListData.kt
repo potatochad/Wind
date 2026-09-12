@@ -158,18 +158,18 @@ class ItemVars {
 
 /*
 fun LoadList(name: Str): ListData {
-    val savedString = getSavedString(name)
-    return ListData(name, savedString)
+return lists.getOrPut(listName) {
+            LazyData(listName)
+        }
+    return LazyData(name, savedString)
 }
 */
 
-object ListData {
+class ListData {
     private val lists = mutableMapOf<Str, LazyData>()
 
     operator fun get(listName: Str): LazyData {
-        return lists.getOrPut(listName) {
-            LazyData(listName)
-        }
+        
     }
 
     fun varsIncreased(listName: Str, varList: MapVarInfo): Bool {
