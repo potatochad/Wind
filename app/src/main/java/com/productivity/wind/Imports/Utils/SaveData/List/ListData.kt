@@ -163,10 +163,13 @@ fun LoadList(name: Str) = ListData(name)
 class ListData(
     val name: Str,
 ) {
-    private val lists = mutableMapOf<Str, LazyData>()
-
+    var strData = ""
     init {
-        lists[name] = LazyData(name)
+        strData = LazyData(name)
+    }
+
+    fun process(){
+        
     }
     
     
