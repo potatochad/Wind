@@ -157,9 +157,6 @@ class ItemVars {
 }
 
 
-fun LoadList(name: Str) = ListData(name)
-
-
 class ListData(
     val name: Str,
 ) {
