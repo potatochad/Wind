@@ -157,66 +157,6 @@ class ItemVars {
 }
 
 
-
-class LazyData(Where: Str = basicTo) {
-	
-
-	val it: Str
-    	get() {
-           val json = JSONObject()
-
-           each { key, value ->
-               json.put(key, value)
-           }
-
-           return json.toString()
-    	}
-	val all: Map<Str, Any?>
-        get() = prefs.all
-		
-	
-	fun deleteAll() = dataEdit.clear().apply()
-	fun remove(id: Str) = dataEdit.remove(id).apply()
-
-	fun hasKey(x: Str) = prefs.hasKey(x)
-	fun find(match: (Str) -> Bool) = prefs.all.filter { (key, _) -> match(key) }
-	
-	val json11 = Json { ignoreUnknownKeys = yes }
-	inline fun <reified T> toJson(x: T) = json11.encodeToString(x)
-	fun <T> toJson(x: T, serializer: KSerializer<T>) = json11.encodeToString(serializer, x)
-	inline fun <reified T> decodeJson(x: Str) = json11.decodeFromString<T>(x)
-
-
-	
-	
-
-
-
-	
-	fun <T> put(id: Str, x: T, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
-        val e = dataEdit
-        when (x) {
-            is Int -> e.putInt(id, x)
-            is Bool -> e.putBoolean(id, x)
-            is Float -> e.putFloat(id, x)
-            is Long -> e.putLong(id, x)
-            is Str -> e.putString(id, x)
-            else -> {
-				Vlog("Cant save a complex type: $id, [ ${x.type} ]")
-				return
-			}
-        }
-		Do(e)
-	}
-	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
-	fun <T> apply(id: Str, x: T) = put(id, x)
-
-	
-	
-	
-}
-
-
 class ListData(
     val Where: Str,
 ) {
@@ -226,6 +166,9 @@ class ListData(
 	val prefs: SharedPreferences
         get() = App.getSharedPreferences(saveTo, Context.MODE_PRIVATE)
 
+	val all: Map<Str, Any?>
+        get() = prefs.all
+
 	val dataEdit get() = prefs.edit()
 
 
@@ -234,6 +177,14 @@ class ListData(
 			Do(key, value)
 		}
 	}
+
+	fun deleteAll() = dataEdit.clear().apply()
+	fun remove(id: Str) = dataEdit.remove(id).apply()
+
+	fun hasKey(x: Str) = prefs.hasKey(x)
+	fun find(match: (Str) -> Bool) = prefs.all.filter { (key, _) -> match(key) }
+	
+	
 
 	
 		
@@ -256,6 +207,16 @@ class ListData(
     }
 
     fun get(id: Str) = prefs.getString(id, null)
+	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
+        val e = dataEdit
+        e.putString(id, x)
+		Do(e)
+	}
+	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
+	fun <T> apply(id: Str, x: T) = put(id, x)
+
+	
+	
 }
 
 
