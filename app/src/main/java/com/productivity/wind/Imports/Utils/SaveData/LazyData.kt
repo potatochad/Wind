@@ -262,29 +262,6 @@ class LazyData(Where: Str = basicTo) {
 
 
 
-fun isSaved2(key: Str, input: Str) {
-	appScope.launch {
-        while (true) {
-            delay(1000)
-	var found = false
-
-    AppData.prefs.all.forEach { (savedKey, value) ->
-        if (value == input) {
-            log("✅ MATCH: using forEach")
-            found = true
-        }
-    }
-
-    if (!found) {
-        log("❌ Value not found in any key")
-	}
-		}
-	}
-}
-
-
-
-
 var idList = mutableListOf<Str>()
 fun <T> s(
 	default: T,
