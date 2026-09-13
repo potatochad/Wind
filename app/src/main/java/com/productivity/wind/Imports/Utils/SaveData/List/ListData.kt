@@ -221,11 +221,6 @@ class ListData(
 
 
 /*
-data class VarInfo(
-    val name: Str,
-    val type: Str,
-    val value: Str
-)
 
 class ListSaveStr(listName: Str) {
 
