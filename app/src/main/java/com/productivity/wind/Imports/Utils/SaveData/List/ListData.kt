@@ -191,7 +191,106 @@ class ListData(
     
 
     fun process(){
-        
+        val start = strData.indexOf('{')
+        val end = strData.lastIndexOf('}')
+
+        if (start == -1 || end == -1 || start >= end)
+            return emptyList()
+
+        val varsStr = strData.fromTo(start + 1, end).trim()
+
+        if (varsStr.empty)
+            return emptyList()
+
+        val result = mutableListOf<VarInfo>()
+
+        // Split variables by commas outside nested structures
+        val vars = mutableListOf<Str>()
+        var depth = 0
+        var current = ""
+
+        for (c in varsStr) {
+            when (c) {
+                '(', '{', '[' -> {
+                    depth++
+                    current += c
+                }
+
+                ')', '}', ']' -> {
+                    depth--
+                    current += c
+                }
+
+                ',' -> {
+                    if (depth == 0) {
+                        vars.add(current.trim())
+                        current = ""
+                    } else {
+                        current += c
+                    }
+                }
+
+                else -> current += c
+            }
+        }
+
+        if (current.trim().notEmpty())
+            vars.add(current.trim())
+
+        // Parse name:type:value
+        for (variable in vars) {
+            val parts = mutableListOf<Str>()
+            depth = 0
+            current = ""
+
+            for (c in variable) {
+                when (c) {
+                    '(', '{', '[' -> {
+                        depth++
+                        current += c
+                    }
+
+                    ')', '}', ']' -> {
+                        depth--
+                        current += c
+                    }
+
+                    ':' -> {
+                        if (depth == 0) {
+                            parts.add(current.trim())
+                            current = ""
+                        } else {
+                            current += c
+                        }
+                    }
+
+                    else -> current += c
+                }
+            }
+
+            parts.add(current.trim())
+
+            if (parts.size >= 3) {
+                result.add(
+                    VarInfo(
+                        name = parts[0],
+                        type = parts[1],
+                        value = parts.drop(2).joinToString(":")
+                    )
+                )
+            }
+        }
+
+        return result
+    }
+
+    private fun countVars(): Int {
+        return getVars().size
+    }
+
+    private fun varsMatch(map: MapVarInfo): Bool {
+        return map.entries.size == countVars()
+	}
     }
     
     
