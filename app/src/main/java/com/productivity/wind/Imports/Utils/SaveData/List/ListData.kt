@@ -159,18 +159,7 @@ class ItemVars {
 
 
 class LazyData(Where: Str = basicTo) {
-	val saveTo = Where
-
-	val prefs: SharedPreferences
-        get() = App.getSharedPreferences(saveTo, Context.MODE_PRIVATE)
-
-	val dataEdit get() = prefs.edit()
 	
-	fun each(Do: (Str, Any?) -> Unit) {
-		prefs.all.forEach { (key, value) ->
-			Do(key, value)
-		}
-	}
 
 	val it: Str
     	get() {
@@ -229,12 +218,26 @@ class LazyData(Where: Str = basicTo) {
 
 
 class ListData(
-    val name: Str,
+    val Where: Str,
 ) {
-    var strData = ""
-    init {
-        strData = LazyData(name)
-    }
+	val saveTo = Where
+	var strData = LazyData(saveTo)
+	
+	val prefs: SharedPreferences
+        get() = App.getSharedPreferences(saveTo, Context.MODE_PRIVATE)
+
+	val dataEdit get() = prefs.edit()
+
+
+	fun each(Do: (Str, Any?) -> Unit) {
+		prefs.all.forEach { (key, value) ->
+			Do(key, value)
+		}
+	}
+
+	
+		
+    
 
     fun process(){
         
