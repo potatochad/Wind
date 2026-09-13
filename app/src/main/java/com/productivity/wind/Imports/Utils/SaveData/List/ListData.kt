@@ -190,7 +190,7 @@ class ListData(
 		
     
 
-    fun process(){
+    fun process(): List<VarInfo<*>> {
         val start = strData.indexOf('{')
         val end = strData.lastIndexOf('}')
 
@@ -280,18 +280,8 @@ class ListData(
                 )
             }
         }
-
-        return result
-    }
-
-    private fun countVars(): Int {
-        return getVars().size
-    }
-
-    private fun varsMatch(map: MapVarInfo): Bool {
-        return map.entries.size == countVars()
+		return result
 	}
-    }
     
     
     fun varsIncreased(listName: Str, varList: MapVarInfo): Bool {
