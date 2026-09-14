@@ -138,30 +138,17 @@ import com.productivity.wind.Imports.UI_visible.*
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.builtins.ListSerializer
 
-//TREAT THIS AS WEIRD ENUM 
-class ItemVars {
-    var increased = ""
-    var decreased = ""
-    var same = yes
-    
-    fun Increased(){
-        
-    }
-    fun Decreased(){
-        
-    }
-    fun Same(): Bool {
-        same = no
-        return same
-    }
-}
 
 
 class ListData(
     val Where: Str,
 ) {
 	val saveTo = Where
-	var strData = LazyData(saveTo)
+
+	
+	var strData = LazyData(saveTo) 
+	//‼️‼️‼️‼️ what does this actually return
+	
 	
 	val prefs: SharedPreferences
         get() = App.getSharedPreferences(saveTo, Context.MODE_PRIVATE)
@@ -195,9 +182,35 @@ class ListData(
     VarInfo(name = "foo",  value = "hello",    type = "String"),
     VarInfo(name = "bar",  value = "123",      type = "Int"),
     VarInfo(name = "baz",  value = "[a,b,c]",  type = "List<String>")
-]
+	]
 	*/
-fun process(strData: String): List<VarInfo<String>> {
+	//‼️‼️ADD A STANDARDIZED WAY TO SAVEE (STRING)
+	//‼️‼️WHICH FUNCTIONS CAN READD
+	//‼️‼️AND I CAN LATER CHANGE EDIT
+	//‼️‼️ MAYBE TWO VARS: example and computer readable 'x':y'c'
+	//‼️‼️ HAVE COMMENTS AND EXPLANATION OF COMPUTER READABLE
+	fun process(): List<VarInfo<*>> {
+        return processVarInfoSTRING(strData)
+	}
+    
+    
+    
+
+    fun get(id: Str) = prefs.getString(id, null)
+	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
+        val e = dataEdit
+        e.putString(id, x)
+		Do(e)
+	}
+	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
+	fun <T> apply(id: Str, x: T) = put(id, x)
+
+	
+	
+}
+
+
+private fun processVarInfoSTRING(strData: Str): List<VarInfo<Str>> {
     val start = strData.indexOf('{')
     val end = strData.lastIndexOf('}')
 
@@ -209,7 +222,9 @@ fun process(strData: String): List<VarInfo<String>> {
     if (varsStr.isEmpty())
         return emptyList()
 
-    // Split on commas that aren't inside (), {}, or []
+    val result = mutableListOf<VarInfo<String>>()
+
+    // Split by commas outside (), {}, []
     val vars = mutableListOf<String>()
     var depth = 0
     var current = StringBuilder()
@@ -228,8 +243,8 @@ fun process(strData: String): List<VarInfo<String>> {
 
             ',' -> {
                 if (depth == 0) {
-                    vars.add(current.toString().trim())
-                    current = StringBuilder()
+                    vars += current.toString().trim()
+                    current.clear()
                 } else {
                     current.append(c)
                 }
@@ -239,14 +254,14 @@ fun process(strData: String): List<VarInfo<String>> {
         }
     }
 
-    if (current.toString().trim().isNotEmpty())
-        vars.add(current.toString().trim())
+    if (current.isNotBlank())
+        vars += current.toString().trim()
 
-    return vars.mapNotNull { variable ->
-        // Split name:type:value on ':' outside nested structures
+    // name:type:value
+    for (variable in vars) {
         val parts = mutableListOf<String>()
         depth = 0
-        current = StringBuilder()
+        current.clear()
 
         for (c in variable) {
             when (c) {
@@ -262,8 +277,8 @@ fun process(strData: String): List<VarInfo<String>> {
 
                 ':' -> {
                     if (depth == 0) {
-                        parts.add(current.toString().trim())
-                        current = StringBuilder()
+                        parts += current.toString().trim()
+                        current.clear()
                     } else {
                         current.append(c)
                     }
@@ -273,260 +288,24 @@ fun process(strData: String): List<VarInfo<String>> {
             }
         }
 
-        parts.add(current.toString().trim())
+        parts += current.toString().trim()
 
-        if (parts.size < 3)
-            return@mapNotNull null
+        if (parts.size >= 3) {
+            val name = parts[0]
+            val type = parts[1]
+            val value = parts.drop(2).joinToString(":")
 
-        VarInfo(
-            name = parts[0],
-            type = parts[1],
-            typeStr = parts[1],
-            value = parts.drop(2).joinToString(":")
-        )
+            result += VarInfo(
+                name = name,
+                value = value,
+                type = type,
+                typeStr = type
+            )
+        }
     }
+
+    return result
 }
-
-    fun process(): List<VarInfo<*>> {
-        val start = strData.indexOf('{')
-        val end = strData.lastIndexOf('}')
-
-        if (start == -1 || end == -1 || start >= end)
-            return emptyList()
-
-        val varsStr = strData.fromTo(start + 1, end).trim()
-
-        if (varsStr.empty)
-            return emptyList()
-
-        val result = mutableListOf<VarInfo>()
-
-        // Split variables by commas outside nested structures
-        val vars = mutableListOf<Str>()
-        var depth = 0
-        var current = ""
-
-        for (c in varsStr) {
-            when (c) {
-                '(', '{', '[' -> {
-                    depth++
-                    current += c
-                }
-
-                ')', '}', ']' -> {
-                    depth--
-                    current += c
-                }
-
-                ',' -> {
-                    if (depth == 0) {
-                        vars.add(current.trim())
-                        current = ""
-                    } else {
-                        current += c
-                    }
-                }
-
-                else -> current += c
-            }
-        }
-
-        if (current.trim().notEmpty())
-            vars.add(current.trim())
-
-        // Parse name:type:value
-        for (variable in vars) {
-            val parts = mutableListOf<Str>()
-            depth = 0
-            current = ""
-
-            for (c in variable) {
-                when (c) {
-                    '(', '{', '[' -> {
-                        depth++
-                        current += c
-                    }
-
-                    ')', '}', ']' -> {
-                        depth--
-                        current += c
-                    }
-
-                    ':' -> {
-                        if (depth == 0) {
-                            parts.add(current.trim())
-                            current = ""
-                        } else {
-                            current += c
-                        }
-                    }
-
-                    else -> current += c
-                }
-            }
-
-            parts.add(current.trim())
-
-            if (parts.size >= 3) {
-                result.add(
-                    VarInfo(
-                        name = parts[0],
-                        type = parts[1],
-                        value = parts.drop(2).joinToString(":")
-                    )
-                )
-            }
-        }
-		return result
-	}
-    
-    
-    fun varsIncreased(listName: Str, varList: MapVarInfo): Bool {
-        varList.toList()
-        LazyData(listName)
-        return no
-    }
-    fun varsDecreased(listName: Str, varList: MapVarInfo): Bool {
-        varList.toList()
-        LazyData(listName)
-        return no
-    }
-
-    fun get(id: Str) = prefs.getString(id, null)
-	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
-        val e = dataEdit
-        e.putString(id, x)
-		Do(e)
-	}
-	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
-	fun <T> apply(id: Str, x: T) = put(id, x)
-
-	
-	
-}
-
-
-/*
-
-class ListSaveStr(listName: Str) {
-
-    var strData: Str = ""
-
-    private fun getVars(): List<VarInfo> {
-        val start = strData.indexOf('{')
-        val end = strData.lastIndexOf('}')
-
-        if (start == -1 || end == -1 || start >= end)
-            return emptyList()
-
-        val varsStr = strData.fromTo(start + 1, end).trim()
-
-        if (varsStr.empty)
-            return emptyList()
-
-        val result = mutableListOf<VarInfo>()
-
-        // Split variables by commas outside nested structures
-        val vars = mutableListOf<Str>()
-        var depth = 0
-        var current = ""
-
-        for (c in varsStr) {
-            when (c) {
-                '(', '{', '[' -> {
-                    depth++
-                    current += c
-                }
-
-                ')', '}', ']' -> {
-                    depth--
-                    current += c
-                }
-
-                ',' -> {
-                    if (depth == 0) {
-                        vars.add(current.trim())
-                        current = ""
-                    } else {
-                        current += c
-                    }
-                }
-
-                else -> current += c
-            }
-        }
-
-        if (current.trim().notEmpty())
-            vars.add(current.trim())
-
-        // Parse name:type:value
-        for (variable in vars) {
-            val parts = mutableListOf<Str>()
-            depth = 0
-            current = ""
-
-            for (c in variable) {
-                when (c) {
-                    '(', '{', '[' -> {
-                        depth++
-                        current += c
-                    }
-
-                    ')', '}', ']' -> {
-                        depth--
-                        current += c
-                    }
-
-                    ':' -> {
-                        if (depth == 0) {
-                            parts.add(current.trim())
-                            current = ""
-                        } else {
-                            current += c
-                        }
-                    }
-
-                    else -> current += c
-                }
-            }
-
-            parts.add(current.trim())
-
-            if (parts.size >= 3) {
-                result.add(
-                    VarInfo(
-                        name = parts[0],
-                        type = parts[1],
-                        value = parts.drop(2).joinToString(":")
-                    )
-                )
-            }
-        }
-
-        return result
-    }
-
-    private fun countVars(): Int {
-        return getVars().size
-    }
-
-    private fun varsMatch(map: MapVarInfo): Bool {
-        return map.entries.size == countVars()
-    }
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
