@@ -190,6 +190,103 @@ class ListData(
 		
     
 
+	/* returns
+	[
+    VarInfo(name = "foo",  value = "hello",    type = "String"),
+    VarInfo(name = "bar",  value = "123",      type = "Int"),
+    VarInfo(name = "baz",  value = "[a,b,c]",  type = "List<String>")
+]
+	*/
+fun process(strData: String): List<VarInfo<String>> {
+    val start = strData.indexOf('{')
+    val end = strData.lastIndexOf('}')
+
+    if (start == -1 || end == -1 || start >= end)
+        return emptyList()
+
+    val varsStr = strData.substring(start + 1, end).trim()
+
+    if (varsStr.isEmpty())
+        return emptyList()
+
+    // Split on commas that aren't inside (), {}, or []
+    val vars = mutableListOf<String>()
+    var depth = 0
+    var current = StringBuilder()
+
+    for (c in varsStr) {
+        when (c) {
+            '(', '{', '[' -> {
+                depth++
+                current.append(c)
+            }
+
+            ')', '}', ']' -> {
+                depth--
+                current.append(c)
+            }
+
+            ',' -> {
+                if (depth == 0) {
+                    vars.add(current.toString().trim())
+                    current = StringBuilder()
+                } else {
+                    current.append(c)
+                }
+            }
+
+            else -> current.append(c)
+        }
+    }
+
+    if (current.toString().trim().isNotEmpty())
+        vars.add(current.toString().trim())
+
+    return vars.mapNotNull { variable ->
+        // Split name:type:value on ':' outside nested structures
+        val parts = mutableListOf<String>()
+        depth = 0
+        current = StringBuilder()
+
+        for (c in variable) {
+            when (c) {
+                '(', '{', '[' -> {
+                    depth++
+                    current.append(c)
+                }
+
+                ')', '}', ']' -> {
+                    depth--
+                    current.append(c)
+                }
+
+                ':' -> {
+                    if (depth == 0) {
+                        parts.add(current.toString().trim())
+                        current = StringBuilder()
+                    } else {
+                        current.append(c)
+                    }
+                }
+
+                else -> current.append(c)
+            }
+        }
+
+        parts.add(current.toString().trim())
+
+        if (parts.size < 3)
+            return@mapNotNull null
+
+        VarInfo(
+            name = parts[0],
+            type = parts[1],
+            typeStr = parts[1],
+            value = parts.drop(2).joinToString(":")
+        )
+    }
+}
+
     fun process(): List<VarInfo<*>> {
         val start = strData.indexOf('{')
         val end = strData.lastIndexOf('}')
