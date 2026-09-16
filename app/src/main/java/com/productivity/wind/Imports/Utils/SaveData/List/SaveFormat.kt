@@ -142,6 +142,20 @@ import com.productivity.wind.Imports.UI_visible.*
 import kotlinx.coroutines.flow.*
 
 
+private val example = """
+   vars: {
+      [stringVar][java.lang.String]["hello"],
+      [intVar][java.lang.Integer][2],
+      [boolVar][java.lang.Boolean][true]
+   }
+"""
+
+
+
+
+
+
+
 
 
 
