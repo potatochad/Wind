@@ -167,7 +167,7 @@ fun < T : EasySave> TrackList(
 
     return By(list)
         .onBuild { prop, listName, mValue -> 
-            val data = ListData[listName].all
+            val data = ListData(listName).all
             Vlog("listData: ${data}")
                 
 
@@ -193,7 +193,7 @@ fun < T : EasySave> TrackList(
                 //‼️ its not implemented yet!!
             }
             list.onRemove{
-                ListData[listName].remove(it.id)
+                ListData(listName).remove(it.id)
             }
                 
             mValue.it = list
@@ -249,7 +249,7 @@ abstract class EasySave {
 
         if (customStr == "[/*UNSUPPORTED VAR SAVE TYPE*/]") return Vlog("Detected an unsupported type")   
         
-        ListData[listName].put(id, customStr) 
+        ListData(listName).put(id, customStr) 
         Vlog("customStr: ${customStr}")
         changed = no
     }
