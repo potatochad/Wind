@@ -146,9 +146,9 @@ class ListData(
 	val saveTo = Where
 	var lazyData = LazyData(saveTo)
 	
-	
+	//for weird safety reason use get
 	val prefs: SharedPreferences
-        get() = 
+        get() = lazyData.prefs
 	
 	val all: Map<Str, Any?>
         get() = prefs.all
@@ -167,6 +167,18 @@ class ListData(
 
 	fun hasKey(x: Str) = prefs.hasKey(x)
 	fun find(match: (Str) -> Bool) = prefs.all.filter { (key, _) -> match(key) }
+
+
+	
+	fun get(id: Str) = prefs.getString(id, null)
+	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
+        val e = dataEdit
+        e.putString(id, x)
+		Do(e)
+	}
+	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
+	fun <T> apply(id: Str, x: T) = put(id, x)
+
 	
 	
 
@@ -181,28 +193,14 @@ class ListData(
     VarInfo(name = "baz",  value = "[a,b,c]",  type = "List<String>")
 	]
 	*/
-	//‼️‼️ADD A STANDARDIZED WAY TO SAVEE (STRING)
-	//‼️‼️WHICH FUNCTIONS CAN READD
-	//‼️‼️AND I CAN LATER CHANGE EDIT
-	//‼️‼️ MAYBE TWO VARS: example and computer readable 'x':y'c'
-	//‼️‼️ HAVE COMMENTS AND EXPLANATION OF COMPUTER READABLE
 	fun process(): List<VarInfo<*>> {
-        return processVarInfoSTRING(strData)
+        return processVarInfoSTRING("")
 	}
     
     
     
 
-    fun get(id: Str) = prefs.getString(id, null)
-	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
-        val e = dataEdit
-        e.putString(id, x)
-		Do(e)
-	}
-	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
-	fun <T> apply(id: Str, x: T) = put(id, x)
-
-	
+    
 	
 }
 
