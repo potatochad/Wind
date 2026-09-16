@@ -144,15 +144,12 @@ class ListData(
     val Where: Str,
 ) {
 	val saveTo = Where
-
-	
-	var strData = LazyData(saveTo) 
-	//‼️‼️‼️‼️ what does this actually return
+	var lazyData = LazyData(saveTo)
 	
 	
 	val prefs: SharedPreferences
-        get() = App.getSharedPreferences(saveTo, Context.MODE_PRIVATE)
-
+        get() = 
+	
 	val all: Map<Str, Any?>
         get() = prefs.all
 
