@@ -168,7 +168,7 @@ private fun getVarValue(type: Str, raw: Str): Any? {
 
 fun getLazyDataVar(key: Str, varName: Str, listName: Str): Any? {
     if (key.empty) return null
-    val data = ListData[listName].get(key, "") ?: return null
+    val data = ListData(listName).get(key, "") ?: return null
 
     val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
     val match = regex.find(data) ?: return null
