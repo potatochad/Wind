@@ -226,7 +226,8 @@ private fun processVarInfoSTRING(strData: Str): List<VarInfo<Str>> {
             result += VarInfo(
                 name = parts[0],
                 value = parts.drop(2).joinToString(":"),
-                type = parts[1],
+				//TEMPORARY placeholder
+                type = String::class.java,// parts[1],
                 typeStr = parts[1]
             )
         }
