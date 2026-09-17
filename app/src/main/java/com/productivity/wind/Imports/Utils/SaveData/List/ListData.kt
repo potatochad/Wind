@@ -215,30 +215,10 @@ private fun processVarInfoSTRING(strData: Str): List<VarInfo<Str>> {
     var depth = 0
     var current = StringBuilder()
 
-    for (c in varsStr) {
-        when (c) {
-            '(', '{', '[' -> {
-                depth++
-                current.append(c)
-            }
-
-            ')', '}', ']' -> {
-                depth--
-                current.append(c)
-            }
-
-            ',' -> {
-                if (depth == 0) {
-                    vars += current.toString().trim()
-                    current.clear()
-                } else {
-                    current.append(c)
-                }
-            }
-
-            else -> current.append(c)
-        }
-    }
+    SplitTopLevel(
+    str: Str,
+    split: Char = ',',
+    deeper: ListStr = listOf("()", "{}", "[]")
 
     if (current.isNotBlank())
         vars += current.toString().trim()
