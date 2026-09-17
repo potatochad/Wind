@@ -208,7 +208,7 @@ abstract class EasySave {
     var id = ""
     var listName = ""
     
-    var changed by mState(no)
+    var changed = no
     var onChanged: Do = {}
     
     
