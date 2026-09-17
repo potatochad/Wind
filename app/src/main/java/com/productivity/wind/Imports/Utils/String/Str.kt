@@ -212,6 +212,20 @@ fun Str.remove(x: Str): Str {
 
 
 
+//Example:"abc {one} xyz {two} end"
+//Result: "one} xyz {two"
+fun InsideBraces(str: Str): Str? {
+    val start = str.indexOf('{')
+    val end = str.lastIndexOf('}')
+
+    if (start == -1 || end == -1 || start >= end)
+        return null
+
+    return str.fromTo(start + 1, end).trim()
+}
+
+
+
 fun Str.takeWords(n: Int): Str{
     return this
         .trim()
