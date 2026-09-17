@@ -223,15 +223,11 @@ private fun processVarInfoSTRING(strData: Str): List<VarInfo<Str>> {
         )
 
         if (parts.size >= 3) {
-            val name = parts[0]
-            val type = parts[1]
-            val value = parts.drop(2).joinToString(":")
-
             result += VarInfo(
-                name = name,
-                value = value,
-                type = type,
-                typeStr = type
+                name = parts[0],
+                value = parts.drop(2).joinToString(":"),
+                type = parts[1],
+                typeStr = parts[1]
             )
         }
 	}
