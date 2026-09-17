@@ -230,9 +230,9 @@ fun InsideBraces(str: Str): Str? {
 //a:1
 //b:{x:2,y:3}
 //c:[1,2,3]
-
 fun SplitTopLevel(
     str: Str,
+    split: Char = ',',
     deeper: ListStr = listOf("()", "{}", "[]")
 ): ListStr {
 
@@ -252,7 +252,7 @@ fun SplitTopLevel(
                 current += c
             }
 
-            c == ',' && depth == 0 -> {
+            c == split && depth == 0 -> {
                 result += current.trim()
                 current = ""
             }
