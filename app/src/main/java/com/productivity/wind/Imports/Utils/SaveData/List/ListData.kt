@@ -176,8 +176,8 @@ class ListData(
         e.putString(id, x)
 		Do(e)
 	}
-	fun <T> commit(id: Str, x: T) = put(id, x, { it.commit() })
-	fun <T> apply(id: Str, x: T) = put(id, x)
+	fun <T> commit(id: Str, x: Str) = put(id, x, { it.commit() })
+	fun <T> apply(id: Str, x: Str) = put(id, x)
 
 	
 	
