@@ -207,54 +207,20 @@ class ListData(
 
 private fun processVarInfoSTRING(strData: Str): List<VarInfo<Str>> {
 	var varsStr = InsideBraces(strData) ?: return emptyList()
+    val result = mList<VarInfo<Str>>()
 
-    val result = mutableListOf<VarInfo<String>>()
+    val vars = SplitTopLevel(
+		varsStr,
+		split = ',',
+		deeper = listOf("()", "{}", "[]")
+	)
 
-    // Split by commas outside (), {}, []
-    val vars = mutableListOf<String>()
-    var depth = 0
-    var current = StringBuilder()
-
-    SplitTopLevel(
-    str: Str,
-    split: Char = ',',
-    deeper: ListStr = listOf("()", "{}", "[]")
-
-    if (current.isNotBlank())
-        vars += current.toString().trim()
-
-    // name:type:value
-    for (variable in vars) {
-        val parts = mutableListOf<String>()
-        depth = 0
-        current.clear()
-
-        for (c in variable) {
-            when (c) {
-                '(', '{', '[' -> {
-                    depth++
-                    current.append(c)
-                }
-
-                ')', '}', ']' -> {
-                    depth--
-                    current.append(c)
-                }
-
-                ':' -> {
-                    if (depth == 0) {
-                        parts += current.toString().trim()
-                        current.clear()
-                    } else {
-                        current.append(c)
-                    }
-                }
-
-                else -> current.append(c)
-            }
-        }
-
-        parts += current.toString().trim()
+	vars.forEach { variable ->
+        val parts = SplitTopLevel(
+            variable,
+            split = ':',
+            deeper = listOf("()", "{}", "[]")
+        )
 
         if (parts.size >= 3) {
             val name = parts[0]
@@ -268,7 +234,7 @@ private fun processVarInfoSTRING(strData: Str): List<VarInfo<Str>> {
                 typeStr = type
             )
         }
-    }
+	}
 
     return result
 }
