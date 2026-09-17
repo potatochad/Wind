@@ -206,16 +206,7 @@ class ListData(
 
 
 private fun processVarInfoSTRING(strData: Str): List<VarInfo<Str>> {
-    val start = strData.indexOf('{')
-    val end = strData.lastIndexOf('}')
-
-    if (start == -1 || end == -1 || start >= end)
-        return emptyList()
-
-    val varsStr = strData.substring(start + 1, end).trim()
-
-    if (varsStr.isEmpty())
-        return emptyList()
+	var varsStr = InsideBraces(strData) ?: return emptyList()
 
     val result = mutableListOf<VarInfo<String>>()
 
