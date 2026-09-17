@@ -247,7 +247,7 @@ abstract class EasySave {
 
         var customStr = VarInfoListToStr(varList)
 
-        if (customStr == "[/*UNSUPPORTED VAR SAVE TYPE*/]") return Vlog("Detected an unsupported type")   
+        if (customStr == WindErrors.UVST) return Vlog("Detected an unsupported type")   
         
         ListData(listName).put(id, customStr) 
         Vlog("customStr: ${customStr}")
