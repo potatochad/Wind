@@ -225,6 +225,49 @@ fun InsideBraces(str: Str): Str? {
 }
 
 
+// Example: a:1, b:{x:2,y:3}, c:[1,2,3]
+//Result:
+//a:1
+//b:{x:2,y:3}
+//c:[1,2,3]
+
+fun SplitTopLevel(
+    str: Str,
+    deeper: ListStr = listOf("()", "{}", "[]")
+): ListStr {
+
+    var depth = 0
+    var current = ""
+    val result = mList<Str>()
+
+    for (c in str) {
+        when {
+            deeper.any { it[0] == c } -> {
+                depth++
+                current += c
+            }
+
+            deeper.any { it[1] == c } -> {
+                depth--
+                current += c
+            }
+
+            c == ',' && depth == 0 -> {
+                result += current.trim()
+                current = ""
+            }
+
+            else -> current += c
+        }
+    }
+
+    if (current.isNotBlank())
+        result += current.trim()
+
+    return result
+}
+
+
 
 fun Str.takeWords(n: Int): Str{
     return this
