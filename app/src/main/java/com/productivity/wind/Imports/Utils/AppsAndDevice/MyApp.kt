@@ -148,6 +148,11 @@ fun CloseMyApp() {
 }
 
 
+enum class WindErrors {
+    UVST//UNSUPPORTED_VAR_SAVE_TYPE
+}
+
+
 
 //!!difficult to use ON PURPOSE. Activity should be used only when necessary
 //*component activity, same as activity, just more UI features*
