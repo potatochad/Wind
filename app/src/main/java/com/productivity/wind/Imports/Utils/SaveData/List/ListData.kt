@@ -171,7 +171,7 @@ class ListData(
 
 	
 	fun get(id: Str) = prefs.getString(id, null)
-	//fun get(idItem: Str, listName) = prefs.getString(id, null)
+	fun getVar(idItem: Str, varName: Str, listName: Str) = prefs.getString(id, null)
 	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
         val e = dataEdit
         e.putString(id, x)
