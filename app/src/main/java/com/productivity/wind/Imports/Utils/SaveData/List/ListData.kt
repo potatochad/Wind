@@ -206,6 +206,49 @@ class ListData(
 }
 
 
+private fun getVarValue(type: Str, raw: Str): Any? {
+    return when {
+        type == "java.lang.String" -> raw.removeSurrounding("\"")
+        type == "java.lang.Integer" -> raw.toIntOrNull()
+        type == "java.lang.Boolean" -> raw.toBooleanStrictOrNull()
+        type == "java.lang.Long" -> raw.toLongOrNull()
+        type == "java.lang.Double" -> raw.toDoubleOrNull()
+        type == "java.lang.Float" -> raw.toFloatOrNull()
+        type == "null" -> null
+
+        type.startsWith(pkgMyApp) -> {
+            Vlog("Found my apps complex class")
+            val clazz = Class.forName(type)
+            Vlog("its a: $clazz")
+            Vlog("got value: ${getEnumValue(clazz, raw)}")
+
+            if (clazz.isEnum) return getEnumValue(clazz, raw)
+                
+            return null
+        }
+        else -> "[/*UNSUPPORTED VAR SAVE TYPE*/]"
+    }
+}
+
+private fun getLazyDataVar(key: Str, varName: Str, listName: Str): Any? {
+    if (key.empty) return null
+    val data = ListData[listName].get(key, "") ?: return null
+
+    val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
+    val match = regex.find(data) ?: return null
+
+    val type = match.groupValues[1]
+    val raw = match.groupValues[2]
+
+    return getVarValue(type, raw)
+}
+
+
+private fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
+    clazz.enumConstants?.firstOrNull {
+        (it as Enum<*>).name == raw
+	}
+
 private fun processVarInfoSTRING(strData: Str): List<VarInfo<Str>> {
 	var varsStr = InsideBraces(strData) ?: return emptyList()
     val result = mList<VarInfo<Str>>()
