@@ -220,7 +220,7 @@ abstract class EasySave {
                 vars.add(name, mValue.it)
             }
             .onFirstGetOrSet{ prop, name, mValue -> 
-                val savedValue = getLazyDataVar(id, name, listName)
+                val savedValue = ListData(listName).getVarValue(id, name, listName)
                 
                 if (savedValue != null) mValue.it = savedValue as T
                 
