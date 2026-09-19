@@ -141,10 +141,10 @@ import kotlinx.serialization.builtins.ListSerializer
 
 
 class ListData(
-    val Where: Str,
+    val Where: Str,//listname
 ) {
-	val saveTo = Where
-	var lazyData = LazyData(saveTo)
+	val listName = Where
+	var lazyData = LazyData(listName)
 	
 	//for weird safety reason use get
 	val prefs: SharedPreferences
@@ -171,7 +171,7 @@ class ListData(
 
 	
 	fun get(id: Str) = prefs.getString(id, null)
-	fun getVarValue(idItem: Str, varName: Str, listName: Str): Any? {
+	fun getVarValue(idItem: Str, varName: Str): Any? {
 		if (idItem.empty) return null
 		val data = prefs.getString(idItem, null) ?: return null
 
