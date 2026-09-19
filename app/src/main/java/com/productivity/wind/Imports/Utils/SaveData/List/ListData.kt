@@ -240,7 +240,7 @@ private fun getVarValue(type: Str, raw: Str): Any? {
                 
             return null
         }
-        else -> "[/*UNSUPPORTED VAR SAVE TYPE*/]"
+        else -> WindErrors.UVST
     }
 }
 
