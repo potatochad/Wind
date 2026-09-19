@@ -171,21 +171,20 @@ class ListData(
 
 	
 	fun get(id: Str) = prefs.getString(id, null)
-	fun getVar(idItem: Str, varName: Str, listName: Str){
-		prefs.getString(id, null)
+	fun getVarValue(idItem: Str, varName: Str, listName: Str): Any? {
+		if (idItem.empty) return null
+		val data = prefs.getString(idItem, null) ?: return null
 
-		(key: Str, varName: Str, listName: Str): Any? {
-			if (key.empty) return null
-			val data = ListData[listName].get(key, "") ?: return null
+		val regex = Regex(
+			"""${Regex.escape(varName)}:([^:]+):("[^"]*"|[^,}]+)"""
+		)
 
-			val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
-			val match = regex.find(data) ?: return null
+		val match = regex.find(data) ?: return null
 
-			val type = match.groupValues[1]
-			val raw = match.groupValues[2]
+		val type = match.groupValues[1]
+		val raw = match.groupValues[2]
 
-			return getVarValue(type, raw)
-		}
+		return getVarValue(type, raw)
 	}
 	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
         val e = dataEdit
