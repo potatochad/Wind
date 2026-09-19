@@ -171,7 +171,22 @@ class ListData(
 
 	
 	fun get(id: Str) = prefs.getString(id, null)
-	fun getVar(idItem: Str, varName: Str, listName: Str) = prefs.getString(id, null)
+	fun getVar(idItem: Str, varName: Str, listName: Str){
+		prefs.getString(id, null)
+
+		(key: Str, varName: Str, listName: Str): Any? {
+			if (key.empty) return null
+			val data = ListData[listName].get(key, "") ?: return null
+
+			val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
+			val match = regex.find(data) ?: return null
+
+			val type = match.groupValues[1]
+			val raw = match.groupValues[2]
+
+			return getVarValue(type, raw)
+		}
+	}
 	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
         val e = dataEdit
         e.putString(id, x)
@@ -230,18 +245,6 @@ private fun getVarValue(type: Str, raw: Str): Any? {
     }
 }
 
-private fun getLazyDataVar(key: Str, varName: Str, listName: Str): Any? {
-    if (key.empty) return null
-    val data = ListData[listName].get(key, "") ?: return null
-
-    val regex = Regex("""$varName:([^:]+):("[^"]*"|[^,}]+)""")
-    val match = regex.find(data) ?: return null
-
-    val type = match.groupValues[1]
-    val raw = match.groupValues[2]
-
-    return getVarValue(type, raw)
-}
 
 
 private fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
