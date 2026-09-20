@@ -227,7 +227,7 @@ fun getVarValue(type: Str, raw: Str): Any? {
 		isDouble(clazz) -> raw.toDoubleOrNull()
 		isFloat(clazz) -> raw.toFloatOrNull()
 		isEnum(clazz) -> getEnumValue(clazz, raw)
-		isMyAppClass(clazz) -> getComplexValue(clazz, raw)
+		//isMyAppClass(clazz) -> getComplexValue(clazz, raw)
 		else -> WindErrors.UVST
     }
 }
