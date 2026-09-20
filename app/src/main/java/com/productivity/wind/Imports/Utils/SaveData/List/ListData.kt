@@ -186,6 +186,7 @@ class ListData(
 
 		return getVarValue(type, raw)
 	}
+	
 	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
         val e = dataEdit
         e.putString(id, x)
