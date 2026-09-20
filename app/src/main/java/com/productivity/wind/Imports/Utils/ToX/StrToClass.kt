@@ -141,7 +141,7 @@ import android.graphics.*
 import com.productivity.wind.Imports.Utils.Browser.*
 
 
-private fun StrToClass(type: Str): Class<*>? {
+fun StrToClass(type: Str): Class<*>? {
     return when {
         type == "java.lang.String" -> String::class.java
         type == "java.lang.Integer" -> Integer::class.java
