@@ -213,45 +213,33 @@ class ListData(
         return processVarInfoSTRING("")
 	}
     
-    
-    
-
-    
-	
 }
 
+//DOESNT WORK WITH NULLs
+fun getVarValue(type: Str, raw: Str): Any? {
+    val clazz = StrToClass(type) ?: return WindErrors.UVST
 
-private fun getVarValue(type: Str, raw: Str): Any? {
     return when {
-        type == "java.lang.String" -> raw.removeSurrounding("\"")
-        type == "java.lang.Integer" -> raw.toIntOrNull()
-        type == "java.lang.Boolean" -> raw.toBooleanStrictOrNull()
-        type == "java.lang.Long" -> raw.toLongOrNull()
-        type == "java.lang.Double" -> raw.toDoubleOrNull()
-        type == "java.lang.Float" -> raw.toFloatOrNull()
-        type == "null" -> null
-
-        type.startsWith(pkgMyApp) -> {
-            Vlog("Found my apps complex class")
-            val clazz = Class.forName(type)
-            Vlog("its a: $clazz")
-            Vlog("got value: ${getEnumValue(clazz, raw)}")
-
-            if (clazz.isEnum) return getEnumValue(clazz, raw)
-                
-            return null
-        }
-        else -> WindErrors.UVST
+		isString(clazz) -> raw.removeSurrounding("\"")
+		isInteger(clazz) -> raw.toIntOrNull()
+		isBoolean(clazz) -> raw.toBooleanStrictOrNull()
+		isLong(clazz) -> raw.toLongOrNull()
+		isDouble(clazz) -> raw.toDoubleOrNull()
+		isFloat(clazz) -> raw.toFloatOrNull()
+		isEnum(clazz) -> getEnumValue(clazz, raw)
+		isMyAppClass(clazz) -> getComplexValue(clazz, raw)
+		else -> WindErrors.UVST
     }
 }
-
-
 
 private fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
     clazz.enumConstants?.firstOrNull {
         (it as Enum<*>).name == raw
 	}
 
+
+
+	
 private fun processVarInfoSTRING(strData: Str): List<VarInfo<Str>> {
 	var varsStr = InsideBraces(strData) ?: return emptyList()
     val result = mList<VarInfo<Str>>()
