@@ -134,3 +134,56 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.channels.Channel
 
+
+data class VarInfo<T>(
+	val name: Str,
+    val value: T,
+	var changed: Bool = no,
+    val type: Class<*>? = value?.let { it::class.java },
+	val typeStr: Str = type?.name ?: "null",
+)
+
+class MapVarInfo {
+    private val map = mutableMapOf<Str, VarInfo<*>>()
+
+    operator fun get(name: Str) = map[name]
+
+    operator fun set(name: Str, info: VarInfo<*>) {
+        map[name] = info
+    }
+
+	fun <T> add(name: Str, value: T, changed: Bool = no) {
+        map[name] = VarInfo(name, value, changed)
+	}
+	fun add(info: VarInfo<*>) {
+        map[info.name] = info
+	}
+	
+
+	fun <T> edit(name: Str, value: T) {
+        map[name] = VarInfo(name, value)
+	}
+
+	fun editAllChanged(edit: (Str, VarInfo<*>) -> VarInfo<*>) {
+		map.entries
+			.filter { it.value.changed }
+			.forEach { (name, info) ->
+				map[name] = edit(name, info)
+			}
+	}
+
+
+	
+	
+
+    fun remove(name: Str) = map.remove(name)
+
+    fun clear() = map.clear()
+
+    fun contains(name: Str) = name in map
+
+	fun toList() = map.values.toList()
+}
+
+
+
