@@ -134,6 +134,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.channels.Channel
 
+/*
 
 //colors
 var cardColor = Color(0xFF1A1A1A)
@@ -555,3 +556,4 @@ fun goTo(
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 }
+*/
