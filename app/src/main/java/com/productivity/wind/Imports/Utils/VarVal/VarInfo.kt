@@ -143,6 +143,8 @@ private fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
 
 	
 class VarInfoWorker(){
+	var cache = ""
+	
 	fun getVarValue(type: Str, raw: Str): Any? {
 		val clazz = StrToClass(type) ?: return null
 
@@ -158,6 +160,46 @@ class VarInfoWorker(){
 			else -> null
 		}
 	}
+
+
+	fun dumbProcess(strData: Str): List<VarInfo<Str>>{
+		var varsStr = InsideBraces(strData) ?: return emptyList()
+		val result = mList<VarInfo<Str>>()
+		
+		val vars = SplitTopLevel(
+			varsStr,
+			split = ',',
+			deeper = listOf("()", "{}", "[]")
+		)
+
+		vars.forEach { variable ->
+			val parts = SplitTopLevel(
+				variable,
+				split = ':',
+				deeper = listOf("()", "{}", "[]")
+			)
+
+			if (parts.size >= 3) {
+				result += VarInfo(
+					name = parts[0],
+					value = parts.drop(2).joinToString(":"),
+					//TEMPORARY placeholder
+					type = String::class.java,// parts[1],
+					typeStr = parts[1]
+				)
+			}
+		}
+		return result
+	}
+
+
+	
+}
+
+
+
+
+
 
 
 
