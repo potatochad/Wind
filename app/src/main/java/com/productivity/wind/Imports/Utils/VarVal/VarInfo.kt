@@ -135,6 +135,34 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.channels.Channel
 
 
+
+private fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
+    clazz.enumConstants?.firstOrNull {
+        (it as Enum<*>).name == raw
+	}
+
+	
+class VarInfoWorker(){
+	fun getVarValue(type: Str, raw: Str): Any? {
+		val clazz = StrToClass(type) ?: return null
+
+		return when {
+			isString(clazz) -> raw.removeSurrounding("\"")
+			isInteger(clazz) -> raw.toIntOrNull()
+			isBoolean(clazz) -> raw.toBooleanStrictOrNull()
+			isLong(clazz) -> raw.toLongOrNull()
+			isDouble(clazz) -> raw.toDoubleOrNull()
+			isFloat(clazz) -> raw.toFloatOrNull()
+			isEnum(clazz) -> getEnumValue(clazz, raw)
+			//isMyAppClass(clazz) -> getComplexValue(clazz, raw)
+			else -> null
+		}
+	}
+
+
+
+}
+
 data class VarInfo<T>(
 	val name: Str,
     val value: T,
