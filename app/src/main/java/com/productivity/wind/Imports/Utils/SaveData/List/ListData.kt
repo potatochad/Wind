@@ -208,10 +208,11 @@ class ListData(
     VarInfo(name = "bar",  value = "123",      type = "Int"),
     VarInfo(name = "baz",  value = "[a,b,c]",  type = "List<String>")
 	]
-	*/
+	
 	fun process(): List<VarInfo<*>> {
         return processVarInfoSTRING("")
 	}
+	*/
     
 }
 
@@ -219,41 +220,3 @@ class ListData(
 
 
 	
-fun processStrToVarInfo(strData: Str): List<VarInfo<Any?>> {
-	fun dumbProcess(): List<VarInfo<Str>>{
-		var varsStr = InsideBraces(strData) ?: return emptyList()
-		val result = mList<VarInfo<Str>>()
-		
-		val vars = SplitTopLevel(
-			varsStr,
-			split = ',',
-			deeper = listOf("()", "{}", "[]")
-		)
-
-		vars.forEach { variable ->
-			val parts = SplitTopLevel(
-				variable,
-				split = ':',
-				deeper = listOf("()", "{}", "[]")
-			)
-
-			if (parts.size >= 3) {
-				result += VarInfo(
-					name = parts[0],
-					value = parts.drop(2).joinToString(":"),
-					//TEMPORARY placeholder
-					type = String::class.java,// parts[1],
-					typeStr = parts[1]
-				)
-			}
-		}
-		return result
-	}
-
-
-	
-}
-
-
-
-
