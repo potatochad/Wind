@@ -240,35 +240,39 @@ private fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
 
 
 	
-private fun processVarInfoSTRING(strData: Str): List<VarInfo<Str>> {
-	var varsStr = InsideBraces(strData) ?: return emptyList()
-    val result = mList<VarInfo<Str>>()
+fun processStrToVarInfo(strData: Str): List<VarInfo<Any?>> {
+	fun dumbProcess(): List<VarInfo<Str>>{
+		var varsStr = InsideBraces(strData) ?: return emptyList()
+		val result = mList<VarInfo<Str>>()
+		
+		val vars = SplitTopLevel(
+			varsStr,
+			split = ',',
+			deeper = listOf("()", "{}", "[]")
+		)
 
-    val vars = SplitTopLevel(
-		varsStr,
-		split = ',',
-		deeper = listOf("()", "{}", "[]")
-	)
+		vars.forEach { variable ->
+			val parts = SplitTopLevel(
+				variable,
+				split = ':',
+				deeper = listOf("()", "{}", "[]")
+			)
 
-	vars.forEach { variable ->
-        val parts = SplitTopLevel(
-            variable,
-            split = ':',
-            deeper = listOf("()", "{}", "[]")
-        )
-
-        if (parts.size >= 3) {
-            result += VarInfo(
-                name = parts[0],
-                value = parts.drop(2).joinToString(":"),
-				//TEMPORARY placeholder
-                type = String::class.java,// parts[1],
-                typeStr = parts[1]
-            )
-        }
+			if (parts.size >= 3) {
+				result += VarInfo(
+					name = parts[0],
+					value = parts.drop(2).joinToString(":"),
+					//TEMPORARY placeholder
+					type = String::class.java,// parts[1],
+					typeStr = parts[1]
+				)
+			}
+		}
+		return result
 	}
 
-    return result
+
+	
 }
 
 
