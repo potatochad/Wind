@@ -1,4 +1,4 @@
-package com.productivity.wind.Imports.Utils.Renames
+package com.productivity.wind.Imports.Utils.VarVal
 
 import com.productivity.wind.Imports.Utils.SaveData.List.*
 import com.productivity.wind.Imports.Utils.Log.*
