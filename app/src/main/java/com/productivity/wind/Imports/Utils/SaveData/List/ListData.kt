@@ -216,26 +216,6 @@ class ListData(
 }
 
 //DOESNT WORK WITH NULLs
-fun getVarValue(type: Str, raw: Str): Any? {
-    val clazz = StrToClass(type) ?: return WindErrors.UVST
-
-    return when {
-		isString(clazz) -> raw.removeSurrounding("\"")
-		isInteger(clazz) -> raw.toIntOrNull()
-		isBoolean(clazz) -> raw.toBooleanStrictOrNull()
-		isLong(clazz) -> raw.toLongOrNull()
-		isDouble(clazz) -> raw.toDoubleOrNull()
-		isFloat(clazz) -> raw.toFloatOrNull()
-		isEnum(clazz) -> getEnumValue(clazz, raw)
-		//isMyAppClass(clazz) -> getComplexValue(clazz, raw)
-		else -> WindErrors.UVST
-    }
-}
-
-private fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
-    clazz.enumConstants?.firstOrNull {
-        (it as Enum<*>).name == raw
-	}
 
 
 
