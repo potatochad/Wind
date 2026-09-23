@@ -136,7 +136,7 @@ import kotlinx.coroutines.channels.Channel
 
 
 
-private fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
+fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
     clazz.enumConstants?.firstOrNull {
         (it as Enum<*>).name == raw
 	}
