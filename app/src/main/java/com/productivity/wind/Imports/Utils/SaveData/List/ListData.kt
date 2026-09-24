@@ -184,7 +184,9 @@ class ListData(
 		val type = match.groupValues[1]
 		val raw = match.groupValues[2]
 
-		return VarInfoWorker.getVarValue(type, raw)
+		val worker = VarInfoWorker()
+
+		return worker.getVarValue(type, raw)
 	}
 	
 	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
