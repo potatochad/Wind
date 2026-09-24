@@ -18,6 +18,8 @@ import androidx.core.app.*
 import android.os.*
 import android.content.*
 import android.util.*
+
+/*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -27,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.text.font.*
+*/
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import kotlinx.coroutines.*
 import kotlin.reflect.full.memberProperties
@@ -47,6 +50,8 @@ import java.lang.reflect.Type
 import kotlin.collections.*
 import android.content.*
 import java.lang.reflect.ParameterizedType
+
+/*
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.text.KeyboardActions
@@ -70,6 +75,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
+
+*/
 import android.content.Intent
 import java.time.LocalDate
 import androidx.navigation.NavGraphBuilder
@@ -87,48 +94,6 @@ import com.productivity.wind.Imports.*
 import com.productivity.wind.Imports.Utils.*
 import androidx.compose.ui.text.*
 import com.productivity.wind.Imports.UI_visible.*
-
-/*
-import java.util.*
-import com.productivity.wind.R
-import kotlin.reflect.full.*
-import androidx.compose.ui.focus.*
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.ActivityResultLauncher
-import androidx.compose.foundation.gestures.*
-import androidx.compose.ui.input.pointer.*
-import java.io.*
-import androidx.compose.ui.geometry.*
-import androidx.compose.ui.text.style.*
-import androidx.compose.foundation.lazy.*
-import java.util.*
-import kotlin.concurrent.*
-import androidx.annotation.RequiresApi
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.navigation.compose.*
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.core.view.*
-import kotlin.reflect.*
-import kotlin.reflect.jvm.*
-import kotlinx.serialization.*
-import kotlinx.serialization.json.*
-import androidx.compose.foundation.text.selection.*
-import kotlin.system.*
-import androidx.navigation.*
-import android.webkit.*
-import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
-import org.jetbrains.kotlin.cli.common.ExitCode
-import java.time.*
-import java.time.format.*
-import android.view.*
-import androidx.core.view.*
-import android.widget.RemoteViews
-import androidx.core.net.toUri
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.channels.Channel
-*/
 
 
 
