@@ -15,12 +15,6 @@ import android.app.usage.UsageStatsManager
 import androidx.compose.foundation.interaction.*
 import android.app.*
 import androidx.core.app.*
-import androidx.compose.ui.draw.*
-import androidx.compose.ui.unit.*
-import androidx.compose.material3.*
-import androidx.compose.foundation.text.*
-import androidx.compose.ui.text.input.*
-import androidx.compose.runtime.*
 import android.os.*
 import android.content.*
 import android.util.*
