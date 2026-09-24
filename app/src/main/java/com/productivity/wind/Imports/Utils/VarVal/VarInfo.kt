@@ -200,10 +200,6 @@ class VarInfoWorker(){
 
 
 
-
-
-}
-
 data class VarInfo<T>(
 	val name: Str,
     val value: T,
