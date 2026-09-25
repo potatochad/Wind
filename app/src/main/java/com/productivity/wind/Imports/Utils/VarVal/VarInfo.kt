@@ -28,11 +28,6 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlin.reflect.*
-/*
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import android.net.Uri
-*/
 import android.widget.Toast
 import com.productivity.wind.*
 import java.util.UUID
@@ -41,21 +36,6 @@ import kotlin.collections.*
 import android.content.*
 import java.lang.reflect.ParameterizedType
 import android.content.Intent
-
-/*
-import java.time.LocalDate
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import com.productivity.wind.Screens.*
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.layout.*
-import android.graphics.drawable.Drawable
-import android.content.pm.*
-*/
 import com.productivity.wind.Imports.*
 import com.productivity.wind.Imports.Utils.*
 import androidx.compose.ui.text.*
