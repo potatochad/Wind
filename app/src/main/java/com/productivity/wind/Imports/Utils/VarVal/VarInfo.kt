@@ -146,6 +146,10 @@ class MapVarInfo {
 			}
 	}
 
+	fun addAll(infos: List<VarInfo<*>>) {
+		infos.forEach { add(it) }
+	}
+
 
 	
 	
