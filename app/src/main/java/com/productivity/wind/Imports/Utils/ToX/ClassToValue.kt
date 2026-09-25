@@ -43,9 +43,7 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 
-fun ClassToValue(type: Str, raw: Str): Any? {
-    val clazz = StrToClass(type) ?: return null
-
+fun ClassToValue(clazz: Class<*>, raw: Str): Any? {
     return when {
         isString(clazz) -> raw.removeSurrounding("\"")
         isInteger(clazz) -> raw.toIntOrNull()
