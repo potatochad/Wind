@@ -18,18 +18,6 @@ import androidx.core.app.*
 import android.os.*
 import android.content.*
 import android.util.*
-
-/*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.*
-import androidx.compose.ui.text.font.*
-*/
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import kotlinx.coroutines.*
 import kotlin.reflect.full.memberProperties
@@ -40,9 +28,11 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlin.reflect.*
+/*
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import android.net.Uri
+*/
 import android.widget.Toast
 import com.productivity.wind.*
 import java.util.UUID
@@ -50,34 +40,9 @@ import java.lang.reflect.Type
 import kotlin.collections.*
 import android.content.*
 import java.lang.reflect.ParameterizedType
+import android.content.Intent
 
 /*
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.*
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.res.painterResource
-
-*/
-import android.content.Intent
 import java.time.LocalDate
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -90,6 +55,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.layout.*
 import android.graphics.drawable.Drawable
 import android.content.pm.*
+*/
 import com.productivity.wind.Imports.*
 import com.productivity.wind.Imports.Utils.*
 import androidx.compose.ui.text.*
