@@ -70,7 +70,7 @@ fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
 
 	
 class VarInfoWorker(){
-	var cache = ""
+	var dumbVars = MapVarInfo()
 	
 	fun getVarValue(type: Str, raw: Str): Any? {
 		val clazz = StrToClass(type) ?: return null
@@ -89,6 +89,7 @@ class VarInfoWorker(){
 	}
 
 
+	//it dumb: so values are STRING
 	fun dumbProcess(strData: Str): List<VarInfo<Str>>{
 		var varsStr = InsideBraces(strData) ?: return emptyList()
 		val result = mList<VarInfo<Str>>()
