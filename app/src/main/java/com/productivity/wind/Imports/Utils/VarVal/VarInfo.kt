@@ -41,13 +41,6 @@ import com.productivity.wind.Imports.Utils.*
 import androidx.compose.ui.text.*
 import com.productivity.wind.Imports.UI_visible.*
 
-
-
-fun getEnumValue(clazz: Class<*>, raw: Str): Any? =
-    clazz.enumConstants?.firstOrNull {
-        (it as Enum<*>).name == raw
-	}
-
 	
 class VarInfoWorker(){
 	var dumbVars = MapVarInfo()
