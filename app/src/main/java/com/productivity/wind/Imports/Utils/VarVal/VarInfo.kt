@@ -41,7 +41,8 @@ import com.productivity.wind.Imports.Utils.*
 import androidx.compose.ui.text.*
 import com.productivity.wind.Imports.UI_visible.*
 
-	
+
+
 class VarInfoWorker(){
 	var dumbVars = MapVarInfo()
 	
