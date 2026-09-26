@@ -41,7 +41,8 @@ import com.productivity.wind.Imports.Utils.*
 import androidx.compose.ui.text.*
 import com.productivity.wind.Imports.UI_visible.*
 
-
+fun Str.toEnumOrNull(clazz: Class<*>): Any? =
+    clazz.enumConstants?.firstOrNull { (it as Enum<*>).name == this }
 
 fun toValue(clazz: Class<*>, raw: Str): Any? {
     return when {
@@ -51,7 +52,7 @@ fun toValue(clazz: Class<*>, raw: Str): Any? {
         isLong(clazz) -> raw.toLongOrNull()
         isDouble(clazz) -> raw.toDoubleOrNull()
         isFloat(clazz) -> raw.toFloatOrNull()
-        isEnum(clazz) -> getEnumValue(clazz, raw)
+        isEnum(clazz) -> raw.toEnumOrNull(clazz)
         else -> null
     }
 }
