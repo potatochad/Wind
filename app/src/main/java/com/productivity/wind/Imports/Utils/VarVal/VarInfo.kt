@@ -47,9 +47,13 @@ class VarInfoWorker(){
 	var dumbVars = MapVarInfo()
 	
 	fun getVarValue(type: Str, raw: Str): Any? {
-		val clazz = StrToClass(type) ?: return null
+		val clazz = StrToClass(type) 
+		if (clazz == null){
+			Vlog("getVarValue ClassError: $type, $raw, $clazz")
+			return null
+		}
 		val value = toValueOrNull(clazz, raw)
-		if (value == null) Vlog("getVarValue error: $type, $raw, $clazz, $value")
+		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
 		return value
 	}
 
