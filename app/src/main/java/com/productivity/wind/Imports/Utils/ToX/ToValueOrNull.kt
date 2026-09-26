@@ -44,7 +44,7 @@ import com.productivity.wind.Imports.UI_visible.*
 fun Str.toEnumOrNull(clazz: Class<*>): Any? =
     clazz.enumConstants?.firstOrNull { (it as Enum<*>).name == this }
 
-fun toValue(clazz: Class<*>, raw: Str): Any? {
+fun toValueOrNull(clazz: Class<*>, raw: Str): Any? {
     return when {
         isString(clazz) -> raw.removeSurrounding("\"")//removes any "", "hello"  →  hello        
         isInteger(clazz) -> raw.toIntOrNull()
