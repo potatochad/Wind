@@ -55,7 +55,7 @@ class VarInfoWorker(){
 			isLong(clazz) -> raw.toLongOrNull()
 			isDouble(clazz) -> raw.toDoubleOrNull()
 			isFloat(clazz) -> raw.toFloatOrNull()
-			isEnum(clazz) -> getEnumValue(clazz, raw)
+			isEnum(clazz) -> raw.toEnumOrNull(clazz)
 			//isMyAppClass(clazz) -> getComplexValue(clazz, raw)
 			else -> null
 		}
