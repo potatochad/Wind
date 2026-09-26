@@ -43,9 +43,9 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 
-fun ClassToValue(clazz: Class<*>, raw: Str): Any? {
+fun toValue(clazz: Class<*>, raw: Str): Any? {
     return when {
-        isString(clazz) -> raw.removeSurrounding("\"")
+        isString(clazz) -> raw.removeSurrounding("\"")//removes any "", "hello"  →  hello        
         isInteger(clazz) -> raw.toIntOrNull()
         isBoolean(clazz) -> raw.toBooleanStrictOrNull()
         isLong(clazz) -> raw.toLongOrNull()
@@ -55,4 +55,11 @@ fun ClassToValue(clazz: Class<*>, raw: Str): Any? {
         else -> null
     }
 }
+
+
+
+
+
+
+
 
