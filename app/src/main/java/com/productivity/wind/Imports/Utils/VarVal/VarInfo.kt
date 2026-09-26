@@ -48,8 +48,9 @@ class VarInfoWorker(){
 	
 	fun getVarValue(type: Str, raw: Str): Any? {
 		val clazz = StrToClass(type) ?: return null
-
-		return toValueOrNull(clazz, raw)
+		val value = toValueOrNull(clazz, raw)
+		if (value == null) Vlog("getVarValue error: $type, $raw, $clazz, $value")
+		return value
 	}
 
 
