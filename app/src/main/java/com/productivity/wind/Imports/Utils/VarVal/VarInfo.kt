@@ -72,7 +72,7 @@ class VarInfoWorker(varsStr: Str = ""){
 
 
 	fun process(){
-		dumbVars.each{
+		dumbVars.each{ name, theVar ->
 			
 		}
 	}
