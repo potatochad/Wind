@@ -48,7 +48,7 @@ class VarInfoWorker(varsStr: Str = ""){
 	val varsStrData = varsStr
 
 	init {
-		if (!strData.empty) {
+		if (!varsStrData.empty) {
 			dumbVars.addAll(dumbProcess(varsStrData))
 		}
 	}
