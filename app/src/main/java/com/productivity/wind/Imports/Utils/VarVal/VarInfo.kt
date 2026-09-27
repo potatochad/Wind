@@ -66,6 +66,11 @@ class VarInfoWorker(varsStr: Str = ""){
 	}
 
 
+
+	fun process(){
+		
+	}
+	
 	//it dumb: so values are STRING
 	fun dumbProcess(strData: Str): List<VarInfo<Str>>{
 		var varsStr = InsideBraces(strData) ?: return emptyList()
