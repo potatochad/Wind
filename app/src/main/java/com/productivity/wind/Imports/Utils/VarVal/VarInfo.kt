@@ -45,6 +45,8 @@ import com.productivity.wind.Imports.UI_visible.*
 
 class VarInfoWorker(){
 	var dumbVars = MapVarInfo()
+
+	
 	
 	fun getVarValue(type: Str, raw: Str): Any? {
 		val clazz = StrToClass(type) 
