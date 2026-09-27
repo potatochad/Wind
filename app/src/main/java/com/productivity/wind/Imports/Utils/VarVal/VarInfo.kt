@@ -46,10 +46,14 @@ import com.productivity.wind.Imports.UI_visible.*
 class VarInfoWorker(varsStr: Str = ""){
 	var dumbVars = MapVarInfo()
 	val varsStrData = varsStr
+	var map: MapVarInfo? = null
 
 	init {
 		if (!varsStrData.empty) {
-			dumbVars.addAll(dumbProcess(varsStrData))
+			dumbVars.addAll(
+				dumbProcess(varsStrData)
+			)
+			process()
 		}
 	}
 	
@@ -68,7 +72,9 @@ class VarInfoWorker(varsStr: Str = ""){
 
 
 	fun process(){
-		
+		dumbVars.each{
+			
+		}
 	}
 	
 	//it dumb: so values are STRING
