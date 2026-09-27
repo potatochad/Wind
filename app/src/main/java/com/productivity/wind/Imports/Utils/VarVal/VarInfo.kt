@@ -160,7 +160,12 @@ class MapVarInfo {
 	}
 
 
-	
+
+	fun each(Do: (Str, VarInfo<*>) -> Unit) {
+		map.forEach { (name, info) ->
+			Do(name, info)
+		}
+	}
 	
 
     fun remove(name: Str) = map.remove(name)
