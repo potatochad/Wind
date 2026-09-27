@@ -110,6 +110,7 @@ data class VarInfo<T>(
 	val name: Str,
     val value: T,
 	var changed: Bool = no,
+	var marker: Int = 0,
     val type: Class<*>? = value?.let { it::class.java },
 	val typeStr: Str = type?.name ?: "null",
 )
