@@ -43,9 +43,15 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 
-class VarInfoWorker(){
+class VarInfoWorker(varsStr: Str = ""){
 	var dumbVars = MapVarInfo()
+	val varsStrData = varsStr
 
+	init {
+		if (!strData.empty) {
+			dumbVars.addAll(dumbProcess(varsStrData))
+		}
+	}
 	
 	
 	fun getVarValue(type: Str, raw: Str): Any? {
