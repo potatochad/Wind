@@ -44,8 +44,8 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 class VarInfoWorker(varsStr: Str = ""){
-	var dumbVars = MapVarInfo()
-	val varsStrData = varsStr
+	private var dumbVars = MapVarInfo()
+	private val varsStrData = varsStr
 	var map: MapVarInfo? = null
 
 	init {
@@ -67,6 +67,35 @@ class VarInfoWorker(varsStr: Str = ""){
 		val value = toValueOrNull(clazz, raw)
 		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
 		return value
+	}
+
+
+	fun process() {
+		dumbVars.each { name, theVar ->
+			val raw = theVar.value
+			val type = theVar.typeStr
+
+			val clazz = StrToClass(type)
+			if (clazz == null) {
+				Vlog("process ClassError: $type, $raw, $clazz")
+				return@each
+			}
+			
+			val value = toValueOrNull(clazz, raw)
+			if (value == null) {
+				Vlog("process ValueError: $type, $raw, $clazz, $value")
+				return@each
+			}
+
+			map.add(
+				VarInfo(
+					name = name,
+					value = value,
+					type = clazz,
+				)
+			)
+			
+		}
 	}
 
 
