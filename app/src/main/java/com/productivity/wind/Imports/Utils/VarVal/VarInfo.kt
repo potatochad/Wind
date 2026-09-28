@@ -75,9 +75,9 @@ class VarInfoWorker(varsStr: Str = ""){
 		dumbVars.each{ name, theVar ->
 			val name = theVar.name
 			val value = theVar.value
-			var changed: Bool = no,
-			var marker: Int = 0,
-			val type
+			var changed = theVar.changed
+			var marker = theVar.marker
+			val type = theVar.type
 			
 			val clazz = StrToClass(type) 
 			if (clazz == null){
