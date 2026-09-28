@@ -78,6 +78,7 @@ class VarInfoWorker(varsStr: Str = ""){
 				Vlog("getVarValue ClassError: $type, $raw, $clazz")
 				return@each
 			}
+			
 			val value = toValueOrNull(clazz, raw)
 			if (value == null) {
 				Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
