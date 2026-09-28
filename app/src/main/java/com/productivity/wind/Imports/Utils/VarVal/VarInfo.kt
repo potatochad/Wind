@@ -73,11 +73,12 @@ class VarInfoWorker(varsStr: Str = ""){
 
 	fun process(){
 		dumbVars.each{ name, theVar ->
-			val name = the: Str,
-    val value: T,
-	var changed: Bool = no,
-	var marker: Int = 0,
-    val type
+			val name = theVar.name
+			val value = theVar.value
+			var changed: Bool = no,
+			var marker: Int = 0,
+			val type
+			
 			val clazz = StrToClass(type) 
 			if (clazz == null){
 				Vlog("getVarValue ClassError: $type, $raw, $clazz")
