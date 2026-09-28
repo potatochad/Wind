@@ -102,8 +102,6 @@ fun BlockingLogic(web: WebController){
 				"Gary Vaynerchuk",
 				"Alex Hormozi",
 				"Naval Ravikant",
-				"Elon Musk",
-				"Jeff Bezos",
 				"Steve Jobs",
 				"business lessons",
 				"life lessons",
