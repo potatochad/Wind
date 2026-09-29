@@ -56,6 +56,8 @@ fun BlockingLogic(web: WebController){
 				"discipline",
 				"my first million",
 				"mindset",
+				"humility",
+				"get rid of ego",
 				"AllThingsSecured",
 				"university",
 				"hard work",
