@@ -46,7 +46,7 @@ import com.productivity.wind.Imports.UI_visible.*
 class VarInfoWorker(varsStr: Str = ""){
 	private var dumbVars = MapVarInfo()
 	private val varsStrData = varsStr
-	var map: MapVarInfo? = null
+	var map = MapVarInfo()
 
 	init {
 		if (!varsStrData.empty) {
@@ -81,7 +81,7 @@ class VarInfoWorker(varsStr: Str = ""){
 				return@each
 			}
 			
-			val value = toValueOrNull(clazz, raw)
+			val value = toValueOrNull(clazz, toStr(raw))
 			if (value == null) {
 				Vlog("process ValueError: $type, $raw, $clazz, $value")
 				return@each
@@ -198,6 +198,9 @@ class MapVarInfo {
     fun contains(name: Str) = name in map
 
 	fun toList() = map.values.toList()
+
+	val empty: Bool
+    	get() = map.isEmpty
 }
 
 
