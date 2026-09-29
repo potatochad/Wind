@@ -99,28 +99,6 @@ class VarInfoWorker(varsStr: Str = ""){
 	}
 
 
-
-	fun process(){
-		dumbVars.each{ name, theVar ->
-			val name = theVar.name
-			val value = theVar.value
-			var changed = theVar.changed
-			var marker = theVar.marker
-			val type = theVar.type
-			
-			val clazz = StrToClass(type) 
-			if (clazz == null){
-				Vlog("getVarValue ClassError: $type, $raw, $clazz")
-				return@each
-			}
-			
-			val value = toValueOrNull(clazz, raw)
-			if (value == null) {
-				Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
-				return@each
-			}
-		}
-	}
 	
 	//it dumb: so values are STRING
 	fun dumbProcess(strData: Str): List<VarInfo<Str>>{
