@@ -200,7 +200,7 @@ class MapVarInfo {
 	fun toList() = map.values.toList()
 
 	val empty: Bool
-    	get() = map.isEmpty
+    	get() = map.isEmpty()
 }
 
 
