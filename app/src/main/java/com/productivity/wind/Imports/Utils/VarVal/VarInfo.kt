@@ -80,24 +80,24 @@ class VarInfoWorker(varsStr: Str = ""){
 				if (clazz == null) {
 					Vlog("process ClassError: $type, $raw, $clazz")
 					return@each
-			}
-			
-			val value = toValueOrNull(clazz, toStr(raw))
-			if (value == null) {
-				Vlog("process ValueError: $type, $raw, $clazz, $value")
-				return@each
-			}
+				}
+				
+				val value = toValueOrNull(clazz, toStr(raw))
+				
+				if (value == null) {
+					Vlog("process ValueError: $type, $raw, $clazz, $value")
+					return@each
+				}
 
-			map.add(
-				VarInfo(
-					name = name,
-					value = value,
-					type = clazz,
+				map.add(
+					VarInfo(
+						name = name,
+						value = value,
+						type = clazz,
+					)
 				)
-			)
-			
+				
 			}
-			
 		}
 	}
 
