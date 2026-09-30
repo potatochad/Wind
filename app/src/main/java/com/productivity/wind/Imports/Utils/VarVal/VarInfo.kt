@@ -71,14 +71,15 @@ class VarInfoWorker(varsStr: Str = ""){
 
 
 	fun process() {
-		dumbVars.each { name, theVar ->
-			val raw = theVar.value
-			val type = theVar.typeStr
+		appNonUIScope.launch {
+			dumbVars.each { name, theVar ->
+				val raw = theVar.value
+				val type = theVar.typeStr
 
-			val clazz = StrToClass(type)
-			if (clazz == null) {
-				Vlog("process ClassError: $type, $raw, $clazz")
-				return@each
+				val clazz = StrToClass(type)
+				if (clazz == null) {
+					Vlog("process ClassError: $type, $raw, $clazz")
+					return@each
 			}
 			
 			val value = toValueOrNull(clazz, toStr(raw))
@@ -94,6 +95,8 @@ class VarInfoWorker(varsStr: Str = ""){
 					type = clazz,
 				)
 			)
+			
+			}
 			
 		}
 	}
