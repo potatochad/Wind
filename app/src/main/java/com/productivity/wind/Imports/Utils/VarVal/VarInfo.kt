@@ -50,10 +50,12 @@ class VarInfoWorker(varsStr: Str = ""){
 
 	init {
 		if (!varsStrData.empty) {
+			appNonUIScope.launch {
 			dumbVars.addAll(
 				dumbProcess(varsStrData)
 			)
-			process()
+			processVar()
+			}
 		}
 	}
 
@@ -84,35 +86,29 @@ class VarInfoWorker(varsStr: Str = ""){
 	}
 
 
-	fun process() {
-		appNonUIScope.launch {
-			dumbVars.each { name, theVar ->
-				val raw = theVar.value
-				val type = theVar.typeStr
+	fun processVar(dumbVar: VarInfo): VarInfo? {
+		val raw = dumbVar.value
+		val type = dumbVar.typeStr
+		val name = dumbVar.name
 
-				val clazz = StrToClass(type)
-				if (clazz == null) {
-					Vlog("process ClassError: $type, $raw, $clazz")
-					return@each
-				}
-				
-				val value = toValueOrNull(clazz, toStr(raw))
-				
-				if (value == null) {
-					Vlog("process ValueError: $type, $raw, $clazz, $value")
-					return@each
-				}
-
-				map.add(
-					VarInfo(
-						name = name,
-						value = value,
-						type = clazz,
-					)
-				)
-				
-			}
+		val clazz = StrToClass(type)
+		if (clazz == null) {
+			Vlog("process ClassError: $type, $raw, $clazz")
+			return null
 		}
+				
+		val value = toValueOrNull(clazz, toStr(raw))
+				
+		if (value == null) {
+			Vlog("process ValueError: $type, $raw, $clazz, $value")
+			return null
+		}
+	
+		return VarInfo(
+			name = name,
+			value = value,
+			type = clazz,
+		)
 	}
 
 
