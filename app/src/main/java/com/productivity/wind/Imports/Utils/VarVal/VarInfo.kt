@@ -164,10 +164,11 @@ class VarInfoWorker(varsStr: Str = ""){
 data class VarInfo<T>(
 	val name: Str,
     val value: T,
+	val type: Class<*>? = value?.let { it::class.java },
+	
 	var changed: Bool = no,
 	var marker: Int = 0,
-    val type: Class<*>? = value?.let { it::class.java },
-	val typeStr: Str = type?.name ?: "null",
+    val typeStr: Str = type?.name ?: "null",
 )
 
 class MapVarInfo {
