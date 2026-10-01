@@ -55,7 +55,7 @@ class VarInfoWorker(varsStr: Str = ""){
 					dumbProcess(varsStrData)
 				)
 				dumbVars.each { name, it ->
-					val processed = processVar(it)
+					val processed: VarInfo<*>? = processVar(it)
 					if (processed == null) {
 						Vlog("ExcludingVar: Error trying processVar")
 					} else {
