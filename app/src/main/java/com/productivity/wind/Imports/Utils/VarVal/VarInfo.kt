@@ -56,6 +56,10 @@ class VarInfoWorker(varsStr: Str = ""){
 			process()
 		}
 	}
+
+	// regex looks for this pattern:   x:y:c
+	fun findVar(data: Str, varName: Str) =
+	    Regex("""${Regex.escape(varName)}:([^:]+):("[^"]*"|[^,}]+)""").find(data)
 	
 	
 	fun getVarValue(type: Str, raw: Str): Any? {
