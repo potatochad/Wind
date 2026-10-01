@@ -82,16 +82,6 @@ class VarInfoWorker(varsStr: Str = ""){
 		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
 		return value
 	}
-	fun getVar(type: Str, raw: Str): Any? {
-		val clazz = StrToClass(type) 
-		if (clazz == null){
-			Vlog("getVarValue ClassError: $type, $raw, $clazz")
-			return null
-		}
-		val value = toValueOrNull(clazz, raw)
-		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
-		return value
-	}
 
 
 	fun process() {
