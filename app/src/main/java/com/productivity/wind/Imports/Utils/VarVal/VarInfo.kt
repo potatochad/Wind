@@ -51,12 +51,12 @@ class VarInfoWorker(varsStr: Str = ""){
 	init {
 		if (!varsStrData.empty) {
 			appNonUIScope.launch {
-			dumbVars.addAll(
-				dumbProcess(varsStrData)
-			)
-			dumbVars.each { name, it ->
-				map.add(processVar(it))
-			}
+				dumbVars.addAll(
+					dumbProcess(varsStrData)
+				)
+				dumbVars.each { name, it ->
+					map.add(processVar(it))
+				}
 			}
 		}
 	}
