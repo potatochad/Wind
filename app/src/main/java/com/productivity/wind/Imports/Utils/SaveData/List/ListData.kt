@@ -150,6 +150,8 @@ class ListData(
 	val prefs: SharedPreferences
         get() = lazyData.prefs
 	
+	fun get(id: Str) = prefs.getString(id, null)
+	
 	val all: Map<Str, Any?>
         get() = prefs.all
 
@@ -170,14 +172,11 @@ class ListData(
 
 
 	
-	fun get(id: Str) = prefs.getString(id, null)
 	fun getVarValue(idItem: Str, varName: Str): Any? {
 		if (idItem.empty) return null
-		val data = prefs.getString(idItem, null) ?: return null
+		val data = get(idItem) ?: return null
 
-		val regex = Regex(
-			"""${Regex.escape(varName)}:([^:]+):("[^"]*"|[^,}]+)"""
-		)
+		val regex = Regex("""${Regex.escape(varName)}:([^:]+):("[^"]*"|[^,}]+)""")
 
 		val match = regex.find(data) ?: return null
 
@@ -196,25 +195,6 @@ class ListData(
 	}
 	fun <T> commit(id: Str, x: Str) = put(id, x, { it.commit() })
 	fun <T> apply(id: Str, x: Str) = put(id, x)
-
-	
-	
-
-	
-		
-    
-
-	/* returns
-	[
-    VarInfo(name = "foo",  value = "hello",    type = "String"),
-    VarInfo(name = "bar",  value = "123",      type = "Int"),
-    VarInfo(name = "baz",  value = "[a,b,c]",  type = "List<String>")
-	]
-	
-	fun process(): List<VarInfo<*>> {
-        return processVarInfoSTRING("")
-	}
-	*/
     
 }
 
