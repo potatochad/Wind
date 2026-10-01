@@ -94,7 +94,7 @@ class VarInfoWorker(varsStr: Str = ""){
 	}
 
 
-	fun processVar(dumbVar: VarInfo): VarInfo? {
+	fun processVar(dumbVar: VarInfo<*>): VarInfo<*>? {
 		val raw = dumbVar.value
 		val type = dumbVar.typeStr
 		val name = dumbVar.name
