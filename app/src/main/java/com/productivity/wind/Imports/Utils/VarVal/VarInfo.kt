@@ -54,7 +54,9 @@ class VarInfoWorker(varsStr: Str = ""){
 			dumbVars.addAll(
 				dumbProcess(varsStrData)
 			)
-			processVar()
+			dumbVars.each { name, it ->
+				map.add(processVar(it))
+			}
 			}
 		}
 	}
