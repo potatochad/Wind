@@ -92,6 +92,11 @@ class VarInfoWorker(val varsStr: Str){
 		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
 		return value
 	}
+	//‼️‼️‼️TODO FOR YOU (have classes in one file:
+	//MAKE A CLASS FOR: VarList:
+	//have it run some logic and so on
+	//MAKE A CLASS FOR VARINFO like thingy:
+	//SORYY you already got that, so have it like compute stuff for youu
 	
 	/*
 	fun getVar(varName: Str): Any? {
