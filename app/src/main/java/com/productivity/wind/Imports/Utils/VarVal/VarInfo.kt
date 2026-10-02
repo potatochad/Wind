@@ -112,11 +112,7 @@ class VarInfoWorker(varsStr: Str = ""){
 			return null
 		}
 	
-		return VarInfo(
-			name = name,
-			value = value,
-			type = clazz,
-		)
+		return VarInfo(name, value, clazz)
 	}
 
 
