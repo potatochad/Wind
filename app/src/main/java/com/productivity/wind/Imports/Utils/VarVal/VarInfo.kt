@@ -172,7 +172,9 @@ class VarInfoWorker(val varsStr: Str){
 
 
 
-
+class VarsList(){
+	
+}
 
 data class VarInfo<T>(
 	val name: Str,
