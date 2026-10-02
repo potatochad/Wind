@@ -72,7 +72,20 @@ class VarInfoWorker(varsStr: Str = ""){
 	fun findVar(data: Str, varName: Str) =
 	    Regex("""${Regex.escape(varName)}:([^:]+):("[^"]*"|[^,}]+)""").find(data)
 	
-	
+	/*
+	fun getVarValue(idItem: Str, varName: Str): Any? {
+		if (idItem.empty) return null
+		val data = get(idItem) ?: return null
+
+		val worker = VarInfoWorker()
+		val match = worker.findVar(data, varName) ?: return null
+
+		val type = match.groupValues[1]
+		val raw = match.groupValues[2]
+
+		return worker.getVarValue(type, raw)
+	}
+	*/
 	fun getVarValue(type: Str, raw: Str): Any? {
 		val clazz = StrToClass(type) 
 		if (clazz == null){
