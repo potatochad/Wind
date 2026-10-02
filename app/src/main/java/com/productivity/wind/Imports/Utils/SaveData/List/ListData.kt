@@ -176,7 +176,7 @@ class ListData(
 		if (idItem.empty) return null
 		val data = get(idItem) ?: return null
 
-		val worker = VarInfoWorker()
+		val worker = VarInfoWorker(data)
 		val match = worker.findVar(data, varName) ?: return null
 
 		val type = match.groupValues[1]
