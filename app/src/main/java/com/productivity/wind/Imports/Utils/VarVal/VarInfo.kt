@@ -176,6 +176,8 @@ class VarsList(){
 	
 }
 
+//‼️‼️‼️RENAME THIS TO VAR
+//MAKE THIS A CLASS AND ADD LOGIC, REGEX
 data class VarInfo<T>(
 	val name: Str,
     val value: T,
