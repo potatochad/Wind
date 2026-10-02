@@ -43,16 +43,14 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 
-class VarInfoWorker(varsStr: Str =""){
+class VarInfoWorker(val varsStr: Str){
 	private var dumbVars = MapVarInfo()
-	private val varsStrData = varsStr
 	var map = MapVarInfo()
 
 	init {
-		if (!varsStrData.empty) {
 			appNonUIScope.launch {
 				dumbVars.addAll(
-					dumbProcess(varsStrData)
+					dumbProcess(varsStr)
 				)
 				dumbVars.each { name, it ->
 					val processed: VarInfo<*>? = processVar(it)
@@ -64,7 +62,6 @@ class VarInfoWorker(varsStr: Str =""){
 				}
 				
 			}
-		}
 	}
 
 	// regex looks for this pattern:   x:y:c
