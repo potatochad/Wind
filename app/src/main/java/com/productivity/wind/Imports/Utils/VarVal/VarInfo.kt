@@ -97,7 +97,8 @@ class VarInfoWorker(varsStr: Str = ""){
 		return value
 	}
 	
-	fun getVar(type: Str, raw: Str): Any? {
+	fun getVar(varName: Str): Any? {
+		
 		val clazz = StrToClass(type) 
 		if (clazz == null){
 			Vlog("getVarValue ClassError: $type, $raw, $clazz")
