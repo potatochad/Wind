@@ -140,10 +140,7 @@ import kotlinx.serialization.builtins.ListSerializer
 
 
 
-class ListData(
-    val Where: Str,//listname
-) {
-	val listName = Where
+class ListData(val listName: Str) {
 	var lazyData = LazyData(listName)
 	
 	//for weird safety reason use get
