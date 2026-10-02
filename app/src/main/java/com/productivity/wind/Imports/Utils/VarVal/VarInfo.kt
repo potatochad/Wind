@@ -46,7 +46,7 @@ import com.productivity.wind.Imports.UI_visible.*
 class VarInfoWorker(varsStr: Str = ""){
 	private var dumbVars = MapVarInfo()
 	private val varsStrData = varsStr
-	var getFirst = ""
+	var getFirst: VarInfo<*>? = null
 	var map = MapVarInfo()
 
 	init {
