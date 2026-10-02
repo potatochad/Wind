@@ -181,7 +181,7 @@ class MapVarInfo {
     }
 
 	fun <T> add(name: Str, value: T, changed: Bool = no) {
-        map[name] = VarInfo(name, value, changed)
+        map[name] = VarInfo(name, value, null, changed)
 	}
 	fun add(info: VarInfo<*>) {
         map[info.name] = info
