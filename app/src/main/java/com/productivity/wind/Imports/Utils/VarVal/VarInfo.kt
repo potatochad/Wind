@@ -186,7 +186,9 @@ class VarInfo<T>(
 	var changed: Bool = no,
 	var marker: Int = 0,
     val typeStr: Str = type?.name ?: "null",
-)
+){
+	//StrToClass(type) 
+}
 
 class MapVarInfo {
     private val map = mutableMapOf<Str, VarInfo<*>>()
