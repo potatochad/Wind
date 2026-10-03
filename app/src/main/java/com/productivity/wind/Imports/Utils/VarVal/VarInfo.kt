@@ -178,7 +178,7 @@ class VarsList(){
 
 //‼️‼️‼️RENAME THIS TO VAR
 //MAKE THIS A CLASS AND ADD LOGIC, REGEX
-data class VarInfo<T>(
+class VarInfo<T>(
 	val name: Str,
     val value: T,
 	val type: Class<*>? = value?.let { it::class.java },
