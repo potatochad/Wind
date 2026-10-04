@@ -193,6 +193,25 @@ class VarInfo<T>(
 	
 	//StrToClass(type) 
 }
+/*
+companion object {
+    fun parse(data: Str): VarInfo<*>? {
+        val match = Regex(
+            """^([^:]+):([^:]+):(.*)$"""
+        ).matchEntire(data) ?: return null
+
+        val name = match.groupValues[1]
+        val typeStr = match.groupValues[2]
+        val raw = match.groupValues[3]
+
+        val clazz = StrToClass(typeStr) ?: return null
+        val value = toValueOrNull(clazz, raw) ?: return null
+
+        return VarInfo(name, value, clazz)
+    }
+}
+
+*/
 
 class MapVarInfo {
     private val map = mutableMapOf<Str, VarInfo<*>>()
