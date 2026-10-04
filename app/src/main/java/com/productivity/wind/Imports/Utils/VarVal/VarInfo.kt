@@ -187,6 +187,10 @@ class VarInfo<T>(
 	var marker: Int = 0,
     val typeStr: Str = type?.name ?: "null",
 ){
+	val isNull get() = value == null
+    val isChanged get() = changed
+    val hasType get() = type != null
+	
 	//StrToClass(type) 
 }
 
