@@ -190,6 +190,12 @@ class VarInfo<T>(
 	val isNull get() = value == null
     val isChanged get() = changed
     val hasType get() = type != null
+
+	// x:type:value
+    /*
+	fun toStr(): Str =
+        "$name:$typeStr:${value}"
+		*/
 	
 	//StrToClass(type) 
 }
