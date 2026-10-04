@@ -172,8 +172,13 @@ class VarInfoWorker(val varsStr: Str){
 
 
 
-class VarsList(){
-	
+class VarsList(
+	val vars: List<VarInfo<*>>
+) {
+    override fun toString(): Str {
+        val varsStr = vars.joinToString(", ") { "$it" }
+        return "vars: { $varsStr }"
+    }
 }
 
 //‼️‼️‼️RENAME THIS TO VAR
