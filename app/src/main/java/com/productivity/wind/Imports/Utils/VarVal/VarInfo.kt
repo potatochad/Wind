@@ -191,13 +191,8 @@ class VarInfo<T>(
     val isChanged get() = changed
     val hasType get() = type != null
 
-	// x:type:value
-    /*
-	fun toStr(): Str =
-        "$name:$typeStr:${value}"
-		*/
+	override fun toString(): Str = "$name:$typeStr:${ComplexTypeToStr(value)}"
 	
-	//StrToClass(type) 
 }
 /*
 companion object {
