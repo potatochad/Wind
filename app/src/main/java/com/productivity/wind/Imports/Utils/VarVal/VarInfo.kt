@@ -175,6 +175,8 @@ class VarInfoWorker(val varsStr: Str){
 class VarsList(
 	val vars: List<VarInfo<*>>
 ) {
+	constructor(map: MapVarInfo) : this(map.toList())
+
     override fun toString(): Str {
         val varsStr = vars.joinToString(", ") { "$it" }
         return "vars: { $varsStr }"
