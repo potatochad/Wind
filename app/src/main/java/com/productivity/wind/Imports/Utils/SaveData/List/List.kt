@@ -213,8 +213,7 @@ abstract class EasySave {
         Vlog("varList: ${varList}")
         Vlog("listName: ${listName}")
 
-        //DOESNT DO FOR WindErrors.UVST
-        var customStr = VarInfoListToStr(varList)
+        var customStr = toStr(VarsList(varList))
 
         ListData(listName).put(id, customStr) 
         Vlog("customStr: ${customStr}")
