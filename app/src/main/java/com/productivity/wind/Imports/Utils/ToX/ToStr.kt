@@ -158,12 +158,6 @@ fun toStr(it: Any?): Str = when (it) {
 
 private val fieldsCache = mutableMapOf<Class<*>, List<java.lang.reflect.Field>>()
 
-fun VarInfoListToStr(vars: List<VarInfo<*>>): Str {
-    val varsStr = vars.joinToString(", ") { "$it" }
-
-    return "vars: { $varsStr }"
-}
-
 // SLOWWWW
 fun ComplexTypeToStr(value: Any?): Str {
     fun listToStr(list: List<*>): String {
