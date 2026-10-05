@@ -181,6 +181,7 @@ class VarsList(
     }
 }
 
+
 //‼️‼️‼️RENAME THIS TO VAR
 //MAKE THIS A CLASS AND ADD LOGIC, REGEX
 class VarInfo<T>(
