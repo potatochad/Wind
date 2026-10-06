@@ -122,7 +122,7 @@ fun BlockingLogic(web: WebController){
 			"Verzicht",
 			"Belohnungsaufschub",
 			"Fleiß",
-			"Durchziehen"
+			"Durchziehen",
 				
 				"discipline",
 			"hard work",
