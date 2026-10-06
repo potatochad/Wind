@@ -209,7 +209,7 @@ abstract class EasySave {
 
 
     open fun save(){
-        var varList = VarsList(varList)
+        var varList = VarsList(vars)
         Vlog("varList: ${varList}")
         Vlog("listName: ${listName}")
         
