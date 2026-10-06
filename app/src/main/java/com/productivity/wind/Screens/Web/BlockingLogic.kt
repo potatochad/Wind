@@ -103,7 +103,7 @@ fun BlockingLogic(web: WebController){
 			"Belohnungsaufschub",
 			"Fleiß",
 			"Durchziehen"
-				/*
+				
 				"discipline",
 			"hard work",
 			"work hard",
@@ -154,7 +154,6 @@ fun BlockingLogic(web: WebController){
 			"mental strength",
 			"no excuses",
 			"keep going",
-			*/
 				
 				/*
 				// "my first million",
