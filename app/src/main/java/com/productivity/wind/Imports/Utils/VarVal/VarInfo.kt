@@ -181,6 +181,36 @@ class VarsList(
         val varsStr = vars.joinToString(", ") { "$it" }
         return "vars: { $varsStr }"
     }
+
+	//it dumb: so values are STRING
+	fun dumbProcess(strData: Str): List<VarInfo<Str>>{
+		var varsStr = InsideBraces(strData) ?: return emptyList()
+		val result = mList<VarInfo<Str>>()
+		
+		val vars = SplitTopLevel(
+			varsStr,
+			split = ',',
+			deeper = listOf("()", "{}", "[]")
+		)
+
+		vars.forEach { variable ->
+			val parts = SplitTopLevel(
+				variable,
+				split = ':',
+				deeper = listOf("()", "{}", "[]")
+			)
+
+			if (parts.size >= 3) {
+				result += VarInfo(
+					name = parts[0],
+					value = parts.drop(2).joinToString(":"),
+					type = String::class.java,
+					typeStr = parts[1]
+				)
+			}
+		}
+		return result
+	}
 }
 
 
