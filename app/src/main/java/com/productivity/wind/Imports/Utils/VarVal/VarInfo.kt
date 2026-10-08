@@ -188,6 +188,7 @@ class VarsList(
 
 
 	//it dumb: so values are STRING
+	companion object {
 	fun dumbProcess(strData: Str): List<VarInfo<Str>>{
 		var varsStr = InsideBraces(strData) ?: return emptyList()
 		val result = mList<VarInfo<Str>>()
@@ -215,6 +216,7 @@ class VarsList(
 			}
 		}
 		return result
+	}
 	}
 }
 
