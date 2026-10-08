@@ -182,6 +182,11 @@ class VarsList(
         return "vars: { $varsStr }"
     }
 
+	constructor(varsStr: Str) : this(
+		dumbProcess(varsStr)
+	)
+
+
 	//it dumb: so values are STRING
 	fun dumbProcess(strData: Str): List<VarInfo<Str>>{
 		var varsStr = InsideBraces(strData) ?: return emptyList()
