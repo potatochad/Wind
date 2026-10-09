@@ -220,7 +220,6 @@ class VarsList(
 	}
 }
 
-
 //‼️‼️‼️RENAME THIS TO VAR
 //MAKE THIS A CLASS AND ADD LOGIC, REGEX
 class VarInfo<T>(
@@ -232,27 +231,20 @@ class VarInfo<T>(
 	var marker: Int = 0,
     val typeStr: Str = type?.name ?: "null",
 ){
-	constructor(varStr: Str) : this(
+	val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
+
+	constructor(varStr: Str) : this<Str>(
 		name = fromStringName(varStr) ?: error("Invalid VarInfo: $varStr"),
 		value = fromStringValue(varStr) ?: error("Invalid VarInfo: $varStr"),
 		type = String::class.java,
-		typeStr = fromStringType(varStr) ?: error("Invalid VarInfo: $varStr")
 	)
 	
 	companion object {
-    val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
+		fun fromStringName(str: Str): Str? =
+           regex.matchEntire(str)?.groupValues?.get(1)
 
-    fun matches(str: Str): Bool =
-        regex.matchEntire(str) != null
-
-    fun fromStringName(str: Str): Str? =
-        regex.matchEntire(str)?.groupValues?.get(1)
-
-    fun fromStringValue(str: Str): Str? =
-        regex.matchEntire(str)?.groupValues?.get(3)
-
-    fun fromStringType(str: Str): Str? =
-        regex.matchEntire(str)?.groupValues?.get(2)
+		fun fromStringValue(str: Str): Str? =
+           regex.matchEntire(str)?.groupValues?.get(3)
 	}
 	
 	val isNull get() = value == null
