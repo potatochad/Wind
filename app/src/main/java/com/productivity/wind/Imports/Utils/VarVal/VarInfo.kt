@@ -232,15 +232,18 @@ class VarInfo<T>(
     val typeStr: Str = type?.name ?: "null",
 ){
 	constructor(varStr: Str) : this<Str>(
-		name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
-		value = getStrValue(varStr) ?: error("Invalid VarInfo: $varStr"),
-		type = String::class.java,
-	)
-	
-	companion object {
-		val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
-		fun getName(str: Str) = regex.group(str, 1)
-		fun getStrValue(str: Str) = regex.group(str, 3)
+        name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
+        value = getStrValue(varStr) ?: error("Invalid VarInfo: $varStr"),
+        type = String::class.java,
+        typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
+    )
+
+    companion object {
+        val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
+
+        fun getName(str: Str) = regex.group(str, 1)
+        fun getStrValue(str: Str) = regex.group(str, 3)
+        fun getTypeStr(str: Str) = regex.group(str, 2)
 	}
 	
 	val isNull get() = value == null
