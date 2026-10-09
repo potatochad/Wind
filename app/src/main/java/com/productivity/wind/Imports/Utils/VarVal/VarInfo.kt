@@ -231,8 +231,6 @@ class VarInfo<T>(
 	var marker: Int = 0,
     val typeStr: Str = type?.name ?: "null",
 ){
-	val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
-
 	constructor(varStr: Str) : this<Str>(
 		name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
 		value = getStrValue(varStr) ?: error("Invalid VarInfo: $varStr"),
@@ -240,6 +238,7 @@ class VarInfo<T>(
 	)
 	
 	companion object {
+		val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
 		fun getName(str: Str) = regex.group(str, 1)
 		fun getStrValue(str: Str) = regex.group(str, 3)
 	}
