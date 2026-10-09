@@ -209,6 +209,10 @@ fun Str.remove(x: Str): Str {
     return this.replace(x, "")
 }
 
+fun Regex.group(str: Str, group: Int): Str? =
+	matchEntire(str)?.groupValues?.getOrNull(group)
+
+
 
 
 //Example:"abc {one} xyz {two} end"
