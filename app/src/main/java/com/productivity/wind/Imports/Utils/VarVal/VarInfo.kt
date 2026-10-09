@@ -231,12 +231,14 @@ class VarInfo<T>(
 	var marker: Int = 0,
     val typeStr: Str = type?.name ?: "null",
 ){
+	/*
 	constructor(varStr: Str) : this<Str>(
         name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
         value = getStrValue(varStr) ?: error("Invalid VarInfo: $varStr"),
         type = String::class.java,
         typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
     )
+	*/
 
     companion object {
         val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
