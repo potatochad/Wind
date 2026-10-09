@@ -233,24 +233,27 @@ class VarInfo<T>(
     val typeStr: Str = type?.name ?: "null",
 ){
 	constructor(varStr: Str) : this(
-		fromString(varStr)
-	)
+		name = fromString(varStr)?.name ?: error("Invalid VarInfo: $varStr"),
+    value = fromString(varStr)?.value ?: error("Invalid VarInfo: $varStr"),
+    type = String::class.java,
+    typeStr = fromString(varStr)?.typeStr ?: error("Invalid VarInfo: $varStr")
+)
 	companion object {
-    val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
+		val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
+		
+		fun matches(str: Str): Bool =
+		regex.matchEntire(str) != null
 
-    fun matches(str: Str): Bool =
-        regex.matchEntire(str) != null
+		fun fromString(str: Str): VarInfo<Str>? {
+			val p = regex.matchEntire(str)?.groupValues ?: return null
 
-    fun fromString(str: Str): Var<Str>? {
-        val p = regex.matchEntire(str)?.groupValues ?: return null
-
-        return Var(
-            name = p[1],
-            value = p[3],
-            type = String::class.java,
-            typeStr = p[2]
-        )
-    }
+			return Var(
+				name = p[1],
+				value = p[3],
+				type = String::class.java,
+				typeStr = p[2]
+			)
+		}
 	}
 	
 	val isNull get() = value == null
