@@ -234,17 +234,14 @@ class VarInfo<T>(
 	val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
 
 	constructor(varStr: Str) : this<Str>(
-		name = fromStringName(varStr) ?: error("Invalid VarInfo: $varStr"),
-		value = fromStringValue(varStr) ?: error("Invalid VarInfo: $varStr"),
+		name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
+		value = getStrValue(varStr) ?: error("Invalid VarInfo: $varStr"),
 		type = String::class.java,
 	)
 	
 	companion object {
-		fun fromStringName(str: Str): Str? =
-           regex.matchEntire(str)?.groupValues?.get(1)
-
-		fun fromStringValue(str: Str): Str? =
-           regex.matchEntire(str)?.groupValues?.get(3)
+		fun getName(str: Str) = regex.group(str, 1)
+		fun getStrValue(str: Str) = regex.group(str, 3)
 	}
 	
 	val isNull get() = value == null
