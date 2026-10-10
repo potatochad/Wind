@@ -243,6 +243,15 @@ class VarInfo<T>(
 
 	var corrupted: Bool = no,
 ){
+	constructor(varStr: Str) : this<String>(
+    name = "testName",
+    value = "stringValue",
+    type = String::class.java,
+    changed = no,
+    marker = 0,
+    typeStr = "null",
+    corrupted = no
+)
 	/*
 	constructor(varStr: Str) : this<String>(
 		name = "testName",
