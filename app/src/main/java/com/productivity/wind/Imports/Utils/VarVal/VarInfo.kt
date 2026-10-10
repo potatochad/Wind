@@ -220,6 +220,16 @@ class VarsList(
 	}
 }
 
+class Test<T>(
+    val name: Str,
+    val value: T,
+) {
+    constructor(str: Str) : this(
+        str,
+        "hi" as T
+    )
+}
+
 //‼️‼️‼️RENAME THIS TO VAR
 //MAKE THIS A CLASS AND ADD LOGIC, REGEX
 class VarInfo<T>(
@@ -233,6 +243,7 @@ class VarInfo<T>(
 
 	var corrupted: Bool = no,
 ){
+	/*
 	constructor(varStr: Str) : this<String>(
 		name = "testName",
 		value = "stringValue",
@@ -245,6 +256,7 @@ class VarInfo<T>(
         typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
 		*/
     )
+	*/
 
     companion object {
         val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
