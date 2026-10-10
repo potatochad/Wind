@@ -230,15 +230,21 @@ class VarInfo<T>(
 	var changed: Bool = no,
 	var marker: Int = 0,
     val typeStr: Str = type?.name ?: "null",
+
+	var corrupted: Bool = no,
 ){
-	/*
-	constructor(varStr: Str) : this<Str>(
+	constructor(varStr: Str) : this(
+		name = "testName",
+		value = "stringValue",
+		type = String::class.java,
+		typeStr = "null",
+		/*
         name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
         value = getStrValue(varStr) ?: error("Invalid VarInfo: $varStr"),
         type = String::class.java,
         typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
+		*/
     )
-	*/
 
     companion object {
         val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
