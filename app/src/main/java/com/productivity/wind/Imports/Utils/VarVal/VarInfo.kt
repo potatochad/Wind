@@ -1,4 +1,3 @@
-@file:Suppress("UNCHECKED_CAST")
 package com.productivity.wind.Imports.Utils.VarVal
 
 import com.productivity.wind.Imports.Utils.SaveData.List.*
@@ -234,7 +233,7 @@ class VarInfo<T>(
 
 	var corrupted: Bool = no,
 ){
-	constructor(varStr: Str) : this(
+	constructor(varStr: Str) : this<String>(
 		name = "testName",
 		value = "stringValue",
 		type = String::class.java,
