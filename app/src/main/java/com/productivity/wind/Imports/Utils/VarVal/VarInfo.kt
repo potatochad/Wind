@@ -233,7 +233,7 @@ class VarInfo<T>(
 
 	var corrupted: Bool = no,
 ){
-	constructor(varStr: Str) : this<Str>(
+	constructor(varStr: Str) : this<*>(
 		name = "testName",
 		value = "stringValue",
 		type = String::class.java,
