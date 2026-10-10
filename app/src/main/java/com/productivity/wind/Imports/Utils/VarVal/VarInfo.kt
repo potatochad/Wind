@@ -1,4 +1,4 @@
-@Suppress("UNCHECKED_CAST")
+@file:Suppress("UNCHECKED_CAST")
 package com.productivity.wind.Imports.Utils.VarVal
 
 import com.productivity.wind.Imports.Utils.SaveData.List.*
