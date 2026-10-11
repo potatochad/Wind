@@ -53,7 +53,7 @@ class VarInfoWorker(val varsStr: Str){
 					dumbProcess(varsStr)
 				)
 				dumbVars.each { name, it ->
-					val processed: VarInfo<*>? = processVar(it)
+					val processed: Var<*>? = processVar(it)
 					if (processed == null) {
 						Vlog("ExcludingVar: Error trying processVar")
 					} else {
@@ -112,7 +112,7 @@ class VarInfoWorker(val varsStr: Str){
 	*/
 
 
-	fun processVar(dumbVar: VarInfo<*>): VarInfo<*>? {
+	fun processVar(dumbVar: Var<*>): Var<*>? {
 		val raw = dumbVar.value
 		val type = dumbVar.typeStr
 		val name = dumbVar.name
@@ -130,15 +130,15 @@ class VarInfoWorker(val varsStr: Str){
 			return null
 		}
 	
-		return VarInfo(name, value, clazz)
+		return Var(name, value, clazz)
 	}
 
 
 	
 	//it dumb: so values are STRING
-	fun dumbProcess(strData: Str): List<VarInfo<Str>>{
+	fun dumbProcess(strData: Str): List<Var<Str>>{
 		var varsStr = InsideBraces(strData) ?: return emptyList()
-		val result = mList<VarInfo<Str>>()
+		val result = mList<Var<Str>>()
 		
 		val vars = SplitTopLevel(
 			varsStr,
@@ -154,7 +154,7 @@ class VarInfoWorker(val varsStr: Str){
 			)
 
 			if (parts.size >= 3) {
-				result += VarInfo(
+				result += Var(
 					name = parts[0],
 					value = parts.drop(2).joinToString(":"),
 					type = String::class.java,
@@ -173,7 +173,7 @@ class VarInfoWorker(val varsStr: Str){
 
 
 class VarsList(
-	val vars: List<VarInfo<*>>
+	val vars: List<Var<*>>
 ) {
 	constructor(map: MapVarInfo) : this(map.toList())
 
@@ -189,9 +189,9 @@ class VarsList(
 
 	//it dumb: so values are STRING
 	companion object {
-	fun dumbProcess(strData: Str): List<VarInfo<Str>>{
+	fun dumbProcess(strData: Str): List<Var<Str>>{
 		var varsStr = InsideBraces(strData) ?: return emptyList()
-		val result = mList<VarInfo<Str>>()
+		val result = mList<Var<Str>>()
 		
 		val vars = SplitTopLevel(
 			varsStr,
@@ -207,7 +207,7 @@ class VarsList(
 			)
 
 			if (parts.size >= 3) {
-				result += VarInfo(
+				result += Var(
 					name = parts[0],
 					value = parts.drop(2).joinToString(":"),
 					type = String::class.java,
@@ -299,15 +299,15 @@ class MapVarInfo {
     }
 
 	fun <T> add(name: Str, value: T, changed: Bool = no) {
-        map[name] = VarInfo(name, value, null, changed)
+        map[name] = Var(name, value, null, changed)
 	}
-	fun add(info: VarInfo<*>) {
+	fun add(info: Var<*>) {
         map[info.name] = info
 	}
 	
 
 	fun <T> edit(name: Str, value: T) {
-        map[name] = VarInfo(name, value)
+        map[name] = Var(name, value)
 	}
 
 	fun editAllChanged(edit: (Str, Var<*>) -> Var<*>) {
