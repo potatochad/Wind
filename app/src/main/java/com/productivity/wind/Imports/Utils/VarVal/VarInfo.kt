@@ -31,24 +31,6 @@ class VarInfoWorker(val varsStr: Str){
 			}
 	}
 
-	// regex looks for this pattern:   x:y:c
-	fun findVar(data: Str, varName: Str) =
-	    Regex("""${Regex.escape(varName)}:([^:]+):("[^"]*"|[^,}]+)""").find(data)
-	
-	/*
-	fun getVarValue(idItem: Str, varName: Str): Any? {
-		if (idItem.empty) return null
-		val data = get(idItem) ?: return null
-
-		val worker = VarInfoWorker()
-		val match = worker.findVar(data, varName) ?: return null
-
-		val type = match.groupValues[1]
-		val raw = match.groupValues[2]
-
-		return worker.getVarValue(type, raw)
-	}
-	*/
 	fun getVarValue(type: Str, raw: Str): Any? {
 		val clazz = StrToClass(type) 
 		if (clazz == null){
@@ -59,25 +41,6 @@ class VarInfoWorker(val varsStr: Str){
 		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
 		return value
 	}
-	//‼️‼️‼️TODO FOR YOU (have classes in one file:
-	//MAKE A CLASS FOR: VarList:
-	//have it run some logic and so on
-	//MAKE A CLASS FOR VARINFO like thingy:
-	//SORYY you already got that, so have it like compute stuff for youu
-	
-	/*
-	fun getVar(varName: Str): Any? {
-		val clazz = StrToClass(type) 
-		if (clazz == null){
-			Vlog("getVarValue ClassError: $type, $raw, $clazz")
-			return null
-		}
-		val value = toValueOrNull(clazz, raw)
-		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
-		return value
-	}
-	*/
-
 
 	fun processVar(dumbVar: Var<*>): Var<*>? {
 		val raw = dumbVar.value
