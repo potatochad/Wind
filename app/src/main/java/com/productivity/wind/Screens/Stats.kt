@@ -1,18 +1,8 @@
 package com.productivity.wind
 
-import com.productivity.wind.Imports.Utils.SaveData.List.*
-import com.productivity.wind.Imports.Utils.Log.*
-import com.productivity.wind.Imports.Utils.Generic_list.*
-import com.productivity.wind.Imports.Utils.AppsAndDevice.*
-import com.productivity.wind.Imports.Utils.NavControl.*
 import com.productivity.wind.Imports.Utils.ToX.*
-import com.productivity.wind.Imports.Utils.String.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.material.icons.Icons
-import com.productivity.wind.Imports.*
-import androidx.compose.material.icons.outlined.*
-import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.UI_visible.*
 
 

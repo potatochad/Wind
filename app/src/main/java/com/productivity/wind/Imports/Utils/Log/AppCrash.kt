@@ -4,27 +4,9 @@
 
 package com.productivity.wind.Imports.Utils.Log
 
-import com.productivity.wind.Bar
-import com.productivity.wind.Imports.Utils.AppsAndDevice.appScope
-import com.productivity.wind.Imports.Utils.AppsAndDevice.App
-
-import android.os.*
 import android.content.*
 import android.util.*
-import android.widget.Toast
-import androidx.compose.runtime.Composable
-import java.io.BufferedReader
 import java.io.File
-import java.io.InputStreamReader
-import java.util.*
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.CancellationException
-
 
 
 object AppCrash {
