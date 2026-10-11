@@ -16,7 +16,8 @@ class VarInfoWorker(val varsStr: Str){
 	init {
 			appNonUIScope.launch {
 				dumbVars.addAll(
-					dumbProcess(varsStr)
+					//returns dumb vars
+					VarsList(varsStr)
 				)
 				dumbVars.each { name, it ->
 					val processed: Var<*>? = processVar(it)
@@ -98,40 +99,6 @@ class VarInfoWorker(val varsStr: Str){
 	
 		return Var(name, value, clazz)
 	}
-
-
-	
-	//it dumb: so values are STRING
-	fun dumbProcess(strData: Str): List<Var<Str>>{
-		var varsStr = InsideBraces(strData) ?: return emptyList()
-		val result = mList<Var<Str>>()
-		
-		val vars = SplitTopLevel(
-			varsStr,
-			split = ',',
-			deeper = listOf("()", "{}", "[]")
-		)
-
-		vars.forEach { variable ->
-			val parts = SplitTopLevel(
-				variable,
-				split = ':',
-				deeper = listOf("()", "{}", "[]")
-			)
-
-			if (parts.size >= 3) {
-				result += Var(
-					name = parts[0],
-					value = parts.drop(2).joinToString(":"),
-					type = String::class.java,
-					typeStr = parts[1]
-				)
-			}
-		}
-		return result
-	}
-
-
 	
 }
 
