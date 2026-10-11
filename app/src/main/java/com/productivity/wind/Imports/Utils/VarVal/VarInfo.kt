@@ -220,19 +220,9 @@ class VarsList(
 	}
 }
 
-class Var<T>(
-    val name: Str,
-    val value: T,
-) {
-    constructor(str: Str) : this(
-        str,
-        "hi" as T
-    )
-}
 
-//‼️‼️‼️RENAME THIS TO VAR
-//MAKE THIS A CLASS AND ADD LOGIC, REGEX
-class VarInfo<T>(
+
+class Var<T>(
 	val name: Str,
     val value: T,
 	val type: Class<*>? = value?.let { it::class.java },
@@ -300,11 +290,11 @@ companion object {
 */
 
 class MapVarInfo {
-    private val map = mutableMapOf<Str, VarInfo<*>>()
+    private val map = mutableMapOf<Str, Var<*>>()
 
     operator fun get(name: Str) = map[name]
 
-    operator fun set(name: Str, info: VarInfo<*>) {
+    operator fun set(name: Str, info: Var<*>) {
         map[name] = info
     }
 
@@ -320,7 +310,7 @@ class MapVarInfo {
         map[name] = VarInfo(name, value)
 	}
 
-	fun editAllChanged(edit: (Str, VarInfo<*>) -> VarInfo<*>) {
+	fun editAllChanged(edit: (Str, Var<*>) -> Var<*>) {
 		map.entries
 			.filter { it.value.changed }
 			.forEach { (name, info) ->
@@ -328,13 +318,13 @@ class MapVarInfo {
 			}
 	}
 
-	fun addAll(infos: List<VarInfo<*>>) {
+	fun addAll(infos: List<Var<*>>) {
 		infos.forEach { add(it) }
 	}
 
 
 
-	fun each(Do: (Str, VarInfo<*>) -> Unit) {
+	fun each(Do: (Str, Var<*>) -> Unit) {
 		map.forEach { (name, info) ->
 			Do(name, info)
 		}
