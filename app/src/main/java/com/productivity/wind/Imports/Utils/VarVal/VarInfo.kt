@@ -195,6 +195,7 @@ class Var<T>(
 	
 	var changed: Bool = no,
 	var marker: Int = 0,
+	var dumb: Bool = no,
     val typeStr: Str = type?.name ?: "null",
 
 	var corrupted: Bool = no,
