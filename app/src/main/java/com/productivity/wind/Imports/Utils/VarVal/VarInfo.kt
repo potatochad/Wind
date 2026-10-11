@@ -155,34 +155,34 @@ class VarsList(
 
 	//it dumb: so values are STRING
 	companion object {
-	fun dumbProcess(strData: Str): List<Var<Str>>{
-		var varsStr = InsideBraces(strData) ?: return emptyList()
-		val result = mList<Var<Str>>()
+		fun dumbProcess(strData: Str): List<Var<Str>>{
+			var varsStr = InsideBraces(strData) ?: return emptyList()
+			val result = mList<Var<Str>>()
 		
-		val vars = SplitTopLevel(
-			varsStr,
-			split = ',',
-			deeper = listOf("()", "{}", "[]")
-		)
-
-		vars.forEach { variable ->
-			val parts = SplitTopLevel(
-				variable,
-				split = ':',
+			val vars = SplitTopLevel(
+				varsStr,
+				split = ',',
 				deeper = listOf("()", "{}", "[]")
 			)
 
-			if (parts.size >= 3) {
-				result += Var(
-					name = parts[0],
-					value = parts.drop(2).joinToString(":"),
-					type = String::class.java,
-					typeStr = parts[1]
+			vars.forEach { variable ->
+				val parts = SplitTopLevel(
+					variable,
+					split = ':',
+					deeper = listOf("()", "{}", "[]")
 				)
+
+				if (parts.size >= 3) {
+					result += Var(
+						name = parts[0],
+						value = parts.drop(2).joinToString(":"),
+						type = String::class.java,
+						typeStr = parts[1]
+					)
+				}
 			}
+			return result
 		}
-		return result
-	}
 	}
 }
 
@@ -200,11 +200,13 @@ class Var<T>(
 
 	var corrupted: Bool = no,
 ){
+	//it dumb: so values are STRING
 	constructor(varStr: Str) : this(
 		name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
 		value = (getStrValue(varStr) ?: error("Invalid VarInfo: $varStr")) as T,
 		type = String::class.java,
-		typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
+		typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr"),
+		dumb = yes
 	)
 
     companion object {
