@@ -165,13 +165,10 @@ class VarsList(
 				deeper = listOf("()", "{}", "[]")
 			)
 
-			try {
-				vars.forEach {
-					result += Var(it)
-				}
-			} catch {
-				
+			vars.forEach {
+				result += Var(it)
 			}
+			
 			return result
 		}
 	}
