@@ -166,7 +166,11 @@ class VarsList(
 			)
 
 			vars.forEach {
-				result += Var(it)
+				try {
+					result += Var(it)
+				} catch (e: Exception) {
+					Vlog("VarsList, error with var, skipping: [$it]")
+				}
 			}
 			
 			return result
