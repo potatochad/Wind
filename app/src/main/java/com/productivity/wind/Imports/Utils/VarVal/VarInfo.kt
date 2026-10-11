@@ -243,14 +243,11 @@ class VarInfo<T>(
 
 	var corrupted: Bool = no,
 ){
-	constructor(varStr: Str) : this<String>(
-    name = "testName",
-    value = "stringValue",
+	constructor(varStr: Str) : this(
+    name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
+    value = (getStrValue(varStr) ?: error("Invalid VarInfo: $varStr")) as T,
     type = String::class.java,
-    changed = no,
-    marker = 0,
-    typeStr = "null",
-    corrupted = no
+    typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
 )
 	/*
 	constructor(varStr: Str) : this<String>(
