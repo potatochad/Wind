@@ -165,21 +165,12 @@ class VarsList(
 				deeper = listOf("()", "{}", "[]")
 			)
 
-			vars.forEach { variable ->
-				val parts = SplitTopLevel(
-					variable,
-					split = ':',
-					deeper = listOf("()", "{}", "[]")
-				)
-
-				if (parts.size >= 3) {
-					result += Var(
-						name = parts[0],
-						value = parts.drop(2).joinToString(":"),
-						type = String::class.java,
-						typeStr = parts[1]
-					)
+			try {
+				vars.forEach {
+					result += Var(it)
 				}
+			} catch {
+				
 			}
 			return result
 		}
@@ -201,6 +192,7 @@ class Var<T>(
 	var corrupted: Bool = no,
 ){
 	//it dumb: so values are STRING
+	//PUT INTO IT   "X:Y:C" ONLYY
 	constructor(varStr: Str) : this(
 		name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
 		value = (getStrValue(varStr) ?: error("Invalid VarInfo: $varStr")) as T,
