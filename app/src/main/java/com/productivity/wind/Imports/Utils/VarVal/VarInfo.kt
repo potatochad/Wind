@@ -17,7 +17,7 @@ class VarInfoWorker(val varsStr: Str){
 			appNonUIScope.launch {
 				dumbVars.addAll(
 					//returns dumb vars
-					VarsList(varsStr)
+					VarsList(varsStr).vars
 				)
 				dumbVars.each { name, it ->
 					val processed: Var<*>? = processVar(it)
