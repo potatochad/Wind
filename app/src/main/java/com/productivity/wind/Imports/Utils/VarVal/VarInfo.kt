@@ -200,25 +200,11 @@ class Var<T>(
 	var corrupted: Bool = no,
 ){
 	constructor(varStr: Str) : this(
-    name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
-    value = (getStrValue(varStr) ?: error("Invalid VarInfo: $varStr")) as T,
-    type = String::class.java,
-    typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
-)
-	/*
-	constructor(varStr: Str) : this<String>(
-		name = "testName",
-		value = "stringValue",
+		name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
+		value = (getStrValue(varStr) ?: error("Invalid VarInfo: $varStr")) as T,
 		type = String::class.java,
-		typeStr = "null",
-		/*
-        name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
-        value = getStrValue(varStr) ?: error("Invalid VarInfo: $varStr"),
-        type = String::class.java,
-        typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
-		*/
-    )
-	*/
+		typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
+	)
 
     companion object {
         val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
@@ -235,25 +221,7 @@ class Var<T>(
 	override fun toString(): Str = "$name:$typeStr:${ComplexTypeToStr(value)}"
 	
 }
-/*
-companion object {
-    fun parse(data: Str): VarInfo<*>? {
-        val match = Regex(
-            """^([^:]+):([^:]+):(.*)$"""
-        ).matchEntire(data) ?: return null
 
-        val name = match.groupValues[1]
-        val typeStr = match.groupValues[2]
-        val raw = match.groupValues[3]
-
-        val clazz = StrToClass(typeStr) ?: return null
-        val value = toValueOrNull(clazz, raw) ?: return null
-
-        return VarInfo(name, value, clazz)
-    }
-}
-
-*/
 
 class MapVarInfo {
     private val map = mutableMapOf<Str, Var<*>>()
