@@ -220,7 +220,7 @@ class VarsList(
 	}
 }
 
-class Test<T>(
+class Var<T>(
     val name: Str,
     val value: T,
 ) {
