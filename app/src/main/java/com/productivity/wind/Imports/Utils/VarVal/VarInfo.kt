@@ -31,6 +31,9 @@ class VarInfoWorker(val varsStr: Str){
 			}
 	}
 
+	fun findVar(data: Str, varName: Str) =
+	    Regex("""${Regex.escape(varName)}:([^:]+):("[^"]*"|[^,}]+)""").find(data)
+
 	fun getVarValue(type: Str, raw: Str): Any? {
 		val clazz = StrToClass(type) 
 		if (clazz == null){
