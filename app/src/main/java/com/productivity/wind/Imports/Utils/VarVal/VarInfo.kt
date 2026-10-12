@@ -1,3 +1,4 @@
+@file:Suppress("UNCHECKED_CAST")
 package com.productivity.wind.Imports.Utils.VarVal
 
 import com.productivity.wind.Imports.Utils.Log.*
@@ -145,22 +146,30 @@ class Var<T>(
         fun getTypeStr(str: Str) = regex.group(str, 2)
 	}
 
-	fun smart(){
+	fun smart() {
 		val raw = value
-		val type = typeStr
+		val clazz = StrToClass(typeStr)
 
-			val clazz = StrToClass(type)
-			if (clazz == null) {
-				Vlog("process ClassError: $type, $raw, $clazz")
-				//stop, do nothing
-			}
-				
-			val value = toValueOrNull(clazz, toStr(raw))
-				
-			if (value == null) {
-				Vlog("process ValueError: $type, $raw, $clazz, $value")
-				//stop, do nothing
-			}
+		if (clazz == null) {
+			Vlog("process ClassError: $typeStr, $raw, $clazz")
+			corrupted = yes
+			return
+		}
+
+		val parsed = toValueOrNull(clazz, toStr(raw))
+
+		if (parsed == null) {
+			Vlog("process ValueError: $typeStr, $raw, $clazz, $parsed")
+			corrupted = yes
+			return
+		}
+		
+		value = parsed as T
+
+		type = clazz
+		changed = yes
+		dumb = no
+		corrupted = no
 	}
 
 	
