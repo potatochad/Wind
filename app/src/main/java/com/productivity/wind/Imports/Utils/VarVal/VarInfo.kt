@@ -72,7 +72,8 @@ class VarInfoWorker(val varsStr: Str){
 
 
 class VarsList(
-	val vars: List<Var<*>>
+	val vars: List<Var<*>>,
+	var smartProcess: Bool = no,
 ) {
 	constructor(map: MapVarInfo) : this(map.toList())
 
@@ -141,6 +142,25 @@ class Var<T>(
         fun getName(str: Str) = regex.group(str, 1)
         fun getStrValue(str: Str) = regex.group(str, 3)
         fun getTypeStr(str: Str) = regex.group(str, 2)
+
+		fun smart(){
+			val raw = value
+			val type = typeStr
+
+			val clazz = StrToClass(type)
+			if (clazz == null) {
+				Vlog("process ClassError: $type, $raw, $clazz")
+				return null
+			}
+				
+			val value = toValueOrNull(clazz, toStr(raw))
+				
+			if (value == null) {
+				Vlog("process ValueError: $type, $raw, $clazz, $value")
+				return null
+			}
+			return Var(name, value, clazz)
+		}
 	}
 	
 	val isNull get() = value == null
