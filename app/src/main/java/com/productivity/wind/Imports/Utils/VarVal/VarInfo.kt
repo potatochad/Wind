@@ -123,7 +123,7 @@ class Var<T>(
 	var changed: Bool = no,
 	var marker: Int = 0,
 	var dumb: Bool = no,
-    val typeStr: Str = type?.name ?: "null",
+    var typeStr: Str = type?.name ?: "null",
 
 	var corrupted: Bool = no,
 ){
@@ -146,30 +146,26 @@ class Var<T>(
         fun getTypeStr(str: Str) = regex.group(str, 2)
 	}
 
-	fun smart() {
-		val raw = value
+	fun smart(): Var<T>? {
 		val clazz = StrToClass(typeStr)
+	    	?: return null.also {
+				Vlog("process Var ClassError: $typeStr, $value, $clazz")
+				corrupted = yes
+			}
 
-		if (clazz == null) {
-			Vlog("process ClassError: $typeStr, $raw, $clazz")
-			corrupted = yes
-			return
-		}
+		val parsed = toValueOrNull(clazz, toStr(value))
+	    	?: return null.also {
+				Vlog("process Var ValueError: $typeStr, $value, $clazz")
+				corrupted = yes
+        }
 
-		val parsed = toValueOrNull(clazz, toStr(raw))
-
-		if (parsed == null) {
-			Vlog("process ValueError: $typeStr, $raw, $clazz, $parsed")
-			corrupted = yes
-			return
-		}
-		
 		value = parsed as T
-
 		type = clazz
 		changed = yes
 		dumb = no
 		corrupted = no
+		
+		return this
 	}
 
 	
