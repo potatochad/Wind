@@ -117,8 +117,8 @@ class VarsList(
 
 class Var<T>(
 	val name: Str,
-    private var value: T,
-	private var type: Class<*>? = value?.let { it::class.java },
+    var value: T,
+	var type: Class<*>? = value?.let { it::class.java },
 	
 	var changed: Bool = no,
 	var marker: Int = 0,
