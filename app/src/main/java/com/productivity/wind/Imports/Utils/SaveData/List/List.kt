@@ -7,7 +7,7 @@ package com.productivity.wind.Imports.Utils.SaveData.List
 //THERE IS A bunch of data saved data (that doesnt get cleaned up, after years, massive issue)
 //It doesnt handle Delete or clear (saved doesnt change)
 // CustomAlertList may habe way more inputs that needs do (like onAdd  but you know others)
-//Cause doesnt save in order, it doesnt onBuild in orderrr. not 1,2,3 indexes, but 5,1,3
+//Doesnt save in order (of like index, completly ignores that), it doesnt onBuild in orderrr. not 1,2,3 indexes, but 5,1,3
 import com.productivity.wind.Imports.Utils.VarVal.*
 import com.productivity.wind.Imports.Utils.SaveData.*
 import com.productivity.wind.Imports.Utils.Log.*
