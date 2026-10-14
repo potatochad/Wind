@@ -50,14 +50,14 @@ class ListData(val listName: Str) {
 		return worker.getVarValue(type, raw)
 	}
 	
-	fun put(id: Str, x: Str, Do: (SharedPreferences.Editor) -> Unit = { it.apply() }) {
-        val e = dataEdit
-        e.putString(id, x)
-		Do(e)
+	fun put(id: Str, x: Str) {
+		dataEdit.putString(id, x).apply()
 	}
-	fun <T> commit(id: Str, x: Str) = put(id, x, { it.commit() })
-	fun <T> apply(id: Str, x: Str) = put(id, x)
-    
+	fun put(id: Str, ) {
+		dataEdit.putString(id, x).apply()
+	}
+	
+	
 }
 
 
