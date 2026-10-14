@@ -22,7 +22,7 @@ class VarInfoWorker(val varsStr: Str){
 				VarsList(varsStr).vars
 			)
 			dumbVars.each { name, it ->
-				val processed: Var<*>? = processVar(it)
+				val processed: Var<*>? = it.smart()
 				if (processed == null) {
 					Vlog("ExcludingVar: Error trying processVar")
 				} else {
@@ -46,11 +46,6 @@ class VarInfoWorker(val varsStr: Str){
 		val value = toValueOrNull(clazz, raw)
 		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
 		return value
-	}
-	
-
-	fun processVar(dumbVar: Var<*>): Var<*>? {
-		return dumbVar.smart()
 	}
 	
 }
