@@ -50,15 +50,19 @@ class ListData(val listName: Str) {
 		return worker.getVarValue(type, raw)
 	}
 	
-	fun put(id: Str, x: Str) {
-		dataEdit.putString(id, x).apply()
-	}
-	fun put(id: Str, ) {
-		dataEdit.putString(id, x).apply()
+	
+	fun put(id: Str, varz: VarsList) {
+		dataEdit.putString(id, "$varz").apply()
 	}
 	
 	
 }
+
+
+
+
+
+
 
 
 
