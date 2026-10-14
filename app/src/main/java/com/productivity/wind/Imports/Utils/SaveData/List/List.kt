@@ -213,7 +213,7 @@ abstract class EasySave {
         Vlog("varList: ${varList}")
         Vlog("listName: ${listName}")
         
-        ListData(listName).put(id, "${varList}") 
+        ListData(listName).put(id, varList) 
         changed = no
     }
 }
