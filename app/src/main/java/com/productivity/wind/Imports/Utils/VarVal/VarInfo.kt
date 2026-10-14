@@ -149,7 +149,7 @@ class Var<T>(
 	fun smart(): Var<T>? {
 		val clazz = StrToClass(typeStr)
 	    	?: return null.also {
-				Vlog("process Var ClassError: $typeStr, $value, $clazz")
+				Vlog("process Var ClassError: $typeStr, $value")
 				corrupted = yes
 			}
 
