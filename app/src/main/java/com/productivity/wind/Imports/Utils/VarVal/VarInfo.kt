@@ -14,27 +14,29 @@ class VarInfoWorker(val varsStr: Str){
 	private var dumbVars = MapVarInfo()
 	var map = MapVarInfo()
 
+	
 	init {
-			appNonUIScope.launch {
-				dumbVars.addAll(
-					//returns dumb vars
-					VarsList(varsStr).vars
-				)
-				dumbVars.each { name, it ->
-					val processed: Var<*>? = processVar(it)
-					if (processed == null) {
-						Vlog("ExcludingVar: Error trying processVar")
-					} else {
-						map.add(processed)
-					}
+		appNonUIScope.launch {
+			dumbVars.addAll(
+				//returns dumb vars
+				VarsList(varsStr).vars
+			)
+			dumbVars.each { name, it ->
+				val processed: Var<*>? = processVar(it)
+				if (processed == null) {
+					Vlog("ExcludingVar: Error trying processVar")
+				} else {
+					map.add(processed)
 				}
-				
 			}
+		}
 	}
+	
 
 	fun findVar(data: Str, varName: Str) =
 	    Regex("""${Regex.escape(varName)}:([^:]+):("[^"]*"|[^,}]+)""").find(data)
 
+		
 	fun getVarValue(type: Str, raw: Str): Any? {
 		val clazz = StrToClass(type) 
 		if (clazz == null){
@@ -45,26 +47,10 @@ class VarInfoWorker(val varsStr: Str){
 		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
 		return value
 	}
+	
 
 	fun processVar(dumbVar: Var<*>): Var<*>? {
-		val raw = dumbVar.value
-		val type = dumbVar.typeStr
-		val name = dumbVar.name
-
-		val clazz = StrToClass(type)
-		if (clazz == null) {
-			Vlog("process ClassError: $type, $raw, $clazz")
-			return null
-		}
-				
-		val value = toValueOrNull(clazz, toStr(raw))
-				
-		if (value == null) {
-			Vlog("process ValueError: $type, $raw, $clazz, $value")
-			return null
-		}
-	
-		return Var(name, value, clazz)
+		return dumbVar.smart()
 	}
 	
 }
@@ -74,18 +60,9 @@ class VarInfoWorker(val varsStr: Str){
 
 class VarsList(
 	val vars: List<Var<*>>,
-	var smartProcess: Bool = no,
 ) {
 	constructor(map: MapVarInfo) : this(map.toList())
-
-    override fun toString(): Str {
-        val varsStr = vars.joinToString(", ") { "$it" }
-        return "vars: { $varsStr }"
-    }
-
-	constructor(varsStr: Str) : this(
-		dumbProcess(varsStr)
-	)
+	constructor(varsStr: Str) : this(dumbProcess(varsStr))
 
 
 	//it dumb: so values are STRING
@@ -111,6 +88,18 @@ class VarsList(
 			return result
 		}
 	}
+
+
+	fun smartAll(){
+		vars.forEach { it.smart() }
+	}
+	
+
+	override fun toString(): Str {
+        val varsStr = vars.joinToString(", ") { "$it" }
+        return "vars: { $varsStr }"
+	}
+	
 }
 
 
