@@ -130,10 +130,10 @@ class Var<T>(
 	//it dumb: so values are STRING
 	//PUT INTO IT   "X:Y:C" ONLYY
 	constructor(varStr: Str) : this(
-		name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
-		value = (getStrValue(varStr) ?: error("Invalid VarInfo: $varStr")) as T,
+		name = name(varStr) ?: error("Invalid VarInfo: $varStr"),
+		value = (strValue(varStr) ?: error("Invalid VarInfo: $varStr")) as T,
 		type = String::class.java,
-		typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr"),
+		typeStr = typeStr(varStr) ?: error("Invalid VarInfo: $varStr"),
 		dumb = yes
 	)
 
@@ -141,10 +141,11 @@ class Var<T>(
     companion object {
         val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
 
-        fun getName(str: Str) = regex.group(str, 1)
-        fun getStrValue(str: Str) = regex.group(str, 3)
-        fun getTypeStr(str: Str) = regex.group(str, 2)
+        private fun name(str: Str) = regex.group(str, 1)
+        private fun strValue(str: Str) = regex.group(str, 3)
+        private fun typeStr(str: Str) = regex.group(str, 2)
 	}
+	
 
 	fun smart(): Var<T>? {
 		val clazz = StrToClass(typeStr)
@@ -173,7 +174,7 @@ class Var<T>(
     val isChanged get() = changed
     val hasType get() = type != null
 
-	override fun toString(): Str = "$name:$typeStr:${ComplexTypeToStr(value)}"
+	override fun toString() = "$name:$typeStr:${ComplexTypeToStr(value)}"
 	
 }
 
