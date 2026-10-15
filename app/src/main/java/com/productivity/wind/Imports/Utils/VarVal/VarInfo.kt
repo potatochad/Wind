@@ -88,6 +88,11 @@ class VarsList(
 	fun smartAll(){
 		vars.forEach { it.smart() }
 	}
+
+
+	fun smart(name: Str) = vars.filter { it.name == name }.also {
+		if (it.size > 1) Vlog("Duplicate var, skipping both: [$name]")
+	}.singleOrNull()?.smart()
 	
 
 	override fun toString(): Str {
