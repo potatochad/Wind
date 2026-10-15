@@ -86,7 +86,7 @@ class VarsList(
 
 
 	fun smartAll(){
-		vars.filter{ it.dumb = yes}.forEach { it.smart() }
+		vars.filter{ it.dumb == yes }.forEach { it.smart() }
 	}
 
 
