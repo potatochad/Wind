@@ -10,6 +10,7 @@ import com.productivity.wind.Imports.Utils.*
 
 class ListData(val listName: Str) {
 	var lazyData = LazyData(listName)
+	var varsList: VarsList? = null
 	
 	//for weird safety reason use get
 	val prefs: SharedPreferences
@@ -38,6 +39,7 @@ class ListData(val listName: Str) {
 
 	
 	fun getVarValue(idItem: Str, varName: Str): Any? {
+		varsList()
 		if (idItem.empty) return null
 		val data = get(idItem) ?: return null
 
