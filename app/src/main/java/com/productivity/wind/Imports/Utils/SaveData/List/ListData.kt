@@ -39,9 +39,12 @@ class ListData(val listName: Str) {
 
 	
 	fun getVarValue(idItem: Str, varName: Str): Any? {
-		varsList()
-		if (idItem.empty) return null
-		val data = get(idItem) ?: return null
+		if (idItem.empty) return null.also { 
+			Vlog("ListData id empty")
+		}
+		val data = get(idItem) ?: return null.also {
+			Vlog("ListData, data = get(id)-> is null")
+		}
 
 		val worker = VarInfoWorker(data)
 		val match = worker.findVar(data, varName) ?: return null
