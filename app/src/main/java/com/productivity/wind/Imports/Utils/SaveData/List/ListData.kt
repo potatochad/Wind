@@ -10,24 +10,14 @@ import kotlin.collections.*
 
 
 class ListData(val listName: Str) {
-	companion object {
-        private val instances = mutableMapOf<Str, VarsList>()
-
-        fun get(listName: Str): VarsList =
-            synchronized(instances) {//fancy thing (for thread safety)
-                instances.getOrPut(listName) {
-                    
-                }
-            }
-	}
-	
 	var lazyData = LazyData(listName)
 	var varsList: VarsList? = null
 	
 	//for weird safety reason use get
 	val prefs: SharedPreferences
         get() = lazyData.prefs
-	
+
+	//returns (should) vars String
 	fun get(id: Str) = prefs.getString(id, null)
 	
 	val all: Map<Str, Any?>
@@ -48,6 +38,21 @@ class ListData(val listName: Str) {
 	fun hasKey(x: Str) = prefs.hasKey(x)
 	fun find(match: (Str) -> Bool) = prefs.all.filter { (key, _) -> match(key) }
 
+	fun put(id: Str, varz: VarsList) {
+		dataEdit.putString(id, "$varz").apply()
+	}
+
+
+	companion object {
+        private val instances = mutableMapOf<Str, VarsList>()
+
+        fun get(listName: Str): VarsList =
+            synchronized(instances) {//fancy thing (for thread safety)
+                instances.getOrPut(listName) {
+                    VarsList(get(idItem) ?: "")
+                }
+            }
+	}
 
 	
 	fun getVarValue(idItem: Str, varName: Str): Any? {
@@ -66,12 +71,6 @@ class ListData(val listName: Str) {
 
 		return worker.getVarValue(type, raw)
 	}
-	
-	
-	fun put(id: Str, varz: VarsList) {
-		dataEdit.putString(id, "$varz").apply()
-	}
-	
 	
 }
 
