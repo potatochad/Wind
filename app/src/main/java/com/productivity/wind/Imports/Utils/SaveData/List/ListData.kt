@@ -10,6 +10,17 @@ import kotlin.collections.*
 
 
 class ListData(val listName: Str) {
+	companion object {
+        private val instances = mutableMapOf<Str, VarsList>()
+
+        fun get(listName: Str): VarsList =
+            synchronized(instances) {//fancy thing (for thread safety)
+                instances.getOrPut(listName) {
+                    
+                }
+            }
+	}
+	
 	var lazyData = LazyData(listName)
 	var varsList: VarsList? = null
 	
