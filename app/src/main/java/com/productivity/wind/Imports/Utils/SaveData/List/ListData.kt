@@ -18,7 +18,7 @@ class ListData(val listName: Str) {
         get() = lazyData.prefs
 
 	//returns (should) vars String
-	fun get(id: Str) = prefs.getString(id, null)
+	fun get(id: Str) = "${prefs.getString(id, null)}"
 	
 	val all: Map<Str, Any?>
         get() = prefs.all
