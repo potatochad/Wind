@@ -18,7 +18,7 @@ class ListData(val listName: Str) {
         get() = lazyData.prefs
 
 	//returns (should) vars String
-	fun get(id: Str) = "${prefs.getString(id, null)}"
+	fun get(id: Str): Str = "${prefs.getString(id, null) :? ""}"
 	
 	val all: Map<Str, Any?>
         get() = prefs.all
@@ -49,7 +49,7 @@ class ListData(val listName: Str) {
         fun get(listName: Str): VarsList =
             synchronized(instances) {//fancy thing (for thread safety)
                 instances.getOrPut(listName) {
-                    VarsList(get(idItem) ?: "")
+                    VarsList(get(idItem))
                 }
             }
 	}
@@ -59,8 +59,11 @@ class ListData(val listName: Str) {
 		if (idItem.empty) return null.also { 
 			Vlog("ListData id empty")
 		}
-		val data = get(idItem) ?: return null.also {
-			Vlog("ListData, data = get(id)-> is null")
+		val data = get(idItem) 
+		
+		if (get(idItem).empty){
+			return null
+			Vlog("ListData, get(id)-> is emptyy")
 		}
 
 		val worker = VarInfoWorker(data)
