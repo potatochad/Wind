@@ -17,8 +17,8 @@ class ListData(val listName: Str) {
 	val prefs: SharedPreferences
         get() = lazyData.prefs
 
-	//returns (should) vars String
-	fun get(id: Str): Str = "${prefs.getString(id, null) :? ""}"
+	//returns (should) vars String, the toStr gets rid of compile error 
+	fun get(id: Str) = toStr(prefs.getString(id, "") ?: "")
 	
 	val all: Map<Str, Any?>
         get() = prefs.all
