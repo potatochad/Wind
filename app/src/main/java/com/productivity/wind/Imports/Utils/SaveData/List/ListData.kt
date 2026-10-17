@@ -9,7 +9,9 @@ import com.productivity.wind.Imports.Utils.ToX.*
 import android.content.*
 import kotlin.collections.*
 
-
+//‼️ Fix the naming, its confusing
+//idItem -> varsId
+//listName -> varsName
 class ListData(val listName: Str) {
 	var lazyData = LazyData(listName)
 	var varsList: VarsList? = null
