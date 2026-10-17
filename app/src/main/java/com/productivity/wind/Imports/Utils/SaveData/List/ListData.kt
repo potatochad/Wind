@@ -47,7 +47,7 @@ class ListData(val listName: Str) {
 	companion object {
         private val instances = mutableMapOf<Str, VarsList>()
 
-        fun get(listName: Str): VarsList =
+        fun get(idItem: Str): VarsList =
             synchronized(instances) {//fancy thing (for thread safety)
                 instances.getOrPut(listName) {
                     VarsList(get(idItem))
