@@ -34,8 +34,7 @@ jobs:
 
       - name: Build APK
         run: |
-        .github/workflows/Imports.sh
-          source ./app/src/main/java/com/productivity/wind/Imports/Utils/Ignore_Imports.sh
+          source .github/workflows/Imports.sh
           give_gradle_permission
 
           Build_APK
