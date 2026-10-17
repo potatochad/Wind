@@ -29,29 +29,12 @@ jobs:
           key: gradle-${{ hashFiles('**/gradle-wrapper.properties') }}
           restore-keys: |
             gradle-
-
-      - name: Wait 600 seconds
-        run: | 
-          sleep 1
-          sleep 2
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-             
              
 
 
       - name: Build APK
         run: |
+        .github/workflows/Imports.sh
           source ./app/src/main/java/com/productivity/wind/Imports/Utils/Ignore_Imports.sh
           give_gradle_permission
 
@@ -64,13 +47,6 @@ jobs:
           name: app-release-${{ github.run_number }}.apk
           path: app/build/outputs/apk/release/app-release.apk
 
-      - name: Wait 600 seconds
-        run: |
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
 
 
 
