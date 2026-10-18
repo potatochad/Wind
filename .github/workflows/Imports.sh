@@ -53,7 +53,7 @@ find_and_source() {
 KEYSTORE_PASSWORD="12345678123"
 KEY_ALIAS="myKeyAliass"
 KEY_PASSWORD="12345678123"
-KEYSTORE_PATH="$(pwd)/app/keyyStore.keystore"
+KEYSTORE_PATH="$(pwd)/.github/keyyStore.keystore"
 
 Create_Keystore() {
     mkdir -p app
