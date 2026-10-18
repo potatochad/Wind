@@ -14,7 +14,7 @@ import kotlin.collections.*
 //listName -> varsName
 class ListData(val listName: Str) {
 	var lazyData = LazyData(listName)
-	var varsList: VarsList? = null
+	var itemVars: VarsList? = null
 	
 	//for weird safety reason use get
 	val prefs: SharedPreferences
@@ -28,7 +28,6 @@ class ListData(val listName: Str) {
 
 	val dataEdit get() = prefs.edit()
 
-
 	fun each(Do: (Str, Any?) -> Unit) {
 		prefs.all.forEach { (key, value) ->
 			Do(key, value)
@@ -41,8 +40,8 @@ class ListData(val listName: Str) {
 	fun hasKey(x: Str) = prefs.hasKey(x)
 	fun find(match: (Str) -> Bool) = prefs.all.filter { (key, _) -> match(key) }
 
-	fun put(id: Str, varz: VarsList) {
-		dataEdit.putString(id, "$varz").apply()
+	fun put(id: Str, vars: VarsList) {
+		dataEdit.putString(id, "$vars").apply()
 	}
 
 
@@ -60,13 +59,13 @@ class ListData(val listName: Str) {
 	}
 
 	
-	fun getVarValue(idItem: Str, varName: Str): Any? {
-		if (idItem.empty) return null.also { 
+	fun getVarValue(varsListId: Str, varName: Str): Any? {
+		if (varsListId.empty) return null.also { 
 			Vlog("ListData id empty")
 		}
-		val data = get(idItem) 
+		val data = get(varsListId) 
 		
-		if (get(idItem).empty){
+		if (data.empty){
 			return null
 			Vlog("ListData, get(id)-> is emptyy")
 		}
