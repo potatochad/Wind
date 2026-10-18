@@ -12,8 +12,8 @@ import kotlin.collections.*
 //‼️ Fix the naming, its confusing
 //idItem -> varsId
 //listName -> varsName
-class ListData(val listName: Str) {
-	var lazyData = LazyData(listName)
+class ListData(val varsListName: Str) {
+	var lazyData = LazyData(varsListName)
 	var itemVars: VarsList? = null
 	
 	//for weird safety reason use get
@@ -59,7 +59,7 @@ class ListData(val listName: Str) {
 	}
 
 	
-	fun getVarValue(varsListId: Str, varName: Str): Any? {
+	fun getVarValue(varsListId: Str, varsListName: Str): Any? {
 		if (varsListId.empty) return null.also { 
 			Vlog("ListData id empty")
 		}
@@ -71,7 +71,7 @@ class ListData(val listName: Str) {
 		}
 
 		val worker = VarInfoWorker(data)
-		val match = worker.findVar(data, varName) ?: return null
+		val match = worker.findVar(data, varsListName) ?: return null
 
 		val type = match.groupValues[1]
 		val raw = match.groupValues[2]
