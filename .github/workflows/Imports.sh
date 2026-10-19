@@ -49,11 +49,12 @@ find_and_source() {
   fi
 }
 
-
+#(when publisching to PlayStore) DELETE ALL THIS (use secrets and new passwords here instead)
+#CHANGING ANY THING HERE -> NEW APK, MUST DELETE AND REINSTALL APP
 KEYSTORE_PASSWORD="12345678123"
 KEY_ALIAS="myKeyAliass"
 KEY_PASSWORD="12345678123"
-KEYSTORE_PATH="$(pwd)/app/keyyStore.keystore"
+KEYSTORE_PATH="$(pwd)/.github/workflows/GeneratedKey.keystore"
 
 Create_Keystore() {
     mkdir -p app
