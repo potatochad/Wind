@@ -54,7 +54,7 @@ find_and_source() {
 KEYSTORE_PASSWORD="12345678123"
 KEY_ALIAS="myKeyAliass"
 KEY_PASSWORD="12345678123"
-KEYSTORE_PATH="$(pwd)/.github/workflows/GeneratedKey.keystore"
+KEYSTORE_PATH="$(pwd)/.github/GeneratedKey.keystore"
 
 Create_Keystore() {
     mkdir -p app
