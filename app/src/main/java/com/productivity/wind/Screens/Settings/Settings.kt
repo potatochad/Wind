@@ -205,11 +205,8 @@ fun GrayScaleScreen() = LazyScreen("GrayScale") {
 		max = 1f,
 		linear = yes,
 		value = amount,
-	){
-		DeviceGray(it)
-	}
+	)
 
-	
 }
         
 
