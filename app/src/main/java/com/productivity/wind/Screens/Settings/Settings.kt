@@ -192,17 +192,19 @@ fun ExtensionsScreen() = LazyScreen("Test Data") {
 
 @Composable
 fun GrayScaleScreen() = LazyScreen("GrayScale") {
+	val amount = mState(0f)
+	
 	EmptyBox(
 		text = "GrayScale",
 		icon = Icons.Default.Palette,
-		color = gold,
+		color = FromColorToColor(gold, Color.Gray, amount.value),
 	)
 	
 	LazySlider(
 		min = 0f,
 		max = 1f,
 		linear = yes,
-		value = mState(0f),
+		value = amount,
 	){
 		DeviceGray(it)
 	}
