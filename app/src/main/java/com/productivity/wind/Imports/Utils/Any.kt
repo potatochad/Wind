@@ -46,6 +46,15 @@ fun AndroidSettings(action: Str) {
 	)
 }
 
+//color = FromColorToColor(gold, Color.Gray, amount.value)
+// 0.5f -> means HalfWay
+fun FromColorToColor(from: Color, to: Color, amount: Float) = Color(
+    red = from.red + (to.red - from.red) * amount,
+    green = from.green + (to.green - from.green) * amount,
+    blue = from.blue + (to.blue - from.blue) * amount,
+    alpha = from.alpha + (to.alpha - from.alpha) * amount,
+)
+
 
 @Composable
 fun getW(): Float {
