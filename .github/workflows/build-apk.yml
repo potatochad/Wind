@@ -20,11 +20,11 @@ jobs:
         shell: bash
         run: |
           FILE=".github/workflows/build-apk.yml"
-
           COMMIT=$(grep -oP 'GotoCommit\[\K[^\]]*' "$FILE" | head -n 1 | tr -d '[:space:]')
 
           if [ -n "$COMMIT" ]; then
-            git fetch --no-tags origin "$COMMIT"
+            git fetch --no-tags --unshallow origin || true
+            git fetch --no-tags origin
             git checkout --detach "$COMMIT"
           fi
 
