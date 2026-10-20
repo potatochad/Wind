@@ -1,5 +1,6 @@
-name: Build APK
+name: Go to commit
 
+ #below is old code, using from other app
 on: push
 
 env:
