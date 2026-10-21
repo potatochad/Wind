@@ -1,1 +1,35 @@
+# GotoCommit[86bcf8c]
+
+name: Build APK
+
+on: push
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # <- force Node 24 for all JS actions
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Go to commit
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          FILE=".github/workflows/build-apk.yml"
+          COMMIT=$(grep -oP 'GotoCommit\[\K[^\]]*' "$FILE" | head -n 1 | tr -d '[:space:]')
+
+          if [ -n "$COMMIT" ]; then
+            git fetch --no-tags --unshallow origin || true
+            git fetch --no-tags origin
+            git checkout --detach "$COMMIT"
+
+            gh run cancel "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY"
+            exit 0
+          fi
 
