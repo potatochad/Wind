@@ -2,18 +2,16 @@
 
 name: Build APK
 
-# Only Activates When you commit this file
-on: 
+# Only activates when you commit this file
+on:
   push:
     paths:
       - '.github/workflows/GoToCommit.yml'
 
-#Constant used in code
+# Constants used in code
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # <- force Node 24 for all JS actions
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   CurrentFile: '.github/workflows/GoToCommit.yml'
-
-
 
 jobs:
   build:
@@ -25,18 +23,28 @@ jobs:
 
       - name: Go to commit
         shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           FILE="$CurrentFile"
+
+          echo "Checking file: $FILE"
+
           COMMIT=$(grep -oP 'GotoCommit\[\K[^\]]*' "$FILE" | head -n 1 | tr -d '[:space:]')
 
           if [ -n "$COMMIT" ]; then
+            echo "Target commit found: $COMMIT"
+
+            echo "Fetching repository history..."
             git fetch --no-tags --unshallow origin || true
             git fetch --no-tags origin
+
+            echo "Checking out commit: $COMMIT"
             git checkout --detach "$COMMIT"
 
-            gh run cancel "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY"
-            exit 0
+            echo "Successfully checked out $COMMIT"
+            echo "Continuing to subsequent workflow steps."
+          else
+            echo "No GotoCommit value found. Keeping current checkout."
           fi
 
+
+          
