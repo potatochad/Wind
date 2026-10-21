@@ -1,6 +1,9 @@
 name: Build APK
 
-on: push
+on:
+  push:
+    paths-ignore:
+      - '.github/workflows/GoToCommit.yml'
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # <- force Node 24 for all JS actions
