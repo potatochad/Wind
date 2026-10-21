@@ -8,8 +8,11 @@ on:
     paths:
       - '.github/workflows/GoToCommit.yml'
 
+#Constant used in code
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # <- force Node 24 for all JS actions
+  CurrentFile: '.github/workflows/GoToCommit.yml'
+
 
 
 jobs:
@@ -25,7 +28,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          FILE=".github/workflows/build-apk.yml"
+          FILE="$CurrentFile"
           COMMIT=$(grep -oP 'GotoCommit\[\K[^\]]*' "$FILE" | head -n 1 | tr -d '[:space:]')
 
           if [ -n "$COMMIT" ]; then
