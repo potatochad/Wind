@@ -3,7 +3,7 @@
 name: Build APK
 
 # Only Activates When you commit this file
-on:
+on: 
   push:
     paths:
       - '.github/workflows/GoToCommit.yml'
