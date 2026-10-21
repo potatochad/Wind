@@ -20,31 +20,51 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Go to commit
         shell: bash
         run: |
+          set -euo pipefail
+
           FILE="$CurrentFile"
 
-          echo "Checking file: $FILE"
+          echo "::group::Reading target commit"
+          echo "Control file: $FILE"
 
-          COMMIT=$(grep -oP 'GotoCommit\[\K[^\]]*' "$FILE" | head -n 1 | tr -d '[:space:]')
+          COMMIT=$(grep -oP 'GotoCommit\[\K[^\]]*' "$FILE" | head -n 1 | tr -d '[:space:]' || true)
 
-          if [ -n "$COMMIT" ]; then
-            echo "Target commit found: $COMMIT"
-
-            echo "Fetching repository history..."
-            git fetch --no-tags --unshallow origin || true
-            git fetch --no-tags origin
-
-            echo "Checking out commit: $COMMIT"
-            git checkout --detach "$COMMIT"
-
-            echo "Successfully checked out $COMMIT"
-            echo "Continuing to subsequent workflow steps."
-          else
+          if [ -z "$COMMIT" ]; then
             echo "No GotoCommit value found. Keeping current checkout."
+            exit 0
           fi
 
+          echo "Target commit: $COMMIT"
+          echo "::endgroup::"
 
-          
+          echo "::group::Fetching repository history"
+          git fetch --no-tags --unshallow origin || true
+          git fetch --no-tags origin
+          git cat-file -e "$COMMIT^{commit}"
+          echo "Target commit exists locally."
+          echo "::endgroup::"
+
+          echo "::group::Checking out target commit"
+          git checkout --detach "$COMMIT"
+
+          ACTUAL=$(git rev-parse HEAD)
+          TARGET=$(git rev-parse "$COMMIT")
+
+          echo "Target:   $TARGET"
+          echo "Checked out: $ACTUAL"
+
+          if [ "$ACTUAL" != "$TARGET" ]; then
+            echo "::error::Checkout verification failed!"
+            exit 1
+          fi
+
+          echo "Verified: repository is now at the requested commit."
+          echo "Working directory: $(pwd)"
+          echo "Subsequent steps will use this checkout unless they change it."
+          echo "::endgroup::"
