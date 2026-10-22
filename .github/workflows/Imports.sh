@@ -175,6 +175,50 @@ Git.checkoutCommit() {
     fi
 }
 
+#force project to 
+Git.forceMainToCommit() {
+    if [[ $# -eq 0 ]] || isEmpty "${1:-}"; then
+        log "❌ No target commit provided."
+        return 2
+    fi
+
+    local commit="$1"
+    local file
+
+    if ! git cat-file -e "$commit^{commit}" 2>/dev/null; then
+        log "❌ Target commit doesn't exist."
+        return 1
+    fi
+
+    log "🔨 Forcing project to match target commit..."
+    log "🔒 Keeping .github/ untouched."
+
+    # Remove tracked and untracked files outside .github/
+    # that aren't present in the target commit.
+    while IFS= read -r -d '' file; do
+        if ! git cat-file -e "$commit:$file" 2>/dev/null; then
+            if [[ -d "$file" && ! -L "$file" ]]; then
+                rm -rf -- "$file"
+            else
+                rm -f -- "$file"
+            fi
+        fi
+    done < <(find . -mindepth 1 -not -path './.git' \
+        -not -path './.git/*' \
+        -not -path './.github' \
+        -not -path './.github/*' -print0)
+
+    # Restore target files without touching .github/.
+    if ! git restore --source="$commit" --worktree -- \
+        . ':(exclude).github' ':(exclude).github/**'; then
+        log "❌ Failed to restore project files."
+        return 1
+    fi
+
+    log "✅ Project now matches the target commit!"
+}
+
+
 
 
 
