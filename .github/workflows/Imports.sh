@@ -104,50 +104,108 @@ Build_APK() {
 
 
 
-# [------------COMMIT LOGIC---------------]
-set -euo pipefail
+# [------------COMMIT LOGIC & IMPORTS FOR IT---------------]
 
-FILE="$CurrentFile"
+Fun_ErrorCatcher() {
+    set -Eeuo pipefail
 
-log "::group::Reading target commit"
-log "Control file: $FILE"
+    trap 'rc=$?; printf "\n💥 BROKEN 💥\n🔹 Line: $LINENO\n🔹 Exit code: $rc\n🔹 Command: %s\n🫡 Mission failed, we got em.\n\n" "$BASH_COMMAND" >&2; exit "$rc"' ERR
+}
+File_firstString_insideBraces() {
+    grep -oP '\{[^}]*\}' "$1" | head -n 1 | tr -d '{}'
+}
 
-COMMIT=$(grep -oP 'GotoCommit\[\K[^\]]*' "$FILE" | head -n 1 | tr -d '[:space:]' || true)
+isEmpty() {
+    [[ -z "${1:-}" ]]
+}
 
-if [ -z "$COMMIT" ]; then
-   log "No GotoCommit value found. Keeping current checkout."
-  exit 0
-fi
+#dots are allowed in Bash function names
+Git.allCommits() {
+    log "📦 Downloading full commit history..."
 
-log "Target commit: $COMMIT"
-log "::endgroup::"
+    if git fetch --no-tags --unshallow origin; then
+        log "✅ Full history downloaded!"
+    else
+        log "⚠️ Couldn't download full history. Continuing anyway."
+        return 0
+    fi
+}
 
-log "::group::Fetching repository history"
-git fetch --no-tags --unshallow origin || true
-git fetch --no-tags origin
-git cat-file -e "$COMMIT^{commit}"
-log "Target commit exists locally."
-log "::endgroup::"
-log "::group::Checking out target commit"
+Git.latestCommits() {
+    log "🔄 Checking for new commits..."
 
-git checkout --detach "$COMMIT"
+    if git fetch --no-tags origin; then
+        log "✅ All caught up!"
+    else
+        local rc=$?
+        log "❌ Couldn't fetch new commits (exit code $rc)."
+        return "$rc"
+    fi
+}
 
-ACTUAL=$(git rev-parse HEAD)
-TARGET=$(git rev-parse "$COMMIT")
+Git.commitExists() {
+    if [[ $# -eq 0 ]] || isEmpty "${1:-}"; then
+        log "❌ No commit was provided."
+        return 2
+    fi
 
-log "Target:   $TARGET"
-log "Checked out: $ACTUAL"
+    if git cat-file -e "$1^{commit}" 2>/dev/null; then
+        return 0
+    else
+        log "⚠️ Commit not found: $1"
+        return 1
+    fi
+}
 
-if [ "$ACTUAL" != "$TARGET" ]; then
-   log "::error::Checkout verification failed!"
-   exit 1
-fi
 
-log "Verified: repository is now at the requested commit."
-log "Working directory: $(pwd)"
-log "Subsequent steps will use this checkout unless they change it."
-log "::endgroup::"
+Git.checkoutCommit() {
+    if [[ $# -eq 0 ]] || isEmpty "${1:-}"; then
+        log "❌ No commit was provided."
+        return 2
+    fi
 
+    log "🔄 Checking out commit: $1"
+
+    if git checkout --detach "$1"; then
+        log "✅ Checked out target commit."
+    else
+        local rc=$?
+        log "❌ Couldn't check out commit (exit code $rc)."
+        return "$rc"
+    fi
+}
+
+
+
+
+
+
+goToCommit(){
+   Fun_ErrorCatcher
+   FILE="$CurrentFile"
+   
+   log "Cuttent file: $FILE"
+   COMMIT=$(File_firstString_insideBraces "$FILE")
+
+   if isEmpty "$COMMIT"; then
+      log "No GotoCommit value found. Keeping current checkout."
+      exit 0 #stop
+    fi
+    
+    log "Target commit: $COMMIT"
+
+    Git.allCommits
+    Git.latestCommits
+    
+    if Git.commitExists "$COMMIT"; then
+       log "Target commit exists locally."
+    else
+       log "❌ Target commit wasn't found locally."
+       exit 1 #leaves
+    fi
+
+    Git.checkoutCommit "$COMMIT"
+}
 
 
 
