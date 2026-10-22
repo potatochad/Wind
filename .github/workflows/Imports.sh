@@ -106,48 +106,62 @@ Build_APK() {
 
 # [------------COMMIT LOGIC---------------]
 set -euo pipefail
+
 FILE="$CurrentFile"
 
-[[ -f "$FILE" ]] || { log "::error::File not found: $FILE"; exit 1; }
+log "::group::Reading target commit"
+log "Control file: $FILE"
 
 COMMIT=$(grep -oP 'GotoCommit\[\K[^\]]*' "$FILE" | head -n 1 | tr -d '[:space:]' || true)
 
-if [[ -z "$COMMIT" ]]; then
-    log "No target commit; keeping current checkout."
-else
-    echo "::group::Fetching history"
-
-    try git fetch --no-tags --unshallow origin onFail git fetch --no-tags origin
-
-    git cat-file -e "${COMMIT}^{commit}" 2>/dev/null \
-        || try git fetch --no-tags origin "$COMMIT" onFail log "Could not fetch target commit: $COMMIT"
-
-    git cat-file -e "${COMMIT}^{commit}" || {
-        echo "::error::Commit not found: $COMMIT"
-        exit 1
-    }
-
-    echo "::endgroup::"
-
-    echo "::group::Checking out target"
-
-    try git checkout --detach "$COMMIT" onFail log "Checkout failed: $COMMIT"
-
-    TARGET=$(git rev-parse "${COMMIT}^{commit}")
-    ACTUAL=$(git rev-parse HEAD)
-
-    log "Branch: ${GITHUB_REF_NAME:-unknown}"
-    log "Current branch: $(git branch --show-current)"
-    log "Target: $TARGET"
-    log "HEAD:   $ACTUAL"
-
-    git log -1 --oneline --decorate
-
-    [[ "$ACTUAL" == "$TARGET" ]] || {
-        echo "::error::Checkout verification failed"
-        exit 1
-    }
-
-    log "Verified target checkout at $(pwd)"
-    echo "::endgroup::"
+if [ -z "$COMMIT" ]; then
+   log "No GotoCommit value found. Keeping current checkout."
+  exit 0
 fi
+
+log "Target commit: $COMMIT"
+log "::endgroup::"
+
+log "::group::Fetching repository history"
+git fetch --no-tags --unshallow origin || true
+git fetch --no-tags origin
+git cat-file -e "$COMMIT^{commit}"
+log "Target commit exists locally."
+log "::endgroup::"
+log "::group::Checking out target commit"
+
+git checkout --detach "$COMMIT"
+
+ACTUAL=$(git rev-parse HEAD)
+TARGET=$(git rev-parse "$COMMIT")
+
+log "Target:   $TARGET"
+log "Checked out: $ACTUAL"
+
+if [ "$ACTUAL" != "$TARGET" ]; then
+   log "::error::Checkout verification failed!"
+   exit 1
+fi
+
+log "Verified: repository is now at the requested commit."
+log "Working directory: $(pwd)"
+log "Subsequent steps will use this checkout unless they change it."
+log "::endgroup::"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
