@@ -224,9 +224,9 @@ Git.forceMainToCommit() {
 
 
 
-goToCommit(){
+GoToCommit(){
    Fun_ErrorCatcher
-   FILE="$CurrentFile"
+   FILE="$1" # pass in CurrentFile (first input)
    
    log "Cuttent file: $FILE"
    COMMIT=$(File_firstString_insideBraces "$FILE")
