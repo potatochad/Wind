@@ -175,7 +175,7 @@ Git.checkoutCommit() {
     fi
 }
 
-#force project to 
+#force project to a commit, ignores github (but doesnt actually do anything about main)
 Git.forceMainToCommit() {
     if [[ $# -eq 0 ]] || isEmpty "${1:-}"; then
         log "❌ No target commit provided."
