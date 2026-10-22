@@ -105,39 +105,49 @@ Build_APK() {
 
 
 # [------------COMMIT LOGIC---------------]
-    set -euo pipefail
-    FILE="$CurrentFile"
+set -euo pipefail
+FILE="$CurrentFile"
 
-    [[ -f "$FILE" ]] || { echo "::error::File not found: $FILE"; exit 1; }
-    COMMIT=$(grep -oP 'GotoCommit\[\K[^\]]*' "$FILE" | head -n 1 | tr -d '[:space:]' || true)
+[[ -f "$FILE" ]] || { log "::error::File not found: $FILE"; exit 1; }
 
-    if [[ -z "$COMMIT" ]]; then
-      echo "No target commit; keeping current checkout."
-      exit 0
-    fi
+COMMIT=$(grep -oP 'GotoCommit\[\K[^\]]*' "$FILE" | head -n 1 | tr -d '[:space:]' || true)
 
+if [[ -z "$COMMIT" ]]; then
+    log "No target commit; keeping current checkout."
+else
     echo "::group::Fetching history"
-    if [[ "$(git rev-parse --is-shallow-repository)" == true ]]; then
-      git fetch --no-tags --unshallow origin
-    fi
-    git cat-file -e "${COMMIT}^{commit}" 2>/dev/null || git fetch --no-tags origin "$COMMIT"
-    git cat-file -e "${COMMIT}^{commit}" || { echo "::error::Commit not found: $COMMIT"; exit 1; }
+
+    try git fetch --no-tags --unshallow origin onFail git fetch --no-tags origin
+
+    git cat-file -e "${COMMIT}^{commit}" 2>/dev/null \
+        || try git fetch --no-tags origin "$COMMIT" onFail log "Could not fetch target commit: $COMMIT"
+
+    git cat-file -e "${COMMIT}^{commit}" || {
+        echo "::error::Commit not found: $COMMIT"
+        exit 1
+    }
+
     echo "::endgroup::"
 
     echo "::group::Checking out target"
-    git checkout --detach "$COMMIT"
+
+    try git checkout --detach "$COMMIT" onFail log "Checkout failed: $COMMIT"
+
     TARGET=$(git rev-parse "${COMMIT}^{commit}")
     ACTUAL=$(git rev-parse HEAD)
 
-    echo "Branch: ${GITHUB_REF_NAME:-unknown}"
-    echo "Current branch: $(git branch --show-current)"
-    echo "Target: $TARGET"
-    echo "HEAD:   $ACTUAL"
+    log "Branch: ${GITHUB_REF_NAME:-unknown}"
+    log "Current branch: $(git branch --show-current)"
+    log "Target: $TARGET"
+    log "HEAD:   $ACTUAL"
+
     git log -1 --oneline --decorate
 
-    [[ "$ACTUAL" == "$TARGET" ]] || { echo "::error::Checkout verification failed"; exit 1; }
-    echo "Verified target checkout at $(pwd)"
+    [[ "$ACTUAL" == "$TARGET" ]] || {
+        echo "::error::Checkout verification failed"
+        exit 1
+    }
+
+    log "Verified target checkout at $(pwd)"
     echo "::endgroup::"
-
-
-
+fi
