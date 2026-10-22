@@ -26,4 +26,5 @@ jobs:
       - name: Go to commit
         shell: bash
         run: |
+          source .github/workflows/Imports.sh
           GoToCommit "$CurrentFile"
