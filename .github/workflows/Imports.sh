@@ -123,6 +123,11 @@ isEmpty() {
 
 #dots are allowed in Bash function names
 Git.allCommits() {
+    if [[ "$(git rev-parse --is-shallow-repository)" != "true" ]]; then
+        log "✅ Repository already has full history."
+        return 0
+    fi
+
     log "📦 Downloading full commit history..."
 
     if git fetch --no-tags --unshallow origin; then
