@@ -223,11 +223,10 @@ Git.forceMainToCommit() {
 
 GoToCommit(){
    Fun_ErrorCatcher
-   FILE="$1" # pass in CurrentFile (first input)
    
-   log "Cuttent file: $FILE"
-   COMMIT=$(File_firstString_insideBrackets "$FILE")
-
+   #local variable, if null-> ""
+   local COMMIT="${1:-}"
+   
    if isEmpty "$COMMIT"; then
       log "No GotoCommit value found. Keeping current checkout."
       exit 0 #stop
