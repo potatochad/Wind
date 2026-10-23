@@ -1,6 +1,4 @@
-# GotoCommit[86bcf8c]
-
-name: Build APK 
+name: GoToCommit
 
 # Only activates when you commit this file
 on:
@@ -27,4 +25,4 @@ jobs:
         shell: bash
         run: |
           source .github/workflows/Imports.sh
-          GoToCommit "$CurrentFile"
+          GoToCommit "86bcf8c"
