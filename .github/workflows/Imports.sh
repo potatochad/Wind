@@ -198,13 +198,13 @@ Git.forceMainToCommit() {
         return 1
     fi
 
-    # Save the current main commit.
+    # gets the COMMITS ID?
     current_main=$(git rev-parse refs/remotes/origin/main) || return 1
 
-    # Start with the target commit's files.
+    # loads files in linux
     git checkout --detach "$commit" || return 1
 
-    # Replace .github/ with the version from current main.
+    # MAKES A VAR: goes to commit, restore git from main
     git restore --source="$current_main" --staged --worktree -- .github/ || return 1
 
     # Create a commit containing the combined files.
