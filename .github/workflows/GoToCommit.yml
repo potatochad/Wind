@@ -9,7 +9,6 @@ on:
 # Constants used in code
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  CurrentFile: '.github/workflows/GoToCommit.yml'
 
 jobs:
   build:
@@ -21,8 +20,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Go to commit
+      - name: Go to commit                            
         shell: bash
         run: |
           source .github/workflows/Imports.sh
           GoToCommit "86bcf8c"
+
+
+
+
+
