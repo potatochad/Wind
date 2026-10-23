@@ -182,6 +182,29 @@ Git.checkoutCommit() {
     fi
 }
 
+Git.goToCommitInDisk() {
+    local commit="$1"
+    local file
+
+    log "🔄 Restoring .github/ from $commit..."
+
+    git restore --source="$commit" --staged --worktree -- .github/ || {
+        log "❌ Failed to restore .github/."
+        return 1
+    }
+
+    #CHECKS THAT EACH FILE GOOD
+    while IFS= read -r -d '' file; do
+        if ! git diff --quiet "$commit" -- "$file" ||
+           ! git diff --cached --quiet "$commit" -- "$file"; then
+            log "❌ Verification failed: $file"
+            return 1
+        fi
+    done < <(git ls-tree -r --name-only -z "$commit" -- .github/)
+
+    log "✅ Every tracked .github/ file verified."
+}
+
 #force project to a commit, ignores github
 Git.forceMainToCommit() {
     if [[ $# -eq 0 ]] || isEmpty "${1:-}"; then
