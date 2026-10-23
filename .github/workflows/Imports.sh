@@ -182,7 +182,7 @@ Git.checkoutCommit() {
     fi
 }
 
-#force project to a commit, ignores github (but doesnt actually do anything about main)
+#force project to a commit, ignores github
 Git.forceMainToCommit() {
     if [[ $# -eq 0 ]] || isEmpty "${1:-}"; then
         log "❌ No target commit provided."
@@ -190,39 +190,33 @@ Git.forceMainToCommit() {
     fi
 
     local commit="$1"
-    local file
+    local current_main
+    local tree
 
     if ! git cat-file -e "$commit^{commit}" 2>/dev/null; then
         log "❌ Target commit doesn't exist."
         return 1
     fi
 
-    log "🔨 Forcing project to match target commit..."
-    log "🔒 Keeping .github/ untouched."
+    # Save the current main commit.
+    current_main=$(git rev-parse refs/remotes/origin/main) || return 1
 
-    # Remove tracked and untracked files outside .github/
-    # that aren't present in the target commit.
-    while IFS= read -r -d '' file; do
-        if ! git cat-file -e "$commit:$file" 2>/dev/null; then
-            if [[ -d "$file" && ! -L "$file" ]]; then
-                rm -rf -- "$file"
-            else
-                rm -f -- "$file"
-            fi
-        fi
-    done < <(find . -mindepth 1 -not -path './.git' \
-        -not -path './.git/*' \
-        -not -path './.github' \
-        -not -path './.github/*' -print0)
+    # Start with the target commit's files.
+    git checkout --detach "$commit" || return 1
 
-    # Restore target files without touching .github/.
-    if ! git restore --source="$commit" --worktree -- \
-        . ':(exclude).github' ':(exclude).github/**'; then
-        log "❌ Failed to restore project files."
-        return 1
-    fi
+    # Replace .github/ with the version from current main.
+    git restore --source="$current_main" --staged --worktree -- .github/ || return 1
 
-    log "✅ Project now matches the target commit!"
+    # Create a commit containing the combined files.
+    git add -A
+    git -c user.name="github-actions[bot]" \
+        -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+        commit -m "Restore project to $commit while preserving .github"
+
+    # Push the combined result to main.
+    git push --force origin HEAD:main || return 1
+
+    log "✅ Main updated; .github/ preserved."
 }
 
 
