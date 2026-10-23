@@ -111,8 +111,10 @@ Fun_ErrorCatcher() {
 
     trap 'rc=$?; printf "\n💥 BROKEN 💥\n🔹 Line: $LINENO\n🔹 Exit code: $rc\n🔹 Command: %s\n🫡 Mission failed, we got em.\n\n" "$BASH_COMMAND" >&2; exit "$rc"' ERR
 }
-File_firstString_insideBraces() {
-    grep -oP '\{[^}]*\}' "$1" | head -n 1 | tr -d '{}'
+
+File_firstString_insideBrackets() {
+    grep -oP '(?<=GotoCommit\[)[^]]+' "$1" |
+        head -n 1 || true
 }
 
 isEmpty() {
@@ -219,17 +221,12 @@ Git.forceMainToCommit() {
 }
 
 
-
-
-
-
-
 GoToCommit(){
    Fun_ErrorCatcher
    FILE="$1" # pass in CurrentFile (first input)
    
    log "Cuttent file: $FILE"
-   COMMIT=$(File_firstString_insideBraces "$FILE")
+   COMMIT=$(File_firstString_insideBrackets "$FILE")
 
    if isEmpty "$COMMIT"; then
       log "No GotoCommit value found. Keeping current checkout."
