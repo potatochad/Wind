@@ -1,4 +1,4 @@
-name: GoToCommit
+name: GoToCommit 
 
 # Only activates when you commit this file
 on:
