@@ -1,0 +1,32 @@
+name: GoToCommit     
+
+# Only activates when you commit this file
+on:
+  push:
+    paths:
+      - '.github/workflows/GoToCommit.yml'
+
+# Constants used in code
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Go to commit                            
+        shell: bash
+        run: |
+          source .github/workflows/Imports/Git/Commit.sh
+          GoToCommit "86bcf8c" 
+
+
+
+
+
