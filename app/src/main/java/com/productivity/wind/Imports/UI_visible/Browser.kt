@@ -7,6 +7,8 @@ import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import com.productivity.wind.Imports.Utils.Browser.*
 
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.onDispose
 
 
 @SuppressLint("SetJavaScriptEnabled")
