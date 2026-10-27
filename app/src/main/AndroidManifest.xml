@@ -100,6 +100,11 @@
 				android:value="used only for background work needing to be done by app (in notification, listed what types, including making app greyscale, depending on usage of specific apps)"/>      
 		</service>
 
+		<service
+			android:name=".Imports.Utils.Browser.BrowserAudioService"
+			android:exported="false"
+			android:foregroundServiceType="mediaPlayback" />
+
 		
 		<receiver
 			android:name=".Imports.BootReceiver"
