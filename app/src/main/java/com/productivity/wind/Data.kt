@@ -359,7 +359,7 @@ fun OnResume(){
 
 @Composable
 fun AppStart() {
-	App.startForeground(BackgroundService::class.java)
+	App.startForeground(BackgroundService::class)
 	
 	Keyboard.track()
 	AppFocus.track()
