@@ -64,6 +64,20 @@ class BrowserAudioService : MediaSessionService() {
         mediaSession = null
         super.onDestroy()
     }
+
+	companion object {
+    fun start(context: android.content.Context) {
+        val intent = android.content.Intent(
+            context,
+            BrowserAudioService::class.java
+        )
+
+        androidx.core.content.ContextCompat.startForegroundService(
+            context,
+            intent
+        )
+    }
+	}
 }
 
 
