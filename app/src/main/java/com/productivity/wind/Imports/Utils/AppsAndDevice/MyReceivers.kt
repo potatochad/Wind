@@ -17,7 +17,7 @@ import com.productivity.wind.Imports.UI_visible.*
 class BootReceiver : BroadcastReceiver() {
 	override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
-            Intent(context, BackgroundService::class.java).also {
+            Intent(context, BackgroundService::class).also {
                 context.startForegroundService(it)
             }
         }
