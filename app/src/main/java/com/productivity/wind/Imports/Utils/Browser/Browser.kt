@@ -222,6 +222,7 @@ class WebController(
 @SuppressLint("SetJavaScriptEnabled")
 fun WebView.enable(){
 	this.settings.apply {
+		mediaPlaybackRequiresUserGesture = no
         javaScriptEnabled = yes
 		domStorageEnabled = yes
         useWideViewPort = yes
