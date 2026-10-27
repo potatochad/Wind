@@ -14,30 +14,8 @@ import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.UI_visible.*
 
 
-fun Context.start(service: Class<out Service>) {
-    Permission.ignoreOptimizations()
-    startService(Intent(this, service))
-}
 
-fun Context.startForeground(service: Class<out Service>) {
-    Permission.ignoreOptimizations()
-
-    val intent = Intent(this, service)
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        startForegroundService(intent)
-    } else {
-        startService(intent)
-    }
-}
-
-fun Context.stop(service: Class<out Service>) {
-    stopService(Intent(this, service))
-}
-
-
-class AppBackground : Service() {
-
+class BackgroundService : Service() {
     companion object {
         private const val CHANNEL_ID = "background_tasks"
         private const val NOTIFICATION_ID = 1
