@@ -16,7 +16,7 @@ import kotlin.reflect.KClass
 
 
 //KCLAAS WITH
-fun Intent(ctx: Context, service: KClass<out Service>) = Intent(ctx, service)          
+fun LazyIntent(ctx: Context, service: KClass<out Service>) = Intent(ctx, service)          
 fun Context.start(service: KClass<out Service>) {
     Permission.ignoreOptimizations()
     startService(Intent(this, service.java))
