@@ -6,7 +6,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import com.productivity.wind.Imports.Utils.Browser.*
-
 import androidx.compose.runtime.DisposableEffect
 
 
@@ -14,27 +13,6 @@ import androidx.compose.runtime.DisposableEffect
 @Composable
 fun WebXml(web: WebController) {
     BackHandler { web.back() }
-
-    val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current
-
-    DisposableEffect(web, lifecycle) {
-        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
-            when (event) {
-                androidx.lifecycle.Lifecycle.Event.ON_RESUME ->
-                    web.webView.onResume()
-
-                // Intentionally don't call webView.onPause():
-                // testing whether this is involved in stopping audio.
-                else -> Unit
-            }
-        }
-
-        lifecycle.lifecycle.addObserver(observer)
-
-        onDispose {
-            lifecycle.lifecycle.removeObserver(observer)
-        }
-    }
     
     AndroidView(
         factory = { 
