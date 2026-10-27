@@ -34,11 +34,38 @@ import java.io.ByteArrayInputStream
 import android.util.Log
 import com.productivity.wind.Imports.Utils.NavControl.*
 import android.app.Service
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaSession
+import androidx.media3.session.MediaSessionService
 
-class BrowserAudioService : Service() {
+class BrowserAudioService : MediaSessionService() {
 
-    override fun onBind(intent: Intent?): IBinder? = null
+    private var mediaSession: MediaSession? = null
+
+    override fun onCreate() {
+        super.onCreate()
+
+        val player = ExoPlayer.Builder(this).build()
+
+        mediaSession = MediaSession.Builder(this, player).build()
+    }
+
+    override fun onGetSession(
+        controllerInfo: MediaSession.ControllerInfo
+    ): MediaSession? = mediaSession
+
+    override fun onDestroy() {
+        mediaSession?.run {
+            player.release()
+            release()
+        }
+
+        mediaSession = null
+        super.onDestroy()
+    }
 }
+
 
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
