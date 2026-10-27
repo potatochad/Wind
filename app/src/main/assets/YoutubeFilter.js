@@ -55,7 +55,7 @@ function shouldProcessItem({ text, href, listItem }) {
 log("Filtering Youtube");
 
 function processItem(item2) {
-    if (item2.href.includes('/shorts/')) {
+    if (item2.href?.includes('/shorts/')) {
         hide(item2);
         return;
     }
