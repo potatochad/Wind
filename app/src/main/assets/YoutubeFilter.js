@@ -67,7 +67,7 @@ function processItem(item2) {
         item2.closest("ytm-reel-item-renderer");
 
     if (shorts) {
-        log("Hiding shorts, TEXT:", text);
+        log("Hiding shorts");
         hide(shorts);
         return;
     }
