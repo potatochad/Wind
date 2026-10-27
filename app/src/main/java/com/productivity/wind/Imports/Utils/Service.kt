@@ -12,17 +12,19 @@ import kotlinx.coroutines.Dispatchers
 import android.content.Intent
 import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.UI_visible.*
+import kotlin.reflect.KClass
 
 
-fun Context.start(service: Class<out Service>) {
+
+fun Context.start(service: KClass<out Service>) {
     Permission.ignoreOptimizations()
-    startService(Intent(this, service))
+    startService(Intent(this, service.java))
 }
 
-fun Context.startForeground(service: Class<out Service>) {
+fun Context.startForeground(service: KClass<out Service>) {
     Permission.ignoreOptimizations()
 
-    val intent = Intent(this, service)
+    val intent = Intent(this, service.java)
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         startForegroundService(intent)
@@ -31,8 +33,8 @@ fun Context.startForeground(service: Class<out Service>) {
     }
 }
 
-fun Context.stop(service: Class<out Service>) {
-    stopService(Intent(this, service))
+fun Context.stop(service: KClass<out Service>) {
+    stopService(Intent(this, service.java))
 }
 
 
