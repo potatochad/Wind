@@ -128,7 +128,7 @@ class BackgroundService : Service() {
 class BootReceiver : BroadcastReceiver() {
 	override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
-            Intent(context, AppBackground::class.java).also {
+            Intent(context, BackgroundService::class.java).also {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     log("Starting the service in >=26 Mode from a BroadcastReceiver")
                     context.startForegroundService(it)
