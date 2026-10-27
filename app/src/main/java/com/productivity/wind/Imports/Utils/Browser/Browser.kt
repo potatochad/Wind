@@ -12,7 +12,7 @@ import androidx.compose.runtime.*
 import androidx.activity.compose.*
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
+import android.os.*
 import androidx.compose.ui.viewinterop.*
 import android.view.*
 import androidx.compose.foundation.*
@@ -33,7 +33,12 @@ import com.productivity.wind.Imports.Utils.String.*
 import java.io.ByteArrayInputStream
 import android.util.Log
 import com.productivity.wind.Imports.Utils.NavControl.*
+import android.app.Service
 
+class BrowserAudioService : Service() {
+
+    override fun onBind(intent: Intent?): IBinder? = null
+}
 
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
