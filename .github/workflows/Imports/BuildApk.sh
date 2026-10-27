@@ -7,7 +7,7 @@ source .github/workflows/Imports/Any.sh
 KEYSTORE_PASSWORD="12345678123"
 KEY_ALIAS="myKeyAliass"
 KEY_PASSWORD="12345678123"
-KEYSTORE_PATH="$(pwd)/.github/GeneratedKey.keystore"
+KEYSTORE_PATH="$(pwd)/app/keyyStore.keystore"
 
 Create_Keystore() {
     mkdir -p app
