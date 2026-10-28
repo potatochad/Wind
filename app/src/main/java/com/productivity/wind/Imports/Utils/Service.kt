@@ -20,7 +20,7 @@ fun LazyIntent(service: KClass<out Service>) = Intent(App, service.java)
 fun LazyIntent(ctx: Context, service: KClass<out Service>) = Intent(ctx, service.java)
 fun start(service: KClass<out Service>) {
     Permission.ignoreOptimizations()
-    startService(Intent(App, service.java))
+    App.startService(Intent(App, service.java))
 }
 fun startForeground(service: KClass<out Service>) {
     Permission.ignoreOptimizations()
@@ -28,13 +28,13 @@ fun startForeground(service: KClass<out Service>) {
     val intent = Intent(App, service.java)
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        startForegroundService(intent)
+        App.startForegroundService(intent)
     } else {
-        startService(intent)
+        App.startService(intent)
     }
 }
 fun stop(service: KClass<out Service>) {
-    stopService(Intent(App, service.java))
+    App.stopService(Intent(App, service.java))
 }
 
 
@@ -42,7 +42,7 @@ fun stop(service: KClass<out Service>) {
 //WITHOUT KCLASS
 fun start(service: Class<out Service>) {
     Permission.ignoreOptimizations()
-    startService(Intent(App, service))
+    App.startService(Intent(App, service))
 }
 fun startForeground(service: Class<out Service>) {
     Permission.ignoreOptimizations()
@@ -50,13 +50,13 @@ fun startForeground(service: Class<out Service>) {
     val intent = Intent(App, service)
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        startForegroundService(intent)
+        App.startForegroundService(intent)
     } else {
-        startService(intent)
+        App.startService(intent)
     }
 }
 fun stop(service: Class<out Service>) {
-    stopService(Intent(App, service))
+    App.stopService(Intent(App, service))
 }
 
 
