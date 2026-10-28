@@ -72,6 +72,17 @@ function processItem(item2) {
         hide(shorts);
         return;
     }
+
+    const post = item2.closest(
+    "ytd-backstage-post-thread-renderer, " +
+    "ytm-backstage-post-thread-renderer, " +
+    "ytd-rich-item-renderer[is-post]"
+);
+
+if (post) {
+    hide(post);
+    return;
+}
     
     const item =
        item2.closest("yt-lockup-view-model") ||
