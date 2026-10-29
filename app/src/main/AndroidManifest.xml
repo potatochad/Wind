@@ -90,7 +90,7 @@
 
 
         <service
-			android:name=".Imports.AppBackground"
+			android:name=".Imports.Utils.AppsAndDevice.MyServices.BackgroundService"
 			android:enabled="true"
 			android:exported="true"
 			android:foregroundServiceType="specialUse">
