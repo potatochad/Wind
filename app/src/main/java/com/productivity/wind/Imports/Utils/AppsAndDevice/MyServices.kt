@@ -29,8 +29,6 @@ class BackgroundService : Service() {
     override fun onCreate() {
         super.onCreate()
 
-		Vlog("BACKGROUND SERVICE: ONCREATE RAN")
-
 		Permission.notification()
 
         createNotificationChannel()
