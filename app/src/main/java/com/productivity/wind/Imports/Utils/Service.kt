@@ -25,6 +25,8 @@ fun start(service: KClass<out Service>) {
 fun startForeground(service: KClass<out Service>) {
     Permission.ignoreOptimizations()
     Vlog("START FOREGROUND CALLED")
+    Vlog("SERVICE CLASS: ${service.java.name}")
+    Vlog("APP PACKAGE: ${App.packageName}")
 
     val intent = Intent(App, service.java)
 
