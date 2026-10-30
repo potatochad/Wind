@@ -16,15 +16,28 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 class BackgroundService : Service() {
-    companion object {
-        private const val CHANNEL_ID = "background_tasks"
-        private const val NOTIFICATION_ID = 1
-    }
-
+    private const val CHANNEL_ID = "background_tasks"
+    private const val NOTIFICATION_ID = 1
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
-	
     private lateinit var notificationBuilder: NotificationCompat.Builder
+
+	
+	private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "Background Tasks",
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                description = "Background service"
+            }
+
+            getSystemService(NotificationManager::class.java)
+                .createNotificationChannel(channel)
+        }
+	}
+	
 
     override fun onCreate() {
         super.onCreate()
@@ -65,15 +78,12 @@ class BackgroundService : Service() {
 
 					// log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
 
-					
 					if (!Permission.hasAccessibility("com.teqtic.lockmeout")) {
 						DeviceGray()
 					} else {
 						DeviceGray(no)
 					}
 
-					
-					
 					updateNotification("Running...$lastUsed")
 					delay(1000)
 					
@@ -106,21 +116,6 @@ class BackgroundService : Service() {
     }
 
     override fun onBind(intent: Intent?) = null
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                "Background Tasks",
-                NotificationManager.IMPORTANCE_LOW
-            ).apply {
-                description = "Background service"
-            }
-
-            getSystemService(NotificationManager::class.java)
-                .createNotificationChannel(channel)
-        }
-    }
 }
 
 
