@@ -82,8 +82,8 @@ import java.util.logging.*
 
 
 
-val notificationId = "WindApp"
-val notificationName = "WindChannel"
+private val defaultId = "WindApp"
+private val defaultName = "WindChannel"
 
 
 
@@ -135,8 +135,8 @@ class LazyNotifi(
 	val id: Int,
 	val ctx: Context,
 	
-	val channel_Id: Str = notifi_Id,
-	val channel_Name: Str = notifi_Name,
+	val channel_Id: Str = defaultId,
+	val channel_Name: Str = defaultName,
 	val importance: Int = NotificationManager.IMPORTANCE_HIGH,
     val Do: NotificationChannel.() -> Unit = {
         description = "Channel description"
@@ -194,8 +194,8 @@ class LazyNotifi_XML(
 	val id: Int,
 	val ctx: Context,
 	
-	val channel_Id: Str = notifi_Id,
-	val channel_Name: Str = notifi_Name,
+	val channel_Id: Str = defaultId,
+	val channel_Name: Str = defaultName,
 	val importance: Int = NotificationManager.IMPORTANCE_HIGH,
     val Do: NotificationChannel.() -> Unit = {
         description = "Channel description"
