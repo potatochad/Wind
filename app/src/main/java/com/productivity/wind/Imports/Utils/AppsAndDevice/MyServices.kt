@@ -14,41 +14,12 @@ import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.UI_visible.*
 
 
-fun CreateNotificationChannel(
-    channelId: Str,
-    name: Str,
-    description: Str,
-    importance: Int = NotificationManager.IMPORTANCE_LOW
-) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val channel = NotificationChannel(
-            channelId,
-            name,
-            importance
-        ).apply {
-            this.description = description
-        }
-
-        App.getSystemService(NotificationManager::class.java)
-            .createNotificationChannel(channel)
-    }
-}
-
-
 class BackgroundService : Service() {
     private val CHANNEL_ID = "background_tasks"
     private val NOTIFICATION_ID = 1
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
     private lateinit var notificationBuilder: NotificationCompat.Builder
-
-	private fun createNotificationChannel() {
-        CreateNotificationChannel(
-            CHANNEL_ID,
-            "Background Tasks",
-            "Background service"
-        )
-	}
 	
 
     override fun onCreate() {
@@ -56,7 +27,11 @@ class BackgroundService : Service() {
 
 		Permission.notification()
 
-        createNotificationChannel()
+		CreateNotificationChannel(
+            CHANNEL_ID,
+            "Background Tasks",
+            "Background service"
+        )
 
         notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(myAppRes) // REQUIRED
