@@ -82,8 +82,8 @@ import java.util.logging.*
 
 
 
-val notifi_Id = "WindApp"
-val notifi_Name = "WindChannel"
+val notificationId = "WindApp"
+val notificationName = "WindChannel"
 
 
 
@@ -111,30 +111,6 @@ fun CreateNotificationChannel(
             .createNotificationChannel(channel)
     }
 }
-
-fun NotifiChannel(
-	ctx: Context,
-    id: Str = notifi_Id,
-    name: Str = notifi_Name,
-    importance: Int = NotificationManager.IMPORTANCE_HIGH,
-    Do: NotificationChannel.() -> Unit = {
-        description = "Channel description"
-        setShowBadge(no)
-	}
-) {
-    Android8OrAbove {
-        NotifiManager(ctx).createNotificationChannel(
-			NotificationChannel(
-				id,
-				name,
-				importance,
-			).apply {
-				Do()
-			}
-		)
-    }
-}
-
 
 
 
