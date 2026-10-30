@@ -36,8 +36,8 @@ fun CreateNotificationChannel(
 
 
 class BackgroundService : Service() {
-    private const val CHANNEL_ID = "background_tasks"
-    private const val NOTIFICATION_ID = 1
+    private val CHANNEL_ID = "background_tasks"
+    private val NOTIFICATION_ID = 1
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
     private lateinit var notificationBuilder: NotificationCompat.Builder
