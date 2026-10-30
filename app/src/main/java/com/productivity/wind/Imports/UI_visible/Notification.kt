@@ -92,6 +92,25 @@ typealias NotifiBuilder = NotificationCompat.Builder
 
 fun NotifiManager(ctx: Context) = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+fun CreateNotificationChannel(
+    channelId: Str,
+    name: Str,
+    description: Str,
+    importance: Int = NotificationManager.IMPORTANCE_LOW
+) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channel = NotificationChannel(
+            channelId,
+            name,
+            importance
+        ).apply {
+            this.description = description
+        }
+
+        App.getSystemService(NotificationManager::class.java)
+            .createNotificationChannel(channel)
+    }
+}
 
 fun NotifiChannel(
 	ctx: Context,
