@@ -311,7 +311,8 @@ fun HandleIntent(intent: Intent){
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI() {
-	
+	//ignore, must be
+	NotificationChannel() 
 
 	
 }
