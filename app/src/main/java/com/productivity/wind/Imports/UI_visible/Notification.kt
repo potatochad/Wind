@@ -97,9 +97,11 @@ fun NotificationChannel() {
     }
 }
 
+fun NotificationBuilder = NotificationBuilder(App, channelId).icon(myAppRes)
 
 
 
+fun NotificationBuilder.icon(x: Int) = apply { setSmallIcon(x) }
 fun NotificationBuilder.title(x: Str) = apply { setContentTitle(x) }
 fun NotificationBuilder.text(x: Str)  = apply { setContentText(x) }
 
