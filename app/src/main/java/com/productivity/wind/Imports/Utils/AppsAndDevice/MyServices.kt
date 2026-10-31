@@ -27,7 +27,7 @@ class BackgroundService : Service() {
 
 		Permission.notification()
 
-		CreateNotificationChannel(
+		NotificationChannel(
             CHANNEL_ID,
             "Background Tasks",
             "Background service"
