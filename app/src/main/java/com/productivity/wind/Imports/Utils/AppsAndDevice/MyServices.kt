@@ -30,7 +30,7 @@ class BackgroundService : Service() {
             .title("Background Tasks")
             .text("Running...")
 
-        startForeground(notificationID, notificationBuilder.build())
+        startForeground(notificationID, notificationBuilder)
     }
 
     private fun updateNotification(text: String) {
