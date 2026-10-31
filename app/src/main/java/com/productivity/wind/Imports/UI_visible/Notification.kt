@@ -89,6 +89,7 @@ private val defaultName = "WindChannel"
 typealias NotificationBuilder = NotificationCompat.Builder
 fun NotificationManager(ctx: Context) = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+//!MUST HAVE ALWAYS CONSTANT (every UPDATE!!) UNIQUE ID
 fun NotificationChannel(
     channelId: Str,
     name: Str,
