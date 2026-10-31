@@ -82,6 +82,7 @@ import java.util.logging.*
 
 
 typealias NotificationBuilder = NotificationCompat.Builder
+fun NotificationBuilder() = NotificationBuilder(App, channelId).icon(myAppRes)
 fun NotificationManager(ctx: Context) = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 //!MUST HAVE ALWAYS CONSTANT (every UPDATE!!) UNIQUE ID
@@ -97,13 +98,16 @@ fun NotificationChannel() {
     }
 }
 
-fun NotificationBuilder = NotificationBuilder(App, channelId).icon(myAppRes)
 
 
-
-fun NotificationBuilder.icon(x: Int) = apply { setSmallIcon(x) }
 fun NotificationBuilder.title(x: Str) = apply { setContentTitle(x) }
 fun NotificationBuilder.text(x: Str)  = apply { setContentText(x) }
+
+//android weird, ignore the official naming
+fun NotificationBuilder.image(x: Bitmap) = apply { setLargeIcon(x) }
+fun NotificationBuilder.icon(x: Int) = apply { setSmallIcon(x) }
+
+
 
 fun RemoteViews.text(id: Int, value: Any) = setTextViewText(id, toStr(value))
 fun RemoteViews.image(id: Int, resId: Int) = setImageViewResource(id, resId)
