@@ -294,23 +294,7 @@ fun AppContent() {
 	}
 }
 
-//Dont use APP context
-suspend fun AppBackground(notif: LazyNotifi){
-	while (yes) {
-		wait(1000)
-		notif.text = "running..."
-		wait(1000)
-		notif.text = "running.."
-		wait(1000)
-		notif.text = "running."
-		wait(1000)
-		notif.text = "running"
-		wait(1000)
-		notif.text = "running."
-		wait(1000)
-		notif.text = "running.."
-	}
-}
+
 
 fun HandleIntent(intent: Intent){
 	val uri = intent.data ?: return
