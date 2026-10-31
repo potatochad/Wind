@@ -26,7 +26,7 @@ class BackgroundService : Service() {
 
 		Permission.notification()
 
-        notificationBuilder = NotificationBuilder(this, channelId)
+        notificationBuilder = NotificationBuilder()
             .setSmallIcon(myAppRes) // REQUIRED
             .setContentTitle("Background Tasks")
             .setContentText("Running...")
