@@ -27,10 +27,8 @@ class BackgroundService : Service() {
 		Permission.notification()
 
         notificationBuilder = NotificationBuilder()
-            .setSmallIcon(myAppRes) // REQUIRED
-            .setContentTitle("Background Tasks")
-            .setContentText("Running...")
-            .setOngoing(true)
+            .title("Background Tasks")
+            .text("Running...")
 
         startForeground(NOTIFICATION_ID, notificationBuilder.build())
     }
