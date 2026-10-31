@@ -81,15 +81,12 @@ import java.util.logging.*
 
 
 
-//default -notification channel- X
-private val defaultId = "WindApp"
-private val defaultName = "WindChannel"
-
-
 typealias NotificationBuilder = NotificationCompat.Builder
 fun NotificationManager(ctx: Context) = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 //!MUST HAVE ALWAYS CONSTANT (every UPDATE!!) UNIQUE ID
+//ONLY HAVE ONE! and call it on every app start.
+private val channelId = "WindApp"
 fun NotificationChannel(
     channelId: Str,
     name: Str,
