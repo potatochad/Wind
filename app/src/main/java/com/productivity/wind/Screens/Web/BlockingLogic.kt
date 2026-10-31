@@ -15,6 +15,9 @@ fun BlockingLogic(web: WebController){
 	fun youtubeFilter(){
 		web.web?.youtubeFilter(
 			allowOnly = listOf(
+				"mr beast",
+				"food",
+				"mrbeast",
 						"Stefan Frädrich",
 		"Greator",
 		"Christian Bischoff",
