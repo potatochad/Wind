@@ -86,24 +86,14 @@ fun NotificationManager(ctx: Context) = ctx.getSystemService(Context.NOTIFICATIO
 
 //!MUST HAVE ALWAYS CONSTANT (every UPDATE!!) UNIQUE ID
 //ONLY HAVE ONE! and call it on every app start.
-private val channelId = "WindApp"
-fun NotificationChannel(
-    channelId: Str,
-    name: Str,
-    description: Str,
-    importance: Int = NotificationManager.IMPORTANCE_LOW
-) {
+private val channelId = "WindID"
+fun NotificationChannel() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val channel = NotificationChannel(
-            channelId,
-            name,
-            importance
-        ).apply {
-            this.description = description
-        }
-
-        App.getSystemService(NotificationManager::class.java)
-            .createNotificationChannel(channel)
+        App.getSystemService(NotificationManager::class.java).createNotificationChannel(
+            NotificationChannel(channelId, "Wind", NotificationManager.IMPORTANCE_LOW).apply {
+                this.description = "A general purpose notification channel"
+            }
+        )
     }
 }
 
