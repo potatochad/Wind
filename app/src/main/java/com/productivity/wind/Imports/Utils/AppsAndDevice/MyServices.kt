@@ -15,7 +15,6 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 class BackgroundService : Service() {
-    private val CHANNEL_ID = "background_tasks"
     private val NOTIFICATION_ID = 1
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
@@ -27,18 +26,11 @@ class BackgroundService : Service() {
 
 		Permission.notification()
 
-		NotificationChannel(
-            CHANNEL_ID,
-            "Background Tasks",
-            "Background service"
-        )
-
-        notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+        notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(myAppRes) // REQUIRED
             .setContentTitle("Background Tasks")
             .setContentText("Running...")
             .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
 
         startForeground(NOTIFICATION_ID, notificationBuilder.build())
     }
