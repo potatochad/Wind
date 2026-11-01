@@ -18,7 +18,7 @@ class BackgroundService : Service() {
     val notifiID = 1
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
-    private lateinit var notificationBuilder: NotificationCompat.Builder
+    private lateinit var notificationBuilder: NotificationBuilder
 	
 
     override fun onCreate() {
