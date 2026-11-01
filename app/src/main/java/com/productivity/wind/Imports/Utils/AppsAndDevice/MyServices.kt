@@ -15,7 +15,7 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 class BackgroundService : Service() {
-    val NOTIFICATION_ID = 1
+    val notifiID = 1
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
     private lateinit var notificationBuilder: NotificationCompat.Builder
@@ -30,7 +30,7 @@ class BackgroundService : Service() {
             .title("Background Tasks")
             .text("Running...")
 
-        startForeground(NOTIFICATION_ID, notificationBuilder)
+        startForeground(notifiID, notificationBuilder)
     }
 
     private fun updateNotification(text: String) {
@@ -40,7 +40,7 @@ class BackgroundService : Service() {
             .build()
 
         NotificationManagerCompat.from(this)
-            .notify(NOTIFICATION_ID, updated)
+            .notify(notifiID, updated)
     }
 
 
