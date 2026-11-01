@@ -99,6 +99,39 @@ fun NotificationChannel() {
 }
 
 
+class LazyNotification(
+    private val context: Context,
+    private val id: Int,
+    channelId: String,
+    title: String,
+    text: String,
+    icon: Int
+) {
+    private val manager = NotificationManagerCompat.from(context)
+
+    private val builder = NotificationCompat.Builder(context, channelId)
+        .setContentTitle(title)
+        .setContentText(text)
+        .setSmallIcon(icon)
+        .setOnlyAlertOnce(true)
+
+    fun update(text: String) {
+        manager.notify(
+            id,
+            builder.setContentText(text).build()
+        )
+    }
+
+    fun show() {
+        manager.notify(id, builder.build())
+    }
+
+    fun cancel() {
+        manager.cancel(id)
+    }
+}
+
+
 
 fun NotificationBuilder.title(x: Str) = apply { setContentTitle(x) }
 fun NotificationBuilder.text(x: Str)  = apply { setContentText(x) }
