@@ -98,7 +98,8 @@ fun NotificationChannel() {
     }
 }
 
-
+//! ONLY use this for notifications
+//it has id manager and can be easily messed up
 class LazyNotification(
     private val id: Int,
     title: Str = "Wind",
