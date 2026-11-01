@@ -83,7 +83,7 @@ import java.util.logging.*
 
 typealias NotificationBuilder = NotificationCompat.Builder
 fun NotificationBuilder() = NotificationBuilder(App, channelId).icon(myAppRes)
-fun NotificationManager(ctx: Context) = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+fun NotificationManager() = App.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 //!MUST HAVE ALWAYS CONSTANT (every UPDATE!!) UNIQUE ID
 //ONLY HAVE ONE! and call it on every app start.
@@ -106,7 +106,7 @@ class LazyNotification(
     text: Str = "",
     icon: Int = myAppRes
 ) {
-    private val manager = NotificationManager(App)
+    private val manager = NotificationManager()
     private val builder = NotificationBuilder()
         .title(title)
         .text(text)
