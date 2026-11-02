@@ -342,6 +342,19 @@ fun OnResume(){
 	
 }
 
+suspend fun BackgroundWork(notifi: LazyNotification){
+	var lastUsed = LastUsedApp()
+
+	if (!Permission.hasAccessibility("com.teqtic.lockmeout")) {
+		DeviceGray()
+	} else {
+		DeviceGray(no)
+	}
+	
+	notifi.text = "$lastUsed"
+	delay(1000)
+}
+
 @Composable
 fun AppStart() {
 	startForeground(BackgroundService::class)
