@@ -25,14 +25,14 @@ class BackgroundService : Service() {
 
 		Permission.notification()
 
-        startForeground(notifi.id, notifi.builder)
+        startForeground(notifi)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         if (job?.isActive != true) {
             job = serviceScope.launch {
-				var appearOnTop = Permission.appearOnTop()
+				Permission.appearOnTop()
 				while (appearOnTop){
 					
 					//for better accuracy need accesibility permission
@@ -44,10 +44,7 @@ class BackgroundService : Service() {
 						DeviceGray(no)
 					}
 
-					notifi.text = "Running.. $lastUsed"
-					delay(1000)
-					
-					notifi.text = "Running.  $lastUsed"
+					notifi.text = "$lastUsed"
 					delay(1000)
 				}
             }
