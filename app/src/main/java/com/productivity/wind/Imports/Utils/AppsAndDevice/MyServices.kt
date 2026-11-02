@@ -45,7 +45,7 @@ class BackgroundService : Service() {
 						DeviceGray(no)
 					}
 
-					updateNotification("Running...$lastUsed")
+					notify.text = "Running...$lastUsed"
 					delay(1000)
 					
 					updateNotification("Running.. $lastUsed")
