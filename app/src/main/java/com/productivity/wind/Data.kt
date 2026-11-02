@@ -345,7 +345,10 @@ fun OnResume(){
 suspend fun BackgroundWork(notifi: LazyNotification){
 	var lastUsed = LastUsedApp()
 
-	if (!Permission.hasAccessibility("com.teqtic.lockmeout")) {
+	if (
+		!Permission.hasAccessibility("com.teqtic.lockmeout") ||
+		lastUsed == "com.chess"
+	   ) {
 		DeviceGray()
 	} else {
 		DeviceGray(no)
@@ -354,6 +357,7 @@ suspend fun BackgroundWork(notifi: LazyNotification){
 	notifi.text = "$lastUsed"
 	delay(1000)
 }
+
 
 @Composable
 fun AppStart() {
