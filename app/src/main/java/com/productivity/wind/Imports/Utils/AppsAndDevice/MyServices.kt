@@ -32,8 +32,7 @@ class BackgroundService : Service() {
 
         if (job?.isActive != true) {
             job = serviceScope.launch {
-				Permission.appearOnTop()
-				while (appearOnTop){
+				while (yes){
 					
 					//for better accuracy need accesibility permission
 					var lastUsed = LastUsedApp()
