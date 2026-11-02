@@ -106,12 +106,12 @@ class LazyNotification(
     text: Str = "",
     icon: Int = myAppRes
 ) {
-    private val manager = NotificationManager()
-    private val builder = NotificationBuilder()
+    val manager = NotificationManager()
+    val builder = NotificationBuilder()
         .title(title)
         .text(text)
         .icon(icon)
-        .setOnlyAlertOnce(true)
+        .silentUpdates()
 
     fun update(text: Str) {
         manager.notify(id, builder.text(text).build())
@@ -127,7 +127,7 @@ class LazyNotification(
 }
 
 
-
+fun NotificationBuilder.silentUpdates(x: Bool = yes) = apply { setOnlyAlertOnce(x) }
 fun NotificationBuilder.title(x: Str) = apply { setContentTitle(x) }
 fun NotificationBuilder.text(x: Str)  = apply { setContentText(x) }
 
