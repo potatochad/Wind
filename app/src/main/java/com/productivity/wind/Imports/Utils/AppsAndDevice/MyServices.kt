@@ -44,10 +44,10 @@ class BackgroundService : Service() {
 						DeviceGray(no)
 					}
 
-					notify.text = "Running.. $lastUsed"
+					notifi.text = "Running.. $lastUsed"
 					delay(1000)
 					
-					notify.text = "Running.  $lastUsed"
+					notifi.text = "Running.  $lastUsed"
 					delay(1000)
 				}
             }
