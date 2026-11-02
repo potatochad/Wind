@@ -34,10 +34,9 @@ class BackgroundService : Service() {
             job = serviceScope.launch {
 				var appearOnTop = Permission.appearOnTop()
 				while (appearOnTop){
+					
 					//for better accuracy need accesibility permission
 					var lastUsed = LastUsedApp()
-
-					// log("lastUsed: $lastUsed, appearOnTop: $appearOnTop")
 
 					if (!Permission.hasAccessibility("com.teqtic.lockmeout")) {
 						DeviceGray()
@@ -45,22 +44,10 @@ class BackgroundService : Service() {
 						DeviceGray(no)
 					}
 
-					notify.text = "Running...$lastUsed"
+					notify.text = "Running.. $lastUsed"
 					delay(1000)
 					
-					updateNotification("Running.. $lastUsed")
-					delay(1000)
-
-					updateNotification("Running.  $lastUsed")
-					delay(1000)
-
-					updateNotification("Running   $lastUsed")
-					delay(1000)
-
-					updateNotification("Running.  $lastUsed")
-					delay(1000)
-
-					updateNotification("Running.. $lastUsed")
+					notify.text = "Running.  $lastUsed"
 					delay(1000)
 				}
             }
