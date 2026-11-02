@@ -15,20 +15,15 @@ import com.productivity.wind.Imports.UI_visible.*
 
 
 class BackgroundService : Service() {
-    val notifiID = 1
+    val notification = LazyNotification(1, "Background tasks", "Loading...")
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var job: Job? = null
-    private lateinit var notificationBuilder: NotificationBuilder
-	
+    
 
     override fun onCreate() {
         super.onCreate()
 
 		Permission.notification()
-
-        notificationBuilder = NotificationBuilder()
-            .title("Background Tasks")
-            .text("Running...")
 
         startForeground(notifiID, notificationBuilder)
     }
