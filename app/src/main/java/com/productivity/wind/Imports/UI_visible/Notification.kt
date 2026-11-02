@@ -90,7 +90,7 @@ fun NotificationManager() = SystemService(Context.NOTIFICATION_SERVICE) as Notif
 val channelId = "WindID"
 fun NotificationChannel() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        SystemService(NotificationManager::class).createNotificationChannel(
+        SystemService(NotificationManager::class)?.createNotificationChannel(
             NotificationChannel(channelId, "Wind", NotificationManager.IMPORTANCE_LOW).apply {
                 this.description = "A general purpose notification channel"
             }
