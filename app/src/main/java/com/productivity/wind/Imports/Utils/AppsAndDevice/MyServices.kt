@@ -33,16 +33,7 @@ class BackgroundService : Service() {
         if (job?.isActive != true) {
             job = serviceScope.launch {
 				while (yes){
-					var lastUsed = LastUsedApp()
-
-					if (!Permission.hasAccessibility("com.teqtic.lockmeout")) {
-						DeviceGray()
-					} else {
-						DeviceGray(no)
-					}
-
-					notifi.text = "$lastUsed"
-					delay(1000)
+					BackgroundWork(notifi)
 				}
             }
         }
