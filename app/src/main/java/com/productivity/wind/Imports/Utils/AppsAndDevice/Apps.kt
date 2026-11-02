@@ -22,7 +22,7 @@ fun TodayAppUsage(packageName: Str): Int {
     }
     val start = cal.timeInMillis
 
-    val usm = App.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+    val usm = SystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
 
     // Use INTERVAL_BEST and filter manually
     val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, start, end)
@@ -44,7 +44,7 @@ fun LastUsedApp(
     context: Context = App,
     lookBackMs: Long = 10_000
 ): Str? {
-    val usm = context.getSystemService(UsageStatsManager::class.java)
+    val usm = SystemService(UsageStatsManager::class)
         ?: return lastUsedApp
 
     val end = System.currentTimeMillis()
