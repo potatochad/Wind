@@ -33,8 +33,6 @@ class BackgroundService : Service() {
         if (job?.isActive != true) {
             job = serviceScope.launch {
 				while (yes){
-					
-					//for better accuracy need accesibility permission
 					var lastUsed = LastUsedApp()
 
 					if (!Permission.hasAccessibility("com.teqtic.lockmeout")) {
