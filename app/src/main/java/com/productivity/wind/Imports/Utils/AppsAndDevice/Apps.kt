@@ -39,27 +39,29 @@ fun AppInfo.pkg(): Str {
 }
 
 
-fun LastUsedApp(context: Context = App, lookBackMs: Long = 10_000): Str? {
+private var lastUsedApp: Str? = null
+fun LastUsedApp(
+    context: Context = App,
+    lookBackMs: Long = 10_000
+): Str? {
     val usm = context.getSystemService(UsageStatsManager::class.java)
+        ?: return lastUsedApp
 
     val end = System.currentTimeMillis()
-    val start = end - lookBackMs
-
-    val events = usm.queryEvents(start, end)
+    val events = usm.queryEvents(end - lookBackMs, end)
     val event = UsageEvents.Event()
-
-    var lastApp: String? = null
 
     while (events.hasNextEvent()) {
         events.getNextEvent(event)
 
         if (event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
-            lastApp = event.packageName
+            lastUsedApp = event.packageName
         }
     }
 
-    return lastApp
+    return lastUsedApp
 }
+
 
 
 fun Str.pkg(): Str {
