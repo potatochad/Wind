@@ -36,6 +36,7 @@ fun startForeground(service: KClass<out Service>) {
 
 //Used for assigning Notification to foreground service
 fun Service.startForeground(id: Int, builder: NotificationBuilder) = startForeground(id, builder.build())
+fun Service.startForeground(x: LazyNotification) = startForeground(x.id, x.builder)
 
 fun stop(service: KClass<out Service>) {
     App.stopService(Intent(App, service.java))
