@@ -66,7 +66,8 @@ fun stop(service: Class<out Service>) {
 
 
 
-
+fun <T : Any> SystemService(type: KClass<T>): T? =
+    App.getSystemService(type.java)
 
 
 
