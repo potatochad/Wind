@@ -113,9 +113,9 @@ class LazyNotification(
         .icon(icon)
         .silentUpdates()
 
-    var text: Str
-       get() = builder.getText()
+    var text: Str = text
        set(value) {
+           field = value
            manager.notify(id, builder.text(value).build())
        }
 
