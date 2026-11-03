@@ -101,7 +101,7 @@
 		</service>
 
 		<service
-			android:name=".BackgroundAudioService"
+			android:name=".Imports.Utils.AppsAndDevice.BackgroundAudio"
 			android:exported="true"
 			android:foregroundServiceType="mediaPlayback">
 			
