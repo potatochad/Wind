@@ -19,6 +19,41 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 
+import android.content.ComponentName
+import androidx.media3.common.MediaMetadata
+import androidx.media3.session.MediaController
+import androidx.media3.session.SessionToken
+import com.google.common.util.concurrent.MoreExecutors
+
+fun testBackgroundAudio() {
+    val token = SessionToken(
+        this,
+        ComponentName(this, BackgroundAudio::class.java)
+    )
+
+    val future = MediaController.Builder(this, token)
+        .buildAsync()
+
+    future.addListener({
+        val controller = future.get()
+
+        controller.setMediaItem(
+            MediaItem.Builder()
+                .setUri("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
+                .setMediaMetadata(
+                    MediaMetadata.Builder()
+                        .setTitle("Wind Audio Test")
+                        .setArtist("Wind")
+                        .build()
+                )
+                .build()
+        )
+
+        controller.prepare()
+        controller.play()
+
+    }, MoreExecutors.directExecutor())
+}
 
 class BackgroundAudio : MediaSessionService() {
 
