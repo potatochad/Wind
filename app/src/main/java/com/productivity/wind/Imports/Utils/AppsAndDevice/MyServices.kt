@@ -14,6 +14,40 @@ import android.content.Intent
 import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.UI_visible.*
 
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaSession
+import androidx.media3.session.MediaSessionService
+
+
+class BackgroundAudio : MediaSessionService() {
+
+    private var mediaSession: MediaSession? = null
+
+    override fun onCreate() {
+        super.onCreate()
+
+        val player = ExoPlayer.Builder(this).build()
+
+        mediaSession = MediaSession.Builder(this, player)
+            .build()
+    }
+
+    override fun onGetSession(
+        controllerInfo: MediaSession.ControllerInfo
+    ): MediaSession? = mediaSession
+
+    override fun onDestroy() {
+        mediaSession?.run {
+            player.release()
+            release()
+        }
+
+        mediaSession = null
+        super.onDestroy()
+    }
+}
+
 
 class BackgroundService : Service() {
     val notifi = LazyNotification(1, "Background tasks", "Loading...")
