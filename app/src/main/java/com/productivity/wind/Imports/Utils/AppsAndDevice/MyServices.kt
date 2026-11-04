@@ -13,12 +13,10 @@ import kotlinx.coroutines.Dispatchers
 import android.content.Intent
 import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.UI_visible.*
-
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
-
 import android.content.ComponentName
 import androidx.media3.common.MediaMetadata
 import androidx.media3.session.MediaController
@@ -27,11 +25,11 @@ import com.google.common.util.concurrent.MoreExecutors
 
 fun testBackgroundAudio() {
     val token = SessionToken(
-        this,
-        ComponentName(this, BackgroundAudio::class.java)
+        App,
+        ComponentName(App, BackgroundAudio::class.java)
     )
 
-    val future = MediaController.Builder(this, token)
+    val future = MediaController.Builder(App, token)
         .buildAsync()
 
     future.addListener({
