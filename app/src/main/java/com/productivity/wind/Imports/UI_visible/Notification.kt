@@ -155,26 +155,23 @@ fun RemoteViews.color(id: Int, color: Int) = setTextColor(id, color)
 
 
 class MediaNotification {
-    private var controller: MediaController? = null
+    private var media: MediaController? = null
     private var future: ListenableFuture<MediaController>? = null
 
     val isConnected: Bool
-        get() = controller != null
+        get() = media != null
 
     val isPlaying: Bool
-        get() = controller?.isPlaying == true
+        get() = media?.isPlaying == true
 
     val currentPosition: Long
-        get() = controller?.currentPosition ?: 0L
+        get() = media?.currentPosition ?: 0L
 
     val duration: Long
-        get() = controller?.duration ?: 0L
+        get() = media?.duration ?: 0L
 
     init {
-        val token = SessionToken(
-            App,
-            ComponentName(App, BackgroundAudio::class.java)
-        )
+        val token = SessionToken(App, ComponentName(App, BackgroundAudio::class.java))
 
         future = MediaController.Builder(App, token)
             .buildAsync()
@@ -184,44 +181,27 @@ class MediaNotification {
         }, MoreExecutors.directExecutor())
     }
 
-    fun play() {
-        controller?.play()
-    }
+    fun play() = media?.play()
+    fun pause() = media?.pause()
+    fun stop() = media?.stop()
+    fun goTo(x: Long) = media?.seekTo(x)
+    fun volume(x: Float) = media?.volume = volume.coerceIn(0f, 1f)
+    fun speed(speed: Float) = media?.setPlaybackSpeed(speed)
 
-    fun pause() {
-        controller?.pause()
-    }
-
-    fun stop() {
-        controller?.stop()
-    }
-
-    fun seekTo(position: Long) {
-        controller?.seekTo(position)
-    }
-
-    fun setVolume(volume: Float) {
-        controller?.volume = volume.coerceIn(0f, 1f)
-    }
-
-    fun setSpeed(speed: Float) {
-        controller?.setPlaybackSpeed(speed)
-    }
-
-    fun setAudio(uri: String) {
-        controller?.run {
+    fun audio(uri: Str) {
+        media?.run {
             setMediaItem(MediaItem.fromUri(uri))
             prepare()
             play()
         }
     }
 
-    fun setMetadata(
-        title: Str,
-        artist: Str = "Wind"
+    fun UI(
+        title: Str = "Music",
+        artist: Str = "",
     ) {
-        controller?.replaceMediaItem(
-            controller?.currentMediaItemIndex ?: 0,
+        media?.replaceMediaItem(
+            media?.currentMediaItemIndex ?: 0,
             MediaItem.Builder()
                 .setUri(controller?.currentMediaItem?.localConfiguration?.uri ?: return)
                 .setMediaMetadata(
@@ -239,7 +219,7 @@ class MediaNotification {
             MediaController.releaseFuture(it)
         }
 
-        controller = null
+        media = null
         future = null
     }
 }
