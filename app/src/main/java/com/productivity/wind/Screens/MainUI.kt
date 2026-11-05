@@ -36,6 +36,7 @@ fun Main() {
 				Icon.Chill { goTo("Web") }
 
 				Icon.Reload{
+					testBackgroundAudio()
 					// showOrderNotification(11)
 				}
 				move(12)
