@@ -54,7 +54,6 @@ fun testBackgroundAudio() {
 }
 
 class BackgroundAudio : MediaSessionService() {
-
     private var mediaSession: MediaSession? = null
 
     override fun onCreate() {
