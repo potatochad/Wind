@@ -137,8 +137,6 @@ fun NotificationBuilder.text(x: Str)  = apply { setContentText(x) }
 fun NotificationBuilder.image(x: Bitmap) = apply { setLargeIcon(x) }
 fun NotificationBuilder.icon(x: Int) = apply { setSmallIcon(x) }
 
-
-
 fun RemoteViews.text(id: Int, value: Any) = setTextViewText(id, toStr(value))
 fun RemoteViews.image(id: Int, resId: Int) = setImageViewResource(id, resId)
 fun RemoteViews.visible(id: Int, visible: Bool) = setViewVisibility(id, if (visible) View.VISIBLE else View.GONE)
@@ -147,9 +145,95 @@ fun RemoteViews.color(id: Int, color: Int) = setTextColor(id, color)
 
 
 
+class MediaNotification {
+    private var controller: MediaController? = null
+    private var future: ListenableFuture<MediaController>? = null
 
+    val isConnected: Bool
+        get() = controller != null
 
+    val isPlaying: Bool
+        get() = controller?.isPlaying == true
 
+    val currentPosition: Long
+        get() = controller?.currentPosition ?: 0L
+
+    val duration: Long
+        get() = controller?.duration ?: 0L
+
+    init {
+        val token = SessionToken(
+            App,
+            ComponentName(App, BackgroundAudio::class.java)
+        )
+
+        future = MediaController.Builder(App, token)
+            .buildAsync()
+
+        future?.addListener({
+            controller = future?.get()
+        }, MoreExecutors.directExecutor())
+    }
+
+    fun play() {
+        controller?.play()
+    }
+
+    fun pause() {
+        controller?.pause()
+    }
+
+    fun stop() {
+        controller?.stop()
+    }
+
+    fun seekTo(position: Long) {
+        controller?.seekTo(position)
+    }
+
+    fun setVolume(volume: Float) {
+        controller?.volume = volume.coerceIn(0f, 1f)
+    }
+
+    fun setSpeed(speed: Float) {
+        controller?.setPlaybackSpeed(speed)
+    }
+
+    fun setAudio(uri: String) {
+        controller?.run {
+            setMediaItem(MediaItem.fromUri(uri))
+            prepare()
+            play()
+        }
+    }
+
+    fun setMetadata(
+        title: Str,
+        artist: Str = "Wind"
+    ) {
+        controller?.replaceMediaItem(
+            controller?.currentMediaItemIndex ?: 0,
+            MediaItem.Builder()
+                .setUri(controller?.currentMediaItem?.localConfiguration?.uri ?: return)
+                .setMediaMetadata(
+                    MediaMetadata.Builder()
+                        .setTitle(title)
+                        .setArtist(artist)
+                        .build()
+                )
+                .build()
+        )
+    }
+
+    fun release() {
+        future?.let {
+            MediaController.releaseFuture(it)
+        }
+
+        controller = null
+        future = null
+    }
+}
 
 
 
