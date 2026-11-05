@@ -225,7 +225,7 @@ class MediaNotification {
         )
     }
 
-    fun release() {
+    fun close() {
         future?.let {
             MediaController.releaseFuture(it)
         }
