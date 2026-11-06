@@ -185,7 +185,7 @@ class MediaNotification {
     fun pause() = media?.pause()
     fun stop() = media?.stop()
     fun goTo(x: Long) = media?.seekTo(x)
-    fun volume(x: Float) = media?.volume = x.coerceIn(0f, 1f)
+    fun volume(x: Float) = media?.volume = x.fromTo(0f, 1f)
     fun speed(speed: Float) = media?.setPlaybackSpeed(speed)
 
     fun audio(uri: Str) {
