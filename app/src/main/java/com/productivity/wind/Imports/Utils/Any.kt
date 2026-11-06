@@ -47,6 +47,9 @@ fun AndroidSettings(action: Str) {
 }
 
 
+fun Float.fromTo(from: Float, to: Float) = coerceIn(from, to)
+
+
 @Composable
 fun getW(): Float {
     return toF(BoxWithConstraints {
