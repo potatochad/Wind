@@ -157,6 +157,7 @@ fun RemoteViews.color(id: Int, color: Int) = setTextColor(id, color)
 class MediaNotification {
     private var media: MediaController? = null
     private var waitDo: ListenableFuture<MediaController>? = null
+    private val pending = mutableListOf<() -> Unit>()
 
     val isConnected: Bool
         get() = media != null
@@ -173,37 +174,45 @@ class MediaNotification {
     init {
         val token = SessionToken(App, ComponentName(App, BackgroundAudio::class.java))
 
-        waitDo = MediaController.Builder(App, token)
-            .buildAsync()
+        waitDo = MediaController.Builder(App, token).buildAsync()
 
         waitDo?.addListener({
             media = waitDo?.get()
+
+            pending.toList().forEach { it() }
+            pending.clear()
         }, MoreExecutors.directExecutor())
     }
 
-    fun play() = media?.play()
-    fun pause() = media?.pause()
-    fun stop() = media?.stop()
-    fun goTo(x: Long) = media?.seekTo(x)
-    fun volume(x: Float) = media?.volume = x.fromTo(0f, 1f)
-    fun speed(speed: Float) = media?.setPlaybackSpeed(speed)
-
-    fun audio(uri: Str) {
-        media?.run {
-            setMediaItem(MediaItem.fromUri(uri))
-            prepare()
-            play()
+    private fun run(x: MediaController.() -> Unit) {
+        media?.let { it.x() } ?: pending.add {
+            media?.x()
         }
+    }
+
+    fun play() = run { play() }
+    fun pause() = run { pause() }
+    fun stop() = run { stop() }
+    fun goTo(x: Long) = run { seekTo(x) }
+    fun volume(x: Float) = run { volume = x.fromTo(0f, 1f) }
+    fun speed(speed: Float) = run { setPlaybackSpeed(speed) }
+
+    fun audio(uri: Str) = run {
+        setMediaItem(MediaItem.fromUri(uri))
+        prepare()
+        play()
     }
 
     fun UI(
         title: Str = "Music",
         artist: Str = "",
-    ) {
-        media?.replaceMediaItem(
-            media?.currentMediaItemIndex ?: 0,
+    ) = run {
+        val uri = currentMediaItem?.localConfiguration?.uri ?: return@run
+
+        replaceMediaItem(
+            currentMediaItemIndex,
             MediaItem.Builder()
-                .setUri(media?.currentMediaItem?.localConfiguration?.uri ?: return)
+                .setUri(uri)
                 .setMediaMetadata(
                     MediaMetadata.Builder()
                         .setTitle(title)
@@ -215,6 +224,8 @@ class MediaNotification {
     }
 
     fun close() {
+        pending.clear()
+
         waitDo?.let {
             MediaController.releaseFuture(it)
         }
@@ -223,8 +234,3 @@ class MediaNotification {
         waitDo = null
     }
 }
-
-
-
-
-
