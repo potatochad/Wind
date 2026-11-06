@@ -156,7 +156,7 @@ fun RemoteViews.color(id: Int, color: Int) = setTextColor(id, color)
 
 class MediaNotification {
     private var media: MediaController? = null
-    private var future: ListenableFuture<MediaController>? = null
+    private var waitDo: ListenableFuture<MediaController>? = null
 
     val isConnected: Bool
         get() = media != null
@@ -173,11 +173,11 @@ class MediaNotification {
     init {
         val token = SessionToken(App, ComponentName(App, BackgroundAudio::class.java))
 
-        future = MediaController.Builder(App, token)
+        waitDo = MediaController.Builder(App, token)
             .buildAsync()
 
-        future?.addListener({
-            controller = future?.get()
+        waitDo?.addListener({
+            media = waitDo?.get()
         }, MoreExecutors.directExecutor())
     }
 
@@ -203,7 +203,7 @@ class MediaNotification {
         media?.replaceMediaItem(
             media?.currentMediaItemIndex ?: 0,
             MediaItem.Builder()
-                .setUri(controller?.currentMediaItem?.localConfiguration?.uri ?: return)
+                .setUri(media?.currentMediaItem?.localConfiguration?.uri ?: return)
                 .setMediaMetadata(
                     MediaMetadata.Builder()
                         .setTitle(title)
@@ -215,12 +215,12 @@ class MediaNotification {
     }
 
     fun close() {
-        future?.let {
+        waitDo?.let {
             MediaController.releaseFuture(it)
         }
 
         media = null
-        future = null
+        waitDo = null
     }
 }
 
