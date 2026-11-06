@@ -24,33 +24,14 @@ import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
 
 fun testBackgroundAudio() {
-    val token = SessionToken(
-        App,
-        ComponentName(App, BackgroundAudio::class.java)
+    val media = MediaNotification()
+
+    media.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
+
+    media.UI(
+        title = "Wind Audio Test",
+        artist = "Wind"
     )
-
-    val future = MediaController.Builder(App, token)
-        .buildAsync()
-
-    future.addListener({
-        val controller = future.get()
-
-        controller.setMediaItem(
-            MediaItem.Builder()
-                .setUri("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
-                .setMediaMetadata(
-                    MediaMetadata.Builder()
-                        .setTitle("Wind Audio Test")
-                        .setArtist("Wind")
-                        .build()
-                )
-                .build()
-        )
-
-        controller.prepare()
-        controller.play()
-
-    }, MoreExecutors.directExecutor())
 }
 
 class BackgroundAudio : MediaSessionService() {
