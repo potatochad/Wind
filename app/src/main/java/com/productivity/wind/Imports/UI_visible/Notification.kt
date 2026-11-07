@@ -208,16 +208,27 @@ class MediaNotification {
 class MediaNotificationUI(val player: ExoPlayer) {
 
     var title: Str = "Music"
-        set(value) { field = value; update() }
+        set(value) { field = value; if (!editing) update() }
 
     var artist: Str = ""
-        set(value) { field = value; update() }
+        set(value) { field = value; if (!editing) update() }
 
     var text: Str = ""
-        set(value) { field = value; update() }
+        set(value) { field = value; if (!editing) update() }
 
     var image: Uri? = null
-        set(value) { field = value; update() }
+        set(value) { field = value; if (!editing) update() }
+
+    private var editing = false
+
+    fun edit(block: MediaNotificationUI.() -> Unit) {
+        editing = true
+        try { block() }
+        finally {
+            editing = false
+            update()
+        }
+    }
 
     private fun update() {
         val item = player.currentMediaItem ?: return
