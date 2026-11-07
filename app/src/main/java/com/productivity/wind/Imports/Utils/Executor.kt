@@ -160,7 +160,7 @@ class LazyBatch(val update: Do) {
 
     operator fun <T> invoke(value: T, Do: Do? = null) 
 	   = By(value).onSet { _, id, _ ->
-		   actions[it] = Do ?: update
+		   actions[id] = Do ?: update
 		   if (depth == 0) flush()
 	   }
 
