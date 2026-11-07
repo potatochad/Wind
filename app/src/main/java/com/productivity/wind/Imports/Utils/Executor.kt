@@ -142,6 +142,31 @@ import org.mozilla.javascript.Scriptable
 
 
 
+
+class User {
+    var name by By("Joe")
+        .onBuild { property, id, state ->
+            println("BUILD: ${property.name}, $id, ${state.it}")
+        }
+        .onGet { property ->
+            println("GET: ${property.name}")
+        }
+        .onSet { property, id, value ->
+            println("SET: ${property.name}, $id, $value")
+        }
+        .onFirstGetOrSet { property, id, state ->
+            println("FIRST ACCESS: ${property.name}, $id, ${state.it}")
+        }
+
+    var age by By(17)
+        .onBuild { property, id, state ->
+            println("Building $id with ${state.it}")
+        }
+        .onFirstGetOrSet { property, id, state ->
+            println("Age accessed for the first time")
+        }
+}
+
 class LazyBatch(private val update: Do) {
     private val actions = linkedMapOf<Any, Do>()
     private var depth = 0
@@ -158,31 +183,16 @@ class LazyBatch(private val update: Do) {
         }
     }
 
-    operator fun <T> invoke(
-        value: T,
-        action: (() -> Unit)? = null
-    ) = LazyBatchValue(value) {
-        actions[it] = action ?: update
-        if (depth == 0) flush()
-    }
+    operator fun <T> invoke(value: T, Do: Do? = null) 
+	   = By(value).onSet { _, id, _ ->
+		   actions[it] = Do ?: update
+		   if (depth == 0) flush()
+	   }
 
     private fun flush() {
         val pending = actions.values.toList()
         actions.clear()
         pending.forEach { it() }
-    }
-
-    private inner class LazyBatchValue<T>(
-        private var value: T,
-        private val schedule: (Any) -> Unit
-    ) : kotlin.properties.ReadWriteProperty<Any?, T> {
-
-        override fun getValue(thisRef: Any?, property: kotlin.reflect.KProperty<*>) = value
-
-        override fun setValue(thisRef: Any?, property: kotlin.reflect.KProperty<*>, value: T) {
-            this.value = value
-            schedule(property)
-        }
     }
 }
 
