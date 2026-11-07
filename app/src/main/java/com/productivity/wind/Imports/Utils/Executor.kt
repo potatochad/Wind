@@ -166,7 +166,7 @@ class LazyBatch(
 
     private fun schedule() {
         job?.cancel()
-        job = scope.launch {
+        job = appScope.launch {
             delay(delay)
             flush()
         }
