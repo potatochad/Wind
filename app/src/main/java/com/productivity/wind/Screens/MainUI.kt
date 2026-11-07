@@ -155,7 +155,10 @@ fun Main() {
 				Icon.Chill { goTo("Web") }
 
 				Icon.Reload{
-					testBackgroundAudio()
+					appScope.launch {
+    TestLazyBatch()
+					}
+					//testBackgroundAudio()
 				}
 				move(12)
 				Text("Points ${Bar.funTime}")
