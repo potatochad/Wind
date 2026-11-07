@@ -234,3 +234,40 @@ class MediaNotification {
         waitDo = null
     }
 }
+
+
+
+class MediaUI {
+
+    var title: Str = "Music"
+        set(value) { field = value; update() }
+
+    var artist: Str = ""
+        set(value) { field = value; update() }
+
+    var text: Str = ""
+        set(value) { field = value; update() }
+
+    var image: Uri? = null
+        set(value) { field = value; update() }
+
+    private fun update() {
+        val item = currentMediaItem ?: return
+        val uri = item.localConfiguration?.uri ?: return
+
+        replaceMediaItem(
+            currentMediaItemIndex,
+            MediaItem.Builder()
+                .setUri(uri)
+                .setMediaMetadata(
+                    MediaMetadata.Builder()
+                        .setTitle(title)
+                        .setArtist(artist)
+                        .setDisplayTitle(text)
+                        .setArtworkUri(image)
+                        .build()
+                )
+                .build()
+        )
+    }
+}
