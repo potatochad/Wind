@@ -66,3 +66,19 @@ fun NotificationChannel() {
 
 
 
+fun NotificationBuilder.silentUpdates(x: Bool = yes) = apply { setOnlyAlertOnce(x) }
+fun NotificationBuilder.title(x: Str) = apply { setContentTitle(x) }
+fun NotificationBuilder.text(x: Str)  = apply { setContentText(x) }
+
+//android weird, ignore the official naming
+fun NotificationBuilder.image(x: Bitmap) = apply { setLargeIcon(x) }
+fun NotificationBuilder.icon(x: Int) = apply { setSmallIcon(x) }
+
+fun RemoteViews.text(id: Int, value: Any) = setTextViewText(id, toStr(value))
+fun RemoteViews.image(id: Int, resId: Int) = setImageViewResource(id, resId)
+fun RemoteViews.visible(id: Int, visible: Bool) = setViewVisibility(id, if (visible) View.VISIBLE else View.GONE)
+fun RemoteViews.click(id: Int, pendingIntent: PendingIntent) = setOnClickPendingIntent(id, pendingIntent)
+fun RemoteViews.color(id: Int, color: Int) = setTextColor(id, color)
+
+
+
