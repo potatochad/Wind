@@ -90,22 +90,6 @@ import com.google.common.util.concurrent.MoreExecutors
 import com.google.common.util.concurrent.ListenableFuture
 import android.net.Uri
 
-typealias NotificationBuilder = NotificationCompat.Builder
-fun NotificationBuilder() = NotificationBuilder(App, channelId).icon(myAppRes)
-fun NotificationManager() = SystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-//!MUST HAVE ALWAYS CONSTANT (every UPDATE!!) UNIQUE ID
-//ONLY HAVE ONE! and call it on every app start.
-val channelId = "WindID"
-fun NotificationChannel() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        SystemService(NotificationManager::class)?.createNotificationChannel(
-            NotificationChannel(channelId, "Wind", NotificationManager.IMPORTANCE_LOW).apply {
-                this.description = "A general purpose notification channel"
-            }
-        )
-    }
-}
 
 //! ONLY use this for notifications
 //it has id manager and can be easily messed up
