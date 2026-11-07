@@ -151,6 +151,7 @@ class LazyBatch(
     private var job: Job? = null
 
     operator fun invoke(block: Do) {
+		MainThreadOnly()
         depth++
         try { block() }
         finally {
@@ -159,12 +160,15 @@ class LazyBatch(
     }
 
     operator fun <T> invoke(value: T, Do: Do? = null) =
+	    MainThreadOnly()
         By(value).onSet { _, id, _ ->
+			MainThreadOnly()
             actions[id] = Do ?: update
             if (depth == 0) schedule()
         }
 
     private fun schedule() {
+		MainThreadOnly()
         job?.cancel()
         job = appScope.launch {
             delay(delay)
@@ -173,6 +177,7 @@ class LazyBatch(
     }
 
     private fun flush() {
+		MainThreadOnly()
         job?.cancel()
         val pending = actions.values.toList()
         actions.clear()
