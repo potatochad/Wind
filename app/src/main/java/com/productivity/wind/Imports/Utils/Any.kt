@@ -47,6 +47,13 @@ fun AndroidSettings(action: Str) {
 }
 
 
+fun MainThreadOnly() {
+    val thread = Thread.currentThread()
+	
+    Vlog("Must run on main thread, currently: ${thread.name}")
+}
+
+
 fun Float.fromTo(from: Float, to: Float) = coerceIn(from, to)
 
 
