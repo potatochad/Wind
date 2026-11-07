@@ -205,7 +205,7 @@ class MediaNotification {
 
 
 
-class MediaUI(private val player: ExoPlayer) {
+class MediaNotificationUI(val player: ExoPlayer) {
 
     var title: Str = "Music"
         set(value) { field = value; update() }
