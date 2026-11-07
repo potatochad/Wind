@@ -142,6 +142,51 @@ import org.mozilla.javascript.Scriptable
 
 
 
+class LazyBatch(private val update: Do) {
+    private val actions = linkedMapOf<Any, Do>()
+    private var depth = 0
+
+    operator fun invoke(block: Do) {
+        depth++
+        try { block() }
+        finally {
+            if (--depth == 0) {
+                val pending = actions.values.toList()
+                actions.clear()
+                pending.forEach { it() }
+            }
+        }
+    }
+
+    operator fun <T> invoke(
+        value: T,
+        action: (() -> Unit)? = null
+    ) = LazyBatchValue(value) {
+        actions[it] = action ?: update
+        if (depth == 0) flush()
+    }
+
+    private fun flush() {
+        val pending = actions.values.toList()
+        actions.clear()
+        pending.forEach { it() }
+    }
+
+    private inner class LazyBatchValue<T>(
+        private var value: T,
+        private val schedule: (Any) -> Unit
+    ) : kotlin.properties.ReadWriteProperty<Any?, T> {
+
+        override fun getValue(thisRef: Any?, property: kotlin.reflect.KProperty<*>) = value
+
+        override fun setValue(thisRef: Any?, property: kotlin.reflect.KProperty<*>, value: T) {
+            this.value = value
+            schedule(property)
+        }
+    }
+}
+
+
 fun RunJs(script: Str): Any? {
     val ctx = Context.enter()
     ctx.optimizationLevel = -1
