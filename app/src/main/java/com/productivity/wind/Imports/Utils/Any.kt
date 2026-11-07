@@ -37,6 +37,7 @@ import java.util.*
 import java.io.*
 import android.webkit.*
 import androidx.compose.ui.text.*
+import android.os.Looper
 
 fun AndroidSettings(action: Str) {
     startActivity(
