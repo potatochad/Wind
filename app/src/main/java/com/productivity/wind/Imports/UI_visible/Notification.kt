@@ -237,7 +237,7 @@ class MediaNotification {
 
 
 
-class MediaUI {
+class MediaUI(private val player: ExoPlayer) {
 
     var title: Str = "Music"
         set(value) { field = value; update() }
@@ -252,11 +252,11 @@ class MediaUI {
         set(value) { field = value; update() }
 
     private fun update() {
-        val item = currentMediaItem ?: return
+        val item = player.currentMediaItem ?: return
         val uri = item.localConfiguration?.uri ?: return
 
-        replaceMediaItem(
-            currentMediaItemIndex,
+        player.replaceMediaItem(
+            player.currentMediaItemIndex,
             MediaItem.Builder()
                 .setUri(uri)
                 .setMediaMetadata(
