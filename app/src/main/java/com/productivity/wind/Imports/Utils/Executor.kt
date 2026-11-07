@@ -142,29 +142,38 @@ import org.mozilla.javascript.Context
 import org.mozilla.javascript.Scriptable
 
 
-class LazyBatch(val update: Do) {
+class LazyBatch(
+    val update: Do,
+    val delay: Long = 50
+) {
     private val actions = linkedMapOf<Any, Do>()
     private var depth = 0
+    private var job: Job? = null
 
     operator fun invoke(block: Do) {
         depth++
         try { block() }
         finally {
-            if (--depth == 0) {
-                val pending = actions.values.toList()
-                actions.clear()
-                pending.forEach { it() }
-            }
+            if (--depth == 0) flush()
         }
     }
 
-    operator fun <T> invoke(value: T, Do: Do? = null) 
-	   = By(value).onSet { _, id, _ ->
-		   actions[id] = Do ?: update
-		   if (depth == 0) flush()
-	   }
+    operator fun <T> invoke(value: T, Do: Do? = null) =
+        By(value).onSet { _, id, _ ->
+            actions[id] = Do ?: update
+            if (depth == 0) schedule()
+        }
+
+    private fun schedule() {
+        job?.cancel()
+        job = scope.launch {
+            delay(delay)
+            flush()
+        }
+    }
 
     private fun flush() {
+        job?.cancel()
         val pending = actions.values.toList()
         actions.clear()
         pending.forEach { it() }
