@@ -141,33 +141,7 @@ import org.mozilla.javascript.Context
 import org.mozilla.javascript.Scriptable
 
 
-
-
-class User {
-    var name by By("Joe")
-        .onBuild { property, id, state ->
-            println("BUILD: ${property.name}, $id, ${state.it}")
-        }
-        .onGet { property ->
-            println("GET: ${property.name}")
-        }
-        .onSet { property, id, value ->
-            println("SET: ${property.name}, $id, $value")
-        }
-        .onFirstGetOrSet { property, id, state ->
-            println("FIRST ACCESS: ${property.name}, $id, ${state.it}")
-        }
-
-    var age by By(17)
-        .onBuild { property, id, state ->
-            println("Building $id with ${state.it}")
-        }
-        .onFirstGetOrSet { property, id, state ->
-            println("Age accessed for the first time")
-        }
-}
-
-class LazyBatch(private val update: Do) {
+class LazyBatch(val update: Do) {
     private val actions = linkedMapOf<Any, Do>()
     private var depth = 0
 
@@ -195,6 +169,7 @@ class LazyBatch(private val update: Do) {
         pending.forEach { it() }
     }
 }
+
 
 
 fun RunJs(script: Str): Any? {
