@@ -36,7 +36,15 @@ fun Main() {
 				Icon.Chill { goTo("Web") }
 
 				Icon.Reload{
-					testBackgroundAudio()
+					fun testMainThread() {
+						MainThreadOnly() // Should pass
+
+						Thread {
+							MainThreadOnly() // Should throw IllegalStateException
+						}.start()
+					}
+					testMainThread()
+					// testBackgroundAudio()
 					// showOrderNotification(11)
 				}
 				move(12)
