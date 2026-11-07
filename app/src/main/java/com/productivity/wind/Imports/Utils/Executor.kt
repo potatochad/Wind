@@ -160,7 +160,6 @@ class LazyBatch(
     }
 
     operator fun <T> invoke(value: T, Do: Do? = null) =
-	    MainThreadOnly()
         By(value).onSet { _, id, _ ->
 			MainThreadOnly()
             actions[id] = Do ?: update
