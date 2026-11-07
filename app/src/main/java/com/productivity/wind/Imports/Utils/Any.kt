@@ -49,8 +49,9 @@ fun AndroidSettings(action: Str) {
 
 fun MainThreadOnly() {
     val thread = Thread.currentThread()
+	val isMain = Looper.myLooper() == Looper.getMainLooper()
 	
-    Vlog("Must run on main thread, currently: ${thread.name}")
+    if (!isMain) Vlog("Must run on main thread, currently: ${thread.name}")
 }
 
 
