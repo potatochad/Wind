@@ -122,10 +122,19 @@ class LazyNotification(
 }
 
 
+
 class MediaNotification {
     private var media: MediaController? = null
     private var waitDo: ListenableFuture<MediaController>? = null
-    private val pending = mutableListOf<() -> Unit>()
+    private val batch = LazyBatch(::update)
+
+    private var play by batch(false) { media?.play() }
+    private var pause by batch(false) { media?.pause() }
+    private var stop by batch(false) { media?.stop() }
+
+    private var seek by batch(0L) { media?.seekTo(seek) }
+    private var volume by batch(1f) { media?.volume = volume }
+    private var speed by batch(1f) { media?.setPlaybackSpeed(speed) }
 
     val isConnected: Bool
         get() = media != null
@@ -146,38 +155,36 @@ class MediaNotification {
 
         waitDo?.addListener({
             media = waitDo?.get()
-
-            pending.toList().forEach { it() }
-            pending.clear()
+            batch { update() }
         }, MoreExecutors.directExecutor())
     }
 
-    private fun run(x: MediaController.() -> Unit) {
-        media?.let { it.x() } ?: pending.add {
-            media?.x()
+    private fun update() {
+        if (media == null) return
+
+        if (play) {
+            play = false
+            media?.play()
         }
     }
 
-    fun play() = run { play() }
-    fun pause() = run { pause() }
-    fun stop() = run { stop() }
-    fun goTo(x: Long) = run { seekTo(x) }
-    fun volume(x: Float) = run { volume = x.fromTo(0f, 1f) }
-    fun speed(speed: Float) = run { setPlaybackSpeed(speed) }
+    fun play() { play = true }
+    fun pause() { pause = true }
+    fun stop() { stop = true }
+    fun goTo(x: Long) { seek = x }
+    fun volume(x: Float) { volume = x.fromTo(0f, 1f) }
+    fun speed(x: Float) { speed = x }
 
-    fun audio(uri: Str) = run {
-        setMediaItem(MediaItem.fromUri(uri))
-        prepare()
-        play()
+    fun audio(uri: Str) = batch {
+        media?.let {
+            it.setMediaItem(MediaItem.fromUri(uri))
+            it.prepare()
+            it.play()
+        }
     }
-    
+
     fun close() {
-        pending.clear()
-
-        waitDo?.let {
-            MediaController.releaseFuture(it)
-        }
-
+        waitDo?.let(MediaController::releaseFuture)
         media = null
         waitDo = null
     }
