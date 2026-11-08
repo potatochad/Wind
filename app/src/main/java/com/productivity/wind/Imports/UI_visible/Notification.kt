@@ -172,7 +172,7 @@ open class MediaNotificationController() {
 
 
 
-class MediaNotification() : MediaNotificationController(player) {
+class MediaNotification() : MediaNotificationController {
     var title: Str by batch("Music")
     var artist: Str by batch("")
     var text: Str by batch("")
