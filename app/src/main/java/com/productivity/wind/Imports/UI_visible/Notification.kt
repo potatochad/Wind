@@ -123,31 +123,15 @@ class LazyNotification(
 
 
 
-open class MediaNotificationController {
+open class MediaNotificationController(
+    protected val player: ExoPlayer
+) {
     protected var media: MediaController? = null
     protected var waitDo: ListenableFuture<MediaController>? = null
 
     protected val batch = LazyBatch(::update)
 
-    protected open fun update() {}
-
-    init {
-        val token = SessionToken(
-            App,
-            ComponentName(App, BackgroundAudio::class.java)
-        )
-
-        waitDo = MediaController.Builder(App, token).buildAsync()
-
-        waitDo?.addListener({
-            media = waitDo?.get()
-            batch { update() }
-        }, MoreExecutors.directExecutor())
-    }
-
-    
-
-    override fun update() {
+    protected open fun update() {
         val item = player.currentMediaItem ?: return
         val uri = item.localConfiguration?.uri ?: return
 
@@ -166,9 +150,30 @@ open class MediaNotificationController {
                 .build()
         )
     }
+
+    protected open var title: Str = "Music"
+    protected open var artist: Str = ""
+    protected open var text: Str = ""
+    protected open var image: Uri? = null
+
+    init {
+        val token = SessionToken(
+            App,
+            ComponentName(App, BackgroundAudio::class.java)
+        )
+
+        waitDo = MediaController.Builder(App, token).buildAsync()
+
+        waitDo?.addListener({
+            media = waitDo?.get()
+            batch { update() }
+        }, MoreExecutors.directExecutor())
+    }
 }
 
-class MediaNotification(val player: ExoPlayer) : MediaNotificationController() {
+
+
+class MediaNotification(player: ExoPlayer) : MediaNotificationController(player) {
     var title: Str by batch("Music")
     var artist: Str by batch("")
     var text: Str by batch("")
@@ -177,7 +182,6 @@ class MediaNotification(val player: ExoPlayer) : MediaNotificationController() {
     fun edit(block: MediaNotification.() -> Unit) {
         batch { block() }
     }
-    
 
     val isConnected: Bool
         get() = media != null
@@ -190,13 +194,14 @@ class MediaNotification(val player: ExoPlayer) : MediaNotificationController() {
 
     val duration: Long
         get() = media?.duration ?: 0L
-    
 
     fun play() = media?.play()
     fun pause() = media?.pause()
     fun stop() = media?.stop()
     fun goTo(x: Long) = media?.seekTo(x)
-    fun volume(x: Float) { media?.volume = x.fromTo(0f, 1f) }
+    fun volume(x: Float) {
+        media?.volume = x.fromTo(0f, 1f)
+    }
     fun speed(x: Float) = media?.setPlaybackSpeed(x)
 
     fun audio(uri: Str) {
