@@ -123,33 +123,19 @@ class LazyNotification(
 
 
 
-class MediaNotification {
-    private var media: MediaController? = null
-    private var waitDo: ListenableFuture<MediaController>? = null
-    private val batch = LazyBatch(::update)
+open class MediaNotificationController {
+    protected var media: MediaController? = null
+    protected var waitDo: ListenableFuture<MediaController>? = null
 
-    private var play by batch(false) { media?.play() }
-    private var pause by batch(false) { media?.pause() }
-    private var stop by batch(false) { media?.stop() }
+    protected val batch = LazyBatch(::update)
 
-    private var seek by batch(0L) { media?.seekTo(seek) }
-    private var volume by batch(1f) { media?.volume = volume }
-    private var speed by batch(1f) { media?.setPlaybackSpeed(speed) }
-
-    val isConnected: Bool
-        get() = media != null
-
-    val isPlaying: Bool
-        get() = media?.isPlaying == true
-
-    val currentPosition: Long
-        get() = media?.currentPosition ?: 0L
-
-    val duration: Long
-        get() = media?.duration ?: 0L
+    protected open fun update() {}
 
     init {
-        val token = SessionToken(App, ComponentName(App, BackgroundAudio::class.java))
+        val token = SessionToken(
+            App,
+            ComponentName(App, BackgroundAudio::class.java)
+        )
 
         waitDo = MediaController.Builder(App, token).buildAsync()
 
@@ -159,52 +145,9 @@ class MediaNotification {
         }, MoreExecutors.directExecutor())
     }
 
-    private fun update() {
-        if (media == null) return
+    
 
-        if (play) {
-            play = false
-            media?.play()
-        }
-    }
-
-    fun play() { play = true }
-    fun pause() { pause = true }
-    fun stop() { stop = true }
-    fun goTo(x: Long) { seek = x }
-    fun volume(x: Float) { volume = x.fromTo(0f, 1f) }
-    fun speed(x: Float) { speed = x }
-
-    fun audio(uri: Str) = batch {
-        media?.let {
-            it.setMediaItem(MediaItem.fromUri(uri))
-            it.prepare()
-            it.play()
-        }
-    }
-
-    fun close() {
-        waitDo?.let(MediaController::releaseFuture)
-        media = null
-        waitDo = null
-    }
-}
-
-
-
-class MediaNotificationUI(val player: ExoPlayer) {
-    private val batch = LazyBatch(::update)
-
-    var title: Str by batch("Music")
-    var artist: Str by batch("")
-    var text: Str by batch("")
-    var image: Uri? by batch(null)
-
-    fun edit(block: MediaNotificationUI.() -> Unit) {
-        batch { block() }
-    }
-
-    private fun update() {
+    override fun update() {
         val item = player.currentMediaItem ?: return
         val uri = item.localConfiguration?.uri ?: return
 
@@ -222,5 +165,51 @@ class MediaNotificationUI(val player: ExoPlayer) {
                 )
                 .build()
         )
+    }
+}
+
+class MediaNotification(val player: ExoPlayer) : MediaNotificationController() {
+    var title: Str by batch("Music")
+    var artist: Str by batch("")
+    var text: Str by batch("")
+    var image: Uri? by batch(null)
+
+    fun edit(block: MediaNotification.() -> Unit) {
+        batch { block() }
+    }
+    
+
+    val isConnected: Bool
+        get() = media != null
+
+    val isPlaying: Bool
+        get() = media?.isPlaying == true
+
+    val currentPosition: Long
+        get() = media?.currentPosition ?: 0L
+
+    val duration: Long
+        get() = media?.duration ?: 0L
+    
+
+    fun play() = media?.play()
+    fun pause() = media?.pause()
+    fun stop() = media?.stop()
+    fun goTo(x: Long) = media?.seekTo(x)
+    fun volume(x: Float) { media?.volume = x.fromTo(0f, 1f) }
+    fun speed(x: Float) = media?.setPlaybackSpeed(x)
+
+    fun audio(uri: Str) {
+        media?.let {
+            it.setMediaItem(MediaItem.fromUri(uri))
+            it.prepare()
+            it.play()
+        }
+    }
+
+    fun close() {
+        waitDo?.let(MediaController::releaseFuture)
+        media = null
+        waitDo = null
     }
 }
