@@ -23,18 +23,14 @@ import kotlinx.coroutines.*
 import android.os.SystemClock
 import android.util.Log
 
+
+
 suspend fun testMediaNotification() = withContext(Dispatchers.Main) {
 
-    val tag = "MediaNotificationTest"
     val start = SystemClock.elapsedRealtime()
 
-    fun log(message: String) {
-        val time = SystemClock.elapsedRealtime() - start
-        Log.d(tag, "[$time ms] $message")
-    }
-
     fun test(name: String, result: Boolean) {
-        log("${if (result) "PASS" else "FAIL"}: $name")
+        Vlog("${if (result) "PASS" else "FAIL"}: $name")
     }
 
     fun timed(name: String, block: () -> Unit) {
@@ -42,20 +38,20 @@ suspend fun testMediaNotification() = withContext(Dispatchers.Main) {
         try {
             block()
             val ms = (SystemClock.elapsedRealtimeNanos() - t) / 1_000_000.0
-            log("PASS: $name (${ms}ms)")
+            Vlog("PASS: $name (${ms}ms)")
         } catch (e: Exception) {
-            log("FAIL: $name - ${e.message}")
+            Vlog("FAIL: $name - ${e.message}")
         }
     }
 
-    log("========== STARTING TEST ==========")
+    Vlog("========== STARTING TEST ==========")
 
     val music = MediaNotification()
 
     try {
         // 1. CONNECTION
 
-        log("Waiting for connection...")
+        Vlog("Waiting for connection...")
 
         val connectionTime = SystemClock.elapsedRealtime()
 
@@ -68,11 +64,11 @@ suspend fun testMediaNotification() = withContext(Dispatchers.Main) {
         test("Controller connected", music.isConnected)
 
         if (!music.isConnected) {
-            log("Connection failed. Remaining tests skipped.")
+            Vlog("Connection failed. Remaining tests skipped.")
             return@withContext
         }
 
-        log("Connection took ${SystemClock.elapsedRealtime() - connectionTime}ms")
+        Vlog("Connection took ${SystemClock.elapsedRealtime() - connectionTime}ms")
 
         // 2. INITIAL VALUES
 
@@ -110,7 +106,7 @@ suspend fun testMediaNotification() = withContext(Dispatchers.Main) {
             }
         }
 
-        log("1000 edits took ${
+        Vlog("1000 edits took ${
             (SystemClock.elapsedRealtimeNanos() - editTime) / 1_000_000.0
         }ms")
 
@@ -128,7 +124,7 @@ suspend fun testMediaNotification() = withContext(Dispatchers.Main) {
             )
         }
 
-        log("Waiting for music to start...")
+        Vlog("Waiting for music to start...")
 
         val playbackTime = SystemClock.elapsedRealtime()
 
@@ -140,15 +136,15 @@ suspend fun testMediaNotification() = withContext(Dispatchers.Main) {
 
         test("Music started", music.isPlaying)
 
-        log("Playback startup: ${
+        Vlog("Playback startup: ${
             SystemClock.elapsedRealtime() - playbackTime
         }ms")
 
         // 6. PLAYBACK INFORMATION
 
-        log("Playing: ${music.isPlaying}")
-        log("Position: ${music.currentPosition}ms")
-        log("Duration: ${music.duration}ms")
+        Vlog("Playing: ${music.isPlaying}")
+        Vlog("Position: ${music.currentPosition}ms")
+        Vlog("Duration: ${music.duration}ms")
 
         test("Duration available", music.duration > 0)
 
@@ -211,7 +207,7 @@ suspend fun testMediaNotification() = withContext(Dispatchers.Main) {
 
         delay(500)
 
-        log("Position after seeking: ${music.currentPosition}ms")
+        Vlog("Position after seeking: ${music.currentPosition}ms")
 
         test(
             "Seek reached target",
@@ -279,14 +275,15 @@ suspend fun testMediaNotification() = withContext(Dispatchers.Main) {
         }
 
     } catch (e: Exception) {
-        log("TEST CRASHED: ${e.stackTraceToString()}")
+        Vlog("TEST CRASHED: ${e.stackTraceToString()}")
     } finally {
         music.close()
     }
 
-    log("========== TEST FINISHED ==========")
-    log("Total runtime: ${SystemClock.elapsedRealtime() - start}ms")
-			}
+    Vlog("========== TEST FINISHED ==========")
+    Vlog("Total runtime: ${SystemClock.elapsedRealtime() - start}ms")
+}
+
 
 
 
