@@ -206,28 +206,15 @@ class MediaNotification {
 
 
 class MediaNotificationUI(val player: ExoPlayer) {
+    private val batch = LazyBatch(::update)
 
-    var title: Str = "Music"
-        set(value) { field = value; if (!editing) update() }
-
-    var artist: Str = ""
-        set(value) { field = value; if (!editing) update() }
-
-    var text: Str = ""
-        set(value) { field = value; if (!editing) update() }
-
-    var image: Uri? = null
-        set(value) { field = value; if (!editing) update() }
-
-    private var editing = false
+    var title: Str by batch("Music")
+    var artist: Str by batch("")
+    var text: Str by batch("")
+    var image: Uri? by batch(null)
 
     fun edit(block: MediaNotificationUI.() -> Unit) {
-        editing = true
-        try { block() }
-        finally {
-            editing = false
-            update()
-        }
+        batch { block() }
     }
 
     private fun update() {
