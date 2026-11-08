@@ -150,10 +150,10 @@ open class MediaNotificationController() {
         )
     }
 
-    protected open var title: Str = "Music"
-    protected open var artist: Str = ""
-    protected open var text: Str = ""
-    protected open var image: Uri? = null
+    open var title: Str = "Music"
+    open var artist: Str = ""
+    open var text: Str = ""
+    open var image: Uri? = null
 
     init {
         val token = SessionToken(
@@ -173,10 +173,10 @@ open class MediaNotificationController() {
 
 
 class MediaNotification : MediaNotificationController() {
-    var title: Str by batch("Music")
-    var artist: Str by batch("")
-    var text: Str by batch("")
-    var image: Uri? by batch(null)
+    override var title: Str by batch("Music")
+    override var artist: Str by batch("")
+    override var text: Str by batch("")
+    override var image: Uri? by batch(null)
 
     fun edit(block: MediaNotification.() -> Unit) {
         batch { block() }
