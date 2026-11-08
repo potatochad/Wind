@@ -170,27 +170,7 @@ class MediaNotification {
         prepare()
         play()
     }
-
-    fun UI(
-        title: Str = "Music",
-        artist: Str = "",
-    ) = run {
-        val uri = currentMediaItem?.localConfiguration?.uri ?: return@run
-
-        replaceMediaItem(
-            currentMediaItemIndex,
-            MediaItem.Builder()
-                .setUri(uri)
-                .setMediaMetadata(
-                    MediaMetadata.Builder()
-                        .setTitle(title)
-                        .setArtist(artist)
-                        .build()
-                )
-                .build()
-        )
-    }
-
+    
     fun close() {
         pending.clear()
 
