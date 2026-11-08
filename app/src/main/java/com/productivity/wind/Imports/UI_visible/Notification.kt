@@ -123,9 +123,8 @@ class LazyNotification(
 
 
 
-open class MediaNotificationController(
-    protected val player: ExoPlayer
-) {
+open class MediaNotificationController() {
+    protected val player = ExoPlayer.Builder(App).build()
     protected var media: MediaController? = null
     protected var waitDo: ListenableFuture<MediaController>? = null
 
@@ -173,7 +172,7 @@ open class MediaNotificationController(
 
 
 
-class MediaNotification(player: ExoPlayer) : MediaNotificationController(player) {
+class MediaNotification() : MediaNotificationController(player) {
     var title: Str by batch("Music")
     var artist: Str by batch("")
     var text: Str by batch("")
