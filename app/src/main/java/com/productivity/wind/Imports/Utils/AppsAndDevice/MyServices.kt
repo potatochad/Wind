@@ -23,6 +23,7 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
 
+/*
 fun testBackgroundAudio() {
     val media = MediaNotification()
 
@@ -33,6 +34,7 @@ fun testBackgroundAudio() {
         artist = "Wind"
     )
 }
+*/
 
 class BackgroundAudio : MediaSessionService() {
     private var mediaSession: MediaSession? = null
