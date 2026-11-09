@@ -54,7 +54,6 @@ class WebController(
     private val doUpdateVisitedHistory = mutableListOf<(Str?, Bool) -> Unit>()
     private val onPageStarted = mutableListOf<(Str?) -> Unit>()
     private val shouldInterceptRequest = mutableListOf<(WebResourceRequest) -> WebResourceResponse?>()
-
     private var onProgressChanged = mutableListOf<(Int) -> Unit>()
     private var onReceivedTitle = mutableListOf<(Str?) -> Unit>()
 
