@@ -43,12 +43,8 @@ import androidx.media3.session.MediaSessionService
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
 ) {
-    val rootView: View =
-        LayoutInflater.from(ctx).inflate(R.layout.web, null, false)
-
-    val webView: WebView =
-        rootView.findViewById(R.id.myWebView)
-
+	val rootView = createRootView(ctx)
+    val webView = getWebView(rootView)
     val swipeRefresh: SwipeRefreshLayout =
         rootView.findViewById(R.id.swipeRefreshContainer)
 
