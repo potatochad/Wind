@@ -60,7 +60,7 @@ class WebController(
     
     init {
 		webView.enable()
-		swipeRefresh.reload(webView)
+		swipeRefresh.setUp(webView)
         
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: Str?): Bool {
