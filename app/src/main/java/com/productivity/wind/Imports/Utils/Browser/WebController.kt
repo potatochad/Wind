@@ -45,9 +45,7 @@ class WebController(
 ) {
 	val rootView = createRootView(ctx)
     val webView = getWebView(rootView)
-    val swipeRefresh: SwipeRefreshLayout =
-        rootView.findViewById(R.id.swipeRefreshContainer)
-
+	val swipeRefresh = getSwipeRefresh(rootView)
 
 
     private var shouldOverrideUrlLoading = mutableListOf<(Str?) -> Bool>()
