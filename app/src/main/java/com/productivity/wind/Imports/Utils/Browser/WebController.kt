@@ -60,10 +60,7 @@ class WebController(
     
     init {
 		webView.enable()
-		
-		swipeRefresh.setOnRefreshListener {
-            webView.reload()
-        }
+		swipeRefresh.reload(webView)
 
         swipeRefresh.setOnChildScrollUpCallback { _, _ ->
             webView.scrollY > 0
