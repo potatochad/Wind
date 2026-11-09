@@ -55,7 +55,8 @@ fun WebView.enable(){
 
 fun createRootView(ctx: Context): View =
     LayoutInflater.from(ctx).inflate(R.layout.web, null, no)
-
+fun getWebView(rootView: View): WebView =
+    rootView.findViewById(R.id.myWebView)
 
 
 
