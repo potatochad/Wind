@@ -57,7 +57,8 @@ fun createRootView(ctx: Context): View =
     LayoutInflater.from(ctx).inflate(R.layout.web, null, no)
 fun getWebView(rootView: View): WebView =
     rootView.findViewById(R.id.myWebView)
-
+fun getSwipeRefresh(rootView: View): SwipeRefreshLayout =
+    rootView.findViewById(R.id.swipeRefreshContainer)
 
 
 @SuppressLint("SetJavaScriptEnabled")
