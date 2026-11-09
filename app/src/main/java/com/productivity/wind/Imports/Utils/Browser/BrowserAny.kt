@@ -53,6 +53,10 @@ fun WebView.enable(){
 }
 
 
+fun createRootView(ctx: Context): View =
+    LayoutInflater.from(ctx).inflate(R.layout.web, null, no)
+
+
 
 
 @SuppressLint("SetJavaScriptEnabled")
