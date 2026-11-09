@@ -59,7 +59,11 @@ fun getWebView(rootView: View): WebView =
     rootView.findViewById(R.id.myWebView)
 fun getSwipeRefresh(rootView: View): SwipeRefreshLayout =
     rootView.findViewById(R.id.swipeRefreshContainer)
-fun SwipeRefreshLayout.reload(webView: WebView) {
+fun SwipeRefreshLayout.setUp(webView: WebView) {
+    setOnChildScrollUpCallback { _, _ ->
+        webView.scrollY > 0
+    }
+
     setOnRefreshListener {
         webView.reload()
     }
