@@ -165,14 +165,14 @@ class WebController(
     val url: Str?
         get() = webView.url
     fun url(u: Str) {
-        val url = u.trim()
-
-        val finalUrl = if (url.isUrl()) url
-        else "https://$url"
-
-        webView.loadUrl(finalUrl)
-    }
-    val web: WebView?
+    	webView.loadUrl(
+			u.trim().let { 
+				if (it.isUrl()) it else "https://$it" 
+			}
+		)
+	}
+   
+	val web: WebView?
         get() = webView
 
     fun blockImages(Do: () -> Bool = { yes }) {
