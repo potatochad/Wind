@@ -165,9 +165,12 @@ class WebController(
     val url: Str?
         get() = webView.url
     fun url(u: Str) {
-    	webView.loadUrl(
-			u.trim().let { 
-				if (it.isUrl()) it else "https://$it" 
+    val url = u.trim()
+		webView.loadUrl(
+			if (url.isUrl()) {
+				url
+			} else {
+				"https://$url"
 			}
 		)
 	}
