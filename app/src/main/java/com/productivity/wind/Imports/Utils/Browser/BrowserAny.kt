@@ -70,6 +70,26 @@ fun SwipeRefreshLayout.setUp(webView: WebView) {
 }
 
 
+
+fun Str.isUrl() =
+    startsWith("http://") ||
+    startsWith("https://") ||
+    startsWith("file://") ||
+    startsWith("about:") ||
+    startsWith("data:") ||
+    startsWith("javascript:") ||
+    startsWith("//") ||
+    startsWith("ftp://") ||
+    startsWith("mailto:") ||
+    startsWith("ws://") ||
+    startsWith("wss://") ||
+    startsWith("tel:") ||
+    startsWith("sms:") ||
+    startsWith("geo:") ||
+    startsWith("content://") ||
+    startsWith("intent://")
+
+
 @SuppressLint("SetJavaScriptEnabled")
 fun WebView.clearWebData() {
     clearMatches()
