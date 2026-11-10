@@ -157,6 +157,8 @@ class WebController(
         }
     }
 
+	fun zoomOut() = webView.zoomOut()
+    fun reload() = webView.reload()
 	fun canGoBack() = webView.canGoBack()
     fun back() = if (webView.canGoBack()) webView.goBack()
 	
@@ -165,28 +167,13 @@ class WebController(
     fun url(u: Str) {
         val url = u.trim()
 
-        val finalUrl =
-        if (
-            url.startsWith("http://") ||
-            url.startsWith("https://") ||
-            url.startsWith("file://") ||
-            url.startsWith("about:") ||
-            url.startsWith("data:") ||
-            url.startsWith("javascript:") ||
-            url.startsWith("//")
-        ) url
+        val finalUrl = if (url.isUrl()) url
         else "https://$url"
 
         webView.loadUrl(finalUrl)
     }
     val web: WebView?
         get() = webView
-    fun zoomOut(){
-        webView.zoomOut()
-    }
-    fun reload(){
-        webView.reload()
-    }
 
     fun blockImages(Do: () -> Bool = { yes }) {
         shouldInterceptRequest { request ->
