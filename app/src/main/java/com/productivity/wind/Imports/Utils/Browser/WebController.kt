@@ -160,7 +160,11 @@ class WebController(
 	fun zoomOut() = webView.zoomOut()
     fun reload() = webView.reload()
 	fun canGoBack() = webView.canGoBack()
-    fun back() = if (webView.canGoBack()) webView.goBack()
+    fun back() {
+		if (webView.canGoBack()) {
+			webView.goBack()
+		}
+	}
 	
     val url: Str?
         get() = webView.url
