@@ -39,17 +39,18 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 
-open class WebEngine(ctx: Context){
-	
+open class WebEngine(
+    protected val ctx: Context
+) {
+    val rootView = createRootView(ctx)
+    val webView = getWebView(rootView)
+    val swipeRefresh = getSwipeRefresh(rootView)
 }
 
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
-) {
-	val rootView = createRootView(ctx)
-    val webView = getWebView(rootView)
-	val swipeRefresh = getSwipeRefresh(rootView)
-
+): WebEngine(ctx) {
+	//stuff...
 
     private var shouldOverrideUrlLoading = mutableListOf<(Str?) -> Bool>()
     private var onPageFinished = mutableListOf<(Str?) -> Unit>()
