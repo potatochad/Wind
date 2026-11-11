@@ -39,6 +39,9 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 
+open class WebEngine(ctx: Context){
+	
+}
 
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
