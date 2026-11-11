@@ -46,14 +46,14 @@ abstract class WebEngine(
     val webView = getWebView(rootView)
     val swipeRefresh = getSwipeRefresh(rootView)
 
-	private var shouldOverrideUrlLoading = mutableListOf<(Str?) -> Bool>()
-    private var onPageFinished = mutableListOf<(Str?) -> Unit>()
-    private var onLoadResource = mutableListOf<(Str?) -> Unit>()
-    private val doUpdateVisitedHistory = mutableListOf<(Str?, Bool) -> Unit>()
-    private val onPageStarted = mutableListOf<(Str?) -> Unit>()
-    private val shouldInterceptRequest = mutableListOf<(WebResourceRequest) -> WebResourceResponse?>()
-    private var onProgressChanged = mutableListOf<(Int) -> Unit>()
-    private var onReceivedTitle = mutableListOf<(Str?) -> Unit>()
+	var shouldOverrideUrlLoading = mutableListOf<(Str?) -> Bool>()
+    var onPageFinished = mutableListOf<(Str?) -> Unit>()
+    var onLoadResource = mutableListOf<(Str?) -> Unit>()
+    val doUpdateVisitedHistory = mutableListOf<(Str?, Bool) -> Unit>()
+    val onPageStarted = mutableListOf<(Str?) -> Unit>()
+    val shouldInterceptRequest = mutableListOf<(WebResourceRequest) -> WebResourceResponse?>()
+    var onProgressChanged = mutableListOf<(Int) -> Unit>()
+    var onReceivedTitle = mutableListOf<(Str?) -> Unit>()
 
     
 }
