@@ -55,14 +55,7 @@ abstract class WebEngine(
     var onProgressChanged = mList<(Int) -> Unit>()
     var onReceivedTitle = mList<(Str?) -> Unit>()
 
-    
-}
-
-
-class WebController(
-    ctx: Context //!NEEDS ONLY LOCAL CONTEXT
-): WebEngine(ctx) {
-    init {
+	init {
 		webView.enable()
 		swipeRefresh.setUp(webView)
         
@@ -154,7 +147,13 @@ class WebController(
         onReceivedTitle.add(handler)
     }    
 
+    
+}
 
+
+class WebController(
+    ctx: Context //!NEEDS ONLY LOCAL CONTEXT
+): WebEngine(ctx) {  
     fun settings(configure: WebSettings.() -> Unit) {
         webView.settings.apply {
             configure()
