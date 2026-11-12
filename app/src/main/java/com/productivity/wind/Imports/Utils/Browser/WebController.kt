@@ -68,8 +68,9 @@ open class WebEngine(ctx: Context) : WebViewClient() {
     override fun onLoadResource(view: WebView?, url: String?) {
         var default = mState(yes)
 		onResource(view, url, yes)
+		onResource(view, url)
 		
-		if (defaultBehaviour) super.onLoadResource(view, url)
+		if () super.onLoadResource(view, url)
     }
 
     
