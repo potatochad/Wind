@@ -72,8 +72,36 @@ open class WebEngine(ctx: Context) : WebViewClient() {
 		
 		if () super.onLoadResource(view, url)
     }
+}
 
-    
+
+open class WebEngine(ctx: Context) : WebViewClient() {
+
+    private var resourceStateCallback: ((WebView?, String?, mStateBool) -> Unit)? = null
+    private var resourceCallback: ((WebView?, String?) -> Unit)? = null
+
+    fun onResource(
+        callback: ((WebView?, String?, mStateBool) -> Unit)? = null
+    ) {
+        resourceStateCallback = callback
+    }
+
+    fun onResource(
+        callback: ((WebView?, String?) -> Unit)? = null
+    ) {
+        resourceCallback = callback
+    }
+
+    override fun onLoadResource(view: WebView?, url: String?) {
+        val state = mStateBool()
+
+        resourceStateCallback?.invoke(view, url, state)
+        resourceCallback?.invoke(view, url)
+
+        if (state.value) {
+            super.onLoadResource(view, url)
+        }
+    }
 }
 */
 
