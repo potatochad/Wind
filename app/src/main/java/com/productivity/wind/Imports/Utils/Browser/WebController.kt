@@ -59,54 +59,6 @@ abstract class WebEngine(
 }
 
 
-/*
-open class WebEngine(ctx: Context) : WebViewClient() {
-
-    fun onResource(((WebView?, Str?, mStateBool) -> Unit)? = null)
-	fun onResource(((WebView?, Str?) -> Unit)? = null)
-    
-    override fun onLoadResource(view: WebView?, url: String?) {
-        var default = mState(yes)
-		onResource(view, url, yes)
-		onResource(view, url)
-		
-		if () super.onLoadResource(view, url)
-    }
-}
-
-
-open class WebEngine(ctx: Context) : WebViewClient() {
-
-    private var resourceStateCallback: ((WebView?, String?, mStateBool) -> Unit)? = null
-    private var resourceCallback: ((WebView?, String?) -> Unit)? = null
-
-    fun onResource(
-        callback: ((WebView?, String?, mStateBool) -> Unit)? = null
-    ) {
-        resourceStateCallback = callback
-    }
-
-    fun onResource(
-        callback: ((WebView?, String?) -> Unit)? = null
-    ) {
-        resourceCallback = callback
-    }
-
-    override fun onLoadResource(view: WebView?, url: String?) {
-        val state = mStateBool()
-
-        resourceStateCallback?.invoke(view, url, state)
-        resourceCallback?.invoke(view, url)
-
-        if (state.value) {
-            super.onLoadResource(view, url)
-        }
-    }
-}
-*/
-
-
-
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
 ): WebEngine(ctx) {
