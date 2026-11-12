@@ -39,6 +39,61 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 
+
+
+class WebController(
+    ctx: Context //!NEEDS ONLY LOCAL CONTEXT
+): WebEngine(ctx) {  
+    fun settings(configure: WebSettings.() -> Unit) {
+        webView.settings.apply {
+            configure()
+        }
+    }
+
+	fun zoomOut() = webView.zoomOut()
+    fun reload() = webView.reload()
+	fun canGoBack() = webView.canGoBack()
+    fun back() {
+		if (webView.canGoBack()) {
+			webView.goBack()
+		}
+	}
+	
+    val url: Str?
+        get() = webView.url
+    fun url(u: Str) {
+    val url = u.trim()
+		webView.loadUrl(
+			if (url.isUrl()) {
+				url
+			} else {
+				"https://$url"
+			}
+		)
+	}
+   
+	val web: WebView?
+        get() = webView
+
+    fun blockImages(Do: () -> Bool = { yes }) {
+        shouldInterceptRequest { request ->
+            val url = request.url.toString().lowercase()
+
+            val host = request.url.host?.lowercase()
+
+            if (host?.contains("ytimg") == true) {
+
+                return@shouldInterceptRequest WebResource.emptyImage()
+            }
+            
+            if (!url.image && Do()) return@shouldInterceptRequest null
+            else WebResource.emptyImage()
+        }
+    }
+}
+
+
+
 abstract class WebEngine(
     protected val ctx: Context
 ) {
@@ -151,53 +206,3 @@ abstract class WebEngine(
 }
 
 
-class WebController(
-    ctx: Context //!NEEDS ONLY LOCAL CONTEXT
-): WebEngine(ctx) {  
-    fun settings(configure: WebSettings.() -> Unit) {
-        webView.settings.apply {
-            configure()
-        }
-    }
-
-	fun zoomOut() = webView.zoomOut()
-    fun reload() = webView.reload()
-	fun canGoBack() = webView.canGoBack()
-    fun back() {
-		if (webView.canGoBack()) {
-			webView.goBack()
-		}
-	}
-	
-    val url: Str?
-        get() = webView.url
-    fun url(u: Str) {
-    val url = u.trim()
-		webView.loadUrl(
-			if (url.isUrl()) {
-				url
-			} else {
-				"https://$url"
-			}
-		)
-	}
-   
-	val web: WebView?
-        get() = webView
-
-    fun blockImages(Do: () -> Bool = { yes }) {
-        shouldInterceptRequest { request ->
-            val url = request.url.toString().lowercase()
-
-            val host = request.url.host?.lowercase()
-
-            if (host?.contains("ytimg") == true) {
-
-                return@shouldInterceptRequest WebResource.emptyImage()
-            }
-            
-            if (!url.image && Do()) return@shouldInterceptRequest null
-            else WebResource.emptyImage()
-        }
-    }
-}
