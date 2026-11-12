@@ -63,27 +63,13 @@ abstract class WebEngine(
 open class WebEngine(ctx: Context) : WebViewClient() {
 
     fun onResource(defaultBehaviour: Bool = yes, ((WebView?, String?) -> Unit)? = null)
-    fun onPageStarted( ((WebView?, String?, Bitmap?) -> Unit)? = null)
-    fun onPageFinished( ((WebView?, String?) -> Unit)? = null)
-
+    
     override fun onLoadResource(view: WebView?, url: String?) {
-        super.onLoadResource(view, url)
-        onResource?.invoke(view, url)
+        if (defaultBehaviour) super.onLoadResource(view, url)
+        onResource(view, url)
     }
 
-    override fun onPageStarted(
-        view: WebView?,
-        url: String?,
-        favicon: Bitmap?
-    ) {
-        super.onPageStarted(view, url, favicon)
-        onPageStarted?.invoke(view, url, favicon)
-    }
-
-    override fun onPageFinished(view: WebView?, url: String?) {
-        super.onPageFinished(view, url)
-        onPageFinished?.invoke(view, url)
-    }
+    
 }
 */
 
