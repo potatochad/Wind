@@ -62,10 +62,13 @@ abstract class WebEngine(
 /*
 open class WebEngine(ctx: Context) : WebViewClient() {
 
-    fun onResource(((WebView?, Str?) -> Bool = yes)? = null)
+    fun onResource(((WebView?, Str?, mStateBool) -> Unit)? = null)
+	fun onResource(((WebView?, Str?) -> Unit)? = null)
     
     override fun onLoadResource(view: WebView?, url: String?) {
-        var defaultBehaviour = onResource(view, url)
+        var default = mState(yes)
+		onResource(view, url, yes)
+		
 		if (defaultBehaviour) super.onLoadResource(view, url)
     }
 
