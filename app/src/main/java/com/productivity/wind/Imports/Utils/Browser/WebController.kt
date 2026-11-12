@@ -62,9 +62,9 @@ abstract class WebEngine(
 /*
 open class WebEngine(ctx: Context) : WebViewClient() {
 
-    var onResource: ((WebView?, String?) -> Unit)? = null
-    var onPageStarted: ((WebView?, String?, Bitmap?) -> Unit)? = null
-    var onPageFinished: ((WebView?, String?) -> Unit)? = null
+    fun onResource(defaultBehaviour: Bool = yes, ((WebView?, String?) -> Unit)? = null)
+    fun onPageStarted( ((WebView?, String?, Bitmap?) -> Unit)? = null)
+    fun onPageFinished( ((WebView?, String?) -> Unit)? = null)
 
     override fun onLoadResource(view: WebView?, url: String?) {
         super.onLoadResource(view, url)
