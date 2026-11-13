@@ -1,3 +1,5 @@
+package com.productivity.wind.Imports.Utils.Js
+
 function watchMedia(onUpdate) {
     const watched = new WeakSet();
 
