@@ -1,5 +1,12 @@
 package com.productivity.wind.Imports.Utils.Js
 
+
+
+class JsButKotlin(){
+    fun function(){
+        "function"
+    }
+}
 function watchMedia(onUpdate) {
     const watched = new WeakSet();
 
