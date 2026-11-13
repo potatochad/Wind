@@ -113,6 +113,7 @@ abstract class WebEngine(
     val shouldInterceptRequest = mList<(WebResourceRequest) -> WebResourceResponse?>()
     var onProgressChanged = mList<(Int) -> Unit>()
     var onReceivedTitle = mList<(Str?) -> Unit>()
+	var onPageCommitVisible = mList<(Str?) -> Unit>()
 
 	init {
 		webView.enable()
@@ -126,6 +127,7 @@ abstract class WebEngine(
 				super.onPageCommitVisible(view, url)
 
 				view?.importsJS()
+				onPageCommitVisible.forEach { it(url) }
 			}
 
 			private var lastFinishedUrl: Str? = null
@@ -197,6 +199,9 @@ abstract class WebEngine(
     fun shouldInterceptRequest(handler: (WebResourceRequest) -> WebResourceResponse?) {
         shouldInterceptRequest.add(handler)
     }
+	fun onPageCommitVisible(Do: (Str?) -> Unit) {
+		onPageCommitVisible.add(Do)
+	}
     
 
     fun onProgressChanged(handler: (Int) -> Unit) {
