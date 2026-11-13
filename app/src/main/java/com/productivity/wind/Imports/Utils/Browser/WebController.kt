@@ -52,6 +52,13 @@ class WebController(
 			webView.gray(90f)
 			swipeRefresh.isRefreshing = no
 		}
+		onConsoleMessage {
+			val msg = it.message()
+
+			if (msg.has("[WINDWEB_LOG]")) {
+				Log.e("badWEB", msg)
+			}
+		}
 	}
 	
     fun settings(configure: WebSettings.() -> Unit) {
@@ -120,6 +127,7 @@ abstract class WebEngine(
     var onProgressChanged = mList<(Int) -> Unit>()
     var onReceivedTitle = mList<(Str?) -> Unit>()
 	var onPageCommitVisible = mList<(Str?) -> Unit>()
+	var onConsoleMessage = mList<(ConsoleMessage) -> Unit>()
 
 	init {
 		webView.enable()
@@ -171,15 +179,12 @@ abstract class WebEngine(
                 onReceivedTitle.forEach { it(title) }
             }
 			override fun onConsoleMessage(message: ConsoleMessage): Bool {
-				val msg = message.message()
-
-				if (msg.has("[WINDWEB_LOG]")) {
-					Log.e("badWEB", msg)
-				}
+				onConsoleMessage.forEach { it(message) }
 				return yes
 			}
         }
     }
+
 
     fun shouldOverrideUrlLoading(Do: (Str?) -> Bool) {
         shouldOverrideUrlLoading.add(Do)
@@ -210,6 +215,9 @@ abstract class WebEngine(
     fun onReceivedTitle(handler: (Str?) -> Unit) {
         onReceivedTitle.add(handler)
     }    
+	fun onConsoleMessage(Do: (ConsoleMessage) -> Unit){
+		onConsoleMessage.add(Do)
+	}
 
     
 }
