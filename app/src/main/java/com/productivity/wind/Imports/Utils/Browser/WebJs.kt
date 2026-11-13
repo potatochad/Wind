@@ -29,9 +29,11 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
     )
 }
 
-//RUNS BEFORE PAGE LOADS
+//RUNS BEFORE PAGE LOADS, but on finished
 fun Any?.importsJS() {
- //delete does nothing
+    val media = getTextAsset("Media.js")
+
+    this.jsFun(media)
 }
 
 
@@ -53,6 +55,13 @@ fun Any?.youtubeFilter(
         const allowTargets = $allow1;
         $filter
         """
+    )
+}
+
+fun Any?.playingMedia(callback: ((Str?) -> Unit)?) {
+    this.jsFun(
+        "return Web.getPlayingMedia();",
+        callback
     )
 }
 
