@@ -6,6 +6,13 @@ class JsButKotlin(){
     fun function(){
         "function"
     }
+    fun custom(js: Str){
+        runJs(js)
+    }
+    fun allHtmlElements(): Str {
+        "function execute
+        observable ()"
+    }
 }
 function watchMedia(onUpdate) {
     const watched = new WeakSet();
