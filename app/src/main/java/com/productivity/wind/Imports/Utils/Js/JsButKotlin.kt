@@ -2,18 +2,22 @@ package com.productivity.wind.Imports.Utils.Js
 
 
 
-class JsButKotlin(){
-    fun function(){
-        "function"
+class JsButKotlin {
+    fun function(name: Str, body: Str): Str =
+        "function $name() { $body }"
+
+    fun custom(js: Str) {
+        runJs(js)//error, no such thing
     }
-    fun custom(js: Str){
-        runJs(js)
-    }
-    fun allHtmlElements(): Str {
-        "function execute
-        observable ()"
-    }
+
+    fun htmlElements(selector: Str): Str =
+        "document.querySelectorAll('*')"
+
+    fun call(target: Str, method: Str): Str =
+        "$target.$method()"
 }
+
+/*
 function watchMedia(onUpdate) {
     const watched = new WeakSet();
 
@@ -62,3 +66,4 @@ function watchMedia(onUpdate) {
 
     return () => observer.disconnect();
 }
+*/
