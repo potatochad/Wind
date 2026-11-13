@@ -45,7 +45,9 @@ class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
 ): WebEngine(ctx) {  
 	init {
-		
+		onPageCommitVisible {
+			webView.importsJS()
+		}
 	}
 	
     fun settings(configure: WebSettings.() -> Unit) {
@@ -125,8 +127,7 @@ abstract class WebEngine(
             }
 			override fun onPageCommitVisible(view: WebView?, url: Str?) {
 				super.onPageCommitVisible(view, url)
-
-				view?.importsJS()
+				
 				onPageCommitVisible.forEach { it(url) }
 			}
 
