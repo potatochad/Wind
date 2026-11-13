@@ -1,3 +1,6 @@
+// useful: https://github.com/duckduckgo/Android/blob/develop/app/src/main/java/com/duckduckgo/app/browser/BrowserChromeClient.kt?utm_source=chatgpt.com
+
+
 package com.productivity.wind.Imports.Utils.Browser
 
 import com.productivity.wind.Imports.Utils.SaveData.List.*
