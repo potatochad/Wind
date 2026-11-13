@@ -44,6 +44,10 @@ import androidx.media3.session.MediaSessionService
 class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
 ): WebEngine(ctx) {  
+	init {
+		
+	}
+	
     fun settings(configure: WebSettings.() -> Unit) {
         webView.settings.apply {
             configure()
