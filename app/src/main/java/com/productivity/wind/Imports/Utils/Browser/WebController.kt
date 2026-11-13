@@ -48,6 +48,10 @@ class WebController(
 		onPageCommitVisible {
 			webView.importsJS()
 		}
+		onPageFinished {
+			webView.gray(90f)
+			swipeRefresh.isRefreshing = no
+		}
 	}
 	
     fun settings(configure: WebSettings.() -> Unit) {
@@ -127,7 +131,6 @@ abstract class WebEngine(
             }
 			override fun onPageCommitVisible(view: WebView?, url: Str?) {
 				super.onPageCommitVisible(view, url)
-				
 				onPageCommitVisible.forEach { it(url) }
 			}
 
@@ -135,11 +138,7 @@ abstract class WebEngine(
             override fun onPageFinished(view: WebView?, url: Str?) {
                 super.onPageFinished(view, url)
 				if (url == lastFinishedUrl) return
-
-				//this.zoomOut()
-                view?.gray(90f)
-                swipeRefresh.isRefreshing = no
-                
+				
                 onPageFinished.forEach { it(url) }
             }
             override fun onLoadResource(view: WebView?, url: Str?) {
