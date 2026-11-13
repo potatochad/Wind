@@ -1,5 +1,5 @@
 // useful: https://github.com/duckduckgo/Android/blob/develop/app/src/main/java/com/duckduckgo/app/browser/BrowserChromeClient.kt?utm_source=chatgpt.com
-
+//useful: https://github.com/duckduckgo/Android/blob/396ac4085123d122a78c00475d1faeb0f55010a9/app/src/main/java/com/duckduckgo/app/browser/WebViewClientListener.kt#L4
 
 package com.productivity.wind.Imports.Utils.Browser
 
