@@ -107,8 +107,10 @@ fun Web(){
 
     LazyScreen(
         top = {
-			WebProps.TopBarInput(web){
-				if (it.empty) goTo("WebHome")
+			SafeMaxW {
+				WebProps.TopBarInput(web){
+					if (it.empty) goTo("WebHome")
+				}
 			}
             SafeEnd {
 				AppItem.Add {
