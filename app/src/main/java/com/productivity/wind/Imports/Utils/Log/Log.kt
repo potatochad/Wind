@@ -82,7 +82,7 @@ fun VlogOne(
 fun getMyAppLogs() {
 	val main = Handler(Looper.getMainLooper())
 
-	fun AddLog(s: Str) {
+	fun AddLog(s: String) {
 		Bar.logs.add(s)
 
 		if (Bar.logs.size > 2000) {
