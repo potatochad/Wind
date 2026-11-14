@@ -49,6 +49,7 @@ class WebController(
     ctx: Context //!NEEDS ONLY LOCAL CONTEXT
 ): WebEngine(ctx) {  
 	init {
+		//should run first
 		onPageCommitVisible {
 			webView.importsJS()
 		}
