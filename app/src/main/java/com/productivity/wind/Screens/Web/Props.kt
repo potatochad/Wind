@@ -116,14 +116,14 @@ object WebProps {
 
 
 	@Composable
-	fun RowScope.TopBarInput(
+	fun TopBarInput(
 		web: WebController,
 		Do: DoStr = {},
 	) {
 		var Input1 by r(Bar.Url)
 		TinyInput(
 			Input1, 
-			Mod.h(40).weight(1f), 
+			Mod.h(40).maxW(), 
 			isInt = no, 
 			maxLetters = 400,
 			onAction = {
