@@ -13,6 +13,8 @@ fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
         callback?.invoke(result)
     }
 }
+
+//every thing local, no global stuff
 fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
     this.js(
         """
@@ -39,7 +41,7 @@ fun Any?.youtubeFilter(
     val allow1 = JSONArray(allowOnly?.map { it.lowercase() } ?: emptyList<String>()).toString()
     val block1 = JSONArray(block?.map { it.lowercase() } ?: emptyList<String>()).toString()
 
-    var jsImports = getTextAsset("YoutubeFilter.js")
+    var jsImports = getTextAsset("Imports.js")
     var filter = getTextAsset("YoutubeFilter.js")
     
     
