@@ -116,7 +116,7 @@ object WebProps {
 
 
 	@Composable
-	fun TopBarInput(
+	fun RowScope.TopBarInput(
 		web: WebController,
 		Do: DoStr = {},
 	) {
