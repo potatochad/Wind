@@ -116,7 +116,6 @@ fun Web(){
 				goTo("WebKeywords")
 			}
 			move(10)
-            }
         },
         scroll = no,
         dividerP = no,
