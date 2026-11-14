@@ -74,6 +74,12 @@ fun RowScope.SafeEnd(ui: uiRow) {
     ui()
 }
 @Composable
+fun RowScope.SafeMaxW(ui: ui) {
+    Box(Mod.weight(1f)) {
+        ui()
+    }
+}
+@Composable
 fun RowScope.Weight(ui: uiRow){
 	Row(Mod.weight(1f)) {
 		ui()
