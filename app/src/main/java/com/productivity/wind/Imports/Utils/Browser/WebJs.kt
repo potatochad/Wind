@@ -14,7 +14,7 @@ fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
     }
 }
 
-//every thing local, no global stuff
+//every thing default local, not global
 fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
     this.js(
         """
@@ -31,6 +31,14 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
         """.trimIndent(),
         callback
     )
+}
+
+
+//RUNS BEFORE PAGE LOADS, but on finished
+fun Any?.importsJS() {
+    val media = getTextAsset("Media.js")
+
+    this.jsFun(media)
 }
 
 
