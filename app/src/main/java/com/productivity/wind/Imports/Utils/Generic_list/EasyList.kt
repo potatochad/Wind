@@ -41,7 +41,7 @@ abstract class EasyListExtra<T>(
         it.onAdd(item)
     }
     fun addAll(items: Iterable<T>) = waitIfEach {
-        MainThreadOnly()
+       MainThreadOnly()
        it.addAll(items)
        it.onAddAll(items)
     }
