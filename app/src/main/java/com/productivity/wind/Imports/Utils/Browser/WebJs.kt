@@ -1,3 +1,5 @@
+//you cannot make js renamed: its ugly
+
 package com.productivity.wind.Imports.Utils.Browser
 
 import com.productivity.wind.Imports.Utils.Log.*
@@ -29,19 +31,6 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
     )
 }
 
-//RUNS BEFORE ALL ELSE js
-fun Any?.importsJS() {
-    val media = getTextAsset("Media.js")
-    var jsImports = getTextAsset("Imports.js")
-
-    this.jsFun(
-        """
-        $jsImports
-        $media
-        """
-    )
-}
-
 
 fun Any?.youtubeFilter(
     allowOnly: ListStr? = null,
@@ -50,11 +39,13 @@ fun Any?.youtubeFilter(
     val allow1 = JSONArray(allowOnly?.map { it.lowercase() } ?: emptyList<String>()).toString()
     val block1 = JSONArray(block?.map { it.lowercase() } ?: emptyList<String>()).toString()
 
+    var jsImports = getTextAsset("YoutubeFilter.js")
     var filter = getTextAsset("YoutubeFilter.js")
     
     
     this.jsFun(
         """
+        $jsImports
         const blockTargets = $block1;
         const allowTargets = $allow1;
         $filter
