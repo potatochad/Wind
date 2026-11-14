@@ -29,11 +29,17 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
     )
 }
 
-//RUNS BEFORE PAGE LOADS, but on finished
+//RUNS BEFORE ALL ELSE js
 fun Any?.importsJS() {
     val media = getTextAsset("Media.js")
+    var jsImports = getTextAsset("Imports.js")
 
-    this.jsFun(media)
+    this.jsFun(
+        """
+        $jsImports
+        $media
+        """
+    )
 }
 
 
@@ -45,12 +51,10 @@ fun Any?.youtubeFilter(
     val block1 = JSONArray(block?.map { it.lowercase() } ?: emptyList<String>()).toString()
 
     var filter = getTextAsset("YoutubeFilter.js")
-    var jsImports = getTextAsset("Imports.js")
     
     
     this.jsFun(
         """
-        $jsImports
         const blockTargets = $block1;
         const allowTargets = $allow1;
         $filter
