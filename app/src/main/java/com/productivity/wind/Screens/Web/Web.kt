@@ -114,6 +114,7 @@ fun Web(){
 				AppItem.Add {
 					goTo("WebKeywords")
 				}
+				move(10)
             }
         },
         scroll = no,
