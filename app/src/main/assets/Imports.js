@@ -1,6 +1,4 @@
 //DONT ADD A LOT OF STUFF
-//FUNCTIONS ONLY
-//FRAGILE CODEE!!
 
 function log(...args) {
            const msg = args
