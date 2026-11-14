@@ -80,12 +80,16 @@ fun VlogOne(
 
 
 fun getMyAppLogs() {
-	fun AddLog(s: String) {
-		Bar.logs.add(s)
+	val main = Handler(Looper.getMainLooper())
 
-        if (Bar.logs.size > 2000) {
-            Bar.logs.subList(0, Bar.logs.size - 2000).clear()
-        }
+	fun AddLog(s: Str) {
+		main.post {
+			Bar.logs.add(s)
+
+			if (Bar.logs.size > 2000) {
+				Bar.logs.subList(0, Bar.logs.size - 2000).clear()
+			}
+		}
 	}
 	Thread {
 		val pid = android.os.Process.myPid()
@@ -98,17 +102,13 @@ fun getMyAppLogs() {
 			if ("WindowOnBackDispatcher" in s) return@forEachLine
 			if (" W " in s) return@forEachLine
 
-			val last = Bar.logs.lastOrNull()
+			main.post {
+                val last = Bar.logs.lastOrNull()
 
-			if (last != s){
-				AddLog(s)
-			} else {
-				if ("[bad]" in s) {
-					AddLog(s)
-				}
+                if (last != s || "[bad]" in s) {
+                    AddLog(s)
+                }
 			}
-
-			
 		}
 	}.start()
 }
