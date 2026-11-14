@@ -31,19 +31,23 @@ abstract class EasyListExtra<T>(
     //IF want add more: waitIfEach and onX
     //----------------------------------------//
     fun add(item: T) = waitIfEach {
+        MainThreadOnly()
         it.add(item)
         it.onAdd(item)
     }
     fun add(index: Int, item: T) = waitIfEach {
+        MainThreadOnly()
         it.add(index, item)
         it.onAdd(item)
     }
     fun addAll(items: Iterable<T>) = waitIfEach {
+        MainThreadOnly()
        it.addAll(items)
        it.onAddAll(items)
     }
 
     fun remove(item: T) = waitIfEach {
+        MainThreadOnly()
         val index = it.indexOf(item)
 
         if (index != -1) {
@@ -54,12 +58,20 @@ abstract class EasyListExtra<T>(
     //-----------------------------------------//
 
 
-    operator fun get(index: Int) = it[index]
-    operator fun set(index: Int, value: T){ it[index] = value }
+    operator fun get(index: Int): T {
+        MainThreadOnly()
+        return it[index]
+    }
+
+    operator fun set(index: Int, value: T) {
+        MainThreadOnly()
+        it[index] = value
+    }
+    
     operator fun plusAssign(item: T) = add(item)
     operator fun minusAssign(item: T) = remove(item)
     
-    //‼️ shall crash onRemove
+    //‼️ dont use!: shall crash onRemove
     override fun iterator(): Iterator<T> = it.iterator()
 }
 
