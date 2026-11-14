@@ -63,7 +63,6 @@ fun LogsScreen() {
 						LogTxt(it){ style ->
 						   if (gotStyle == no) {
 							   gotStyle = yes
-							   Vlog("gotStyle: $gotStyle")
 							   strStyle = style
 						   }
 					   } 
