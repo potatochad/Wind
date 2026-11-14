@@ -110,12 +110,10 @@ fun Web(){
 			WebProps.TopBarInput(web){
 				if (it.empty) goTo("WebHome")
 			}
-            End {
-                Row{
-                    AppItem.Add {
-                        goTo("WebKeywords")
-                    }
-                }
+            SafeEnd {
+				AppItem.Add {
+					goTo("WebKeywords")
+				}
             }
         },
         scroll = no,
