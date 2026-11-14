@@ -123,7 +123,7 @@ object WebProps {
 		var Input1 by r(Bar.Url)
 		TinyInput(
 			Input1, 
-			Mod.h(40).maxW(), 
+			Mod.h(40).weight(1f), 
 			isInt = no, 
 			maxLetters = 400,
 			onAction = {
