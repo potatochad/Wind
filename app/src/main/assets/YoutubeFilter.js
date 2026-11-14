@@ -12,36 +12,36 @@ function getText(item) {
 
 function shouldProcessItem({ text, href, listItem }) {
     if (/^\d+(?::\d+)+$/.test(text.trim())) {
-        log("REJECT: duration only", text);
+        // log("REJECT: duration only", text);
         return false;
     }
 
     if (!text) {
-        log("REJECT: empty text", href);
+        // log("REJECT: empty text", href);
         return false;
     }
 
     if (!href) {
-        log("REJECT: empty href");
+        // log("REJECT: empty href");
         return false;
     }
 
     if (!listItem) {
-        log("REJECT: text not matched target list", text);
+        // log("REJECT: text not matched target list", text);
         return false;
     }
 
     if (!href.includes("youtube.com/watch?v=")) {
-        log("REJECT: not a watch url", href);
+        // log("REJECT: not a watch url", href);
         return false;
     }
 
     if (href.startsWith("intent://")) {
-        log("REJECT: intent url", href);
+        // log("REJECT: intent url", href);
         return false;
     }
 
-    log("ACCEPT:", href);
+    // log("ACCEPT:", href);
     return true;
 }
 
@@ -96,7 +96,7 @@ if (post) {
     const listItem = blockTargets.some(t => text.includes(t));
     const logUrl = webItemUrl(item, 8);
 
-    log("1. TEXT:", text, "Url:", logUrl, "link:", href);
+    // log("1. TEXT:", text, "Url:", logUrl, "link:", href);
 
     
     if (!shouldProcessItem({ text, href, listItem })) {
@@ -110,7 +110,7 @@ if (post) {
         return;
     }
 
-    log("2. TEXT:", text, "Url:", logUrl, "link:", href);
+    // log("2. TEXT:", text, "Url:", logUrl, "link:", href);
 
     hide(item);
 }
