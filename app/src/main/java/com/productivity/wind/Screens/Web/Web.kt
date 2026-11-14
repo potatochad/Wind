@@ -112,11 +112,10 @@ fun Web(){
 					if (it.empty) goTo("WebHome")
 				}
 			}
-            SafeEnd {
-				AppItem.Add {
-					goTo("WebKeywords")
-				}
-				move(10)
+			AppItem.Add {
+				goTo("WebKeywords")
+			}
+			move(10)
             }
         },
         scroll = no,
