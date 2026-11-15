@@ -182,7 +182,7 @@ fun Ring(
 	progress: Float = 1f,
 	ContentPadding: Int = 1,
 	strokeCap: StrokeCap = StrokeCap.Butt,
-	content: @Composable BoxScope.() -> Unit
+	content: uiBox
 ) {
 	Box(
 		contentAlignment = Alignment.Center,
