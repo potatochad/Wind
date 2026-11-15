@@ -52,6 +52,7 @@ class WebController(
 		//should run first
 		onPageCommitVisible {
 			webView.importsJS()
+			//BackgroundAudioPlayer()
 		}
 		onPageFinished {
 			webView.gray(90f)
