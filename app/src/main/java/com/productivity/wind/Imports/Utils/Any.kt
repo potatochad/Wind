@@ -181,14 +181,19 @@ typealias Var = KMutableProperty<*>
 
 typealias AppInfo = ResolveInfo
 
+
 typealias Content = @Composable () -> Unit
 typealias Content_<T> = @Composable (T) -> Unit
+
 typealias UI = @Composable () -> Unit
 typealias UI_<T> = @Composable (T) -> Unit
 typealias ui = @Composable () -> Unit
 typealias ui_<T> = @Composable (T) -> Unit
+
 typealias uiRow = @Composable RowScope.() -> Unit
 typealias uiColumn = @Composable ColumnScope.() -> Unit
+typealias uiBox = @Composable BoxScope.() -> Unit
+
 
 	
 fun KProperty<*>.getType(): KClass<*>? = this.returnType.classifier as? KClass<*>
