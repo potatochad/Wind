@@ -19,23 +19,6 @@ import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.drawscope.*
 
 
-@Composable
-fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
-	val sDp = toDp(s)
-	val wDp = toDp(w)
-	val hDp = toDp(h)
-
-	Spacer(
-		modifier = if (sDp > 0.dp) {
-			Mod.s(sDp)  // uniform size
-		} else {
-			Mod.w(wDp).h(hDp)
-		}
-	)
-}
-
-
-
 @Composable 
 fun RuleCard(
     txt: Str,
