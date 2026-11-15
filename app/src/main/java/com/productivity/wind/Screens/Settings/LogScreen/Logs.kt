@@ -51,7 +51,7 @@ fun LogsScreen() {
 	) {
         if (Bar.logs.empty){
               LazzyColumn {
-				  Text("No logs".gray)
+				  Text("No logs".gray())
 			  }
         } else {
 			Box(
