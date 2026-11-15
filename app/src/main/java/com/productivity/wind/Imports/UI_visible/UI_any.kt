@@ -35,6 +35,13 @@ fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 }
 
 
+@Composable
+fun Center(ui: ui){
+	LazzyColumn(Mod.maxS()) { ui() }
+}
+
+
+
 @Composable 
 fun RuleCard(
     txt: Str,
