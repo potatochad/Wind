@@ -58,34 +58,6 @@ fun BottomAppBarPadding(ui: ui){
 }
 
 
-@Composable
-fun End(mod: Mod = Mod, ui: ui) {
-	Row(
-		mod.maxW(),
-		verticalAlignment = Alignment.CenterVertically,
-		horizontalArrangement = Arrangement.End
-	){
-		ui()
-		move(10)
-	}
-}
-@Composable
-fun RowScope.SafeEnd(ui: uiRow) {
-    Spacer(modifier = Mod.weight(1f))
-    ui()
-}
-@Composable
-fun RowScope.SafeMaxW(ui: ui) {
-    Box(Mod.weight(1f)) {
-        ui()
-    }
-}
-@Composable
-fun RowScope.Weight(ui: uiRow){
-	Row(Mod.weight(1f)) {
-		ui()
-	}
-}
 
 @Composable
 fun EmptyBox(
