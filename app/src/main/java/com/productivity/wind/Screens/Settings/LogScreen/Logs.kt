@@ -10,7 +10,7 @@ import com.productivity.wind.Imports.Utils.*
 import androidx.compose.ui.unit.*
 import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.UI_visible.*
-
+import androidx.compose.material3.*
 
 @Composable
 fun LogsScreen() {
