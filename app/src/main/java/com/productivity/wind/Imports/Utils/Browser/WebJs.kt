@@ -69,6 +69,11 @@ fun Any?.playingMedia(callback: ((Str?) -> Unit)?) {
         callback
     )
 }
+fun Any?.playingAudioGoTo(time: Int = 120) {
+    this.jsFun(
+        """Web.controlMedia("seek", $time);"""
+    )
+}
 
 
 
