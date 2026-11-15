@@ -36,7 +36,7 @@ fun move(s: Any = 0, w: Any = 0, h: Any = 0) {
 
 
 @Composable
-fun Center(ui: ui){
+fun Center(ui: uiColumn){
 	LazzyColumn(Mod.maxS()) { ui() }
 }
 
