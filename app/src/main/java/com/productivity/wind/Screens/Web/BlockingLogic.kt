@@ -224,9 +224,6 @@ fun BlockingLogic(web: WebController){
 	}
 	web.onPageFinished{
 		youtubeFilter()
-		web.playingMedia{
-			Vlog("playingMedia: $it")
-		}
 	}
 
 	
