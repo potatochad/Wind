@@ -50,9 +50,7 @@ fun LogsScreen() {
 		scroll = no,
 	) {
         if (Bar.logs.empty){
-              LazzyColumn(Mod.maxS().centerY.centerX) {
-				  Text("No logs".gray())
-			  }
+              Center { Text("No logs".gray()) }
         } else {
 			Box(
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Xscroll()
