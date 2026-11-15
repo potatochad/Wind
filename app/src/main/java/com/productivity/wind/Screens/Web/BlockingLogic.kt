@@ -13,11 +13,8 @@ fun BlockingLogic(web: WebController){
 		Bar.Url = "google.com"
 	}
 	fun youtubeFilter(){
-		web.web?.youtubeFilter(
+		web.youtubeFilter(
 			allowOnly = listOf(
-				"mr beast",
-				"food",
-				"mrbeast",
 						"Stefan Frädrich",
 		"Greator",
 		"Christian Bischoff",
@@ -227,6 +224,9 @@ fun BlockingLogic(web: WebController){
 	}
 	web.onPageFinished{
 		youtubeFilter()
+		web.playingMedia{
+			Vlog("playingMedia: $it")
+		}
 	}
 
 	
