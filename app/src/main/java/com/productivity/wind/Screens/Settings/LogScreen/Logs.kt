@@ -50,7 +50,7 @@ fun LogsScreen() {
 		scroll = no,
 	) {
         if (Bar.logs.empty){
-              LazzyColumn {
+              LazzyColumn(Mod.maxW) {
 				  Text("No logs".gray())
 			  }
         } else {
