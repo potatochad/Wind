@@ -33,3 +33,17 @@ Web.getPlayingMedia = function() {
         videoHeight: el.videoHeight || 0
     }));
 };
+
+Web.controlMedia = function(action, value) {
+    const el = [...document.querySelectorAll("audio, video")]
+        .find(el => !el.paused && !el.ended)
+        || document.querySelector("video, audio");
+
+    if (!el) return;
+
+    switch (action) {
+        case "play": el.play(); break;
+        case "pause": el.pause(); break;
+        case "seek": el.currentTime = value; break;
+    }
+};
