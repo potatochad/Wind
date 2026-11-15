@@ -47,5 +47,12 @@ import androidx.compose.ui.zIndex
 
 @Composable
 fun Center(ui: uiColumn){
-	LazzyColumn(Mod.maxS()) { ui() }
+	LazzyColumn(Mod.maxS().center) { ui() }
 }
+
+
+
+
+
+
+
