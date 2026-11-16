@@ -63,6 +63,12 @@ fun Any?.youtubeFilter(
     )
 }
 
+
+
+fun Any?.backgroundAudio(){
+   // toWeb(this)?.
+}
+
 fun Any?.playingMedia(callback: ((Str?) -> Unit)?) {
     this.jsFun(
         "return Web.getPlayingMedia();",
