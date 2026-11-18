@@ -95,3 +95,66 @@ class WebMedia(
     val totalTime get() = duration?.let { formatTime(it) } ?: "--:--"
     val remainingTime get() = remaining?.let { formatTime(it) } ?: "--:--"
 }
+
+
+
+data class WebMedia(
+    val type: Str,
+    val title: Str,
+    val artist: Str,
+    val album: Str,
+    val artwork: Str,
+    val src: Str,
+
+    val currentTime: Double,
+    val duration: Double?,
+
+    val paused: Boolean,
+    val ended: Boolean,
+    val muted: Boolean,
+    val volume: Double,
+    val playbackRate: Double,
+
+    val readyState: Int,
+    val networkState: Int,
+
+    val poster: Str,
+    val videoWidth: Int,
+    val videoHeight: Int
+) {
+    companion object {
+        fun from(json: String?): WebMedia? = try {
+            val j = org.json.JSONObject(json ?: return null)
+
+            WebMedia(
+                type = j.getString("type"),
+                title = j.getString("title"),
+                artist = j.getString("artist"),
+                album = j.getString("album"),
+                artwork = j.getString("artwork"),
+                src = j.getString("src"),
+
+                currentTime = j.getDouble("currentTime"),
+                duration = j.optDouble("duration").takeIf {
+                    !j.isNull("duration")
+                },
+
+                paused = j.getBoolean("paused"),
+                ended = j.getBoolean("ended"),
+                muted = j.getBoolean("muted"),
+                volume = j.getDouble("volume"),
+                playbackRate = j.getDouble("playbackRate"),
+
+                readyState = j.getInt("readyState"),
+                networkState = j.getInt("networkState"),
+
+                poster = j.getString("poster"),
+                videoWidth = j.getInt("videoWidth"),
+                videoHeight = j.getInt("videoHeight")
+            )
+        } catch (e: Exception) {
+            Vlog("WebMedia: ${e.message}")
+            null
+        }
+    }
+}
