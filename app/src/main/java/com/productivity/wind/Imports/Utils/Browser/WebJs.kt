@@ -66,7 +66,9 @@ fun Any?.youtubeFilter(
 
 
 fun Any?.backgroundAudio(){
-   // toWeb(this)?.
+   this.playingMedia {
+      Vlog("$it")
+   }
 }
 
 fun Any?.playingMedia(callback: ((Str?) -> Unit)?) {
