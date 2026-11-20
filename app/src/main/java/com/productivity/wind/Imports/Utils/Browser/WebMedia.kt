@@ -63,26 +63,26 @@ class WebMedia(
 ) {
     constructor(json: String) : this(org.json.JSONObject(json))
 
-private constructor(j: org.json.JSONObject) : this(
-    type = j.optString("type"),
-    title = j.optString("title"),
-    artist = j.optString("artist"),
-    album = j.optString("album"),
-    artwork = j.optString("artwork"),
-    src = j.optString("src"),
-    currentTime = j.optDouble("currentTime"),
-    duration = if (j.isNull("duration")) null else j.optDouble("duration"),
-    paused = j.optBoolean("paused"),
-    ended = j.optBoolean("ended"),
-    muted = j.optBoolean("muted"),
-    volume = j.optDouble("volume", 1.0),
-    playbackRate = j.optDouble("playbackRate", 1.0),
-    readyState = j.optInt("readyState"),
-    networkState = j.optInt("networkState"),
-    poster = j.optString("poster"),
-    videoWidth = j.optInt("videoWidth"),
-    videoHeight = j.optInt("videoHeight")
-)
+    private constructor(j: org.json.JSONObject) : this(
+        type = j.optString("type"),
+        title = j.optString("title"),
+        artist = j.optString("artist"),
+        album = j.optString("album"),
+        artwork = j.optString("artwork"),
+        src = j.optString("src"),
+        currentTime = j.optDouble("currentTime"),
+        duration = if (j.isNull("duration")) null else j.optDouble("duration"),
+        paused = j.optBoolean("paused"),
+        ended = j.optBoolean("ended"),
+        muted = j.optBoolean("muted"),
+        volume = j.optDouble("volume", 1.0),
+        playbackRate = j.optDouble("playbackRate", 1.0),
+        readyState = j.optInt("readyState"),
+        networkState = j.optInt("networkState"),
+        poster = j.optString("poster"),
+        videoWidth = j.optInt("videoWidth"),
+        videoHeight = j.optInt("videoHeight")
+    )
 
     val isVideo get() = type == "video"
     val isAudio get() = type == "audio"
