@@ -16,10 +16,24 @@ fun Any?.importsJS() {
 }
 
 //RUNS BEFORE PAGE LOADS
-fun Any?.backgroundAudio(){
-   this.playingMedia {
-      if (it != null && it != "null" && it != "") Vlog("WebMedia: ${WebMedia(it)}")
-   }
+fun Any?.backgroundAudio() {
+    val media = MediaNotification()
+    var m: WebMedia? = null
+
+    this.playingMedia {
+        if (it != null && it != "null" && it != "") {
+            m = WebMedia(it)
+        }
+
+        m?.let {
+            media.edit {
+                title = it.title
+                artist = it.artist
+                text = it.album
+                image = it.artwork.toUriOrNull()
+            }
+        }
+    }
 }
 
 //needs a on pageLoad to work
