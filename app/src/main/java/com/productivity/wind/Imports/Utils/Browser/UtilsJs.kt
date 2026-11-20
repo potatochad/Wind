@@ -34,43 +34,6 @@ fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
 }
 
 
-//RUNS BEFORE PAGE LOADS, but on finished
-fun Any?.importsJS() {
-    val media = getTextAsset("Media.js")
-
-    this.jsFun(media)
-}
-
-
-fun Any?.youtubeFilter(
-    allowOnly: ListStr? = null,
-    block: ListStr? = null,
-) {
-    val allow1 = JSONArray(allowOnly?.map { it.lowercase() } ?: emptyList<String>()).toString()
-    val block1 = JSONArray(block?.map { it.lowercase() } ?: emptyList<String>()).toString()
-
-    var jsImports = getTextAsset("Imports.js")
-    var filter = getTextAsset("YoutubeFilter.js")
-    
-    
-    this.jsFun(
-        """
-        $jsImports
-        const blockTargets = $block1;
-        const allowTargets = $allow1;
-        $filter
-        """
-    )
-}
-
-
-
-fun Any?.backgroundAudio(){
-   this.playingMedia {
-      Vlog("$it")
-   }
-}
-
 fun Any?.playingMedia(callback: ((Str?) -> Unit)?) {
     this.jsFun(
         "return Web.getPlayingMedia();",
