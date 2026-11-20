@@ -18,7 +18,7 @@ fun Any?.importsJS() {
 //RUNS BEFORE PAGE LOADS
 fun Any?.backgroundAudio(){
    this.playingMedia {
-      if (it != null) Vlog("WebMedia: ${WebMedia(it)}")
+      if (it != null && it != "null" && it != "") Vlog("WebMedia: ${WebMedia(it)}")
    }
 }
 
