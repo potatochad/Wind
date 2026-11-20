@@ -40,7 +40,6 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 
 
-/*
 
 class WebMedia(
     val type: Str = "",
@@ -51,9 +50,9 @@ class WebMedia(
     val src: Str = "",
     val currentTime: Double = 0.0,
     val duration: Double? = null,
-    val paused: Bool = false,
-    val ended: Bool = false,
-    val muted: Bool = false,
+    val paused: Bool = no,
+    val ended: Bool = no,
+    val muted: Bool = no,
     val volume: Double = 1.0,
     val playbackRate: Double = 1.0,
     val readyState: Int = 0,
@@ -62,6 +61,29 @@ class WebMedia(
     val videoWidth: Int = 0,
     val videoHeight: Int = 0
 ) {
+    constructor(json: String) : this(
+        org.json.JSONObject(json).run {
+            type = optString("type")
+            title = optString("title")
+            artist = optString("artist")
+            album = optString("album")
+            artwork = optString("artwork")
+            src = optString("src")
+            currentTime = optDouble("currentTime")
+            duration = if (isNull("duration")) null else optDouble("duration")
+            paused = optBoolean("paused")
+            ended = optBoolean("ended")
+            muted = optBoolean("muted")
+            volume = optDouble("volume", 1.0)
+            playbackRate = optDouble("playbackRate", 1.0)
+            readyState = optInt("readyState")
+            networkState = optInt("networkState")
+            poster = optString("poster")
+            videoWidth = optInt("videoWidth")
+            videoHeight = optInt("videoHeight")
+        }
+    )
+
     val isVideo get() = type == "video"
     val isAudio get() = type == "audio"
 
@@ -97,67 +119,3 @@ class WebMedia(
     val remainingTime get() = remaining?.let { formatTime(it) } ?: "--:--"
 }
 
-
-
-data class WebMedia(
-    val type: Str,
-    val title: Str,
-    val artist: Str,
-    val album: Str,
-    val artwork: Str,
-    val src: Str,
-
-    val currentTime: Double,
-    val duration: Double?,
-
-    val paused: Boolean,
-    val ended: Boolean,
-    val muted: Boolean,
-    val volume: Double,
-    val playbackRate: Double,
-
-    val readyState: Int,
-    val networkState: Int,
-
-    val poster: Str,
-    val videoWidth: Int,
-    val videoHeight: Int
-) {
-    companion object {
-        fun from(json: String?): WebMedia? = try {
-            val j = org.json.JSONObject(json ?: return null)
-
-            WebMedia(
-                type = j.getString("type"),
-                title = j.getString("title"),
-                artist = j.getString("artist"),
-                album = j.getString("album"),
-                artwork = j.getString("artwork"),
-                src = j.getString("src"),
-
-                currentTime = j.getDouble("currentTime"),
-                duration = j.optDouble("duration").takeIf {
-                    !j.isNull("duration")
-                },
-
-                paused = j.getBoolean("paused"),
-                ended = j.getBoolean("ended"),
-                muted = j.getBoolean("muted"),
-                volume = j.getDouble("volume"),
-                playbackRate = j.getDouble("playbackRate"),
-
-                readyState = j.getInt("readyState"),
-                networkState = j.getInt("networkState"),
-
-                poster = j.getString("poster"),
-                videoWidth = j.getInt("videoWidth"),
-                videoHeight = j.getInt("videoHeight")
-            )
-        } catch (e: Exception) {
-            Vlog("WebMedia: ${e.message}")
-            null
-        }
-    }
-}
-
-*/
