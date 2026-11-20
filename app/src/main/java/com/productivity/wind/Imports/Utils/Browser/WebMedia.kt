@@ -61,28 +61,36 @@ class WebMedia(
     val videoWidth: Int = 0,
     val videoHeight: Int = 0
 ) {
-    constructor(json: String) : this(
-        org.json.JSONObject(json).run {
-            type = optString("type")
-            title = optString("title")
-            artist = optString("artist")
-            album = optString("album")
-            artwork = optString("artwork")
-            src = optString("src")
-            currentTime = optDouble("currentTime")
-            duration = if (isNull("duration")) null else optDouble("duration")
-            paused = optBoolean("paused")
-            ended = optBoolean("ended")
-            muted = optBoolean("muted")
-            volume = optDouble("volume", 1.0)
-            playbackRate = optDouble("playbackRate", 1.0)
-            readyState = optInt("readyState")
-            networkState = optInt("networkState")
-            poster = optString("poster")
-            videoWidth = optInt("videoWidth")
-            videoHeight = optInt("videoHeight")
-        }
-    )
+    companion object {
+        fun from(json: String?): WebMedia? = try {
+            val j = org.json.JSONObject(json ?: return null)
+
+            WebMedia(
+                type = j.optString("type"),
+                title = j.optString("title"),
+                artist = j.optString("artist"),
+                album = j.optString("album"),
+                artwork = j.optString("artwork"),
+                src = j.optString("src"),
+                currentTime = j.optDouble("currentTime"),
+                duration = if (j.isNull("duration")) null
+                else j.optDouble("duration"),
+                paused = j.optBoolean("paused"),
+            ended = j.optBoolean("ended"),
+            muted = j.optBoolean("muted"),
+            volume = j.optDouble("volume", 1.0),
+            playbackRate = j.optDouble("playbackRate", 1.0),
+            readyState = j.optInt("readyState"),
+            networkState = j.optInt("networkState"),
+            poster = j.optString("poster"),
+            videoWidth = j.optInt("videoWidth"),
+            videoHeight = j.optInt("videoHeight")
+        )
+    } catch (e: Exception) {
+        Vlog("WebMedia: ${e.message}")
+        null
+    }
+    }
 
     val isVideo get() = type == "video"
     val isAudio get() = type == "audio"
