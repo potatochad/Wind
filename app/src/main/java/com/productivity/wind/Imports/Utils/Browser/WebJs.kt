@@ -32,7 +32,7 @@ fun Any?.backgroundAudio() {
                 title = it.title
                 artist = it.artist
                 text = it.album
-                image = it.artwork.toUriOrNull()
+                image = m.artwork.takeIf { it.isNotEmpty() }?.let { Uri.parse(it) }
             }
         }
     }
