@@ -61,9 +61,17 @@ class WebMedia(
     val videoWidth: Int = 0,
     val videoHeight: Int = 0
 ) {
-    constructor(json: String) : this(org.json.JSONObject(json))
 
-    private constructor(j: org.json.JSONObject) : this(
+    constructor(json: String) : this(
+        try {
+            JSONObject(json)
+        } catch (e: Exception) {
+            Vlog("WebMedia error: ${e.message}")
+            JSONObject()
+        }
+    )
+    
+    private constructor(j: JSONObject) : this(
         type = j.optString("type"),
         title = j.optString("title"),
         artist = j.optString("artist"),
