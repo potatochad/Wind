@@ -168,7 +168,8 @@ abstract class WebEngine(
                 onPageStarted.forEach { it(url) }
             }
             override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? {
-               //toList fixes edit and add at same times crashes shouldInterceptRequest.toList().forEach { 
+				//toList fixes edit and add at same times crashes 
+				shouldInterceptRequest.toList().forEach { 
                     val result = it(request)
                     if (result != null) return result
                 }
