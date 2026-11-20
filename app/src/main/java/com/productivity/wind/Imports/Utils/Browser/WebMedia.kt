@@ -61,28 +61,28 @@ class WebMedia(
     val videoWidth: Int = 0,
     val videoHeight: Int = 0
 ) {
-    constructor(json: String) : this(
-        run { org.json.JSONObject(json) }.optString("type"),
-        run { org.json.JSONObject(json) }.optString("title"),
-        run { org.json.JSONObject(json) }.optString("artist"),
-        run { org.json.JSONObject(json) }.optString("album"),
-        run { org.json.JSONObject(json) }.optString("artwork"),
-        run { org.json.JSONObject(json) }.optString("src"),
-        run { org.json.JSONObject(json) }.optDouble("currentTime"),
-        run { org.json.JSONObject(json) }.let {
-            if (it.isNull("duration")) null else it.optDouble("duration")
-        },
-        run { org.json.JSONObject(json) }.optBoolean("paused"),
-        run { org.json.JSONObject(json) }.optBoolean("ended"),
-        run { org.json.JSONObject(json) }.optBoolean("muted"),
-        run { org.json.JSONObject(json) }.optDouble("volume", 1.0),
-        run { org.json.JSONObject(json) }.optDouble("playbackRate", 1.0),
-        run { org.json.JSONObject(json) }.optInt("readyState"),
-        run { org.json.JSONObject(json) }.optInt("networkState"),
-        run { org.json.JSONObject(json) }.optString("poster"),
-        run { org.json.JSONObject(json) }.optInt("videoWidth"),
-        run { org.json.JSONObject(json) }.optInt("videoHeight")
-    )
+    constructor(json: String) : this(org.json.JSONObject(json))
+
+private constructor(j: org.json.JSONObject) : this(
+    type = j.optString("type"),
+    title = j.optString("title"),
+    artist = j.optString("artist"),
+    album = j.optString("album"),
+    artwork = j.optString("artwork"),
+    src = j.optString("src"),
+    currentTime = j.optDouble("currentTime"),
+    duration = if (j.isNull("duration")) null else j.optDouble("duration"),
+    paused = j.optBoolean("paused"),
+    ended = j.optBoolean("ended"),
+    muted = j.optBoolean("muted"),
+    volume = j.optDouble("volume", 1.0),
+    playbackRate = j.optDouble("playbackRate", 1.0),
+    readyState = j.optInt("readyState"),
+    networkState = j.optInt("networkState"),
+    poster = j.optString("poster"),
+    videoWidth = j.optInt("videoWidth"),
+    videoHeight = j.optInt("videoHeight")
+)
 
     val isVideo get() = type == "video"
     val isAudio get() = type == "audio"
