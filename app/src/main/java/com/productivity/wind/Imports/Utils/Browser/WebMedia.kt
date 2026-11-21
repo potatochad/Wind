@@ -63,13 +63,18 @@ class WebMedia(
 ) {
 
     constructor(json: String) : this(
+    try {
+        val array = JSONArray(json)
+        array.optJSONObject(0) ?: JSONObject()
+    } catch (e: Exception) {
         try {
             JSONObject(json)
         } catch (e: Exception) {
             Vlog("WebMedia error: ${e.message}")
             JSONObject()
         }
-    )
+    }
+)
     
     private constructor(j: JSONObject) : this(
         type = j.optString("type"),
