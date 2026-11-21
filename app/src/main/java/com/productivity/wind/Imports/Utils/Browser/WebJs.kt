@@ -28,7 +28,11 @@ fun Any?.backgroundAudio() {
             m = WebMedia(it)
         }
         Vlog("Showing media notification")
+    }
 
+    scope.launch {
+        delay(2000)
+        Vlog("calling media")
         m?.let {
             media.edit {
                 title = it.title
@@ -38,6 +42,7 @@ fun Any?.backgroundAudio() {
             }
         }
     }
+    
 }
 
 //needs a on pageLoad to work
