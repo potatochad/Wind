@@ -8,6 +8,7 @@ import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.UI_visible.*
 import org.json.JSONArray
 import android.net.Uri
+import kotlinx.coroutines.delay
 
 
 //RUNS BEFORE PAGE LOADS
