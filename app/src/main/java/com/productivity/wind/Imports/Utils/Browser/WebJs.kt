@@ -6,9 +6,10 @@ import com.productivity.wind.Imports.Utils.Log.*
 import com.productivity.wind.Imports.Utils.ToX.*
 import com.productivity.wind.Imports.Utils.*
 import com.productivity.wind.Imports.UI_visible.*
-import org.json.JSONArray
-import android.net.Uri
-import kotlinx.coroutines.delay
+import com.productivity.wind.Imports.Utils.AppsAndDevice.*
+import org.json.*
+import android.net.*
+import kotlinx.coroutines.*
 
 
 //RUNS BEFORE PAGE LOADS
