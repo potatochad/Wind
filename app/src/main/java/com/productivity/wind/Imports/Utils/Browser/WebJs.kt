@@ -24,8 +24,10 @@ fun Any?.backgroundAudio() {
 
     this.playingMedia {
         if (it != null && it != "null" && it != "") {
+            Vlog("it: $it")
             m = WebMedia(it)
         }
+        Vlog("Showing media notification")
 
         m?.let {
             media.edit {
