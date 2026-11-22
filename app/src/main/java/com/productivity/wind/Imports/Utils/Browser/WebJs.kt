@@ -24,10 +24,21 @@ fun Any?.backgroundAudio() {
     val media = MediaNotification()
     var m: WebMedia? = null
 
-    this.playingMedia {
-        if (it != null && it != "null" && it != "") {
-            Vlog("it: $it")
-            m = WebMedia(it)
+    Each(5000){
+        this.playingMedia {
+            if (it != null && it != "null" && it != "") {
+                Vlog("it: $it")
+                m = WebMedia(it)
+
+                m?.let {
+                    media.edit {
+                        title = it.title
+                        artist = it.artist
+                        text = it.album
+                        image = m.artwork.takeIf { it.isNotEmpty() }?.let { Uri.parse(it) }
+                    }
+                }
+            }
         }
     }
 
