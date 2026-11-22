@@ -213,7 +213,8 @@ fun LazyLine(
 }
 
 
-  
+//MOVE TO LAYOUT.KT; RENAME TO EASYROW AND COLUMN
+//ALSO FIX DEFAULTS (COLUMN IS CENTER, ROW CENTER TOPDOWN)
 @Composable
 fun LazzyRow(
     mod: Mod = Mod,

@@ -79,7 +79,7 @@ fun WebHome(){
 		
 		
 		LazzyRow(Mod.centerX.space(5).Xscroll()) {
-			QuickItem("Youtube", "https://www.youtube.com/@melrobbins", Icons.Default.PlayArrow)
+			QuickItem("Youtube", "https://www.youtube.com", Icons.Default.PlayArrow)
             QuickItem("My First Million", "www.mfmpod.com", Icons.Default.PlayArrow)
             QuickItem("Mel Robbins", "https://www.melrobbins.com/podcast/", Icons.Default.PlayArrow)
         }
@@ -107,19 +107,15 @@ fun Web(){
 
     LazyScreen(
         top = {
-			WebProps.TopBarInput(web){
-				if (it.empty) goTo("WebHome")
+			SafeMaxW {
+				WebProps.TopBarInput(web){
+					if (it.empty) goTo("WebHome")
+				}
 			}
-            End {
-                Row{
-                    Icon.Reload{ 
-                        web.reload()
-                    } 
-                    AppItem.Add {
-                        goTo("WebKeywords")
-                    }
-                }
-            }
+			AppItem.Add {
+				goTo("WebKeywords")
+			}
+			move(10)
         },
         scroll = no,
         dividerP = no,

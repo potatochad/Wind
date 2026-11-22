@@ -262,23 +262,7 @@ fun AppContent() {
 	}
 }
 
-//Dont use APP context
-suspend fun AppBackground(notif: LazyNotifi){
-	while (yes) {
-		wait(1000)
-		notif.text = "running..."
-		wait(1000)
-		notif.text = "running.."
-		wait(1000)
-		notif.text = "running."
-		wait(1000)
-		notif.text = "running"
-		wait(1000)
-		notif.text = "running."
-		wait(1000)
-		notif.text = "running.."
-	}
-}
+
 
 fun HandleIntent(intent: Intent){
 	val uri = intent.data ?: return
@@ -295,7 +279,8 @@ fun HandleIntent(intent: Intent){
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun AppStart_beforeUI() {
-	
+	//ignore, must be
+	NotificationChannel() 
 
 	
 }
@@ -325,9 +310,26 @@ fun OnResume(){
 	
 }
 
+suspend fun BackgroundWork(notifi: LazyNotification){
+	var lastUsed = LastUsedApp()
+
+	if (
+		!Permission.hasAccessibility("com.teqtic.lockmeout") ||
+		lastUsed == "com.chess"
+	   ) {
+		DeviceGray()
+	} else {
+		DeviceGray(no)
+	}
+	
+	notifi.text = "$lastUsed"
+	delay(1000)
+}
+
+
 @Composable
 fun AppStart() {
-	App.start(AppBackground::class.java)
+	startForeground(BackgroundService::class)
 	
 	Keyboard.track()
 	AppFocus.track()

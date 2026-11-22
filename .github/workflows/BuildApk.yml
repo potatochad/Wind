@@ -1,6 +1,10 @@
 name: Build APK
 
-on: push
+on:
+  push:
+    paths-ignore:
+      - '.github/workflows/**'
+
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # <- force Node 24 for all JS actions
@@ -29,30 +33,12 @@ jobs:
           key: gradle-${{ hashFiles('**/gradle-wrapper.properties') }}
           restore-keys: |
             gradle-
-
-      - name: Wait 600 seconds
-        run: | 
-          sleep 1
-          sleep 2
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-             
              
 
 
       - name: Build APK
         run: |
-          source ./app/src/main/java/com/productivity/wind/Imports/Utils/Ignore_Imports.sh
+          source .github/workflows/Imports/BuildApk.sh
           give_gradle_permission
 
           Build_APK
@@ -64,13 +50,6 @@ jobs:
           name: app-release-${{ github.run_number }}.apk
           path: app/build/outputs/apk/release/app-release.apk
 
-      - name: Wait 600 seconds
-        run: |
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
-          sleep 1
 
 
 

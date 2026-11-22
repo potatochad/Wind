@@ -1,3 +1,4 @@
+@file:Suppress("UNCHECKED_CAST")
 package com.productivity.wind.Imports.Utils.VarVal
 
 import com.productivity.wind.Imports.Utils.Log.*
@@ -13,41 +14,29 @@ class VarInfoWorker(val varsStr: Str){
 	private var dumbVars = MapVarInfo()
 	var map = MapVarInfo()
 
+	
 	init {
-			appNonUIScope.launch {
-				dumbVars.addAll(
-					dumbProcess(varsStr)
-				)
-				dumbVars.each { name, it ->
-					val processed: Var<*>? = processVar(it)
-					if (processed == null) {
-						Vlog("ExcludingVar: Error trying processVar")
-					} else {
-						map.add(processed)
-					}
+		appNonUIScope.launch {
+			dumbVars.addAll(
+				//returns dumb vars
+				VarsList(varsStr).vars
+			)
+			dumbVars.each { name, it ->
+				val processed: Var<*>? = it.smart()
+				if (processed == null) {
+					Vlog("ExcludingVar: Error trying processVar")
+				} else {
+					map.add(processed)
 				}
-				
 			}
+		}
 	}
+	
 
-	// regex looks for this pattern:   x:y:c
 	fun findVar(data: Str, varName: Str) =
 	    Regex("""${Regex.escape(varName)}:([^:]+):("[^"]*"|[^,}]+)""").find(data)
-	
-	/*
-	fun getVarValue(idItem: Str, varName: Str): Any? {
-		if (idItem.empty) return null
-		val data = get(idItem) ?: return null
 
-		val worker = VarInfoWorker()
-		val match = worker.findVar(data, varName) ?: return null
-
-		val type = match.groupValues[1]
-		val raw = match.groupValues[2]
-
-		return worker.getVarValue(type, raw)
-	}
-	*/
+		
 	fun getVarValue(type: Str, raw: Str): Any? {
 		val clazz = StrToClass(type) 
 		if (clazz == null){
@@ -58,80 +47,6 @@ class VarInfoWorker(val varsStr: Str){
 		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
 		return value
 	}
-	//‼️‼️‼️TODO FOR YOU (have classes in one file:
-	//MAKE A CLASS FOR: VarList:
-	//have it run some logic and so on
-	//MAKE A CLASS FOR VARINFO like thingy:
-	//SORYY you already got that, so have it like compute stuff for youu
-	
-	/*
-	fun getVar(varName: Str): Any? {
-		val clazz = StrToClass(type) 
-		if (clazz == null){
-			Vlog("getVarValue ClassError: $type, $raw, $clazz")
-			return null
-		}
-		val value = toValueOrNull(clazz, raw)
-		if (value == null) Vlog("getVarValue ValueError: $type, $raw, $clazz, $value")
-		return value
-	}
-	*/
-
-
-	fun processVar(dumbVar: Var<*>): Var<*>? {
-		val raw = dumbVar.value
-		val type = dumbVar.typeStr
-		val name = dumbVar.name
-
-		val clazz = StrToClass(type)
-		if (clazz == null) {
-			Vlog("process ClassError: $type, $raw, $clazz")
-			return null
-		}
-				
-		val value = toValueOrNull(clazz, toStr(raw))
-				
-		if (value == null) {
-			Vlog("process ValueError: $type, $raw, $clazz, $value")
-			return null
-		}
-	
-		return Var(name, value, clazz)
-	}
-
-
-	
-	//it dumb: so values are STRING
-	fun dumbProcess(strData: Str): List<Var<Str>>{
-		var varsStr = InsideBraces(strData) ?: return emptyList()
-		val result = mList<Var<Str>>()
-		
-		val vars = SplitTopLevel(
-			varsStr,
-			split = ',',
-			deeper = listOf("()", "{}", "[]")
-		)
-
-		vars.forEach { variable ->
-			val parts = SplitTopLevel(
-				variable,
-				split = ':',
-				deeper = listOf("()", "{}", "[]")
-			)
-
-			if (parts.size >= 3) {
-				result += Var(
-					name = parts[0],
-					value = parts.drop(2).joinToString(":"),
-					type = String::class.java,
-					typeStr = parts[1]
-				)
-			}
-		}
-		return result
-	}
-
-
 	
 }
 
@@ -139,121 +54,119 @@ class VarInfoWorker(val varsStr: Str){
 
 
 class VarsList(
-	val vars: List<Var<*>>
+	val vars: List<Var<*>>,
 ) {
 	constructor(map: MapVarInfo) : this(map.toList())
-
-    override fun toString(): Str {
-        val varsStr = vars.joinToString(", ") { "$it" }
-        return "vars: { $varsStr }"
-    }
-
-	constructor(varsStr: Str) : this(
-		dumbProcess(varsStr)
-	)
+	constructor(varsStr: Str) : this(dumbProcess(varsStr))
 
 
 	//it dumb: so values are STRING
 	companion object {
-	fun dumbProcess(strData: Str): List<Var<Str>>{
-		var varsStr = InsideBraces(strData) ?: return emptyList()
-		val result = mList<Var<Str>>()
+		fun dumbProcess(strData: Str): List<Var<Str>>{
+			var varsStr = InsideBraces(strData) ?: return emptyList()
+			val result = mList<Var<Str>>()
 		
-		val vars = SplitTopLevel(
-			varsStr,
-			split = ',',
-			deeper = listOf("()", "{}", "[]")
-		)
-
-		vars.forEach { variable ->
-			val parts = SplitTopLevel(
-				variable,
-				split = ':',
+			val vars = SplitTopLevel(
+				varsStr,
+				split = ',',
 				deeper = listOf("()", "{}", "[]")
 			)
 
-			if (parts.size >= 3) {
-				result += Var(
-					name = parts[0],
-					value = parts.drop(2).joinToString(":"),
-					type = String::class.java,
-					typeStr = parts[1]
-				)
+			vars.forEach {
+				try {
+					result += Var(it)
+				} catch (e: Exception) {
+					Vlog("VarsList, error with var, skipping: [$it]")
+				}
 			}
+			
+			return result
 		}
-		return result
 	}
+
+
+	fun smartAll(){
+		vars.filter{ it.dumb == yes }.forEach { it.smart() }
 	}
+
+
+	fun smart(name: Str) = vars.filter { it.name == name }.also {
+		if (it.size > 1) Vlog("Duplicate var, skipping both: [$name]")
+	}.singleOrNull()?.smart()
+	
+
+	override fun toString(): Str {
+        val varsStr = vars.joinToString(", ") { "$it" }
+        return "vars: { $varsStr }"
+	}
+	
 }
 
 
 
 class Var<T>(
 	val name: Str,
-    val value: T,
-	val type: Class<*>? = value?.let { it::class.java },
+    var value: T,
+	var type: Class<*>? = value?.let { it::class.java },
 	
 	var changed: Bool = no,
 	var marker: Int = 0,
-    val typeStr: Str = type?.name ?: "null",
+	var dumb: Bool = no,
+    var typeStr: Str = type?.name ?: "null",
 
 	var corrupted: Bool = no,
 ){
+	//it dumb: so values are STRING
+	//PUT INTO IT   "X:Y:C" ONLYY
 	constructor(varStr: Str) : this(
-    name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
-    value = (getStrValue(varStr) ?: error("Invalid VarInfo: $varStr")) as T,
-    type = String::class.java,
-    typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
-)
-	/*
-	constructor(varStr: Str) : this<String>(
-		name = "testName",
-		value = "stringValue",
+		name = name(varStr) ?: error("Invalid VarInfo: $varStr"),
+		value = (strValue(varStr) ?: error("Invalid VarInfo: $varStr")) as T,
 		type = String::class.java,
-		typeStr = "null",
-		/*
-        name = getName(varStr) ?: error("Invalid VarInfo: $varStr"),
-        value = getStrValue(varStr) ?: error("Invalid VarInfo: $varStr"),
-        type = String::class.java,
-        typeStr = getTypeStr(varStr) ?: error("Invalid VarInfo: $varStr")
-		*/
-    )
-	*/
+		typeStr = typeStr(varStr) ?: error("Invalid VarInfo: $varStr"),
+		dumb = yes
+	)
 
+	
     companion object {
         val regex = Regex("""^([^:]+):([^:]+):(.*)$""")
 
-        fun getName(str: Str) = regex.group(str, 1)
-        fun getStrValue(str: Str) = regex.group(str, 3)
-        fun getTypeStr(str: Str) = regex.group(str, 2)
+        private fun name(str: Str) = regex.group(str, 1)
+        private fun strValue(str: Str) = regex.group(str, 3)
+        private fun typeStr(str: Str) = regex.group(str, 2)
 	}
+	
+
+	fun smart(): Var<T>? {
+		val clazz = StrToClass(typeStr)
+	    	?: return null.also {
+				Vlog("process Var ClassError: $typeStr, $value")
+				corrupted = yes
+			}
+
+		val parsed = toValueOrNull(clazz, toStr(value))
+	    	?: return null.also {
+				Vlog("process Var ValueError: $typeStr, $value, $clazz")
+				corrupted = yes
+        }
+
+		value = parsed as T
+		type = clazz
+		changed = yes
+		dumb = no
+		corrupted = no
+		
+		return this
+	}
+
 	
 	val isNull get() = value == null
     val isChanged get() = changed
     val hasType get() = type != null
 
-	override fun toString(): Str = "$name:$typeStr:${ComplexTypeToStr(value)}"
+	override fun toString() = "$name:$typeStr:${ComplexTypeToStr(value)}"
 	
 }
-/*
-companion object {
-    fun parse(data: Str): VarInfo<*>? {
-        val match = Regex(
-            """^([^:]+):([^:]+):(.*)$"""
-        ).matchEntire(data) ?: return null
 
-        val name = match.groupValues[1]
-        val typeStr = match.groupValues[2]
-        val raw = match.groupValues[3]
-
-        val clazz = StrToClass(typeStr) ?: return null
-        val value = toValueOrNull(clazz, raw) ?: return null
-
-        return VarInfo(name, value, clazz)
-    }
-}
-
-*/
 
 class MapVarInfo {
     private val map = mutableMapOf<Str, Var<*>>()

@@ -1,3 +1,5 @@
+//DONT ADD A LOT OF STUFF
+
 function log(...args) {
            const msg = args
               .map(a => String(a))

@@ -8,6 +8,8 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import com.productivity.wind.Imports.Utils.*
 import androidx.compose.ui.text.*
 
+fun Str.startsWithAny(vararg values: Str) =
+    values.any { startsWith(it) }
 
 val Str.notEmpty: Bool
     get() = this.isNotEmpty()

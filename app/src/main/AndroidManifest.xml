@@ -90,7 +90,7 @@
 
 
         <service
-			android:name=".Imports.AppBackground"
+			android:name=".Imports.Utils.AppsAndDevice.BackgroundService"
 			android:enabled="true"
 			android:exported="true"
 			android:foregroundServiceType="specialUse">
@@ -98,6 +98,17 @@
 			<property
 				android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
 				android:value="used only for background work needing to be done by app (in notification, listed what types, including making app greyscale, depending on usage of specific apps)"/>      
+		</service>
+
+		<service
+			android:name=".Imports.Utils.AppsAndDevice.BackgroundAudio"
+			android:exported="true"
+			android:foregroundServiceType="mediaPlayback">
+			
+			<intent-filter>
+				<action android:name="androidx.media3.session.MediaSessionService" />
+				<action android:name="android.media.browse.MediaBrowserService" />
+			</intent-filter>
 		</service>
 
 		

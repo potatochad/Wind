@@ -13,7 +13,7 @@ fun BlockingLogic(web: WebController){
 		Bar.Url = "google.com"
 	}
 	fun youtubeFilter(){
-		web.web?.youtubeFilter(
+		web.youtubeFilter(
 			allowOnly = listOf(
 						"Stefan Frädrich",
 		"Greator",
@@ -226,7 +226,6 @@ fun BlockingLogic(web: WebController){
 		youtubeFilter()
 	}
 
-	
 	
 	web.doUpdateVisitedHistory { url, isReload ->
 		Bar.Url = url ?: "https://www.google.com"

@@ -10,7 +10,7 @@ import com.productivity.wind.Imports.Utils.*
 import androidx.compose.ui.unit.*
 import androidx.compose.foundation.lazy.*
 import com.productivity.wind.Imports.UI_visible.*
-
+import androidx.compose.material3.*
 
 @Composable
 fun LogsScreen() {
@@ -50,7 +50,7 @@ fun LogsScreen() {
 		scroll = no,
 	) {
         if (Bar.logs.empty){
-              EmptyBox("No logs")
+              Center { Text("No logs".gray()) }
         } else {
 			Box(
 				Mod.w(AppW - 10.dp).move(w = 5).h(AppH - 35.dp).Xscroll()
@@ -63,7 +63,6 @@ fun LogsScreen() {
 						LogTxt(it){ style ->
 						   if (gotStyle == no) {
 							   gotStyle = yes
-							   Vlog("gotStyle: $gotStyle")
 							   strStyle = style
 						   }
 					   } 

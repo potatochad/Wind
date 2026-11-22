@@ -1,40 +1,53 @@
+//you cannot make js renamed: its ugly
+
 package com.productivity.wind.Imports.Utils.Browser
 
 import com.productivity.wind.Imports.Utils.Log.*
 import com.productivity.wind.Imports.Utils.ToX.*
 import com.productivity.wind.Imports.Utils.*
-import org.json.JSONArray
+import com.productivity.wind.Imports.UI_visible.*
+import com.productivity.wind.Imports.Utils.AppsAndDevice.*
+import org.json.*
+import android.net.*
+import kotlinx.coroutines.*
 
-
-fun Any?.js(code: Str, callback: ((Str?) -> Unit)? = null) {
-    toWeb(this)?.evaluateJavascript(code) { result ->
-        callback?.invoke(result)
-    }
-}
-fun Any?.jsFun(code: Str, callback: ((Str?) -> Unit)? = null) {
-    this.js(
-        """
-        (function() {
-            try {
-                window.WindWeb = window.WindWeb || {};
-                const Web = window.WindWeb;
-                $code
-            } catch (e) {
-                const errorMsg = "JS error: " + String(e.message);
-                console.log("[WINDWEB_LOG]", errorMsg);
-            }
-        })();
-        """.trimIndent(),
-        callback
-    )
-}
 
 //RUNS BEFORE PAGE LOADS
 fun Any?.importsJS() {
- //delete does nothing
+    val media = getTextAsset("Media.js")
+
+    this.jsFun(media)
 }
 
+//RUNS BEFORE PAGE LOADS
+fun Any?.backgroundAudio() {
+    val media = MediaNotification()
+    var m: WebMedia? = null
 
+    this.playingMedia {
+        if (it != null && it != "null" && it != "") {
+            Vlog("it: $it")
+            m = WebMedia(it)
+        }
+        Vlog("Showing media notification")
+    }
+
+    scope.launch {
+        delay(2000)
+        Vlog("calling media")
+        m?.let {
+            media.edit {
+                title = it.title
+                artist = it.artist
+                text = it.album
+                image = m.artwork.takeIf { it.isNotEmpty() }?.let { Uri.parse(it) }
+            }
+        }
+    }
+    
+}
+
+//needs a on pageLoad to work
 fun Any?.youtubeFilter(
     allowOnly: ListStr? = null,
     block: ListStr? = null,
@@ -42,8 +55,8 @@ fun Any?.youtubeFilter(
     val allow1 = JSONArray(allowOnly?.map { it.lowercase() } ?: emptyList<String>()).toString()
     val block1 = JSONArray(block?.map { it.lowercase() } ?: emptyList<String>()).toString()
 
-    var filter = getTextAsset("YoutubeFilter.js")
     var jsImports = getTextAsset("Imports.js")
+    var filter = getTextAsset("YoutubeFilter.js")
     
     
     this.jsFun(
@@ -58,136 +71,5 @@ fun Any?.youtubeFilter(
 
 
 
-fun Any?.forceGoogleInputFocus() {
-    this.js(
-        """
-        (function() {
-
-            let input =
-                document.querySelector('textarea[name="q"]') ||
-                document.querySelector('input[name="q"]') ||
-                document.querySelector('[role="combobox"]');
-
-            if (!input) return "not found";
-
-            input.scrollIntoView({behavior: "smooth", block: "center"});
-
-            input.focus();
-            input.click();
-
-            input.dispatchEvent(new Event('focus', {bubbles: true}));
-
-            return "focused";
-
-        })();
-        """.trimIndent()
-    ) {
-        log("JS result: $it")
-
-        toWeb(this)?.showKeyboard()
-    }
-}
-
-
-fun Any?.allVisibleText(done: DoStr) {
-    this.js(
-        """
-        (function(){
-
-            // Create a full copy of the page
-            const bodyCopy = document.body.cloneNode(true);
-
-            // Clean the copy only (not the real page)
-            bodyCopy.querySelectorAll('style, script, link, noscript').forEach(e => e.remove());
-
-            function getText(node){
-                let text = "";
-
-                node.childNodes.forEach(n => {
-
-                    if(n.nodeType === Node.COMMENT_NODE) return;
-
-                    if(n.nodeType === Node.TEXT_NODE){
-                        let t = n.textContent.trim();
-                        if(t.length > 0){
-                            text += t + "\n";
-                        }
-                    }
-                    else if(n.nodeType === Node.ELEMENT_NODE){
-                        text += getText(n);
-                    }
-
-                });
-
-                return text;
-            }
-
-            return getText(bodyCopy);
-
-        })();
-        """.trimIndent()
-    ) { result ->
-
-        val cleaned = result
-            ?.removePrefix("\"")
-            ?.removeSuffix("\"")
-            ?.replace("\\n", "\n")
-            ?.replace("\\\"", "\"")
-
-        done(cleaned ?: "")
-    }
- }
-
-
-fun Any?.html(done: DoStr) {
-    this.js(
-        """
-        (function(){
-        // Clone the body so we don't break the live page
-        var clone = document.body.cloneNode(true);
-
-        // Remove unwanted tags inside body
-        clone.querySelectorAll('style, script, link').forEach(e => e.remove());
-
-        // Remove all images
-        clone.querySelectorAll('img').forEach(e => e.remove());
-        clone.querySelectorAll('svg').forEach(e => e.remove());
-
-        // Remove inline style attributes
-        clone.querySelectorAll('*').forEach(e => e.removeAttribute('style'));
-
-        // Return only cleaned body HTML
-        return clone.outerHTML;
-    })();
-    """.trimIndent()
-    ) { html ->
-        val cleaned = html
-        ?.removePrefix("\"")
-        ?.removeSuffix("\"")
-        ?.replace("\\u003C", "<")
-        ?.replace("\\u003E", ">")
-        ?.replace("\\\"", "\"")
-        ?.replace("\\n", "\n")
-        
-        done(cleaned ?: "")
-    }
-}
-
-
-
-fun Any?.gray(x: Float) {
-    this.js(
-        "document.body.style.filter = 'grayscale(${x}%)';",
-        null
-    )
-}
-
-
-
-
-    
-
-
-    
 
 

@@ -12,36 +12,36 @@ function getText(item) {
 
 function shouldProcessItem({ text, href, listItem }) {
     if (/^\d+(?::\d+)+$/.test(text.trim())) {
-        log("REJECT: duration only", text);
+        // log("REJECT: duration only", text);
         return false;
     }
 
     if (!text) {
-        log("REJECT: empty text", href);
+        // log("REJECT: empty text", href);
         return false;
     }
 
     if (!href) {
-        log("REJECT: empty href");
+        // log("REJECT: empty href");
         return false;
     }
 
     if (!listItem) {
-        log("REJECT: text not matched target list", text);
+        // log("REJECT: text not matched target list", text);
         return false;
     }
 
     if (!href.includes("youtube.com/watch?v=")) {
-        log("REJECT: not a watch url", href);
+        // log("REJECT: not a watch url", href);
         return false;
     }
 
     if (href.startsWith("intent://")) {
-        log("REJECT: intent url", href);
+        // log("REJECT: intent url", href);
         return false;
     }
 
-    log("ACCEPT:", href);
+    // log("ACCEPT:", href);
     return true;
 }
 
@@ -55,7 +55,8 @@ function shouldProcessItem({ text, href, listItem }) {
 log("Filtering Youtube");
 
 function processItem(item2) {
-    if (item2.href.includes('/shorts/')) {
+    if (!item2 || item2.nodeType !== 1 || !item2.isConnected) return;
+    if (item2.href?.includes('/shorts/')) {
         hide(item2);
         return;
     }
@@ -67,10 +68,21 @@ function processItem(item2) {
         item2.closest("ytm-reel-item-renderer");
 
     if (shorts) {
-        log("Hiding shorts, TEXT:", text);
+        log("Hiding shorts");
         hide(shorts);
         return;
     }
+
+    const post = item2.closest(
+    "ytd-backstage-post-thread-renderer, " +
+    "ytm-backstage-post-thread-renderer, " +
+    "ytd-rich-item-renderer[is-post]"
+);
+
+if (post) {
+    hide(post);
+    return;
+}
     
     const item =
        item2.closest("yt-lockup-view-model") ||
@@ -84,7 +96,7 @@ function processItem(item2) {
     const listItem = blockTargets.some(t => text.includes(t));
     const logUrl = webItemUrl(item, 8);
 
-    log("1. TEXT:", text, "Url:", logUrl, "link:", href);
+    // log("1. TEXT:", text, "Url:", logUrl, "link:", href);
 
     
     if (!shouldProcessItem({ text, href, listItem })) {
@@ -98,7 +110,7 @@ function processItem(item2) {
         return;
     }
 
-    log("2. TEXT:", text, "Url:", logUrl, "link:", href);
+    // log("2. TEXT:", text, "Url:", logUrl, "link:", href);
 
     hide(item);
 }

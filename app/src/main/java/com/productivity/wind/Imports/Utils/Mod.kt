@@ -120,6 +120,8 @@ inline fun <reified T : Modifier.Element> Mod.hasTag(): Bool =
 
 val Mod.centerX: Mod get() = this.then(CenterX_Tag)
 val Mod.centerY: Mod get() = this.then(CenterY_Tag)
+
+val Mod.center: Mod get() = this.centerX.centerY
 val Mod.top: Mod get() = this.then(Top_Tag)
 val Mod.bottom: Mod get() = this.then(Bottom_Tag)
 val Mod.start: Mod get() = this.then(Start_Tag)
