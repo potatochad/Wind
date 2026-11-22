@@ -123,6 +123,35 @@ class LazyNotification(
 
 
 
+class MediaNotificationUI(
+    val player: ExoPlayer,
+    val uri: Uri,
+    val title: Str,
+    val artist: Str,
+    val text: Str,
+    val image: Uri?
+) {
+    init {
+        val item = MediaItem.Builder()
+            .setUri(uri)
+            .setMediaMetadata(
+                MediaMetadata.Builder()
+                    .setTitle(title)
+                    .setArtist(artist)
+                    .setDisplayTitle(text)
+                    .setArtworkUri(image)
+                    .build()
+            )
+            .build()
+
+        if (player.mediaItemCount == 0)
+            player.setMediaItem(item)
+        else
+            player.replaceMediaItem(player.currentMediaItemIndex, item)
+    }
+}
+
+
 open class MediaNotificationController() {
     protected val player = ExoPlayer.Builder(App).build()
     protected var media: MediaController? = null
