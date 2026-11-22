@@ -123,7 +123,7 @@ class LazyNotification(
 
 
 
-class MediaNotificationUI(
+private class MediaUI(
     val player: ExoPlayer,
     val uri: Uri,
     val title: Str,
@@ -150,32 +150,27 @@ class MediaNotificationUI(
             player.replaceMediaItem(player.currentMediaItemIndex, item)
     }
 }
+private fun MediaPlayer() = ExoPlayer.Builder(App).build()
 
 
 open class MediaNotificationController() {
-    protected val player = ExoPlayer.Builder(App).build()
+    protected val player = MediaPlayer()
     protected var media: MediaController? = null
     protected var waitDo: ListenableFuture<MediaController>? = null
-
+   
     protected val batch = LazyBatch(::update)
 
     protected open fun update() {
         val item = player.currentMediaItem ?: return
         val uri = item.localConfiguration?.uri ?: return
-
-        player.replaceMediaItem(
-            player.currentMediaItemIndex,
-            MediaItem.Builder()
-                .setUri(uri)
-                .setMediaMetadata(
-                    MediaMetadata.Builder()
-                        .setTitle(title)
-                        .setArtist(artist)
-                        .setDisplayTitle(text)
-                        .setArtworkUri(image)
-                        .build()
-                )
-                .build()
+        
+        MediaUI(
+            media!!,
+            uri,
+            title,
+            artist,
+            text,
+            image
         )
     }
 
