@@ -31,12 +31,14 @@ fun Any?.backgroundAudio() {
                 m = WebMedia(it)
 
                 m?.let {
-                    media.edit {
+                    media.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
+                    
+                    media.UI(
                         title = it.title
                         artist = it.artist
                         text = it.album
                         image = m.artwork.takeIf { it.isNotEmpty() }?.let { Uri.parse(it) }
-                    }
+                    )
                 }
             }
         }
