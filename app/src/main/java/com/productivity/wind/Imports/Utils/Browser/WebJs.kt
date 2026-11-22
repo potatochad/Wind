@@ -33,7 +33,7 @@ fun Any?.backgroundAudio() {
                 m?.let {
                     media.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
                     
-                    media.UI(
+                    media.edit(
                         title = it.title
                         artist = it.artist
                         text = it.album
