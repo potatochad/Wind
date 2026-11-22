@@ -29,7 +29,6 @@ fun Any?.backgroundAudio() {
             Vlog("it: $it")
             m = WebMedia(it)
         }
-        Vlog("Showing media notification")
     }
 
     scope.launch {
