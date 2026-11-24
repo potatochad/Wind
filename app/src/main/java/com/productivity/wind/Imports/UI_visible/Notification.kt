@@ -124,7 +124,7 @@ class LazyNotification(
 
 
 private class MediaUI(
-    val player: ExoPlayer,
+    val player: Player,//accepts oddly media item
     val uri: Uri,
     val title: Str,
     val artist: Str,
@@ -152,16 +152,52 @@ private class MediaUI(
 }
 private fun MediaPlayer() = ExoPlayer.Builder(App).build()
 
+private class LazyMediaController {
+    val player = MediaPlayer()
+    var media: MediaController? = null
+    var waitDo: ListenableFuture<MediaController>? = null
+
+    init {
+        val token = SessionToken(
+            App,
+            ComponentName(App, BackgroundAudio::class.java)
+        )
+
+        waitDo = MediaController.Builder(App, token).buildAsync()
+
+        waitDo?.addListener({
+            media = waitDo?.get()
+        }, MoreExecutors.directExecutor())
+    }
+
+    fun close() {
+        waitDo?.let(MediaController::releaseFuture)
+        media = null
+        waitDo = null
+        player.release()
+    }
+    fun audio(uri: Str) {
+        media?.let {
+            it.setMediaItem(MediaItem.fromUri(uri))
+            it.prepare()
+            it.play()
+        }
+    }
+}
+
+
 
 open class MediaNotificationController() {
-    protected val player = MediaPlayer()
-    protected var media: MediaController? = null
+    protected val controller = LazyMediaController()
+
+    protected val player get() = controller.player
+    protected val media get() = controller.media
     protected var waitDo: ListenableFuture<MediaController>? = null
    
     protected val batch = LazyBatch(::update)
 
     protected open fun update() {
-        val item = player.currentMediaItem ?: run {
+        val item = contoller.currentMediaItem ?: run {
             Vlog("No mediaItem, need audio")
             return
         }
@@ -185,20 +221,6 @@ open class MediaNotificationController() {
     open var artist: Str = ""
     open var text: Str = ""
     open var image: Uri? = null
-
-    init {
-        val token = SessionToken(
-            App,
-            ComponentName(App, BackgroundAudio::class.java)
-        )
-
-        waitDo = MediaController.Builder(App, token).buildAsync()
-
-        waitDo?.addListener({
-            media = waitDo?.get()
-            batch { update() }
-        }, MoreExecutors.directExecutor())
-    }
 }
 
 
@@ -234,17 +256,7 @@ class MediaNotification : MediaNotificationController() {
     }
     fun speed(x: Float) = media?.setPlaybackSpeed(x)
 
-    fun audio(uri: Str) {
-        media?.let {
-            it.setMediaItem(MediaItem.fromUri(uri))
-            it.prepare()
-            it.play()
-        }
-    }
 
-    fun close() {
-        waitDo?.let(MediaController::releaseFuture)
-        media = null
-        waitDo = null
-    }
+    fun close(){}
+    fun audio(){}
 }
