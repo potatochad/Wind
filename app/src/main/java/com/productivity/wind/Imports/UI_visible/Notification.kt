@@ -161,11 +161,12 @@ open class MediaNotificationController() {
     protected val batch = LazyBatch(::update)
 
     protected open fun update() {
-        val item = if (player.currentMediaItem == null){
+        val item = player.currentMediaItem ?: run {
             Vlog("No mediaItem, need audio")
             return
         }
-        val uri = if (item.localConfiguration?.uri == null) {
+
+        val uri = item.localConfiguration?.uri ?: run {
             Vlog("No audio, need audio")
             return
         }
