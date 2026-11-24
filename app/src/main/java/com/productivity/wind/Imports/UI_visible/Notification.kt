@@ -208,7 +208,7 @@ open class MediaNotificationController() {
         }
         
         MediaUI(
-            player,
+            media!!,
             uri,
             title,
             artist,
