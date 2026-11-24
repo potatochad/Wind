@@ -153,8 +153,9 @@ private class MediaUI(
 private fun MediaPlayer() = ExoPlayer.Builder(App).build()
 
 private class LazyMediaController {
-    val player = MediaPlayer()
     var media: MediaController? = null
+        private set
+    
     var waitDo: ListenableFuture<MediaController>? = null
 
     init {
@@ -174,8 +175,8 @@ private class LazyMediaController {
         waitDo?.let(MediaController::releaseFuture)
         media = null
         waitDo = null
-        player.release()
     }
+    
     fun audio(uri: Str) {
         media?.let {
             it.setMediaItem(MediaItem.fromUri(uri))
@@ -189,8 +190,6 @@ private class LazyMediaController {
 
 open class MediaNotificationController() {
     protected val controller = LazyMediaController()
-
-    protected val player get() = controller.player
     protected val media get() = controller.media
     protected var waitDo: ListenableFuture<MediaController>? = null
    
@@ -257,6 +256,10 @@ class MediaNotification : MediaNotificationController() {
     fun speed(x: Float) = media?.setPlaybackSpeed(x)
 
 
-    fun close(){}
-    fun audio(){}
+    fun audio(uri: Str) = controller.audio(uri)
+    fun close() = controller.close()
 }
+
+
+
+
