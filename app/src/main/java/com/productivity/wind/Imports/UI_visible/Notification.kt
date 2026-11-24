@@ -190,8 +190,8 @@ class LazyMediaController {
 
 
 open class MediaNotificationController() {
-    protected val controller = LazyMediaController()
-    protected val media get() = controller.media
+    val controller = LazyMediaController()
+    val media get() = controller.media
     protected var waitDo: ListenableFuture<MediaController>? = null
    
     protected val batch = LazyBatch(::update)
