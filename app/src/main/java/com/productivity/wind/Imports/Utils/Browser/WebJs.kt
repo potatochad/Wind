@@ -33,12 +33,12 @@ fun Any?.backgroundAudio() {
                 m?.let {
                     media.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
                     
-                    media.edit(
+                    media.edit {
                         title = it.title
                         artist = it.artist
                         text = it.album
                         image = m.artwork.takeIf { it.isNotEmpty() }?.let { Uri.parse(it) }
-                    )
+                    }
                 }
             }
         }
