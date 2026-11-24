@@ -197,8 +197,8 @@ open class MediaNotificationController() {
     protected val batch = LazyBatch(::update)
 
     protected open fun update() {
-        val item = controller.currentMediaItem ?: run {
-            Vlog("No mediaItem, need audio")
+        val item = media?.currentMediaItem ?: run {
+            Vlog("No mediaItem or media")
             return
         }
 
