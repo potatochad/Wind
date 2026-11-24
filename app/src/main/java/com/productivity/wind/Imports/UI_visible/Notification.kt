@@ -153,7 +153,7 @@ private class MediaUI(
 }
 private fun MediaPlayer() = ExoPlayer.Builder(App).build()
 
-private class LazyMediaController {
+class LazyMediaController {
     var media: MediaController? = null
         private set
     
