@@ -31,8 +31,7 @@ fun Any?.backgroundAudio() {
                 m = WebMedia(it)
 
                 m?.let {
-                    media.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
-                    
+                    media.audio(it.src)
                     media.edit {
                         title = it.title
                         artist = it.artist
