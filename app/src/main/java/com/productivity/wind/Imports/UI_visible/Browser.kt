@@ -13,6 +13,14 @@ import androidx.compose.runtime.DisposableEffect
 @Composable
 fun WebXml(web: WebController) {
     BackHandler { web.back() }
+
+    RunOnce {
+        web.open = yes
+        
+        onDispose {
+            web.open = no
+        }
+    }
     
     AndroidView(
         factory = { 
