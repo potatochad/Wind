@@ -97,6 +97,8 @@ class WebController(
    
 	val web: WebView?
         get() = webView
+	
+	var open by mState(no)
 
     fun blockImages(Do: () -> Bool = { yes }) {
         shouldInterceptRequest { request ->
