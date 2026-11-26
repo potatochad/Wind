@@ -42,19 +42,6 @@ fun Any?.backgroundAudio() {
             }
         }
     }
-
-    scope.launch {
-        delay(2000)
-        Vlog("calling media")
-        m?.let {
-            media.edit {
-                title = it.title
-                artist = it.artist
-                text = it.album
-                image = m.artwork.takeIf { it.isNotEmpty() }?.let { Uri.parse(it) }
-            }
-        }
-    }
     
 }
 
