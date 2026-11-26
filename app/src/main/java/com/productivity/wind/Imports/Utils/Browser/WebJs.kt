@@ -32,7 +32,7 @@ fun Any?.backgroundAudio() {
 
                 m?.let {
                     media.audio(it.src)
-                    media.edit {
+                    media.ui {
                         title = it.title
                         artist = it.artist
                         text = it.album
