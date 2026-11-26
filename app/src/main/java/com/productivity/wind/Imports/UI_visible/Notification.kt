@@ -231,7 +231,7 @@ class MediaNotification : MediaNotificationController() {
     override var text: Str by batch("")
     override var image: Uri? by batch(null)
 
-    fun edit(block: MediaNotification.() -> Unit) {
+    fun ui(block: MediaNotification.() -> Unit) {
         batch { block() }
     }
 
