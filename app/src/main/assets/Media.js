@@ -49,30 +49,26 @@ function reportMediaState(force = false) {
 Web.getPlayingMedia = function() {
     //artists name, title etc..but not audio.
     const details = navigator.mediaSession?.metadata;
-
-    return chooseMedia().map(it => ({
+    const it = chooseMedia();
+    
+    return {
         type: it.tagName.toLowerCase(),
-
         title: details?.title || document.title,
         artist: details?.artist || "",
         album: details?.album || "",
         artwork: details?.artwork?.[0]?.src || "",
         src: it.currentSrc || it.src || "",
         currentTime: it.currentTime,
-        duration: Number.isFinite(it.duration)
-            ? it.duration : null,
-
+        duration: Number.isFinite(it.duration) ? it.duration : null,
         muted: it.muted,
         volume: it.volume,
         playbackRate: it.playbackRate,
-
         readyState: it.readyState,
         networkState: it.networkState,
-            
         poster: it.poster || "",
         videoWidth: it.videoWidth || 0,
         videoHeight: it.videoHeight || 0
-    }));
+    };
 };
 
 
