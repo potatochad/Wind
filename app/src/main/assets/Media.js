@@ -1,5 +1,32 @@
+function sortUp(a, b) {
+  return a - b; // Smallest → Largest
+}
+
+function sortDown(a, b) {
+  return b - a; // Largest → Smallest
+}
+
+
 function getElements(selector) {
     return Array.from(document.querySelectorAll(selector));
+}
+
+function mediaElements() {
+    return getElements("audio, video")
+        .filter((media) => media && media.isConnected);
+}
+
+let currentMedia = null;
+function chooseMedia() {
+    if (currentMedia && currentMedia.isConnected && !currentMedia.ended) return currentMedia;
+    
+    currentMedia = mediaElements().sort((first, second) => {
+    const playingDifference = Number(first.paused) - Number(second.paused);
+    if (playingDifference !== 0) return playingDifference;
+    return (second.clientWidth * second.clientHeight) -
+      (first.clientWidth * first.clientHeight);
+  })[0] || null;
+  return currentMedia;
 }
 
 
