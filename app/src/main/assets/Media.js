@@ -8,35 +8,34 @@ Web.getPlayingMedia = function() {
     const details = navigator.mediaSession?.metadata;
 
     return getElements("audio, video")
-        .filter(el => !el.paused && !el.ended)
-        .map(el => ({
-        type: el.tagName.toLowerCase(),
+        .filter(it => !it.paused && !it.ended)
+        .map(it => ({
+        type: it.tagName.toLowerCase(),
 
-        title: metadata?.title || document.title,
-        artist: metadata?.artist || "",
-        album: metadata?.album || "",
-        artwork: metadata?.artwork?.[0]?.src || "",
+        title: details?.title || document.title,
+        artist: details?.artist || "",
+        album: details?.album || "",
+        artwork: details?.artwork?.[0]?.src || "",
+        src: it.currentSrc || it.src || "",
+        currentTime: it.currentTime,
+        duration: Number.isFinite(it.duration)
+            ? it.duration : null,
 
-        src: el.currentSrc || el.src || "",
+        paused: it.paused,
+        ended: it.ended,
+        muted: it.muted,
+        volume: it.volume,
+        playbackRate: it.playbackRate,
 
-        currentTime: el.currentTime,
-        duration: Number.isFinite(el.duration)
-            ? el.duration : null,
-
-        paused: el.paused,
-        ended: el.ended,
-        muted: el.muted,
-        volume: el.volume,
-        playbackRate: el.playbackRate,
-
-        readyState: el.readyState,
-        networkState: el.networkState,
-
-        poster: el.poster || "",
-        videoWidth: el.videoWidth || 0,
-        videoHeight: el.videoHeight || 0
+        readyState: it.readyState,
+        networkState: it.networkState,
+            
+        poster: it.poster || "",
+        videoWidth: it.videoWidth || 0,
+        videoHeight: it.videoHeight || 0
     }));
 };
+
 
 Web.controlMedia = function(action, value) {
     const el = [...document.querySelectorAll("audio, video")]
