@@ -26,7 +26,26 @@ function chooseMedia() {
   return currentMedia;
 }
 
-
+/*
+function reportMediaState(force = false) {
+  const media = chooseMedia();
+  if (!media || !port) return;
+  const now = Date.now();
+  if (!force && now - lastMediaReport < 1000) return;
+  lastMediaReport = now;
+  try {
+    port.postMessage({
+      type: "media-state",
+      title: document.title || "网页媒体",
+      url: location.href,
+      mediaUrl: media.currentSrc || media.src || "",
+      playing: !media.paused && !media.ended,
+      durationMs: Number.isFinite(media.duration) ? Math.round(media.duration * 1000) : -1,
+      positionMs: Number.isFinite(media.currentTime) ? Math.round(media.currentTime * 1000) : 0,
+    });
+  } catch (_) { }
+}
+*/
 Web.getPlayingMedia = function() {
     //artists name, title etc..but not audio.
     const details = navigator.mediaSession?.metadata;
