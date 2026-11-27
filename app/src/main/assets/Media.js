@@ -1,11 +1,15 @@
-Web.getPlayingMedia = function() {
-    const metadata = navigator.mediaSession?.metadata;
+function getElements(selector) {
+    return Array.from(document.querySelectorAll(selector));
+}
 
-    return Array.from(
-        document.querySelectorAll("audio, video")
-    )
-    .filter(el => !el.paused && !el.ended)
-    .map(el => ({
+
+Web.getPlayingMedia = function() {
+    //artists name, title etc..but not audio.
+    const details = navigator.mediaSession?.metadata;
+
+    return getElements("audio, video")
+        .filter(el => !el.paused && !el.ended)
+        .map(el => ({
         type: el.tagName.toLowerCase(),
 
         title: metadata?.title || document.title,
