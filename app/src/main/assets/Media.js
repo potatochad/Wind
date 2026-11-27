@@ -1,9 +1,9 @@
-function sortUp(array) {
-  return [...array].sort((a, b) => a - b);
-}
-function sortDown(array) {
-  return [...array].sort((a, b) => b - a);
-}
+Array.prototype.sortUp = function() {
+  return this.sort((a, b) => a - b);
+};
+Array.prototype.sortDown = function() {
+  return this.sort((a, b) => b - a);
+};
 
 
 function getElements(selector) {
@@ -18,7 +18,7 @@ function mediaElements() {
 let currentMedia = null;
 function chooseMedia() {
     if (currentMedia && currentMedia.isConnected && !currentMedia.ended) return currentMedia;
-    
+
     currentMedia = mediaElements().sort((first, second) => {
     const playingDifference = Number(first.paused) - Number(second.paused);
     if (playingDifference !== 0) return playingDifference;
