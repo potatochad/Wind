@@ -1,9 +1,8 @@
-function sortUp(a, b) {
-  return a - b; // Smallest → Largest
+function sortUp(array) {
+  return [...array].sort((a, b) => a - b);
 }
-
-function sortDown(a, b) {
-  return b - a; // Largest → Smallest
+function sortDown(array) {
+  return [...array].sort((a, b) => b - a);
 }
 
 
