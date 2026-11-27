@@ -24,7 +24,11 @@ fun Any?.backgroundAudio() {
     val media = MediaNotification()
     var m: WebMedia? = null
 
-    toWeb().open
+    /*
+    while(toWeb(this)?.open){
+        wait(5000)
+    }
+    */
     Each(5000){
         this.playingMedia {
             if (it != null && it != "null" && it != "") {
