@@ -31,9 +31,7 @@ Web.getPlayingMedia = function() {
     //artists name, title etc..but not audio.
     const details = navigator.mediaSession?.metadata;
 
-    return getElements("audio, video")
-        .filter(it => !it.paused && !it.ended)
-        .map(it => ({
+    return chooseMedia().map(it => ({
         type: it.tagName.toLowerCase(),
 
         title: details?.title || document.title,
