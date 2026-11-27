@@ -1,14 +1,15 @@
-Array.prototype.sortUp = function() {
-  return this.sort((a, b) => a - b);
-};
-Array.prototype.sortDown = function() {
-  return this.sort((a, b) => b - a);
-};
-
-
+// media.size
+Object.defineProperty(HTMLMediaElement.prototype, "size", {
+    get() {
+        return this.clientWidth * this.clientHeight;
+    }
+});
 function getElements(selector) {
     return Array.from(document.querySelectorAll(selector));
 }
+//-----------Imports--------///
+
+
 
 function mediaElements() {
     return getElements("audio, video")
@@ -19,12 +20,9 @@ let currentMedia = null;
 function chooseMedia() {
     if (currentMedia && currentMedia.isConnected && !currentMedia.ended) return currentMedia;
 
-    currentMedia = mediaElements().sort((first, second) => {
-    const playingDifference = Number(first.paused) - Number(second.paused);
-    if (playingDifference !== 0) return playingDifference;
-    return (second.clientWidth * second.clientHeight) -
-      (first.clientWidth * first.clientHeight);
-  })[0] || null;
+    currentMedia = mediaElements()
+      .filter(it => !it.paused)
+      .sort((first, second) => second.size - first.size)[0] || null;
   return currentMedia;
 }
 
