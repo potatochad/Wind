@@ -21,8 +21,6 @@ Web.getPlayingMedia = function() {
         duration: Number.isFinite(it.duration)
             ? it.duration : null,
 
-        paused: it.paused,
-        ended: it.ended,
         muted: it.muted,
         volume: it.volume,
         playbackRate: it.playbackRate,
